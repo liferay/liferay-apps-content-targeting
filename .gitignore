@@ -1,7 +1,6 @@
 *~
 *-ext.properties
 *.bak
-*.iml
 *.ipr
 *.iws
 *.processed
