@@ -1,0 +1,8 @@
+Bundle-Name: Content Targeting Core
+Export-Package:\
+	com.liferay.contenttargeting.*
+Import-Package:\
+	com.liferay.contenttargeting.*,\
+	*
+Include-Resource: classes
+Service-Component:com.liferay.contenttargeting.*
