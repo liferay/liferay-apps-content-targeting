@@ -25,3 +25,6 @@ _sass_cache_*.css
 /build.*.properties
 /dist
 /tools/*/*/*/lib
+
+.idea/workspace.xml
+.idea/rebel_project.xml
