@@ -1,0 +1,6 @@
+Bundle-Name: Time Rule
+Include-Resource: classes
+Private-Package: \
+	com.liferay.contenttargeting.rules.time.*
+Service-Component: \
+	com.liferay.contenttargeting.rules.time.*
