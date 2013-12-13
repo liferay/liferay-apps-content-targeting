@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="EclipseModuleManager">
+    <libelement value="file:///portal-master/lib/development/activation.jar" />
+    <libelement value="file:///portal-master/lib/development/annotations.jar" />
+    <libelement value="file:///portal-master/lib/development/jsp-api.jar" />
+    <libelement value="file:///portal-master/lib/development/mail.jar" />
+    <libelement value="file:///portal-master/lib/development/servlet-api.jar" />
+    <libelement value="file:///portal-master/lib/global/portlet.jar" />
+    <libelement value="file:///portal-master/lib/portal/commons-logging.jar" />
+    <libelement value="file:///portal-master/lib/portal/log4j.jar" />
+    <libelement value="file:///portal-master/portal-service/portal-service.jar" />
+    <libelement value="file:///portal-master/util-bridges/util-bridges.jar" />
+    <libelement value="file:///portal-master/util-java/util-java.jar" />
+    <libelement value="file:///portal-master/util-taglib/util-taglib.jar" />
+    <libelement value="jar://$MODULE_DIR$/../log-bridge-shared/lib/org.osgi.compendium.jar!/" />
+    <libelement value="jar://$MODULE_DIR$/../log-bridge-shared/lib/org.osgi.core.jar!/" />
+    <src_description expected_position="0">
+      <src_folder value="file://$MODULE_DIR$/../log-bridge-shared/src" expected_position="0" />
+    </src_description>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="false">
+    <output url="file://$MODULE_DIR$/../log-bridge-shared/bin" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../log-bridge-shared">
+      <sourceFolder url="file://$MODULE_DIR$/../log-bridge-shared/src" isTestSource="false" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="module-library">
+      <library name="org.osgi.compendium.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../log-bridge-shared/lib/org.osgi.compendium.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library name="org.osgi.core.jar">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../log-bridge-shared/lib/org.osgi.core.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+
