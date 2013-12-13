@@ -50,6 +50,119 @@
 		</sequential>
 	</macrodef>
 
+	<target name="build-service">
+		<mkdir dir="classes" />
+		<mkdir dir="lib" />
+		<mkdir dir="service" />
+		<mkdir dir="sql" />
+		<mkdir dir="src" />
+
+		<copy todir="classes">
+			<fileset dir="src" excludes="**/*.java" />
+		</copy>
+
+		<path id="service.classpath">
+			<path refid="lib.classpath" />
+			<path refid="portal.classpath" />
+			<fileset dir="${app.server.lib.portal.dir}" includes="commons-digester.jar,commons-lang.jar,easyconf.jar" />
+			<fileset dir="lib" includes="*.jar" />
+			<pathelement location="classes" />
+		</path>
+
+		<if>
+			<os family="windows" />
+			<then>
+				<classpath-to-jar
+					classpathref="service.classpath"
+					jarfile="build-service-classpath.jar"
+				/>
+			</then>
+		</if>
+
+
+		<property name="service.input.file" value="${basedir}/service.xml" />
+
+
+		<java
+			classname="com.liferay.portal.tools.servicebuilder.ServiceBuilder"
+			classpathref="service.classpath"
+			fork="true"
+			newenvironment="true"
+			outputproperty="build-service.output"
+		>
+			<jvmarg value="-Xms512m" />
+			<jvmarg value="-Xmx1024m" />
+			<jvmarg value="-Xss2048k" />
+			<jvmarg value="-XX:MaxPermSize=512m" />
+			<arg value="-Dexternal-properties=com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg value="-Dorg.apache.commons.logging.Log=org.apache.commons.logging.impl.Log4JLogger" />
+			<arg value="service.input.file=${service.input.file}" />
+			<arg value="service.hbm.file=${basedir}/src/META-INF/portlet-hbm.xml" />
+			<arg value="service.orm.file=${basedir}/src/META-INF/portlet-orm.xml" />
+			<arg value="service.model.hints.file=${basedir}/src/META-INF/portlet-model-hints.xml" />
+			<arg value="service.spring.file=${basedir}/src/META-INF/portlet-spring.xml" />
+			<arg value="service.spring.base.file=${basedir}/src/META-INF/base-spring.xml" />
+			<arg value="service.spring.cluster.file=${basedir}/src/META-INF/cluster-spring.xml" />
+			<arg value="service.spring.dynamic.data.source.file=${basedir}/src/META-INF/dynamic-data-source-spring.xml" />
+			<arg value="service.spring.hibernate.file=${basedir}/src/META-INF/hibernate-spring.xml" />
+			<arg value="service.spring.infrastructure.file=${basedir}/src/META-INF/infrastructure-spring.xml" />
+			<arg value="service.spring.shard.data.source.file=${basedir}/src/META-INF/shard-data-source-spring.xml" />
+			<arg value="service.api.dir=${basedir}/service" />
+			<arg value="service.impl.dir=${basedir}/src" />
+			<arg value="service.json.file=${basedir}/docroot/js/service.js" />
+			<arg value="service.sql.dir=${basedir}/sql" />
+			<arg value="service.sql.file=tables.sql" />
+			<arg value="service.sql.indexes.file=indexes.sql" />
+			<arg value="service.sql.indexes.properties.file=indexes.properties" />
+			<arg value="service.sql.sequences.file=sequences.sql" />
+			<arg value="service.auto.namespace.tables=true" />
+			<arg value="service.bean.locator.util=com.liferay.util.bean.PortletBeanLocatorUtil" />
+			<arg value="service.props.util=com.liferay.util.service.ServiceProps" />
+			<arg value="service.plugin.name=${plugin.name}" />
+			<arg value="service.target.entity.name=${service.target.entity.name}" />
+		</java>
+
+		<if>
+			<os family="windows" />
+			<then>
+				<delete file="build-service-classpath.jar" />
+			</then>
+		</if>
+
+		<delete file="ServiceBuilder.temp" />
+
+		<echo>${build-service.output}</echo>
+
+		<if>
+			<contains string="${build-service.output}" substring="Error" />
+			<then>
+				<fail>Service Builder generated exceptions.</fail>
+			</then>
+		</if>
+
+		<mkdir dir="service-classes" />
+
+		<path id="service.classpath">
+			<path refid="lib.classpath" />
+			<fileset dir="${app.server.lib.global.dir}" includes="*.jar" />
+			<fileset dir="lib" excludes="${plugin.name}-service.jar" includes="*.jar" />
+		</path>
+
+		<antcall target="compile-java">
+			<param name="javac.classpathref" value="service.classpath" />
+			<param name="javac.destdir" value="service-classes" />
+			<param name="javac.srcdir" value="service" />
+			<reference refid="service.classpath" torefid="service.classpath" />
+		</antcall>
+
+		<zip
+			basedir="service-classes"
+			destfile="lib/${plugin.name}-service.jar"
+		/>
+
+		<delete dir="service-classes" />
+	</target>
+
 	<target name="clean">
 		<delete dir="${osgi.plugin.classes.dir}" />
 
