@@ -23,7 +23,6 @@ _sass_cache_*.css
 /*/*/docroot/WEB-INF/lib/portal-compat-shared.jar
 
 /build.*.properties
-/lib
 /dist
 /tools/*/*/*/lib
 
