@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="osgi">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/bnd.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.osgi.compendium.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/org.osgi.core.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/bnd.jar!/OSGI-OPT/src" />
+      <root url="jar://$PROJECT_DIR$/lib/org.osgi.compendium.jar!/OSGI-OPT/src" />
+      <root url="jar://$PROJECT_DIR$/lib/org.osgi.core.jar!/OSGI-OPT/src" />
+    </SOURCES>
+  </library>
+</component>
