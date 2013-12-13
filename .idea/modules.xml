@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-core/content-targeting-core.iml" filepath="$PROJECT_DIR$/shared/content-targeting-core/content-targeting-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/portlets/content-targeting-portlet/content-targeting-portlet.iml" filepath="$PROJECT_DIR$/portlets/content-targeting-portlet/content-targeting-portlet.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/ct-time-rule/ct-time-rule.iml" filepath="$PROJECT_DIR$/shared/ct-time-rule/ct-time-rule.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/http-service-shared/http-service-shared-master.iml" filepath="$PROJECT_DIR$/shared/http-service-shared/http-service-shared-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/http-service-shared/log-bridge-shared-master.iml" filepath="$PROJECT_DIR$/shared/http-service-shared/log-bridge-shared-master.iml" />

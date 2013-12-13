@@ -1,0 +1,41 @@
+Bundle-Icon: /icon.png;size=16
+Bundle-Localization: WEB-INF/classes/content/Language
+Bundle-Name: Content Targeting Portlet
+DynamicImport-Package:\
+	org.apache.jasper.servlet,\
+	org.eclipse.jetty.servlet.listener
+Export-Package:\
+	content,\
+	com.liferay.contenttargeting.portlet
+Import-Package:\
+	com.liferay.contenttargeting.portlet,\
+	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.language,\
+	com.liferay.portal.kernel.lar,\
+	com.liferay.portal.kernel.servlet,\
+	com.liferay.portal.kernel.servlet.filters.invoker,\
+	com.liferay.portal.service,\
+	com.liferay.portal.servlet.filters.aggregate,\
+	com.liferay.portal.servlet.filters.dynamiccss,\
+	com.liferay.portlet,\
+	com.liferay.httpservice.servlet,\
+	com.liferay.util.bridges.freemarker,\
+	javax.portlet,\
+	javax.el,\
+	javax.servlet,\
+	javax.servlet.http,\
+	*;resolution:="optional"
+Private-Package: com.liferay.contenttargeting.portlet.internal
+Service-Component:com.liferay.contenttargeting.portlet.*
+Web-ContextPath: /content-targeting-portlet
+-wab: \
+	docroot,\
+	{WEB-INF/liferay-display.xml=docroot/WEB-INF/liferay-display.xml},\
+	{WEB-INF/liferay-plugin-package.properties=docroot/WEB-INF/liferay-plugin-package.properties},\
+	{WEB-INF/liferay-portlet.xml=docroot/WEB-INF/liferay-portlet.xml},\
+	{WEB-INF/liferay-web.xml=docroot/WEB-INF/liferay-web.xml},\
+	{WEB-INF/portlet.xml=docroot/WEB-INF/portlet.xml},\
+	{WEB-INF/web.xml=docroot/WEB-INF/web.xml}
+-wablib: \
+	${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+	${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar

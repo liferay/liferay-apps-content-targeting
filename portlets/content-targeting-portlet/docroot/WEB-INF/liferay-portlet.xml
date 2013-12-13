@@ -1,10 +1,13 @@
 <?xml version="1.0"?>
-<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.1.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_1_0.dtd">
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>content-targeting</portlet-name>
+		<portlet-name>1</portlet-name>
 		<icon>/icon.png</icon>
+		<struts-path>o/content-targeting-portlet</struts-path>
+		<use-default-template>false</use-default-template>
+		<render-weight>1</render-weight>
 		<header-portlet-css>/css/main.css</header-portlet-css>
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>content-targeting-portlet</css-class-wrapper>

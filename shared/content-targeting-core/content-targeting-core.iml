@@ -8,6 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="osgi" level="project" />
+    <orderEntry type="library" name="portal-6.2.x" level="project" />
   </component>
 </module>
 
