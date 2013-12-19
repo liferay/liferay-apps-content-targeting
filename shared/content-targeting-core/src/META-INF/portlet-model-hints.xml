@@ -1,6 +1,14 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<hint-collection name="CLOB">
+		<hint name="max-length">2000000</hint>
+	</hint-collection>
+	<hint-collection name="TEXTAREA">
+		<hint name="display-height">105</hint>
+		<hint name="display-width">500</hint>
+		<hint name="max-length">4000</hint>
+	</hint-collection>
 	<model name="com.liferay.contenttargeting.model.CTUser">
 		<field name="uuid" type="String" />
 		<field name="CTUserId" type="long" />
@@ -11,7 +19,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="lastIp" type="String" />
-		<field name="typeSettings" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.contenttargeting.model.Rule">
 		<field name="uuid" type="String" />
@@ -24,7 +34,9 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="segmentId" type="long" />
 		<field name="type" type="String" />
-		<field name="typeSettings" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.contenttargeting.model.UserSegment">
 		<field name="uuid" type="String" />
@@ -36,6 +48,9 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" localized="true" />
-		<field name="description" type="String" localized="true" />
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">300</hint>
+		</field>
 	</model>
 </model-hints>
