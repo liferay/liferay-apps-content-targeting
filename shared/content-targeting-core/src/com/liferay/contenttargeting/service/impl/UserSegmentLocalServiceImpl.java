@@ -14,7 +14,17 @@
 
 package com.liferay.contenttargeting.service.impl;
 
+import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.base.UserSegmentLocalServiceBaseImpl;
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * The implementation of the user segment local service.
@@ -31,5 +41,76 @@ import com.liferay.contenttargeting.service.base.UserSegmentLocalServiceBaseImpl
  * @see com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil
  */
 public class UserSegmentLocalServiceImpl
-	extends UserSegmentLocalServiceBaseImpl {
+		extends UserSegmentLocalServiceBaseImpl {
+
+	@Override
+	public UserSegment addUserSegment(
+			long userId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		User user = UserLocalServiceUtil.getUser(userId);
+		long groupId = serviceContext.getScopeGroupId();
+
+		Date now = new Date();
+
+		long userSegmentId = CounterLocalServiceUtil.increment();
+
+		UserSegment userSegment = userSegmentPersistence.create(userSegmentId);
+
+		userSegment.setGroupId(groupId);
+		userSegment.setCompanyId(user.getCompanyId());
+		userSegment.setUserId(user.getUserId());
+		userSegment.setUserName(user.getFullName());
+		userSegment.setCreateDate(serviceContext.getCreateDate(now));
+		userSegment.setModifiedDate(serviceContext.getModifiedDate(now));
+		userSegment.setName(name);
+		userSegment.setDescription(description);
+
+		userSegmentPersistence.update(userSegment);
+
+		return userSegment;
+	}
+
+	@Override
+	public UserSegment deleteUserSegment(long userSegmentId)
+		throws PortalException, SystemException {
+
+		return userSegmentPersistence.remove(userSegmentId);
+	}
+
+	@Override
+	public List<UserSegment> getUserSegments(long groupId)
+		throws PortalException, SystemException {
+
+		return userSegmentPersistence.findByGroupId(groupId);
+	}
+
+	@Override
+	public long getUserSegmentsCount(long groupId)
+		throws PortalException, SystemException {
+
+		return userSegmentPersistence.countByGroupId(groupId);
+	}
+
+	@Override
+	public UserSegment updateUserSegment(
+			long userSegmentId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Date now = new Date();
+
+		UserSegment userSegment = userSegmentPersistence.findByPrimaryKey(
+			userSegmentId);
+
+		userSegment.setModifiedDate(serviceContext.getModifiedDate(now));
+		userSegment.setName(name);
+		userSegment.setDescription(description);
+
+		userSegmentPersistence.update(userSegment);
+
+		return userSegment;
+	}
+
 }
