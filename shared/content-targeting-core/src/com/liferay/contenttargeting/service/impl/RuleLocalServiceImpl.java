@@ -14,7 +14,16 @@
 
 package com.liferay.contenttargeting.service.impl;
 
+import com.liferay.contenttargeting.model.Rule;
 import com.liferay.contenttargeting.service.base.RuleLocalServiceBaseImpl;
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
+
+import java.util.Date;
 
 /**
  * The implementation of the rule local service.
@@ -31,4 +40,60 @@ import com.liferay.contenttargeting.service.base.RuleLocalServiceBaseImpl;
  * @see com.liferay.contenttargeting.service.RuleLocalServiceUtil
  */
 public class RuleLocalServiceImpl extends RuleLocalServiceBaseImpl {
+
+	@Override
+	public Rule addRule(
+			long userId, String type, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		User user = UserLocalServiceUtil.getUser(userId);
+		long groupId = serviceContext.getScopeGroupId();
+
+		Date now = new Date();
+
+		long ruleId = CounterLocalServiceUtil.increment();
+
+		Rule rule = rulePersistence.create(ruleId);
+
+		rule.setGroupId(groupId);
+		rule.setCompanyId(user.getCompanyId());
+		rule.setUserId(user.getUserId());
+		rule.setUserName(user.getFullName());
+		rule.setCreateDate(serviceContext.getCreateDate(now));
+		rule.setModifiedDate(serviceContext.getModifiedDate(now));
+		rule.setType(type);
+		rule.setTypeSettings(typeSettings);
+
+		rulePersistence.update(rule);
+
+		return rule;
+	}
+
+	@Override
+	public Rule deleteRule(long ruleId)
+		throws PortalException, SystemException {
+
+		return rulePersistence.remove(ruleId);
+	}
+
+	@Override
+	public Rule updateRule(
+			long ruleId, String type, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Date now = new Date();
+
+		Rule rule = rulePersistence.findByPrimaryKey(ruleId);
+
+		rule.setModifiedDate(serviceContext.getModifiedDate(now));
+		rule.setType(type);
+		rule.setTypeSettings(typeSettings);
+
+		rulePersistence.update(rule);
+
+		return rule;
+	}
+
 }
