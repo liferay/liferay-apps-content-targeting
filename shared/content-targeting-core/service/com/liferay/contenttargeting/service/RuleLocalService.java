@@ -300,4 +300,16 @@ public interface RuleLocalService extends BaseLocalService, InvokableLocalServic
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public com.liferay.contenttargeting.model.Rule addRule(long userId,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.contenttargeting.model.Rule updateRule(long ruleId,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

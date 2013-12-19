@@ -76,9 +76,9 @@ public class RuleModelImpl extends BaseModelImpl<Rule> implements RuleModel {
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "segmentId", Types.BIGINT },
 			{ "type_", Types.VARCHAR },
-			{ "typeSettings", Types.VARCHAR }
+			{ "typeSettings", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_Rule (uuid_ VARCHAR(75) null,ruleId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentId LONG,type_ VARCHAR(75) null,typeSettings VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_Rule (uuid_ VARCHAR(75) null,ruleId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,segmentId LONG,type_ VARCHAR(75) null,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_Rule";
 	public static final String ORDER_BY_JPQL = " ORDER BY rule.type DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_Rule.type_ DESC";

@@ -335,6 +335,30 @@ public class CTUserLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.contenttargeting.model.CTUser addUser(
+		long userId, java.lang.String lastIp, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addUser(userId, lastIp, typeSettings, serviceContext);
+	}
+
+	public static com.liferay.contenttargeting.model.CTUser deleteUser(
+		long CTUserId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteUser(CTUserId);
+	}
+
+	public static com.liferay.contenttargeting.model.CTUser updateUser(
+		long userId, java.lang.String lastIp, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateUser(userId, lastIp, typeSettings, serviceContext);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

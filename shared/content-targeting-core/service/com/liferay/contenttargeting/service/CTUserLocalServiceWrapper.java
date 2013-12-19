@@ -344,6 +344,33 @@ public class CTUserLocalServiceWrapper implements CTUserLocalService,
 		return _ctUserLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public com.liferay.contenttargeting.model.CTUser addUser(long userId,
+		java.lang.String lastIp, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ctUserLocalService.addUser(userId, lastIp, typeSettings,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.CTUser deleteUser(long CTUserId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ctUserLocalService.deleteUser(CTUserId);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.CTUser updateUser(long userId,
+		java.lang.String lastIp, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ctUserLocalService.updateUser(userId, lastIp, typeSettings,
+			serviceContext);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

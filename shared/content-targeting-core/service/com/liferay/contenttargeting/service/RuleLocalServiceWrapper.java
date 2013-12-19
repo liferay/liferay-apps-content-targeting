@@ -344,6 +344,26 @@ public class RuleLocalServiceWrapper implements RuleLocalService,
 		return _ruleLocalService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public com.liferay.contenttargeting.model.Rule addRule(long userId,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ruleLocalService.addRule(userId, type, typeSettings,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.Rule updateRule(long ruleId,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ruleLocalService.updateRule(ruleId, type, typeSettings,
+			serviceContext);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -129,6 +129,32 @@ public class UserSegmentLocalServiceClpInvoker {
 		_methodName51 = "setBeanIdentifier";
 
 		_methodParameterTypes51 = new String[] { "java.lang.String" };
+
+		_methodName56 = "addUserSegment";
+
+		_methodParameterTypes56 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName57 = "deleteUserSegment";
+
+		_methodParameterTypes57 = new String[] { "long" };
+
+		_methodName58 = "getUserSegments";
+
+		_methodParameterTypes58 = new String[] { "long" };
+
+		_methodName59 = "getUserSegmentsCount";
+
+		_methodParameterTypes59 = new String[] { "long" };
+
+		_methodName60 = "updateUserSegment";
+
+		_methodParameterTypes60 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -256,6 +282,35 @@ public class UserSegmentLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName56.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
+			return UserSegmentLocalServiceUtil.addUserSegment(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(com.liferay.portal.service.ServiceContext)arguments[3]);
+		}
+
+		if (_methodName57.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
+			return UserSegmentLocalServiceUtil.deleteUserSegment(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName58.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
+			return UserSegmentLocalServiceUtil.getUserSegments(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName59.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
+			return UserSegmentLocalServiceUtil.getUserSegmentsCount(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName60.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+			return UserSegmentLocalServiceUtil.updateUserSegment(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(com.liferay.portal.service.ServiceContext)arguments[3]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -303,4 +358,14 @@ public class UserSegmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes50;
 	private String _methodName51;
 	private String[] _methodParameterTypes51;
+	private String _methodName56;
+	private String[] _methodParameterTypes56;
+	private String _methodName57;
+	private String[] _methodParameterTypes57;
+	private String _methodName58;
+	private String[] _methodParameterTypes58;
+	private String _methodName59;
+	private String[] _methodParameterTypes59;
+	private String _methodName60;
+	private String[] _methodParameterTypes60;
 }

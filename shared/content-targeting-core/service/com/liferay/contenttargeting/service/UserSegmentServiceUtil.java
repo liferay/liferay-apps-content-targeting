@@ -63,6 +63,46 @@ public class UserSegmentServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.contenttargeting.model.UserSegment addUserSegment(
+		long userId, java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addUserSegment(userId, name, description, serviceContext);
+	}
+
+	public static com.liferay.contenttargeting.model.UserSegment deleteUserSegment(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteUserSegment(userSegmentId);
+	}
+
+	public static java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSegments(groupId);
+	}
+
+	public static long getUserSegmentsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSegmentsCount(groupId);
+	}
+
+	public static com.liferay.contenttargeting.model.UserSegment updateUserSegment(
+		long userSegmentId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateUserSegment(userSegmentId, name, description,
+			serviceContext);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

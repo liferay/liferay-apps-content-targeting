@@ -56,6 +56,50 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 		return _userSegmentService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public com.liferay.contenttargeting.model.UserSegment addUserSegment(
+		long userId, java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentService.addUserSegment(userId, name, description,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.UserSegment deleteUserSegment(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentService.deleteUserSegment(userSegmentId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentService.getUserSegments(groupId);
+	}
+
+	@Override
+	public long getUserSegmentsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentService.getUserSegmentsCount(groupId);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.UserSegment updateUserSegment(
+		long userSegmentId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentService.updateUserSegment(userSegmentId, name,
+			description, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

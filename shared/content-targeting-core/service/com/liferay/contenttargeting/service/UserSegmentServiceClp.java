@@ -31,6 +31,32 @@ public class UserSegmentServiceClp implements UserSegmentService {
 		_methodName1 = "setBeanIdentifier";
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
+
+		_methodName3 = "addUserSegment";
+
+		_methodParameterTypes3 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName4 = "deleteUserSegment";
+
+		_methodParameterTypes4 = new String[] { "long" };
+
+		_methodName5 = "getUserSegments";
+
+		_methodParameterTypes5 = new String[] { "long" };
+
+		_methodName6 = "getUserSegmentsCount";
+
+		_methodParameterTypes6 = new String[] { "long" };
+
+		_methodName7 = "updateUserSegment";
+
+		_methodParameterTypes7 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	@Override
@@ -83,9 +109,209 @@ public class UserSegmentServiceClp implements UserSegmentService {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public com.liferay.contenttargeting.model.UserSegment addUserSegment(
+		long userId, java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName3,
+					_methodParameterTypes3,
+					new Object[] {
+						userId,
+						
+					ClpSerializer.translateInput(name),
+						
+					ClpSerializer.translateInput(description),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.UserSegment deleteUserSegment(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName4,
+					_methodParameterTypes4, new Object[] { userSegmentId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] { groupId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.contenttargeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public long getUserSegmentsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName6,
+					_methodParameterTypes6, new Object[] { groupId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Long)returnObj).longValue();
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.UserSegment updateUserSegment(
+		long userSegmentId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7,
+					new Object[] {
+						userSegmentId,
+						
+					ClpSerializer.translateInput(name),
+						
+					ClpSerializer.translateInput(description),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
 	private String _methodName1;
 	private String[] _methodParameterTypes1;
+	private String _methodName3;
+	private String[] _methodParameterTypes3;
+	private String _methodName4;
+	private String[] _methodParameterTypes4;
+	private String _methodName5;
+	private String[] _methodParameterTypes5;
+	private String _methodName6;
+	private String[] _methodParameterTypes6;
+	private String _methodName7;
+	private String[] _methodParameterTypes7;
 }

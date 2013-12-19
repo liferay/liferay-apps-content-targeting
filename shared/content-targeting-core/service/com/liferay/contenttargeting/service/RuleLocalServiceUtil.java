@@ -333,6 +333,23 @@ public class RuleLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.contenttargeting.model.Rule addRule(long userId,
+		java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addRule(userId, type, typeSettings, serviceContext);
+	}
+
+	public static com.liferay.contenttargeting.model.Rule updateRule(
+		long ruleId, java.lang.String type, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateRule(ruleId, type, typeSettings, serviceContext);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

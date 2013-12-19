@@ -355,6 +355,42 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 			arguments);
 	}
 
+	@Override
+	public com.liferay.contenttargeting.model.UserSegment addUserSegment(
+		long userId, java.lang.String name, java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.addUserSegment(userId, name,
+			description, serviceContext);
+	}
+
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.getUserSegments(groupId);
+	}
+
+	@Override
+	public long getUserSegmentsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.getUserSegmentsCount(groupId);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.UserSegment updateUserSegment(
+		long userSegmentId, java.lang.String name,
+		java.lang.String description,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.updateUserSegment(userSegmentId, name,
+			description, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

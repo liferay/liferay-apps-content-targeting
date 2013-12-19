@@ -129,6 +129,24 @@ public class CTUserLocalServiceClpInvoker {
 		_methodName51 = "setBeanIdentifier";
 
 		_methodParameterTypes51 = new String[] { "java.lang.String" };
+
+		_methodName56 = "addUser";
+
+		_methodParameterTypes56 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName57 = "deleteUser";
+
+		_methodParameterTypes57 = new String[] { "long" };
+
+		_methodName58 = "updateUser";
+
+		_methodParameterTypes58 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -256,6 +274,25 @@ public class CTUserLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName56.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
+			return CTUserLocalServiceUtil.addUser(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(com.liferay.portal.service.ServiceContext)arguments[3]);
+		}
+
+		if (_methodName57.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
+			return CTUserLocalServiceUtil.deleteUser(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName58.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
+			return CTUserLocalServiceUtil.updateUser(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(com.liferay.portal.service.ServiceContext)arguments[3]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -303,4 +340,10 @@ public class CTUserLocalServiceClpInvoker {
 	private String[] _methodParameterTypes50;
 	private String _methodName51;
 	private String[] _methodParameterTypes51;
+	private String _methodName56;
+	private String[] _methodParameterTypes56;
+	private String _methodName57;
+	private String[] _methodParameterTypes57;
+	private String _methodName58;
+	private String[] _methodParameterTypes58;
 }
