@@ -14,7 +14,13 @@
 
 package com.liferay.contenttargeting.service.impl;
 
+import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.base.UserSegmentServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
 
 /**
  * The implementation of the user segment remote service.
@@ -31,4 +37,46 @@ import com.liferay.contenttargeting.service.base.UserSegmentServiceBaseImpl;
  * @see com.liferay.contenttargeting.service.UserSegmentServiceUtil
  */
 public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
+
+	@Override
+	public UserSegment addUserSegment(
+			long userId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return userSegmentLocalService.addUserSegment(
+			userId, name, description, serviceContext);
+	}
+
+	@Override
+	public UserSegment deleteUserSegment(long userSegmentId)
+		throws PortalException, SystemException {
+
+		return userSegmentLocalService.deleteUserSegment(userSegmentId);
+	}
+
+	@Override
+	public List<UserSegment> getUserSegments(long groupId)
+		throws PortalException, SystemException {
+
+		return userSegmentLocalService.getUserSegments(groupId);
+	}
+
+	@Override
+	public long getUserSegmentsCount(long groupId)
+		throws PortalException, SystemException {
+
+		return userSegmentLocalService.getUserSegmentsCount(groupId);
+	}
+
+	@Override
+	public UserSegment updateUserSegment(
+			long userSegmentId, String name, String description,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return userSegmentLocalService.updateUserSegment(
+			userSegmentId, name, description, serviceContext);
+	}
+
 }
