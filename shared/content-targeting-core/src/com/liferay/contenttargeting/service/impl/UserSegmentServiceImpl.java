@@ -31,9 +31,4 @@ import com.liferay.contenttargeting.service.base.UserSegmentServiceBaseImpl;
  * @see com.liferay.contenttargeting.service.UserSegmentServiceUtil
  */
 public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.contenttargeting.service.UserSegmentServiceUtil} to access the user segment remote service.
-	 */
 }

@@ -24,11 +24,8 @@ package com.liferay.contenttargeting.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class CTUserImpl extends CTUserBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a c t user model instance should use the {@link com.liferay.contenttargeting.model.CTUser} interface instead.
-	 */
+
 	public CTUserImpl() {
 	}
+
 }

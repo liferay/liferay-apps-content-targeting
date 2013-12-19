@@ -31,9 +31,4 @@ import com.liferay.contenttargeting.service.base.CTUserServiceBaseImpl;
  * @see com.liferay.contenttargeting.service.CTUserServiceUtil
  */
 public class CTUserServiceImpl extends CTUserServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.contenttargeting.service.CTUserServiceUtil} to access the c t user remote service.
-	 */
 }

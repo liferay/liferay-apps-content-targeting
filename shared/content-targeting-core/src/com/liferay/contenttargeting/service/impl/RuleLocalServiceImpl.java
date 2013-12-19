@@ -31,9 +31,4 @@ import com.liferay.contenttargeting.service.base.RuleLocalServiceBaseImpl;
  * @see com.liferay.contenttargeting.service.RuleLocalServiceUtil
  */
 public class RuleLocalServiceImpl extends RuleLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.contenttargeting.service.RuleLocalServiceUtil} to access the rule local service.
-	 */
 }

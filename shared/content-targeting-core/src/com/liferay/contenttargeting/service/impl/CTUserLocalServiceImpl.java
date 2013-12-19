@@ -31,9 +31,4 @@ import com.liferay.contenttargeting.service.base.CTUserLocalServiceBaseImpl;
  * @see com.liferay.contenttargeting.service.CTUserLocalServiceUtil
  */
 public class CTUserLocalServiceImpl extends CTUserLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.contenttargeting.service.CTUserLocalServiceUtil} to access the c t user local service.
-	 */
 }

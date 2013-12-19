@@ -24,11 +24,8 @@ package com.liferay.contenttargeting.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class UserSegmentImpl extends UserSegmentBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a user segment model instance should use the {@link com.liferay.contenttargeting.model.UserSegment} interface instead.
-	 */
+
 	public UserSegmentImpl() {
 	}
+
 }

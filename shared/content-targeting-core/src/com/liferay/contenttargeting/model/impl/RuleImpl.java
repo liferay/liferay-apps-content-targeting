@@ -24,11 +24,8 @@ package com.liferay.contenttargeting.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class RuleImpl extends RuleBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a rule model instance should use the {@link com.liferay.contenttargeting.model.Rule} interface instead.
-	 */
+
 	public RuleImpl() {
 	}
+
 }
