@@ -155,7 +155,7 @@
 			<reference refid="service.classpath" torefid="service.classpath" />
 		</antcall>
 
-		<zip
+		<jar
 			basedir="service-classes"
 			destfile="lib/${plugin.name}-service.jar"
 		/>
