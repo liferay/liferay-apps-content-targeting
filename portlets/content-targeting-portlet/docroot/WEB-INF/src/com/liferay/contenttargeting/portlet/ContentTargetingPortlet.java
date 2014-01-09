@@ -16,6 +16,8 @@ package com.liferay.contenttargeting.portlet;
 
 import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.portlet.internal.RulesRegistryFactory;
+import com.liferay.contenttargeting.service.UserSegmentService;
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -92,6 +94,15 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 					"userInfo",
 					portletRequest.getAttribute(PortletRequest.USER_INFO));
 
+				// Injecting services into the template context
+
+				template.put(
+					"userSegmentService",
+					_findService(
+							"content-targeting-core",
+							UserSegmentService.class.getName())
+				);
+
 				Writer writer = null;
 
 				if (portletResponse instanceof MimeResponse) {
@@ -116,6 +127,31 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				portletResponse.setProperty("clear-request-parameters", "true");
 			}
 		}
+	}
+
+	// This code has been copied from ServiceLocator and it's a provisional way
+	// to retrieve the service beans
+
+	private Object _findService(String servletContextName, String serviceName) {
+		Object bean = null;
+
+		try {
+			bean = PortletBeanLocatorUtil.locate(
+				servletContextName, _getServiceName(serviceName));
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+		}
+
+		return bean;
+	}
+
+	private String _getServiceName(String serviceName) {
+		if (!serviceName.endsWith(".velocity")) {
+			serviceName += ".velocity";
+		}
+
+		return serviceName;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
