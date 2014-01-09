@@ -11,7 +11,7 @@
 		</init-param>
 		<init-param>
 			<name>view-template</name>
-			<value>/view.ftl</value>
+			<value>html/content_targeting/view.ftl</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>

@@ -14,7 +14,7 @@
  */
 -->
 
-<#include "init.ftl" />
+<#include "../init.ftl" />
 
 <div class="portlet" id="portlet_${plid}">
 	<div class="portlet-topper">
