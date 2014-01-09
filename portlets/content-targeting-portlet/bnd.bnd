@@ -8,7 +8,13 @@ Export-Package:\
 	content,\
 	com.liferay.contenttargeting.portlet
 Import-Package:\
-	com.liferay.contenttargeting.portlet,\
+	com.liferay.contenttargeting.api.model,\
+	com.liferay.contenttargeting.service,\
+	com.liferay.contenttargeting.service.base,\
+	com.liferay.contenttargeting.service.http,\
+	com.liferay.contenttargeting.service.impl,\
+	com.liferay.contenttargeting.service.messaging,\
+	com.liferay.contenttargeting.service.persistence,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.language,\
 	com.liferay.portal.kernel.lar,\
