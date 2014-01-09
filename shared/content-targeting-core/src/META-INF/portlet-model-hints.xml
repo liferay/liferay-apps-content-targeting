@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.contenttargeting.model.CTUser">
+		<field name="uuid" type="String" />
+		<field name="CTUserId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="lastIp" type="String" />
+		<field name="typeSettings" type="String" />
+	</model>
+	<model name="com.liferay.contenttargeting.model.Rule">
+		<field name="uuid" type="String" />
+		<field name="ruleId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="segmentId" type="long" />
+		<field name="type" type="String" />
+		<field name="typeSettings" type="String" />
+	</model>
+	<model name="com.liferay.contenttargeting.model.UserSegment">
+		<field name="uuid" type="String" />
+		<field name="segmentId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="name" type="String" localized="true" />
+		<field name="description" type="String" localized="true" />
+	</model>
+</model-hints>
