@@ -57,6 +57,22 @@
 		<ant dir="webs" target="compile" inheritAll="false" />
 	</target>
 
+	<target name="console">
+		<copy todir="${app.server.parent.dir}/data/osgi/modules">
+			<fileset dir="modules" />
+		</copy>
+
+		<exec executable="/bin/sh" os="${os.apple},${os.unix}">
+			<arg value="-c"/>
+			<arg value="telnet localhost 6666 &lt; /dev/tty &gt; /dev/tty 2&gt; /dev/tty"/>
+		</exec>
+
+		<exec executable="cmd.exe" os="${os.windows}">
+			<arg value="-c"/>
+			<arg value="telnet localhost 6666"/>
+		</exec>
+	</target>
+
 	<target name="deploy">
 		<ant dir="hooks" target="deploy" inheritAll="false" />
 		<ant dir="layouttpl" target="deploy" inheritAll="false" />
