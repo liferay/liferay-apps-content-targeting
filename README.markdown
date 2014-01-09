@@ -1,7 +1,8 @@
-# Liferay Plugins
+# Liferay WCM Plugins
 
-The liferay-plugins repository is part of the Liferay Portal project. [Liferay
-Portal](http://www.liferay.com/community/liferay-projects/liferay-portal) is an
+The liferay-wmc-plugins repository is part of the Liferay Portal project.
+[Liferay Portal]
+(http://www.liferay.com/community/liferay-projects/liferay-portal) is an
 open source enterprise web platform for building business solutions that deliver
 immediate results and long-term value. Liferay Portal started out as a personal
 development project in 2000 and was open sourced in 2001.
@@ -9,43 +10,27 @@ development project in 2000 and was open sourced in 2001.
 To get started, check out the project's community homepage at
 [http://liferay.org](http://liferay.org)!
 
+The WCM Plugins are a subset of plugins related to the Web Content Management
+Experience that enhance Liferay WCM capabilities.
+
+The list of available plugins right now is:
+* Audience Targeting (will be available as an app in the marketplace):
+
 Most of the plugins found in the liferay-plugins repository can be easily
 installed on Liferay Portal via [Liferay
 Marketplace](http://liferay.com/marketplace). To build one or more of the
 plugins yourself, read below for details.
 
-## Source Code
-
-Liferay's main source code resides in two repositories:
-[liferay-portal](https://github.com/liferay/liferay-portal) and
-[liferay-plugins](https://github.com/liferay/liferay-plugins). Liferay has
-additional repositories for the following:
-
-* [AlloyUI](https://github.com/liferay/alloy-ui)
-* [Documentation](https://github.com/liferay/liferay-docs)
-* [Git Tools](https://github.com/liferay/git-tools)
-* [Liferay Faces](https://github.com/liferay/liferay-faces)
-* [Liferay IDE](https://github.com/liferay/liferay-ide)
-* [Maven Support](https://github.com/liferay/liferay-maven-support)
-
-Liferay Portal *releases* are built from the liferay-portal repository and
-include select plugins from the liferay-plugins repository. You can build
-Liferay Portal, its plugins, and/or any of the other supporting technologies
-from their respective repositories.
-
-For more information on building liferay-portal, see the [README
-file](https://github.com/liferay/liferay-portal/blob/master/README.markdown) in
-the liferay-portal repository.
-
 ## Quick Start
 
-In the [liferay-plugins](https://github.com/liferay/liferay-plugins) repository,
-plugins are laid out in a software development kit (SDK) -- the Liferay Plugins
-SDK. All Liferay plugin types, including portlets, themes, layout templates,
-hooks, and EXT plugins, can be created and maintained in the SDK. [The Plugins
-SDK](http://www.liferay.com/documentation/liferay-portal/6.1/development/-/ai/the-plugins-s-3)
-chapter of Liferay's [Development
-Guide](http://www.liferay.com/documentation/liferay-portal/6.1/development)
+In the [liferay-wcm-plugins](https://github.com/liferay/temp-wcm-plugins)
+repository, plugins are laid out in a software development kit (SDK) -- the
+Liferay Plugins SDK. All Liferay plugin types, including portlets, themes,
+layout templates, hooks, and EXT plugins, can be created and maintained in the
+ SDK. [The Plugins SDK]
+ (http://www.liferay.com/documentation/liferay-portal/6.1/development/-/ai/the-plugins-s-3)
+chapter of Liferay's [Development Guide]
+(http://www.liferay.com/documentation/liferay-portal/6.1/development)
 explains how to create, build, and deploy your plugins. Follow the instructions
 in this section to build and deploy any of the existing SDK plugins quickly.
 
@@ -53,15 +38,15 @@ For demonstration purposes, let's pretend your user name is *joe* and you have a
 Liferay instance bundled with Apache Tomcat running in your `/home/joe/`
 directory.
 
-1. Fork the [liferay-plugins](https://github.com/liferay/liferay-plugins)
+1. Fork the [liferay-wcm-plugins](https://github.com/liferay/temp-wcm-plugins)
 repository.
 
 2. Clone your fork of the repository.
 3. Create a `build.${username}.properties` file in the root directory of your
-liferay-plugins repository clone. Be sure to replace `${username}` with your
+liferay-wcm-plugins repository clone. Be sure to replace `${username}` with your
 user name.
 
-		/home/joe/liferay-plugins/build.joe.properties
+		/home/joe/liferay-wcm-plugins/build.joe.properties
 
 	Note, to determine your user name, execute `echo %USERNAME%` on Windows or
 	`whoami` on Unix/Linux.
@@ -78,7 +63,7 @@ user name.
 5. Navigate to the directory of a plugin (e.g. *Sample JSP Portlet*) and deploy
 it using Ant.
 
-		cd /home/joe/liferay-plugins/portlets/sample-jsp-portlet
+		cd /home/joe/liferay-wcm-plugins/portlets/sample-jsp-portlet
 		ant deploy
 
 	The plugin compiles, its WAR file is built to the plugin's `dist` directory,
@@ -110,6 +95,43 @@ contribution steps outlined in the [CONTRIBUTING
 guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown).
 It explains how to contribute to Liferay and contains links to additional useful
 resources.
+
+## Development
+
+### Source Code
+
+The Source code of the WCM plugins is organized in the following way:
+* Audience Targeting
+ * content-targeting-core (/shared) - contains all the common services and
+classes for the app.
+ * content-targeting-portlet (/portlet) - contains all the all portlets and UIs
+ * ct-time-rule (/shared) - rule used by the audience targeting app to filter
+user audiences by time
+* OSGI modules required for the project
+ * http-service-shared (/shared)
+ * log-bridge-shared (/shared)
+* /modules - OSGI modules required to start the OSGI console
+
+
+### OSGI Console
+
+The OSGi bundle console gives information about the bundles that are currently
+ available in the container and allows some operations over them. In order to
+ start the console just run `ant console` from the root folder of the project.
+
+Some useful commands:
+
+* bundles: list bundles and status
+* start [bundle id]: starts a bundle
+* stop [bundle id]: stops a bundle
+* uninstall [bundle id]: uninstalls a bundle
+
+### Freemarker
+
+Set this property to 0 to always retrieve the freemarker code from the template
+ instead of the cache.
+`freemarker.engine.resource.modification.check.interval=0`
+
 
 ## More Information
 
