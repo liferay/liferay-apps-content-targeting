@@ -98,6 +98,9 @@ resources.
 
 ## Development
 
+The master branch of the plugins is developed for Liferay 6.2 CE GA1 using the
+6.2.0-ce-ga1 version of the plugins SDK.
+
 ### Source Code
 
 The Source code of the WCM plugins is organized in the following way:
