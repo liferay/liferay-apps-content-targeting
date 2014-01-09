@@ -115,6 +115,13 @@ user audiences by time
  * log-bridge-shared (/shared)
 * /modules - OSGI modules required to start the OSGI console
 
+### Deployment
+
+In order to deploy the audience targeting app, you can add this property to your
+build.username.properties:
+
+`plugins.includes=content-targeting-core,content-targeting-portlet,ct-time-rule,http-service-shared,log-bridge-shared,system-packages-extra`
+
 
 ### OSGI Console
 
