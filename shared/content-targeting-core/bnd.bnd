@@ -1,8 +1,34 @@
+Bundle-ClassPath: .,WEB-INF/lib/util-java.jar,WEB-INF/lib/util-taglib.jar,WEB-INF/lib/content-targeting-core-service.jar
 Bundle-Name: Content Targeting Core
-Export-Package:\
-	com.liferay.contenttargeting.*
+Export-Package: com.liferay.contenttargeting,\
+	com.liferay.contenttargeting.api.model,\
+Include-Resource: classes,\
+	{WEB-INF/liferay-plugin-package.properties=docroot/WEB-INF/liferay-plugin-package.properties},\
+	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
+	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+	WEB-INF/lib/util-taglib.jar=${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar
 Import-Package:\
-	com.liferay.contenttargeting.*,\
-	*
-Include-Resource: classes
+	com.liferay.counter.service,\
+	com.liferay.portal.kernel.bean,\
+	com.liferay.portal.kernel.configuration,\
+	com.liferay.portal.kernel.dao.orm,\
+	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.io.unsync,\
+	com.liferay.portal.kernel.language,\
+	com.liferay.portal.kernel.lar,\
+	com.liferay.portal.kernel.log,\
+	com.liferay.portal.kernel.messaging,\
+	com.liferay.portal.kernel.portlet,\
+	com.liferay.portal.kernel.servlet,\
+	com.liferay.portal.kernel.servlet.filters.invoker,\
+	com.liferay.portal.kernel.uuid,\
+	com.liferay.portal.kernel.util,\
+	com.liferay.portlet.expando.model,\
+	com.liferay.portal,\
+	com.liferay.portal.model,\
+	com.liferay.portal.model.impl,\
+	com.liferay.portal.service,\
+	com.liferay.portal.service.persistence,\
+	com.liferay.portal.service.persistence.impl
 Service-Component:com.liferay.contenttargeting.*
+Web-ContextPath: /content-targeting-core
