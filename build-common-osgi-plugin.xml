@@ -79,9 +79,7 @@
 			</then>
 		</if>
 
-
 		<property name="service.input.file" value="${basedir}/service.xml" />
-
 
 		<java
 			classname="com.liferay.portal.tools.servicebuilder.ServiceBuilder"
