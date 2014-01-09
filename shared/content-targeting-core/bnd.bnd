@@ -9,7 +9,8 @@ Export-Package: com.liferay.contenttargeting,\
 	com.liferay.contenttargeting.service.impl,\
 	com.liferay.contenttargeting.service.messaging,\
 	com.liferay.contenttargeting.service.persistence
-Include-Resource: classes,\
+Include-Resource: WEB-INF/classes/META-INF/=classes/META-INF/,\
+	classes,\
 	{WEB-INF/liferay-plugin-package.properties=docroot/WEB-INF/liferay-plugin-package.properties},\
 	{WEB-INF/sql=sql},\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
