@@ -15,12 +15,15 @@
 package com.liferay.contenttargeting.portlet;
 
 import com.liferay.contenttargeting.api.model.RulesRegistry;
+import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.portlet.internal.RulesRegistryFactory;
 import com.liferay.contenttargeting.service.UserSegmentService;
+import com.liferay.contenttargeting.service.UserSegmentServiceUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -28,12 +31,20 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.template.TemplateTaglibSupportProvider;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.freemarker.FreeMarkerPortlet;
 
 import java.io.IOException;
 import java.io.Writer;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
@@ -44,6 +55,39 @@ import javax.portlet.PortletResponse;
  * @author Eduardo Garcia
  */
 public class ContentTargetingPortlet extends FreeMarkerPortlet {
+
+	public void addUserSegment(ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		String name = ParamUtil.getString(request, "name");
+		String description = ParamUtil.getString(request, "description");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			UserSegment.class.getName(), request);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		try {
+			UserSegmentServiceUtil.addUserSegment(
+				themeDisplay.getUserId(), name, description, serviceContext);
+
+			String redirect = ParamUtil.getString(request, "redirect");
+
+			response.sendRedirect(redirect);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+
+			if (e instanceof PrincipalException) {
+				response.setRenderParameter(
+					"mvcPath", "/html/content_targeting/edit_user_segment.ftl");
+			}
+			else {
+				response.setRenderParameter("mvcPath", "/html/error.ftl");
+			}
+		}
+	}
 
 	@Override
 	protected void include(
@@ -99,8 +143,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				template.put(
 					"userSegmentService",
 					_findService(
-							"content-targeting-core",
-							UserSegmentService.class.getName())
+						"content-targeting-core",
+						UserSegmentService.class.getName())
 				);
 
 				Writer writer = null;
