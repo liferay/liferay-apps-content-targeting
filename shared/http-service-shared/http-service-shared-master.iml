@@ -53,7 +53,7 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="portal-6.2.x" level="project" />
+    <orderEntry type="library" name="reference-libraries" level="project" />
   </component>
 </module>
 
