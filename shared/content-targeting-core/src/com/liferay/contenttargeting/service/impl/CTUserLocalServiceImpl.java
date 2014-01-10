@@ -75,13 +75,6 @@ public class CTUserLocalServiceImpl extends CTUserLocalServiceBaseImpl {
 	}
 
 	@Override
-	public CTUser deleteUser(long CTUserId)
-		throws PortalException, SystemException {
-
-		return ctUserPersistence.remove(CTUserId);
-	}
-
-	@Override
 	public CTUser updateUser(
 			long userId, String lastIp, String typeSettings,
 			ServiceContext serviceContext)

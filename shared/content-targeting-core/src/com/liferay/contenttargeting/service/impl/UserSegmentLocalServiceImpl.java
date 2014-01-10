@@ -73,13 +73,6 @@ public class UserSegmentLocalServiceImpl
 	}
 
 	@Override
-	public UserSegment deleteUserSegment(long userSegmentId)
-		throws PortalException, SystemException {
-
-		return userSegmentPersistence.remove(userSegmentId);
-	}
-
-	@Override
 	public List<UserSegment> getUserSegments(long groupId)
 		throws PortalException, SystemException {
 

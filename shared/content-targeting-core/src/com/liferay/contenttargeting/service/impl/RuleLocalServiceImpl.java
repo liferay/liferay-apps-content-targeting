@@ -71,13 +71,6 @@ public class RuleLocalServiceImpl extends RuleLocalServiceBaseImpl {
 	}
 
 	@Override
-	public Rule deleteRule(long ruleId)
-		throws PortalException, SystemException {
-
-		return rulePersistence.remove(ruleId);
-	}
-
-	@Override
 	public Rule updateRule(
 			long ruleId, String type, String typeSettings,
 			ServiceContext serviceContext)
