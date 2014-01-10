@@ -49,7 +49,7 @@
 
 		${rowURL.setParameter("mvcPath", "html/content_targeting/edit_user_segment.ftl")}
 		${rowURL.setParameter("redirect", portalUtil.getCurrentURL(request))}
-		${rowURL.setParameter("userSegmentId", userSegment.getSegmentId()?string)}
+		${rowURL.setParameter("userSegmentId", userSegment.getUserSegmentId()?string)}
 
 		<@liferay_ui["search-container-column-text"]
 			name="name"
