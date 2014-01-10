@@ -20,7 +20,8 @@ _sass_cache_*.css
 /*/*/tmp
 
 /*/*/docroot/WEB-INF/classes
-/*/*/docroot/WEB-INF/lib/portal-compat-shared.jar
+/*/*/docroot/WEB-INF/lib/*.jar
+/*/*/lib/*.jar
 
 /build.*.properties
 /dist
