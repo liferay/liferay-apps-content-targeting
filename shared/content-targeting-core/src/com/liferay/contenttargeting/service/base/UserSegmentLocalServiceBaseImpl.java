@@ -83,27 +83,27 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	/**
 	 * Creates a new user segment with the primary key. Does not add the user segment to the database.
 	 *
-	 * @param segmentId the primary key for the new user segment
+	 * @param userSegmentId the primary key for the new user segment
 	 * @return the new user segment
 	 */
 	@Override
-	public UserSegment createUserSegment(long segmentId) {
-		return userSegmentPersistence.create(segmentId);
+	public UserSegment createUserSegment(long userSegmentId) {
+		return userSegmentPersistence.create(userSegmentId);
 	}
 
 	/**
 	 * Deletes the user segment with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param segmentId the primary key of the user segment
+	 * @param userSegmentId the primary key of the user segment
 	 * @return the user segment that was removed
 	 * @throws PortalException if a user segment with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public UserSegment deleteUserSegment(long segmentId)
+	public UserSegment deleteUserSegment(long userSegmentId)
 		throws PortalException, SystemException {
-		return userSegmentPersistence.remove(segmentId);
+		return userSegmentPersistence.remove(userSegmentId);
 	}
 
 	/**
@@ -214,9 +214,9 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	}
 
 	@Override
-	public UserSegment fetchUserSegment(long segmentId)
+	public UserSegment fetchUserSegment(long userSegmentId)
 		throws SystemException {
-		return userSegmentPersistence.fetchByPrimaryKey(segmentId);
+		return userSegmentPersistence.fetchByPrimaryKey(userSegmentId);
 	}
 
 	/**
@@ -250,15 +250,15 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	/**
 	 * Returns the user segment with the primary key.
 	 *
-	 * @param segmentId the primary key of the user segment
+	 * @param userSegmentId the primary key of the user segment
 	 * @return the user segment
 	 * @throws PortalException if a user segment with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserSegment getUserSegment(long segmentId)
+	public UserSegment getUserSegment(long userSegmentId)
 		throws PortalException, SystemException {
-		return userSegmentPersistence.findByPrimaryKey(segmentId);
+		return userSegmentPersistence.findByPrimaryKey(userSegmentId);
 	}
 
 	@Override

@@ -32,6 +32,6 @@ public abstract class UserSegmentActionableDynamicQuery
 
 		setClassLoader(com.liferay.contenttargeting.service.ClpSerializer.class.getClassLoader());
 
-		setPrimaryKeyPropertyName("segmentId");
+		setPrimaryKeyPropertyName("userSegmentId");
 	}
 }

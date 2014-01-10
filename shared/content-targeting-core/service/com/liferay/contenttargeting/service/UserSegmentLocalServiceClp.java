@@ -186,12 +186,12 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 
 	@Override
 	public com.liferay.contenttargeting.model.UserSegment createUserSegment(
-		long segmentId) {
+		long userSegmentId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { segmentId });
+					_methodParameterTypes1, new Object[] { userSegmentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -210,14 +210,14 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 
 	@Override
 	public com.liferay.contenttargeting.model.UserSegment deleteUserSegment(
-		long segmentId)
+		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { segmentId });
+					_methodParameterTypes2, new Object[] { userSegmentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -471,13 +471,13 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 
 	@Override
 	public com.liferay.contenttargeting.model.UserSegment fetchUserSegment(
-		long segmentId)
+		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { segmentId });
+					_methodParameterTypes10, new Object[] { userSegmentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -560,14 +560,14 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 
 	@Override
 	public com.liferay.contenttargeting.model.UserSegment getUserSegment(
-		long segmentId)
+		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName13,
-					_methodParameterTypes13, new Object[] { segmentId });
+					_methodParameterTypes13, new Object[] { userSegmentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

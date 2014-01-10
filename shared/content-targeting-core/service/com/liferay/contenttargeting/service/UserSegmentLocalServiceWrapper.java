@@ -47,29 +47,29 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	/**
 	* Creates a new user segment with the primary key. Does not add the user segment to the database.
 	*
-	* @param segmentId the primary key for the new user segment
+	* @param userSegmentId the primary key for the new user segment
 	* @return the new user segment
 	*/
 	@Override
 	public com.liferay.contenttargeting.model.UserSegment createUserSegment(
-		long segmentId) {
-		return _userSegmentLocalService.createUserSegment(segmentId);
+		long userSegmentId) {
+		return _userSegmentLocalService.createUserSegment(userSegmentId);
 	}
 
 	/**
 	* Deletes the user segment with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param segmentId the primary key of the user segment
+	* @param userSegmentId the primary key of the user segment
 	* @return the user segment that was removed
 	* @throws PortalException if a user segment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.contenttargeting.model.UserSegment deleteUserSegment(
-		long segmentId)
+		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.deleteUserSegment(segmentId);
+		return _userSegmentLocalService.deleteUserSegment(userSegmentId);
 	}
 
 	/**
@@ -185,9 +185,9 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 
 	@Override
 	public com.liferay.contenttargeting.model.UserSegment fetchUserSegment(
-		long segmentId)
+		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.fetchUserSegment(segmentId);
+		return _userSegmentLocalService.fetchUserSegment(userSegmentId);
 	}
 
 	/**
@@ -225,17 +225,17 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	/**
 	* Returns the user segment with the primary key.
 	*
-	* @param segmentId the primary key of the user segment
+	* @param userSegmentId the primary key of the user segment
 	* @return the user segment
 	* @throws PortalException if a user segment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.contenttargeting.model.UserSegment getUserSegment(
-		long segmentId)
+		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentLocalService.getUserSegment(segmentId);
+		return _userSegmentLocalService.getUserSegment(userSegmentId);
 	}
 
 	@Override

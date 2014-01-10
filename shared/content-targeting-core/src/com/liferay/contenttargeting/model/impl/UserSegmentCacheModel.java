@@ -42,8 +42,8 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", segmentId=");
-		sb.append(segmentId);
+		sb.append(", userSegmentId=");
+		sb.append(userSegmentId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -76,7 +76,7 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 			userSegmentImpl.setUuid(uuid);
 		}
 
-		userSegmentImpl.setSegmentId(segmentId);
+		userSegmentImpl.setUserSegmentId(userSegmentId);
 		userSegmentImpl.setGroupId(groupId);
 		userSegmentImpl.setCompanyId(companyId);
 		userSegmentImpl.setUserId(userId);
@@ -124,7 +124,7 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
-		segmentId = objectInput.readLong();
+		userSegmentId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
@@ -145,7 +145,7 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(segmentId);
+		objectOutput.writeLong(userSegmentId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -176,7 +176,7 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 	}
 
 	public String uuid;
-	public long segmentId;
+	public long userSegmentId;
 	public long groupId;
 	public long companyId;
 	public long userId;

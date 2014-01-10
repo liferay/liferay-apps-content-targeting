@@ -61,7 +61,7 @@
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.contenttargeting.model.impl.UserSegmentModelImpl">
 		<attributes>
-			<id name="segmentId" />
+			<id name="userSegmentId" />
 			<basic name="uuid">
 				<column name="UUID_" />
 			</basic>

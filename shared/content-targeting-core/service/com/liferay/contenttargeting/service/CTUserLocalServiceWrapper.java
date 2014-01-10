@@ -355,13 +355,6 @@ public class CTUserLocalServiceWrapper implements CTUserLocalService,
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.CTUser deleteUser(long CTUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _ctUserLocalService.deleteUser(CTUserId);
-	}
-
-	@Override
 	public com.liferay.contenttargeting.model.CTUser updateUser(long userId,
 		java.lang.String lastIp, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)

@@ -343,13 +343,6 @@ public class CTUserLocalServiceUtil {
 		return getService().addUser(userId, lastIp, typeSettings, serviceContext);
 	}
 
-	public static com.liferay.contenttargeting.model.CTUser deleteUser(
-		long CTUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteUser(CTUserId);
-	}
-
 	public static com.liferay.contenttargeting.model.CTUser updateUser(
 		long userId, java.lang.String lastIp, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)

@@ -83,18 +83,18 @@ public interface UserSegmentModel extends BaseModel<UserSegment>,
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the segment ID of this user segment.
+	 * Returns the user segment ID of this user segment.
 	 *
-	 * @return the segment ID of this user segment
+	 * @return the user segment ID of this user segment
 	 */
-	public long getSegmentId();
+	public long getUserSegmentId();
 
 	/**
-	 * Sets the segment ID of this user segment.
+	 * Sets the user segment ID of this user segment.
 	 *
-	 * @param segmentId the segment ID of this user segment
+	 * @param userSegmentId the user segment ID of this user segment
 	 */
-	public void setSegmentId(long segmentId);
+	public void setUserSegmentId(long userSegmentId);
 
 	/**
 	 * Returns the group ID of this user segment.

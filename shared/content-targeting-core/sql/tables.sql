@@ -27,7 +27,7 @@ create table CT_Rule (
 
 create table CT_UserSegment (
 	uuid_ VARCHAR(75) null,
-	segmentId LONG not null primary key,
+	userSegmentId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,

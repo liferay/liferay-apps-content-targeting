@@ -52,7 +52,7 @@ public class UserSegmentWrapper implements UserSegment,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("segmentId", getSegmentId());
+		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -73,10 +73,10 @@ public class UserSegmentWrapper implements UserSegment,
 			setUuid(uuid);
 		}
 
-		Long segmentId = (Long)attributes.get("segmentId");
+		Long userSegmentId = (Long)attributes.get("userSegmentId");
 
-		if (segmentId != null) {
-			setSegmentId(segmentId);
+		if (userSegmentId != null) {
+			setUserSegmentId(userSegmentId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -169,23 +169,23 @@ public class UserSegmentWrapper implements UserSegment,
 	}
 
 	/**
-	* Returns the segment ID of this user segment.
+	* Returns the user segment ID of this user segment.
 	*
-	* @return the segment ID of this user segment
+	* @return the user segment ID of this user segment
 	*/
 	@Override
-	public long getSegmentId() {
-		return _userSegment.getSegmentId();
+	public long getUserSegmentId() {
+		return _userSegment.getUserSegmentId();
 	}
 
 	/**
-	* Sets the segment ID of this user segment.
+	* Sets the user segment ID of this user segment.
 	*
-	* @param segmentId the segment ID of this user segment
+	* @param userSegmentId the user segment ID of this user segment
 	*/
 	@Override
-	public void setSegmentId(long segmentId) {
-		_userSegment.setSegmentId(segmentId);
+	public void setUserSegmentId(long userSegmentId) {
+		_userSegment.setUserSegmentId(userSegmentId);
 	}
 
 	/**

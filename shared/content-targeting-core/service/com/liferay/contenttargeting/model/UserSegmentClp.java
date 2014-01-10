@@ -63,17 +63,17 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 
 	@Override
 	public long getPrimaryKey() {
-		return _segmentId;
+		return _userSegmentId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setSegmentId(primaryKey);
+		setUserSegmentId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _segmentId;
+		return _userSegmentId;
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("segmentId", getSegmentId());
+		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -107,10 +107,10 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 			setUuid(uuid);
 		}
 
-		Long segmentId = (Long)attributes.get("segmentId");
+		Long userSegmentId = (Long)attributes.get("userSegmentId");
 
-		if (segmentId != null) {
-			setSegmentId(segmentId);
+		if (userSegmentId != null) {
+			setUserSegmentId(userSegmentId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -186,21 +186,21 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	}
 
 	@Override
-	public long getSegmentId() {
-		return _segmentId;
+	public long getUserSegmentId() {
+		return _userSegmentId;
 	}
 
 	@Override
-	public void setSegmentId(long segmentId) {
-		_segmentId = segmentId;
+	public void setUserSegmentId(long userSegmentId) {
+		_userSegmentId = userSegmentId;
 
 		if (_userSegmentRemoteModel != null) {
 			try {
 				Class<?> clazz = _userSegmentRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setSegmentId", long.class);
+				Method method = clazz.getMethod("setUserSegmentId", long.class);
 
-				method.invoke(_userSegmentRemoteModel, segmentId);
+				method.invoke(_userSegmentRemoteModel, userSegmentId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -753,7 +753,7 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 		UserSegmentClp clone = new UserSegmentClp();
 
 		clone.setUuid(getUuid());
-		clone.setSegmentId(getSegmentId());
+		clone.setUserSegmentId(getUserSegmentId());
 		clone.setGroupId(getGroupId());
 		clone.setCompanyId(getCompanyId());
 		clone.setUserId(getUserId());
@@ -814,8 +814,8 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
-		sb.append(", segmentId=");
-		sb.append(getSegmentId());
+		sb.append(", userSegmentId=");
+		sb.append(getUserSegmentId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -850,8 +850,8 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>segmentId</column-name><column-value><![CDATA[");
-		sb.append(getSegmentId());
+			"<column><column-name>userSegmentId</column-name><column-value><![CDATA[");
+		sb.append(getUserSegmentId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -892,7 +892,7 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	}
 
 	private String _uuid;
-	private long _segmentId;
+	private long _userSegmentId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

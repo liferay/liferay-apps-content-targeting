@@ -40,7 +40,7 @@
 	</model>
 	<model name="com.liferay.contenttargeting.model.UserSegment">
 		<field name="uuid" type="String" />
-		<field name="segmentId" type="long" />
+		<field name="userSegmentId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

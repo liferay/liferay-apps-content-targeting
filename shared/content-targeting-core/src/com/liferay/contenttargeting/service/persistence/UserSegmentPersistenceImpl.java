@@ -375,7 +375,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	/**
 	 * Returns the user segments before and after the current user segment in the ordered set where uuid = &#63;.
 	 *
-	 * @param segmentId the primary key of the current user segment
+	 * @param userSegmentId the primary key of the current user segment
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user segment
@@ -383,10 +383,10 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserSegment[] findByUuid_PrevAndNext(long segmentId, String uuid,
-		OrderByComparator orderByComparator)
+	public UserSegment[] findByUuid_PrevAndNext(long userSegmentId,
+		String uuid, OrderByComparator orderByComparator)
 		throws NoSuchUserSegmentException, SystemException {
-		UserSegment userSegment = findByPrimaryKey(segmentId);
+		UserSegment userSegment = findByPrimaryKey(userSegmentId);
 
 		Session session = null;
 
@@ -1198,7 +1198,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	/**
 	 * Returns the user segments before and after the current user segment in the ordered set where uuid = &#63; and companyId = &#63;.
 	 *
-	 * @param segmentId the primary key of the current user segment
+	 * @param userSegmentId the primary key of the current user segment
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1207,10 +1207,10 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserSegment[] findByUuid_C_PrevAndNext(long segmentId, String uuid,
-		long companyId, OrderByComparator orderByComparator)
+	public UserSegment[] findByUuid_C_PrevAndNext(long userSegmentId,
+		String uuid, long companyId, OrderByComparator orderByComparator)
 		throws NoSuchUserSegmentException, SystemException {
-		UserSegment userSegment = findByPrimaryKey(segmentId);
+		UserSegment userSegment = findByPrimaryKey(userSegmentId);
 
 		Session session = null;
 
@@ -1731,7 +1731,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	/**
 	 * Returns the user segments before and after the current user segment in the ordered set where groupId = &#63;.
 	 *
-	 * @param segmentId the primary key of the current user segment
+	 * @param userSegmentId the primary key of the current user segment
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user segment
@@ -1739,10 +1739,10 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserSegment[] findByGroupId_PrevAndNext(long segmentId,
+	public UserSegment[] findByGroupId_PrevAndNext(long userSegmentId,
 		long groupId, OrderByComparator orderByComparator)
 		throws NoSuchUserSegmentException, SystemException {
-		UserSegment userSegment = findByPrimaryKey(segmentId);
+		UserSegment userSegment = findByPrimaryKey(userSegmentId);
 
 		Session session = null;
 
@@ -2087,15 +2087,15 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	/**
 	 * Creates a new user segment with the primary key. Does not add the user segment to the database.
 	 *
-	 * @param segmentId the primary key for the new user segment
+	 * @param userSegmentId the primary key for the new user segment
 	 * @return the new user segment
 	 */
 	@Override
-	public UserSegment create(long segmentId) {
+	public UserSegment create(long userSegmentId) {
 		UserSegment userSegment = new UserSegmentImpl();
 
 		userSegment.setNew(true);
-		userSegment.setPrimaryKey(segmentId);
+		userSegment.setPrimaryKey(userSegmentId);
 
 		String uuid = PortalUUIDUtil.generate();
 
@@ -2107,15 +2107,15 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	/**
 	 * Removes the user segment with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param segmentId the primary key of the user segment
+	 * @param userSegmentId the primary key of the user segment
 	 * @return the user segment that was removed
 	 * @throws com.liferay.contenttargeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserSegment remove(long segmentId)
+	public UserSegment remove(long userSegmentId)
 		throws NoSuchUserSegmentException, SystemException {
-		return remove((Serializable)segmentId);
+		return remove((Serializable)userSegmentId);
 	}
 
 	/**
@@ -2312,7 +2312,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 		userSegmentImpl.setPrimaryKey(userSegment.getPrimaryKey());
 
 		userSegmentImpl.setUuid(userSegment.getUuid());
-		userSegmentImpl.setSegmentId(userSegment.getSegmentId());
+		userSegmentImpl.setUserSegmentId(userSegment.getUserSegmentId());
 		userSegmentImpl.setGroupId(userSegment.getGroupId());
 		userSegmentImpl.setCompanyId(userSegment.getCompanyId());
 		userSegmentImpl.setUserId(userSegment.getUserId());
@@ -2353,15 +2353,15 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	/**
 	 * Returns the user segment with the primary key or throws a {@link com.liferay.contenttargeting.NoSuchUserSegmentException} if it could not be found.
 	 *
-	 * @param segmentId the primary key of the user segment
+	 * @param userSegmentId the primary key of the user segment
 	 * @return the user segment
 	 * @throws com.liferay.contenttargeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserSegment findByPrimaryKey(long segmentId)
+	public UserSegment findByPrimaryKey(long userSegmentId)
 		throws NoSuchUserSegmentException, SystemException {
-		return findByPrimaryKey((Serializable)segmentId);
+		return findByPrimaryKey((Serializable)userSegmentId);
 	}
 
 	/**
@@ -2415,14 +2415,14 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	/**
 	 * Returns the user segment with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param segmentId the primary key of the user segment
+	 * @param userSegmentId the primary key of the user segment
 	 * @return the user segment, or <code>null</code> if a user segment with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public UserSegment fetchByPrimaryKey(long segmentId)
+	public UserSegment fetchByPrimaryKey(long userSegmentId)
 		throws SystemException {
-		return fetchByPrimaryKey((Serializable)segmentId);
+		return fetchByPrimaryKey((Serializable)userSegmentId);
 	}
 
 	/**

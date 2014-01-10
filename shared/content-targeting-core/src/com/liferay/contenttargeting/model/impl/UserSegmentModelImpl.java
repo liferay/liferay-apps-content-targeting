@@ -75,7 +75,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 	public static final String TABLE_NAME = "CT_UserSegment";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
-			{ "segmentId", Types.BIGINT },
+			{ "userSegmentId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
@@ -85,7 +85,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_UserSegment (uuid_ VARCHAR(75) null,segmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_UserSegment (uuid_ VARCHAR(75) null,userSegmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_UserSegment";
 	public static final String ORDER_BY_JPQL = " ORDER BY userSegment.name DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_UserSegment.name DESC";
@@ -120,7 +120,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 		UserSegment model = new UserSegmentImpl();
 
 		model.setUuid(soapModel.getUuid());
-		model.setSegmentId(soapModel.getSegmentId());
+		model.setUserSegmentId(soapModel.getUserSegmentId());
 		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
@@ -161,17 +161,17 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 
 	@Override
 	public long getPrimaryKey() {
-		return _segmentId;
+		return _userSegmentId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setSegmentId(primaryKey);
+		setUserSegmentId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _segmentId;
+		return _userSegmentId;
 	}
 
 	@Override
@@ -194,7 +194,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("segmentId", getSegmentId());
+		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -215,10 +215,10 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 			setUuid(uuid);
 		}
 
-		Long segmentId = (Long)attributes.get("segmentId");
+		Long userSegmentId = (Long)attributes.get("userSegmentId");
 
-		if (segmentId != null) {
-			setSegmentId(segmentId);
+		if (userSegmentId != null) {
+			setUserSegmentId(userSegmentId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -296,13 +296,13 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 
 	@JSON
 	@Override
-	public long getSegmentId() {
-		return _segmentId;
+	public long getUserSegmentId() {
+		return _userSegmentId;
 	}
 
 	@Override
-	public void setSegmentId(long segmentId) {
-		_segmentId = segmentId;
+	public void setUserSegmentId(long userSegmentId) {
+		_userSegmentId = userSegmentId;
 	}
 
 	@JSON
@@ -725,7 +725,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 		UserSegmentImpl userSegmentImpl = new UserSegmentImpl();
 
 		userSegmentImpl.setUuid(getUuid());
-		userSegmentImpl.setSegmentId(getSegmentId());
+		userSegmentImpl.setUserSegmentId(getUserSegmentId());
 		userSegmentImpl.setGroupId(getGroupId());
 		userSegmentImpl.setCompanyId(getCompanyId());
 		userSegmentImpl.setUserId(getUserId());
@@ -811,7 +811,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 			userSegmentCacheModel.uuid = null;
 		}
 
-		userSegmentCacheModel.segmentId = getSegmentId();
+		userSegmentCacheModel.userSegmentId = getUserSegmentId();
 
 		userSegmentCacheModel.groupId = getGroupId();
 
@@ -870,8 +870,8 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
-		sb.append(", segmentId=");
-		sb.append(getSegmentId());
+		sb.append(", userSegmentId=");
+		sb.append(getUserSegmentId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -906,8 +906,8 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>segmentId</column-name><column-value><![CDATA[");
-		sb.append(getSegmentId());
+			"<column><column-name>userSegmentId</column-name><column-value><![CDATA[");
+		sb.append(getUserSegmentId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -953,7 +953,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 		};
 	private String _uuid;
 	private String _originalUuid;
-	private long _segmentId;
+	private long _userSegmentId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;

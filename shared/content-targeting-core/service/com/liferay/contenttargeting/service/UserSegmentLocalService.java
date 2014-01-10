@@ -59,22 +59,22 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	/**
 	* Creates a new user segment with the primary key. Does not add the user segment to the database.
 	*
-	* @param segmentId the primary key for the new user segment
+	* @param userSegmentId the primary key for the new user segment
 	* @return the new user segment
 	*/
 	public com.liferay.contenttargeting.model.UserSegment createUserSegment(
-		long segmentId);
+		long userSegmentId);
 
 	/**
 	* Deletes the user segment with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param segmentId the primary key of the user segment
+	* @param userSegmentId the primary key of the user segment
 	* @return the user segment that was removed
 	* @throws PortalException if a user segment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.contenttargeting.model.UserSegment deleteUserSegment(
-		long segmentId)
+		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -168,7 +168,7 @@ public interface UserSegmentLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.contenttargeting.model.UserSegment fetchUserSegment(
-		long segmentId)
+		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -200,14 +200,14 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	/**
 	* Returns the user segment with the primary key.
 	*
-	* @param segmentId the primary key of the user segment
+	* @param userSegmentId the primary key of the user segment
 	* @return the user segment
 	* @throws PortalException if a user segment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.contenttargeting.model.UserSegment getUserSegment(
-		long segmentId)
+		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

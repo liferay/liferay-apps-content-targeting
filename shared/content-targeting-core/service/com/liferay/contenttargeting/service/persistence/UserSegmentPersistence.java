@@ -143,7 +143,7 @@ public interface UserSegmentPersistence extends BasePersistence<UserSegment> {
 	/**
 	* Returns the user segments before and after the current user segment in the ordered set where uuid = &#63;.
 	*
-	* @param segmentId the primary key of the current user segment
+	* @param userSegmentId the primary key of the current user segment
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user segment
@@ -151,7 +151,7 @@ public interface UserSegmentPersistence extends BasePersistence<UserSegment> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.contenttargeting.model.UserSegment[] findByUuid_PrevAndNext(
-		long segmentId, java.lang.String uuid,
+		long userSegmentId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.contenttargeting.NoSuchUserSegmentException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -351,7 +351,7 @@ public interface UserSegmentPersistence extends BasePersistence<UserSegment> {
 	/**
 	* Returns the user segments before and after the current user segment in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* @param segmentId the primary key of the current user segment
+	* @param userSegmentId the primary key of the current user segment
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -360,7 +360,7 @@ public interface UserSegmentPersistence extends BasePersistence<UserSegment> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.contenttargeting.model.UserSegment[] findByUuid_C_PrevAndNext(
-		long segmentId, java.lang.String uuid, long companyId,
+		long userSegmentId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.contenttargeting.NoSuchUserSegmentException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -492,7 +492,7 @@ public interface UserSegmentPersistence extends BasePersistence<UserSegment> {
 	/**
 	* Returns the user segments before and after the current user segment in the ordered set where groupId = &#63;.
 	*
-	* @param segmentId the primary key of the current user segment
+	* @param userSegmentId the primary key of the current user segment
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user segment
@@ -500,7 +500,7 @@ public interface UserSegmentPersistence extends BasePersistence<UserSegment> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.contenttargeting.model.UserSegment[] findByGroupId_PrevAndNext(
-		long segmentId, long groupId,
+		long userSegmentId, long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.contenttargeting.NoSuchUserSegmentException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -543,20 +543,22 @@ public interface UserSegmentPersistence extends BasePersistence<UserSegment> {
 	/**
 	* Creates a new user segment with the primary key. Does not add the user segment to the database.
 	*
-	* @param segmentId the primary key for the new user segment
+	* @param userSegmentId the primary key for the new user segment
 	* @return the new user segment
 	*/
-	public com.liferay.contenttargeting.model.UserSegment create(long segmentId);
+	public com.liferay.contenttargeting.model.UserSegment create(
+		long userSegmentId);
 
 	/**
 	* Removes the user segment with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param segmentId the primary key of the user segment
+	* @param userSegmentId the primary key of the user segment
 	* @return the user segment that was removed
 	* @throws com.liferay.contenttargeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.model.UserSegment remove(long segmentId)
+	public com.liferay.contenttargeting.model.UserSegment remove(
+		long userSegmentId)
 		throws com.liferay.contenttargeting.NoSuchUserSegmentException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -567,25 +569,25 @@ public interface UserSegmentPersistence extends BasePersistence<UserSegment> {
 	/**
 	* Returns the user segment with the primary key or throws a {@link com.liferay.contenttargeting.NoSuchUserSegmentException} if it could not be found.
 	*
-	* @param segmentId the primary key of the user segment
+	* @param userSegmentId the primary key of the user segment
 	* @return the user segment
 	* @throws com.liferay.contenttargeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.contenttargeting.model.UserSegment findByPrimaryKey(
-		long segmentId)
+		long userSegmentId)
 		throws com.liferay.contenttargeting.NoSuchUserSegmentException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the user segment with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param segmentId the primary key of the user segment
+	* @param userSegmentId the primary key of the user segment
 	* @return the user segment, or <code>null</code> if a user segment with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.contenttargeting.model.UserSegment fetchByPrimaryKey(
-		long segmentId)
+		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

@@ -32,7 +32,7 @@ public class UserSegmentSoap implements Serializable {
 		UserSegmentSoap soapModel = new UserSegmentSoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setSegmentId(model.getSegmentId());
+		soapModel.setUserSegmentId(model.getUserSegmentId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -86,11 +86,11 @@ public class UserSegmentSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _segmentId;
+		return _userSegmentId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setSegmentId(pk);
+		setUserSegmentId(pk);
 	}
 
 	public String getUuid() {
@@ -101,12 +101,12 @@ public class UserSegmentSoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getSegmentId() {
-		return _segmentId;
+	public long getUserSegmentId() {
+		return _userSegmentId;
 	}
 
-	public void setSegmentId(long segmentId) {
-		_segmentId = segmentId;
+	public void setUserSegmentId(long userSegmentId) {
+		_userSegmentId = userSegmentId;
 	}
 
 	public long getGroupId() {
@@ -174,7 +174,7 @@ public class UserSegmentSoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _segmentId;
+	private long _userSegmentId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
