@@ -4,7 +4,7 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>1</portlet-name>
-		<icon>icons/content_targeting.png</icon>
+		<icon>/icons/content_targeting.png</icon>
 		<struts-path>o/content-targeting-portlet</struts-path>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/main.css</header-portlet-css>
