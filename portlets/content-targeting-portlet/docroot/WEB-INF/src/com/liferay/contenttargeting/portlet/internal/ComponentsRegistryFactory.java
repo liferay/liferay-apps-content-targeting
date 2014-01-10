@@ -18,21 +18,31 @@ import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Reference;
 
 import com.liferay.contenttargeting.api.model.RulesRegistry;
+import com.liferay.contenttargeting.service.UserSegmentService;
 
 /**
  * @author Eduardo Garcia
  */
 @Component(immediate = true)
-public class RulesRegistryFactory {
+public class ComponentsRegistryFactory {
 
 	public static RulesRegistry getRulesRegistryFactory() {
 		return _rulesRegistry;
 	}
 
+	public static UserSegmentService getUserSegmentService() {
+		return _userSegmentService;
+	};
+
 	@Reference(type = '?', unbind ="setRulesRegistry")
 	public void setRulesRegistry(RulesRegistry rulesRegistry) {
 		_rulesRegistry = rulesRegistry;
 	}
+
+	@Reference
+	public void setUserSegmentService(UserSegmentService userSegmentService) {
+		_userSegmentService = userSegmentService;
+	} private static UserSegmentService _userSegmentService;
 
 	private static RulesRegistry _rulesRegistry;
 

@@ -16,8 +16,7 @@ package com.liferay.contenttargeting.portlet;
 
 import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.UserSegment;
-import com.liferay.contenttargeting.portlet.internal.RulesRegistryFactory;
-import com.liferay.contenttargeting.service.UserSegmentLocalService;
+import com.liferay.contenttargeting.portlet.internal.ComponentsRegistryFactory;
 import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.contenttargeting.service.UserSegmentServiceUtil;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
@@ -99,12 +98,15 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			UserSegmentService userSegmentService =
+				ComponentsRegistryFactory.getUserSegmentService();
+			
 			if (userSegmentId > 0) {
-				UserSegmentServiceUtil.updateUserSegment(
+				userSegmentService.updateUserSegment(
 					userSegmentId, nameMap, descriptionMap, serviceContext);
 			}
 			else {
-				UserSegmentServiceUtil.addUserSegment(
+				userSegmentService.addUserSegment(
 					themeDisplay.getUserId(), nameMap, descriptionMap,
 					serviceContext);
 			}
@@ -246,6 +248,6 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		ContentTargetingPortlet.class);
 
 	private RulesRegistry _rulesRegistry =
-		RulesRegistryFactory.getRulesRegistryFactory();
+		ComponentsRegistryFactory.getRulesRegistryFactory();
 
 }
