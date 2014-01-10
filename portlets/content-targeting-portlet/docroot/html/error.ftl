@@ -14,16 +14,8 @@
  */
 -->
 
-<#include "init.ftl" />
-
-<div class="portlet" id="portlet_${plid}">
-	<div class="portlet-topper">
-		<h1 class="portlet-title">
-			<span class="portlet-title-text">${portlet_display.getTitle()}</span>
-		</h1>
-	</div>
-
-	<div class="portlet-content">
-		Error!!!
-	</div>
+<div class="content-targeting-error">
+	<span class="alert alert-error">
+		<@liferay.language key="an-error-occurred-while-processing-the-template" />
+	</span>
 </div>
