@@ -4,6 +4,8 @@
       <root url="jar://$PROJECT_DIR$/lib/portal-impl.jar!/" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../liferay-portal-src-6.2.0-ce-ga1/portal-impl/src" />
+    </SOURCES>
   </library>
 </component>
