@@ -194,32 +194,23 @@
 	</target>
 
 	<target name="jar" depends="compile">
-		<if>
-			<not>
-				<uptodate targetfile="${plugin.file}">
-					<srcfiles dir="${osgi.plugin.classes.dir}" includes="**/*.*" />
-				</uptodate>
-			</not>
-			<then>
-				<manifest-helper />
+		<manifest-helper />
 
-				<bndexpand propertyfile="${sdk.dir}/common.bnd" />
+		<bndexpand propertyfile="${sdk.dir}/common.bnd" />
 
-				<bnd
-					eclipse="false"
-					exceptions="true"
-					failok="false"
-					inherit="true"
-					output="${plugin.file}"
-					sourcepath="."
-				>
-					<bndfiles path="bnd.bnd" />
-					<classpath>
-						<pathelement location="${osgi.plugin.classes.dir}" />
-					</classpath>
-				</bnd>
-			</then>
-		</if>
+		<bnd
+			eclipse="false"
+			exceptions="true"
+			failok="false"
+			inherit="true"
+			output="${plugin.file}"
+			sourcepath="."
+		>
+			<bndfiles path="bnd.bnd" />
+			<classpath>
+				<pathelement location="${osgi.plugin.classes.dir}" />
+			</classpath>
+		</bnd>
 	</target>
 
 	<target name="manifest">
