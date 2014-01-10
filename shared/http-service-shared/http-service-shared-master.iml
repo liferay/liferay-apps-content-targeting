@@ -36,25 +36,11 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
-      <library name="org.osgi.compendium.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/org.osgi.compendium.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="org.osgi.core.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/lib/org.osgi.core.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="reference-libraries" level="project" />
+    <orderEntry type="library" name="reference" level="project" />
+    <orderEntry type="library" name="portal" level="project" />
+    <orderEntry type="library" name="portal-impl" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="osgi" level="project" />
+    <orderEntry type="library" name="mockito" level="project" />
   </component>
 </module>
 

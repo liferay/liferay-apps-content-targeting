@@ -1,0 +1,21 @@
+<component name="libraryTable">
+  <library name="mockito">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/mockito-all.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mockito.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/powermock-api-mockito.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/powermock-api-support.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/powermock-mockito.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/powermock-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/powermock-module-junit4-common.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/powermock-module-junit4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/powermock-reflect.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/mockito-all.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mockito.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/powermock-mockito.jar!/" />
+    </SOURCES>
+  </library>
+</component>

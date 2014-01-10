@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="portal">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/portal-service.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/util-bridges.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/util-java.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/util-taglib.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

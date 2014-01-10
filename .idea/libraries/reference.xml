@@ -1,0 +1,35 @@
+<component name="libraryTable">
+  <library name="reference">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/struts.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mail.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/serializer.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/activation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/antelopetasks.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bcpg-jdk16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/log4j.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ecj.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/javax.servlet-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ant-contrib.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-test.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/servlet-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ccpp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jargs.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/portlet.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/xalan.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/scala-compiler.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/xercesImpl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bcprov-jdk16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jalopy.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/xml-apis.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/qdox.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/junit.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jsp-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/axis.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/struts.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -28,25 +28,9 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="module-library">
-      <library name="org.osgi.compendium.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../log-bridge-shared/lib/org.osgi.compendium.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="org.osgi.core.jar">
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../log-bridge-shared/lib/org.osgi.core.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" name="reference-libraries" level="project" />
+    <orderEntry type="library" name="reference" level="project" />
+    <orderEntry type="library" name="portal" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="osgi" level="project" />
   </component>
 </module>
 
