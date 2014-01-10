@@ -9,5 +9,6 @@
 
 	<dependencies defaultconf="default">
 		<dependency org="biz.aQute.bnd"	name="bnd" rev="2.2.0" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="4.3.1" />
 	</dependencies>
 </ivy-module>
