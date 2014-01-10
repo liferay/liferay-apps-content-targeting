@@ -24,6 +24,7 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$/../log-bridge-shared">
       <sourceFolder url="file://$MODULE_DIR$/../log-bridge-shared/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/../log-bridge-shared/classes" />
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
