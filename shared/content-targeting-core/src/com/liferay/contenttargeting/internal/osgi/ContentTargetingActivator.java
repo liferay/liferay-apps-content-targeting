@@ -14,6 +14,7 @@
 
 package com.liferay.contenttargeting.internal.osgi;
 
+import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -39,6 +40,14 @@ public class ContentTargetingActivator
 
 		ApplicationContext applicationContext =
 			(ApplicationContext)message.getPayload();
+
+		UserSegmentLocalService usls =
+			(UserSegmentLocalService)applicationContext.getBean(
+				UserSegmentLocalService.class.getName());
+
+		_userSegmentLocalServiceServiceRegistration =
+			_bundleContext.registerService(
+				UserSegmentLocalService.class, usls, null);
 
 		UserSegmentService uss =
 			(UserSegmentService)applicationContext.getBean(
@@ -67,6 +76,12 @@ public class ContentTargetingActivator
 
 		MessageBusUtil.unregisterMessageListener(DESTINATION_NAME, this);
 
+		if (_userSegmentLocalServiceServiceRegistration != null) {
+			_userSegmentLocalServiceServiceRegistration.unregister();
+
+			_userSegmentLocalServiceServiceRegistration = null;
+		}
+
 		if (_userSegmentServiceServiceRegistration != null) {
 			_userSegmentServiceServiceRegistration.unregister();
 
@@ -78,6 +93,8 @@ public class ContentTargetingActivator
 		"content-targeting-core-spring";
 
 	private BundleContext _bundleContext;
+	private ServiceRegistration<UserSegmentLocalService>
+		_userSegmentLocalServiceServiceRegistration;
 	private ServiceRegistration<UserSegmentService>
 		_userSegmentServiceServiceRegistration;
 
