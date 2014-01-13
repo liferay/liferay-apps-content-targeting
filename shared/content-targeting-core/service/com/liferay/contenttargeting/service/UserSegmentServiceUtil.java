@@ -64,12 +64,14 @@ public class UserSegmentServiceUtil {
 	}
 
 	public static com.liferay.contenttargeting.model.UserSegment addUserSegment(
-		long userId, java.lang.String name, java.lang.String description,
+		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addUserSegment(userId, name, description, serviceContext);
+				   .addUserSegment(userId, nameMap, descriptionMap,
+			serviceContext);
 	}
 
 	public static com.liferay.contenttargeting.model.UserSegment deleteUserSegment(
@@ -93,13 +95,14 @@ public class UserSegmentServiceUtil {
 	}
 
 	public static com.liferay.contenttargeting.model.UserSegment updateUserSegment(
-		long userSegmentId, java.lang.String name,
-		java.lang.String description,
+		long userSegmentId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateUserSegment(userSegmentId, name, description,
+				   .updateUserSegment(userSegmentId, nameMap, descriptionMap,
 			serviceContext);
 	}
 

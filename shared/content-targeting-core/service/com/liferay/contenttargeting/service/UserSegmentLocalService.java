@@ -306,7 +306,8 @@ public interface UserSegmentLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	public com.liferay.contenttargeting.model.UserSegment addUserSegment(
-		long userId, java.lang.String name, java.lang.String description,
+		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -323,8 +324,9 @@ public interface UserSegmentLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.contenttargeting.model.UserSegment updateUserSegment(
-		long userSegmentId, java.lang.String name,
-		java.lang.String description,
+		long userSegmentId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

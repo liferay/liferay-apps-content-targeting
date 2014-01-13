@@ -18,8 +18,12 @@ import com.liferay.contenttargeting.service.UserSegmentServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
@@ -63,12 +67,20 @@ import java.rmi.RemoteException;
  */
 public class UserSegmentServiceSoap {
 	public static com.liferay.contenttargeting.model.UserSegmentSoap addUserSegment(
-		long userId, java.lang.String name, java.lang.String description,
+		long userId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
 			com.liferay.contenttargeting.model.UserSegment returnValue = UserSegmentServiceUtil.addUserSegment(userId,
-					name, description, serviceContext);
+					nameMap, descriptionMap, serviceContext);
 
 			return com.liferay.contenttargeting.model.UserSegmentSoap.toSoapModel(returnValue);
 		}
@@ -123,13 +135,20 @@ public class UserSegmentServiceSoap {
 	}
 
 	public static com.liferay.contenttargeting.model.UserSegmentSoap updateUserSegment(
-		long userSegmentId, java.lang.String name,
-		java.lang.String description,
+		long userSegmentId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
 			com.liferay.contenttargeting.model.UserSegment returnValue = UserSegmentServiceUtil.updateUserSegment(userSegmentId,
-					name, description, serviceContext);
+					nameMap, descriptionMap, serviceContext);
 
 			return com.liferay.contenttargeting.model.UserSegmentSoap.toSoapModel(returnValue);
 		}

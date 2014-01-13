@@ -35,7 +35,7 @@ public class UserSegmentServiceClp implements UserSegmentService {
 		_methodName3 = "addUserSegment";
 
 		_methodParameterTypes3 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
+				"long", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -54,7 +54,7 @@ public class UserSegmentServiceClp implements UserSegmentService {
 		_methodName7 = "updateUserSegment";
 
 		_methodParameterTypes7 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
+				"long", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -111,7 +111,8 @@ public class UserSegmentServiceClp implements UserSegmentService {
 
 	@Override
 	public com.liferay.contenttargeting.model.UserSegment addUserSegment(
-		long userId, java.lang.String name, java.lang.String description,
+		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -123,9 +124,9 @@ public class UserSegmentServiceClp implements UserSegmentService {
 					new Object[] {
 						userId,
 						
-					ClpSerializer.translateInput(name),
+					ClpSerializer.translateInput(nameMap),
 						
-					ClpSerializer.translateInput(description),
+					ClpSerializer.translateInput(descriptionMap),
 						
 					ClpSerializer.translateInput(serviceContext)
 					});
@@ -256,8 +257,9 @@ public class UserSegmentServiceClp implements UserSegmentService {
 
 	@Override
 	public com.liferay.contenttargeting.model.UserSegment updateUserSegment(
-		long userSegmentId, java.lang.String name,
-		java.lang.String description,
+		long userSegmentId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -269,9 +271,9 @@ public class UserSegmentServiceClp implements UserSegmentService {
 					new Object[] {
 						userSegmentId,
 						
-					ClpSerializer.translateInput(name),
+					ClpSerializer.translateInput(nameMap),
 						
-					ClpSerializer.translateInput(description),
+					ClpSerializer.translateInput(descriptionMap),
 						
 					ClpSerializer.translateInput(serviceContext)
 					});

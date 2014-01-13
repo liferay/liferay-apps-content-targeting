@@ -58,12 +58,13 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 
 	@Override
 	public com.liferay.contenttargeting.model.UserSegment addUserSegment(
-		long userId, java.lang.String name, java.lang.String description,
+		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentService.addUserSegment(userId, name, description,
-			serviceContext);
+		return _userSegmentService.addUserSegment(userId, nameMap,
+			descriptionMap, serviceContext);
 	}
 
 	@Override
@@ -91,13 +92,14 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 
 	@Override
 	public com.liferay.contenttargeting.model.UserSegment updateUserSegment(
-		long userSegmentId, java.lang.String name,
-		java.lang.String description,
+		long userSegmentId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _userSegmentService.updateUserSegment(userSegmentId, name,
-			description, serviceContext);
+		return _userSegmentService.updateUserSegment(userSegmentId, nameMap,
+			descriptionMap, serviceContext);
 	}
 
 	/**
