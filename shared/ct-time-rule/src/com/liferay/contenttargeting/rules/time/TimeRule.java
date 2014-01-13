@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -16,6 +16,7 @@ package com.liferay.contenttargeting.rules.time;
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
+
 import com.liferay.contenttargeting.api.model.Rule;
 
 /**
@@ -24,17 +25,17 @@ import com.liferay.contenttargeting.api.model.Rule;
 @Component(immediate = true)
 public class TimeRule implements Rule {
 
-	@Override
-	public String getName() {
-		return "time";
-	}
-
 	@Activate
-	public void activate () {
+	public void activate() {
 	}
 
 	@Deactivate
-	public void deActivate () {
+	public void deActivate() {
+	}
+
+	@Override
+	public String getName() {
+		return "time";
 	}
 
 }

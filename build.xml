@@ -63,13 +63,13 @@
 		</copy>
 
 		<exec executable="/bin/sh" os="${os.apple},${os.unix}">
-			<arg value="-c"/>
-			<arg value="telnet localhost 6666 &lt; /dev/tty &gt; /dev/tty 2&gt; /dev/tty"/>
+			<arg value="-c" />
+			<arg value="telnet localhost 6666 &lt; /dev/tty &gt; /dev/tty 2&gt; /dev/tty" />
 		</exec>
 
 		<exec executable="cmd.exe" os="${os.windows}">
-			<arg value="-c"/>
-			<arg value="telnet localhost 6666"/>
+			<arg value="-c" />
+			<arg value="telnet localhost 6666" />
 		</exec>
 	</target>
 

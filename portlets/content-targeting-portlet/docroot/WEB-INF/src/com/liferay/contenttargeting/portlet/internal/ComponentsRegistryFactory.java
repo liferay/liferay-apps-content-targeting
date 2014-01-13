@@ -32,7 +32,7 @@ public class ComponentsRegistryFactory {
 
 	public static UserSegmentService getUserSegmentService() {
 		return _userSegmentService;
-	};
+	}
 
 	@Reference(type = '?', unbind ="setRulesRegistry")
 	public void setRulesRegistry(RulesRegistry rulesRegistry) {
@@ -42,8 +42,9 @@ public class ComponentsRegistryFactory {
 	@Reference
 	public void setUserSegmentService(UserSegmentService userSegmentService) {
 		_userSegmentService = userSegmentService;
-	} private static UserSegmentService _userSegmentService;
+	}
 
 	private static RulesRegistry _rulesRegistry;
+	private static UserSegmentService _userSegmentService;
 
 }
