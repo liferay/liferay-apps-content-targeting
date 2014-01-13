@@ -61,6 +61,32 @@ import javax.portlet.PortletResponse;
  */
 public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
+	public void deleteUserSegment(
+			ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
+
+		try {
+			UserSegmentServiceUtil.deleteUserSegment(userSegmentId);
+
+			String redirect = ParamUtil.getString(request, "redirect");
+
+			response.sendRedirect(redirect);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+
+			if (e instanceof PrincipalException) {
+				response.setRenderParameter(
+					"mvcPath", "/html/content_targeting/view.ftl");
+			}
+			else {
+				response.setRenderParameter("mvcPath", "/html/error.ftl");
+			}
+		}
+	}
+
 	public void updateUserSegment(
 			ActionRequest request, ActionResponse response)
 		throws Exception {

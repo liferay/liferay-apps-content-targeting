@@ -45,23 +45,41 @@
 		modelVar="userSegment"
 	>
 
-		<#assign rowURL = renderResponse.createRenderURL()>
-
-		${rowURL.setParameter("mvcPath", "html/content_targeting/edit_user_segment.ftl")}
-		${rowURL.setParameter("redirect", portalUtil.getCurrentURL(request))}
-		${rowURL.setParameter("userSegmentId", userSegment.getUserSegmentId()?string)}
-
 		<@liferay_ui["search-container-column-text"]
 			name="name"
-			href=rowURL
 			value=userSegment.getName()
 		/>
 
 		<@liferay_ui["search-container-column-text"]
 			name="description"
-			href=rowURL
 			value=userSegment.getDescription()
 		/>
+
+		<@liferay_ui["search-container-column-text"]
+			name=""
+		>
+			<@liferay_ui["icon-menu"]>
+				<@portlet["renderURL"] var="editUserSegmentURL">
+					<@portlet["param"] name="mvcPath" value="html/content_targeting/edit_user_segment.ftl" />
+					<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
+					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+				</@>
+
+				<@liferay_ui["icon"]
+					image="edit"
+					url="${editUserSegmentURL}"
+				/>
+
+				<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
+					<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
+					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+				</@>
+
+				<@liferay_ui["icon-delete"]
+					url="${deleteUserSegmentURL}"
+				/>
+			</@>
+		</@>
 	</@>
 
 	<@liferay_ui["search-iterator"] />
