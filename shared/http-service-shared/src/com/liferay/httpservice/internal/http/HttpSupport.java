@@ -121,6 +121,8 @@ public class HttpSupport {
 
 			bundleServletContext.setServletContextName(servletContextName);
 
+			bundleServletContext.setAttribute("OSGI_BUNDLE", bundle);
+
 			ServletContextPool.put(servletContextName, bundleServletContext);
 
 			servletContext = bundleServletContext;
@@ -145,7 +147,12 @@ public class HttpSupport {
 			ServiceReference<BundleServletContext> servletContextReference =
 				iterator.next();
 
-			return _bundleContext.getService(servletContextReference);
+			BundleServletContext bundleServletContext =
+				_bundleContext.getService(servletContextReference);
+
+			bundleServletContext.setAttribute("OSGI_BUNDLE", bundle);
+
+			return bundleServletContext;
 		}
 
 		return null;
