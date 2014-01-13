@@ -21,6 +21,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * The implementation of the user segment remote service.
@@ -32,7 +34,8 @@ import java.util.List;
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
- * @author Brian Wing Shun Chan
+ * @author Eudaldo Alonso
+ * @author Julio Camarero
  * @see com.liferay.contenttargeting.service.base.UserSegmentServiceBaseImpl
  * @see com.liferay.contenttargeting.service.UserSegmentServiceUtil
  */
@@ -40,12 +43,12 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 
 	@Override
 	public UserSegment addUserSegment(
-			long userId, String name, String description,
-			ServiceContext serviceContext)
+			long userId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return userSegmentLocalService.addUserSegment(
-			userId, name, description, serviceContext);
+			userId, nameMap, descriptionMap, serviceContext);
 	}
 
 	@Override
@@ -71,12 +74,12 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 
 	@Override
 	public UserSegment updateUserSegment(
-			long userSegmentId, String name, String description,
-			ServiceContext serviceContext)
+			long userSegmentId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		return userSegmentLocalService.updateUserSegment(
-			userSegmentId, name, description, serviceContext);
+			userSegmentId, nameMap, descriptionMap, serviceContext);
 	}
 
 }

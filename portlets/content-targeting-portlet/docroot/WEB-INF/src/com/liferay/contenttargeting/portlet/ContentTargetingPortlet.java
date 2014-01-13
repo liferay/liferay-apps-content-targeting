@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.template.TemplateTaglibSupportProvider;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.kernel.util.WebKeys;
@@ -43,6 +44,9 @@ import com.liferay.util.bridges.freemarker.FreeMarkerPortlet;
 
 import java.io.IOException;
 import java.io.Writer;
+
+import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -57,11 +61,16 @@ import javax.portlet.PortletResponse;
  */
 public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
-	public void addUserSegment(ActionRequest request, ActionResponse response)
+	public void updateUserSegment(
+			ActionRequest request, ActionResponse response)
 		throws Exception {
 
-		String name = ParamUtil.getString(request, "name");
-		String description = ParamUtil.getString(request, "description");
+		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			request, "name");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(request, "description");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			UserSegment.class.getName(), request);
@@ -70,8 +79,15 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		try {
-			UserSegmentServiceUtil.addUserSegment(
-				themeDisplay.getUserId(), name, description, serviceContext);
+			if (userSegmentId > 0) {
+				UserSegmentServiceUtil.updateUserSegment(
+					userSegmentId, nameMap, descriptionMap, serviceContext);
+			}
+			else {
+				UserSegmentServiceUtil.addUserSegment(
+					themeDisplay.getUserId(), nameMap, descriptionMap,
+					serviceContext);
+			}
 
 			String redirect = ParamUtil.getString(request, "redirect");
 
@@ -141,8 +157,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 				// Injecting services into the template context
 
-				template.put(
-					"userSegmentClass", UserSegment.class);
+				template.put("userSegmentClass", UserSegment.class);
 				template.put(
 					"userSegmentLocalService",
 					_findService(

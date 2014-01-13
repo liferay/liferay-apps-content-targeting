@@ -25,6 +25,8 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * The implementation of the user segment local service.
@@ -36,7 +38,8 @@ import java.util.List;
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
- * @author Brian Wing Shun Chan
+ * @author Eudaldo Alonso
+ * @author Julio Camarero
  * @see com.liferay.contenttargeting.service.base.UserSegmentLocalServiceBaseImpl
  * @see com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil
  */
@@ -45,8 +48,8 @@ public class UserSegmentLocalServiceImpl
 
 	@Override
 	public UserSegment addUserSegment(
-			long userId, String name, String description,
-			ServiceContext serviceContext)
+			long userId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = UserLocalServiceUtil.getUser(userId);
@@ -64,8 +67,8 @@ public class UserSegmentLocalServiceImpl
 		userSegment.setUserName(user.getFullName());
 		userSegment.setCreateDate(serviceContext.getCreateDate(now));
 		userSegment.setModifiedDate(serviceContext.getModifiedDate(now));
-		userSegment.setName(name);
-		userSegment.setDescription(description);
+		userSegment.setNameMap(nameMap);
+		userSegment.setDescriptionMap(descriptionMap);
 
 		userSegmentPersistence.update(userSegment);
 
@@ -88,8 +91,8 @@ public class UserSegmentLocalServiceImpl
 
 	@Override
 	public UserSegment updateUserSegment(
-			long userSegmentId, String name, String description,
-			ServiceContext serviceContext)
+			long userSegmentId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Date now = new Date();
@@ -98,8 +101,8 @@ public class UserSegmentLocalServiceImpl
 			userSegmentId);
 
 		userSegment.setModifiedDate(serviceContext.getModifiedDate(now));
-		userSegment.setName(name);
-		userSegment.setDescription(description);
+		userSegment.setNameMap(nameMap);
+		userSegment.setDescriptionMap(descriptionMap);
 
 		userSegmentPersistence.update(userSegment);
 

@@ -29,10 +29,11 @@
 	title="new-user-segment"
 />
 
-<@portlet["actionURL"] name="addUserSegment" var="addUserSegmentURL" />
+<@portlet["actionURL"] name="updateUserSegment" var="addUserSegmentURL" />
 
 <@aui["form"] action="${addUserSegmentURL}" method="post" name="fm">
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
+	<@aui["input"] name="userSegmentId" type="hidden" value=userSegmentId />
 
 	<@aui["model-context"] bean=userSegment model=userSegmentClass />
 
