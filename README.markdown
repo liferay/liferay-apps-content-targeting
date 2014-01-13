@@ -142,6 +142,14 @@ Set this property to 0 to always retrieve the freemarker code from the template
  instead of the cache.
 `freemarker.engine.resource.modification.check.interval=0`
 
+### Debugging
+
+Since the project includes the IntelliJ project files, these configuration files
+reference the source code of
+[Liferay Portal](http://sourceforge.net/projects/lportal/files/Liferay%20Portal/)
+and [Freemarker](http://sourceforge.net/projects/freemarker/files/freemarker/)
+for debugging purposes. These sources should be in their own folder at the same
+level of the root folder of the project.
 
 ## More Information
 
