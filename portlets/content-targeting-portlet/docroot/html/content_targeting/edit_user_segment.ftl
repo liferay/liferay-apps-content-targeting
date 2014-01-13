@@ -20,6 +20,10 @@
 
 <#assign userSegmentId = paramUtil.getLong(request, "userSegmentId")>
 
+<#if (userSegmentId > 0)>
+	<#assign userSegment = userSegmentLocalService.getUserSegment(userSegmentId) />
+</#if>
+
 <@liferay_ui["header"]
 	backURL="${redirect}"
 	title="new-user-segment"
@@ -29,6 +33,8 @@
 
 <@aui["form"] action="${addUserSegmentURL}" method="post" name="fm">
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
+
+	<@aui["model-context"] bean=userSegment model=userSegmentClass />
 
 	<@aui["input"] name="name" />
 
