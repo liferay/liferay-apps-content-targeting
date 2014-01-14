@@ -6,4 +6,5 @@ Export-Package: \
 	com.liferay.portal.jsonwebservice,\
 	com.liferay.portal.spring.context,\
 	com.liferay.portal.struts,\
-	com.liferay.util
+	com.liferay.util,\
+	com.liferay.util.service
