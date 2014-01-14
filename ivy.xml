@@ -33,6 +33,7 @@
 		<dependency name="qdox" org="com.thoughtworks.qdox" rev="1.12.1" />
 		<dependency name="scala-compiler" org="org.scala-lang" rev="2.9.2" />
 		<dependency name="serializer" org="xalan" rev="2.7.1" />
+		<dependency name="spring-context" org="org.springframework" rev="3.0.7.RELEASE" />
 		<dependency name="spring-test" org="org.springframework" rev="3.0.7.RELEASE" />
 		<dependency name="xalan" org="xalan" rev="2.7.1" />
 		<dependency name="xercesImpl" org="xerces" rev="2.10.0" />
