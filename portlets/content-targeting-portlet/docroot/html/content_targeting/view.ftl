@@ -67,6 +67,7 @@
 
 				<@liferay_ui["icon"]
 					image="edit"
+					method="get"
 					url="${editUserSegmentURL}"
 				/>
 
