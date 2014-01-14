@@ -11,9 +11,11 @@
 .sass-cache
 .sass_cache_*.css
 _sass_cache_*.css
+ivy.xml.MD5
 
 /*/*/bin
 /*/*/classes
+/*/*/ivy.xml.MD5
 /*/*/temp
 /*/*/test-classes
 /*/*/test-results
