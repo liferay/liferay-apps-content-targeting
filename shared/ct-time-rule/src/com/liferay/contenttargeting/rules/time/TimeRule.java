@@ -34,6 +34,11 @@ public class TimeRule implements Rule {
 	}
 
 	@Override
+	public String getIcon() {
+		return "../aui/time";
+	}
+
+	@Override
 	public String getName() {
 		return "time";
 	}

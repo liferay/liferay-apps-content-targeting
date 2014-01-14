@@ -19,6 +19,8 @@ package com.liferay.contenttargeting.api.model;
  */
 public interface Rule {
 
+	public String getIcon();
+
 	public String getName();
 
 }
