@@ -88,6 +88,7 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 		attributes.put("uuid", getUuid());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("assetCategoryId", getAssetCategoryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -117,6 +118,12 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
+
+		if (assetCategoryId != null) {
+			setAssetCategoryId(assetCategoryId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -224,6 +231,29 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 				Method method = clazz.getMethod("setGroupId", long.class);
 
 				method.invoke(_userSegmentRemoteModel, groupId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getAssetCategoryId() {
+		return _assetCategoryId;
+	}
+
+	@Override
+	public void setAssetCategoryId(long assetCategoryId) {
+		_assetCategoryId = assetCategoryId;
+
+		if (_userSegmentRemoteModel != null) {
+			try {
+				Class<?> clazz = _userSegmentRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setAssetCategoryId", long.class);
+
+				method.invoke(_userSegmentRemoteModel, assetCategoryId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -755,6 +785,7 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 		clone.setUuid(getUuid());
 		clone.setUserSegmentId(getUserSegmentId());
 		clone.setGroupId(getGroupId());
+		clone.setAssetCategoryId(getAssetCategoryId());
 		clone.setCompanyId(getCompanyId());
 		clone.setUserId(getUserId());
 		clone.setUserName(getUserName());
@@ -810,7 +841,7 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -818,6 +849,8 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 		sb.append(getUserSegmentId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
+		sb.append(", assetCategoryId=");
+		sb.append(getAssetCategoryId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", userId=");
@@ -839,7 +872,7 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.contenttargeting.model.UserSegment");
@@ -856,6 +889,10 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>assetCategoryId</column-name><column-value><![CDATA[");
+		sb.append(getAssetCategoryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -894,6 +931,7 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	private String _uuid;
 	private long _userSegmentId;
 	private long _groupId;
+	private long _assetCategoryId;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;

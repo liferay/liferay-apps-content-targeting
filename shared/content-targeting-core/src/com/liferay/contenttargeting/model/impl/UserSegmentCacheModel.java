@@ -38,7 +38,7 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -46,6 +46,8 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 		sb.append(userSegmentId);
 		sb.append(", groupId=");
 		sb.append(groupId);
+		sb.append(", assetCategoryId=");
+		sb.append(assetCategoryId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -78,6 +80,7 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 
 		userSegmentImpl.setUserSegmentId(userSegmentId);
 		userSegmentImpl.setGroupId(groupId);
+		userSegmentImpl.setAssetCategoryId(assetCategoryId);
 		userSegmentImpl.setCompanyId(companyId);
 		userSegmentImpl.setUserId(userId);
 
@@ -126,6 +129,7 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 		uuid = objectInput.readUTF();
 		userSegmentId = objectInput.readLong();
 		groupId = objectInput.readLong();
+		assetCategoryId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
@@ -147,6 +151,7 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 
 		objectOutput.writeLong(userSegmentId);
 		objectOutput.writeLong(groupId);
+		objectOutput.writeLong(assetCategoryId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
@@ -178,6 +183,7 @@ public class UserSegmentCacheModel implements CacheModel<UserSegment>,
 	public String uuid;
 	public long userSegmentId;
 	public long groupId;
+	public long assetCategoryId;
 	public long companyId;
 	public long userId;
 	public String userName;

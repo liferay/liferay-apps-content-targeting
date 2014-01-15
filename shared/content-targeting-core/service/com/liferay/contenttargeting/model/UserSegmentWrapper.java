@@ -54,6 +54,7 @@ public class UserSegmentWrapper implements UserSegment,
 		attributes.put("uuid", getUuid());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("assetCategoryId", getAssetCategoryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -83,6 +84,12 @@ public class UserSegmentWrapper implements UserSegment,
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
+
+		if (assetCategoryId != null) {
+			setAssetCategoryId(assetCategoryId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -206,6 +213,26 @@ public class UserSegmentWrapper implements UserSegment,
 	@Override
 	public void setGroupId(long groupId) {
 		_userSegment.setGroupId(groupId);
+	}
+
+	/**
+	* Returns the asset category ID of this user segment.
+	*
+	* @return the asset category ID of this user segment
+	*/
+	@Override
+	public long getAssetCategoryId() {
+		return _userSegment.getAssetCategoryId();
+	}
+
+	/**
+	* Sets the asset category ID of this user segment.
+	*
+	* @param assetCategoryId the asset category ID of this user segment
+	*/
+	@Override
+	public void setAssetCategoryId(long assetCategoryId) {
+		_userSegment.setAssetCategoryId(assetCategoryId);
 	}
 
 	/**

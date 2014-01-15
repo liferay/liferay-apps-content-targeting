@@ -113,6 +113,20 @@ public interface UserSegmentModel extends BaseModel<UserSegment>,
 	public void setGroupId(long groupId);
 
 	/**
+	 * Returns the asset category ID of this user segment.
+	 *
+	 * @return the asset category ID of this user segment
+	 */
+	public long getAssetCategoryId();
+
+	/**
+	 * Sets the asset category ID of this user segment.
+	 *
+	 * @param assetCategoryId the asset category ID of this user segment
+	 */
+	public void setAssetCategoryId(long assetCategoryId);
+
+	/**
 	 * Returns the company ID of this user segment.
 	 *
 	 * @return the company ID of this user segment

@@ -77,6 +77,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 			{ "uuid_", Types.VARCHAR },
 			{ "userSegmentId", Types.BIGINT },
 			{ "groupId", Types.BIGINT },
+			{ "assetCategoryId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
@@ -85,7 +86,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 			{ "name", Types.VARCHAR },
 			{ "description", Types.VARCHAR }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_UserSegment (uuid_ VARCHAR(75) null,userSegmentId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_UserSegment (uuid_ VARCHAR(75) null,userSegmentId LONG not null primary key,groupId LONG,assetCategoryId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_UserSegment";
 	public static final String ORDER_BY_JPQL = " ORDER BY userSegment.name DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_UserSegment.name DESC";
@@ -122,6 +123,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 		model.setUuid(soapModel.getUuid());
 		model.setUserSegmentId(soapModel.getUserSegmentId());
 		model.setGroupId(soapModel.getGroupId());
+		model.setAssetCategoryId(soapModel.getAssetCategoryId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
@@ -196,6 +198,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 		attributes.put("uuid", getUuid());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("groupId", getGroupId());
+		attributes.put("assetCategoryId", getAssetCategoryId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -225,6 +228,12 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 
 		if (groupId != null) {
 			setGroupId(groupId);
+		}
+
+		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
+
+		if (assetCategoryId != null) {
+			setAssetCategoryId(assetCategoryId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -326,6 +335,17 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 
 	public long getOriginalGroupId() {
 		return _originalGroupId;
+	}
+
+	@JSON
+	@Override
+	public long getAssetCategoryId() {
+		return _assetCategoryId;
+	}
+
+	@Override
+	public void setAssetCategoryId(long assetCategoryId) {
+		_assetCategoryId = assetCategoryId;
 	}
 
 	@JSON
@@ -727,6 +747,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 		userSegmentImpl.setUuid(getUuid());
 		userSegmentImpl.setUserSegmentId(getUserSegmentId());
 		userSegmentImpl.setGroupId(getGroupId());
+		userSegmentImpl.setAssetCategoryId(getAssetCategoryId());
 		userSegmentImpl.setCompanyId(getCompanyId());
 		userSegmentImpl.setUserId(getUserId());
 		userSegmentImpl.setUserName(getUserName());
@@ -815,6 +836,8 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 
 		userSegmentCacheModel.groupId = getGroupId();
 
+		userSegmentCacheModel.assetCategoryId = getAssetCategoryId();
+
 		userSegmentCacheModel.companyId = getCompanyId();
 
 		userSegmentCacheModel.userId = getUserId();
@@ -866,7 +889,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -874,6 +897,8 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 		sb.append(getUserSegmentId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
+		sb.append(", assetCategoryId=");
+		sb.append(getAssetCategoryId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", userId=");
@@ -895,7 +920,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.contenttargeting.model.UserSegment");
@@ -912,6 +937,10 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
 		sb.append(getGroupId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>assetCategoryId</column-name><column-value><![CDATA[");
+		sb.append(getAssetCategoryId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -957,6 +986,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
+	private long _assetCategoryId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;

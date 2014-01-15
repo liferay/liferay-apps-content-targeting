@@ -137,17 +137,21 @@ public class UserSegmentLocalServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName57 = "getUserSegments";
+		_methodName57 = "deleteUserSegment";
 
 		_methodParameterTypes57 = new String[] { "long" };
 
-		_methodName58 = "getUserSegmentsCount";
+		_methodName58 = "getUserSegments";
 
 		_methodParameterTypes58 = new String[] { "long" };
 
-		_methodName59 = "updateUserSegment";
+		_methodName59 = "getUserSegmentsCount";
 
-		_methodParameterTypes59 = new String[] {
+		_methodParameterTypes59 = new String[] { "long" };
+
+		_methodName60 = "updateUserSegment";
+
+		_methodParameterTypes60 = new String[] {
 				"long", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -288,16 +292,21 @@ public class UserSegmentLocalServiceClpInvoker {
 
 		if (_methodName57.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
-			return UserSegmentLocalServiceUtil.getUserSegments(((Long)arguments[0]).longValue());
+			return UserSegmentLocalServiceUtil.deleteUserSegment(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName58.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
-			return UserSegmentLocalServiceUtil.getUserSegmentsCount(((Long)arguments[0]).longValue());
+			return UserSegmentLocalServiceUtil.getUserSegments(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName59.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
+			return UserSegmentLocalServiceUtil.getUserSegmentsCount(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName60.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.updateUserSegment(((Long)arguments[0]).longValue(),
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -359,4 +368,6 @@ public class UserSegmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes58;
 	private String _methodName59;
 	private String[] _methodParameterTypes59;
+	private String _methodName60;
+	private String[] _methodParameterTypes60;
 }

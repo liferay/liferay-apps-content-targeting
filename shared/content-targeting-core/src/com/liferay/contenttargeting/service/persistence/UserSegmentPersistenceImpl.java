@@ -2314,6 +2314,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 		userSegmentImpl.setUuid(userSegment.getUuid());
 		userSegmentImpl.setUserSegmentId(userSegment.getUserSegmentId());
 		userSegmentImpl.setGroupId(userSegment.getGroupId());
+		userSegmentImpl.setAssetCategoryId(userSegment.getAssetCategoryId());
 		userSegmentImpl.setCompanyId(userSegment.getCompanyId());
 		userSegmentImpl.setUserId(userSegment.getUserId());
 		userSegmentImpl.setUserName(userSegment.getUserName());

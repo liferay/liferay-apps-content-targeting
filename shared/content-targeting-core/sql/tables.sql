@@ -43,6 +43,7 @@ create table CT_UserSegment (
 	uuid_ VARCHAR(75) null,
 	userSegmentId LONG not null primary key,
 	groupId LONG,
+	assetCategoryId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,

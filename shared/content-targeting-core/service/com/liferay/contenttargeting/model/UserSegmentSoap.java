@@ -34,6 +34,7 @@ public class UserSegmentSoap implements Serializable {
 		soapModel.setUuid(model.getUuid());
 		soapModel.setUserSegmentId(model.getUserSegmentId());
 		soapModel.setGroupId(model.getGroupId());
+		soapModel.setAssetCategoryId(model.getAssetCategoryId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
@@ -117,6 +118,14 @@ public class UserSegmentSoap implements Serializable {
 		_groupId = groupId;
 	}
 
+	public long getAssetCategoryId() {
+		return _assetCategoryId;
+	}
+
+	public void setAssetCategoryId(long assetCategoryId) {
+		_assetCategoryId = assetCategoryId;
+	}
+
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -176,6 +185,7 @@ public class UserSegmentSoap implements Serializable {
 	private String _uuid;
 	private long _userSegmentId;
 	private long _groupId;
+	private long _assetCategoryId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
