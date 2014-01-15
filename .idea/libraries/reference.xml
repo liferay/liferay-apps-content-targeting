@@ -27,6 +27,8 @@
       <root url="jar://$PROJECT_DIR$/lib/jsp-api.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/axis.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/spring-context.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-beans.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-core.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
