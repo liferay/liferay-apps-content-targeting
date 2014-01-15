@@ -103,7 +103,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			};
 		}
 
-		_serviceTrackerUtil.initServices(bundle);
+		_serviceTrackerUtil = new ServiceTrackerUtil(bundle);
 	}
 
 	public void updateUserSegment(
@@ -242,6 +242,6 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
-	private ServiceTrackerUtil _serviceTrackerUtil = new ServiceTrackerUtil();
+	private ServiceTrackerUtil _serviceTrackerUtil;
 
 }

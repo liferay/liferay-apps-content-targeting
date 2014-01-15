@@ -14,6 +14,7 @@
 
 package com.liferay.contenttargeting.util;
 
+import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
 
@@ -55,7 +56,19 @@ public class ServiceTrackerUtil {
 		return userSegmentService;
 	}
 
-	public void initServices(Bundle bundle) throws UnavailableException {
+	public RulesRegistry getRulesRegistry()
+		throws UnavailableException {
+
+		RulesRegistry rulesRegistry = _rulesRegistryTracker.getService();
+
+		if (rulesRegistry == null) {
+			throw new UnavailableServiceException(RulesRegistry.class);
+		}
+
+		return rulesRegistry;
+	}
+
+	public ServiceTrackerUtil(Bundle bundle) throws UnavailableException {
 		final BundleContext bundleContext = bundle.getBundleContext();
 
 		_userSegmentLocalServiceTracker =
@@ -70,6 +83,12 @@ public class ServiceTrackerUtil {
 				bundleContext, UserSegmentService.class, null);
 
 		_userSegmentServiceTracker.open();
+
+		_rulesRegistryTracker =
+			new ServiceTracker<RulesRegistry, RulesRegistry>(
+				bundleContext, RulesRegistry.class, null);
+
+		_rulesRegistryTracker.open();
 
 		try {
 			UserSegmentLocalService userSegmentLocalService =
@@ -88,6 +107,14 @@ public class ServiceTrackerUtil {
 			if (userSegmentService == null) {
 				throw new UnavailableServiceException(UserSegmentService.class);
 			}
+
+			RulesRegistry rulesRegistry =
+				_rulesRegistryTracker.waitForService(
+					_SERVICE_TRACKER_TIMEOUT);
+
+			if (rulesRegistry == null) {
+				throw new UnavailableServiceException(RulesRegistry.class);
+			}
 		}
 		catch (InterruptedException e) {
 			throw new UnavailableException(e.getMessage());
@@ -100,5 +127,6 @@ public class ServiceTrackerUtil {
 		_userSegmentLocalServiceTracker;
 	private ServiceTracker<UserSegmentService, UserSegmentService>
 		_userSegmentServiceTracker;
+	private ServiceTracker<RulesRegistry, RulesRegistry> _rulesRegistryTracker;
 
 }

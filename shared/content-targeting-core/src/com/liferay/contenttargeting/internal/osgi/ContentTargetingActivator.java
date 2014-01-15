@@ -41,20 +41,20 @@ public class ContentTargetingActivator
 		ApplicationContext applicationContext =
 			(ApplicationContext)message.getPayload();
 
-		UserSegmentLocalService usls =
+		UserSegmentLocalService userSegmentLocalService =
 			(UserSegmentLocalService)applicationContext.getBean(
 				UserSegmentLocalService.class.getName());
 
 		_userSegmentLocalServiceServiceRegistration =
 			_bundleContext.registerService(
-				UserSegmentLocalService.class, usls, null);
+				UserSegmentLocalService.class, userSegmentLocalService, null);
 
-		UserSegmentService uss =
+		UserSegmentService userSegmentService =
 			(UserSegmentService)applicationContext.getBean(
 				UserSegmentService.class.getName());
 
 		_userSegmentServiceServiceRegistration = _bundleContext.registerService(
-			UserSegmentService.class, uss, null);
+			UserSegmentService.class, userSegmentService, null);
 	}
 
 	@Override
