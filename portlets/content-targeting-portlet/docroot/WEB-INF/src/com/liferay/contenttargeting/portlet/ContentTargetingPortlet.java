@@ -77,13 +77,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 
-			if (e instanceof PrincipalException) {
-				response.setRenderParameter(
-					"mvcPath", "/html/content_targeting/view.ftl");
-			}
-			else {
-				response.setRenderParameter("mvcPath", "/html/error.ftl");
-			}
+			response.setRenderParameter("mvcPath", "/html/error.ftl");
 		}
 	}
 
