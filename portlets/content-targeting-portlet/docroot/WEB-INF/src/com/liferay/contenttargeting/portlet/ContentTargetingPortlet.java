@@ -15,8 +15,8 @@
 package com.liferay.contenttargeting.portlet;
 
 import com.liferay.contenttargeting.model.UserSegment;
-import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
+import com.liferay.contenttargeting.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -54,8 +54,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.UnavailableException;
 
 import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Eduardo Garcia
@@ -70,7 +68,10 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		try {
-			_getUserSegmentService().deleteUserSegment(userSegmentId);
+			UserSegmentService userSegmentService =
+				_serviceTrackerUtil.getUserSegmentService();
+
+			userSegmentService.deleteUserSegment(userSegmentId);
 
 			String redirect = ParamUtil.getString(request, "redirect");
 
@@ -102,7 +103,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			};
 		}
 
-		_initServices(bundle);
+		_serviceTrackerUtil.initServices(bundle);
 	}
 
 	public void updateUserSegment(
@@ -122,15 +123,18 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		UserSegmentService userSegmentService =
+			_serviceTrackerUtil.getUserSegmentService();
+
 		try {
 			if (userSegmentId > 0) {
-				_getUserSegmentService().updateUserSegment(
-						userSegmentId, nameMap, descriptionMap, serviceContext);
+				userSegmentService.updateUserSegment(
+					userSegmentId, nameMap, descriptionMap, serviceContext);
 			}
 			else {
-				_getUserSegmentService().addUserSegment(
-						themeDisplay.getUserId(), nameMap, descriptionMap,
-						serviceContext);
+				userSegmentService.addUserSegment(
+					themeDisplay.getUserId(), nameMap, descriptionMap,
+					serviceContext);
 			}
 
 			String redirect = ParamUtil.getString(request, "redirect");
@@ -203,8 +207,11 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 				template.put("userSegmentClass", UserSegment.class);
 				template.put(
-					"userSegmentLocalService", _getUserSegmentLocalService());
-				template.put("userSegmentService", _getUserSegmentService());
+					"userSegmentLocalService",
+					_serviceTrackerUtil.getUserSegmentLocalService());
+				template.put(
+					"userSegmentService",
+					_serviceTrackerUtil.getUserSegmentService());
 
 				Writer writer = null;
 
@@ -232,84 +239,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 	}
 
-	private UserSegmentLocalService _getUserSegmentLocalService()
-		throws UnavailableException {
-
-		UserSegmentLocalService userSegmentLocalService =
-			_userSegmentLocalServiceTracker.getService();
-
-		if (userSegmentLocalService == null) {
-			throw new UnavailableException(
-				"Can't find a reference to " +
-					UserSegmentLocalService.class, 0);
-		}
-
-		return userSegmentLocalService;
-	}
-
-	private UserSegmentService _getUserSegmentService()
-		throws UnavailableException {
-
-		UserSegmentService userSegmentService =
-			_userSegmentServiceTracker.getService();
-
-		if (userSegmentService == null) {
-			throw new UnavailableException(
-				"Can't find a reference to " + UserSegmentService.class, 0);
-		}
-
-		return userSegmentService;
-	}
-
-	private void _initServices(Bundle bundle) throws UnavailableException {
-		final BundleContext bundleContext = bundle.getBundleContext();
-
-		_userSegmentLocalServiceTracker =
-			new ServiceTracker
-				<UserSegmentLocalService, UserSegmentLocalService>(
-				bundleContext, UserSegmentLocalService.class, null);
-
-		_userSegmentLocalServiceTracker.open();
-
-		_userSegmentServiceTracker =
-			new ServiceTracker<UserSegmentService, UserSegmentService>(
-				bundleContext, UserSegmentService.class, null);
-
-		_userSegmentServiceTracker.open();
-
-		try {
-			UserSegmentLocalService userSegmentLocalService =
-				_userSegmentLocalServiceTracker.waitForService(
-					_SERVICE_TRACKER_TIMEOUT);
-
-			if (userSegmentLocalService == null) {
-				throw new UnavailableException(
-					"Can't find a reference to " +
-						UserSegmentLocalService.class, 0);
-			}
-
-			UserSegmentService userSegmentService =
-				_userSegmentServiceTracker.waitForService(
-					_SERVICE_TRACKER_TIMEOUT);
-
-			if (userSegmentService == null) {
-				throw new UnavailableException(
-					"Can't find a reference to " + UserSegmentService.class, 0);
-			}
-		}
-		catch (InterruptedException e) {
-			throw new UnavailableException(e.getMessage());
-		}
-	}
-
-	private static final int _SERVICE_TRACKER_TIMEOUT = 5000;
-
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
-	private ServiceTracker<UserSegmentLocalService, UserSegmentLocalService>
-		_userSegmentLocalServiceTracker;
-	private ServiceTracker<UserSegmentService, UserSegmentService>
-		_userSegmentServiceTracker;
+	private ServiceTrackerUtil _serviceTrackerUtil = new ServiceTrackerUtil();
 
 }
