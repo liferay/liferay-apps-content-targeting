@@ -20,12 +20,12 @@
 
 <@aui["nav-bar"]>
 	<@aui["nav"]>
-		<#assign editUserSegmentURL = renderResponse.createRenderURL()>
+		<@portlet["renderURL"] var="addUserSegmentURL">
+			<@portlet["param"] name="mvcPath" value="html/content_targeting/edit_user_segment.ftl" />
+			<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
+		</@>
 
-		${editUserSegmentURL.setParameter("mvcPath", "html/content_targeting/edit_user_segment.ftl")}
-		${editUserSegmentURL.setParameter("redirect", portalUtil.getCurrentURL(request))}
-
-		<@aui["nav-item"] href="${editUserSegmentURL}" iconCssClass="icon-plus" label="add-user-segment" />
+		<@aui["nav-item"] href="${addUserSegmentURL}" iconCssClass="icon-plus" label="add-user-segment" />
 	</@>
 </@>
 
