@@ -31,9 +31,5 @@ import com.liferay.contenttargeting.service.base.RuleInstanceServiceBaseImpl;
  * @see com.liferay.contenttargeting.service.RuleInstanceServiceUtil
  */
 public class RuleInstanceServiceImpl extends RuleInstanceServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.contenttargeting.service.RuleInstanceServiceUtil} to access the rule instance remote service.
-	 */
+
 }
