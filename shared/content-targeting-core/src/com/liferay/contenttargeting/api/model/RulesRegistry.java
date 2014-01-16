@@ -21,6 +21,6 @@ import java.util.List;
  */
 public interface RulesRegistry {
 
-	public List<Rule> collect();
+	public List<Rule> getRules();
 
 }

@@ -30,7 +30,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class RulesRegistryManager implements RulesRegistry {
 
 	@Override
-	public List<Rule> collect() {
+	public List<Rule> getRules() {
 		return _rules;
 	}
 
