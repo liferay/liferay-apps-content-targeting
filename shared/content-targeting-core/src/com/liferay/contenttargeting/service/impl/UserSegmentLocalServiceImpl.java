@@ -16,12 +16,18 @@ package com.liferay.contenttargeting.service.impl;
 
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.base.UserSegmentLocalServiceBaseImpl;
+import com.liferay.contenttargeting.util.UserSegmentUtil;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -62,6 +68,11 @@ public class UserSegmentLocalServiceImpl
 		UserSegment userSegment = userSegmentPersistence.create(userSegmentId);
 
 		userSegment.setGroupId(groupId);
+
+		AssetCategory assetCategory = addUserSegmentCategory(
+			userId, nameMap, descriptionMap, serviceContext);
+
+		userSegment.setAssetCategoryId(assetCategory.getCategoryId());
 		userSegment.setCompanyId(user.getCompanyId());
 		userSegment.setUserId(user.getUserId());
 		userSegment.setUserName(user.getFullName());
@@ -71,6 +82,17 @@ public class UserSegmentLocalServiceImpl
 		userSegment.setDescriptionMap(descriptionMap);
 
 		userSegmentPersistence.update(userSegment);
+
+		return userSegment;
+	}
+
+	@Override
+	public UserSegment deleteUserSegment(long userSegmentId)
+		throws PortalException, SystemException {
+
+		UserSegment userSegment = userSegmentPersistence.remove(userSegmentId);
+
+		removeUserSegmentCategory(userSegment.getAssetCategoryId());
 
 		return userSegment;
 	}
@@ -106,7 +128,67 @@ public class UserSegmentLocalServiceImpl
 
 		userSegmentPersistence.update(userSegment);
 
+		updateUserSegmentCategory(
+			userSegment.getUserId(), userSegment.getAssetCategoryId(), nameMap,
+			descriptionMap, serviceContext);
+
 		return userSegment;
+	}
+
+	protected AssetCategory addUserSegmentCategory(
+			long userId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long vocabularyId = UserSegmentUtil.getAssetVocabularyId(
+			userId, serviceContext);
+
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
+			userId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
+			descriptionMap, vocabularyId, null, serviceContext);
+
+		return assetCategory;
+	}
+
+	protected void removeUserSegmentCategory(long assetCategoryId)
+		throws PortalException, SystemException {
+
+		int entriesCount =
+			AssetEntryLocalServiceUtil.getAssetCategoryAssetEntriesCount(
+				assetCategoryId);
+
+		if (entriesCount <= 0) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.deleteAssetCategory(
+					assetCategoryId);
+
+			int categoriesCount =
+				AssetCategoryLocalServiceUtil.getVocabularyRootCategoriesCount(
+					assetCategory.getVocabularyId());
+
+			if (categoriesCount <= 0) {
+				AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(
+					assetCategory.getVocabularyId());
+			}
+		}
+	}
+
+	protected AssetCategory updateUserSegmentCategory(
+			long userId, long assetCategoryId, Map<Locale, String> titleMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long vocabularyId = UserSegmentUtil.getAssetVocabularyId(
+				userId, serviceContext);
+
+		AssetCategory assetCategory =
+			AssetCategoryLocalServiceUtil.fetchCategory(assetCategoryId);
+
+		AssetCategoryLocalServiceUtil.updateCategory(
+			userId, assetCategoryId, assetCategory.getParentCategoryId(),
+			titleMap, descriptionMap, vocabularyId, null, serviceContext);
+
+		return assetCategory;
 	}
 
 }
