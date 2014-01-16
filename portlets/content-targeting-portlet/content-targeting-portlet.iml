@@ -15,7 +15,9 @@
           <root url="jar://$MODULE_DIR$/docroot/WEB-INF/lib/content-targeting-core-service.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../../shared/content-targeting-core/service" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -24,7 +26,9 @@
           <root url="jar://$MODULE_DIR$/docroot/WEB-INF/lib/content-targeting-core.jar!/" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../../shared/content-targeting-core/src" />
+        </SOURCES>
       </library>
     </orderEntry>
     <orderEntry type="library" name="portal" level="project" />
