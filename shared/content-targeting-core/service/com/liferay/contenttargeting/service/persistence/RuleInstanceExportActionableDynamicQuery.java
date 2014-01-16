@@ -14,7 +14,7 @@
 
 package com.liferay.contenttargeting.service.persistence;
 
-import com.liferay.contenttargeting.model.Rule;
+import com.liferay.contenttargeting.model.RuleInstance;
 
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,8 +30,9 @@ import com.liferay.portal.util.PortalUtil;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class RuleExportActionableDynamicQuery extends RuleActionableDynamicQuery {
-	public RuleExportActionableDynamicQuery(
+public class RuleInstanceExportActionableDynamicQuery
+	extends RuleInstanceActionableDynamicQuery {
+	public RuleInstanceExportActionableDynamicQuery(
 		PortletDataContext portletDataContext) throws SystemException {
 		_portletDataContext = portletDataContext;
 
@@ -67,14 +68,14 @@ public class RuleExportActionableDynamicQuery extends RuleActionableDynamicQuery
 
 	protected StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
-				Rule.class.getName()));
+				RuleInstance.class.getName()));
 	}
 
 	@Override
 	@SuppressWarnings("unused")
 	protected void performAction(Object object)
 		throws PortalException, SystemException {
-		Rule stagedModel = (Rule)object;
+		RuleInstance stagedModel = (RuleInstance)object;
 
 		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,
 			stagedModel);

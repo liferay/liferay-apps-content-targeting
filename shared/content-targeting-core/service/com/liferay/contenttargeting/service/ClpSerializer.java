@@ -15,7 +15,7 @@
 package com.liferay.contenttargeting.service;
 
 import com.liferay.contenttargeting.model.CTUserClp;
-import com.liferay.contenttargeting.model.RuleClp;
+import com.liferay.contenttargeting.model.RuleInstanceClp;
 import com.liferay.contenttargeting.model.UserSegmentClp;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -108,8 +108,8 @@ public class ClpSerializer {
 			return translateInputCTUser(oldModel);
 		}
 
-		if (oldModelClassName.equals(RuleClp.class.getName())) {
-			return translateInputRule(oldModel);
+		if (oldModelClassName.equals(RuleInstanceClp.class.getName())) {
+			return translateInputRuleInstance(oldModel);
 		}
 
 		if (oldModelClassName.equals(UserSegmentClp.class.getName())) {
@@ -141,10 +141,10 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateInputRule(BaseModel<?> oldModel) {
-		RuleClp oldClpModel = (RuleClp)oldModel;
+	public static Object translateInputRuleInstance(BaseModel<?> oldModel) {
+		RuleInstanceClp oldClpModel = (RuleInstanceClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getRuleRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getRuleInstanceRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -184,8 +184,8 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
-					"com.liferay.contenttargeting.model.impl.RuleImpl")) {
-			return translateOutputRule(oldModel);
+					"com.liferay.contenttargeting.model.impl.RuleInstanceImpl")) {
+			return translateOutputRuleInstance(oldModel);
 		}
 
 		if (oldModelClassName.equals(
@@ -277,8 +277,9 @@ public class ClpSerializer {
 			return new com.liferay.contenttargeting.NoSuchUserException();
 		}
 
-		if (className.equals("com.liferay.contenttargeting.NoSuchRuleException")) {
-			return new com.liferay.contenttargeting.NoSuchRuleException();
+		if (className.equals(
+					"com.liferay.contenttargeting.NoSuchRuleInstanceException")) {
+			return new com.liferay.contenttargeting.NoSuchRuleInstanceException();
 		}
 
 		if (className.equals(
@@ -299,12 +300,12 @@ public class ClpSerializer {
 		return newModel;
 	}
 
-	public static Object translateOutputRule(BaseModel<?> oldModel) {
-		RuleClp newModel = new RuleClp();
+	public static Object translateOutputRuleInstance(BaseModel<?> oldModel) {
+		RuleInstanceClp newModel = new RuleInstanceClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-		newModel.setRuleRemoteModel(oldModel);
+		newModel.setRuleInstanceRemoteModel(oldModel);
 
 		return newModel;
 	}

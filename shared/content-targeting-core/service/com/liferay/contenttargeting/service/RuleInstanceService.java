@@ -24,25 +24,25 @@ import com.liferay.portal.service.BaseService;
 import com.liferay.portal.service.InvokableService;
 
 /**
- * Provides the remote service interface for Rule. Methods of this
+ * Provides the remote service interface for RuleInstance. Methods of this
  * service are expected to have security checks based on the propagated JAAS
  * credentials because this service can be accessed remotely.
  *
  * @author Brian Wing Shun Chan
- * @see RuleServiceUtil
- * @see com.liferay.contenttargeting.service.base.RuleServiceBaseImpl
- * @see com.liferay.contenttargeting.service.impl.RuleServiceImpl
+ * @see RuleInstanceServiceUtil
+ * @see com.liferay.contenttargeting.service.base.RuleInstanceServiceBaseImpl
+ * @see com.liferay.contenttargeting.service.impl.RuleInstanceServiceImpl
  * @generated
  */
 @AccessControlled
 @JSONWebService
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface RuleService extends BaseService, InvokableService {
+public interface RuleInstanceService extends BaseService, InvokableService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link RuleServiceUtil} to access the rule remote service. Add custom service methods to {@link com.liferay.contenttargeting.service.impl.RuleServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link RuleInstanceServiceUtil} to access the rule instance remote service. Add custom service methods to {@link com.liferay.contenttargeting.service.impl.RuleInstanceServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**

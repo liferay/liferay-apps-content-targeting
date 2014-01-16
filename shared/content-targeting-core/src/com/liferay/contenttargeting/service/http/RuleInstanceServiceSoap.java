@@ -16,7 +16,7 @@ package com.liferay.contenttargeting.service.http;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.contenttargeting.service.RuleServiceUtil} service utility. The
+ * {@link com.liferay.contenttargeting.service.RuleInstanceServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -24,10 +24,10 @@ package com.liferay.contenttargeting.service.http;
  * <p>
  * ServiceBuilder follows certain rules in translating the methods. For example,
  * if the method in the service utility returns a {@link java.util.List}, that
- * is translated to an array of {@link com.liferay.contenttargeting.model.RuleSoap}.
+ * is translated to an array of {@link com.liferay.contenttargeting.model.RuleInstanceSoap}.
  * If the method in the service utility returns a
- * {@link com.liferay.contenttargeting.model.Rule}, that is translated to a
- * {@link com.liferay.contenttargeting.model.RuleSoap}. Methods that SOAP cannot
+ * {@link com.liferay.contenttargeting.model.RuleInstance}, that is translated to a
+ * {@link com.liferay.contenttargeting.model.RuleInstanceSoap}. Methods that SOAP cannot
  * safely wire are skipped.
  * </p>
  *
@@ -49,10 +49,10 @@ package com.liferay.contenttargeting.service.http;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see RuleServiceHttp
- * @see com.liferay.contenttargeting.model.RuleSoap
- * @see com.liferay.contenttargeting.service.RuleServiceUtil
+ * @see RuleInstanceServiceHttp
+ * @see com.liferay.contenttargeting.model.RuleInstanceSoap
+ * @see com.liferay.contenttargeting.service.RuleInstanceServiceUtil
  * @generated
  */
-public class RuleServiceSoap {
+public class RuleInstanceServiceSoap {
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.contenttargeting.service.base;
 
-import com.liferay.contenttargeting.service.RuleServiceUtil;
+import com.liferay.contenttargeting.service.RuleInstanceServiceUtil;
 
 import java.util.Arrays;
 
@@ -22,8 +22,8 @@ import java.util.Arrays;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class RuleServiceClpInvoker {
-	public RuleServiceClpInvoker() {
+public class RuleInstanceServiceClpInvoker {
+	public RuleInstanceServiceClpInvoker() {
 		_methodName30 = "getBeanIdentifier";
 
 		_methodParameterTypes30 = new String[] {  };
@@ -37,12 +37,12 @@ public class RuleServiceClpInvoker {
 		Object[] arguments) throws Throwable {
 		if (_methodName30.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes30, parameterTypes)) {
-			return RuleServiceUtil.getBeanIdentifier();
+			return RuleInstanceServiceUtil.getBeanIdentifier();
 		}
 
 		if (_methodName31.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes31, parameterTypes)) {
-			RuleServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+			RuleInstanceServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}

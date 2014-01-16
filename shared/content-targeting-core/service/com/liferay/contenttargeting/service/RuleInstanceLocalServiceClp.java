@@ -20,28 +20,29 @@ import com.liferay.portal.service.InvokableLocalService;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class RuleLocalServiceClp implements RuleLocalService {
-	public RuleLocalServiceClp(InvokableLocalService invokableLocalService) {
+public class RuleInstanceLocalServiceClp implements RuleInstanceLocalService {
+	public RuleInstanceLocalServiceClp(
+		InvokableLocalService invokableLocalService) {
 		_invokableLocalService = invokableLocalService;
 
-		_methodName0 = "addRule";
+		_methodName0 = "addRuleInstance";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.contenttargeting.model.Rule"
+				"com.liferay.contenttargeting.model.RuleInstance"
 			};
 
-		_methodName1 = "createRule";
+		_methodName1 = "createRuleInstance";
 
 		_methodParameterTypes1 = new String[] { "long" };
 
-		_methodName2 = "deleteRule";
+		_methodName2 = "deleteRuleInstance";
 
 		_methodParameterTypes2 = new String[] { "long" };
 
-		_methodName3 = "deleteRule";
+		_methodName3 = "deleteRuleInstance";
 
 		_methodParameterTypes3 = new String[] {
-				"com.liferay.contenttargeting.model.Rule"
+				"com.liferay.contenttargeting.model.RuleInstance"
 			};
 
 		_methodName4 = "dynamicQuery";
@@ -80,19 +81,19 @@ public class RuleLocalServiceClp implements RuleLocalService {
 				"com.liferay.portal.kernel.dao.orm.Projection"
 			};
 
-		_methodName10 = "fetchRule";
+		_methodName10 = "fetchRuleInstance";
 
 		_methodParameterTypes10 = new String[] { "long" };
 
-		_methodName11 = "fetchRuleByUuidAndCompanyId";
+		_methodName11 = "fetchRuleInstanceByUuidAndCompanyId";
 
 		_methodParameterTypes11 = new String[] { "java.lang.String", "long" };
 
-		_methodName12 = "fetchRuleByUuidAndGroupId";
+		_methodName12 = "fetchRuleInstanceByUuidAndGroupId";
 
 		_methodParameterTypes12 = new String[] { "java.lang.String", "long" };
 
-		_methodName13 = "getRule";
+		_methodName13 = "getRuleInstance";
 
 		_methodParameterTypes13 = new String[] { "long" };
 
@@ -100,26 +101,26 @@ public class RuleLocalServiceClp implements RuleLocalService {
 
 		_methodParameterTypes14 = new String[] { "java.io.Serializable" };
 
-		_methodName15 = "getRuleByUuidAndCompanyId";
+		_methodName15 = "getRuleInstanceByUuidAndCompanyId";
 
 		_methodParameterTypes15 = new String[] { "java.lang.String", "long" };
 
-		_methodName16 = "getRuleByUuidAndGroupId";
+		_methodName16 = "getRuleInstanceByUuidAndGroupId";
 
 		_methodParameterTypes16 = new String[] { "java.lang.String", "long" };
 
-		_methodName17 = "getRules";
+		_methodName17 = "getRuleInstances";
 
 		_methodParameterTypes17 = new String[] { "int", "int" };
 
-		_methodName18 = "getRulesCount";
+		_methodName18 = "getRuleInstancesCount";
 
 		_methodParameterTypes18 = new String[] {  };
 
-		_methodName19 = "updateRule";
+		_methodName19 = "updateRuleInstance";
 
 		_methodParameterTypes19 = new String[] {
-				"com.liferay.contenttargeting.model.Rule"
+				"com.liferay.contenttargeting.model.RuleInstance"
 			};
 
 		_methodName20 = "getBeanIdentifier";
@@ -129,32 +130,18 @@ public class RuleLocalServiceClp implements RuleLocalService {
 		_methodName21 = "setBeanIdentifier";
 
 		_methodParameterTypes21 = new String[] { "java.lang.String" };
-
-		_methodName23 = "addRule";
-
-		_methodParameterTypes23 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
-				"com.liferay.portal.service.ServiceContext"
-			};
-
-		_methodName24 = "updateRule";
-
-		_methodParameterTypes24 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
-				"com.liferay.portal.service.ServiceContext"
-			};
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.Rule addRule(
-		com.liferay.contenttargeting.model.Rule rule)
+	public com.liferay.contenttargeting.model.RuleInstance addRuleInstance(
+		com.liferay.contenttargeting.model.RuleInstance ruleInstance)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName0,
 					_methodParameterTypes0,
-					new Object[] { ClpSerializer.translateInput(rule) });
+					new Object[] { ClpSerializer.translateInput(ruleInstance) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -172,16 +159,17 @@ public class RuleLocalServiceClp implements RuleLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.RuleInstance)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.Rule createRule(long ruleId) {
+	public com.liferay.contenttargeting.model.RuleInstance createRuleInstance(
+		long ruleInstanceId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { ruleId });
+					_methodParameterTypes1, new Object[] { ruleInstanceId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -195,18 +183,19 @@ public class RuleLocalServiceClp implements RuleLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.RuleInstance)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.Rule deleteRule(long ruleId)
+	public com.liferay.contenttargeting.model.RuleInstance deleteRuleInstance(
+		long ruleInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { ruleId });
+					_methodParameterTypes2, new Object[] { ruleInstanceId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -228,19 +217,19 @@ public class RuleLocalServiceClp implements RuleLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.RuleInstance)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.Rule deleteRule(
-		com.liferay.contenttargeting.model.Rule rule)
+	public com.liferay.contenttargeting.model.RuleInstance deleteRuleInstance(
+		com.liferay.contenttargeting.model.RuleInstance ruleInstance)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName3,
 					_methodParameterTypes3,
-					new Object[] { ClpSerializer.translateInput(rule) });
+					new Object[] { ClpSerializer.translateInput(ruleInstance) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -258,7 +247,7 @@ public class RuleLocalServiceClp implements RuleLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.RuleInstance)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -459,13 +448,14 @@ public class RuleLocalServiceClp implements RuleLocalService {
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.Rule fetchRule(long ruleId)
+	public com.liferay.contenttargeting.model.RuleInstance fetchRuleInstance(
+		long ruleInstanceId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { ruleId });
+					_methodParameterTypes10, new Object[] { ruleInstanceId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -483,11 +473,11 @@ public class RuleLocalServiceClp implements RuleLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.RuleInstance)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.Rule fetchRuleByUuidAndCompanyId(
+	public com.liferay.contenttargeting.model.RuleInstance fetchRuleInstanceByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -513,11 +503,11 @@ public class RuleLocalServiceClp implements RuleLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.RuleInstance)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.Rule fetchRuleByUuidAndGroupId(
+	public com.liferay.contenttargeting.model.RuleInstance fetchRuleInstanceByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -543,18 +533,19 @@ public class RuleLocalServiceClp implements RuleLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.RuleInstance)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.Rule getRule(long ruleId)
+	public com.liferay.contenttargeting.model.RuleInstance getRuleInstance(
+		long ruleInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName13,
-					_methodParameterTypes13, new Object[] { ruleId });
+					_methodParameterTypes13, new Object[] { ruleInstanceId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -576,7 +567,7 @@ public class RuleLocalServiceClp implements RuleLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.RuleInstance)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -615,7 +606,7 @@ public class RuleLocalServiceClp implements RuleLocalService {
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.Rule getRuleByUuidAndCompanyId(
+	public com.liferay.contenttargeting.model.RuleInstance getRuleInstanceByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -646,11 +637,11 @@ public class RuleLocalServiceClp implements RuleLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.RuleInstance)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.Rule getRuleByUuidAndGroupId(
+	public com.liferay.contenttargeting.model.RuleInstance getRuleInstanceByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -681,11 +672,11 @@ public class RuleLocalServiceClp implements RuleLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.RuleInstance)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<com.liferay.contenttargeting.model.Rule> getRules(
+	public java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -710,11 +701,11 @@ public class RuleLocalServiceClp implements RuleLocalService {
 			}
 		}
 
-		return (java.util.List<com.liferay.contenttargeting.model.Rule>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.liferay.contenttargeting.model.RuleInstance>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public int getRulesCount()
+	public int getRuleInstancesCount()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -742,15 +733,15 @@ public class RuleLocalServiceClp implements RuleLocalService {
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.Rule updateRule(
-		com.liferay.contenttargeting.model.Rule rule)
+	public com.liferay.contenttargeting.model.RuleInstance updateRuleInstance(
+		com.liferay.contenttargeting.model.RuleInstance ruleInstance)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
-					new Object[] { ClpSerializer.translateInput(rule) });
+					new Object[] { ClpSerializer.translateInput(ruleInstance) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -768,7 +759,7 @@ public class RuleLocalServiceClp implements RuleLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.RuleInstance)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -821,94 +812,6 @@ public class RuleLocalServiceClp implements RuleLocalService {
 		throw new UnsupportedOperationException();
 	}
 
-	@Override
-	public com.liferay.contenttargeting.model.Rule addRule(long userId,
-		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
-					new Object[] {
-						userId,
-						
-					ClpSerializer.translateInput(type),
-						
-					ClpSerializer.translateInput(typeSettings),
-						
-					ClpSerializer.translateInput(serviceContext)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public com.liferay.contenttargeting.model.Rule updateRule(long ruleId,
-		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
-					new Object[] {
-						ruleId,
-						
-					ClpSerializer.translateInput(type),
-						
-					ClpSerializer.translateInput(typeSettings),
-						
-					ClpSerializer.translateInput(serviceContext)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.contenttargeting.model.Rule)ClpSerializer.translateOutput(returnObj);
-	}
-
 	private InvokableLocalService _invokableLocalService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -954,8 +857,4 @@ public class RuleLocalServiceClp implements RuleLocalService {
 	private String[] _methodParameterTypes20;
 	private String _methodName21;
 	private String[] _methodParameterTypes21;
-	private String _methodName23;
-	private String[] _methodParameterTypes23;
-	private String _methodName24;
-	private String[] _methodParameterTypes24;
 }

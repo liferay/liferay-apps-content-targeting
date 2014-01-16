@@ -17,18 +17,18 @@ package com.liferay.contenttargeting.model;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the Rule service. Represents a row in the &quot;CT_Rule&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the RuleInstance service. Represents a row in the &quot;CT_RuleInstance&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
- * @see RuleModel
- * @see com.liferay.contenttargeting.model.impl.RuleImpl
- * @see com.liferay.contenttargeting.model.impl.RuleModelImpl
+ * @see RuleInstanceModel
+ * @see com.liferay.contenttargeting.model.impl.RuleInstanceImpl
+ * @see com.liferay.contenttargeting.model.impl.RuleInstanceModelImpl
  * @generated
  */
-public interface Rule extends RuleModel, PersistedModel {
+public interface RuleInstance extends RuleInstanceModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this interface directly. Add methods to {@link com.liferay.contenttargeting.model.impl.RuleImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify this interface directly. Add methods to {@link com.liferay.contenttargeting.model.impl.RuleInstanceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 }

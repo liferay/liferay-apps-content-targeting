@@ -17,7 +17,7 @@ package com.liferay.contenttargeting.service.base;
 import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.service.CTUserLocalService;
 import com.liferay.contenttargeting.service.persistence.CTUserPersistence;
-import com.liferay.contenttargeting.service.persistence.RulePersistence;
+import com.liferay.contenttargeting.service.persistence.RuleInstancePersistence;
 import com.liferay.contenttargeting.service.persistence.UserSegmentPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -390,59 +390,60 @@ public abstract class CTUserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the rule local service.
+	 * Returns the rule instance local service.
 	 *
-	 * @return the rule local service
+	 * @return the rule instance local service
 	 */
-	public com.liferay.contenttargeting.service.RuleLocalService getRuleLocalService() {
-		return ruleLocalService;
+	public com.liferay.contenttargeting.service.RuleInstanceLocalService getRuleInstanceLocalService() {
+		return ruleInstanceLocalService;
 	}
 
 	/**
-	 * Sets the rule local service.
+	 * Sets the rule instance local service.
 	 *
-	 * @param ruleLocalService the rule local service
+	 * @param ruleInstanceLocalService the rule instance local service
 	 */
-	public void setRuleLocalService(
-		com.liferay.contenttargeting.service.RuleLocalService ruleLocalService) {
-		this.ruleLocalService = ruleLocalService;
+	public void setRuleInstanceLocalService(
+		com.liferay.contenttargeting.service.RuleInstanceLocalService ruleInstanceLocalService) {
+		this.ruleInstanceLocalService = ruleInstanceLocalService;
 	}
 
 	/**
-	 * Returns the rule remote service.
+	 * Returns the rule instance remote service.
 	 *
-	 * @return the rule remote service
+	 * @return the rule instance remote service
 	 */
-	public com.liferay.contenttargeting.service.RuleService getRuleService() {
-		return ruleService;
+	public com.liferay.contenttargeting.service.RuleInstanceService getRuleInstanceService() {
+		return ruleInstanceService;
 	}
 
 	/**
-	 * Sets the rule remote service.
+	 * Sets the rule instance remote service.
 	 *
-	 * @param ruleService the rule remote service
+	 * @param ruleInstanceService the rule instance remote service
 	 */
-	public void setRuleService(
-		com.liferay.contenttargeting.service.RuleService ruleService) {
-		this.ruleService = ruleService;
+	public void setRuleInstanceService(
+		com.liferay.contenttargeting.service.RuleInstanceService ruleInstanceService) {
+		this.ruleInstanceService = ruleInstanceService;
 	}
 
 	/**
-	 * Returns the rule persistence.
+	 * Returns the rule instance persistence.
 	 *
-	 * @return the rule persistence
+	 * @return the rule instance persistence
 	 */
-	public RulePersistence getRulePersistence() {
-		return rulePersistence;
+	public RuleInstancePersistence getRuleInstancePersistence() {
+		return ruleInstancePersistence;
 	}
 
 	/**
-	 * Sets the rule persistence.
+	 * Sets the rule instance persistence.
 	 *
-	 * @param rulePersistence the rule persistence
+	 * @param ruleInstancePersistence the rule instance persistence
 	 */
-	public void setRulePersistence(RulePersistence rulePersistence) {
-		this.rulePersistence = rulePersistence;
+	public void setRuleInstancePersistence(
+		RuleInstancePersistence ruleInstancePersistence) {
+		this.ruleInstancePersistence = ruleInstancePersistence;
 	}
 
 	/**
@@ -684,12 +685,12 @@ public abstract class CTUserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.contenttargeting.service.CTUserService ctUserService;
 	@BeanReference(type = CTUserPersistence.class)
 	protected CTUserPersistence ctUserPersistence;
-	@BeanReference(type = com.liferay.contenttargeting.service.RuleLocalService.class)
-	protected com.liferay.contenttargeting.service.RuleLocalService ruleLocalService;
-	@BeanReference(type = com.liferay.contenttargeting.service.RuleService.class)
-	protected com.liferay.contenttargeting.service.RuleService ruleService;
-	@BeanReference(type = RulePersistence.class)
-	protected RulePersistence rulePersistence;
+	@BeanReference(type = com.liferay.contenttargeting.service.RuleInstanceLocalService.class)
+	protected com.liferay.contenttargeting.service.RuleInstanceLocalService ruleInstanceLocalService;
+	@BeanReference(type = com.liferay.contenttargeting.service.RuleInstanceService.class)
+	protected com.liferay.contenttargeting.service.RuleInstanceService ruleInstanceService;
+	@BeanReference(type = RuleInstancePersistence.class)
+	protected RuleInstancePersistence ruleInstancePersistence;
 	@BeanReference(type = com.liferay.contenttargeting.service.UserSegmentLocalService.class)
 	protected com.liferay.contenttargeting.service.UserSegmentLocalService userSegmentLocalService;
 	@BeanReference(type = com.liferay.contenttargeting.service.UserSegmentService.class)

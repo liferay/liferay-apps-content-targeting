@@ -21,33 +21,33 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * This class is used by SOAP remote services, specifically {@link com.liferay.contenttargeting.service.http.RuleServiceSoap}.
+ * This class is used by SOAP remote services, specifically {@link com.liferay.contenttargeting.service.http.RuleInstanceServiceSoap}.
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.contenttargeting.service.http.RuleServiceSoap
+ * @see com.liferay.contenttargeting.service.http.RuleInstanceServiceSoap
  * @generated
  */
-public class RuleSoap implements Serializable {
-	public static RuleSoap toSoapModel(Rule model) {
-		RuleSoap soapModel = new RuleSoap();
+public class RuleInstanceSoap implements Serializable {
+	public static RuleInstanceSoap toSoapModel(RuleInstance model) {
+		RuleInstanceSoap soapModel = new RuleInstanceSoap();
 
 		soapModel.setUuid(model.getUuid());
-		soapModel.setRuleId(model.getRuleId());
+		soapModel.setRuleInstanceId(model.getRuleInstanceId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
-		soapModel.setSegmentId(model.getSegmentId());
-		soapModel.setType(model.getType());
+		soapModel.setRuleKey(model.getRuleKey());
+		soapModel.setUserSegmentId(model.getUserSegmentId());
 		soapModel.setTypeSettings(model.getTypeSettings());
 
 		return soapModel;
 	}
 
-	public static RuleSoap[] toSoapModels(Rule[] models) {
-		RuleSoap[] soapModels = new RuleSoap[models.length];
+	public static RuleInstanceSoap[] toSoapModels(RuleInstance[] models) {
+		RuleInstanceSoap[] soapModels = new RuleInstanceSoap[models.length];
 
 		for (int i = 0; i < models.length; i++) {
 			soapModels[i] = toSoapModel(models[i]);
@@ -56,14 +56,14 @@ public class RuleSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static RuleSoap[][] toSoapModels(Rule[][] models) {
-		RuleSoap[][] soapModels = null;
+	public static RuleInstanceSoap[][] toSoapModels(RuleInstance[][] models) {
+		RuleInstanceSoap[][] soapModels = null;
 
 		if (models.length > 0) {
-			soapModels = new RuleSoap[models.length][models[0].length];
+			soapModels = new RuleInstanceSoap[models.length][models[0].length];
 		}
 		else {
-			soapModels = new RuleSoap[0][0];
+			soapModels = new RuleInstanceSoap[0][0];
 		}
 
 		for (int i = 0; i < models.length; i++) {
@@ -73,25 +73,25 @@ public class RuleSoap implements Serializable {
 		return soapModels;
 	}
 
-	public static RuleSoap[] toSoapModels(List<Rule> models) {
-		List<RuleSoap> soapModels = new ArrayList<RuleSoap>(models.size());
+	public static RuleInstanceSoap[] toSoapModels(List<RuleInstance> models) {
+		List<RuleInstanceSoap> soapModels = new ArrayList<RuleInstanceSoap>(models.size());
 
-		for (Rule model : models) {
+		for (RuleInstance model : models) {
 			soapModels.add(toSoapModel(model));
 		}
 
-		return soapModels.toArray(new RuleSoap[soapModels.size()]);
+		return soapModels.toArray(new RuleInstanceSoap[soapModels.size()]);
 	}
 
-	public RuleSoap() {
+	public RuleInstanceSoap() {
 	}
 
 	public long getPrimaryKey() {
-		return _ruleId;
+		return _ruleInstanceId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setRuleId(pk);
+		setRuleInstanceId(pk);
 	}
 
 	public String getUuid() {
@@ -102,12 +102,12 @@ public class RuleSoap implements Serializable {
 		_uuid = uuid;
 	}
 
-	public long getRuleId() {
-		return _ruleId;
+	public long getRuleInstanceId() {
+		return _ruleInstanceId;
 	}
 
-	public void setRuleId(long ruleId) {
-		_ruleId = ruleId;
+	public void setRuleInstanceId(long ruleInstanceId) {
+		_ruleInstanceId = ruleInstanceId;
 	}
 
 	public long getGroupId() {
@@ -158,20 +158,20 @@ public class RuleSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	public long getSegmentId() {
-		return _segmentId;
+	public String getRuleKey() {
+		return _ruleKey;
 	}
 
-	public void setSegmentId(long segmentId) {
-		_segmentId = segmentId;
+	public void setRuleKey(String ruleKey) {
+		_ruleKey = ruleKey;
 	}
 
-	public String getType() {
-		return _type;
+	public long getUserSegmentId() {
+		return _userSegmentId;
 	}
 
-	public void setType(String type) {
-		_type = type;
+	public void setUserSegmentId(long userSegmentId) {
+		_userSegmentId = userSegmentId;
 	}
 
 	public String getTypeSettings() {
@@ -183,14 +183,14 @@ public class RuleSoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _ruleId;
+	private long _ruleInstanceId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _segmentId;
-	private String _type;
+	private String _ruleKey;
+	private long _userSegmentId;
 	private String _typeSettings;
 }

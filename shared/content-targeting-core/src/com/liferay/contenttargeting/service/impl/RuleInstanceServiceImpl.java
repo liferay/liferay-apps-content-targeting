@@ -14,21 +14,26 @@
 
 package com.liferay.contenttargeting.service.impl;
 
-import com.liferay.contenttargeting.service.base.RuleServiceBaseImpl;
+import com.liferay.contenttargeting.service.base.RuleInstanceServiceBaseImpl;
 
 /**
- * The implementation of the rule remote service.
+ * The implementation of the rule instance remote service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.contenttargeting.service.RuleService} interface.
+ * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.contenttargeting.service.RuleInstanceService} interface.
  *
  * <p>
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.contenttargeting.service.base.RuleServiceBaseImpl
- * @see com.liferay.contenttargeting.service.RuleServiceUtil
+ * @see com.liferay.contenttargeting.service.base.RuleInstanceServiceBaseImpl
+ * @see com.liferay.contenttargeting.service.RuleInstanceServiceUtil
  */
-public class RuleServiceImpl extends RuleServiceBaseImpl {
+public class RuleInstanceServiceImpl extends RuleInstanceServiceBaseImpl {
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this interface directly. Always use {@link com.liferay.contenttargeting.service.RuleInstanceServiceUtil} to access the rule instance remote service.
+	 */
 }

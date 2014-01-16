@@ -17,16 +17,16 @@ package com.liferay.contenttargeting.service;
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
- * Provides a wrapper for {@link RuleService}.
+ * Provides a wrapper for {@link RuleInstanceService}.
  *
  * @author Brian Wing Shun Chan
- * @see RuleService
+ * @see RuleInstanceService
  * @generated
  */
-public class RuleServiceWrapper implements RuleService,
-	ServiceWrapper<RuleService> {
-	public RuleServiceWrapper(RuleService ruleService) {
-		_ruleService = ruleService;
+public class RuleInstanceServiceWrapper implements RuleInstanceService,
+	ServiceWrapper<RuleInstanceService> {
+	public RuleInstanceServiceWrapper(RuleInstanceService ruleInstanceService) {
+		_ruleInstanceService = ruleInstanceService;
 	}
 
 	/**
@@ -36,7 +36,7 @@ public class RuleServiceWrapper implements RuleService,
 	*/
 	@Override
 	public java.lang.String getBeanIdentifier() {
-		return _ruleService.getBeanIdentifier();
+		return _ruleInstanceService.getBeanIdentifier();
 	}
 
 	/**
@@ -46,39 +46,40 @@ public class RuleServiceWrapper implements RuleService,
 	*/
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_ruleService.setBeanIdentifier(beanIdentifier);
+		_ruleInstanceService.setBeanIdentifier(beanIdentifier);
 	}
 
 	@Override
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
-		return _ruleService.invokeMethod(name, parameterTypes, arguments);
+		return _ruleInstanceService.invokeMethod(name, parameterTypes, arguments);
 	}
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
-	public RuleService getWrappedRuleService() {
-		return _ruleService;
+	public RuleInstanceService getWrappedRuleInstanceService() {
+		return _ruleInstanceService;
 	}
 
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
-	public void setWrappedRuleService(RuleService ruleService) {
-		_ruleService = ruleService;
+	public void setWrappedRuleInstanceService(
+		RuleInstanceService ruleInstanceService) {
+		_ruleInstanceService = ruleInstanceService;
 	}
 
 	@Override
-	public RuleService getWrappedService() {
-		return _ruleService;
+	public RuleInstanceService getWrappedService() {
+		return _ruleInstanceService;
 	}
 
 	@Override
-	public void setWrappedService(RuleService ruleService) {
-		_ruleService = ruleService;
+	public void setWrappedService(RuleInstanceService ruleInstanceService) {
+		_ruleInstanceService = ruleInstanceService;
 	}
 
-	private RuleService _ruleService;
+	private RuleInstanceService _ruleInstanceService;
 }

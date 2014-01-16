@@ -4,9 +4,9 @@
 	<bean id="com.liferay.contenttargeting.service.CTUserLocalService" class="com.liferay.contenttargeting.service.impl.CTUserLocalServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.CTUserService" class="com.liferay.contenttargeting.service.impl.CTUserServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.persistence.CTUserPersistence" class="com.liferay.contenttargeting.service.persistence.CTUserPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.contenttargeting.service.RuleLocalService" class="com.liferay.contenttargeting.service.impl.RuleLocalServiceImpl" />
-	<bean id="com.liferay.contenttargeting.service.RuleService" class="com.liferay.contenttargeting.service.impl.RuleServiceImpl" />
-	<bean id="com.liferay.contenttargeting.service.persistence.RulePersistence" class="com.liferay.contenttargeting.service.persistence.RulePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.contenttargeting.service.RuleInstanceLocalService" class="com.liferay.contenttargeting.service.impl.RuleInstanceLocalServiceImpl" />
+	<bean id="com.liferay.contenttargeting.service.RuleInstanceService" class="com.liferay.contenttargeting.service.impl.RuleInstanceServiceImpl" />
+	<bean id="com.liferay.contenttargeting.service.persistence.RuleInstancePersistence" class="com.liferay.contenttargeting.service.persistence.RuleInstancePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.contenttargeting.service.UserSegmentLocalService" class="com.liferay.contenttargeting.service.impl.UserSegmentLocalServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.UserSegmentService" class="com.liferay.contenttargeting.service.impl.UserSegmentServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.persistence.UserSegmentPersistence" class="com.liferay.contenttargeting.service.persistence.UserSegmentPersistenceImpl" parent="basePersistence" />

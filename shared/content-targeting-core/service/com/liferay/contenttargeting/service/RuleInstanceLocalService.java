@@ -24,67 +24,69 @@ import com.liferay.portal.service.InvokableLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
 
 /**
- * Provides the local service interface for Rule. Methods of this
+ * Provides the local service interface for RuleInstance. Methods of this
  * service will not have security checks based on the propagated JAAS
  * credentials because this service can only be accessed from within the same
  * VM.
  *
  * @author Brian Wing Shun Chan
- * @see RuleLocalServiceUtil
- * @see com.liferay.contenttargeting.service.base.RuleLocalServiceBaseImpl
- * @see com.liferay.contenttargeting.service.impl.RuleLocalServiceImpl
+ * @see RuleInstanceLocalServiceUtil
+ * @see com.liferay.contenttargeting.service.base.RuleInstanceLocalServiceBaseImpl
+ * @see com.liferay.contenttargeting.service.impl.RuleInstanceLocalServiceImpl
  * @generated
  */
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface RuleLocalService extends BaseLocalService, InvokableLocalService,
-	PersistedModelLocalService {
+public interface RuleInstanceLocalService extends BaseLocalService,
+	InvokableLocalService, PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link RuleLocalServiceUtil} to access the rule local service. Add custom service methods to {@link com.liferay.contenttargeting.service.impl.RuleLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
+	 * Never modify or reference this interface directly. Always use {@link RuleInstanceLocalServiceUtil} to access the rule instance local service. Add custom service methods to {@link com.liferay.contenttargeting.service.impl.RuleInstanceLocalServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
-	* Adds the rule to the database. Also notifies the appropriate model listeners.
+	* Adds the rule instance to the database. Also notifies the appropriate model listeners.
 	*
-	* @param rule the rule
-	* @return the rule that was added
+	* @param ruleInstance the rule instance
+	* @return the rule instance that was added
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.model.Rule addRule(
-		com.liferay.contenttargeting.model.Rule rule)
+	public com.liferay.contenttargeting.model.RuleInstance addRuleInstance(
+		com.liferay.contenttargeting.model.RuleInstance ruleInstance)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Creates a new rule with the primary key. Does not add the rule to the database.
+	* Creates a new rule instance with the primary key. Does not add the rule instance to the database.
 	*
-	* @param ruleId the primary key for the new rule
-	* @return the new rule
+	* @param ruleInstanceId the primary key for the new rule instance
+	* @return the new rule instance
 	*/
-	public com.liferay.contenttargeting.model.Rule createRule(long ruleId);
+	public com.liferay.contenttargeting.model.RuleInstance createRuleInstance(
+		long ruleInstanceId);
 
 	/**
-	* Deletes the rule with the primary key from the database. Also notifies the appropriate model listeners.
+	* Deletes the rule instance with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param ruleId the primary key of the rule
-	* @return the rule that was removed
-	* @throws PortalException if a rule with the primary key could not be found
+	* @param ruleInstanceId the primary key of the rule instance
+	* @return the rule instance that was removed
+	* @throws PortalException if a rule instance with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.model.Rule deleteRule(long ruleId)
+	public com.liferay.contenttargeting.model.RuleInstance deleteRuleInstance(
+		long ruleInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Deletes the rule from the database. Also notifies the appropriate model listeners.
+	* Deletes the rule instance from the database. Also notifies the appropriate model listeners.
 	*
-	* @param rule the rule
-	* @return the rule that was removed
+	* @param ruleInstance the rule instance
+	* @return the rule instance that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.model.Rule deleteRule(
-		com.liferay.contenttargeting.model.Rule rule)
+	public com.liferay.contenttargeting.model.RuleInstance deleteRuleInstance(
+		com.liferay.contenttargeting.model.RuleInstance ruleInstance)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
@@ -105,7 +107,7 @@ public interface RuleLocalService extends BaseLocalService, InvokableLocalServic
 	* Performs a dynamic query on the database and returns a range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.RuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -123,7 +125,7 @@ public interface RuleLocalService extends BaseLocalService, InvokableLocalServic
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.RuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param dynamicQuery the dynamic query
@@ -165,45 +167,47 @@ public interface RuleLocalService extends BaseLocalService, InvokableLocalServic
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.contenttargeting.model.Rule fetchRule(long ruleId)
+	public com.liferay.contenttargeting.model.RuleInstance fetchRuleInstance(
+		long ruleInstanceId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the rule with the matching UUID and company.
+	* Returns the rule instance with the matching UUID and company.
 	*
-	* @param uuid the rule's UUID
+	* @param uuid the rule instance's UUID
 	* @param companyId the primary key of the company
-	* @return the matching rule, or <code>null</code> if a matching rule could not be found
+	* @return the matching rule instance, or <code>null</code> if a matching rule instance could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.contenttargeting.model.Rule fetchRuleByUuidAndCompanyId(
+	public com.liferay.contenttargeting.model.RuleInstance fetchRuleInstanceByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the rule matching the UUID and group.
+	* Returns the rule instance matching the UUID and group.
 	*
-	* @param uuid the rule's UUID
+	* @param uuid the rule instance's UUID
 	* @param groupId the primary key of the group
-	* @return the matching rule, or <code>null</code> if a matching rule could not be found
+	* @return the matching rule instance, or <code>null</code> if a matching rule instance could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.contenttargeting.model.Rule fetchRuleByUuidAndGroupId(
+	public com.liferay.contenttargeting.model.RuleInstance fetchRuleInstanceByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the rule with the primary key.
+	* Returns the rule instance with the primary key.
 	*
-	* @param ruleId the primary key of the rule
-	* @return the rule
-	* @throws PortalException if a rule with the primary key could not be found
+	* @param ruleInstanceId the primary key of the rule instance
+	* @return the rule instance
+	* @throws PortalException if a rule instance with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.contenttargeting.model.Rule getRule(long ruleId)
+	public com.liferay.contenttargeting.model.RuleInstance getRuleInstance(
+		long ruleInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -215,71 +219,71 @@ public interface RuleLocalService extends BaseLocalService, InvokableLocalServic
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the rule with the matching UUID and company.
+	* Returns the rule instance with the matching UUID and company.
 	*
-	* @param uuid the rule's UUID
+	* @param uuid the rule instance's UUID
 	* @param companyId the primary key of the company
-	* @return the matching rule
-	* @throws PortalException if a matching rule could not be found
+	* @return the matching rule instance
+	* @throws PortalException if a matching rule instance could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.contenttargeting.model.Rule getRuleByUuidAndCompanyId(
+	public com.liferay.contenttargeting.model.RuleInstance getRuleInstanceByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the rule matching the UUID and group.
+	* Returns the rule instance matching the UUID and group.
 	*
-	* @param uuid the rule's UUID
+	* @param uuid the rule instance's UUID
 	* @param groupId the primary key of the group
-	* @return the matching rule
-	* @throws PortalException if a matching rule could not be found
+	* @return the matching rule instance
+	* @throws PortalException if a matching rule instance could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.contenttargeting.model.Rule getRuleByUuidAndGroupId(
+	public com.liferay.contenttargeting.model.RuleInstance getRuleInstanceByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the rules.
+	* Returns a range of all the rule instances.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.RuleModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param start the lower bound of the range of rules
-	* @param end the upper bound of the range of rules (not inclusive)
-	* @return the range of rules
+	* @param start the lower bound of the range of rule instances
+	* @param end the upper bound of the range of rule instances (not inclusive)
+	* @return the range of rule instances
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.contenttargeting.model.Rule> getRules(
+	public java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of rules.
+	* Returns the number of rule instances.
 	*
-	* @return the number of rules
+	* @return the number of rule instances
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getRulesCount()
+	public int getRuleInstancesCount()
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Updates the rule in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	* Updates the rule instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
-	* @param rule the rule
-	* @return the rule that was updated
+	* @param ruleInstance the rule instance
+	* @return the rule instance that was updated
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.model.Rule updateRule(
-		com.liferay.contenttargeting.model.Rule rule)
+	public com.liferay.contenttargeting.model.RuleInstance updateRuleInstance(
+		com.liferay.contenttargeting.model.RuleInstance ruleInstance)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -300,16 +304,4 @@ public interface RuleLocalService extends BaseLocalService, InvokableLocalServic
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
-
-	public com.liferay.contenttargeting.model.Rule addRule(long userId,
-		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.contenttargeting.model.Rule updateRule(long ruleId,
-		java.lang.String type, java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
 }

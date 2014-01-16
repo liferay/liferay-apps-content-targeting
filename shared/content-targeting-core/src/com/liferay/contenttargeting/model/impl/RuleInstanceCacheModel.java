@@ -14,7 +14,7 @@
 
 package com.liferay.contenttargeting.model.impl;
 
-import com.liferay.contenttargeting.model.Rule;
+import com.liferay.contenttargeting.model.RuleInstance;
 
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -28,21 +28,22 @@ import java.io.ObjectOutput;
 import java.util.Date;
 
 /**
- * The cache model class for representing Rule in entity cache.
+ * The cache model class for representing RuleInstance in entity cache.
  *
  * @author Brian Wing Shun Chan
- * @see Rule
+ * @see RuleInstance
  * @generated
  */
-public class RuleCacheModel implements CacheModel<Rule>, Externalizable {
+public class RuleInstanceCacheModel implements CacheModel<RuleInstance>,
+	Externalizable {
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(23);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", ruleId=");
-		sb.append(ruleId);
+		sb.append(", ruleInstanceId=");
+		sb.append(ruleInstanceId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -55,10 +56,10 @@ public class RuleCacheModel implements CacheModel<Rule>, Externalizable {
 		sb.append(createDate);
 		sb.append(", modifiedDate=");
 		sb.append(modifiedDate);
-		sb.append(", segmentId=");
-		sb.append(segmentId);
-		sb.append(", type=");
-		sb.append(type);
+		sb.append(", ruleKey=");
+		sb.append(ruleKey);
+		sb.append(", userSegmentId=");
+		sb.append(userSegmentId);
 		sb.append(", typeSettings=");
 		sb.append(typeSettings);
 		sb.append("}");
@@ -67,75 +68,75 @@ public class RuleCacheModel implements CacheModel<Rule>, Externalizable {
 	}
 
 	@Override
-	public Rule toEntityModel() {
-		RuleImpl ruleImpl = new RuleImpl();
+	public RuleInstance toEntityModel() {
+		RuleInstanceImpl ruleInstanceImpl = new RuleInstanceImpl();
 
 		if (uuid == null) {
-			ruleImpl.setUuid(StringPool.BLANK);
+			ruleInstanceImpl.setUuid(StringPool.BLANK);
 		}
 		else {
-			ruleImpl.setUuid(uuid);
+			ruleInstanceImpl.setUuid(uuid);
 		}
 
-		ruleImpl.setRuleId(ruleId);
-		ruleImpl.setGroupId(groupId);
-		ruleImpl.setCompanyId(companyId);
-		ruleImpl.setUserId(userId);
+		ruleInstanceImpl.setRuleInstanceId(ruleInstanceId);
+		ruleInstanceImpl.setGroupId(groupId);
+		ruleInstanceImpl.setCompanyId(companyId);
+		ruleInstanceImpl.setUserId(userId);
 
 		if (userName == null) {
-			ruleImpl.setUserName(StringPool.BLANK);
+			ruleInstanceImpl.setUserName(StringPool.BLANK);
 		}
 		else {
-			ruleImpl.setUserName(userName);
+			ruleInstanceImpl.setUserName(userName);
 		}
 
 		if (createDate == Long.MIN_VALUE) {
-			ruleImpl.setCreateDate(null);
+			ruleInstanceImpl.setCreateDate(null);
 		}
 		else {
-			ruleImpl.setCreateDate(new Date(createDate));
+			ruleInstanceImpl.setCreateDate(new Date(createDate));
 		}
 
 		if (modifiedDate == Long.MIN_VALUE) {
-			ruleImpl.setModifiedDate(null);
+			ruleInstanceImpl.setModifiedDate(null);
 		}
 		else {
-			ruleImpl.setModifiedDate(new Date(modifiedDate));
+			ruleInstanceImpl.setModifiedDate(new Date(modifiedDate));
 		}
 
-		ruleImpl.setSegmentId(segmentId);
-
-		if (type == null) {
-			ruleImpl.setType(StringPool.BLANK);
+		if (ruleKey == null) {
+			ruleInstanceImpl.setRuleKey(StringPool.BLANK);
 		}
 		else {
-			ruleImpl.setType(type);
+			ruleInstanceImpl.setRuleKey(ruleKey);
 		}
+
+		ruleInstanceImpl.setUserSegmentId(userSegmentId);
 
 		if (typeSettings == null) {
-			ruleImpl.setTypeSettings(StringPool.BLANK);
+			ruleInstanceImpl.setTypeSettings(StringPool.BLANK);
 		}
 		else {
-			ruleImpl.setTypeSettings(typeSettings);
+			ruleInstanceImpl.setTypeSettings(typeSettings);
 		}
 
-		ruleImpl.resetOriginalValues();
+		ruleInstanceImpl.resetOriginalValues();
 
-		return ruleImpl;
+		return ruleInstanceImpl;
 	}
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
-		ruleId = objectInput.readLong();
+		ruleInstanceId = objectInput.readLong();
 		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
 		createDate = objectInput.readLong();
 		modifiedDate = objectInput.readLong();
-		segmentId = objectInput.readLong();
-		type = objectInput.readUTF();
+		ruleKey = objectInput.readUTF();
+		userSegmentId = objectInput.readLong();
 		typeSettings = objectInput.readUTF();
 	}
 
@@ -149,7 +150,7 @@ public class RuleCacheModel implements CacheModel<Rule>, Externalizable {
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(ruleId);
+		objectOutput.writeLong(ruleInstanceId);
 		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
@@ -163,14 +164,15 @@ public class RuleCacheModel implements CacheModel<Rule>, Externalizable {
 
 		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(modifiedDate);
-		objectOutput.writeLong(segmentId);
 
-		if (type == null) {
+		if (ruleKey == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
 		else {
-			objectOutput.writeUTF(type);
+			objectOutput.writeUTF(ruleKey);
 		}
+
+		objectOutput.writeLong(userSegmentId);
 
 		if (typeSettings == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -181,14 +183,14 @@ public class RuleCacheModel implements CacheModel<Rule>, Externalizable {
 	}
 
 	public String uuid;
-	public long ruleId;
+	public long ruleInstanceId;
 	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;
 	public long createDate;
 	public long modifiedDate;
-	public long segmentId;
-	public String type;
+	public String ruleKey;
+	public long userSegmentId;
 	public String typeSettings;
 }

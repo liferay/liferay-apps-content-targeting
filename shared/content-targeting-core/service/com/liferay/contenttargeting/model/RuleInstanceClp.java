@@ -15,7 +15,7 @@
 package com.liferay.contenttargeting.model;
 
 import com.liferay.contenttargeting.service.ClpSerializer;
-import com.liferay.contenttargeting.service.RuleLocalServiceUtil;
+import com.liferay.contenttargeting.service.RuleInstanceLocalServiceUtil;
 
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -37,33 +37,34 @@ import java.util.Map;
 /**
  * @author Brian Wing Shun Chan
  */
-public class RuleClp extends BaseModelImpl<Rule> implements Rule {
-	public RuleClp() {
+public class RuleInstanceClp extends BaseModelImpl<RuleInstance>
+	implements RuleInstance {
+	public RuleInstanceClp() {
 	}
 
 	@Override
 	public Class<?> getModelClass() {
-		return Rule.class;
+		return RuleInstance.class;
 	}
 
 	@Override
 	public String getModelClassName() {
-		return Rule.class.getName();
+		return RuleInstance.class.getName();
 	}
 
 	@Override
 	public long getPrimaryKey() {
-		return _ruleId;
+		return _ruleInstanceId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setRuleId(primaryKey);
+		setRuleInstanceId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _ruleId;
+		return _ruleInstanceId;
 	}
 
 	@Override
@@ -76,15 +77,15 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("ruleId", getRuleId());
+		attributes.put("ruleInstanceId", getRuleInstanceId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
-		attributes.put("segmentId", getSegmentId());
-		attributes.put("type", getType());
+		attributes.put("ruleKey", getRuleKey());
+		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("typeSettings", getTypeSettings());
 
 		return attributes;
@@ -98,10 +99,10 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 			setUuid(uuid);
 		}
 
-		Long ruleId = (Long)attributes.get("ruleId");
+		Long ruleInstanceId = (Long)attributes.get("ruleInstanceId");
 
-		if (ruleId != null) {
-			setRuleId(ruleId);
+		if (ruleInstanceId != null) {
+			setRuleInstanceId(ruleInstanceId);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -140,16 +141,16 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 			setModifiedDate(modifiedDate);
 		}
 
-		Long segmentId = (Long)attributes.get("segmentId");
+		String ruleKey = (String)attributes.get("ruleKey");
 
-		if (segmentId != null) {
-			setSegmentId(segmentId);
+		if (ruleKey != null) {
+			setRuleKey(ruleKey);
 		}
 
-		String type = (String)attributes.get("type");
+		Long userSegmentId = (Long)attributes.get("userSegmentId");
 
-		if (type != null) {
-			setType(type);
+		if (userSegmentId != null) {
+			setUserSegmentId(userSegmentId);
 		}
 
 		String typeSettings = (String)attributes.get("typeSettings");
@@ -168,13 +169,13 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	public void setUuid(String uuid) {
 		_uuid = uuid;
 
-		if (_ruleRemoteModel != null) {
+		if (_ruleInstanceRemoteModel != null) {
 			try {
-				Class<?> clazz = _ruleRemoteModel.getClass();
+				Class<?> clazz = _ruleInstanceRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setUuid", String.class);
 
-				method.invoke(_ruleRemoteModel, uuid);
+				method.invoke(_ruleInstanceRemoteModel, uuid);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -183,21 +184,21 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	}
 
 	@Override
-	public long getRuleId() {
-		return _ruleId;
+	public long getRuleInstanceId() {
+		return _ruleInstanceId;
 	}
 
 	@Override
-	public void setRuleId(long ruleId) {
-		_ruleId = ruleId;
+	public void setRuleInstanceId(long ruleInstanceId) {
+		_ruleInstanceId = ruleInstanceId;
 
-		if (_ruleRemoteModel != null) {
+		if (_ruleInstanceRemoteModel != null) {
 			try {
-				Class<?> clazz = _ruleRemoteModel.getClass();
+				Class<?> clazz = _ruleInstanceRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setRuleId", long.class);
+				Method method = clazz.getMethod("setRuleInstanceId", long.class);
 
-				method.invoke(_ruleRemoteModel, ruleId);
+				method.invoke(_ruleInstanceRemoteModel, ruleInstanceId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -214,13 +215,13 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	public void setGroupId(long groupId) {
 		_groupId = groupId;
 
-		if (_ruleRemoteModel != null) {
+		if (_ruleInstanceRemoteModel != null) {
 			try {
-				Class<?> clazz = _ruleRemoteModel.getClass();
+				Class<?> clazz = _ruleInstanceRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setGroupId", long.class);
 
-				method.invoke(_ruleRemoteModel, groupId);
+				method.invoke(_ruleInstanceRemoteModel, groupId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -237,13 +238,13 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	public void setCompanyId(long companyId) {
 		_companyId = companyId;
 
-		if (_ruleRemoteModel != null) {
+		if (_ruleInstanceRemoteModel != null) {
 			try {
-				Class<?> clazz = _ruleRemoteModel.getClass();
+				Class<?> clazz = _ruleInstanceRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setCompanyId", long.class);
 
-				method.invoke(_ruleRemoteModel, companyId);
+				method.invoke(_ruleInstanceRemoteModel, companyId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -260,13 +261,13 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	public void setUserId(long userId) {
 		_userId = userId;
 
-		if (_ruleRemoteModel != null) {
+		if (_ruleInstanceRemoteModel != null) {
 			try {
-				Class<?> clazz = _ruleRemoteModel.getClass();
+				Class<?> clazz = _ruleInstanceRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setUserId", long.class);
 
-				method.invoke(_ruleRemoteModel, userId);
+				method.invoke(_ruleInstanceRemoteModel, userId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -293,13 +294,13 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	public void setUserName(String userName) {
 		_userName = userName;
 
-		if (_ruleRemoteModel != null) {
+		if (_ruleInstanceRemoteModel != null) {
 			try {
-				Class<?> clazz = _ruleRemoteModel.getClass();
+				Class<?> clazz = _ruleInstanceRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setUserName", String.class);
 
-				method.invoke(_ruleRemoteModel, userName);
+				method.invoke(_ruleInstanceRemoteModel, userName);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -316,13 +317,13 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	public void setCreateDate(Date createDate) {
 		_createDate = createDate;
 
-		if (_ruleRemoteModel != null) {
+		if (_ruleInstanceRemoteModel != null) {
 			try {
-				Class<?> clazz = _ruleRemoteModel.getClass();
+				Class<?> clazz = _ruleInstanceRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setCreateDate", Date.class);
 
-				method.invoke(_ruleRemoteModel, createDate);
+				method.invoke(_ruleInstanceRemoteModel, createDate);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -339,13 +340,13 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	public void setModifiedDate(Date modifiedDate) {
 		_modifiedDate = modifiedDate;
 
-		if (_ruleRemoteModel != null) {
+		if (_ruleInstanceRemoteModel != null) {
 			try {
-				Class<?> clazz = _ruleRemoteModel.getClass();
+				Class<?> clazz = _ruleInstanceRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setModifiedDate", Date.class);
 
-				method.invoke(_ruleRemoteModel, modifiedDate);
+				method.invoke(_ruleInstanceRemoteModel, modifiedDate);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -354,21 +355,21 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	}
 
 	@Override
-	public long getSegmentId() {
-		return _segmentId;
+	public String getRuleKey() {
+		return _ruleKey;
 	}
 
 	@Override
-	public void setSegmentId(long segmentId) {
-		_segmentId = segmentId;
+	public void setRuleKey(String ruleKey) {
+		_ruleKey = ruleKey;
 
-		if (_ruleRemoteModel != null) {
+		if (_ruleInstanceRemoteModel != null) {
 			try {
-				Class<?> clazz = _ruleRemoteModel.getClass();
+				Class<?> clazz = _ruleInstanceRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setSegmentId", long.class);
+				Method method = clazz.getMethod("setRuleKey", String.class);
 
-				method.invoke(_ruleRemoteModel, segmentId);
+				method.invoke(_ruleInstanceRemoteModel, ruleKey);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -377,21 +378,21 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	}
 
 	@Override
-	public String getType() {
-		return _type;
+	public long getUserSegmentId() {
+		return _userSegmentId;
 	}
 
 	@Override
-	public void setType(String type) {
-		_type = type;
+	public void setUserSegmentId(long userSegmentId) {
+		_userSegmentId = userSegmentId;
 
-		if (_ruleRemoteModel != null) {
+		if (_ruleInstanceRemoteModel != null) {
 			try {
-				Class<?> clazz = _ruleRemoteModel.getClass();
+				Class<?> clazz = _ruleInstanceRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setType", String.class);
+				Method method = clazz.getMethod("setUserSegmentId", long.class);
 
-				method.invoke(_ruleRemoteModel, type);
+				method.invoke(_ruleInstanceRemoteModel, userSegmentId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -408,13 +409,13 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	public void setTypeSettings(String typeSettings) {
 		_typeSettings = typeSettings;
 
-		if (_ruleRemoteModel != null) {
+		if (_ruleInstanceRemoteModel != null) {
 			try {
-				Class<?> clazz = _ruleRemoteModel.getClass();
+				Class<?> clazz = _ruleInstanceRemoteModel.getClass();
 
 				Method method = clazz.getMethod("setTypeSettings", String.class);
 
-				method.invoke(_ruleRemoteModel, typeSettings);
+				method.invoke(_ruleInstanceRemoteModel, typeSettings);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -425,15 +426,15 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
-				Rule.class.getName()));
+				RuleInstance.class.getName()));
 	}
 
-	public BaseModel<?> getRuleRemoteModel() {
-		return _ruleRemoteModel;
+	public BaseModel<?> getRuleInstanceRemoteModel() {
+		return _ruleInstanceRemoteModel;
 	}
 
-	public void setRuleRemoteModel(BaseModel<?> ruleRemoteModel) {
-		_ruleRemoteModel = ruleRemoteModel;
+	public void setRuleInstanceRemoteModel(BaseModel<?> ruleInstanceRemoteModel) {
+		_ruleInstanceRemoteModel = ruleInstanceRemoteModel;
 	}
 
 	public Object invokeOnRemoteModel(String methodName,
@@ -447,7 +448,7 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 			}
 		}
 
-		Class<?> remoteModelClass = _ruleRemoteModel.getClass();
+		Class<?> remoteModelClass = _ruleInstanceRemoteModel.getClass();
 
 		ClassLoader remoteModelClassLoader = remoteModelClass.getClassLoader();
 
@@ -467,7 +468,7 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 		Method method = remoteModelClass.getMethod(methodName,
 				remoteParameterTypes);
 
-		Object returnValue = method.invoke(_ruleRemoteModel,
+		Object returnValue = method.invoke(_ruleInstanceRemoteModel,
 				remoteParameterValues);
 
 		if (returnValue != null) {
@@ -480,43 +481,43 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	@Override
 	public void persist() throws SystemException {
 		if (this.isNew()) {
-			RuleLocalServiceUtil.addRule(this);
+			RuleInstanceLocalServiceUtil.addRuleInstance(this);
 		}
 		else {
-			RuleLocalServiceUtil.updateRule(this);
+			RuleInstanceLocalServiceUtil.updateRuleInstance(this);
 		}
 	}
 
 	@Override
-	public Rule toEscapedModel() {
-		return (Rule)ProxyUtil.newProxyInstance(Rule.class.getClassLoader(),
-			new Class[] { Rule.class }, new AutoEscapeBeanHandler(this));
+	public RuleInstance toEscapedModel() {
+		return (RuleInstance)ProxyUtil.newProxyInstance(RuleInstance.class.getClassLoader(),
+			new Class[] { RuleInstance.class }, new AutoEscapeBeanHandler(this));
 	}
 
 	@Override
 	public Object clone() {
-		RuleClp clone = new RuleClp();
+		RuleInstanceClp clone = new RuleInstanceClp();
 
 		clone.setUuid(getUuid());
-		clone.setRuleId(getRuleId());
+		clone.setRuleInstanceId(getRuleInstanceId());
 		clone.setGroupId(getGroupId());
 		clone.setCompanyId(getCompanyId());
 		clone.setUserId(getUserId());
 		clone.setUserName(getUserName());
 		clone.setCreateDate(getCreateDate());
 		clone.setModifiedDate(getModifiedDate());
-		clone.setSegmentId(getSegmentId());
-		clone.setType(getType());
+		clone.setRuleKey(getRuleKey());
+		clone.setUserSegmentId(getUserSegmentId());
 		clone.setTypeSettings(getTypeSettings());
 
 		return clone;
 	}
 
 	@Override
-	public int compareTo(Rule rule) {
+	public int compareTo(RuleInstance ruleInstance) {
 		int value = 0;
 
-		value = getType().compareTo(rule.getType());
+		value = getRuleKey().compareTo(ruleInstance.getRuleKey());
 
 		value = value * -1;
 
@@ -533,13 +534,13 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 			return true;
 		}
 
-		if (!(obj instanceof RuleClp)) {
+		if (!(obj instanceof RuleInstanceClp)) {
 			return false;
 		}
 
-		RuleClp rule = (RuleClp)obj;
+		RuleInstanceClp ruleInstance = (RuleInstanceClp)obj;
 
-		long primaryKey = rule.getPrimaryKey();
+		long primaryKey = ruleInstance.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -560,8 +561,8 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
-		sb.append(", ruleId=");
-		sb.append(getRuleId());
+		sb.append(", ruleInstanceId=");
+		sb.append(getRuleInstanceId());
 		sb.append(", groupId=");
 		sb.append(getGroupId());
 		sb.append(", companyId=");
@@ -574,10 +575,10 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 		sb.append(getCreateDate());
 		sb.append(", modifiedDate=");
 		sb.append(getModifiedDate());
-		sb.append(", segmentId=");
-		sb.append(getSegmentId());
-		sb.append(", type=");
-		sb.append(getType());
+		sb.append(", ruleKey=");
+		sb.append(getRuleKey());
+		sb.append(", userSegmentId=");
+		sb.append(getUserSegmentId());
 		sb.append(", typeSettings=");
 		sb.append(getTypeSettings());
 		sb.append("}");
@@ -590,7 +591,7 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
-		sb.append("com.liferay.contenttargeting.model.Rule");
+		sb.append("com.liferay.contenttargeting.model.RuleInstance");
 		sb.append("</model-name>");
 
 		sb.append(
@@ -598,8 +599,8 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>ruleId</column-name><column-value><![CDATA[");
-		sb.append(getRuleId());
+			"<column><column-name>ruleInstanceId</column-name><column-value><![CDATA[");
+		sb.append(getRuleInstanceId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>groupId</column-name><column-value><![CDATA[");
@@ -626,12 +627,12 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 		sb.append(getModifiedDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>segmentId</column-name><column-value><![CDATA[");
-		sb.append(getSegmentId());
+			"<column><column-name>ruleKey</column-name><column-value><![CDATA[");
+		sb.append(getRuleKey());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>type</column-name><column-value><![CDATA[");
-		sb.append(getType());
+			"<column><column-name>userSegmentId</column-name><column-value><![CDATA[");
+		sb.append(getUserSegmentId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
@@ -644,7 +645,7 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	}
 
 	private String _uuid;
-	private long _ruleId;
+	private long _ruleInstanceId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
@@ -652,8 +653,8 @@ public class RuleClp extends BaseModelImpl<Rule> implements Rule {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
-	private long _segmentId;
-	private String _type;
+	private String _ruleKey;
+	private long _userSegmentId;
 	private String _typeSettings;
-	private BaseModel<?> _ruleRemoteModel;
+	private BaseModel<?> _ruleInstanceRemoteModel;
 }

@@ -14,8 +14,8 @@
 
 package com.liferay.contenttargeting.service.persistence;
 
-import com.liferay.contenttargeting.model.Rule;
-import com.liferay.contenttargeting.service.RuleLocalServiceUtil;
+import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.contenttargeting.service.RuleInstanceLocalServiceUtil;
 
 import com.liferay.portal.kernel.dao.orm.BaseActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -24,14 +24,14 @@ import com.liferay.portal.kernel.exception.SystemException;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public abstract class RuleActionableDynamicQuery
+public abstract class RuleInstanceActionableDynamicQuery
 	extends BaseActionableDynamicQuery {
-	public RuleActionableDynamicQuery() throws SystemException {
-		setBaseLocalService(RuleLocalServiceUtil.getService());
-		setClass(Rule.class);
+	public RuleInstanceActionableDynamicQuery() throws SystemException {
+		setBaseLocalService(RuleInstanceLocalServiceUtil.getService());
+		setClass(RuleInstance.class);
 
 		setClassLoader(com.liferay.contenttargeting.service.ClpSerializer.class.getClassLoader());
 
-		setPrimaryKeyPropertyName("ruleId");
+		setPrimaryKeyPropertyName("ruleInstanceId");
 	}
 }

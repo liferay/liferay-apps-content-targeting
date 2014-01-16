@@ -32,9 +32,9 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.contenttargeting.model.impl.RuleModelImpl">
+	<mapped-superclass class="com.liferay.contenttargeting.model.impl.RuleInstanceModelImpl">
 		<attributes>
-			<id name="ruleId" />
+			<id name="ruleInstanceId" />
 			<basic name="uuid">
 				<column name="UUID_" />
 			</basic>
@@ -48,10 +48,8 @@
 			<basic name="modifiedDate">
 				<temporal>TIMESTAMP</temporal>
 			</basic>
-			<basic name="segmentId" />
-			<basic name="type">
-				<column name="TYPE_" />
-			</basic>
+			<basic name="ruleKey" />
+			<basic name="userSegmentId" />
 			<basic name="typeSettings" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
@@ -91,8 +89,8 @@
 		<table name="CT_CTUser" />
 		<attributes />
 	</entity>
-	<entity class="com.liferay.contenttargeting.model.impl.RuleImpl" name="Rule">
-		<table name="CT_Rule" />
+	<entity class="com.liferay.contenttargeting.model.impl.RuleInstanceImpl" name="RuleInstance">
+		<table name="CT_RuleInstance" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.contenttargeting.model.impl.UserSegmentImpl" name="UserSegment">

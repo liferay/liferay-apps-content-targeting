@@ -23,20 +23,18 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.contenttargeting.model.Rule">
+	<model name="com.liferay.contenttargeting.model.RuleInstance">
 		<field name="uuid" type="String" />
-		<field name="ruleId" type="long" />
+		<field name="ruleInstanceId" type="long" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="segmentId" type="long" />
-		<field name="type" type="String" />
-		<field name="typeSettings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
+		<field name="ruleKey" type="String" />
+		<field name="userSegmentId" type="long" />
+		<field name="typeSettings" type="String" />
 	</model>
 	<model name="com.liferay.contenttargeting.model.UserSegment">
 		<field name="uuid" type="String" />

@@ -3,7 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.contenttargeting.model.CTUser" />
-	<import class="com.liferay.contenttargeting.model.Rule" />
+	<import class="com.liferay.contenttargeting.model.RuleInstance" />
 	<import class="com.liferay.contenttargeting.model.UserSegment" />
 	<class name="com.liferay.contenttargeting.model.impl.CTUserImpl" table="CT_CTUser">
 		<cache usage="read-write" />
@@ -20,9 +20,9 @@
 		<property name="lastIp" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.contenttargeting.model.impl.RuleImpl" table="CT_Rule">
+	<class name="com.liferay.contenttargeting.model.impl.RuleInstanceImpl" table="CT_RuleInstance">
 		<cache usage="read-write" />
-		<id name="ruleId" type="long">
+		<id name="ruleInstanceId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
@@ -32,8 +32,8 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
-		<property name="segmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" column="type_" />
+		<property name="ruleKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userSegmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.contenttargeting.model.impl.UserSegmentImpl" table="CT_UserSegment">

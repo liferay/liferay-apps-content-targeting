@@ -20,8 +20,8 @@ import com.liferay.portal.service.InvokableService;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class RuleServiceClp implements RuleService {
-	public RuleServiceClp(InvokableService invokableService) {
+public class RuleInstanceServiceClp implements RuleInstanceService {
+	public RuleInstanceServiceClp(InvokableService invokableService) {
 		_invokableService = invokableService;
 
 		_methodName0 = "getBeanIdentifier";
