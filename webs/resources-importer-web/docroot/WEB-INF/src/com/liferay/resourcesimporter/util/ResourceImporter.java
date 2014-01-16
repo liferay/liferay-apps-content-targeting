@@ -33,11 +33,9 @@ import java.util.Set;
  */
 public class ResourceImporter extends FileSystemImporter {
 
-
 	public void importResources() throws Exception {
 		doImportResources();
 	}
-
 
 	protected void addDDMStructures(
 			String parentStructureId, String structuresDirName)
@@ -66,7 +64,6 @@ public class ResourceImporter extends FileSystemImporter {
 		}
 	}
 
-
 	protected void addDDMTemplates(
 			String ddmStructureKey, String templatesDirName)
 		throws Exception {
@@ -93,7 +90,6 @@ public class ResourceImporter extends FileSystemImporter {
 				ddmStructureKey, name, urlConnection.getInputStream());
 		}
 	}
-
 
 	protected void addDLFileEntries(String fileEntriesDirName)
 		throws Exception {
@@ -133,7 +129,6 @@ public class ResourceImporter extends FileSystemImporter {
 			urlConnection.getInputStream(), urlConnection.getContentLength());
 	}
 
-
 	protected long addDLFolder(long parentFolderId, String resourcePath)
 		throws Exception {
 
@@ -161,7 +156,6 @@ public class ResourceImporter extends FileSystemImporter {
 
 		return folderId;
 	}
-
 
 	protected void addJournalArticles(
 			String ddmStructureKey, String ddmTemplateKey,
@@ -191,7 +185,6 @@ public class ResourceImporter extends FileSystemImporter {
 				urlConnection.getInputStream());
 		}
 	}
-
 
 	protected InputStream getInputStream(String fileName) throws Exception {
 		URL url = servletContext.getResource(resourcesDir.concat(fileName));

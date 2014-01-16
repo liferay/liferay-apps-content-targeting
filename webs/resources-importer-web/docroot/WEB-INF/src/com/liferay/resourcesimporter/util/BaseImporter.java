@@ -43,7 +43,6 @@ import javax.servlet.ServletContext;
  */
 public abstract class BaseImporter implements Importer {
 
-
 	public void afterPropertiesSet() throws Exception {
 		User user = UserLocalServiceUtil.getDefaultUser(companyId);
 
@@ -126,11 +125,9 @@ public abstract class BaseImporter implements Importer {
 		}
 	}
 
-
 	public long getGroupId() {
 		return groupId;
 	}
-
 
 	public long getTargetClassPK() {
 		return targetClassPK;
@@ -146,36 +143,29 @@ public abstract class BaseImporter implements Importer {
 		return targetValueMap;
 	}
 
-
 	public boolean isExisting() {
 		return existing;
 	}
-
 
 	public void setCompanyId(long companyId) {
 		this.companyId = companyId;
 	}
 
-
 	public void setResourcesDir(String resourcesDir) {
 		this.resourcesDir = resourcesDir;
 	}
-
 
 	public void setServletContext(ServletContext servletContext) {
 		this.servletContext = servletContext;
 	}
 
-
 	public void setServletContextName(String servletContextName) {
 		this.servletContextName = servletContextName;
 	}
 
-
 	public void setTargetClassName(String targetClassName) {
 		this.targetClassName = targetClassName;
 	}
-
 
 	public void setTargetValue(String targetValue) {
 		this.targetValue = targetValue;

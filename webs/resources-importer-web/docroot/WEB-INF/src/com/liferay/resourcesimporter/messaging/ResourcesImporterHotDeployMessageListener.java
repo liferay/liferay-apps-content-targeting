@@ -273,7 +273,6 @@ public class ResourcesImporterHotDeployMessageListener
 		}
 	}
 
-
 	protected void onDeploy(Message message) throws Exception {
 		initialize(message);
 	}
