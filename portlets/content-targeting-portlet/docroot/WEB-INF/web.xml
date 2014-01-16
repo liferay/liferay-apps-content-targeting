@@ -74,6 +74,10 @@
 		<servlet-class>com.liferay.portal.webserver.DynamicResourceServlet</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	<servlet>
+		<servlet-name>Freemarker Servlet</servlet-name>
+		<servlet-class>com.liferay.freemarker.osgi.OsgiFreemarkerServlet</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>1 Servlet</servlet-name>
 		<url-pattern>/1/*</url-pattern>
@@ -81,6 +85,10 @@
 	<servlet-mapping>
 		<servlet-name>Dynamic Resource Servlet</servlet-name>
 		<url-pattern>/sprite/*</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Freemarker Servlet</servlet-name>
+		<url-pattern>*.ftl</url-pattern>
 	</servlet-mapping>
 	<jsp-config>
 		<taglib>

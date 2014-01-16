@@ -1,6 +1,8 @@
 Bundle-Icon: /icons/content_targeting.png;size=16
 Bundle-Localization: WEB-INF/classes/content/Language
 Bundle-Name: Content Targeting Portlet
+Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/
+ util-taglib.jar
 DynamicImport-Package:\
 	org.apache.jasper.servlet,\
 	org.eclipse.jetty.servlet.listener
@@ -8,9 +10,14 @@ Export-Package:\
 	content,\
 	com.liferay.contenttargeting.portlet
 Import-Package:\
+	com.liferay.freemarker.osgi,\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.service,\
+	com.liferay.contenttargeting.service.base,\
+	com.liferay.contenttargeting.service.http,\
+	com.liferay.contenttargeting.service.impl,\
 	com.liferay.contenttargeting.service.messaging,\
+	com.liferay.contenttargeting.service.persistence,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.language,\
 	com.liferay.portal.kernel.lar,\
