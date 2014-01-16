@@ -38,11 +38,11 @@
 			<finder-column name="groupId" />
 		</finder>
 	</entity>
-	<entity name="Rule" uuid="true" local-service="true" remote-service="true">
+	<entity name="RuleInstance" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="ruleId" type="long" primary="true" />
+		<column name="ruleInstanceId" type="long" primary="true" />
 
 		<!-- Group instance -->
 
