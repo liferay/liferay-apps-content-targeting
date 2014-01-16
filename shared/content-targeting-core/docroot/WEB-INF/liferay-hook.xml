@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.2.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_2_0.dtd">
+
+<hook>
+	<language-properties>content/Language.properties</language-properties>
+	<service>
+		<service-type>com.liferay.portlet.asset.service.AssetVocabularyService</service-type>
+		<service-impl>com.liferay.contenttargeting.hook.CTAssetVocabularyServiceImpl</service-impl>
+	</service>
+</hook>
