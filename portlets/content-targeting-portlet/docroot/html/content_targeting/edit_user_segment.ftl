@@ -41,6 +41,23 @@
 
 	<@aui["input"] name="description" />
 
+	<h4><@liferay_ui["message"] key="rules" /></h4>
+
+	<@liferay_ui["icon-menu"] direction="right" icon="../aui/plus" message="add-rule" showWhenSingleIcon=true>
+		<#list rules as rule>
+			<@portlet["renderURL"] var="editRuleURL">
+				<@portlet["param"] name="mvcPath" value="html/content_targeting/edit_rule.ftl" />
+				<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
+			</@>
+
+			<@liferay_ui["icon"]
+				image="${rule.getIcon()}"
+				message="${rule.getName()}"
+				url="${editRuleURL}"
+			/>
+		</#list>
+	</@>
+
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
 	</@>

@@ -14,6 +14,7 @@
 
 package com.liferay.contenttargeting.portlet;
 
+import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.contenttargeting.util.ServiceTrackerUtil;
@@ -205,6 +206,10 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 				// Injecting services into the template context
 
+				RulesRegistry rulesRegistry =
+					_serviceTrackerUtil.getRulesRegistry();
+
+				template.put("rules", rulesRegistry.getRules());
 				template.put("userSegmentClass", UserSegment.class);
 				template.put(
 					"userSegmentLocalService",
