@@ -45,12 +45,12 @@
 
 		<@liferay_ui["search-container-column-text"]
 			name="name"
-			value=userSegment.getName()
+			value=userSegment.getName(locale)
 		/>
 
 		<@liferay_ui["search-container-column-text"]
 			name="description"
-			value=userSegment.getDescription()
+			value=userSegment.getDescription(locale)
 		/>
 
 		<@liferay_ui["search-container-column-text"]
