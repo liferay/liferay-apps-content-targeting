@@ -120,7 +120,9 @@ user audiences by time
 In order to deploy the audience targeting app, you can add this property to your
 build.username.properties:
 
-`plugins.includes=content-targeting-core,content-targeting-portlet,ct-time-rule,http-service-shared,log-bridge-shared,system-packages-extra`
+```
+plugins.includes=content-targeting-core,content-targeting-portlet,ct-time-rule,freemarker-osgi,http-service-shared,log-bridge-shared,system-packages-extra
+```
 
 
 ### OSGI Console
