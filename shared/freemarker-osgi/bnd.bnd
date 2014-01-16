@@ -1,0 +1,2 @@
+Bundle-Name: Freemarker OSGi
+Export-Package: com.liferay.freemarker.osgi
