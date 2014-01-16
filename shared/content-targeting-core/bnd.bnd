@@ -28,6 +28,7 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.io.unsync,\
 	com.liferay.portal.kernel.json,\
+	com.liferay.portal.kernel.language,\
 	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.messaging,\
@@ -41,6 +42,8 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.portal.service,\
 	com.liferay.portal.service.persistence,\
 	com.liferay.portal.service.persistence.impl,\
+	com.liferay.portlet.asset.model,\
+	com.liferay.portlet.asset.service,\
 	com.liferay.portlet.expando.model,\
 	com.liferay.portlet.expando.util,\
 	com.liferay.util.service,\
