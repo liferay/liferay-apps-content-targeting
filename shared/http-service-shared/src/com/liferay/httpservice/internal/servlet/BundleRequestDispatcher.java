@@ -119,7 +119,7 @@ public class BundleRequestDispatcher implements RequestDispatcher {
 
 		BundleServletRequest bundleServletRequest = new BundleServletRequest(
 			this, (HttpServletRequest)servletRequest);
-		
+
 		doDispatch(bundleServletRequest, servletResponse);
 	}
 

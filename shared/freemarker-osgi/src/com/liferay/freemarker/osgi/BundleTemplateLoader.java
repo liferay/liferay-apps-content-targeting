@@ -1,13 +1,29 @@
+/**
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.freemarker.osgi;
 
 import freemarker.cache.TemplateLoader;
-import org.osgi.framework.Bundle;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+
 import java.net.URL;
+
+import org.osgi.framework.Bundle;
 
 /**
  * @author Carlos Sierra Andrés
@@ -16,6 +32,16 @@ public class BundleTemplateLoader implements TemplateLoader {
 
 	public BundleTemplateLoader(Bundle bundle) {
 		_bundle = bundle;
+	}
+
+	@Override
+	public void closeTemplateSource(Object templateSource) throws IOException {
+		BundleTemplateSource bundleTemplateSource =
+			(BundleTemplateSource)templateSource;
+
+		InputStream inputStream = bundleTemplateSource.getInputStream();
+
+		inputStream.close();
 	}
 
 	@Override
@@ -37,27 +63,14 @@ public class BundleTemplateLoader implements TemplateLoader {
 	@Override
 	public Reader getReader(Object templateSource, String encoding)
 		throws IOException {
+
 		BundleTemplateSource bundleTemplateSource =
-			(BundleTemplateSource) templateSource;
+			(BundleTemplateSource)templateSource;
 
 		return new InputStreamReader(bundleTemplateSource.getInputStream());
 	}
 
-	@Override
-	public void closeTemplateSource(Object templateSource) throws IOException {
-		BundleTemplateSource bundleTemplateSource =
-			(BundleTemplateSource) templateSource;
-
-		InputStream inputStream = bundleTemplateSource.getInputStream();
-
-		inputStream.close();
-	}
-
-	private Bundle _bundle;
-
 	public static class BundleTemplateSource {
-		private final InputStream _inputStream;
-		private URL _url;
 
 		public BundleTemplateSource(URL url) throws IOException {
 
@@ -72,5 +85,12 @@ public class BundleTemplateLoader implements TemplateLoader {
 		public URL getUrl() {
 			return _url;
 		}
+
+		private final InputStream _inputStream;
+
+		private URL _url;
 	}
+
+	private Bundle _bundle;
+
 }
