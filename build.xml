@@ -5,6 +5,7 @@
 	<import file="build-common.xml" />
 
 	<target name="all">
+		<antcall target="clean-server" />
 		<antcall target="clean" />
 		<antcall target="deploy" />
 	</target>
@@ -46,6 +47,12 @@
 		<ant dir="shared" target="clean" inheritAll="false" />
 		<ant dir="themes" target="clean" inheritAll="false" />
 		<ant dir="webs" target="clean" inheritAll="false" />
+	</target>
+
+	<target name="clean-server">
+		<delete dir="${app.server.parent.dir}/data/osgi" />
+		<delete dir="${app.server.dir}/work" />
+		<delete dir="${app.server.dir}/temp" />
 	</target>
 
 	<target name="compile">
