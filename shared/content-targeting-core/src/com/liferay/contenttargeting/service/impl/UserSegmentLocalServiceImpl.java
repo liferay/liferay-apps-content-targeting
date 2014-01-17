@@ -157,20 +157,23 @@ public class UserSegmentLocalServiceImpl
 			AssetEntryLocalServiceUtil.getAssetCategoryAssetEntriesCount(
 				assetCategoryId);
 
-		if (entriesCount <= 0) {
-			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.deleteAssetCategory(
-					assetCategoryId);
-
-			int categoriesCount =
-				AssetCategoryLocalServiceUtil.getVocabularyRootCategoriesCount(
-					assetCategory.getVocabularyId());
-
-			if (categoriesCount <= 0) {
-				AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(
-					assetCategory.getVocabularyId());
-			}
+		if (entriesCount > 0) {
+			return;
 		}
+
+		AssetCategory assetCategory =
+			AssetCategoryLocalServiceUtil.deleteAssetCategory(assetCategoryId);
+
+		int categoriesCount =
+			AssetCategoryLocalServiceUtil.getVocabularyRootCategoriesCount(
+				assetCategory.getVocabularyId());
+
+		if (categoriesCount > 0) {
+			return;
+		}
+
+		AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(
+			assetCategory.getVocabularyId());
 	}
 
 	protected AssetCategory updateUserSegmentCategory(
@@ -179,10 +182,10 @@ public class UserSegmentLocalServiceImpl
 		throws PortalException, SystemException {
 
 		long vocabularyId = UserSegmentUtil.getAssetVocabularyId(
-				userId, serviceContext);
+			userId, serviceContext);
 
 		AssetCategory assetCategory =
-			AssetCategoryLocalServiceUtil.fetchCategory(assetCategoryId);
+			AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);
 
 		AssetCategoryLocalServiceUtil.updateCategory(
 			userId, assetCategoryId, assetCategory.getParentCategoryId(),
