@@ -16,6 +16,7 @@ package com.liferay.contenttargeting.portlet;
 
 import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.UserSegment;
+import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.contenttargeting.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -55,6 +56,7 @@ import javax.portlet.PortletResponse;
 import javax.portlet.UnavailableException;
 
 import org.osgi.framework.Bundle;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Eduardo Garcia
@@ -70,7 +72,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 		try {
 			UserSegmentService userSegmentService =
-				_serviceTrackerUtil.getUserSegmentService();
+				_userSegmentServiceTracker.getService();
 
 			userSegmentService.deleteUserSegment(userSegmentId);
 
@@ -104,7 +106,12 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			};
 		}
 
-		_serviceTrackerUtil = new ServiceTrackerUtil(bundle);
+		_userSegmentLocalServiceTracker = ServiceTrackerUtil.getServiceTracker(
+			UserSegmentLocalService.class, bundle.getBundleContext());
+		_userSegmentServiceTracker = ServiceTrackerUtil.getServiceTracker(
+			UserSegmentService.class, bundle.getBundleContext());
+		_rulesRegistryTracker = ServiceTrackerUtil.getServiceTracker(
+			RulesRegistry.class, bundle.getBundleContext());
 	}
 
 	public void updateUserSegment(
@@ -114,7 +121,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				request, "name");
+			request, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
@@ -125,7 +132,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		UserSegmentService userSegmentService =
-			_serviceTrackerUtil.getUserSegmentService();
+			_userSegmentServiceTracker.getService();
 
 		try {
 			if (userSegmentId > 0) {
@@ -207,16 +214,16 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				// Injecting services into the template context
 
 				RulesRegistry rulesRegistry =
-					_serviceTrackerUtil.getRulesRegistry();
+					_rulesRegistryTracker.getService();
 
 				template.put("rules", rulesRegistry.getRules());
 				template.put("userSegmentClass", UserSegment.class);
 				template.put(
 					"userSegmentLocalService",
-					_serviceTrackerUtil.getUserSegmentLocalService());
+					_userSegmentLocalServiceTracker.getService());
 				template.put(
 					"userSegmentService",
-					_serviceTrackerUtil.getUserSegmentService());
+					_userSegmentServiceTracker.getService());
 
 				Writer writer = null;
 
@@ -247,6 +254,10 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
-	private ServiceTrackerUtil _serviceTrackerUtil;
+	private ServiceTracker<RulesRegistry, RulesRegistry> _rulesRegistryTracker;
+	private ServiceTracker<UserSegmentLocalService, UserSegmentLocalService>
+		_userSegmentLocalServiceTracker;
+	private ServiceTracker<UserSegmentService, UserSegmentService>
+		_userSegmentServiceTracker;
 
 }

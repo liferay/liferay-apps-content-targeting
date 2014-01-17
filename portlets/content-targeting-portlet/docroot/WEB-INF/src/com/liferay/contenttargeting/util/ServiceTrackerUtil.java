@@ -14,13 +14,8 @@
 
 package com.liferay.contenttargeting.util;
 
-import com.liferay.contenttargeting.api.model.RulesRegistry;
-import com.liferay.contenttargeting.service.UserSegmentLocalService;
-import com.liferay.contenttargeting.service.UserSegmentService;
-
 import javax.portlet.UnavailableException;
 
-import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -29,101 +24,38 @@ import org.osgi.util.tracker.ServiceTracker;
  */
 public class ServiceTrackerUtil {
 
-	public ServiceTrackerUtil(Bundle bundle) throws UnavailableException {
-		final BundleContext bundleContext = bundle.getBundleContext();
+	public static <T>ServiceTracker<T, T> getServiceTracker(
+			final Class<T> clazz, BundleContext bundleContext)
+		throws UnavailableException {
 
-		_userSegmentLocalServiceTracker =
-			new ServiceTracker
-				<UserSegmentLocalService, UserSegmentLocalService>(
-				bundleContext, UserSegmentLocalService.class, null);
+		ServiceTracker<T, T> serviceTracker = new ServiceTracker<T, T>(
+			bundleContext, clazz, null) {
 
-		_userSegmentLocalServiceTracker.open();
+			@Override
+			public T getService() {
+				T service = super.getService();
 
-		_userSegmentServiceTracker =
-			new ServiceTracker<UserSegmentService, UserSegmentService>(
-				bundleContext, UserSegmentService.class, null);
+				if (service == null) {
+					throw new RuntimeException(
+						new UnavailableServiceException(clazz));
+				}
 
-		_userSegmentServiceTracker.open();
+				return service;
+			}
+		};
 
-		_rulesRegistryTracker =
-			new ServiceTracker<RulesRegistry, RulesRegistry>(
-				bundleContext, RulesRegistry.class, null);
-
-		_rulesRegistryTracker.open();
+		serviceTracker.open();
 
 		try {
-			UserSegmentLocalService userSegmentLocalService =
-				_userSegmentLocalServiceTracker.waitForService(
-					_SERVICE_TRACKER_TIMEOUT);
-
-			if (userSegmentLocalService == null) {
-				throw new UnavailableServiceException(
-					UserSegmentLocalService.class);
-			}
-
-			UserSegmentService userSegmentService =
-				_userSegmentServiceTracker.waitForService(
-					_SERVICE_TRACKER_TIMEOUT);
-
-			if (userSegmentService == null) {
-				throw new UnavailableServiceException(UserSegmentService.class);
-			}
-
-			RulesRegistry rulesRegistry = _rulesRegistryTracker.waitForService(
-				_SERVICE_TRACKER_TIMEOUT);
-
-			if (rulesRegistry == null) {
-				throw new UnavailableServiceException(RulesRegistry.class);
-			}
+			serviceTracker.waitForService(_SERVICE_TRACKER_TIMEOUT);
 		}
 		catch (InterruptedException e) {
-			throw new UnavailableException(e.getMessage());
-		}
-	}
-
-	public RulesRegistry getRulesRegistry() throws UnavailableException {
-		RulesRegistry rulesRegistry = _rulesRegistryTracker.getService();
-
-		if (rulesRegistry == null) {
-			throw new UnavailableServiceException(RulesRegistry.class);
+			throw new UnavailableServiceException(clazz);
 		}
 
-		return rulesRegistry;
-	}
-
-	public UserSegmentLocalService getUserSegmentLocalService()
-		throws UnavailableException {
-
-		UserSegmentLocalService userSegmentLocalService =
-			_userSegmentLocalServiceTracker.getService();
-
-		if (userSegmentLocalService == null) {
-			throw new UnavailableServiceException(
-				UserSegmentLocalService.class);
-		}
-
-		return userSegmentLocalService;
-	}
-
-	public UserSegmentService getUserSegmentService()
-		throws UnavailableException {
-
-		UserSegmentService userSegmentService =
-			_userSegmentServiceTracker.getService();
-
-		if (userSegmentService == null) {
-			throw new UnavailableServiceException(UserSegmentService.class);
-		}
-
-		return userSegmentService;
+		return serviceTracker;
 	}
 
 	private static final int _SERVICE_TRACKER_TIMEOUT = 5000;
-
-	private ServiceTracker<RulesRegistry, RulesRegistry> _rulesRegistryTracker;
-	private ServiceTracker<UserSegmentLocalService, UserSegmentLocalService>
-		_userSegmentLocalServiceTracker;
-	private ServiceTracker<UserSegmentService, UserSegmentService>
-		_userSegmentServiceTracker;
 
 }
