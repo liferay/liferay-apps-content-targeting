@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.template.TemplateTaglibSupportProvider;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
@@ -40,9 +41,14 @@ import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.util.bridges.freemarker.FreeMarkerPortlet;
 
+import freemarker.ext.beans.BeansWrapper;
+
+import freemarker.template.TemplateHashModel;
+
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -83,7 +89,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 
-			response.setRenderParameter("mvcPath", "/html/error.ftl");
+			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
 		}
 	}
 
@@ -154,10 +160,11 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 			if (e instanceof PrincipalException) {
 				response.setRenderParameter(
-					"mvcPath", "/html/content_targeting/edit_user_segment.ftl");
+					"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
 			}
 			else {
-				response.setRenderParameter("mvcPath", "/html/error.ftl");
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.ERROR);
 			}
 		}
 	}
@@ -211,19 +218,20 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 					"userInfo",
 					portletRequest.getAttribute(PortletRequest.USER_INFO));
 
-				// Injecting services into the template context
+				// Injecting static models into the template context
 
-				RulesRegistry rulesRegistry =
-					_rulesRegistryTracker.getService();
+				BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
-				template.put("rules", rulesRegistry.getRules());
-				template.put("userSegmentClass", UserSegment.class);
+				TemplateHashModel staticModels = wrapper.getStaticModels();
+
 				template.put(
-					"userSegmentLocalService",
-					_userSegmentLocalServiceTracker.getService());
-				template.put(
-					"userSegmentService",
-					_userSegmentServiceTracker.getService());
+					"contentTargetingPath",
+					staticModels.get(
+						"com.liferay.contenttargeting.portlet." +
+							"ContentTargetingPath"));
+
+				populateViewContext(
+					path, portletRequest, portletResponse, template);
 
 				Writer writer = null;
 
@@ -248,6 +256,51 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			if (lifecycle.equals(PortletRequest.RENDER_PHASE)) {
 				portletResponse.setProperty("clear-request-parameters", "true");
 			}
+		}
+	}
+
+	protected void populateViewContext(
+			String path, PortletRequest portletRequest,
+			PortletResponse portletResponse, Template template)
+		throws Exception {
+
+		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			UserSegmentService userSegmentService =
+				_userSegmentServiceTracker.getService();
+
+			List<UserSegment> userSegments =
+				userSegmentService.getUserSegments(
+					themeDisplay.getScopeGroupId());
+
+			template.put("userSegments", userSegments);
+		}
+		else if (path.equals(ContentTargetingPath.EDIT_RULE)) {
+		}
+		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
+			template.put("userSegmentClass", UserSegment.class);
+
+			RulesRegistry rulesRegistry = _rulesRegistryTracker.getService();
+
+			template.put("rules", rulesRegistry.getRules());
+
+			UserSegment userSegment = null;
+
+			long userSegmentId = ParamUtil.getLong(
+				portletRequest, "userSegmentId");
+
+			if (userSegmentId > 0) {
+				UserSegmentLocalService userSegmentLocalService =
+					_userSegmentLocalServiceTracker.getService();
+
+				userSegment = userSegmentLocalService.getUserSegment(
+					userSegmentId);
+			}
+
+			template.put("userSegment", userSegment);
 		}
 	}
 

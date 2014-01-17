@@ -18,12 +18,6 @@
 
 <#assign redirect = paramUtil.getString(request, "redirect")>
 
-<#assign userSegmentId = paramUtil.getLong(request, "userSegmentId")>
-
-<#if (userSegmentId > 0)>
-	<#assign userSegment = userSegmentLocalService.getUserSegment(userSegmentId) />
-</#if>
-
 <@liferay_ui["header"]
 	backURL="${redirect}"
 	title="new-user-segment"
@@ -46,7 +40,7 @@
 	<@liferay_ui["icon-menu"] direction="right" icon="../aui/plus" message="add-rule" showWhenSingleIcon=true>
 		<#list rules as rule>
 			<@portlet["renderURL"] var="editRuleURL">
-				<@portlet["param"] name="mvcPath" value="html/content_targeting/edit_rule.ftl" />
+				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_RULE}" />
 				<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
 			</@>
 

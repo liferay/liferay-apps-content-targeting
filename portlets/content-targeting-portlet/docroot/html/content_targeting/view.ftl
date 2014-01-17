@@ -16,12 +16,10 @@
 
 <#include "../init.ftl" />
 
-<#assign userSegmentResults = userSegmentService.getUserSegments(themeDisplay.getScopeGroupId())>
-
 <@aui["nav-bar"]>
 	<@aui["nav"]>
 		<@portlet["renderURL"] var="addUserSegmentURL">
-			<@portlet["param"] name="mvcPath" value="html/content_targeting/edit_user_segment.ftl" />
+			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
 			<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
 		</@>
 
@@ -36,8 +34,8 @@
 	iteratorURL=iteratorURL
 >
 	<@liferay_ui["search-container-results"]
-		results=userSegmentResults
-		total=userSegmentResults?size
+		results=userSegments
+		total=userSegments ?size
 	/>
 
 	<@liferay_ui["search-container-row"]
@@ -60,7 +58,7 @@
 		>
 			<@liferay_ui["icon-menu"]>
 				<@portlet["renderURL"] var="editUserSegmentURL">
-					<@portlet["param"] name="mvcPath" value="html/content_targeting/edit_user_segment.ftl" />
+					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
 					<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
 					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
 				</@>
