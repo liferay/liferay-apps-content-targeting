@@ -14,6 +14,7 @@
 
 package com.liferay.contenttargeting.portlet;
 
+import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
@@ -281,7 +282,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
 			template.put("userSegmentClass", UserSegment.class);
 
-			template.put("rules", _rulesRegistry.getRules());
+			Map<String, Rule> rules = _rulesRegistry.getRules();
+
+			template.put("rules", rules.values());
 
 			UserSegment userSegment = null;
 
