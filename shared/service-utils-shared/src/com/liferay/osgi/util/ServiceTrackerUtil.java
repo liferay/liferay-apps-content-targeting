@@ -14,12 +14,12 @@
 
 package com.liferay.osgi.util;
 
-import org.osgi.framework.BundleContext;
-import org.osgi.util.tracker.ServiceTracker;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+
+import org.osgi.framework.BundleContext;
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Carlos Sierra Andrés
@@ -53,7 +53,8 @@ public class ServiceTrackerUtil {
 			new InvocationHandler() {
 
 				@Override
-				public Object invoke(Object o, Method method, Object[] parameters)
+				public Object invoke(
+						Object o, Method method, Object[] parameters)
 					throws Throwable {
 
 					T service = serviceTracker.getService();
@@ -66,8 +67,7 @@ public class ServiceTrackerUtil {
 				}
 			});
 
-		return (T) o;
-
+		return (T)o;
 	}
 
 	private static final int _SERVICE_TRACKER_TIMEOUT = 5000;

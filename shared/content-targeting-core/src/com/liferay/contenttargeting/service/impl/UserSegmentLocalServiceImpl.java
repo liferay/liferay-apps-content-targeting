@@ -184,8 +184,8 @@ public class UserSegmentLocalServiceImpl
 		long vocabularyId = UserSegmentUtil.getAssetVocabularyId(
 			userId, serviceContext);
 
-		AssetCategory assetCategory =
-			AssetCategoryLocalServiceUtil.getCategory(assetCategoryId);
+		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(
+			assetCategoryId);
 
 		AssetCategoryLocalServiceUtil.updateCategory(
 			userId, assetCategoryId, assetCategory.getParentCategoryId(),

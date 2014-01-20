@@ -19,8 +19,8 @@ import javax.naming.ServiceUnavailableException;
 /**
  * @author Carlos Sierra Andrés
  */
-public class OsgiServiceUnavailableException extends
-	ServiceUnavailableException {
+public class OsgiServiceUnavailableException
+	extends ServiceUnavailableException {
 
 	public OsgiServiceUnavailableException(Class<?> clazz) {
 		super(clazz.toString());
