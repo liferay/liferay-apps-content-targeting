@@ -3,7 +3,7 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>1</portlet-name>
+		<portlet-name>ctadmin</portlet-name>
 		<icon>/icons/content_targeting.png</icon>
 		<struts-path>o/content-targeting-portlet</struts-path>
 		<render-weight>1</render-weight>
