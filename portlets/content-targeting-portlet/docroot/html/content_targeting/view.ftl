@@ -59,7 +59,7 @@
 			<@liferay_ui["icon-menu"]>
 				<@portlet["renderURL"] var="editUserSegmentURL">
 					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-					<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
+					<@portlet["param"] name="redirect" value="${currentURL}" />
 					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
 				</@>
 
@@ -70,7 +70,7 @@
 				/>
 
 				<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
-					<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
+					<@portlet["param"] name="redirect" value="${currentURL}" />
 					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
 				</@>
 

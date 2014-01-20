@@ -42,7 +42,7 @@
 		<#list rules as rule>
 			<@portlet["renderURL"] var="editRuleURL">
 				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_RULE}" />
-				<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
+				<@portlet["param"] name="redirect" value="${currentURL}" />
 			</@>
 
 			<@liferay_ui["icon"]
