@@ -54,6 +54,7 @@ import freemarker.template.TemplateHashModel;
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -379,6 +380,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			template.put("ruleFormHTML", ruleFormHTML);
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
+			template.put("rulesRegistry", _rulesRegistry);
 			template.put("userSegmentClass", UserSegment.class);
 
 			Map<String, Rule> rules = _rulesRegistry.getRules();
@@ -393,6 +395,14 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			if (userSegmentId > 0) {
 				userSegment = _userSegmentLocalService.getUserSegment(
 					userSegmentId);
+
+				List<RuleInstance> ruleInstances =
+					_ruleInstanceService.getRuleInstances(userSegmentId);
+
+				template.put("ruleInstances", ruleInstances);
+			}
+			else {
+				template.put("ruleInstances", new ArrayList<RuleInstance>());
 			}
 
 			template.put("userSegment", userSegment);

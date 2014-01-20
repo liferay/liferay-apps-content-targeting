@@ -55,6 +55,60 @@
 		</#list>
 	</@>
 
+	<@liferay_ui["search-container"]
+		emptyResultsMessage="no-rules-were-found-for-this-user-segment"
+		iteratorURL=iteratorURL
+	>
+		<@liferay_ui["search-container-results"]
+			results=ruleInstances
+			total=ruleInstances ?size
+		/>
+
+		<@liferay_ui["search-container-row"]
+			className="com.liferay.contenttargeting.model.RuleInstance"
+			modelVar="ruleInstance"
+		>
+
+			<#assign rule = rulesRegistry.getRule(ruleInstance.getRuleKey())>
+
+			<@liferay_ui["search-container-column-text"]
+				name="summary"
+				value=rule.getSummary(ruleInstance, locale)
+			/>
+
+			<@liferay_ui["search-container-column-text"]
+				name=""
+			>
+				<@liferay_ui["icon-menu"]>
+					<#assign editRuleInstanceURL = renderResponse.createRenderURL()>
+
+					${editRuleInstanceURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE)}
+					${editRuleInstanceURL.setParameter("redirect", currentURL)}
+					${editRuleInstanceURL.setParameter("ruleInstanceId", ruleInstance.getRuleInstanceId()?string)}
+					${editRuleInstanceURL.setParameter("ruleKey", ruleInstance.getRuleKey()?string)}
+
+					<@liferay_ui["icon"]
+						image="edit"
+						method="get"
+						url="${editRuleInstanceURL}"
+					/>
+
+					<#assign deleteRuleInstanceURL = renderResponse.createActionURL()>
+
+					${deleteRuleInstanceURL.setParameter("javax.portlet.action", "deleteRuleInstance")}
+					${deleteRuleInstanceURL.setParameter("redirect", currentURL)}
+					${deleteRuleInstanceURL.setParameter("ruleInstanceId", ruleInstance.getRuleInstanceId()?string)}
+
+					<@liferay_ui["icon-delete"]
+						url="${deleteRuleInstanceURL}"
+					/>
+				</@>
+			</@>
+		</@>
+
+		<@liferay_ui["search-iterator"] />
+	</@>
+
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
 	</@>
