@@ -76,6 +76,26 @@ import org.osgi.framework.Bundle;
  */
 public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
+	public void deleteRuleInstance(
+			ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		long ruleInstanceId = ParamUtil.getLong(request, "ruleInstanceId");
+
+		try {
+			_ruleInstanceService.deleteRuleInstance(ruleInstanceId);
+
+			String redirect = ParamUtil.getString(request, "redirect");
+
+			response.sendRedirect(redirect);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+
+			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
+		}
+	}
+
 	public void deleteUserSegment(
 			ActionRequest request, ActionResponse response)
 		throws Exception {
@@ -133,6 +153,55 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 	}
 
+	public void updateRuleInstance(
+			ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		long ruleInstanceId = ParamUtil.getLong(request, "ruleInstanceId");
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				RuleInstance.class.getName(), request);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		String ruleKey = ParamUtil.getString(request, "ruleKey");
+
+		Rule rule = _rulesRegistry.getRule(ruleKey);
+
+		String typeSettings = rule.processRule(request, response);
+
+		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
+
+		try {
+			if (ruleInstanceId > 0) {
+				_ruleInstanceService.updateRuleInstance(
+						ruleInstanceId, typeSettings, serviceContext);
+			}
+			else {
+				_ruleInstanceService.addRuleInstance(
+						themeDisplay.getUserId(), ruleKey, userSegmentId,
+						typeSettings, serviceContext);
+			}
+
+			String redirect = ParamUtil.getString(request, "redirect");
+
+			response.sendRedirect(redirect);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+
+			if (e instanceof PrincipalException) {
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
+			}
+			else {
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.ERROR);
+			}
+		}
+	}
+
 	public void updateUserSegment(
 			ActionRequest request, ActionResponse response)
 		throws Exception {
@@ -140,7 +209,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			request, "name");
+				request, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
