@@ -14,6 +14,8 @@
 
 package com.liferay.contenttargeting.internal.osgi;
 
+import com.liferay.contenttargeting.service.RuleInstanceLocalService;
+import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.portal.kernel.messaging.Message;
@@ -40,6 +42,22 @@ public class ContentTargetingActivator
 
 		ApplicationContext applicationContext =
 			(ApplicationContext)message.getPayload();
+
+		RuleInstanceLocalService ruleInstanceLocalService =
+			(RuleInstanceLocalService)applicationContext.getBean(
+				RuleInstanceLocalService.class.getName());
+
+		_ruleInstanceLocalServiceServiceRegistration =
+			_bundleContext.registerService(
+				RuleInstanceLocalService.class, ruleInstanceLocalService, null);
+
+		RuleInstanceService ruleInstanceService =
+			(RuleInstanceService)applicationContext.getBean(
+				RuleInstanceService.class.getName());
+
+		_ruleInstanceServiceServiceRegistration =
+			_bundleContext.registerService(
+				RuleInstanceService.class, ruleInstanceService, null);
 
 		UserSegmentLocalService userSegmentLocalService =
 			(UserSegmentLocalService)applicationContext.getBean(
@@ -76,6 +94,18 @@ public class ContentTargetingActivator
 
 		MessageBusUtil.unregisterMessageListener(DESTINATION_NAME, this);
 
+		if (_ruleInstanceLocalServiceServiceRegistration != null) {
+			_ruleInstanceLocalServiceServiceRegistration.unregister();
+
+			_ruleInstanceLocalServiceServiceRegistration = null;
+		}
+
+		if (_ruleInstanceServiceServiceRegistration != null) {
+			_ruleInstanceServiceServiceRegistration.unregister();
+
+			_ruleInstanceServiceServiceRegistration = null;
+		}
+
 		if (_userSegmentLocalServiceServiceRegistration != null) {
 			_userSegmentLocalServiceServiceRegistration.unregister();
 
@@ -93,6 +123,10 @@ public class ContentTargetingActivator
 		"content-targeting-core-spring";
 
 	private BundleContext _bundleContext;
+	private ServiceRegistration<RuleInstanceLocalService>
+		_ruleInstanceLocalServiceServiceRegistration;
+	private ServiceRegistration<RuleInstanceService>
+		_ruleInstanceServiceServiceRegistration;
 	private ServiceRegistration<UserSegmentLocalService>
 		_userSegmentLocalServiceServiceRegistration;
 	private ServiceRegistration<UserSegmentService>
