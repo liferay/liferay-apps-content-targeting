@@ -54,7 +54,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import javax.naming.ServiceUnavailableException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.MimeResponse;
@@ -79,10 +78,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		try {
-			UserSegmentService userSegmentService =
-				_userSegmentService;
-
-			userSegmentService.deleteUserSegment(userSegmentId);
+			_userSegmentService.deleteUserSegment(userSegmentId);
 
 			String redirect = ParamUtil.getString(request, "redirect");
 
@@ -121,11 +117,11 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				UserSegmentLocalService.class, bundle.getBundleContext());
 			_rulesRegistry = ServiceTrackerUtil.getService(
 				RulesRegistry.class, bundle.getBundleContext());
-		} catch (OsgiServiceUnavailableException e) {
-			throw new UnavailableServiceException(
-				e.getUnavailableServiceClass());
 		}
-
+		catch (OsgiServiceUnavailableException osue) {
+			throw new UnavailableServiceException(
+				osue.getUnavailableServiceClass());
+		}
 	}
 
 	public void updateUserSegment(

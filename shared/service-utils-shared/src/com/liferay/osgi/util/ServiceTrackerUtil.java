@@ -14,9 +14,10 @@
 
 package com.liferay.osgi.util;
 
+import com.liferay.portal.kernel.util.ProxyUtil;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.util.tracker.ServiceTracker;
@@ -48,13 +49,13 @@ public class ServiceTrackerUtil {
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
-		Object o = Proxy.newProxyInstance(
+		Object serviceProxy = ProxyUtil.newProxyInstance(
 			classLoader, new Class[]{clazz},
 			new InvocationHandler() {
 
 				@Override
 				public Object invoke(
-						Object o, Method method, Object[] parameters)
+						Object object, Method method, Object[] parameters)
 					throws Throwable {
 
 					T service = serviceTracker.getService();
@@ -67,7 +68,7 @@ public class ServiceTrackerUtil {
 				}
 			});
 
-		return (T)o;
+		return (T)serviceProxy;
 	}
 
 	private static final int _SERVICE_TRACKER_TIMEOUT = 5000;
