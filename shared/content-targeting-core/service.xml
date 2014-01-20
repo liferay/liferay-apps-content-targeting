@@ -73,6 +73,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="UserSegmentId" return-type="Collection">
+			<finder-column name="userSegmentId" />
+		</finder>
 	</entity>
 	<entity name="UserSegment" uuid="true" local-service="true" remote-service="true">
 
