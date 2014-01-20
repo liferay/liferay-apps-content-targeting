@@ -16,6 +16,9 @@ package com.liferay.contenttargeting.service.impl;
 
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.base.UserSegmentServiceBaseImpl;
+import com.liferay.contenttargeting.service.permission.ContentTargetingPermission;
+import com.liferay.contenttargeting.service.permission.UserSegmentPermission;
+import com.liferay.contenttargeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
@@ -47,6 +50,10 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		ContentTargetingPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.ADD_USER_SEGMENT);
+
 		return userSegmentLocalService.addUserSegment(
 			userId, nameMap, descriptionMap, serviceContext);
 	}
@@ -55,6 +62,9 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 	public UserSegment deleteUserSegment(long userSegmentId)
 		throws PortalException, SystemException {
 
+		UserSegmentPermission.check(
+			getPermissionChecker(), userSegmentId, ActionKeys.DELETE);
+
 		return userSegmentLocalService.deleteUserSegment(userSegmentId);
 	}
 
@@ -62,14 +72,14 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 	public List<UserSegment> getUserSegments(long groupId)
 		throws PortalException, SystemException {
 
-		return userSegmentLocalService.getUserSegments(groupId);
+		return userSegmentPersistence.filterFindByGroupId(groupId);
 	}
 
 	@Override
 	public long getUserSegmentsCount(long groupId)
 		throws PortalException, SystemException {
 
-		return userSegmentLocalService.getUserSegmentsCount(groupId);
+		return userSegmentPersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override
@@ -77,6 +87,9 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 			long userSegmentId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		UserSegmentPermission.check(
+			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
 
 		return userSegmentLocalService.updateUserSegment(
 			userSegmentId, nameMap, descriptionMap, serviceContext);

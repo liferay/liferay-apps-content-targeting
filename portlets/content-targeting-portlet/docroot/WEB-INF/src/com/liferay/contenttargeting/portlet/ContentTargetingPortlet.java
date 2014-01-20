@@ -28,6 +28,7 @@ import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -317,7 +318,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 							"ContentTargetingPath"));
 
 				populateViewContext(
-					path, portletRequest, portletResponse, template);
+					path, portletRequest, portletResponse, template,
+					staticModels);
 
 				Writer writer = null;
 
@@ -347,10 +349,32 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 	protected void populateViewContext(
 			String path, PortletRequest portletRequest,
-			PortletResponse portletResponse, Template template)
+			PortletResponse portletResponse, Template template,
+			TemplateHashModel staticModels)
 		throws Exception {
 
+		template.put("userSegmentClass", UserSegment.class);
+
 		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW)) {
+			template.put(
+				"actionKeys",
+				staticModels.get(
+					"com.liferay.contenttargeting.util.ActionKeys"));
+
+			template.put(
+				"contentTargetingPermission",
+				staticModels.get(
+					"com.liferay.contenttargeting.service.permission." +
+						"ContentTargetingPermission"));
+
+			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
+
+			template.put(
+				"userSegmentPermission",
+				staticModels.get(
+					"com.liferay.contenttargeting.service.permission." +
+						"UserSegmentPermission"));
+
 			ThemeDisplay themeDisplay =
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
@@ -392,7 +416,6 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
 			template.put("rulesRegistry", _rulesRegistry);
-			template.put("userSegmentClass", UserSegment.class);
 
 			Map<String, Rule> rules = _rulesRegistry.getRules();
 

@@ -16,16 +16,19 @@
 
 <#include "../init.ftl" />
 
-<@aui["nav-bar"]>
-	<@aui["nav"]>
-		<@portlet["renderURL"] var="addUserSegmentURL">
-			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-			<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
-		</@>
+<#if contentTargetingPermission.contains(permissionChecker, scopeGroupId, actionKeys.ADD_USER_SEGMENT)>
+	<@aui["nav-bar"]>
+		<@aui["nav"]>
+			<@portlet["renderURL"] var="addUserSegmentURL">
+				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
+				<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
+			</@>
 
-		<@aui["nav-item"] href="${addUserSegmentURL}" iconCssClass="icon-plus" label="add-user-segment" />
+			<@aui["nav-item"] href="${addUserSegmentURL}" iconCssClass="icon-plus" label="add-user-segment" />
+		</@>
 	</@>
-</@>
+</#if>
+
 
 <#assign iteratorURL = renderResponse.createRenderURL()>
 
@@ -57,26 +60,48 @@
 			name=""
 		>
 			<@liferay_ui["icon-menu"]>
-				<@portlet["renderURL"] var="editUserSegmentURL">
-					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-					<@portlet["param"] name="redirect" value="${currentURL}" />
-					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-				</@>
+				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.UPDATE)>
+					<@portlet["renderURL"] var="editUserSegmentURL">
+						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
+						<@portlet["param"] name="redirect" value="${currentURL}" />
+						<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+					</@>
 
-				<@liferay_ui["icon"]
-					image="edit"
-					method="get"
-					url="${editUserSegmentURL}"
-				/>
 
-				<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
-					<@portlet["param"] name="redirect" value="${currentURL}" />
-					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-				</@>
+					<@liferay_ui["icon"]
+						image="edit"
+						method="get"
+						url="${editUserSegmentURL}"
+					/>
+				</#if>
 
-				<@liferay_ui["icon-delete"]
-					url="${deleteUserSegmentURL}"
-				/>
+				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.DELETE)>
+					<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
+						<@portlet["param"] name="redirect" value="${currentURL}" />
+						<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+					</@>
+
+					<@liferay_ui["icon-delete"]
+						url="${deleteUserSegmentURL}"
+					/>
+				</#if>
+
+				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.PERMISSIONS)>
+					<@liferay_security["permissionsURL"]
+						modelResource="${userSegmentClass.getName()}"
+						modelResourceDescription="${userSegment.getName(locale)}"
+						resourcePrimKey="${userSegment.getUserSegmentId()}"
+						var="permissionsEntryURL"
+						windowState="${liferayWindowStatePopUp}"
+					/>
+
+					<@liferay_ui["icon"]
+						image="permissions"
+						method="get"
+						url="${permissionsEntryURL}"
+						useDialog=true
+					/>
+				</#if>
 			</@>
 		</@>
 	</@>
