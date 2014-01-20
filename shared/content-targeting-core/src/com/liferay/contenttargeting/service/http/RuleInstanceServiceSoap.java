@@ -14,6 +14,13 @@
 
 package com.liferay.contenttargeting.service.http;
 
+import com.liferay.contenttargeting.service.RuleInstanceServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
  * {@link com.liferay.contenttargeting.service.RuleInstanceServiceUtil} service utility. The
@@ -55,4 +62,83 @@ package com.liferay.contenttargeting.service.http;
  * @generated
  */
 public class RuleInstanceServiceSoap {
+	public static com.liferay.contenttargeting.model.RuleInstanceSoap addRuleInstance(
+		long userId, java.lang.String ruleKey, long userSegmentId,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.contenttargeting.model.RuleInstance returnValue = RuleInstanceServiceUtil.addRuleInstance(userId,
+					ruleKey, userSegmentId, typeSettings, serviceContext);
+
+			return com.liferay.contenttargeting.model.RuleInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.contenttargeting.model.RuleInstanceSoap deleteRuleInstance(
+		long ruleInstanceId) throws RemoteException {
+		try {
+			com.liferay.contenttargeting.model.RuleInstance returnValue = RuleInstanceServiceUtil.deleteRuleInstance(ruleInstanceId);
+
+			return com.liferay.contenttargeting.model.RuleInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.contenttargeting.model.RuleInstanceSoap[] getRuleInstances(
+		long userSegmentId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.contenttargeting.model.RuleInstance> returnValue =
+				RuleInstanceServiceUtil.getRuleInstances(userSegmentId);
+
+			return com.liferay.contenttargeting.model.RuleInstanceSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static long getRuleInstancesCount(long userSegmentId)
+		throws RemoteException {
+		try {
+			long returnValue = RuleInstanceServiceUtil.getRuleInstancesCount(userSegmentId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.contenttargeting.model.RuleInstanceSoap updateRuleInstance(
+		long ruleInstanceId, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.contenttargeting.model.RuleInstance returnValue = RuleInstanceServiceUtil.updateRuleInstance(ruleInstanceId,
+					typeSettings, serviceContext);
+
+			return com.liferay.contenttargeting.model.RuleInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(RuleInstanceServiceSoap.class);
 }

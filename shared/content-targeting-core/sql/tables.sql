@@ -36,7 +36,7 @@ create table CT_RuleInstance (
 	modifiedDate DATE null,
 	ruleKey VARCHAR(75) null,
 	userSegmentId LONG,
-	typeSettings VARCHAR(75) null
+	typeSettings TEXT null
 );
 
 create table CT_UserSegment (

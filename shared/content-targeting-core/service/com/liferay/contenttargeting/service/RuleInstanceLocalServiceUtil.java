@@ -335,10 +335,37 @@ public class RuleInstanceLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.contenttargeting.model.RuleInstance addRuleInstance(
+		long userId, java.lang.String ruleKey, long userSegmentId,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addRuleInstance(userId, ruleKey, userSegmentId,
+			typeSettings, serviceContext);
+	}
+
 	public static java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances(
 		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getRuleInstances(userSegmentId);
+	}
+
+	public static long getRuleInstancesCount(long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRuleInstancesCount(userSegmentId);
+	}
+
+	public static com.liferay.contenttargeting.model.RuleInstance updateRuleInstance(
+		long ruleInstanceId, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateRuleInstance(ruleInstanceId, typeSettings,
+			serviceContext);
 	}
 
 	public static void clearService() {

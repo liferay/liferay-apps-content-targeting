@@ -356,10 +356,38 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 	}
 
 	@Override
+	public com.liferay.contenttargeting.model.RuleInstance addRuleInstance(
+		long userId, java.lang.String ruleKey, long userSegmentId,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ruleInstanceLocalService.addRuleInstance(userId, ruleKey,
+			userSegmentId, typeSettings, serviceContext);
+	}
+
+	@Override
 	public java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances(
 		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _ruleInstanceLocalService.getRuleInstances(userSegmentId);
+	}
+
+	@Override
+	public long getRuleInstancesCount(long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ruleInstanceLocalService.getRuleInstancesCount(userSegmentId);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.RuleInstance updateRuleInstance(
+		long ruleInstanceId, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ruleInstanceLocalService.updateRuleInstance(ruleInstanceId,
+			typeSettings, serviceContext);
 	}
 
 	/**

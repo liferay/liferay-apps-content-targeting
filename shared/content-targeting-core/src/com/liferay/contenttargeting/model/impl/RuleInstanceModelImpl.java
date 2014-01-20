@@ -77,9 +77,9 @@ public class RuleInstanceModelImpl extends BaseModelImpl<RuleInstance>
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "ruleKey", Types.VARCHAR },
 			{ "userSegmentId", Types.BIGINT },
-			{ "typeSettings", Types.VARCHAR }
+			{ "typeSettings", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_RuleInstance (uuid_ VARCHAR(75) null,ruleInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ruleKey VARCHAR(75) null,userSegmentId LONG,typeSettings VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_RuleInstance (uuid_ VARCHAR(75) null,ruleInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,ruleKey VARCHAR(75) null,userSegmentId LONG,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_RuleInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY ruleInstance.ruleKey DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_RuleInstance.ruleKey DESC";

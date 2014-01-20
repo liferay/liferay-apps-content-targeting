@@ -56,6 +56,49 @@ public class RuleInstanceServiceWrapper implements RuleInstanceService,
 		return _ruleInstanceService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public com.liferay.contenttargeting.model.RuleInstance addRuleInstance(
+		long userId, java.lang.String ruleKey, long userSegmentId,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ruleInstanceService.addRuleInstance(userId, ruleKey,
+			userSegmentId, typeSettings, serviceContext);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.RuleInstance deleteRuleInstance(
+		long ruleInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ruleInstanceService.deleteRuleInstance(ruleInstanceId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ruleInstanceService.getRuleInstances(userSegmentId);
+	}
+
+	@Override
+	public long getRuleInstancesCount(long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ruleInstanceService.getRuleInstancesCount(userSegmentId);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.RuleInstance updateRuleInstance(
+		long ruleInstanceId, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ruleInstanceService.updateRuleInstance(ruleInstanceId,
+			typeSettings, serviceContext);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
