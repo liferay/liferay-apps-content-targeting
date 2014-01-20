@@ -16,7 +16,10 @@ package com.liferay.contenttargeting.portlet;
 
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
+import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.model.UserSegment;
+import com.liferay.contenttargeting.service.RuleInstanceLocalService;
+import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.contenttargeting.util.UnavailableServiceException;
@@ -112,6 +115,10 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 
 		try {
+			_ruleInstanceService = ServiceTrackerUtil.getService(
+				RuleInstanceService.class, bundle.getBundleContext());
+			_ruleInstanceLocalService = ServiceTrackerUtil.getService(
+				RuleInstanceLocalService.class, bundle.getBundleContext());
 			_userSegmentService = ServiceTrackerUtil.getService(
 				UserSegmentService.class, bundle.getBundleContext());
 			_userSegmentLocalService = ServiceTrackerUtil.getService(
@@ -278,6 +285,19 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			template.put("userSegments", userSegments);
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_RULE)) {
+			template.put("ruleInstanceClass", RuleInstance.class);
+
+			RuleInstance ruleInstance = null;
+
+			long ruleInstanceId = ParamUtil.getLong(
+				portletRequest, "ruleInstanceId");
+
+			if (ruleInstanceId > 0) {
+				ruleInstance = _ruleInstanceLocalService.getRuleInstance(
+					ruleInstanceId);
+
+				template.put("ruleInstance", ruleInstance);
+			}
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
 			template.put("userSegmentClass", UserSegment.class);
@@ -303,6 +323,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
+	private RuleInstanceLocalService _ruleInstanceLocalService;
+	private RuleInstanceService _ruleInstanceService;
 	private RulesRegistry _rulesRegistry;
 	private UserSegmentLocalService _userSegmentLocalService;
 	private UserSegmentService _userSegmentService;
