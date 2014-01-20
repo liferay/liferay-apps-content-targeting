@@ -54,6 +54,7 @@ import freemarker.template.TemplateHashModel;
 import java.io.IOException;
 import java.io.Writer;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -298,6 +299,15 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 				template.put("ruleInstance", ruleInstance);
 			}
+
+			String ruleKey = ParamUtil.getString(portletRequest, "ruleKey");
+
+			Rule rule = _rulesRegistry.getRule(ruleKey);
+
+			String ruleFormHTML = rule.getFormHTML(
+				ruleInstance, _cloneTemplateContext(template));
+
+			template.put("ruleFormHTML", ruleFormHTML);
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
 			template.put("userSegmentClass", UserSegment.class);
@@ -318,6 +328,16 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 			template.put("userSegment", userSegment);
 		}
+	}
+
+	private Map<String, Object> _cloneTemplateContext(Template template) {
+		Map<String, Object> context = new HashMap<String, Object>();
+
+		for (String key : template.getKeys()) {
+			context.put(key, template.get(key));
+		}
+
+		return context;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

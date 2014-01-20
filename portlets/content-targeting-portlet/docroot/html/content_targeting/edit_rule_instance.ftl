@@ -34,6 +34,8 @@
 	<@aui["input"] name="ruleKey" type="hidden" value="${ruleKey}" />
 	<@aui["input"] name="userSegmentId" type="hidden" value=userSegmentId />
 
+	${ruleFormHTML}
+
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
 	</@>
