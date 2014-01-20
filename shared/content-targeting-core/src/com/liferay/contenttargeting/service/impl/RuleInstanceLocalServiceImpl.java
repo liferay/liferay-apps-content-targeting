@@ -14,7 +14,11 @@
 
 package com.liferay.contenttargeting.service.impl;
 
+import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.service.base.RuleInstanceLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.SystemException;
+
+import java.util.List;
 
 /**
  * The implementation of the rule instance local service.
@@ -32,5 +36,11 @@ import com.liferay.contenttargeting.service.base.RuleInstanceLocalServiceBaseImp
  */
 public class RuleInstanceLocalServiceImpl
 	extends RuleInstanceLocalServiceBaseImpl {
+
+	public List<RuleInstance> getRuleInstances(long userSegmentId)
+		throws SystemException {
+
+		return ruleInstancePersistence.findByUserSegmentId(userSegmentId);
+	}
 
 }
