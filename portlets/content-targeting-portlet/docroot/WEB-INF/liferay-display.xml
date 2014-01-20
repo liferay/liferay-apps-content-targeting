@@ -3,6 +3,6 @@
 
 <display>
 	<category name="category.ct">
-		<portlet id="1" />
+		<portlet id="ctadmin" />
 	</category>
 </display>
