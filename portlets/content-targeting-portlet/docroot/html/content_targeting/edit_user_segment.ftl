@@ -40,15 +40,15 @@
 
 	<@liferay_ui["icon-menu"] direction="right" icon="../aui/plus" message="add-rule" showWhenSingleIcon=true>
 		<#list rules as rule>
-			<#assign editRuleURL = renderResponse.createRenderURL()>
+			<#assign addRuleInstanceURL = renderResponse.createRenderURL()>
 
-			${editRuleURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE)}
-			${editRuleURL.setParameter("redirect", currentURL)}
+			${addRuleInstanceURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE)}
+			${addRuleInstanceURL.setParameter("redirect", currentURL)}
 
 			<@liferay_ui["icon"]
 				image="${rule.getIcon()}"
 				message="${rule.getName()}"
-				url="${editRuleURL}"
+				url="${addRuleInstanceURL}"
 			/>
 		</#list>
 	</@>
