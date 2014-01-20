@@ -1,5 +1,21 @@
 Bundle-Name: Time Rule
 Include-Resource: classes
+Import-Package:\
+	com.liferay.contenttargeting.api.model,\
+	com.liferay.contenttargeting.service,\
+	com.liferay.contenttargeting.service.messaging,\
+	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.language,\
+	com.liferay.portal.kernel.lar,\
+	com.liferay.portal.kernel.servlet,\
+	com.liferay.portal.kernel.servlet.filters.invoker,\
+	freemarker.cache,\
+	freemarker.template,\
+	javax.portlet,\
+	javax.el,\
+	javax.servlet,\
+	javax.servlet.http,\
+	*;resolution:="optional"
 Private-Package: \
 	com.liferay.contenttargeting.rules.time.*
 Service-Component: \
