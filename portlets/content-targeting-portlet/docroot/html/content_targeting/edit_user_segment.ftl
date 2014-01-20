@@ -42,7 +42,7 @@
 		<#list rules as rule>
 			<#assign addRuleInstanceURL = renderResponse.createRenderURL()>
 
-			${addRuleInstanceURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE)}
+			${addRuleInstanceURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE_INSTANCE)}
 			${addRuleInstanceURL.setParameter("redirect", currentURL)}
 			${addRuleInstanceURL.setParameter("ruleKey", rule.getRuleKey())}
 			${addRuleInstanceURL.setParameter("userSegmentId", userSegmentId?string)}
@@ -82,7 +82,7 @@
 				<@liferay_ui["icon-menu"]>
 					<#assign editRuleInstanceURL = renderResponse.createRenderURL()>
 
-					${editRuleInstanceURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE)}
+					${editRuleInstanceURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE_INSTANCE)}
 					${editRuleInstanceURL.setParameter("redirect", currentURL)}
 					${editRuleInstanceURL.setParameter("ruleInstanceId", ruleInstance.getRuleInstanceId()?string)}
 					${editRuleInstanceURL.setParameter("ruleKey", ruleInstance.getRuleKey()?string)}

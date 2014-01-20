@@ -18,8 +18,8 @@ package com.liferay.contenttargeting.portlet;
  */
 public class ContentTargetingPath {
 
-	public static final String EDIT_RULE =
-		"html/content_targeting/edit_rule.ftl";
+	public static final String EDIT_RULE_INSTANCE =
+		"html/content_targeting/edit_rule_instance.ftl";
 
 	public static final String EDIT_USER_SEGMENT =
 		"html/content_targeting/edit_user_segment.ftl";

@@ -355,7 +355,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 			template.put("userSegments", userSegments);
 		}
-		else if (path.equals(ContentTargetingPath.EDIT_RULE)) {
+		else if (path.equals(ContentTargetingPath.EDIT_RULE_INSTANCE)) {
 			template.put("ruleInstanceClass", RuleInstance.class);
 
 			RuleInstance ruleInstance = null;
