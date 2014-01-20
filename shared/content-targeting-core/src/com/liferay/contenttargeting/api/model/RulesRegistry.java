@@ -21,6 +21,8 @@ import java.util.Map;
  */
 public interface RulesRegistry {
 
+	public Rule getRule(String ruleKey);
+
 	public Map<String, Rule> getRules();
 
 }

@@ -29,6 +29,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class RulesRegistryManager implements RulesRegistry {
 
+	@Override
 	public Rule getRule(String ruleKey) {
 		return _rules.get(ruleKey);
 	}
