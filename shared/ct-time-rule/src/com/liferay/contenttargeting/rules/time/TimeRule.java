@@ -19,6 +19,7 @@ import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 
 import com.liferay.contenttargeting.api.model.Rule;
+import com.liferay.contenttargeting.model.RuleInstance;
 
 /**
  * @author Julio Camarero
@@ -35,6 +36,11 @@ public class TimeRule implements Rule {
 	}
 
 	@Override
+	public boolean evaluate(RuleInstance ruleInstance) {
+		return true;
+	}
+
+	@Override
 	public String getIcon() {
 		return "../aui/time";
 	}
@@ -42,6 +48,11 @@ public class TimeRule implements Rule {
 	@Override
 	public String getName() {
 		return "time";
+	}
+
+	@Override
+	public String getRuleKey() {
+		return "timeRule";
 	}
 
 }

@@ -14,13 +14,19 @@
 
 package com.liferay.contenttargeting.api.model;
 
+import com.liferay.contenttargeting.model.RuleInstance;
+
 /**
  * @author Eudaldo Alonso
  */
 public interface Rule {
 
+	public boolean evaluate(RuleInstance ruleInstance);
+
 	public String getIcon();
 
 	public String getName();
+
+	public String getRuleKey();
 
 }
