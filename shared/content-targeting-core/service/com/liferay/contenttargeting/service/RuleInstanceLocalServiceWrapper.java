@@ -355,6 +355,13 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 			arguments);
 	}
 
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _ruleInstanceLocalService.getRuleInstances(userSegmentId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

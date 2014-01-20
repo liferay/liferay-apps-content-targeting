@@ -9,6 +9,7 @@ create index IX_14C90164 on CT_Rule (uuid_, companyId);
 create unique index IX_4EAA90E6 on CT_Rule (uuid_, groupId);
 
 create index IX_B034D565 on CT_RuleInstance (groupId);
+create index IX_29BE548E on CT_RuleInstance (userSegmentId);
 create index IX_74DA7D2F on CT_RuleInstance (uuid_);
 create index IX_E3BCC399 on CT_RuleInstance (uuid_, companyId);
 create unique index IX_B8A35C5B on CT_RuleInstance (uuid_, groupId);

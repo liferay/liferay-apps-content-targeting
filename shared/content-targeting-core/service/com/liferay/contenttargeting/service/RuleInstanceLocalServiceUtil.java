@@ -335,6 +335,12 @@ public class RuleInstanceLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getRuleInstances(userSegmentId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

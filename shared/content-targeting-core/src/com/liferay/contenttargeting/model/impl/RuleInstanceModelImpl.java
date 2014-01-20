@@ -97,8 +97,9 @@ public class RuleInstanceModelImpl extends BaseModelImpl<RuleInstance>
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
-	public static long RULEKEY_COLUMN_BITMASK = 8L;
+	public static long USERSEGMENTID_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
+	public static long RULEKEY_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -438,7 +439,19 @@ public class RuleInstanceModelImpl extends BaseModelImpl<RuleInstance>
 
 	@Override
 	public void setUserSegmentId(long userSegmentId) {
+		_columnBitmask |= USERSEGMENTID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserSegmentId) {
+			_setOriginalUserSegmentId = true;
+
+			_originalUserSegmentId = _userSegmentId;
+		}
+
 		_userSegmentId = userSegmentId;
+	}
+
+	public long getOriginalUserSegmentId() {
+		return _originalUserSegmentId;
 	}
 
 	@JSON
@@ -566,6 +579,10 @@ public class RuleInstanceModelImpl extends BaseModelImpl<RuleInstance>
 		ruleInstanceModelImpl._originalCompanyId = ruleInstanceModelImpl._companyId;
 
 		ruleInstanceModelImpl._setOriginalCompanyId = false;
+
+		ruleInstanceModelImpl._originalUserSegmentId = ruleInstanceModelImpl._userSegmentId;
+
+		ruleInstanceModelImpl._setOriginalUserSegmentId = false;
 
 		ruleInstanceModelImpl._columnBitmask = 0;
 	}
@@ -746,6 +763,8 @@ public class RuleInstanceModelImpl extends BaseModelImpl<RuleInstance>
 	private Date _modifiedDate;
 	private String _ruleKey;
 	private long _userSegmentId;
+	private long _originalUserSegmentId;
+	private boolean _setOriginalUserSegmentId;
 	private String _typeSettings;
 	private long _columnBitmask;
 	private RuleInstance _escapedModel;
