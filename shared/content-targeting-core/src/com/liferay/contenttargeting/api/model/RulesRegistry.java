@@ -14,13 +14,13 @@
 
 package com.liferay.contenttargeting.api.model;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eudaldo Alonso
  */
 public interface RulesRegistry {
 
-	public List<Rule> getRules();
+	public Map<String, Rule> getRules();
 
 }
