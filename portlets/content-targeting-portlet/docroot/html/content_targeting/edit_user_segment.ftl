@@ -44,6 +44,8 @@
 
 			${addRuleInstanceURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE)}
 			${addRuleInstanceURL.setParameter("redirect", currentURL)}
+			${addRuleInstanceURL.setParameter("ruleKey", rule.getRuleKey())}
+			${addRuleInstanceURL.setParameter("userSegmentId", userSegmentId?string)}
 
 			<@liferay_ui["icon"]
 				image="${rule.getIcon()}"
