@@ -1,8 +1,7 @@
+Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/util-taglib.jar,WEB-INF/lib/content-targeting-core-service.jar
 Bundle-Icon: /icons/content_targeting.png;size=16
 Bundle-Localization: WEB-INF/classes/content/Language
 Bundle-Name: Content Targeting Portlet
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/
- util-taglib.jar
 DynamicImport-Package:\
 	org.apache.jasper.servlet,\
 	org.eclipse.jetty.servlet.listener
