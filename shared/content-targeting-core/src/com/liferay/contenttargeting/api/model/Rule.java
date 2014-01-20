@@ -16,6 +16,7 @@ package com.liferay.contenttargeting.api.model;
 
 import com.liferay.contenttargeting.model.RuleInstance;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -36,6 +37,8 @@ public interface Rule {
 	public String getName();
 
 	public String getRuleKey();
+
+	public String getSummary(RuleInstance ruleInstance, Locale locale);
 
 	public String processRule(PortletRequest request, PortletResponse response);
 

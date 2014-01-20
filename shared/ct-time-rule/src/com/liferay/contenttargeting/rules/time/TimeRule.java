@@ -34,6 +34,7 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
+import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -126,6 +127,11 @@ public class TimeRule implements Rule {
 	@Override
 	public String getRuleKey() {
 		return "timeRule";
+	}
+
+	@Override
+	public String getSummary(RuleInstance ruleInstance, Locale locale) {
+		return "Time Rule Summary";
 	}
 
 	@Override
