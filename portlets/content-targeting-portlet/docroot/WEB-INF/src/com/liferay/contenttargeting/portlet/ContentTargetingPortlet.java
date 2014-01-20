@@ -18,7 +18,9 @@ import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
-import com.liferay.contenttargeting.util.ServiceTrackerUtil;
+import com.liferay.contenttargeting.util.UnavailableServiceException;
+import com.liferay.osgi.util.OsgiServiceUnavailableException;
+import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -52,6 +54,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.naming.ServiceUnavailableException;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.MimeResponse;
@@ -62,7 +65,6 @@ import javax.portlet.PortletResponse;
 import javax.portlet.UnavailableException;
 
 import org.osgi.framework.Bundle;
-import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * @author Eduardo Garcia
@@ -78,7 +80,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 		try {
 			UserSegmentService userSegmentService =
-				_userSegmentServiceTracker.getService();
+				_userSegmentService;
 
 			userSegmentService.deleteUserSegment(userSegmentId);
 
@@ -112,12 +114,18 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			};
 		}
 
-		_userSegmentLocalServiceTracker = ServiceTrackerUtil.getServiceTracker(
-			UserSegmentLocalService.class, bundle.getBundleContext());
-		_userSegmentServiceTracker = ServiceTrackerUtil.getServiceTracker(
-			UserSegmentService.class, bundle.getBundleContext());
-		_rulesRegistryTracker = ServiceTrackerUtil.getServiceTracker(
-			RulesRegistry.class, bundle.getBundleContext());
+		try {
+			_userSegmentService = ServiceTrackerUtil.getService(
+				UserSegmentService.class, bundle.getBundleContext());
+			_userSegmentLocalService = ServiceTrackerUtil.getService(
+				UserSegmentLocalService.class, bundle.getBundleContext());
+			_rulesRegistry = ServiceTrackerUtil.getService(
+				RulesRegistry.class, bundle.getBundleContext());
+		} catch (OsgiServiceUnavailableException e) {
+			throw new UnavailableServiceException(
+				e.getUnavailableServiceClass());
+		}
+
 	}
 
 	public void updateUserSegment(
@@ -137,16 +145,13 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		UserSegmentService userSegmentService =
-			_userSegmentServiceTracker.getService();
-
 		try {
 			if (userSegmentId > 0) {
-				userSegmentService.updateUserSegment(
+				_userSegmentService.updateUserSegment(
 					userSegmentId, nameMap, descriptionMap, serviceContext);
 			}
 			else {
-				userSegmentService.addUserSegment(
+				_userSegmentService.addUserSegment(
 					themeDisplay.getUserId(), nameMap, descriptionMap,
 					serviceContext);
 			}
@@ -269,11 +274,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
-			UserSegmentService userSegmentService =
-				_userSegmentServiceTracker.getService();
-
 			List<UserSegment> userSegments =
-				userSegmentService.getUserSegments(
+				_userSegmentService.getUserSegments(
 					themeDisplay.getScopeGroupId());
 
 			template.put("userSegments", userSegments);
@@ -283,9 +285,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
 			template.put("userSegmentClass", UserSegment.class);
 
-			RulesRegistry rulesRegistry = _rulesRegistryTracker.getService();
-
-			template.put("rules", rulesRegistry.getRules());
+			template.put("rules", _rulesRegistry.getRules());
 
 			UserSegment userSegment = null;
 
@@ -293,10 +293,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				portletRequest, "userSegmentId");
 
 			if (userSegmentId > 0) {
-				UserSegmentLocalService userSegmentLocalService =
-					_userSegmentLocalServiceTracker.getService();
-
-				userSegment = userSegmentLocalService.getUserSegment(
+				userSegment = _userSegmentLocalService.getUserSegment(
 					userSegmentId);
 			}
 
@@ -307,10 +304,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
-	private ServiceTracker<RulesRegistry, RulesRegistry> _rulesRegistryTracker;
-	private ServiceTracker<UserSegmentLocalService, UserSegmentLocalService>
-		_userSegmentLocalServiceTracker;
-	private ServiceTracker<UserSegmentService, UserSegmentService>
-		_userSegmentServiceTracker;
+	private RulesRegistry _rulesRegistry;
+	private UserSegmentLocalService _userSegmentLocalService;
+	private UserSegmentService _userSegmentService;
 
 }

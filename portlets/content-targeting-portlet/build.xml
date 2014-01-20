@@ -3,5 +3,5 @@
 <project name="content-targeting-portlet" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="../../build-common-osgi-plugin.xml" />
 
-	<property name="import.shared" value="content-targeting-core" />
+	<property name="import.shared" value="service-utils-shared,content-targeting-core" />
 </project>

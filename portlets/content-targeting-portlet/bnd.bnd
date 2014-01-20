@@ -14,6 +14,7 @@ Import-Package:\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.contenttargeting.service.messaging,\
+	com.liferay.osgi.util,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.language,\
 	com.liferay.portal.kernel.lar,\
