@@ -47,8 +47,7 @@ public class CTUserLocalServiceImpl extends CTUserLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
-		long groupId = serviceContext.getScopeGroupId();
+		User user = UserLocalServiceUtil.fetchUser(userId);
 
 		Date now = new Date();
 
@@ -56,8 +55,8 @@ public class CTUserLocalServiceImpl extends CTUserLocalServiceBaseImpl {
 
 		CTUser CTUser = ctUserPersistence.create(CTUserId);
 
-		CTUser.setGroupId(groupId);
-		CTUser.setCompanyId(CTUser.getCompanyId());
+		CTUser.setGroupId(serviceContext.getScopeGroupId());
+		CTUser.setCompanyId(serviceContext.getCompanyId());
 
 		if (user != null) {
 			CTUser.setUserId(user.getUserId());
