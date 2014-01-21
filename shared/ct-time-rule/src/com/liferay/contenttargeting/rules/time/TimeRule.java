@@ -19,6 +19,7 @@ import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 
 import com.liferay.contenttargeting.api.model.Rule;
+import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -55,7 +56,7 @@ public class TimeRule implements Rule {
 	}
 
 	@Override
-	public boolean evaluate(RuleInstance ruleInstance) {
+	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser) {
 		return true;
 	}
 

@@ -14,6 +14,7 @@
 
 package com.liferay.contenttargeting.api.model;
 
+import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 
 import java.util.Locale;
@@ -27,7 +28,7 @@ import javax.portlet.PortletResponse;
  */
 public interface Rule {
 
-	public boolean evaluate(RuleInstance ruleInstance);
+	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser);
 
 	public String getFormHTML(
 		RuleInstance ruleInstance, Map<String, Object> context);
