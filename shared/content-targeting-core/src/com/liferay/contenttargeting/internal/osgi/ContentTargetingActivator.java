@@ -14,6 +14,7 @@
 
 package com.liferay.contenttargeting.internal.osgi;
 
+import com.liferay.contenttargeting.service.CTUserLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
@@ -42,6 +43,14 @@ public class ContentTargetingActivator
 
 		ApplicationContext applicationContext =
 			(ApplicationContext)message.getPayload();
+
+		CTUserLocalService ctUserLocalService =
+			(CTUserLocalService)applicationContext.getBean(
+				CTUserLocalService.class.getName());
+
+		_ctUserLocalServiceServiceRegistration =
+			_bundleContext.registerService(
+				CTUserLocalService.class, ctUserLocalService, null);
 
 		RuleInstanceLocalService ruleInstanceLocalService =
 			(RuleInstanceLocalService)applicationContext.getBean(
@@ -94,6 +103,12 @@ public class ContentTargetingActivator
 
 		MessageBusUtil.unregisterMessageListener(DESTINATION_NAME, this);
 
+		if (_ctUserLocalServiceServiceRegistration != null) {
+			_ctUserLocalServiceServiceRegistration.unregister();
+
+			_ctUserLocalServiceServiceRegistration = null;
+		}
+
 		if (_ruleInstanceLocalServiceServiceRegistration != null) {
 			_ruleInstanceLocalServiceServiceRegistration.unregister();
 
@@ -123,6 +138,8 @@ public class ContentTargetingActivator
 		"content-targeting-core-spring";
 
 	private BundleContext _bundleContext;
+	private ServiceRegistration<CTUserLocalService>
+		_ctUserLocalServiceServiceRegistration;
 	private ServiceRegistration<RuleInstanceLocalService>
 		_ruleInstanceLocalServiceServiceRegistration;
 	private ServiceRegistration<RuleInstanceService>
