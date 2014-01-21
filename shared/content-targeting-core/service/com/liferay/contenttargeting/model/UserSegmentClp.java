@@ -635,6 +635,49 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	}
 
 	@Override
+	public java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances() {
+		try {
+			String methodName = "getRuleInstances";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.util.List<com.liferay.contenttargeting.model.RuleInstance> returnObj =
+				(java.util.List<com.liferay.contenttargeting.model.RuleInstance>)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public boolean matches(com.liferay.contenttargeting.model.CTUser ctUser,
+		com.liferay.contenttargeting.api.model.RulesRegistry rulesRegistry) {
+		try {
+			String methodName = "matches";
+
+			Class<?>[] parameterTypes = new Class<?>[] {
+					com.liferay.contenttargeting.model.CTUser.class,
+					com.liferay.contenttargeting.api.model.RulesRegistry.class
+				};
+
+			Object[] parameterValues = new Object[] { ctUser, rulesRegistry };
+
+			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				UserSegment.class.getName()));

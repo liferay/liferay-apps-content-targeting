@@ -182,19 +182,6 @@ public interface CTUserLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the c t user matching the UUID and group.
-	*
-	* @param uuid the c t user's UUID
-	* @param groupId the primary key of the group
-	* @return the matching c t user, or <code>null</code> if a matching c t user could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.contenttargeting.model.CTUser fetchCTUserByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns the c t user with the primary key.
 	*
 	* @param CTUserId the primary key of the c t user
@@ -226,21 +213,6 @@ public interface CTUserLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.contenttargeting.model.CTUser getCTUserByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the c t user matching the UUID and group.
-	*
-	* @param uuid the c t user's UUID
-	* @param groupId the primary key of the group
-	* @return the matching c t user
-	* @throws PortalException if a matching c t user could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.contenttargeting.model.CTUser getCTUserByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -301,9 +273,19 @@ public interface CTUserLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	public com.liferay.contenttargeting.model.CTUser addUser(long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.contenttargeting.model.CTUser addUser(long userId,
 		java.lang.String lastIp, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.contenttargeting.model.CTUser getCTUserByUserId(
+		long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

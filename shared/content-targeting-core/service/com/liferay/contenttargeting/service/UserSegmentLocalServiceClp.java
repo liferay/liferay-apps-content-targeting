@@ -142,13 +142,17 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 
 		_methodParameterTypes24 = new String[] { "long" };
 
-		_methodName25 = "getUserSegmentsCount";
+		_methodName25 = "getUserSegments";
 
-		_methodParameterTypes25 = new String[] { "long" };
+		_methodParameterTypes25 = new String[] { "long[][]" };
 
-		_methodName26 = "updateUserSegment";
+		_methodName26 = "getUserSegmentsCount";
 
-		_methodParameterTypes26 = new String[] {
+		_methodParameterTypes26 = new String[] { "long" };
+
+		_methodName27 = "updateUserSegment";
+
+		_methodParameterTypes27 = new String[] {
 				"long", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -914,14 +918,49 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public long getUserSegmentsCount(long groupId)
+	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
+		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] { groupId });
+					_methodParameterTypes25,
+					new Object[] { ClpSerializer.translateInput(groupIds) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.contenttargeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public long getUserSegmentsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26, new Object[] { groupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -957,8 +996,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						userSegmentId,
 						
@@ -1045,4 +1084,6 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	private String[] _methodParameterTypes25;
 	private String _methodName26;
 	private String[] _methodParameterTypes26;
+	private String _methodName27;
+	private String[] _methodParameterTypes27;
 }

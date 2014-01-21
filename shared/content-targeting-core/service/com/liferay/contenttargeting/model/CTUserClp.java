@@ -77,7 +77,6 @@ public class CTUserClp extends BaseModelImpl<CTUser> implements CTUser {
 
 		attributes.put("uuid", getUuid());
 		attributes.put("CTUserId", getCTUserId());
-		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -101,12 +100,6 @@ public class CTUserClp extends BaseModelImpl<CTUser> implements CTUser {
 
 		if (CTUserId != null) {
 			setCTUserId(CTUserId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -206,29 +199,6 @@ public class CTUserClp extends BaseModelImpl<CTUser> implements CTUser {
 	@Override
 	public void setCTUserUuid(String CTUserUuid) {
 		_CTUserUuid = CTUserUuid;
-	}
-
-	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		_groupId = groupId;
-
-		if (_ctUserRemoteModel != null) {
-			try {
-				Class<?> clazz = _ctUserRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setGroupId", long.class);
-
-				method.invoke(_ctUserRemoteModel, groupId);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
 	}
 
 	@Override
@@ -403,6 +373,29 @@ public class CTUserClp extends BaseModelImpl<CTUser> implements CTUser {
 	}
 
 	@Override
+	public long[] getMatchesUserSegmentIds(long[] groupIds,
+		com.liferay.contenttargeting.api.model.RulesRegistry rulesRegistry) {
+		try {
+			String methodName = "getMatchesUserSegmentIds";
+
+			Class<?>[] parameterTypes = new Class<?>[] {
+					long.class,
+					com.liferay.contenttargeting.api.model.RulesRegistry.class
+				};
+
+			Object[] parameterValues = new Object[] { groupIds, rulesRegistry };
+
+			long[] returnObj = (long[])invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				CTUser.class.getName()));
@@ -479,7 +472,6 @@ public class CTUserClp extends BaseModelImpl<CTUser> implements CTUser {
 
 		clone.setUuid(getUuid());
 		clone.setCTUserId(getCTUserId());
-		clone.setGroupId(getGroupId());
 		clone.setCompanyId(getCompanyId());
 		clone.setUserId(getUserId());
 		clone.setUserName(getUserName());
@@ -543,14 +535,12 @@ public class CTUserClp extends BaseModelImpl<CTUser> implements CTUser {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
 		sb.append(", CTUserId=");
 		sb.append(getCTUserId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", userId=");
@@ -572,7 +562,7 @@ public class CTUserClp extends BaseModelImpl<CTUser> implements CTUser {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.contenttargeting.model.CTUser");
@@ -585,10 +575,6 @@ public class CTUserClp extends BaseModelImpl<CTUser> implements CTUser {
 		sb.append(
 			"<column><column-name>CTUserId</column-name><column-value><![CDATA[");
 		sb.append(getCTUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -627,7 +613,6 @@ public class CTUserClp extends BaseModelImpl<CTUser> implements CTUser {
 	private String _uuid;
 	private long _CTUserId;
 	private String _CTUserUuid;
-	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;

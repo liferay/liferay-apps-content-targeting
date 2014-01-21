@@ -613,269 +613,6 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 	private static final String _FINDER_COLUMN_UUID_UUID_1 = "ctUser.uuid IS NULL";
 	private static final String _FINDER_COLUMN_UUID_UUID_2 = "ctUser.uuid = ?";
 	private static final String _FINDER_COLUMN_UUID_UUID_3 = "(ctUser.uuid IS NULL OR ctUser.uuid = '')";
-	public static final FinderPath FINDER_PATH_FETCH_BY_UUID_G = new FinderPath(CTUserModelImpl.ENTITY_CACHE_ENABLED,
-			CTUserModelImpl.FINDER_CACHE_ENABLED, CTUserImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() },
-			CTUserModelImpl.UUID_COLUMN_BITMASK |
-			CTUserModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_G = new FinderPath(CTUserModelImpl.ENTITY_CACHE_ENABLED,
-			CTUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUUID_G",
-			new String[] { String.class.getName(), Long.class.getName() });
-
-	/**
-	 * Returns the c t user where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.contenttargeting.NoSuchUserException} if it could not be found.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching c t user
-	 * @throws com.liferay.contenttargeting.NoSuchUserException if a matching c t user could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTUser findByUUID_G(String uuid, long groupId)
-		throws NoSuchUserException, SystemException {
-		CTUser ctUser = fetchByUUID_G(uuid, groupId);
-
-		if (ctUser == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("uuid=");
-			msg.append(uuid);
-
-			msg.append(", groupId=");
-			msg.append(groupId);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchUserException(msg.toString());
-		}
-
-		return ctUser;
-	}
-
-	/**
-	 * Returns the c t user where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the matching c t user, or <code>null</code> if a matching c t user could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTUser fetchByUUID_G(String uuid, long groupId)
-		throws SystemException {
-		return fetchByUUID_G(uuid, groupId, true);
-	}
-
-	/**
-	 * Returns the c t user where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @param retrieveFromCache whether to use the finder cache
-	 * @return the matching c t user, or <code>null</code> if a matching c t user could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTUser fetchByUUID_G(String uuid, long groupId,
-		boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { uuid, groupId };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs, this);
-		}
-
-		if (result instanceof CTUser) {
-			CTUser ctUser = (CTUser)result;
-
-			if (!Validator.equals(uuid, ctUser.getUuid()) ||
-					(groupId != ctUser.getGroupId())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_SELECT_CTUSER_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (bindUuid) {
-					qPos.add(uuid);
-				}
-
-				qPos.add(groupId);
-
-				List<CTUser> list = q.list();
-
-				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-						finderArgs, list);
-				}
-				else {
-					CTUser ctUser = list.get(0);
-
-					result = ctUser;
-
-					cacheResult(ctUser);
-
-					if ((ctUser.getUuid() == null) ||
-							!ctUser.getUuid().equals(uuid) ||
-							(ctUser.getGroupId() != groupId)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-							finderArgs, ctUser);
-					}
-				}
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G,
-					finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (CTUser)result;
-		}
-	}
-
-	/**
-	 * Removes the c t user where uuid = &#63; and groupId = &#63; from the database.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the c t user that was removed
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTUser removeByUUID_G(String uuid, long groupId)
-		throws NoSuchUserException, SystemException {
-		CTUser ctUser = findByUUID_G(uuid, groupId);
-
-		return remove(ctUser);
-	}
-
-	/**
-	 * Returns the number of c t users where uuid = &#63; and groupId = &#63;.
-	 *
-	 * @param uuid the uuid
-	 * @param groupId the group ID
-	 * @return the number of matching c t users
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public int countByUUID_G(String uuid, long groupId)
-		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_G;
-
-		Object[] finderArgs = new Object[] { uuid, groupId };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_CTUSER_WHERE);
-
-			boolean bindUuid = false;
-
-			if (uuid == null) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_1);
-			}
-			else if (uuid.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_UUID_G_UUID_3);
-			}
-			else {
-				bindUuid = true;
-
-				query.append(_FINDER_COLUMN_UUID_G_UUID_2);
-			}
-
-			query.append(_FINDER_COLUMN_UUID_G_GROUPID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				if (bindUuid) {
-					qPos.add(uuid);
-				}
-
-				qPos.add(groupId);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_UUID_G_UUID_1 = "ctUser.uuid IS NULL AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_2 = "ctUser.uuid = ? AND ";
-	private static final String _FINDER_COLUMN_UUID_G_UUID_3 = "(ctUser.uuid IS NULL OR ctUser.uuid = '') AND ";
-	private static final String _FINDER_COLUMN_UUID_G_GROUPID_2 = "ctUser.groupId = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_UUID_C = new FinderPath(CTUserModelImpl.ENTITY_CACHE_ENABLED,
 			CTUserModelImpl.FINDER_CACHE_ENABLED, CTUserImpl.class,
 			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUuid_C",
@@ -1446,65 +1183,65 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "ctUser.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(ctUser.uuid IS NULL OR ctUser.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "ctUser.companyId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(CTUserModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID = new FinderPath(CTUserModelImpl.ENTITY_CACHE_ENABLED,
 			CTUserModelImpl.FINDER_CACHE_ENABLED, CTUserImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByGroupId",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByUserId",
 			new String[] {
 				Long.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID =
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID =
 		new FinderPath(CTUserModelImpl.ENTITY_CACHE_ENABLED,
 			CTUserModelImpl.FINDER_CACHE_ENABLED, CTUserImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUserId",
 			new String[] { Long.class.getName() },
-			CTUserModelImpl.GROUPID_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(CTUserModelImpl.ENTITY_CACHE_ENABLED,
+			CTUserModelImpl.USERID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_USERID = new FinderPath(CTUserModelImpl.ENTITY_CACHE_ENABLED,
 			CTUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUserId",
 			new String[] { Long.class.getName() });
 
 	/**
-	 * Returns all the c t users where groupId = &#63;.
+	 * Returns all the c t users where userId = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param userId the user ID
 	 * @return the matching c t users
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTUser> findByGroupId(long groupId) throws SystemException {
-		return findByGroupId(groupId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	public List<CTUser> findByUserId(long userId) throws SystemException {
+		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the c t users where groupId = &#63;.
+	 * Returns a range of all the c t users where userId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.CTUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param groupId the group ID
+	 * @param userId the user ID
 	 * @param start the lower bound of the range of c t users
 	 * @param end the upper bound of the range of c t users (not inclusive)
 	 * @return the range of matching c t users
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTUser> findByGroupId(long groupId, int start, int end)
+	public List<CTUser> findByUserId(long userId, int start, int end)
 		throws SystemException {
-		return findByGroupId(groupId, start, end, null);
+		return findByUserId(userId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the c t users where groupId = &#63;.
+	 * Returns an ordered range of all the c t users where userId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.CTUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param groupId the group ID
+	 * @param userId the user ID
 	 * @param start the lower bound of the range of c t users
 	 * @param end the upper bound of the range of c t users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
@@ -1512,7 +1249,7 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTUser> findByGroupId(long groupId, int start, int end,
+	public List<CTUser> findByUserId(long userId, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
@@ -1521,12 +1258,12 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID;
-			finderArgs = new Object[] { groupId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID;
+			finderArgs = new Object[] { userId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID;
-			finderArgs = new Object[] { groupId, start, end, orderByComparator };
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_USERID;
+			finderArgs = new Object[] { userId, start, end, orderByComparator };
 		}
 
 		List<CTUser> list = (List<CTUser>)FinderCacheUtil.getResult(finderPath,
@@ -1534,7 +1271,7 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (CTUser ctUser : list) {
-				if ((groupId != ctUser.getGroupId())) {
+				if ((userId != ctUser.getUserId())) {
 					list = null;
 
 					break;
@@ -1555,7 +1292,7 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 
 			query.append(_SQL_SELECT_CTUSER_WHERE);
 
-			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+			query.append(_FINDER_COLUMN_USERID_USERID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1577,7 +1314,7 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(groupId);
+				qPos.add(userId);
 
 				if (!pagination) {
 					list = (List<CTUser>)QueryUtil.list(q, getDialect(), start,
@@ -1610,19 +1347,19 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 	}
 
 	/**
-	 * Returns the first c t user in the ordered set where groupId = &#63;.
+	 * Returns the first c t user in the ordered set where userId = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching c t user
 	 * @throws com.liferay.contenttargeting.NoSuchUserException if a matching c t user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTUser findByGroupId_First(long groupId,
+	public CTUser findByUserId_First(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserException, SystemException {
-		CTUser ctUser = fetchByGroupId_First(groupId, orderByComparator);
+		CTUser ctUser = fetchByUserId_First(userId, orderByComparator);
 
 		if (ctUser != null) {
 			return ctUser;
@@ -1632,8 +1369,8 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
-		msg.append(groupId);
+		msg.append("userId=");
+		msg.append(userId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -1641,17 +1378,17 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 	}
 
 	/**
-	 * Returns the first c t user in the ordered set where groupId = &#63;.
+	 * Returns the first c t user in the ordered set where userId = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching c t user, or <code>null</code> if a matching c t user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTUser fetchByGroupId_First(long groupId,
+	public CTUser fetchByUserId_First(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<CTUser> list = findByGroupId(groupId, 0, 1, orderByComparator);
+		List<CTUser> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -1661,19 +1398,19 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 	}
 
 	/**
-	 * Returns the last c t user in the ordered set where groupId = &#63;.
+	 * Returns the last c t user in the ordered set where userId = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching c t user
 	 * @throws com.liferay.contenttargeting.NoSuchUserException if a matching c t user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTUser findByGroupId_Last(long groupId,
+	public CTUser findByUserId_Last(long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserException, SystemException {
-		CTUser ctUser = fetchByGroupId_Last(groupId, orderByComparator);
+		CTUser ctUser = fetchByUserId_Last(userId, orderByComparator);
 
 		if (ctUser != null) {
 			return ctUser;
@@ -1683,8 +1420,8 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("groupId=");
-		msg.append(groupId);
+		msg.append("userId=");
+		msg.append(userId);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -1692,23 +1429,23 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 	}
 
 	/**
-	 * Returns the last c t user in the ordered set where groupId = &#63;.
+	 * Returns the last c t user in the ordered set where userId = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching c t user, or <code>null</code> if a matching c t user could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTUser fetchByGroupId_Last(long groupId,
+	public CTUser fetchByUserId_Last(long userId,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByGroupId(groupId);
+		int count = countByUserId(userId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTUser> list = findByGroupId(groupId, count - 1, count,
+		List<CTUser> list = findByUserId(userId, count - 1, count,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1719,17 +1456,17 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 	}
 
 	/**
-	 * Returns the c t users before and after the current c t user in the ordered set where groupId = &#63;.
+	 * Returns the c t users before and after the current c t user in the ordered set where userId = &#63;.
 	 *
 	 * @param CTUserId the primary key of the current c t user
-	 * @param groupId the group ID
+	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next c t user
 	 * @throws com.liferay.contenttargeting.NoSuchUserException if a c t user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTUser[] findByGroupId_PrevAndNext(long CTUserId, long groupId,
+	public CTUser[] findByUserId_PrevAndNext(long CTUserId, long userId,
 		OrderByComparator orderByComparator)
 		throws NoSuchUserException, SystemException {
 		CTUser ctUser = findByPrimaryKey(CTUserId);
@@ -1741,12 +1478,12 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 
 			CTUser[] array = new CTUserImpl[3];
 
-			array[0] = getByGroupId_PrevAndNext(session, ctUser, groupId,
+			array[0] = getByUserId_PrevAndNext(session, ctUser, userId,
 					orderByComparator, true);
 
 			array[1] = ctUser;
 
-			array[2] = getByGroupId_PrevAndNext(session, ctUser, groupId,
+			array[2] = getByUserId_PrevAndNext(session, ctUser, userId,
 					orderByComparator, false);
 
 			return array;
@@ -1759,8 +1496,8 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 		}
 	}
 
-	protected CTUser getByGroupId_PrevAndNext(Session session, CTUser ctUser,
-		long groupId, OrderByComparator orderByComparator, boolean previous) {
+	protected CTUser getByUserId_PrevAndNext(Session session, CTUser ctUser,
+		long userId, OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1773,7 +1510,7 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 
 		query.append(_SQL_SELECT_CTUSER_WHERE);
 
-		query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+		query.append(_FINDER_COLUMN_USERID_USERID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -1843,7 +1580,7 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(groupId);
+		qPos.add(userId);
 
 		if (orderByComparator != null) {
 			Object[] values = orderByComparator.getOrderByConditionValues(ctUser);
@@ -1864,31 +1601,31 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 	}
 
 	/**
-	 * Removes all the c t users where groupId = &#63; from the database.
+	 * Removes all the c t users where userId = &#63; from the database.
 	 *
-	 * @param groupId the group ID
+	 * @param userId the user ID
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByGroupId(long groupId) throws SystemException {
-		for (CTUser ctUser : findByGroupId(groupId, QueryUtil.ALL_POS,
+	public void removeByUserId(long userId) throws SystemException {
+		for (CTUser ctUser : findByUserId(userId, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(ctUser);
 		}
 	}
 
 	/**
-	 * Returns the number of c t users where groupId = &#63;.
+	 * Returns the number of c t users where userId = &#63;.
 	 *
-	 * @param groupId the group ID
+	 * @param userId the user ID
 	 * @return the number of matching c t users
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByGroupId(long groupId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_GROUPID;
+	public int countByUserId(long userId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERID;
 
-		Object[] finderArgs = new Object[] { groupId };
+		Object[] finderArgs = new Object[] { userId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -1898,7 +1635,7 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 
 			query.append(_SQL_COUNT_CTUSER_WHERE);
 
-			query.append(_FINDER_COLUMN_GROUPID_GROUPID_2);
+			query.append(_FINDER_COLUMN_USERID_USERID_2);
 
 			String sql = query.toString();
 
@@ -1911,7 +1648,7 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(groupId);
+				qPos.add(userId);
 
 				count = (Long)q.uniqueResult();
 
@@ -1930,7 +1667,7 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_GROUPID_GROUPID_2 = "ctUser.groupId = ?";
+	private static final String _FINDER_COLUMN_USERID_USERID_2 = "ctUser.userId = ?";
 
 	public CTUserPersistenceImpl() {
 		setModelClass(CTUser.class);
@@ -1945,9 +1682,6 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 	public void cacheResult(CTUser ctUser) {
 		EntityCacheUtil.putResult(CTUserModelImpl.ENTITY_CACHE_ENABLED,
 			CTUserImpl.class, ctUser.getPrimaryKey(), ctUser);
-
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
-			new Object[] { ctUser.getUuid(), ctUser.getGroupId() }, ctUser);
 
 		ctUser.resetOriginalValues();
 	}
@@ -2005,8 +1739,6 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
-
-		clearUniqueFindersCache(ctUser);
 	}
 
 	@Override
@@ -2017,53 +1749,6 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 		for (CTUser ctUser : ctUsers) {
 			EntityCacheUtil.removeResult(CTUserModelImpl.ENTITY_CACHE_ENABLED,
 				CTUserImpl.class, ctUser.getPrimaryKey());
-
-			clearUniqueFindersCache(ctUser);
-		}
-	}
-
-	protected void cacheUniqueFindersCache(CTUser ctUser) {
-		if (ctUser.isNew()) {
-			Object[] args = new Object[] { ctUser.getUuid(), ctUser.getGroupId() };
-
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args, ctUser);
-		}
-		else {
-			CTUserModelImpl ctUserModelImpl = (CTUserModelImpl)ctUser;
-
-			if ((ctUserModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						ctUser.getUuid(), ctUser.getGroupId()
-					};
-
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
-					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
-					ctUser);
-			}
-		}
-	}
-
-	protected void clearUniqueFindersCache(CTUser ctUser) {
-		CTUserModelImpl ctUserModelImpl = (CTUserModelImpl)ctUser;
-
-		Object[] args = new Object[] { ctUser.getUuid(), ctUser.getGroupId() };
-
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
-
-		if ((ctUserModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_UUID_G.getColumnBitmask()) != 0) {
-			args = new Object[] {
-					ctUserModelImpl.getOriginalUuid(),
-					ctUserModelImpl.getOriginalGroupId()
-				};
-
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
 		}
 	}
 
@@ -2253,28 +1938,23 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 			}
 
 			if ((ctUserModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						ctUserModelImpl.getOriginalGroupId()
-					};
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] { ctUserModelImpl.getOriginalUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
-				args = new Object[] { ctUserModelImpl.getGroupId() };
+				args = new Object[] { ctUserModelImpl.getUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_GROUPID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 			}
 		}
 
 		EntityCacheUtil.putResult(CTUserModelImpl.ENTITY_CACHE_ENABLED,
 			CTUserImpl.class, ctUser.getPrimaryKey(), ctUser);
-
-		clearUniqueFindersCache(ctUser);
-		cacheUniqueFindersCache(ctUser);
 
 		return ctUser;
 	}
@@ -2291,7 +1971,6 @@ public class CTUserPersistenceImpl extends BasePersistenceImpl<CTUser>
 
 		ctUserImpl.setUuid(ctUser.getUuid());
 		ctUserImpl.setCTUserId(ctUser.getCTUserId());
-		ctUserImpl.setGroupId(ctUser.getGroupId());
 		ctUserImpl.setCompanyId(ctUser.getCompanyId());
 		ctUserImpl.setUserId(ctUser.getUserId());
 		ctUserImpl.setUserName(ctUser.getUserName());

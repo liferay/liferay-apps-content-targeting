@@ -228,20 +228,6 @@ public abstract class CTUserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the c t user matching the UUID and group.
-	 *
-	 * @param uuid the c t user's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching c t user, or <code>null</code> if a matching c t user could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTUser fetchCTUserByUuidAndGroupId(String uuid, long groupId)
-		throws SystemException {
-		return ctUserPersistence.fetchByUUID_G(uuid, groupId);
-	}
-
-	/**
 	 * Returns the c t user with the primary key.
 	 *
 	 * @param CTUserId the primary key of the c t user
@@ -274,21 +260,6 @@ public abstract class CTUserLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public CTUser getCTUserByUuidAndCompanyId(String uuid, long companyId)
 		throws PortalException, SystemException {
 		return ctUserPersistence.findByUuid_C_First(uuid, companyId, null);
-	}
-
-	/**
-	 * Returns the c t user matching the UUID and group.
-	 *
-	 * @param uuid the c t user's UUID
-	 * @param groupId the primary key of the group
-	 * @return the matching c t user
-	 * @throws PortalException if a matching c t user could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTUser getCTUserByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException, SystemException {
-		return ctUserPersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**

@@ -768,6 +768,19 @@ public class UserSegmentWrapper implements UserSegment,
 	}
 
 	@Override
+	public java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances()
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegment.getRuleInstances();
+	}
+
+	@Override
+	public boolean matches(com.liferay.contenttargeting.model.CTUser ctUser,
+		com.liferay.contenttargeting.api.model.RulesRegistry rulesRegistry)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegment.matches(ctUser, rulesRegistry);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

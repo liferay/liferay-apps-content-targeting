@@ -176,69 +176,6 @@ public interface CTUserPersistence extends BasePersistence<CTUser> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the c t user where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.contenttargeting.NoSuchUserException} if it could not be found.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the matching c t user
-	* @throws com.liferay.contenttargeting.NoSuchUserException if a matching c t user could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.contenttargeting.model.CTUser findByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.contenttargeting.NoSuchUserException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the c t user where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the matching c t user, or <code>null</code> if a matching c t user could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.contenttargeting.model.CTUser fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the c t user where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching c t user, or <code>null</code> if a matching c t user could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.contenttargeting.model.CTUser fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the c t user where uuid = &#63; and groupId = &#63; from the database.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the c t user that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.contenttargeting.model.CTUser removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.contenttargeting.NoSuchUserException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the number of c t users where uuid = &#63; and groupId = &#63;.
-	*
-	* @param uuid the uuid
-	* @param groupId the group ID
-	* @return the number of matching c t users
-	* @throws SystemException if a system exception occurred
-	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
 	* Returns all the c t users where uuid = &#63; and companyId = &#63;.
 	*
 	* @param uuid the uuid
@@ -387,141 +324,140 @@ public interface CTUserPersistence extends BasePersistence<CTUser> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns all the c t users where groupId = &#63;.
+	* Returns all the c t users where userId = &#63;.
 	*
-	* @param groupId the group ID
+	* @param userId the user ID
 	* @return the matching c t users
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.contenttargeting.model.CTUser> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.contenttargeting.model.CTUser> findByUserId(
+		long userId) throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns a range of all the c t users where groupId = &#63;.
+	* Returns a range of all the c t users where userId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.CTUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param groupId the group ID
+	* @param userId the user ID
 	* @param start the lower bound of the range of c t users
 	* @param end the upper bound of the range of c t users (not inclusive)
 	* @return the range of matching c t users
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.contenttargeting.model.CTUser> findByGroupId(
-		long groupId, int start, int end)
+	public java.util.List<com.liferay.contenttargeting.model.CTUser> findByUserId(
+		long userId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns an ordered range of all the c t users where groupId = &#63;.
+	* Returns an ordered range of all the c t users where userId = &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.CTUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param groupId the group ID
+	* @param userId the user ID
 	* @param start the lower bound of the range of c t users
 	* @param end the upper bound of the range of c t users (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching c t users
 	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.contenttargeting.model.CTUser> findByGroupId(
-		long groupId, int start, int end,
+	public java.util.List<com.liferay.contenttargeting.model.CTUser> findByUserId(
+		long userId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first c t user in the ordered set where groupId = &#63;.
+	* Returns the first c t user in the ordered set where userId = &#63;.
 	*
-	* @param groupId the group ID
+	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t user
 	* @throws com.liferay.contenttargeting.NoSuchUserException if a matching c t user could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.model.CTUser findByGroupId_First(
-		long groupId,
+	public com.liferay.contenttargeting.model.CTUser findByUserId_First(
+		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.contenttargeting.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the first c t user in the ordered set where groupId = &#63;.
+	* Returns the first c t user in the ordered set where userId = &#63;.
 	*
-	* @param groupId the group ID
+	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t user, or <code>null</code> if a matching c t user could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.model.CTUser fetchByGroupId_First(
-		long groupId,
+	public com.liferay.contenttargeting.model.CTUser fetchByUserId_First(
+		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last c t user in the ordered set where groupId = &#63;.
+	* Returns the last c t user in the ordered set where userId = &#63;.
 	*
-	* @param groupId the group ID
+	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t user
 	* @throws com.liferay.contenttargeting.NoSuchUserException if a matching c t user could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.model.CTUser findByGroupId_Last(
-		long groupId,
+	public com.liferay.contenttargeting.model.CTUser findByUserId_Last(
+		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.contenttargeting.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the last c t user in the ordered set where groupId = &#63;.
+	* Returns the last c t user in the ordered set where userId = &#63;.
 	*
-	* @param groupId the group ID
+	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t user, or <code>null</code> if a matching c t user could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.model.CTUser fetchByGroupId_Last(
-		long groupId,
+	public com.liferay.contenttargeting.model.CTUser fetchByUserId_Last(
+		long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the c t users before and after the current c t user in the ordered set where groupId = &#63;.
+	* Returns the c t users before and after the current c t user in the ordered set where userId = &#63;.
 	*
 	* @param CTUserId the primary key of the current c t user
-	* @param groupId the group ID
+	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next c t user
 	* @throws com.liferay.contenttargeting.NoSuchUserException if a c t user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.model.CTUser[] findByGroupId_PrevAndNext(
-		long CTUserId, long groupId,
+	public com.liferay.contenttargeting.model.CTUser[] findByUserId_PrevAndNext(
+		long CTUserId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.contenttargeting.NoSuchUserException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes all the c t users where groupId = &#63; from the database.
+	* Removes all the c t users where userId = &#63; from the database.
 	*
-	* @param groupId the group ID
+	* @param userId the user ID
 	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByGroupId(long groupId)
+	public void removeByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of c t users where groupId = &#63;.
+	* Returns the number of c t users where userId = &#63;.
 	*
-	* @param groupId the group ID
+	* @param userId the user ID
 	* @return the number of matching c t users
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByGroupId(long groupId)
+	public int countByUserId(long userId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

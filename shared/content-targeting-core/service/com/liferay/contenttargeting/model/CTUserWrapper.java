@@ -52,7 +52,6 @@ public class CTUserWrapper implements CTUser, ModelWrapper<CTUser> {
 
 		attributes.put("uuid", getUuid());
 		attributes.put("CTUserId", getCTUserId());
-		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -76,12 +75,6 @@ public class CTUserWrapper implements CTUser, ModelWrapper<CTUser> {
 
 		if (CTUserId != null) {
 			setCTUserId(CTUserId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -207,26 +200,6 @@ public class CTUserWrapper implements CTUser, ModelWrapper<CTUser> {
 	@Override
 	public void setCTUserUuid(java.lang.String CTUserUuid) {
 		_ctUser.setCTUserUuid(CTUserUuid);
-	}
-
-	/**
-	* Returns the group ID of this c t user.
-	*
-	* @return the group ID of this c t user
-	*/
-	@Override
-	public long getGroupId() {
-		return _ctUser.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this c t user.
-	*
-	* @param groupId the group ID of this c t user
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_ctUser.setGroupId(groupId);
 	}
 
 	/**
@@ -493,6 +466,14 @@ public class CTUserWrapper implements CTUser, ModelWrapper<CTUser> {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_ctUser.persist();
+	}
+
+	@Override
+	public long[] getMatchesUserSegmentIds(long[] groupIds,
+		com.liferay.contenttargeting.api.model.RulesRegistry rulesRegistry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _ctUser.getMatchesUserSegmentIds(groupIds, rulesRegistry);
 	}
 
 	@Override

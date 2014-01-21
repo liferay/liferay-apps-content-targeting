@@ -69,7 +69,6 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "CTUserId", Types.BIGINT },
-			{ "groupId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
@@ -78,7 +77,7 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 			{ "lastIp", Types.VARCHAR },
 			{ "typeSettings", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_CTUser (uuid_ VARCHAR(75) null,CTUserId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,lastIp VARCHAR(75) null,typeSettings TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_CTUser (uuid_ VARCHAR(75) null,CTUserId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,lastIp VARCHAR(75) null,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_CTUser";
 	public static final String ORDER_BY_JPQL = " ORDER BY ctUser.CTUserId DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_CTUser.CTUserId DESC";
@@ -95,7 +94,7 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 				"value.object.column.bitmask.enabled.com.liferay.contenttargeting.model.CTUser"),
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
+	public static long USERID_COLUMN_BITMASK = 2L;
 	public static long UUID_COLUMN_BITMASK = 4L;
 	public static long CTUSERID_COLUMN_BITMASK = 8L;
 
@@ -114,7 +113,6 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 
 		model.setUuid(soapModel.getUuid());
 		model.setCTUserId(soapModel.getCTUserId());
-		model.setGroupId(soapModel.getGroupId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
 		model.setUserName(soapModel.getUserName());
@@ -188,7 +186,6 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 
 		attributes.put("uuid", getUuid());
 		attributes.put("CTUserId", getCTUserId());
-		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -212,12 +209,6 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 
 		if (CTUserId != null) {
 			setCTUserId(CTUserId);
-		}
-
-		Long groupId = (Long)attributes.get("groupId");
-
-		if (groupId != null) {
-			setGroupId(groupId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -312,29 +303,6 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 
 	@JSON
 	@Override
-	public long getGroupId() {
-		return _groupId;
-	}
-
-	@Override
-	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
-		}
-
-		_groupId = groupId;
-	}
-
-	public long getOriginalGroupId() {
-		return _originalGroupId;
-	}
-
-	@JSON
-	@Override
 	public long getCompanyId() {
 		return _companyId;
 	}
@@ -364,6 +332,14 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 
 	@Override
 	public void setUserId(long userId) {
+		_columnBitmask |= USERID_COLUMN_BITMASK;
+
+		if (!_setOriginalUserId) {
+			_setOriginalUserId = true;
+
+			_originalUserId = _userId;
+		}
+
 		_userId = userId;
 	}
 
@@ -375,6 +351,10 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 	@Override
 	public void setUserUuid(String userUuid) {
 		_userUuid = userUuid;
+	}
+
+	public long getOriginalUserId() {
+		return _originalUserId;
 	}
 
 	@JSON
@@ -486,7 +466,6 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 
 		ctUserImpl.setUuid(getUuid());
 		ctUserImpl.setCTUserId(getCTUserId());
-		ctUserImpl.setGroupId(getGroupId());
 		ctUserImpl.setCompanyId(getCompanyId());
 		ctUserImpl.setUserId(getUserId());
 		ctUserImpl.setUserName(getUserName());
@@ -556,13 +535,13 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 
 		ctUserModelImpl._originalUuid = ctUserModelImpl._uuid;
 
-		ctUserModelImpl._originalGroupId = ctUserModelImpl._groupId;
-
-		ctUserModelImpl._setOriginalGroupId = false;
-
 		ctUserModelImpl._originalCompanyId = ctUserModelImpl._companyId;
 
 		ctUserModelImpl._setOriginalCompanyId = false;
+
+		ctUserModelImpl._originalUserId = ctUserModelImpl._userId;
+
+		ctUserModelImpl._setOriginalUserId = false;
 
 		ctUserModelImpl._columnBitmask = 0;
 	}
@@ -580,8 +559,6 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 		}
 
 		ctUserCacheModel.CTUserId = getCTUserId();
-
-		ctUserCacheModel.groupId = getGroupId();
 
 		ctUserCacheModel.companyId = getCompanyId();
 
@@ -634,14 +611,12 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
 		sb.append(", CTUserId=");
 		sb.append(getCTUserId());
-		sb.append(", groupId=");
-		sb.append(getGroupId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
 		sb.append(", userId=");
@@ -663,7 +638,7 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.contenttargeting.model.CTUser");
@@ -676,10 +651,6 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 		sb.append(
 			"<column><column-name>CTUserId</column-name><column-value><![CDATA[");
 		sb.append(getCTUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>groupId</column-name><column-value><![CDATA[");
-		sb.append(getGroupId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>companyId</column-name><column-value><![CDATA[");
@@ -721,14 +692,13 @@ public class CTUserModelImpl extends BaseModelImpl<CTUser>
 	private String _originalUuid;
 	private long _CTUserId;
 	private String _CTUserUuid;
-	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
+	private long _originalUserId;
+	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;

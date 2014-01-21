@@ -18,7 +18,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.StagedGroupedModel;
+import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -40,7 +40,7 @@ import java.util.Date;
  * @see com.liferay.contenttargeting.model.impl.CTUserModelImpl
  * @generated
  */
-public interface CTUserModel extends BaseModel<CTUser>, StagedGroupedModel {
+public interface CTUserModel extends BaseModel<CTUser>, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -106,22 +106,6 @@ public interface CTUserModel extends BaseModel<CTUser>, StagedGroupedModel {
 	 * @param CTUserUuid the c t user uuid of this c t user
 	 */
 	public void setCTUserUuid(String CTUserUuid);
-
-	/**
-	 * Returns the group ID of this c t user.
-	 *
-	 * @return the group ID of this c t user
-	 */
-	@Override
-	public long getGroupId();
-
-	/**
-	 * Sets the group ID of this c t user.
-	 *
-	 * @param groupId the group ID of this c t user
-	 */
-	@Override
-	public void setGroupId(long groupId);
 
 	/**
 	 * Returns the company ID of this c t user.

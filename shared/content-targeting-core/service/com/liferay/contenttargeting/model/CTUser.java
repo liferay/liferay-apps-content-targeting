@@ -31,4 +31,8 @@ public interface CTUser extends CTUserModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.contenttargeting.model.impl.CTUserImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public long[] getMatchesUserSegmentIds(long[] groupIds,
+		com.liferay.contenttargeting.api.model.RulesRegistry rulesRegistry)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

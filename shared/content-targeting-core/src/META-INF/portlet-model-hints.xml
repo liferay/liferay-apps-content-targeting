@@ -12,7 +12,6 @@
 	<model name="com.liferay.contenttargeting.model.CTUser">
 		<field name="uuid" type="String" />
 		<field name="CTUserId" type="long" />
-		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
 		<field name="userName" type="String" />

@@ -37,14 +37,12 @@ import java.util.Date;
 public class CTUserCacheModel implements CacheModel<CTUser>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(19);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", CTUserId=");
 		sb.append(CTUserId);
-		sb.append(", groupId=");
-		sb.append(groupId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -76,7 +74,6 @@ public class CTUserCacheModel implements CacheModel<CTUser>, Externalizable {
 		}
 
 		ctUserImpl.setCTUserId(CTUserId);
-		ctUserImpl.setGroupId(groupId);
 		ctUserImpl.setCompanyId(companyId);
 		ctUserImpl.setUserId(userId);
 
@@ -124,7 +121,6 @@ public class CTUserCacheModel implements CacheModel<CTUser>, Externalizable {
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		CTUserId = objectInput.readLong();
-		groupId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
@@ -145,7 +141,6 @@ public class CTUserCacheModel implements CacheModel<CTUser>, Externalizable {
 		}
 
 		objectOutput.writeLong(CTUserId);
-		objectOutput.writeLong(groupId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
@@ -176,7 +171,6 @@ public class CTUserCacheModel implements CacheModel<CTUser>, Externalizable {
 
 	public String uuid;
 	public long CTUserId;
-	public long groupId;
 	public long companyId;
 	public long userId;
 	public String userName;

@@ -202,20 +202,6 @@ public class CTUserLocalServiceUtil {
 	}
 
 	/**
-	* Returns the c t user matching the UUID and group.
-	*
-	* @param uuid the c t user's UUID
-	* @param groupId the primary key of the group
-	* @return the matching c t user, or <code>null</code> if a matching c t user could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.contenttargeting.model.CTUser fetchCTUserByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchCTUserByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
 	* Returns the c t user with the primary key.
 	*
 	* @param CTUserId the primary key of the c t user
@@ -251,22 +237,6 @@ public class CTUserLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCTUserByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns the c t user matching the UUID and group.
-	*
-	* @param uuid the c t user's UUID
-	* @param groupId the primary key of the group
-	* @return the matching c t user
-	* @throws PortalException if a matching c t user could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.contenttargeting.model.CTUser getCTUserByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCTUserByUuidAndGroupId(uuid, groupId);
 	}
 
 	/**
@@ -336,11 +306,25 @@ public class CTUserLocalServiceUtil {
 	}
 
 	public static com.liferay.contenttargeting.model.CTUser addUser(
+		long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().addUser(companyId);
+	}
+
+	public static com.liferay.contenttargeting.model.CTUser addUser(
 		long userId, java.lang.String lastIp, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().addUser(userId, lastIp, typeSettings, serviceContext);
+	}
+
+	public static com.liferay.contenttargeting.model.CTUser getCTUserByUserId(
+		long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCTUserByUserId(userId);
 	}
 
 	public static com.liferay.contenttargeting.model.CTUser updateUser(
