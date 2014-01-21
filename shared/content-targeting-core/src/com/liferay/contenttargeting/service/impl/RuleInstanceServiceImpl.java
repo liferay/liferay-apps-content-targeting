@@ -14,7 +14,13 @@
 
 package com.liferay.contenttargeting.service.impl;
 
+import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.service.base.RuleInstanceServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.List;
 
 /**
  * The implementation of the rule instance remote service.
@@ -31,5 +37,46 @@ import com.liferay.contenttargeting.service.base.RuleInstanceServiceBaseImpl;
  * @see com.liferay.contenttargeting.service.RuleInstanceServiceUtil
  */
 public class RuleInstanceServiceImpl extends RuleInstanceServiceBaseImpl {
+
+	@Override
+	public RuleInstance addRuleInstance(
+			long userId, String ruleKey, long userSegmentId,
+			String typeSettings, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return ruleInstanceLocalService.addRuleInstance(
+				userId, ruleKey, userSegmentId, typeSettings, serviceContext);
+	}
+
+	@Override
+	public RuleInstance deleteRuleInstance(long ruleInstanceId)
+		throws PortalException, SystemException {
+
+		return ruleInstanceLocalService.deleteRuleInstance(ruleInstanceId);
+	}
+
+	@Override
+	public List<RuleInstance> getRuleInstances(long userSegmentId)
+		throws SystemException {
+
+		return ruleInstanceLocalService.getRuleInstances(userSegmentId);
+	}
+
+	@Override
+	public long getRuleInstancesCount(long userSegmentId)
+		throws PortalException, SystemException {
+
+		return ruleInstanceLocalService.getRuleInstancesCount(userSegmentId);
+	}
+
+	@Override
+	public RuleInstance updateRuleInstance(
+			long ruleInstanceId, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return ruleInstanceLocalService.updateRuleInstance(
+			ruleInstanceId, typeSettings, serviceContext);
+	}
 
 }
