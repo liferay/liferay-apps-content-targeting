@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contenttargeting.util;
+package com.liferay.contenttargeting.portlet.util;
 
 import javax.portlet.UnavailableException;
 
