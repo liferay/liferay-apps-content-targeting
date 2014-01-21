@@ -45,6 +45,7 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.freemarker.FreeMarkerPortlet;
 
 import freemarker.ext.beans.BeansWrapper;
@@ -293,7 +294,12 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 						portletResponse);
 				}
 
+				template.put(
+					"currentURL", PortalUtil.getCurrentURL(portletRequest));
 				template.put("portletContext", getPortletContext());
+				template.put(
+					"redirect",
+					ParamUtil.getString(portletRequest, "redirect"));
 				template.put(
 					"userInfo",
 					portletRequest.getAttribute(PortletRequest.USER_INFO));

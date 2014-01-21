@@ -16,7 +16,6 @@
 
 <#include "../init.ftl" />
 
-<#assign redirect = paramUtil.getString(request, "redirect")>
 <#assign ruleInstanceId = paramUtil.getLong(request, "ruleInstanceId")>
 <#assign ruleKey = paramUtil.getString(request, "ruleKey")>
 <#assign userSegmentId = paramUtil.getLong(request, "userSegmentId")>

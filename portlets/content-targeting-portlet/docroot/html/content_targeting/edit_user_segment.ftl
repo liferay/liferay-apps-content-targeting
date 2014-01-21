@@ -16,7 +16,6 @@
 
 <#include "../init.ftl" />
 
-<#assign redirect = paramUtil.getString(request, "redirect")>
 <#assign userSegmentId = paramUtil.getLong(request, "userSegmentId")>
 
 <@liferay_ui["header"]
