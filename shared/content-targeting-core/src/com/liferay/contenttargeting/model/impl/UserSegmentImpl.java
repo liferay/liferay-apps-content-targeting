@@ -14,6 +14,12 @@
 
 package com.liferay.contenttargeting.model.impl;
 
+import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.contenttargeting.service.RuleInstanceLocalServiceUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+
+import java.util.List;
+
 /**
  * The extended model implementation for the UserSegment service. Represents a row in the &quot;CT_UserSegment&quot; database table, with each column mapped to a property of this class.
  *
@@ -26,6 +32,11 @@ package com.liferay.contenttargeting.model.impl;
 public class UserSegmentImpl extends UserSegmentBaseImpl {
 
 	public UserSegmentImpl() {
+	}
+
+	public List<RuleInstance> getRuleInstances() throws SystemException {
+		return RuleInstanceLocalServiceUtil.getRuleInstances(
+			getUserSegmentId());
 	}
 
 }
