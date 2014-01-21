@@ -74,6 +74,17 @@ public class CTUserLocalServiceImpl extends CTUserLocalServiceBaseImpl {
 	}
 
 	@Override
+	public CTUser getCTUserByUserId(long userId)
+		throws PortalException, SystemException {
+
+		if (userId <= 0) {
+			return null;
+		}
+
+		return ctUserPersistence.fetchByUserId_First(userId, null);
+	}
+
+	@Override
 	public CTUser updateUser(
 			long userId, String lastIp, String typeSettings,
 			ServiceContext serviceContext)

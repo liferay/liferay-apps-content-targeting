@@ -37,6 +37,9 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
+		<finder name="UserId" return-type="Collection">
+			<finder-column name="userId" />
+		</finder>
 	</entity>
 	<entity name="RuleInstance" uuid="true" local-service="true" remote-service="true">
 
