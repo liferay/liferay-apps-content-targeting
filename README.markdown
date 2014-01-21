@@ -153,6 +153,26 @@ and [Freemarker](http://sourceforge.net/projects/freemarker/files/freemarker/)
 for debugging purposes. These sources should be in their own folder at the same
 level of the root folder of the project.
 
+### Troubleshooting
+
+#### Missing dependencies
+
+If a ClassNotFoundException occurs:
+* If the class is not in the global classpath, make sure the dependency has been
+ exported by the source component and imported in the consumer component:
+ * For portal internal packages, check that they are exported in the
+ module.framework.system.packages.extra property of the portal-ext.properties.
+ * For bundle packages, check the Export-Package/Import-Package of the bnd.bnd
+  file in the source/consumer bundles, respectively.
+*If the class is in the global classpath, make sure the dependency has been
+imported in the bnd.bnd file of the consumer component.
+
+#### Changes are not visible after deploy
+If the plugin has been successfully deployed but the changes are not visible,
+check that the generated .jar in the /dist folder of the plugins SDK actually
+ contains the latest modifications.
+
+
 ## More Information
 
 For more information about filing bugs, staying updated with Liferay on social
