@@ -14,6 +14,7 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.contenttargeting.model,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.counter.service,\
+	com.liferay.osgi.util,\
 	com.liferay.portal,\
 	com.liferay.portal.kernel.annotation,\
 	com.liferay.portal.kernel.bean,\
@@ -42,14 +43,18 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.portal.service,\
 	com.liferay.portal.service.persistence,\
 	com.liferay.portal.service.persistence.impl,\
+	com.liferay.portal.util,\
 	com.liferay.portlet.asset,\
 	com.liferay.portlet.asset.model,\
 	com.liferay.portlet.asset.service,\
 	com.liferay.portlet.expando.model,\
 	com.liferay.portlet.expando.util,\
 	com.liferay.util.service,\
+	javax.servlet.http,\
+	javax.servlet,\
 	javax.portlet,\
 	javax.sql,\
+	org.apache.el,\
 	org.osgi.framework,\
 	org.springframework.*
 Include-Resource: classes,\
