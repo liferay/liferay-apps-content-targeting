@@ -61,14 +61,13 @@
 	>
 		<@liferay_ui["search-container-results"]
 			results=ruleInstances
-			total=ruleInstances ?size
+			total=ruleInstances?size
 		/>
 
 		<@liferay_ui["search-container-row"]
 			className="com.liferay.contenttargeting.model.RuleInstance"
 			modelVar="ruleInstance"
 		>
-
 			<#assign rule = rulesRegistry.getRule(ruleInstance.getRuleKey())>
 
 			<@liferay_ui["search-container-column-text"]

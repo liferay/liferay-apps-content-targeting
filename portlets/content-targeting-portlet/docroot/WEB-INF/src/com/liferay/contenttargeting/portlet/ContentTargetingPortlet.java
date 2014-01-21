@@ -161,7 +161,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long ruleInstanceId = ParamUtil.getLong(request, "ruleInstanceId");
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				RuleInstance.class.getName(), request);
+			RuleInstance.class.getName(), request);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -210,7 +210,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				request, "name");
+			request, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
