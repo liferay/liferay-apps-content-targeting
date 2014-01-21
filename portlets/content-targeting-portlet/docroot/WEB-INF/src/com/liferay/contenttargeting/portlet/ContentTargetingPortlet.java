@@ -384,6 +384,11 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				ruleInstance, _cloneTemplateContext(template));
 
 			template.put("ruleFormHTML", ruleFormHTML);
+			template.put("ruleInstanceId", ruleInstanceId);
+			template.put("ruleKey", ruleKey);
+			template.put(
+				"userSegmentId",
+				ParamUtil.getLong(portletRequest, "userSegmentId"));
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
 			template.put("rulesRegistry", _rulesRegistry);
@@ -412,6 +417,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			}
 
 			template.put("userSegment", userSegment);
+			template.put("userSegmentId", userSegmentId);
 		}
 	}
 

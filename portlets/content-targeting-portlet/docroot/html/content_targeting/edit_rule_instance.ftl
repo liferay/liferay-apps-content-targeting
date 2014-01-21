@@ -16,10 +16,6 @@
 
 <#include "../init.ftl" />
 
-<#assign ruleInstanceId = paramUtil.getLong(request, "ruleInstanceId")>
-<#assign ruleKey = paramUtil.getString(request, "ruleKey")>
-<#assign userSegmentId = paramUtil.getLong(request, "userSegmentId")>
-
 <@liferay_ui["header"]
 	backURL="${redirect}"
 	title="new-rule"

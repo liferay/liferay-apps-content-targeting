@@ -16,8 +16,6 @@
 
 <#include "../init.ftl" />
 
-<#assign userSegmentId = paramUtil.getLong(request, "userSegmentId")>
-
 <@liferay_ui["header"]
 	backURL="${redirect}"
 	title="new-user-segment"
