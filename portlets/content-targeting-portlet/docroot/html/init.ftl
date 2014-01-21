@@ -27,5 +27,3 @@
 <@liferay_theme["defineObjects"] />
 
 <#assign currentURL = portalUtil.getCurrentURL(request) />
-<#assign portlet_display = portletDisplay />
-<#assign theme = theme />
