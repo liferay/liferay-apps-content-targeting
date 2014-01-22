@@ -18,22 +18,16 @@ import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Deactivate;
 
+import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-
-import freemarker.cache.ClassTemplateLoader;
-
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
 
 import java.util.Locale;
 import java.util.Map;
@@ -44,8 +38,8 @@ import javax.portlet.PortletResponse;
 /**
  * @author Julio Camarero
  */
-@Component(immediate = true)
-public class TimeRule implements Rule {
+@Component(immediate = true, provide = Rule.class)
+public class TimeRule extends BaseRule {
 
 	@Activate
 	public void activate() {
@@ -90,20 +84,8 @@ public class TimeRule implements Rule {
 				context.put("startTimeAmPm", 0);
 			}
 
-			Configuration configuration = new Configuration();
-
-			configuration.setObjectWrapper(new DefaultObjectWrapper());
-			configuration.setTemplateLoader(
-				new ClassTemplateLoader(TimeRule.class, StringPool.SLASH));
-			configuration.setTemplateUpdateDelay(Integer.MAX_VALUE);
-
-			Template template = configuration.getTemplate(_FORM_TEMPLATE_PATH);
-
-			UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-			template.process(context, unsyncStringWriter);
-
-			content = unsyncStringWriter.toString();
+			content = parseTemplate(
+				TimeRule.class, _FORM_TEMPLATE_PATH, context);
 		}
 		catch (Exception e) {
 			_log.error(
