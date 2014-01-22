@@ -9,8 +9,6 @@ Import-Package:\
 	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.servlet,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
-	freemarker.cache,\
-	freemarker.template,\
 	javax.portlet,\
 	javax.el,\
 	javax.servlet,\

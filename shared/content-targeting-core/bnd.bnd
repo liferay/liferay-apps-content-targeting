@@ -50,7 +50,8 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.portlet.expando.model,\
 	com.liferay.portlet.expando.util,\
 	com.liferay.util.service,\
-	javax.servlet.http,\
+	freemarker.cache,\
+    freemarker.template,\javax.servlet.http,\
 	javax.servlet,\
 	javax.portlet,\
 	javax.sql,\
