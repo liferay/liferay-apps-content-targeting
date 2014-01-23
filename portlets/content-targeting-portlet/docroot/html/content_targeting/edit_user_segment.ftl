@@ -68,6 +68,11 @@
 			<#assign rule = rulesRegistry.getRule(ruleInstance.getRuleKey())>
 
 			<@liferay_ui["search-container-column-text"]
+				name="name"
+				value=rule.getName()
+			/>
+
+			<@liferay_ui["search-container-column-text"]
 				name="summary"
 				value=rule.getSummary(ruleInstance, locale)
 			/>
