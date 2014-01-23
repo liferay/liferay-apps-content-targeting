@@ -5,7 +5,6 @@
 	<portlet>
 		<portlet-name>ctadmin</portlet-name>
 		<icon>/icons/icon.png</icon>
-		<struts-path>o/content-targeting-portlet</struts-path>
 		<control-panel-entry-category>site_administration.configuration</control-panel-entry-category>
 		<control-panel-entry-weight>10.0</control-panel-entry-weight>
 		<render-weight>1</render-weight>
@@ -16,7 +15,6 @@
 	<portlet>
 		<portlet-name>targetedcontentdisplay</portlet-name>
 		<icon>/icons/targeted_content_display.png</icon>
-		<struts-path>o/content-targeting-portlet</struts-path>
 		<instanceable>true</instanceable>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/main.css</header-portlet-css>
