@@ -13,6 +13,16 @@
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>content-targeting-portlet</css-class-wrapper>
 	</portlet>
+	<portlet>
+		<portlet-name>targetedcontentdisplay</portlet-name>
+		<icon>/icons/targeted_content_display.png</icon>
+		<struts-path>o/content-targeting-portlet</struts-path>
+		<instanceable>true</instanceable>
+		<render-weight>1</render-weight>
+		<header-portlet-css>/css/main.css</header-portlet-css>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>targeted-content-display-portlet</css-class-wrapper>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>
