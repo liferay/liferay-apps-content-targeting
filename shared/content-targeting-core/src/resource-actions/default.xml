@@ -6,7 +6,10 @@
 		<model-name>com.liferay.contenttargeting.model</model-name>
 		<portlet-ref>
 			<portlet-name>ctcore</portlet-name>
+			<portlet-name>ctadmin</portlet-name>
 		</portlet-ref>
+		<root>true</root>
+		<weight>1</weight>
 		<permissions>
 			<supports>
 				<action-key>ADD_USER_SEGMENT</action-key>
@@ -23,7 +26,9 @@
 		<model-name>com.liferay.contenttargeting.model.UserSegment</model-name>
 		<portlet-ref>
 			<portlet-name>ctcore</portlet-name>
+			<portlet-name>ctadmin</portlet-name>
 		</portlet-ref>
+		<weight>2</weight>
 		<permissions>
 			<supports>
 				<action-key>DELETE</action-key>
