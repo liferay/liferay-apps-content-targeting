@@ -5,7 +5,7 @@
 	<model-resource>
 		<model-name>com.liferay.contenttargeting.model</model-name>
 		<portlet-ref>
-			<portlet-name>ctadmin</portlet-name>
+			<portlet-name>ctcore</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
@@ -22,7 +22,7 @@
 	<model-resource>
 		<model-name>com.liferay.contenttargeting.model.UserSegment</model-name>
 		<portlet-ref>
-			<portlet-name>ctadmin</portlet-name>
+			<portlet-name>ctcore</portlet-name>
 		</portlet-ref>
 		<permissions>
 			<supports>
