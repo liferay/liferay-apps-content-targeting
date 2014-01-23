@@ -55,7 +55,6 @@ public class CTUserLocalServiceImpl extends CTUserLocalServiceBaseImpl {
 
 		CTUser CTUser = ctUserPersistence.create(CTUserId);
 
-		CTUser.setGroupId(serviceContext.getScopeGroupId());
 		CTUser.setCompanyId(serviceContext.getCompanyId());
 
 		if (user != null) {
