@@ -117,7 +117,7 @@ public class TimeRule implements Rule {
 
 	@Override
 	public String getIcon() {
-		return "../aui/time";
+		return "icon-time";
 	}
 
 	@Override

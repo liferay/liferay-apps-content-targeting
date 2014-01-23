@@ -35,21 +35,31 @@
 
 	<h4><@liferay_ui["message"] key="rules" /></h4>
 
-	<@liferay_ui["icon-menu"] direction="right" icon="../aui/plus" message="add-rule" showWhenSingleIcon=true>
-		<#list rules as rule>
-			<#assign addRuleInstanceURL = renderResponse.createRenderURL()>
+	<@aui["nav-bar"]
+		cssClass="add-rule-bar"
+	>
+		<@aui["nav"]>
+			<@aui["nav-item"]
+				dropdown=true
+				iconCssClass="icon-plus"
+				label="add-rule"
+			>
+				<#list rules as rule>
+					<#assign addRuleInstanceURL = renderResponse.createRenderURL()>
 
-			${addRuleInstanceURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE_INSTANCE)}
-			${addRuleInstanceURL.setParameter("redirect", currentURL)}
-			${addRuleInstanceURL.setParameter("ruleKey", rule.getRuleKey())}
-			${addRuleInstanceURL.setParameter("userSegmentId", userSegmentId?string)}
+					${addRuleInstanceURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE_INSTANCE)}
+					${addRuleInstanceURL.setParameter("redirect", currentURL)}
+					${addRuleInstanceURL.setParameter("ruleKey", rule.getRuleKey())}
+					${addRuleInstanceURL.setParameter("userSegmentId", userSegmentId?string)}
 
-			<@liferay_ui["icon"]
-				image="${rule.getIcon()}"
-				message="${rule.getName()}"
-				url="${addRuleInstanceURL}"
-			/>
-		</#list>
+					<@aui["nav-item"]
+						href="${addRuleInstanceURL}"
+						iconCssClass="${rule.getIcon()}"
+						label="${rule.getName()}"
+					/>
+				</#list>
+			</@>
+		</@>
 	</@>
 
 	<@liferay_ui["search-container"]
