@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
+import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -88,9 +89,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		try {
 			_ruleInstanceService.deleteRuleInstance(ruleInstanceId);
 
-			String redirect = ParamUtil.getString(request, "redirect");
-
-			response.sendRedirect(redirect);
+			sendRedirect(request, response);
 		}
 		catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -108,9 +107,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		try {
 			_userSegmentService.deleteUserSegment(userSegmentId);
 
-			String redirect = ParamUtil.getString(request, "redirect");
-
-			response.sendRedirect(redirect);
+			sendRedirect(request, response);
 		}
 		catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -187,9 +184,14 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 						typeSettings, serviceContext);
 			}
 
-			String redirect = ParamUtil.getString(request, "redirect");
+			String portletId = PortalUtil.getPortletId(request);
 
-			response.sendRedirect(redirect);
+			SessionMessages.add(
+				request,
+				portletId + SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+				portletId);
+
+			sendRedirect(request, response);
 		}
 		catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -233,9 +235,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 					serviceContext);
 			}
 
-			String redirect = ParamUtil.getString(request, "redirect");
-
-			response.sendRedirect(redirect);
+			sendRedirect(request, response);
 		}
 		catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
@@ -343,6 +343,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				"com.liferay.contenttargeting.portlet.ContentTargetingPath"));
 		template.put(
 			"currentURL", PortalUtil.getCurrentURL(portletRequest));
+		template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 		template.put("portletContext", getPortletContext());
 		template.put(
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
@@ -368,9 +369,6 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				staticModels.get(
 					"com.liferay.contenttargeting.service.permission." +
 						"ContentTargetingPermission"));
-
-			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
-
 			template.put(
 				"userSegmentPermission",
 				staticModels.get(
@@ -415,6 +413,11 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			template.put(
 				"userSegmentId",
 				ParamUtil.getLong(portletRequest, "userSegmentId"));
+		}
+		else if (path.equals(ContentTargetingPath.EDIT_RULE_INSTANCE_REDIRECT)) {
+			String ruleKey = ParamUtil.getString(portletRequest, "ruleKey");
+
+			template.put("ruleKey", ruleKey);
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
 			template.put("rulesRegistry", _rulesRegistry);

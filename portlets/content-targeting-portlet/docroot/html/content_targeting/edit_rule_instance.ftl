@@ -16,15 +16,15 @@
 
 <#include "../init.ftl" />
 
-<@liferay_ui["header"]
-	backURL="${redirect}"
-	title="new-rule"
-/>
-
 <@portlet["actionURL"] name="updateRuleInstance" var="editRuleInstanceURL" />
 
 <@aui["form"] action="${editRuleInstanceURL}" method="post" name="fm">
-	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
+	<#assign redirectURL = renderResponse.createRenderURL()>
+
+	${redirectURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE_INSTANCE_REDIRECT)}
+	${redirectURL.setParameter("ruleKey", ruleKey)}
+
+	<@aui["input"] name="redirect" type="hidden" value="${redirectURL}" />
 	<@aui["input"] name="ruleInstanceId" type="hidden" value=ruleInstanceId />
 	<@aui["input"] name="ruleKey" type="hidden" value="${ruleKey}" />
 	<@aui["input"] name="userSegmentId" type="hidden" value=userSegmentId />

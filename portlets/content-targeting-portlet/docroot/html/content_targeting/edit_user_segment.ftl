@@ -51,8 +51,12 @@
 					${addRuleInstanceURL.setParameter("redirect", currentURL)}
 					${addRuleInstanceURL.setParameter("ruleKey", rule.getRuleKey())}
 					${addRuleInstanceURL.setParameter("userSegmentId", userSegmentId?string)}
+					${addRuleInstanceURL.setWindowState(liferayWindowStatePopUp)}
 
 					<@aui["nav-item"]
+						anchorId="ruleItem-${rule.getRuleKey()}"
+						anchorCssClass="new-rule"
+						cssClass="rule-item"
 						href="${addRuleInstanceURL}"
 						iconCssClass="${rule.getIcon()}"
 						label="${rule.getName()}"
@@ -98,8 +102,11 @@
 					${editRuleInstanceURL.setParameter("redirect", currentURL)}
 					${editRuleInstanceURL.setParameter("ruleInstanceId", ruleInstance.getRuleInstanceId()?string)}
 					${editRuleInstanceURL.setParameter("ruleKey", ruleInstance.getRuleKey()?string)}
+					${editRuleInstanceURL.setWindowState(liferayWindowStatePopUp)}
 
 					<@liferay_ui["icon"]
+						cssClass="rule-item"
+						id="ruleItem-${rule.getRuleKey()}"
 						image="edit"
 						method="get"
 						url="${editRuleInstanceURL}"
@@ -124,4 +131,35 @@
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
 	</@>
+</@>
+
+<@aui["script"] use="aui-base">
+	A.getBody().delegate(
+		'click',
+		function(event){
+			event.preventDefault();
+
+			var title;
+
+			if (event.currentTarget.hasClass('new-rule')) {
+            	title = '<@liferay_ui["message"] key="new-rule" />' + ': ' +  event.currentTarget.html();
+			}
+			else {
+				title = '<@liferay_ui["message"] key="edit-rule" />';
+			}
+
+			Liferay.Util.openWindow(
+				{
+					dialog:
+						{
+							destroyOnHide: true
+						},
+					id: 'dialog_' + event.currentTarget.attr('id'),
+					title: title,
+					uri: event.currentTarget.attr('href')
+				}
+			);
+		},
+		'.rule-item a'
+	);
 </@>
