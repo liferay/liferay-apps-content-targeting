@@ -14,6 +14,9 @@
 
 package com.liferay.contenttargeting.model.impl;
 
+import com.liferay.contenttargeting.api.model.Rule;
+import com.liferay.contenttargeting.api.model.RulesRegistry;
+import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.service.RuleInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -37,6 +40,22 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 	public List<RuleInstance> getRuleInstances() throws SystemException {
 		return RuleInstanceLocalServiceUtil.getRuleInstances(
 			getUserSegmentId());
+	}
+
+	public boolean matches(CTUser ctUser, RulesRegistry rulesRegistry)
+		throws SystemException {
+
+		List<RuleInstance> rules = getRuleInstances();
+
+		for (RuleInstance ruleInstance : rules) {
+			Rule rule = rulesRegistry.getRule(ruleInstance.getRuleKey());
+
+			if (!rule.evaluate(ruleInstance, ctUser)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 }
