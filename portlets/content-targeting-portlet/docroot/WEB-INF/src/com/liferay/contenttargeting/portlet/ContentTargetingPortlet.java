@@ -316,16 +316,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 				template.put("Request", httpRequestHashModel);
 
-				BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
-
-				TemplateHashModel staticModels = wrapper.getStaticModels();
-
 				populateContext(
-					portletRequest, portletResponse, template, staticModels);
-
-				populateViewContext(
-					path, portletRequest, portletResponse, template,
-					staticModels);
+					path, portletRequest, portletResponse, template);
 
 				Writer writer = null;
 
@@ -354,9 +346,13 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 	}
 
 	protected void populateContext(
-			PortletRequest portletRequest, PortletResponse portletResponse,
-			Template template, TemplateHashModel staticModels)
+			String path, PortletRequest portletRequest,
+			PortletResponse portletResponse, Template template)
 		throws Exception {
+
+		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
+
+		TemplateHashModel staticModels = wrapper.getStaticModels();
 
 		template.put(
 			"contentTargetingPath",
@@ -370,6 +366,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		template.put(
 			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
 		template.put("userSegmentClass", UserSegment.class);
+
+		populateViewContext(
+			path, portletRequest, portletResponse, template, staticModels);
 	}
 
 	protected void populateViewContext(
