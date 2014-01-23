@@ -42,6 +42,25 @@ import java.util.Date;
 public class CTUserLocalServiceImpl extends CTUserLocalServiceBaseImpl {
 
 	@Override
+	public CTUser addUser(long companyId)
+		throws PortalException, SystemException {
+
+		Date now = new Date();
+
+		long CTUserId = CounterLocalServiceUtil.increment();
+
+		CTUser CTUser = ctUserPersistence.create(CTUserId);
+
+		CTUser.setCompanyId(companyId);
+		CTUser.setCreateDate(now);
+		CTUser.setModifiedDate(now);
+
+		ctUserPersistence.update(CTUser);
+
+		return CTUser;
+	}
+
+	@Override
 	public CTUser addUser(
 			long userId, String lastIp, String typeSettings,
 			ServiceContext serviceContext)
