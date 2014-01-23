@@ -30,7 +30,7 @@
 <#assign iteratorURL = renderResponse.createRenderURL()>
 
 <@liferay_ui["search-container"]
-	emptyResultsMessage="no-user-segment-were-found"
+	emptyResultsMessage="no-user-segments-were-found"
 	iteratorURL=iteratorURL
 >
 	<@liferay_ui["search-container-results"]
