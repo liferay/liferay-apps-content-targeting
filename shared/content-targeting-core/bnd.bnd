@@ -6,18 +6,22 @@ Export-Package: com.liferay.contenttargeting,\
 	com.liferay.contenttargeting.model,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.contenttargeting.service.messaging,\
-	com.liferay.contenttargeting.portlet
+	com.liferay.contenttargeting.service.permission,\
+	com.liferay.contenttargeting.util
 Include-Resource: classes,\
 	{WEB-INF/classes/META-INF=classes/META-INF/},\
 	{WEB-INF/liferay-plugin-package.properties=docroot/WEB-INF/liferay-plugin-package.properties},\
 	{WEB-INF/sql=sql},\
 	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
+	{WEB-INF/liferay-portlet.xml=docroot/WEB-INF/liferay-portlet.xml},\
+	{WEB-INF/portlet.xml=docroot/WEB-INF/portlet.xml},\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
 	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	WEB-INF/lib/util-taglib.jar=${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar,\
 	WEB-INF/lib/content-targeting-core-service.jar=lib/content-targeting-core-service.jar
 Import-Package = com.liferay.contenttargeting,\
 	com.liferay.contenttargeting.api.model,\
+	com.germinus.easyconf,\
 	com.liferay.contenttargeting.model,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.counter.service,\
@@ -25,6 +29,8 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.portal.kernel.annotation,\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.cache,\
+	com.liferay.portal.kernel.configuration,\
+	com.liferay.portal.kernel.dao.db,\
 	com.liferay.portal.kernel.dao.jdbc,\
 	com.liferay.portal.kernel.dao.orm,\
 	com.liferay.portal.kernel.exception,\
@@ -34,6 +40,7 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.messaging,\
+	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.search,\
 	com.liferay.portal.kernel.servlet,\
 	com.liferay.portal.kernel.transaction,\
@@ -41,6 +48,8 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.portal.kernel.uuid,\
 	com.liferay.portal.model,\
 	com.liferay.portal.model.impl,\
+	com.liferay.portal.security.auth,\
+	com.liferay.portal.security.permission,\
 	com.liferay.portal.service,\
 	com.liferay.portal.service.persistence,\
 	com.liferay.portal.service.persistence.impl,\

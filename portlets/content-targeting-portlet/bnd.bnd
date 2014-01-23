@@ -12,17 +12,21 @@ Import-Package:\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.contenttargeting.service.messaging,\
+	com.liferay.contenttargeting.service.permission,\
+	com.liferay.contenttargeting.util,\
+	com.liferay.httpservice.servlet,\
 	com.liferay.osgi.util,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.language,\
 	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.servlet,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
+	com.liferay.portal.security.auth,\
+	com.liferay.portal.security.permission,\
 	com.liferay.portal.service,\
 	com.liferay.portal.servlet.filters.aggregate,\
 	com.liferay.portal.servlet.filters.dynamiccss,\
 	com.liferay.portlet,\
-	com.liferay.httpservice.servlet,\
 	com.liferay.util.bridges.freemarker,\
 	javax.portlet,\
 	javax.el,\
