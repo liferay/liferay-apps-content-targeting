@@ -101,7 +101,14 @@ public class UserSegmentLocalServiceImpl
 	public List<UserSegment> getUserSegments(long groupId)
 		throws PortalException, SystemException {
 
-		return userSegmentPersistence.findByGroupId(groupId);
+		return getUserSegments(new long[]{groupId});
+	}
+
+	@Override
+	public List<UserSegment> getUserSegments(long[] groupIds)
+		throws PortalException, SystemException {
+
+		return userSegmentPersistence.findByGroupId(groupIds);
 	}
 
 	@Override
