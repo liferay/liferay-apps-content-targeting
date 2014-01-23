@@ -24,23 +24,61 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
+ *
  * @author Eudaldo Alonso
  */
 public interface Rule {
 
+	/**
+	 *
+	 * @param  ruleInstance
+	 * @param  ctUser
+	 * @return
+	 */
 	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser);
 
+	/**
+	 *
+	 * @param  ruleInstance
+	 * @param  context
+	 * @return
+	 */
 	public String getFormHTML(
 		RuleInstance ruleInstance, Map<String, Object> context);
 
+	/**
+	 *
+	 * @return
+	 */
 	public String getIcon();
 
+	/**
+	 *
+	 * @param  locale
+	 * @return
+	 */
 	public String getName(Locale locale);
 
+	/**
+	 *
+	 * @return
+	 */
 	public String getRuleKey();
 
+	/**
+	 *
+	 * @param  ruleInstance
+	 * @param  locale
+	 * @return
+	 */
 	public String getSummary(RuleInstance ruleInstance, Locale locale);
 
+	/**
+	 *
+	 * @param  request
+	 * @param  response
+	 * @return
+	 */
 	public String processRule(PortletRequest request, PortletResponse response);
 
 }
