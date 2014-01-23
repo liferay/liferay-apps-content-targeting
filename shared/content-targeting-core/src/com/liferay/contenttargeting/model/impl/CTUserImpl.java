@@ -14,6 +14,16 @@
 
 package com.liferay.contenttargeting.model.impl;
 
+import com.liferay.contenttargeting.api.model.RulesRegistry;
+import com.liferay.contenttargeting.model.UserSegment;
+import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ArrayUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * The extended model implementation for the CTUser service. Represents a row in the &quot;CT_CTUser&quot; database table, with each column mapped to a property of this class.
  *
@@ -28,4 +38,25 @@ public class CTUserImpl extends CTUserBaseImpl {
 	public CTUserImpl() {
 	}
 
+	public long[] getMatchesUserSegmentIds(
+			long[] groupIds, RulesRegistry rulesRegistry)
+		throws PortalException, SystemException {
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return null;
+		}
+
+		List<Long> userSegmentIds = new ArrayList<Long>();
+
+		List<UserSegment> userSegments =
+			UserSegmentLocalServiceUtil.getUserSegments(groupIds);
+
+		for (UserSegment userSegment : userSegments) {
+			if (userSegment.matches(this, rulesRegistry)) {
+				userSegmentIds.add(userSegment.getUserSegmentId());
+			}
+		}
+
+		return ArrayUtil.toLongArray(userSegmentIds);
+	}
 }
