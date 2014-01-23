@@ -51,7 +51,9 @@ import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.bridges.freemarker.FreeMarkerPortlet;
 
 import freemarker.ext.beans.BeansWrapper;
+import freemarker.ext.servlet.HttpRequestHashModel;
 
+import freemarker.template.ObjectWrapper;
 import freemarker.template.TemplateHashModel;
 
 import java.io.IOException;
@@ -71,6 +73,9 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.UnavailableException;
+
+import javax.servlet.http.HttpServletRequestWrapper;
+import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.osgi.framework.Bundle;
 
@@ -293,6 +298,23 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 						template, servletContextName, portletRequest,
 						portletResponse);
 				}
+
+				// LPS-43725
+
+				HttpServletRequestWrapper httpServletRequestWrapper =
+					new HttpServletRequestWrapper(
+						PortalUtil.getHttpServletRequest(portletRequest));
+
+				HttpServletResponseWrapper httpServletResponseWrapper =
+					new HttpServletResponseWrapper(
+						PortalUtil.getHttpServletResponse(portletResponse));
+
+				HttpRequestHashModel httpRequestHashModel =
+					new HttpRequestHashModel(
+						httpServletRequestWrapper, httpServletResponseWrapper,
+						ObjectWrapper.DEFAULT_WRAPPER);
+
+				template.put("Request", httpRequestHashModel);
 
 				BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
