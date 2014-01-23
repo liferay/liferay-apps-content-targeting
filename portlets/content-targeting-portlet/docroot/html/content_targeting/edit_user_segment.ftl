@@ -45,13 +45,12 @@
 				label="add-rule"
 			>
 				<#list rules as rule>
-					<#assign addRuleInstanceURL = renderResponse.createRenderURL()>
-
-					${addRuleInstanceURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE_INSTANCE)}
-					${addRuleInstanceURL.setParameter("redirect", currentURL)}
-					${addRuleInstanceURL.setParameter("ruleKey", rule.getRuleKey())}
-					${addRuleInstanceURL.setParameter("userSegmentId", userSegmentId?string)}
-					${addRuleInstanceURL.setWindowState(liferayWindowStatePopUp)}
+					<@portlet["renderURL"] var="addRuleInstanceURL" windowState="${liferayWindowStatePopUp}">
+						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_RULE_INSTANCE}" />
+						<@portlet["param"] name="redirect" value="${currentURL}" />
+						<@portlet["param"] name="ruleKey" value="${rule.getRuleKey()}" />
+						<@portlet["param"] name="userSegmentId" value="${userSegmentId?string}" />
+					</@>
 
 					<@aui["nav-item"]
 						anchorId="ruleItem-${rule.getRuleKey()}"
@@ -96,13 +95,12 @@
 				name=""
 			>
 				<@liferay_ui["icon-menu"]>
-					<#assign editRuleInstanceURL = renderResponse.createRenderURL()>
-
-					${editRuleInstanceURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE_INSTANCE)}
-					${editRuleInstanceURL.setParameter("redirect", currentURL)}
-					${editRuleInstanceURL.setParameter("ruleInstanceId", ruleInstance.getRuleInstanceId()?string)}
-					${editRuleInstanceURL.setParameter("ruleKey", ruleInstance.getRuleKey()?string)}
-					${editRuleInstanceURL.setWindowState(liferayWindowStatePopUp)}
+					<@portlet["renderURL"] var="editRuleInstanceURL" windowState="${liferayWindowStatePopUp}">
+						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_RULE_INSTANCE}" />
+						<@portlet["param"] name="redirect" value="${currentURL}" />
+						<@portlet["param"] name="ruleInstanceId" value="${ruleInstance.getRuleInstanceId()?string}" />
+						<@portlet["param"] name="ruleKey" value="${rule.getRuleKey()}" />
+					</@>
 
 					<@liferay_ui["icon"]
 						cssClass="rule-item"
@@ -112,11 +110,10 @@
 						url="${editRuleInstanceURL}"
 					/>
 
-					<#assign deleteRuleInstanceURL = renderResponse.createActionURL()>
-
-					${deleteRuleInstanceURL.setParameter("javax.portlet.action", "deleteRuleInstance")}
-					${deleteRuleInstanceURL.setParameter("redirect", currentURL)}
-					${deleteRuleInstanceURL.setParameter("ruleInstanceId", ruleInstance.getRuleInstanceId()?string)}
+					<@portlet["actionURL"] name="deleteRuleInstance" var="deleteRuleInstanceURL">
+						<@portlet["param"] name="redirect" value="${currentURL}" />
+						<@portlet["param"] name="ruleInstanceId" value="${ruleInstance.getRuleInstanceId()?string}" />
+					</@>
 
 					<@liferay_ui["icon-delete"]
 						url="${deleteRuleInstanceURL}"
