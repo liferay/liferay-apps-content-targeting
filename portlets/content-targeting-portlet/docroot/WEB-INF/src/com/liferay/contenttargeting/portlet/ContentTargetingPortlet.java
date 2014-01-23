@@ -412,14 +412,19 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			long ruleInstanceId = ParamUtil.getLong(
 				portletRequest, "ruleInstanceId");
 
+			String ruleKey;
+
 			if (ruleInstanceId > 0) {
 				ruleInstance = _ruleInstanceLocalService.getRuleInstance(
 					ruleInstanceId);
 
+				ruleKey = ruleInstance.getRuleKey();
+
 				template.put("ruleInstance", ruleInstance);
 			}
-
-			String ruleKey = ParamUtil.getString(portletRequest, "ruleKey");
+			else {
+				ruleKey = ParamUtil.getString(portletRequest, "ruleKey");
+			}
 
 			Rule rule = _rulesRegistry.getRule(ruleKey);
 

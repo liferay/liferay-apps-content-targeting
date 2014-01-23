@@ -99,7 +99,6 @@
 						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_RULE_INSTANCE}" />
 						<@portlet["param"] name="redirect" value="${currentURL}" />
 						<@portlet["param"] name="ruleInstanceId" value="${ruleInstance.getRuleInstanceId()?string}" />
-						<@portlet["param"] name="ruleKey" value="${rule.getRuleKey()}" />
 					</@>
 
 					<@liferay_ui["icon"]
