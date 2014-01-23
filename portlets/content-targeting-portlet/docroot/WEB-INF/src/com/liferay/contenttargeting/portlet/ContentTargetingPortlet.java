@@ -18,11 +18,11 @@ import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.model.UserSegment;
+import com.liferay.contenttargeting.portlet.util.UnavailableServiceException;
 import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
-import com.liferay.contenttargeting.portlet.util.UnavailableServiceException;
 import com.liferay.osgi.util.OsgiServiceUnavailableException;
 import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
@@ -187,8 +187,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			String portletId = PortalUtil.getPortletId(request);
 
 			SessionMessages.add(
-				request,
-				portletId + SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
+				request, portletId + SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
 				portletId);
 
 			sendRedirect(request, response);
@@ -341,8 +340,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			"contentTargetingPath",
 			staticModels.get(
 				"com.liferay.contenttargeting.portlet.ContentTargetingPath"));
-		template.put(
-			"currentURL", PortalUtil.getCurrentURL(portletRequest));
+		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
 		template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 		template.put("portletContext", getPortletContext());
 		template.put(
@@ -414,7 +412,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				"userSegmentId",
 				ParamUtil.getLong(portletRequest, "userSegmentId"));
 		}
-		else if (path.equals(ContentTargetingPath.EDIT_RULE_INSTANCE_REDIRECT)) {
+		else if (path.equals(
+					ContentTargetingPath.EDIT_RULE_INSTANCE_REDIRECT)) {
+
 			String ruleKey = ParamUtil.getString(portletRequest, "ruleKey");
 
 			template.put("ruleKey", ruleKey);

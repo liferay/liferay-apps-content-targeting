@@ -142,7 +142,7 @@
 			var title;
 
 			if (event.currentTarget.hasClass('new-rule')) {
-            	title = '<@liferay_ui["message"] key="new-rule" />' + ': ' +  event.currentTarget.html();
+				title = '<@liferay_ui["message"] key="new-rule" />' + ': ' +  event.currentTarget.html();
 			}
 			else {
 				title = '<@liferay_ui["message"] key="edit-rule" />';

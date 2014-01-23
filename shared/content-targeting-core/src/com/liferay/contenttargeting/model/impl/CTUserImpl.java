@@ -59,4 +59,5 @@ public class CTUserImpl extends CTUserBaseImpl {
 
 		return ArrayUtil.toLongArray(userSegmentIds);
 	}
+
 }
