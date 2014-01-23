@@ -21,7 +21,7 @@
 		<@aui["nav"]>
 			<@portlet["renderURL"] var="addUserSegmentURL">
 				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-				<@portlet["param"] name="redirect" value="${portalUtil.getCurrentURL(request)}" />
+				<@portlet["param"] name="redirect" value="${currentURL}" />
 			</@>
 
 			<@aui["nav-item"] href="${addUserSegmentURL}" iconCssClass="icon-plus" label="add-user-segment" />

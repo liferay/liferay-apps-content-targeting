@@ -8,9 +8,9 @@
 			<mime-type>text/html</mime-type>
 		</supports>
 		<portlet-info>
-			<title>User Segments</title>
-			<short-title>User Segments</short-title>
-			<keywords>User Segments</keywords>
+			<title>Audience Targeting Resources</title>
+			<short-title>Audience Targeting Resources</short-title>
+			<keywords>Audience Targeting Resources</keywords>
 		</portlet-info>
 	</portlet>
 </portlet-app>

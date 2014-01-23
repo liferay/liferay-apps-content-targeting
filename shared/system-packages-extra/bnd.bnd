@@ -1,4 +1,3 @@
-Fragment-Host: system.bundle;extension:=framework
 Export-Package: \
 	com.germinus.easyconf,\
 	com.liferay.portal.apache.bridges.struts,\
@@ -11,3 +10,4 @@ Export-Package: \
 	com.liferay.portal.struts,\
 	com.liferay.util,\
 	com.liferay.util.service
+Fragment-Host: system.bundle;extension:=framework

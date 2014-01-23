@@ -295,27 +295,12 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 						portletResponse);
 				}
 
-				template.put(
-					"currentURL", PortalUtil.getCurrentURL(portletRequest));
-				template.put("portletContext", getPortletContext());
-				template.put(
-					"redirect",
-					ParamUtil.getString(portletRequest, "redirect"));
-				template.put(
-					"userInfo",
-					portletRequest.getAttribute(PortletRequest.USER_INFO));
-
-				// Injecting static models into the template context
-
 				BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
 				TemplateHashModel staticModels = wrapper.getStaticModels();
 
-				template.put(
-					"contentTargetingPath",
-					staticModels.get(
-						"com.liferay.contenttargeting.portlet." +
-							"ContentTargetingPath"));
+				populateContext(
+					portletRequest, portletResponse, template, staticModels);
 
 				populateViewContext(
 					path, portletRequest, portletResponse, template,
@@ -347,13 +332,30 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 	}
 
+	protected void populateContext(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			Template template, TemplateHashModel staticModels)
+		throws Exception {
+
+		template.put(
+			"contentTargetingPath",
+			staticModels.get(
+				"com.liferay.contenttargeting.portlet.ContentTargetingPath"));
+		template.put(
+			"currentURL", PortalUtil.getCurrentURL(portletRequest));
+		template.put("portletContext", getPortletContext());
+		template.put(
+			"redirect", ParamUtil.getString(portletRequest, "redirect"));
+		template.put(
+			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
+		template.put("userSegmentClass", UserSegment.class);
+	}
+
 	protected void populateViewContext(
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template,
 			TemplateHashModel staticModels)
 		throws Exception {
-
-		template.put("userSegmentClass", UserSegment.class);
 
 		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW)) {
 			template.put(
