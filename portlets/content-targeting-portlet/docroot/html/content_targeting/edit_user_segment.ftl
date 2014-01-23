@@ -78,6 +78,7 @@
 			/>
 
 			<@liferay_ui["search-container-column-text"]
+				align="right"
 				name=""
 			>
 				<@liferay_ui["icon-menu"]>

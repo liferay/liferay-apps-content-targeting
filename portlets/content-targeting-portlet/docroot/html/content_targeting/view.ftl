@@ -29,7 +29,6 @@
 	</@>
 </#if>
 
-
 <#assign iteratorURL = renderResponse.createRenderURL()>
 
 <@liferay_ui["search-container"]
@@ -57,6 +56,7 @@
 		/>
 
 		<@liferay_ui["search-container-column-text"]
+			align="right"
 			name=""
 		>
 			<@liferay_ui["icon-menu"]>
