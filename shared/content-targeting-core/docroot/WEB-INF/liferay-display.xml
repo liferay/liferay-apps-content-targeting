@@ -3,6 +3,6 @@
 
 <display>
 	<category name="hidden">
-		<portlet id="ctadmin" />
+		<portlet id="ctcore" />
 	</category>
 </display>

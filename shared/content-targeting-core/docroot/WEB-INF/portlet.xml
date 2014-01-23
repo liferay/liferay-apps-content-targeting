@@ -7,5 +7,10 @@
 		<supports>
 			<mime-type>text/html</mime-type>
 		</supports>
+		<portlet-info>
+			<title>User Segments</title>
+			<short-title>User Segments</short-title>
+			<keywords>User Segments</keywords>
+		</portlet-info>
 	</portlet>
 </portlet-app>

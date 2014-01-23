@@ -9,6 +9,7 @@ Export-Package: com.liferay.contenttargeting,\
 	com.liferay.contenttargeting.service.permission,\
 	com.liferay.contenttargeting.util
 Include-Resource: classes,\
+	{WEB-INF/liferay-display.xml=docroot/WEB-INF/liferay-display.xml},\
 	{WEB-INF/classes/META-INF=classes/META-INF/},\
 	{WEB-INF/liferay-plugin-package.properties=docroot/WEB-INF/liferay-plugin-package.properties},\
 	{WEB-INF/sql=sql},\

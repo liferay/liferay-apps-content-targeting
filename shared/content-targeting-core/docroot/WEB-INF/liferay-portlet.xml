@@ -4,6 +4,5 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>ctcore</portlet-name>
-		<system>true</system>
 	</portlet>
 </liferay-portlet-app>
