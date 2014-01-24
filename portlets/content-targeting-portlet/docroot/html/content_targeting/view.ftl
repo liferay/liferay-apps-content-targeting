@@ -29,11 +29,9 @@
 	</@>
 </#if>
 
-<#assign iteratorURL = renderResponse.createRenderURL()>
-
 <@liferay_ui["search-container"]
 	emptyResultsMessage="no-user-segments-were-found"
-	iteratorURL=iteratorURL
+	iteratorURL=renderResponse.createRenderURL()
 >
 	<@liferay_ui["search-container-results"]
 		results=userSegments

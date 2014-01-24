@@ -19,10 +19,10 @@
 <@portlet["actionURL"] name="updateRuleInstance" var="editRuleInstanceURL" />
 
 <@aui["form"] action="${editRuleInstanceURL}" method="post" name="fm">
-	<#assign redirectURL = renderResponse.createRenderURL()>
-
-	${redirectURL.setParameter("mvcPath", contentTargetingPath.EDIT_RULE_INSTANCE_REDIRECT)}
-	${redirectURL.setParameter("ruleKey", ruleKey)}
+	<@portlet["renderURL"] var="redirectURL">
+		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_RULE_INSTANCE_REDIRECT}" />
+		<@portlet["param"] name="ruleKey" value="${ruleKey}" />
+	</@>
 
 	<@aui["input"] name="redirect" type="hidden" value="${redirectURL}" />
 	<@aui["input"] name="ruleInstanceId" type="hidden" value=ruleInstanceId />

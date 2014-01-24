@@ -95,12 +95,11 @@ public class UserSegmentLocalServiceImpl
 
 		UserSegment userSegment = userSegmentPersistence.remove(userSegmentId);
 
-
 		try {
 			removeUserSegmentCategory(userSegment.getAssetCategoryId());
 		}
-		catch(NoSuchCategoryException nsace) {
-			if(_log.isDebugEnabled()) {
+		catch (NoSuchCategoryException nsace) {
+			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Category " + userSegment.getAssetCategoryId() +
 						"could not be deleted");
@@ -216,6 +215,5 @@ public class UserSegmentLocalServiceImpl
 
 	private static Log _log = LogFactoryUtil.getLog(
 		UserSegmentLocalServiceImpl.class);
-
 
 }

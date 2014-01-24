@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.text.Format;
+
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
@@ -126,12 +127,10 @@ public class TimeRule extends BaseRule {
 		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			_SIMPLE_DATE_FORMAT_PATTERN, locale);
 
-
 		StringBundler sb = new StringBundler(4);
 
 		try {
-			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
-				typeSettings);
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
 
 			Calendar startCalendar = CalendarFactoryUtil.getCalendar(
 				1970, 0, 1, jsonObj.getInt("startTimeHour"),
@@ -140,7 +139,6 @@ public class TimeRule extends BaseRule {
 			Calendar endCalendar = CalendarFactoryUtil.getCalendar(
 				1970, 0, 1, jsonObj.getInt("endTimeHour"),
 				jsonObj.getInt("endTimeMinute"));
-
 
 			sb.append("Users browsing the Site from ");
 			sb.append(format.format(startCalendar.getTime()));
@@ -180,8 +178,8 @@ public class TimeRule extends BaseRule {
 	private static final String _FORM_TEMPLATE_PATH =
 		"templates/ct_time_rule_fields.ftl";
 
-	private static Log _log = LogFactoryUtil.getLog(TimeRule.class);
-
 	private static final String _SIMPLE_DATE_FORMAT_PATTERN = "hh:mm a";
+
+	private static Log _log = LogFactoryUtil.getLog(TimeRule.class);
 
 }
