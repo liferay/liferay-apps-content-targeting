@@ -20,9 +20,12 @@ import com.liferay.contenttargeting.util.UserSegmentUtil;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portlet.asset.NoSuchCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
@@ -92,7 +95,17 @@ public class UserSegmentLocalServiceImpl
 
 		UserSegment userSegment = userSegmentPersistence.remove(userSegmentId);
 
-		removeUserSegmentCategory(userSegment.getAssetCategoryId());
+
+		try {
+			removeUserSegmentCategory(userSegment.getAssetCategoryId());
+		}
+		catch(NoSuchCategoryException nsace) {
+			if(_log.isDebugEnabled()) {
+				_log.debug(
+					"Category " + userSegment.getAssetCategoryId() +
+						"could not be deleted");
+			}
+		}
 
 		return userSegment;
 	}
@@ -200,5 +213,9 @@ public class UserSegmentLocalServiceImpl
 
 		return assetCategory;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		UserSegmentLocalServiceImpl.class);
+
 
 }
