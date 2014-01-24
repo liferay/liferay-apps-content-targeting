@@ -22,11 +22,14 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
@@ -103,8 +106,8 @@ public class TimeRule extends BaseRule {
 	}
 
 	@Override
-	public String getName() {
-		return "time";
+	public String getName(Locale locale) {
+		return LanguageUtil.get(locale, "time");
 	}
 
 	@Override
@@ -114,7 +117,27 @@ public class TimeRule extends BaseRule {
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
-		return "Time Rule Summary";
+		String typeSettings = ruleInstance.getTypeSettings();
+
+		StringBundler sb = new StringBundler(10);
+
+		try {
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+				typeSettings);
+
+			sb.append("Users browsing the Site from ");
+			sb.append(jsonObj.getInt("startTimeHour"));
+			sb.append(":");
+			sb.append(jsonObj.getInt("startTimeMinute"));
+			sb.append(" to ");
+			sb.append(jsonObj.getInt("endTimeHour"));
+			sb.append(":");
+			sb.append(jsonObj.getInt("endTimeMinute"));
+		}
+		catch (JSONException jse) {
+		}
+
+		return sb.toString();
 	}
 
 	@Override

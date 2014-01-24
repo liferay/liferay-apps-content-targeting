@@ -59,7 +59,7 @@
 						cssClass="rule-item"
 						href="${addRuleInstanceURL}"
 						iconCssClass="${rule.getIcon()}"
-						label="${rule.getName()}"
+						label="${rule.getName(locale)}"
 					/>
 				</#list>
 			</@>
@@ -83,7 +83,7 @@
 
 			<@liferay_ui["search-container-column-text"]
 				name="name"
-				value=rule.getName()
+				value=rule.getName(locale)
 			/>
 
 			<@liferay_ui["search-container-column-text"]

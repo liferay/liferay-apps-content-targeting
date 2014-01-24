@@ -35,7 +35,7 @@ public interface Rule {
 
 	public String getIcon();
 
-	public String getName();
+	public String getName(Locale locale);
 
 	public String getRuleKey();
 
