@@ -428,7 +428,7 @@ public class CTUserWrapper implements CTUser, ModelWrapper<CTUser> {
 	}
 
 	@Override
-	public int compareTo(com.liferay.contenttargeting.model.CTUser ctUser) {
+	public int compareTo(CTUser ctUser) {
 		return _ctUser.compareTo(ctUser);
 	}
 
@@ -438,17 +438,17 @@ public class CTUserWrapper implements CTUser, ModelWrapper<CTUser> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.contenttargeting.model.CTUser> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<CTUser> toCacheModel() {
 		return _ctUser.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.CTUser toEscapedModel() {
+	public CTUser toEscapedModel() {
 		return new CTUserWrapper(_ctUser.toEscapedModel());
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.CTUser toUnescapedModel() {
+	public CTUser toUnescapedModel() {
 		return new CTUserWrapper(_ctUser.toUnescapedModel());
 	}
 
