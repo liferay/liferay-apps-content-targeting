@@ -28,10 +28,14 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CalendarFactoryUtil;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.text.Format;
+import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
 
@@ -119,20 +123,29 @@ public class TimeRule extends BaseRule {
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
 		String typeSettings = ruleInstance.getTypeSettings();
 
-		StringBundler sb = new StringBundler(10);
+		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
+			_SIMPLE_DATE_FORMAT_PATTERN, locale);
+
+
+		StringBundler sb = new StringBundler(4);
 
 		try {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
 				typeSettings);
 
+			Calendar startCalendar = CalendarFactoryUtil.getCalendar(
+				1970, 0, 1, jsonObj.getInt("startTimeHour"),
+				jsonObj.getInt("startTimeMinute"));
+
+			Calendar endCalendar = CalendarFactoryUtil.getCalendar(
+				1970, 0, 1, jsonObj.getInt("endTimeHour"),
+				jsonObj.getInt("endTimeMinute"));
+
+
 			sb.append("Users browsing the Site from ");
-			sb.append(jsonObj.getInt("startTimeHour"));
-			sb.append(":");
-			sb.append(jsonObj.getInt("startTimeMinute"));
+			sb.append(format.format(startCalendar.getTime()));
 			sb.append(" to ");
-			sb.append(jsonObj.getInt("endTimeHour"));
-			sb.append(":");
-			sb.append(jsonObj.getInt("endTimeMinute"));
+			sb.append(format.format(endCalendar.getTime()));
 		}
 		catch (JSONException jse) {
 		}
@@ -168,5 +181,7 @@ public class TimeRule extends BaseRule {
 		"templates/ct_time_rule_fields.ftl";
 
 	private static Log _log = LogFactoryUtil.getLog(TimeRule.class);
+
+	private static final String _SIMPLE_DATE_FORMAT_PATTERN = "hh:mm a";
 
 }
