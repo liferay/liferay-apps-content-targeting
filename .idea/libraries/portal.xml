@@ -9,9 +9,9 @@
     <JAVADOC />
     <SOURCES>
       <root url="file://$PROJECT_DIR$/../liferay-portal-src-6.2.0-ce-ga1/util-taglib/src" />
-      <root url="file://$PROJECT_DIR$/../liferay-portal-src-6.2.0-ce-ga1/util-slf4j/src" />
       <root url="file://$PROJECT_DIR$/../liferay-portal-src-6.2.0-ce-ga1/util-java/src" />
       <root url="file://$PROJECT_DIR$/../liferay-portal-src-6.2.0-ce-ga1/portal-service/src" />
+      <root url="file://$PROJECT_DIR$/../liferay-portal-src-6.2.0-ce-ga1/util-bridges/src" />
     </SOURCES>
   </library>
 </component>
