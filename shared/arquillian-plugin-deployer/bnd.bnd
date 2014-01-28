@@ -1,0 +1,16 @@
+Bundle-Name: Arquillian Plugin Deployer
+Export-Package: com.liferay.arquillian
+Import-Package: \
+	com.liferay.portal.kernel.servlet.filters.invoker,\
+	javax.servlet,\
+	javax.servlet.http,\
+	org.apache.commons.fileupload.*,\
+	org.osgi.framework,\
+	org.osgi.util.tracker
+
+
+Web-ContextPath: /arquillian-deploy
+
+-wab: \
+	docroot
+
