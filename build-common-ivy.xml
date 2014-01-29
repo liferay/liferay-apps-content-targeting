@@ -89,6 +89,10 @@
 		</sequential>
 	</for>
 
+	<target name="importPom">
+		<ivy:convertpom pomFile="pom.xml" ivyFile="converted.ivy.xml" />
+	</target>
+
 	<target name="publish">
 		<ivy:settings file="${sdk.dir}/ivy-settings-publisher.xml" />
 
