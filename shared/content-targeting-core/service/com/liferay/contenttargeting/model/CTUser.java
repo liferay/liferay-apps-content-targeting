@@ -33,6 +33,5 @@ public interface CTUser extends CTUserModel, PersistedModel {
 	 */
 	public long[] getMatchesUserSegmentIds(long[] groupIds,
 		com.liferay.contenttargeting.api.model.RulesRegistry rulesRegistry)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws java.lang.Exception;
 }
