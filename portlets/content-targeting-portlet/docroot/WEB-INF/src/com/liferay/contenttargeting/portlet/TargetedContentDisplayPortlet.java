@@ -396,6 +396,10 @@ public class TargetedContentDisplayPortlet extends FreeMarkerPortlet {
 		else if (path.equals(TargetedContentDisplayPath.EDIT_RULE) ||
 				 path.equals(TargetedContentDisplayPath.CONFIGURATION)) {
 
+			template.put(
+				"assetRendererFactories",
+				getSelectableAssetRendererFactories(
+					themeDisplay.getCompanyId()));
 			template.put("portletPreferences", portletPreferences);
 
 			int[] queryRulesIndexes = GetterUtil.getIntegerValues(
@@ -406,6 +410,33 @@ public class TargetedContentDisplayPortlet extends FreeMarkerPortlet {
 			}
 
 			template.put("queryLogicIndexes", queryRulesIndexes);
+
+			template.put(
+				"queryRuleUtilClass",
+				staticModels.get(
+					"com.liferay.contenttargeting.portlet.util.QueryRuleUtil"));
+
+			HttpServletRequest request = PortalUtil.getHttpServletRequest(
+				portletRequest);
+
+			template.put(
+				"randomNamespace",
+				PortalUtil.generateRandomKey(request, "user_segment_selector") +
+					StringPool.UNDERLINE);
+			template.put(
+				"targetedContentDisplayUtilClass",
+				staticModels.get(
+					"com.liferay.contenttargeting.portlet.util." +
+						"TargetedContentDisplayUtil"));
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
+
+			template.put(
+				"vocabularyId",
+				UserSegmentUtil.getAssetVocabularyId(
+					themeDisplay.getUserId(), serviceContext));
 
 			StringBundler vocabularyGroupIds = new StringBundler(3);
 
@@ -419,38 +450,6 @@ public class TargetedContentDisplayPortlet extends FreeMarkerPortlet {
 			}
 
 			template.put("vocabularyGroupIds", vocabularyGroupIds.toString());
-
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				portletRequest);
-
-			template.put(
-				"randomNamespace",
-				PortalUtil.generateRandomKey(request, "user_segment_selector") +
-					StringPool.UNDERLINE);
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
-
-			template.put(
-				"vocabularyId",
-				UserSegmentUtil.getAssetVocabularyId(
-					themeDisplay.getUserId(), serviceContext));
-
-			template.put(
-				"targetedContentDisplayUtilClass",
-				staticModels.get(
-					"com.liferay.contenttargeting.portlet.util." +
-							"TargetedContentDisplayUtil"));
-			template.put(
-				"queryRuleUtilClass",
-				staticModels.get(
-					"com.liferay.contenttargeting.portlet.util.QueryRuleUtil"));
-
-			template.put(
-				"assetRendererFactories",
-				getSelectableAssetRendererFactories(
-					themeDisplay.getCompanyId()));
 		}
 	}
 
