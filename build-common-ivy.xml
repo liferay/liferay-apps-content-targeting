@@ -42,11 +42,11 @@
 						<isfalse value="${ivy.xml.unmodified}" />
 						<then>
 							<ivy:settings file="${ivy.custom.settings.file}" />
-
+							
 							<ivy:resolve
 								file="@{ivy.xml.dir}/ivy.xml"
 								log="download-only"
-								transitive="false"
+								transitive="true"
 							/>
 
 							<if>
