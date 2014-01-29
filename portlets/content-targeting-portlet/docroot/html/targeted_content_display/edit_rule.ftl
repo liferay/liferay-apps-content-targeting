@@ -35,18 +35,18 @@
 			</@>
 
 			<div class="user-segment-selector">
-				<div class="lfr-tags-selector-content" id="<@portlet["namespace"] />${randomNamespace}assetCategoriesSelector${index}">
+				<div class="lfr-tags-selector-content" id="<@portlet["namespace"] />assetCategoriesSelector${index}">
 					<@aui["input"] name="userSegmentAssetCategoryIds${index}" type="hidden" value="${queryRule.getUserSegmentAssetCategoryIdsAsString()}" />
 				</div>
 
 				<@aui["script"] use="liferay-asset-categories-selector">
 					new Liferay.AssetCategoriesSelector(
 						{
-							contentBox: '#<@portlet["namespace"] />${randomNamespace}assetCategoriesSelector${index}',
+							contentBox: '#<@portlet["namespace"] />assetCategoriesSelector${index}',
 							curEntries: '${queryRule.getUserSegmentAssetCategoryNames(locale)}',
 							curEntryIds: '${queryRule.getUserSegmentAssetCategoryIdsAsString()}',
 							hiddenInput: '#<@portlet["namespace"] />userSegmentAssetCategoryIds${index}',
-							instanceVar: '<@portlet["namespace"] />${randomNamespace}',
+							instanceVar: '<@portlet["namespace"] />',
 							vocabularyGroupIds: '${vocabularyGroupIds}',
 							vocabularyIds: '${vocabularyId}'
 						}

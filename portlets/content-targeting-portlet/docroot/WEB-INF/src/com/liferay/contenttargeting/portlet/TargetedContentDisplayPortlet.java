@@ -403,26 +403,14 @@ public class TargetedContentDisplayPortlet extends FreeMarkerPortlet {
 			template.put("portletPreferences", portletPreferences);
 
 			int[] queryRulesIndexes = GetterUtil.getIntegerValues(
-				portletPreferences.getValues("queryLogicIndexes", null));
-
-			if (ArrayUtil.isEmpty(queryRulesIndexes)) {
-				queryRulesIndexes = new int[] {0};
-			}
+				portletPreferences.getValues("queryLogicIndexes", null),
+				new int[] {0});
 
 			template.put("queryLogicIndexes", queryRulesIndexes);
-
 			template.put(
 				"queryRuleUtilClass",
 				staticModels.get(
 					"com.liferay.contenttargeting.portlet.util.QueryRuleUtil"));
-
-			HttpServletRequest request = PortalUtil.getHttpServletRequest(
-				portletRequest);
-
-			template.put(
-				"randomNamespace",
-				PortalUtil.generateRandomKey(request, "user_segment_selector") +
-					StringPool.UNDERLINE);
 			template.put(
 				"targetedContentDisplayUtilClass",
 				staticModels.get(
