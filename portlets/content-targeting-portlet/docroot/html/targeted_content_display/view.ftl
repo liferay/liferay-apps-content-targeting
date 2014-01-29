@@ -16,12 +16,19 @@
 
 <#include "../init.ftl" />
 
-<@portlet["renderURL"] var="configurationURL">
+<@portlet["renderURL"] var="configurationURL" windowState=liferayWindowStatePopUp.toString()>
 	<@portlet["param"] name="mvcPath" value="${targetedContentDisplayPath.CONFIGURATION}" />
 	<@portlet["param"] name="redirect" value="${currentURL}" />
 </@>
 
-<@aui["a"] href="${configurationURL}">${languageUtil.get(locale, "configuration")}</@>
+<@liferay_ui["icon"]
+	cssClass="pull-right"
+	image="../aui/wrench"
+	label=true
+	message="configuration"
+	useDialog=true
+	url="${configurationURL}"
+/>
 
 <#if isMatchingRule>
 	<div>

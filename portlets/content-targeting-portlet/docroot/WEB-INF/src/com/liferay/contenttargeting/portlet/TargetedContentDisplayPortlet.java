@@ -305,6 +305,8 @@ public class TargetedContentDisplayPortlet extends FreeMarkerPortlet {
 		template.put(
 			"liferayWindowStateExclusive", LiferayWindowState.EXCLUSIVE);
 		template.put(
+			"liferayWindowStatePopUp", LiferayWindowState.POP_UP);
+		template.put(
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 		template.put(
 			"targetedContentDisplayPath",

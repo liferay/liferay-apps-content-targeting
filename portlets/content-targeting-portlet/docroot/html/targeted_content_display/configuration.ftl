@@ -16,12 +16,9 @@
 
 <#include "../init.ftl" />
 
-<@liferay_ui["header"]
-	backURL="${redirect}"
-	title="configuration"
-/>
-
-<@liferay_portlet["actionURL"] name="updatePreferences" var="configurationURL" />
+<@liferay_portlet["actionURL"] name="updatePreferences" var="configurationURL">
+	<@portlet["param"] name="redirect" value="${currentURL}" />
+</@>
 
 <@aui["form"] action="${configurationURL}" method="post" name="fm">
 	<div id="<@portlet["namespace"] />queryRules">
