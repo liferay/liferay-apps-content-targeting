@@ -173,13 +173,27 @@ public class TimeRule extends BaseRule {
 		try {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
 
+			int startTimeHour = jsonObj.getInt("startTimeHour");
+			int startTimeMinute = jsonObj.getInt("startTimeMinute");
+			int startTimeAmPm = jsonObj.getInt("startTimeAmPm");
+
+			if (startTimeAmPm == Calendar.PM) {
+				startTimeHour += 12;
+			}
+
 			Calendar startCalendar = CalendarFactoryUtil.getCalendar(
-				1970, 0, 1, jsonObj.getInt("startTimeHour"),
-				jsonObj.getInt("startTimeMinute"));
+				1970, 0, 1, startTimeHour, startTimeMinute);
+
+			int endTimeHour = jsonObj.getInt("endTimeHour");
+			int endTimeMinute = jsonObj.getInt("endTimeMinute");
+			int endTimeAmPm = jsonObj.getInt("endTimeAmPm");
+
+			if (endTimeAmPm == Calendar.PM) {
+				endTimeHour += 12;
+			}
 
 			Calendar endCalendar = CalendarFactoryUtil.getCalendar(
-				1970, 0, 1, jsonObj.getInt("endTimeHour"),
-				jsonObj.getInt("endTimeMinute"));
+				1970, 0, 1, endTimeHour, endTimeMinute);
 
 			sb.append("Users browsing the Site from ");
 			sb.append(format.format(startCalendar.getTime()));
