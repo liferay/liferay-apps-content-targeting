@@ -38,6 +38,6 @@
 	</div>
 <#else>
 	<div class="alert alert-info">
-		<@liferay_ui["message"] key="no-matching-rules" />
+		<@liferay_ui["message"] key="there-are-no-matching-rules" />
 	</div>
 </#if>
