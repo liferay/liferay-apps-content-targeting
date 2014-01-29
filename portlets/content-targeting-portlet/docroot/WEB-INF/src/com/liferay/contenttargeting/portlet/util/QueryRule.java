@@ -63,8 +63,57 @@ public class QueryRule {
 		_assetType = assetRendererFactory.getTypeName(locale, true);
 	}
 
-	public boolean evaluate(long[] userSegmentIds) {
-		return true;
+	public boolean evaluate(long[] userSegmentAssetCategoryIds) {
+		if (_contains) {
+			if (_andOperator) {
+				return ArrayUtil.containsAll(
+					_userSegmentAssetCategoryIds, userSegmentAssetCategoryIds);
+			}
+			else {
+				for (long userSegmentAssetCategoryId :
+						userSegmentAssetCategoryIds) {
+
+					if (ArrayUtil.contains(
+							_userSegmentAssetCategoryIds,
+							userSegmentAssetCategoryId)) {
+
+						return true;
+					}
+				}
+
+				return false;
+			}
+		}
+		else {
+			if (_andOperator) {
+				for (long userSegmentAssetCategoryId :
+						userSegmentAssetCategoryIds) {
+
+					if (ArrayUtil.contains(
+							_userSegmentAssetCategoryIds,
+							userSegmentAssetCategoryId)) {
+
+						return false;
+					}
+				}
+
+				return true;
+			}
+			else {
+				for (long userSegmentAssetCategoryId :
+						userSegmentAssetCategoryIds) {
+
+					if (!ArrayUtil.contains(
+							_userSegmentAssetCategoryIds,
+							userSegmentAssetCategoryId)) {
+
+						return true;
+					}
+				}
+
+				return false;
+			}
+		}
 	}
 
 	public String getAssetClassName() {

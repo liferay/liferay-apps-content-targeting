@@ -77,8 +77,8 @@ public class QueryRuleUtil {
 	}
 
 	public static QueryRule match(
-			long[] userSegmentIds, PortletPreferences portletPreferences,
-			Locale locale)
+			long[] userSegmentAssetCategoryIds,
+			PortletPreferences portletPreferences, Locale locale)
 		throws PortalException, SystemException {
 
 		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
@@ -88,7 +88,7 @@ public class QueryRuleUtil {
 			QueryRule queryRule = getQueryRule(
 				portletPreferences, queryRuleIndex, locale);
 
-			if (queryRule.evaluate(userSegmentIds)) {
+			if (queryRule.evaluate(userSegmentAssetCategoryIds)) {
 				return queryRule;
 			}
 		}

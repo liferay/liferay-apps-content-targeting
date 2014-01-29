@@ -330,13 +330,28 @@ public class TargetedContentDisplayPortlet extends FreeMarkerPortlet {
 		if (Validator.isNull(path) ||
 			path.equals(TargetedContentDisplayPath.VIEW)) {
 
+			QueryRule queryRule = null;
+
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
 
-			template.put("userSegmentIds", userSegmentIds);
+			if (userSegmentIds != null) {
+				long[] userSegmentAssetCategoryIds =
+					new long[userSegmentIds.length];
 
-			QueryRule queryRule = QueryRuleUtil.match(
-				userSegmentIds, portletPreferences, themeDisplay.getLocale());
+				for (int i = 0; i < userSegmentIds.length; i++) {
+					UserSegment userSegment =
+						_userSegmentLocalService.fetchUserSegment(
+							userSegmentIds[i]);
+
+					userSegmentAssetCategoryIds[i] =
+						userSegment.getAssetCategoryId();
+				}
+
+				queryRule = QueryRuleUtil.match(
+					userSegmentAssetCategoryIds, portletPreferences,
+					themeDisplay.getLocale());
+			}
 
 			boolean isMatchingRule = false;
 
