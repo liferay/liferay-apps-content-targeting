@@ -14,15 +14,20 @@
 
 package com.liferay.arquillian;
 
+import com.liferay.portal.kernel.util.GetterUtil;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
+import org.osgi.framework.BundleReference;
 import org.osgi.framework.Filter;
+import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
+import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -43,7 +48,9 @@ public class DeployerServlet extends HttpServlet {
 	public static final String BUNDLE_CONTEXT_PATH = "Bundle-Context-Path";
 	public static final String DEPLOYER_SERVLET_LOCATION = "DeployerServlet";
 	public static final String TEXT = "text/text";
+
 	public static final long TIMEOUT = 10 * 1000L;
+	private ServiceTracker<Servlet,Servlet> _servletServletServiceTracker;
 
 	@Override
 	protected void doDelete(
@@ -92,27 +99,40 @@ public class DeployerServlet extends HttpServlet {
 			InputStream bundleInputStream = fileItem.getInputStream();
 
 			Bundle newBundle = bundleContext.installBundle(
-				DEPLOYER_SERVLET_LOCATION, bundleInputStream);
+				_deployerServletInstallLocation, bundleInputStream);
 
 			newBundle.start();
 
 			long bundleId = newBundle.getBundleId();
 
-			Filter filter = bundleContext.createFilter(
+			Filter bundleContextFilter = bundleContext.createFilter(
 				"(&(objectClass=com.liferay.httpservice.internal.servlet." +
 					"BundleServletContext)(bundle.id=" + bundleId + "))");
 
-			ServiceTracker serviceTracker = new ServiceTracker(
-				bundleContext, filter, null);
+			ServiceTracker servletContextServiceTracker = new ServiceTracker(
+				bundleContext, bundleContextFilter, null);
 
-			serviceTracker.open();
+			servletContextServiceTracker.open();
 
 			ServletContext sc =
-				(ServletContext) serviceTracker.waitForService(TIMEOUT);
+				(ServletContext) servletContextServiceTracker.waitForService(
+					_installTimeout);
+
+			Filter arquillianServletFilter = bundleContext.createFilter(
+				"(&(objectClass=javax.servlet.Servlet)(bundle.id=" + bundleId +
+					")(servletName=ArquillianServletRunner))");
+
+			ServiceTracker arquillianServletServiceTracker =
+				new ServiceTracker(
+					bundleContext, arquillianServletFilter, null);
+
+			arquillianServletServiceTracker.open();
+
+			arquillianServletServiceTracker.waitForService(_installTimeout);
 
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.setContentType(TEXT);
-			response.setHeader(BUNDLE_CONTEXT_PATH, sc.getContextPath());
+			response.setHeader(_contextPathHeader, sc.getContextPath());
 
 		} catch (Exception e) {
 			throw new ServletException(e);
@@ -129,8 +149,24 @@ public class DeployerServlet extends HttpServlet {
 
 		ServletContext servletContext = config.getServletContext();
 
-		_bundle = (Bundle) servletContext.getAttribute("OSGI_BUNDLE");
+		if (servletContext instanceof BundleReference) {
+			_bundle = ((BundleReference)servletContext).getBundle();
+		}
+
+		_contextPathHeader = GetterUtil.getString(
+			config.getInitParameter("contextPathHeader"), BUNDLE_CONTEXT_PATH);
+		_deployerServletInstallLocation = GetterUtil.getString(
+			config.getInitParameter(
+				"deployerServletInstallLocation"), DEPLOYER_SERVLET_LOCATION);
+		_installTimeout = GetterUtil.getLong(
+			config.getInitParameter("installTimeout"), TIMEOUT);
 	}
 
 	private Bundle _bundle;
+
+	private String _contextPathHeader;
+	private String _deployerServletInstallLocation;
+	private long _installTimeout;
+
+
 }
