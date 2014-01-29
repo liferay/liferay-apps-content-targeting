@@ -23,9 +23,7 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.BundleException;
 import org.osgi.framework.BundleReference;
 import org.osgi.framework.Filter;
-import org.osgi.framework.ServiceReference;
 import org.osgi.util.tracker.ServiceTracker;
-import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletConfig;
@@ -118,17 +116,8 @@ public class DeployerServlet extends HttpServlet {
 				(ServletContext) servletContextServiceTracker.waitForService(
 					_installTimeout);
 
-			Filter arquillianServletFilter = bundleContext.createFilter(
-				"(&(objectClass=javax.servlet.Servlet)(bundle.id=" + bundleId +
-					")(servletName=ArquillianServletRunner))");
-
-			ServiceTracker arquillianServletServiceTracker =
-				new ServiceTracker(
-					bundleContext, arquillianServletFilter, null);
-
-			arquillianServletServiceTracker.open();
-
-			arquillianServletServiceTracker.waitForService(_installTimeout);
+			waitForServlet(sc, "ArquillianServletRunner",
+				_installTimeout);
 
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.setContentType(TEXT);
@@ -141,6 +130,31 @@ public class DeployerServlet extends HttpServlet {
 			out.flush();
 			out.close();
 		}
+	}
+
+	private Servlet waitForServlet(ServletContext servletContext, String servletName, long timeout) {
+
+		long elapsedTime = 0;
+
+		Servlet found = null;
+
+		final long step = 10;
+		while (found == null && elapsedTime < timeout) {
+			try {
+				Thread.sleep(step);
+			}
+			catch (InterruptedException e) {
+				break;
+			}
+
+			try {
+				found = servletContext.getServlet(servletName);
+			} catch (ServletException e) {
+			}
+			elapsedTime += step;
+		}
+
+		return found;
 	}
 
 	@Override
