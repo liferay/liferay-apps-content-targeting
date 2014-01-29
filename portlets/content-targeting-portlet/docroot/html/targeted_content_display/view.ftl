@@ -16,19 +16,21 @@
 
 <#include "../init.ftl" />
 
-<@portlet["renderURL"] var="configurationURL" windowState=liferayWindowStatePopUp.toString()>
-	<@portlet["param"] name="mvcPath" value="${targetedContentDisplayPath.CONFIGURATION}" />
-	<@portlet["param"] name="redirect" value="${currentURL}" />
-</@>
+<#if portletDisplay.isShowConfigurationIcon()>
+	<@portlet["renderURL"] var="configurationURL" windowState=liferayWindowStatePopUp.toString()>
+		<@portlet["param"] name="mvcPath" value="${targetedContentDisplayPath.CONFIGURATION}" />
+		<@portlet["param"] name="redirect" value="${currentURL}" />
+	</@>
 
-<@liferay_ui["icon"]
-	cssClass="pull-right"
-	image="../aui/wrench"
-	label=true
-	message="configuration"
-	useDialog=true
-	url="${configurationURL}"
-/>
+	<@liferay_ui["icon"]
+		cssClass="pull-right"
+		image="../aui/wrench"
+		label=true
+		message="configuration"
+		useDialog=true
+		url="${configurationURL}"
+	/>
+</#if>
 
 <#if isMatchingRule>
 	<div>
