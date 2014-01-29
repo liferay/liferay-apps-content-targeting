@@ -58,8 +58,49 @@ public class TimeRule extends BaseRule {
 	}
 
 	@Override
-	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser) {
-		return true;
+	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
+		throws Exception {
+
+		if (ruleInstance == null) {
+			return false;
+		}
+
+		String typeSettings = ruleInstance.getTypeSettings();
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
+
+		int endTimeHour = jsonObj.getInt("endTimeHour");
+		int endTimeMinute = jsonObj.getInt("endTimeMinute");
+		int endTimeAmPm = jsonObj.getInt("endTimeAmPm");
+
+		if (endTimeAmPm == Calendar.PM) {
+			endTimeHour += 12;
+		}
+
+		int startTimeHour = jsonObj.getInt("startTimeHour");
+		int startTimeMinute = jsonObj.getInt("startTimeMinute");
+		int startTimeAmPm = jsonObj.getInt("startTimeAmPm");
+
+		if (startTimeAmPm == Calendar.PM) {
+			startTimeHour += 12;
+		}
+
+		Calendar cal = CalendarFactoryUtil.getCalendar();
+
+		int hour = cal.get(Calendar.HOUR_OF_DAY);
+		int minute = cal.get(Calendar.MINUTE);
+
+		int startTimeMinutes = startTimeHour * 60 + startTimeMinute;
+		int endTimeMinutes = endTimeHour * 60 + endTimeMinute;
+		int nowTimeMinutes = hour * 60 + minute;
+
+		if ((startTimeMinutes <= nowTimeMinutes) &&
+			(endTimeMinutes > nowTimeMinutes)) {
+
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override

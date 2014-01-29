@@ -39,7 +39,8 @@ public interface Rule {
 	 * @return <code>true</code> if the user complies with the rule instance;
 	 *         <code>false</code> otherwise
 	 */
-	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser);
+	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
+		throws Exception;
 
 	/**
 	 * Returns the HTML code containing the form fields required to edit the

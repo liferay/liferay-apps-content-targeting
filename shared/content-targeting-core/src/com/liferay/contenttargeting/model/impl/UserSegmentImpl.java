@@ -43,7 +43,7 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 	}
 
 	public boolean matches(CTUser ctUser, RulesRegistry rulesRegistry)
-		throws SystemException {
+		throws Exception {
 
 		List<RuleInstance> rules = getRuleInstances();
 
