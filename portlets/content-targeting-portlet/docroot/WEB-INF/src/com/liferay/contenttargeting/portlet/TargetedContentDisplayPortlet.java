@@ -14,6 +14,7 @@
 
 package com.liferay.contenttargeting.portlet;
 
+import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.portlet.util.QueryRule;
 import com.liferay.contenttargeting.portlet.util.QueryRuleUtil;
 import com.liferay.contenttargeting.portlet.util.UnavailableServiceException;
@@ -127,12 +128,7 @@ public class TargetedContentDisplayPortlet extends FreeMarkerPortlet {
 			return;
 		}
 
-		PortletPreferences portletPreferences = request.getPreferences();
-
-		portletPreferences.setValue("showAssetTitle", String.valueOf(false));
-
-		portletPreferences.setValues(
-			"queryLogicIndexes", ArrayUtil.toStringArray(queryRulesIndexes));
+		List<QueryRule> queryRules = new ArrayList<QueryRule>();
 
 		for (int queryRulesIndex : queryRulesIndexes) {
 			QueryRule queryRule = QueryRuleUtil.getQueryRule(
@@ -142,18 +138,43 @@ public class TargetedContentDisplayPortlet extends FreeMarkerPortlet {
 				break;
 			}
 
+			queryRules.add(queryRule);
+		}
+
+		PortletPreferences portletPreferences = request.getPreferences();
+
+		int[] oldQueryRulesIndexes = GetterUtil.getIntegerValues(
+			portletPreferences.getValues("queryLogicIndexes", null));
+
+		for (int queryRulesIndex : oldQueryRulesIndexes) {
 			portletPreferences.setValue(
-				"queryContains" + queryRulesIndex,
+				"queryContains" + queryRulesIndex, StringPool.BLANK);
+			portletPreferences.setValue(
+				"queryAndOperator" + queryRulesIndex, StringPool.BLANK);
+			portletPreferences.setValues(
+				"userSegmentAssetCategoryIds" + queryRulesIndex, new String[0]);
+			portletPreferences.setValue(
+				"assetEntryId" + queryRulesIndex, StringPool.BLANK);
+		}
+
+		portletPreferences.setValue("showAssetTitle", String.valueOf(false));
+
+		portletPreferences.setValues(
+			"queryLogicIndexes", ArrayUtil.toStringArray(queryRulesIndexes));
+
+		for (QueryRule queryRule : queryRules) {
+			portletPreferences.setValue(
+				"queryContains" + queryRule.getIndex(),
 				String.valueOf(queryRule.isContains()));
 			portletPreferences.setValue(
-				"queryAndOperator" + queryRulesIndex,
+				"queryAndOperator" + queryRule.getIndex(),
 				String.valueOf(queryRule.isAndOperator()));
 			portletPreferences.setValues(
-				"userSegmentAssetCategoryIds" + queryRulesIndex,
+				"userSegmentAssetCategoryIds" + queryRule.getIndex(),
 				ArrayUtil.toStringArray(
 					queryRule.getUserSegmentAssetCategoryIds()));
 			portletPreferences.setValue(
-				"assetEntryId" + queryRulesIndex,
+				"assetEntryId" + queryRule.getIndex(),
 				String.valueOf(queryRule.getAssetEntryId()));
 		}
 
