@@ -26,15 +26,11 @@
 <@aui["form"] action="${configurationURL}" method="post" name="fm">
 	<div id="<@portlet["namespace"] />queryRules">
 		<@aui["fieldset"] label="displayed-assets-must-match-these-rules">
-			<div class="lfr-form-row">
-				<div class="row-fields">
-					<#list queryLogicIndexes as queryLogicIndex>
-						${request.setAttribute("configuration.index", queryLogicIndex)}
+			<#list queryLogicIndexes as queryLogicIndex>
+				${request.setAttribute("configuration.index", queryLogicIndex)}
 
-						<#include "edit_rule.ftl" />
-					</#list>
-				</div>
-			</div>
+				<#include "edit_rule.ftl" />
+			</#list>
 		</@>
 	</div>
 
@@ -53,6 +49,8 @@
 			contentBox: '#<@portlet["namespace"] />queryRules > fieldset',
 			fieldIndexes: '<@portlet["namespace"] />queryLogicIndexes',
 			namespace: '<@portlet["namespace"] />',
+			sortable: true,
+			sortableHandle: '.field-row',
 			url: '${newUserSegmentRuleURL}'
 		}
 	).render();
