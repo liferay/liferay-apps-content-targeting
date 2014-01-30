@@ -37,7 +37,6 @@ import java.util.List;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -45,6 +44,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -85,9 +85,7 @@ public class UserSegmentFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) {
-		ServletContext servletContext = filterConfig.getServletContext();
-
-		Bundle bundle = (Bundle)servletContext.getAttribute("OSGI_BUNDLE");
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		try {
 			_ctUserLocalService = ServiceTrackerUtil.getService(

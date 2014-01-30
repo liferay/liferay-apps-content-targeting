@@ -79,6 +79,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -89,9 +90,7 @@ public class TargetedContentDisplayPortlet extends FreeMarkerPortlet {
 	public void init() throws PortletException {
 		super.init();
 
-		PortletContext portletContext = getPortletContext();
-
-		Bundle bundle = (Bundle)portletContext.getAttribute("OSGI_BUNDLE");
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		if (bundle == null) {
 			throw new UnavailableException(
