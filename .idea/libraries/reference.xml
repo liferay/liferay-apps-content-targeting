@@ -29,6 +29,7 @@
       <root url="jar://$PROJECT_DIR$/lib/spring-context.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/spring-beans.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/spring-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-fileupload.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES>
