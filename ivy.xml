@@ -13,6 +13,7 @@
 		<dependency name="bcpg-jdk16" org="org.bouncycastle" rev="1.46" />
 		<dependency name="bcprov-jdk16" org="org.bouncycastle" rev="1.46" />
 		<dependency name="ccpp" org="javax.ccpp" rev="1.0" />
+		<dependency name="commons-fileupload" org="commons-fileupload" rev="1.2.2" />
 		<dependency name="ecj" org="org.eclipse.jdt.core.compiler" rev="3.7.2" />
 		<dependency name="jalopy" org="jalopy" rev="1.5rc3" />
 		<dependency name="jargs" org="net.sf" rev="1.0" />

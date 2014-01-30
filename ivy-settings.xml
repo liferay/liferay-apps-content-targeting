@@ -16,8 +16,8 @@
 			<resolver ref="ow2-public" />
 			<resolver ref="primefaces" />
 			<filesystem name="local-maven2" m2compatible="true" >
-				<artifact pattern="${m2-pattern}"/>
-				<ivy pattern="${m2-pattern}"/>
+				<artifact pattern="${m2-pattern}" />
+				<ivy pattern="${m2-pattern}" />
 			</filesystem>
 		</chain>
 	</resolvers>

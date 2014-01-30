@@ -26,14 +26,17 @@ import com.liferay.portal.service.UserLocalService;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalService;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import org.jboss.arquillian.junit.Arquillian;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.HashMap;
-import java.util.Locale;
 
 /**
  * @author Carlos Sierra Andrés
@@ -41,13 +44,8 @@ import java.util.Locale;
 @RunWith(Arquillian.class)
 public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
 
-	@OSGi private UserSegmentLocalService userSegmentLocalService;
-	@OSGi private UserLocalService userLocalService;
-	@OSGi private AssetCategoryLocalService assetCategoryLocalService;
-	private User defaultUser;
-
 	@Before
-	public void prepare() throws SystemException, PortalException {
+	public void setUp() throws SystemException, PortalException {
 		long defaultCompanyId = PortalUtil.getDefaultCompanyId();
 
 		defaultUser = userLocalService.getDefaultUser(defaultCompanyId);
@@ -55,16 +53,16 @@ public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
 
 	@Test
 	public void testAddUserSegment() throws Exception {
-
 		int initUserSegmentsCount =
 			userSegmentLocalService.getUserSegmentsCount();
 
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), "test-category");
+
 		UserSegment userSegment = userSegmentLocalService.addUserSegment(
-			defaultUser.getUserId(),
-			new HashMap<Locale, String>() {{
-				put(LocaleUtil.getDefault(), "test-category");
-			}},
-			null, new ServiceContext());
+			defaultUser.getUserId(), nameMap, null,
+			new ServiceContext());
 
 		Assert.assertEquals(
 			initUserSegmentsCount + 1,
@@ -83,5 +81,11 @@ public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
 			initUserSegmentsCount,
 			userSegmentLocalService.getUserSegmentsCount());
 	}
+
+	private User defaultUser;
+
+	@OSGi private AssetCategoryLocalService assetCategoryLocalService;
+	@OSGi private UserLocalService userLocalService;
+	@OSGi private UserSegmentLocalService userSegmentLocalService;
 
 }

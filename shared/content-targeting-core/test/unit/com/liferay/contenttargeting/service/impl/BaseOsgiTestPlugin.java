@@ -14,14 +14,15 @@
 
 package com.liferay.contenttargeting.service.impl;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectHelper;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
-
-import java.io.File;
-import java.io.FileNotFoundException;
 
 /**
  * @author Carlos Sierra Andrés
@@ -31,21 +32,28 @@ public class BaseOsgiTestPlugin {
 	@Deployment
 	public static WebArchive getDeployment() throws FileNotFoundException {
 		File buildFile = new File("build.xml");
-		Project p = new Project();
-		p.setUserProperty("ant.file", buildFile.getAbsolutePath());
-		p.init();
+
+		Project project = new Project();
+
+		project.setUserProperty("ant.file", buildFile.getAbsolutePath());
+
+		project.init();
+
 		ProjectHelper helper = ProjectHelper.getProjectHelper();
-		p.addReference("ant.projectHelper", helper);
-		helper.parse(p, buildFile);
-		p.executeTarget("jar");
+
+		project.addReference("ant.projectHelper", helper);
+
+		helper.parse(project, buildFile);
+
+		project.executeTarget("jar");
 
 		WebArchive wabFile = ShrinkWrap.createFromZipFile(
-			WebArchive.class,
-			new File(p.getProperty("plugin.file")));
+			WebArchive.class, new File(project.getProperty("plugin.file")));
 
 		wabFile.addClass(BaseOsgiTestPlugin.class);
 
 		WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war");
+
 		webArchive.merge(wabFile);
 
 		return webArchive;

@@ -98,7 +98,8 @@ public class WebBundleDeployer {
 			bundleServletContext.open();
 
 			if (bundle.getState() == Bundle.ACTIVE) {
-				ServletContextPool.put(servletContextName, bundleServletContext);
+				ServletContextPool.put(
+					servletContextName, bundleServletContext);
 			}
 		}
 		catch (Exception e) {
