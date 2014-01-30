@@ -113,6 +113,11 @@ user audiences by time
 * OSGI modules required for the project
  * http-service-shared (/shared)
  * log-bridge-shared (/shared)
+ * system-packages-extra (/shared)
+ * service-utils-shared (/shared)
+ * freemarker-osgi (/shared)
+* Modules required to run the integration tests
+ * arquillian-plugin-deployer (/shared) used for testing
 * /modules - OSGI modules required to start the OSGI console
 
 ### Deployment
@@ -152,6 +157,21 @@ reference the source code of
 and [Freemarker](http://sourceforge.net/projects/freemarker/files/freemarker/)
 for debugging purposes. These sources should be in their own folder at the same
 level of the root folder of the project.
+
+### Testing
+
+In order to to execute the Integration tests locally you should follow the
+following steps:
+
+1. Download the [Arquillian Liferay Container](https://github.com/liferay-labs/arquillian-liferay-container)
+2. Execute `mvn install` from the root folder
+3. Deploy the "arquillian-plugin-deployer" from the /shared folder of your
+plugin
+3. Uninstall the module you want to test (using the osgi console, e.g.
+ `uninstall 10`)
+4. In the folder of your plugin, execute `ant test`.
+(In order to run the tests from the IDE (e.g. IntelliJ), you should update the
+folder of the runner to use the older of your plugin as the working directory).
 
 ### Troubleshooting
 
