@@ -15,7 +15,9 @@
 package com.liferay.arquillian;
 
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.osgi.framework.Bundle;
@@ -36,7 +38,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 
 /**
  * @author Carlos Sierra Andrés
@@ -63,7 +67,8 @@ public class DeployerServlet extends HttpServlet {
 			bundle.stop();
 
 			bundle.uninstall();
-		} catch (BundleException e) {
+		}
+		catch (BundleException e) {
 			throw new ServletException(e);
 		}
 	}
@@ -73,28 +78,11 @@ public class DeployerServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws ServletException, IOException {
 
-		DiskFileItemFactory factory = new DiskFileItemFactory();
-
-		ServletConfig servletConfig = this.getServletConfig();
-
-		ServletContext servletContext = servletConfig.getServletContext();
-		File repository = (File) servletContext.getAttribute(
-			"javax.servlet.context.tempdir");
-
-		factory.setRepository(repository);
-
-		ServletFileUpload upload = new ServletFileUpload(factory);
-
-		BundleContext bundleContext = _bundle.getBundleContext();
-
-		ServletOutputStream out = response.getOutputStream();
-
 		try {
-			List<FileItem> items = upload.parseRequest(request);
+			InputStream bundleInputStream = getUploadedBundleInputStream(
+				request);
 
-			FileItem fileItem = items.get(0);
-
-			InputStream bundleInputStream = fileItem.getInputStream();
+			BundleContext bundleContext = _bundle.getBundleContext();
 
 			Bundle newBundle = bundleContext.installBundle(
 				_deployerServletInstallLocation, bundleInputStream);
@@ -116,20 +104,67 @@ public class DeployerServlet extends HttpServlet {
 				(ServletContext) servletContextServiceTracker.waitForService(
 					_installTimeout);
 
-			waitForServlet(sc, "ArquillianServletRunner",
-				_installTimeout);
+			Servlet arquillianServletRunner =
+				waitForServlet(sc, "ArquillianServletRunner", _installTimeout);
+
+			if (arquillianServletRunner == null) {
+				throw new TimeoutException(
+					"The arquillian servlet runner is taking more than " +
+						_installTimeout + " to deploy");
+			}
 
 			response.setStatus(HttpServletResponse.SC_OK);
 			response.setContentType(TEXT);
 			response.setHeader(_contextPathHeader, sc.getContextPath());
-
-		} catch (Exception e) {
-			throw new ServletException(e);
+		}
+		catch (Exception e) {
+			signalError(e, response);
 		}
 		finally {
-			out.flush();
-			out.close();
+			ServletOutputStream outputStream = response.getOutputStream();
+			outputStream.flush();
 		}
+	}
+
+	private void signalError(Throwable t, HttpServletResponse response) {
+		response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+
+		try {
+			ServletOutputStream outputStream = response.getOutputStream();
+			response.setContentType(StringPool.UTF8);
+
+			PrintWriter printWriter = new PrintWriter(outputStream);
+
+			t.printStackTrace(printWriter);
+
+			printWriter.flush();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private InputStream getUploadedBundleInputStream(HttpServletRequest request)
+		throws IOException, FileUploadException {
+
+		DiskFileItemFactory factory = new DiskFileItemFactory();
+
+		ServletConfig servletConfig = this.getServletConfig();
+
+		ServletContext servletContext = servletConfig.getServletContext();
+		File repository = (File) servletContext.getAttribute(
+			"javax.servlet.context.tempdir");
+
+		factory.setRepository(repository);
+
+		ServletFileUpload upload = new ServletFileUpload(factory);
+
+
+		List<FileItem> items = upload.parseRequest(request);
+
+		FileItem fileItem = items.get(0);
+
+		return fileItem.getInputStream();
 	}
 
 	private Servlet waitForServlet(ServletContext servletContext, String servletName, long timeout) {
@@ -149,8 +184,10 @@ public class DeployerServlet extends HttpServlet {
 
 			try {
 				found = servletContext.getServlet(servletName);
-			} catch (ServletException e) {
 			}
+			catch (ServletException e) {
+			}
+
 			elapsedTime += step;
 		}
 
