@@ -16,8 +16,8 @@
 
 <#include "../init.ftl" />
 
-<#assign indexJSP = getterUtil.getInteger(request.getAttribute("configuration.index"))>
-<#assign index = paramUtil.getInteger(request, "index", indexJSP)>
+<#assign configurationIndex = getterUtil.getInteger(request.getAttribute("configuration.index"))>
+<#assign index = paramUtil.getInteger(request, "index", configurationIndex)>
 
 <#assign queryRule = queryRuleUtilClass.getQueryRule(portletPreferences, index, locale)>
 
@@ -69,7 +69,7 @@
 						<#list assetRendererFactories as assetRendererFactory>
 							<@liferay_ui["icon"]
 								cssClass="asset-selector"
-								data=targetedContentDisplayUtilClass.getData(request, assetRendererFactory, index)
+								data=targetedContentDisplayUtilClass.getAssetSelectorIconData(request, assetRendererFactory, index)
 								id="groupId_${assetRendererFactory.getTypeName(locale, false)}_${index}"
 								message=assetRendererFactory.getTypeName(locale, false)
 								src=assetRendererFactory.getIconPath(renderRequest)
