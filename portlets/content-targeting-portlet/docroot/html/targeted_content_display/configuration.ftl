@@ -31,6 +31,66 @@
 		</@>
 	</div>
 
+	<div class="default-content">
+        <@aui["select"] label="default-content" name="contentDefaultValue">
+            <@aui["option"] label="nothing-to-show" selected=!contentDefaultValue value=false />
+            <@aui["option"] label="select" selected=contentDefaultValue value=true />
+        </@>
+
+		<div id="<@portlet["namespace"] />contentDefaultBox">
+			<div class="select-asset-selector">
+				<div class="lfr-meta-actions edit-controls">
+					<@aui["input"] name="assetEntryIdDefault" type="hidden" value=assetEntryIdDefault />
+
+					<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" message=languageUtil.get(locale, "select-content") showWhenSingleIcon=true>
+						<#list assetRendererFactories as assetRendererFactory>
+							<@liferay_ui["icon"]
+								cssClass="asset-selector"
+								data=targetedContentDisplayUtilClass.getAssetSelectorIconData(request, assetRendererFactory, "Default")
+								id="groupId_${assetRendererFactory.getTypeName(locale, false)}_Default"
+								message=assetRendererFactory.getTypeName(locale, false)
+								src=assetRendererFactory.getIconPath(renderRequest)
+								url="javascript:;"
+							/>
+						</#list>
+					</@>
+				</div>
+			</div>
+
+			<#assign cssClass = "">
+
+			<#if (assetEntryIdDefault <= 0)>
+				<#assign cssClass = "hide">
+			</#if>
+
+			<div class="selected-content ${cssClass}" id="<@portlet["namespace"] />selectedContentDefault">
+				<table class="table table-bordered table-hover table-striped">
+					<thead class="table-columns">
+					<tr>
+						<th class="table-first-header">${languageUtil.get(locale, "title")}</th>
+						<th class="">${languageUtil.get(locale, "type")}</th>
+						<th class="table-last-header">&nbsp;</th>
+					</tr>
+					</thead>
+					<tbody class="table-data">
+					<tr class="">
+						<td class="table-cell first" id="<@portlet["namespace"] />assetTitleInfoDefault">${assetTitleDefault}</td>
+						<td class="table-cell" id="<@portlet["namespace"] />assetTypeInfoDefault">${assetTypeDefault}</td>
+						<td class="table-cell last">
+							<@liferay_ui["icon"]
+								cssClass="delete-selected-content"
+								data={"index" : "Default"}
+								image="delete"
+								url="javascript:;"
+							/>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+        </div>
+	</div>
+
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" value="save" />
 	</@>
@@ -85,7 +145,7 @@
 		'.asset-selector a'
 	);
 
-	A.one('#<@portlet["namespace"] />queryRules').delegate(
+	A.one('#<@portlet["namespace"] />fm').delegate(
 		'click',
 		function(event) {
 			event.preventDefault();
@@ -103,4 +163,6 @@
 		},
 		'.delete-selected-content a'
 	);
+
+	Liferay.Util.toggleSelectBox('<@portlet["namespace"] />contentDefaultValue', 'true', '<@portlet["namespace"] />contentDefaultBox');
 </@>

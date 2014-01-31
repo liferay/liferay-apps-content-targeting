@@ -69,7 +69,7 @@
 						<#list assetRendererFactories as assetRendererFactory>
 							<@liferay_ui["icon"]
 								cssClass="asset-selector"
-								data=targetedContentDisplayUtilClass.getAssetSelectorIconData(request, assetRendererFactory, index)
+								data=targetedContentDisplayUtilClass.getAssetSelectorIconData(request, assetRendererFactory, "${index}")
 								id="groupId_${assetRendererFactory.getTypeName(locale, false)}_${index}"
 								message=assetRendererFactory.getTypeName(locale, false)
 								src=assetRendererFactory.getIconPath(renderRequest)

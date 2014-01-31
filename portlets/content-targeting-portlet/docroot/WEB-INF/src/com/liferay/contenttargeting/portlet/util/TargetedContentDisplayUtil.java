@@ -64,7 +64,7 @@ public class TargetedContentDisplayUtil {
 
 	public static Map<String, Object> getAssetSelectorIconData(
 			HttpServletRequest request,
-			AssetRendererFactory assetRendererFactory, long index)
+			AssetRendererFactory assetRendererFactory, String index)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(

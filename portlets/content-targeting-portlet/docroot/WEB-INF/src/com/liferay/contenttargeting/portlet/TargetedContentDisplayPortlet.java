@@ -100,6 +100,10 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		long assetEntryIdDefault = ParamUtil.getLong(
+			request, "assetEntryIdDefault");
+		boolean contentDefaultValue = ParamUtil.getBoolean(
+			request, "contentDefaultValue");
 		int[] queryRulesIndexes = StringUtil.split(
 			ParamUtil.getString(request, "queryLogicIndexes"), 0);
 
@@ -138,6 +142,10 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 		portletPreferences.setValue("showAssetTitle", String.valueOf(false));
 
+		portletPreferences.setValue(
+			"assetEntryIdDefault", String.valueOf(assetEntryIdDefault));
+		portletPreferences.setValue(
+			"contentDefaultValue", String.valueOf(contentDefaultValue));
 		portletPreferences.setValues(
 			"queryLogicIndexes", ArrayUtil.toStringArray(queryRulesIndexes));
 
@@ -214,6 +222,11 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
+		long assetEntryIdDefault = GetterUtil.getLong(
+			portletPreferences.getValue("assetEntryIdDefault", null));
+		boolean contentDefaultValue = GetterUtil.getBoolean(
+			portletPreferences.getValue("contentDefaultValue", null));
+
 		if (Validator.isNull(path) ||
 			path.equals(TargetedContentDisplayPath.VIEW)) {
 
@@ -242,12 +255,19 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 			boolean isMatchingRule = false;
 
-			if (queryRule != null) {
+			if ((queryRule != null) ||
+				(contentDefaultValue && (assetEntryIdDefault > 0))) {
+
 				isMatchingRule = true;
 
+				long assetEntryId = assetEntryIdDefault;
+
+				if (queryRule != null) {
+					assetEntryId = queryRule.getAssetEntryId();
+				}
+
 				AssetEntry assetEntry =
-					AssetEntryLocalServiceUtil.fetchAssetEntry(
-						queryRule.getAssetEntryId());
+					AssetEntryLocalServiceUtil.fetchAssetEntry(assetEntryId);
 
 				AssetRendererFactory assetRendererFactory =
 					AssetRendererFactoryRegistryUtil.
@@ -290,6 +310,33 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 				"assetRendererFactories",
 				getSelectableAssetRendererFactories(
 					themeDisplay.getCompanyId()));
+
+			String assetTitleDefault = StringPool.BLANK;
+			String assetTypeDefault = StringPool.BLANK;
+
+			if (assetEntryIdDefault > 0) {
+				AssetEntry assetEntry =
+					AssetEntryLocalServiceUtil.fetchAssetEntry(
+						assetEntryIdDefault);
+
+				AssetRendererFactory assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassName(
+							assetEntry.getClassName());
+
+				AssetRenderer assetRenderer =
+					assetRendererFactory.getAssetRenderer(
+						assetEntry.getClassPK());
+
+				assetTitleDefault = assetRenderer.getTitle(
+					themeDisplay.getLocale());
+				assetTypeDefault = assetRendererFactory.getType();
+			}
+
+			template.put("assetEntryIdDefault", assetEntryIdDefault);
+			template.put("assetTitleDefault", assetTitleDefault);
+			template.put("assetTypeDefault", assetTypeDefault);
+			template.put("contentDefaultValue", contentDefaultValue);
 			template.put(
 				"liferayWindowStateExclusive", LiferayWindowState.EXCLUSIVE);
 			template.put("portletPreferences", portletPreferences);

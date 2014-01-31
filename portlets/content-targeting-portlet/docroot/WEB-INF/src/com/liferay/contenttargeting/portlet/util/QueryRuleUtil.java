@@ -88,7 +88,9 @@ public class QueryRuleUtil {
 			QueryRule queryRule = getQueryRule(
 				portletPreferences, queryRuleIndex, locale);
 
-			if (queryRule.evaluate(userSegmentAssetCategoryIds)) {
+			if (queryRule.isValid() &&
+				queryRule.evaluate(userSegmentAssetCategoryIds)) {
+
 				return queryRule;
 			}
 		}
