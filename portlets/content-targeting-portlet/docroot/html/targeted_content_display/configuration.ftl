@@ -22,7 +22,7 @@
 
 <@aui["form"] action="${configurationURL}" method="post" name="fm">
 	<div id="<@portlet["namespace"] />queryRules">
-		<@aui["fieldset"] label="displayed-assets-must-match-these-rules">
+		<@aui["fieldset"] label="display-the-following-content">
 			<#list queryLogicIndexes as queryLogicIndex>
 				${request.setAttribute("configuration.index", queryLogicIndex)}
 

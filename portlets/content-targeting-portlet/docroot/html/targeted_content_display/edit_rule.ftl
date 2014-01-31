@@ -24,12 +24,12 @@
 <div class="lfr-form-row">
 	<div class="row-fields">
 		<div class="field-row form-inline query-row">
-			<@aui["select"] inlineField=true label="" name="queryContains${index}">
-				<@aui["option"] label="contains" selected=queryRule.isContains() value=true />
-				<@aui["option"] label="does-not-contain" selected=!queryRule.isContains() value=false />
+			<@aui["select"] inlineField=true label="user" name="queryContains${index}">
+				<@aui["option"] label="belongs" selected=queryRule.isContains() value=true />
+				<@aui["option"] label="does-not-belong" selected=!queryRule.isContains() value=false />
 			</@>
 
-			<@aui["select"] inlineField=true label="" name="queryAndOperator${index}">
+			<@aui["select"] inlineField=true label="to" name="queryAndOperator${index}" suffix="of-the-following-user-segments">
 				<@aui["option"] label="all" selected=queryRule.isAndOperator() value=true />
 				<@aui["option"] label="any"selected=!queryRule.isAndOperator() value=false />
 			</@>
@@ -40,7 +40,7 @@
 				</div>
 
 				<@aui["script"] use="liferay-asset-categories-selector">
-					new Liferay.AssetCategoriesSelector(
+					var assetCategoriesSelector = new Liferay.AssetCategoriesSelector(
 						{
 							contentBox: '#<@portlet["namespace"] />assetCategoriesSelector${index}',
 							curEntries: '${queryRule.getUserSegmentAssetCategoryNames(locale)}',
@@ -48,9 +48,16 @@
 							hiddenInput: '#<@portlet["namespace"] />userSegmentAssetCategoryIds${index}',
 							instanceVar: '<@portlet["namespace"] />',
 							vocabularyGroupIds: '${vocabularyGroupIds}',
-							vocabularyIds: '${vocabularyId}'
+							vocabularyIds: '${vocabularyId}',
+							title: '<@liferay_ui["message"] key="select-user-segments" />'
 						}
 					).render();
+
+					var changeTitle = function() {
+						assetCategoriesSelector._popup.titleNode.html(assetCategoriesSelector.get('title'));
+					};
+
+					A.Do.after(changeTitle, assetCategoriesSelector, '_showSelectPopup');
 				</@>
 			</div>
 
