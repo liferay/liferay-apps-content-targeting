@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class TargetedContentDisplayUtil {
 
-	public static PortletURL getBrowseURL(
+	public static PortletURL getAssetBrowserURL(
 			HttpServletRequest request, String className)
 		throws Exception {
 
@@ -62,7 +62,7 @@ public class TargetedContentDisplayUtil {
 		return assetBrowserURL;
 	}
 
-	public static Map<String, Object> getData(
+	public static Map<String, Object> getAssetSelectorIconData(
 			HttpServletRequest request,
 			AssetRendererFactory assetRendererFactory, long index)
 		throws Exception {
@@ -70,7 +70,7 @@ public class TargetedContentDisplayUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		PortletURL assetBrowserURL = getBrowseURL(
+		PortletURL assetBrowserURL = getAssetBrowserURL(
 			request, assetRendererFactory.getClassName());
 
 		String typeName = assetRendererFactory.getTypeName(

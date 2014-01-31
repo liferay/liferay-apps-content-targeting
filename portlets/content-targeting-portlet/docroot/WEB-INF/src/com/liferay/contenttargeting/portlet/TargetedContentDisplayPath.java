@@ -22,8 +22,8 @@ public class TargetedContentDisplayPath {
 	public static final String CONFIGURATION =
 		"html/targeted_content_display/configuration.ftl";
 
-	public static final String EDIT_RULE =
-		"html/targeted_content_display/edit_rule.ftl";
+	public static final String EDIT_QUERY_RULE =
+		"html/targeted_content_display/edit_query_rule.ftl";
 
 	public static final String ERROR = "html/error.ftl";
 

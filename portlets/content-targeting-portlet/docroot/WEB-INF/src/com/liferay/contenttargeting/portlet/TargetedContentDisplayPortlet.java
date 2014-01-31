@@ -74,7 +74,6 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.UnavailableException;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.HttpServletResponseWrapper;
 
@@ -302,10 +301,6 @@ public class TargetedContentDisplayPortlet extends FreeMarkerPortlet {
 
 		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
 		template.put(
-			"liferayWindowStateExclusive", LiferayWindowState.EXCLUSIVE);
-		template.put(
-			"liferayWindowStatePopUp", LiferayWindowState.POP_UP);
-		template.put(
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 		template.put(
 			"targetedContentDisplayPath",
@@ -391,14 +386,17 @@ public class TargetedContentDisplayPortlet extends FreeMarkerPortlet {
 			}
 
 			template.put("isMatchingRule", isMatchingRule);
+			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 		}
-		else if (path.equals(TargetedContentDisplayPath.EDIT_RULE) ||
+		else if (path.equals(TargetedContentDisplayPath.EDIT_QUERY_RULE) ||
 				 path.equals(TargetedContentDisplayPath.CONFIGURATION)) {
 
 			template.put(
 				"assetRendererFactories",
 				getSelectableAssetRendererFactories(
 					themeDisplay.getCompanyId()));
+			template.put(
+				"liferayWindowStateExclusive", LiferayWindowState.EXCLUSIVE);
 			template.put("portletPreferences", portletPreferences);
 
 			int[] queryRulesIndexes = GetterUtil.getIntegerValues(

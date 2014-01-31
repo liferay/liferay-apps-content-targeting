@@ -26,7 +26,7 @@
 			<#list queryLogicIndexes as queryLogicIndex>
 				${request.setAttribute("configuration.index", queryLogicIndex)}
 
-				<#include "edit_rule.ftl" />
+				<#include "edit_query_rule.ftl" />
 			</#list>
 		</@>
 	</div>
@@ -37,7 +37,7 @@
 </@>
 
 <@portlet["renderURL"] var="newUserSegmentRuleURL" windowState=liferayWindowStateExclusive.toString()>
-	<@portlet["param"] name="mvcPath" value="${targetedContentDisplayPath.EDIT_RULE}" />
+	<@portlet["param"] name="mvcPath" value="${targetedContentDisplayPath.EDIT_QUERY_RULE}" />
 </@>
 
 <@aui["script"] use="aui-base,liferay-auto-fields">
@@ -51,24 +51,6 @@
 			url: '${newUserSegmentRuleURL}'
 		}
 	).render();
-
-	function selectAsset(assetEntryId, assetClassName, assetType, assetEntryTitle, index) {
-		A.one('#<@portlet["namespace"] />assetEntryId' + index).attr('value', assetEntryId);
-
-		A.one('#<@portlet["namespace"] />assetTitleInfo' + index).html(assetEntryTitle);
-		A.one('#<@portlet["namespace"] />assetTypeInfo' + index).html(assetType);
-
-		A.one('#<@portlet["namespace"] />selectedContent' + index).show();
-	}
-
-	function removeSelectedContent(index) {
-		A.one('#<@portlet["namespace"] />assetEntryId' + index).attr('value', '');
-
-		A.one('#<@portlet["namespace"] />assetTitleInfo' + index).html('');
-		A.one('#<@portlet["namespace"] />assetTypeInfo' + index).html('');
-
-		A.one('#<@portlet["namespace"] />selectedContent' + index).hide();
-	}
 
 	A.getBody().delegate(
 		'click',
@@ -89,21 +71,35 @@
 					uri: currentTarget.attr('data-href')
 				},
 				function(event) {
-					selectAsset(event.assetentryid, event.assetclassname, event.assettype, event.assettitle, currentTarget.attr('data-index'));
+					var index = currentTarget.attr('data-index');
+
+					A.one('#<@portlet["namespace"] />assetEntryId' + index).attr('value', event.assetentryid);
+
+					A.one('#<@portlet["namespace"] />assetTitleInfo' + index).html(event.assettitle);
+					A.one('#<@portlet["namespace"] />assetTypeInfo' + index).html(event.assettype);
+
+					A.one('#<@portlet["namespace"] />selectedContent' + index).show();
 				}
 			);
 		},
 		'.asset-selector a'
 	);
 
-	A.getBody().delegate(
+	A.one('#<@portlet["namespace"] />queryRules').delegate(
 		'click',
 		function(event) {
 			event.preventDefault();
 
 			var currentTarget = event.currentTarget;
 
-			removeSelectedContent(currentTarget.attr('data-index'));
+			var index = currentTarget.attr('data-index');
+
+			A.one('#<@portlet["namespace"] />assetEntryId' + index).attr('value', '');
+
+			A.one('#<@portlet["namespace"] />assetTitleInfo' + index).html('');
+			A.one('#<@portlet["namespace"] />assetTypeInfo' + index).html('');
+
+			A.one('#<@portlet["namespace"] />selectedContent' + index).hide();
 		},
 		'.delete-selected-content a'
 	);

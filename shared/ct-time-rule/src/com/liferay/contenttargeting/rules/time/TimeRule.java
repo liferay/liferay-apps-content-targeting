@@ -85,18 +85,19 @@ public class TimeRule extends BaseRule {
 			startTimeHour += 12;
 		}
 
-		Calendar cal = CalendarFactoryUtil.getCalendar();
+		Calendar now = CalendarFactoryUtil.getCalendar();
 
-		int hour = cal.get(Calendar.HOUR_OF_DAY);
-		int minute = cal.get(Calendar.MINUTE);
+		int day = now.get(Calendar.DATE);
+		int month = now.get(Calendar.MONTH);
+		int year = now.get(Calendar.YEAR);
 
-		int startTimeMinutes = startTimeHour * 60 + startTimeMinute;
-		int endTimeMinutes = endTimeHour * 60 + endTimeMinute;
-		int nowTimeMinutes = hour * 60 + minute;
+		Calendar startCalendar = CalendarFactoryUtil.getCalendar(
+			year, month, day, startTimeHour, startTimeMinute);
 
-		if ((startTimeMinutes <= nowTimeMinutes) &&
-			(endTimeMinutes > nowTimeMinutes)) {
+		Calendar endCalendar = CalendarFactoryUtil.getCalendar(
+			year, month, day, endTimeHour, endTimeMinute);
 
+		if (startCalendar.before(now) && endCalendar.after(now)) {
 			return true;
 		}
 

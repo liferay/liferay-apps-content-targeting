@@ -172,7 +172,7 @@ public class QueryRule {
 			}
 
 			sb.append(assetCategory.getTitle(locale));
-			sb.append("_CATEGORY_");
+			sb.append(_CATEGORY_SEPARATOR);
 		}
 
 		return sb.toString();
@@ -235,6 +235,8 @@ public class QueryRule {
 
 		_userSegmentAssetCategoryIds = userSegmentAssetCategoryIds;
 	}
+
+	private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
 
 	private boolean _andOperator;
 	private String _assetClassName = StringPool.BLANK;
