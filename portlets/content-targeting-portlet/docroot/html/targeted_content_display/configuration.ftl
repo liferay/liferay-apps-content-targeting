@@ -33,7 +33,7 @@
 
 	<div class="default-content">
         <@aui["select"] label="default-content" name="contentDefaultValue">
-            <@aui["option"] label="nothing-to-show" selected=!contentDefaultValue value=false />
+            <@aui["option"] label="dont-display-anything" selected=!contentDefaultValue value=false />
             <@aui["option"] label="select" selected=contentDefaultValue value=true />
         </@>
 
