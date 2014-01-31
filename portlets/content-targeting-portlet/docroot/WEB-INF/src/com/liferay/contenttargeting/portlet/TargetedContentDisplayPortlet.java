@@ -384,6 +384,10 @@ public class TargetedContentDisplayPortlet extends FreeMarkerPortlet {
 				portletRequest.setAttribute(
 					"view.jsp-print", new Boolean(false));
 			}
+			else {
+				portletRequest.setAttribute(
+					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+			}
 
 			template.put("isMatchingRule", isMatchingRule);
 			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
