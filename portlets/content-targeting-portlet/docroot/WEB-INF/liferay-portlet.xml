@@ -8,7 +8,7 @@
 		<control-panel-entry-category>site_administration.configuration</control-panel-entry-category>
 		<control-panel-entry-weight>10.0</control-panel-entry-weight>
 		<render-weight>1</render-weight>
-		<header-portlet-css>/css/main.css</header-portlet-css>
+		<header-portlet-css>/css/content_targeting/main.css</header-portlet-css>
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>content-targeting-portlet</css-class-wrapper>
 	</portlet>
@@ -17,7 +17,7 @@
 		<icon>/icons/targeted_content_display.png</icon>
 		<instanceable>true</instanceable>
 		<render-weight>1</render-weight>
-		<header-portlet-css>/css/main.css</header-portlet-css>
+		<header-portlet-css>/css/targeted_content_display/main.css</header-portlet-css>
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>targeted-content-display-portlet</css-class-wrapper>
 	</portlet>
