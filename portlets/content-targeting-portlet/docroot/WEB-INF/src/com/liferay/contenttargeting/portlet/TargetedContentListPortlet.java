@@ -36,7 +36,9 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 
@@ -131,6 +133,18 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
+	@Override
+	protected String getPath(PortletRequest portletRequest) {
+		String strutsPath = ParamUtil.getString(
+			portletRequest, "struts_action");
+
+		if (strutsPath.equals("/asset_publisher/view_content")) {
+			return TargetedContentListPath.VIEW_CONTENT;
+		}
+
+		return super.getPath(portletRequest);
+	}
+
 	protected void populateContext(
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template)
@@ -193,12 +207,9 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 					"view.jsp-results", new ArrayList());
 				portletRequest.setAttribute(
 					"view.jsp-assetEntryIndex", new Integer(0));
-				portletRequest.setAttribute(
-					"view.jsp-show", new Boolean(true));
+				portletRequest.setAttribute("view.jsp-show", new Boolean(true));
 				portletRequest.setAttribute(
 					"view.jsp-print", new Boolean(false));
-				portletRequest.setAttribute(
-					"view.jsp-viewInContext", new Boolean(true));
 			}
 			else {
 				portletRequest.setAttribute(
@@ -211,6 +222,35 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 				staticModels.get(
 					"com.liferay.portlet.asset." +
 						"AssetRendererFactoryRegistryUtil"));
+		}
+		else if (path.equals(TargetedContentListPath.VIEW_CONTENT)) {
+			long assetEntryId = ParamUtil.getLong(
+				portletRequest, "assetEntryId");
+
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
+				assetEntryId);
+
+			AssetRendererFactory assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+							assetEntry.getClassName());
+
+			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+				assetEntry.getClassPK());
+
+			portletRequest.setAttribute("view.jsp-results", new ArrayList());
+			portletRequest.setAttribute(
+				"view.jsp-assetEntryIndex", new Integer(0));
+			portletRequest.setAttribute("view.jsp-assetEntry", assetEntry);
+			portletRequest.setAttribute(
+				"view.jsp-assetRendererFactory", assetRendererFactory);
+			portletRequest.setAttribute(
+				"view.jsp-assetRenderer", assetRenderer);
+			portletRequest.setAttribute(
+				"view.jsp-title",
+				assetEntry.getTitle(themeDisplay.getLocale()));
+			portletRequest.setAttribute("view.jsp-show", new Boolean(false));
+			portletRequest.setAttribute("view.jsp-print", new Boolean(false));
 		}
 		else if (path.equals(TargetedContentListPath.CONFIGURATION)) {
 			List<KeyValuePair> typesLeftList = new ArrayList<KeyValuePair>();
