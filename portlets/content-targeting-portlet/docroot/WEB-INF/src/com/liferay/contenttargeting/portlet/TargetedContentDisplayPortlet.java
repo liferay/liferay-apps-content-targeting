@@ -14,11 +14,11 @@
 
 package com.liferay.contenttargeting.portlet;
 
-import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.portlet.util.QueryRule;
 import com.liferay.contenttargeting.portlet.util.QueryRuleUtil;
 import com.liferay.contenttargeting.portlet.util.UnavailableServiceException;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
+import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.UserSegmentUtil;
 import com.liferay.contenttargeting.util.WebKeys;
 import com.liferay.osgi.util.OsgiServiceUnavailableException;
@@ -237,16 +237,7 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 			if (userSegmentIds != null) {
 				long[] userSegmentAssetCategoryIds =
-					new long[userSegmentIds.length];
-
-				for (int i = 0; i < userSegmentIds.length; i++) {
-					UserSegment userSegment =
-						_userSegmentLocalService.fetchUserSegment(
-							userSegmentIds[i]);
-
-					userSegmentAssetCategoryIds[i] =
-						userSegment.getAssetCategoryId();
-				}
+					ContentTargetingUtil.getAssetCategoryIds(userSegmentIds);
 
 				queryRule = QueryRuleUtil.match(
 					userSegmentAssetCategoryIds, portletPreferences,
