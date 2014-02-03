@@ -178,7 +178,7 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
 
-			List<AssetEntry> entries = new ArrayList<AssetEntry>();
+			List<AssetEntry> assetEntries = new ArrayList<AssetEntry>();
 
 			if (ArrayUtil.isNotEmpty(userSegmentIds)) {
 				AssetEntryQuery entryQuery = new AssetEntryQuery();
@@ -187,14 +187,30 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 					ContentTargetingUtil.getAssetCategoryIds(userSegmentIds));
 				entryQuery.setClassNameIds(classNameIds);
 
-				entries = AssetEntryServiceUtil.getEntries(entryQuery);
+				assetEntries = AssetEntryServiceUtil.getEntries(entryQuery);
+
+				portletRequest.setAttribute(
+					"view.jsp-results", new ArrayList());
+				portletRequest.setAttribute(
+					"view.jsp-assetEntryIndex", new Integer(0));
+				portletRequest.setAttribute(
+					"view.jsp-show", new Boolean(true));
+				portletRequest.setAttribute(
+					"view.jsp-print", new Boolean(false));
+				portletRequest.setAttribute(
+					"view.jsp-viewInContext", new Boolean(true));
 			}
 			else {
 				portletRequest.setAttribute(
 					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 			}
 
-			template.put("results", entries);
+			template.put("assetEntries", assetEntries);
+			template.put(
+				"assetRendererFactoryRegistryUtilClass",
+				staticModels.get(
+					"com.liferay.portlet.asset." +
+						"AssetRendererFactoryRegistryUtil"));
 		}
 		else if (path.equals(TargetedContentListPath.CONFIGURATION)) {
 			List<KeyValuePair> typesLeftList = new ArrayList<KeyValuePair>();

@@ -32,10 +32,17 @@
 	/>
 </#if>
 
-<#if results?has_content>
-	<#list results as result>
-		<div class="result">
-			<p>${result.getTitle(themeDisplay.getLocale())}</p>
+<#if assetEntries?has_content>
+	<#list assetEntries as assetEntry>
+		<div class="asset-entry">
+			<#assign assetRendererFactory = assetRendererFactoryRegistryUtilClass.getAssetRendererFactoryByClassName(assetEntry.getClassName())>
+
+			${request.setAttribute("view.jsp-assetEntry", assetEntry)}
+			${request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory)}
+			${request.setAttribute("view.jsp-assetRenderer", assetRendererFactory.getAssetRenderer(assetEntry.getClassPK()))}
+			${request.setAttribute("view.jsp-title", assetEntry.getTitle(themeDisplay.getLocale()))}
+
+			<@liferay_util["include"] page="/html/portlet/asset_publisher/display/abstracts.jsp" />
 		</div>
 	</#list>
 <#else>
