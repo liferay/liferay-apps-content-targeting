@@ -32,10 +32,10 @@
 	</div>
 
 	<div class="default-content">
-        <@aui["select"] label="default-content" name="contentDefaultValue">
-            <@aui["option"] label="dont-display-anything" selected=!contentDefaultValue value=false />
-            <@aui["option"] label="select" selected=contentDefaultValue value=true />
-        </@>
+		<@aui["select"] label="default-content" name="contentDefaultValue">
+			<@aui["option"] label="dont-display-anything" selected=!contentDefaultValue value=false />
+			<@aui["option"] label="select" selected=contentDefaultValue value=true />
+		</@>
 
 		<div id="<@portlet["namespace"] />contentDefaultBox">
 			<div class="select-asset-selector">
@@ -88,7 +88,7 @@
 					</tbody>
 				</table>
 			</div>
-        </div>
+		</div>
 	</div>
 
 	<@aui["button-row"]>
