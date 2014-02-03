@@ -18,10 +18,25 @@ import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.WebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.KeyValuePair;
+import com.liferay.portal.kernel.util.KeyValuePairComparator;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PredicateFilter;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.ClassName;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portal.service.ClassNameLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 
@@ -30,8 +45,12 @@ import freemarker.ext.beans.BeansWrapper;
 import freemarker.template.TemplateHashModel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import javax.portlet.ActionRequest;
+import javax.portlet.ActionResponse;
+import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -39,6 +58,78 @@ import javax.portlet.PortletResponse;
  * @author Eudaldo Alonso
  */
 public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
+
+	public void updatePreferences(
+			ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		boolean anyAssetType = ParamUtil.getBoolean(
+			request, "anyAssetType", true);
+		String[] classNameIds = StringUtil.split(
+			ParamUtil.getString(request, "classNameIds"));
+
+		PortletPreferences portletPreferences = request.getPreferences();
+
+		portletPreferences.setValue(
+			"anyAssetType", String.valueOf(anyAssetType));
+
+		if (Validator.isNotNull(classNameIds)) {
+			portletPreferences.setValues("classNameIds", classNameIds);
+		}
+
+		portletPreferences.store();
+	}
+
+	protected long[] getAvailableClassNameIds(long companyId) {
+		long[] availableClassNameIds =
+			AssetRendererFactoryRegistryUtil.getClassNameIds(companyId);
+
+		availableClassNameIds = ArrayUtil.filter(
+			availableClassNameIds,
+			new PredicateFilter<Long>() {
+
+				public boolean filter(Long classNameId) {
+					AssetRendererFactory assetRendererFactory =
+						AssetRendererFactoryRegistryUtil.
+							getAssetRendererFactoryByClassName(
+								PortalUtil.getClassName(classNameId));
+
+					return assetRendererFactory.isSelectable();
+				}
+
+			});
+
+		return availableClassNameIds;
+	}
+
+	protected long[] getClassNameIds(
+		PortletPreferences portletPreferences, long[] availableClassNameIds) {
+
+		boolean anyAssetType = GetterUtil.getBoolean(
+			portletPreferences.getValue(
+				"anyAssetType", Boolean.TRUE.toString()));
+
+		if (anyAssetType) {
+			return availableClassNameIds;
+		}
+
+		long defaultClassNameId = GetterUtil.getLong(
+			portletPreferences.getValue("anyAssetType", null));
+
+		if (defaultClassNameId > 0) {
+			return new long[] {defaultClassNameId};
+		}
+
+		long[] classNameIds = GetterUtil.getLongValues(
+			portletPreferences.getValues("classNameIds", null));
+
+		if (ArrayUtil.isNotEmpty(classNameIds)) {
+			return classNameIds;
+		}
+		else {
+			return availableClassNameIds;
+		}
+	}
 
 	protected void populateContext(
 			String path, PortletRequest portletRequest,
@@ -48,6 +139,15 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
 		TemplateHashModel staticModels = wrapper.getStaticModels();
+
+		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
+		template.put(
+			"redirect", ParamUtil.getString(portletRequest, "redirect"));
+		template.put(
+			"targetedContentListPath",
+			staticModels.get(
+				"com.liferay.contenttargeting.portlet." +
+					"TargetedContentListPath"));
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
@@ -59,8 +159,21 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 			TemplateHashModel staticModels)
 		throws Exception {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortletPreferences portletPreferences = portletRequest.getPreferences();
+
+		long[] availableClassNameIds = getAvailableClassNameIds(
+			themeDisplay.getCompanyId());
+
+		long[] classNameIds = getClassNameIds(
+			portletPreferences, availableClassNameIds);
+
 		if (Validator.isNull(path) ||
 			path.equals(TargetedContentListPath.VIEW)) {
+
+			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
@@ -72,6 +185,7 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 
 				entryQuery.setAnyCategoryIds(
 					ContentTargetingUtil.getAssetCategoryIds(userSegmentIds));
+				entryQuery.setClassNameIds(classNameIds);
 
 				entries = AssetEntryServiceUtil.getEntries(entryQuery);
 			}
@@ -81,6 +195,56 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 			}
 
 			template.put("results", entries);
+		}
+		else if (path.equals(TargetedContentListPath.CONFIGURATION)) {
+			List<KeyValuePair> typesLeftList = new ArrayList<KeyValuePair>();
+
+			for (long classNameId : classNameIds) {
+				String className = PortalUtil.getClassName(classNameId);
+
+				typesLeftList.add(
+					new KeyValuePair(
+						String.valueOf(classNameId),
+						ResourceActionsUtil.getModelResource(
+							themeDisplay.getLocale(), className)));
+			}
+
+			List<KeyValuePair> typesRightList = new ArrayList<KeyValuePair>();
+
+			Arrays.sort(classNameIds);
+
+			List<String> modelResources = new ArrayList<String>();
+
+			for (long classNameId : availableClassNameIds) {
+				ClassName className = ClassNameLocalServiceUtil.getClassName(
+					classNameId);
+
+				if (Arrays.binarySearch(classNameIds, classNameId) < 0) {
+					typesRightList.add(
+						new KeyValuePair(
+							String.valueOf(classNameId),
+							ResourceActionsUtil.getModelResource(
+								themeDisplay.getLocale(),
+								className.getValue())));
+				}
+
+				modelResources.add(
+					ResourceActionsUtil.getModelResource(
+						themeDisplay.getLocale(), className.getValue()));
+			}
+
+			typesRightList = ListUtil.sort(
+				typesRightList, new KeyValuePairComparator(false, true));
+
+			boolean anyAssetType = GetterUtil.getBoolean(
+				portletPreferences.getValue("anyAssetType", null), true);
+
+			template.put("anyAssetType", anyAssetType);
+			template.put("availableClassNameIds", availableClassNameIds);
+			template.put("classNameIds", classNameIds);
+			template.put("modelResources", modelResources);
+			template.put("typesLeftList", typesLeftList);
+			template.put("typesRightList", typesRightList);
 		}
 	}
 

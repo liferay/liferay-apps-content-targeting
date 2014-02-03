@@ -16,6 +16,22 @@
 
 <#include "../init.ftl" />
 
+<#if portletDisplay.isShowConfigurationIcon()>
+	<@portlet["renderURL"] var="configurationURL" windowState=liferayWindowStatePopUp.toString()>
+		<@portlet["param"] name="mvcPath" value="${targetedContentListPath.CONFIGURATION}" />
+		<@portlet["param"] name="redirect" value="${currentURL}" />
+	</@>
+
+	<@liferay_ui["icon"]
+		cssClass="pull-right"
+		image="../aui/wrench"
+		label=true
+		message="configuration"
+		useDialog=true
+		url="${configurationURL}"
+	/>
+</#if>
+
 <#if results?has_content>
 	<#list results as result>
 		<div class="result">

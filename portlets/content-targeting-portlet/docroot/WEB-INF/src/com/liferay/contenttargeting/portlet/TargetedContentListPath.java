@@ -19,6 +19,9 @@ package com.liferay.contenttargeting.portlet;
  */
 public class TargetedContentListPath {
 
+	public static final String CONFIGURATION =
+		"html/targeted_content_list/configuration.ftl";
+
 	public static final String ERROR = "html/error.ftl";
 
 	public static final String VIEW = "html/targeted_content_list/view.ftl";
