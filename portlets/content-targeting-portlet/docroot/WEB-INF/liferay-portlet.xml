@@ -21,6 +21,15 @@
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>targeted-content-display-portlet</css-class-wrapper>
 	</portlet>
+	<portlet>
+		<portlet-name>targetedcontentlist</portlet-name>
+		<icon>/icons/targeted_content_list.png</icon>
+		<instanceable>true</instanceable>
+		<render-weight>1</render-weight>
+		<header-portlet-css>/css/targeted_content_list/main.css</header-portlet-css>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>targeted-content-list-portlet</css-class-wrapper>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>
