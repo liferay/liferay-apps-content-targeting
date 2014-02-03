@@ -14,49 +14,26 @@
 
 package com.liferay.contenttargeting.portlet;
 
-import com.liferay.contenttargeting.model.UserSegment;
-import com.liferay.contenttargeting.portlet.util.QueryRule;
-import com.liferay.contenttargeting.portlet.util.QueryRuleUtil;
-import com.liferay.contenttargeting.portlet.util.UnavailableServiceException;
-import com.liferay.contenttargeting.service.UserSegmentLocalService;
-import com.liferay.contenttargeting.util.UserSegmentUtil;
+import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.WebKeys;
-import com.liferay.osgi.util.OsgiServiceUnavailableException;
-import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
+import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
+
 import freemarker.ext.beans.BeansWrapper;
+
 import freemarker.template.TemplateHashModel;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.UnavailableException;
 
 /**
  * @author Eudaldo Alonso
@@ -81,6 +58,30 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 			PortletResponse portletResponse, Template template,
 			TemplateHashModel staticModels)
 		throws Exception {
+
+		if (Validator.isNull(path) ||
+			path.equals(TargetedContentListPath.VIEW)) {
+
+			long[] userSegmentIds = (long[])portletRequest.getAttribute(
+				WebKeys.USER_SEGMENT_IDS);
+
+			List<AssetEntry> entries = new ArrayList<AssetEntry>();
+
+			if (ArrayUtil.isNotEmpty(userSegmentIds)) {
+				AssetEntryQuery entryQuery = new AssetEntryQuery();
+
+				entryQuery.setAnyCategoryIds(
+					ContentTargetingUtil.getAssetCategoryIds(userSegmentIds));
+
+				entries = AssetEntryServiceUtil.getEntries(entryQuery);
+			}
+			else {
+				portletRequest.setAttribute(
+					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+			}
+
+			template.put("results", entries);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -16,4 +16,14 @@
 
 <#include "../init.ftl" />
 
-<p>Targeted Content List</p>
+<#if results?has_content>
+	<#list results as result>
+		<div class="result">
+			<p>${result.getTitle(themeDisplay.getLocale())}</p>
+		</div>
+	</#list>
+<#else>
+	<div class="alert alert-info">
+		<@liferay_ui["message"] key="there-are-no-matching-rules" />
+	</div>
+</#if>
