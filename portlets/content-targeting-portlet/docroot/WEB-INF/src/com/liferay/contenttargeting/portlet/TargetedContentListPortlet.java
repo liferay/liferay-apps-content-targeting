@@ -233,7 +233,7 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 			AssetRendererFactory assetRendererFactory =
 				AssetRendererFactoryRegistryUtil.
 					getAssetRendererFactoryByClassName(
-							assetEntry.getClassName());
+						assetEntry.getClassName());
 
 			AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
 				assetEntry.getClassPK());
