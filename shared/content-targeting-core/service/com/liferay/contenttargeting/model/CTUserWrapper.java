@@ -476,6 +476,11 @@ public class CTUserWrapper implements CTUser, ModelWrapper<CTUser> {
 	}
 
 	@Override
+	public com.liferay.portal.model.User getUser() {
+		return _ctUser.getUser();
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

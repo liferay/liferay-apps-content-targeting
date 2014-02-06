@@ -396,6 +396,25 @@ public class CTUserClp extends BaseModelImpl<CTUser> implements CTUser {
 	}
 
 	@Override
+	public com.liferay.portal.model.User getUser() {
+		try {
+			String methodName = "getUser";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			com.liferay.portal.model.User returnObj = (com.liferay.portal.model.User)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				CTUser.class.getName()));
