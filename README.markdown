@@ -110,6 +110,7 @@ classes for the app.
  * content-targeting-portlet (/portlet) - contains all the all portlets and UIs
  * ct-time-rule (/shared) - rule used by the audience targeting app to filter
  * ct-gender-rule (/shared) - rule used by the audience targeting app to filter
+ * ct-age-rule (/shared) - rule used by the audience targeting app to filter
 user audiences by time
 * OSGI modules required for the project
  * http-service-shared (/shared)
@@ -127,7 +128,7 @@ In order to deploy the audience targeting app, you can add this property to your
 build.username.properties:
 
 ```
-plugins.includes=content-targeting-core,content-targeting-portlet,ct-time-rule,freemarker-osgi,gender-rule,http-service-shared,log-bridge-shared,system-packages-extra
+plugins.includes=content-targeting-core,content-targeting-portlet,ct-age-rule,ct-gender-rule,ct-time-rule,freemarker-osgi,http-service-shared,log-bridge-shared,system-packages-extra
 ```
 
 

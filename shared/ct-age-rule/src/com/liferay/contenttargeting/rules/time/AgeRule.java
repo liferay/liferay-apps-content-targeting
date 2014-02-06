@@ -22,13 +22,19 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
@@ -57,17 +63,21 @@ public class AgeRule extends BaseRule {
 			return false;
 		}
 
-		String gender = ruleInstance.getTypeSettings();
-
 		User user = ctUser.getUser();
 
 		if (user == null) {
 			return false;
 		}
 
-		if ((user.isMale() && gender.equals("male")) ||
-			!user.isMale() && gender.equals("female")) {
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+			ruleInstance.getTypeSettings());
 
+		int youngerThan = jsonObj.getInt("youngerThan");
+		int olderThan = jsonObj.getInt("olderThan");
+
+		int age = getAge(user.getBirthday());
+
+		if ((age > olderThan) && (age < youngerThan)) {
 			return true;
 		}
 
@@ -81,13 +91,21 @@ public class AgeRule extends BaseRule {
 		String content = StringPool.BLANK;
 
 		try {
-			String gender = StringPool.BLANK;
+			int youngerThan = 0;
+			int olderThan = 0;
 
 			if (ruleInstance != null) {
-				gender = ruleInstance.getTypeSettings();
+				String typeSettings = ruleInstance.getTypeSettings();
+
+				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+					typeSettings);
+
+				youngerThan = jsonObj.getInt("youngerThan");
+				olderThan = jsonObj.getInt("olderThan");
 			}
 
-			context.put("gender", gender);
+			context.put("youngerThan", youngerThan);
+			context.put("olderThan", olderThan);
 
 			content = parseTemplate(
 				AgeRule.class, _FORM_TEMPLATE_PATH, context);
@@ -104,33 +122,91 @@ public class AgeRule extends BaseRule {
 
 	@Override
 	public String getIcon() {
-		return "icon-female";
+		return "icon-calendar-empty";
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "gender");
+		return LanguageUtil.get(locale, "age");
 	}
 
 	@Override
 	public String getRuleKey() {
-		return "genderRule";
+		return "ageRule";
 	}
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
-		return ruleInstance.getTypeSettings();
+		String typeSettings = ruleInstance.getTypeSettings();
+
+		StringBundler sb = new StringBundler(4);
+
+		try {
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
+
+			int youngerThan = jsonObj.getInt("youngerThan");
+			int olderThan = jsonObj.getInt("olderThan");
+
+			if ((youngerThan > 0) && (olderThan > 0)) {
+				sb.append("Users between ");
+				sb.append(olderThan);
+				sb.append(" and ");
+				sb.append(youngerThan);
+				sb.append(" years old");
+			}
+			else if (youngerThan > 0) {
+				sb.append("Users younger than ");
+				sb.append(youngerThan);
+				sb.append(" years old");
+			}
+			else if (olderThan > 0) {
+				sb.append("Users olderThan than ");
+				sb.append(olderThan);
+				sb.append(" years old");
+			}
+		}
+		catch (JSONException jse) {
+		}
+
+		return sb.toString();
 	}
 
 	@Override
 	public String processRule(
 		PortletRequest request, PortletResponse response) {
 
-		return ParamUtil.getString(request, "gender");
+		int youngerThan = ParamUtil.getInteger(request, "youngerThan");
+		int olderThan = ParamUtil.getInteger(request, "olderThan");
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+		jsonObj.put("youngerThan", youngerThan);
+		jsonObj.put("olderThan", olderThan);
+
+		return jsonObj.toString();
+	}
+
+	protected int getAge(Date birthday) {
+		Calendar birthdayCalendar = Calendar.getInstance();
+
+		birthdayCalendar.setTime(birthday);
+
+		Calendar today = Calendar.getInstance();
+
+		int age = today.get(Calendar.YEAR) - birthdayCalendar.get(
+			Calendar.YEAR);
+
+		if (today.get(Calendar.DAY_OF_YEAR) <=
+				birthdayCalendar.get(Calendar.DAY_OF_YEAR)) {
+
+			age--;
+		}
+
+		return age;
 	}
 
 	private static final String _FORM_TEMPLATE_PATH =
-		"templates/gender_rule_fields.ftl";
+		"templates/ct_age_rule_fields.ftl";
 
 	private static Log _log = LogFactoryUtil.getLog(AgeRule.class);
 
