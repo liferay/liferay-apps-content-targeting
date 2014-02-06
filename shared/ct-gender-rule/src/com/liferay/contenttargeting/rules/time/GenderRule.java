@@ -57,13 +57,13 @@ public class GenderRule extends BaseRule {
 			return false;
 		}
 
-		String gender = ruleInstance.getTypeSettings();
-
 		User user = ctUser.getUser();
 
 		if (user == null) {
 			return false;
 		}
+
+		String gender = ruleInstance.getTypeSettings();
 
 		if ((user.isMale() && gender.equals("male")) ||
 			!user.isMale() && gender.equals("female")) {
@@ -130,7 +130,7 @@ public class GenderRule extends BaseRule {
 	}
 
 	private static final String _FORM_TEMPLATE_PATH =
-		"templates/gender_rule_fields.ftl";
+		"templates/ct_gender_rule_fields.ftl";
 
 	private static Log _log = LogFactoryUtil.getLog(GenderRule.class);
 
