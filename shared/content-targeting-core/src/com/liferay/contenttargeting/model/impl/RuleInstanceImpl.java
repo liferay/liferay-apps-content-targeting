@@ -14,6 +14,12 @@
 
 package com.liferay.contenttargeting.model.impl;
 
+import com.liferay.contenttargeting.model.UserSegment;
+import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.portal.kernel.util.StringPool;
+
+import java.util.Locale;
+
 /**
  * The extended model implementation for the RuleInstance service. Represents a row in the &quot;CT_RuleInstance&quot; database table, with each column mapped to a property of this class.
  *
@@ -26,6 +32,20 @@ package com.liferay.contenttargeting.model.impl;
 public class RuleInstanceImpl extends RuleInstanceBaseImpl {
 
 	public RuleInstanceImpl() {
+	}
+
+	@Override
+	public String getUserSegmentName(Locale locale) {
+		try {
+			UserSegment userSegment =
+				UserSegmentLocalServiceUtil.getUserSegment(getUserSegmentId());
+
+			return userSegment.getName(locale);
+		}
+		catch (Exception e) {
+		}
+
+		return StringPool.BLANK;
 	}
 
 }
