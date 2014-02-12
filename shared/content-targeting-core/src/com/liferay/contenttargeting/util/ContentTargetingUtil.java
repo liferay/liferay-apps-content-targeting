@@ -34,8 +34,7 @@ public class ContentTargetingUtil {
 
 		for (int i = 0; i < userSegmentIds.length; i++) {
 			UserSegment userSegment =
-				UserSegmentLocalServiceUtil.fetchUserSegment(
-					userSegmentIds[i]);
+				UserSegmentLocalServiceUtil.fetchUserSegment(userSegmentIds[i]);
 
 			assetCategoryIds[i] = userSegment.getAssetCategoryId();
 		}

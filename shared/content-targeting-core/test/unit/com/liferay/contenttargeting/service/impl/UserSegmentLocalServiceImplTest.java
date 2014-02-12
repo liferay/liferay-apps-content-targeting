@@ -45,7 +45,7 @@ import org.junit.runner.RunWith;
 public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
 
 	@Before
-	public void setUp() throws SystemException, PortalException {
+	public void setUp() throws PortalException, SystemException {
 		long defaultCompanyId = PortalUtil.getDefaultCompanyId();
 
 		defaultUser = userLocalService.getDefaultUser(defaultCompanyId);
@@ -61,8 +61,7 @@ public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
 		nameMap.put(LocaleUtil.getDefault(), "test-category");
 
 		UserSegment userSegment = userSegmentLocalService.addUserSegment(
-			defaultUser.getUserId(), nameMap, null,
-			new ServiceContext());
+			defaultUser.getUserId(), nameMap, null, new ServiceContext());
 
 		Assert.assertEquals(
 			initUserSegmentsCount + 1,
