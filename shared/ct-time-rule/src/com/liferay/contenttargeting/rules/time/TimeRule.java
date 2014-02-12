@@ -65,35 +65,10 @@ public class TimeRule extends BaseRule {
 
 		String typeSettings = ruleInstance.getTypeSettings();
 
-		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
-
-		int endTimeHour = jsonObj.getInt("endTimeHour");
-		int endTimeMinute = jsonObj.getInt("endTimeMinute");
-		int endTimeAmPm = jsonObj.getInt("endTimeAmPm");
-
-		if (endTimeAmPm == Calendar.PM) {
-			endTimeHour += 12;
-		}
-
-		int startTimeHour = jsonObj.getInt("startTimeHour");
-		int startTimeMinute = jsonObj.getInt("startTimeMinute");
-		int startTimeAmPm = jsonObj.getInt("startTimeAmPm");
-
-		if (startTimeAmPm == Calendar.PM) {
-			startTimeHour += 12;
-		}
+		Calendar startCalendar = _getStartCalendar(typeSettings);
+		Calendar endCalendar = _getEndCalendar(typeSettings);
 
 		Calendar now = CalendarFactoryUtil.getCalendar();
-
-		int day = now.get(Calendar.DATE);
-		int month = now.get(Calendar.MONTH);
-		int year = now.get(Calendar.YEAR);
-
-		Calendar startCalendar = CalendarFactoryUtil.getCalendar(
-			year, month, day, startTimeHour, startTimeMinute);
-
-		Calendar endCalendar = CalendarFactoryUtil.getCalendar(
-			year, month, day, endTimeHour, endTimeMinute);
 
 		if (startCalendar.before(now) && endCalendar.after(now)) {
 			return true;
@@ -126,38 +101,13 @@ public class TimeRule extends BaseRule {
 
 		StringBundler sb = new StringBundler(4);
 
-		try {
-			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
+		Calendar startCalendar = _getStartCalendar(typeSettings);
+		Calendar endCalendar = _getEndCalendar(typeSettings);
 
-			int startTimeHour = jsonObj.getInt("startTimeHour");
-			int startTimeMinute = jsonObj.getInt("startTimeMinute");
-			int startTimeAmPm = jsonObj.getInt("startTimeAmPm");
-
-			if (startTimeAmPm == Calendar.PM) {
-				startTimeHour += 12;
-			}
-
-			Calendar startCalendar = CalendarFactoryUtil.getCalendar(
-				1970, 0, 1, startTimeHour, startTimeMinute);
-
-			int endTimeHour = jsonObj.getInt("endTimeHour");
-			int endTimeMinute = jsonObj.getInt("endTimeMinute");
-			int endTimeAmPm = jsonObj.getInt("endTimeAmPm");
-
-			if (endTimeAmPm == Calendar.PM) {
-				endTimeHour += 12;
-			}
-
-			Calendar endCalendar = CalendarFactoryUtil.getCalendar(
-				1970, 0, 1, endTimeHour, endTimeMinute);
-
-			sb.append("Users browsing the Site from ");
-			sb.append(format.format(startCalendar.getTime()));
-			sb.append(" to ");
-			sb.append(format.format(endCalendar.getTime()));
-		}
-		catch (JSONException jse) {
-		}
+		sb.append("Users browsing the Site from ");
+		sb.append(format.format(startCalendar.getTime()));
+		sb.append(" to ");
+		sb.append(format.format(endCalendar.getTime()));
 
 		return sb.toString();
 	}
@@ -218,6 +168,64 @@ public class TimeRule extends BaseRule {
 		}
 
 		return context;
+	}
+
+	private Calendar _getEndCalendar(String typeSettings) {
+		Calendar now = CalendarFactoryUtil.getCalendar();
+
+		try {
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
+
+			int endTimeHour = jsonObj.getInt("endTimeHour");
+			int endTimeMinute = jsonObj.getInt("endTimeMinute");
+			int endTimeAmPm = jsonObj.getInt("endTimeAmPm");
+
+			if (endTimeAmPm == Calendar.PM) {
+				endTimeHour += 12;
+			}
+
+			int day = now.get(Calendar.DATE);
+			int month = now.get(Calendar.MONTH);
+			int year = now.get(Calendar.YEAR);
+
+			Calendar endCalendar = CalendarFactoryUtil.getCalendar(
+				year, month, day, endTimeHour, endTimeMinute);
+
+			return endCalendar;
+		}
+		catch (JSONException jse) {
+		}
+
+		return now;
+	}
+
+	private Calendar _getStartCalendar(String typeSettings) {
+		Calendar now = CalendarFactoryUtil.getCalendar();
+
+		try {
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
+
+			int startTimeHour = jsonObj.getInt("startTimeHour");
+			int startTimeMinute = jsonObj.getInt("startTimeMinute");
+			int startTimeAmPm = jsonObj.getInt("startTimeAmPm");
+
+			if (startTimeAmPm == Calendar.PM) {
+				startTimeHour += 12;
+			}
+
+			int day = now.get(Calendar.DATE);
+			int month = now.get(Calendar.MONTH);
+			int year = now.get(Calendar.YEAR);
+
+			Calendar startCalendar = CalendarFactoryUtil.getCalendar(
+				year, month, day, startTimeHour, startTimeMinute);
+
+			return startCalendar;
+		}
+		catch (JSONException jse) {
+		}
+
+		return now;
 	}
 
 	private static final String _SIMPLE_DATE_FORMAT_PATTERN = "hh:mm a";
