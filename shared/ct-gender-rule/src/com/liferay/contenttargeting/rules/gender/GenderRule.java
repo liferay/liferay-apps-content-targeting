@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.contenttargeting.rules.time;
+package com.liferay.contenttargeting.rules.gender;
 
-import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Deactivate;
-
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.CTUser;
@@ -39,14 +36,6 @@ import javax.portlet.PortletResponse;
  */
 @Component(immediate = true, provide = Rule.class)
 public class GenderRule extends BaseRule {
-
-	@Activate
-	public void activate() {
-	}
-
-	@Deactivate
-	public void deActivate() {
-	}
 
 	@Override
 	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
@@ -76,16 +65,6 @@ public class GenderRule extends BaseRule {
 	@Override
 	public String getIcon() {
 		return "icon-female";
-	}
-
-	@Override
-	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "gender");
-	}
-
-	@Override
-	public String getRuleKey() {
-		return "genderRule";
 	}
 
 	@Override

@@ -19,7 +19,7 @@ Import-Package:\
 	javax.servlet.http,\
 	*;resolution:="optional"
 Private-Package: \
-	com.liferay.contenttargeting.rules.time.*
+	com.liferay.contenttargeting.rules.age.*
 Service-Component: \
-	com.liferay.contenttargeting.rules.time.*
+	com.liferay.contenttargeting.rules.age.*
 Web-ContextPath: /ct-age-rule

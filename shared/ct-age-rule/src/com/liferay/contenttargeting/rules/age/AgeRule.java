@@ -12,12 +12,9 @@
  * details.
  */
 
-package com.liferay.contenttargeting.rules.time;
+package com.liferay.contenttargeting.rules.age;
 
-import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Deactivate;
-
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.CTUser;
@@ -44,14 +41,6 @@ import javax.portlet.PortletResponse;
  */
 @Component(immediate = true, provide = Rule.class)
 public class AgeRule extends BaseRule {
-
-	@Activate
-	public void activate() {
-	}
-
-	@Deactivate
-	public void deActivate() {
-	}
 
 	@Override
 	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
@@ -85,16 +74,6 @@ public class AgeRule extends BaseRule {
 	@Override
 	public String getIcon() {
 		return "icon-calendar-empty";
-	}
-
-	@Override
-	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "age");
-	}
-
-	@Override
-	public String getRuleKey() {
-		return "ageRule";
 	}
 
 	@Override

@@ -14,12 +14,16 @@
 
 package com.liferay.contenttargeting.api.model;
 
+import aQute.bnd.annotation.component.Activate;
+import aQute.bnd.annotation.component.Deactivate;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import com.liferay.portal.security.permission.ResourceActionsUtil;
 import freemarker.cache.ClassTemplateLoader;
 
 import freemarker.template.Configuration;
@@ -27,12 +31,27 @@ import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 /**
  * @author Eduardo Garcia
  */
 public abstract class BaseRule implements Rule {
+
+	@Activate
+	public void activate() {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Rule activate: " + getClass().getSimpleName());
+		}
+	}
+
+	@Deactivate
+	public void deActivate() {
+		if (_log.isDebugEnabled()) {
+			_log.debug("Rule deactivate: " + getClass().getSimpleName());
+		}
+	}
 
 	@Override
 	public String getFormHTML(
@@ -43,8 +62,7 @@ public abstract class BaseRule implements Rule {
 		try {
 			context.putAll(getContext(ruleInstance));
 
-			content = parseTemplate(
-				this.getClass(), _FORM_TEMPLATE_PATH, context);
+			content = parseTemplate(getClass(), _FORM_TEMPLATE_PATH, context);
 		}
 		catch (Exception e) {
 			_log.error(
@@ -54,6 +72,22 @@ public abstract class BaseRule implements Rule {
 		}
 
 		return content;
+	}
+
+	@Override
+	public String getIcon() {
+		return "icon-retweet";
+	}
+
+	@Override
+	public String getName(Locale locale) {
+		return ResourceActionsUtil.getModelResource(
+			locale, getClass().getName());
+	}
+
+	@Override
+	public String getRuleKey() {
+		return getClass().getSimpleName();
 	}
 
 	protected Map<String, Object> getContext(RuleInstance ruleInstance) {

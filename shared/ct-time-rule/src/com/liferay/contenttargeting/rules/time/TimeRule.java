@@ -46,14 +46,6 @@ import javax.portlet.PortletResponse;
 @Component(immediate = true, provide = Rule.class)
 public class TimeRule extends BaseRule {
 
-	@Activate
-	public void activate() {
-	}
-
-	@Deactivate
-	public void deActivate() {
-	}
-
 	@Override
 	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
 		throws Exception {
@@ -79,16 +71,6 @@ public class TimeRule extends BaseRule {
 	@Override
 	public String getIcon() {
 		return "icon-time";
-	}
-
-	@Override
-	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "time");
-	}
-
-	@Override
-	public String getRuleKey() {
-		return "timeRule";
 	}
 
 	@Override

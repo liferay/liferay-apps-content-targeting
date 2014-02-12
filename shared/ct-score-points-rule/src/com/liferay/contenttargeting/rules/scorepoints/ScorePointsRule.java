@@ -42,14 +42,6 @@ import javax.portlet.PortletResponse;
 @Component(immediate = true, provide = Rule.class)
 public class ScorePointsRule extends BaseRule {
 
-	@Activate
-	public void activate() {
-	}
-
-	@Deactivate
-	public void deActivate() {
-	}
-
 	@Override
 	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
 		throws Exception {
@@ -81,16 +73,6 @@ public class ScorePointsRule extends BaseRule {
 	@Override
 	public String getIcon() {
 		return "icon-star";
-	}
-
-	@Override
-	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "score-points");
-	}
-
-	@Override
-	public String getRuleKey() {
-		return "scorePoints";
 	}
 
 	@Override
