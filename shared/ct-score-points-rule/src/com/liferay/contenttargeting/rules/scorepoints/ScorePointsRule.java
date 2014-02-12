@@ -27,7 +27,7 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -97,22 +97,23 @@ public class ScorePointsRule extends BaseRule {
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
 		String typeSettings = ruleInstance.getTypeSettings();
 
-		StringBundler sb = new StringBundler(4);
+		String summary = StringPool.BLANK;
 
 		try {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
 
 			int scorePoints = jsonObj.getInt("scorePoints");
 
-			sb.append("Users with ");
-			sb.append(scorePoints);
-			sb.append(" score points of ");
-			sb.append(ruleInstance.getUserSegmentName(locale));
+			String userSegmentName = ruleInstance.getUserSegmentName(locale);
+
+			summary = LanguageUtil.format(
+				locale, "users-with-x-score-points-of-x",
+				new Object[] {scorePoints, userSegmentName});
 		}
 		catch (JSONException jse) {
 		}
 
-		return sb.toString();
+		return summary;
 	}
 
 	@Override
