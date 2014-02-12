@@ -503,6 +503,11 @@ public class RuleInstanceWrapper implements RuleInstance,
 	}
 
 	@Override
+	public java.lang.String getUserSegmentName(java.util.Locale locale) {
+		return _ruleInstance.getUserSegmentName(locale);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

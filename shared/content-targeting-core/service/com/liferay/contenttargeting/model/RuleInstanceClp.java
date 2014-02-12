@@ -424,6 +424,25 @@ public class RuleInstanceClp extends BaseModelImpl<RuleInstance>
 	}
 
 	@Override
+	public java.lang.String getUserSegmentName(java.util.Locale locale) {
+		try {
+			String methodName = "getUserSegmentName";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.util.Locale.class };
+
+			Object[] parameterValues = new Object[] { locale };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				RuleInstance.class.getName()));
