@@ -162,9 +162,6 @@ public class ScorePointsRule extends BaseRule {
 		return jsonObj.toString();
 	}
 
-	private static final String _FORM_TEMPLATE_PATH =
-		"templates/ct_score_points_rule_fields.ftl";
-
 	private static Log _log = LogFactoryUtil.getLog(ScorePointsRule.class);
 
 }

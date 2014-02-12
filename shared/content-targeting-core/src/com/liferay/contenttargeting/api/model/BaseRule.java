@@ -50,4 +50,6 @@ public abstract class BaseRule implements Rule {
 		return unsyncStringWriter.toString();
 	}
 
+	protected static final String _FORM_TEMPLATE_PATH =
+		"templates/ct_fields.ftl";
 }

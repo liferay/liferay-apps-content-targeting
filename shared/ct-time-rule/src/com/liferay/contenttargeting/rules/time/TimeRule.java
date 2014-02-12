@@ -231,9 +231,6 @@ public class TimeRule extends BaseRule {
 		return jsonObj.toString();
 	}
 
-	private static final String _FORM_TEMPLATE_PATH =
-		"templates/ct_time_rule_fields.ftl";
-
 	private static final String _SIMPLE_DATE_FORMAT_PATTERN = "hh:mm a";
 
 	private static Log _log = LogFactoryUtil.getLog(TimeRule.class);

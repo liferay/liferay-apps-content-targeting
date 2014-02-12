@@ -205,9 +205,6 @@ public class AgeRule extends BaseRule {
 		return age;
 	}
 
-	private static final String _FORM_TEMPLATE_PATH =
-		"templates/ct_age_rule_fields.ftl";
-
 	private static Log _log = LogFactoryUtil.getLog(AgeRule.class);
 
 }

@@ -129,9 +129,6 @@ public class GenderRule extends BaseRule {
 		return ParamUtil.getString(request, "gender");
 	}
 
-	private static final String _FORM_TEMPLATE_PATH =
-		"templates/ct_gender_rule_fields.ftl";
-
 	private static Log _log = LogFactoryUtil.getLog(GenderRule.class);
 
 }
