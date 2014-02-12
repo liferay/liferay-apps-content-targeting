@@ -28,15 +28,10 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.text.Format;
-
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
 
@@ -69,35 +64,16 @@ public class ScorePointsRule extends BaseRule {
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
 
-		int endTimeHour = jsonObj.getInt("endTimeHour");
-		int endTimeMinute = jsonObj.getInt("endTimeMinute");
-		int endTimeAmPm = jsonObj.getInt("endTimeAmPm");
+		int scorePoints = jsonObj.getInt("scorePoints");
 
-		if (endTimeAmPm == Calendar.PM) {
-			endTimeHour += 12;
-		}
+		String ctUserTypeSettings = ctUser.getTypeSettings();
 
-		int startTimeHour = jsonObj.getInt("startTimeHour");
-		int startTimeMinute = jsonObj.getInt("startTimeMinute");
-		int startTimeAmPm = jsonObj.getInt("startTimeAmPm");
+		JSONObject ctUserJsonObj = JSONFactoryUtil.createJSONObject(
+			ctUserTypeSettings);
 
-		if (startTimeAmPm == Calendar.PM) {
-			startTimeHour += 12;
-		}
+		int ctUserScorePoints = ctUserJsonObj.getInt("scorePoints");
 
-		Calendar now = CalendarFactoryUtil.getCalendar();
-
-		int day = now.get(Calendar.DATE);
-		int month = now.get(Calendar.MONTH);
-		int year = now.get(Calendar.YEAR);
-
-		Calendar startCalendar = CalendarFactoryUtil.getCalendar(
-			year, month, day, startTimeHour, startTimeMinute);
-
-		Calendar endCalendar = CalendarFactoryUtil.getCalendar(
-			year, month, day, endTimeHour, endTimeMinute);
-
-		if (startCalendar.before(now) && endCalendar.after(now)) {
+		if (ctUserScorePoints >= scorePoints) {
 			return true;
 		}
 
@@ -117,21 +93,10 @@ public class ScorePointsRule extends BaseRule {
 				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
 					typeSettings);
 
-				context.put("endTimeHour", jsonObj.getInt("endTimeHour"));
-				context.put("endTimeMinute", jsonObj.getInt("endTimeMinute"));
-				context.put("endTimeAmPm", jsonObj.getInt("endTimeAmPm"));
-				context.put("startTimeHour", jsonObj.getInt("startTimeHour"));
-				context.put(
-					"startTimeMinute", jsonObj.getInt("startTimeMinute"));
-				context.put("startTimeAmPm", jsonObj.getInt("startTimeAmPm"));
+				context.put("scorePoints", jsonObj.getInt("scorePoints"));
 			}
 			else {
-				context.put("endTimeHour", 0);
-				context.put("endTimeMinute", 0);
-				context.put("endTimeAmPm", 0);
-				context.put("startTimeHour", 0);
-				context.put("startTimeMinute", 0);
-				context.put("startTimeAmPm", 0);
+				context.put("scorePoints", 0);
 			}
 
 			content = parseTemplate(
@@ -149,57 +114,34 @@ public class ScorePointsRule extends BaseRule {
 
 	@Override
 	public String getIcon() {
-		return "icon-time";
+		return "icon-star";
 	}
 
 	@Override
 	public String getName(Locale locale) {
-		return LanguageUtil.get(locale, "time");
+		return LanguageUtil.get(locale, "score-points");
 	}
 
 	@Override
 	public String getRuleKey() {
-		return "timeRule";
+		return "scorePoints";
 	}
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
 		String typeSettings = ruleInstance.getTypeSettings();
 
-		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-			_SIMPLE_DATE_FORMAT_PATTERN, locale);
-
 		StringBundler sb = new StringBundler(4);
 
 		try {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
 
-			int startTimeHour = jsonObj.getInt("startTimeHour");
-			int startTimeMinute = jsonObj.getInt("startTimeMinute");
-			int startTimeAmPm = jsonObj.getInt("startTimeAmPm");
+			int scorePoints = jsonObj.getInt("scorePoints");
 
-			if (startTimeAmPm == Calendar.PM) {
-				startTimeHour += 12;
-			}
-
-			Calendar startCalendar = CalendarFactoryUtil.getCalendar(
-				1970, 0, 1, startTimeHour, startTimeMinute);
-
-			int endTimeHour = jsonObj.getInt("endTimeHour");
-			int endTimeMinute = jsonObj.getInt("endTimeMinute");
-			int endTimeAmPm = jsonObj.getInt("endTimeAmPm");
-
-			if (endTimeAmPm == Calendar.PM) {
-				endTimeHour += 12;
-			}
-
-			Calendar endCalendar = CalendarFactoryUtil.getCalendar(
-				1970, 0, 1, endTimeHour, endTimeMinute);
-
-			sb.append("Users browsing the Site from ");
-			sb.append(format.format(startCalendar.getTime()));
-			sb.append(" to ");
-			sb.append(format.format(endCalendar.getTime()));
+			sb.append("Users with ");
+			sb.append(scorePoints);
+			sb.append(" score points of ");
+			sb.append(ruleInstance.getUserSegmentName(locale));
 		}
 		catch (JSONException jse) {
 		}
@@ -211,30 +153,17 @@ public class ScorePointsRule extends BaseRule {
 	public String processRule(
 		PortletRequest request, PortletResponse response) {
 
-		int endTimeHour = ParamUtil.getInteger(request, "endTimeHour");
-		int endTimeMinute = ParamUtil.getInteger(request, "endTimeMinute");
-		int endTimeAmPm = ParamUtil.getInteger(request, "endTimeAmPm");
-
-		int startTimeHour = ParamUtil.getInteger(request, "startTimeHour");
-		int startTimeMinute = ParamUtil.getInteger(request, "startTimeMinute");
-		int startTimeAmPm = ParamUtil.getInteger(request, "startTimeAmPm");
+		int scorePoints = ParamUtil.getInteger(request, "scorePoints");
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 
-		jsonObj.put("endTimeHour", endTimeHour);
-		jsonObj.put("endTimeMinute", endTimeMinute);
-		jsonObj.put("endTimeAmPm", endTimeAmPm);
-		jsonObj.put("startTimeHour", startTimeHour);
-		jsonObj.put("startTimeMinute", startTimeMinute);
-		jsonObj.put("startTimeAmPm", startTimeAmPm);
+		jsonObj.put("scorePoints", scorePoints);
 
 		return jsonObj.toString();
 	}
 
 	private static final String _FORM_TEMPLATE_PATH =
-			"templates/ct_score_points_rule_fields.ftl";
-
-	private static final String _SIMPLE_DATE_FORMAT_PATTERN = "hh:mm a";
+		"templates/ct_score_points_rule_fields.ftl";
 
 	private static Log _log = LogFactoryUtil.getLog(ScorePointsRule.class);
 
