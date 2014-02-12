@@ -14,7 +14,10 @@
 
 package com.liferay.contenttargeting.api.model;
 
+import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import freemarker.cache.ClassTemplateLoader;
@@ -23,12 +26,39 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author Eduardo Garcia
  */
 public abstract class BaseRule implements Rule {
+
+	@Override
+	public String getFormHTML(
+		RuleInstance ruleInstance, Map<String, Object> context) {
+
+		String content = StringPool.BLANK;
+
+		try {
+			context.putAll(getContext(ruleInstance));
+
+			content = parseTemplate(
+				this.getClass(), _FORM_TEMPLATE_PATH, context);
+		}
+		catch (Exception e) {
+			_log.error(
+			"Error while processing rule form template " +
+				_FORM_TEMPLATE_PATH,
+			e);
+		}
+
+		return content;
+	}
+
+	protected Map<String, Object> getContext(RuleInstance ruleInstance) {
+		return new HashMap<String, Object>();
+	}
 
 	protected String parseTemplate(
 			Class clazz, String templatePath, Map<String, Object> context)
@@ -52,4 +82,7 @@ public abstract class BaseRule implements Rule {
 
 	protected static final String _FORM_TEMPLATE_PATH =
 		"templates/ct_fields.ftl";
+
+	private static Log _log = LogFactoryUtil.getLog(BaseRule.class);
+
 }

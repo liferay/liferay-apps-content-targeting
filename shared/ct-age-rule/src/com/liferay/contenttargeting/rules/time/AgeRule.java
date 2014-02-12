@@ -26,15 +26,13 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -82,42 +80,6 @@ public class AgeRule extends BaseRule {
 		}
 
 		return false;
-	}
-
-	@Override
-	public String getFormHTML(
-		RuleInstance ruleInstance, Map<String, Object> context) {
-
-		String content = StringPool.BLANK;
-
-		try {
-			int youngerThan = 0;
-			int olderThan = 0;
-
-			if (ruleInstance != null) {
-				String typeSettings = ruleInstance.getTypeSettings();
-
-				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
-					typeSettings);
-
-				youngerThan = jsonObj.getInt("youngerThan");
-				olderThan = jsonObj.getInt("olderThan");
-			}
-
-			context.put("youngerThan", youngerThan);
-			context.put("olderThan", olderThan);
-
-			content = parseTemplate(
-				AgeRule.class, _FORM_TEMPLATE_PATH, context);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Error while processing rule form template " +
-					_FORM_TEMPLATE_PATH,
-				e);
-		}
-
-		return content;
 	}
 
 	@Override
@@ -205,6 +167,31 @@ public class AgeRule extends BaseRule {
 		return age;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(AgeRule.class);
+	@Override
+	protected Map<String, Object> getContext(RuleInstance ruleInstance) {
+		Map<String, Object> context = new HashMap<String, Object>();
+
+		int youngerThan = 0;
+		int olderThan = 0;
+
+		if (ruleInstance != null) {
+			String typeSettings = ruleInstance.getTypeSettings();
+
+			try {
+				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+					typeSettings);
+
+				youngerThan = jsonObj.getInt("youngerThan");
+				olderThan = jsonObj.getInt("olderThan");
+			}
+			catch (JSONException jse) {
+			}
+		}
+
+		context.put("youngerThan", youngerThan);
+		context.put("olderThan", olderThan);
+
+		return context;
+	}
 
 }

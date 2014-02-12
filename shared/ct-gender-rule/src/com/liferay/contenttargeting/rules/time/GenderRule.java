@@ -23,12 +23,11 @@ import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -75,34 +74,6 @@ public class GenderRule extends BaseRule {
 	}
 
 	@Override
-	public String getFormHTML(
-		RuleInstance ruleInstance, Map<String, Object> context) {
-
-		String content = StringPool.BLANK;
-
-		try {
-			String gender = StringPool.BLANK;
-
-			if (ruleInstance != null) {
-				gender = ruleInstance.getTypeSettings();
-			}
-
-			context.put("gender", gender);
-
-			content = parseTemplate(
-				GenderRule.class, _FORM_TEMPLATE_PATH, context);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Error while processing rule form template " +
-					_FORM_TEMPLATE_PATH,
-				e);
-		}
-
-		return content;
-	}
-
-	@Override
 	public String getIcon() {
 		return "icon-female";
 	}
@@ -129,6 +100,19 @@ public class GenderRule extends BaseRule {
 		return ParamUtil.getString(request, "gender");
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(GenderRule.class);
+	@Override
+	protected Map<String, Object> getContext(RuleInstance ruleInstance) {
+		Map<String, Object> context = new HashMap<String, Object>();
+
+		String gender = StringPool.BLANK;
+
+		if (ruleInstance != null) {
+			gender = ruleInstance.getTypeSettings();
+		}
+
+		context.put("gender", gender);
+
+		return context;
+	}
 
 }

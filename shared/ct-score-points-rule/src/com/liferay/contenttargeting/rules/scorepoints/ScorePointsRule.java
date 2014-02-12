@@ -26,12 +26,10 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -78,38 +76,6 @@ public class ScorePointsRule extends BaseRule {
 		}
 
 		return false;
-	}
-
-	@Override
-	public String getFormHTML(
-		RuleInstance ruleInstance, Map<String, Object> context) {
-
-		String content = StringPool.BLANK;
-
-		try {
-			if (ruleInstance != null) {
-				String typeSettings = ruleInstance.getTypeSettings();
-
-				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
-					typeSettings);
-
-				context.put("scorePoints", jsonObj.getInt("scorePoints"));
-			}
-			else {
-				context.put("scorePoints", 0);
-			}
-
-			content = parseTemplate(
-				ScorePointsRule.class, _FORM_TEMPLATE_PATH, context);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Error while processing rule form template " +
-					_FORM_TEMPLATE_PATH,
-				e);
-		}
-
-		return content;
 	}
 
 	@Override
@@ -162,6 +128,27 @@ public class ScorePointsRule extends BaseRule {
 		return jsonObj.toString();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(ScorePointsRule.class);
+	@Override
+	protected Map<String, Object> getContext(RuleInstance ruleInstance) {
+		Map<String, Object> context = new HashMap<String, Object>();
+
+		if (ruleInstance != null) {
+			String typeSettings = ruleInstance.getTypeSettings();
+
+			try {
+				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+					typeSettings);
+
+				context.put("scorePoints", jsonObj.getInt("scorePoints"));
+			}
+			catch (JSONException jse) {
+			}
+		}
+		else {
+			context.put("scorePoints", 0);
+		}
+
+		return context;
+	}
 
 }

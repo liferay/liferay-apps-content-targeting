@@ -26,17 +26,15 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.text.Format;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -102,49 +100,6 @@ public class TimeRule extends BaseRule {
 		}
 
 		return false;
-	}
-
-	@Override
-	public String getFormHTML(
-		RuleInstance ruleInstance, Map<String, Object> context) {
-
-		String content = StringPool.BLANK;
-
-		try {
-			if (ruleInstance != null) {
-				String typeSettings = ruleInstance.getTypeSettings();
-
-				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
-					typeSettings);
-
-				context.put("endTimeHour", jsonObj.getInt("endTimeHour"));
-				context.put("endTimeMinute", jsonObj.getInt("endTimeMinute"));
-				context.put("endTimeAmPm", jsonObj.getInt("endTimeAmPm"));
-				context.put("startTimeHour", jsonObj.getInt("startTimeHour"));
-				context.put(
-					"startTimeMinute", jsonObj.getInt("startTimeMinute"));
-				context.put("startTimeAmPm", jsonObj.getInt("startTimeAmPm"));
-			}
-			else {
-				context.put("endTimeHour", 0);
-				context.put("endTimeMinute", 0);
-				context.put("endTimeAmPm", 0);
-				context.put("startTimeHour", 0);
-				context.put("startTimeMinute", 0);
-				context.put("startTimeAmPm", 0);
-			}
-
-			content = parseTemplate(
-				TimeRule.class, _FORM_TEMPLATE_PATH, context);
-		}
-		catch (Exception e) {
-			_log.error(
-				"Error while processing rule form template " +
-					_FORM_TEMPLATE_PATH,
-				e);
-		}
-
-		return content;
 	}
 
 	@Override
@@ -231,8 +186,40 @@ public class TimeRule extends BaseRule {
 		return jsonObj.toString();
 	}
 
-	private static final String _SIMPLE_DATE_FORMAT_PATTERN = "hh:mm a";
+	@Override
+	protected Map<String, Object> getContext(RuleInstance ruleInstance) {
+		Map<String, Object> context = new HashMap<String, Object>();
 
-	private static Log _log = LogFactoryUtil.getLog(TimeRule.class);
+		if (ruleInstance != null) {
+			String typeSettings = ruleInstance.getTypeSettings();
+
+			try {
+				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+					typeSettings);
+
+				context.put("endTimeHour", jsonObj.getInt("endTimeHour"));
+				context.put("endTimeMinute", jsonObj.getInt("endTimeMinute"));
+				context.put("endTimeAmPm", jsonObj.getInt("endTimeAmPm"));
+				context.put("startTimeHour", jsonObj.getInt("startTimeHour"));
+				context.put(
+					"startTimeMinute", jsonObj.getInt("startTimeMinute"));
+				context.put("startTimeAmPm", jsonObj.getInt("startTimeAmPm"));
+			}
+			catch (JSONException jse) {
+			}
+		}
+		else {
+			context.put("endTimeHour", 0);
+			context.put("endTimeMinute", 0);
+			context.put("endTimeAmPm", 0);
+			context.put("startTimeHour", 0);
+			context.put("startTimeMinute", 0);
+			context.put("startTimeAmPm", 0);
+		}
+
+		return context;
+	}
+
+	private static final String _SIMPLE_DATE_FORMAT_PATTERN = "hh:mm a";
 
 }
