@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 
 import java.text.Format;
 
@@ -99,17 +98,17 @@ public class TimeRule extends BaseRule {
 		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
 			_SIMPLE_DATE_FORMAT_PATTERN, locale);
 
-		StringBundler sb = new StringBundler(4);
-
 		Calendar startCalendar = _getStartCalendar(typeSettings);
 		Calendar endCalendar = _getEndCalendar(typeSettings);
 
-		sb.append("Users browsing the Site from ");
-		sb.append(format.format(startCalendar.getTime()));
-		sb.append(" to ");
-		sb.append(format.format(endCalendar.getTime()));
+		String summary = LanguageUtil.format(
+			locale, "users-browsing-the-site-from-x-to-x",
+			new Object[] {
+				format.format(startCalendar.getTime()),
+				format.format(endCalendar.getTime())
+			});
 
-		return sb.toString();
+		return summary;
 	}
 
 	@Override

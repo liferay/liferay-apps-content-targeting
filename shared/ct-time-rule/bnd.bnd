@@ -1,5 +1,9 @@
 Bundle-Name: Time Rule
-Include-Resource: classes
+Bundle-ClassPath: .,WEB-INF/lib/util-java.jar
+Include-Resource: classes,\
+	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
+	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
+	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
 Import-Package:\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.service,\
@@ -18,3 +22,4 @@ Private-Package: \
 	com.liferay.contenttargeting.rules.time.*
 Service-Component: \
 	com.liferay.contenttargeting.rules.time.*
+Web-ContextPath: /ct-time-rule

@@ -90,7 +90,7 @@ public class GenderRule extends BaseRule {
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
-		return ruleInstance.getTypeSettings();
+		return LanguageUtil.get(locale, ruleInstance.getTypeSettings());
 	}
 
 	@Override
