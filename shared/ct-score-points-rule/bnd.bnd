@@ -1,6 +1,9 @@
 Bundle-Name: Score Points Rule
 Bundle-ClassPath: .,WEB-INF/lib/util-java.jar
-Include-Resource: classes
+Include-Resource: classes,\
+	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
+	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
+	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
 Import-Package:\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.service,\
@@ -15,10 +18,6 @@ Import-Package:\
 	javax.servlet,\
 	javax.servlet.http,\
 	*;resolution:="optional"
-Include-Resource: classes,\
-	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
-	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
-	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
 Private-Package: \
 	com.liferay.contenttargeting.rules.scorepoints.*
 Service-Component: \
