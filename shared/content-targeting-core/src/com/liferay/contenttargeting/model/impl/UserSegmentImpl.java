@@ -50,6 +50,10 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 		for (RuleInstance ruleInstance : rules) {
 			Rule rule = rulesRegistry.getRule(ruleInstance.getRuleKey());
 
+			if (rule == null) {
+				continue;
+			}
+
 			if (!rule.evaluate(ruleInstance, ctUser)) {
 				return false;
 			}
