@@ -97,7 +97,7 @@ public class UserSegmentLocalServiceImpl
 		UserSegment userSegment = userSegmentPersistence.remove(userSegmentId);
 
 		for (RuleInstance ruleInstance :
-			ruleInstancePersistence.findByUserSegmentId(userSegmentId)) {
+				ruleInstancePersistence.findByUserSegmentId(userSegmentId)) {
 
 			ruleInstanceService.deleteRuleInstance(
 				ruleInstance.getRuleInstanceId());
