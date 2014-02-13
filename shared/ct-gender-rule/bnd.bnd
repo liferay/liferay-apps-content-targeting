@@ -13,6 +13,7 @@ Import-Package:\
 	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.servlet,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
+	com.liferay.portal.kernel.util,\
 	javax.portlet,\
 	javax.el,\
 	javax.servlet,\
