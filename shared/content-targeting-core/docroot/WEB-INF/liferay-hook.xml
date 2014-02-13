@@ -20,4 +20,8 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 	</servlet-filter-mapping>
+	<struts-action>
+		<struts-action-path>/journal_content/view</struts-action-path>
+		<struts-action-impl>com.liferay.contenttargeting.hook.action.JournalViewAction</struts-action-impl>
+	</struts-action>
 </hook>

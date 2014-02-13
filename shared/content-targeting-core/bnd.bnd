@@ -44,12 +44,14 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.portal.service,\
 	com.liferay.portal.service.persistence,\
 	com.liferay.portal.service.persistence.impl,\
+	com.liferay.portal.theme,\
 	com.liferay.portal.util,\
 	com.liferay.portlet.asset,\
 	com.liferay.portlet.asset.model,\
 	com.liferay.portlet.asset.service,\
 	com.liferay.portlet.expando.model,\
 	com.liferay.portlet.expando.util,\
+	com.liferay.portlet.journal.model,\
 	com.liferay.util.service,\
 	freemarker.cache,\
     freemarker.template,\javax.servlet.http,\
