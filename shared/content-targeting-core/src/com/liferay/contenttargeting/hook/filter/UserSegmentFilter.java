@@ -16,8 +16,7 @@ package com.liferay.contenttargeting.hook.filter;
 
 import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.CTUser;
-import com.liferay.contenttargeting.service.CTUserLocalService;
-import com.liferay.contenttargeting.util.CTCookieUtil;
+import com.liferay.contenttargeting.util.CTUserUtil;
 import com.liferay.contenttargeting.util.WebKeys;
 import com.liferay.osgi.util.OsgiServiceUnavailableException;
 import com.liferay.osgi.util.ServiceTrackerUtil;
@@ -27,8 +26,6 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
@@ -65,7 +62,7 @@ public class UserSegmentFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
 		try {
-			CTUser ctUser = getCTUser(request, response);
+			CTUser ctUser = CTUserUtil.getCTUser(request, response);
 
 			long[] groupIds = getGroupIds(request);
 
@@ -88,49 +85,12 @@ public class UserSegmentFilter implements Filter {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		try {
-			_ctUserLocalService = ServiceTrackerUtil.getService(
-				CTUserLocalService.class, bundle.getBundleContext());
 			_rulesRegistry = ServiceTrackerUtil.getService(
 				RulesRegistry.class, bundle.getBundleContext());
 		}
 		catch (OsgiServiceUnavailableException osue) {
 			osue.printStackTrace();
 		}
-	}
-
-	protected CTUser getCTUser(
-			HttpServletRequest request, HttpServletResponse response)
-		throws PortalException, SystemException {
-
-		long companyId = PortalUtil.getCompanyId(request);
-		long userId = PortalUtil.getUserId(request);
-
-		if (userId > 0) {
-			CTUser ctUser = _ctUserLocalService.getCTUserByUserId(userId);
-
-			if (ctUser == null) {
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setCompanyId(companyId);
-
-				ctUser = _ctUserLocalService.addUser(
-					userId, null, null, serviceContext);
-			}
-
-			return ctUser;
-		}
-
-		long ctUserId = CTCookieUtil.getCTUserId(request);
-
-		if (ctUserId > 0) {
-			return _ctUserLocalService.fetchCTUser(ctUserId);
-		}
-
-		CTUser ctUser = _ctUserLocalService.addUser(companyId);
-
-		CTCookieUtil.addCookie(request, response, ctUser.getCTUserId());
-
-		return ctUser;
 	}
 
 	protected long[] getGroupIds(HttpServletRequest request)
@@ -165,7 +125,6 @@ public class UserSegmentFilter implements Filter {
 		return groupIds;
 	}
 
-	private CTUserLocalService _ctUserLocalService;
 	private RulesRegistry _rulesRegistry;
 
 }
