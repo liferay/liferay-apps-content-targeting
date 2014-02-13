@@ -89,6 +89,11 @@ public abstract class BaseRule implements Rule {
 		return getClass().getSimpleName();
 	}
 
+	@Override
+	public boolean isInstantiable() {
+		return false;
+	}
+
 	protected String parseTemplate(
 			Class clazz, String templatePath, Map<String, Object> context)
 		throws Exception {

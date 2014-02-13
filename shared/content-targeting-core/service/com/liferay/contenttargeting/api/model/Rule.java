@@ -31,6 +31,10 @@ import javax.portlet.PortletResponse;
  */
 public interface Rule {
 
+	public void activate();
+
+	public void deActivate();
+
 	/**
 	 * Returns <code>true</code> if the user complies with the rule instance.
 	 *
@@ -87,6 +91,8 @@ public interface Rule {
 	 * @return the rule instance's localized summary
 	 */
 	public String getSummary(RuleInstance ruleInstance, Locale locale);
+
+	public boolean isInstantiable();
 
 	/**
 	 * Returns the result of evaluating the rule's form fields in the context of
