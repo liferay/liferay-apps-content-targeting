@@ -17,19 +17,16 @@ package com.liferay.contenttargeting.hook.filter;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.util.CTUserUtil;
+import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.WebKeys;
 import com.liferay.osgi.util.OsgiServiceUnavailableException;
 import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 
 import java.io.IOException;
-
-import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -103,26 +100,8 @@ public class UserSegmentFilter implements Filter {
 			return null;
 		}
 
-		Group scopeGroup = GroupLocalServiceUtil.fetchGroup(
+		return ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
 			layoutSet.getGroupId());
-
-		if (scopeGroup == null) {
-			return null;
-		}
-
-		List<Group> groups = scopeGroup.getAncestors();
-
-		groups.add(scopeGroup);
-
-		long[] groupIds = new long[groups.size()];
-
-		for (int i = 0; i < groups.size(); i++) {
-			Group group = groups.get(i);
-
-			groupIds[i] = group.getGroupId();
-		}
-
-		return groupIds;
 	}
 
 	private RulesRegistry _rulesRegistry;

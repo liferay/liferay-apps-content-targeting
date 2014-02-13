@@ -16,7 +16,12 @@ package com.liferay.contenttargeting.util;
 
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+
+import java.util.List;
 
 /**
  * @author Eudaldo Alonso
@@ -40,6 +45,30 @@ public class ContentTargetingUtil {
 		}
 
 		return assetCategoryIds;
+	}
+
+	public static long[] getAncestorsAndCurrentGroupIds(long groupId)
+		throws PortalException, SystemException {
+
+		Group scopeGroup = GroupLocalServiceUtil.fetchGroup(groupId);
+
+		if (scopeGroup == null) {
+			return null;
+		}
+
+		List<Group> groups = scopeGroup.getAncestors();
+
+		groups.add(scopeGroup);
+
+		long[] groupIds = new long[groups.size()];
+
+		for (int i = 0; i < groups.size(); i++) {
+			Group group = groups.get(i);
+
+			groupIds[i] = group.getGroupId();
+		}
+
+		return groupIds;
 	}
 
 }
