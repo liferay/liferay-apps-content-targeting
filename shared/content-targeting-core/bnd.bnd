@@ -33,6 +33,7 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.search,\
 	com.liferay.portal.kernel.servlet,\
+	com.liferay.portal.kernel.struts,\
 	com.liferay.portal.kernel.transaction,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.kernel.uuid,\
