@@ -15,6 +15,7 @@
 package com.liferay.contenttargeting.rules.age;
 
 import aQute.bnd.annotation.component.Component;
+
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.CTUser;
