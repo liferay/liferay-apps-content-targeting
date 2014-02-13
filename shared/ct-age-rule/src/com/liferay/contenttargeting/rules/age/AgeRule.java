@@ -29,7 +29,6 @@ import com.liferay.portal.model.User;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -143,8 +142,8 @@ public class AgeRule extends BaseRule {
 	}
 
 	@Override
-	protected Map<String, Object> getContext(RuleInstance ruleInstance) {
-		Map<String, Object> context = new HashMap<String, Object>();
+	protected void populateContext(
+		RuleInstance ruleInstance, Map<String, Object> context) {
 
 		int youngerThan = 0;
 		int olderThan = 0;
@@ -165,8 +164,6 @@ public class AgeRule extends BaseRule {
 
 		context.put("youngerThan", youngerThan);
 		context.put("olderThan", olderThan);
-
-		return context;
 	}
 
 }

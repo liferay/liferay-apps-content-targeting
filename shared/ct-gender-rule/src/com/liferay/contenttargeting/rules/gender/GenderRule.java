@@ -24,7 +24,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.User;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -80,8 +79,8 @@ public class GenderRule extends BaseRule {
 	}
 
 	@Override
-	protected Map<String, Object> getContext(RuleInstance ruleInstance) {
-		Map<String, Object> context = new HashMap<String, Object>();
+	protected void populateContext(
+		RuleInstance ruleInstance, Map<String, Object> context) {
 
 		String gender = StringPool.BLANK;
 
@@ -90,8 +89,6 @@ public class GenderRule extends BaseRule {
 		}
 
 		context.put("gender", gender);
-
-		return context;
 	}
 
 }

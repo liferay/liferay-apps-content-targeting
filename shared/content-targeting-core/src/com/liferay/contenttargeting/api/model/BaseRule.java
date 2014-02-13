@@ -60,7 +60,7 @@ public abstract class BaseRule implements Rule {
 		String content = StringPool.BLANK;
 
 		try {
-			context.putAll(getContext(ruleInstance));
+			populateContext(ruleInstance, context);
 
 			content = parseTemplate(getClass(), _FORM_TEMPLATE_PATH, context);
 		}
@@ -90,10 +90,6 @@ public abstract class BaseRule implements Rule {
 		return getClass().getSimpleName();
 	}
 
-	protected Map<String, Object> getContext(RuleInstance ruleInstance) {
-		return new HashMap<String, Object>();
-	}
-
 	protected String parseTemplate(
 			Class clazz, String templatePath, Map<String, Object> context)
 		throws Exception {
@@ -112,6 +108,10 @@ public abstract class BaseRule implements Rule {
 		template.process(context, unsyncStringWriter);
 
 		return unsyncStringWriter.toString();
+	}
+
+	protected void populateContext(
+		RuleInstance ruleInstance, Map<String, Object> context) {
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH =

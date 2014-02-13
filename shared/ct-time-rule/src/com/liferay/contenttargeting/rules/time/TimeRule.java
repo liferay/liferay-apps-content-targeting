@@ -33,7 +33,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import java.text.Format;
 
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -118,8 +117,8 @@ public class TimeRule extends BaseRule {
 	}
 
 	@Override
-	protected Map<String, Object> getContext(RuleInstance ruleInstance) {
-		Map<String, Object> context = new HashMap<String, Object>();
+	protected void populateContext(
+		RuleInstance ruleInstance, Map<String, Object> context) {
 
 		if (ruleInstance != null) {
 			String typeSettings = ruleInstance.getTypeSettings();
@@ -147,8 +146,6 @@ public class TimeRule extends BaseRule {
 			context.put("startTimeMinute", 0);
 			context.put("startTimeAmPm", 0);
 		}
-
-		return context;
 	}
 
 	private Calendar _getEndCalendar(String typeSettings) {

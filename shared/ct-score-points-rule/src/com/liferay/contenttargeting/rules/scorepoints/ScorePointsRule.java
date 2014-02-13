@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -112,8 +111,8 @@ public class ScorePointsRule extends BaseRule {
 	}
 
 	@Override
-	protected Map<String, Object> getContext(RuleInstance ruleInstance) {
-		Map<String, Object> context = new HashMap<String, Object>();
+	protected void populateContext(
+		RuleInstance ruleInstance, Map<String, Object> context) {
 
 		if (ruleInstance != null) {
 			String typeSettings = ruleInstance.getTypeSettings();
@@ -130,8 +129,6 @@ public class ScorePointsRule extends BaseRule {
 		else {
 			context.put("scorePoints", 0);
 		}
-
-		return context;
 	}
 
 }
