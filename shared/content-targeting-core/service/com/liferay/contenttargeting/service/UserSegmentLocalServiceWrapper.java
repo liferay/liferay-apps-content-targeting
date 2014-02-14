@@ -328,6 +328,170 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	}
 
 	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void addCampaignUserSegment(long campaignId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.addCampaignUserSegment(campaignId,
+			userSegmentId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void addCampaignUserSegment(long campaignId,
+		com.liferay.contenttargeting.model.UserSegment userSegment)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.addCampaignUserSegment(campaignId, userSegment);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void addCampaignUserSegments(long campaignId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.addCampaignUserSegments(campaignId,
+			userSegmentIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void addCampaignUserSegments(long campaignId,
+		java.util.List<com.liferay.contenttargeting.model.UserSegment> UserSegments)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.addCampaignUserSegments(campaignId,
+			UserSegments);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void clearCampaignUserSegments(long campaignId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.clearCampaignUserSegments(campaignId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void deleteCampaignUserSegment(long campaignId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.deleteCampaignUserSegment(campaignId,
+			userSegmentId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void deleteCampaignUserSegment(long campaignId,
+		com.liferay.contenttargeting.model.UserSegment userSegment)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.deleteCampaignUserSegment(campaignId,
+			userSegment);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void deleteCampaignUserSegments(long campaignId,
+		long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.deleteCampaignUserSegments(campaignId,
+			userSegmentIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void deleteCampaignUserSegments(long campaignId,
+		java.util.List<com.liferay.contenttargeting.model.UserSegment> UserSegments)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.deleteCampaignUserSegments(campaignId,
+			UserSegments);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getCampaignUserSegments(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.getCampaignUserSegments(campaignId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getCampaignUserSegments(
+		long campaignId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.getCampaignUserSegments(campaignId,
+			start, end);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getCampaignUserSegments(
+		long campaignId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.getCampaignUserSegments(campaignId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public int getCampaignUserSegmentsCount(long campaignId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.getCampaignUserSegmentsCount(campaignId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public boolean hasCampaignUserSegment(long campaignId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.hasCampaignUserSegment(campaignId,
+			userSegmentId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public boolean hasCampaignUserSegments(long campaignId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.hasCampaignUserSegments(campaignId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void setCampaignUserSegments(long campaignId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.setCampaignUserSegments(campaignId,
+			userSegmentIds);
+	}
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

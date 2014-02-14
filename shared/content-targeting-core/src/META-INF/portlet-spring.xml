@@ -1,6 +1,9 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.liferay.contenttargeting.service.CampaignLocalService" class="com.liferay.contenttargeting.service.impl.CampaignLocalServiceImpl" />
+	<bean id="com.liferay.contenttargeting.service.CampaignService" class="com.liferay.contenttargeting.service.impl.CampaignServiceImpl" />
+	<bean id="com.liferay.contenttargeting.service.persistence.CampaignPersistence" class="com.liferay.contenttargeting.service.persistence.CampaignPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.contenttargeting.service.CTUserLocalService" class="com.liferay.contenttargeting.service.impl.CTUserLocalServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.CTUserService" class="com.liferay.contenttargeting.service.impl.CTUserServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.persistence.CTUserPersistence" class="com.liferay.contenttargeting.service.persistence.CTUserPersistenceImpl" parent="basePersistence" />

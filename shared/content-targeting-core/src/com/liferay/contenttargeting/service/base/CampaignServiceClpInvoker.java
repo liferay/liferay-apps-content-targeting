@@ -14,7 +14,7 @@
 
 package com.liferay.contenttargeting.service.base;
 
-import com.liferay.contenttargeting.service.CTUserServiceUtil;
+import com.liferay.contenttargeting.service.CampaignServiceUtil;
 
 import java.util.Arrays;
 
@@ -22,8 +22,8 @@ import java.util.Arrays;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class CTUserServiceClpInvoker {
-	public CTUserServiceClpInvoker() {
+public class CampaignServiceClpInvoker {
+	public CampaignServiceClpInvoker() {
 		_methodName36 = "getBeanIdentifier";
 
 		_methodParameterTypes36 = new String[] {  };
@@ -37,12 +37,12 @@ public class CTUserServiceClpInvoker {
 		Object[] arguments) throws Throwable {
 		if (_methodName36.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
-			return CTUserServiceUtil.getBeanIdentifier();
+			return CampaignServiceUtil.getBeanIdentifier();
 		}
 
 		if (_methodName37.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes37, parameterTypes)) {
-			CTUserServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+			CampaignServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}

@@ -4,6 +4,14 @@ create index IX_2C102704 on CT_CTUser (uuid_);
 create index IX_B66212A4 on CT_CTUser (uuid_, companyId);
 create unique index IX_9D6F226 on CT_CTUser (uuid_, groupId);
 
+create index IX_80FBFA6 on CT_Campaign (groupId);
+create index IX_DB3D03B0 on CT_Campaign (uuid_);
+create index IX_E92ED278 on CT_Campaign (uuid_, companyId);
+create unique index IX_EAB996FA on CT_Campaign (uuid_, groupId);
+
+create index IX_195BA1BA on CT_Campaigns_UserSegments (campaignId);
+create index IX_3D78FE78 on CT_Campaigns_UserSegments (userSegmentId);
+
 create index IX_B9B4D73A on CT_Rule (groupId);
 create index IX_30AAF044 on CT_Rule (uuid_);
 create index IX_14C90164 on CT_Rule (uuid_, companyId);

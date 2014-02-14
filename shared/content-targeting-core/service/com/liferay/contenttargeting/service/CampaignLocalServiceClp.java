@@ -20,29 +20,28 @@ import com.liferay.portal.service.InvokableLocalService;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
-	public UserSegmentLocalServiceClp(
-		InvokableLocalService invokableLocalService) {
+public class CampaignLocalServiceClp implements CampaignLocalService {
+	public CampaignLocalServiceClp(InvokableLocalService invokableLocalService) {
 		_invokableLocalService = invokableLocalService;
 
-		_methodName0 = "addUserSegment";
+		_methodName0 = "addCampaign";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.contenttargeting.model.UserSegment"
+				"com.liferay.contenttargeting.model.Campaign"
 			};
 
-		_methodName1 = "createUserSegment";
+		_methodName1 = "createCampaign";
 
 		_methodParameterTypes1 = new String[] { "long" };
 
-		_methodName2 = "deleteUserSegment";
+		_methodName2 = "deleteCampaign";
 
 		_methodParameterTypes2 = new String[] { "long" };
 
-		_methodName3 = "deleteUserSegment";
+		_methodName3 = "deleteCampaign";
 
 		_methodParameterTypes3 = new String[] {
-				"com.liferay.contenttargeting.model.UserSegment"
+				"com.liferay.contenttargeting.model.Campaign"
 			};
 
 		_methodName4 = "dynamicQuery";
@@ -81,19 +80,19 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 				"com.liferay.portal.kernel.dao.orm.Projection"
 			};
 
-		_methodName10 = "fetchUserSegment";
+		_methodName10 = "fetchCampaign";
 
 		_methodParameterTypes10 = new String[] { "long" };
 
-		_methodName11 = "fetchUserSegmentByUuidAndCompanyId";
+		_methodName11 = "fetchCampaignByUuidAndCompanyId";
 
 		_methodParameterTypes11 = new String[] { "java.lang.String", "long" };
 
-		_methodName12 = "fetchUserSegmentByUuidAndGroupId";
+		_methodName12 = "fetchCampaignByUuidAndGroupId";
 
 		_methodParameterTypes12 = new String[] { "java.lang.String", "long" };
 
-		_methodName13 = "getUserSegment";
+		_methodName13 = "getCampaign";
 
 		_methodParameterTypes13 = new String[] { "long" };
 
@@ -101,96 +100,96 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 
 		_methodParameterTypes14 = new String[] { "java.io.Serializable" };
 
-		_methodName15 = "getUserSegmentByUuidAndCompanyId";
+		_methodName15 = "getCampaignByUuidAndCompanyId";
 
 		_methodParameterTypes15 = new String[] { "java.lang.String", "long" };
 
-		_methodName16 = "getUserSegmentByUuidAndGroupId";
+		_methodName16 = "getCampaignByUuidAndGroupId";
 
 		_methodParameterTypes16 = new String[] { "java.lang.String", "long" };
 
-		_methodName17 = "getUserSegments";
+		_methodName17 = "getCampaigns";
 
 		_methodParameterTypes17 = new String[] { "int", "int" };
 
-		_methodName18 = "getUserSegmentsCount";
+		_methodName18 = "getCampaignsCount";
 
 		_methodParameterTypes18 = new String[] {  };
 
-		_methodName19 = "updateUserSegment";
+		_methodName19 = "updateCampaign";
 
 		_methodParameterTypes19 = new String[] {
-				"com.liferay.contenttargeting.model.UserSegment"
+				"com.liferay.contenttargeting.model.Campaign"
 			};
 
-		_methodName20 = "addCampaignUserSegment";
+		_methodName20 = "addUserSegmentCampaign";
 
 		_methodParameterTypes20 = new String[] { "long", "long" };
 
-		_methodName21 = "addCampaignUserSegment";
+		_methodName21 = "addUserSegmentCampaign";
 
 		_methodParameterTypes21 = new String[] {
-				"long", "com.liferay.contenttargeting.model.UserSegment"
+				"long", "com.liferay.contenttargeting.model.Campaign"
 			};
 
-		_methodName22 = "addCampaignUserSegments";
+		_methodName22 = "addUserSegmentCampaigns";
 
 		_methodParameterTypes22 = new String[] { "long", "long[][]" };
 
-		_methodName23 = "addCampaignUserSegments";
+		_methodName23 = "addUserSegmentCampaigns";
 
 		_methodParameterTypes23 = new String[] { "long", "java.util.List" };
 
-		_methodName24 = "clearCampaignUserSegments";
+		_methodName24 = "clearUserSegmentCampaigns";
 
 		_methodParameterTypes24 = new String[] { "long" };
 
-		_methodName25 = "deleteCampaignUserSegment";
+		_methodName25 = "deleteUserSegmentCampaign";
 
 		_methodParameterTypes25 = new String[] { "long", "long" };
 
-		_methodName26 = "deleteCampaignUserSegment";
+		_methodName26 = "deleteUserSegmentCampaign";
 
 		_methodParameterTypes26 = new String[] {
-				"long", "com.liferay.contenttargeting.model.UserSegment"
+				"long", "com.liferay.contenttargeting.model.Campaign"
 			};
 
-		_methodName27 = "deleteCampaignUserSegments";
+		_methodName27 = "deleteUserSegmentCampaigns";
 
 		_methodParameterTypes27 = new String[] { "long", "long[][]" };
 
-		_methodName28 = "deleteCampaignUserSegments";
+		_methodName28 = "deleteUserSegmentCampaigns";
 
 		_methodParameterTypes28 = new String[] { "long", "java.util.List" };
 
-		_methodName29 = "getCampaignUserSegments";
+		_methodName29 = "getUserSegmentCampaigns";
 
 		_methodParameterTypes29 = new String[] { "long" };
 
-		_methodName30 = "getCampaignUserSegments";
+		_methodName30 = "getUserSegmentCampaigns";
 
 		_methodParameterTypes30 = new String[] { "long", "int", "int" };
 
-		_methodName31 = "getCampaignUserSegments";
+		_methodName31 = "getUserSegmentCampaigns";
 
 		_methodParameterTypes31 = new String[] {
 				"long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName32 = "getCampaignUserSegmentsCount";
+		_methodName32 = "getUserSegmentCampaignsCount";
 
 		_methodParameterTypes32 = new String[] { "long" };
 
-		_methodName33 = "hasCampaignUserSegment";
+		_methodName33 = "hasUserSegmentCampaign";
 
 		_methodParameterTypes33 = new String[] { "long", "long" };
 
-		_methodName34 = "hasCampaignUserSegments";
+		_methodName34 = "hasUserSegmentCampaigns";
 
 		_methodParameterTypes34 = new String[] { "long" };
 
-		_methodName35 = "setCampaignUserSegments";
+		_methodName35 = "setUserSegmentCampaigns";
 
 		_methodParameterTypes35 = new String[] { "long", "long[][]" };
 
@@ -201,44 +200,18 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		_methodName37 = "setBeanIdentifier";
 
 		_methodParameterTypes37 = new String[] { "java.lang.String" };
-
-		_methodName39 = "addUserSegment";
-
-		_methodParameterTypes39 = new String[] {
-				"long", "java.util.Map", "java.util.Map",
-				"com.liferay.portal.service.ServiceContext"
-			};
-
-		_methodName40 = "getUserSegments";
-
-		_methodParameterTypes40 = new String[] { "long" };
-
-		_methodName41 = "getUserSegments";
-
-		_methodParameterTypes41 = new String[] { "long[][]" };
-
-		_methodName42 = "getUserSegmentsCount";
-
-		_methodParameterTypes42 = new String[] { "long" };
-
-		_methodName43 = "updateUserSegment";
-
-		_methodParameterTypes43 = new String[] {
-				"long", "java.util.Map", "java.util.Map",
-				"com.liferay.portal.service.ServiceContext"
-			};
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.UserSegment addUserSegment(
-		com.liferay.contenttargeting.model.UserSegment userSegment)
+	public com.liferay.contenttargeting.model.Campaign addCampaign(
+		com.liferay.contenttargeting.model.Campaign campaign)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName0,
 					_methodParameterTypes0,
-					new Object[] { ClpSerializer.translateInput(userSegment) });
+					new Object[] { ClpSerializer.translateInput(campaign) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -256,17 +229,17 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.UserSegment createUserSegment(
-		long userSegmentId) {
+	public com.liferay.contenttargeting.model.Campaign createCampaign(
+		long campaignId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { userSegmentId });
+					_methodParameterTypes1, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -280,19 +253,19 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.UserSegment deleteUserSegment(
-		long userSegmentId)
+	public com.liferay.contenttargeting.model.Campaign deleteCampaign(
+		long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { userSegmentId });
+					_methodParameterTypes2, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -314,19 +287,19 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.UserSegment deleteUserSegment(
-		com.liferay.contenttargeting.model.UserSegment userSegment)
+	public com.liferay.contenttargeting.model.Campaign deleteCampaign(
+		com.liferay.contenttargeting.model.Campaign campaign)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName3,
 					_methodParameterTypes3,
-					new Object[] { ClpSerializer.translateInput(userSegment) });
+					new Object[] { ClpSerializer.translateInput(campaign) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -344,7 +317,7 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -545,14 +518,14 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.UserSegment fetchUserSegment(
-		long userSegmentId)
+	public com.liferay.contenttargeting.model.Campaign fetchCampaign(
+		long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { userSegmentId });
+					_methodParameterTypes10, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -570,11 +543,11 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.UserSegment fetchUserSegmentByUuidAndCompanyId(
+	public com.liferay.contenttargeting.model.Campaign fetchCampaignByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -600,11 +573,11 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.UserSegment fetchUserSegmentByUuidAndGroupId(
+	public com.liferay.contenttargeting.model.Campaign fetchCampaignByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -630,19 +603,19 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.UserSegment getUserSegment(
-		long userSegmentId)
+	public com.liferay.contenttargeting.model.Campaign getCampaign(
+		long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName13,
-					_methodParameterTypes13, new Object[] { userSegmentId });
+					_methodParameterTypes13, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -664,7 +637,7 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -703,7 +676,7 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.UserSegment getUserSegmentByUuidAndCompanyId(
+	public com.liferay.contenttargeting.model.Campaign getCampaignByUuidAndCompanyId(
 		java.lang.String uuid, long companyId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -734,11 +707,11 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.UserSegment getUserSegmentByUuidAndGroupId(
+	public com.liferay.contenttargeting.model.Campaign getCampaignByUuidAndGroupId(
 		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -769,11 +742,11 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
 		int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -798,11 +771,11 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (java.util.List<com.liferay.contenttargeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.liferay.contenttargeting.model.Campaign>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public int getUserSegmentsCount()
+	public int getCampaignsCount()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -830,15 +803,15 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.UserSegment updateUserSegment(
-		com.liferay.contenttargeting.model.UserSegment userSegment)
+	public com.liferay.contenttargeting.model.Campaign updateCampaign(
+		com.liferay.contenttargeting.model.Campaign campaign)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
-					new Object[] { ClpSerializer.translateInput(userSegment) });
+					new Object[] { ClpSerializer.translateInput(campaign) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -856,16 +829,16 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
+		return (com.liferay.contenttargeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public void addCampaignUserSegment(long campaignId, long userSegmentId)
+	public void addUserSegmentCampaign(long userSegmentId, long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName20,
 				_methodParameterTypes20,
-				new Object[] { campaignId, userSegmentId });
+				new Object[] { userSegmentId, campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -885,16 +858,16 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public void addCampaignUserSegment(long campaignId,
-		com.liferay.contenttargeting.model.UserSegment userSegment)
+	public void addUserSegmentCampaign(long userSegmentId,
+		com.liferay.contenttargeting.model.Campaign campaign)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName21,
 				_methodParameterTypes21,
 				new Object[] {
-					campaignId,
+					userSegmentId,
 					
-				ClpSerializer.translateInput(userSegment)
+				ClpSerializer.translateInput(campaign)
 				});
 		}
 		catch (Throwable t) {
@@ -915,15 +888,15 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public void addCampaignUserSegments(long campaignId, long[] userSegmentIds)
+	public void addUserSegmentCampaigns(long userSegmentId, long[] campaignIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName22,
 				_methodParameterTypes22,
 				new Object[] {
-					campaignId,
+					userSegmentId,
 					
-				ClpSerializer.translateInput(userSegmentIds)
+				ClpSerializer.translateInput(campaignIds)
 				});
 		}
 		catch (Throwable t) {
@@ -944,16 +917,16 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public void addCampaignUserSegments(long campaignId,
-		java.util.List<com.liferay.contenttargeting.model.UserSegment> UserSegments)
+	public void addUserSegmentCampaigns(long userSegmentId,
+		java.util.List<com.liferay.contenttargeting.model.Campaign> Campaigns)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName23,
 				_methodParameterTypes23,
 				new Object[] {
-					campaignId,
+					userSegmentId,
 					
-				ClpSerializer.translateInput(UserSegments)
+				ClpSerializer.translateInput(Campaigns)
 				});
 		}
 		catch (Throwable t) {
@@ -974,11 +947,11 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public void clearCampaignUserSegments(long campaignId)
+	public void clearUserSegmentCampaigns(long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName24,
-				_methodParameterTypes24, new Object[] { campaignId });
+				_methodParameterTypes24, new Object[] { userSegmentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -998,12 +971,12 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public void deleteCampaignUserSegment(long campaignId, long userSegmentId)
+	public void deleteUserSegmentCampaign(long userSegmentId, long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName25,
 				_methodParameterTypes25,
-				new Object[] { campaignId, userSegmentId });
+				new Object[] { userSegmentId, campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1023,16 +996,16 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public void deleteCampaignUserSegment(long campaignId,
-		com.liferay.contenttargeting.model.UserSegment userSegment)
+	public void deleteUserSegmentCampaign(long userSegmentId,
+		com.liferay.contenttargeting.model.Campaign campaign)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName26,
 				_methodParameterTypes26,
 				new Object[] {
-					campaignId,
+					userSegmentId,
 					
-				ClpSerializer.translateInput(userSegment)
+				ClpSerializer.translateInput(campaign)
 				});
 		}
 		catch (Throwable t) {
@@ -1053,16 +1026,16 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public void deleteCampaignUserSegments(long campaignId,
-		long[] userSegmentIds)
+	public void deleteUserSegmentCampaigns(long userSegmentId,
+		long[] campaignIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName27,
 				_methodParameterTypes27,
 				new Object[] {
-					campaignId,
+					userSegmentId,
 					
-				ClpSerializer.translateInput(userSegmentIds)
+				ClpSerializer.translateInput(campaignIds)
 				});
 		}
 		catch (Throwable t) {
@@ -1083,16 +1056,16 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public void deleteCampaignUserSegments(long campaignId,
-		java.util.List<com.liferay.contenttargeting.model.UserSegment> UserSegments)
+	public void deleteUserSegmentCampaigns(long userSegmentId,
+		java.util.List<com.liferay.contenttargeting.model.Campaign> Campaigns)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName28,
 				_methodParameterTypes28,
 				new Object[] {
-					campaignId,
+					userSegmentId,
 					
-				ClpSerializer.translateInput(UserSegments)
+				ClpSerializer.translateInput(Campaigns)
 				});
 		}
 		catch (Throwable t) {
@@ -1113,14 +1086,14 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getCampaignUserSegments(
-		long campaignId)
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getUserSegmentCampaigns(
+		long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29, new Object[] { campaignId });
+					_methodParameterTypes29, new Object[] { userSegmentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1138,19 +1111,19 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (java.util.List<com.liferay.contenttargeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.liferay.contenttargeting.model.Campaign>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getCampaignUserSegments(
-		long campaignId, int start, int end)
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getUserSegmentCampaigns(
+		long userSegmentId, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName30,
 					_methodParameterTypes30,
-					new Object[] { campaignId, start, end });
+					new Object[] { userSegmentId, start, end });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1168,12 +1141,12 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (java.util.List<com.liferay.contenttargeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.liferay.contenttargeting.model.Campaign>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getCampaignUserSegments(
-		long campaignId, int start, int end,
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getUserSegmentCampaigns(
+		long userSegmentId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1182,7 +1155,7 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName31,
 					_methodParameterTypes31,
 					new Object[] {
-						campaignId,
+						userSegmentId,
 						
 					start,
 						
@@ -1207,17 +1180,17 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return (java.util.List<com.liferay.contenttargeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.liferay.contenttargeting.model.Campaign>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public int getCampaignUserSegmentsCount(long campaignId)
+	public int getUserSegmentCampaignsCount(long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32, new Object[] { campaignId });
+					_methodParameterTypes32, new Object[] { userSegmentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1239,14 +1212,14 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public boolean hasCampaignUserSegment(long campaignId, long userSegmentId)
+	public boolean hasUserSegmentCampaign(long userSegmentId, long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName33,
 					_methodParameterTypes33,
-					new Object[] { campaignId, userSegmentId });
+					new Object[] { userSegmentId, campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1268,13 +1241,13 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public boolean hasCampaignUserSegments(long campaignId)
+	public boolean hasUserSegmentCampaigns(long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34, new Object[] { campaignId });
+					_methodParameterTypes34, new Object[] { userSegmentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1296,15 +1269,15 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public void setCampaignUserSegments(long campaignId, long[] userSegmentIds)
+	public void setUserSegmentCampaigns(long userSegmentId, long[] campaignIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName35,
 				_methodParameterTypes35,
 				new Object[] {
-					campaignId,
+					userSegmentId,
 					
-				ClpSerializer.translateInput(userSegmentIds)
+				ClpSerializer.translateInput(campaignIds)
 				});
 		}
 		catch (Throwable t) {
@@ -1372,199 +1345,6 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable {
 		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public com.liferay.contenttargeting.model.UserSegment addUserSegment(
-		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName39,
-					_methodParameterTypes39,
-					new Object[] {
-						userId,
-						
-					ClpSerializer.translateInput(nameMap),
-						
-					ClpSerializer.translateInput(descriptionMap),
-						
-					ClpSerializer.translateInput(serviceContext)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName40,
-					_methodParameterTypes40, new Object[] { groupId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<com.liferay.contenttargeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
-		long[] groupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName41,
-					_methodParameterTypes41,
-					new Object[] { ClpSerializer.translateInput(groupIds) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<com.liferay.contenttargeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public long getUserSegmentsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName42,
-					_methodParameterTypes42, new Object[] { groupId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return ((Long)returnObj).longValue();
-	}
-
-	@Override
-	public com.liferay.contenttargeting.model.UserSegment updateUserSegment(
-		long userSegmentId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName43,
-					_methodParameterTypes43,
-					new Object[] {
-						userSegmentId,
-						
-					ClpSerializer.translateInput(nameMap),
-						
-					ClpSerializer.translateInput(descriptionMap),
-						
-					ClpSerializer.translateInput(serviceContext)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.contenttargeting.model.UserSegment)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;
@@ -1644,14 +1424,4 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	private String[] _methodParameterTypes36;
 	private String _methodName37;
 	private String[] _methodParameterTypes37;
-	private String _methodName39;
-	private String[] _methodParameterTypes39;
-	private String _methodName40;
-	private String[] _methodParameterTypes40;
-	private String _methodName41;
-	private String[] _methodParameterTypes41;
-	private String _methodName42;
-	private String[] _methodParameterTypes42;
-	private String _methodName43;
-	private String[] _methodParameterTypes43;
 }

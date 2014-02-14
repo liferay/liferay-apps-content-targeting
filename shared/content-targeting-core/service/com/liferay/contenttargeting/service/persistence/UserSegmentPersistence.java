@@ -840,4 +840,195 @@ public interface UserSegmentPersistence extends BasePersistence<UserSegment> {
 	*/
 	public int countAll()
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the campaigns associated with the user segment.
+	*
+	* @param pk the primary key of the user segment
+	* @return the campaigns associated with the user segment
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long pk) throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the campaigns associated with the user segment.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the user segment
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @return the range of campaigns associated with the user segment
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long pk, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the campaigns associated with the user segment.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param pk the primary key of the user segment
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of campaigns associated with the user segment
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long pk, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of campaigns associated with the user segment.
+	*
+	* @param pk the primary key of the user segment
+	* @return the number of campaigns associated with the user segment
+	* @throws SystemException if a system exception occurred
+	*/
+	public int getCampaignsSize(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns <code>true</code> if the campaign is associated with the user segment.
+	*
+	* @param pk the primary key of the user segment
+	* @param campaignPK the primary key of the campaign
+	* @return <code>true</code> if the campaign is associated with the user segment; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean containsCampaign(long pk, long campaignPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns <code>true</code> if the user segment has any campaigns associated with it.
+	*
+	* @param pk the primary key of the user segment to check for associations with campaigns
+	* @return <code>true</code> if the user segment has any campaigns associated with it; <code>false</code> otherwise
+	* @throws SystemException if a system exception occurred
+	*/
+	public boolean containsCampaigns(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds an association between the user segment and the campaign. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the user segment
+	* @param campaignPK the primary key of the campaign
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addCampaign(long pk, long campaignPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds an association between the user segment and the campaign. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the user segment
+	* @param campaign the campaign
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addCampaign(long pk,
+		com.liferay.contenttargeting.model.Campaign campaign)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds an association between the user segment and the campaigns. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the user segment
+	* @param campaignPKs the primary keys of the campaigns
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addCampaigns(long pk, long[] campaignPKs)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Adds an association between the user segment and the campaigns. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the user segment
+	* @param campaigns the campaigns
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addCampaigns(long pk,
+		java.util.List<com.liferay.contenttargeting.model.Campaign> campaigns)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Clears all associations between the user segment and its campaigns. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the user segment to clear the associated campaigns from
+	* @throws SystemException if a system exception occurred
+	*/
+	public void clearCampaigns(long pk)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the association between the user segment and the campaign. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the user segment
+	* @param campaignPK the primary key of the campaign
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeCampaign(long pk, long campaignPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the association between the user segment and the campaign. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the user segment
+	* @param campaign the campaign
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeCampaign(long pk,
+		com.liferay.contenttargeting.model.Campaign campaign)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the association between the user segment and the campaigns. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the user segment
+	* @param campaignPKs the primary keys of the campaigns
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeCampaigns(long pk, long[] campaignPKs)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the association between the user segment and the campaigns. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the user segment
+	* @param campaigns the campaigns
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeCampaigns(long pk,
+		java.util.List<com.liferay.contenttargeting.model.Campaign> campaigns)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Sets the campaigns associated with the user segment, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the user segment
+	* @param campaignPKs the primary keys of the campaigns to be associated with the user segment
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setCampaigns(long pk, long[] campaignPKs)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Sets the campaigns associated with the user segment, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	*
+	* @param pk the primary key of the user segment
+	* @param campaigns the campaigns to be associated with the user segment
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setCampaigns(long pk,
+		java.util.List<com.liferay.contenttargeting.model.Campaign> campaigns)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

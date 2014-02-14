@@ -17,6 +17,7 @@ package com.liferay.contenttargeting.service.base;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.contenttargeting.service.persistence.CTUserPersistence;
+import com.liferay.contenttargeting.service.persistence.CampaignPersistence;
 import com.liferay.contenttargeting.service.persistence.RuleInstancePersistence;
 import com.liferay.contenttargeting.service.persistence.UserSegmentPersistence;
 
@@ -49,6 +50,62 @@ public abstract class UserSegmentServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * Never modify or reference this class directly. Always use {@link com.liferay.contenttargeting.service.UserSegmentServiceUtil} to access the user segment remote service.
 	 */
+
+	/**
+	 * Returns the campaign local service.
+	 *
+	 * @return the campaign local service
+	 */
+	public com.liferay.contenttargeting.service.CampaignLocalService getCampaignLocalService() {
+		return campaignLocalService;
+	}
+
+	/**
+	 * Sets the campaign local service.
+	 *
+	 * @param campaignLocalService the campaign local service
+	 */
+	public void setCampaignLocalService(
+		com.liferay.contenttargeting.service.CampaignLocalService campaignLocalService) {
+		this.campaignLocalService = campaignLocalService;
+	}
+
+	/**
+	 * Returns the campaign remote service.
+	 *
+	 * @return the campaign remote service
+	 */
+	public com.liferay.contenttargeting.service.CampaignService getCampaignService() {
+		return campaignService;
+	}
+
+	/**
+	 * Sets the campaign remote service.
+	 *
+	 * @param campaignService the campaign remote service
+	 */
+	public void setCampaignService(
+		com.liferay.contenttargeting.service.CampaignService campaignService) {
+		this.campaignService = campaignService;
+	}
+
+	/**
+	 * Returns the campaign persistence.
+	 *
+	 * @return the campaign persistence
+	 */
+	public CampaignPersistence getCampaignPersistence() {
+		return campaignPersistence;
+	}
+
+	/**
+	 * Sets the campaign persistence.
+	 *
+	 * @param campaignPersistence the campaign persistence
+	 */
+	public void setCampaignPersistence(CampaignPersistence campaignPersistence) {
+		this.campaignPersistence = campaignPersistence;
+	}
 
 	/**
 	 * Returns the c t user local service.
@@ -391,6 +448,12 @@ public abstract class UserSegmentServiceBaseImpl extends BaseServiceImpl
 		}
 	}
 
+	@BeanReference(type = com.liferay.contenttargeting.service.CampaignLocalService.class)
+	protected com.liferay.contenttargeting.service.CampaignLocalService campaignLocalService;
+	@BeanReference(type = com.liferay.contenttargeting.service.CampaignService.class)
+	protected com.liferay.contenttargeting.service.CampaignService campaignService;
+	@BeanReference(type = CampaignPersistence.class)
+	protected CampaignPersistence campaignPersistence;
 	@BeanReference(type = com.liferay.contenttargeting.service.CTUserLocalService.class)
 	protected com.liferay.contenttargeting.service.CTUserLocalService ctUserLocalService;
 	@BeanReference(type = com.liferay.contenttargeting.service.CTUserService.class)

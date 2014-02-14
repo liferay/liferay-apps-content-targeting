@@ -19,6 +19,7 @@ import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.model.impl.UserSegmentImpl;
 import com.liferay.contenttargeting.model.impl.UserSegmentModelImpl;
 
+import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.cache.CacheRegistryUtil;
 import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
@@ -48,11 +49,14 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.service.persistence.impl.TableMapper;
+import com.liferay.portal.service.persistence.impl.TableMapperFactory;
 
 import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -2994,6 +2998,8 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 		throws SystemException {
 		userSegment = toUnwrappedModel(userSegment);
 
+		userSegmentToCampaignTableMapper.deleteLeftPrimaryKeyTableMappings(userSegment.getPrimaryKey());
+
 		Session session = null;
 
 		try {
@@ -3429,6 +3435,296 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 		return count.intValue();
 	}
 
+	/**
+	 * Returns all the campaigns associated with the user segment.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @return the campaigns associated with the user segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long pk) throws SystemException {
+		return getCampaigns(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the campaigns associated with the user segment.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param start the lower bound of the range of user segments
+	 * @param end the upper bound of the range of user segments (not inclusive)
+	 * @return the range of campaigns associated with the user segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long pk, int start, int end) throws SystemException {
+		return getCampaigns(pk, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the campaigns associated with the user segment.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param start the lower bound of the range of user segments
+	 * @param end the upper bound of the range of user segments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of campaigns associated with the user segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long pk, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		return userSegmentToCampaignTableMapper.getRightBaseModels(pk, start,
+			end, orderByComparator);
+	}
+
+	/**
+	 * Returns the number of campaigns associated with the user segment.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @return the number of campaigns associated with the user segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int getCampaignsSize(long pk) throws SystemException {
+		long[] pks = userSegmentToCampaignTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.length;
+	}
+
+	/**
+	 * Returns <code>true</code> if the campaign is associated with the user segment.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param campaignPK the primary key of the campaign
+	 * @return <code>true</code> if the campaign is associated with the user segment; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public boolean containsCampaign(long pk, long campaignPK)
+		throws SystemException {
+		return userSegmentToCampaignTableMapper.containsTableMapping(pk,
+			campaignPK);
+	}
+
+	/**
+	 * Returns <code>true</code> if the user segment has any campaigns associated with it.
+	 *
+	 * @param pk the primary key of the user segment to check for associations with campaigns
+	 * @return <code>true</code> if the user segment has any campaigns associated with it; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public boolean containsCampaigns(long pk) throws SystemException {
+		if (getCampaignsSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Adds an association between the user segment and the campaign. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param campaignPK the primary key of the campaign
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addCampaign(long pk, long campaignPK) throws SystemException {
+		userSegmentToCampaignTableMapper.addTableMapping(pk, campaignPK);
+	}
+
+	/**
+	 * Adds an association between the user segment and the campaign. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param campaign the campaign
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addCampaign(long pk,
+		com.liferay.contenttargeting.model.Campaign campaign)
+		throws SystemException {
+		userSegmentToCampaignTableMapper.addTableMapping(pk,
+			campaign.getPrimaryKey());
+	}
+
+	/**
+	 * Adds an association between the user segment and the campaigns. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param campaignPKs the primary keys of the campaigns
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addCampaigns(long pk, long[] campaignPKs)
+		throws SystemException {
+		for (long campaignPK : campaignPKs) {
+			userSegmentToCampaignTableMapper.addTableMapping(pk, campaignPK);
+		}
+	}
+
+	/**
+	 * Adds an association between the user segment and the campaigns. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param campaigns the campaigns
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addCampaigns(long pk,
+		List<com.liferay.contenttargeting.model.Campaign> campaigns)
+		throws SystemException {
+		for (com.liferay.contenttargeting.model.Campaign campaign : campaigns) {
+			userSegmentToCampaignTableMapper.addTableMapping(pk,
+				campaign.getPrimaryKey());
+		}
+	}
+
+	/**
+	 * Clears all associations between the user segment and its campaigns. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment to clear the associated campaigns from
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void clearCampaigns(long pk) throws SystemException {
+		userSegmentToCampaignTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+	}
+
+	/**
+	 * Removes the association between the user segment and the campaign. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param campaignPK the primary key of the campaign
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeCampaign(long pk, long campaignPK)
+		throws SystemException {
+		userSegmentToCampaignTableMapper.deleteTableMapping(pk, campaignPK);
+	}
+
+	/**
+	 * Removes the association between the user segment and the campaign. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param campaign the campaign
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeCampaign(long pk,
+		com.liferay.contenttargeting.model.Campaign campaign)
+		throws SystemException {
+		userSegmentToCampaignTableMapper.deleteTableMapping(pk,
+			campaign.getPrimaryKey());
+	}
+
+	/**
+	 * Removes the association between the user segment and the campaigns. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param campaignPKs the primary keys of the campaigns
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeCampaigns(long pk, long[] campaignPKs)
+		throws SystemException {
+		for (long campaignPK : campaignPKs) {
+			userSegmentToCampaignTableMapper.deleteTableMapping(pk, campaignPK);
+		}
+	}
+
+	/**
+	 * Removes the association between the user segment and the campaigns. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param campaigns the campaigns
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeCampaigns(long pk,
+		List<com.liferay.contenttargeting.model.Campaign> campaigns)
+		throws SystemException {
+		for (com.liferay.contenttargeting.model.Campaign campaign : campaigns) {
+			userSegmentToCampaignTableMapper.deleteTableMapping(pk,
+				campaign.getPrimaryKey());
+		}
+	}
+
+	/**
+	 * Sets the campaigns associated with the user segment, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param campaignPKs the primary keys of the campaigns to be associated with the user segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void setCampaigns(long pk, long[] campaignPKs)
+		throws SystemException {
+		Set<Long> newCampaignPKsSet = SetUtil.fromArray(campaignPKs);
+		Set<Long> oldCampaignPKsSet = SetUtil.fromArray(userSegmentToCampaignTableMapper.getRightPrimaryKeys(
+					pk));
+
+		Set<Long> removeCampaignPKsSet = new HashSet<Long>(oldCampaignPKsSet);
+
+		removeCampaignPKsSet.removeAll(newCampaignPKsSet);
+
+		for (long removeCampaignPK : removeCampaignPKsSet) {
+			userSegmentToCampaignTableMapper.deleteTableMapping(pk,
+				removeCampaignPK);
+		}
+
+		newCampaignPKsSet.removeAll(oldCampaignPKsSet);
+
+		for (long newCampaignPK : newCampaignPKsSet) {
+			userSegmentToCampaignTableMapper.addTableMapping(pk, newCampaignPK);
+		}
+	}
+
+	/**
+	 * Sets the campaigns associated with the user segment, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param campaigns the campaigns to be associated with the user segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void setCampaigns(long pk,
+		List<com.liferay.contenttargeting.model.Campaign> campaigns)
+		throws SystemException {
+		try {
+			long[] campaignPKs = new long[campaigns.size()];
+
+			for (int i = 0; i < campaigns.size(); i++) {
+				com.liferay.contenttargeting.model.Campaign campaign = campaigns.get(i);
+
+				campaignPKs[i] = campaign.getPrimaryKey();
+			}
+
+			setCampaigns(pk, campaignPKs);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(UserSegmentModelImpl.MAPPING_TABLE_CT_CAMPAIGNS_USERSEGMENTS_NAME);
+		}
+	}
+
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -3457,6 +3753,9 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 				_log.error(e);
 			}
 		}
+
+		userSegmentToCampaignTableMapper = TableMapperFactory.getTableMapper("CT_Campaigns_UserSegments",
+				"userSegmentId", "campaignId", this, campaignPersistence);
 	}
 
 	public void destroy() {
@@ -3466,6 +3765,9 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@BeanReference(type = CampaignPersistence.class)
+	protected CampaignPersistence campaignPersistence;
+	protected TableMapper<UserSegment, com.liferay.contenttargeting.model.Campaign> userSegmentToCampaignTableMapper;
 	private static final String _SQL_SELECT_USERSEGMENT = "SELECT userSegment FROM UserSegment userSegment";
 	private static final String _SQL_SELECT_USERSEGMENT_WHERE = "SELECT userSegment FROM UserSegment userSegment WHERE ";
 	private static final String _SQL_COUNT_USERSEGMENT = "SELECT COUNT(userSegment) FROM UserSegment userSegment";
