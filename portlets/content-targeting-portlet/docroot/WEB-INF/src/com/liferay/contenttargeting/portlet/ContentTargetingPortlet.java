@@ -19,6 +19,8 @@ import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.portlet.util.UnavailableServiceException;
+import com.liferay.contenttargeting.service.CampaignLocalService;
+import com.liferay.contenttargeting.service.CampaignService;
 import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
@@ -121,6 +123,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 
 		try {
+			_campaignLocalService = ServiceTrackerUtil.getService(
+				CampaignLocalService.class, bundle.getBundleContext());
+			_campaignService = ServiceTrackerUtil.getService(
+				CampaignService.class, bundle.getBundleContext());
 			_ruleInstanceLocalService = ServiceTrackerUtil.getService(
 				RuleInstanceLocalService.class, bundle.getBundleContext());
 			_ruleInstanceService = ServiceTrackerUtil.getService(
@@ -385,6 +391,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
+	private CampaignLocalService _campaignLocalService;
+	private CampaignService _campaignService;
 	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RuleInstanceService _ruleInstanceService;
 	private RulesRegistry _rulesRegistry;
