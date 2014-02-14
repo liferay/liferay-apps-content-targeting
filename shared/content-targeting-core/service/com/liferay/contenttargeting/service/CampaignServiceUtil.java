@@ -63,6 +63,53 @@ public class CampaignServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.contenttargeting.model.Campaign addCampaign(
+		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Date startDate, java.util.Date endDate, int priority,
+		long[] userSegmentIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addCampaign(userId, nameMap, descriptionMap, startDate,
+			endDate, priority, userSegmentIds, serviceContext);
+	}
+
+	public static com.liferay.contenttargeting.model.Campaign deleteCampaign(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteCampaign(campaignId);
+	}
+
+	public static java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCampaigns(groupId);
+	}
+
+	public static long getCampaignsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCampaignsCount(groupId);
+	}
+
+	public static com.liferay.contenttargeting.model.Campaign updateCampaign(
+		long campaignId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Date startDate, java.util.Date endDate, int priority,
+		long[] userSegmentIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateCampaign(campaignId, nameMap, descriptionMap,
+			startDate, endDate, priority, userSegmentIds, serviceContext);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

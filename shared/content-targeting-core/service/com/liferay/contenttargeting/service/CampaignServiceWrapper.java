@@ -56,6 +56,57 @@ public class CampaignServiceWrapper implements CampaignService,
 		return _campaignService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public com.liferay.contenttargeting.model.Campaign addCampaign(
+		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Date startDate, java.util.Date endDate, int priority,
+		long[] userSegmentIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _campaignService.addCampaign(userId, nameMap, descriptionMap,
+			startDate, endDate, priority, userSegmentIds, serviceContext);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.Campaign deleteCampaign(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _campaignService.deleteCampaign(campaignId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _campaignService.getCampaigns(groupId);
+	}
+
+	@Override
+	public long getCampaignsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _campaignService.getCampaignsCount(groupId);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.model.Campaign updateCampaign(
+		long campaignId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Date startDate, java.util.Date endDate, int priority,
+		long[] userSegmentIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _campaignService.updateCampaign(campaignId, nameMap,
+			descriptionMap, startDate, endDate, priority, userSegmentIds,
+			serviceContext);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
