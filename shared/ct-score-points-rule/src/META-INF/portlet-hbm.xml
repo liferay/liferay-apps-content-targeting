@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint" />
+	<class name="com.liferay.contenttargeting.rules.scorepoints.model.impl.ScorePointImpl" table="ScorePoints_ScorePoint">
+		<cache usage="read-write" />
+		<id name="Id" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="CTUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="assetCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="points" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+</hibernate-mapping>
