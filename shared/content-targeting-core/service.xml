@@ -3,6 +3,48 @@
 
 <service-builder package-path="com.liferay.contenttargeting">
 	<namespace>CT</namespace>
+	<entity name="Campaign" uuid="true" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="campaignId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
+		<column name="startDate" type="Date" />
+		<column name="endDate" type="Date" />
+		<column name="priority" type="int" />
+
+		<!-- Relationships -->
+
+		<column name="userSegments" type="Collection" entity="UserSegment" mapping-table="Campaigns_UserSegments" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="campaignId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" arrayable-operator="OR" />
+		</finder>
+	</entity>
 	<entity name="CTUser" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
@@ -96,6 +138,10 @@
 
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
+
+		<!-- Relationships -->
+
+		<column name="campaigns" type="Collection" entity="Campaign" mapping-table="Campaigns_UserSegments" />
 
 		<!-- Order -->
 
