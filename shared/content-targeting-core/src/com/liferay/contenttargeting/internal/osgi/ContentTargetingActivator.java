@@ -94,7 +94,8 @@ public class ContentTargetingActivator
 
 		SerialDestination destination = new SerialDestination(DESTINATION_NAME);
 
-		MessageBus messageBus = ServiceTrackerUtil.getService(MessageBus.class, bundleContext);
+		MessageBus messageBus = ServiceTrackerUtil.getService(
+			MessageBus.class, bundleContext);
 
 		messageBus.addDestination(destination);
 

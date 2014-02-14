@@ -28,25 +28,6 @@ import java.util.List;
  */
 public class ContentTargetingUtil {
 
-	public static long[] getAssetCategoryIds(long[] userSegmentIds)
-		throws SystemException {
-
-		if (userSegmentIds == null) {
-			return new long[0];
-		}
-
-		long[] assetCategoryIds = new long[userSegmentIds.length];
-
-		for (int i = 0; i < userSegmentIds.length; i++) {
-			UserSegment userSegment =
-				UserSegmentLocalServiceUtil.fetchUserSegment(userSegmentIds[i]);
-
-			assetCategoryIds[i] = userSegment.getAssetCategoryId();
-		}
-
-		return assetCategoryIds;
-	}
-
 	public static long[] getAncestorsAndCurrentGroupIds(long groupId)
 		throws PortalException, SystemException {
 
@@ -69,6 +50,25 @@ public class ContentTargetingUtil {
 		}
 
 		return groupIds;
+	}
+
+	public static long[] getAssetCategoryIds(long[] userSegmentIds)
+		throws SystemException {
+
+		if (userSegmentIds == null) {
+			return new long[0];
+		}
+
+		long[] assetCategoryIds = new long[userSegmentIds.length];
+
+		for (int i = 0; i < userSegmentIds.length; i++) {
+			UserSegment userSegment =
+				UserSegmentLocalServiceUtil.fetchUserSegment(userSegmentIds[i]);
+
+			assetCategoryIds[i] = userSegment.getAssetCategoryId();
+		}
+
+		return assetCategoryIds;
 	}
 
 }

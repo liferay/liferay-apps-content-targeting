@@ -121,16 +121,16 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 
 		try {
-			_ruleInstanceService = ServiceTrackerUtil.getService(
-				RuleInstanceService.class, bundle.getBundleContext());
 			_ruleInstanceLocalService = ServiceTrackerUtil.getService(
 				RuleInstanceLocalService.class, bundle.getBundleContext());
-			_userSegmentService = ServiceTrackerUtil.getService(
-				UserSegmentService.class, bundle.getBundleContext());
-			_userSegmentLocalService = ServiceTrackerUtil.getService(
-				UserSegmentLocalService.class, bundle.getBundleContext());
+			_ruleInstanceService = ServiceTrackerUtil.getService(
+				RuleInstanceService.class, bundle.getBundleContext());
 			_rulesRegistry = ServiceTrackerUtil.getService(
 				RulesRegistry.class, bundle.getBundleContext());
+			_userSegmentLocalService = ServiceTrackerUtil.getService(
+				UserSegmentLocalService.class, bundle.getBundleContext());
+			_userSegmentService = ServiceTrackerUtil.getService(
+				UserSegmentService.class, bundle.getBundleContext());
 		}
 		catch (OsgiServiceUnavailableException osue) {
 			throw new UnavailableServiceException(
