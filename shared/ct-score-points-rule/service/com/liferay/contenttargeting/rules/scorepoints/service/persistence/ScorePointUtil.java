@@ -270,77 +270,77 @@ public class ScorePointUtil {
 	}
 
 	/**
-	* Returns the score point where CTUserId = &#63; and assetCategoryId = &#63; or throws a {@link com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException} if it could not be found.
+	* Returns the score point where CTUserId = &#63; and userSegmentId = &#63; or throws a {@link com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException} if it could not be found.
 	*
 	* @param CTUserId the c t user ID
-	* @param assetCategoryId the asset category ID
+	* @param userSegmentId the user segment ID
 	* @return the matching score point
 	* @throws com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException if a matching score point could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint findByC_U(
-		long CTUserId, long assetCategoryId)
+		long CTUserId, long userSegmentId)
 		throws com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_U(CTUserId, assetCategoryId);
+		return getPersistence().findByC_U(CTUserId, userSegmentId);
 	}
 
 	/**
-	* Returns the score point where CTUserId = &#63; and assetCategoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the score point where CTUserId = &#63; and userSegmentId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param CTUserId the c t user ID
-	* @param assetCategoryId the asset category ID
+	* @param userSegmentId the user segment ID
 	* @return the matching score point, or <code>null</code> if a matching score point could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint fetchByC_U(
-		long CTUserId, long assetCategoryId)
+		long CTUserId, long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByC_U(CTUserId, assetCategoryId);
+		return getPersistence().fetchByC_U(CTUserId, userSegmentId);
 	}
 
 	/**
-	* Returns the score point where CTUserId = &#63; and assetCategoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the score point where CTUserId = &#63; and userSegmentId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param CTUserId the c t user ID
-	* @param assetCategoryId the asset category ID
+	* @param userSegmentId the user segment ID
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching score point, or <code>null</code> if a matching score point could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint fetchByC_U(
-		long CTUserId, long assetCategoryId, boolean retrieveFromCache)
+		long CTUserId, long userSegmentId, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByC_U(CTUserId, assetCategoryId, retrieveFromCache);
+				   .fetchByC_U(CTUserId, userSegmentId, retrieveFromCache);
 	}
 
 	/**
-	* Removes the score point where CTUserId = &#63; and assetCategoryId = &#63; from the database.
+	* Removes the score point where CTUserId = &#63; and userSegmentId = &#63; from the database.
 	*
 	* @param CTUserId the c t user ID
-	* @param assetCategoryId the asset category ID
+	* @param userSegmentId the user segment ID
 	* @return the score point that was removed
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint removeByC_U(
-		long CTUserId, long assetCategoryId)
+		long CTUserId, long userSegmentId)
 		throws com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_U(CTUserId, assetCategoryId);
+		return getPersistence().removeByC_U(CTUserId, userSegmentId);
 	}
 
 	/**
-	* Returns the number of score points where CTUserId = &#63; and assetCategoryId = &#63;.
+	* Returns the number of score points where CTUserId = &#63; and userSegmentId = &#63;.
 	*
 	* @param CTUserId the c t user ID
-	* @param assetCategoryId the asset category ID
+	* @param userSegmentId the user segment ID
 	* @return the number of matching score points
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_U(long CTUserId, long assetCategoryId)
+	public static int countByC_U(long CTUserId, long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_U(CTUserId, assetCategoryId);
+		return getPersistence().countByC_U(CTUserId, userSegmentId);
 	}
 
 	/**

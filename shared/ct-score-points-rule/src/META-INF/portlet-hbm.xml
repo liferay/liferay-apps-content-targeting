@@ -10,7 +10,7 @@
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
 		<property name="CTUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="assetCategoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userSegmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="points" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 </hibernate-mapping>

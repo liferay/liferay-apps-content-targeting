@@ -117,18 +117,18 @@ public interface ScorePointModel extends BaseModel<ScorePoint> {
 	public void setCTUserUuid(String CTUserUuid);
 
 	/**
-	 * Returns the asset category ID of this score point.
+	 * Returns the user segment ID of this score point.
 	 *
-	 * @return the asset category ID of this score point
+	 * @return the user segment ID of this score point
 	 */
-	public long getAssetCategoryId();
+	public long getUserSegmentId();
 
 	/**
-	 * Sets the asset category ID of this score point.
+	 * Sets the user segment ID of this score point.
 	 *
-	 * @param assetCategoryId the asset category ID of this score point
+	 * @param userSegmentId the user segment ID of this score point
 	 */
-	public void setAssetCategoryId(long assetCategoryId);
+	public void setUserSegmentId(long userSegmentId);
 
 	/**
 	 * Returns the points of this score point.

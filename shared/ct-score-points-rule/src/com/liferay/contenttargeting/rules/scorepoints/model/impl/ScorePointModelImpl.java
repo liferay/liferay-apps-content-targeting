@@ -68,10 +68,10 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 			{ "uuid_", Types.VARCHAR },
 			{ "Id", Types.BIGINT },
 			{ "CTUserId", Types.BIGINT },
-			{ "assetCategoryId", Types.BIGINT },
+			{ "userSegmentId", Types.BIGINT },
 			{ "points", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ScorePoints_ScorePoint (uuid_ VARCHAR(75) null,Id LONG not null primary key,CTUserId LONG,assetCategoryId LONG,points LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ScorePoints_ScorePoint (uuid_ VARCHAR(75) null,Id LONG not null primary key,CTUserId LONG,userSegmentId LONG,points LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ScorePoints_ScorePoint";
 	public static final String ORDER_BY_JPQL = " ORDER BY scorePoint.CTUserId DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY ScorePoints_ScorePoint.CTUserId DESC";
@@ -88,7 +88,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 				"value.object.column.bitmask.enabled.com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint"),
 			true);
 	public static long CTUSERID_COLUMN_BITMASK = 1L;
-	public static long ASSETCATEGORYID_COLUMN_BITMASK = 2L;
+	public static long USERSEGMENTID_COLUMN_BITMASK = 2L;
 	public static long UUID_COLUMN_BITMASK = 4L;
 
 	/**
@@ -107,7 +107,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 		model.setUuid(soapModel.getUuid());
 		model.setId(soapModel.getId());
 		model.setCTUserId(soapModel.getCTUserId());
-		model.setAssetCategoryId(soapModel.getAssetCategoryId());
+		model.setUserSegmentId(soapModel.getUserSegmentId());
 		model.setPoints(soapModel.getPoints());
 
 		return model;
@@ -176,7 +176,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 		attributes.put("uuid", getUuid());
 		attributes.put("Id", getId());
 		attributes.put("CTUserId", getCTUserId());
-		attributes.put("assetCategoryId", getAssetCategoryId());
+		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("points", getPoints());
 
 		return attributes;
@@ -202,10 +202,10 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 			setCTUserId(CTUserId);
 		}
 
-		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
+		Long userSegmentId = (Long)attributes.get("userSegmentId");
 
-		if (assetCategoryId != null) {
-			setAssetCategoryId(assetCategoryId);
+		if (userSegmentId != null) {
+			setUserSegmentId(userSegmentId);
 		}
 
 		Long points = (Long)attributes.get("points");
@@ -285,25 +285,25 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 
 	@JSON
 	@Override
-	public long getAssetCategoryId() {
-		return _assetCategoryId;
+	public long getUserSegmentId() {
+		return _userSegmentId;
 	}
 
 	@Override
-	public void setAssetCategoryId(long assetCategoryId) {
-		_columnBitmask |= ASSETCATEGORYID_COLUMN_BITMASK;
+	public void setUserSegmentId(long userSegmentId) {
+		_columnBitmask |= USERSEGMENTID_COLUMN_BITMASK;
 
-		if (!_setOriginalAssetCategoryId) {
-			_setOriginalAssetCategoryId = true;
+		if (!_setOriginalUserSegmentId) {
+			_setOriginalUserSegmentId = true;
 
-			_originalAssetCategoryId = _assetCategoryId;
+			_originalUserSegmentId = _userSegmentId;
 		}
 
-		_assetCategoryId = assetCategoryId;
+		_userSegmentId = userSegmentId;
 	}
 
-	public long getOriginalAssetCategoryId() {
-		return _originalAssetCategoryId;
+	public long getOriginalUserSegmentId() {
+		return _originalUserSegmentId;
 	}
 
 	@JSON
@@ -351,7 +351,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 		scorePointImpl.setUuid(getUuid());
 		scorePointImpl.setId(getId());
 		scorePointImpl.setCTUserId(getCTUserId());
-		scorePointImpl.setAssetCategoryId(getAssetCategoryId());
+		scorePointImpl.setUserSegmentId(getUserSegmentId());
 		scorePointImpl.setPoints(getPoints());
 
 		scorePointImpl.resetOriginalValues();
@@ -419,9 +419,9 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 
 		scorePointModelImpl._setOriginalCTUserId = false;
 
-		scorePointModelImpl._originalAssetCategoryId = scorePointModelImpl._assetCategoryId;
+		scorePointModelImpl._originalUserSegmentId = scorePointModelImpl._userSegmentId;
 
-		scorePointModelImpl._setOriginalAssetCategoryId = false;
+		scorePointModelImpl._setOriginalUserSegmentId = false;
 
 		scorePointModelImpl._columnBitmask = 0;
 	}
@@ -442,7 +442,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 
 		scorePointCacheModel.CTUserId = getCTUserId();
 
-		scorePointCacheModel.assetCategoryId = getAssetCategoryId();
+		scorePointCacheModel.userSegmentId = getUserSegmentId();
 
 		scorePointCacheModel.points = getPoints();
 
@@ -459,8 +459,8 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 		sb.append(getId());
 		sb.append(", CTUserId=");
 		sb.append(getCTUserId());
-		sb.append(", assetCategoryId=");
-		sb.append(getAssetCategoryId());
+		sb.append(", userSegmentId=");
+		sb.append(getUserSegmentId());
 		sb.append(", points=");
 		sb.append(getPoints());
 		sb.append("}");
@@ -490,8 +490,8 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 		sb.append(getCTUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>assetCategoryId</column-name><column-value><![CDATA[");
-		sb.append(getAssetCategoryId());
+			"<column><column-name>userSegmentId</column-name><column-value><![CDATA[");
+		sb.append(getUserSegmentId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>points</column-name><column-value><![CDATA[");
@@ -514,9 +514,9 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 	private String _CTUserUuid;
 	private long _originalCTUserId;
 	private boolean _setOriginalCTUserId;
-	private long _assetCategoryId;
-	private long _originalAssetCategoryId;
-	private boolean _setOriginalAssetCategoryId;
+	private long _userSegmentId;
+	private long _originalUserSegmentId;
+	private boolean _setOriginalUserSegmentId;
 	private long _points;
 	private long _columnBitmask;
 	private ScorePoint _escapedModel;

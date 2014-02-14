@@ -51,7 +51,7 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 		attributes.put("uuid", getUuid());
 		attributes.put("Id", getId());
 		attributes.put("CTUserId", getCTUserId());
-		attributes.put("assetCategoryId", getAssetCategoryId());
+		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("points", getPoints());
 
 		return attributes;
@@ -77,10 +77,10 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 			setCTUserId(CTUserId);
 		}
 
-		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
+		Long userSegmentId = (Long)attributes.get("userSegmentId");
 
-		if (assetCategoryId != null) {
-			setAssetCategoryId(assetCategoryId);
+		if (userSegmentId != null) {
+			setUserSegmentId(userSegmentId);
 		}
 
 		Long points = (Long)attributes.get("points");
@@ -193,23 +193,23 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 	}
 
 	/**
-	* Returns the asset category ID of this score point.
+	* Returns the user segment ID of this score point.
 	*
-	* @return the asset category ID of this score point
+	* @return the user segment ID of this score point
 	*/
 	@Override
-	public long getAssetCategoryId() {
-		return _scorePoint.getAssetCategoryId();
+	public long getUserSegmentId() {
+		return _scorePoint.getUserSegmentId();
 	}
 
 	/**
-	* Sets the asset category ID of this score point.
+	* Sets the user segment ID of this score point.
 	*
-	* @param assetCategoryId the asset category ID of this score point
+	* @param userSegmentId the user segment ID of this score point
 	*/
 	@Override
-	public void setAssetCategoryId(long assetCategoryId) {
-		_scorePoint.setAssetCategoryId(assetCategoryId);
+	public void setUserSegmentId(long userSegmentId) {
+		_scorePoint.setUserSegmentId(userSegmentId);
 	}
 
 	/**

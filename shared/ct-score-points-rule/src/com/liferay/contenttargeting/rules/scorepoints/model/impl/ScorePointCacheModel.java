@@ -44,8 +44,8 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 		sb.append(Id);
 		sb.append(", CTUserId=");
 		sb.append(CTUserId);
-		sb.append(", assetCategoryId=");
-		sb.append(assetCategoryId);
+		sb.append(", userSegmentId=");
+		sb.append(userSegmentId);
 		sb.append(", points=");
 		sb.append(points);
 		sb.append("}");
@@ -66,7 +66,7 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 
 		scorePointImpl.setId(Id);
 		scorePointImpl.setCTUserId(CTUserId);
-		scorePointImpl.setAssetCategoryId(assetCategoryId);
+		scorePointImpl.setUserSegmentId(userSegmentId);
 		scorePointImpl.setPoints(points);
 
 		scorePointImpl.resetOriginalValues();
@@ -79,7 +79,7 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 		uuid = objectInput.readUTF();
 		Id = objectInput.readLong();
 		CTUserId = objectInput.readLong();
-		assetCategoryId = objectInput.readLong();
+		userSegmentId = objectInput.readLong();
 		points = objectInput.readLong();
 	}
 
@@ -95,13 +95,13 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 
 		objectOutput.writeLong(Id);
 		objectOutput.writeLong(CTUserId);
-		objectOutput.writeLong(assetCategoryId);
+		objectOutput.writeLong(userSegmentId);
 		objectOutput.writeLong(points);
 	}
 
 	public String uuid;
 	public long Id;
 	public long CTUserId;
-	public long assetCategoryId;
+	public long userSegmentId;
 	public long points;
 }

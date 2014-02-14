@@ -77,7 +77,7 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 		attributes.put("uuid", getUuid());
 		attributes.put("Id", getId());
 		attributes.put("CTUserId", getCTUserId());
-		attributes.put("assetCategoryId", getAssetCategoryId());
+		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("points", getPoints());
 
 		return attributes;
@@ -103,10 +103,10 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 			setCTUserId(CTUserId);
 		}
 
-		Long assetCategoryId = (Long)attributes.get("assetCategoryId");
+		Long userSegmentId = (Long)attributes.get("userSegmentId");
 
-		if (assetCategoryId != null) {
-			setAssetCategoryId(assetCategoryId);
+		if (userSegmentId != null) {
+			setUserSegmentId(userSegmentId);
 		}
 
 		Long points = (Long)attributes.get("points");
@@ -196,21 +196,21 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 	}
 
 	@Override
-	public long getAssetCategoryId() {
-		return _assetCategoryId;
+	public long getUserSegmentId() {
+		return _userSegmentId;
 	}
 
 	@Override
-	public void setAssetCategoryId(long assetCategoryId) {
-		_assetCategoryId = assetCategoryId;
+	public void setUserSegmentId(long userSegmentId) {
+		_userSegmentId = userSegmentId;
 
 		if (_scorePointRemoteModel != null) {
 			try {
 				Class<?> clazz = _scorePointRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setAssetCategoryId", long.class);
+				Method method = clazz.getMethod("setUserSegmentId", long.class);
 
-				method.invoke(_scorePointRemoteModel, assetCategoryId);
+				method.invoke(_scorePointRemoteModel, userSegmentId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -313,7 +313,7 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 		clone.setUuid(getUuid());
 		clone.setId(getId());
 		clone.setCTUserId(getCTUserId());
-		clone.setAssetCategoryId(getAssetCategoryId());
+		clone.setUserSegmentId(getUserSegmentId());
 		clone.setPoints(getPoints());
 
 		return clone;
@@ -379,8 +379,8 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 		sb.append(getId());
 		sb.append(", CTUserId=");
 		sb.append(getCTUserId());
-		sb.append(", assetCategoryId=");
-		sb.append(getAssetCategoryId());
+		sb.append(", userSegmentId=");
+		sb.append(getUserSegmentId());
 		sb.append(", points=");
 		sb.append(getPoints());
 		sb.append("}");
@@ -410,8 +410,8 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 		sb.append(getCTUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>assetCategoryId</column-name><column-value><![CDATA[");
-		sb.append(getAssetCategoryId());
+			"<column><column-name>userSegmentId</column-name><column-value><![CDATA[");
+		sb.append(getUserSegmentId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>points</column-name><column-value><![CDATA[");
@@ -427,7 +427,7 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 	private long _Id;
 	private long _CTUserId;
 	private String _CTUserUuid;
-	private long _assetCategoryId;
+	private long _userSegmentId;
 	private long _points;
 	private BaseModel<?> _scorePointRemoteModel;
 }

@@ -621,25 +621,25 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 			FINDER_CLASS_NAME_ENTITY, "fetchByC_U",
 			new String[] { Long.class.getName(), Long.class.getName() },
 			ScorePointModelImpl.CTUSERID_COLUMN_BITMASK |
-			ScorePointModelImpl.ASSETCATEGORYID_COLUMN_BITMASK);
+			ScorePointModelImpl.USERSEGMENTID_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_C_U = new FinderPath(ScorePointModelImpl.ENTITY_CACHE_ENABLED,
 			ScorePointModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U",
 			new String[] { Long.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the score point where CTUserId = &#63; and assetCategoryId = &#63; or throws a {@link com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException} if it could not be found.
+	 * Returns the score point where CTUserId = &#63; and userSegmentId = &#63; or throws a {@link com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException} if it could not be found.
 	 *
 	 * @param CTUserId the c t user ID
-	 * @param assetCategoryId the asset category ID
+	 * @param userSegmentId the user segment ID
 	 * @return the matching score point
 	 * @throws com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException if a matching score point could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ScorePoint findByC_U(long CTUserId, long assetCategoryId)
+	public ScorePoint findByC_U(long CTUserId, long userSegmentId)
 		throws NoSuchScorePointException, SystemException {
-		ScorePoint scorePoint = fetchByC_U(CTUserId, assetCategoryId);
+		ScorePoint scorePoint = fetchByC_U(CTUserId, userSegmentId);
 
 		if (scorePoint == null) {
 			StringBundler msg = new StringBundler(6);
@@ -649,8 +649,8 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 			msg.append("CTUserId=");
 			msg.append(CTUserId);
 
-			msg.append(", assetCategoryId=");
-			msg.append(assetCategoryId);
+			msg.append(", userSegmentId=");
+			msg.append(userSegmentId);
 
 			msg.append(StringPool.CLOSE_CURLY_BRACE);
 
@@ -665,32 +665,32 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	}
 
 	/**
-	 * Returns the score point where CTUserId = &#63; and assetCategoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the score point where CTUserId = &#63; and userSegmentId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param CTUserId the c t user ID
-	 * @param assetCategoryId the asset category ID
+	 * @param userSegmentId the user segment ID
 	 * @return the matching score point, or <code>null</code> if a matching score point could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ScorePoint fetchByC_U(long CTUserId, long assetCategoryId)
+	public ScorePoint fetchByC_U(long CTUserId, long userSegmentId)
 		throws SystemException {
-		return fetchByC_U(CTUserId, assetCategoryId, true);
+		return fetchByC_U(CTUserId, userSegmentId, true);
 	}
 
 	/**
-	 * Returns the score point where CTUserId = &#63; and assetCategoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the score point where CTUserId = &#63; and userSegmentId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param CTUserId the c t user ID
-	 * @param assetCategoryId the asset category ID
+	 * @param userSegmentId the user segment ID
 	 * @param retrieveFromCache whether to use the finder cache
 	 * @return the matching score point, or <code>null</code> if a matching score point could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ScorePoint fetchByC_U(long CTUserId, long assetCategoryId,
+	public ScorePoint fetchByC_U(long CTUserId, long userSegmentId,
 		boolean retrieveFromCache) throws SystemException {
-		Object[] finderArgs = new Object[] { CTUserId, assetCategoryId };
+		Object[] finderArgs = new Object[] { CTUserId, userSegmentId };
 
 		Object result = null;
 
@@ -703,7 +703,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 			ScorePoint scorePoint = (ScorePoint)result;
 
 			if ((CTUserId != scorePoint.getCTUserId()) ||
-					(assetCategoryId != scorePoint.getAssetCategoryId())) {
+					(userSegmentId != scorePoint.getUserSegmentId())) {
 				result = null;
 			}
 		}
@@ -715,7 +715,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 			query.append(_FINDER_COLUMN_C_U_CTUSERID_2);
 
-			query.append(_FINDER_COLUMN_C_U_ASSETCATEGORYID_2);
+			query.append(_FINDER_COLUMN_C_U_USERSEGMENTID_2);
 
 			String sql = query.toString();
 
@@ -730,7 +730,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 				qPos.add(CTUserId);
 
-				qPos.add(assetCategoryId);
+				qPos.add(userSegmentId);
 
 				List<ScorePoint> list = q.list();
 
@@ -753,7 +753,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 					cacheResult(scorePoint);
 
 					if ((scorePoint.getCTUserId() != CTUserId) ||
-							(scorePoint.getAssetCategoryId() != assetCategoryId)) {
+							(scorePoint.getUserSegmentId() != userSegmentId)) {
 						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U,
 							finderArgs, scorePoint);
 					}
@@ -779,35 +779,35 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	}
 
 	/**
-	 * Removes the score point where CTUserId = &#63; and assetCategoryId = &#63; from the database.
+	 * Removes the score point where CTUserId = &#63; and userSegmentId = &#63; from the database.
 	 *
 	 * @param CTUserId the c t user ID
-	 * @param assetCategoryId the asset category ID
+	 * @param userSegmentId the user segment ID
 	 * @return the score point that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ScorePoint removeByC_U(long CTUserId, long assetCategoryId)
+	public ScorePoint removeByC_U(long CTUserId, long userSegmentId)
 		throws NoSuchScorePointException, SystemException {
-		ScorePoint scorePoint = findByC_U(CTUserId, assetCategoryId);
+		ScorePoint scorePoint = findByC_U(CTUserId, userSegmentId);
 
 		return remove(scorePoint);
 	}
 
 	/**
-	 * Returns the number of score points where CTUserId = &#63; and assetCategoryId = &#63;.
+	 * Returns the number of score points where CTUserId = &#63; and userSegmentId = &#63;.
 	 *
 	 * @param CTUserId the c t user ID
-	 * @param assetCategoryId the asset category ID
+	 * @param userSegmentId the user segment ID
 	 * @return the number of matching score points
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_U(long CTUserId, long assetCategoryId)
+	public int countByC_U(long CTUserId, long userSegmentId)
 		throws SystemException {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_U;
 
-		Object[] finderArgs = new Object[] { CTUserId, assetCategoryId };
+		Object[] finderArgs = new Object[] { CTUserId, userSegmentId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -819,7 +819,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 			query.append(_FINDER_COLUMN_C_U_CTUSERID_2);
 
-			query.append(_FINDER_COLUMN_C_U_ASSETCATEGORYID_2);
+			query.append(_FINDER_COLUMN_C_U_USERSEGMENTID_2);
 
 			String sql = query.toString();
 
@@ -834,7 +834,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 
 				qPos.add(CTUserId);
 
-				qPos.add(assetCategoryId);
+				qPos.add(userSegmentId);
 
 				count = (Long)q.uniqueResult();
 
@@ -854,7 +854,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	}
 
 	private static final String _FINDER_COLUMN_C_U_CTUSERID_2 = "scorePoint.CTUserId = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_ASSETCATEGORYID_2 = "scorePoint.assetCategoryId = ?";
+	private static final String _FINDER_COLUMN_C_U_USERSEGMENTID_2 = "scorePoint.userSegmentId = ?";
 
 	public ScorePointPersistenceImpl() {
 		setModelClass(ScorePoint.class);
@@ -871,9 +871,8 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 			ScorePointImpl.class, scorePoint.getPrimaryKey(), scorePoint);
 
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U,
-			new Object[] {
-				scorePoint.getCTUserId(), scorePoint.getAssetCategoryId()
-			}, scorePoint);
+			new Object[] { scorePoint.getCTUserId(), scorePoint.getUserSegmentId() },
+			scorePoint);
 
 		scorePoint.resetOriginalValues();
 	}
@@ -951,7 +950,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	protected void cacheUniqueFindersCache(ScorePoint scorePoint) {
 		if (scorePoint.isNew()) {
 			Object[] args = new Object[] {
-					scorePoint.getCTUserId(), scorePoint.getAssetCategoryId()
+					scorePoint.getCTUserId(), scorePoint.getUserSegmentId()
 				};
 
 			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U, args,
@@ -964,8 +963,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 			if ((scorePointModelImpl.getColumnBitmask() &
 					FINDER_PATH_FETCH_BY_C_U.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						scorePoint.getCTUserId(),
-						scorePoint.getAssetCategoryId()
+						scorePoint.getCTUserId(), scorePoint.getUserSegmentId()
 					};
 
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U, args,
@@ -980,7 +978,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 		ScorePointModelImpl scorePointModelImpl = (ScorePointModelImpl)scorePoint;
 
 		Object[] args = new Object[] {
-				scorePoint.getCTUserId(), scorePoint.getAssetCategoryId()
+				scorePoint.getCTUserId(), scorePoint.getUserSegmentId()
 			};
 
 		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
@@ -990,7 +988,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 				FINDER_PATH_FETCH_BY_C_U.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					scorePointModelImpl.getOriginalCTUserId(),
-					scorePointModelImpl.getOriginalAssetCategoryId()
+					scorePointModelImpl.getOriginalUserSegmentId()
 				};
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U, args);
@@ -1190,7 +1188,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 		scorePointImpl.setUuid(scorePoint.getUuid());
 		scorePointImpl.setId(scorePoint.getId());
 		scorePointImpl.setCTUserId(scorePoint.getCTUserId());
-		scorePointImpl.setAssetCategoryId(scorePoint.getAssetCategoryId());
+		scorePointImpl.setUserSegmentId(scorePoint.getUserSegmentId());
 		scorePointImpl.setPoints(scorePoint.getPoints());
 
 		return scorePointImpl;
