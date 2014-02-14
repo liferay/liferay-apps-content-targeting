@@ -199,7 +199,7 @@ There are some issues with the Spring context and OSGI context. They can easily
 by bypassed deploying the apps when the server is already started or also adding
 this property to portal-ext.properties:
 
-`module.framework.properties.felix.fileinstall.start.level=20
+`module.framework.properties.felix.fileinstall.start.level=20`
 
 
 ## More Information
