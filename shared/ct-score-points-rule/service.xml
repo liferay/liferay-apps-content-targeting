@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.liferay.contenttargeting.rules.scorepoints">
+	<namespace>ScorePoints</namespace>
+	<entity name="ScorePoint" uuid="true" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="Id" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="CTUserId" type="long" />
+		<column name="userSegmentId" type="long" />
+		<column name="points" type="long" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="CTUserId" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="C_U" return-type="ScorePoint">
+			<finder-column name="CTUserId" />
+			<finder-column name="userSegmentId" />
+		</finder>
+	</entity>
+</service-builder>
