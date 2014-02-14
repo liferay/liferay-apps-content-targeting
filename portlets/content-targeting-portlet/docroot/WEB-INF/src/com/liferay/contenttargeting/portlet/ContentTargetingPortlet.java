@@ -336,32 +336,39 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			template.put("ruleKey", ruleKey);
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
+			long userSegmentId = ParamUtil.getLong(
+				portletRequest, "userSegmentId");
+
+			template.put("userSegmentId", userSegmentId);
+
+			if (userSegmentId > 0) {
+				template.put(
+					"userSegment",
+					_userSegmentLocalService.getUserSegment(userSegmentId));
+			}
+		}
+		else if (path.equals(ContentTargetingPath.MANAGE_RULES)) {
 			template.put("rulesRegistry", _rulesRegistry);
 
 			Map<String, Rule> rules = _rulesRegistry.getRules();
 
 			template.put("rules", rules.values());
 
-			UserSegment userSegment = null;
-
 			long userSegmentId = ParamUtil.getLong(
 				portletRequest, "userSegmentId");
 
 			if (userSegmentId > 0) {
-				userSegment = _userSegmentLocalService.getUserSegment(
-					userSegmentId);
-
 				List<RuleInstance> ruleInstances =
 					_ruleInstanceService.getRuleInstances(userSegmentId);
 
 				template.put("ruleInstances", ruleInstances);
-			}
-			else {
-				template.put("ruleInstances", new ArrayList<RuleInstance>());
-			}
 
-			template.put("userSegment", userSegment);
-			template.put("userSegmentId", userSegmentId);
+				UserSegment userSegment =
+					_userSegmentLocalService.getUserSegment(
+						userSegmentId);
+
+				template.put("userSegment", userSegment);
+			}
 		}
 	}
 
