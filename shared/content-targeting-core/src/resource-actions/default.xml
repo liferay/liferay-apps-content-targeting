@@ -12,13 +12,38 @@
 		<weight>1</weight>
 		<permissions>
 			<supports>
+				<action-key>ADD_CAMPAIGN</action-key>
 				<action-key>ADD_USER_SEGMENT</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
 			<site-member-defaults />
 			<guest-defaults />
 			<guest-unsupported>
+				<action-key>ADD_CAMPAIGN</action-key>
 				<action-key>ADD_USER_SEGMENT</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
+		<model-name>com.liferay.contenttargeting.model.Campaign</model-name>
+		<portlet-ref>
+			<portlet-name>ctcore</portlet-name>
+			<portlet-name>ctadmin</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults />
+			<guest-defaults />
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>PERMISSIONS</action-key>
+				<action-key>UPDATE</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

@@ -20,6 +20,8 @@ package com.liferay.contenttargeting.util;
 public class ActionKeys
 	extends com.liferay.portal.security.permission.ActionKeys {
 
+	public static final String ADD_CAMPAIGN = "ADD_CAMPAIGN";
+
 	public static final String ADD_USER_SEGMENT = "ADD_USER_SEGMENT";
 
 }
