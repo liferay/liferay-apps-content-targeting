@@ -14,7 +14,19 @@
 
 package com.liferay.contenttargeting.service.impl;
 
+import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.service.base.CampaignServiceBaseImpl;
+import com.liferay.contenttargeting.service.permission.CampaignPermission;
+import com.liferay.contenttargeting.service.permission.ContentTargetingPermission;
+import com.liferay.contenttargeting.util.ActionKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * The implementation of the campaign remote service.
@@ -26,10 +38,65 @@ import com.liferay.contenttargeting.service.base.CampaignServiceBaseImpl;
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
- * @author Brian Wing Shun Chan
+ * @author Eduardo Garcia
  * @see com.liferay.contenttargeting.service.base.CampaignServiceBaseImpl
  * @see com.liferay.contenttargeting.service.CampaignServiceUtil
  */
 public class CampaignServiceImpl extends CampaignServiceBaseImpl {
+
+	@Override
+	public Campaign addCampaign(
+			long userId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
+			int priority, long[] userSegmentIds, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		ContentTargetingPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.ADD_CAMPAIGN);
+
+		return campaignLocalService.addCampaign(
+			userId, nameMap, descriptionMap, startDate, endDate, priority,
+			userSegmentIds, serviceContext);
+	}
+
+	@Override
+	public Campaign deleteCampaign(long campaignId)
+		throws PortalException, SystemException {
+
+		CampaignPermission.check(
+			getPermissionChecker(), campaignId, ActionKeys.DELETE);
+
+		return campaignLocalService.deleteCampaign(campaignId);
+	}
+
+	@Override
+	public List<Campaign> getCampaigns(long groupId)
+		throws PortalException, SystemException {
+
+		return campaignLocalService.getCampaigns(new long[]{groupId});
+	}
+
+	@Override
+	public long getCampaignsCount(long groupId)
+		throws PortalException, SystemException {
+
+		return campaignLocalService.getCampaignsCount(groupId);
+	}
+
+	@Override
+	public Campaign updateCampaign(
+			long campaignId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
+			int priority, long[] userSegmentIds, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		CampaignPermission.check(
+			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
+
+		return campaignLocalService.updateCampaign(
+			campaignId, nameMap, descriptionMap, startDate, endDate, priority,
+			userSegmentIds, serviceContext);
+	}
 
 }
