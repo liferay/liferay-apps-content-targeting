@@ -31,9 +31,5 @@ import com.liferay.contenttargeting.service.base.CampaignServiceBaseImpl;
  * @see com.liferay.contenttargeting.service.CampaignServiceUtil
  */
 public class CampaignServiceImpl extends CampaignServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.contenttargeting.service.CampaignServiceUtil} to access the campaign remote service.
-	 */
+
 }

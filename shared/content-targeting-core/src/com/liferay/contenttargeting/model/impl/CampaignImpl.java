@@ -24,11 +24,8 @@ package com.liferay.contenttargeting.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class CampaignImpl extends CampaignBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a campaign model instance should use the {@link com.liferay.contenttargeting.model.Campaign} interface instead.
-	 */
+
 	public CampaignImpl() {
 	}
+
 }

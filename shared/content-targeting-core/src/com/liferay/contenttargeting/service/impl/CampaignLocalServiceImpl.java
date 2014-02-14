@@ -31,9 +31,5 @@ import com.liferay.contenttargeting.service.base.CampaignLocalServiceBaseImpl;
  * @see com.liferay.contenttargeting.service.CampaignLocalServiceUtil
  */
 public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.contenttargeting.service.CampaignLocalServiceUtil} to access the campaign local service.
-	 */
+
 }
