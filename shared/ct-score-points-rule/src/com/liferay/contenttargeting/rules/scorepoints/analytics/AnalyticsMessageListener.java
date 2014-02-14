@@ -40,9 +40,7 @@ public class AnalyticsMessageListener implements MessageListener {
 		long ctUserId = message.getLong("ctUserId");
 		long groupId = message.getLong("groupId");
 
-		if (_log.isDebugEnabled()) {
-			_log.debug(message);
-		}
+		ScorePointsAssigner.assignPoints(groupId, ctUserId, className, classPK);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
