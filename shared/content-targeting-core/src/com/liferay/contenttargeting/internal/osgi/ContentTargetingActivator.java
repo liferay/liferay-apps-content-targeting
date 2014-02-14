@@ -19,7 +19,9 @@ import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
+import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.MessageListenerException;
@@ -92,9 +94,11 @@ public class ContentTargetingActivator
 
 		SerialDestination destination = new SerialDestination(DESTINATION_NAME);
 
-		MessageBusUtil.addDestination(destination);
+		MessageBus messageBus = ServiceTrackerUtil.getService(MessageBus.class, bundleContext);
 
-		MessageBusUtil.registerMessageListener(DESTINATION_NAME, this);
+		messageBus.addDestination(destination);
+
+		messageBus.registerMessageListener(DESTINATION_NAME, this);
 	}
 
 	@Override
