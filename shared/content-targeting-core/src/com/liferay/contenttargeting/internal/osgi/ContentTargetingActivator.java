@@ -15,6 +15,8 @@
 package com.liferay.contenttargeting.internal.osgi;
 
 import com.liferay.contenttargeting.service.CTUserLocalService;
+import com.liferay.contenttargeting.service.CampaignLocalService;
+import com.liferay.contenttargeting.service.CampaignService;
 import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
@@ -45,6 +47,22 @@ public class ContentTargetingActivator
 
 		ApplicationContext applicationContext =
 			(ApplicationContext)message.getPayload();
+
+		CampaignLocalService campaignLocalService =
+			(CampaignLocalService)applicationContext.getBean(
+				CampaignLocalService.class.getName());
+
+		_campaignLocalServiceServiceRegistration =
+			_bundleContext.registerService(
+				CampaignLocalService.class, campaignLocalService, null);
+
+		CampaignService campaignService =
+			(CampaignService)applicationContext.getBean(
+				CampaignService.class.getName());
+
+		_campaignServiceServiceRegistration =
+			_bundleContext.registerService(
+				CampaignService.class, campaignService, null);
 
 		CTUserLocalService ctUserLocalService =
 			(CTUserLocalService)applicationContext.getBean(
@@ -108,6 +126,18 @@ public class ContentTargetingActivator
 
 		MessageBusUtil.unregisterMessageListener(DESTINATION_NAME, this);
 
+		if (_campaignLocalServiceServiceRegistration != null) {
+			_campaignLocalServiceServiceRegistration.unregister();
+
+			_campaignLocalServiceServiceRegistration = null;
+		}
+
+		if (_campaignServiceServiceRegistration != null) {
+			_campaignServiceServiceRegistration.unregister();
+
+			_campaignServiceServiceRegistration = null;
+		}
+
 		if (_ctUserLocalServiceServiceRegistration != null) {
 			_ctUserLocalServiceServiceRegistration.unregister();
 
@@ -143,6 +173,10 @@ public class ContentTargetingActivator
 		"content-targeting-core-spring";
 
 	private BundleContext _bundleContext;
+	private ServiceRegistration<CampaignLocalService>
+		_campaignLocalServiceServiceRegistration;
+	private ServiceRegistration<CampaignService>
+		_campaignServiceServiceRegistration;
 	private ServiceRegistration<CTUserLocalService>
 		_ctUserLocalServiceServiceRegistration;
 	private ServiceRegistration<RuleInstanceLocalService>
