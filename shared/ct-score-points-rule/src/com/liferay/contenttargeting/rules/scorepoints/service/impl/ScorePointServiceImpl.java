@@ -31,9 +31,11 @@ import com.liferay.contenttargeting.rules.scorepoints.service.base.ScorePointSer
  * @see com.liferay.contenttargeting.rules.scorepoints.service.ScorePointServiceUtil
  */
 public class ScorePointServiceImpl extends ScorePointServiceBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.contenttargeting.rules.scorepoints.service.ScorePointServiceUtil} to access the score point remote service.
 	 */
+
 }

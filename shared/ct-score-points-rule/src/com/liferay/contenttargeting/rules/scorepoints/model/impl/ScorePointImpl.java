@@ -24,11 +24,14 @@ package com.liferay.contenttargeting.rules.scorepoints.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class ScorePointImpl extends ScorePointBaseImpl {
-	/*
+
+	/**
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never reference this class directly. All methods that expect a score point model instance should use the {@link com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint} interface instead.
 	 */
+
 	public ScorePointImpl() {
 	}
+
 }
