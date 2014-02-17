@@ -47,7 +47,6 @@ import freemarker.ext.beans.BeansWrapper;
 
 import freemarker.template.TemplateHashModel;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -260,6 +259,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put(
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 		template.put(
+			"tabs1", ParamUtil.getString(portletRequest, "tabs1", "campaigns"));
+		template.put(
 			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
 		template.put("userSegmentClass", UserSegment.class);
 
@@ -370,8 +371,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				template.put("ruleInstances", ruleInstances);
 
 				UserSegment userSegment =
-					_userSegmentLocalService.getUserSegment(
-						userSegmentId);
+					_userSegmentLocalService.getUserSegment(userSegmentId);
 
 				template.put("userSegment", userSegment);
 			}
