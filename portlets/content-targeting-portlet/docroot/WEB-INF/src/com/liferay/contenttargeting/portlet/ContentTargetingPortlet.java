@@ -16,6 +16,7 @@ package com.liferay.contenttargeting.portlet;
 
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
+import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.portlet.util.UnavailableServiceException;
@@ -33,6 +34,8 @@ import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.util.DateFormatFactory;
+import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -47,6 +50,7 @@ import freemarker.ext.beans.BeansWrapper;
 
 import freemarker.template.TemplateHashModel;
 
+import java.text.Format;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -67,6 +71,23 @@ import org.osgi.framework.FrameworkUtil;
  * @author Carlos Sierra Andrés
  */
 public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
+
+	public void deleteCampaign(ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		long campaignId = ParamUtil.getLong(request, "campaignId");
+
+		try {
+			_campaignService.deleteCampaign(campaignId);
+
+			sendRedirect(request, response);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+
+			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
+		}
+	}
 
 	public void deleteRuleInstance(
 			ActionRequest request, ActionResponse response)
@@ -249,6 +270,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		TemplateHashModel staticModels = wrapper.getStaticModels();
 
+		template.put("campaignClass", Campaign.class);
 		template.put(
 			"contentTargetingPath",
 			staticModels.get(
@@ -281,6 +303,11 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					"com.liferay.contenttargeting.util.ActionKeys"));
 
 			template.put(
+				"campaignPermission",
+				staticModels.get(
+					"com.liferay.contenttargeting.service.permission." +
+						"CampaignPermission"));
+			template.put(
 				"contentTargetingPermission",
 				staticModels.get(
 					"com.liferay.contenttargeting.service.permission." +
@@ -295,11 +322,23 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				(ThemeDisplay)portletRequest.getAttribute(
 					WebKeys.THEME_DISPLAY);
 
+			List<Campaign> campaigns = _campaignService.getCampaigns(
+				themeDisplay.getScopeGroupId());
+
+			template.put("campaigns", campaigns);
+
 			List<UserSegment> userSegments =
 				_userSegmentService.getUserSegments(
 					themeDisplay.getScopeGroupId());
 
 			template.put("userSegments", userSegments);
+
+			Format displayFormatDate =
+				FastDateFormatFactoryUtil.getSimpleDateFormat(
+					"yyyy-MM-dd HH:mm", themeDisplay.getLocale(),
+					themeDisplay.getTimeZone());
+
+			template.put("displayFormatDate", displayFormatDate);
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_RULE_INSTANCE)) {
 			template.put("ruleInstanceClass", RuleInstance.class);
