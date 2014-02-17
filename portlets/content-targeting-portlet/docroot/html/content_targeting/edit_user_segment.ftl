@@ -18,7 +18,7 @@
 
 <@liferay_ui["header"]
 	backURL="${redirect}"
-	title="new-user-segment"
+	title='${(userSegment.getName(locale))!"new-user-segment"}'
 />
 
 <@portlet["actionURL"] name="updateUserSegment" var="addUserSegmentURL" />
