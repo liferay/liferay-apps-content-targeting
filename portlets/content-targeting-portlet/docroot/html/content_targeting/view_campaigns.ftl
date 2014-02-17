@@ -16,6 +16,19 @@
 
 <#include "../init.ftl" />
 
+<#if contentTargetingPermission.contains(permissionChecker, scopeGroupId, actionKeys.ADD_CAMPAIGN)>
+	<@aui["nav-bar"]>
+		<@aui["nav"]>
+			<@portlet["renderURL"] var="addCampaignURL">
+				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
+				<@portlet["param"] name="redirect" value="${currentURL}" />
+			</@>
+
+			<@aui["nav-item"] href="${addCampaignURL}" iconCssClass="icon-plus" label="add-campaign" />
+		</@>
+	</@>
+</#if>
+
 <@liferay_ui["search-container"]
 	emptyResultsMessage="no-campaigns-were-found"
 	iteratorURL=renderResponse.createRenderURL()
@@ -60,6 +73,20 @@
 			name=""
 		>
 			<@liferay_ui["icon-menu"]>
+				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
+					<@portlet["renderURL"] var="editCampaignURL">
+						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
+						<@portlet["param"] name="redirect" value="${currentURL}" />
+						<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
+					</@>
+
+					<@liferay_ui["icon"]
+						image="edit"
+						method="get"
+						url="${editCampaignURL}"
+					/>
+				</#if>
+
 				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.DELETE)>
 					<@portlet["actionURL"] name="deleteCampaign" var="deleteCampaignURL">
 						<@portlet["param"] name="redirect" value="${currentURL}" />
