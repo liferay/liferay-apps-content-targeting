@@ -19,7 +19,10 @@
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
 		<field name="name" type="String" localized="true" />
-		<field name="description" type="String" localized="true" />
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+			<hint name="display-width">300</hint>
+		</field>
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
 		<field name="priority" type="int" />
