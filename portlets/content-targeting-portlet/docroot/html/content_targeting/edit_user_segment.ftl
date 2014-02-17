@@ -29,7 +29,7 @@
 
 	<@aui["model-context"] bean=userSegment model=userSegmentClass />
 
-	<@aui["input"] name="name" />
+	<@aui["input"] name="name" required=true />
 
 	<@aui["input"] name="description" />
 
