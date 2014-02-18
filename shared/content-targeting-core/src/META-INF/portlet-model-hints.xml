@@ -18,7 +18,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" localized="true" />
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
 		<field name="description" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">300</hint>
@@ -65,7 +67,9 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" localized="true" />
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
 		<field name="description" type="String" localized="true">
 			<hint-collection name="TEXTAREA" />
 			<hint name="display-width">300</hint>

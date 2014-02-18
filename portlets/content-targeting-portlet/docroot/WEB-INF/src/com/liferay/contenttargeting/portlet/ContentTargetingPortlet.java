@@ -182,7 +182,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		int priority = ParamUtil.getInteger(request, "priority");
 
-		// First implementation: one user segment per campaign
+		// Initially, only one user segment per campaign is supported
 
 		long[] userSegmentIds = null;
 
@@ -421,7 +421,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				priority = campaign.getPriority();
 
-				// First implementation: one user segment per campaign
+				// Initially, only one user segment per campaign is supported
 
 				if ((campaignUserSegments != null) &&
 					!campaignUserSegments.isEmpty()) {
@@ -545,7 +545,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(
-				themeDisplay.getTimeZone(), themeDisplay.getLocale());
+			themeDisplay.getTimeZone(), themeDisplay.getLocale());
 
 		calendar.set(Calendar.MONTH, dateMonth);
 		calendar.set(Calendar.DATE, dateDay);

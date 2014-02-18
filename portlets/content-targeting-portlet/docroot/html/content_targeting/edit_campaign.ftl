@@ -29,7 +29,7 @@
 
 	<@aui["model-context"] bean=campaign model=campaignClass />
 
-	<@aui["input"] name="name" required=true />
+	<@aui["input"] name="name" />
 
 	<@aui["input"] name="description" />
 
