@@ -4,8 +4,4 @@
     <listener>
         <listener-class>com.liferay.portal.kernel.servlet.PluginContextListener</listener-class>
     </listener>
-	<context-param>
-		<param-name>portalContextConfigLocation</param-name>
-		<param-value>/WEB-INF/classes/META-INF/analytics-spring.xml</param-value>
-	</context-param>
 </web-app>
