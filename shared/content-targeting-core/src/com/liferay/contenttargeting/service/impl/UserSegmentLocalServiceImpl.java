@@ -139,6 +139,13 @@ public class UserSegmentLocalServiceImpl
 	}
 
 	@Override
+	public long getUserSegmentsCount(long[] groupIds)
+		throws PortalException, SystemException {
+
+		return userSegmentPersistence.countByGroupId(groupIds);
+	}
+
+	@Override
 	public UserSegment updateUserSegment(
 			long userSegmentId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)

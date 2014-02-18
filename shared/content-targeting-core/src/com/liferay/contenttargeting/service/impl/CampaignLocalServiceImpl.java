@@ -105,6 +105,13 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	}
 
 	@Override
+	public long getCampaignsCount(long[] groupIds)
+		throws PortalException, SystemException {
+
+		return campaignPersistence.countByGroupId(groupIds);
+	}
+
+	@Override
 	public Campaign updateCampaign(
 			long campaignId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
