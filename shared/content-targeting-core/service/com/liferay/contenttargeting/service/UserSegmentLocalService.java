@@ -440,6 +440,11 @@ public interface UserSegmentLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getUserSegmentsCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.contenttargeting.model.UserSegment updateUserSegment(
 		long userSegmentId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

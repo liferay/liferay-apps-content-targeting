@@ -510,6 +510,12 @@ public class UserSegmentLocalServiceUtil {
 		return getService().getUserSegmentsCount(groupId);
 	}
 
+	public static long getUserSegmentsCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSegmentsCount(groupIds);
+	}
+
 	public static com.liferay.contenttargeting.model.UserSegment updateUserSegment(
 		long userSegmentId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

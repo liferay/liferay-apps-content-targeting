@@ -549,6 +549,13 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	}
 
 	@Override
+	public long getCampaignsCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _campaignLocalService.getCampaignsCount(groupIds);
+	}
+
+	@Override
 	public com.liferay.contenttargeting.model.Campaign updateCampaign(
 		long campaignId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

@@ -512,6 +512,12 @@ public class CampaignLocalServiceUtil {
 		return getService().getCampaignsCount(groupId);
 	}
 
+	public static long getCampaignsCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCampaignsCount(groupIds);
+	}
+
 	public static com.liferay.contenttargeting.model.Campaign updateCampaign(
 		long campaignId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

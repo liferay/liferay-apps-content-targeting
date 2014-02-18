@@ -442,6 +442,11 @@ public interface CampaignLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getCampaignsCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.contenttargeting.model.Campaign updateCampaign(
 		long campaignId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

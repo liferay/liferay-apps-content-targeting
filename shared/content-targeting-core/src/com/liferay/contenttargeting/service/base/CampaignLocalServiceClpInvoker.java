@@ -221,9 +221,13 @@ public class CampaignLocalServiceClpInvoker {
 
 		_methodParameterTypes81 = new String[] { "long" };
 
-		_methodName82 = "updateCampaign";
+		_methodName82 = "getCampaignsCount";
 
-		_methodParameterTypes82 = new String[] {
+		_methodParameterTypes82 = new String[] { "long[][]" };
+
+		_methodName83 = "updateCampaign";
+
+		_methodParameterTypes83 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
 				"java.util.Date", "int", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
@@ -497,6 +501,11 @@ public class CampaignLocalServiceClpInvoker {
 
 		if (_methodName82.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
+			return CampaignLocalServiceUtil.getCampaignsCount((long[])arguments[0]);
+		}
+
+		if (_methodName83.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
 			return CampaignLocalServiceUtil.updateCampaign(((Long)arguments[0]).longValue(),
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -594,4 +603,6 @@ public class CampaignLocalServiceClpInvoker {
 	private String[] _methodParameterTypes81;
 	private String _methodName82;
 	private String[] _methodParameterTypes82;
+	private String _methodName83;
+	private String[] _methodParameterTypes83;
 }
