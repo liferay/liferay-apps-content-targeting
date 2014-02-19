@@ -84,6 +84,16 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	}
 
 	@Override
+	public Campaign fetchCurrentMaxPriorityCampaign(
+			long groupId, long[] userSegmentIds)
+		throws SystemException {
+
+		Date now = new Date();
+
+		return campaignFinder.fetchByG_D_U(groupId, now, userSegmentIds);
+	}
+
+	@Override
 	public List<Campaign> getCampaigns(long groupId)
 		throws PortalException, SystemException {
 
