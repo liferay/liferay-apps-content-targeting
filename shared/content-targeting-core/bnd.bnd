@@ -37,6 +37,7 @@ Import-Package = com.liferay.contenttargeting,\
 	com.liferay.portal.kernel.transaction,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.kernel.uuid,\
+	com.liferay.portal.kernel.xml,\
 	com.liferay.portal.model,\
 	com.liferay.portal.model.impl,\
 	com.liferay.portal.security.auth,\
