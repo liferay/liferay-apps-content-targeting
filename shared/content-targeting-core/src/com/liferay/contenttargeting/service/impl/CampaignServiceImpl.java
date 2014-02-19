@@ -74,14 +74,14 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 	public List<Campaign> getCampaigns(long groupId)
 		throws PortalException, SystemException {
 
-		return campaignLocalService.getCampaigns(new long[]{groupId});
+		return campaignPersistence.filterFindByGroupId(groupId);
 	}
 
 	@Override
 	public long getCampaignsCount(long groupId)
 		throws PortalException, SystemException {
 
-		return campaignLocalService.getCampaignsCount(groupId);
+		return campaignPersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override
