@@ -16,12 +16,17 @@
 
 <#include "../init.ftl" />
 
+<@portlet["renderURL"] var="viewUserSegmentsURL">
+	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+	<@portlet["param"] name="tabs1" value="user-segments" />
+</@>
+
 <#if contentTargetingPermission.contains(permissionChecker, scopeGroupId, actionKeys.ADD_USER_SEGMENT)>
 	<@aui["nav-bar"]>
 		<@aui["nav"]>
 			<@portlet["renderURL"] var="addUserSegmentURL">
 				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-				<@portlet["param"] name="redirect" value="${currentURL}" />
+				<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
 			</@>
 
 			<@aui["nav-item"] href="${addUserSegmentURL}" iconCssClass="icon-plus" label="add-user-segment" />
@@ -61,7 +66,7 @@
 				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.UPDATE)>
 					<@portlet["renderURL"] var="manageRulesURL">
 						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.MANAGE_RULES}" />
-						<@portlet["param"] name="redirect" value="${currentURL}" />
+						<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
 						<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
 					</@>
 
@@ -74,7 +79,7 @@
 
 					<@portlet["renderURL"] var="editUserSegmentURL">
 						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-						<@portlet["param"] name="redirect" value="${currentURL}" />
+						<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
 						<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
 					</@>
 
@@ -87,7 +92,7 @@
 
 				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.DELETE)>
 					<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
-						<@portlet["param"] name="redirect" value="${currentURL}" />
+						<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
 						<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
 					</@>
 

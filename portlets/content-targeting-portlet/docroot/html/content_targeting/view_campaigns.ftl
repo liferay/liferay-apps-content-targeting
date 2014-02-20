@@ -16,12 +16,17 @@
 
 <#include "../init.ftl" />
 
+<@portlet["renderURL"] var="viewCampaignsURL">
+	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+	<@portlet["param"] name="tabs1" value="campaigns" />
+</@>
+
 <#if contentTargetingPermission.contains(permissionChecker, scopeGroupId, actionKeys.ADD_CAMPAIGN)>
 	<@aui["nav-bar"]>
 		<@aui["nav"]>
 			<@portlet["renderURL"] var="addCampaignURL">
 				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-				<@portlet["param"] name="redirect" value="${currentURL}" />
+				<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
 			</@>
 
 			<@aui["nav-item"] href="${addCampaignURL}" iconCssClass="icon-plus" label="add-campaign" />
@@ -76,7 +81,7 @@
 				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
 					<@portlet["renderURL"] var="editCampaignURL">
 						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-						<@portlet["param"] name="redirect" value="${currentURL}" />
+						<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
 						<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
 					</@>
 
@@ -89,7 +94,7 @@
 
 				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.DELETE)>
 					<@portlet["actionURL"] name="deleteCampaign" var="deleteCampaignURL">
-						<@portlet["param"] name="redirect" value="${currentURL}" />
+						<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
 						<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
 					</@>
 
