@@ -294,6 +294,11 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
+					"com.liferay.contenttargeting.UsedUserSegmentException")) {
+			return new com.liferay.contenttargeting.UsedUserSegmentException();
+		}
+
+		if (className.equals(
 					"com.liferay.contenttargeting.NoSuchCampaignException")) {
 			return new com.liferay.contenttargeting.NoSuchCampaignException();
 		}
