@@ -17,6 +17,7 @@ package com.liferay.osgi.util;
 import com.liferay.portal.kernel.util.ProxyUtil;
 
 import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 import org.osgi.framework.BundleContext;
@@ -64,7 +65,12 @@ public class ServiceTrackerUtil {
 						throw new OsgiServiceUnavailableException(clazz);
 					}
 
-					return method.invoke(service, parameters);
+					try {
+						return method.invoke(service, parameters);
+					}
+					catch(InvocationTargetException ite) {
+						throw ite.getTargetException();
+					}
 				}
 			});
 
