@@ -47,13 +47,21 @@ public class UserSegmentServiceClp implements UserSegmentService {
 
 		_methodParameterTypes5 = new String[] { "long" };
 
-		_methodName6 = "getUserSegmentsCount";
+		_methodName6 = "getUserSegments";
 
-		_methodParameterTypes6 = new String[] { "long" };
+		_methodParameterTypes6 = new String[] { "long[][]" };
 
-		_methodName7 = "updateUserSegment";
+		_methodName7 = "getUserSegmentsCount";
 
-		_methodParameterTypes7 = new String[] {
+		_methodParameterTypes7 = new String[] { "long" };
+
+		_methodName8 = "getUserSegmentsCount";
+
+		_methodParameterTypes8 = new String[] { "long[][]" };
+
+		_methodName9 = "updateUserSegment";
+
+		_methodParameterTypes9 = new String[] {
 				"long", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -223,14 +231,83 @@ public class UserSegmentServiceClp implements UserSegmentService {
 	}
 
 	@Override
-	public long getUserSegmentsCount(long groupId)
+	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
+		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName6,
-					_methodParameterTypes6, new Object[] { groupId });
+					_methodParameterTypes6,
+					new Object[] { ClpSerializer.translateInput(groupIds) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.contenttargeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public long getUserSegmentsCount(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7, new Object[] { groupId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Long)returnObj).longValue();
+	}
+
+	@Override
+	public long getUserSegmentsCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName8,
+					_methodParameterTypes8,
+					new Object[] { ClpSerializer.translateInput(groupIds) });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -266,8 +343,8 @@ public class UserSegmentServiceClp implements UserSegmentService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName7,
-					_methodParameterTypes7,
+			returnObj = _invokableService.invokeMethod(_methodName9,
+					_methodParameterTypes9,
 					new Object[] {
 						userSegmentId,
 						
@@ -316,4 +393,8 @@ public class UserSegmentServiceClp implements UserSegmentService {
 	private String[] _methodParameterTypes6;
 	private String _methodName7;
 	private String[] _methodParameterTypes7;
+	private String _methodName8;
+	private String[] _methodParameterTypes8;
+	private String _methodName9;
+	private String[] _methodParameterTypes9;
 }

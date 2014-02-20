@@ -88,10 +88,23 @@ public class UserSegmentServiceUtil {
 		return getService().getUserSegments(groupId);
 	}
 
+	public static java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSegments(groupIds);
+	}
+
 	public static long getUserSegmentsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserSegmentsCount(groupId);
+	}
+
+	public static long getUserSegmentsCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSegmentsCount(groupIds);
 	}
 
 	public static com.liferay.contenttargeting.model.UserSegment updateUserSegment(

@@ -84,10 +84,25 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentService.getUserSegments(groupIds);
+	}
+
+	@Override
 	public long getUserSegmentsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userSegmentService.getUserSegmentsCount(groupId);
+	}
+
+	@Override
+	public long getUserSegmentsCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentService.getUserSegmentsCount(groupIds);
 	}
 
 	@Override

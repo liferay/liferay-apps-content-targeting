@@ -47,13 +47,21 @@ public class UserSegmentServiceClpInvoker {
 
 		_methodParameterTypes44 = new String[] { "long" };
 
-		_methodName45 = "getUserSegmentsCount";
+		_methodName45 = "getUserSegments";
 
-		_methodParameterTypes45 = new String[] { "long" };
+		_methodParameterTypes45 = new String[] { "long[][]" };
 
-		_methodName46 = "updateUserSegment";
+		_methodName46 = "getUserSegmentsCount";
 
-		_methodParameterTypes46 = new String[] {
+		_methodParameterTypes46 = new String[] { "long" };
+
+		_methodName47 = "getUserSegmentsCount";
+
+		_methodParameterTypes47 = new String[] { "long[][]" };
+
+		_methodName48 = "updateUserSegment";
+
+		_methodParameterTypes48 = new String[] {
 				"long", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -93,11 +101,21 @@ public class UserSegmentServiceClpInvoker {
 
 		if (_methodName45.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
-			return UserSegmentServiceUtil.getUserSegmentsCount(((Long)arguments[0]).longValue());
+			return UserSegmentServiceUtil.getUserSegments((long[])arguments[0]);
 		}
 
 		if (_methodName46.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+			return UserSegmentServiceUtil.getUserSegmentsCount(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName47.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
+			return UserSegmentServiceUtil.getUserSegmentsCount((long[])arguments[0]);
+		}
+
+		if (_methodName48.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
 			return UserSegmentServiceUtil.updateUserSegment(((Long)arguments[0]).longValue(),
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -121,4 +139,8 @@ public class UserSegmentServiceClpInvoker {
 	private String[] _methodParameterTypes45;
 	private String _methodName46;
 	private String[] _methodParameterTypes46;
+	private String _methodName47;
+	private String[] _methodParameterTypes47;
+	private String _methodName48;
+	private String[] _methodParameterTypes48;
 }

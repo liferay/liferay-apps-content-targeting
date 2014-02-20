@@ -120,10 +120,39 @@ public class UserSegmentServiceSoap {
 		}
 	}
 
+	public static com.liferay.contenttargeting.model.UserSegmentSoap[] getUserSegments(
+		long[] groupIds) throws RemoteException {
+		try {
+			java.util.List<com.liferay.contenttargeting.model.UserSegment> returnValue =
+				UserSegmentServiceUtil.getUserSegments(groupIds);
+
+			return com.liferay.contenttargeting.model.UserSegmentSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static long getUserSegmentsCount(long groupId)
 		throws RemoteException {
 		try {
 			long returnValue = UserSegmentServiceUtil.getUserSegmentsCount(groupId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static long getUserSegmentsCount(long[] groupIds)
+		throws RemoteException {
+		try {
+			long returnValue = UserSegmentServiceUtil.getUserSegmentsCount(groupIds);
 
 			return returnValue;
 		}
