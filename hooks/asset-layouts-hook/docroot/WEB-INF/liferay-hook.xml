@@ -2,4 +2,8 @@
 <!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.2.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_2_0.dtd">
 
 <hook>
+	<service>
+		<service-type>com.liferay.portal.service.LayoutLocalService</service-type>
+		<service-impl>com.liferay.assetlayouts.service.impl.AssetLayoutsLayoutLocalServiceImpl</service-impl>
+	</service>
 </hook>
