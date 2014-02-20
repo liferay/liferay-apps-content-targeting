@@ -14,6 +14,8 @@
 
 package com.liferay.contenttargeting.service.impl;
 
+import com.liferay.contenttargeting.UsedUserSegmentException;
+import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.base.UserSegmentLocalServiceBaseImpl;
@@ -93,6 +95,13 @@ public class UserSegmentLocalServiceImpl
 	@Override
 	public UserSegment deleteUserSegment(long userSegmentId)
 		throws PortalException, SystemException {
+
+		List<Campaign> campaigns = userSegmentPersistence.getCampaigns(
+			userSegmentId);
+
+		if (!campaigns.isEmpty()) {
+			throw new UsedUserSegmentException(campaigns);
+		}
 
 		UserSegment userSegment = userSegmentPersistence.remove(userSegmentId);
 
