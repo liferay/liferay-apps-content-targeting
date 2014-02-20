@@ -34,6 +34,16 @@
 	</@>
 </#if>
 
+<@liferay_ui["error"] exception=usedUserSegmentExceptionClass>
+	<@liferay_ui["message"] key="this-user-segment-can-not-be-deleted-because-it-is-used-by-the-following-campaigns" />
+
+	<ul>
+		<#list errorException.getCampaigns() as campaign>
+			<li>${campaign.getName(locale)}</li>
+		</#list>
+	</ul>
+</@>
+
 <@liferay_ui["search-container"]
 	emptyResultsMessage="no-user-segments-were-found"
 	iteratorURL=renderResponse.createRenderURL()

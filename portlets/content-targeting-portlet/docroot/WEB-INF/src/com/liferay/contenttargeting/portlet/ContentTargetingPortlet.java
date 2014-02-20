@@ -14,6 +14,7 @@
 
 package com.liferay.contenttargeting.portlet;
 
+import com.liferay.contenttargeting.UsedUserSegmentException;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.Campaign;
@@ -122,9 +123,22 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			sendRedirect(request, response);
 		}
 		catch (Exception e) {
-			SessionErrors.add(request, e.getClass().getName());
+			SessionErrors.add(request, e.getClass().getName(), e);
 
-			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
+			if (e instanceof UsedUserSegmentException) {
+				SessionMessages.add(
+					request,
+					PortalUtil.getPortletId(request) +
+						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.VIEW);
+				response.setRenderParameter("tabs1", "user-segments");
+			}
+			else {
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.ERROR);
+			}
 		}
 	}
 
@@ -392,6 +406,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			template.put("campaigns", campaigns);
 			template.put("userSegments", userSegments);
+			template.put(
+				"usedUserSegmentExceptionClass",
+				UsedUserSegmentException.class);
 
 			Format displayFormatDate =
 				FastDateFormatFactoryUtil.getSimpleDateFormat(
