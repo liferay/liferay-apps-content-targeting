@@ -76,10 +76,24 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 	}
 
 	@Override
+	public List<UserSegment> getUserSegments(long[] groupIds)
+		throws PortalException, SystemException {
+
+		return userSegmentPersistence.filterFindByGroupId(groupIds);
+	}
+
+	@Override
 	public long getUserSegmentsCount(long groupId)
 		throws PortalException, SystemException {
 
 		return userSegmentPersistence.filterCountByGroupId(groupId);
+	}
+
+	@Override
+	public long getUserSegmentsCount(long[] groupIds)
+		throws PortalException, SystemException {
+
+		return userSegmentPersistence.filterCountByGroupId(groupIds);
 	}
 
 	@Override
