@@ -768,6 +768,12 @@ public class UserSegmentWrapper implements UserSegment,
 	}
 
 	@Override
+	public java.lang.String getNameWithGroupName(java.util.Locale locale,
+		long groupId) {
+		return _userSegment.getNameWithGroupName(locale, groupId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _userSegment.getRuleInstances();
@@ -778,12 +784,6 @@ public class UserSegmentWrapper implements UserSegment,
 		com.liferay.contenttargeting.api.model.RulesRegistry rulesRegistry)
 		throws java.lang.Exception {
 		return _userSegment.matches(ctUser, rulesRegistry);
-	}
-
-	@Override
-	public java.lang.String getGroupedName(java.util.Locale locale,
-		long scopeGroupId) {
-		return _userSegment.getGroupedName(locale, scopeGroupId);
 	}
 
 	@Override
