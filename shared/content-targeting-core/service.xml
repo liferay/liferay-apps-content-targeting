@@ -155,4 +155,7 @@
 			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
 	</entity>
+	<exceptions>
+		<exception>UsedUserSegment</exception>
+	</exceptions>
 </service-builder>
