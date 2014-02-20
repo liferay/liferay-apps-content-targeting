@@ -27,6 +27,7 @@ import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
+import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.osgi.util.OsgiServiceUnavailableException;
 import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -376,9 +377,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		List<UserSegment> userSegments = _userSegmentService.getUserSegments(
-			themeDisplay.getScopeGroupId());
-
 		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW)) {
 			template.put(
 				"actionKeys",
@@ -405,6 +403,11 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				themeDisplay.getScopeGroupId());
 
 			template.put("campaigns", campaigns);
+
+			List<UserSegment> userSegments =
+				_userSegmentService.getUserSegments(
+					themeDisplay.getScopeGroupId());
+
 			template.put("userSegments", userSegments);
 			template.put(
 				"usedUserSegmentExceptionClass",
@@ -452,6 +455,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			template.put("priority", priority);
 			template.put("userSegmentId", userSegmentId);
+
+			long[] groupIds =
+				ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+					themeDisplay.getScopeGroupId());
+
+			List<UserSegment> userSegments =
+				_userSegmentService.getUserSegments(groupIds);
+
 			template.put("userSegments", userSegments);
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_RULE_INSTANCE)) {

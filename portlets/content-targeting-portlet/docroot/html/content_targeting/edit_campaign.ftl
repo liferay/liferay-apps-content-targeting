@@ -37,7 +37,7 @@
 		<@aui["option"] label="" selected=(userSegmentId == -1) value="-1" />
 
 		<#list userSegments as userSegment>
-			<@aui["option"] label="${userSegment.getName(locale)}" selected=(userSegmentId == userSegment.getUserSegmentId()) value="${userSegment.getUserSegmentId()}" />
+			<@aui["option"] label="${userSegment.getGroupedName(locale, themeDisplay.getScopeGroupId())}" selected=(userSegmentId == userSegment.getUserSegmentId()) value="${userSegment.getUserSegmentId()}" />
 		</#list>
 	</@>
 
