@@ -28,6 +28,12 @@ public class UsedUserSegmentException extends PortalException {
 		super();
 	}
 
+	public UsedUserSegmentException(List<Campaign> campaigns) {
+		super();
+
+		_campaigns = campaigns;
+	}
+
 	public UsedUserSegmentException(String msg) {
 		super(msg);
 	}
@@ -38,12 +44,6 @@ public class UsedUserSegmentException extends PortalException {
 
 	public UsedUserSegmentException(Throwable cause) {
 		super(cause);
-	}
-
-	public UsedUserSegmentException(List<Campaign> campaigns) {
-		super();
-
-		_campaigns = campaigns;
 	}
 
 	public List<Campaign> getCampaigns() {
