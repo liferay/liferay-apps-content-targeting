@@ -37,4 +37,7 @@ public interface UserSegment extends UserSegmentModel, PersistedModel {
 	public boolean matches(com.liferay.contenttargeting.model.CTUser ctUser,
 		com.liferay.contenttargeting.api.model.RulesRegistry rulesRegistry)
 		throws java.lang.Exception;
+
+	public java.lang.String getGroupedName(java.util.Locale locale,
+		long scopeGroupId);
 }

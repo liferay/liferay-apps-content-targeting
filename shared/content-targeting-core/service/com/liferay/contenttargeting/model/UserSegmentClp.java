@@ -655,6 +655,28 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	}
 
 	@Override
+	public java.lang.String getGroupedName(java.util.Locale locale,
+		long scopeGroupId) {
+		try {
+			String methodName = "getGroupedName";
+
+			Class<?>[] parameterTypes = new Class<?>[] {
+					java.util.Locale.class, long.class
+				};
+
+			Object[] parameterValues = new Object[] { locale, scopeGroupId };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public boolean matches(com.liferay.contenttargeting.model.CTUser ctUser,
 		com.liferay.contenttargeting.api.model.RulesRegistry rulesRegistry) {
 		try {

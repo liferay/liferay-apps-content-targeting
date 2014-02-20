@@ -781,6 +781,12 @@ public class UserSegmentWrapper implements UserSegment,
 	}
 
 	@Override
+	public java.lang.String getGroupedName(java.util.Locale locale,
+		long scopeGroupId) {
+		return _userSegment.getGroupedName(locale, scopeGroupId);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;
