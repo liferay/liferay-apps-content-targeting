@@ -33,6 +33,14 @@
 
 	<@aui["input"] name="description" />
 
+	<@aui["select"] label="user-segment" name="userSegmentId">
+		<@aui["option"] label="" selected=(userSegmentId == -1) value="-1" />
+
+		<#list userSegments as userSegment>
+			<@aui["option"] label="${userSegment.getName(locale)}" selected=(userSegmentId == userSegment.getUserSegmentId()) value="${userSegment.getUserSegmentId()}" />
+		</#list>
+	</@>
+
 	<@aui["input"] name="startDate" />
 
 	<@aui["input"] name="endDate" />
@@ -42,14 +50,6 @@
 
 		<#list 1..maxPriority as i>
 			<@aui["option"] label="${i}" selected=(priority == i) />
-		</#list>
-	</@>
-
-	<@aui["select"] label="user-segment" name="userSegmentId">
-		<@aui["option"] label="" selected=(userSegmentId == -1) value="-1" />
-
-		<#list userSegments as userSegment>
-			<@aui["option"] label="${userSegment.getName(locale)}" selected=(userSegmentId == userSegment.getUserSegmentId()) value="${userSegment.getUserSegmentId()}" />
 		</#list>
 	</@>
 
