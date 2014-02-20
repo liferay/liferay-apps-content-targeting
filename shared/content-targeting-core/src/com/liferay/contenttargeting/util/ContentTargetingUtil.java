@@ -41,6 +41,11 @@ public class ContentTargetingUtil {
 
 		groups.add(scopeGroup);
 
+		Group companyGroup = GroupLocalServiceUtil.getCompanyGroup(
+			scopeGroup.getCompanyId());
+
+		groups.add(companyGroup);
+
 		long[] groupIds = new long[groups.size()];
 
 		for (int i = 0; i < groups.size(); i++) {
