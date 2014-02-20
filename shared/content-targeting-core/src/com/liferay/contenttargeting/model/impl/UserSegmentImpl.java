@@ -44,10 +44,10 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 	public UserSegmentImpl() {
 	}
 
-	public String getGroupedName(Locale locale, long scopeGroupId) {
+	public String getNameWithGroupName(Locale locale, long groupId) {
 		String name = getName(locale);
 
-		if (scopeGroupId != getGroupId()) {
+		if (groupId != getGroupId()) {
 			try {
 				Group group = GroupLocalServiceUtil.getGroup(getGroupId());
 
