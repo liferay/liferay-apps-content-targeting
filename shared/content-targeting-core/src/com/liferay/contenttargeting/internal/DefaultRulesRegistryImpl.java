@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contenttargeting.internal.manager;
+package com.liferay.contenttargeting.internal;
 
 import aQute.bnd.annotation.component.Component;
 import aQute.bnd.annotation.component.Reference;
@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Eudaldo Alonso
  */
 @Component
-public class RulesRegistryManager implements RulesRegistry {
+public class DefaultRulesRegistryImpl implements RulesRegistry {
 
 	@Override
 	public Rule getRule(String ruleKey) {
