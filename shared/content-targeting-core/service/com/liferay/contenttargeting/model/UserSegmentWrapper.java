@@ -780,13 +780,6 @@ public class UserSegmentWrapper implements UserSegment,
 	}
 
 	@Override
-	public boolean matches(com.liferay.contenttargeting.model.CTUser ctUser,
-		com.liferay.contenttargeting.api.model.RulesRegistry rulesRegistry)
-		throws java.lang.Exception {
-		return _userSegment.matches(ctUser, rulesRegistry);
-	}
-
-	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

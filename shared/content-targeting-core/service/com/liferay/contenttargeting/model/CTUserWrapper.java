@@ -469,10 +469,16 @@ public class CTUserWrapper implements CTUser, ModelWrapper<CTUser> {
 	}
 
 	@Override
-	public long[] getMatchesUserSegmentIds(long[] groupIds,
-		com.liferay.contenttargeting.api.model.RulesRegistry rulesRegistry)
+	public long[] getMatchesUserSegmentIds(long[] groupIds)
 		throws java.lang.Exception {
-		return _ctUser.getMatchesUserSegmentIds(groupIds, rulesRegistry);
+		return _ctUser.getMatchesUserSegmentIds(groupIds);
+	}
+
+	@Override
+	public boolean matches(
+		com.liferay.contenttargeting.model.UserSegment userSegment)
+		throws java.lang.Exception {
+		return _ctUser.matches(userSegment);
 	}
 
 	@Override

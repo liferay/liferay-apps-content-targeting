@@ -36,8 +36,4 @@ public interface UserSegment extends UserSegmentModel, PersistedModel {
 
 	public java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances()
 		throws com.liferay.portal.kernel.exception.SystemException;
-
-	public boolean matches(com.liferay.contenttargeting.model.CTUser ctUser,
-		com.liferay.contenttargeting.api.model.RulesRegistry rulesRegistry)
-		throws java.lang.Exception;
 }
