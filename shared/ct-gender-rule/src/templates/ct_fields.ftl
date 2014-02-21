@@ -9,12 +9,10 @@
 	</div>
 </#if>
 
-<@aui["select"] name="gender">
-	<#assign isMale = gender?string == "male" />
+<#assign isMale = gender?string == "male" />
 
-	<@aui["option"] label="male" selected=isMale />
+<@aui["input"] checked=isMale label="male" name="gender" type="radio" value="male" />
 
-	<#assign isFemale = gender?string == "female" />
+<#assign isFemale = gender?string == "female" />
 
-	<@aui["option"] label="female" selected=isFemale />
-</@>
+<@aui["input"] checked=isFemale label="female" name="gender" type="radio" value="female" />
