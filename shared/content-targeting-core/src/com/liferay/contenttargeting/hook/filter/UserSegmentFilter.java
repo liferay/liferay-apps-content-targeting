@@ -14,7 +14,7 @@
 
 package com.liferay.contenttargeting.hook.filter;
 
-import com.liferay.contenttargeting.api.model.RulesRegistry;
+import com.liferay.contenttargeting.api.model.RulesEngine;
 import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.util.CTUserUtil;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
@@ -63,8 +63,7 @@ public class UserSegmentFilter implements Filter {
 
 			long[] groupIds = getGroupIds(request);
 
-			long[] userSegmentsIds = ctUser.getMatchesUserSegmentIds(
-				groupIds, _rulesRegistry);
+			long[] userSegmentsIds = ctUser.getMatchesUserSegmentIds(groupIds);
 
 			if (ArrayUtil.isNotEmpty(userSegmentsIds)) {
 				request.setAttribute(WebKeys.USER_SEGMENT_IDS, userSegmentsIds);
@@ -82,8 +81,8 @@ public class UserSegmentFilter implements Filter {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		try {
-			_rulesRegistry = ServiceTrackerUtil.getService(
-				RulesRegistry.class, bundle.getBundleContext());
+			_rulesEngine = ServiceTrackerUtil.getService(
+				RulesEngine.class, bundle.getBundleContext());
 		}
 		catch (OsgiServiceUnavailableException osue) {
 			osue.printStackTrace();
@@ -104,6 +103,6 @@ public class UserSegmentFilter implements Filter {
 			layoutSet.getGroupId());
 	}
 
-	private RulesRegistry _rulesRegistry;
+	private RulesEngine _rulesEngine;
 
 }
