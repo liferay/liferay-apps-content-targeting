@@ -140,6 +140,8 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 				"assetEntryId" + queryRulesIndex, StringPool.BLANK);
 		}
 
+		portletPreferences.setValue(
+			"enableSocialBookmarks", String.valueOf(false));
 		portletPreferences.setValue("showAssetTitle", String.valueOf(false));
 
 		portletPreferences.setValue(
