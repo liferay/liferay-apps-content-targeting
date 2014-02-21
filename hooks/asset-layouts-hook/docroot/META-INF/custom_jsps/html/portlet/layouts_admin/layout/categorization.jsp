@@ -35,9 +35,3 @@ Layout selLayout = (Layout)request.getAttribute("edit_pages.jsp-selLayout");
 
 	<aui:input name="tags" type="assetTags" />
 </aui:fieldset>
-
-<aui:script>
-	function <portlet:namespace />getSuggestionsContent() {
-		 return document.<portlet:namespace />fm.<portlet:namespace />description.value;
-	}
-</aui:script>

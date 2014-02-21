@@ -108,10 +108,11 @@ The Source code of the WCM plugins is organized in the following way:
  * content-targeting-core (/shared) - contains all the common services and
 classes for the app.
  * content-targeting-portlet (/portlet) - contains all the all portlets and UIs
- * ct-time-rule (/shared) - rule used by the audience targeting app to filter
- * ct-gender-rule (/shared) - rule used by the audience targeting app to filter
- * ct-age-rule (/shared) - rule used by the audience targeting app to filter
-user audiences by time
+ * ct-time-rule (/shared) - rule used by the audience targeting app to filter user audiences by time
+ * ct-gender-rule (/shared) - rule used by the audience targeting app to filter user audiences by gender
+ * ct-age-rule (/shared) - rule used by the audience targeting app to filter user audiences by age
+ * ct-score-rule (/shared) - rule used by the audience targeting app to filter user audiences by their behavior
+ * asset-layouts-hook (/hooks) - Hook to support tagging and categorizing pages
 * OSGI modules required for the project
  * http-service-shared (/shared)
  * log-bridge-shared (/shared)

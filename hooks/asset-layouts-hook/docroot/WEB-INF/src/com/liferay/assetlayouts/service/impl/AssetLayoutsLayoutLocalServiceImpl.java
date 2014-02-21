@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.systemevent.SystemEventHierarchyEntryThreadLocal;
 import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalService;
 import com.liferay.portal.service.LayoutLocalServiceWrapper;
@@ -80,9 +81,6 @@ public class AssetLayoutsLayoutLocalServiceImpl
 			AssetEntryLocalServiceUtil.deleteEntry(
 				Layout.class.getName(), layout.getPrimaryKey());
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 		finally {
 			SystemEventHierarchyEntryThreadLocal.push(
 				Layout.class, layout.getPrimaryKey());
@@ -99,7 +97,8 @@ public class AssetLayoutsLayoutLocalServiceImpl
 			layout.getModifiedDate(), Layout.class.getName(),
 			layout.getPrimaryKey(), layout.getUuid(), 0, assetCategoryIds,
 			assetTagNames, false, null, null, null, ContentTypes.TEXT_HTML,
-			layout.getTitle(), null, null, null, null, 0, 0, null, false);
+			layout.getName(LocaleUtil.getDefault()), null, null, null, null, 0,
+			0, null, false);
 	}
 
 	@Override
