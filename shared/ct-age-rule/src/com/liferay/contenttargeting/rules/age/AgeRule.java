@@ -50,10 +50,6 @@ public class AgeRule extends BaseRule {
 	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
 		throws Exception {
 
-		if (ruleInstance == null) {
-			return false;
-		}
-
 		User user = ctUser.getUser();
 
 		if (user == null) {

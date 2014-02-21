@@ -43,10 +43,6 @@ public class ScorePointsRule extends BaseRule {
 	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
 		throws Exception {
 
-		if (ruleInstance == null) {
-			return false;
-		}
-
 		String typeSettings = ruleInstance.getTypeSettings();
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
