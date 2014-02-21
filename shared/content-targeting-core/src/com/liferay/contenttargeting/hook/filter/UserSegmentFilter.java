@@ -78,15 +78,6 @@ public class UserSegmentFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		try {
-			_rulesEngine = ServiceTrackerUtil.getService(
-				RulesEngine.class, bundle.getBundleContext());
-		}
-		catch (OsgiServiceUnavailableException osue) {
-			osue.printStackTrace();
-		}
 	}
 
 	protected long[] getGroupIds(HttpServletRequest request)
@@ -102,7 +93,5 @@ public class UserSegmentFilter implements Filter {
 		return ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
 			layoutSet.getGroupId());
 	}
-
-	private RulesEngine _rulesEngine;
 
 }
