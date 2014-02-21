@@ -68,7 +68,7 @@ public class ServiceTrackerUtil {
 					try {
 						return method.invoke(service, parameters);
 					}
-					catch(InvocationTargetException ite) {
+					catch (InvocationTargetException ite) {
 						throw ite.getTargetException();
 					}
 				}

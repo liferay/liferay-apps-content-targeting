@@ -71,8 +71,7 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return scorePoint.getPoints();
 	}
 
-	public long incrementPoints(
-			long ctUserId, long userSegmentId, long points)
+	public long incrementPoints(long ctUserId, long userSegmentId, long points)
 		throws SystemException {
 
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
