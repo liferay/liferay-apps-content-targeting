@@ -17,6 +17,7 @@ package com.liferay.contenttargeting.service.base;
 import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.service.CTUserService;
 import com.liferay.contenttargeting.service.persistence.CTUserPersistence;
+import com.liferay.contenttargeting.service.persistence.CampaignFinder;
 import com.liferay.contenttargeting.service.persistence.CampaignPersistence;
 import com.liferay.contenttargeting.service.persistence.RuleInstancePersistence;
 import com.liferay.contenttargeting.service.persistence.UserSegmentPersistence;
@@ -105,6 +106,24 @@ public abstract class CTUserServiceBaseImpl extends BaseServiceImpl
 	 */
 	public void setCampaignPersistence(CampaignPersistence campaignPersistence) {
 		this.campaignPersistence = campaignPersistence;
+	}
+
+	/**
+	 * Returns the campaign finder.
+	 *
+	 * @return the campaign finder
+	 */
+	public CampaignFinder getCampaignFinder() {
+		return campaignFinder;
+	}
+
+	/**
+	 * Sets the campaign finder.
+	 *
+	 * @param campaignFinder the campaign finder
+	 */
+	public void setCampaignFinder(CampaignFinder campaignFinder) {
+		this.campaignFinder = campaignFinder;
 	}
 
 	/**
@@ -454,6 +473,8 @@ public abstract class CTUserServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.contenttargeting.service.CampaignService campaignService;
 	@BeanReference(type = CampaignPersistence.class)
 	protected CampaignPersistence campaignPersistence;
+	@BeanReference(type = CampaignFinder.class)
+	protected CampaignFinder campaignFinder;
 	@BeanReference(type = com.liferay.contenttargeting.service.CTUserLocalService.class)
 	protected com.liferay.contenttargeting.service.CTUserLocalService ctUserLocalService;
 	@BeanReference(type = com.liferay.contenttargeting.service.CTUserService.class)

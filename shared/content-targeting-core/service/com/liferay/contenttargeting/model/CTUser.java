@@ -34,9 +34,9 @@ public interface CTUser extends CTUserModel, PersistedModel {
 	public long[] getMatchesUserSegmentIds(long[] groupIds)
 		throws java.lang.Exception;
 
+	public com.liferay.portal.model.User getUser();
+
 	public boolean matches(
 		com.liferay.contenttargeting.model.UserSegment userSegment)
 		throws java.lang.Exception;
-
-	public com.liferay.portal.model.User getUser();
 }

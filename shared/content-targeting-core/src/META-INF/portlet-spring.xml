@@ -4,6 +4,7 @@
 	<bean id="com.liferay.contenttargeting.service.CampaignLocalService" class="com.liferay.contenttargeting.service.impl.CampaignLocalServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.CampaignService" class="com.liferay.contenttargeting.service.impl.CampaignServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.persistence.CampaignPersistence" class="com.liferay.contenttargeting.service.persistence.CampaignPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.contenttargeting.service.persistence.CampaignFinder" class="com.liferay.contenttargeting.service.persistence.CampaignFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.contenttargeting.service.CTUserLocalService" class="com.liferay.contenttargeting.service.impl.CTUserLocalServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.CTUserService" class="com.liferay.contenttargeting.service.impl.CTUserServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.persistence.CTUserPersistence" class="com.liferay.contenttargeting.service.persistence.CTUserPersistenceImpl" parent="basePersistence" />

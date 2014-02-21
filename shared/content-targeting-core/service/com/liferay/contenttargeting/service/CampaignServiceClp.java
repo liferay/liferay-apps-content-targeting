@@ -44,17 +44,21 @@ public class CampaignServiceClp implements CampaignService {
 
 		_methodParameterTypes4 = new String[] { "long" };
 
-		_methodName5 = "getCampaigns";
+		_methodName5 = "fetchCurrentMaxPriorityCampaign";
 
-		_methodParameterTypes5 = new String[] { "long" };
+		_methodParameterTypes5 = new String[] { "long", "long[][]" };
 
-		_methodName6 = "getCampaignsCount";
+		_methodName6 = "getCampaigns";
 
 		_methodParameterTypes6 = new String[] { "long" };
 
-		_methodName7 = "updateCampaign";
+		_methodName7 = "getCampaignsCount";
 
-		_methodParameterTypes7 = new String[] {
+		_methodParameterTypes7 = new String[] { "long" };
+
+		_methodName8 = "updateCampaign";
+
+		_methodParameterTypes8 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
 				"java.util.Date", "int", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
@@ -201,6 +205,40 @@ public class CampaignServiceClp implements CampaignService {
 	}
 
 	@Override
+	public com.liferay.contenttargeting.model.Campaign fetchCurrentMaxPriorityCampaign(
+		long groupId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5,
+					new Object[] {
+						groupId,
+						
+					ClpSerializer.translateInput(userSegmentIds)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.contenttargeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -208,8 +246,8 @@ public class CampaignServiceClp implements CampaignService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName5,
-					_methodParameterTypes5, new Object[] { groupId });
+			returnObj = _invokableService.invokeMethod(_methodName6,
+					_methodParameterTypes6, new Object[] { groupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -241,8 +279,8 @@ public class CampaignServiceClp implements CampaignService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName6,
-					_methodParameterTypes6, new Object[] { groupId });
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7, new Object[] { groupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -280,8 +318,8 @@ public class CampaignServiceClp implements CampaignService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName7,
-					_methodParameterTypes7,
+			returnObj = _invokableService.invokeMethod(_methodName8,
+					_methodParameterTypes8,
 					new Object[] {
 						campaignId,
 						
@@ -338,4 +376,6 @@ public class CampaignServiceClp implements CampaignService {
 	private String[] _methodParameterTypes6;
 	private String _methodName7;
 	private String[] _methodParameterTypes7;
+	private String _methodName8;
+	private String[] _methodParameterTypes8;
 }

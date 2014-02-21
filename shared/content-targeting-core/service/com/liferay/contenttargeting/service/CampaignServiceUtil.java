@@ -83,6 +83,13 @@ public class CampaignServiceUtil {
 		return getService().deleteCampaign(campaignId);
 	}
 
+	public static com.liferay.contenttargeting.model.Campaign fetchCurrentMaxPriorityCampaign(
+		long groupId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .fetchCurrentMaxPriorityCampaign(groupId, userSegmentIds);
+	}
+
 	public static java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,

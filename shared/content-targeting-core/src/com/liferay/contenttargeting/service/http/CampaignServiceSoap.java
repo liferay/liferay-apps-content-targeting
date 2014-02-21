@@ -107,6 +107,21 @@ public class CampaignServiceSoap {
 		}
 	}
 
+	public static com.liferay.contenttargeting.model.CampaignSoap fetchCurrentMaxPriorityCampaign(
+		long groupId, long[] userSegmentIds) throws RemoteException {
+		try {
+			com.liferay.contenttargeting.model.Campaign returnValue = CampaignServiceUtil.fetchCurrentMaxPriorityCampaign(groupId,
+					userSegmentIds);
+
+			return com.liferay.contenttargeting.model.CampaignSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.contenttargeting.model.CampaignSoap[] getCampaigns(
 		long groupId) throws RemoteException {
 		try {

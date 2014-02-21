@@ -80,6 +80,11 @@ public interface CampaignService extends BaseService, InvokableService {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.contenttargeting.model.Campaign fetchCurrentMaxPriorityCampaign(
+		long groupId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,

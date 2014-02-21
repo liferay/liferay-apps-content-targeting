@@ -78,6 +78,14 @@ public class CampaignServiceWrapper implements CampaignService,
 	}
 
 	@Override
+	public com.liferay.contenttargeting.model.Campaign fetchCurrentMaxPriorityCampaign(
+		long groupId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _campaignService.fetchCurrentMaxPriorityCampaign(groupId,
+			userSegmentIds);
+	}
+
+	@Override
 	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
