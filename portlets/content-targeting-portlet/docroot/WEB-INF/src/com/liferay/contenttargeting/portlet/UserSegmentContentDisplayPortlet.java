@@ -16,13 +16,9 @@ package com.liferay.contenttargeting.portlet;
 
 import com.liferay.contenttargeting.portlet.util.QueryRule;
 import com.liferay.contenttargeting.portlet.util.QueryRuleUtil;
-import com.liferay.contenttargeting.portlet.util.UnavailableServiceException;
-import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.UserSegmentUtil;
 import com.liferay.contenttargeting.util.WebKeys;
-import com.liferay.osgi.util.OsgiServiceUnavailableException;
-import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -30,7 +26,6 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -52,46 +47,14 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
-import javax.portlet.PortletException;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import javax.portlet.UnavailableException;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eudaldo Alonso
  */
 public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
-
-	@Override
-	public void init() throws PortletException {
-		super.init();
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		if (bundle == null) {
-			throw new UnavailableException(
-				"Can't find a reference to the OSGi bundle") {
-
-				@Override
-				public boolean isPermanent() {
-					return true;
-				}
-			};
-		}
-
-		try {
-			_userSegmentLocalService = ServiceTrackerUtil.getService(
-				UserSegmentLocalService.class, bundle.getBundleContext());
-		}
-		catch (OsgiServiceUnavailableException osue) {
-			throw new UnavailableServiceException(
-				osue.getUnavailableServiceClass());
-		}
-	}
 
 	public void updatePreferences(
 			ActionRequest request, ActionResponse response)
@@ -358,29 +321,32 @@ public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
 
-			template.put(
-				"vocabularyId",
-				UserSegmentUtil.getAssetVocabularyId(
-					themeDisplay.getUserId(), serviceContext));
+			long[] vocabularyGroupIds = new long[1];
+			long[] vocabularyIds = new long[1];
 
-			StringBundler vocabularyGroupIds = new StringBundler(3);
-
-			vocabularyGroupIds.append(themeDisplay.getSiteGroupId());
-
-			if (themeDisplay.getScopeGroupId() !=
+			if (themeDisplay.getScopeGroupId() ==
 					themeDisplay.getCompanyGroupId()) {
 
-				vocabularyGroupIds.append(StringPool.COMMA);
-				vocabularyGroupIds.append(themeDisplay.getCompanyGroupId());
+				vocabularyGroupIds[0] = themeDisplay.getCompanyGroupId();
+
+				vocabularyIds[0] = UserSegmentUtil.getAssetVocabularyId(
+					themeDisplay.getUserId(), serviceContext);
+			}
+			else {
+				vocabularyGroupIds =
+					ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+						themeDisplay.getSiteGroupId());
+				vocabularyIds = UserSegmentUtil.getAssetVocabularyIds(
+					vocabularyGroupIds);
 			}
 
-			template.put("vocabularyGroupIds", vocabularyGroupIds.toString());
+			template.put(
+				"vocabularyGroupIds", StringUtil.merge(vocabularyGroupIds));
+			template.put("vocabularyIds", StringUtil.merge(vocabularyIds));
 		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		UserSegmentContentDisplayPortlet.class);
-
-	private UserSegmentLocalService _userSegmentLocalService;
 
 }

@@ -68,7 +68,7 @@
 							hiddenInput: '#<@portlet["namespace"] />userSegmentAssetCategoryIds${index}',
 							instanceVar: '<@portlet["namespace"] />',
 							vocabularyGroupIds: '${vocabularyGroupIds}',
-							vocabularyIds: '${vocabularyId}',
+							vocabularyIds: '${vocabularyIds}',
 							title: '<@liferay_ui["message"] key="select-user-segments" />'
 						}
 					).render();

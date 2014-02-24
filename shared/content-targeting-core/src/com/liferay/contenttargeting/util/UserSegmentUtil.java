@@ -17,13 +17,16 @@ package com.liferay.contenttargeting.util;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.NoSuchVocabularyException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -64,6 +67,26 @@ public class UserSegmentUtil {
 		}
 
 		return vocabulary.getVocabularyId();
+	}
+
+	public static long[] getAssetVocabularyIds(long[] groupIds)
+		throws PortalException, SystemException {
+
+		List<Long> vocabularyIds = new ArrayList<Long>();
+
+		for (long groupId : groupIds) {
+			try {
+				AssetVocabulary vocabulary =
+					AssetVocabularyLocalServiceUtil.getGroupVocabulary(
+						groupId, getAssetVocabularyName());
+
+				vocabularyIds.add(vocabulary.getVocabularyId());
+			}
+			catch (NoSuchVocabularyException e) {
+			}
+		}
+
+		return ArrayUtil.toLongArray(vocabularyIds);
 	}
 
 	public static String getAssetVocabularyName() {
