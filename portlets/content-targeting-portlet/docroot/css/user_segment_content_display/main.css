@@ -166,6 +166,10 @@
 			}
 		}
 
+		.undomanager {
+			margin: 0 10px 0 30px;
+		}
+
 		.user-segment-selector {
 			margin-right: 10px;
 			margin-bottom: 10px;
