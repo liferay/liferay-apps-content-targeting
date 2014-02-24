@@ -186,6 +186,9 @@ public class UserSegmentLocalServiceImpl
 		long vocabularyId = UserSegmentUtil.getAssetVocabularyId(
 			userId, serviceContext);
 
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
 		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
 			userId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
 			descriptionMap, vocabularyId, null, serviceContext);
@@ -196,16 +199,10 @@ public class UserSegmentLocalServiceImpl
 	protected void removeUserSegmentCategory(long assetCategoryId)
 		throws PortalException, SystemException {
 
-		int entriesCount =
-			AssetEntryLocalServiceUtil.getAssetCategoryAssetEntriesCount(
-				assetCategoryId);
-
-		if (entriesCount > 0) {
-			return;
-		}
-
 		AssetCategory assetCategory =
-			AssetCategoryLocalServiceUtil.deleteAssetCategory(assetCategoryId);
+			AssetCategoryLocalServiceUtil.fetchAssetCategory(assetCategoryId);
+
+		AssetCategoryLocalServiceUtil.deleteCategory(assetCategory);
 
 		int categoriesCount =
 			AssetCategoryLocalServiceUtil.getVocabularyRootCategoriesCount(
