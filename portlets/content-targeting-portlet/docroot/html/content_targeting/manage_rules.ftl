@@ -41,8 +41,8 @@
 				<@aui["nav-item"]
 					anchorId="ruleItem-${rule.getRuleKey()}"
 					anchorCssClass="new-rule"
-					cssClass="rule-item"
-					href="${addRuleInstanceURL}"
+					cssClass="${userSegment.isRuleEnabled(rule)?string('rule-item enabled','rule-item disabled')}"
+					href="${userSegment.isRuleEnabled(rule)?string(addRuleInstanceURL,'javascript:;')}"
 					iconCssClass="${rule.getIcon()}"
 					label="${rule.getName(locale)}"
 				/>
@@ -137,6 +137,6 @@
 				}
 			);
 		},
-		'.rule-item a'
+		'.rule-item.enabled a'
 	);
 </@>
