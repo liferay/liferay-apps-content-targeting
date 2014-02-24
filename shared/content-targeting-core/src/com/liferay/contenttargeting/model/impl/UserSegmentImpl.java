@@ -14,6 +14,7 @@
 
 package com.liferay.contenttargeting.model.impl;
 
+import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.service.RuleInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -72,6 +73,20 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 	public List<RuleInstance> getRuleInstances() throws SystemException {
 		return RuleInstanceLocalServiceUtil.getRuleInstances(
 			getUserSegmentId());
+	}
+
+	public boolean isRuleEnabled(Rule rule) throws Exception {
+		if (rule.isInstantiable()) {
+			return true;
+		}
+
+		if (RuleInstanceLocalServiceUtil.getRuleInstancesCount(
+				rule.getRuleKey(), getUserSegmentId()) > 0) {
+
+			return false;
+		}
+
+		return true;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(UserSegmentImpl.class);
