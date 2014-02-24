@@ -3,6 +3,7 @@
 
 <display>
 	<category name="category.ct">
+		<portlet id="campaigncontentdisplay" />
 		<portlet id="usersegmentcontentdisplay" />
 		<portlet id="usersegmentcontentlist" />
 	</category>

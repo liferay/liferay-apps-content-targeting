@@ -3,6 +3,15 @@
 
 <liferay-portlet-app>
 	<portlet>
+		<portlet-name>campaigncontentdisplay</portlet-name>
+		<icon>/icons/campaign_content_display.png</icon>
+		<instanceable>true</instanceable>
+		<render-weight>1</render-weight>
+		<header-portlet-css>/css/campaign_content_display/main.css</header-portlet-css>
+		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<css-class-wrapper>campaign-content-display-portlet</css-class-wrapper>
+	</portlet>
+	<portlet>
 		<portlet-name>ctadmin</portlet-name>
 		<icon>/icons/icon.png</icon>
 		<control-panel-entry-category>site_administration.configuration</control-panel-entry-category>
