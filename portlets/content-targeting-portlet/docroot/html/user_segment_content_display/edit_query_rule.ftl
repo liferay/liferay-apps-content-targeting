@@ -46,9 +46,9 @@
 		<@aui["column"] columnWidth=15>
 			<span class="query-and-operator-text"><@liferay_ui["message"] key="to" /></span>
 
-			<@aui["input"] checked=queryRule.isAndOperator() label="all" name="queryAndOperator${index}" type="radio" value=true />
-
 			<@aui["input"] checked=!queryRule.isAndOperator() label="any" name="queryAndOperator${index}" type="radio" value=false />
+
+			<@aui["input"] checked=queryRule.isAndOperator() label="all" name="queryAndOperator${index}" type="radio" value=true />
 		</@>
 
 		<@aui["column"] columnWidth=30>
