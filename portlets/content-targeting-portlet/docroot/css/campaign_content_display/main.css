@@ -1,4 +1,4 @@
-.user-segment-content-display-portlet {
+.campaign-content-display-portlet {
 	.rules-panel {
 		background-color: #EEE;
 		margin: 10px;
@@ -123,11 +123,11 @@
 					margin: 4px 0;
 				}
 
-				.default-content-value-text, .query-contains-text, .query-and-operator-text, .query-user-segments-text, .query-content-text {
+				.default-content-value-text, .query-contains-text, .query-and-operator-text, .query-campaign-text, .query-content-text {
 					font-weight: 400;
 				}
 
-				.default-content-value, .query-contains-value, .query-and-operator-value, .query-user-segments-value, .query-content-value {
+				.default-content-value, .query-contains-value, .query-and-operator-value, .query-campaign-value, .query-content-value {
 					color: #8D8D8D;
 				}
 
@@ -163,20 +163,6 @@
 
 			.lfr-meta-actions {
 				padding-top: 0;
-			}
-		}
-
-		.user-segment-selector {
-			margin-right: 10px;
-			margin-bottom: 10px;
-			overflow: hidden;
-
-			.tagselector-content {
-				overflow: hidden;
-
-				ul {
-					margin: 10px 0;
-				}
 			}
 		}
 	}

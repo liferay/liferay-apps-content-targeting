@@ -98,11 +98,11 @@
 					</div>
 
 					<div class="summary-view">
-						<@aui["column"] columnWidth=60>
+						<@aui["column"] columnWidth=50>
 							<span class="otherwise-text"><@liferay_ui["message"] key="otherwise" /></span>
 						</@>
 
-						<@aui["column"] columnWidth=40>
+						<@aui["column"] columnWidth=50>
 							<span class="default-content-value-text">
 								<#if (assetEntryIdDefault <= 0)>
 									<@liferay_ui["message"] key="dont-display-anything" />

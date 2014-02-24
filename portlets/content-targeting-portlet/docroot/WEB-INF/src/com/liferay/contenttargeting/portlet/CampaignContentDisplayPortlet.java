@@ -14,12 +14,12 @@
 
 package com.liferay.contenttargeting.portlet;
 
-import com.liferay.contenttargeting.portlet.util.QueryRule;
-import com.liferay.contenttargeting.portlet.util.QueryRuleUtil;
+import com.liferay.contenttargeting.model.Campaign;
+import com.liferay.contenttargeting.portlet.util.CampaignQueryRule;
+import com.liferay.contenttargeting.portlet.util.CampaignQueryRuleUtil;
 import com.liferay.contenttargeting.portlet.util.UnavailableServiceException;
-import com.liferay.contenttargeting.service.UserSegmentLocalService;
-import com.liferay.contenttargeting.util.ContentTargetingUtil;
-import com.liferay.contenttargeting.util.UserSegmentUtil;
+import com.liferay.contenttargeting.service.CampaignLocalService;
+import com.liferay.contenttargeting.service.CampaignService;
 import com.liferay.contenttargeting.util.WebKeys;
 import com.liferay.osgi.util.OsgiServiceUnavailableException;
 import com.liferay.osgi.util.ServiceTrackerUtil;
@@ -30,11 +30,9 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -84,8 +82,10 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 		}
 
 		try {
-			_userSegmentLocalService = ServiceTrackerUtil.getService(
-				UserSegmentLocalService.class, bundle.getBundleContext());
+			_campaignLocalService = ServiceTrackerUtil.getService(
+				CampaignLocalService.class, bundle.getBundleContext());
+			_campaignService = ServiceTrackerUtil.getService(
+				CampaignService.class, bundle.getBundleContext());
 		}
 		catch (OsgiServiceUnavailableException osue) {
 			throw new UnavailableServiceException(
@@ -111,10 +111,10 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 			return;
 		}
 
-		List<QueryRule> queryRules = new ArrayList<QueryRule>();
+		List<CampaignQueryRule> queryRules = new ArrayList<CampaignQueryRule>();
 
 		for (int queryRulesIndex : queryRulesIndexes) {
-			QueryRule queryRule = QueryRuleUtil.getQueryRule(
+			CampaignQueryRule queryRule = CampaignQueryRuleUtil.getQueryRule(
 				request, queryRulesIndex, themeDisplay.getLocale());
 
 			if (!queryRule.isValid()) {
@@ -131,11 +131,7 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 		for (int queryRulesIndex : oldQueryRulesIndexes) {
 			portletPreferences.setValue(
-				"queryContains" + queryRulesIndex, StringPool.BLANK);
-			portletPreferences.setValue(
-				"queryAndOperator" + queryRulesIndex, StringPool.BLANK);
-			portletPreferences.setValues(
-				"userSegmentAssetCategoryIds" + queryRulesIndex, new String[0]);
+				"campaignId" + queryRulesIndex, StringPool.BLANK);
 			portletPreferences.setValue(
 				"assetEntryId" + queryRulesIndex, StringPool.BLANK);
 		}
@@ -151,17 +147,10 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 		portletPreferences.setValues(
 			"queryLogicIndexes", ArrayUtil.toStringArray(queryRulesIndexes));
 
-		for (QueryRule queryRule : queryRules) {
+		for (CampaignQueryRule queryRule : queryRules) {
 			portletPreferences.setValue(
-				"queryContains" + queryRule.getIndex(),
-				String.valueOf(queryRule.isContains()));
-			portletPreferences.setValue(
-				"queryAndOperator" + queryRule.getIndex(),
-				String.valueOf(queryRule.isAndOperator()));
-			portletPreferences.setValues(
-				"userSegmentAssetCategoryIds" + queryRule.getIndex(),
-				ArrayUtil.toStringArray(
-					queryRule.getUserSegmentAssetCategoryIds()));
+				"campaignId" + queryRule.getIndex(),
+				String.valueOf(queryRule.getCampaignId()));
 			portletPreferences.setValue(
 				"assetEntryId" + queryRule.getIndex(),
 				String.valueOf(queryRule.getAssetEntryId()));
@@ -178,7 +167,7 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 		List<AssetRendererFactory> assetRendererFactories =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
-					companyId);
+				companyId);
 
 		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
 			if (!rendererFactory.isSelectable()) {
@@ -232,18 +221,21 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 		if (Validator.isNull(path) ||
 			path.equals(CampaignContentDisplayPath.VIEW)) {
 
-			QueryRule queryRule = null;
+			CampaignQueryRule queryRule = null;
 
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
 
 			if (userSegmentIds != null) {
-				long[] userSegmentAssetCategoryIds =
-					ContentTargetingUtil.getAssetCategoryIds(userSegmentIds);
+				Campaign campaign =
+					_campaignLocalService.fetchCurrentMaxPriorityCampaign(
+						themeDisplay.getScopeGroupId(), userSegmentIds);
 
-				queryRule = QueryRuleUtil.match(
-					userSegmentAssetCategoryIds, portletPreferences,
-					themeDisplay.getLocale());
+				if (campaign != null) {
+					queryRule = CampaignQueryRuleUtil.match(
+						campaign.getCampaignId(), portletPreferences,
+						themeDisplay.getLocale());
+				}
 			}
 
 			boolean isMatchingRule = false;
@@ -330,6 +322,11 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 					themeDisplay.getLocale(), true);
 			}
 
+			List<Campaign> campaigns = _campaignService.getCampaigns(
+				themeDisplay.getScopeGroupId());
+
+			template.put("campaigns", campaigns);
+
 			template.put("assetEntryIdDefault", assetEntryIdDefault);
 			template.put("assetImageDefault", assetImageDefault);
 			template.put("assetTitleDefault", assetTitleDefault);
@@ -345,42 +342,22 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 			template.put("queryLogicIndexes", queryRulesIndexes);
 			template.put(
-				"queryRuleUtilClass",
+				"campaignQueryRuleUtilClass",
 				staticModels.get(
-					"com.liferay.contenttargeting.portlet.util.QueryRuleUtil"));
+					"com.liferay.contenttargeting.portlet.util." +
+						"CampaignQueryRuleUtil"));
 			template.put(
 				"userSegmentContentDisplayUtilClass",
 				staticModels.get(
 					"com.liferay.contenttargeting.portlet.util." +
 						"UserSegmentContentDisplayUtil"));
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
-
-			template.put(
-				"vocabularyId",
-				UserSegmentUtil.getAssetVocabularyId(
-					themeDisplay.getUserId(), serviceContext));
-
-			StringBundler vocabularyGroupIds = new StringBundler(3);
-
-			vocabularyGroupIds.append(themeDisplay.getSiteGroupId());
-
-			if (themeDisplay.getScopeGroupId() !=
-					themeDisplay.getCompanyGroupId()) {
-
-				vocabularyGroupIds.append(StringPool.COMMA);
-				vocabularyGroupIds.append(themeDisplay.getCompanyGroupId());
-			}
-
-			template.put("vocabularyGroupIds", vocabularyGroupIds.toString());
 		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		CampaignContentDisplayPortlet.class);
 
-	private UserSegmentLocalService _userSegmentLocalService;
+	private CampaignLocalService _campaignLocalService;
+	private CampaignService _campaignService;
 
 }

@@ -21,7 +21,7 @@
 
 <#assign isFirst = getterUtil.getBoolean(request.getAttribute("configuration.isFirst"))>
 
-<#assign queryRule = queryRuleUtilClass.getQueryRule(portletPreferences, index, locale)>
+<#assign queryRule = campaignQueryRuleUtilClass.getQueryRule(portletPreferences, index, locale)>
 
 <div class="field-row query-row">
 	<@aui["input"] name="queryIndex${index}" type="hidden" />
@@ -35,54 +35,19 @@
 	</#if>
 
 	<div class="full-view ${fullViewClass}">
-		<@aui["column"] columnWidth=15>
-			<span class="query-contains-text"><@liferay_ui["message"] key="if-the-user" /></span>
+		<@aui["column"] columnWidth=50>
+			<span class="query-contains-text"><@liferay_ui["message"] key="if-the-user-belongs-to-this-campaign" /></span>
 
-			<@aui["input"] checked=queryRule.isContains() label="belongs" name="queryContains${index}" type="radio" value=true />
-
-			<@aui["input"] checked=!queryRule.isContains() label="does-not-belong" name="queryContains${index}" type="radio" value=false />
-		</@>
-
-		<@aui["column"] columnWidth=15>
-			<span class="query-and-operator-text"><@liferay_ui["message"] key="to" /></span>
-
-			<@aui["input"] checked=queryRule.isAndOperator() label="all" name="queryAndOperator${index}" type="radio" value=true />
-
-			<@aui["input"] checked=!queryRule.isAndOperator() label="any" name="queryAndOperator${index}" type="radio" value=false />
-		</@>
-
-		<@aui["column"] columnWidth=30>
-			<div class="user-segment-selector">
-				<span class="query-and-operator-text"><@liferay_ui["message"] key="of-the-following-user-segments" /></span>
-
-				<div class="lfr-tags-selector-content" id="<@portlet["namespace"] />assetCategoriesSelector${index}">
-					<@aui["input"] name="userSegmentAssetCategoryIds${index}" type="hidden" value="${queryRule.getUserSegmentAssetCategoryIdsAsString()}" />
-				</div>
-
-				<@aui["script"] use="liferay-asset-categories-selector">
-					var assetCategoriesSelector = new Liferay.AssetCategoriesSelector(
-						{
-							contentBox: '#<@portlet["namespace"] />assetCategoriesSelector${index}',
-							curEntries: '${queryRule.getUserSegmentAssetCategoryNames(locale)}',
-							curEntryIds: '${queryRule.getUserSegmentAssetCategoryIdsAsString()}',
-							hiddenInput: '#<@portlet["namespace"] />userSegmentAssetCategoryIds${index}',
-							instanceVar: '<@portlet["namespace"] />',
-							vocabularyGroupIds: '${vocabularyGroupIds}',
-							vocabularyIds: '${vocabularyId}',
-							title: '<@liferay_ui["message"] key="select-user-segments" />'
-						}
-					).render();
-
-					var changeTitle = function() {
-						assetCategoriesSelector._popup.titleNode.html(assetCategoriesSelector.get('title'));
-					};
-
-					A.Do.after(changeTitle, assetCategoriesSelector, '_showSelectPopup');
+			<div class="campaign-selector">
+				<@aui["select"] label="" name="campaignId${index}">
+					<#list campaigns as campaign>
+						<@aui["option"] label="${campaign.getName(locale)}" selected=(queryRule.getCampaignId() == campaign.getCampaignId()) value="${campaign.getCampaignId()}" />
+					</#list>
 				</@>
 			</div>
 		</@>
 
-		<@aui["column"] columnWidth=40>
+		<@aui["column"] columnWidth=50>
 			<div class="select-asset-selector">
 				<span class="query-and-operator-text"><@liferay_ui["message"] key="display-this-content" /></span>
 
@@ -124,34 +89,12 @@
 
 	<#if queryRule.isValid()>
 		<div class="summary-view ${summaryViewClass}">
-			<@aui["column"] columnWidth=15>
-				<span class="query-contains-text"><@liferay_ui["message"] key="if-the-user" /></span>:
-				<span class="query-contains-value">
-					<#if queryRule.isContains()>
-						<@liferay_ui["message"] key="belongs" />
-					<#else>
-						<@liferay_ui["message"] key="does-not-belong" />
-					</#if>
-				</span>
+			<@aui["column"] columnWidth=50>
+				<span class="query-campaigns-text"><@liferay_ui["message"] key="if-the-user-belongs-to-this-campaign" /></span>
+				<span class="query-campaigns-value">${queryRule.getCampaignName(locale)}</span>
 			</@>
 
-			<@aui["column"] columnWidth=15>
-				<span class="query-and-operator-text"><@liferay_ui["message"] key="to" /></span>:
-				<span class="query-and-operator-value">
-					<#if queryRule.isAndOperator()>
-						<@liferay_ui["message"] key="all" />
-					<#else>
-						<@liferay_ui["message"] key="any" />
-					</#if>
-				</span>
-			</@>
-
-			<@aui["column"] columnWidth=30>
-				<span class="query-user-segments-text"><@liferay_ui["message"] key="of-the-following-user-segments" /></span>
-				<span class="query-user-segments-value">${queryRule.getUserSegmentNames(locale)}</span>
-			</@>
-
-			<@aui["column"] columnWidth=40>
+			<@aui["column"] columnWidth=50>
 				<span class="query-content-text"><@liferay_ui["message"] key="display-this-content" /></span>
 				<span class="query-content-value">${queryRule.getAssetTitle()} (<span class="query-content-value-type">${queryRule.getAssetType()}</span>)</span>
 			</@>
