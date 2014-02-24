@@ -79,7 +79,7 @@ public class ScorePointsRule extends BaseRule {
 			String userSegmentName = ruleInstance.getUserSegmentName(locale);
 
 			summary = LanguageUtil.format(
-				locale, "users-with-x-score-points-of-x",
+				locale, "users-with-more-than-x-score-points-of-x",
 				new Object[] {scorePoints, userSegmentName});
 		}
 		catch (JSONException jse) {
@@ -113,6 +113,11 @@ public class ScorePointsRule extends BaseRule {
 					typeSettings);
 
 				context.put("scorePoints", jsonObj.getInt("scorePoints"));
+
+				Locale locale = (Locale)context.get("locale");
+
+				context.put(
+					"userSegmentName", ruleInstance.getUserSegmentName(locale));
 			}
 			catch (JSONException jse) {
 			}
