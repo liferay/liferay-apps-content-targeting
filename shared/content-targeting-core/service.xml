@@ -114,6 +114,10 @@
 		<finder name="UserSegmentId" return-type="Collection">
 			<finder-column name="userSegmentId" />
 		</finder>
+		<finder name="R_U" return-type="Collection">
+			<finder-column name="ruleKey" />
+			<finder-column name="userSegmentId" />
+		</finder>
 	</entity>
 	<entity name="UserSegment" uuid="true" local-service="true" remote-service="true">
 
