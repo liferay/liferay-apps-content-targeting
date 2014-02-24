@@ -146,7 +146,7 @@ public class AgeRule extends BaseRule {
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
-		int youngerThan = 0;
+		int youngerThan = 100;
 		int olderThan = 0;
 
 		if (ruleInstance != null) {
