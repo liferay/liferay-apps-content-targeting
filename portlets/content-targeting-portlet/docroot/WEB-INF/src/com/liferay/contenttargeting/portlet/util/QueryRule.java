@@ -134,6 +134,10 @@ public class QueryRule {
 	public String getAssetImage(PortletRequest portletRequest)
 		throws Exception {
 
+		if (!isValid()) {
+			return StringPool.BLANK;
+		}
+
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
 				_assetClassName);
