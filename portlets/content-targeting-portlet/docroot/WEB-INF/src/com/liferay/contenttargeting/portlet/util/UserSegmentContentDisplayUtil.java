@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class TargetedContentDisplayUtil {
+public class UserSegmentContentDisplayUtil {
 
 	public static PortletURL getAssetBrowserURL(
 			HttpServletRequest request, String className)

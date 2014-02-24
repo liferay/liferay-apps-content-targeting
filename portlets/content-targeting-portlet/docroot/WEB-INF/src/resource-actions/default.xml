@@ -18,7 +18,7 @@
 		</permissions>
 	</portlet-resource>
 	<portlet-resource>
-		<portlet-name>targetedcontentdisplay</portlet-name>
+		<portlet-name>usersegmentcontentdisplay</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_TO_PAGE</action-key>
@@ -37,7 +37,7 @@
 		</permissions>
 	</portlet-resource>
 	<portlet-resource>
-		<portlet-name>targetedcontentlist</portlet-name>
+		<portlet-name>usersegmentcontentlist</portlet-name>
 		<permissions>
 			<supports>
 				<action-key>ADD_TO_PAGE</action-key>

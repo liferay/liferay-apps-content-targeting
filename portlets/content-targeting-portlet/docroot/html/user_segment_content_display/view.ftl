@@ -18,7 +18,7 @@
 
 <#if portletDisplay.isShowConfigurationIcon()>
 	<@portlet["renderURL"] var="configurationURL" windowState=liferayWindowStatePopUp.toString()>
-		<@portlet["param"] name="mvcPath" value="${targetedContentDisplayPath.CONFIGURATION}" />
+		<@portlet["param"] name="mvcPath" value="${userSegmentContentDisplayPath.CONFIGURATION}" />
 		<@portlet["param"] name="redirect" value="${currentURL}" />
 	</@>
 

@@ -3,8 +3,8 @@
 
 <display>
 	<category name="category.ct">
-		<portlet id="targetedcontentdisplay" />
-		<portlet id="targetedcontentlist" />
+		<portlet id="usersegmentcontentdisplay" />
+		<portlet id="usersegmentcontentlist" />
 	</category>
 	<category name="category.hidden">
 		<portlet id="ctadmin" />

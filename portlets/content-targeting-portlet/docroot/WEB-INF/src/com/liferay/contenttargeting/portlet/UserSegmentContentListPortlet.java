@@ -59,7 +59,7 @@ import javax.portlet.PortletResponse;
 /**
  * @author Eudaldo Alonso
  */
-public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
+public class UserSegmentContentListPortlet extends CTFreeMarkerPortlet {
 
 	public void updatePreferences(
 			ActionRequest request, ActionResponse response)
@@ -139,7 +139,7 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 			portletRequest, "struts_action");
 
 		if (strutsPath.equals("/asset_publisher/view_content")) {
-			return TargetedContentListPath.VIEW_CONTENT;
+			return UserSegmentContentListPath.VIEW_CONTENT;
 		}
 
 		return super.getPath(portletRequest);
@@ -158,10 +158,10 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 		template.put(
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 		template.put(
-			"targetedContentListPath",
+			"userSegmentContentListPath",
 			staticModels.get(
 				"com.liferay.contenttargeting.portlet." +
-					"TargetedContentListPath"));
+					"UserSegmentContentListPath"));
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
@@ -185,7 +185,7 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 			portletPreferences, availableClassNameIds);
 
 		if (Validator.isNull(path) ||
-			path.equals(TargetedContentListPath.VIEW)) {
+			path.equals(UserSegmentContentListPath.VIEW)) {
 
 			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 
@@ -223,7 +223,7 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 					"com.liferay.portlet.asset." +
 						"AssetRendererFactoryRegistryUtil"));
 		}
-		else if (path.equals(TargetedContentListPath.VIEW_CONTENT)) {
+		else if (path.equals(UserSegmentContentListPath.VIEW_CONTENT)) {
 			long assetEntryId = ParamUtil.getLong(
 				portletRequest, "assetEntryId");
 
@@ -252,7 +252,7 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 			portletRequest.setAttribute("view.jsp-show", new Boolean(false));
 			portletRequest.setAttribute("view.jsp-print", new Boolean(false));
 		}
-		else if (path.equals(TargetedContentListPath.CONFIGURATION)) {
+		else if (path.equals(UserSegmentContentListPath.CONFIGURATION)) {
 			List<KeyValuePair> typesLeftList = new ArrayList<KeyValuePair>();
 
 			for (long classNameId : classNameIds) {
@@ -305,6 +305,6 @@ public class TargetedContentListPortlet extends CTFreeMarkerPortlet {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		TargetedContentListPortlet.class);
+		UserSegmentContentListPortlet.class);
 
 }

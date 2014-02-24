@@ -17,16 +17,16 @@ package com.liferay.contenttargeting.portlet;
 /**
  * @author Eudaldo Alonso
  */
-public class TargetedContentDisplayPath {
+public class UserSegmentContentListPath {
 
 	public static final String CONFIGURATION =
-		"html/targeted_content_display/configuration.ftl";
-
-	public static final String EDIT_QUERY_RULE =
-		"html/targeted_content_display/edit_query_rule.ftl";
+		"html/user_segment_content_list/configuration.ftl";
 
 	public static final String ERROR = "html/error.ftl";
 
-	public static final String VIEW = "html/targeted_content_display/view.ftl";
+	public static final String VIEW = "html/user_segment_content_list/view.ftl";
+
+	public static final String VIEW_CONTENT =
+		"html/user_segment_content_list/view_content.ftl";
 
 }

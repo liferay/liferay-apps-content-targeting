@@ -83,7 +83,7 @@
 											<#list assetRendererFactories as assetRendererFactory>
 												<@liferay_ui["icon"]
 													cssClass="asset-selector"
-													data=targetedContentDisplayUtilClass.getAssetSelectorIconData(request, assetRendererFactory, "Default")
+													data=userSegmentContentDisplayUtilClass.getAssetSelectorIconData(request, assetRendererFactory, "Default")
 													id="groupId_${assetRendererFactory.getTypeName(locale, false)}_Default"
 													message=assetRendererFactory.getTypeName(locale, false)
 													src=assetRendererFactory.getIconPath(renderRequest)
@@ -127,7 +127,7 @@
 </@>
 
 <@portlet["renderURL"] var="newUserSegmentRuleURL" windowState=liferayWindowStateExclusive.toString()>
-	<@portlet["param"] name="mvcPath" value="${targetedContentDisplayPath.EDIT_QUERY_RULE}" />
+	<@portlet["param"] name="mvcPath" value="${userSegmentContentDisplayPath.EDIT_QUERY_RULE}" />
 </@>
 
 <@aui["script"] use="aui-base,liferay-auto-fields">

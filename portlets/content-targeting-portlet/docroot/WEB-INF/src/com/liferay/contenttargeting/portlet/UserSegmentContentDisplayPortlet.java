@@ -64,7 +64,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Eudaldo Alonso
  */
-public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
+public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 	@Override
 	public void init() throws PortletException {
@@ -204,10 +204,10 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 		template.put(
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 		template.put(
-			"targetedContentDisplayPath",
+			"userSegmentContentDisplayPath",
 			staticModels.get(
 				"com.liferay.contenttargeting.portlet." +
-					"TargetedContentDisplayPath"));
+					"UserSegmentContentDisplayPath"));
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
@@ -230,7 +230,7 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 			portletPreferences.getValue("contentDefaultValue", null));
 
 		if (Validator.isNull(path) ||
-			path.equals(TargetedContentDisplayPath.VIEW)) {
+			path.equals(UserSegmentContentDisplayPath.VIEW)) {
 
 			QueryRule queryRule = null;
 
@@ -296,8 +296,8 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 			template.put("isMatchingRule", isMatchingRule);
 			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 		}
-		else if (path.equals(TargetedContentDisplayPath.EDIT_QUERY_RULE) ||
-				 path.equals(TargetedContentDisplayPath.CONFIGURATION)) {
+		else if (path.equals(UserSegmentContentDisplayPath.EDIT_QUERY_RULE) ||
+				 path.equals(UserSegmentContentDisplayPath.CONFIGURATION)) {
 
 			template.put(
 				"assetRendererFactories",
@@ -349,10 +349,10 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 				staticModels.get(
 					"com.liferay.contenttargeting.portlet.util.QueryRuleUtil"));
 			template.put(
-				"targetedContentDisplayUtilClass",
+				"userSegmentContentDisplayUtilClass",
 				staticModels.get(
 					"com.liferay.contenttargeting.portlet.util." +
-						"TargetedContentDisplayUtil"));
+						"UserSegmentContentDisplayUtil"));
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -379,7 +379,7 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		TargetedContentDisplayPortlet.class);
+		UserSegmentContentDisplayPortlet.class);
 
 	private UserSegmentLocalService _userSegmentLocalService;
 
