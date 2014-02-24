@@ -146,9 +146,17 @@ public class RuleInstanceLocalServiceClp implements RuleInstanceLocalService {
 
 		_methodParameterTypes25 = new String[] { "long" };
 
-		_methodName26 = "updateRuleInstance";
+		_methodName26 = "getRuleInstances";
 
-		_methodParameterTypes26 = new String[] {
+		_methodParameterTypes26 = new String[] { "java.lang.String", "long" };
+
+		_methodName27 = "getRuleInstancesCount";
+
+		_methodParameterTypes27 = new String[] { "java.lang.String", "long" };
+
+		_methodName28 = "updateRuleInstance";
+
+		_methodParameterTypes28 = new String[] {
 				"long", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -944,6 +952,79 @@ public class RuleInstanceLocalServiceClp implements RuleInstanceLocalService {
 	}
 
 	@Override
+	public java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances(
+		java.lang.String ruleKey, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
+					new Object[] {
+						ClpSerializer.translateInput(ruleKey),
+						
+					userSegmentId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.contenttargeting.model.RuleInstance>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public long getRuleInstancesCount(java.lang.String ruleKey,
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
+					new Object[] {
+						ClpSerializer.translateInput(ruleKey),
+						
+					userSegmentId
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Long)returnObj).longValue();
+	}
+
+	@Override
 	public com.liferay.contenttargeting.model.RuleInstance updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -952,8 +1033,8 @@ public class RuleInstanceLocalServiceClp implements RuleInstanceLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						ruleInstanceId,
 						
@@ -1038,4 +1119,8 @@ public class RuleInstanceLocalServiceClp implements RuleInstanceLocalService {
 	private String[] _methodParameterTypes25;
 	private String _methodName26;
 	private String[] _methodParameterTypes26;
+	private String _methodName27;
+	private String[] _methodParameterTypes27;
+	private String _methodName28;
+	private String[] _methodParameterTypes28;
 }

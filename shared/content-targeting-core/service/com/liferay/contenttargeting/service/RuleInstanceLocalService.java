@@ -322,6 +322,17 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.contenttargeting.model.RuleInstance> getRuleInstances(
+		java.lang.String ruleKey, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getRuleInstancesCount(java.lang.String ruleKey,
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	public com.liferay.contenttargeting.model.RuleInstance updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)

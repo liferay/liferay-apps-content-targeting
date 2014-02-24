@@ -2443,6 +2443,578 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	}
 
 	private static final String _FINDER_COLUMN_USERSEGMENTID_USERSEGMENTID_2 = "ruleInstance.userSegmentId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_U = new FinderPath(RuleInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			RuleInstanceModelImpl.FINDER_CACHE_ENABLED, RuleInstanceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_U",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_U = new FinderPath(RuleInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			RuleInstanceModelImpl.FINDER_CACHE_ENABLED, RuleInstanceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_U",
+			new String[] { String.class.getName(), Long.class.getName() },
+			RuleInstanceModelImpl.RULEKEY_COLUMN_BITMASK |
+			RuleInstanceModelImpl.USERSEGMENTID_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_R_U = new FinderPath(RuleInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			RuleInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_U",
+			new String[] { String.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns all the rule instances where ruleKey = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param ruleKey the rule key
+	 * @param userSegmentId the user segment ID
+	 * @return the matching rule instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<RuleInstance> findByR_U(String ruleKey, long userSegmentId)
+		throws SystemException {
+		return findByR_U(ruleKey, userSegmentId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the rule instances where ruleKey = &#63; and userSegmentId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param ruleKey the rule key
+	 * @param userSegmentId the user segment ID
+	 * @param start the lower bound of the range of rule instances
+	 * @param end the upper bound of the range of rule instances (not inclusive)
+	 * @return the range of matching rule instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<RuleInstance> findByR_U(String ruleKey, long userSegmentId,
+		int start, int end) throws SystemException {
+		return findByR_U(ruleKey, userSegmentId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the rule instances where ruleKey = &#63; and userSegmentId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.contenttargeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param ruleKey the rule key
+	 * @param userSegmentId the user segment ID
+	 * @param start the lower bound of the range of rule instances
+	 * @param end the upper bound of the range of rule instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rule instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<RuleInstance> findByR_U(String ruleKey, long userSegmentId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_U;
+			finderArgs = new Object[] { ruleKey, userSegmentId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_R_U;
+			finderArgs = new Object[] {
+					ruleKey, userSegmentId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<RuleInstance> list = (List<RuleInstance>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (RuleInstance ruleInstance : list) {
+				if (!Validator.equals(ruleKey, ruleInstance.getRuleKey()) ||
+						(userSegmentId != ruleInstance.getUserSegmentId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_RULEINSTANCE_WHERE);
+
+			boolean bindRuleKey = false;
+
+			if (ruleKey == null) {
+				query.append(_FINDER_COLUMN_R_U_RULEKEY_1);
+			}
+			else if (ruleKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_U_RULEKEY_3);
+			}
+			else {
+				bindRuleKey = true;
+
+				query.append(_FINDER_COLUMN_R_U_RULEKEY_2);
+			}
+
+			query.append(_FINDER_COLUMN_R_U_USERSEGMENTID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(RuleInstanceModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindRuleKey) {
+					qPos.add(ruleKey);
+				}
+
+				qPos.add(userSegmentId);
+
+				if (!pagination) {
+					list = (List<RuleInstance>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<RuleInstance>(list);
+				}
+				else {
+					list = (List<RuleInstance>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first rule instance in the ordered set where ruleKey = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param ruleKey the rule key
+	 * @param userSegmentId the user segment ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching rule instance
+	 * @throws com.liferay.contenttargeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public RuleInstance findByR_U_First(String ruleKey, long userSegmentId,
+		OrderByComparator orderByComparator)
+		throws NoSuchRuleInstanceException, SystemException {
+		RuleInstance ruleInstance = fetchByR_U_First(ruleKey, userSegmentId,
+				orderByComparator);
+
+		if (ruleInstance != null) {
+			return ruleInstance;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ruleKey=");
+		msg.append(ruleKey);
+
+		msg.append(", userSegmentId=");
+		msg.append(userSegmentId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRuleInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the first rule instance in the ordered set where ruleKey = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param ruleKey the rule key
+	 * @param userSegmentId the user segment ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching rule instance, or <code>null</code> if a matching rule instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public RuleInstance fetchByR_U_First(String ruleKey, long userSegmentId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<RuleInstance> list = findByR_U(ruleKey, userSegmentId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last rule instance in the ordered set where ruleKey = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param ruleKey the rule key
+	 * @param userSegmentId the user segment ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching rule instance
+	 * @throws com.liferay.contenttargeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public RuleInstance findByR_U_Last(String ruleKey, long userSegmentId,
+		OrderByComparator orderByComparator)
+		throws NoSuchRuleInstanceException, SystemException {
+		RuleInstance ruleInstance = fetchByR_U_Last(ruleKey, userSegmentId,
+				orderByComparator);
+
+		if (ruleInstance != null) {
+			return ruleInstance;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("ruleKey=");
+		msg.append(ruleKey);
+
+		msg.append(", userSegmentId=");
+		msg.append(userSegmentId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchRuleInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the last rule instance in the ordered set where ruleKey = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param ruleKey the rule key
+	 * @param userSegmentId the user segment ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching rule instance, or <code>null</code> if a matching rule instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public RuleInstance fetchByR_U_Last(String ruleKey, long userSegmentId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByR_U(ruleKey, userSegmentId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<RuleInstance> list = findByR_U(ruleKey, userSegmentId, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the rule instances before and after the current rule instance in the ordered set where ruleKey = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param ruleInstanceId the primary key of the current rule instance
+	 * @param ruleKey the rule key
+	 * @param userSegmentId the user segment ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next rule instance
+	 * @throws com.liferay.contenttargeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public RuleInstance[] findByR_U_PrevAndNext(long ruleInstanceId,
+		String ruleKey, long userSegmentId, OrderByComparator orderByComparator)
+		throws NoSuchRuleInstanceException, SystemException {
+		RuleInstance ruleInstance = findByPrimaryKey(ruleInstanceId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			RuleInstance[] array = new RuleInstanceImpl[3];
+
+			array[0] = getByR_U_PrevAndNext(session, ruleInstance, ruleKey,
+					userSegmentId, orderByComparator, true);
+
+			array[1] = ruleInstance;
+
+			array[2] = getByR_U_PrevAndNext(session, ruleInstance, ruleKey,
+					userSegmentId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected RuleInstance getByR_U_PrevAndNext(Session session,
+		RuleInstance ruleInstance, String ruleKey, long userSegmentId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_RULEINSTANCE_WHERE);
+
+		boolean bindRuleKey = false;
+
+		if (ruleKey == null) {
+			query.append(_FINDER_COLUMN_R_U_RULEKEY_1);
+		}
+		else if (ruleKey.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_R_U_RULEKEY_3);
+		}
+		else {
+			bindRuleKey = true;
+
+			query.append(_FINDER_COLUMN_R_U_RULEKEY_2);
+		}
+
+		query.append(_FINDER_COLUMN_R_U_USERSEGMENTID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(RuleInstanceModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindRuleKey) {
+			qPos.add(ruleKey);
+		}
+
+		qPos.add(userSegmentId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(ruleInstance);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<RuleInstance> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the rule instances where ruleKey = &#63; and userSegmentId = &#63; from the database.
+	 *
+	 * @param ruleKey the rule key
+	 * @param userSegmentId the user segment ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByR_U(String ruleKey, long userSegmentId)
+		throws SystemException {
+		for (RuleInstance ruleInstance : findByR_U(ruleKey, userSegmentId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(ruleInstance);
+		}
+	}
+
+	/**
+	 * Returns the number of rule instances where ruleKey = &#63; and userSegmentId = &#63;.
+	 *
+	 * @param ruleKey the rule key
+	 * @param userSegmentId the user segment ID
+	 * @return the number of matching rule instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByR_U(String ruleKey, long userSegmentId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_U;
+
+		Object[] finderArgs = new Object[] { ruleKey, userSegmentId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_RULEINSTANCE_WHERE);
+
+			boolean bindRuleKey = false;
+
+			if (ruleKey == null) {
+				query.append(_FINDER_COLUMN_R_U_RULEKEY_1);
+			}
+			else if (ruleKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_U_RULEKEY_3);
+			}
+			else {
+				bindRuleKey = true;
+
+				query.append(_FINDER_COLUMN_R_U_RULEKEY_2);
+			}
+
+			query.append(_FINDER_COLUMN_R_U_USERSEGMENTID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindRuleKey) {
+					qPos.add(ruleKey);
+				}
+
+				qPos.add(userSegmentId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_R_U_RULEKEY_1 = "ruleInstance.ruleKey IS NULL AND ";
+	private static final String _FINDER_COLUMN_R_U_RULEKEY_2 = "ruleInstance.ruleKey = ? AND ";
+	private static final String _FINDER_COLUMN_R_U_RULEKEY_3 = "(ruleInstance.ruleKey IS NULL OR ruleInstance.ruleKey = '') AND ";
+	private static final String _FINDER_COLUMN_R_U_USERSEGMENTID_2 = "ruleInstance.userSegmentId = ?";
 
 	public RuleInstancePersistenceImpl() {
 		setModelClass(RuleInstance.class);
@@ -2808,6 +3380,27 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERSEGMENTID,
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERSEGMENTID,
+					args);
+			}
+
+			if ((ruleInstanceModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_U.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						ruleInstanceModelImpl.getOriginalRuleKey(),
+						ruleInstanceModelImpl.getOriginalUserSegmentId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_U, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_U,
+					args);
+
+				args = new Object[] {
+						ruleInstanceModelImpl.getRuleKey(),
+						ruleInstanceModelImpl.getUserSegmentId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_U, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_U,
 					args);
 			}
 		}

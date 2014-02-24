@@ -780,6 +780,13 @@ public class UserSegmentWrapper implements UserSegment,
 	}
 
 	@Override
+	public boolean isRuleEnabled(
+		com.liferay.contenttargeting.api.model.Rule rule)
+		throws java.lang.Exception {
+		return _userSegment.isRuleEnabled(rule);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

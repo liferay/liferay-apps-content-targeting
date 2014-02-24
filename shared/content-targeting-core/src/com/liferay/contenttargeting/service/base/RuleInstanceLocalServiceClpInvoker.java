@@ -145,9 +145,17 @@ public class RuleInstanceLocalServiceClpInvoker {
 
 		_methodParameterTypes66 = new String[] { "long" };
 
-		_methodName67 = "updateRuleInstance";
+		_methodName67 = "getRuleInstances";
 
-		_methodParameterTypes67 = new String[] {
+		_methodParameterTypes67 = new String[] { "java.lang.String", "long" };
+
+		_methodName68 = "getRuleInstancesCount";
+
+		_methodParameterTypes68 = new String[] { "java.lang.String", "long" };
+
+		_methodName69 = "updateRuleInstance";
+
+		_methodParameterTypes69 = new String[] {
 				"long", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -299,6 +307,18 @@ public class RuleInstanceLocalServiceClpInvoker {
 
 		if (_methodName67.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
+			return RuleInstanceLocalServiceUtil.getRuleInstances((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName68.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
+			return RuleInstanceLocalServiceUtil.getRuleInstancesCount((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName69.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
 			return RuleInstanceLocalServiceUtil.updateRuleInstance(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				(com.liferay.portal.service.ServiceContext)arguments[2]);
@@ -359,4 +379,8 @@ public class RuleInstanceLocalServiceClpInvoker {
 	private String[] _methodParameterTypes66;
 	private String _methodName67;
 	private String[] _methodParameterTypes67;
+	private String _methodName68;
+	private String[] _methodParameterTypes68;
+	private String _methodName69;
+	private String[] _methodParameterTypes69;
 }

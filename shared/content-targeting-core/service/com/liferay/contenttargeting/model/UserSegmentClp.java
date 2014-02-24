@@ -677,6 +677,28 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	}
 
 	@Override
+	public boolean isRuleEnabled(
+		com.liferay.contenttargeting.api.model.Rule rule) {
+		try {
+			String methodName = "isRuleEnabled";
+
+			Class<?>[] parameterTypes = new Class<?>[] {
+					com.liferay.contenttargeting.api.model.Rule.class
+				};
+
+			Object[] parameterValues = new Object[] { rule };
+
+			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				UserSegment.class.getName()));
