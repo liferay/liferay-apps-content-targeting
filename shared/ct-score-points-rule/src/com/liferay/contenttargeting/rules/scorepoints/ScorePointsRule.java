@@ -20,6 +20,7 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.contenttargeting.rules.scorepoints.service.ScorePointLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -47,14 +48,10 @@ public class ScorePointsRule extends BaseRule {
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
 
-		int scorePoints = jsonObj.getInt("scorePoints");
+		long scorePoints = jsonObj.getLong("scorePoints");
 
-		String ctUserTypeSettings = ctUser.getTypeSettings();
-
-		JSONObject ctUserJsonObj = JSONFactoryUtil.createJSONObject(
-			ctUserTypeSettings);
-
-		int ctUserScorePoints = ctUserJsonObj.getInt("scorePoints");
+		long ctUserScorePoints = ScorePointLocalServiceUtil.getPoints(
+			ctUser.getCTUserId(), ruleInstance.getUserSegmentId());
 
 		if (ctUserScorePoints >= scorePoints) {
 			return true;
