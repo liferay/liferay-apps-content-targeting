@@ -24,11 +24,14 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.Locale;
+
+import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
@@ -128,6 +131,19 @@ public class QueryRule {
 		return _assetEntryId;
 	}
 
+	public String getAssetImage(PortletRequest portletRequest)
+		throws Exception {
+
+		AssetRendererFactory assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_assetClassName);
+
+		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
+			_assetClassPK);
+
+		return assetRenderer.getThumbnailPath(portletRequest);
+	}
+
 	public String getAssetTitle() {
 		return _assetTitle;
 	}
@@ -152,7 +168,11 @@ public class QueryRule {
 		return StringUtil.merge(_userSegmentAssetCategoryIds);
 	}
 
-	public String getUserSegmentAssetCategoryNames(Locale locale)
+	public String getUserSegmentNames(Locale locale) throws SystemException {
+		return getUserSegmentNames(locale, StringPool.COMMA_AND_SPACE);
+	}
+
+	protected String getUserSegmentNames(Locale locale, String separator)
 		throws SystemException {
 
 		if (ArrayUtil.isEmpty(_userSegmentAssetCategoryIds)) {
@@ -172,10 +192,16 @@ public class QueryRule {
 			}
 
 			sb.append(assetCategory.getTitle(locale));
-			sb.append(_CATEGORY_SEPARATOR);
+			sb.append(separator);
 		}
 
 		return sb.toString();
+	}
+
+	public String getUserSegmentAssetCategoryNames(Locale locale)
+		throws SystemException {
+
+		return getUserSegmentNames(locale, _CATEGORY_SEPARATOR);
 	}
 
 	public boolean isAndOperator() {

@@ -1,14 +1,187 @@
 .targeted-content-display-portlet {
-	.selected-content {
-		margin-top: 10px;
+	.rules-panel {
+		background-color: #EEE;
+		margin: 10px;
+		overflow: hidden;
+		padding-bottom: 10px;
+
+		.lfr-form-row {
+			background-color: #FFF;
+			border-color: #CCC;
+			border-style: solid;
+			border-width: 1px 1px 1px 2px;
+			margin: 10px 10px 10px 30px;
+			padding: 0;
+			width: auto;
+
+			&.active {
+				border-color: #009AE5;
+				border-width: 1px 1px 1px 4px;
+				box-shadow: 0px 5px 0px -1px #DDD;
+
+				.row-fields .field-row {
+					border-left-color: #009AE5;
+				}
+
+				.lfr-autorow-controls .toolbar-content .btn-content .icon {
+					color: #009AE5;
+
+					&.icon-minus {
+						display: block;
+					}
+				}
+			}
+
+			&.first {
+				border-width: 2px 1px 1px 1px;
+			}
+
+			&.last {
+				border-width: 1px 1px 2px 1px;
+			}
+
+			&.active.first {
+				border-width: 4px 1px 1px 1px;
+			}
+
+			&.active.last {
+				border-width: 1px 1px 4px 1px;
+			}
+
+			.handle-sort-vertical {
+				background: transparent;
+				padding-left: 0;
+			}
+
+			.lfr-autorow-controls {
+				display: inline-block;
+				bottom: auto;
+				right: auto;
+				top: 5px;
+				width: 100%;
+
+				.toolbar-content .btn-content {
+					background: transparent;
+					border: 0;
+					box-shadow: 0 0;
+					font-size: 15px;
+					padding: 0 0;
+
+					&:hover {
+						background-position: 0 0;
+					}
+
+					&.add-row {
+						font-size: 18px;
+						left: -25px;
+						position: absolute;
+						width: 18px;
+					}
+
+					&.delete-row {
+						right: 10px;
+						position: absolute;
+					}
+
+					.icon {
+						color: #CCC;
+
+						&.icon-plus:before {
+							content: "\f055";
+						}
+
+						&.icon-minus {
+							display: none;
+
+							&:before {
+								content: "\f00d";
+							}
+						}
+					}
+				}
+			}
+
+			.default-content {
+				overflow: hidden;
+				padding: 10px 10px 10px 23px;
+
+				.full-view .radio {
+					font-weight: 400;
+				}
+
+				.otherwise-text {
+					font-size: 18px;
+				}
+			}
+
+			.row-fields {
+				padding: 0 5px;
+
+				.field-row {
+					border-left: dotted 2px #CCC;
+					padding: 10px 10px 10px 20px;
+					margin: 4px 0;
+				}
+
+				.default-content-value-text, .query-contains-text, .query-and-operator-text, .query-user-segments-text, .query-content-text {
+					font-weight: 400;
+				}
+
+				.default-content-value, .query-contains-value, .query-and-operator-value, .query-user-segments-value, .query-content-value {
+					color: #8D8D8D;
+				}
+
+				.query-content-value-type {
+					font-size: 13px;
+				}
+			}
+		}
+
+		.select-asset-selector {
+			.asset-preview {
+				font-size: 13px;
+				overflow: hidden;
+
+				.asset-image {
+					max-height: 55px;
+				}
+
+				.asset-title {
+					font-weight: 400;
+					margin-top: 6px;
+				}
+
+				.asset-type {
+					color: #8D8D8D;
+					font-weight: 400;
+				}
+
+				.column-content {
+					padding-left: 0;
+				}
+			}
+
+			.lfr-meta-actions {
+				padding-top: 0;
+			}
+		}
+
+		.user-segment-selector {
+			margin-right: 10px;
+			margin-bottom: 10px;
+			overflow: hidden;
+
+			.tagselector-content {
+				overflow: hidden;
+
+				ul {
+					margin: 10px 0;
+				}
+			}
+		}
 	}
 
-	.user-segment-selector {
-		margin-bottom: 10px;
-		overflow: hidden;
-
-		.tagselector-content {
-			overflow: hidden;
-		}
+	.title {
+		font-size: 20px;
 	}
 }

@@ -20,76 +20,106 @@
 	<@portlet["param"] name="redirect" value="${currentURL}" />
 </@>
 
+<span class="title"><@liferay_ui["message"] key="display-the-following-content"/></span>
+
 <@aui["form"] action="${configurationURL}" method="post" name="fm">
-	<div id="<@portlet["namespace"] />queryRules">
-		<@aui["fieldset"] label="display-the-following-content">
-			<#list queryLogicIndexes as queryLogicIndex>
-				${request.setAttribute("configuration.index", queryLogicIndex)}
+	<div class="rules-panel">
+		<div id="<@portlet["namespace"] />queryRules">
+			<@aui["fieldset"] label="">
+				<#assign rowClass = "first active" />
+				<#assign isFirst = true />
 
-				<#include "edit_query_rule.ftl" />
-			</#list>
-		</@>
-	</div>
+				<#list queryLogicIndexes as queryLogicIndex>
+					${request.setAttribute("configuration.index", queryLogicIndex)}
+					${request.setAttribute("configuration.isFirst", isFirst)}
 
-	<div class="default-content">
-		<@aui["select"] label="default-content" name="contentDefaultValue">
-			<@aui["option"] label="dont-display-anything" selected=!contentDefaultValue value=false />
-			<@aui["option"] label="select" selected=contentDefaultValue value=true />
-		</@>
+                	<div class="lfr-form-row ${rowClass}">
+                		<div class="row-fields">
+							<#include "edit_query_rule.ftl" />
+						</div>
+					</div>
 
-		<div id="<@portlet["namespace"] />contentDefaultBox">
-			<div class="select-asset-selector">
-				<div class="lfr-meta-actions edit-controls">
-					<@aui["input"] name="assetEntryIdDefault" type="hidden" value=assetEntryIdDefault />
+					<#assign rowClass = "" />
+					<#assign isFirst = false />
+				</#list>
+			</@>
+		</div>
 
-					<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" message=languageUtil.get(locale, "select-content") showWhenSingleIcon=true>
-						<#list assetRendererFactories as assetRendererFactory>
-							<@liferay_ui["icon"]
-								cssClass="asset-selector"
-								data=targetedContentDisplayUtilClass.getAssetSelectorIconData(request, assetRendererFactory, "Default")
-								id="groupId_${assetRendererFactory.getTypeName(locale, false)}_Default"
-								message=assetRendererFactory.getTypeName(locale, false)
-								src=assetRendererFactory.getIconPath(renderRequest)
-								url="javascript:;"
-							/>
-						</#list>
-					</@>
+		<div class="lfr-form-row last">
+			<div class="row-fields">
+				<div class="default-content">
+					<div class="full-view hide">
+						<@aui["column"] columnWidth=60>
+                    		<span class="otherwise-text"><@liferay_ui["message"] key="otherwise" /></span>
+						</@>
+
+						<@aui["column"] columnWidth=40>
+							<@aui["input"] checked=!contentDefaultValue label="dont-display-anything" name="contentDefaultValue" type="radio" value=false />
+
+							<@aui["input"] checked=contentDefaultValue label="display-this-content" name="contentDefaultValue" type="radio" value=true />
+
+							<div id="<@portlet["namespace"] />contentDefaultBox">
+								<div class="select-asset-selector">
+									<#assign cssClass = "">
+
+									<#if (assetEntryIdDefault <= 0)>
+										<#assign cssClass = "hide">
+									</#if>
+
+                                    <div class="asset-preview ${cssClass}" id="<@portlet["namespace"] />selectedContentDefault">
+										<@aui["column"]>
+                                            <img class="asset-image" src="${assetImageDefault}" />
+										</@>
+										<@aui["column"]>
+                                            <div class="asset-title" id="<@portlet["namespace"] />assetTitleInfoDefault">${assetTitleDefault}</div>
+                                            <div class="asset-type" id="<@portlet["namespace"] />assetTypeInfoDefault"><@liferay_ui["message"] key="type" />: ${assetTypeDefault}</div>
+										</@>
+                                    </div>
+
+									<@aui["input"] name="assetEntryIdDefault" type="hidden" value=assetEntryIdDefault />
+
+									<div class="lfr-meta-actions edit-controls">
+										<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" message=languageUtil.get(locale, "select-content") showWhenSingleIcon=true>
+											<#list assetRendererFactories as assetRendererFactory>
+												<@liferay_ui["icon"]
+													cssClass="asset-selector"
+													data=targetedContentDisplayUtilClass.getAssetSelectorIconData(request, assetRendererFactory, "Default")
+													id="groupId_${assetRendererFactory.getTypeName(locale, false)}_Default"
+													message=assetRendererFactory.getTypeName(locale, false)
+													src=assetRendererFactory.getIconPath(renderRequest)
+													url="javascript:;"
+												/>
+											</#list>
+										</@>
+									</div>
+								</div>
+							</div>
+						</@>
+					</div>
+
+					<div class="summary-view">
+						<@aui["column"] columnWidth=60>
+							<span class="otherwise-text"><@liferay_ui["message"] key="otherwise" /></span>
+						</@>
+
+						<@aui["column"] columnWidth=40>
+							<span class="default-content-value-text">
+								<#if (assetEntryIdDefault <= 0)>
+									<@liferay_ui["message"] key="dont-display-anything" />
+								<#else>
+									<@liferay_ui["message"] key="display-this-content" />
+								</#if>
+							</span>
+
+							<#if (assetEntryIdDefault > 0)>
+								<span class="default-content-value">${assetTitleDefault} (<span class="default-content-value-type">${assetTypeDefault}</span>)</span>
+							</#if>
+						</@>
+					</div>
 				</div>
 			</div>
-
-			<#assign cssClass = "">
-
-			<#if (assetEntryIdDefault <= 0)>
-				<#assign cssClass = "hide">
-			</#if>
-
-			<div class="selected-content ${cssClass}" id="<@portlet["namespace"] />selectedContentDefault">
-				<table class="table table-bordered table-hover table-striped">
-					<thead class="table-columns">
-					<tr>
-						<th class="table-first-header">${languageUtil.get(locale, "title")}</th>
-						<th class="">${languageUtil.get(locale, "type")}</th>
-						<th class="table-last-header">&nbsp;</th>
-					</tr>
-					</thead>
-					<tbody class="table-data">
-					<tr class="">
-						<td class="table-cell first" id="<@portlet["namespace"] />assetTitleInfoDefault">${assetTitleDefault}</td>
-						<td class="table-cell" id="<@portlet["namespace"] />assetTypeInfoDefault">${assetTypeDefault}</td>
-						<td class="table-cell last">
-							<@liferay_ui["icon"]
-								cssClass="delete-selected-content"
-								data={"index" : "Default"}
-								image="delete"
-								url="javascript:;"
-							/>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-	</div>
+        </div>
+    </div>
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" value="save" />
@@ -145,23 +175,44 @@
 		'.asset-selector a'
 	);
 
-	A.one('#<@portlet["namespace"] />fm').delegate(
+	A.getBody().delegate(
 		'click',
 		function(event) {
-			event.preventDefault();
+			A.all('.lfr-form-row').each(
+				function(row) {
+					row.removeClass('active');
+
+					var summaryContent = row.one('.summary-view');
+
+					if (summaryContent) {
+						var fullView = row.one('.full-view');
+
+						if (fullView) {
+							fullView.hide();
+						}
+
+						summaryContent.show();
+					}
+				}
+			);
 
 			var currentTarget = event.currentTarget;
 
-			var index = currentTarget.attr('data-index');
+			currentTarget.addClass('active');
 
-			A.one('#<@portlet["namespace"] />assetEntryId' + index).attr('value', '');
+			var fullView = currentTarget.one('.full-view');
 
-			A.one('#<@portlet["namespace"] />assetTitleInfo' + index).html('');
-			A.one('#<@portlet["namespace"] />assetTypeInfo' + index).html('');
+			if (fullView) {
+				fullView.show();
+			}
 
-			A.one('#<@portlet["namespace"] />selectedContent' + index).hide();
+			var summaryView = currentTarget.one('.summary-view');
+
+			if (summaryView) {
+				summaryView.hide();
+			}
 		},
-		'.delete-selected-content a'
+		'.lfr-form-row'
 	);
 
 	Liferay.Util.toggleSelectBox('<@portlet["namespace"] />contentDefaultValue', 'true', '<@portlet["namespace"] />contentDefaultBox');

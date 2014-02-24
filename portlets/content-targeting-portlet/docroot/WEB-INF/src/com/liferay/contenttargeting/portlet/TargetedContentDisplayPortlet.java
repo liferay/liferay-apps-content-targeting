@@ -304,6 +304,7 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 				getSelectableAssetRendererFactories(
 					themeDisplay.getCompanyId()));
 
+			String assetImageDefault = StringPool.BLANK;
 			String assetTitleDefault = StringPool.BLANK;
 			String assetTypeDefault = StringPool.BLANK;
 
@@ -321,12 +322,16 @@ public class TargetedContentDisplayPortlet extends CTFreeMarkerPortlet {
 					assetRendererFactory.getAssetRenderer(
 						assetEntry.getClassPK());
 
+				assetImageDefault = assetRenderer.getThumbnailPath(
+					portletRequest);
 				assetTitleDefault = assetRenderer.getTitle(
 					themeDisplay.getLocale());
-				assetTypeDefault = assetRendererFactory.getType();
+				assetTypeDefault = assetRendererFactory.getTypeName(
+					themeDisplay.getLocale(), true);
 			}
 
 			template.put("assetEntryIdDefault", assetEntryIdDefault);
+			template.put("assetImageDefault", assetImageDefault);
 			template.put("assetTitleDefault", assetTitleDefault);
 			template.put("assetTypeDefault", assetTypeDefault);
 			template.put("contentDefaultValue", contentDefaultValue);

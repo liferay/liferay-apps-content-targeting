@@ -19,22 +19,42 @@
 <#assign configurationIndex = getterUtil.getInteger(request.getAttribute("configuration.index"))>
 <#assign index = paramUtil.getInteger(request, "index", configurationIndex)>
 
+<#assign isFirst = getterUtil.getBoolean(request.getAttribute("configuration.isFirst"))>
+
 <#assign queryRule = queryRuleUtilClass.getQueryRule(portletPreferences, index, locale)>
 
-<div class="lfr-form-row">
-	<div class="row-fields">
-		<div class="field-row form-inline query-row">
-			<@aui["select"] inlineField=true label="user" name="queryContains${index}">
-				<@aui["option"] label="belongs" selected=queryRule.isContains() value=true />
-				<@aui["option"] label="does-not-belong" selected=!queryRule.isContains() value=false />
-			</@>
+<div class="field-row query-row">
+	<@aui["input"] name="queryIndex${index}" type="hidden" />
 
-			<@aui["select"] inlineField=true label="to" name="queryAndOperator${index}" suffix="of-the-following-user-segments">
-				<@aui["option"] label="all" selected=queryRule.isAndOperator() value=true />
-				<@aui["option"] label="any"selected=!queryRule.isAndOperator() value=false />
-			</@>
+	<#assign fullViewClass = "">
+	<#assign summaryViewClass = "hide">
 
+	<#if queryRule.isValid() && !isFirst >
+		<#assign fullViewClass = "hide">
+		<#assign summaryViewClass = "">
+	</#if>
+
+	<div class="full-view ${fullViewClass}">
+		<@aui["column"] columnWidth=15>
+			<span class="query-contains-text"><@liferay_ui["message"] key="if-the-user" /></span>
+
+			<@aui["input"] checked=queryRule.isContains() label="belongs" name="queryContains${index}" type="radio" value=true />
+
+			<@aui["input"] checked=!queryRule.isContains() label="does-not-belong" name="queryContains${index}" type="radio" value=false />
+		</@>
+
+		<@aui["column"] columnWidth=15>
+			<span class="query-and-operator-text"><@liferay_ui["message"] key="to" /></span>
+
+			<@aui["input"] checked=queryRule.isAndOperator() label="all" name="queryAndOperator${index}" type="radio" value=true />
+
+			<@aui["input"] checked=!queryRule.isAndOperator() label="any" name="queryAndOperator${index}" type="radio" value=false />
+		</@>
+
+		<@aui["column"] columnWidth=30>
 			<div class="user-segment-selector">
+				<span class="query-and-operator-text"><@liferay_ui["message"] key="of-the-following-user-segments" /></span>
+
 				<div class="lfr-tags-selector-content" id="<@portlet["namespace"] />assetCategoriesSelector${index}">
 					<@aui["input"] name="userSegmentAssetCategoryIds${index}" type="hidden" value="${queryRule.getUserSegmentAssetCategoryIdsAsString()}" />
 				</div>
@@ -60,8 +80,28 @@
 					A.Do.after(changeTitle, assetCategoriesSelector, '_showSelectPopup');
 				</@>
 			</div>
+		</@>
 
+		<@aui["column"] columnWidth=40>
 			<div class="select-asset-selector">
+				<span class="query-and-operator-text"><@liferay_ui["message"] key="display-this-content" /></span>
+
+				<#assign cssClass = "">
+
+				<#if !queryRule.isValid()>
+					<#assign cssClass = "hide">
+				</#if>
+
+				<div class="asset-preview ${cssClass}" id="<@portlet["namespace"] />selectedContent${index}">
+					<@aui["column"]>
+						<img class="asset-image" src="${queryRule.getAssetImage(renderRequest)}" />
+					</@>
+					<@aui["column"]>
+                		<div class="asset-title" id="<@portlet["namespace"] />assetTitleInfo${index}">${queryRule.getAssetTitle()}</div>
+                		<div class="asset-type" id="<@portlet["namespace"] />assetTypeInfo${index}"><@liferay_ui["message"] key="type" />: ${queryRule.getAssetType()}</div>
+					</@>
+                </div>
+
 				<div class="lfr-meta-actions edit-controls">
 					<@aui["input"] name="assetEntryId${index}" type="hidden" value=queryRule.getAssetEntryId() />
 
@@ -79,38 +119,42 @@
 					</@>
 				</div>
 			</div>
+		</@>
+    </div>
 
-			<#assign cssClass = "">
+	<#if queryRule.isValid()>
+		<div class="summary-view ${summaryViewClass}">
+			<@aui["column"] columnWidth=15>
+				<span class="query-contains-text"><@liferay_ui["message"] key="if-the-user" /></span>:
+				<span class="query-contains-value">
+					<#if queryRule.isContains()>
+						<@liferay_ui["message"] key="belongs" />
+					<#else>
+						<@liferay_ui["message"] key="does-not-belong" />
+					</#if>
+				</span>
+			</@>
 
-			<#if !queryRule.isValid()>
-				<#assign cssClass = "hide">
-			</#if>
+			<@aui["column"] columnWidth=15>
+				<span class="query-and-operator-text"><@liferay_ui["message"] key="to" /></span>:
+				<span class="query-and-operator-value">
+					<#if queryRule.isAndOperator()>
+						<@liferay_ui["message"] key="all" />
+					<#else>
+						<@liferay_ui["message"] key="any" />
+					</#if>
+				</span>
+			</@>
 
-			<div class="selected-content ${cssClass}" id="<@portlet["namespace"] />selectedContent${index}">
-				<table class="table table-bordered table-hover table-striped">
-					<thead class="table-columns">
-					<tr>
-						<th class="table-first-header">${languageUtil.get(locale, "title")}</th>
-						<th class="">${languageUtil.get(locale, "type")}</th>
-						<th class="table-last-header">&nbsp;</th>
-					</tr>
-					</thead>
-					<tbody class="table-data">
-					<tr class="">
-						<td class="table-cell first" id="<@portlet["namespace"] />assetTitleInfo${index}">${queryRule.getAssetTitle()}</td>
-						<td class="table-cell" id="<@portlet["namespace"] />assetTypeInfo${index}">${queryRule.getAssetType()}</td>
-						<td class="table-cell last">
-							<@liferay_ui["icon"]
-								cssClass="delete-selected-content"
-								data={"index" : index}
-								image="delete"
-								url="javascript:;"
-							/>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-			</div>
+			<@aui["column"] columnWidth=30>
+				<span class="query-user-segments-text"><@liferay_ui["message"] key="of-the-following-user-segments" /></span>
+				<span class="query-user-segments-value">${queryRule.getUserSegmentNames(locale)}</span>
+			</@>
+
+			<@aui["column"] columnWidth=40>
+				<span class="query-content-text"><@liferay_ui["message"] key="display-this-content" /></span>
+				<span class="query-content-value">${queryRule.getAssetTitle()} (<span class="query-content-value-type">${queryRule.getAssetType()}</span>)</span>
+			</@>
 		</div>
-	</div>
+	</#if>
 </div>
