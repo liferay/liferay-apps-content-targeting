@@ -36,9 +36,9 @@ import javax.portlet.PortletRequest;
 /**
  * @author Eudaldo Alonso
  */
-public class QueryRule {
+public class UserSegmentQueryRule {
 
-	public QueryRule(
+	public UserSegmentQueryRule(
 			boolean andOperator, boolean contains, long assetEntryId,
 			long[] userSegmentAssetCategoryIds, int index, Locale locale)
 		throws PortalException, SystemException {

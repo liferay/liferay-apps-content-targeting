@@ -21,7 +21,7 @@
 
 <#assign isFirst = getterUtil.getBoolean(request.getAttribute("configuration.isFirst"))>
 
-<#assign queryRule = queryRuleUtilClass.getQueryRule(portletPreferences, index, locale)>
+<#assign queryRule = userSegmentQueryRuleUtilClass.getQueryRule(portletPreferences, index, locale)>
 
 <div class="field-row query-row">
 	<@aui["input"] name="queryIndex${index}" type="hidden" />

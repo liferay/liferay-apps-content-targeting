@@ -14,8 +14,8 @@
 
 package com.liferay.contenttargeting.portlet;
 
-import com.liferay.contenttargeting.portlet.util.QueryRule;
-import com.liferay.contenttargeting.portlet.util.QueryRuleUtil;
+import com.liferay.contenttargeting.portlet.util.UserSegmentQueryRule;
+import com.liferay.contenttargeting.portlet.util.UserSegmentQueryRuleUtil;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.UserSegmentUtil;
 import com.liferay.contenttargeting.util.WebKeys;
@@ -74,11 +74,13 @@ public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 			return;
 		}
 
-		List<QueryRule> queryRules = new ArrayList<QueryRule>();
+		List<UserSegmentQueryRule> queryRules =
+			new ArrayList<UserSegmentQueryRule>();
 
 		for (int queryRulesIndex : queryRulesIndexes) {
-			QueryRule queryRule = QueryRuleUtil.getQueryRule(
-				request, queryRulesIndex, themeDisplay.getLocale());
+			UserSegmentQueryRule queryRule =
+				UserSegmentQueryRuleUtil.getQueryRule(
+					request, queryRulesIndex, themeDisplay.getLocale());
 
 			if (!queryRule.isValid()) {
 				break;
@@ -114,7 +116,7 @@ public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 		portletPreferences.setValues(
 			"queryLogicIndexes", ArrayUtil.toStringArray(queryRulesIndexes));
 
-		for (QueryRule queryRule : queryRules) {
+		for (UserSegmentQueryRule queryRule : queryRules) {
 			portletPreferences.setValue(
 				"queryContains" + queryRule.getIndex(),
 				String.valueOf(queryRule.isContains()));
@@ -195,7 +197,7 @@ public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 		if (Validator.isNull(path) ||
 			path.equals(UserSegmentContentDisplayPath.VIEW)) {
 
-			QueryRule queryRule = null;
+			UserSegmentQueryRule queryRule = null;
 
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
@@ -204,7 +206,7 @@ public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 				long[] userSegmentAssetCategoryIds =
 					ContentTargetingUtil.getAssetCategoryIds(userSegmentIds);
 
-				queryRule = QueryRuleUtil.match(
+				queryRule = UserSegmentQueryRuleUtil.match(
 					userSegmentAssetCategoryIds, portletPreferences,
 					themeDisplay.getLocale());
 			}
@@ -308,9 +310,10 @@ public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 			template.put("queryLogicIndexes", queryRulesIndexes);
 			template.put(
-				"queryRuleUtilClass",
+				"userSegmentQueryRuleUtilClass",
 				staticModels.get(
-					"com.liferay.contenttargeting.portlet.util.QueryRuleUtil"));
+					"com.liferay.contenttargeting.portlet.util." +
+						"UserSegmentQueryRuleUtil"));
 			template.put(
 				"userSegmentContentDisplayUtilClass",
 				staticModels.get(

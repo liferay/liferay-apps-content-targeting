@@ -28,9 +28,9 @@ import javax.portlet.PortletPreferences;
 /**
  * @author Eudaldo Alonso
  */
-public class QueryRuleUtil {
+public class UserSegmentQueryRuleUtil {
 
-	public static QueryRule getQueryRule(
+	public static UserSegmentQueryRule getQueryRule(
 			ActionRequest request, int queryRulesIndex, Locale locale)
 		throws PortalException, SystemException {
 
@@ -39,19 +39,19 @@ public class QueryRuleUtil {
 		boolean andOperator = ParamUtil.getBoolean(
 			request, "queryAndOperator" + queryRulesIndex);
 
+		long assetEntryId = ParamUtil.getLong(
+			request, "assetEntryId" + queryRulesIndex);
+
 		long[] userSegmentAssetCategoryIds = StringUtil.split(
 			ParamUtil.getString(
 				request, "userSegmentAssetCategoryIds" + queryRulesIndex), 0L);
 
-		long assetEntryId = ParamUtil.getLong(
-			request, "assetEntryId" + queryRulesIndex);
-
-		return new QueryRule(
+		return new UserSegmentQueryRule(
 			andOperator, contains, assetEntryId, userSegmentAssetCategoryIds,
 			queryRulesIndex, locale);
 	}
 
-	public static QueryRule getQueryRule(
+	public static UserSegmentQueryRule getQueryRule(
 			PortletPreferences portletPreferences, int queryRulesIndex,
 			Locale locale)
 		throws PortalException, SystemException {
@@ -71,12 +71,12 @@ public class QueryRuleUtil {
 			portletPreferences.getValues(
 				"userSegmentAssetCategoryIds" + queryRulesIndex, null));
 
-		return new QueryRule(
+		return new UserSegmentQueryRule(
 			andOperator, contains, assetEntryId, userSegmentAssetCategoryIds,
 			queryRulesIndex, locale);
 	}
 
-	public static QueryRule match(
+	public static UserSegmentQueryRule match(
 			long[] userSegmentAssetCategoryIds,
 			PortletPreferences portletPreferences, Locale locale)
 		throws PortalException, SystemException {
@@ -85,7 +85,7 @@ public class QueryRuleUtil {
 			portletPreferences.getValues("queryLogicIndexes", null));
 
 		for (int queryRuleIndex : queryRulesIndexes) {
-			QueryRule queryRule = getQueryRule(
+			UserSegmentQueryRule queryRule = getQueryRule(
 				portletPreferences, queryRuleIndex, locale);
 
 			if (queryRule.isValid() &&
