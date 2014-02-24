@@ -250,17 +250,20 @@ public class QueryRule {
 		StringBundler sb = new StringBundler(
 			(_userSegmentAssetCategoryIds.length * 2) - 1);
 
-		for (long userSegmentAssetCategoryId : _userSegmentAssetCategoryIds) {
+		for (int i = 0; i < _userSegmentAssetCategoryIds.length; i++) {
 			AssetCategory assetCategory =
 				AssetCategoryLocalServiceUtil.fetchAssetCategory(
-					userSegmentAssetCategoryId);
+					_userSegmentAssetCategoryIds[i]);
 
 			if (assetCategory == null) {
 				continue;
 			}
 
 			sb.append(assetCategory.getTitle(locale));
-			sb.append(separator);
+
+			if (i != (_userSegmentAssetCategoryIds.length - 1)) {
+				sb.append(separator);
+			}
 		}
 
 		return sb.toString();
@@ -274,7 +277,7 @@ public class QueryRule {
 	private long _assetEntryId;
 	private String _assetTitle = StringPool.BLANK;
 	private String _assetType = StringPool.BLANK;
-	private boolean _contains;
+	private boolean _contains = true;
 	private int _index;
 	private long[] _userSegmentAssetCategoryIds;
 
