@@ -75,7 +75,7 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerPortlet {
 		portletPreferences.setValue(
 			"anyAssetType", String.valueOf(anyAssetType));
 
-		if (Validator.isNotNull(classNameIds)) {
+		if (ArrayUtil.isEmpty(classNameIds)) {
 			portletPreferences.setValues("classNameIds", classNameIds);
 		}
 
@@ -211,10 +211,6 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerPortlet {
 				portletRequest.setAttribute(
 					"view.jsp-print", new Boolean(false));
 			}
-			else {
-				portletRequest.setAttribute(
-					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
-			}
 
 			template.put("assetEntries", assetEntries);
 			template.put(
@@ -222,6 +218,11 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerPortlet {
 				staticModels.get(
 					"com.liferay.portlet.asset." +
 						"AssetRendererFactoryRegistryUtil"));
+
+			if (assetEntries.isEmpty()) {
+				portletRequest.setAttribute(
+					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+			}
 		}
 		else if (path.equals(UserSegmentContentListPath.VIEW_CONTENT)) {
 			long assetEntryId = ParamUtil.getLong(
