@@ -142,77 +142,82 @@
 		}
 	).render();
 
-	A.getBody().delegate(
-		'click',
-		function(event) {
-			event.preventDefault();
+	var onAssetSelectorClick = function(event) {
+		event.preventDefault();
 
-			var currentTarget = event.currentTarget;
+		var currentTarget = event.currentTarget;
 
-			Liferay.Util.selectEntity(
-				{
-					dialog: {
-						constrain: true,
-						modal: true
-					},
-					eventName: 'selectContent',
-					id: 'selectContent' + currentTarget.attr('id'),
-					title: currentTarget.attr('data-title'),
-					uri: currentTarget.attr('data-href')
+		Liferay.Util.selectEntity(
+			{
+				dialog: {
+					constrain: true,
+					modal: true
 				},
-				function(event) {
-					var index = currentTarget.attr('data-index');
+				eventName: 'selectContent',
+				id: 'selectContent' + currentTarget.attr('id'),
+				title: currentTarget.attr('data-title'),
+				uri: currentTarget.attr('data-href')
+			},
+			function(event) {
+				var index = currentTarget.attr('data-index');
 
-					A.one('#<@portlet["namespace"] />assetEntryId' + index).attr('value', event.assetentryid);
+				A.one('#<@portlet["namespace"] />assetEntryId' + index).attr('value', event.assetentryid);
 
-					A.one('#<@portlet["namespace"] />assetTitleInfo' + index).html(event.assettitle);
-					A.one('#<@portlet["namespace"] />assetTypeInfo' + index).html(event.assettype);
+				A.one('#<@portlet["namespace"] />assetTitleInfo' + index).html(event.assettitle);
+				A.one('#<@portlet["namespace"] />assetTypeInfo' + index).html(event.assettype);
 
-					A.one('#<@portlet["namespace"] />selectedContent' + index).show();
+				A.one('#<@portlet["namespace"] />selectedContent' + index).show();
+			}
+		);
+	};
+
+	var onFormRowClick = function(event) {
+		A.all('.lfr-form-row').each(
+			function(row) {
+				row.removeClass('active');
+
+				var summaryContent = row.one('.summary-view');
+
+				if (summaryContent) {
+					var fullView = row.one('.full-view');
+
+					if (fullView) {
+						fullView.hide();
+					}
+
+					summaryContent.show();
 				}
-			);
-		},
-		'.asset-selector a'
-	);
+			}
+		);
+
+		var currentTarget = event.currentTarget;
+
+		currentTarget.addClass('active');
+
+		var fullView = currentTarget.one('.full-view');
+
+		if (fullView) {
+			fullView.show();
+		}
+
+		var summaryView = currentTarget.one('.summary-view');
+
+		if (summaryView) {
+			summaryView.hide();
+		}
+	};
 
 	A.getBody().delegate(
 		'click',
 		function(event) {
-			A.all('.lfr-form-row').each(
-				function(row) {
-					row.removeClass('active');
-
-					var summaryContent = row.one('.summary-view');
-
-					if (summaryContent) {
-						var fullView = row.one('.full-view');
-
-						if (fullView) {
-							fullView.hide();
-						}
-
-						summaryContent.show();
-					}
-				}
-			);
-
-			var currentTarget = event.currentTarget;
-
-			currentTarget.addClass('active');
-
-			var fullView = currentTarget.one('.full-view');
-
-			if (fullView) {
-				fullView.show();
+			if (event.currentTarget.hasClass('lfr-form-row')) {
+				onFormRowClick(event);
 			}
-
-			var summaryView = currentTarget.one('.summary-view');
-
-			if (summaryView) {
-				summaryView.hide();
+			else {
+				onAssetSelectorClick(event);
 			}
 		},
-		'.lfr-form-row'
+		'.asset-selector a, .lfr-form-row'
 	);
 
 	Liferay.Util.toggleSelectBox('<@portlet["namespace"] />contentDefaultValue', 'true', '<@portlet["namespace"] />contentDefaultBox');
