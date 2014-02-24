@@ -33,8 +33,8 @@
 					${request.setAttribute("configuration.index", queryLogicIndex)}
 					${request.setAttribute("configuration.isFirst", isFirst)}
 
-                	<div class="lfr-form-row ${rowClass}">
-                		<div class="row-fields">
+					<div class="lfr-form-row ${rowClass}">
+						<div class="row-fields">
 							<#include "edit_query_rule.ftl" />
 						</div>
 					</div>
@@ -50,7 +50,7 @@
 				<div class="default-content">
 					<div class="full-view hide">
 						<@aui["column"] columnWidth=60>
-                    		<span class="otherwise-text"><@liferay_ui["message"] key="otherwise" /></span>
+							<span class="otherwise-text"><@liferay_ui["message"] key="otherwise" /></span>
 						</@>
 
 						<@aui["column"] columnWidth=40>
@@ -66,15 +66,15 @@
 										<#assign cssClass = "hide">
 									</#if>
 
-                                    <div class="asset-preview ${cssClass}" id="<@portlet["namespace"] />selectedContentDefault">
+									<div class="asset-preview ${cssClass}" id="<@portlet["namespace"] />selectedContentDefault">
 										<@aui["column"]>
-                                            <img class="asset-image" src="${assetImageDefault}" />
+											<img class="asset-image" src="${assetImageDefault}" />
 										</@>
 										<@aui["column"]>
-                                            <div class="asset-title" id="<@portlet["namespace"] />assetTitleInfoDefault">${assetTitleDefault}</div>
-                                            <div class="asset-type" id="<@portlet["namespace"] />assetTypeInfoDefault"><@liferay_ui["message"] key="type" />: ${assetTypeDefault}</div>
+											<div class="asset-title" id="<@portlet["namespace"] />assetTitleInfoDefault">${assetTitleDefault}</div>
+											<div class="asset-type" id="<@portlet["namespace"] />assetTypeInfoDefault"><@liferay_ui["message"] key="type" />: ${assetTypeDefault}</div>
 										</@>
-                                    </div>
+									</div>
 
 									<@aui["input"] name="assetEntryIdDefault" type="hidden" value=assetEntryIdDefault />
 
@@ -118,8 +118,8 @@
 					</div>
 				</div>
 			</div>
-        </div>
-    </div>
+		</div>
+	</div>
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" value="save" />

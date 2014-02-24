@@ -97,10 +97,10 @@
 						<img class="asset-image" src="${queryRule.getAssetImage(renderRequest)}" />
 					</@>
 					<@aui["column"]>
-                		<div class="asset-title" id="<@portlet["namespace"] />assetTitleInfo${index}">${queryRule.getAssetTitle()}</div>
-                		<div class="asset-type" id="<@portlet["namespace"] />assetTypeInfo${index}"><@liferay_ui["message"] key="type" />: ${queryRule.getAssetType()}</div>
+						<div class="asset-title" id="<@portlet["namespace"] />assetTitleInfo${index}">${queryRule.getAssetTitle()}</div>
+						<div class="asset-type" id="<@portlet["namespace"] />assetTypeInfo${index}"><@liferay_ui["message"] key="type" />: ${queryRule.getAssetType()}</div>
 					</@>
-                </div>
+				</div>
 
 				<div class="lfr-meta-actions edit-controls">
 					<@aui["input"] name="assetEntryId${index}" type="hidden" value=queryRule.getAssetEntryId() />
@@ -120,7 +120,7 @@
 				</div>
 			</div>
 		</@>
-    </div>
+	</div>
 
 	<#if queryRule.isValid()>
 		<div class="summary-view ${summaryViewClass}">

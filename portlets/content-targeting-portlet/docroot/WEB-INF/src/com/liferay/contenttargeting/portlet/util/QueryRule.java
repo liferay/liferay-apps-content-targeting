@@ -168,40 +168,14 @@ public class QueryRule {
 		return StringUtil.merge(_userSegmentAssetCategoryIds);
 	}
 
-	public String getUserSegmentNames(Locale locale) throws SystemException {
-		return getUserSegmentNames(locale, StringPool.COMMA_AND_SPACE);
-	}
-
-	protected String getUserSegmentNames(Locale locale, String separator)
-		throws SystemException {
-
-		if (ArrayUtil.isEmpty(_userSegmentAssetCategoryIds)) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(
-			(_userSegmentAssetCategoryIds.length * 2) - 1);
-
-		for (long userSegmentAssetCategoryId : _userSegmentAssetCategoryIds) {
-			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.fetchAssetCategory(
-					userSegmentAssetCategoryId);
-
-			if (assetCategory == null) {
-				continue;
-			}
-
-			sb.append(assetCategory.getTitle(locale));
-			sb.append(separator);
-		}
-
-		return sb.toString();
-	}
-
 	public String getUserSegmentAssetCategoryNames(Locale locale)
 		throws SystemException {
 
 		return getUserSegmentNames(locale, _CATEGORY_SEPARATOR);
+	}
+
+	public String getUserSegmentNames(Locale locale) throws SystemException {
+		return getUserSegmentNames(locale, StringPool.COMMA_AND_SPACE);
 	}
 
 	public boolean isAndOperator() {
@@ -260,6 +234,32 @@ public class QueryRule {
 		long[] userSegmentAssetCategoryIds) {
 
 		_userSegmentAssetCategoryIds = userSegmentAssetCategoryIds;
+	}
+
+	protected String getUserSegmentNames(Locale locale, String separator)
+		throws SystemException {
+
+		if (ArrayUtil.isEmpty(_userSegmentAssetCategoryIds)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(
+			(_userSegmentAssetCategoryIds.length * 2) - 1);
+
+		for (long userSegmentAssetCategoryId : _userSegmentAssetCategoryIds) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					userSegmentAssetCategoryId);
+
+			if (assetCategory == null) {
+				continue;
+			}
+
+			sb.append(assetCategory.getTitle(locale));
+			sb.append(separator);
+		}
+
+		return sb.toString();
 	}
 
 	private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
