@@ -78,7 +78,8 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 		return true;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DefaultRulesEngineImpl.class);
+	private static Log _log = LogFactoryUtil.getLog(
+		DefaultRulesEngineImpl.class);
 
 	private RulesRegistry _rulesRegistry;
 

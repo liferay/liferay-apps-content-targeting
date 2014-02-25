@@ -14,13 +14,10 @@
 
 package com.liferay.contenttargeting.hook.filter;
 
-import com.liferay.contenttargeting.api.model.RulesEngine;
 import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.util.CTUserUtil;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.WebKeys;
-import com.liferay.osgi.util.OsgiServiceUnavailableException;
-import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -36,9 +33,6 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eudaldo Alonso
