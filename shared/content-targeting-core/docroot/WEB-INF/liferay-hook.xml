@@ -24,4 +24,8 @@
 		<struts-action-path>/journal_content/view</struts-action-path>
 		<struts-action-impl>com.liferay.contenttargeting.hook.action.JournalViewAction</struts-action-impl>
 	</struts-action>
+	<struts-action>
+		<struts-action-path>/portal/layout</struts-action-path>
+		<struts-action-impl>com.liferay.contenttargeting.hook.action.LayoutViewAction</struts-action-impl>
+	</struts-action>
 </hook>
