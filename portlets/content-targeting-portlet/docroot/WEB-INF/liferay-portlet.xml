@@ -9,7 +9,6 @@
 		<control-panel-entry-weight>10.0</control-panel-entry-weight>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/content_targeting/main.css</header-portlet-css>
-		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>content-targeting-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
@@ -18,7 +17,6 @@
 		<instanceable>true</instanceable>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/user_segment_content_display/main.css</header-portlet-css>
-		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>user-segment-content-display-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
@@ -27,7 +25,6 @@
 		<instanceable>true</instanceable>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/user_segment_content_list/main.css</header-portlet-css>
-		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>user-segment-content-list-portlet</css-class-wrapper>
 	</portlet>
 	<role-mapper>
