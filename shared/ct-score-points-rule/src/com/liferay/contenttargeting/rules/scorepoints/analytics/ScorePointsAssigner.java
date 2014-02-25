@@ -26,6 +26,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 
 import java.util.List;
 
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
@@ -38,16 +39,10 @@ public class ScorePointsAssigner {
 			long groupId, long ctUserId, String className, long classPK)
 		throws Exception {
 
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				className);
+		AssetEntry entry = AssetEntryLocalServiceUtil.fetchEntry(
+			className, classPK);
 
-		AssetEntry entry = null;
-
-		try {
-			entry = assetRendererFactory.getAssetEntry(className, classPK);
-		}
-		catch (Exception e) {
+		if (entry == null) {
 			return;
 		}
 
