@@ -177,8 +177,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				UserSegmentService.class, bundle.getBundleContext());
 		}
 		catch (OsgiServiceUnavailableException osue) {
-			throw new UnavailableServiceException(
-				osue.getUnavailableServiceClass());
+			throw new UnavailableException(osue.getMessage(), 5);
 		}
 	}
 
