@@ -14,11 +14,14 @@
 
 package com.liferay.contenttargeting.service.impl;
 
+import com.liferay.contenttargeting.NoSuchCampaignException;
 import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.service.base.CampaignLocalServiceBaseImpl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -44,6 +47,7 @@ import java.util.Map;
  */
 public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Campaign addCampaign(
 			long userId, Map<Locale, String> nameMap,
@@ -81,6 +85,14 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		}
 
 		return campaign;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public Campaign deleteCampaign(long campaignId)
+		throws SystemException, PortalException {
+
+		return campaignPersistence.remove(campaignId);
 	}
 
 	@Override
@@ -121,6 +133,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		return campaignPersistence.countByGroupId(groupIds);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Campaign updateCampaign(
 			long campaignId, Map<Locale, String> nameMap,
