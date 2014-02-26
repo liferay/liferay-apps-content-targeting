@@ -27,9 +27,11 @@ import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
+import com.liferay.contenttargeting.util.BaseModelSearchResult;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.osgi.util.OsgiServiceUnavailableException;
 import com.liferay.osgi.util.ServiceTrackerUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -398,9 +400,22 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			template.put("campaigns", campaigns);
 
-			List<UserSegment> userSegments =
-				_userSegmentService.getUserSegments(
+			List<UserSegment> userSegments = null;
+
+			String keywords = ParamUtil.getString(portletRequest, "keywords");
+
+			if (Validator.isNull(keywords)) {
+				userSegments = _userSegmentService.getUserSegments(
 					themeDisplay.getScopeGroupId());
+			}
+			else {
+				BaseModelSearchResult<UserSegment> results =
+					_userSegmentLocalService.searchUserSegments(
+						themeDisplay.getScopeGroupId(), keywords,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				userSegments = results.getBaseModels();
+			}
 
 			template.put("userSegments", userSegments);
 			template.put(

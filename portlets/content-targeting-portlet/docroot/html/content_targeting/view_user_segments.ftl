@@ -21,19 +21,6 @@
 	<@portlet["param"] name="tabs1" value="user-segments" />
 </@>
 
-<#if contentTargetingPermission.contains(permissionChecker, scopeGroupId, actionKeys.ADD_USER_SEGMENT)>
-	<@aui["nav-bar"]>
-		<@aui["nav"]>
-			<@portlet["renderURL"] var="addUserSegmentURL">
-				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-				<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
-			</@>
-
-			<@aui["nav-item"] href="${addUserSegmentURL}" iconCssClass="icon-plus" label="add-user-segment" />
-		</@>
-	</@>
-</#if>
-
 <@liferay_ui["error"] exception=usedUserSegmentExceptionClass>
 	<@liferay_ui["message"] key="this-user-segment-can-not-be-deleted-because-it-is-used-by-the-following-campaigns" />
 
@@ -44,92 +31,111 @@
 	</ul>
 </@>
 
-<@liferay_ui["search-container"]
-	emptyResultsMessage="no-user-segments-were-found"
-	iteratorURL=renderResponse.createRenderURL()
->
-	<@liferay_ui["search-container-results"]
-		results=userSegments
-		total=userSegments ?size
-	/>
+<@portlet["renderURL"] var="searchURL">
+	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+	<@portlet["param"] name="tabs1" value="user-segments" />
+</@>
 
-	<@liferay_ui["search-container-row"]
-		className="com.liferay.contenttargeting.model.UserSegment"
-		modelVar="userSegment"
+<@aui["form"] action="${searchURL}" method="post" name="fm">
+	<@aui["input"] name="redirect" type="hidden" value="${currentURL}" />
+
+	<@aui["nav-bar"]>
+		<#include "user_segment_toolbar.ftl" />
+
+		<@aui["nav-bar-search"] cssClass="pull-right">
+			<div class="form-search">
+				<@liferay_ui["input-search"] id="keywords1" name="keywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
+			</div>
+		</@>
+	</@>
+
+	<@liferay_ui["search-container"]
+		emptyResultsMessage="no-user-segments-were-found"
+		iteratorURL=renderResponse.createRenderURL()
 	>
+		<@liferay_ui["search-container-results"]
+			results=userSegments
+			total=userSegments ?size
+		/>
+
+		<@liferay_ui["search-container-row"]
+			className="com.liferay.contenttargeting.model.UserSegment"
+			modelVar="userSegment"
+		>
 
 		<@liferay_ui["search-container-column-text"]
 			name="name"
 			value=userSegment.getName(locale)
 		/>
 
-		<@liferay_ui["search-container-column-text"]
-			name="description"
-			value=userSegment.getDescription(locale)
-		/>
+			<@liferay_ui["search-container-column-text"]
+				name="description"
+				value=userSegment.getDescription(locale)
+			/>
 
-		<@liferay_ui["search-container-column-text"]
-			align="right"
-			name=""
-		>
-			<@liferay_ui["icon-menu"]>
-				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.UPDATE)>
-					<@portlet["renderURL"] var="manageRulesURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.MANAGE_RULES}" />
-						<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
-						<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-					</@>
+			<@liferay_ui["search-container-column-text"]
+				align="right"
+				name=""
+			>
+				<@liferay_ui["icon-menu"]>
+					<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.UPDATE)>
+						<@portlet["renderURL"] var="manageRulesURL">
+							<@portlet["param"] name="mvcPath" value="${contentTargetingPath.MANAGE_RULES}" />
+							<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
+							<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+						</@>
 
-					<@liferay_ui["icon"]
-						image="services"
-						message="manage-rules"
-						method="get"
-						url="${manageRulesURL}"
-					/>
+						<@liferay_ui["icon"]
+							image="services"
+							message="manage-rules"
+							method="get"
+							url="${manageRulesURL}"
+						/>
 
-					<@portlet["renderURL"] var="editUserSegmentURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-						<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
-						<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-					</@>
+						<@portlet["renderURL"] var="editUserSegmentURL">
+							<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
+							<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
+							<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+						</@>
 
-					<@liferay_ui["icon"]
-						image="edit"
-						method="get"
-						url="${editUserSegmentURL}"
-					/>
-				</#if>
+						<@liferay_ui["icon"]
+							image="edit"
+							method="get"
+							url="${editUserSegmentURL}"
+						/>
+					</#if>
 
-				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.DELETE)>
-					<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
-						<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
-						<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-					</@>
+					<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.DELETE)>
+						<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
+							<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
+							<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+						</@>
 
-					<@liferay_ui["icon-delete"]
-						url="${deleteUserSegmentURL}"
-					/>
-				</#if>
+						<@liferay_ui["icon-delete"]
+							url="${deleteUserSegmentURL}"
+						/>
+					</#if>
 
-				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.PERMISSIONS)>
-					<@liferay_security["permissionsURL"]
-						modelResource="${userSegmentClass.getName()}"
-						modelResourceDescription="${userSegment.getName(locale)}"
-						resourcePrimKey="${userSegment.getUserSegmentId()}"
-						var="permissionsEntryURL"
-						windowState="${liferayWindowStatePopUp}"
-					/>
+					<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.PERMISSIONS)>
+						<@liferay_security["permissionsURL"]
+							modelResource="${userSegmentClass.getName()}"
+							modelResourceDescription="${userSegment.getName(locale)}"
+							resourcePrimKey="${userSegment.getUserSegmentId()}"
+							var="permissionsEntryURL"
+							windowState="${liferayWindowStatePopUp}"
+						/>
 
-					<@liferay_ui["icon"]
-						image="permissions"
-						method="get"
-						url="${permissionsEntryURL}"
-						useDialog=true
-					/>
-				</#if>
+						<@liferay_ui["icon"]
+							image="permissions"
+							method="get"
+							url="${permissionsEntryURL}"
+							useDialog=true
+						/>
+					</#if>
+				</@>
 			</@>
 		</@>
-	</@>
 
-	<@liferay_ui["search-iterator"] />
+		<@liferay_ui["search-iterator"] />
+	</@>
 </@>
