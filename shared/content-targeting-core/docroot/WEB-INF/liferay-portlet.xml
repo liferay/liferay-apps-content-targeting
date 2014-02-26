@@ -4,6 +4,7 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>ctcore</portlet-name>
+		<indexer-class>com.liferay.contenttargeting.util.CampaignIndexer</indexer-class>
 		<indexer-class>com.liferay.contenttargeting.util.UserSegmentIndexer</indexer-class>
 	</portlet>
 </liferay-portlet-app>
