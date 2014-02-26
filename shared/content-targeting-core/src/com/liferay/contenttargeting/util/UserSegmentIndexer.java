@@ -112,6 +112,7 @@ public class UserSegmentIndexer extends BaseIndexer {
 		document.addLocalizedText(
 			Field.DESCRIPTION, userSegment.getDescriptionMap());
 		document.addLocalizedText(Field.NAME, userSegment.getNameMap());
+
 		document.addKeyword("userSegmentId", userSegment.getUserSegmentId());
 
 		if (_log.isDebugEnabled()) {

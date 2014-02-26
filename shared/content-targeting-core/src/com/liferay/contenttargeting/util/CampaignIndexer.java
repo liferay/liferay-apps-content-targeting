@@ -109,7 +109,7 @@ public class CampaignIndexer extends BaseIndexer {
 		Document document = getBaseModelDocument(PORTLET_ID, campaign);
 
 		document.addLocalizedText(
-				Field.DESCRIPTION, campaign.getDescriptionMap());
+			Field.DESCRIPTION, campaign.getDescriptionMap());
 		document.addLocalizedText(Field.NAME, campaign.getNameMap());
 
 		document.addKeyword("campaignId", campaign.getCampaignId());
