@@ -14,16 +14,15 @@
 
 package com.liferay.contenttargeting.util;
 
+import com.liferay.contenttargeting.model.Campaign;
+import com.liferay.contenttargeting.service.CampaignLocalServiceUtil;
+import com.liferay.contenttargeting.service.permission.CampaignPermission;
+import com.liferay.contenttargeting.service.persistence.CampaignActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -32,31 +31,22 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFolderActionableDynamicQuery;
 
 import java.util.Locale;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 /**
- * @author Alexander Chow
+ * @author Eudaldo Alonso
  */
 public class CampaignIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {DLFolder.class.getName()};
+	public static final String[] CLASS_NAMES = {Campaign.class.getName()};
 
-	public static final String PORTLET_ID = PortletKeys.DOCUMENT_LIBRARY;
+	public static final String PORTLET_ID = PortletKeys.CT_CORE;
 
 	public CampaignIndexer() {
 		setFilterSearch(true);
@@ -79,57 +69,53 @@ public class CampaignIndexer extends BaseIndexer {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(entryClassPK);
+		Campaign campaign = CampaignLocalServiceUtil.getCampaign(entryClassPK);
 
-		return DLFolderPermission.contains(
-			permissionChecker, dlFolder, ActionKeys.VIEW);
+		return CampaignPermission.contains(
+			permissionChecker, campaign, ActionKeys.VIEW);
 	}
 
 	@Override
-	public void postProcessContextQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
+	public void postProcessSearchQuery(
+			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		addStatus(contextQuery, searchContext);
-
-		contextQuery.addRequiredTerm(Field.HIDDEN, false);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, Field.DESCRIPTION, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
 	}
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
-		DLFolder dlFolder = (DLFolder)obj;
+		Campaign campaign = (Campaign)obj;
 
 		Document document = new DocumentImpl();
 
-		document.addUID(PORTLET_ID, dlFolder.getFolderId());
+		document.addUID(PORTLET_ID, campaign.getCampaignId());
 
 		SearchEngineUtil.deleteDocument(
-			getSearchEngineId(), dlFolder.getCompanyId(),
+			getSearchEngineId(), campaign.getCompanyId(),
 			document.get(Field.UID));
 	}
 
 	@Override
 	protected Document doGetDocument(Object obj) throws Exception {
-		DLFolder dlFolder = (DLFolder)obj;
+		Campaign campaign = (Campaign)obj;
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing folder " + dlFolder);
+			_log.debug("Indexing campaign " + campaign);
 		}
 
-		Document document = getBaseModelDocument(PORTLET_ID, dlFolder);
+		Document document = getBaseModelDocument(PORTLET_ID, campaign);
 
-		document.addText(Field.DESCRIPTION, dlFolder.getDescription());
-		document.addKeyword(Field.FOLDER_ID, dlFolder.getParentFolderId());
-		document.addKeyword(
-			Field.HIDDEN, (dlFolder.isHidden() || dlFolder.isInHiddenFolder()));
-		document.addText(Field.TITLE, dlFolder.getName());
-		document.addKeyword(Field.TREE_PATH, dlFolder.getTreePath());
-		document.addKeyword(
-			Field.TREE_PATH,
-			StringUtil.split(dlFolder.getTreePath(), CharPool.SLASH));
+		document.addLocalizedText(
+				Field.DESCRIPTION, campaign.getDescriptionMap());
+		document.addLocalizedText(Field.NAME, campaign.getNameMap());
+
+		document.addKeyword("campaignId", campaign.getCampaignId());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + dlFolder + " indexed successfully");
+			_log.debug("Campaign " + campaign + " indexed successfully");
 		}
 
 		return document;
@@ -140,58 +126,33 @@ public class CampaignIndexer extends BaseIndexer {
 		Document document, Locale locale, String snippet,
 		PortletURL portletURL) {
 
-		LiferayPortletURL liferayPortletURL = (LiferayPortletURL)portletURL;
-
-		liferayPortletURL.setLifecycle(PortletRequest.ACTION_PHASE);
-
-		try {
-			liferayPortletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-		}
-		catch (WindowStateException wse) {
-		}
-
-		String folderId = document.get(Field.ENTRY_CLASS_PK);
-
-		portletURL.setParameter("struts_action", "/document_library/view");
-		portletURL.setParameter("folderId", folderId);
-
-		Summary summary = createSummary(
-			document, Field.TITLE, Field.DESCRIPTION);
-
-		summary.setMaxContentLength(200);
-		summary.setPortletURL(portletURL);
-
-		return summary;
+		return null;
 	}
 
 	@Override
 	protected void doReindex(Object obj) throws Exception {
-		DLFolder dlFolder = (DLFolder)obj;
+		Campaign campaign = (Campaign)obj;
 
-		if (!dlFolder.isApproved() && !dlFolder.isInTrash()) {
-			return;
-		}
-
-		Document document = getDocument(dlFolder);
+		Document document = getDocument(campaign);
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-				getSearchEngineId(), dlFolder.getCompanyId(), document);
+				getSearchEngineId(), campaign.getCompanyId(), document);
 		}
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(classPK);
+		Campaign campaign = CampaignLocalServiceUtil.getCampaign(classPK);
 
-		doReindex(dlFolder);
+		doReindex(campaign);
 	}
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexFolders(companyId);
+		reindexCampaigns(companyId);
 	}
 
 	@Override
@@ -199,24 +160,17 @@ public class CampaignIndexer extends BaseIndexer {
 		return PORTLET_ID;
 	}
 
-	protected void reindexFolders(final long companyId)
+	protected void reindexCampaigns(final long companyId)
 		throws PortalException, SystemException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new DLFolderActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				Property property = PropertyFactoryUtil.forName("mountPoint");
-
-				dynamicQuery.add(property.eq(false));
-			}
+			new CampaignActionableDynamicQuery() {
 
 			@Override
 			protected void performAction(Object object) throws PortalException {
-				DLFolder dlFolder = (DLFolder)object;
+				Campaign campaign = (Campaign)object;
 
-				Document document = getDocument(dlFolder);
+				Document document = getDocument(campaign);
 
 				if (document != null) {
 					addDocument(document);
