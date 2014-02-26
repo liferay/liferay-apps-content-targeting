@@ -525,6 +525,20 @@ public class CampaignLocalServiceUtil {
 		return getService().getCampaignsCount(groupIds);
 	}
 
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		java.lang.String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().search(groupId, keywords, start, end);
+	}
+
+	public static com.liferay.contenttargeting.util.BaseModelSearchResult<com.liferay.contenttargeting.model.Campaign> searchCampaigns(
+		long groupId, java.lang.String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().searchCampaigns(groupId, keywords, start, end);
+	}
+
 	public static com.liferay.contenttargeting.model.Campaign updateCampaign(
 		long campaignId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
