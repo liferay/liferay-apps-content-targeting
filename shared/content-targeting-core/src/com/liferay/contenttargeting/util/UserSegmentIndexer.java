@@ -14,16 +14,15 @@
 
 package com.liferay.contenttargeting.util;
 
+import com.liferay.contenttargeting.model.UserSegment;
+import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.contenttargeting.service.permission.UserSegmentPermission;
+import com.liferay.contenttargeting.service.persistence.UserSegmentActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.LiferayPortletURL;
-import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.search.BaseIndexer;
 import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
@@ -32,31 +31,22 @@ import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.util.CharPool;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.util.PortletKeys;
-import com.liferay.portlet.documentlibrary.model.DLFolder;
-import com.liferay.portlet.documentlibrary.service.DLFolderLocalServiceUtil;
-import com.liferay.portlet.documentlibrary.service.permission.DLFolderPermission;
-import com.liferay.portlet.documentlibrary.service.persistence.DLFolderActionableDynamicQuery;
 
 import java.util.Locale;
 
-import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
-import javax.portlet.WindowStateException;
 
 /**
- * @author Alexander Chow
+ * @author Eudaldo Alonso
  */
 public class UserSegmentIndexer extends BaseIndexer {
 
-	public static final String[] CLASS_NAMES = {DLFolder.class.getName()};
+	public static final String[] CLASS_NAMES = {UserSegment.class.getName()};
 
-	public static final String PORTLET_ID = PortletKeys.DOCUMENT_LIBRARY;
+	public static final String PORTLET_ID = PortletKeys.CT_CORE;
 
 	public UserSegmentIndexer() {
 		setFilterSearch(true);
@@ -79,57 +69,53 @@ public class UserSegmentIndexer extends BaseIndexer {
 			long entryClassPK, String actionId)
 		throws Exception {
 
-		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(entryClassPK);
+		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
+			entryClassPK);
 
-		return DLFolderPermission.contains(
-			permissionChecker, dlFolder, ActionKeys.VIEW);
+		return UserSegmentPermission.contains(
+			permissionChecker, userSegment, ActionKeys.VIEW);
 	}
 
 	@Override
-	public void postProcessContextQuery(
-			BooleanQuery contextQuery, SearchContext searchContext)
+	public void postProcessSearchQuery(
+			BooleanQuery searchQuery, SearchContext searchContext)
 		throws Exception {
 
-		addStatus(contextQuery, searchContext);
-
-		contextQuery.addRequiredTerm(Field.HIDDEN, false);
+		addSearchLocalizedTerm(
+			searchQuery, searchContext, Field.DESCRIPTION, false);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
 	}
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
-		DLFolder dlFolder = (DLFolder)obj;
+		UserSegment userSegment = (UserSegment)obj;
 
 		Document document = new DocumentImpl();
 
-		document.addUID(PORTLET_ID, dlFolder.getFolderId());
+		document.addUID(PORTLET_ID, userSegment.getUserSegmentId());
 
 		SearchEngineUtil.deleteDocument(
-				getSearchEngineId(), dlFolder.getCompanyId(),
-				document.get(Field.UID));
+			getSearchEngineId(), userSegment.getCompanyId(),
+			document.get(Field.UID));
 	}
 
 	@Override
 	protected Document doGetDocument(Object obj) throws Exception {
-		DLFolder dlFolder = (DLFolder)obj;
+		UserSegment userSegment = (UserSegment)obj;
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Indexing folder " + dlFolder);
+			_log.debug("Indexing user segment " + userSegment);
 		}
 
-		Document document = getBaseModelDocument(PORTLET_ID, dlFolder);
+		Document document = getBaseModelDocument(PORTLET_ID, userSegment);
 
-		document.addText(Field.DESCRIPTION, dlFolder.getDescription());
-		document.addKeyword(Field.FOLDER_ID, dlFolder.getParentFolderId());
-		document.addKeyword(
-			Field.HIDDEN, (dlFolder.isHidden() || dlFolder.isInHiddenFolder()));
-		document.addText(Field.TITLE, dlFolder.getName());
-		document.addKeyword(Field.TREE_PATH, dlFolder.getTreePath());
-		document.addKeyword(
-			Field.TREE_PATH,
-			StringUtil.split(dlFolder.getTreePath(), CharPool.SLASH));
+		document.addLocalizedText(
+			Field.DESCRIPTION, userSegment.getDescriptionMap());
+		document.addLocalizedText(Field.NAME, userSegment.getNameMap());
+		document.addKeyword("userSegmentId", userSegment.getUserSegmentId());
 
 		if (_log.isDebugEnabled()) {
-			_log.debug("Document " + dlFolder + " indexed successfully");
+			_log.debug("User segment " + userSegment + " indexed successfully");
 		}
 
 		return document;
@@ -140,58 +126,34 @@ public class UserSegmentIndexer extends BaseIndexer {
 		Document document, Locale locale, String snippet,
 		PortletURL portletURL) {
 
-		LiferayPortletURL liferayPortletURL = (LiferayPortletURL)portletURL;
-
-		liferayPortletURL.setLifecycle(PortletRequest.ACTION_PHASE);
-
-		try {
-			liferayPortletURL.setWindowState(LiferayWindowState.EXCLUSIVE);
-		}
-		catch (WindowStateException wse) {
-		}
-
-		String folderId = document.get(Field.ENTRY_CLASS_PK);
-
-		portletURL.setParameter("struts_action", "/document_library/view");
-		portletURL.setParameter("folderId", folderId);
-
-		Summary summary = createSummary(
-			document, Field.TITLE, Field.DESCRIPTION);
-
-		summary.setMaxContentLength(200);
-		summary.setPortletURL(portletURL);
-
-		return summary;
+		return null;
 	}
 
 	@Override
 	protected void doReindex(Object obj) throws Exception {
-		DLFolder dlFolder = (DLFolder)obj;
+		UserSegment userSegment = (UserSegment)obj;
 
-		if (!dlFolder.isApproved() && !dlFolder.isInTrash()) {
-			return;
-		}
-
-		Document document = getDocument(dlFolder);
+		Document document = getDocument(userSegment);
 
 		if (document != null) {
 			SearchEngineUtil.updateDocument(
-					getSearchEngineId(), dlFolder.getCompanyId(), document);
+				getSearchEngineId(), userSegment.getCompanyId(), document);
 		}
 	}
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		DLFolder dlFolder = DLFolderLocalServiceUtil.getFolder(classPK);
+		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
+			classPK);
 
-		doReindex(dlFolder);
+		doReindex(userSegment);
 	}
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
 
-		reindexFolders(companyId);
+		reindexUserSegments(companyId);
 	}
 
 	@Override
@@ -199,24 +161,17 @@ public class UserSegmentIndexer extends BaseIndexer {
 		return PORTLET_ID;
 	}
 
-	protected void reindexFolders(final long companyId)
+	protected void reindexUserSegments(final long companyId)
 		throws PortalException, SystemException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new DLFolderActionableDynamicQuery() {
-
-			@Override
-			protected void addCriteria(DynamicQuery dynamicQuery) {
-				Property property = PropertyFactoryUtil.forName("mountPoint");
-
-				dynamicQuery.add(property.eq(false));
-			}
+			new UserSegmentActionableDynamicQuery() {
 
 			@Override
 			protected void performAction(Object object) throws PortalException {
-				DLFolder dlFolder = (DLFolder)object;
+				UserSegment userSegment = (UserSegment)object;
 
-				Document document = getDocument(dlFolder);
+				Document document = getDocument(userSegment);
 
 				if (document != null) {
 					addDocument(document);
@@ -231,6 +186,6 @@ public class UserSegmentIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(DLFolderIndexer.class);
+	private static Log _log = LogFactoryUtil.getLog(UserSegmentIndexer.class);
 
 }
