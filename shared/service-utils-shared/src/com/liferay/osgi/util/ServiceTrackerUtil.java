@@ -29,24 +29,12 @@ import org.osgi.util.tracker.ServiceTracker;
 public class ServiceTrackerUtil {
 
 	public static <T> T getService(
-			final Class<T> clazz, BundleContext bundleContext)
-		throws OsgiServiceUnavailableException {
+			final Class<T> clazz, BundleContext bundleContext) {
 
 		final ServiceTracker<T, T> serviceTracker = new ServiceTracker<T, T>(
 			bundleContext, clazz, null);
 
 		serviceTracker.open();
-
-		try {
-			T service = serviceTracker.waitForService(_SERVICE_TRACKER_TIMEOUT);
-
-			if (service == null) {
-				throw new OsgiServiceUnavailableException(clazz);
-			}
-		}
-		catch (InterruptedException e) {
-			throw new OsgiServiceUnavailableException(clazz);
-		}
 
 		ClassLoader classLoader = clazz.getClassLoader();
 
@@ -76,7 +64,5 @@ public class ServiceTrackerUtil {
 
 		return (T)serviceProxy;
 	}
-
-	private static final int _SERVICE_TRACKER_TIMEOUT = 5000;
 
 }

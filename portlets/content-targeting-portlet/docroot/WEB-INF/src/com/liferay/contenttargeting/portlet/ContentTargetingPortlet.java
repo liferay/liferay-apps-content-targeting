@@ -160,25 +160,20 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			};
 		}
 
-		try {
-			_campaignLocalService = ServiceTrackerUtil.getService(
-				CampaignLocalService.class, bundle.getBundleContext());
-			_campaignService = ServiceTrackerUtil.getService(
-				CampaignService.class, bundle.getBundleContext());
-			_ruleInstanceLocalService = ServiceTrackerUtil.getService(
-				RuleInstanceLocalService.class, bundle.getBundleContext());
-			_ruleInstanceService = ServiceTrackerUtil.getService(
-				RuleInstanceService.class, bundle.getBundleContext());
-			_rulesRegistry = ServiceTrackerUtil.getService(
-				RulesRegistry.class, bundle.getBundleContext());
-			_userSegmentLocalService = ServiceTrackerUtil.getService(
-				UserSegmentLocalService.class, bundle.getBundleContext());
-			_userSegmentService = ServiceTrackerUtil.getService(
-				UserSegmentService.class, bundle.getBundleContext());
-		}
-		catch (OsgiServiceUnavailableException osue) {
-			throw new UnavailableException(osue.getMessage(), 5);
-		}
+		_campaignLocalService = ServiceTrackerUtil.getService(
+			CampaignLocalService.class, bundle.getBundleContext());
+		_campaignService = ServiceTrackerUtil.getService(
+			CampaignService.class, bundle.getBundleContext());
+		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
+			RuleInstanceLocalService.class, bundle.getBundleContext());
+		_ruleInstanceService = ServiceTrackerUtil.getService(
+			RuleInstanceService.class, bundle.getBundleContext());
+		_rulesRegistry = ServiceTrackerUtil.getService(
+			RulesRegistry.class, bundle.getBundleContext());
+		_userSegmentLocalService = ServiceTrackerUtil.getService(
+			UserSegmentLocalService.class, bundle.getBundleContext());
+		_userSegmentService = ServiceTrackerUtil.getService(
+			UserSegmentService.class, bundle.getBundleContext());
 	}
 
 	public void updateCampaign(ActionRequest request, ActionResponse response)

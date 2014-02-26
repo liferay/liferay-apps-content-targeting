@@ -81,16 +81,10 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 			};
 		}
 
-		try {
-			_campaignLocalService = ServiceTrackerUtil.getService(
-				CampaignLocalService.class, bundle.getBundleContext());
-			_campaignService = ServiceTrackerUtil.getService(
-				CampaignService.class, bundle.getBundleContext());
-		}
-		catch (OsgiServiceUnavailableException osue) {
-			throw new UnavailableServiceException(
-				osue.getUnavailableServiceClass());
-		}
+		_campaignLocalService = ServiceTrackerUtil.getService(
+			CampaignLocalService.class, bundle.getBundleContext());
+		_campaignService = ServiceTrackerUtil.getService(
+			CampaignService.class, bundle.getBundleContext());
 	}
 
 	public void updatePreferences(

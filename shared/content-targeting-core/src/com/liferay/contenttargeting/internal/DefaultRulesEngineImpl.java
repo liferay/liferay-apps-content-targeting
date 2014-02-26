@@ -42,13 +42,8 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 	public void activate() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		try {
-			_rulesRegistry = ServiceTrackerUtil.getService(
-				RulesRegistry.class, bundle.getBundleContext());
-		}
-		catch (OsgiServiceUnavailableException osue) {
-			osue.printStackTrace();
-		}
+		_rulesRegistry = ServiceTrackerUtil.getService(
+			RulesRegistry.class, bundle.getBundleContext());
 	}
 
 	@Override
