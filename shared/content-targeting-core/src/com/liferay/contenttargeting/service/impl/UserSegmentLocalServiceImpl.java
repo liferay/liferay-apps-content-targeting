@@ -25,6 +25,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
@@ -57,6 +59,7 @@ import java.util.Map;
 public class UserSegmentLocalServiceImpl
 		extends UserSegmentLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public UserSegment addUserSegment(
 			long userId, Map<Locale, String> nameMap,
@@ -91,6 +94,7 @@ public class UserSegmentLocalServiceImpl
 		return userSegment;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public UserSegment deleteUserSegment(long userSegmentId)
 		throws PortalException, SystemException {
@@ -153,6 +157,7 @@ public class UserSegmentLocalServiceImpl
 		return userSegmentPersistence.countByGroupId(groupIds);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public UserSegment updateUserSegment(
 			long userSegmentId, Map<Locale, String> nameMap,
