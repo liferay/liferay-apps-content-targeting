@@ -14,10 +14,18 @@
 
 package com.liferay.contenttargeting.util;
 
+import com.liferay.contenttargeting.model.UserSegment;
+import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.NoSuchVocabularyException;
@@ -34,6 +42,9 @@ import java.util.Map;
  * @author Eudaldo Alonso
  */
 public class UserSegmentUtil {
+
+	public static final String[] SELECTED_FIELD_NAMES =
+		{Field.COMPANY_ID, Field.GROUP_ID, Field.UID, "userSegmentId"};
 
 	public static Map<Locale, String> getAssetVocabularyDescription() {
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
@@ -106,6 +117,40 @@ public class UserSegmentUtil {
 		}
 
 		return titleMap;
+	}
+
+	public static List<UserSegment> getUserSegments(Hits hits)
+		throws PortalException, SystemException {
+
+		List<Document> documents = hits.toList();
+
+		List<UserSegment> userSegments = new ArrayList<UserSegment>(
+			documents.size());
+
+		for (com.liferay.portal.kernel.search.Document document : documents) {
+			long userSegmentId = GetterUtil.getLong(
+				document.get("userSegmentId"));
+
+			UserSegment userSegment =
+				UserSegmentLocalServiceUtil.fetchUserSegment(userSegmentId);
+
+			if (userSegment == null) {
+				userSegments = null;
+
+				Indexer indexer = IndexerRegistryUtil.getIndexer(
+					UserSegment.class);
+
+				long companyId = GetterUtil.getLong(
+					document.get(Field.COMPANY_ID));
+
+				indexer.delete(companyId, document.getUID());
+			}
+			else if (userSegments != null) {
+				userSegments.add(userSegment);
+			}
+		}
+
+		return userSegments;
 	}
 
 }

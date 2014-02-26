@@ -19,15 +19,23 @@ import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.base.UserSegmentLocalServiceBaseImpl;
+import com.liferay.contenttargeting.util.BaseModelSearchResult;
 import com.liferay.contenttargeting.util.UserSegmentUtil;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.asset.NoSuchCategoryException;
@@ -157,6 +165,30 @@ public class UserSegmentLocalServiceImpl
 		return userSegmentPersistence.countByGroupId(groupIds);
 	}
 
+	@Override
+	public Hits search(long groupId, String keywords, int start, int end)
+		throws PortalException, SystemException {
+
+		Indexer indexer = IndexerRegistryUtil.getIndexer(
+			UserSegment.class.getName());
+
+		SearchContext searchContext = buildSearchContext(
+			groupId, keywords, start, end);
+
+		return indexer.search(searchContext);
+	}
+
+	@Override
+	public BaseModelSearchResult<UserSegment> searchUserSegments(
+			long groupId, String keywords, int start, int end)
+		throws PortalException, SystemException {
+
+		SearchContext searchContext = buildSearchContext(
+			groupId, keywords, start, end);
+
+		return searchUserSegments(searchContext);
+	}
+
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public UserSegment updateUserSegment(
@@ -200,6 +232,24 @@ public class UserSegmentLocalServiceImpl
 		return assetCategory;
 	}
 
+	protected SearchContext buildSearchContext(
+			long groupId, String keywords, int start, int end)
+		throws PortalException, SystemException {
+
+		SearchContext searchContext = new SearchContext();
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		searchContext.setCompanyId(group.getCompanyId());
+
+		searchContext.setEnd(end);
+		searchContext.setGroupIds(new long[]{groupId});
+		searchContext.setKeywords(keywords);
+		searchContext.setStart(start);
+
+		return searchContext;
+	}
+
 	protected void removeUserSegmentCategory(long assetCategoryId)
 		throws PortalException, SystemException {
 
@@ -218,6 +268,29 @@ public class UserSegmentLocalServiceImpl
 
 		AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(
 			assetCategory.getVocabularyId());
+	}
+
+	protected BaseModelSearchResult<UserSegment> searchUserSegments(
+			SearchContext searchContext)
+		throws PortalException, SystemException {
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			UserSegment.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext);
+
+			List<UserSegment> userSegments = UserSegmentUtil.getUserSegments(
+				hits);
+
+			if (userSegments != null) {
+				return new BaseModelSearchResult<UserSegment>(
+					userSegments, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	protected AssetCategory updateUserSegmentCategory(
