@@ -516,6 +516,20 @@ public class UserSegmentLocalServiceUtil {
 		return getService().getUserSegmentsCount(groupIds);
 	}
 
+	public static com.liferay.portal.kernel.search.Hits search(long groupId,
+		java.lang.String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().search(groupId, keywords, start, end);
+	}
+
+	public static com.liferay.contenttargeting.util.BaseModelSearchResult<com.liferay.contenttargeting.model.UserSegment> searchUserSegments(
+		long groupId, java.lang.String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().searchUserSegments(groupId, keywords, start, end);
+	}
+
 	public static com.liferay.contenttargeting.model.UserSegment updateUserSegment(
 		long userSegmentId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

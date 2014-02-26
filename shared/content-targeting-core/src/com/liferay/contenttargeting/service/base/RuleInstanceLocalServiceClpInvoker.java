@@ -141,13 +141,13 @@ public class RuleInstanceLocalServiceClpInvoker {
 
 		_methodParameterTypes65 = new String[] { "long" };
 
-		_methodName66 = "getRuleInstancesCount";
+		_methodName66 = "getRuleInstances";
 
-		_methodParameterTypes66 = new String[] { "long" };
+		_methodParameterTypes66 = new String[] { "java.lang.String", "long" };
 
-		_methodName67 = "getRuleInstances";
+		_methodName67 = "getRuleInstancesCount";
 
-		_methodParameterTypes67 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes67 = new String[] { "long" };
 
 		_methodName68 = "getRuleInstancesCount";
 
@@ -302,13 +302,13 @@ public class RuleInstanceLocalServiceClpInvoker {
 
 		if (_methodName66.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
-			return RuleInstanceLocalServiceUtil.getRuleInstancesCount(((Long)arguments[0]).longValue());
+			return RuleInstanceLocalServiceUtil.getRuleInstances((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName67.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
-			return RuleInstanceLocalServiceUtil.getRuleInstances((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue());
+			return RuleInstanceLocalServiceUtil.getRuleInstancesCount(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName68.equals(name) &&
