@@ -395,28 +395,34 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					"com.liferay.contenttargeting.service.permission." +
 						"UserSegmentPermission"));
 
-			List<Campaign> campaigns = _campaignService.getCampaigns(
-				themeDisplay.getScopeGroupId());
-
-			template.put("campaigns", campaigns);
-
+			List<Campaign> campaigns = null;
 			List<UserSegment> userSegments = null;
 
 			String keywords = ParamUtil.getString(portletRequest, "keywords");
 
 			if (Validator.isNull(keywords)) {
+				campaigns = _campaignService.getCampaigns(
+					themeDisplay.getScopeGroupId());
 				userSegments = _userSegmentService.getUserSegments(
 					themeDisplay.getScopeGroupId());
 			}
 			else {
-				BaseModelSearchResult<UserSegment> results =
+				BaseModelSearchResult<Campaign> campaignResults =
+					_campaignLocalService.searchCampaigns(
+						themeDisplay.getScopeGroupId(), keywords,
+						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+				campaigns = campaignResults.getBaseModels();
+
+				BaseModelSearchResult<UserSegment> userSegmentResults =
 					_userSegmentLocalService.searchUserSegments(
 						themeDisplay.getScopeGroupId(), keywords,
 						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-				userSegments = results.getBaseModels();
+				userSegments = userSegmentResults.getBaseModels();
 			}
 
+			template.put("campaigns", campaigns);
 			template.put("userSegments", userSegments);
 			template.put(
 				"usedUserSegmentExceptionClass",
