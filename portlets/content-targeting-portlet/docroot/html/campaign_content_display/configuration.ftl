@@ -136,8 +136,7 @@
 			contentBox: '#<@portlet["namespace"] />queryRules > fieldset',
 			fieldIndexes: '<@portlet["namespace"] />queryLogicIndexes',
 			namespace: '<@portlet["namespace"] />',
-			sortable: true,
-			sortableHandle: '.field-row',
+			sortable: false,
 			url: '${newUserSegmentRuleURL}'
 		}
 	).render();
