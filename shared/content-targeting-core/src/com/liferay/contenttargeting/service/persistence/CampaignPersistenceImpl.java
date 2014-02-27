@@ -106,7 +106,8 @@ public class CampaignPersistenceImpl extends BasePersistenceImpl<Campaign>
 			CampaignModelImpl.FINDER_CACHE_ENABLED, CampaignImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid",
 			new String[] { String.class.getName() },
-			CampaignModelImpl.UUID_COLUMN_BITMASK);
+			CampaignModelImpl.UUID_COLUMN_BITMASK |
+			CampaignModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID = new FinderPath(CampaignModelImpl.ENTITY_CACHE_ENABLED,
 			CampaignModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid",
@@ -900,7 +901,8 @@ public class CampaignPersistenceImpl extends BasePersistenceImpl<Campaign>
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByUuid_C",
 			new String[] { String.class.getName(), Long.class.getName() },
 			CampaignModelImpl.UUID_COLUMN_BITMASK |
-			CampaignModelImpl.COMPANYID_COLUMN_BITMASK);
+			CampaignModelImpl.COMPANYID_COLUMN_BITMASK |
+			CampaignModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_UUID_C = new FinderPath(CampaignModelImpl.ENTITY_CACHE_ENABLED,
 			CampaignModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByUuid_C",
@@ -1471,7 +1473,8 @@ public class CampaignPersistenceImpl extends BasePersistenceImpl<Campaign>
 			CampaignModelImpl.FINDER_CACHE_ENABLED, CampaignImpl.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByGroupId",
 			new String[] { Long.class.getName() },
-			CampaignModelImpl.GROUPID_COLUMN_BITMASK);
+			CampaignModelImpl.GROUPID_COLUMN_BITMASK |
+			CampaignModelImpl.PRIORITY_COLUMN_BITMASK);
 	public static final FinderPath FINDER_PATH_COUNT_BY_GROUPID = new FinderPath(CampaignModelImpl.ENTITY_CACHE_ENABLED,
 			CampaignModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByGroupId",

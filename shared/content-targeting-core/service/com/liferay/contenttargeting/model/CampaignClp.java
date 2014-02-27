@@ -862,17 +862,15 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 	public int compareTo(Campaign campaign) {
 		int value = 0;
 
-		if (getCampaignId() < campaign.getCampaignId()) {
+		if (getPriority() < campaign.getPriority()) {
 			value = -1;
 		}
-		else if (getCampaignId() > campaign.getCampaignId()) {
+		else if (getPriority() > campaign.getPriority()) {
 			value = 1;
 		}
 		else {
 			value = 0;
 		}
-
-		value = value * -1;
 
 		if (value != 0) {
 			return value;

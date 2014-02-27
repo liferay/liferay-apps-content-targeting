@@ -90,8 +90,8 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 		};
 	public static final String TABLE_SQL_CREATE = "create table CT_Campaign (uuid_ VARCHAR(75) null,campaignId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,startDate DATE null,endDate DATE null,priority INTEGER)";
 	public static final String TABLE_SQL_DROP = "drop table CT_Campaign";
-	public static final String ORDER_BY_JPQL = " ORDER BY campaign.campaignId DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY CT_Campaign.campaignId DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY campaign.priority ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY CT_Campaign.priority ASC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -107,7 +107,7 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
 	public static long GROUPID_COLUMN_BITMASK = 2L;
 	public static long UUID_COLUMN_BITMASK = 4L;
-	public static long CAMPAIGNID_COLUMN_BITMASK = 8L;
+	public static long PRIORITY_COLUMN_BITMASK = 8L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -340,8 +340,6 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 
 	@Override
 	public void setCampaignId(long campaignId) {
-		_columnBitmask = -1L;
-
 		_campaignId = campaignId;
 	}
 
@@ -682,6 +680,8 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 
 	@Override
 	public void setPriority(int priority) {
+		_columnBitmask = -1L;
+
 		_priority = priority;
 	}
 
@@ -818,17 +818,15 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 	public int compareTo(Campaign campaign) {
 		int value = 0;
 
-		if (getCampaignId() < campaign.getCampaignId()) {
+		if (getPriority() < campaign.getPriority()) {
 			value = -1;
 		}
-		else if (getCampaignId() > campaign.getCampaignId()) {
+		else if (getPriority() > campaign.getPriority()) {
 			value = 1;
 		}
 		else {
 			value = 0;
 		}
-
-		value = value * -1;
 
 		if (value != 0) {
 			return value;
