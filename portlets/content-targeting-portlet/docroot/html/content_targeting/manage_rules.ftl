@@ -88,7 +88,7 @@
 				</@>
 
 				<@liferay_ui["icon"]
-					cssClass="rule-item"
+					cssClass="rule-item enabled"
 					id="ruleItem-${rule.getRuleKey()}"
 					image="edit"
 					method="get"
