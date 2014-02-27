@@ -62,6 +62,18 @@ public class CampaignQueryRule {
 		_assetClassPK = assetEntry.getClassPK();
 		_assetTitle = assetEntry.getTitle(locale);
 		_assetType = assetRendererFactory.getTypeName(locale, true);
+
+		try {
+			Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+			CampaignLocalService campaignLocalService =
+				ServiceTrackerUtil.getService(
+					CampaignLocalService.class, bundle.getBundleContext());
+
+			_campaign = campaignLocalService.getCampaign(_campaignId);
+		}
+		catch (Exception e) {
+		}
 	}
 
 	public String getAssetClassName() {
@@ -106,20 +118,19 @@ public class CampaignQueryRule {
 	}
 
 	public String getCampaignName(Locale locale) {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		try {
-			CampaignLocalService campaignLocalService =
-				ServiceTrackerUtil.getService(
-					CampaignLocalService.class, bundle.getBundleContext());
-
-			Campaign campaign = campaignLocalService.getCampaign(_campaignId);
-
-			return campaign.getName(locale);
+		if (_campaign != null) {
+			return _campaign.getName(locale);
 		}
-		catch (Exception e) {
-			return StringPool.BLANK;
+
+		return StringPool.BLANK;
+	}
+
+	public int getCampaignPriority() {
+		if (_campaign != null) {
+			return _campaign.getPriority();
 		}
+
+		return -1;
 	}
 
 	public int getIndex() {
@@ -169,6 +180,7 @@ public class CampaignQueryRule {
 	private long _assetEntryId;
 	private String _assetTitle = StringPool.BLANK;
 	private String _assetType = StringPool.BLANK;
+	private Campaign _campaign;
 	private long _campaignId;
 	private int _index;
 
