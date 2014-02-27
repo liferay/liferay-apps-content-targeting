@@ -35,8 +35,8 @@
 
 		<!-- Order -->
 
-		<order by="desc">
-			<order-column name="campaignId" />
+		<order by="asc">
+			<order-column name="priority" />
 		</order>
 
 		<!-- Finder methods -->
