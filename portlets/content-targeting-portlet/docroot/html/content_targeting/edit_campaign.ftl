@@ -49,7 +49,15 @@
 		<#assign maxPriority=5>
 
 		<#list 1..maxPriority as i>
-			<@aui["option"] label="${i}" selected=(priority == i) />
+			<#assign label="${i}" />
+
+			<#if i == 1>
+				<#assign label='${label} (${languageUtil.get(locale, "maximum")})' />
+			<#elseif i == maxPriority>
+				<#assign label='${label} (${languageUtil.get(locale, "minimum")})' />
+			</#if>
+
+			<@aui["option"] label="${label}" selected=(priority == i) value="${i}"/>
 		</#list>
 	</@>
 
