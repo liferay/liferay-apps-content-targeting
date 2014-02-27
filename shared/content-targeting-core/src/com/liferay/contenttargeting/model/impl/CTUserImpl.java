@@ -17,7 +17,6 @@ package com.liferay.contenttargeting.model.impl;
 import com.liferay.contenttargeting.api.model.RulesEngine;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.osgi.util.OsgiServiceUnavailableException;
 import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -90,13 +89,8 @@ public class CTUserImpl extends CTUserBaseImpl {
 	private void _intiRulesEngine() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		try {
-			_rulesEngine = ServiceTrackerUtil.getService(
-				RulesEngine.class, bundle.getBundleContext());
-		}
-		catch (OsgiServiceUnavailableException osue) {
-			_log.error("Can't start the Rules Engine.");
-		}
+		_rulesEngine = ServiceTrackerUtil.getService(
+			RulesEngine.class, bundle.getBundleContext());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(CTUserImpl.class);
