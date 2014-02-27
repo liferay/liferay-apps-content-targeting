@@ -33,9 +33,9 @@
 		<#include "campaign_toolbar.ftl" />
 
 		<@aui["nav-bar-search"] cssClass="pull-right">
-        <div class="form-search">
+		<div class="form-search">
 			<@liferay_ui["input-search"] id="keywords1" name="keywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
-        </div>
+		</div>
 		</@>
 	</@>
 

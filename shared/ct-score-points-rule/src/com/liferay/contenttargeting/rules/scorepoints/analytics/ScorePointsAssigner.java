@@ -20,13 +20,11 @@ import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.List;
 
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 

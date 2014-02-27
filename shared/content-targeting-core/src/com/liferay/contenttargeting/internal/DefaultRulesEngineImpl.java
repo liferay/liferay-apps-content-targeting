@@ -22,7 +22,6 @@ import com.liferay.contenttargeting.api.model.RulesEngine;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
-import com.liferay.osgi.util.OsgiServiceUnavailableException;
 import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
