@@ -103,6 +103,19 @@ public class CTUserLocalServiceImpl extends CTUserLocalServiceBaseImpl {
 	}
 
 	@Override
+	public CTUser updateLastIp(long CTUserId, String lastIp)
+		throws PortalException, SystemException {
+
+		CTUser CTUser = ctUserPersistence.fetchByPrimaryKey(CTUserId);
+
+		CTUser.setLastIp(lastIp);
+
+		ctUserPersistence.update(CTUser);
+
+		return CTUser;
+	}
+
+	@Override
 	public CTUser updateUser(
 			long userId, String lastIp, String typeSettings,
 			ServiceContext serviceContext)
