@@ -372,6 +372,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW) ||
+			path.equals(ContentTargetingPath.VIEW_CAMPAIGNS_RESOURCES) ||
 			path.equals(ContentTargetingPath.VIEW_USER_SEGMENTS_RESOURCES)) {
 
 			template.put(

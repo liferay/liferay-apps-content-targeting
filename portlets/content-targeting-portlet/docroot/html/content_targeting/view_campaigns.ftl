@@ -29,7 +29,7 @@
 
 		<@aui["nav-bar-search"] cssClass="pull-right">
 			<div class="form-search">
-				<@liferay_ui["input-search"] id="keywords1" name="keywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
+				<@liferay_ui["input-search"] id="campaignkeywords" name="keywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
 			</div>
 		</@>
 	</@>
@@ -37,4 +37,18 @@
 	<div id="<@portlet["namespace"] />campaignsPanel">
 		<#include "view_campaigns_resources.ftl" />
 	</div>
+</@>
+
+<@aui["script"] use="liferay-ajax-search">
+	var campaignsPanel = A.one('#<@portlet["namespace"] />campaignsPanel');
+	var inputNode = A.one('#<@portlet["namespace"] />campaignkeywords');
+
+	var search = new Liferay.AjaxContentSearch(
+		{
+			contentPanel: campaignsPanel,
+			inputNode: inputNode,
+			resourceURL: '<@portlet["resourceURL"]><@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_CAMPAIGNS_RESOURCES}" /><@portlet["param"] name="tabs1" value="campaigns" /></@>',
+			namespace: '<@portlet["namespace"] />'
+		}
+	);
 </@>
