@@ -23,7 +23,7 @@
 	</@>
 
 	<@liferay_ui["icon"]
-		cssClass="pull-right"
+		cssClass="lfr-meta-actions pull-right"
 		image="../aui/wrench"
 		label=true
 		message="configuration"
