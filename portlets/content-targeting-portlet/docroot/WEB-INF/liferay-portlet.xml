@@ -18,6 +18,7 @@
 		<control-panel-entry-weight>10.0</control-panel-entry-weight>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/content_targeting/main.css</header-portlet-css>
+		<header-portlet-javascript>/js/content_targeting/search.js</header-portlet-javascript>
 		<css-class-wrapper>content-targeting-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
