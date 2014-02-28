@@ -82,8 +82,8 @@ public class UserSegmentIndexer extends BaseIndexer {
 		throws Exception {
 
 		addSearchLocalizedTerm(
-			searchQuery, searchContext, Field.DESCRIPTION, false);
-		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, false);
+			searchQuery, searchContext, Field.DESCRIPTION, true);
+		addSearchLocalizedTerm(searchQuery, searchContext, Field.NAME, true);
 	}
 
 	@Override
