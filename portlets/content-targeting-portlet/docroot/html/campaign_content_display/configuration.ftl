@@ -104,14 +104,14 @@
 
 						<@aui["column"] columnWidth=50>
 							<span class="default-content-value-text">
-								<#if (assetEntryIdDefault <= 0)>
+								<#if (!contentDefaultValue)>
 									<@liferay_ui["message"] key="dont-display-anything" />
 								<#else>
 									<@liferay_ui["message"] key="display-this-content" />
 								</#if>
 							</span>
 
-							<#if (assetEntryIdDefault > 0)>
+							<#if (contentDefaultValue && (assetEntryIdDefault > 0))>
 								<span class="default-content-value">${assetTitleDefault} (<span class="default-content-value-type">${assetTypeDefault}</span>)</span>
 							</#if>
 						</@>
