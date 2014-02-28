@@ -18,9 +18,14 @@
 
 <@aui["nav"]>
 	<#if contentTargetingPermission.contains(permissionChecker, scopeGroupId, actionKeys.ADD_CAMPAIGN)>
+		<@portlet["renderURL"] var="redirectURL">
+			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+			<@portlet["param"] name="tabs1" value="campaigns" />
+		</@>
+
 		<@portlet["renderURL"] var="addCampaignURL">
 			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-			<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
+			<@portlet["param"] name="redirect" value="${redirectURL}" />
 		</@>
 
 		<@aui["nav-item"] href="${addCampaignURL}" iconCssClass="icon-plus" label="add-campaign" />
