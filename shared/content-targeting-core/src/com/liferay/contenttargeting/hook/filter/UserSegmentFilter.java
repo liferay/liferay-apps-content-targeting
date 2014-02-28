@@ -15,6 +15,7 @@
 package com.liferay.contenttargeting.hook.filter;
 
 import com.liferay.contenttargeting.model.CTUser;
+import com.liferay.contenttargeting.service.CTUserLocalServiceUtil;
 import com.liferay.contenttargeting.util.CTUserUtil;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.WebKeys;
@@ -54,6 +55,9 @@ public class UserSegmentFilter implements Filter {
 
 		try {
 			CTUser ctUser = CTUserUtil.getCTUser(request, response);
+
+			CTUserLocalServiceUtil.updateLastIp(
+				ctUser.getCTUserId(), request.getRemoteAddr());
 
 			long[] groupIds = getGroupIds(request);
 
