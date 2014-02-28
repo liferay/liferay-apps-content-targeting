@@ -20,17 +20,20 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.contenttargeting.rules.ipgeocode.model.IPInfo;
+import com.liferay.contenttargeting.rules.ipgeocode.util.IPGeocodeUtil;
+import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Country;
+import com.liferay.portal.model.Region;
+import com.liferay.portal.service.CountryServiceUtil;
+import com.liferay.portal.service.RegionServiceUtil;
 
-import java.text.Format;
-
-import java.util.Calendar;
 import java.util.Locale;
 import java.util.Map;
 
@@ -38,7 +41,7 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
 /**
- * @author Julio Camarero
+ * @author Eudaldo Alonso
  */
 @Component(immediate = true, provide = Rule.class)
 public class IpGeocodeRule extends BaseRule {
@@ -47,15 +50,40 @@ public class IpGeocodeRule extends BaseRule {
 	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
 		throws Exception {
 
-		String typeSettings = ruleInstance.getTypeSettings();
+		IPInfo ipInfo = IPGeocodeUtil.getIPInfo(ctUser.getLastIp());
 
-		Calendar startCalendar = _getStartCalendar(typeSettings);
-		Calendar endCalendar = _getEndCalendar(typeSettings);
+		if (ipInfo == null) {
+			return false;
+		}
 
-		Calendar now = CalendarFactoryUtil.getCalendar();
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+			ruleInstance.getTypeSettings());
 
-		if (startCalendar.before(now) && endCalendar.after(now)) {
-			return true;
+		long countryId = jsonObj.getLong("countryId");
+		long regionId = jsonObj.getLong("regionId");
+
+		Country country = CountryServiceUtil.fetchCountry(countryId);
+
+		if (country == null) {
+			return false;
+		}
+
+		Region region = null;
+
+		try {
+			region = RegionServiceUtil.getRegion(regionId);
+		}
+		catch (Exception e) {
+		}
+
+		String countryCode = ipInfo.getCountryCode();
+
+		if (countryCode.equals(country.getA2())) {
+			String regionCode = ipInfo.getRegionCode();
+
+			if ((region == null) || regionCode.equals(region.getRegionCode())) {
+				return true;
+			}
 		}
 
 		return false;
@@ -63,25 +91,46 @@ public class IpGeocodeRule extends BaseRule {
 
 	@Override
 	public String getIcon() {
-		return "icon-time";
+		return "icon-globe";
 	}
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
 		String typeSettings = ruleInstance.getTypeSettings();
 
-		Format format = FastDateFormatFactoryUtil.getSimpleDateFormat(
-			_SIMPLE_DATE_FORMAT_PATTERN, locale);
+		String summary = StringPool.BLANK;
 
-		Calendar startCalendar = _getStartCalendar(typeSettings);
-		Calendar endCalendar = _getEndCalendar(typeSettings);
+		try {
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
 
-		String summary = LanguageUtil.format(
-			locale, "users-browsing-the-site-from-x-to-x",
-			new Object[] {
-				format.format(startCalendar.getTime()),
-				format.format(endCalendar.getTime())
-			});
+			long countryId = jsonObj.getLong("countryId");
+			long regionId = jsonObj.getLong("regionId");
+
+			Country country = CountryServiceUtil.fetchCountry(countryId);
+			Region region = null;
+
+			try {
+				region = RegionServiceUtil.getRegion(regionId);
+			}
+			catch (NoSuchRegionException nsre) {
+			}
+
+			if (country != null) {
+				if (region != null) {
+					summary = LanguageUtil.format(
+						locale, "users-from-x-x",
+						new Object[] {
+							country.getName(locale), region.getName()
+						});
+				}
+				else {
+					summary = LanguageUtil.format(
+						locale, "users-from-x", country.getName(locale));
+				}
+			}
+		}
+		catch (Exception e) {
+		}
 
 		return summary;
 	}
@@ -90,22 +139,13 @@ public class IpGeocodeRule extends BaseRule {
 	public String processRule(
 		PortletRequest request, PortletResponse response) {
 
-		int endTimeHour = ParamUtil.getInteger(request, "endTimeHour");
-		int endTimeMinute = ParamUtil.getInteger(request, "endTimeMinute");
-		int endTimeAmPm = ParamUtil.getInteger(request, "endTimeAmPm");
-
-		int startTimeHour = ParamUtil.getInteger(request, "startTimeHour");
-		int startTimeMinute = ParamUtil.getInteger(request, "startTimeMinute");
-		int startTimeAmPm = ParamUtil.getInteger(request, "startTimeAmPm");
+		long countryId = ParamUtil.getLong(request, "countryId");
+		long regionId = ParamUtil.getLong(request, "regionId");
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 
-		jsonObj.put("endTimeHour", endTimeHour);
-		jsonObj.put("endTimeMinute", endTimeMinute);
-		jsonObj.put("endTimeAmPm", endTimeAmPm);
-		jsonObj.put("startTimeHour", startTimeHour);
-		jsonObj.put("startTimeMinute", startTimeMinute);
-		jsonObj.put("startTimeAmPm", startTimeAmPm);
+		jsonObj.put("countryId", countryId);
+		jsonObj.put("regionId", regionId);
 
 		return jsonObj.toString();
 	}
@@ -114,6 +154,9 @@ public class IpGeocodeRule extends BaseRule {
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
+		long countryId = 0;
+		long regionId = 0;
+
 		if (ruleInstance != null) {
 			String typeSettings = ruleInstance.getTypeSettings();
 
@@ -121,85 +164,15 @@ public class IpGeocodeRule extends BaseRule {
 				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
 					typeSettings);
 
-				context.put("endTimeHour", jsonObj.getInt("endTimeHour"));
-				context.put("endTimeMinute", jsonObj.getInt("endTimeMinute"));
-				context.put("endTimeAmPm", jsonObj.getInt("endTimeAmPm"));
-				context.put("startTimeHour", jsonObj.getInt("startTimeHour"));
-				context.put(
-					"startTimeMinute", jsonObj.getInt("startTimeMinute"));
-				context.put("startTimeAmPm", jsonObj.getInt("startTimeAmPm"));
+				countryId = jsonObj.getLong("countryId");
+				regionId = jsonObj.getLong("regionId");
 			}
 			catch (JSONException jse) {
 			}
 		}
-		else {
-			context.put("endTimeHour", 0);
-			context.put("endTimeMinute", 0);
-			context.put("endTimeAmPm", 0);
-			context.put("startTimeHour", 0);
-			context.put("startTimeMinute", 0);
-			context.put("startTimeAmPm", 0);
-		}
+
+		context.put("countryId", countryId);
+		context.put("regionId", regionId);
 	}
-
-	private Calendar _getEndCalendar(String typeSettings) {
-		Calendar now = CalendarFactoryUtil.getCalendar();
-
-		try {
-			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
-
-			int endTimeHour = jsonObj.getInt("endTimeHour");
-			int endTimeMinute = jsonObj.getInt("endTimeMinute");
-			int endTimeAmPm = jsonObj.getInt("endTimeAmPm");
-
-			if (endTimeAmPm == Calendar.PM) {
-				endTimeHour += 12;
-			}
-
-			int day = now.get(Calendar.DATE);
-			int month = now.get(Calendar.MONTH);
-			int year = now.get(Calendar.YEAR);
-
-			Calendar endCalendar = CalendarFactoryUtil.getCalendar(
-				year, month, day, endTimeHour, endTimeMinute);
-
-			return endCalendar;
-		}
-		catch (JSONException jse) {
-		}
-
-		return now;
-	}
-
-	private Calendar _getStartCalendar(String typeSettings) {
-		Calendar now = CalendarFactoryUtil.getCalendar();
-
-		try {
-			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
-
-			int startTimeHour = jsonObj.getInt("startTimeHour");
-			int startTimeMinute = jsonObj.getInt("startTimeMinute");
-			int startTimeAmPm = jsonObj.getInt("startTimeAmPm");
-
-			if (startTimeAmPm == Calendar.PM) {
-				startTimeHour += 12;
-			}
-
-			int day = now.get(Calendar.DATE);
-			int month = now.get(Calendar.MONTH);
-			int year = now.get(Calendar.YEAR);
-
-			Calendar startCalendar = CalendarFactoryUtil.getCalendar(
-				year, month, day, startTimeHour, startTimeMinute);
-
-			return startCalendar;
-		}
-		catch (JSONException jse) {
-		}
-
-		return now;
-	}
-
-	private static final String _SIMPLE_DATE_FORMAT_PATTERN = "hh:mm a";
 
 }

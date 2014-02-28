@@ -1,36 +1,29 @@
 <#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
 <#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
+<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
 
-<@aui["fieldset"] cssClass="time-selector" label="start-time">
-	<@liferay_ui["input-time"]
-		amPmParam="startTimeAmPm"
-		amPmValue=startTimeAmPm
-		hourParam="startTimeHour"
-		hourValue=startTimeHour
-		minuteParam="startTimeMinute"
-		minuteValue=startTimeMinute
-		name="startTime"
-	/>
+<@aui["select"] label="country" name="countryId" />
+
+<@aui["select"] label="region" name="regionId" />
+
+<@aui["script"] use="liferay-dynamic-select">
+	new Liferay.DynamicSelect(
+		[
+			{
+				select: '<@portlet["namespace"] />countryId',
+				selectData: Liferay.Address.getCountries,
+				selectDesc: 'nameCurrentValue',
+				selectId: 'countryId',
+				selectSort: true,
+				selectVal: '${countryId}'
+			},
+			{
+				select: '<@portlet["namespace"] />regionId',
+				selectData: Liferay.Address.getRegions,
+				selectDesc: 'name',
+				selectId: 'regionId',
+				selectVal: '${regionId}'
+			}
+		]
+	);
 </@>
-
-<@aui["fieldset"] cssClass="time-selector" label="end-time">
-	<@liferay_ui["input-time"]
-		amPmParam="endTimeAmPm"
-		amPmValue=endTimeAmPm
-		hourParam="endTimeHour"
-		hourValue=endTimeHour
-		minuteParam="endTimeMinute"
-		minuteValue=endTimeMinute
-		name="endTime"
-	/>
-</@>
-
-<style>
-	 .time-selector legend {
-		border: none;
-		font-weight: bold;
-		font-size: 15px;
-		line-height: 30px;
-		margin-bottom: 0;
-	 }
-</style>

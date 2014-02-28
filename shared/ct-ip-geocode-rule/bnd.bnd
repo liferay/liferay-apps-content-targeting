@@ -1,25 +1,33 @@
-Bundle-Name: Time Rule
-Bundle-ClassPath: .,WEB-INF/lib/util-java.jar
+Bundle-Name: Ip Geocode Rule
+Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar
 Include-Resource: classes,\
 	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
 	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
 Import-Package:\
+	com.liferay.contenttargeting.model,\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.contenttargeting.service.messaging,\
+	com.liferay.portal,\
+	com.liferay.portal.kernel.bean,\
+	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.json,\
 	com.liferay.portal.kernel.language,\
 	com.liferay.portal.kernel.lar,\
+	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.servlet,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
+	com.liferay.portal.kernel.portlet,\
+	com.liferay.portal.kernel.util,\
+	com.liferay.portal.model,\
+	com.liferay.portal.service,\
 	javax.portlet,\
-	javax.el,\
-	javax.servlet,\
-	javax.servlet.http,\
-	*;resolution:="optional"
+	javax.naming,\
+	javax.naming.directory
 Private-Package: \
-	com.liferay.contenttargeting.rules.time.*
+	com.liferay.contenttargeting.rules.ipgeocode.*
 Service-Component: \
-	com.liferay.contenttargeting.rules.time.*
-Web-ContextPath: /ct-time-rule
+	com.liferay.contenttargeting.rules.ipgeocode.*
+Web-ContextPath: /ct-ip-geocode-rule
