@@ -371,7 +371,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW)) {
+		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW) ||
+			path.equals(ContentTargetingPath.VIEW_USER_SEGMENTS_RESOURCES)) {
+
 			template.put(
 				"actionKeys",
 				staticModels.get(
