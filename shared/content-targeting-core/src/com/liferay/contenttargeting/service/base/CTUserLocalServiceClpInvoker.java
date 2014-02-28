@@ -137,9 +137,13 @@ public class CTUserLocalServiceClpInvoker {
 
 		_methodParameterTypes64 = new String[] { "long" };
 
-		_methodName65 = "updateUser";
+		_methodName65 = "updateLastIp";
 
-		_methodParameterTypes65 = new String[] {
+		_methodParameterTypes65 = new String[] { "long", "java.lang.String" };
+
+		_methodName66 = "updateUser";
+
+		_methodParameterTypes66 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -277,6 +281,12 @@ public class CTUserLocalServiceClpInvoker {
 
 		if (_methodName65.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
+			return CTUserLocalServiceUtil.updateLastIp(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
+		}
+
+		if (_methodName66.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
 			return CTUserLocalServiceUtil.updateUser(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
@@ -333,4 +343,6 @@ public class CTUserLocalServiceClpInvoker {
 	private String[] _methodParameterTypes64;
 	private String _methodName65;
 	private String[] _methodParameterTypes65;
+	private String _methodName66;
+	private String[] _methodParameterTypes66;
 }

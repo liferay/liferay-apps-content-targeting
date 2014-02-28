@@ -327,6 +327,13 @@ public class CTUserLocalServiceUtil {
 		return getService().getCTUserByUserId(userId);
 	}
 
+	public static com.liferay.contenttargeting.model.CTUser updateLastIp(
+		long CTUserId, java.lang.String lastIp)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateLastIp(CTUserId, lastIp);
+	}
+
 	public static com.liferay.contenttargeting.model.CTUser updateUser(
 		long userId, java.lang.String lastIp, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
