@@ -18,9 +18,14 @@
 
 <@aui["nav"]>
 	<#if contentTargetingPermission.contains(permissionChecker, scopeGroupId, actionKeys.ADD_USER_SEGMENT)>
+		<@portlet["renderURL"] var="redirectURL">
+			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+			<@portlet["param"] name="tabs1" value="user-segments" />
+		</@>
+
 		<@portlet["renderURL"] var="addUserSegmentURL">
 			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-			<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
+			<@portlet["param"] name="redirect" value="${redirectURL}" />
 		</@>
 
 		<@aui["nav-item"] href="${addUserSegmentURL}" iconCssClass="icon-plus" label="add-user-segment" />
