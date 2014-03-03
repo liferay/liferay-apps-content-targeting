@@ -149,7 +149,7 @@
 	   n.get('parentNode').appendChild(c);
 	   host.set('dragNode', c);
 	   return c;
-   }
+	}
 </@>
 
 <@aui["script"] use="aui-base,liferay-auto-fields">
