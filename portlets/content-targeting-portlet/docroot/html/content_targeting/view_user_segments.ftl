@@ -46,19 +46,19 @@
 
 	<div id="<@portlet["namespace"] />userSegmentsPanel">
 		<#include "view_user_segments_resources.ftl" />
-    </div>
+	</div>
 </@>
 
 <@aui["script"] use="liferay-ajax-search">
-    var userSegmentsPanel = A.one('#<@portlet["namespace"] />userSegmentsPanel');
-    var inputNode = A.one('#<@portlet["namespace"] />userSegmentkeywords');
+	var userSegmentsPanel = A.one('#<@portlet["namespace"] />userSegmentsPanel');
+	var inputNode = A.one('#<@portlet["namespace"] />userSegmentkeywords');
 
-    var search = new Liferay.AjaxContentSearch(
+	var search = new Liferay.AjaxContentSearch(
 		{
 			contentPanel: userSegmentsPanel,
 			inputNode: inputNode,
 			resourceURL: '<@portlet["resourceURL"]><@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_USER_SEGMENTS_RESOURCES}" /><@portlet["param"] name="tabs1" value="user-segments" /></@>',
 			namespace: '<@portlet["namespace"] />'
 		}
-    );
+	);
 </@>
