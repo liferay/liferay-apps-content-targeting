@@ -130,6 +130,28 @@
 	<@portlet["param"] name="mvcPath" value="${userSegmentContentDisplayPath.EDIT_QUERY_RULE}" />
 </@>
 
+
+<@aui["script"] use="dd-proxy">
+
+	// This code is only needed to fix a YUI issue. See WCM-42
+	// It should be removed once this plugin is migrated to 7.0
+
+	A.Plugin.DDProxy.prototype.clone = function() {
+	   var host = this.get('host'),
+		   n = host.get('node'),
+		   c = n.cloneNode(true);
+
+	   c.all('input[type="radio"]').removeAttribute('name');
+
+	   delete c._yuid;
+	   c.setAttribute('id', A.guid());
+	   c.setStyle('position', 'absolute');
+	   n.get('parentNode').appendChild(c);
+	   host.set('dragNode', c);
+	   return c;
+   }
+</@>
+
 <@aui["script"] use="aui-base,liferay-auto-fields">
 	var autoFields = new Liferay.AutoFields(
 		{
