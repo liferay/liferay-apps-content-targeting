@@ -42,25 +42,6 @@ import java.util.Date;
 public class CTUserLocalServiceImpl extends CTUserLocalServiceBaseImpl {
 
 	@Override
-	public CTUser addUser(long companyId)
-		throws PortalException, SystemException {
-
-		Date now = new Date();
-
-		long CTUserId = CounterLocalServiceUtil.increment();
-
-		CTUser CTUser = ctUserPersistence.create(CTUserId);
-
-		CTUser.setCompanyId(companyId);
-		CTUser.setCreateDate(now);
-		CTUser.setModifiedDate(now);
-
-		ctUserPersistence.update(CTUser);
-
-		return CTUser;
-	}
-
-	@Override
 	public CTUser addUser(
 			long userId, String lastIp, String typeSettings,
 			ServiceContext serviceContext)
@@ -92,7 +73,7 @@ public class CTUserLocalServiceImpl extends CTUserLocalServiceBaseImpl {
 	}
 
 	@Override
-	public CTUser getCTUserByUserId(long userId)
+	public CTUser fetchCTUserByUserId(long userId)
 		throws PortalException, SystemException {
 
 		if (userId <= 0) {
@@ -109,6 +90,7 @@ public class CTUserLocalServiceImpl extends CTUserLocalServiceBaseImpl {
 		CTUser CTUser = ctUserPersistence.fetchByPrimaryKey(CTUserId);
 
 		CTUser.setLastIp(lastIp);
+		CTUser.setModifiedDate(new Date());
 
 		ctUserPersistence.update(CTUser);
 
