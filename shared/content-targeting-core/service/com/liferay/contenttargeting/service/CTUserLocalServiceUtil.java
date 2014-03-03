@@ -306,13 +306,6 @@ public class CTUserLocalServiceUtil {
 	}
 
 	public static com.liferay.contenttargeting.model.CTUser addUser(
-		long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().addUser(companyId);
-	}
-
-	public static com.liferay.contenttargeting.model.CTUser addUser(
 		long userId, java.lang.String lastIp, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -320,11 +313,11 @@ public class CTUserLocalServiceUtil {
 		return getService().addUser(userId, lastIp, typeSettings, serviceContext);
 	}
 
-	public static com.liferay.contenttargeting.model.CTUser getCTUserByUserId(
+	public static com.liferay.contenttargeting.model.CTUser fetchCTUserByUserId(
 		long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCTUserByUserId(userId);
+		return getService().fetchCTUserByUserId(userId);
 	}
 
 	public static com.liferay.contenttargeting.model.CTUser updateLastIp(

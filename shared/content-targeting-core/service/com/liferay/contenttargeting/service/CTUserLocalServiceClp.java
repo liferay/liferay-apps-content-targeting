@@ -124,26 +124,22 @@ public class CTUserLocalServiceClp implements CTUserLocalService {
 
 		_methodName21 = "addUser";
 
-		_methodParameterTypes21 = new String[] { "long" };
-
-		_methodName22 = "addUser";
-
-		_methodParameterTypes22 = new String[] {
+		_methodParameterTypes21 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName23 = "getCTUserByUserId";
+		_methodName22 = "fetchCTUserByUserId";
 
-		_methodParameterTypes23 = new String[] { "long" };
+		_methodParameterTypes22 = new String[] { "long" };
 
-		_methodName24 = "updateLastIp";
+		_methodName23 = "updateLastIp";
 
-		_methodParameterTypes24 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes23 = new String[] { "long", "java.lang.String" };
 
-		_methodName25 = "updateUser";
+		_methodName24 = "updateUser";
 
-		_methodParameterTypes25 = new String[] {
+		_methodParameterTypes24 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -761,39 +757,6 @@ public class CTUserLocalServiceClp implements CTUserLocalService {
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.CTUser addUser(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] { companyId });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (com.liferay.contenttargeting.model.CTUser)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
 	public com.liferay.contenttargeting.model.CTUser addUser(long userId,
 		java.lang.String lastIp, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -802,8 +765,8 @@ public class CTUserLocalServiceClp implements CTUserLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21,
 					new Object[] {
 						userId,
 						
@@ -838,15 +801,15 @@ public class CTUserLocalServiceClp implements CTUserLocalService {
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.CTUser getCTUserByUserId(
+	public com.liferay.contenttargeting.model.CTUser fetchCTUserByUserId(
 		long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] { userId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22, new Object[] { userId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -879,8 +842,8 @@ public class CTUserLocalServiceClp implements CTUserLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] { CTUserId, ClpSerializer.translateInput(
 							lastIp) });
 		}
@@ -916,8 +879,8 @@ public class CTUserLocalServiceClp implements CTUserLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						userId,
 						
@@ -1000,6 +963,4 @@ public class CTUserLocalServiceClp implements CTUserLocalService {
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
-	private String _methodName25;
-	private String[] _methodParameterTypes25;
 }

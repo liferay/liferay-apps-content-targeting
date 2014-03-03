@@ -39,16 +39,22 @@ public class CTUserUtil {
 		long companyId = PortalUtil.getCompanyId(request);
 		long userId = PortalUtil.getUserId(request);
 
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(companyId);
+
+		CTUser ctUser = null;
+
 		if (userId > 0) {
-			CTUser ctUser = CTUserLocalServiceUtil.getCTUserByUserId(userId);
+			ctUser = CTUserLocalServiceUtil.fetchCTUserByUserId(userId);
 
 			if (ctUser == null) {
-				ServiceContext serviceContext = new ServiceContext();
-
-				serviceContext.setCompanyId(companyId);
-
 				ctUser = CTUserLocalServiceUtil.addUser(
-					userId, null, null, serviceContext);
+					userId, request.getRemoteAddr(), null, serviceContext);
+			}
+			else if (!ctUser.getLastIp().equals(request.getRemoteAddr())) {
+				CTUserLocalServiceUtil.updateLastIp(
+					ctUser.getCTUserId(), request.getRemoteAddr());
 			}
 
 			return ctUser;
@@ -57,16 +63,19 @@ public class CTUserUtil {
 		long ctUserId = CTCookieUtil.getCTUserId(request);
 
 		if (ctUserId > 0) {
-			CTUser ctUser = CTUserLocalServiceUtil.fetchCTUser(ctUserId);
-
-			if (ctUser != null) {
-				return ctUser;
-			}
+			ctUser = CTUserLocalServiceUtil.fetchCTUser(ctUserId);
 		}
 
-		CTUser ctUser = CTUserLocalServiceUtil.addUser(companyId);
+		if (ctUser == null) {
+			ctUser = CTUserLocalServiceUtil.addUser(
+				0, request.getRemoteAddr(), null, serviceContext);
 
-		CTCookieUtil.addCookie(request, response, ctUser.getCTUserId());
+			CTCookieUtil.addCookie(request, response, ctUser.getCTUserId());
+		}
+		else if (!ctUser.getLastIp().equals(request.getRemoteAddr())) {
+			CTUserLocalServiceUtil.updateLastIp(
+				ctUser.getCTUserId(), request.getRemoteAddr());
+		}
 
 		return ctUser;
 	}

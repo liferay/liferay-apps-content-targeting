@@ -313,13 +313,6 @@ public class CTUserLocalServiceWrapper implements CTUserLocalService,
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.CTUser addUser(long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _ctUserLocalService.addUser(companyId);
-	}
-
-	@Override
 	public com.liferay.contenttargeting.model.CTUser addUser(long userId,
 		java.lang.String lastIp, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -330,11 +323,11 @@ public class CTUserLocalServiceWrapper implements CTUserLocalService,
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.CTUser getCTUserByUserId(
+	public com.liferay.contenttargeting.model.CTUser fetchCTUserByUserId(
 		long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ctUserLocalService.getCTUserByUserId(userId);
+		return _ctUserLocalService.fetchCTUserByUserId(userId);
 	}
 
 	@Override

@@ -124,26 +124,22 @@ public class CTUserLocalServiceClpInvoker {
 
 		_methodName62 = "addUser";
 
-		_methodParameterTypes62 = new String[] { "long" };
-
-		_methodName63 = "addUser";
-
-		_methodParameterTypes63 = new String[] {
+		_methodParameterTypes62 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName64 = "getCTUserByUserId";
+		_methodName63 = "fetchCTUserByUserId";
 
-		_methodParameterTypes64 = new String[] { "long" };
+		_methodParameterTypes63 = new String[] { "long" };
 
-		_methodName65 = "updateLastIp";
+		_methodName64 = "updateLastIp";
 
-		_methodParameterTypes65 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes64 = new String[] { "long", "java.lang.String" };
 
-		_methodName66 = "updateUser";
+		_methodName65 = "updateUser";
 
-		_methodParameterTypes66 = new String[] {
+		_methodParameterTypes65 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -264,29 +260,24 @@ public class CTUserLocalServiceClpInvoker {
 
 		if (_methodName62.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
-			return CTUserLocalServiceUtil.addUser(((Long)arguments[0]).longValue());
-		}
-
-		if (_methodName63.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
 			return CTUserLocalServiceUtil.addUser(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName64.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
-			return CTUserLocalServiceUtil.getCTUserByUserId(((Long)arguments[0]).longValue());
+		if (_methodName63.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
+			return CTUserLocalServiceUtil.fetchCTUserByUserId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName65.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
+		if (_methodName64.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
 			return CTUserLocalServiceUtil.updateLastIp(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
 
-		if (_methodName66.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
+		if (_methodName65.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
 			return CTUserLocalServiceUtil.updateUser(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
@@ -343,6 +334,4 @@ public class CTUserLocalServiceClpInvoker {
 	private String[] _methodParameterTypes64;
 	private String _methodName65;
 	private String[] _methodParameterTypes65;
-	private String _methodName66;
-	private String[] _methodParameterTypes66;
 }
