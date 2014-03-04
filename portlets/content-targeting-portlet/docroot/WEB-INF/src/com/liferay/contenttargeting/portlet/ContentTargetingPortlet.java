@@ -431,7 +431,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			Format displayFormatDate =
 				FastDateFormatFactoryUtil.getSimpleDateFormat(
-					"yyyy-MM-dd HH:mm", themeDisplay.getLocale(),
+					"dd/MM/yyyy hh:mm a", themeDisplay.getLocale(),
 					themeDisplay.getTimeZone());
 
 			template.put("displayFormatDate", displayFormatDate);
