@@ -20,8 +20,15 @@ import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.CharPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
+import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
@@ -77,15 +84,51 @@ public class UserSegmentFilter implements Filter {
 	protected long[] getGroupIds(HttpServletRequest request)
 		throws PortalException, SystemException {
 
-		LayoutSet layoutSet = (LayoutSet)request.getAttribute(
-			"VIRTUAL_HOST_LAYOUT_SET");
+		String pathInfo = request.getPathInfo();
 
-		if (layoutSet == null) {
-			return null;
+		int pos = pathInfo.indexOf(CharPool.SLASH, 1);
+
+		String friendlyURL = null;
+
+		if (pos != -1) {
+			friendlyURL = pathInfo.substring(0, pos);
+		}
+		else if (pathInfo.length() > 1) {
+			friendlyURL = pathInfo;
 		}
 
-		return ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
-			layoutSet.getGroupId());
+		long groupId = 0;
+
+		if (!Validator.isNull(friendlyURL)) {
+			long companyId = PortalUtil.getCompanyId(request);
+
+			try {
+				Group group = GroupLocalServiceUtil.getFriendlyURLGroup(
+					companyId, friendlyURL);
+
+				groupId = group.getGroupId();
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e);
+				}
+			}
+		}
+
+		if (groupId == 0) {
+			LayoutSet layoutSet = (LayoutSet)request.getAttribute(
+					"VIRTUAL_HOST_LAYOUT_SET");
+
+			if (layoutSet == null) {
+				return null;
+			}
+
+			groupId = layoutSet.getGroupId();
+		}
+
+		return ContentTargetingUtil.getAncestorsAndCurrentGroupIds(groupId);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(UserSegmentFilter.class);
 
 }
