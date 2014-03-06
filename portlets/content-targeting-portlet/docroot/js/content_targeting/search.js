@@ -93,6 +93,8 @@ AUI.add(
 					_afterSuccess: function(event) {
 						var instance = this;
 
+						instance._contentPanel.plug(A.Plugin.ParseContent);
+
 						instance._contentPanel.setContent(event.currentTarget.get('responseData'));
 					},
 
@@ -128,6 +130,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'aui-io-request', 'autocomplete-base', 'autocomplete-filters', 'liferay-portlet-base']
+		requires: ['aui-base', 'aui-io-request', 'aui-parse-content', 'autocomplete-base', 'autocomplete-filters', 'liferay-portlet-base']
 	}
 );
