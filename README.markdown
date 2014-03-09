@@ -112,7 +112,7 @@ classes for the app.
  * ct-gender-rule (/shared) - rule used by the audience targeting app to filter user audiences by gender
  * ct-age-rule (/shared) - rule used by the audience targeting app to filter user audiences by age
  * ct-score-rule (/shared) - rule used by the audience targeting app to filter user audiences by their behavior
- * asset-layouts-hook (/hooks) - Hook to support tagging and categorizing pages
+ * portal-6-2-x-compat-hook (/hooks) - Hook to make the content targeting plugins compatible with Liferay 6.2.x versions.
 * OSGI modules required for the project
  * http-service-shared (/shared)
  * log-bridge-shared (/shared)
