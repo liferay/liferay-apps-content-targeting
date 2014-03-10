@@ -28,19 +28,10 @@ int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_
 
 List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
 
-Group siteGroup = themeDisplay.getSiteGroup();
+long[] groupIds = getCurrentAndAncestorSiteGroupIds(scopeGroupId);
 
-StringBundler vocabularyGroupIds = new StringBundler(3);
-
-vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(siteGroup.getGroupId(), false));
-
-vocabularyGroupIds.append(siteGroup.getGroupId());
-
-if (scopeGroupId != themeDisplay.getCompanyGroupId()) {
-	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(themeDisplay.getCompanyGroupId(), false));
-
-	vocabularyGroupIds.append(StringPool.COMMA);
-	vocabularyGroupIds.append(themeDisplay.getCompanyGroupId());
+for (long groupId : groupIds) {
+	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(groupId, false));
 }
 
 if (Validator.isNotNull(className)) {
@@ -84,8 +75,13 @@ if (Validator.isNotNull(className)) {
 			<label id="<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>">
 				<%= vocabulary.getTitle(locale) %>
 
-				<c:if test="<%= vocabulary.getGroupId() == themeDisplay.getCompanyGroupId() %>">
-					(<liferay-ui:message key="global" />)
+				<c:if test="<%= vocabulary.getGroupId() != themeDisplay.getSiteGroupId() %>">
+
+					<%
+					Group vocabularyGroup = GroupLocalServiceUtil.getGroup(vocabulary.getGroupId());
+					%>
+
+					(<%= vocabularyGroup.getDescriptiveName() %>)
 				</c:if>
 
 				<c:if test="<%= vocabulary.isRequired(classNameId) %>">
@@ -112,8 +108,8 @@ if (Validator.isNotNull(className)) {
 					moreResultsLabel: '<%= UnicodeLanguageUtil.get(pageContext, "load-more-results") %>',
 					portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 					singleSelect: <%= !vocabulary.isMultiValued() %>,
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", vocabulary.getTitle(locale)) %>',
-					vocabularyGroupIds: '<%= vocabulary.getGroupId() %>',
+					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", vocabulary.getTitle(locale), false) %>',
+					vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
 					vocabularyIds: '<%= String.valueOf(vocabulary.getVocabularyId()) %>'
 				}
 			).render();
@@ -148,7 +144,7 @@ else {
 				maxEntries: <%= maxEntries %>,
 				moreResultsLabel: '<%= UnicodeLanguageUtil.get(pageContext, "load-more-results") %>',
 				portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
-				vocabularyGroupIds: '<%= vocabularyGroupIds.toString() %>',
+				vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
 				vocabularyIds: '<%= ListUtil.toString(vocabularies, "vocabularyId") %>'
 			}
 		).render();
@@ -219,6 +215,52 @@ private String[] _getCategoryIdsTitles(String categoryIds, String categoryNames,
 	}
 
 	return new String[] {categoryIds, categoryNames};
+}
+
+private long[] getCurrentAndAncestorSiteGroupIds(long groupId)
+	throws PortalException, SystemException {
+
+	List<Group> groups = new ArrayList<Group>();
+
+	long siteGroupId = PortalUtil.getSiteGroupId(groupId);
+
+	Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
+
+	if (!siteGroup.isLayoutPrototype()) {
+		groups.add(siteGroup);
+	}
+
+	groups.addAll(doGetAncestorSiteGroupIds(groupId));
+
+	long[] groupIds = new long[groups.size()];
+
+	for (int i = 0; i < groups.size(); i++) {
+		Group group = groups.get(i);
+
+		groupIds[i] = group.getGroupId();
+	}
+
+	return groupIds;
+}
+
+protected List<Group> doGetAncestorSiteGroupIds(long groupId)
+	throws PortalException, SystemException {
+
+	List<Group> groups = new ArrayList<Group>();
+
+	long siteGroupId = PortalUtil.getSiteGroupId(groupId);
+
+	Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
+
+	groups.addAll(siteGroup.getAncestors());
+
+	if (!siteGroup.isCompany()) {
+		groups.add(
+			GroupLocalServiceUtil.getCompanyGroup(
+				siteGroup.getCompanyId()));
+	}
+
+	return groups;
 }
 
 private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
