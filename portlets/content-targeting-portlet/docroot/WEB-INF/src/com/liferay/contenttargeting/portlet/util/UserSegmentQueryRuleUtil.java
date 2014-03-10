@@ -34,10 +34,10 @@ public class UserSegmentQueryRuleUtil {
 			ActionRequest request, int queryRulesIndex, Locale locale)
 		throws PortalException, SystemException {
 
-		boolean contains = ParamUtil.getBoolean(
-			request, "queryContains" + queryRulesIndex);
 		boolean andOperator = ParamUtil.getBoolean(
 			request, "queryAndOperator" + queryRulesIndex);
+		boolean contains = ParamUtil.getBoolean(
+			request, "queryContains" + queryRulesIndex, true);
 
 		long assetEntryId = ParamUtil.getLong(
 			request, "assetEntryId" + queryRulesIndex);
@@ -61,7 +61,7 @@ public class UserSegmentQueryRuleUtil {
 				"queryAndOperator" + queryRulesIndex, null));
 		boolean contains = GetterUtil.getBoolean(
 			portletPreferences.getValue(
-				"queryContains" + queryRulesIndex, null));
+				"queryContains" + queryRulesIndex, null), true);
 
 		long assetEntryId = GetterUtil.getLong(
 			portletPreferences.getValue(
