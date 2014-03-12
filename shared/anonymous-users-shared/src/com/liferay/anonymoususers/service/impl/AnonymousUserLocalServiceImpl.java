@@ -32,9 +32,5 @@ import com.liferay.anonymoususers.service.base.AnonymousUserLocalServiceBaseImpl
  */
 public class AnonymousUserLocalServiceImpl
 	extends AnonymousUserLocalServiceBaseImpl {
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.anonymoususers.service.AnonymousUserLocalServiceUtil} to access the anonymous user local service.
-	 */
+
 }

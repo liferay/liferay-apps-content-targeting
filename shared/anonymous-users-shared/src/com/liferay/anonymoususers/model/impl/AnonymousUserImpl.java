@@ -24,11 +24,8 @@ package com.liferay.anonymoususers.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class AnonymousUserImpl extends AnonymousUserBaseImpl {
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a anonymous user model instance should use the {@link com.liferay.anonymoususers.model.AnonymousUser} interface instead.
-	 */
+
 	public AnonymousUserImpl() {
 	}
+
 }
