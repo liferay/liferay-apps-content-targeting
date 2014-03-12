@@ -373,25 +373,6 @@ public class CTUserClp extends BaseModelImpl<CTUser> implements CTUser {
 	}
 
 	@Override
-	public long[] getMatchesUserSegmentIds(long[] groupIds) {
-		try {
-			String methodName = "getMatchesUserSegmentIds";
-
-			Class<?>[] parameterTypes = new Class<?>[] { long.class };
-
-			Object[] parameterValues = new Object[] { groupIds };
-
-			long[] returnObj = (long[])invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public com.liferay.portal.model.User getUser() {
 		try {
 			String methodName = "getUser";
@@ -401,28 +382,6 @@ public class CTUserClp extends BaseModelImpl<CTUser> implements CTUser {
 			Object[] parameterValues = new Object[] {  };
 
 			com.liferay.portal.model.User returnObj = (com.liferay.portal.model.User)invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public boolean matches(
-		com.liferay.contenttargeting.model.UserSegment userSegment) {
-		try {
-			String methodName = "matches";
-
-			Class<?>[] parameterTypes = new Class<?>[] {
-					com.liferay.contenttargeting.model.UserSegment.class
-				};
-
-			Object[] parameterValues = new Object[] { userSegment };
-
-			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
 
 			return returnObj;
