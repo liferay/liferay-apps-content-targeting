@@ -1,9 +1,3 @@
-create index IX_70A75DFA on CT_CTUser (groupId);
-create index IX_E61104EA on CT_CTUser (userId);
-create index IX_2C102704 on CT_CTUser (uuid_);
-create index IX_B66212A4 on CT_CTUser (uuid_, companyId);
-create unique index IX_9D6F226 on CT_CTUser (uuid_, groupId);
-
 create index IX_80FBFA6 on CT_Campaign (groupId);
 create index IX_DB3D03B0 on CT_Campaign (uuid_);
 create index IX_E92ED278 on CT_Campaign (uuid_, companyId);

@@ -1,15 +1,3 @@
-create table CT_CTUser (
-	uuid_ VARCHAR(75) null,
-	CTUserId LONG not null primary key,
-	companyId LONG,
-	userId LONG,
-	userName VARCHAR(75) null,
-	createDate DATE null,
-	modifiedDate DATE null,
-	lastIp VARCHAR(75) null,
-	typeSettings TEXT null
-);
-
 create table CT_Campaign (
 	uuid_ VARCHAR(75) null,
 	campaignId LONG not null primary key,
