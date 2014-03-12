@@ -14,6 +14,9 @@
 
 package com.liferay.anonymoususers.model.impl;
 
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
+
 /**
  * The extended model implementation for the AnonymousUser service. Represents a row in the &quot;AU_AnonymousUser&quot; database table, with each column mapped to a property of this class.
  *
@@ -26,6 +29,19 @@ package com.liferay.anonymoususers.model.impl;
 public class AnonymousUserImpl extends AnonymousUserBaseImpl {
 
 	public AnonymousUserImpl() {
+	}
+
+	@Override
+	public User getUser() {
+		if (getUserId() > 0) {
+			try {
+				return UserLocalServiceUtil.getUserById(getUserId());
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return null;
 	}
 
 }

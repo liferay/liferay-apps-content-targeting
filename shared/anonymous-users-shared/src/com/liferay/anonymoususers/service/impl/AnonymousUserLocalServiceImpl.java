@@ -14,7 +14,16 @@
 
 package com.liferay.anonymoususers.service.impl;
 
+import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.anonymoususers.service.base.AnonymousUserLocalServiceBaseImpl;
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
+
+import java.util.Date;
 
 /**
  * The implementation of the anonymous user local service.
@@ -32,5 +41,83 @@ import com.liferay.anonymoususers.service.base.AnonymousUserLocalServiceBaseImpl
  */
 public class AnonymousUserLocalServiceImpl
 	extends AnonymousUserLocalServiceBaseImpl {
+
+	@Override
+	public AnonymousUser addAnonymousUser(
+			long userId, String lastIp, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		User user = UserLocalServiceUtil.fetchUser(userId);
+
+		Date now = new Date();
+
+		long AnonymousUserId = CounterLocalServiceUtil.increment();
+
+		AnonymousUser AnonymousUser = anonymousUserPersistence.create(
+			AnonymousUserId);
+
+		AnonymousUser.setCompanyId(serviceContext.getCompanyId());
+
+		if (user != null) {
+			AnonymousUser.setUserId(user.getUserId());
+			AnonymousUser.setUserName(user.getFullName());
+		}
+
+		AnonymousUser.setCreateDate(serviceContext.getCreateDate(now));
+		AnonymousUser.setModifiedDate(serviceContext.getModifiedDate(now));
+		AnonymousUser.setLastIp(lastIp);
+		AnonymousUser.setTypeSettings(typeSettings);
+
+		anonymousUserPersistence.update(AnonymousUser);
+
+		return AnonymousUser;
+	}
+
+	@Override
+	public AnonymousUser fetchAnonymousUserByUserId(long userId)
+		throws PortalException, SystemException {
+
+		if (userId <= 0) {
+			return null;
+		}
+
+		return anonymousUserPersistence.fetchByUserId_First(userId, null);
+	}
+
+	@Override
+	public AnonymousUser updateAnonymousUser(
+			long userId, String lastIp, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		Date now = new Date();
+
+		AnonymousUser AnonymousUser = anonymousUserPersistence.findByPrimaryKey(
+			userId);
+
+		AnonymousUser.setModifiedDate(serviceContext.getModifiedDate(now));
+		AnonymousUser.setLastIp(lastIp);
+		AnonymousUser.setTypeSettings(typeSettings);
+
+		anonymousUserPersistence.update(AnonymousUser);
+
+		return AnonymousUser;
+	}
+
+	@Override
+	public AnonymousUser updateLastIp(long AnonymousUserId, String lastIp)
+		throws PortalException, SystemException {
+
+		AnonymousUser AnonymousUser =
+			anonymousUserPersistence.fetchByPrimaryKey(AnonymousUserId);
+
+		AnonymousUser.setLastIp(lastIp);
+		AnonymousUser.setModifiedDate(new Date());
+
+		anonymousUserPersistence.update(AnonymousUser);
+
+		return AnonymousUser;
+	}
 
 }
