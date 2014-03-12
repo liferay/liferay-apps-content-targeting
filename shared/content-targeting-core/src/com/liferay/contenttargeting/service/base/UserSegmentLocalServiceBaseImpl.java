@@ -16,7 +16,6 @@ package com.liferay.contenttargeting.service.base;
 
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
-import com.liferay.contenttargeting.service.persistence.CTUserPersistence;
 import com.liferay.contenttargeting.service.persistence.CampaignFinder;
 import com.liferay.contenttargeting.service.persistence.CampaignPersistence;
 import com.liferay.contenttargeting.service.persistence.RuleInstancePersistence;
@@ -563,62 +562,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the c t user local service.
-	 *
-	 * @return the c t user local service
-	 */
-	public com.liferay.contenttargeting.service.CTUserLocalService getCTUserLocalService() {
-		return ctUserLocalService;
-	}
-
-	/**
-	 * Sets the c t user local service.
-	 *
-	 * @param ctUserLocalService the c t user local service
-	 */
-	public void setCTUserLocalService(
-		com.liferay.contenttargeting.service.CTUserLocalService ctUserLocalService) {
-		this.ctUserLocalService = ctUserLocalService;
-	}
-
-	/**
-	 * Returns the c t user remote service.
-	 *
-	 * @return the c t user remote service
-	 */
-	public com.liferay.contenttargeting.service.CTUserService getCTUserService() {
-		return ctUserService;
-	}
-
-	/**
-	 * Sets the c t user remote service.
-	 *
-	 * @param ctUserService the c t user remote service
-	 */
-	public void setCTUserService(
-		com.liferay.contenttargeting.service.CTUserService ctUserService) {
-		this.ctUserService = ctUserService;
-	}
-
-	/**
-	 * Returns the c t user persistence.
-	 *
-	 * @return the c t user persistence
-	 */
-	public CTUserPersistence getCTUserPersistence() {
-		return ctUserPersistence;
-	}
-
-	/**
-	 * Sets the c t user persistence.
-	 *
-	 * @param ctUserPersistence the c t user persistence
-	 */
-	public void setCTUserPersistence(CTUserPersistence ctUserPersistence) {
-		this.ctUserPersistence = ctUserPersistence;
-	}
-
-	/**
 	 * Returns the rule instance local service.
 	 *
 	 * @return the rule instance local service
@@ -916,12 +859,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	protected CampaignPersistence campaignPersistence;
 	@BeanReference(type = CampaignFinder.class)
 	protected CampaignFinder campaignFinder;
-	@BeanReference(type = com.liferay.contenttargeting.service.CTUserLocalService.class)
-	protected com.liferay.contenttargeting.service.CTUserLocalService ctUserLocalService;
-	@BeanReference(type = com.liferay.contenttargeting.service.CTUserService.class)
-	protected com.liferay.contenttargeting.service.CTUserService ctUserService;
-	@BeanReference(type = CTUserPersistence.class)
-	protected CTUserPersistence ctUserPersistence;
 	@BeanReference(type = com.liferay.contenttargeting.service.RuleInstanceLocalService.class)
 	protected com.liferay.contenttargeting.service.RuleInstanceLocalService ruleInstanceLocalService;
 	@BeanReference(type = com.liferay.contenttargeting.service.RuleInstanceService.class)

@@ -42,30 +42,6 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.contenttargeting.model.impl.CTUserModelImpl">
-		<attributes>
-			<id name="CTUserId" />
-			<basic name="uuid">
-				<column name="UUID_" />
-			</basic>
-			<basic name="companyId" />
-			<basic name="userId" />
-			<basic name="userName" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="modifiedDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
-			<basic name="lastIp" />
-			<basic name="typeSettings" />
-			<transient name="CTUserUuid" />
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-			<transient name="userUuid" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="com.liferay.contenttargeting.model.impl.RuleInstanceModelImpl">
 		<attributes>
 			<id name="ruleInstanceId" />
@@ -122,10 +98,6 @@
 	</mapped-superclass>
 	<entity class="com.liferay.contenttargeting.model.impl.CampaignImpl" name="Campaign">
 		<table name="CT_Campaign" />
-		<attributes />
-	</entity>
-	<entity class="com.liferay.contenttargeting.model.impl.CTUserImpl" name="CTUser">
-		<table name="CT_CTUser" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.contenttargeting.model.impl.RuleInstanceImpl" name="RuleInstance">

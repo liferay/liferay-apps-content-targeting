@@ -29,19 +29,6 @@
 		<field name="endDate" type="Date" />
 		<field name="priority" type="int" />
 	</model>
-	<model name="com.liferay.contenttargeting.model.CTUser">
-		<field name="uuid" type="String" />
-		<field name="CTUserId" type="long" />
-		<field name="companyId" type="long" />
-		<field name="userId" type="long" />
-		<field name="userName" type="String" />
-		<field name="createDate" type="Date" />
-		<field name="modifiedDate" type="Date" />
-		<field name="lastIp" type="String" />
-		<field name="typeSettings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
-	</model>
 	<model name="com.liferay.contenttargeting.model.RuleInstance">
 		<field name="uuid" type="String" />
 		<field name="ruleInstanceId" type="long" />

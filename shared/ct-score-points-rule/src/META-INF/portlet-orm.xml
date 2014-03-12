@@ -13,10 +13,10 @@
 			<basic name="uuid">
 				<column name="UUID_" />
 			</basic>
-			<basic name="CTUserId" />
+			<basic name="anonymousUserId" />
 			<basic name="userSegmentId" />
 			<basic name="points" />
-			<transient name="CTUserUuid" />
+			<transient name="anonymousUserUuid" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

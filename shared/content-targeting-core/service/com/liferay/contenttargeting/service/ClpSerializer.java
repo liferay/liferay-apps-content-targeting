@@ -14,7 +14,6 @@
 
 package com.liferay.contenttargeting.service;
 
-import com.liferay.contenttargeting.model.CTUserClp;
 import com.liferay.contenttargeting.model.CampaignClp;
 import com.liferay.contenttargeting.model.RuleInstanceClp;
 import com.liferay.contenttargeting.model.UserSegmentClp;
@@ -109,10 +108,6 @@ public class ClpSerializer {
 			return translateInputCampaign(oldModel);
 		}
 
-		if (oldModelClassName.equals(CTUserClp.class.getName())) {
-			return translateInputCTUser(oldModel);
-		}
-
 		if (oldModelClassName.equals(RuleInstanceClp.class.getName())) {
 			return translateInputRuleInstance(oldModel);
 		}
@@ -140,16 +135,6 @@ public class ClpSerializer {
 		CampaignClp oldClpModel = (CampaignClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getCampaignRemoteModel();
-
-		newModel.setModelAttributes(oldClpModel.getModelAttributes());
-
-		return newModel;
-	}
-
-	public static Object translateInputCTUser(BaseModel<?> oldModel) {
-		CTUserClp oldClpModel = (CTUserClp)oldModel;
-
-		BaseModel<?> newModel = oldClpModel.getCTUserRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -196,11 +181,6 @@ public class ClpSerializer {
 		if (oldModelClassName.equals(
 					"com.liferay.contenttargeting.model.impl.CampaignImpl")) {
 			return translateOutputCampaign(oldModel);
-		}
-
-		if (oldModelClassName.equals(
-					"com.liferay.contenttargeting.model.impl.CTUserImpl")) {
-			return translateOutputCTUser(oldModel);
 		}
 
 		if (oldModelClassName.equals(
@@ -303,10 +283,6 @@ public class ClpSerializer {
 			return new com.liferay.contenttargeting.NoSuchCampaignException();
 		}
 
-		if (className.equals("com.liferay.contenttargeting.NoSuchUserException")) {
-			return new com.liferay.contenttargeting.NoSuchUserException();
-		}
-
 		if (className.equals(
 					"com.liferay.contenttargeting.NoSuchRuleInstanceException")) {
 			return new com.liferay.contenttargeting.NoSuchRuleInstanceException();
@@ -326,16 +302,6 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setCampaignRemoteModel(oldModel);
-
-		return newModel;
-	}
-
-	public static Object translateOutputCTUser(BaseModel<?> oldModel) {
-		CTUserClp newModel = new CTUserClp();
-
-		newModel.setModelAttributes(oldModel.getModelAttributes());
-
-		newModel.setCTUserRemoteModel(oldModel);
 
 		return newModel;
 	}
