@@ -280,25 +280,29 @@ public class ScorePointLocalServiceUtil {
 	* Never reference this interface directly. Always use {@link com.liferay.contenttargeting.rules.scorepoints.service.ScorePointLocalServiceUtil} to access the score point local service.
 	*/
 	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint addScorePoints(
-		long ctUserId, long userSegmentId, long points)
+		long anonymousUserId, long userSegmentId, long points)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().addScorePoints(ctUserId, userSegmentId, points);
+		return getService()
+				   .addScorePoints(anonymousUserId, userSegmentId, points);
 	}
 
-	public static long getPoints(long ctUserId, long userSegmentId)
+	public static long getPoints(long anonymousUserId, long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPoints(ctUserId, userSegmentId);
+		return getService().getPoints(anonymousUserId, userSegmentId);
 	}
 
-	public static long incrementPoints(long ctUserId, long userSegmentId,
-		long points) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().incrementPoints(ctUserId, userSegmentId, points);
+	public static long incrementPoints(long anonymousUserId,
+		long userSegmentId, long points)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .incrementPoints(anonymousUserId, userSegmentId, points);
 	}
 
 	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint updateScorePoints(
-		long ctUserId, long userSegmentId, long points)
+		long anonymousUserId, long userSegmentId, long points)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateScorePoints(ctUserId, userSegmentId, points);
+		return getService()
+				   .updateScorePoints(anonymousUserId, userSegmentId, points);
 	}
 
 	public static void clearService() {

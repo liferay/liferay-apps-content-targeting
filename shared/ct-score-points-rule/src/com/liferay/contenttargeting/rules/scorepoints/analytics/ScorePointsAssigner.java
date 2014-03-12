@@ -34,7 +34,7 @@ import org.osgi.framework.FrameworkUtil;
 public class ScorePointsAssigner {
 
 	public static void assignPoints(
-			long groupId, long ctUserId, String className, long classPK)
+			long groupId, long anonymousUserId, String className, long classPK)
 		throws Exception {
 
 		AssetEntry entry = AssetEntryLocalServiceUtil.fetchEntry(
@@ -76,7 +76,7 @@ public class ScorePointsAssigner {
 					className, classPK, userSegment.getUserSegmentId());
 
 				ScorePointLocalServiceUtil.incrementPoints(
-					ctUserId, userSegment.getUserSegmentId(), points);
+					anonymousUserId, userSegment.getUserSegmentId(), points);
 			}
 		}
 	}

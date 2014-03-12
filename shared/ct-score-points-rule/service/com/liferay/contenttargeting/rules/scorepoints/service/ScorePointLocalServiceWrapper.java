@@ -293,30 +293,30 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	*/
 	@Override
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint addScorePoints(
-		long ctUserId, long userSegmentId, long points)
+		long anonymousUserId, long userSegmentId, long points)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.addScorePoints(ctUserId, userSegmentId,
-			points);
+		return _scorePointLocalService.addScorePoints(anonymousUserId,
+			userSegmentId, points);
 	}
 
 	@Override
-	public long getPoints(long ctUserId, long userSegmentId)
+	public long getPoints(long anonymousUserId, long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.getPoints(ctUserId, userSegmentId);
+		return _scorePointLocalService.getPoints(anonymousUserId, userSegmentId);
 	}
 
 	@Override
-	public long incrementPoints(long ctUserId, long userSegmentId, long points)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.incrementPoints(ctUserId, userSegmentId,
-			points);
+	public long incrementPoints(long anonymousUserId, long userSegmentId,
+		long points) throws com.liferay.portal.kernel.exception.SystemException {
+		return _scorePointLocalService.incrementPoints(anonymousUserId,
+			userSegmentId, points);
 	}
 
 	@Override
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint updateScorePoints(
-		long ctUserId, long userSegmentId, long points)
+		long anonymousUserId, long userSegmentId, long points)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.updateScorePoints(ctUserId,
+		return _scorePointLocalService.updateScorePoints(anonymousUserId,
 			userSegmentId, points);
 	}
 

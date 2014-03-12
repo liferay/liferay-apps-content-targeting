@@ -683,14 +683,14 @@ public class ScorePointLocalServiceClp implements ScorePointLocalService {
 
 	@Override
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint addScorePoints(
-		long ctUserId, long userSegmentId, long points)
+		long anonymousUserId, long userSegmentId, long points)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
-					new Object[] { ctUserId, userSegmentId, points });
+					new Object[] { anonymousUserId, userSegmentId, points });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -712,14 +712,14 @@ public class ScorePointLocalServiceClp implements ScorePointLocalService {
 	}
 
 	@Override
-	public long getPoints(long ctUserId, long userSegmentId)
+	public long getPoints(long anonymousUserId, long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
-					new Object[] { ctUserId, userSegmentId });
+					new Object[] { anonymousUserId, userSegmentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -741,14 +741,14 @@ public class ScorePointLocalServiceClp implements ScorePointLocalService {
 	}
 
 	@Override
-	public long incrementPoints(long ctUserId, long userSegmentId, long points)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public long incrementPoints(long anonymousUserId, long userSegmentId,
+		long points) throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName21,
 					_methodParameterTypes21,
-					new Object[] { ctUserId, userSegmentId, points });
+					new Object[] { anonymousUserId, userSegmentId, points });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -771,14 +771,14 @@ public class ScorePointLocalServiceClp implements ScorePointLocalService {
 
 	@Override
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint updateScorePoints(
-		long ctUserId, long userSegmentId, long points)
+		long anonymousUserId, long userSegmentId, long points)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName22,
 					_methodParameterTypes22,
-					new Object[] { ctUserId, userSegmentId, points });
+					new Object[] { anonymousUserId, userSegmentId, points });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

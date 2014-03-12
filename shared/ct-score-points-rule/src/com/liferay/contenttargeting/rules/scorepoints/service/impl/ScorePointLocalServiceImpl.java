@@ -42,14 +42,14 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 	 */
 
 	public ScorePoint addScorePoints(
-			long ctUserId, long userSegmentId, long points)
+			long anonymousUserId, long userSegmentId, long points)
 		throws SystemException {
 
 		long scorePointId = CounterLocalServiceUtil.increment();
 
 		ScorePoint scorePoint = scorePointPersistence.create(scorePointId);
 
-		scorePoint.setCTUserId(ctUserId);
+		scorePoint.setAnonymousUserId(anonymousUserId);
 		scorePoint.setUserSegmentId(userSegmentId);
 		scorePoint.setPoints(points);
 
@@ -58,11 +58,11 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return scorePoint;
 	}
 
-	public long getPoints(long ctUserId, long userSegmentId)
+	public long getPoints(long anonymousUserId, long userSegmentId)
 		throws SystemException {
 
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
-				ctUserId, userSegmentId);
+				anonymousUserId, userSegmentId);
 
 		if (scorePoint == null) {
 			return 0;
@@ -71,15 +71,16 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return scorePoint.getPoints();
 	}
 
-	public long incrementPoints(long ctUserId, long userSegmentId, long points)
+	public long incrementPoints(
+			long anonymousUserId, long userSegmentId, long points)
 		throws SystemException {
 
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
-			ctUserId, userSegmentId);
+			anonymousUserId, userSegmentId);
 
 		if (scorePoint == null) {
 			scorePointLocalService.addScorePoints(
-				ctUserId, userSegmentId, points);
+				anonymousUserId, userSegmentId, points);
 
 			return points;
 		}
@@ -94,11 +95,11 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 	}
 
 	public ScorePoint updateScorePoints(
-			long ctUserId, long userSegmentId, long points)
+			long anonymousUserId, long userSegmentId, long points)
 		throws SystemException {
 
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
-			ctUserId, userSegmentId);
+			anonymousUserId, userSegmentId);
 
 		scorePoint.setPoints(points);
 

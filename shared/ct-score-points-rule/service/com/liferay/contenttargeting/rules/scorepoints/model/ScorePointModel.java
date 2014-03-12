@@ -88,33 +88,33 @@ public interface ScorePointModel extends BaseModel<ScorePoint> {
 	public void setId(long Id);
 
 	/**
-	 * Returns the c t user ID of this score point.
+	 * Returns the anonymous user ID of this score point.
 	 *
-	 * @return the c t user ID of this score point
+	 * @return the anonymous user ID of this score point
 	 */
-	public long getCTUserId();
+	public long getAnonymousUserId();
 
 	/**
-	 * Sets the c t user ID of this score point.
+	 * Sets the anonymous user ID of this score point.
 	 *
-	 * @param CTUserId the c t user ID of this score point
+	 * @param anonymousUserId the anonymous user ID of this score point
 	 */
-	public void setCTUserId(long CTUserId);
+	public void setAnonymousUserId(long anonymousUserId);
 
 	/**
-	 * Returns the c t user uuid of this score point.
+	 * Returns the anonymous user uuid of this score point.
 	 *
-	 * @return the c t user uuid of this score point
+	 * @return the anonymous user uuid of this score point
 	 * @throws SystemException if a system exception occurred
 	 */
-	public String getCTUserUuid() throws SystemException;
+	public String getAnonymousUserUuid() throws SystemException;
 
 	/**
-	 * Sets the c t user uuid of this score point.
+	 * Sets the anonymous user uuid of this score point.
 	 *
-	 * @param CTUserUuid the c t user uuid of this score point
+	 * @param anonymousUserUuid the anonymous user uuid of this score point
 	 */
-	public void setCTUserUuid(String CTUserUuid);
+	public void setAnonymousUserUuid(String anonymousUserUuid);
 
 	/**
 	 * Returns the user segment ID of this score point.

@@ -50,7 +50,7 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 
 		attributes.put("uuid", getUuid());
 		attributes.put("Id", getId());
-		attributes.put("CTUserId", getCTUserId());
+		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("points", getPoints());
 
@@ -71,10 +71,10 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 			setId(Id);
 		}
 
-		Long CTUserId = (Long)attributes.get("CTUserId");
+		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
 
-		if (CTUserId != null) {
-			setCTUserId(CTUserId);
+		if (anonymousUserId != null) {
+			setAnonymousUserId(anonymousUserId);
 		}
 
 		Long userSegmentId = (Long)attributes.get("userSegmentId");
@@ -151,45 +151,45 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 	}
 
 	/**
-	* Returns the c t user ID of this score point.
+	* Returns the anonymous user ID of this score point.
 	*
-	* @return the c t user ID of this score point
+	* @return the anonymous user ID of this score point
 	*/
 	@Override
-	public long getCTUserId() {
-		return _scorePoint.getCTUserId();
+	public long getAnonymousUserId() {
+		return _scorePoint.getAnonymousUserId();
 	}
 
 	/**
-	* Sets the c t user ID of this score point.
+	* Sets the anonymous user ID of this score point.
 	*
-	* @param CTUserId the c t user ID of this score point
+	* @param anonymousUserId the anonymous user ID of this score point
 	*/
 	@Override
-	public void setCTUserId(long CTUserId) {
-		_scorePoint.setCTUserId(CTUserId);
+	public void setAnonymousUserId(long anonymousUserId) {
+		_scorePoint.setAnonymousUserId(anonymousUserId);
 	}
 
 	/**
-	* Returns the c t user uuid of this score point.
+	* Returns the anonymous user uuid of this score point.
 	*
-	* @return the c t user uuid of this score point
+	* @return the anonymous user uuid of this score point
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getCTUserUuid()
+	public java.lang.String getAnonymousUserUuid()
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _scorePoint.getCTUserUuid();
+		return _scorePoint.getAnonymousUserUuid();
 	}
 
 	/**
-	* Sets the c t user uuid of this score point.
+	* Sets the anonymous user uuid of this score point.
 	*
-	* @param CTUserUuid the c t user uuid of this score point
+	* @param anonymousUserUuid the anonymous user uuid of this score point
 	*/
 	@Override
-	public void setCTUserUuid(java.lang.String CTUserUuid) {
-		_scorePoint.setCTUserUuid(CTUserUuid);
+	public void setAnonymousUserUuid(java.lang.String anonymousUserUuid) {
+		_scorePoint.setAnonymousUserUuid(anonymousUserUuid);
 	}
 
 	/**
@@ -296,7 +296,8 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 	}
 
 	@Override
-	public int compareTo(ScorePoint scorePoint) {
+	public int compareTo(
+		com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint scorePoint) {
 		return _scorePoint.compareTo(scorePoint);
 	}
 
@@ -306,17 +307,17 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<ScorePoint> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint> toCacheModel() {
 		return _scorePoint.toCacheModel();
 	}
 
 	@Override
-	public ScorePoint toEscapedModel() {
+	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint toEscapedModel() {
 		return new ScorePointWrapper(_scorePoint.toEscapedModel());
 	}
 
 	@Override
-	public ScorePoint toUnescapedModel() {
+	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint toUnescapedModel() {
 		return new ScorePointWrapper(_scorePoint.toUnescapedModel());
 	}
 

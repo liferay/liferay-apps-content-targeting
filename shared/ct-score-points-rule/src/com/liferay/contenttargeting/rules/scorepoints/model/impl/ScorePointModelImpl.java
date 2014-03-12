@@ -67,14 +67,14 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
 			{ "Id", Types.BIGINT },
-			{ "CTUserId", Types.BIGINT },
+			{ "anonymousUserId", Types.BIGINT },
 			{ "userSegmentId", Types.BIGINT },
 			{ "points", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ScorePoints_ScorePoint (uuid_ VARCHAR(75) null,Id LONG not null primary key,CTUserId LONG,userSegmentId LONG,points LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ScorePoints_ScorePoint (uuid_ VARCHAR(75) null,Id LONG not null primary key,anonymousUserId LONG,userSegmentId LONG,points LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ScorePoints_ScorePoint";
-	public static final String ORDER_BY_JPQL = " ORDER BY scorePoint.CTUserId DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY ScorePoints_ScorePoint.CTUserId DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY scorePoint.anonymousUserId DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY ScorePoints_ScorePoint.anonymousUserId DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -87,7 +87,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint"),
 			true);
-	public static long CTUSERID_COLUMN_BITMASK = 1L;
+	public static long ANONYMOUSUSERID_COLUMN_BITMASK = 1L;
 	public static long USERSEGMENTID_COLUMN_BITMASK = 2L;
 	public static long UUID_COLUMN_BITMASK = 4L;
 
@@ -106,7 +106,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 
 		model.setUuid(soapModel.getUuid());
 		model.setId(soapModel.getId());
-		model.setCTUserId(soapModel.getCTUserId());
+		model.setAnonymousUserId(soapModel.getAnonymousUserId());
 		model.setUserSegmentId(soapModel.getUserSegmentId());
 		model.setPoints(soapModel.getPoints());
 
@@ -175,7 +175,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 
 		attributes.put("uuid", getUuid());
 		attributes.put("Id", getId());
-		attributes.put("CTUserId", getCTUserId());
+		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("points", getPoints());
 
@@ -196,10 +196,10 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 			setId(Id);
 		}
 
-		Long CTUserId = (Long)attributes.get("CTUserId");
+		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
 
-		if (CTUserId != null) {
-			setCTUserId(CTUserId);
+		if (anonymousUserId != null) {
+			setAnonymousUserId(anonymousUserId);
 		}
 
 		Long userSegmentId = (Long)attributes.get("userSegmentId");
@@ -252,35 +252,36 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 
 	@JSON
 	@Override
-	public long getCTUserId() {
-		return _CTUserId;
+	public long getAnonymousUserId() {
+		return _anonymousUserId;
 	}
 
 	@Override
-	public void setCTUserId(long CTUserId) {
+	public void setAnonymousUserId(long anonymousUserId) {
 		_columnBitmask = -1L;
 
-		if (!_setOriginalCTUserId) {
-			_setOriginalCTUserId = true;
+		if (!_setOriginalAnonymousUserId) {
+			_setOriginalAnonymousUserId = true;
 
-			_originalCTUserId = _CTUserId;
+			_originalAnonymousUserId = _anonymousUserId;
 		}
 
-		_CTUserId = CTUserId;
+		_anonymousUserId = anonymousUserId;
 	}
 
 	@Override
-	public String getCTUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getCTUserId(), "uuid", _CTUserUuid);
+	public String getAnonymousUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getAnonymousUserId(), "uuid",
+			_anonymousUserUuid);
 	}
 
 	@Override
-	public void setCTUserUuid(String CTUserUuid) {
-		_CTUserUuid = CTUserUuid;
+	public void setAnonymousUserUuid(String anonymousUserUuid) {
+		_anonymousUserUuid = anonymousUserUuid;
 	}
 
-	public long getOriginalCTUserId() {
-		return _originalCTUserId;
+	public long getOriginalAnonymousUserId() {
+		return _originalAnonymousUserId;
 	}
 
 	@JSON
@@ -350,7 +351,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 
 		scorePointImpl.setUuid(getUuid());
 		scorePointImpl.setId(getId());
-		scorePointImpl.setCTUserId(getCTUserId());
+		scorePointImpl.setAnonymousUserId(getAnonymousUserId());
 		scorePointImpl.setUserSegmentId(getUserSegmentId());
 		scorePointImpl.setPoints(getPoints());
 
@@ -363,10 +364,10 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 	public int compareTo(ScorePoint scorePoint) {
 		int value = 0;
 
-		if (getCTUserId() < scorePoint.getCTUserId()) {
+		if (getAnonymousUserId() < scorePoint.getAnonymousUserId()) {
 			value = -1;
 		}
-		else if (getCTUserId() > scorePoint.getCTUserId()) {
+		else if (getAnonymousUserId() > scorePoint.getAnonymousUserId()) {
 			value = 1;
 		}
 		else {
@@ -415,9 +416,9 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 
 		scorePointModelImpl._originalUuid = scorePointModelImpl._uuid;
 
-		scorePointModelImpl._originalCTUserId = scorePointModelImpl._CTUserId;
+		scorePointModelImpl._originalAnonymousUserId = scorePointModelImpl._anonymousUserId;
 
-		scorePointModelImpl._setOriginalCTUserId = false;
+		scorePointModelImpl._setOriginalAnonymousUserId = false;
 
 		scorePointModelImpl._originalUserSegmentId = scorePointModelImpl._userSegmentId;
 
@@ -440,7 +441,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 
 		scorePointCacheModel.Id = getId();
 
-		scorePointCacheModel.CTUserId = getCTUserId();
+		scorePointCacheModel.anonymousUserId = getAnonymousUserId();
 
 		scorePointCacheModel.userSegmentId = getUserSegmentId();
 
@@ -457,8 +458,8 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 		sb.append(getUuid());
 		sb.append(", Id=");
 		sb.append(getId());
-		sb.append(", CTUserId=");
-		sb.append(getCTUserId());
+		sb.append(", anonymousUserId=");
+		sb.append(getAnonymousUserId());
 		sb.append(", userSegmentId=");
 		sb.append(getUserSegmentId());
 		sb.append(", points=");
@@ -486,8 +487,8 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 		sb.append(getId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>CTUserId</column-name><column-value><![CDATA[");
-		sb.append(getCTUserId());
+			"<column><column-name>anonymousUserId</column-name><column-value><![CDATA[");
+		sb.append(getAnonymousUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userSegmentId</column-name><column-value><![CDATA[");
@@ -510,10 +511,10 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 	private String _uuid;
 	private String _originalUuid;
 	private long _Id;
-	private long _CTUserId;
-	private String _CTUserUuid;
-	private long _originalCTUserId;
-	private boolean _setOriginalCTUserId;
+	private long _anonymousUserId;
+	private String _anonymousUserUuid;
+	private long _originalAnonymousUserId;
+	private boolean _setOriginalAnonymousUserId;
 	private long _userSegmentId;
 	private long _originalUserSegmentId;
 	private boolean _setOriginalUserSegmentId;

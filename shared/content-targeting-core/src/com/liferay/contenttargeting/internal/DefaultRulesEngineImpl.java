@@ -17,10 +17,10 @@ package com.liferay.contenttargeting.internal;
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
 
+import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.api.model.RulesEngine;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
-import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -46,7 +46,9 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 	}
 
 	@Override
-	public boolean matches(CTUser ctUser, List<RuleInstance> ruleInstances) {
+	public boolean matches(
+		AnonymousUser anonymousUser, List<RuleInstance> ruleInstances) {
+
 		for (RuleInstance ruleInstance : ruleInstances) {
 			Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
 
@@ -55,7 +57,7 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 			}
 
 			try {
-				if (!rule.evaluate(ruleInstance, ctUser)) {
+				if (!rule.evaluate(ruleInstance, anonymousUser)) {
 					return false;
 				}
 			}

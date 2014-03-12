@@ -14,8 +14,8 @@
 
 package com.liferay.contenttargeting.hook.action;
 
-import com.liferay.contenttargeting.model.CTUser;
-import com.liferay.contenttargeting.util.CTUserUtil;
+import com.liferay.anonymoususers.model.AnonymousUser;
+import com.liferay.anonymoususers.util.AnonymousUsersUtil;
 import com.liferay.contenttargeting.util.WebKeys;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -54,13 +54,14 @@ public class JournalViewAction extends BaseStrutsPortletAction {
 			return forward;
 		}
 
-		CTUser ctUser = CTUserUtil.getCTUser(renderRequest, renderResponse);
+		AnonymousUser anonymousUser = AnonymousUsersUtil.getAnonymousUser(
+			renderRequest, renderResponse);
 
 		Message message = new Message();
 
 		message.put("className", JournalArticle.class.getName());
 		message.put("classPK", getClassPK(article));
-		message.put("ctUserId", ctUser.getCTUserId());
+		message.put("anonymousUserId", anonymousUser.getAnonymousUserId());
 		message.put("groupId", themeDisplay.getScopeGroupId());
 
 		MessageBusUtil.sendMessage("liferay/analytics", message);

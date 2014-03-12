@@ -14,7 +14,7 @@
 
 package com.liferay.contenttargeting.api.model;
 
-import com.liferay.contenttargeting.model.CTUser;
+import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 
 import java.util.Locale;
@@ -39,11 +39,12 @@ public interface Rule {
 	 * Returns <code>true</code> if the user complies with the rule instance.
 	 *
 	 * @param  ruleInstance the rule instance with stored configuration
-	 * @param  ctUser the user who evaluates the rule
+	 * @param  anonymousUser the user who evaluates the rule
 	 * @return <code>true</code> if the user complies with the rule instance;
 	 *         <code>false</code> otherwise
 	 */
-	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
+	public boolean evaluate(
+			RuleInstance ruleInstance, AnonymousUser anonymousUser)
 		throws Exception;
 
 	/**

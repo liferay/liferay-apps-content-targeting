@@ -16,9 +16,9 @@ package com.liferay.contenttargeting.rules.scorepoints;
 
 import aQute.bnd.annotation.component.Component;
 
+import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
-import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.rules.scorepoints.service.ScorePointLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONException;
@@ -41,7 +41,8 @@ import javax.portlet.PortletResponse;
 public class ScorePointsRule extends BaseRule {
 
 	@Override
-	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
+	public boolean evaluate(
+			RuleInstance ruleInstance, AnonymousUser anonymousUser)
 		throws Exception {
 
 		String typeSettings = ruleInstance.getTypeSettings();
@@ -50,10 +51,11 @@ public class ScorePointsRule extends BaseRule {
 
 		long scorePoints = jsonObj.getLong("scorePoints");
 
-		long ctUserScorePoints = ScorePointLocalServiceUtil.getPoints(
-			ctUser.getCTUserId(), ruleInstance.getUserSegmentId());
+		long anonymousUserScorePoints = ScorePointLocalServiceUtil.getPoints(
+			anonymousUser.getAnonymousUserId(),
+			ruleInstance.getUserSegmentId());
 
-		if (ctUserScorePoints >= scorePoints) {
+		if (anonymousUserScorePoints >= scorePoints) {
 			return true;
 		}
 

@@ -254,17 +254,17 @@ public interface ScorePointLocalService extends BaseLocalService,
 	* Never reference this interface directly. Always use {@link com.liferay.contenttargeting.rules.scorepoints.service.ScorePointLocalServiceUtil} to access the score point local service.
 	*/
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint addScorePoints(
-		long ctUserId, long userSegmentId, long points)
+		long anonymousUserId, long userSegmentId, long points)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getPoints(long ctUserId, long userSegmentId)
+	public long getPoints(long anonymousUserId, long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public long incrementPoints(long ctUserId, long userSegmentId, long points)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public long incrementPoints(long anonymousUserId, long userSegmentId,
+		long points) throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint updateScorePoints(
-		long ctUserId, long userSegmentId, long points)
+		long anonymousUserId, long userSegmentId, long points)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

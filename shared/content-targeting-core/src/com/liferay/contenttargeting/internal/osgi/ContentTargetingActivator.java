@@ -14,7 +14,6 @@
 
 package com.liferay.contenttargeting.internal.osgi;
 
-import com.liferay.contenttargeting.service.CTUserLocalService;
 import com.liferay.contenttargeting.service.CampaignLocalService;
 import com.liferay.contenttargeting.service.CampaignService;
 import com.liferay.contenttargeting.service.RuleInstanceLocalService;
@@ -63,14 +62,6 @@ public class ContentTargetingActivator
 		_campaignServiceServiceRegistration =
 			_bundleContext.registerService(
 				CampaignService.class, campaignService, null);
-
-		CTUserLocalService ctUserLocalService =
-			(CTUserLocalService)applicationContext.getBean(
-				CTUserLocalService.class.getName());
-
-		_ctUserLocalServiceServiceRegistration =
-			_bundleContext.registerService(
-				CTUserLocalService.class, ctUserLocalService, null);
 
 		RuleInstanceLocalService ruleInstanceLocalService =
 			(RuleInstanceLocalService)applicationContext.getBean(
@@ -138,12 +129,6 @@ public class ContentTargetingActivator
 			_campaignServiceServiceRegistration = null;
 		}
 
-		if (_ctUserLocalServiceServiceRegistration != null) {
-			_ctUserLocalServiceServiceRegistration.unregister();
-
-			_ctUserLocalServiceServiceRegistration = null;
-		}
-
 		if (_ruleInstanceLocalServiceServiceRegistration != null) {
 			_ruleInstanceLocalServiceServiceRegistration.unregister();
 
@@ -177,8 +162,6 @@ public class ContentTargetingActivator
 		_campaignLocalServiceServiceRegistration;
 	private ServiceRegistration<CampaignService>
 		_campaignServiceServiceRegistration;
-	private ServiceRegistration<CTUserLocalService>
-		_ctUserLocalServiceServiceRegistration;
 	private ServiceRegistration<RuleInstanceLocalService>
 		_ruleInstanceLocalServiceServiceRegistration;
 	private ServiceRegistration<RuleInstanceService>

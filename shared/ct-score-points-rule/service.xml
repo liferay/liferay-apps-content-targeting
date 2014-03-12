@@ -11,20 +11,20 @@
 
 		<!-- Other fields -->
 
-		<column name="CTUserId" type="long" />
+		<column name="anonymousUserId" type="long" />
 		<column name="userSegmentId" type="long" />
 		<column name="points" type="long" />
 
 		<!-- Order -->
 
 		<order by="desc">
-			<order-column name="CTUserId" />
+			<order-column name="anonymousUserId" />
 		</order>
 
 		<!-- Finder methods -->
 
 		<finder name="C_U" return-type="ScorePoint">
-			<finder-column name="CTUserId" />
+			<finder-column name="anonymousUserId" />
 			<finder-column name="userSegmentId" />
 		</finder>
 	</entity>

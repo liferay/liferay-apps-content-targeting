@@ -76,7 +76,7 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 
 		attributes.put("uuid", getUuid());
 		attributes.put("Id", getId());
-		attributes.put("CTUserId", getCTUserId());
+		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("points", getPoints());
 
@@ -97,10 +97,10 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 			setId(Id);
 		}
 
-		Long CTUserId = (Long)attributes.get("CTUserId");
+		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
 
-		if (CTUserId != null) {
-			setCTUserId(CTUserId);
+		if (anonymousUserId != null) {
+			setAnonymousUserId(anonymousUserId);
 		}
 
 		Long userSegmentId = (Long)attributes.get("userSegmentId");
@@ -163,21 +163,21 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 	}
 
 	@Override
-	public long getCTUserId() {
-		return _CTUserId;
+	public long getAnonymousUserId() {
+		return _anonymousUserId;
 	}
 
 	@Override
-	public void setCTUserId(long CTUserId) {
-		_CTUserId = CTUserId;
+	public void setAnonymousUserId(long anonymousUserId) {
+		_anonymousUserId = anonymousUserId;
 
 		if (_scorePointRemoteModel != null) {
 			try {
 				Class<?> clazz = _scorePointRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCTUserId", long.class);
+				Method method = clazz.getMethod("setAnonymousUserId", long.class);
 
-				method.invoke(_scorePointRemoteModel, CTUserId);
+				method.invoke(_scorePointRemoteModel, anonymousUserId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -186,13 +186,14 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 	}
 
 	@Override
-	public String getCTUserUuid() throws SystemException {
-		return PortalUtil.getUserValue(getCTUserId(), "uuid", _CTUserUuid);
+	public String getAnonymousUserUuid() throws SystemException {
+		return PortalUtil.getUserValue(getAnonymousUserId(), "uuid",
+			_anonymousUserUuid);
 	}
 
 	@Override
-	public void setCTUserUuid(String CTUserUuid) {
-		_CTUserUuid = CTUserUuid;
+	public void setAnonymousUserUuid(String anonymousUserUuid) {
+		_anonymousUserUuid = anonymousUserUuid;
 	}
 
 	@Override
@@ -312,7 +313,7 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 
 		clone.setUuid(getUuid());
 		clone.setId(getId());
-		clone.setCTUserId(getCTUserId());
+		clone.setAnonymousUserId(getAnonymousUserId());
 		clone.setUserSegmentId(getUserSegmentId());
 		clone.setPoints(getPoints());
 
@@ -323,10 +324,10 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 	public int compareTo(ScorePoint scorePoint) {
 		int value = 0;
 
-		if (getCTUserId() < scorePoint.getCTUserId()) {
+		if (getAnonymousUserId() < scorePoint.getAnonymousUserId()) {
 			value = -1;
 		}
-		else if (getCTUserId() > scorePoint.getCTUserId()) {
+		else if (getAnonymousUserId() > scorePoint.getAnonymousUserId()) {
 			value = 1;
 		}
 		else {
@@ -377,8 +378,8 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 		sb.append(getUuid());
 		sb.append(", Id=");
 		sb.append(getId());
-		sb.append(", CTUserId=");
-		sb.append(getCTUserId());
+		sb.append(", anonymousUserId=");
+		sb.append(getAnonymousUserId());
 		sb.append(", userSegmentId=");
 		sb.append(getUserSegmentId());
 		sb.append(", points=");
@@ -406,8 +407,8 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 		sb.append(getId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>CTUserId</column-name><column-value><![CDATA[");
-		sb.append(getCTUserId());
+			"<column><column-name>anonymousUserId</column-name><column-value><![CDATA[");
+		sb.append(getAnonymousUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userSegmentId</column-name><column-value><![CDATA[");
@@ -425,8 +426,8 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 
 	private String _uuid;
 	private long _Id;
-	private long _CTUserId;
-	private String _CTUserUuid;
+	private long _anonymousUserId;
+	private String _anonymousUserUuid;
 	private long _userSegmentId;
 	private long _points;
 	private BaseModel<?> _scorePointRemoteModel;

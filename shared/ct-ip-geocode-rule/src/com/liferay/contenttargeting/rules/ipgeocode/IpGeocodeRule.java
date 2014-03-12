@@ -16,9 +16,9 @@ package com.liferay.contenttargeting.rules.ipgeocode;
 
 import aQute.bnd.annotation.component.Component;
 
+import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
-import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.rules.ipgeocode.model.IPInfo;
 import com.liferay.contenttargeting.rules.ipgeocode.util.IPGeocodeUtil;
@@ -47,10 +47,11 @@ import javax.portlet.PortletResponse;
 public class IpGeocodeRule extends BaseRule {
 
 	@Override
-	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
+	public boolean evaluate(
+			RuleInstance ruleInstance, AnonymousUser anonymousUser)
 		throws Exception {
 
-		IPInfo ipInfo = IPGeocodeUtil.getIPInfo(ctUser.getLastIp());
+		IPInfo ipInfo = IPGeocodeUtil.getIPInfo(anonymousUser.getLastIp());
 
 		if (ipInfo == null) {
 			return false;

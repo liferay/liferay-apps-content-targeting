@@ -14,11 +14,11 @@
 
 package com.liferay.contenttargeting.hook.filter;
 
+import com.liferay.anonymoususers.model.AnonymousUser;
+import com.liferay.anonymoususers.util.AnonymousUsersUtil;
 import com.liferay.contenttargeting.api.model.RulesEngine;
-import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.contenttargeting.util.CTUserUtil;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.WebKeys;
 import com.liferay.osgi.util.ServiceTrackerUtil;
@@ -70,11 +70,13 @@ public class UserSegmentFilter implements Filter {
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
 		try {
-			CTUser ctUser = CTUserUtil.getCTUser(request, response);
+			AnonymousUser anonymousUser = AnonymousUsersUtil.getAnonymousUser(
+				request, response);
 
 			long[] groupIds = getGroupIds(request);
 
-			long[] userSegmentsIds = getMatchesUserSegmentIds(groupIds, ctUser);
+			long[] userSegmentsIds = getMatchesUserSegmentIds(
+				groupIds, anonymousUser);
 
 			if (ArrayUtil.isNotEmpty(userSegmentsIds)) {
 				request.setAttribute(WebKeys.USER_SEGMENT_IDS, userSegmentsIds);
@@ -87,7 +89,8 @@ public class UserSegmentFilter implements Filter {
 		filterChain.doFilter(servletRequest, servletResponse);
 	}
 
-	public long[] getMatchesUserSegmentIds(long[] groupIds, CTUser ctUser)
+	public long[] getMatchesUserSegmentIds(
+			long[] groupIds, AnonymousUser anonymousUser)
 		throws Exception {
 
 		if (ArrayUtil.isEmpty(groupIds)) {
@@ -100,7 +103,7 @@ public class UserSegmentFilter implements Filter {
 			UserSegmentLocalServiceUtil.getUserSegments(groupIds);
 
 		for (UserSegment userSegment : userSegments) {
-			if (matches(ctUser, userSegment)) {
+			if (matches(anonymousUser, userSegment)) {
 				userSegmentIds.add(userSegment.getUserSegmentId());
 			}
 		}
@@ -113,14 +116,15 @@ public class UserSegmentFilter implements Filter {
 		_intiRulesEngine();
 	}
 
-	public boolean matches(CTUser ctUser, UserSegment userSegment)
+	public boolean matches(AnonymousUser anonymousUser, UserSegment userSegment)
 		throws Exception {
 
 		if (_rulesEngine == null) {
 			_intiRulesEngine();
 		}
 
-		return _rulesEngine.matches(ctUser, userSegment.getRuleInstances());
+		return _rulesEngine.matches(
+			anonymousUser, userSegment.getRuleInstances());
 	}
 
 	protected long[] getGroupIds(HttpServletRequest request)

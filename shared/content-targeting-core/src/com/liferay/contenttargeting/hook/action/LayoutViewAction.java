@@ -14,8 +14,8 @@
 
 package com.liferay.contenttargeting.hook.action;
 
-import com.liferay.contenttargeting.model.CTUser;
-import com.liferay.contenttargeting.util.CTUserUtil;
+import com.liferay.anonymoususers.model.AnonymousUser;
+import com.liferay.anonymoususers.util.AnonymousUsersUtil;
 import com.liferay.contenttargeting.util.WebKeys;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
@@ -49,13 +49,14 @@ public class LayoutViewAction extends BaseStrutsAction {
 			return actionForward;
 		}
 
-		CTUser ctUser = CTUserUtil.getCTUser(request, response);
+		AnonymousUser anonymousUser = AnonymousUsersUtil.getAnonymousUser(
+			request, response);
 
 		Message message = new Message();
 
 		message.put("className", Layout.class.getName());
 		message.put("classPK", layout.getPrimaryKey());
-		message.put("ctUserId", ctUser.getCTUserId());
+		message.put("anonymousUserId", anonymousUser.getAnonymousUserId());
 		message.put("groupId", layout.getGroupId());
 
 		MessageBusUtil.sendMessage("liferay/analytics", message);

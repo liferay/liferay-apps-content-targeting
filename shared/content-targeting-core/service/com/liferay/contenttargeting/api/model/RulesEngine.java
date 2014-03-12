@@ -14,7 +14,7 @@
 
 package com.liferay.contenttargeting.api.model;
 
-import com.liferay.contenttargeting.model.CTUser;
+import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 
 import java.util.List;
@@ -24,6 +24,7 @@ import java.util.List;
  */
 public interface RulesEngine {
 
-	public boolean matches(CTUser ctUser, List<RuleInstance> ruleInstances);
+	public boolean matches(
+		AnonymousUser anonymousUser, List<RuleInstance> ruleInstances);
 
 }

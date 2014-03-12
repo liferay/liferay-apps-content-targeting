@@ -32,7 +32,7 @@ public class ScorePointSoap implements Serializable {
 
 		soapModel.setUuid(model.getUuid());
 		soapModel.setId(model.getId());
-		soapModel.setCTUserId(model.getCTUserId());
+		soapModel.setAnonymousUserId(model.getAnonymousUserId());
 		soapModel.setUserSegmentId(model.getUserSegmentId());
 		soapModel.setPoints(model.getPoints());
 
@@ -103,12 +103,12 @@ public class ScorePointSoap implements Serializable {
 		_Id = Id;
 	}
 
-	public long getCTUserId() {
-		return _CTUserId;
+	public long getAnonymousUserId() {
+		return _anonymousUserId;
 	}
 
-	public void setCTUserId(long CTUserId) {
-		_CTUserId = CTUserId;
+	public void setAnonymousUserId(long anonymousUserId) {
+		_anonymousUserId = anonymousUserId;
 	}
 
 	public long getUserSegmentId() {
@@ -129,7 +129,7 @@ public class ScorePointSoap implements Serializable {
 
 	private String _uuid;
 	private long _Id;
-	private long _CTUserId;
+	private long _anonymousUserId;
 	private long _userSegmentId;
 	private long _points;
 }

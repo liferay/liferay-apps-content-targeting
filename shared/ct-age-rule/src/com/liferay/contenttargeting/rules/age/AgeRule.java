@@ -16,9 +16,9 @@ package com.liferay.contenttargeting.rules.age;
 
 import aQute.bnd.annotation.component.Component;
 
+import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
-import com.liferay.contenttargeting.model.CTUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -47,10 +47,11 @@ import javax.portlet.PortletResponse;
 public class AgeRule extends BaseRule {
 
 	@Override
-	public boolean evaluate(RuleInstance ruleInstance, CTUser ctUser)
+	public boolean evaluate(
+			RuleInstance ruleInstance, AnonymousUser anonymousUser)
 		throws Exception {
 
-		User user = ctUser.getUser();
+		User user = anonymousUser.getUser();
 
 		if (user == null) {
 			return false;
