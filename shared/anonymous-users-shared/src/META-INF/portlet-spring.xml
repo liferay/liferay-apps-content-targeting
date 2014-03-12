@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.liferay.anonymoususers.service.AnonymousUserLocalService" class="com.liferay.anonymoususers.service.impl.AnonymousUserLocalServiceImpl" />
+	<bean id="com.liferay.anonymoususers.service.AnonymousUserService" class="com.liferay.anonymoususers.service.impl.AnonymousUserServiceImpl" />
+	<bean id="com.liferay.anonymoususers.service.persistence.AnonymousUserPersistence" class="com.liferay.anonymoususers.service.persistence.AnonymousUserPersistenceImpl" parent="basePersistence" />
+</beans>

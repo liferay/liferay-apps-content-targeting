@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.anonymoususers.model.AnonymousUser">
+		<field name="uuid" type="String" />
+		<field name="AnonymousUserId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="lastIp" type="String" />
+		<field name="typeSettings" type="String" />
+	</model>
+</model-hints>
