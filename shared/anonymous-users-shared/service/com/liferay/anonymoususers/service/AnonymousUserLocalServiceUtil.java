@@ -305,6 +305,40 @@ public class AnonymousUserLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.anonymoususers.model.AnonymousUser addAnonymousUser(
+		long userId, java.lang.String lastIp, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addAnonymousUser(userId, lastIp, typeSettings,
+			serviceContext);
+	}
+
+	public static com.liferay.anonymoususers.model.AnonymousUser fetchAnonymousUserByUserId(
+		long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchAnonymousUserByUserId(userId);
+	}
+
+	public static com.liferay.anonymoususers.model.AnonymousUser updateAnonymousUser(
+		long userId, java.lang.String lastIp, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateAnonymousUser(userId, lastIp, typeSettings,
+			serviceContext);
+	}
+
+	public static com.liferay.anonymoususers.model.AnonymousUser updateLastIp(
+		long AnonymousUserId, java.lang.String lastIp)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateLastIp(AnonymousUserId, lastIp);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

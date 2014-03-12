@@ -322,6 +322,42 @@ public class AnonymousUserLocalServiceWrapper
 			arguments);
 	}
 
+	@Override
+	public com.liferay.anonymoususers.model.AnonymousUser addAnonymousUser(
+		long userId, java.lang.String lastIp, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _anonymousUserLocalService.addAnonymousUser(userId, lastIp,
+			typeSettings, serviceContext);
+	}
+
+	@Override
+	public com.liferay.anonymoususers.model.AnonymousUser fetchAnonymousUserByUserId(
+		long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _anonymousUserLocalService.fetchAnonymousUserByUserId(userId);
+	}
+
+	@Override
+	public com.liferay.anonymoususers.model.AnonymousUser updateAnonymousUser(
+		long userId, java.lang.String lastIp, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _anonymousUserLocalService.updateAnonymousUser(userId, lastIp,
+			typeSettings, serviceContext);
+	}
+
+	@Override
+	public com.liferay.anonymoususers.model.AnonymousUser updateLastIp(
+		long AnonymousUserId, java.lang.String lastIp)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _anonymousUserLocalService.updateLastIp(AnonymousUserId, lastIp);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -31,4 +31,5 @@ public interface AnonymousUser extends AnonymousUserModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.anonymoususers.model.impl.AnonymousUserImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public com.liferay.portal.model.User getUser();
 }

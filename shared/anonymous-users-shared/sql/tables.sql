@@ -7,5 +7,5 @@ create table AU_AnonymousUser (
 	createDate DATE null,
 	modifiedDate DATE null,
 	lastIp VARCHAR(75) null,
-	typeSettings VARCHAR(75) null
+	typeSettings TEXT null
 );

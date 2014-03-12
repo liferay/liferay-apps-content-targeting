@@ -75,9 +75,9 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 			{ "createDate", Types.TIMESTAMP },
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "lastIp", Types.VARCHAR },
-			{ "typeSettings", Types.VARCHAR }
+			{ "typeSettings", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table AU_AnonymousUser (uuid_ VARCHAR(75) null,AnonymousUserId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,lastIp VARCHAR(75) null,typeSettings VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table AU_AnonymousUser (uuid_ VARCHAR(75) null,AnonymousUserId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,lastIp VARCHAR(75) null,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table AU_AnonymousUser";
 	public static final String ORDER_BY_JPQL = " ORDER BY anonymousUser.AnonymousUserId DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY AU_AnonymousUser.AnonymousUserId DESC";
