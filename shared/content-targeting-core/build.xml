@@ -3,7 +3,7 @@
 <project name="content-targeting-core" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="import.shared" value="service-utils-shared" />
+	<property name="import.shared" value="service-utils-shared,anonymous-users-shared" />
 
 	<import file="../../build-common-osgi-plugin.xml" />
 </project>

@@ -5,6 +5,9 @@ Include-Resource: classes,\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
 	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
 Import-Package:\
+	com.liferay.anonymoususers.model,\
+	com.liferay.anonymoususers.service,\
+	com.liferay.anonymoususers.service.messaging,\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.contenttargeting.service.messaging,\

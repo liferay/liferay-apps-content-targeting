@@ -4,7 +4,8 @@ Export-Package:\
 	com.liferay.anonymoususers,\
 	com.liferay.anonymoususers.model,\
 	com.liferay.anonymoususers.service,\
-	com.liferay.anonymoususers.service.messaging
+	com.liferay.anonymoususers.service.messaging,\
+	com.liferay.anonymoususers.util
 Import-Package =\
 	com.liferay.anonymoususers,\
 	com.liferay.anonymoususers.model,\

@@ -8,6 +8,9 @@ Include-Resource: classes,\
 	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	WEB-INF/lib/ct-score-points-rule-service.jar=lib/ct-score-points-rule-service.jar
 Import-Package:\
+	com.liferay.anonymoususers.model,\
+	com.liferay.anonymoususers.service,\
+	com.liferay.anonymoususers.service.messaging,\
 	com.liferay.contenttargeting.model,\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.service,\

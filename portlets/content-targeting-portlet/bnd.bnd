@@ -9,6 +9,10 @@ Export-Package:\
 	com.liferay.contenttargeting.portlet
 Import-Package:\
 	com.liferay.freemarker.osgi,\
+	com.liferay.anonymoususers.model,\
+	com.liferay.anonymoususers.service,\
+	com.liferay.anonymoususers.service.messaging,\
+	com.liferay.anonymoususers.util,\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.contenttargeting.service.messaging,\
