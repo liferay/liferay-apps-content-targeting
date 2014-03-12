@@ -14,21 +14,8 @@
 
 package com.liferay.contenttargeting.model.impl;
 
-import com.liferay.contenttargeting.api.model.RulesEngine;
-import com.liferay.contenttargeting.model.UserSegment;
-import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.osgi.util.ServiceTrackerUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.UserLocalServiceUtil;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * The extended model implementation for the CTUser service. Represents a row in the &quot;CT_CTUser&quot; database table, with each column mapped to a property of this class.
@@ -42,27 +29,6 @@ import org.osgi.framework.FrameworkUtil;
 public class CTUserImpl extends CTUserBaseImpl {
 
 	public CTUserImpl() {
-		_intiRulesEngine();
-	}
-
-	@Override
-	public long[] getMatchesUserSegmentIds(long[] groupIds) throws Exception {
-		if (ArrayUtil.isEmpty(groupIds)) {
-			return null;
-		}
-
-		List<Long> userSegmentIds = new ArrayList<Long>();
-
-		List<UserSegment> userSegments =
-			UserSegmentLocalServiceUtil.getUserSegments(groupIds);
-
-		for (UserSegment userSegment : userSegments) {
-			if (matches(userSegment)) {
-				userSegmentIds.add(userSegment.getUserSegmentId());
-			}
-		}
-
-		return ArrayUtil.toLongArray(userSegmentIds);
 	}
 
 	@Override
@@ -77,24 +43,5 @@ public class CTUserImpl extends CTUserBaseImpl {
 
 		return null;
 	}
-
-	public boolean matches(UserSegment userSegment) throws Exception {
-		if (_rulesEngine == null) {
-			_intiRulesEngine();
-		}
-
-		return _rulesEngine.matches(this, userSegment.getRuleInstances());
-	}
-
-	private void _intiRulesEngine() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_rulesEngine = ServiceTrackerUtil.getService(
-			RulesEngine.class, bundle.getBundleContext());
-	}
-
-	private static Log _log = LogFactoryUtil.getLog(CTUserImpl.class);
-
-	private RulesEngine _rulesEngine;
 
 }

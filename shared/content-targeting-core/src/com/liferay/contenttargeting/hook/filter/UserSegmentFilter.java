@@ -14,10 +14,14 @@
 
 package com.liferay.contenttargeting.hook.filter;
 
+import com.liferay.contenttargeting.api.model.RulesEngine;
 import com.liferay.contenttargeting.model.CTUser;
+import com.liferay.contenttargeting.model.UserSegment;
+import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.contenttargeting.util.CTUserUtil;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.WebKeys;
+import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -32,6 +36,9 @@ import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -40,6 +47,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -64,7 +74,7 @@ public class UserSegmentFilter implements Filter {
 
 			long[] groupIds = getGroupIds(request);
 
-			long[] userSegmentsIds = ctUser.getMatchesUserSegmentIds(groupIds);
+			long[] userSegmentsIds = getMatchesUserSegmentIds(groupIds, ctUser);
 
 			if (ArrayUtil.isNotEmpty(userSegmentsIds)) {
 				request.setAttribute(WebKeys.USER_SEGMENT_IDS, userSegmentsIds);
@@ -77,8 +87,40 @@ public class UserSegmentFilter implements Filter {
 		filterChain.doFilter(servletRequest, servletResponse);
 	}
 
+	public long[] getMatchesUserSegmentIds(long[] groupIds, CTUser ctUser)
+		throws Exception {
+
+		if (ArrayUtil.isEmpty(groupIds)) {
+			return null;
+		}
+
+		List<Long> userSegmentIds = new ArrayList<Long>();
+
+		List<UserSegment> userSegments =
+			UserSegmentLocalServiceUtil.getUserSegments(groupIds);
+
+		for (UserSegment userSegment : userSegments) {
+			if (matches(ctUser, userSegment)) {
+				userSegmentIds.add(userSegment.getUserSegmentId());
+			}
+		}
+
+		return ArrayUtil.toLongArray(userSegmentIds);
+	}
+
 	@Override
 	public void init(FilterConfig filterConfig) {
+		_intiRulesEngine();
+	}
+
+	public boolean matches(CTUser ctUser, UserSegment userSegment)
+		throws Exception {
+
+		if (_rulesEngine == null) {
+			_intiRulesEngine();
+		}
+
+		return _rulesEngine.matches(ctUser, userSegment.getRuleInstances());
 	}
 
 	protected long[] getGroupIds(HttpServletRequest request)
@@ -129,6 +171,15 @@ public class UserSegmentFilter implements Filter {
 		return ContentTargetingUtil.getAncestorsAndCurrentGroupIds(groupId);
 	}
 
+	private void _intiRulesEngine() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_rulesEngine = ServiceTrackerUtil.getService(
+			RulesEngine.class, bundle.getBundleContext());
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(UserSegmentFilter.class);
+
+	private RulesEngine _rulesEngine;
 
 }
