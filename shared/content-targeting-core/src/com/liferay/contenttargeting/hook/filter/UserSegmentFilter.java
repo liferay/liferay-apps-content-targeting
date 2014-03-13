@@ -15,7 +15,7 @@
 package com.liferay.contenttargeting.hook.filter;
 
 import com.liferay.anonymoususers.model.AnonymousUser;
-import com.liferay.anonymoususers.util.AnonymousUsersUtil;
+import com.liferay.anonymoususers.util.AnonymousUsersManager;
 import com.liferay.contenttargeting.api.model.RulesEngine;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
@@ -69,9 +69,13 @@ public class UserSegmentFilter implements Filter {
 
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
+		if (_anonymousUsersManager == null) {
+			_intiAnonymousUserManager();
+		}
+
 		try {
-			AnonymousUser anonymousUser = AnonymousUsersUtil.getAnonymousUser(
-				request, response);
+			AnonymousUser anonymousUser =
+				_anonymousUsersManager.getAnonymousUser(request, response);
 
 			long[] groupIds = getGroupIds(request);
 
@@ -113,6 +117,7 @@ public class UserSegmentFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) {
+		_intiAnonymousUserManager();
 		_intiRulesEngine();
 	}
 
@@ -175,6 +180,13 @@ public class UserSegmentFilter implements Filter {
 		return ContentTargetingUtil.getAncestorsAndCurrentGroupIds(groupId);
 	}
 
+	private void _intiAnonymousUserManager() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_anonymousUsersManager = ServiceTrackerUtil.getService(
+			AnonymousUsersManager.class, bundle.getBundleContext());
+	}
+
 	private void _intiRulesEngine() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
@@ -184,6 +196,7 @@ public class UserSegmentFilter implements Filter {
 
 	private static Log _log = LogFactoryUtil.getLog(UserSegmentFilter.class);
 
+	private AnonymousUsersManager _anonymousUsersManager;
 	private RulesEngine _rulesEngine;
 
 }

@@ -14,37 +14,18 @@
 
 package com.liferay.anonymoususers.util;
 
-import com.liferay.portal.kernel.util.CookieKeys;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
-
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author Eudaldo Alonso
+ * @author Eduardo Garcia
  */
-public class AnonymousUsersCookieUtil {
+public interface AnonymousUsersCookieManager {
 
-	public static final String ANONYMOUS_USER_ID = "ANONYMOUS_USER_ID";
-
-	public static void addCookie(
+	public void addCookie(
 		HttpServletRequest request, HttpServletResponse response,
-		long anonymousUserId) {
+		long anonymousUserId);
 
-		Cookie userIdCookie = new Cookie(
-			ANONYMOUS_USER_ID, String.valueOf(anonymousUserId));
-
-		userIdCookie.setPath(StringPool.SLASH);
-		userIdCookie.setMaxAge(CookieKeys.MAX_AGE);
-
-		CookieKeys.addCookie(request, response, userIdCookie);
-	}
-
-	public static long getAnonymousUserId(HttpServletRequest request) {
-		return GetterUtil.getLong(
-			CookieKeys.getCookie(request, ANONYMOUS_USER_ID));
-	}
+	public long getAnonymousUserId(HttpServletRequest request);
 
 }

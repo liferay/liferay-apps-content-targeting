@@ -14,6 +14,9 @@
 
 package com.liferay.anonymoususers.util;
 
+import aQute.bnd.annotation.component.Component;
+import aQute.bnd.annotation.component.Reference;
+
 import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.anonymoususers.service.AnonymousUserLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -30,9 +33,11 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Eudaldo Alonso
  */
-public class AnonymousUsersUtil {
+@Component
+public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
-	public static AnonymousUser getAnonymousUser(
+	@Override
+	public AnonymousUser getAnonymousUser(
 			HttpServletRequest request, HttpServletResponse response)
 		throws PortalException, SystemException {
 
@@ -65,7 +70,7 @@ public class AnonymousUsersUtil {
 			return anonymousUser;
 		}
 
-		long anonymousUserId = AnonymousUsersCookieUtil.getAnonymousUserId(
+		long anonymousUserId = _anonymousUsersCookieManager.getAnonymousUserId(
 			request);
 
 		if (anonymousUserId > 0) {
@@ -78,7 +83,7 @@ public class AnonymousUsersUtil {
 			anonymousUser = AnonymousUserLocalServiceUtil.addAnonymousUser(
 				0, request.getRemoteAddr(), null, serviceContext);
 
-			AnonymousUsersCookieUtil.addCookie(
+			_anonymousUsersCookieManager.addCookie(
 				request, response, anonymousUser.getAnonymousUserId());
 		}
 		else if (!anonymousUser.getLastIp().equals(request.getRemoteAddr())) {
@@ -89,7 +94,8 @@ public class AnonymousUsersUtil {
 		return anonymousUser;
 	}
 
-	public static AnonymousUser getAnonymousUser(
+	@Override
+	public AnonymousUser getAnonymousUser(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException, SystemException {
 
@@ -100,5 +106,18 @@ public class AnonymousUsersUtil {
 
 		return getAnonymousUser(request, response);
 	}
+
+	public AnonymousUsersCookieManager getAnonymousUsersCookieManager() {
+		return _anonymousUsersCookieManager;
+	}
+
+	@Reference
+	public void setAnonymousUsersCookieManager(
+		AnonymousUsersCookieManager anonymousUsersCookieManager) {
+
+		this._anonymousUsersCookieManager = anonymousUsersCookieManager;
+	}
+
+	private AnonymousUsersCookieManager _anonymousUsersCookieManager;
 
 }

@@ -15,8 +15,9 @@
 package com.liferay.contenttargeting.hook.action;
 
 import com.liferay.anonymoususers.model.AnonymousUser;
-import com.liferay.anonymoususers.util.AnonymousUsersUtil;
+import com.liferay.anonymoususers.util.AnonymousUsersManager;
 import com.liferay.contenttargeting.util.WebKeys;
+import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.struts.BaseStrutsPortletAction;
@@ -28,6 +29,9 @@ import com.liferay.portlet.journal.model.JournalArticleConstants;
 import javax.portlet.PortletConfig;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eudaldo
@@ -54,7 +58,11 @@ public class JournalViewAction extends BaseStrutsPortletAction {
 			return forward;
 		}
 
-		AnonymousUser anonymousUser = AnonymousUsersUtil.getAnonymousUser(
+		if (_anonymousUsersManager == null) {
+			_intiAnonymousUserManager();
+		}
+
+		AnonymousUser anonymousUser = _anonymousUsersManager.getAnonymousUser(
 			renderRequest, renderResponse);
 
 		Message message = new Message();
@@ -80,5 +88,14 @@ public class JournalViewAction extends BaseStrutsPortletAction {
 			return article.getResourcePrimKey();
 		}
 	}
+
+	private void _intiAnonymousUserManager() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_anonymousUsersManager = ServiceTrackerUtil.getService(
+			AnonymousUsersManager.class, bundle.getBundleContext());
+	}
+
+	private AnonymousUsersManager _anonymousUsersManager;
 
 }
