@@ -14,36 +14,24 @@
 
 package com.liferay.contenttargeting.internal;
 
-import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Component;
+import aQute.bnd.annotation.component.Reference;
 
 import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.api.model.RulesEngine;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.RuleInstance;
-import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Julio Camarero
  */
 @Component
 public class DefaultRulesEngineImpl implements RulesEngine {
-
-	@Activate
-	public void activate() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_rulesRegistry = ServiceTrackerUtil.getService(
-			RulesRegistry.class, bundle.getBundleContext());
-	}
 
 	@Override
 	public boolean matches(
@@ -72,6 +60,11 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 		}
 
 		return true;
+	}
+
+	@Reference
+	public void setRulesRegistry(RulesRegistry rulesRegistry) {
+		this._rulesRegistry = rulesRegistry;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
