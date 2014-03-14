@@ -170,11 +170,10 @@ following steps:
 2. Execute `mvn install` from the root folder
 3. Deploy the "arquillian-plugin-deployer" from the /shared folder of your
 plugin
-3. Uninstall the module you want to test (using the osgi console, e.g.
- `uninstall 10`)
-4. In the folder of your plugin, execute `ant test`.
-(In order to run the tests from the IDE (e.g. IntelliJ), you should update the
-folder of the runner to use the older of your plugin as the working directory).
+4. Deploy the plugin that you want to test, but do not deploy its test plugin.
+5. Run your server and in the folder of your test plugin, execute `ant test`
+In order to run the tests from the IDE (e.g. IntelliJ), you should update the
+folder of the runner to use the folder of your plugin as the working directory.
 
 ### Troubleshooting
 
