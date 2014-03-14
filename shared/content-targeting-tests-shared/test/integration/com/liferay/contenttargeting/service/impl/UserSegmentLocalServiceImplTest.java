@@ -48,43 +48,43 @@ public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
 	public void setUp() throws PortalException, SystemException {
 		long defaultCompanyId = PortalUtil.getDefaultCompanyId();
 
-		defaultUser = userLocalService.getDefaultUser(defaultCompanyId);
+		_defaultUser = _userLocalService.getDefaultUser(defaultCompanyId);
 	}
 
 	@Test
-	public void testAddUserSegment() throws Exception {
+	public void testAddAndDeleteUserSegment() throws Exception {
 		int initUserSegmentsCount =
-			userSegmentLocalService.getUserSegmentsCount();
+			_userSegmentLocalService.getUserSegmentsCount();
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
 		nameMap.put(LocaleUtil.getDefault(), "test-category");
 
-		UserSegment userSegment = userSegmentLocalService.addUserSegment(
-			defaultUser.getUserId(), nameMap, null, new ServiceContext());
+		UserSegment userSegment = _userSegmentLocalService.addUserSegment(
+			_defaultUser.getUserId(), nameMap, null, new ServiceContext());
 
 		Assert.assertEquals(
 			initUserSegmentsCount + 1,
-			userSegmentLocalService.getUserSegmentsCount());
+			_userSegmentLocalService.getUserSegmentsCount());
 
 		AssetCategory assetCategory =
-			assetCategoryLocalService.fetchAssetCategory(
+			_assetCategoryLocalService.fetchAssetCategory(
 				userSegment.getAssetCategoryId());
 
 		Assert.assertNotNull(assetCategory);
 
-		userSegmentLocalService.deleteUserSegment(
+		_userSegmentLocalService.deleteUserSegment(
 			userSegment.getUserSegmentId());
 
 		Assert.assertEquals(
 			initUserSegmentsCount,
-			userSegmentLocalService.getUserSegmentsCount());
+			_userSegmentLocalService.getUserSegmentsCount());
 	}
 
-	private User defaultUser;
+	private User _defaultUser;
 
-	@OSGi private AssetCategoryLocalService assetCategoryLocalService;
-	@OSGi private UserLocalService userLocalService;
-	@OSGi private UserSegmentLocalService userSegmentLocalService;
+	@OSGi private AssetCategoryLocalService _assetCategoryLocalService;
+	@OSGi private UserLocalService _userLocalService;
+	@OSGi private UserSegmentLocalService _userSegmentLocalService;
 
 }

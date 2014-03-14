@@ -14,16 +14,18 @@
 
 package com.liferay.contenttargeting.rules.gender;
 
-
 import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.portal.model.User;
 import com.liferay.portal.util.PortalUtil;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.mockito.Mock;
+
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -38,29 +40,6 @@ public class GenderRuleTest extends PowerMockito {
 	@Before
 	public void setUp() throws Exception {
 		_genderRule = new GenderRule();
-	}
-
-	@Test
-	public void testMale() throws Exception {
-		when(
-			_anonymousUser.getUser()
-		).thenReturn(
-			_user
-		);
-
-		when(
-			_user.isMale()
-		).thenReturn(
-			true
-		);
-
-		when(
-			_ruleInstance.getTypeSettings()
-		).thenReturn(
-			"male"
-		);
-
-		Assert.assertTrue(_genderRule.evaluate(_ruleInstance, _anonymousUser));
 	}
 
 	@Test
@@ -87,6 +66,29 @@ public class GenderRuleTest extends PowerMockito {
 	}
 
 	@Test
+	public void testMale() throws Exception {
+		when(
+			_anonymousUser.getUser()
+		).thenReturn(
+			_user
+		);
+
+		when(
+			_user.isMale()
+		).thenReturn(
+			true
+		);
+
+		when(
+			_ruleInstance.getTypeSettings()
+		).thenReturn(
+			"male"
+		);
+
+		Assert.assertTrue(_genderRule.evaluate(_ruleInstance, _anonymousUser));
+	}
+
+	@Test
 	public void testUnknown() throws Exception {
 		when(
 			_anonymousUser.getUser()
@@ -97,10 +99,10 @@ public class GenderRuleTest extends PowerMockito {
 		Assert.assertFalse(_genderRule.evaluate(_ruleInstance, _anonymousUser));
 	}
 
-	private GenderRule _genderRule;
-
 	@Mock
 	private AnonymousUser _anonymousUser;
+
+	private GenderRule _genderRule;
 
 	@Mock
 	private RuleInstance _ruleInstance;
