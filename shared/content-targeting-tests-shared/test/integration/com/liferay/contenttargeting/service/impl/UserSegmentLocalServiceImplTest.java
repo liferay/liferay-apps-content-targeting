@@ -17,13 +17,10 @@ package com.liferay.contenttargeting.service.impl;
 import com.liferay.arquillian.container.enrichers.OSGi;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.contenttargeting.tests.util.TestUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.model.User;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalService;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalService;
 
@@ -34,7 +31,6 @@ import java.util.Map;
 import org.jboss.arquillian.junit.Arquillian;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -43,13 +39,6 @@ import org.junit.runner.RunWith;
  */
 @RunWith(Arquillian.class)
 public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
-
-	@Before
-	public void setUp() throws PortalException, SystemException {
-		long defaultCompanyId = PortalUtil.getDefaultCompanyId();
-
-		_defaultUser = _userLocalService.getDefaultUser(defaultCompanyId);
-	}
 
 	@Test
 	public void testAddAndDeleteUserSegment() throws Exception {
@@ -60,8 +49,13 @@ public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
 
 		nameMap.put(LocaleUtil.getDefault(), "test-category");
 
+		Group group = TestUtil.addGroup();
+
+		ServiceContext serviceContext = TestUtil.getServiceContext(
+			group.getGroupId(), TestUtil.getUserId());
+
 		UserSegment userSegment = _userSegmentLocalService.addUserSegment(
-			_defaultUser.getUserId(), nameMap, null, new ServiceContext());
+			TestUtil.getUserId(), nameMap, null, serviceContext);
 
 		Assert.assertEquals(
 			initUserSegmentsCount + 1,
@@ -81,10 +75,7 @@ public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
 			_userSegmentLocalService.getUserSegmentsCount());
 	}
 
-	private User _defaultUser;
-
 	@OSGi private AssetCategoryLocalService _assetCategoryLocalService;
-	@OSGi private UserLocalService _userLocalService;
 	@OSGi private UserSegmentLocalService _userSegmentLocalService;
 
 }
