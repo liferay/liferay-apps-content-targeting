@@ -12,7 +12,7 @@
  * details.
  */
 
-package unit.com.liferay.contenttargeting.service.impl;
+package com.liferay.contenttargeting.service.impl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -31,9 +31,31 @@ public class BaseOsgiTestPlugin {
 
 	@Deployment
 	public static WebArchive getDeployment() throws FileNotFoundException {
-		WebArchive webArchive = ShrinkWrap.create(WebArchive.class);
+		File buildFile = new File("build.xml");
 
-		//webArchive.
+		Project project = new Project();
+
+		project.setUserProperty("ant.file", buildFile.getAbsolutePath());
+
+		project.init();
+
+		ProjectHelper helper = ProjectHelper.getProjectHelper();
+
+		project.addReference("ant.projectHelper", helper);
+
+		helper.parse(project, buildFile);
+
+		project.executeTarget("jar");
+
+		WebArchive wabFile = ShrinkWrap.createFromZipFile(
+			WebArchive.class, new File(project.getProperty("plugin.file")));
+
+		wabFile.addClass(BaseOsgiTestPlugin.class);
+
+		WebArchive webArchive = ShrinkWrap.create(WebArchive.class, "test.war");
+
+		webArchive.merge(wabFile);
+
 		return webArchive;
 	}
 

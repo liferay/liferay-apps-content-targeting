@@ -12,7 +12,7 @@
  * details.
  */
 
-package unit.com.liferay.contenttargeting.service.impl;
+package com.liferay.contenttargeting.service.impl;
 
 import com.liferay.arquillian.container.enrichers.OSGi;
 import com.liferay.contenttargeting.model.UserSegment;
