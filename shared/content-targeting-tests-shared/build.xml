@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<project name="content-targeting-tests-shared" basedir="." default="compile">
+	<property name="plugin.version" value="1" />
+
+	<property name="import.shared" value="content-targeting-core,service-utils-shared" />
+
+	<import file="../../build-common-osgi-plugin.xml" />
+</project>
