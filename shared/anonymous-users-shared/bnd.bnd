@@ -65,4 +65,4 @@ Include-Resource: classes,\
 	WEB-INF/lib/util-taglib.jar=${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar,\
 	WEB-INF/lib/anonymous-users-shared-service.jar=lib/anonymous-users-shared-service.jar
 Service-Component:com.liferay.anonymoususers.*
-Web-ContextPath: /anonymous-users
+Web-ContextPath: /anonymous-users-shared
