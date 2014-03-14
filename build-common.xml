@@ -66,6 +66,7 @@
 		<fileset dir="${sdk.dir}/lib" includes="junit.jar,mockito-all.jar,powermock-*.jar,spring-test.jar" />
 		<pathelement location="test-classes/integration" />
 		<pathelement location="test-classes/unit" />
+		<pathelement location="${java.home}/../lib/tools.jar" />
 	</path>
 
 	<condition property="correct.ant.version">
