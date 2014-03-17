@@ -110,6 +110,17 @@
 		<ant dir="${module.name}" target="setup-eclipse" inheritAll="false" />
 	</target>
 
+	<target name="test">
+		<antcall target="loop-modules">
+			<param name="loop.modules.cmd" value="test-module" />
+			<param name="plugins.includes" value="${plugins.test.includes}" />
+		</antcall>
+	</target>
+
+	<target name="test-module">
+		<ant dir="${module.name}" target="test" inheritAll="false" />
+	</target>
+
 	<target name="war">
 		<antcall target="loop-modules">
 			<param name="loop.modules.cmd" value="war-module" />

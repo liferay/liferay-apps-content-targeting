@@ -241,6 +241,15 @@
 		<ant dir="webs" target="setup-eclipse" inheritAll="false" />
 	</target>
 
+	<target name="test">
+		<ant dir="hooks" target="test" inheritAll="false" />
+		<ant dir="layouttpl" target="test" inheritAll="false" />
+		<ant dir="portlets" target="test" inheritAll="false" />
+		<ant dir="shared" target="test" inheritAll="false" />
+		<ant dir="themes" target="test" inheritAll="false" />
+		<ant dir="webs" target="test" inheritAll="false" />
+	</target>
+
 	<target name="war">
 		<ant dir="hooks" target="war" inheritAll="false" />
 		<ant dir="layouttpl" target="war" inheritAll="false" />
