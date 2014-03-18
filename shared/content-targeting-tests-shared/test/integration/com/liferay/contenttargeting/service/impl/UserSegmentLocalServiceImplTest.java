@@ -42,14 +42,14 @@ public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
 
 	@Test
 	public void testAddAndDeleteUserSegment() throws Exception {
+		Group group = TestUtil.addGroup();
+
 		int initUserSegmentsCount =
-			_userSegmentLocalService.getUserSegmentsCount();
+			_userSegmentLocalService.getUserSegmentsCount(group.getGroupId());
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
 		nameMap.put(LocaleUtil.getDefault(), "test-category");
-
-		Group group = TestUtil.addGroup();
 
 		ServiceContext serviceContext = TestUtil.getServiceContext(
 			group.getGroupId(), TestUtil.getUserId());
@@ -59,7 +59,7 @@ public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
 
 		Assert.assertEquals(
 			initUserSegmentsCount + 1,
-			_userSegmentLocalService.getUserSegmentsCount());
+			_userSegmentLocalService.getUserSegmentsCount(group.getGroupId()));
 
 		AssetCategory assetCategory =
 			_assetCategoryLocalService.fetchAssetCategory(
@@ -72,7 +72,7 @@ public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
 
 		Assert.assertEquals(
 			initUserSegmentsCount,
-			_userSegmentLocalService.getUserSegmentsCount());
+			_userSegmentLocalService.getUserSegmentsCount(group.getGroupId()));
 	}
 
 	@OSGi private AssetCategoryLocalService _assetCategoryLocalService;
