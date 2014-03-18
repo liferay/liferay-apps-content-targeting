@@ -18,13 +18,8 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" localized="true">
-			<validator name="required" />
-		</field>
-		<field name="description" type="String" localized="true">
-			<hint-collection name="TEXTAREA" />
-			<hint name="display-width">300</hint>
-		</field>
+		<field name="name" type="String" localized="true" />
+		<field name="description" type="String" localized="true" />
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
 		<field name="priority" type="int" />
@@ -40,9 +35,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="ruleKey" type="String" />
 		<field name="userSegmentId" type="long" />
-		<field name="typeSettings" type="String">
-			<hint-collection name="CLOB" />
-		</field>
+		<field name="typeSettings" type="String" />
 	</model>
 	<model name="com.liferay.contenttargeting.model.UserSegment">
 		<field name="uuid" type="String" />
@@ -54,12 +47,7 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" localized="true">
-			<validator name="required" />
-		</field>
-		<field name="description" type="String" localized="true">
-			<hint-collection name="TEXTAREA" />
-			<hint name="display-width">300</hint>
-		</field>
+		<field name="name" type="String" localized="true" />
+		<field name="description" type="String" localized="true" />
 	</model>
 </model-hints>

@@ -504,13 +504,13 @@ public class UserSegmentLocalServiceUtil {
 		return getService().getUserSegments(groupIds);
 	}
 
-	public static long getUserSegmentsCount(long groupId)
+	public static int getUserSegmentsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserSegmentsCount(groupId);
 	}
 
-	public static long getUserSegmentsCount(long[] groupIds)
+	public static int getUserSegmentsCount(long[] groupIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserSegmentsCount(groupIds);

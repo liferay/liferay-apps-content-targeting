@@ -1505,7 +1505,7 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
-	public long getUserSegmentsCount(long groupId)
+	public int getUserSegmentsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1534,11 +1534,11 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return ((Long)returnObj).longValue();
+		return ((Integer)returnObj).intValue();
 	}
 
 	@Override
-	public long getUserSegmentsCount(long[] groupIds)
+	public int getUserSegmentsCount(long[] groupIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1568,7 +1568,7 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 			}
 		}
 
-		return ((Long)returnObj).longValue();
+		return ((Integer)returnObj).intValue();
 	}
 
 	@Override

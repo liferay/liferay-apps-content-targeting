@@ -547,14 +547,14 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	}
 
 	@Override
-	public long getUserSegmentsCount(long groupId)
+	public int getUserSegmentsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userSegmentLocalService.getUserSegmentsCount(groupId);
 	}
 
 	@Override
-	public long getUserSegmentsCount(long[] groupIds)
+	public int getUserSegmentsCount(long[] groupIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _userSegmentLocalService.getUserSegmentsCount(groupIds);
