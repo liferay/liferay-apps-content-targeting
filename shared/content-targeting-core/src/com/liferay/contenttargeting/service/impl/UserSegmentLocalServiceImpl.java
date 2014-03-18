@@ -152,14 +152,14 @@ public class UserSegmentLocalServiceImpl
 	}
 
 	@Override
-	public long getUserSegmentsCount(long groupId)
+	public int getUserSegmentsCount(long groupId)
 		throws PortalException, SystemException {
 
 		return userSegmentPersistence.countByGroupId(groupId);
 	}
 
 	@Override
-	public long getUserSegmentsCount(long[] groupIds)
+	public int getUserSegmentsCount(long[] groupIds)
 		throws PortalException, SystemException {
 
 		return userSegmentPersistence.countByGroupId(groupIds);
