@@ -145,10 +145,8 @@ public class AgeRuleTest extends PowerMockito {
 		Assert.assertFalse(_ageRule.evaluate(_ruleInstance, _anonymousUser));
 	}
 
-	private String _generateJSON(int olderThan, int youngerThan)
-		throws org.json.JSONException {
-
-		org.json.JSONObject jsonObj = new org.json.JSONObject();
+	private String _generateJSON(int olderThan, int youngerThan) {
+		JSONObject jsonObj = new JSONObjectImpl();
 
 		jsonObj.put("olderThan", olderThan);
 		jsonObj.put("youngerThan", youngerThan);
