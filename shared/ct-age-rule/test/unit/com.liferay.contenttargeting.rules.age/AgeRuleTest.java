@@ -14,27 +14,29 @@
 
 package com.liferay.contenttargeting.rules.age;
 
-
 import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.model.User;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
-
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 /**
  * @author Julio Camarero
@@ -101,23 +103,6 @@ public class AgeRuleTest extends PowerMockito {
 	}
 
 	@Test
-	public void testUnderAge() throws Exception {
-		when(
-			_anonymousUser.getUser()
-		).thenReturn(
-			_user
-		);
-
-		when(
-			_ruleInstance.getTypeSettings()
-		).thenReturn(
-			_generateJSON(30, 40)
-		);
-
-		Assert.assertFalse(_ageRule.evaluate(_ruleInstance, _anonymousUser));
-	}
-
-	@Test
 	public void testOverAge() throws Exception {
 		when(
 			_anonymousUser.getUser()
@@ -129,6 +114,23 @@ public class AgeRuleTest extends PowerMockito {
 			_ruleInstance.getTypeSettings()
 		).thenReturn(
 			_generateJSON(10, 20)
+		);
+
+		Assert.assertFalse(_ageRule.evaluate(_ruleInstance, _anonymousUser));
+	}
+
+	@Test
+	public void testUnderAge() throws Exception {
+		when(
+			_anonymousUser.getUser()
+		).thenReturn(
+			_user
+		);
+
+		when(
+			_ruleInstance.getTypeSettings()
+		).thenReturn(
+			_generateJSON(30, 40)
 		);
 
 		Assert.assertFalse(_ageRule.evaluate(_ruleInstance, _anonymousUser));

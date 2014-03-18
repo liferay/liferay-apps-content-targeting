@@ -14,7 +14,6 @@
 
 package com.liferay.contenttargeting.rules.time;
 
-
 import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.portal.json.JSONObjectImpl;
@@ -22,25 +21,28 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.model.User;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
+
 /**
  * @author Julio Camarero
  */
-@PrepareForTest({CalendarFactoryUtil.class,JSONFactoryUtil.class})
+@PrepareForTest({CalendarFactoryUtil.class, JSONFactoryUtil.class})
 @RunWith(PowerMockRunner.class)
 public class TimeRuleTest extends PowerMockito {
 
@@ -172,15 +174,17 @@ public class TimeRuleTest extends PowerMockito {
 		return jsonObj.toString();
 	}
 
-	private TimeRule _timeRule;
 	private Calendar _5minutesAgo;
-	private Calendar _in5minutes;
 
 	@Mock
 	private AnonymousUser _anonymousUser;
 
+	private Calendar _in5minutes;
+
 	@Mock
 	private RuleInstance _ruleInstance;
+
+	private TimeRule _timeRule;
 
 	@Mock
 	private User _user;
