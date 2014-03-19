@@ -1,6 +1,6 @@
 # Liferay WCM Plugins
 
-The liferay-wmc-plugins repository is part of the Liferay Portal project.
+The liferay-wcm-plugins repository is part of the Liferay Portal project.
 [Liferay Portal]
 (http://www.liferay.com/community/liferay-projects/liferay-portal) is an
 open source enterprise web platform for building business solutions that deliver
@@ -129,7 +129,7 @@ In order to deploy the audience targeting app, you can add this property to your
 build.username.properties:
 
 ```
-plugins.includes=content-targeting-core,content-targeting-portlet,ct-age-rule,ct-gender-rule,ct-time-rule,freemarker-osgi,http-service-shared,log-bridge-shared,system-packages-extra
+plugins.includes=anonymous-users-shared,content-targeting-core,content-targeting-portlet,ct-age-rule,ct-gender-rule,ct-time-rule,freemarker-osgi,http-service-shared,log-bridge-shared,service-utils-shared,system-packages-extra
 ```
 
 
