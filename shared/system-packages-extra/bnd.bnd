@@ -1,6 +1,7 @@
 Export-Package: \
 	com.germinus.easyconf,\
 	com.liferay.portal.apache.bridges.struts,\
+	com.liferay.portal.json,\
 	com.liferay.portal.security.auth,\
 	com.liferay.portal.security.permission,\
 	com.liferay.portal.servlet.filters.aggregate,\
