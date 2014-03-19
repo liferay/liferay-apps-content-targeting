@@ -26,7 +26,6 @@ ivy.xml.MD5
 /*/*/lib/*.jar
 
 /build.*.properties
-/dist
 /tools/*/*/*/lib
 
 .idea/workspace.xml
