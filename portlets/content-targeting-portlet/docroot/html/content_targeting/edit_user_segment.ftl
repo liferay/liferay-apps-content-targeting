@@ -78,6 +78,34 @@
 
 						<#if rule_has_next>,</#if>
 					</#list>
+				],
+
+				fields:
+				[
+					<#list ruleInstances as ruleInstance>
+
+						<#assign rule = rulesRegistry.getRule(ruleInstance.getRuleKey())>
+
+						<#assign options=rule.getEditorOptions()>
+
+						{
+							iconClass: '${rule.getIcon()}',
+							label: '${rule.getName(locale)}',
+							options: [
+								<#list options?keys as option>
+									{
+										label: '${option}',
+										value: '${options[option]}'
+									}
+
+									<#if option_has_next>,</#if>
+								</#list>
+							],
+							type: '${rule.getEditorType()}'
+						}
+
+						<#if ruleInstance_has_next>,</#if>
+					</#list>
 				]
 			}
 		).render();
