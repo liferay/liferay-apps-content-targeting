@@ -33,23 +33,41 @@
 
 	<@aui["input"] name="description" />
 
+	<#if userSegment??>
+		<div id="formBuilder"></div>
+	</#if>
+
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
 	</@>
 </@>
 
 <#if userSegment??>
-	<@portlet["renderURL"] var="manageRulesURL">
-		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.MANAGE_RULES}" />
-		<@portlet["param"] name="redirect" value="${currentURL}" />
-		<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-	</@>
+	<@aui["script"] use="aui-form-builder">
+		new A.FormBuilder(
+			{
+				boundingBox: '#formBuilder',
 
-	<@liferay_ui["icon"]
-		image="services"
-		label=true
-		message="manage-rules"
-		method="get"
-		url="${manageRulesURL}"
-	/>
+				availableFields:
+				[
+					<#list rules as rule>
+						<@portlet["renderURL"] var="addRuleInstanceURL" windowState="${liferayWindowStatePopUp}">
+							<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_RULE_INSTANCE}" />
+							<@portlet["param"] name="redirect" value="${currentURL}" />
+							<@portlet["param"] name="ruleKey" value="${rule.getRuleKey()}" />
+							<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+						</@>
+
+						{
+							iconClass: '${rule.getIcon()}',
+							label: '${rule.getName(locale)}',
+							type: 'text'
+						}
+
+						<#if rule_has_next>,</#if>
+					</#list>
+				]
+			}
+		).render();
+	</@>
 </#if>

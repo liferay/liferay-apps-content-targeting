@@ -528,21 +528,11 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			template.put("userSegmentId", userSegmentId);
 
-			if (userSegmentId > 0) {
-				template.put(
-					"userSegment",
-					_userSegmentLocalService.getUserSegment(userSegmentId));
-			}
-		}
-		else if (path.equals(ContentTargetingPath.MANAGE_RULES)) {
 			template.put("rulesRegistry", _rulesRegistry);
 
 			Map<String, Rule> rules = _rulesRegistry.getRules();
 
 			template.put("rules", rules.values());
-
-			long userSegmentId = ParamUtil.getLong(
-				portletRequest, "userSegmentId");
 
 			if (userSegmentId > 0) {
 				List<RuleInstance> ruleInstances =
