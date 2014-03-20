@@ -48,6 +48,20 @@ public interface Rule {
 		throws Exception;
 
 	/**
+	 *
+	 *
+	 * @return [description]
+	 */
+	public Map<String, String> getEditorOptions();
+
+	/**
+	 * Returns the type of rule.
+	 *
+	 * @return the type of rule
+	 */
+	public String getEditorType();
+
+	/**
 	 * Returns the HTML code containing the form fields required to edit the
 	 * rule instance's configuration, based on the context.
 	 *

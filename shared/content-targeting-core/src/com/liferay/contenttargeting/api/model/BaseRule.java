@@ -30,6 +30,7 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -50,6 +51,14 @@ public abstract class BaseRule implements Rule {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Rule deactivate: " + getClass().getSimpleName());
 		}
+	}
+
+	public Map<String, String> getEditorOptions() {
+		return new HashMap<String, String>();
+	}
+
+	public String getEditorType() {
+		return "text";
 	}
 
 	@Override

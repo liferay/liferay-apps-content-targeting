@@ -58,10 +58,22 @@
 							<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
 						</@>
 
+						<#assign options=rule.getEditorOptions()>
+
 						{
 							iconClass: '${rule.getIcon()}',
 							label: '${rule.getName(locale)}',
-							type: 'text'
+							options: [
+								<#list options?keys as option>
+									{
+										label: '${option}',
+										value: '${options[option]}'
+									}
+
+									<#if option_has_next>,</#if>
+								</#list>
+							],
+							type: '${rule.getEditorType()}'
 						}
 
 						<#if rule_has_next>,</#if>
