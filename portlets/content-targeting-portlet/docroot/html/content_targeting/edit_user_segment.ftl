@@ -51,13 +51,6 @@
 				availableFields:
 				[
 					<#list rules as rule>
-						<@portlet["renderURL"] var="addRuleInstanceURL" windowState="${liferayWindowStatePopUp}">
-							<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_RULE_INSTANCE}" />
-							<@portlet["param"] name="redirect" value="${currentURL}" />
-							<@portlet["param"] name="ruleKey" value="${rule.getRuleKey()}" />
-							<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-						</@>
-
 						<#assign options=rule.getEditorOptions()>
 
 						{
@@ -83,9 +76,7 @@
 				fields:
 				[
 					<#list ruleInstances as ruleInstance>
-
 						<#assign rule = rulesRegistry.getRule(ruleInstance.getRuleKey())>
-
 						<#assign options=rule.getEditorOptions()>
 
 						{
