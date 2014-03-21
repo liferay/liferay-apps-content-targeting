@@ -779,7 +779,7 @@ public class CampaignWrapper implements Campaign, ModelWrapper<Campaign> {
 	}
 
 	@Override
-	public int compareTo(Campaign campaign) {
+	public int compareTo(com.liferay.contenttargeting.model.Campaign campaign) {
 		return _campaign.compareTo(campaign);
 	}
 
@@ -789,17 +789,17 @@ public class CampaignWrapper implements Campaign, ModelWrapper<Campaign> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Campaign> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.contenttargeting.model.Campaign> toCacheModel() {
 		return _campaign.toCacheModel();
 	}
 
 	@Override
-	public Campaign toEscapedModel() {
+	public com.liferay.contenttargeting.model.Campaign toEscapedModel() {
 		return new CampaignWrapper(_campaign.toEscapedModel());
 	}
 
 	@Override
-	public Campaign toUnescapedModel() {
+	public com.liferay.contenttargeting.model.Campaign toUnescapedModel() {
 		return new CampaignWrapper(_campaign.toUnescapedModel());
 	}
 
