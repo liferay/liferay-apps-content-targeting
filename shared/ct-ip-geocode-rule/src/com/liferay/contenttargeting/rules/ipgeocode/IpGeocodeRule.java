@@ -80,9 +80,9 @@ public class IpGeocodeRule extends BaseRule {
 		String countryCode = ipInfo.getCountryCode();
 
 		if (countryCode.equals(country.getA2())) {
-			String regionCode = ipInfo.getRegionCode();
+			String regionName = ipInfo.getRegionName();
 
-			if ((region == null) || regionCode.equals(region.getRegionCode())) {
+			if ((region == null) || regionName.equals(region.getName())) {
 				return true;
 			}
 		}
