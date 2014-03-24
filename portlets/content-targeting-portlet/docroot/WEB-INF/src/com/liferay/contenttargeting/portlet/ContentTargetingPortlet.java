@@ -40,6 +40,8 @@ import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -431,6 +433,25 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				template.put("userSegment", userSegment);
 			}
+
+			Map<String, String> ruleTemplates = new HashMap<String, String>();
+
+			Map<String, Object> clonedContext = _cloneTemplateContext(template);
+
+			for (Rule rule : rules.values()) {
+				if (!rule.getEditorType().equals("time")) {
+					String ruleTemplate = rule.getFormHTML(
+					null, clonedContext);
+
+					ruleTemplate = StringUtil.replace(
+						ruleTemplate, new String[] {StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE},
+						new String[] {StringPool.BLANK, StringPool.BLANK});
+
+					ruleTemplates.put(rule.getRuleKey(), ruleTemplate);
+				}
+			}
+
+			template.put("ruleTemplates", ruleTemplates);
 		}
 	}
 
