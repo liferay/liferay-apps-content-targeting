@@ -95,6 +95,11 @@
 
 						{
 							iconClass: '${rule.getIcon()}',
+
+							<#if !rule.isInstantiable()>
+							id: '${rule.getEditorType()}Unique',
+							</#if>
+
 							label: '<div class="row"><div class="rule-title">${rule.getName(locale)}</div><div class="rule-description">${rule.getDescription(locale)}</div></div>',
 							options: [
 								<#list options?keys as option>
@@ -106,7 +111,8 @@
 									<#if option_has_next>,</#if>
 								</#list>
 							],
-							type: '${rule.getEditorType()}'
+							type: '${rule.getEditorType()}',
+							unique: ${(!rule.isInstantiable())?string}
 						}
 
 						<#if rule_has_next>,</#if>
@@ -121,6 +127,11 @@
 
 						{
 							iconClass: '${rule.getIcon()}',
+
+							<#if !rule.isInstantiable()>
+							id: '${rule.getEditorType()}Unique',
+							</#if>
+
 							label: '${rule.getName(locale)}',
 							options: [
 								<#list options?keys as option>
@@ -132,7 +143,8 @@
 									<#if option_has_next>,</#if>
 								</#list>
 							],
-							type: '${rule.getEditorType()}'
+							type: '${rule.getEditorType()}',
+							unique: ${(!rule.isInstantiable())?string}
 						}
 
 						<#if ruleInstance_has_next>,</#if>
