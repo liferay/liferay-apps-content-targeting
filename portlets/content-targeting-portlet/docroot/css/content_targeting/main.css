@@ -31,7 +31,8 @@
 
 				.diagram-builder-field {
 					height: inherit;
-					padding-left: 20px;
+					padding-left: 10px;
+					position: relative;
 					text-align: left;
 					width: 100%;
 
@@ -41,12 +42,26 @@
 					}
 
 					.diagram-builder-field-icon {
-						display: inline;
-						padding: 0 10px;
+						display: block;
+						font-size: 22px;
+						padding: 10px;
 					}
 
 					.diagram-builder-field-label {
-						display: inline;
+						font-size: 12px;
+						left: 60px;
+						line-height: 18px;
+						position: absolute;
+						top: 5px;
+
+						.row {
+							margin: 0;
+						}
+
+						.rule-title {
+							font-size: 14px;
+							font-weight: 400;
+						}
 					}
 				}
 			}
@@ -55,8 +70,14 @@
 				background-color: #f6f6f6;
 				border: none;
 
+				.diagram-builder-drop-container {
+					height: auto;
+				}
+
 				.toolbar {
 					display: block !important;
+					right: 0;
+					top: 5px;
 
 					.btn-group {
 						button {
@@ -69,6 +90,7 @@
 							box-shadow: inherit;
 							color: #ccc;
 							display: inline-block;
+							font-size: 16px;
 						}
 
 						.icon-trash:before {
@@ -88,6 +110,36 @@
 						border-left: 1px dotted #ccc;
 						margin: -8px;
 						padding: 8px;
+
+						> label:first-child {
+							display: none;
+						}
+
+						.rule-header {
+							margin: 5px;
+
+							.rule-icon {
+								font-size: 35px;
+								text-align: right;
+							}
+
+							.rule-info {
+								display: inline-block;
+								margin-left: 10px;
+							}
+
+							.rule-description {
+								font-size: 13px;
+							}
+
+							.rule-title {
+								font-size: 18px;
+							}
+						}
+
+						.rule-editor {
+							margin: 30px 55px;
+						}
 					}
 				}
 
@@ -99,7 +151,7 @@
 						border-left-color: #009ae5;
 					}
 
-					.btn-group :last-child {
+					.rule-header, .btn-group :last-child {
 						color: #009ae5;
 					}
 				}
