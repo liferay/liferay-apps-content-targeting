@@ -94,6 +94,7 @@
 						<#assign options=rule.getEditorOptions()>
 
 						{
+							acceptChildren: false,
 							iconClass: '${rule.getIcon()}',
 
 							<#if !rule.isInstantiable()>
@@ -126,6 +127,7 @@
 						<#assign options=rule.getEditorOptions()>
 
 						{
+							acceptChildren: false,
 							iconClass: '${rule.getIcon()}',
 
 							<#if !rule.isInstantiable()>
