@@ -73,11 +73,6 @@ public class AgeRule extends BaseRule {
 	}
 
 	@Override
-	public String getEditorType() {
-		return "age";
-	}
-
-	@Override
 	public String getIcon() {
 		return "icon-calendar-empty";
 	}

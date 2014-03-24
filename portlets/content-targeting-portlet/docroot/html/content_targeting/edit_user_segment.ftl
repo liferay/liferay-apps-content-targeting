@@ -47,11 +47,10 @@
 
 		<#list ruleTemplates?keys as ruleKey>
 			<#assign rule=rulesRegistry.getRule(ruleKey)>
-			<#assign ruleEditorType=rule.getEditorType()>
 
-			var CT${ruleEditorType}RuleField = A.Component.create({
+			var CT${ruleKey}RuleField = A.Component.create({
 
-				NAME: 'ct-${ruleEditorType}-rule-field',
+				NAME: 'ct-${ruleKey}-rule-field',
 
 				EXTENDS: A.FormBuilderField,
 
@@ -76,10 +75,10 @@
 
 			});
 
-			A.CT${ruleEditorType}RuleField = CT${ruleEditorType}RuleField;
+			A.CT${ruleKey}RuleField = CT${ruleKey}RuleField;
 
-			if (!A.FormBuilder.types.${ruleEditorType}) {
-				A.FormBuilder.types.${ruleEditorType} = A.CT${ruleEditorType}RuleField;
+			if (!A.FormBuilder.types.${ruleKey}) {
+				A.FormBuilder.types.${ruleKey} = A.CT${ruleKey}RuleField;
 			}
 		</#list>
 		;
@@ -91,28 +90,17 @@
 				availableFields:
 				[
 					<#list rules as rule>
-						<#assign options=rule.getEditorOptions()>
-
 						{
+
 							acceptChildren: false,
 							iconClass: '${rule.getIcon()}',
 
 							<#if !rule.isInstantiable()>
-							id: '${rule.getEditorType()}Unique',
+								id: '${rule.getRuleKey()}Unique',
 							</#if>
 
 							label: '<div class="row"><div class="rule-title">${rule.getName(locale)}</div><div class="rule-description">${rule.getDescription(locale)}</div></div>',
-							options: [
-								<#list options?keys as option>
-									{
-										label: '${option}',
-										value: '${options[option]}'
-									}
-
-									<#if option_has_next>,</#if>
-								</#list>
-							],
-							type: '${rule.getEditorType()}',
+							type: '${rule.getRuleKey()}',
 							unique: ${(!rule.isInstantiable())?string}
 						}
 
@@ -124,28 +112,17 @@
 				[
 					<#list ruleInstances as ruleInstance>
 						<#assign rule = rulesRegistry.getRule(ruleInstance.getRuleKey())>
-						<#assign options=rule.getEditorOptions()>
 
 						{
 							acceptChildren: false,
 							iconClass: '${rule.getIcon()}',
 
 							<#if !rule.isInstantiable()>
-							id: '${rule.getEditorType()}Unique',
+								id: '${rule.getRuleKey()}Unique',
 							</#if>
 
 							label: '${rule.getName(locale)}',
-							options: [
-								<#list options?keys as option>
-									{
-										label: '${option}',
-										value: '${options[option]}'
-									}
-
-									<#if option_has_next>,</#if>
-								</#list>
-							],
-							type: '${rule.getEditorType()}',
+							type: '${rule.getRuleKey()}',
 							unique: ${(!rule.isInstantiable())?string}
 						}
 

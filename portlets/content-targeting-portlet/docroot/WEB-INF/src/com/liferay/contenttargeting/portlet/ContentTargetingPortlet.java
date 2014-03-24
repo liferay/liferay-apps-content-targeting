@@ -439,16 +439,15 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			Map<String, Object> clonedContext = _cloneTemplateContext(template);
 
 			for (Rule rule : rules.values()) {
-				if (!rule.getEditorType().equals("time")) {
-					String ruleTemplate = rule.getFormHTML(
-					null, clonedContext);
+				String ruleTemplate = rule.getFormHTML(null, clonedContext);
 
-					ruleTemplate = StringUtil.replace(
-						ruleTemplate, new String[] {StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE},
-						new String[] {StringPool.BLANK, StringPool.BLANK});
+				ruleTemplate = StringUtil.replace(
+					ruleTemplate,
+					new String[]
+						{StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE},
+					new String[] {StringPool.BLANK, StringPool.BLANK});
 
-					ruleTemplates.put(rule.getRuleKey(), ruleTemplate);
-				}
+				ruleTemplates.put(rule.getRuleKey(), ruleTemplate);
 			}
 
 			template.put("ruleTemplates", ruleTemplates);

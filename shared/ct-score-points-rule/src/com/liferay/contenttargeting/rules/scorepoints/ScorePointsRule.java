@@ -62,10 +62,6 @@ public class ScorePointsRule extends BaseRule {
 		return false;
 	}
 
-	public String getEditorType() {
-		return "scorepoints";
-	}
-
 	@Override
 	public String getIcon() {
 		return "icon-star";

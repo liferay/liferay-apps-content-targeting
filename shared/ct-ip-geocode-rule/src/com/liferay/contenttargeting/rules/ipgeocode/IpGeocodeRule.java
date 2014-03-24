@@ -90,10 +90,6 @@ public class IpGeocodeRule extends BaseRule {
 		return false;
 	}
 
-	public String getEditorType() {
-		return "location";
-	}
-
 	@Override
 	public String getIcon() {
 		return "icon-globe";

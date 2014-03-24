@@ -64,19 +64,6 @@ public class GenderRule extends BaseRule {
 		return false;
 	}
 
-	public Map<String, String> getEditorOptions() {
-		Map<String, String> options = new HashMap<String, String>();
-
-		options.put("Male", "man");
-		options.put("Female", "woman");
-
-		return options;
-	}
-
-	public String getEditorType() {
-		return "gender";
-	}
-
 	@Override
 	public String getIcon() {
 		return "icon-female";

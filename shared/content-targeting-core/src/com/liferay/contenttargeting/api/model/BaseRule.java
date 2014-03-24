@@ -53,14 +53,6 @@ public abstract class BaseRule implements Rule {
 		}
 	}
 
-	public Map<String, String> getEditorOptions() {
-		return new HashMap<String, String>();
-	}
-
-	public String getEditorType() {
-		return "text";
-	}
-
 	@Override
 	public String getFormHTML(
 		RuleInstance ruleInstance, Map<String, Object> context) {
@@ -84,14 +76,10 @@ public abstract class BaseRule implements Rule {
 
 	@Override
 	public String getDescription(Locale locale) {
-		String description = ResourceActionsUtil.getModelResource(
-			locale, getClass().getName().concat(".description"));
+		String className = getClass().getName();
 
-		if (description.equals(getClass().getName().concat(".description"))) {
-			description = StringPool.BLANK;
-		}
-
-		return description;
+		return ResourceActionsUtil.getModelResource(
+			locale, className.concat(".description"));
 	}
 
 	@Override
