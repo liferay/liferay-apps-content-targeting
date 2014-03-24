@@ -44,6 +44,46 @@
 
 <#if userSegment??>
 	<@aui["script"] use="aui-form-builder">
+
+		<#list ruleTemplates?keys as ruleKey>
+			<#assign rule=rulesRegistry.getRule(ruleKey)>
+			<#assign ruleEditorType=rule.getEditorType()>
+
+			var CT${ruleEditorType}RuleField = A.Component.create({
+
+				NAME: 'ct-${ruleEditorType}-rule-field',
+
+				EXTENDS: A.FormBuilderField,
+
+				prototype: {
+					getHTML: function() {
+						var instance = this;
+
+						return '<div> \
+							<div class="rule-header"> \
+								<i class="${rule.getIcon()} rule-icon"></i> \
+								<div class="row rule-info"> \
+									<div class="rule-title">${rule.getName(locale)}</div> \
+									<div class="rule-description">${rule.getDescription(locale)}</div> \
+								</div> \
+							</div> \
+							<div class="rule-editor"> \
+								${ruleTemplates[ruleKey]} \
+							</div> \
+						</div>';
+					}
+				}
+
+			});
+
+			A.CT${ruleEditorType}RuleField = CT${ruleEditorType}RuleField;
+
+			if (!A.FormBuilder.types.${ruleEditorType}) {
+				A.FormBuilder.types.${ruleEditorType} = A.CT${ruleEditorType}RuleField;
+			}
+		</#list>
+		;
+
 		new A.FormBuilder(
 			{
 				boundingBox: '#formBuilder',
@@ -55,7 +95,7 @@
 
 						{
 							iconClass: '${rule.getIcon()}',
-							label: '${rule.getName(locale)}',
+							label: '<div class="row"><div class="rule-title">${rule.getName(locale)}</div><div class="rule-description">${rule.getDescription(locale)}</div></div>',
 							options: [
 								<#list options?keys as option>
 									{
