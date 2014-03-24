@@ -62,6 +62,10 @@ public class TimeRule extends BaseRule {
 		return false;
 	}
 
+	public String getEditorType() {
+		return "time";
+	}
+
 	@Override
 	public String getIcon() {
 		return "icon-time";

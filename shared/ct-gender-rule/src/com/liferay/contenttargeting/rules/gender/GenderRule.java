@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -61,6 +62,19 @@ public class GenderRule extends BaseRule {
 		}
 
 		return false;
+	}
+
+	public Map<String, String> getEditorOptions() {
+		Map<String, String> options = new HashMap<String, String>();
+
+		options.put("Male", "man");
+		options.put("Female", "woman");
+
+		return options;
+	}
+
+	public String getEditorType() {
+		return "gender";
 	}
 
 	@Override

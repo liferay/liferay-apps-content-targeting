@@ -83,6 +83,18 @@ public abstract class BaseRule implements Rule {
 	}
 
 	@Override
+	public String getDescription(Locale locale) {
+		String description = ResourceActionsUtil.getModelResource(
+			locale, getClass().getName().concat(".description"));
+
+		if (description.equals(getClass().getName().concat(".description"))) {
+			description = StringPool.BLANK;
+		}
+
+		return description;
+	}
+
+	@Override
 	public String getIcon() {
 		return "icon-retweet";
 	}

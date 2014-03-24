@@ -48,11 +48,19 @@ public interface Rule {
 		throws Exception;
 
 	/**
+	 * Returns the rule editor options.
 	 *
-	 *
-	 * @return [description]
+	 * @return the rule editor options
 	 */
 	public Map<String, String> getEditorOptions();
+
+	/**
+	 * Returns the rule description.
+	 *
+	 * @param  locale the language's locale
+	 * @return the rule locale
+	 */
+	public String getDescription(Locale locale);
 
 	/**
 	 * Returns the type of rule.
