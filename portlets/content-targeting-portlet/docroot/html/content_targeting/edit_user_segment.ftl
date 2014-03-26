@@ -23,9 +23,10 @@
 
 <@portlet["actionURL"] name="updateUserSegment" var="addUserSegmentURL" />
 
-<@aui["form"] action="${addUserSegmentURL}" method="post" name="fm">
+<@aui["form"] action="${addUserSegmentURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveRules();">
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
 	<@aui["input"] name="userSegmentId" type="hidden" value=userSegmentId />
+	<@aui["input"] name="userSegmentRules" type="hidden" />
 
 	<@aui["model-context"] bean=userSegment model=userSegmentClass />
 
@@ -33,103 +34,133 @@
 
 	<@aui["input"] name="description" />
 
-	<#if userSegment??>
-		<div id="formBuilder"></div>
-	</#if>
+	<div id="formBuilder"></div>
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
 	</@>
 </@>
 
-<#if userSegment??>
-	<@aui["script"] use="aui-form-builder">
+<@aui["script"] use="aui-form-builder">
 
-		<#list ruleTemplates?keys as ruleKey>
-			<#assign rule=rulesRegistry.getRule(ruleKey)>
+	<#list ruleTemplates?keys as ruleKey>
+		<#assign rule=rulesRegistry.getRule(ruleKey)>
 
-			var CT${ruleKey}RuleField = A.Component.create({
+		var CT${ruleKey}RuleField = A.Component.create({
 
-				NAME: 'ct-${ruleKey}-rule-field',
+			NAME: 'ct-${ruleKey}-rule-field',
 
-				EXTENDS: A.FormBuilderField,
+			EXTENDS: A.FormBuilderField,
 
-				prototype: {
-					getHTML: function() {
-						var instance = this;
+			prototype: {
+				getHTML: function() {
+					var instance = this;
 
-						return '<div> \
-							<div class="rule-header"> \
-								<i class="${rule.getIcon()} rule-icon"></i> \
-								<div class="row rule-info"> \
-									<div class="rule-title">${rule.getName(locale)}</div> \
-									<div class="rule-description">${rule.getDescription(locale)}</div> \
-								</div> \
+					return '<div> \
+						<div class="rule-header"> \
+							<i class="${rule.getIcon()} rule-icon"></i> \
+							<div class="row rule-info"> \
+								<div class="rule-title">${rule.getName(locale)}</div> \
+								<div class="rule-description">${rule.getDescription(locale)}</div> \
 							</div> \
-							<div class="rule-editor"> \
-								${ruleTemplates[ruleKey]} \
-							</div> \
-						</div>';
-					}
+						</div> \
+						<div class="rule-editor"> \
+							${ruleTemplates[ruleKey]} \
+						</div> \
+					</div>';
 				}
-
-			});
-
-			A.CT${ruleKey}RuleField = CT${ruleKey}RuleField;
-
-			if (!A.FormBuilder.types.${ruleKey}) {
-				A.FormBuilder.types.${ruleKey} = A.CT${ruleKey}RuleField;
 			}
-		</#list>
-		;
 
-		new A.FormBuilder(
-			{
-				boundingBox: '#formBuilder',
+		});
 
-				availableFields:
-				[
-					<#list rules as rule>
-						{
+		A.CT${ruleKey}RuleField = CT${ruleKey}RuleField;
 
-							acceptChildren: false,
-							iconClass: '${rule.getIcon()}',
+		if (!A.FormBuilder.types.${ruleKey}) {
+			A.FormBuilder.types.${ruleKey} = A.CT${ruleKey}RuleField;
+		}
+	</#list>
+	;
 
-							<#if !rule.isInstantiable()>
-								id: '${rule.getRuleKey()}Unique',
-							</#if>
+	var userSegmentBuilder = new A.FormBuilder(
+		{
+			boundingBox: '#formBuilder',
 
-							label: '<div class="row"><div class="rule-title">${rule.getName(locale)}</div><div class="rule-description">${rule.getDescription(locale)}</div></div>',
-							type: '${rule.getRuleKey()}',
-							unique: ${(!rule.isInstantiable())?string}
-						}
+			availableFields:
+			[
+				<#list rules as rule>
+					{
 
-						<#if rule_has_next>,</#if>
-					</#list>
-				],
+						acceptChildren: false,
+						iconClass: '${rule.getIcon()}',
 
-				fields:
-				[
-					<#list ruleInstances as ruleInstance>
-						<#assign rule = rulesRegistry.getRule(ruleInstance.getRuleKey())>
+						<#if !rule.isInstantiable()>
+							id: '${rule.getRuleKey()}Unique',
+						</#if>
 
-						{
-							acceptChildren: false,
-							iconClass: '${rule.getIcon()}',
+						label: '<div class="row"><div class="rule-title">${rule.getName(locale)}</div><div class="rule-description">${rule.getDescription(locale)}</div></div>',
+						type: '${rule.getRuleKey()}',
+						unique: ${(!rule.isInstantiable())?string}
+					}
 
-							<#if !rule.isInstantiable()>
-								id: '${rule.getRuleKey()}Unique',
-							</#if>
+					<#if rule_has_next>,</#if>
+				</#list>
+			],
 
-							label: '${rule.getName(locale)}',
-							type: '${rule.getRuleKey()}',
-							unique: ${(!rule.isInstantiable())?string}
-						}
+			fields:
+			[
+				<#list ruleInstances as ruleInstance>
+					<#assign rule = rulesRegistry.getRule(ruleInstance.getRuleKey())>
 
-						<#if ruleInstance_has_next>,</#if>
-					</#list>
-				]
+					{
+						acceptChildren: false,
+						iconClass: '${rule.getIcon()}',
+
+						<#if !rule.isInstantiable()>
+							id: '${rule.getRuleKey()}Unique',
+						</#if>
+
+						label: '${rule.getName(locale)}',
+						type: '${rule.getRuleKey()}',
+						unique: ${(!rule.isInstantiable())?string}
+					}
+
+					<#if ruleInstance_has_next>,</#if>
+				</#list>
+			]
+		}
+	).render();
+
+	saveRules = function() {
+		var userSegment = {
+			rules: []
+		};
+
+		userSegmentBuilder.get('fields').each(
+			function(item) {
+				var rule = {
+					id: item.get('id'),
+					data: [],
+					type: item.get('type')
+				};
+
+				var contentBox = item.get('contentBox');
+
+				contentBox.all('input').each(
+					function(input) {
+						rule.data.push(
+							{
+								name: input.attr('name'),
+								value: input.val()
+							}
+						);
+					}
+				);
+
+				userSegment.rules.push(rule);
 			}
-		).render();
-	</@>
-</#if>
+		);
+
+		document.<@portlet["namespace"] />fm.<@portlet["namespace"] />userSegmentRules.value = JSON.stringify(userSegment);
+		submitForm(document.<@portlet["namespace"] />fm);
+	};
+</@>
