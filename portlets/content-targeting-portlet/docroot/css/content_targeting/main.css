@@ -79,8 +79,8 @@
 
 				.toolbar {
 					display: block !important;
-					right: 0;
-					top: 5px;
+					right: -2px;
+					top: 2px;
 
 					.btn-group {
 						button {
@@ -104,13 +104,14 @@
 
 				.form-builder-field {
 					border: 1px solid #ccc;
-					border-left-width: 5px;
+					border-left-color: #999;
+					border-left-width: 2px;
 					border-radius: 0;
 					box-shadow: inherit;
-					margin: 20px;
+					margin: 30px;
 
 					.form-builder-field-content {
-						border-left: 1px dotted #ccc;
+						border-left: 2px dotted #ccc;
 						margin: -8px;
 						padding: 8px;
 
@@ -119,16 +120,19 @@
 						}
 
 						.rule-header {
-							margin: 5px;
+							margin: 0 5px;
+							position: relative;
 
 							.rule-icon {
 								font-size: 35px;
-								text-align: right;
+								position: absolute;
+								text-align: center;
+								width: 35px;
 							}
 
 							.rule-info {
 								display: inline-block;
-								margin-left: 10px;
+								margin-left: 45px;
 							}
 
 							.rule-description {
@@ -141,17 +145,20 @@
 						}
 
 						.rule-editor {
-							margin: 30px 55px;
+							margin: 30px 50px;
 						}
 					}
 				}
 
 				.form-builder-field-selected {
-					border-color: #009ae5;
-					box-shadow: 0 3px 0 #e3e3e3;
+					border-color: rgba(0, 154, 229, 0.5);
+					border-left-color: #009ae5;
+					border-left-width: 5px;
+					box-shadow: 0 3px 0 #e9e9e9;
 
 					.form-builder-field-content {
-						border-left-color: #009ae5;
+						border-left-color: rgba(0, 154, 229, 0.5);
+						padding-left: 5px;
 					}
 
 					.rule-header, .btn-group :last-child {

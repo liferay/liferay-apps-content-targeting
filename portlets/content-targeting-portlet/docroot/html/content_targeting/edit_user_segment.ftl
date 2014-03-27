@@ -89,7 +89,9 @@
 
 					return '<div> \
 						<div class="rule-header"> \
-							<i class="${rule.getIcon()} rule-icon"></i> \
+							<div class="rule-icon"> \
+								<i class="${rule.getIcon()}"></i> \
+							</div> \
 							<div class="row rule-info"> \
 								<div class="rule-title">${rule.getName(locale)}</div> \
 								<div class="rule-description">${rule.getDescription(locale)}</div> \
