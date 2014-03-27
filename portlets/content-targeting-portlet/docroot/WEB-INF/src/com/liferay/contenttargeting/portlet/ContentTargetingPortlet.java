@@ -479,11 +479,37 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			template.put("rules", rules.values());
 
+			Map<String, Object> clonedContext = _cloneTemplateContext(template);
+
 			if (userSegmentId > 0) {
 				List<RuleInstance> ruleInstances =
 					_ruleInstanceService.getRuleInstances(userSegmentId);
 
 				template.put("ruleInstances", ruleInstances);
+
+				Map<String, String> ruleInstancesTemplates =
+					new HashMap<String, String>();
+
+				for (RuleInstance ruleInstance : ruleInstances) {
+					Rule rule = _rulesRegistry.getRule(
+						ruleInstance.getRuleKey());
+
+					String ruleInstanceFormHTML = rule.getFormHTML(
+						ruleInstance, clonedContext);
+
+					ruleInstanceFormHTML = StringUtil.replace(
+						ruleInstanceFormHTML,
+						new String[]
+							{StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE},
+						new String[] {StringPool.BLANK, StringPool.BLANK});
+
+					String ruleInstanceKeyId = ruleInstance.getRuleKey().concat("_").concat(String.valueOf(ruleInstance.getRuleInstanceId()));
+
+					ruleInstancesTemplates.put(
+						ruleInstanceKeyId, ruleInstanceFormHTML);
+				}
+
+				template.put("ruleInstancesTemplates", ruleInstancesTemplates);
 
 				UserSegment userSegment =
 					_userSegmentLocalService.getUserSegment(userSegmentId);
@@ -492,8 +518,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			}
 
 			Map<String, String> ruleTemplates = new HashMap<String, String>();
-
-			Map<String, Object> clonedContext = _cloneTemplateContext(template);
 
 			for (Rule rule : rules.values()) {
 				String ruleTemplate = rule.getFormHTML(null, clonedContext);

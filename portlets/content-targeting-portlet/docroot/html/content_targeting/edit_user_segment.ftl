@@ -79,7 +79,43 @@
 			A.FormBuilder.types.${ruleKey} = A.CT${ruleKey}RuleField;
 		}
 	</#list>
-	;
+
+	<#if userSegment??>
+		<#list ruleInstancesTemplates?keys as ruleInstanceKey>
+			var CT${ruleInstanceKey}RuleField = A.Component.create({
+
+				NAME: 'ct-${ruleInstanceKey}-rule-field',
+
+				EXTENDS: A.FormBuilderField,
+
+				prototype: {
+					getHTML: function() {
+						var instance = this;
+
+						return '<div> \
+							<div class="rule-header"> \
+								<i class="${rule.getIcon()} rule-icon"></i> \
+								<div class="row rule-info"> \
+									<div class="rule-title"></div> \
+									<div class="rule-description"></div> \
+								</div> \
+							</div> \
+							<div class="rule-editor"> \
+								${ruleInstancesTemplates[ruleInstanceKey]} \
+							</div> \
+						</div>';
+					}
+				}
+
+			});
+
+			A.CT${ruleInstanceKey}RuleField = CT${ruleInstanceKey}RuleField;
+
+			if (!A.FormBuilder.types.${ruleInstanceKey}) {
+				A.FormBuilder.types.${ruleInstanceKey} = A.CT${ruleInstanceKey}RuleField;
+			}
+		</#list>
+	</#if>
 
 	var userSegmentBuilder = new A.FormBuilder(
 		{
@@ -104,29 +140,33 @@
 
 					<#if rule_has_next>,</#if>
 				</#list>
-			],
-
-			fields:
-			[
-				<#list ruleInstances as ruleInstance>
-					<#assign rule = rulesRegistry.getRule(ruleInstance.getRuleKey())>
-
-					{
-						acceptChildren: false,
-						iconClass: '${rule.getIcon()}',
-
-						<#if !rule.isInstantiable()>
-							id: '${rule.getRuleKey()}Unique',
-						</#if>
-
-						label: '${rule.getName(locale)}',
-						type: '${rule.getRuleKey()}',
-						unique: ${(!rule.isInstantiable())?string}
-					}
-
-					<#if ruleInstance_has_next>,</#if>
-				</#list>
 			]
+
+			<#if userSegment??>
+				,
+
+				fields:
+				[
+					<#list ruleInstances as ruleInstance>
+						<#assign rule = rulesRegistry.getRule(ruleInstance.getRuleKey())>
+
+						{
+							acceptChildren: false,
+							iconClass: '${rule.getIcon()}',
+
+							<#if !rule.isInstantiable()>
+								id: '${rule.getRuleKey()}Unique',
+							</#if>
+
+							label: '${rule.getName(locale)}',
+							type: '${rule.getRuleKey()}_${ruleInstance.getRuleInstanceId()}',
+							unique: ${(!rule.isInstantiable())?string}
+						}
+
+						<#if ruleInstance_has_next>,</#if>
+					</#list>
+				]
+			</#if>
 		}
 	).render();
 
