@@ -43,6 +43,30 @@
 
 <@aui["script"] use="aui-form-builder">
 
+	A.FormBuilder.prototype._onClickField = function(event) {
+        var instance = this,
+            field = A.Widget.getByNode(event.target);
+
+        instance.simulateFocusField(field, event.target);
+
+        event.stopPropagation();
+    };
+
+    A.FormBuilder.prototype.simulateFocusField = function(field, target) {
+        var instance = this,
+            lastFocusedField = instance.lastFocusedField;
+
+        if (lastFocusedField) {
+            lastFocusedField.blur();
+        }
+
+        instance.lastFocusedField = field.focus();
+
+        if (target) {
+        	target.focus();
+    	}
+	};
+
 	<#list ruleTemplates?keys as ruleKey>
 		<#assign rule=rulesRegistry.getRule(ruleKey)>
 
