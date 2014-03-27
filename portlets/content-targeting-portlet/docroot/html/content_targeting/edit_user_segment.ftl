@@ -37,7 +37,7 @@
 	<div id="formBuilder"></div>
 
 	<@aui["button-row"]>
-		<@aui["button"] type="submit" />
+		<@aui["button"] cssClass="pull-right" type="submit" />
 	</@>
 </@>
 
