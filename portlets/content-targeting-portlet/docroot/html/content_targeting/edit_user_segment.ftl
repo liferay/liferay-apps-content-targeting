@@ -52,6 +52,13 @@
 
 			EXTENDS: A.FormBuilderField,
 
+			ATTRS: {
+				acceptChildren: {
+					readOnly: true,
+					value: false
+				}
+			},
+
 			prototype: {
 				getHTML: function() {
 					var instance = this;
@@ -70,7 +77,6 @@
 					</div>';
 				}
 			}
-
 		});
 
 		A.CT${ruleKey}RuleField = CT${ruleKey}RuleField;
@@ -87,6 +93,13 @@
 				NAME: 'ct-${ruleInstanceKey}-rule-field',
 
 				EXTENDS: A.FormBuilderField,
+
+				ATTRS: {
+					acceptChildren: {
+						readOnly: true,
+						value: false
+					}
+				},
 
 				prototype: {
 					getHTML: function() {
@@ -106,7 +119,6 @@
 						</div>';
 					}
 				}
-
 			});
 
 			A.CT${ruleInstanceKey}RuleField = CT${ruleInstanceKey}RuleField;
@@ -125,8 +137,6 @@
 			[
 				<#list rules as rule>
 					{
-
-						acceptChildren: false,
 						iconClass: '${rule.getIcon()}',
 
 						<#if !rule.isInstantiable()>
@@ -151,7 +161,6 @@
 						<#assign rule = rulesRegistry.getRule(ruleInstance.getRuleKey())>
 
 						{
-							acceptChildren: false,
 							iconClass: '${rule.getIcon()}',
 
 							<#if !rule.isInstantiable()>
