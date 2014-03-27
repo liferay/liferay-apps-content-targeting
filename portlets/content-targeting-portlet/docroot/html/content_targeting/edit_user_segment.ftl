@@ -34,6 +34,16 @@
 
 	<@aui["input"] name="description" />
 
+	<div class="panel-page-menu rules-search hide">
+		<div class="search-panels">
+			<i class="icon-search"></i>
+
+			<div class="search-panels-bar">
+				<@aui["input"] cssClass="search-panels-input search-query span12" label="" name="searchPanel" type="text" />
+			</div>
+		</div>
+	</div>
+
 	<div id="formBuilder"></div>
 
 	<@aui["button-row"]>
@@ -41,30 +51,30 @@
 	</@>
 </@>
 
-<@aui["script"] use="aui-form-builder">
+<@aui["script"] use="aui-form-builder,autocomplete-base,autocomplete-filters">
 
 	A.FormBuilder.prototype._onClickField = function(event) {
-        var instance = this,
-            field = A.Widget.getByNode(event.target);
+		var instance = this,
+			field = A.Widget.getByNode(event.target);
 
-        instance.simulateFocusField(field, event.target);
+		instance.simulateFocusField(field, event.target);
 
-        event.stopPropagation();
-    };
+		event.stopPropagation();
+	};
 
-    A.FormBuilder.prototype.simulateFocusField = function(field, target) {
-        var instance = this,
-            lastFocusedField = instance.lastFocusedField;
+	A.FormBuilder.prototype.simulateFocusField = function(field, target) {
+		var instance = this,
+			lastFocusedField = instance.lastFocusedField;
 
-        if (lastFocusedField) {
-            lastFocusedField.blur();
-        }
+		if (lastFocusedField) {
+			lastFocusedField.blur();
+		}
 
-        instance.lastFocusedField = field.focus();
+		instance.lastFocusedField = field.focus();
 
-        if (target) {
-        	target.focus();
-    	}
+		if (target) {
+			target.focus();
+		}
 	};
 
 	<#list ruleTemplates?keys as ruleKey>
@@ -204,6 +214,59 @@
 			</#if>
 		}
 	).render();
+
+	A.one('.tab-pane.active').insertBefore(
+		A.one('.rules-search'),
+		A.one('.diagram-builder-fields-container')
+	).removeClass('hide');
+
+	var RuleSearch = A.Base.create('ruleSearch', A.Base, [A.AutoCompleteBase],
+		{
+			initializer: function () {
+				this._bindUIACBase();
+				this._syncUIACBase();
+			}
+		}
+	);
+
+	var ruleFilter = new RuleSearch(
+		{
+			inputNode: '.rules-search .search-panels-input',
+			minQueryLength: 0,
+			queryDelay: 0,
+
+			source: (function () {
+				var results = [];
+
+				A.all('.diagram-builder-fields-container .rule-title').each(function (node) {
+					results.push({
+						node: node,
+						searchData: node.text()
+					});
+				});
+
+	  			return results;
+			}()),
+
+			resultTextLocator: 'searchData',
+
+			resultFilters: 'phraseMatch'
+		}
+	);
+
+	ruleFilter.on(
+		'results',
+		function (e) {
+			A.all('.diagram-builder-field').addClass('hide');
+
+			A.Array.each(
+				e.results,
+				function (result) {
+					result.raw.node.ancestor('.diagram-builder-field').removeClass('hide');
+				}
+			);
+		}
+	);
 
 	saveRules = function() {
 		var userSegment = {

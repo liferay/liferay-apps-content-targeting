@@ -11,7 +11,7 @@
 				}
 
 				.tab-content {
-					padding: 10px;
+					padding: 0 20px 10px 0;
 
 					.tab-pane {
 						display: none;
@@ -21,14 +21,19 @@
 					.tab-pane:first-child {
 						display: block;
 					}
+
+					.search-panels {
+						padding: 0;
+
+						.search-panels-input {
+							border-radius: 0;
+						}
+					}
 				}
 			}
 
 			.diagram-builder-fields-container {
-				border: 1px solid #ccc;
-				border-left-width: 0;
-				border-right-width: 0;
-				margin: 0;
+				margin: 10px 0;
 				overflow: hidden;
 
 				.diagram-builder-field {
