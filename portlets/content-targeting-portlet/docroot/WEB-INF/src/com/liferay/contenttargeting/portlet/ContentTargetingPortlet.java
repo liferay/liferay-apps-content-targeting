@@ -30,6 +30,9 @@ import com.liferay.contenttargeting.util.BaseModelSearchResult;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.json.JSONArray;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -235,16 +238,20 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		UserSegment userSegment = null;
+
 		try {
 			if (userSegmentId > 0) {
-				_userSegmentService.updateUserSegment(
+				userSegment = _userSegmentService.updateUserSegment(
 					userSegmentId, nameMap, descriptionMap, serviceContext);
 			}
 			else {
-				_userSegmentService.addUserSegment(
+				userSegment = _userSegmentService.addUserSegment(
 					themeDisplay.getUserId(), nameMap, descriptionMap,
 					serviceContext);
 			}
+
+			updateRules(userSegment.getUserSegmentId(), request, response);
 
 			sendRedirect(request, response);
 		}
@@ -258,6 +265,56 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			else {
 				response.setRenderParameter(
 					"mvcPath", ContentTargetingPath.ERROR);
+			}
+		}
+	}
+
+	protected void updateRules(
+			long userSegmentId, ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		String userSegmentRules = ParamUtil.getString(
+			request, "userSegmentRules");
+
+		if (Validator.isNull(userSegmentRules)) {
+			return;
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			RuleInstance.class.getName(), request);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONObject jSONObject = JSONFactoryUtil.createJSONObject(
+			userSegmentRules);
+
+		String rules = jSONObject.getString("rules");
+
+		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(rules);
+
+		for (int i = 0; i < jSONArray.length(); i++) {
+			JSONObject jSONObjectRule = jSONArray.getJSONObject(i);
+
+			String type = jSONObjectRule.getString("type");
+
+			Rule rule = _rulesRegistry.getRule(type);
+
+			String typeSettings = rule.processRule(request, response);
+
+			long ruleInstanceId = 0;
+
+			try {
+				if (ruleInstanceId > 0) {
+					_ruleInstanceService.updateRuleInstance(
+						ruleInstanceId, typeSettings, serviceContext);
+				} else {
+					_ruleInstanceService.addRuleInstance(
+						themeDisplay.getUserId(), type, userSegmentId,
+						typeSettings, serviceContext);
+				}
+			}
+			catch (Exception e) {
 			}
 		}
 	}
