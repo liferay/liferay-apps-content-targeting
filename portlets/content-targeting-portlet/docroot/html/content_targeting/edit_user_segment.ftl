@@ -77,8 +77,9 @@
 		}
 	};
 
-	<#list ruleTemplates?keys as ruleKey>
-		<#assign rule=rulesRegistry.getRule(ruleKey)>
+	<#list ruleTemplates as ruleTemplate>
+		<#assign rule = ruleTemplate.getRule()>
+		<#assign ruleKey = rule.getRuleKey()>
 
 		var CT${ruleKey}RuleField = A.Component.create({
 
@@ -108,7 +109,7 @@
 							</div> \
 						</div> \
 						<div class="rule-editor"> \
-							${ruleTemplates[ruleKey]} \
+							${ruleTemplate.getTemplate()} \
 						</div> \
 					</div>';
 				}
@@ -123,10 +124,13 @@
 	</#list>
 
 	<#if userSegment??>
-		<#list ruleInstancesTemplates?keys as ruleInstanceKey>
-			var CT${ruleInstanceKey}RuleField = A.Component.create({
+		<#list addedRuleTemplates as addedRuleTemplate>
+			<#assign rule = addedRuleTemplate.getRule()>
+			<#assign ruleKey = rule.getRuleKey() + "_" + addedRuleTemplate.getInstanceId()>
 
-				NAME: 'ct-${ruleInstanceKey}-rule-field',
+			var CT${ruleKey}RuleField = A.Component.create({
+
+				NAME: 'ct-${ruleKey}-rule-field',
 
 				EXTENDS: A.FormBuilderField,
 
@@ -145,22 +149,22 @@
 							<div class="rule-header"> \
 								<i class="${rule.getIcon()} rule-icon"></i> \
 								<div class="row rule-info"> \
-									<div class="rule-title"></div> \
-									<div class="rule-description"></div> \
+									<div class="rule-title">${rule.getName(locale)}</div> \
+									<div class="rule-description">${rule.getDescription(locale)}</div> \
 								</div> \
 							</div> \
 							<div class="rule-editor"> \
-								${ruleInstancesTemplates[ruleInstanceKey]} \
+								${addedRuleTemplate.getTemplate()} \
 							</div> \
 						</div>';
 					}
 				}
 			});
 
-			A.CT${ruleInstanceKey}RuleField = CT${ruleInstanceKey}RuleField;
+			A.CT${ruleKey}RuleField = CT${ruleKey}RuleField;
 
-			if (!A.FormBuilder.types.${ruleInstanceKey}) {
-				A.FormBuilder.types.${ruleInstanceKey} = A.CT${ruleInstanceKey}RuleField;
+			if (!A.FormBuilder.types.${ruleKey}) {
+				A.FormBuilder.types.${ruleKey} = A.CT${ruleKey}RuleField;
 			}
 		</#list>
 	</#if>

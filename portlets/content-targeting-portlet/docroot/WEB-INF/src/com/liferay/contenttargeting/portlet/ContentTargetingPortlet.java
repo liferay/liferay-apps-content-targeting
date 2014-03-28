@@ -20,9 +20,9 @@ import com.liferay.contenttargeting.api.model.RulesRegistry;
 import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.model.UserSegment;
+import com.liferay.contenttargeting.portlet.util.RuleTemplate;
 import com.liferay.contenttargeting.service.CampaignLocalService;
 import com.liferay.contenttargeting.service.CampaignService;
-import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
@@ -33,18 +33,16 @@ import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -59,6 +57,7 @@ import freemarker.template.TemplateHashModel;
 
 import java.text.Format;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -167,7 +166,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		long campaignId = ParamUtil.getLong(request, "campaignId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			request, "name");
+				request, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
@@ -265,56 +264,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			else {
 				response.setRenderParameter(
 					"mvcPath", ContentTargetingPath.ERROR);
-			}
-		}
-	}
-
-	protected void updateRules(
-			long userSegmentId, ActionRequest request, ActionResponse response)
-		throws Exception {
-
-		String userSegmentRules = ParamUtil.getString(
-			request, "userSegmentRules");
-
-		if (Validator.isNull(userSegmentRules)) {
-			return;
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			RuleInstance.class.getName(), request);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		JSONObject jSONObject = JSONFactoryUtil.createJSONObject(
-			userSegmentRules);
-
-		String rules = jSONObject.getString("rules");
-
-		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(rules);
-
-		for (int i = 0; i < jSONArray.length(); i++) {
-			JSONObject jSONObjectRule = jSONArray.getJSONObject(i);
-
-			String type = jSONObjectRule.getString("type");
-
-			Rule rule = _rulesRegistry.getRule(type);
-
-			String typeSettings = rule.processRule(request, response);
-
-			long ruleInstanceId = 0;
-
-			try {
-				if (ruleInstanceId > 0) {
-					_ruleInstanceService.updateRuleInstance(
-						ruleInstanceId, typeSettings, serviceContext);
-				} else {
-					_ruleInstanceService.addRuleInstance(
-						themeDisplay.getUserId(), type, userSegmentId,
-						typeSettings, serviceContext);
-				}
-			}
-			catch (Exception e) {
 			}
 		}
 	}
@@ -479,37 +428,32 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			template.put("rules", rules.values());
 
-			Map<String, Object> clonedContext = _cloneTemplateContext(template);
-
 			if (userSegmentId > 0) {
 				List<RuleInstance> ruleInstances =
 					_ruleInstanceService.getRuleInstances(userSegmentId);
 
 				template.put("ruleInstances", ruleInstances);
 
-				Map<String, String> ruleInstancesTemplates =
-					new HashMap<String, String>();
+				List<RuleTemplate> addedRuleTemplates =
+					new ArrayList<RuleTemplate>();
 
 				for (RuleInstance ruleInstance : ruleInstances) {
 					Rule rule = _rulesRegistry.getRule(
 						ruleInstance.getRuleKey());
 
-					String ruleInstanceFormHTML = rule.getFormHTML(
-						ruleInstance, clonedContext);
+					RuleTemplate ruleTemplate = new RuleTemplate();
 
-					ruleInstanceFormHTML = StringUtil.replace(
-						ruleInstanceFormHTML,
-						new String[]
-							{StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE},
-						new String[] {StringPool.BLANK, StringPool.BLANK});
+					ruleTemplate.setInstanceId(
+						ruleInstance.getRuleInstanceId());
+					ruleTemplate.setRule(rule);
+					ruleTemplate.setTemplate(
+						rule.getFormHTML(
+							ruleInstance, _cloneTemplateContext(template)));
 
-					String ruleInstanceKeyId = ruleInstance.getRuleKey().concat("_").concat(String.valueOf(ruleInstance.getRuleInstanceId()));
-
-					ruleInstancesTemplates.put(
-						ruleInstanceKeyId, ruleInstanceFormHTML);
+					addedRuleTemplates.add(ruleTemplate);
 				}
 
-				template.put("ruleInstancesTemplates", ruleInstancesTemplates);
+				template.put("addedRuleTemplates", addedRuleTemplates);
 
 				UserSegment userSegment =
 					_userSegmentLocalService.getUserSegment(userSegmentId);
@@ -517,22 +461,87 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				template.put("userSegment", userSegment);
 			}
 
-			Map<String, String> ruleTemplates = new HashMap<String, String>();
+			List<RuleTemplate> ruleTemplates = new ArrayList<RuleTemplate>();
 
 			for (Rule rule : rules.values()) {
-				String ruleTemplate = rule.getFormHTML(null, clonedContext);
+				RuleTemplate ruleTemplate = new RuleTemplate();
 
-				ruleTemplate = StringUtil.replace(
-					ruleTemplate,
-					new String[]
-						{StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE},
-					new String[] {StringPool.BLANK, StringPool.BLANK});
+				ruleTemplate.setRule(rule);
+				ruleTemplate.setTemplate(
+					rule.getFormHTML(null, _cloneTemplateContext(template)));
 
-				ruleTemplates.put(rule.getRuleKey(), ruleTemplate);
+				ruleTemplates.add(ruleTemplate);
 			}
 
 			template.put("ruleTemplates", ruleTemplates);
 		}
+	}
+
+	protected void updateRules(
+			long userSegmentId, ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		String userSegmentRules = ParamUtil.getString(
+			request, "userSegmentRules");
+
+		if (Validator.isNull(userSegmentRules)) {
+			return;
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			RuleInstance.class.getName(), request);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONObject jSONObject = JSONFactoryUtil.createJSONObject(
+			userSegmentRules);
+
+		String rules = jSONObject.getString("rules");
+
+		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(rules);
+
+		for (int i = 0; i < jSONArray.length(); i++) {
+			JSONObject jSONObjectRule = jSONArray.getJSONObject(i);
+
+			long ruleInstanceId = 0;
+			String type = jSONObjectRule.getString("type");
+
+			if (type.contains(StringPool.UNDERLINE)) {
+				String[] ids = type.split(StringPool.UNDERLINE);
+
+				ruleInstanceId = GetterUtil.getLong(ids[1]);
+				type = ids[0];
+			}
+
+			Rule rule = _rulesRegistry.getRule(type);
+
+			String typeSettings = rule.processRule(request, response);
+
+			try {
+				if (ruleInstanceId > 0) {
+					_ruleInstanceService.updateRuleInstance(
+						ruleInstanceId, typeSettings, serviceContext);
+				}
+				else {
+					_ruleInstanceService.addRuleInstance(
+						themeDisplay.getUserId(), type, userSegmentId,
+						typeSettings, serviceContext);
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+	}
+
+	private Map<String, Object> _cloneTemplateContext(Template template) {
+		Map<String, Object> context = new HashMap<String, Object>();
+
+		for (String key : template.getKeys()) {
+			context.put(key, template.get(key));
+		}
+
+		return context;
 	}
 
 	private Date _getDate(PortletRequest portletRequest, String paramPrefix) {

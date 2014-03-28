@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 
 import freemarker.cache.ClassTemplateLoader;
@@ -30,7 +31,6 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -54,6 +54,14 @@ public abstract class BaseRule implements Rule {
 	}
 
 	@Override
+	public String getDescription(Locale locale) {
+		String className = getClass().getName();
+
+		return ResourceActionsUtil.getModelResource(
+			locale, className.concat(".description"));
+	}
+
+	@Override
 	public String getFormHTML(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
@@ -63,6 +71,11 @@ public abstract class BaseRule implements Rule {
 			populateContext(ruleInstance, context);
 
 			content = parseTemplate(getClass(), _FORM_TEMPLATE_PATH, context);
+
+			content = StringUtil.replace(
+				content,
+				new String[]{StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE},
+				new String[]{StringPool.BLANK, StringPool.BLANK});
 		}
 		catch (Exception e) {
 			_log.error(
@@ -72,14 +85,6 @@ public abstract class BaseRule implements Rule {
 		}
 
 		return content;
-	}
-
-	@Override
-	public String getDescription(Locale locale) {
-		String className = getClass().getName();
-
-		return ResourceActionsUtil.getModelResource(
-			locale, className.concat(".description"));
 	}
 
 	@Override
