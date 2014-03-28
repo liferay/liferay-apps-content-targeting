@@ -77,96 +77,14 @@
 		}
 	};
 
-	<#list ruleTemplates as ruleTemplate>
-		<#assign rule = ruleTemplate.getRule()>
-		<#assign ruleKey = rule.getRuleKey()>
+	<#assign templates = ruleTemplates>
 
-		var CT${ruleKey}RuleField = A.Component.create({
-
-			NAME: 'ct-${ruleKey}-rule-field',
-
-			EXTENDS: A.FormBuilderField,
-
-			ATTRS: {
-				acceptChildren: {
-					readOnly: true,
-					value: false
-				}
-			},
-
-			prototype: {
-				getHTML: function() {
-					var instance = this;
-
-					return '<div> \
-						<div class="rule-header"> \
-							<div class="rule-icon"> \
-								<i class="${rule.getIcon()}"></i> \
-							</div> \
-							<div class="row rule-info"> \
-								<div class="rule-title">${rule.getName(locale)}</div> \
-								<div class="rule-description">${rule.getDescription(locale)}</div> \
-							</div> \
-						</div> \
-						<div class="rule-editor"> \
-							${ruleTemplate.getTemplate()} \
-						</div> \
-					</div>';
-				}
-			}
-		});
-
-		A.CT${ruleKey}RuleField = CT${ruleKey}RuleField;
-
-		if (!A.FormBuilder.types.${ruleKey}) {
-			A.FormBuilder.types.${ruleKey} = A.CT${ruleKey}RuleField;
-		}
-	</#list>
+	<#include "rule_field_template.ftl" />
 
 	<#if userSegment??>
-		<#list addedRuleTemplates as addedRuleTemplate>
-			<#assign rule = addedRuleTemplate.getRule()>
-			<#assign ruleKey = rule.getRuleKey() + "_" + addedRuleTemplate.getInstanceId()>
+		<#assign templates = addedRuleTemplates>
 
-			var CT${ruleKey}RuleField = A.Component.create({
-
-				NAME: 'ct-${ruleKey}-rule-field',
-
-				EXTENDS: A.FormBuilderField,
-
-				ATTRS: {
-					acceptChildren: {
-						readOnly: true,
-						value: false
-					}
-				},
-
-				prototype: {
-					getHTML: function() {
-						var instance = this;
-
-						return '<div> \
-							<div class="rule-header"> \
-								<i class="${rule.getIcon()} rule-icon"></i> \
-								<div class="row rule-info"> \
-									<div class="rule-title">${rule.getName(locale)}</div> \
-									<div class="rule-description">${rule.getDescription(locale)}</div> \
-								</div> \
-							</div> \
-							<div class="rule-editor"> \
-								${addedRuleTemplate.getTemplate()} \
-							</div> \
-						</div>';
-					}
-				}
-			});
-
-			A.CT${ruleKey}RuleField = CT${ruleKey}RuleField;
-
-			if (!A.FormBuilder.types.${ruleKey}) {
-				A.FormBuilder.types.${ruleKey} = A.CT${ruleKey}RuleField;
-			}
-		</#list>
+		<#include "rule_field_template.ftl" />
 	</#if>
 
 	var userSegmentBuilder = new A.FormBuilder(

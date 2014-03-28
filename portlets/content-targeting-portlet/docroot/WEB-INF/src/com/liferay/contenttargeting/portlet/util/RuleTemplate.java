@@ -15,11 +15,23 @@
 package com.liferay.contenttargeting.portlet.util;
 
 import com.liferay.contenttargeting.api.model.Rule;
+import com.liferay.portal.kernel.util.StringPool;
 
 /**
  * @author Eudaldo Alonso
  */
 public class RuleTemplate {
+
+	public String getTemplateKey() {
+		String templateKey = _rule.getRuleKey();
+
+		if (_instanceId > 0) {
+			templateKey = templateKey.concat(StringPool.UNDERLINE).concat(
+				String.valueOf(_instanceId));
+		}
+
+		return templateKey;
+	}
 
 	public long getInstanceId() {
 		return _instanceId;
