@@ -71,11 +71,6 @@ public abstract class BaseRule implements Rule {
 			populateContext(ruleInstance, context);
 
 			content = parseTemplate(getClass(), _FORM_TEMPLATE_PATH, context);
-
-			content = StringUtil.replace(
-				content,
-				new String[]{StringPool.RETURN_NEW_LINE, StringPool.NEW_LINE},
-				new String[]{StringPool.BLANK, StringPool.BLANK});
 		}
 		catch (Exception e) {
 			_log.error(

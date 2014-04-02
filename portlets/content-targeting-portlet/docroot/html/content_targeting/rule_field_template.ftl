@@ -20,9 +20,6 @@
 
 	var CT${templateKey}RuleFieldEditor = '${template.getTemplate()}';
 
-	CT${templateKey}RuleFieldEditor = CT${templateKey}RuleFieldEditor.replace(/<!\[CDATA\[/g, '<![CDATA[\n');
-	CT${templateKey}RuleFieldEditor = CT${templateKey}RuleFieldEditor.replace(/\/\/ ]]/g, '\n// ]]');
-
 	var CT${templateKey}RuleField = A.Component.create({
 
 		NAME: 'ct-${templateKey}-rule-field',
