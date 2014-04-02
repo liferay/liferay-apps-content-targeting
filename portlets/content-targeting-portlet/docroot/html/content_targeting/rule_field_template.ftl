@@ -18,6 +18,11 @@
 	<#assign rule = template.getRule()>
 	<#assign templateKey = template.getTemplateKey()>
 
+	var CT${templateKey}RuleFieldEditor = '${template.getTemplate()}';
+
+	CT${templateKey}RuleFieldEditor = CT${templateKey}RuleFieldEditor.replace(/<!\[CDATA\[/g, '<![CDATA[\n');
+	CT${templateKey}RuleFieldEditor = CT${templateKey}RuleFieldEditor.replace(/\/\/ ]]/g, '\n// ]]');
+
 	var CT${templateKey}RuleField = A.Component.create({
 
 		NAME: 'ct-${templateKey}-rule-field',
@@ -35,20 +40,25 @@
 			getHTML: function() {
 				var instance = this;
 
-				return '<div> \
-					<div class="rule-header"> \
-						<div class="rule-icon"> \
-							<i class="${rule.getIcon()}"></i> \
-						</div> \
-						<div class="row rule-info"> \
-							<div class="rule-title">${rule.getName(locale)}</div> \
-							<div class="rule-description">${rule.getDescription(locale)}</div> \
-						</div> \
-					</div> \
-					<div class="rule-editor"> \
-						${template.getTemplate()} \
-					</div> \
-				</div>';
+				return A.Lang.sub(
+					A.FormBuilder.CTRuleFieldTemplate,
+					{
+						description: '${rule.getDescription(locale)}',
+						editor: CT${templateKey}RuleFieldEditor,
+						icon: '${rule.getIcon()}',
+						name: '${rule.getName(locale)}',
+					}
+				);
+			},
+
+			getNode: function(){
+	            var instance = this,
+	            	templateContainer = A.Node.create('<div></div>');
+
+	            templateContainer.plug(A.Plugin.ParseContent);
+	            templateContainer.setContent(instance.getHTML());
+
+	            return templateContainer;
 			}
 		}
 	});

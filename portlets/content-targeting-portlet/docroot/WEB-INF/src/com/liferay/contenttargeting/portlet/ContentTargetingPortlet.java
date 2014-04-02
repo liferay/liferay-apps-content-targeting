@@ -40,6 +40,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -426,6 +427,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			Map<String, Rule> rules = _rulesRegistry.getRules();
 
+			themeDisplay.setIsolated(true);
+
 			template.put("rules", rules.values());
 
 			if (userSegmentId > 0) {
@@ -447,8 +450,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						ruleInstance.getRuleInstanceId());
 					ruleTemplate.setRule(rule);
 					ruleTemplate.setTemplate(
-						rule.getFormHTML(
-							ruleInstance, _cloneTemplateContext(template)));
+						HtmlUtil.escapeJS(
+							rule.getFormHTML(
+								ruleInstance, _cloneTemplateContext(template))));
 
 					addedRuleTemplates.add(ruleTemplate);
 				}
@@ -468,12 +472,15 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				ruleTemplate.setRule(rule);
 				ruleTemplate.setTemplate(
-					rule.getFormHTML(null, _cloneTemplateContext(template)));
+					HtmlUtil.escapeJS(
+						rule.getFormHTML(null, _cloneTemplateContext(template))));
 
 				ruleTemplates.add(ruleTemplate);
 			}
 
 			template.put("ruleTemplates", ruleTemplates);
+
+			themeDisplay.setIsolated(false);
 		}
 	}
 

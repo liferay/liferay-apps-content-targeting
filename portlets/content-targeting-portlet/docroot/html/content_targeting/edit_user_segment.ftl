@@ -51,7 +51,20 @@
 	</@>
 </@>
 
-<@aui["script"] use="aui-form-builder,autocomplete-base,autocomplete-filters">
+<@aui["script"] use="aui-form-builder,aui-parse-content,autocomplete-base,autocomplete-filters">
+
+	A.FormBuilder.CTRuleFieldTemplate = '<div>' +
+		'<div class="rule-header">' +
+			'<div class="rule-icon">' +
+				'<i class="{icon}"></i>' +
+			'</div>' +
+			'<div class="row rule-info">' +
+				'<div class="rule-title">{name}</div>' +
+				'<div class="rule-description">{description}</div>' +
+			'</div>' +
+		'</div>' +
+		'<div class="rule-editor">{editor}</div>' +
+	'</div>';
 
 	A.FormBuilder.prototype._onClickField = function(event) {
 		var instance = this,
