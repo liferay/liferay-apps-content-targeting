@@ -218,7 +218,7 @@
 
 				var contentBox = item.get('contentBox');
 
-				contentBox.all('input').each(
+				contentBox.all('input, select, textarea').each(
 					function(input) {
 						rule.data.push(
 							{
