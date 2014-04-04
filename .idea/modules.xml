@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/hooks/analytics-hook/analytics-hook.iml" filepath="$PROJECT_DIR$/hooks/analytics-hook/analytics-hook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/analytics-processor-shared/analytics-processor-shared.iml" filepath="$PROJECT_DIR$/shared/analytics-processor-shared/analytics-processor-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/anonymous-users-shared/anonymous-users-shared.iml" filepath="$PROJECT_DIR$/shared/anonymous-users-shared/anonymous-users-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/arquillian-plugin-deployer/arquillian-plugin-deployer.iml" filepath="$PROJECT_DIR$/shared/arquillian-plugin-deployer/arquillian-plugin-deployer.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-core/content-targeting-core.iml" filepath="$PROJECT_DIR$/shared/content-targeting-core/content-targeting-core.iml" />

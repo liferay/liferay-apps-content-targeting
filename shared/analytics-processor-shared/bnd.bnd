@@ -1,0 +1,26 @@
+Bundle-ClassPath: .,WEB-INF/lib/util-java.jar
+Bundle-Name: Analytics Processor
+Include-Resource: classes,\
+	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
+	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
+Import-Package:\
+	com.liferay.anonymoususers.model,\
+	com.liferay.anonymoususers.service,\
+	com.liferay.anonymoususers.service.messaging,\
+	com.liferay.portal.json,\
+	com.liferay.portal.model.impl,\
+	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.language,\
+	com.liferay.portal.kernel.lar,\
+	com.liferay.portal.kernel.servlet,\
+	com.liferay.portal.kernel.servlet.filters.invoker,\
+	javax.portlet,\
+	javax.el,\
+	javax.servlet,\
+	javax.servlet.http,\
+	*;resolution:="optional"
+Private-Package: \
+	com.liferay.analyticsprocessor.*
+Service-Component: \
+	com.liferay.analyticsprocessor.*
+Web-ContextPath: /analytics-processor

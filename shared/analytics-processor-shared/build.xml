@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<project name="simple-analytics-provider" basedir="." default="compile">
+	<property name="plugin.version" value="1" />
+
+	<property name="import.shared" value="anonymous-users-shared" />
+
+	<import file="../../build-common-osgi-plugin.xml" />
+</project>
