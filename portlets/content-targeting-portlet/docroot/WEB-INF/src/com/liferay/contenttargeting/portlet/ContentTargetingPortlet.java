@@ -167,7 +167,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		long campaignId = ParamUtil.getLong(request, "campaignId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				request, "name");
+			request, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
@@ -427,60 +427,67 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			Map<String, Rule> rules = _rulesRegistry.getRules();
 
-			themeDisplay.setIsolated(true);
+			boolean isolated = themeDisplay.isIsolated();
 
-			template.put("rules", rules.values());
+			try {
+				themeDisplay.setIsolated(true);
 
-			if (userSegmentId > 0) {
-				List<RuleInstance> ruleInstances =
-					_ruleInstanceService.getRuleInstances(userSegmentId);
+				template.put("rules", rules.values());
 
-				template.put("ruleInstances", ruleInstances);
+				if (userSegmentId > 0) {
+					List<RuleInstance> ruleInstances =
+						_ruleInstanceService.getRuleInstances(userSegmentId);
 
-				List<RuleTemplate> addedRuleTemplates =
-					new ArrayList<RuleTemplate>();
+					template.put("ruleInstances", ruleInstances);
 
-				for (RuleInstance ruleInstance : ruleInstances) {
-					Rule rule = _rulesRegistry.getRule(
-						ruleInstance.getRuleKey());
+					List<RuleTemplate> addedRuleTemplates =
+						new ArrayList<RuleTemplate>();
 
-					RuleTemplate ruleTemplate = new RuleTemplate();
+					for (RuleInstance ruleInstance : ruleInstances) {
+						Rule rule = _rulesRegistry.getRule(
+							ruleInstance.getRuleKey());
 
-					ruleTemplate.setInstanceId(
-						ruleInstance.getRuleInstanceId());
-					ruleTemplate.setRule(rule);
-					ruleTemplate.setTemplate(
-						HtmlUtil.escapeJS(
-							rule.getFormHTML(
-								ruleInstance, _cloneTemplateContext(template))));
+						RuleTemplate ruleTemplate = new RuleTemplate();
 
-					addedRuleTemplates.add(ruleTemplate);
+						String html = rule.getFormHTML(
+							ruleInstance, _cloneTemplateContext(template));
+
+						ruleTemplate.setInstanceId(
+							ruleInstance.getRuleInstanceId());
+						ruleTemplate.setRule(rule);
+						ruleTemplate.setTemplate(HtmlUtil.escapeJS(html));
+
+						addedRuleTemplates.add(ruleTemplate);
+					}
+
+					template.put("addedRuleTemplates", addedRuleTemplates);
+
+					UserSegment userSegment =
+						_userSegmentLocalService.getUserSegment(userSegmentId);
+
+					template.put("userSegment", userSegment);
 				}
 
-				template.put("addedRuleTemplates", addedRuleTemplates);
+				List<RuleTemplate> ruleTemplates =
+					new ArrayList<RuleTemplate>();
 
-				UserSegment userSegment =
-					_userSegmentLocalService.getUserSegment(userSegmentId);
+				for (Rule rule : rules.values()) {
+					RuleTemplate ruleTemplate = new RuleTemplate();
 
-				template.put("userSegment", userSegment);
+					String html = rule.getFormHTML(
+						null, _cloneTemplateContext(template));
+
+					ruleTemplate.setRule(rule);
+					ruleTemplate.setTemplate(HtmlUtil.escapeJS(html));
+
+					ruleTemplates.add(ruleTemplate);
+				}
+
+				template.put("ruleTemplates", ruleTemplates);
 			}
-
-			List<RuleTemplate> ruleTemplates = new ArrayList<RuleTemplate>();
-
-			for (Rule rule : rules.values()) {
-				RuleTemplate ruleTemplate = new RuleTemplate();
-
-				ruleTemplate.setRule(rule);
-				ruleTemplate.setTemplate(
-					HtmlUtil.escapeJS(
-						rule.getFormHTML(null, _cloneTemplateContext(template))));
-
-				ruleTemplates.add(ruleTemplate);
+			finally {
+				themeDisplay.setIsolated(isolated);
 			}
-
-			template.put("ruleTemplates", ruleTemplates);
-
-			themeDisplay.setIsolated(false);
 		}
 	}
 

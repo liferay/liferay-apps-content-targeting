@@ -22,17 +22,6 @@ import com.liferay.portal.kernel.util.StringPool;
  */
 public class RuleTemplate {
 
-	public String getTemplateKey() {
-		String templateKey = _rule.getRuleKey();
-
-		if (_instanceId > 0) {
-			templateKey = templateKey.concat(StringPool.UNDERLINE).concat(
-				String.valueOf(_instanceId));
-		}
-
-		return templateKey;
-	}
-
 	public long getInstanceId() {
 		return _instanceId;
 	}
@@ -43,6 +32,17 @@ public class RuleTemplate {
 
 	public String getTemplate() {
 		return _template;
+	}
+
+	public String getTemplateKey() {
+		String templateKey = _rule.getRuleKey();
+
+		if (_instanceId > 0) {
+			templateKey = templateKey.concat(StringPool.UNDERLINE).concat(
+				String.valueOf(_instanceId));
+		}
+
+		return templateKey;
 	}
 
 	public void setInstanceId(long instanceId) {

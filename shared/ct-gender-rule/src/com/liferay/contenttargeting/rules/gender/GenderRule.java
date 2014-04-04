@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
