@@ -194,24 +194,6 @@ public class IpGeocodeRuleTest extends PowerMockito {
 			_ipGeocodeRule.evaluate(_ruleInstance, _anonymousUser));
 	}
 
-	private JSONObject _generateJSONUSA() {
-		JSONObject jsonObj = new JSONObjectImpl();
-
-		jsonObj.put("ip", "173.194.41.248");
-		jsonObj.put("country_code", "US");
-		jsonObj.put("country_name", "United States");
-		jsonObj.put("region_code", "CA");
-		jsonObj.put("region_name", "California");
-		jsonObj.put("city", "Mountain View");
-		jsonObj.put("zipcode", "94043");
-		jsonObj.put("latitude", 37.4192);
-		jsonObj.put("longitude", -122.0574);
-		jsonObj.put("metro_code", "807");
-		jsonObj.put("area_code", "650");
-
-		return jsonObj;
-	}
-
 	private JSONObject _generateJSONSpain() {
 		JSONObject jsonObj = new JSONObjectImpl();
 
@@ -226,6 +208,24 @@ public class IpGeocodeRuleTest extends PowerMockito {
 		jsonObj.put("longitude", -3.6922);
 		jsonObj.put("metro_code", "");
 		jsonObj.put("area_code", "");
+
+		return jsonObj;
+	}
+
+	private JSONObject _generateJSONUSA() {
+		JSONObject jsonObj = new JSONObjectImpl();
+
+		jsonObj.put("ip", "173.194.41.248");
+		jsonObj.put("country_code", "US");
+		jsonObj.put("country_name", "United States");
+		jsonObj.put("region_code", "CA");
+		jsonObj.put("region_name", "California");
+		jsonObj.put("city", "Mountain View");
+		jsonObj.put("zipcode", "94043");
+		jsonObj.put("latitude", 37.4192);
+		jsonObj.put("longitude", -122.0574);
+		jsonObj.put("metro_code", "807");
+		jsonObj.put("area_code", "650");
 
 		return jsonObj;
 	}
