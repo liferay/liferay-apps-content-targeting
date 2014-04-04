@@ -13,3 +13,12 @@
  * details.
  */
 --%>
+
+<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/analytics.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
+
+<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/integrations/liferay-analytics.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
+
+<script>
+	analytics.addIntegration(Liferay.Analytics);
+	analytics.initialize(['LiferayAnalytics']);
+</script>

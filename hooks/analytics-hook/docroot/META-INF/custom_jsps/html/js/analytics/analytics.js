@@ -13437,6 +13437,7 @@ var defaults = require('defaults');
 var each = require('each');
 var Emitter = require('emitter');
 var group = require('./group');
+var integration = require('integration');
 var is = require('is');
 var isEmail = require('is-email');
 var isMeta = require('is-meta');
@@ -13613,6 +13614,7 @@ this._callback(fn);
 return this;
 };
 
+Analytics.prototype.integration = integration;
 
 /**
  * Return the current user.
