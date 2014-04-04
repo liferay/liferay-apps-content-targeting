@@ -3,7 +3,7 @@
 <project name="simple-analytics-provider" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="import.shared" value="anonymous-users-shared" />
+	<property name="import.shared" value="anonymous-users-shared, service-utils-shared" />
 
 	<import file="../../build-common-osgi-plugin.xml" />
 </project>
