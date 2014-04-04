@@ -51,19 +51,6 @@
 		>
 			<@liferay_ui["icon-menu"]>
 				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.UPDATE)>
-					<@portlet["renderURL"] var="manageRulesURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.MANAGE_RULES}" />
-						<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
-						<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-					</@>
-
-					<@liferay_ui["icon"]
-						image="services"
-						message="manage-rules"
-						method="get"
-						url="${manageRulesURL}"
-					/>
-
 					<@portlet["renderURL"] var="editUserSegmentURL">
 						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
 						<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />

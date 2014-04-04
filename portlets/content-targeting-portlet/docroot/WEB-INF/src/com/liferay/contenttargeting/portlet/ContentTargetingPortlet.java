@@ -94,24 +94,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
-	public void deleteRuleInstance(
-			ActionRequest request, ActionResponse response)
-		throws Exception {
-
-		long ruleInstanceId = ParamUtil.getLong(request, "ruleInstanceId");
-
-		try {
-			_ruleInstanceService.deleteRuleInstance(ruleInstanceId);
-
-			sendRedirect(request, response);
-		}
-		catch (Exception e) {
-			SessionErrors.add(request, e.getClass().getName());
-
-			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
-		}
-	}
-
 	public void deleteUserSegment(
 			ActionRequest request, ActionResponse response)
 		throws Exception {
@@ -164,8 +146,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			CampaignLocalService.class, bundle.getBundleContext());
 		_campaignService = ServiceTrackerUtil.getService(
 			CampaignService.class, bundle.getBundleContext());
-		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
-			RuleInstanceLocalService.class, bundle.getBundleContext());
 		_ruleInstanceService = ServiceTrackerUtil.getService(
 			RuleInstanceService.class, bundle.getBundleContext());
 		_rulesRegistry = ServiceTrackerUtil.getService(
@@ -228,59 +208,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			if (e instanceof PrincipalException) {
 				response.setRenderParameter(
 					"mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
-			}
-			else {
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.ERROR);
-			}
-		}
-	}
-
-	public void updateRuleInstance(
-			ActionRequest request, ActionResponse response)
-		throws Exception {
-
-		long ruleInstanceId = ParamUtil.getLong(request, "ruleInstanceId");
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			RuleInstance.class.getName(), request);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		String ruleKey = ParamUtil.getString(request, "ruleKey");
-
-		Rule rule = _rulesRegistry.getRule(ruleKey);
-
-		String typeSettings = rule.processRule(request, response);
-
-		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
-
-		try {
-			if (ruleInstanceId > 0) {
-				_ruleInstanceService.updateRuleInstance(
-						ruleInstanceId, typeSettings, serviceContext);
-			}
-			else {
-				_ruleInstanceService.addRuleInstance(
-						themeDisplay.getUserId(), ruleKey, userSegmentId,
-						typeSettings, serviceContext);
-			}
-
-			String portletId = PortalUtil.getPortletId(request);
-
-			SessionMessages.add(
-				request, portletId + SessionMessages.KEY_SUFFIX_REFRESH_PORTLET,
-				portletId);
-
-			sendRedirect(request, response);
-		}
-		catch (Exception e) {
-			SessionErrors.add(request, e.getClass().getName());
-
-			if (e instanceof PrincipalException) {
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
 			}
 			else {
 				response.setRenderParameter(
@@ -481,47 +408,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			template.put("userSegments", userSegments);
 		}
-		else if (path.equals(ContentTargetingPath.EDIT_RULE_INSTANCE)) {
-			template.put("ruleInstanceClass", RuleInstance.class);
-
-			RuleInstance ruleInstance = null;
-
-			long ruleInstanceId = ParamUtil.getLong(
-				portletRequest, "ruleInstanceId");
-
-			String ruleKey;
-
-			if (ruleInstanceId > 0) {
-				ruleInstance = _ruleInstanceLocalService.getRuleInstance(
-					ruleInstanceId);
-
-				ruleKey = ruleInstance.getRuleKey();
-
-				template.put("ruleInstance", ruleInstance);
-			}
-			else {
-				ruleKey = ParamUtil.getString(portletRequest, "ruleKey");
-			}
-
-			Rule rule = _rulesRegistry.getRule(ruleKey);
-
-			String ruleFormHTML = rule.getFormHTML(
-				ruleInstance, _cloneTemplateContext(template));
-
-			template.put("ruleFormHTML", ruleFormHTML);
-			template.put("ruleInstanceId", ruleInstanceId);
-			template.put("ruleKey", ruleKey);
-			template.put(
-				"userSegmentId",
-				ParamUtil.getLong(portletRequest, "userSegmentId"));
-		}
-		else if (path.equals(
-					ContentTargetingPath.EDIT_RULE_INSTANCE_REDIRECT)) {
-
-			String ruleKey = ParamUtil.getString(portletRequest, "ruleKey");
-
-			template.put("ruleKey", ruleKey);
-		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
 			long userSegmentId = ParamUtil.getLong(
 				portletRequest, "userSegmentId");
@@ -546,16 +432,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				template.put("userSegment", userSegment);
 			}
 		}
-	}
-
-	private Map<String, Object> _cloneTemplateContext(Template template) {
-		Map<String, Object> context = new HashMap<String, Object>();
-
-		for (String key : template.getKeys()) {
-			context.put(key, template.get(key));
-		}
-
-		return context;
 	}
 
 	private Date _getDate(PortletRequest portletRequest, String paramPrefix) {
@@ -592,12 +468,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return calendar.getTime();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		ContentTargetingPortlet.class);
-
 	private CampaignLocalService _campaignLocalService;
 	private CampaignService _campaignService;
-	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RuleInstanceService _ruleInstanceService;
 	private RulesRegistry _rulesRegistry;
 	private UserSegmentLocalService _userSegmentLocalService;
