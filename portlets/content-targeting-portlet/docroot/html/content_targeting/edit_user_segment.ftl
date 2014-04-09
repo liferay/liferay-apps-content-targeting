@@ -34,206 +34,100 @@
 
 	<@aui["input"] name="description" />
 
-	<div class="panel-page-menu rules-search hide">
-		<div class="search-panels">
-			<i class="icon-search"></i>
+	<@aui["field-wrapper"] label="Rules">
+		<div id="formBuilderBB" class="yui3-widget component diagram-builder form-builder liferayctformbuilder">
+			<div id="formBuilderCB" class="diagram-builder-content form-builder-content">
+				<div class="tabbable">
+					<div class="tabbable-content">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="javascript:;">Add node</a></li>
+							<li><a href="javascript:;">Settings</a></li>
+						</ul>
+						<div class="tab-content">
+							<div class="tab-pane">
+								<div class="panel-page-menu hide" id="formBuilderSB">
+									<div class="search-panels">
+										<i class="icon-search"></i>
 
-			<div class="search-panels-bar">
-				<@aui["input"] cssClass="search-panels-input search-query span12" label="" name="searchPanel" type="text" />
+										<div class="search-panels-bar">
+											<@aui["input"] cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
+										</div>
+									</div>
+								</div>
+
+								<ul class="diagram-builder-fields-container form-builder-fields-container clearfix">
+									<#list ruleTemplates as template>
+										<#assign rule = template.getRule()>
+										<#assign templateKey = template.getTemplateKey()>
+
+										<li class="diagram-builder-field form-builder-field hide" data-icon="${rule.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!rule.isInstantiable())?string}">
+											<span class="icon diagram-builder-field-icon ${rule.getIcon()}"></span>
+											<div class="diagram-builder-field-label">
+												<div class="row">
+													<div class="rule-title">${rule.getName(locale)}</div>
+													<div class="rule-description">${rule.getDescription(locale)}</div>
+												</div>
+											</div>
+										</li>
+									</#list>
+								</ul>
+							</div>
+							<div class="tab-pane"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="diagram-builder-content-container form-builder-content-container">
+					<div class="diagram-builder-canvas form-builder-canvas">
+						<div class="diagram-builder-drop-container form-builder-drop-container">
+							<#if userSegment??>
+								<#list addedRuleTemplates as template>
+									<#assign rule = template.getRule()>
+									<#assign templateKey = template.getTemplateKey()>
+
+									<div class="widget component form-builder-field yui3-widget hide" data-icon="${rule.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!rule.isInstantiable())?string}">
+										<div>
+											<div>
+												<div class="rule-header">
+													<div class="rule-icon"><i class="${rule.getIcon()}"></i></div>
+													<div class="row rule-info">
+														<div class="rule-title">${rule.getName(locale)}</div>
+														<div class="rule-description">${rule.getDescription(locale)}</div>
+													</div>
+												</div>
+												<div class="rule-editor">
+												</div>
+											</div>
+										</div>
+									</div>
+								</#list>
+							</#if>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</div>
-	</div>
-
-	<div id="formBuilder"></div>
+	</@>
 
 	<@aui["button-row"]>
-		<@aui["button"] cssClass="pull-right" type="submit" />
+		<@aui["button"] type="submit" />
+		<@aui["button"] href="${redirect}" type="cancel" />
 	</@>
 </@>
 
-<@aui["script"] use="aui-form-builder,aui-parse-content,autocomplete-base,autocomplete-filters">
-
-	A.FormBuilder.CTRuleFieldTemplate = '<div>' +
-		'<div class="rule-header">' +
-			'<div class="rule-icon">' +
-				'<i class="{icon}"></i>' +
-			'</div>' +
-			'<div class="row rule-info">' +
-				'<div class="rule-title">{name}</div>' +
-				'<div class="rule-description">{description}</div>' +
-			'</div>' +
-		'</div>' +
-		'<div class="rule-editor">{editor}</div>' +
-	'</div>';
-
-	A.FormBuilder.prototype._onClickField = function(event) {
-		var instance = this,
-			field = A.Widget.getByNode(event.target);
-
-		instance.simulateFocusField(field, event.target);
-
-		event.stopPropagation();
-	};
-
-	A.FormBuilder.prototype.simulateFocusField = function(field, target) {
-		var instance = this,
-			lastFocusedField = instance.lastFocusedField;
-
-		if (lastFocusedField) {
-			lastFocusedField.blur();
-		}
-
-		instance.lastFocusedField = field.focus();
-
-		if (target) {
-			target.focus();
-		}
-	};
-
-	<#assign templates = ruleTemplates>
-
-	<#include "rule_field_template.ftl" />
-
-	<#if userSegment??>
-		<#assign templates = addedRuleTemplates>
-
-		<#include "rule_field_template.ftl" />
-	</#if>
-
-	var userSegmentBuilder = new A.FormBuilder(
+<@aui["script"] use="liferay-ct-form-builder">
+	var userSegmentBuilder = new A.LiferayCTFormBuilder(
 		{
-			boundingBox: '#formBuilder',
-
-			availableFields:
-			[
-				<#list rules as rule>
-					{
-						iconClass: '${rule.getIcon()}',
-
-						<#if !rule.isInstantiable()>
-							id: '${rule.getRuleKey()}Unique',
-						</#if>
-
-						label: '<div class="row"><div class="rule-title">${rule.getName(locale)}</div><div class="rule-description">${rule.getDescription(locale)}</div></div>',
-						type: '${rule.getRuleKey()}',
-						unique: ${(!rule.isInstantiable())?string}
-					}
-
-					<#if rule_has_next>,</#if>
-				</#list>
-			]
-
-			<#if userSegment??>
-				,
-
-				fields:
-				[
-					<#list ruleInstances as ruleInstance>
-						<#assign rule = rulesRegistry.getRule(ruleInstance.getRuleKey())>
-
-						{
-							iconClass: '${rule.getIcon()}',
-
-							<#if !rule.isInstantiable()>
-								id: '${rule.getRuleKey()}Unique',
-							</#if>
-
-							label: '${rule.getName(locale)}',
-							type: '${rule.getRuleKey()}_${ruleInstance.getRuleInstanceId()}',
-							unique: ${(!rule.isInstantiable())?string}
-						}
-
-						<#if ruleInstance_has_next>,</#if>
-					</#list>
-				]
-			</#if>
+			boundingBox: '#formBuilderBB',
+			contentBox: '#formBuilderCB',
+			searchBox: '#formBuilderSB'
 		}
 	).render();
 
-	A.one('.tab-pane.active').insertBefore(
-		A.one('.rules-search'),
-		A.one('.diagram-builder-fields-container')
-	).removeClass('hide');
-
-	var RuleSearch = A.Base.create('ruleSearch', A.Base, [A.AutoCompleteBase],
-		{
-			initializer: function () {
-				this._bindUIACBase();
-				this._syncUIACBase();
-			}
-		}
-	);
-
-	var ruleFilter = new RuleSearch(
-		{
-			inputNode: '.rules-search .search-panels-input',
-			minQueryLength: 0,
-			queryDelay: 0,
-
-			source: (function () {
-				var results = [];
-
-				A.all('.diagram-builder-fields-container .rule-title').each(function (node) {
-					results.push({
-						node: node,
-						searchData: node.text()
-					});
-				});
-
-	  			return results;
-			}()),
-
-			resultTextLocator: 'searchData',
-
-			resultFilters: 'phraseMatch'
-		}
-	);
-
-	ruleFilter.on(
-		'results',
-		function (e) {
-			A.all('.diagram-builder-field').addClass('hide');
-
-			A.Array.each(
-				e.results,
-				function (result) {
-					result.raw.node.ancestor('.diagram-builder-field').removeClass('hide');
-				}
-			);
-		}
-	);
-
 	saveRules = function() {
-		var userSegment = {
-			rules: []
-		};
+		document.<@portlet["namespace"] />fm.<@portlet["namespace"] />userSegmentRules.value = userSegmentBuilder.exportAsJSON();
 
-		userSegmentBuilder.get('fields').each(
-			function(item) {
-				var rule = {
-					id: item.get('id'),
-					data: [],
-					type: item.get('type')
-				};
-
-				var contentBox = item.get('contentBox');
-
-				contentBox.all('input, select, textarea').each(
-					function(input) {
-						rule.data.push(
-							{
-								name: input.attr('name'),
-								value: input.val()
-							}
-						);
-					}
-				);
-
-				userSegment.rules.push(rule);
-			}
-		);
-
-		document.<@portlet["namespace"] />fm.<@portlet["namespace"] />userSegmentRules.value = JSON.stringify(userSegment);
 		submitForm(document.<@portlet["namespace"] />fm);
 	};
 </@>

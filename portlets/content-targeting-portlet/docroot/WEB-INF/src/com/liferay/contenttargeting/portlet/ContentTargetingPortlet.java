@@ -455,7 +455,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						ruleTemplate.setInstanceId(
 							ruleInstance.getRuleInstanceId());
 						ruleTemplate.setRule(rule);
-						ruleTemplate.setTemplate(HtmlUtil.escapeJS(html));
+						ruleTemplate.setTemplate(HtmlUtil.escapeAttribute(html));
 
 						addedRuleTemplates.add(ruleTemplate);
 					}
@@ -478,7 +478,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						null, _cloneTemplateContext(template));
 
 					ruleTemplate.setRule(rule);
-					ruleTemplate.setTemplate(HtmlUtil.escapeJS(html));
+					ruleTemplate.setTemplate(HtmlUtil.escapeAttribute(html));
 
 					ruleTemplates.add(ruleTemplate);
 				}

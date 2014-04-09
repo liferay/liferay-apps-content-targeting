@@ -5,14 +5,21 @@
 
 	.form-builder {
 		.form-builder-content {
+			.form-builder-content-container {
+				padding-left: 240px;
+			}
+
+			.tabbable {
+				margin-left: 0;
+				width: 240px;
+			}
+
 			.tabbable-content {
 				> .nav {
 					display: none;
 				}
 
 				.tab-content {
-					padding: 0 20px 10px 0;
-
 					.tab-pane {
 						display: none;
 						height: auto;
@@ -27,6 +34,7 @@
 
 						.search-panels-input {
 							border-radius: 0;
+							width: 166px;
 						}
 					}
 				}
@@ -38,7 +46,6 @@
 
 				.diagram-builder-field {
 					height: inherit;
-					padding-left: 10px;
 					position: relative;
 					text-align: left;
 					width: 100%;
@@ -56,7 +63,7 @@
 
 					.diagram-builder-field-label {
 						font-size: 12px;
-						left: 60px;
+						left: 40px;
 						line-height: 18px;
 						position: absolute;
 						top: 5px;
@@ -80,6 +87,7 @@
 				.diagram-builder-drop-container {
 					height: auto;
 					min-height: 500px;
+					padding-bottom: 0;
 				}
 
 				.toolbar {
