@@ -115,11 +115,6 @@ public class ScorePointsRule extends BaseRule {
 					typeSettings);
 
 				context.put("scorePoints", jsonObj.getInt("scorePoints"));
-
-				Locale locale = (Locale)context.get("locale");
-
-				context.put(
-					"userSegmentName", ruleInstance.getUserSegmentName(locale));
 			}
 			catch (JSONException jse) {
 			}
