@@ -20,7 +20,7 @@ AUI.add(
 
 			LiferayCTFormRuleSearch = A.Base.create('ruleSearch', A.Base, [A.AutoCompleteBase],
 				{
-					initializer: function () {
+					initializer: function() {
 						this._bindUIACBase();
 						this._syncUIACBase();
 					}
@@ -87,7 +87,7 @@ AUI.add(
 										minQueryLength: 0,
 										queryDelay: 0,
 
-										source: (function () {
+										source: (function() {
 											return A.Array.map(
 												instance.get('availableFields'),
 												function(field) {
@@ -124,7 +124,7 @@ AUI.add(
 
 							A.Array.each(
 								event.results,
-								function (result) {
+								function(result) {
 									result.raw.node.ancestor('.diagram-builder-field').removeClass('hide');
 								}
 							);
@@ -277,7 +277,7 @@ AUI.add(
 							);
 						},
 
-						getNode: function(){
+						getNode: function() {
 							var instance = this,
 								templateContainer = A.Node.create('<div></div>');
 

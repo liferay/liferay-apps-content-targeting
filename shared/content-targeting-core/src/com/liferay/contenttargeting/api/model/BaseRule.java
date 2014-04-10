@@ -56,8 +56,7 @@ public abstract class BaseRule implements Rule {
 	public String getDescription(Locale locale) {
 		String key = getClass().getName().concat(".description");
 
-		String description = ResourceActionsUtil.getModelResource(
-			locale, key);
+		String description = ResourceActionsUtil.getModelResource(locale, key);
 
 		if (description.equals(key)) {
 			description = StringPool.BLANK;

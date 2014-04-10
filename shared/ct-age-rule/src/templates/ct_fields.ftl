@@ -16,13 +16,13 @@
 
 <@aui["script"] use="liferay-input-slider">
 	new Liferay.InputSlider(
-    	{
+		{
 			inputNode: '#<@portlet["namespace"] />olderThan'
 		}
 	);
 
 	new Liferay.InputSlider(
-    	{
+		{
 			inputNode: '#<@portlet["namespace"] />youngerThan'
 		}
 	);
