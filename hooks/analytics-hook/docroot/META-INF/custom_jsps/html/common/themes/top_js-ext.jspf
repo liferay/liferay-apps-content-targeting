@@ -21,4 +21,10 @@
 <script>
 	analytics.addIntegration(Liferay.Analytics);
 	analytics.initialize(['LiferayAnalytics']);
+
+	analytics.track('view', {
+		className: '<%= Layout.class.getName() %>',
+		classPK: '<%= layout.getPlid() %>',
+		groupId: '<%= layout.getGroupId() %>'
+	});
 </script>
