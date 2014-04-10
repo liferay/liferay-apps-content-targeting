@@ -18,8 +18,12 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" localized="true" />
-		<field name="description" type="String" localized="true" />
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
 		<field name="priority" type="int" />
@@ -47,7 +51,11 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
-		<field name="name" type="String" localized="true" />
-		<field name="description" type="String" localized="true" />
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
 	</model>
 </model-hints>
