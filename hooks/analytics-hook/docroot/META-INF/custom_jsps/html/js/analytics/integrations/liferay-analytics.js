@@ -1,8 +1,8 @@
 var events = [],
 	ioRequest,
 	requestId,
-	requestInterval = 5000,
-	requestUri = '/o/analytics-processor/track',
+	requestInterval,
+	requestUri,
 	themeDisplayData = {},
 
 	LiferayAnalytics = analytics.integration('LiferayAnalytics').readyOnInitialize(),
@@ -28,6 +28,9 @@ var events = [],
 	};
 
 LiferayAnalytics.prototype.initialize = function() {
+	requestInterval = this.options.interval;
+	requestUri = this.options.uri;
+
 	AUI().use(
 		'aui-io-request',
 		function(A) {

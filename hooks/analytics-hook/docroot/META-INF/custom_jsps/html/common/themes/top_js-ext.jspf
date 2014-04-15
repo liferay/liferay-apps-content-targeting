@@ -20,7 +20,16 @@
 
 <script>
 	analytics.addIntegration(Liferay.Analytics);
-	analytics.initialize(['LiferayAnalytics']);
+
+	analytics.initialize(
+		{
+			'LiferayAnalytics':
+			{
+				interval: 5000,
+				uri: '/o/analytics-processor/track'
+			}
+		}
+	);
 
 	analytics.track('view', {
 		className: '<%= Layout.class.getName() %>',
