@@ -16,22 +16,22 @@
 
 <script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/analytics.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
 
-<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/integrations/liferay-analytics.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
+<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/liferay-analytics-api.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
+
+<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/integrations/liferay-analytics-processor.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
 
 <script>
-	analytics.addIntegration(Liferay.Analytics);
-
-	analytics.initialize(
+	Liferay.Analytics.initialize(
 		{
-			'LiferayAnalytics':
+			'LiferayAnalyticsProcessor':
 			{
-				interval: 5000,
+				interval: 20000,
 				uri: '/o/analytics-processor/track'
 			}
 		}
 	);
 
-	analytics.track('view', {
+	Liferay.Analytics.track('view', {
 		className: '<%= Layout.class.getName() %>',
 		classPK: '<%= layout.getPlid() %>',
 		groupId: '<%= layout.getGroupId() %>'

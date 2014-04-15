@@ -15318,5 +15318,5 @@ module.exports = require("analytics");
 } else if (typeof define == "function" && define.amd) {
 define([], function(){ return require("analytics"); });
 } else {
-this["analytics"] = require("analytics");
+Liferay._analytics = require("analytics");
 }})();
