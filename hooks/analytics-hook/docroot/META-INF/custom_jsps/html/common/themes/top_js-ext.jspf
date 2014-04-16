@@ -25,8 +25,8 @@
 		{
 			'LiferayAnalyticsProcessor':
 			{
-				interval: 20000,
-				uri: '/o/analytics-processor/track'
+				interval: <%= PropsUtil.get("analytics.flush.interval") %>,
+				uri: '<%= PropsUtil.get("analytics.processor.uri") %>'
 			}
 		}
 	);
