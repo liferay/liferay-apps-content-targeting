@@ -1,6 +1,7 @@
 ;(function() {
 	var events = [],
 		ioRequest,
+		pendingFlush,
 		requestId,
 		requestInterval,
 		requestUri,
@@ -11,6 +12,10 @@
 	LiferayAnalyticsProcessor.prototype._ready = true;
 
 	LiferayAnalyticsProcessor.prototype.flush = function() {
+		var instance = this;
+
+		pendingFlush = false;
+
 		if (events.length) {
 			if (ioRequest) {
 				ioRequest(
@@ -27,12 +32,17 @@
 
 				requestId = clearInterval(requestId);
 			}
+			else {
+				pendingFlush = true;
+			}
 		}
 	};
 
 	LiferayAnalyticsProcessor.prototype.initialize = function() {
-		requestInterval = this.options.interval;
-		requestUri = this.options.uri;
+		var instance = this;
+
+		requestInterval = instance.options.interval;
+		requestUri = instance.options.uri;
 
 		AUI().use(
 			'aui-io-request',
@@ -51,17 +61,21 @@
 				);
 
 				ioRequest = A.io.request;
+
+				if (pendingFlush) {
+					instance.flush();
+				}
 			}
 		);
 	}
 
 	LiferayAnalyticsProcessor.prototype.track = function(event, properties) {
-		console.log('tracking');
-		console.log(event.obj);
+		var instance = this;
+
 		events.push(event.obj);
 
 		if (!requestId) {
-			requestId = setTimeout(this.flush, requestInterval);
+			requestId = setTimeout(instance.flush, requestInterval);
 		}
 	};
 
