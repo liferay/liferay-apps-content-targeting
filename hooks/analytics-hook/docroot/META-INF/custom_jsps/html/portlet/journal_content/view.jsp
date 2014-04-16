@@ -23,7 +23,7 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 %>
 
 <c:if test="<%= articleDisplay != null %>">
-	<aui:script>
+	<aui:script position="inline">
 		Liferay.Analytics.track('view', {
 			className: '<%= JournalArticle.class.getName() %>',
 			classPK: '<%= articleDisplay.getResourcePrimKey() %>',
