@@ -885,7 +885,7 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 
 	@Override
 	public com.liferay.anonymoususers.model.AnonymousUser updateLastIp(
-		long AnonymousUserId, java.lang.String lastIp)
+		long anonymousUserId, java.lang.String lastIp)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -894,7 +894,7 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName24,
 					_methodParameterTypes24,
 					new Object[] {
-						AnonymousUserId,
+						anonymousUserId,
 						
 					ClpSerializer.translateInput(lastIp)
 					});

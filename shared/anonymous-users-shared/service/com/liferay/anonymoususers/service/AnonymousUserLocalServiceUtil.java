@@ -333,10 +333,10 @@ public class AnonymousUserLocalServiceUtil {
 	}
 
 	public static com.liferay.anonymoususers.model.AnonymousUser updateLastIp(
-		long AnonymousUserId, java.lang.String lastIp)
+		long anonymousUserId, java.lang.String lastIp)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateLastIp(AnonymousUserId, lastIp);
+		return getService().updateLastIp(anonymousUserId, lastIp);
 	}
 
 	public static void clearService() {

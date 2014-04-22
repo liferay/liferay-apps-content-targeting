@@ -296,7 +296,7 @@ public interface AnonymousUserLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.anonymoususers.model.AnonymousUser updateLastIp(
-		long AnonymousUserId, java.lang.String lastIp)
+		long anonymousUserId, java.lang.String lastIp)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }
