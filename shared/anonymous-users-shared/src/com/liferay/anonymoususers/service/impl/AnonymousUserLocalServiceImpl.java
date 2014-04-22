@@ -52,26 +52,26 @@ public class AnonymousUserLocalServiceImpl
 
 		Date now = new Date();
 
-		long AnonymousUserId = CounterLocalServiceUtil.increment();
+		long anonymousUserId = CounterLocalServiceUtil.increment();
 
-		AnonymousUser AnonymousUser = anonymousUserPersistence.create(
-			AnonymousUserId);
+		AnonymousUser anonymousUser = anonymousUserPersistence.create(
+			anonymousUserId);
 
-		AnonymousUser.setCompanyId(serviceContext.getCompanyId());
+		anonymousUser.setCompanyId(serviceContext.getCompanyId());
 
 		if (user != null) {
-			AnonymousUser.setUserId(user.getUserId());
-			AnonymousUser.setUserName(user.getFullName());
+			anonymousUser.setUserId(user.getUserId());
+			anonymousUser.setUserName(user.getFullName());
 		}
 
-		AnonymousUser.setCreateDate(serviceContext.getCreateDate(now));
-		AnonymousUser.setModifiedDate(serviceContext.getModifiedDate(now));
-		AnonymousUser.setLastIp(lastIp);
-		AnonymousUser.setTypeSettings(typeSettings);
+		anonymousUser.setCreateDate(serviceContext.getCreateDate(now));
+		anonymousUser.setModifiedDate(serviceContext.getModifiedDate(now));
+		anonymousUser.setLastIp(lastIp);
+		anonymousUser.setTypeSettings(typeSettings);
 
-		anonymousUserPersistence.update(AnonymousUser);
+		anonymousUserPersistence.update(anonymousUser);
 
-		return AnonymousUser;
+		return anonymousUser;
 	}
 
 	@Override
@@ -93,31 +93,31 @@ public class AnonymousUserLocalServiceImpl
 
 		Date now = new Date();
 
-		AnonymousUser AnonymousUser = anonymousUserPersistence.findByPrimaryKey(
+		AnonymousUser anonymousUser = anonymousUserPersistence.findByPrimaryKey(
 			userId);
 
-		AnonymousUser.setModifiedDate(serviceContext.getModifiedDate(now));
-		AnonymousUser.setLastIp(lastIp);
-		AnonymousUser.setTypeSettings(typeSettings);
+		anonymousUser.setModifiedDate(serviceContext.getModifiedDate(now));
+		anonymousUser.setLastIp(lastIp);
+		anonymousUser.setTypeSettings(typeSettings);
 
-		anonymousUserPersistence.update(AnonymousUser);
+		anonymousUserPersistence.update(anonymousUser);
 
-		return AnonymousUser;
+		return anonymousUser;
 	}
 
 	@Override
-	public AnonymousUser updateLastIp(long AnonymousUserId, String lastIp)
+	public AnonymousUser updateLastIp(long anonymousUserId, String lastIp)
 		throws PortalException, SystemException {
 
-		AnonymousUser AnonymousUser =
-			anonymousUserPersistence.fetchByPrimaryKey(AnonymousUserId);
+		AnonymousUser anonymousUser =
+			anonymousUserPersistence.fetchByPrimaryKey(anonymousUserId);
 
-		AnonymousUser.setLastIp(lastIp);
-		AnonymousUser.setModifiedDate(new Date());
+		anonymousUser.setLastIp(lastIp);
+		anonymousUser.setModifiedDate(new Date());
 
-		anonymousUserPersistence.update(AnonymousUser);
+		anonymousUserPersistence.update(anonymousUser);
 
-		return AnonymousUser;
+		return anonymousUser;
 	}
 
 }
