@@ -13,9 +13,15 @@
 		<field name="referrerClassName" type="String" />
 		<field name="referrerClassPK" type="long" />
 		<field name="clientIP" type="String" />
-		<field name="userAgent" type="String" />
+		<field name="userAgent" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="languageId" type="String" />
-		<field name="URL" type="String" />
-		<field name="additionalInfo" type="String" />
+		<field name="URL" type="String">
+			<hint-collection name="TEXTAREA" />
+		</field>
+		<field name="additionalInfo" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 </model-hints>
