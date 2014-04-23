@@ -31,9 +31,5 @@ import com.liferay.analytics.service.base.AnalyticsEventServiceBaseImpl;
  * @see com.liferay.analytics.service.AnalyticsEventServiceUtil
  */
 public class AnalyticsEventServiceImpl extends AnalyticsEventServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.analytics.service.AnalyticsEventServiceUtil} to access the analytics event remote service.
-	 */
+
 }

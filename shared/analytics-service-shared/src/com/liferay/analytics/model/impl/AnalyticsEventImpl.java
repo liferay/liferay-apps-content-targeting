@@ -24,11 +24,8 @@ package com.liferay.analytics.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class AnalyticsEventImpl extends AnalyticsEventBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a analytics event model instance should use the {@link com.liferay.analytics.model.AnalyticsEvent} interface instead.
-	 */
+
 	public AnalyticsEventImpl() {
 	}
+
 }
