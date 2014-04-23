@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="com.liferay.analytics.model.impl.AnalyticsEventModelImpl">
+		<attributes>
+			<id name="analyticsEventId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="anonymousUserId" />
+			<basic name="eventType" />
+			<basic name="className" />
+			<basic name="classPK" />
+			<basic name="referrerClassName" />
+			<basic name="referrerClassPK" />
+			<basic name="clientIP" />
+			<basic name="userAgent" />
+			<basic name="languageId" />
+			<basic name="URL" />
+			<basic name="additionalInfo" />
+			<transient name="anonymousUserUuid" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="com.liferay.analytics.model.impl.AnalyticsEventImpl" name="AnalyticsEvent">
+		<table name="Analytics_AnalyticsEvent" />
+		<attributes />
+	</entity>
+</entity-mappings>
