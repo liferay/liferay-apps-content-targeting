@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+
+<ivy-module
+	version="2.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
+	xmlns:m="http://ant.apache.org/ivy/maven"
+>
+	<info module="ct-score-points-rule" organisation="com.liferay" >
+		<m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-impl-jboss__version>2.0.0-alpha-3</m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-impl-jboss__version>
+		<m:dependency.management__org.jboss.arquillian.junit__arquillian-junit-core__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.junit__arquillian-junit-core__version>
+		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-depchain__version>2.0.0</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-depchain__version>
+		<m:dependency.management__org.jboss.arquillian.junit__arquillian-junit-standalone__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.junit__arquillian-junit-standalone__version>
+		<m:dependency.management__org.jboss.arquillian.test__arquillian-test-impl-base__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.test__arquillian-test-impl-base__version>
+		<m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-api-jboss__version>2.0.0-alpha-3</m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-api-jboss__version>
+		<m:dependency.management__org.jboss.arquillian.container__arquillian-container-test-spi__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.container__arquillian-container-test-spi__version>
+		<m:dependency.management__org.jboss.arquillian.container__arquillian-container-test-api__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.container__arquillian-container-test-api__version>
+		<m:dependency.management__org.jboss.arquillian.testenricher__arquillian-testenricher-resource__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.testenricher__arquillian-testenricher-resource__version>
+		<m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-api-base__version>2.0.0-alpha-3</m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-api-base__version>
+		<m:dependency.management__org.jboss.arquillian.protocol__arquillian-protocol-jmx__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.protocol__arquillian-protocol-jmx__version>
+		<m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-impl-base__version>2.0.0-alpha-3</m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-impl-base__version>
+		<m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-gen__version>2.0.0-alpha-3</m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-gen__version>
+		<m:dependency.management__org.jboss.shrinkwrap__shrinkwrap-spi__version>1.1.2</m:dependency.management__org.jboss.shrinkwrap__shrinkwrap-spi__version>
+		<m:dependency.management__org.jboss.arquillian.config__arquillian-config-spi__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.config__arquillian-config-spi__version>
+		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-spi__version>2.0.0</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-spi__version>
+		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-maven-plugin__scope>runtime</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-maven-plugin__scope>
+		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-api-maven__version>2.0.0</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-api-maven__version>
+		<m:dependency.management__org.jboss.arquillian.config__arquillian-config-api__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.config__arquillian-config-api__version>
+		<m:dependency.management__org.jboss.arquillian.core__arquillian-core-impl-base__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.core__arquillian-core-impl-base__version>
+		<m:dependency.management__org.jboss.arquillian.testng__arquillian-testng-standalone__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.testng__arquillian-testng-standalone__version>
+		<m:dependency.management__org.jboss.arquillian.container__arquillian-container-spi__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.container__arquillian-container-spi__version>
+		<m:dependency.management__org.jboss.arquillian.core__arquillian-core-api__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.core__arquillian-core-api__version>
+		<m:dependency.management__org.jboss.shrinkwrap__shrinkwrap-impl-nio2__version>1.1.2</m:dependency.management__org.jboss.shrinkwrap__shrinkwrap-impl-nio2__version>
+		<m:dependency.management__org.jboss.arquillian.test__arquillian-test-spi__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.test__arquillian-test-spi__version>
+		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-impl-maven-archive__version>2.0.0</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-impl-maven-archive__version>
+		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-spi-maven__version>2.0.0</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-spi-maven__version>
+		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-impl-maven__version>2.0.0</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-impl-maven__version>
+		<m:dependency.management__org.jboss.arquillian.junit__arquillian-junit-container__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.junit__arquillian-junit-container__version>
+		<m:dependency.management__org.jboss.arquillian.testenricher__arquillian-testenricher-cdi__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.testenricher__arquillian-testenricher-cdi__version>
+		<m:dependency.management__org.jboss.arquillian.testng__arquillian-testng-container__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.testng__arquillian-testng-container__version>
+		<m:dependency.management__org.jboss.arquillian.container__arquillian-container-test-impl-base__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.container__arquillian-container-test-impl-base__version>
+		<m:dependency.management__org.jboss.arquillian.config__arquillian-config-impl-base__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.config__arquillian-config-impl-base__version>
+		<m:dependency.management__org.jboss.arquillian.test__arquillian-test-api__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.test__arquillian-test-api__version>
+		<m:dependency.management__org.jboss.shrinkwrap__shrinkwrap-api-nio2__version>1.1.2</m:dependency.management__org.jboss.shrinkwrap__shrinkwrap-api-nio2__version>
+		<m:dependency.management__org.jboss.arquillian.protocol__arquillian-protocol-servlet__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.protocol__arquillian-protocol-servlet__version>
+		<m:dependency.management__org.jboss.arquillian.container__arquillian-container-impl-base__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.container__arquillian-container-impl-base__version>
+		<m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-api-javaee__version>2.0.0-alpha-3</m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-api-javaee__version>
+		<m:dependency.management__org.jboss.shrinkwrap__shrinkwrap-api__version>1.1.2</m:dependency.management__org.jboss.shrinkwrap__shrinkwrap-api__version>
+		<m:dependency.management__org.jboss.shrinkwrap__shrinkwrap-impl-base__version>1.1.2</m:dependency.management__org.jboss.shrinkwrap__shrinkwrap-impl-base__version>
+		<m:dependency.management__org.jboss.arquillian.testenricher__arquillian-testenricher-initialcontext__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.testenricher__arquillian-testenricher-initialcontext__version>
+		<m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-impl-javaee__version>2.0.0-alpha-3</m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-impl-javaee__version>
+		<m:dependency.management__org.jboss.arquillian.testenricher__arquillian-testenricher-ejb__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.testenricher__arquillian-testenricher-ejb__version>
+		<m:properties__project.build.sourceEncoding>UTF-8</m:properties__project.build.sourceEncoding>
+		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-api__version>2.0.0</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-api__version>
+		<m:dependency.management__org.jboss.arquillian.core__arquillian-core-spi__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.core__arquillian-core-spi__version>
+		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-api-maven-archive__version>2.0.0</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-api-maven-archive__version>
+		<m:dependency.management__org.jboss.arquillian.testng__arquillian-testng-core__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.testng__arquillian-testng-core__version>
+		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-maven-plugin__version>2.0.0</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-maven-plugin__version>
+		<m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-spi__version>2.0.0-alpha-3</m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-spi__version>
+	</info>
+
+	<configurations>
+		<conf name="compile" visibility="public" description="this is the default scope, used if none is specified. Compile dependencies are available in all classpaths." />
+		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime" />
+		<conf name="runtime" visibility="public" description="this scope indicates that the dependency is not required for compilation, but is for execution. It is in the runtime and test classpaths, but not the compile classpath." extends="compile" />
+		<conf name="test" visibility="private" description="this scope indicates that the dependency is not required for normal use of the application, and is only available for the test compilation and execution phases." extends="runtime" />
+	</configurations>
+
+	<dependencies defaultconf="default">
+		<dependency org="biz.aQute.bnd"	name="bnd" rev="2.2.0" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="4.3.1" />
+		<dependency org="junit" name="junit" rev="4.11" force="true" conf="test->*" />
+		<dependency org="org.jboss.arquillian.junit" name="arquillian-junit-container" rev="1.1.2.Final" force="true" conf="test->*" />
+		<dependency org="org.jboss.arquillian.protocol" name="arquillian-protocol-servlet" rev="1.1.2.Final" force="true" conf="test->*" />
+		<dependency org="arquillian-liferay-container" name="arquillian-liferay-container" rev="0.0.1-SNAPSHOT" force="true" conf="test->*" />
+		<dependency org="org.apache.httpcomponents" name="httpclient" rev="4.2" force="true" conf="test->*" />
+		<dependency org="org.apache.httpcomponents" name="httpmime" rev="4.2" force="true" conf="test->*" />
+		<dependency org="org.apache.ant" name="ant" rev="1.9.3" force="true" conf="test->*" />
+		<override org="org.jboss.shrinkwrap.resolver" module="shrinkwrap-resolver-maven-plugin" matcher="exact" rev="2.0.0" />
+		<override org="org.jboss.shrinkwrap.resolver" module="shrinkwrap-resolver-impl-maven-archive" matcher="exact" rev="2.0.0" />
+		<override org="org.jboss.shrinkwrap.descriptors" module="shrinkwrap-descriptors-spi" matcher="exact" rev="2.0.0-alpha-3" />
+		<override org="org.jboss.arquillian.protocol" module="arquillian-protocol-servlet" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.shrinkwrap" module="shrinkwrap-spi" matcher="exact" rev="1.1.2" />
+		<override org="org.jboss.arquillian.core" module="arquillian-core-api" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.shrinkwrap" module="shrinkwrap-api" matcher="exact" rev="1.1.2" />
+		<override org="org.jboss.arquillian.core" module="arquillian-core-spi" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.protocol" module="arquillian-protocol-jmx" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.shrinkwrap" module="shrinkwrap-api-nio2" matcher="exact" rev="1.1.2" />
+		<override org="org.jboss.arquillian.junit" module="arquillian-junit-core" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.shrinkwrap" module="shrinkwrap-impl-nio2" matcher="exact" rev="1.1.2" />
+		<override org="org.jboss.arquillian.test" module="arquillian-test-api" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.shrinkwrap.descriptors" module="shrinkwrap-descriptors-impl-base" matcher="exact" rev="2.0.0-alpha-3" />
+		<override org="org.jboss.shrinkwrap.descriptors" module="shrinkwrap-descriptors-impl-javaee" matcher="exact" rev="2.0.0-alpha-3" />
+		<override org="org.jboss.shrinkwrap.resolver" module="shrinkwrap-resolver-api" matcher="exact" rev="2.0.0" />
+		<override org="org.jboss.shrinkwrap.resolver" module="shrinkwrap-resolver-api-maven-archive" matcher="exact" rev="2.0.0" />
+		<override org="org.jboss.arquillian.config" module="arquillian-config-impl-base" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.testng" module="arquillian-testng-core" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.shrinkwrap.resolver" module="shrinkwrap-resolver-spi-maven" matcher="exact" rev="2.0.0" />
+		<override org="org.jboss.shrinkwrap.resolver" module="shrinkwrap-resolver-impl-maven" matcher="exact" rev="2.0.0" />
+		<override org="org.jboss.arquillian.testng" module="arquillian-testng-standalone" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.test" module="arquillian-test-spi" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.testenricher" module="arquillian-testenricher-resource" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.container" module="arquillian-container-test-api" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.container" module="arquillian-container-test-spi" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.shrinkwrap.resolver" module="shrinkwrap-resolver-spi" matcher="exact" rev="2.0.0" />
+		<override org="org.jboss.arquillian.config" module="arquillian-config-api" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.shrinkwrap.resolver" module="shrinkwrap-resolver-api-maven" matcher="exact" rev="2.0.0" />
+		<override org="org.jboss.arquillian.testenricher" module="arquillian-testenricher-initialcontext" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.config" module="arquillian-config-spi" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.shrinkwrap.descriptors" module="shrinkwrap-descriptors-api-jboss" matcher="exact" rev="2.0.0-alpha-3" />
+		<override org="org.jboss.arquillian.test" module="arquillian-test-impl-base" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.container" module="arquillian-container-test-impl-base" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.junit" module="arquillian-junit-standalone" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.container" module="arquillian-container-spi" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.shrinkwrap.descriptors" module="shrinkwrap-descriptors-api-javaee" matcher="exact" rev="2.0.0-alpha-3" />
+		<override org="org.jboss.arquillian.testng" module="arquillian-testng-container" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.testenricher" module="arquillian-testenricher-cdi" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.container" module="arquillian-container-impl-base" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.shrinkwrap.descriptors" module="shrinkwrap-descriptors-gen" matcher="exact" rev="2.0.0-alpha-3" />
+		<override org="org.jboss.arquillian.core" module="arquillian-core-impl-base" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.arquillian.junit" module="arquillian-junit-container" matcher="exact" rev="1.1.2.Final" />
+		<override org="org.jboss.shrinkwrap.resolver" module="shrinkwrap-resolver-depchain" matcher="exact" rev="2.0.0" />
+		<override org="org.jboss.shrinkwrap.descriptors" module="shrinkwrap-descriptors-impl-jboss" matcher="exact" rev="2.0.0-alpha-3" />
+		<override org="org.jboss.shrinkwrap.descriptors" module="shrinkwrap-descriptors-api-base" matcher="exact" rev="2.0.0-alpha-3" />
+		<override org="org.jboss.shrinkwrap" module="shrinkwrap-impl-base" matcher="exact" rev="1.1.2" />
+		<override org="org.jboss.arquillian.testenricher" module="arquillian-testenricher-ejb" matcher="exact" rev="1.1.2.Final" />
+	</dependencies>
+</ivy-module>
