@@ -14,7 +14,17 @@
 
 package com.liferay.analytics.service.impl;
 
+import com.liferay.analytics.model.AnalyticsEvent;
 import com.liferay.analytics.service.base.AnalyticsEventLocalServiceBaseImpl;
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalServiceUtil;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * The implementation of the analytics event local service.
@@ -32,5 +42,66 @@ import com.liferay.analytics.service.base.AnalyticsEventLocalServiceBaseImpl;
  */
 public class AnalyticsEventLocalServiceImpl
 	extends AnalyticsEventLocalServiceBaseImpl {
+
+	@Override
+	public AnalyticsEvent addAnalyticsEvent(
+			long userId, long anonymousUserId, String eventType,
+			String className, long classPK, String referrerClassName,
+			long referrerClassPK, String clientIP, String userAgent,
+			String languageId, String URL, String additionalInfo,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long analyticsEventId = CounterLocalServiceUtil.increment();
+
+		AnalyticsEvent analyticsEvent = analyticsEventPersistence.create(
+			analyticsEventId);
+
+		analyticsEvent.setCompanyId(serviceContext.getCompanyId());
+
+		User user = UserLocalServiceUtil.fetchUser(userId);
+
+		if (user != null) {
+			analyticsEvent.setUserId(user.getUserId());
+		}
+
+		analyticsEvent.setCreateDate(serviceContext.getCreateDate(new Date()));
+
+		analyticsEvent.setAnonymousUserId(anonymousUserId);
+		analyticsEvent.setEventType(eventType);
+		analyticsEvent.setClassName(className);
+		analyticsEvent.setClassPK(classPK);
+		analyticsEvent.setReferrerClassName(referrerClassName);
+		analyticsEvent.setReferrerClassPK(referrerClassPK);
+		analyticsEvent.setClientIP(clientIP);
+		analyticsEvent.setUserAgent(userAgent);
+		analyticsEvent.setLanguageId(languageId);
+		analyticsEvent.setURL(URL);
+		analyticsEvent.setAdditionalInfo(additionalInfo);
+
+		analyticsEventPersistence.update(analyticsEvent);
+
+		return analyticsEvent;
+	}
+
+	@Override
+	public void deleteAnalyticsEvents(long companyId, Date createDate)
+		throws PortalException, SystemException {
+
+		List<AnalyticsEvent> analyticsEvents =
+			analyticsEventPersistence.findByC_LtD(companyId, createDate);
+
+		for (AnalyticsEvent analyticsEvent : analyticsEvents) {
+			deleteAnalyticsEvent(analyticsEvent);
+		}
+	}
+
+	@Override
+	public List<AnalyticsEvent> getAnalyticsEvents(
+			long companyId, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.findByC_GtD(companyId, createDate);
+	}
 
 }
