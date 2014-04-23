@@ -288,6 +288,39 @@ public class AnalyticsEventLocalServiceWrapper
 			arguments);
 	}
 
+	@Override
+	public com.liferay.analytics.model.AnalyticsEvent addAnalyticsEvent(
+		long userId, long anonymousUserId, java.lang.String eventType,
+		java.lang.String className, long classPK,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String clientIP, java.lang.String userAgent,
+		java.lang.String languageId, java.lang.String URL,
+		java.lang.String additionalInfo,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.addAnalyticsEvent(userId,
+			anonymousUserId, eventType, className, classPK, referrerClassName,
+			referrerClassPK, clientIP, userAgent, languageId, URL,
+			additionalInfo, serviceContext);
+	}
+
+	@Override
+	public void deleteAnalyticsEvents(long companyId, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_analyticsEventLocalService.deleteAnalyticsEvents(companyId, createDate);
+	}
+
+	@Override
+	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		long companyId, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.getAnalyticsEvents(companyId,
+			createDate);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

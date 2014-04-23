@@ -113,6 +113,23 @@ public class AnalyticsEventLocalServiceClpInvoker {
 		_methodName35 = "setBeanIdentifier";
 
 		_methodParameterTypes35 = new String[] { "java.lang.String" };
+
+		_methodName40 = "addAnalyticsEvent";
+
+		_methodParameterTypes40 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String", "long",
+				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName41 = "deleteAnalyticsEvents";
+
+		_methodParameterTypes41 = new String[] { "long", "java.util.Date" };
+
+		_methodName42 = "getAnalyticsEvents";
+
+		_methodParameterTypes42 = new String[] { "long", "java.util.Date" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,6 +233,35 @@ public class AnalyticsEventLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName40.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
+			return AnalyticsEventLocalServiceUtil.addAnalyticsEvent(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				((Long)arguments[4]).longValue(),
+				(java.lang.String)arguments[5],
+				((Long)arguments[6]).longValue(),
+				(java.lang.String)arguments[7], (java.lang.String)arguments[8],
+				(java.lang.String)arguments[9],
+				(java.lang.String)arguments[10],
+				(java.lang.String)arguments[11],
+				(com.liferay.portal.service.ServiceContext)arguments[12]);
+		}
+
+		if (_methodName41.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
+			AnalyticsEventLocalServiceUtil.deleteAnalyticsEvents(((Long)arguments[0]).longValue(),
+				(java.util.Date)arguments[1]);
+
+			return null;
+		}
+
+		if (_methodName42.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
+			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents(((Long)arguments[0]).longValue(),
+				(java.util.Date)arguments[1]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -255,4 +301,10 @@ public class AnalyticsEventLocalServiceClpInvoker {
 	private String[] _methodParameterTypes34;
 	private String _methodName35;
 	private String[] _methodParameterTypes35;
+	private String _methodName40;
+	private String[] _methodParameterTypes40;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
 }

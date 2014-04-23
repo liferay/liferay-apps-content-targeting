@@ -10,8 +10,8 @@ create table Analytics_AnalyticsEvent (
 	referrerClassName VARCHAR(75) null,
 	referrerClassPK LONG,
 	clientIP VARCHAR(75) null,
-	userAgent VARCHAR(75) null,
+	userAgent STRING null,
 	languageId VARCHAR(75) null,
-	URL VARCHAR(75) null,
-	additionalInfo VARCHAR(75) null
+	URL STRING null,
+	additionalInfo TEXT null
 );

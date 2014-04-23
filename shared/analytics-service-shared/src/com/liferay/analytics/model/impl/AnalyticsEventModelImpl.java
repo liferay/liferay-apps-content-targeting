@@ -81,9 +81,9 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 			{ "userAgent", Types.VARCHAR },
 			{ "languageId", Types.VARCHAR },
 			{ "URL", Types.VARCHAR },
-			{ "additionalInfo", Types.VARCHAR }
+			{ "additionalInfo", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Analytics_AnalyticsEvent (analyticsEventId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,anonymousUserId LONG,eventType VARCHAR(75) null,className VARCHAR(75) null,classPK LONG,referrerClassName VARCHAR(75) null,referrerClassPK LONG,clientIP VARCHAR(75) null,userAgent VARCHAR(75) null,languageId VARCHAR(75) null,URL VARCHAR(75) null,additionalInfo VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table Analytics_AnalyticsEvent (analyticsEventId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,anonymousUserId LONG,eventType VARCHAR(75) null,className VARCHAR(75) null,classPK LONG,referrerClassName VARCHAR(75) null,referrerClassPK LONG,clientIP VARCHAR(75) null,userAgent STRING null,languageId VARCHAR(75) null,URL STRING null,additionalInfo TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table Analytics_AnalyticsEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY analyticsEvent.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY Analytics_AnalyticsEvent.createDate DESC";

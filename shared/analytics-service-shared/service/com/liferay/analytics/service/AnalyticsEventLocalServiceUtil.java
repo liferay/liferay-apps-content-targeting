@@ -275,6 +275,36 @@ public class AnalyticsEventLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.analytics.model.AnalyticsEvent addAnalyticsEvent(
+		long userId, long anonymousUserId, java.lang.String eventType,
+		java.lang.String className, long classPK,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String clientIP, java.lang.String userAgent,
+		java.lang.String languageId, java.lang.String URL,
+		java.lang.String additionalInfo,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addAnalyticsEvent(userId, anonymousUserId, eventType,
+			className, classPK, referrerClassName, referrerClassPK, clientIP,
+			userAgent, languageId, URL, additionalInfo, serviceContext);
+	}
+
+	public static void deleteAnalyticsEvents(long companyId,
+		java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteAnalyticsEvents(companyId, createDate);
+	}
+
+	public static java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		long companyId, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAnalyticsEvents(companyId, createDate);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}
