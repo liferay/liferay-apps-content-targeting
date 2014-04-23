@@ -22,7 +22,7 @@
 					requestUri,
 					{
 						data: {
-							themeDisplayData: themeDisplayData,
+							themeDisplayData: JSON.stringify(themeDisplayData),
 							events: JSON.stringify(events)
 						}
 					}
