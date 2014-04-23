@@ -25,7 +25,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
@@ -73,13 +75,33 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		}
 	}
 
+	protected void copyJSONObjectData(Message message, JSONObject jsonObject) {
+		Iterator<String> keys = jsonObject.keys();
+
+		while (keys.hasNext() ) {
+			String key = keys.next();
+
+			message.put(key, jsonObject.getString(key));
+		}
+	}
+
 	protected void processEvents(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		String json = ParamUtil.getString(request, "events", "[]");
+		String themeDisplayDataJSON = ParamUtil.getString(
+			request, "themeDisplayData");
 
-		JSONArray eventsJSONArray = JSONFactoryUtil.createJSONArray(json);
+		if (Validator.isNull(themeDisplayDataJSON)) {
+			return;
+		}
+
+		JSONObject themeDisplayDataJSONObject =
+			JSONFactoryUtil.createJSONObject(themeDisplayDataJSON);
+
+		String eventsJSON = ParamUtil.getString(request, "events", "[]");
+
+		JSONArray eventsJSONArray = JSONFactoryUtil.createJSONArray(eventsJSON);
 
 		if (eventsJSONArray.length() == 0) {
 			return;
@@ -91,6 +113,11 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		for (int i = 0; i < eventsJSONArray.length(); ++i) {
 			Message message = new Message();
 
+			message.put("clientIP", request.getRemoteAddr());
+			message.put("userAgent", request.getHeader(HttpHeaders.USER_AGENT));
+
+			copyJSONObjectData(message, themeDisplayDataJSONObject);
+
 			message.put("anonymousUserId", anonymousUser.getAnonymousUserId());
 
 			JSONObject eventJSONObject = eventsJSONArray.getJSONObject(i);
@@ -98,16 +125,8 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 			message.put("event", eventJSONObject.getString("event", "view"));
 			message.put("timestamp", eventJSONObject.getString("timestamp"));
 
-			JSONObject propertiesJSONObject = eventJSONObject.getJSONObject(
-				"properties");
-
-			Iterator<String> keys = propertiesJSONObject.keys();
-
-			while (keys.hasNext() ) {
-				String key = keys.next();
-
-				message.put(key, propertiesJSONObject.getString(key));
-			}
+			copyJSONObjectData(
+				message, eventJSONObject.getJSONObject("properties"));
 
 			MessageBusUtil.sendMessage("liferay/analytics", message);
 		}
