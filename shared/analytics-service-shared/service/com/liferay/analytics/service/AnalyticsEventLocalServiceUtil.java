@@ -291,6 +291,12 @@ public class AnalyticsEventLocalServiceUtil {
 			userAgent, languageId, URL, additionalInfo, serviceContext);
 	}
 
+	public static void checkAnalyticsEvents()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().checkAnalyticsEvents();
+	}
+
 	public static void deleteAnalyticsEvents(long companyId,
 		java.util.Date createDate)
 		throws com.liferay.portal.kernel.exception.PortalException,

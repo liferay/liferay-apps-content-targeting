@@ -306,6 +306,13 @@ public class AnalyticsEventLocalServiceWrapper
 	}
 
 	@Override
+	public void checkAnalyticsEvents()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_analyticsEventLocalService.checkAnalyticsEvents();
+	}
+
+	@Override
 	public void deleteAnalyticsEvents(long companyId, java.util.Date createDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

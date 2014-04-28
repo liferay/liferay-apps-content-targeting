@@ -123,13 +123,17 @@ public class AnalyticsEventLocalServiceClpInvoker {
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName41 = "deleteAnalyticsEvents";
+		_methodName41 = "checkAnalyticsEvents";
 
-		_methodParameterTypes41 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes41 = new String[] {  };
 
-		_methodName42 = "getAnalyticsEvents";
+		_methodName42 = "deleteAnalyticsEvents";
 
 		_methodParameterTypes42 = new String[] { "long", "java.util.Date" };
+
+		_methodName43 = "getAnalyticsEvents";
+
+		_methodParameterTypes43 = new String[] { "long", "java.util.Date" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -250,14 +254,21 @@ public class AnalyticsEventLocalServiceClpInvoker {
 
 		if (_methodName41.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
-			AnalyticsEventLocalServiceUtil.deleteAnalyticsEvents(((Long)arguments[0]).longValue(),
-				(java.util.Date)arguments[1]);
+			AnalyticsEventLocalServiceUtil.checkAnalyticsEvents();
 
 			return null;
 		}
 
 		if (_methodName42.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
+			AnalyticsEventLocalServiceUtil.deleteAnalyticsEvents(((Long)arguments[0]).longValue(),
+				(java.util.Date)arguments[1]);
+
+			return null;
+		}
+
+		if (_methodName43.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents(((Long)arguments[0]).longValue(),
 				(java.util.Date)arguments[1]);
 		}
@@ -307,4 +318,6 @@ public class AnalyticsEventLocalServiceClpInvoker {
 	private String[] _methodParameterTypes41;
 	private String _methodName42;
 	private String[] _methodParameterTypes42;
+	private String _methodName43;
+	private String[] _methodParameterTypes43;
 }
