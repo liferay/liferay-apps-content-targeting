@@ -10,16 +10,16 @@
 
 	<!-- Listeners -->
 
-	<bean id="messageListener.analytics_listener" class="com.liferay.contenttargeting.rules.scorepoints.analytics.AnalyticsMessageListener" />
+	<bean id="messageListener.score_points_analytics_listener" class="com.liferay.contenttargeting.rules.scorepoints.analytics.AnalyticsMessageListener" />
 
 	<!-- Configurator -->
 
-	<bean id="messagingConfigurator" class="com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator">
+	<bean id="messagingConfigurator.score_points" class="com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator">
 		<property name="messageListeners">
 			<map key-type="java.lang.String" value-type="java.util.List">
 				<entry key="liferay/analytics">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.analytics_listener" />
+						<ref bean="messageListener.score_points_analytics_listener" />
 					</list>
 				</entry>
 			</map>
