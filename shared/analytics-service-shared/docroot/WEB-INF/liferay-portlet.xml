@@ -4,5 +4,14 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>analytics-service</portlet-name>
+		<scheduler-entry>
+			<scheduler-event-listener-class>com.liferay.analytics.messaging.CheckAnalyticsEventsMessageListener</scheduler-event-listener-class>
+			<trigger>
+				<simple>
+					<property-key>analytics.events.check.interval</property-key>
+					<time-unit>minute</time-unit>
+				</simple>
+			</trigger>
+		</scheduler-entry>
 	</portlet>
 </liferay-portlet-app>

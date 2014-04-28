@@ -16,13 +16,18 @@ package com.liferay.analytics.service.impl;
 
 import com.liferay.analytics.model.AnalyticsEvent;
 import com.liferay.analytics.service.base.AnalyticsEventLocalServiceBaseImpl;
+import com.liferay.analytics.util.PortletPropsValues;
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.persistence.CompanyActionableDynamicQuery;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -85,6 +90,25 @@ public class AnalyticsEventLocalServiceImpl
 	}
 
 	@Override
+	public void checkAnalyticsEvents() throws PortalException, SystemException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			new CompanyActionableDynamicQuery() {
+
+				@Override
+				protected void performAction(Object object)
+					throws PortalException, SystemException {
+
+					Company company = (Company)object;
+
+					deleteAnalyticsEvents(company.getCompanyId(), getMaxAge());
+				}
+
+			};
+
+		actionableDynamicQuery.performActions();
+	}
+
+	@Override
 	public void deleteAnalyticsEvents(long companyId, Date createDate)
 		throws PortalException, SystemException {
 
@@ -102,6 +126,18 @@ public class AnalyticsEventLocalServiceImpl
 		throws PortalException, SystemException {
 
 		return analyticsEventPersistence.findByC_GtD(companyId, createDate);
+	}
+
+	protected Date getMaxAge() throws PortalException, SystemException {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(new Date());
+
+		int maxAge = PortletPropsValues.ANALYTICS_EVENTS_MAX_AGE;
+
+		calendar.add(Calendar.MINUTE, -maxAge);
+
+		return calendar.getTime();
 	}
 
 }
