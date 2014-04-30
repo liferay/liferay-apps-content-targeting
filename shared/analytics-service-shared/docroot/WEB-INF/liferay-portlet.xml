@@ -9,7 +9,7 @@
 			<trigger>
 				<simple>
 					<property-key>analytics.events.check.interval</property-key>
-					<time-unit>minute</time-unit>
+					<time-unit>day</time-unit>
 				</simple>
 			</trigger>
 		</scheduler-entry>
