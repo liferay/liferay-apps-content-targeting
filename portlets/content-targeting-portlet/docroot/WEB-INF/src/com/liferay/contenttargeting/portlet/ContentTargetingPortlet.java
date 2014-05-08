@@ -38,7 +38,6 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -55,8 +54,6 @@ import com.liferay.portal.util.PortalUtil;
 import freemarker.ext.beans.BeansWrapper;
 
 import freemarker.template.TemplateHashModel;
-
-import java.text.Format;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -364,13 +361,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			template.put(
 				"usedUserSegmentExceptionClass",
 				UsedUserSegmentException.class);
-
-			Format displayFormatDate =
-				FastDateFormatFactoryUtil.getSimpleDateFormat(
-					"dd/MM/yyyy hh:mm a", themeDisplay.getLocale(),
-					themeDisplay.getTimeZone());
-
-			template.put("displayFormatDate", displayFormatDate);
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN)) {
 			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");

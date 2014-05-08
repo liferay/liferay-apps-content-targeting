@@ -45,14 +45,14 @@
 			value=campaign.getDescription(locale)
 		/>
 
-		<@liferay_ui["search-container-column-text"]
+		<@liferay_ui["search-container-column-date"]
 			name="start-date"
-			value=displayFormatDate.format(campaign.getStartDate())
+			value=campaign.getStartDate()
 		/>
 
-		<@liferay_ui["search-container-column-text"]
+		<@liferay_ui["search-container-column-date"]
 			name="end-date"
-			value=displayFormatDate.format(campaign.getEndDate())
+			value=campaign.getEndDate()
 		/>
 
 		<@liferay_ui["search-container-column-text"]
