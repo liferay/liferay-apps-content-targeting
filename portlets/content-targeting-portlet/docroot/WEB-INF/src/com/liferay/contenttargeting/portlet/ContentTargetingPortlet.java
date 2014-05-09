@@ -173,6 +173,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		int priority = ParamUtil.getInteger(request, "priority");
 
+		boolean active = ParamUtil.getBoolean(request, "active");
+
 		// Initially, only one user segment per campaign is supported
 
 		long[] userSegmentIds = null;
@@ -193,12 +195,12 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			if (campaignId > 0) {
 				_campaignService.updateCampaign(
 					campaignId, nameMap, descriptionMap, startDate, endDate,
-					priority, userSegmentIds, serviceContext);
+					priority, active, userSegmentIds, serviceContext);
 			}
 			else {
 				_campaignService.addCampaign(
 					themeDisplay.getUserId(), nameMap, descriptionMap,
-					startDate, endDate, priority, userSegmentIds,
+					startDate, endDate, priority, active, userSegmentIds,
 					serviceContext);
 			}
 
@@ -276,6 +278,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		TemplateHashModel staticModels = wrapper.getStaticModels();
 
 		template.put("campaignClass", Campaign.class);
+		template.put(
+			"campaignConstants",
+			staticModels.get(
+				"com.liferay.contenttargeting.util.CampaignConstants"));
 		template.put(
 			"contentTargetingPath",
 			staticModels.get(

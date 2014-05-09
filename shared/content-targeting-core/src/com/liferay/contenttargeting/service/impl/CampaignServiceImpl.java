@@ -48,7 +48,8 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 	public Campaign addCampaign(
 			long userId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
-			int priority, long[] userSegmentIds, ServiceContext serviceContext)
+			int priority, boolean active, long[] userSegmentIds,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		ContentTargetingPermission.check(
@@ -57,7 +58,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 
 		return campaignLocalService.addCampaign(
 			userId, nameMap, descriptionMap, startDate, endDate, priority,
-			userSegmentIds, serviceContext);
+			active, userSegmentIds, serviceContext);
 	}
 
 	@Override
@@ -77,7 +78,8 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 
 		Date now = new Date();
 
-		return campaignFinder.filterFetchByG_D_U(groupId, now, userSegmentIds);
+		return campaignFinder.filterFetchByG_D_A_U(
+			groupId, now, true, userSegmentIds);
 	}
 
 	@Override
@@ -98,7 +100,8 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 	public Campaign updateCampaign(
 			long campaignId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
-			int priority, long[] userSegmentIds, ServiceContext serviceContext)
+			int priority, boolean active, long[] userSegmentIds,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		CampaignPermission.check(
@@ -106,7 +109,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 
 		return campaignLocalService.updateCampaign(
 			campaignId, nameMap, descriptionMap, startDate, endDate, priority,
-			userSegmentIds, serviceContext);
+			active, userSegmentIds, serviceContext);
 	}
 
 }

@@ -35,26 +35,28 @@ import java.util.List;
 public class CampaignFinderImpl
 	extends BasePersistenceImpl<Campaign> implements CampaignFinder {
 
-	public static final String FIND_BY_G_D_U =
-		CampaignFinder.class.getName() + ".findByG_D_U";
+	public static final String FIND_BY_G_D_A_U =
+		CampaignFinder.class.getName() + ".findByG_D_A_U";
 
 	@Override
-	public Campaign fetchByG_D_U(long groupId, Date date, long[] userSegmentIds)
+	public Campaign fetchByG_D_A_U(long groupId, Date date, boolean active,
+		long[] userSegmentIds)
+
 		throws SystemException {
 
-		return doFetchByG_D_U(groupId, date, userSegmentIds, false);
+		return doFetchByG_D_A_U(groupId, date, active, userSegmentIds, false);
 	}
 
 	@Override
-	public Campaign filterFetchByG_D_U(
-			long groupId, Date date, long[] userSegmentIds)
+	public Campaign filterFetchByG_D_A_U(
+			long groupId, Date date, boolean active, long[] userSegmentIds)
 		throws SystemException {
 
-		return doFetchByG_D_U(groupId, date, userSegmentIds, true);
+		return doFetchByG_D_A_U(groupId, date, active, userSegmentIds, true);
 	}
 
-	protected Campaign doFetchByG_D_U(
-			long groupId, Date date, long[] userSegmentIds,
+	protected Campaign doFetchByG_D_A_U(
+			long groupId, Date date, boolean active, long[] userSegmentIds,
 			boolean inlineSQLHelper)
 		throws SystemException {
 
@@ -65,7 +67,7 @@ public class CampaignFinderImpl
 
 			CustomSQLUtil.reloadCustomSQL();
 
-			String sql = CustomSQLUtil.get(FIND_BY_G_D_U);
+			String sql = CustomSQLUtil.get(FIND_BY_G_D_A_U);
 
 			sql = StringUtil.replace(
 				sql, "[$USER_SEGMENT_IDS$]", StringUtil.merge(userSegmentIds));
@@ -85,6 +87,7 @@ public class CampaignFinderImpl
 			qPos.add(groupId);
 			qPos.add(date);
 			qPos.add(date);
+			qPos.add(active);
 
 			List<Campaign> campaigns = q.list();
 

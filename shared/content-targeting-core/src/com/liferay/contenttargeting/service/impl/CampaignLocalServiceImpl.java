@@ -60,7 +60,8 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	public Campaign addCampaign(
 			long userId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
-			int priority, long[] userSegmentIds, ServiceContext serviceContext)
+			int priority, boolean active, long[] userSegmentIds,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = UserLocalServiceUtil.getUser(userId);
@@ -84,6 +85,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		campaign.setStartDate(startDate);
 		campaign.setEndDate(endDate);
 		campaign.setPriority(priority);
+		campaign.setActive(active);
 
 		campaignPersistence.update(campaign);
 
@@ -110,7 +112,8 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 		Date now = new Date();
 
-		return campaignFinder.fetchByG_D_U(groupId, now, userSegmentIds);
+		return campaignFinder.fetchByG_D_A_U(
+			groupId, now, true, userSegmentIds);
 	}
 
 	@Override
@@ -170,7 +173,8 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	public Campaign updateCampaign(
 			long campaignId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
-			int priority, long[] userSegmentIds, ServiceContext serviceContext)
+			int priority, boolean active, long[] userSegmentIds,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Date now = new Date();
@@ -183,6 +187,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		campaign.setStartDate(startDate);
 		campaign.setEndDate(endDate);
 		campaign.setPriority(priority);
+		campaign.setActive(active);
 
 		campaignPersistence.update(campaign);
 

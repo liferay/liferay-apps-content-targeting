@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	 <sql id="com.liferay.contenttargeting.service.persistence.CampaignFinder.findByG_D_U">
+	 <sql id="com.liferay.contenttargeting.service.persistence.CampaignFinder.findByG_D_A_U">
 		<![CDATA[
 			SELECT
 				CT_Campaign.*
@@ -13,7 +13,8 @@
 					(CT_Campaigns_UserSegments.userSegmentId IN ([$USER_SEGMENT_IDS$]))
 			WHERE
 				(CT_Campaign.groupId = ?) AND
-				(CT_Campaign.startDate <= ? AND CT_Campaign.endDate >= ?)
+				(CT_Campaign.startDate <= ? AND CT_Campaign.endDate >= ?) AND
+				(CT_Campaign.active_ = ?)
 			ORDER BY
 				CT_Campaign.priority ASC
 		]]>
