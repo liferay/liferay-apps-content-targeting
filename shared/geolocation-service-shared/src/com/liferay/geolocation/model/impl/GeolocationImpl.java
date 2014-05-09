@@ -21,14 +21,11 @@ package com.liferay.geolocation.model.impl;
  * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.geolocation.model.Geolocation} interface.
  * </p>
  *
- * @author Brian Wing Shun Chan
+ * @author Julio Camarero
  */
 public class GeolocationImpl extends GeolocationBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a geolocation model instance should use the {@link com.liferay.geolocation.model.Geolocation} interface instead.
-	 */
+
 	public GeolocationImpl() {
 	}
+
 }

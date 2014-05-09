@@ -324,66 +324,339 @@ public interface GeolocationPersistence extends BasePersistence<Geolocation> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the geolocation where classNameId = &#63; and classPK = &#63; or throws a {@link com.liferay.geolocation.NoSuchGeolocationException} if it could not be found.
+	* Returns all the geolocations where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @return the matching geolocation
+	* @return the matching geolocations
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.geolocation.model.Geolocation> findByC_C_C(
+		long companyId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the geolocations where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.geolocation.model.impl.GeolocationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of geolocations
+	* @param end the upper bound of the range of geolocations (not inclusive)
+	* @return the range of matching geolocations
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.geolocation.model.Geolocation> findByC_C_C(
+		long companyId, long classNameId, long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the geolocations where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.geolocation.model.impl.GeolocationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of geolocations
+	* @param end the upper bound of the range of geolocations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching geolocations
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.geolocation.model.Geolocation> findByC_C_C(
+		long companyId, long classNameId, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first geolocation in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching geolocation
 	* @throws com.liferay.geolocation.NoSuchGeolocationException if a matching geolocation could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.geolocation.model.Geolocation findByC_C(
-		long classNameId, long classPK)
+	public com.liferay.geolocation.model.Geolocation findByC_C_C_First(
+		long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.geolocation.NoSuchGeolocationException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the geolocation where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the first geolocation in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @return the matching geolocation, or <code>null</code> if a matching geolocation could not be found
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching geolocation, or <code>null</code> if a matching geolocation could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.geolocation.model.Geolocation fetchByC_C(
-		long classNameId, long classPK)
+	public com.liferay.geolocation.model.Geolocation fetchByC_C_C_First(
+		long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the geolocation where classNameId = &#63; and classPK = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the last geolocation in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching geolocation, or <code>null</code> if a matching geolocation could not be found
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching geolocation
+	* @throws com.liferay.geolocation.NoSuchGeolocationException if a matching geolocation could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.geolocation.model.Geolocation fetchByC_C(
-		long classNameId, long classPK, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Removes the geolocation where classNameId = &#63; and classPK = &#63; from the database.
-	*
-	* @param classNameId the class name ID
-	* @param classPK the class p k
-	* @return the geolocation that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public com.liferay.geolocation.model.Geolocation removeByC_C(
-		long classNameId, long classPK)
+	public com.liferay.geolocation.model.Geolocation findByC_C_C_Last(
+		long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.geolocation.NoSuchGeolocationException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of geolocations where classNameId = &#63; and classPK = &#63;.
+	* Returns the last geolocation in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
 	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching geolocation, or <code>null</code> if a matching geolocation could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.geolocation.model.Geolocation fetchByC_C_C_Last(
+		long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the geolocations before and after the current geolocation in the ordered set where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param geolocationId the primary key of the current geolocation
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next geolocation
+	* @throws com.liferay.geolocation.NoSuchGeolocationException if a geolocation with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.geolocation.model.Geolocation[] findByC_C_C_PrevAndNext(
+		long geolocationId, long companyId, long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.geolocation.NoSuchGeolocationException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the geolocations where companyId = &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_C_C(long companyId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of geolocations where companyId = &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
 	* @param classNameId the class name ID
 	* @param classPK the class p k
 	* @return the number of matching geolocations
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByC_C(long classNameId, long classPK)
+	public int countByC_C_C(long companyId, long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns all the geolocations where companyId = &#63; and modifiedDate &gt; &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the matching geolocations
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.geolocation.model.Geolocation> findByC_M_C_C(
+		long companyId, java.util.Date modifiedDate, long classNameId,
+		long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the geolocations where companyId = &#63; and modifiedDate &gt; &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.geolocation.model.impl.GeolocationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of geolocations
+	* @param end the upper bound of the range of geolocations (not inclusive)
+	* @return the range of matching geolocations
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.geolocation.model.Geolocation> findByC_M_C_C(
+		long companyId, java.util.Date modifiedDate, long classNameId,
+		long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the geolocations where companyId = &#63; and modifiedDate &gt; &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.geolocation.model.impl.GeolocationModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param start the lower bound of the range of geolocations
+	* @param end the upper bound of the range of geolocations (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching geolocations
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.geolocation.model.Geolocation> findByC_M_C_C(
+		long companyId, java.util.Date modifiedDate, long classNameId,
+		long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first geolocation in the ordered set where companyId = &#63; and modifiedDate &gt; &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching geolocation
+	* @throws com.liferay.geolocation.NoSuchGeolocationException if a matching geolocation could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.geolocation.model.Geolocation findByC_M_C_C_First(
+		long companyId, java.util.Date modifiedDate, long classNameId,
+		long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.geolocation.NoSuchGeolocationException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first geolocation in the ordered set where companyId = &#63; and modifiedDate &gt; &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching geolocation, or <code>null</code> if a matching geolocation could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.geolocation.model.Geolocation fetchByC_M_C_C_First(
+		long companyId, java.util.Date modifiedDate, long classNameId,
+		long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last geolocation in the ordered set where companyId = &#63; and modifiedDate &gt; &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching geolocation
+	* @throws com.liferay.geolocation.NoSuchGeolocationException if a matching geolocation could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.geolocation.model.Geolocation findByC_M_C_C_Last(
+		long companyId, java.util.Date modifiedDate, long classNameId,
+		long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.geolocation.NoSuchGeolocationException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last geolocation in the ordered set where companyId = &#63; and modifiedDate &gt; &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching geolocation, or <code>null</code> if a matching geolocation could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.geolocation.model.Geolocation fetchByC_M_C_C_Last(
+		long companyId, java.util.Date modifiedDate, long classNameId,
+		long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the geolocations before and after the current geolocation in the ordered set where companyId = &#63; and modifiedDate &gt; &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param geolocationId the primary key of the current geolocation
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next geolocation
+	* @throws com.liferay.geolocation.NoSuchGeolocationException if a geolocation with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.geolocation.model.Geolocation[] findByC_M_C_C_PrevAndNext(
+		long geolocationId, long companyId, java.util.Date modifiedDate,
+		long classNameId, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.geolocation.NoSuchGeolocationException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the geolocations where companyId = &#63; and modifiedDate &gt; &#63; and classNameId = &#63; and classPK = &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_M_C_C(long companyId, java.util.Date modifiedDate,
+		long classNameId, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of geolocations where companyId = &#63; and modifiedDate &gt; &#63; and classNameId = &#63; and classPK = &#63;.
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param classNameId the class name ID
+	* @param classPK the class p k
+	* @return the number of matching geolocations
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_M_C_C(long companyId, java.util.Date modifiedDate,
+		long classNameId, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

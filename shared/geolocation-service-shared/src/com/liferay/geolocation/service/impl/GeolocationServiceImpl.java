@@ -26,14 +26,9 @@ import com.liferay.geolocation.service.base.GeolocationServiceBaseImpl;
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
- * @author Brian Wing Shun Chan
+ * @author Julio Camarero
  * @see com.liferay.geolocation.service.base.GeolocationServiceBaseImpl
  * @see com.liferay.geolocation.service.GeolocationServiceUtil
  */
 public class GeolocationServiceImpl extends GeolocationServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.geolocation.service.GeolocationServiceUtil} to access the geolocation remote service.
-	 */
 }

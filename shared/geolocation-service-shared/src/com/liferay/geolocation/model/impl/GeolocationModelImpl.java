@@ -102,8 +102,9 @@ public class GeolocationModelImpl extends BaseModelImpl<Geolocation>
 	public static long CLASSNAMEID_COLUMN_BITMASK = 1L;
 	public static long CLASSPK_COLUMN_BITMASK = 2L;
 	public static long COMPANYID_COLUMN_BITMASK = 4L;
-	public static long UUID_COLUMN_BITMASK = 8L;
-	public static long GEOLOCATIONID_COLUMN_BITMASK = 16L;
+	public static long MODIFIEDDATE_COLUMN_BITMASK = 8L;
+	public static long UUID_COLUMN_BITMASK = 16L;
+	public static long GEOLOCATIONID_COLUMN_BITMASK = 32L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -383,7 +384,17 @@ public class GeolocationModelImpl extends BaseModelImpl<Geolocation>
 
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_columnBitmask |= MODIFIEDDATE_COLUMN_BITMASK;
+
+		if (_originalModifiedDate == null) {
+			_originalModifiedDate = _modifiedDate;
+		}
+
 		_modifiedDate = modifiedDate;
+	}
+
+	public Date getOriginalModifiedDate() {
+		return _originalModifiedDate;
 	}
 
 	@Override
@@ -707,6 +718,8 @@ public class GeolocationModelImpl extends BaseModelImpl<Geolocation>
 
 		geolocationModelImpl._setOriginalCompanyId = false;
 
+		geolocationModelImpl._originalModifiedDate = geolocationModelImpl._modifiedDate;
+
 		geolocationModelImpl._originalClassNameId = geolocationModelImpl._classNameId;
 
 		geolocationModelImpl._setOriginalClassNameId = false;
@@ -948,6 +961,7 @@ public class GeolocationModelImpl extends BaseModelImpl<Geolocation>
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;
 	private Date _modifiedDate;
+	private Date _originalModifiedDate;
 	private long _classNameId;
 	private long _originalClassNameId;
 	private boolean _setOriginalClassNameId;
