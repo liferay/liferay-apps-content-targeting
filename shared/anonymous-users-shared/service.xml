@@ -8,7 +8,7 @@
 
 		<!-- PK fields -->
 
-		<column name="AnonymousUserId" type="long" primary="true" />
+		<column name="anonymousUserId" type="long" primary="true" />
 
 		<!-- Audit fields -->
 
@@ -26,7 +26,7 @@
 		<!-- Order -->
 
 		<order by="desc">
-			<order-column name="AnonymousUserId" />
+			<order-column name="anonymousUserId" />
 		</order>
 
 		<!-- Finder methods -->
