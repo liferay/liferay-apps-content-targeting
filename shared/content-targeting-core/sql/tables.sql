@@ -11,7 +11,8 @@ create table CT_Campaign (
 	description STRING null,
 	startDate DATE null,
 	endDate DATE null,
-	priority INTEGER
+	priority INTEGER,
+	active_ BOOLEAN
 );
 
 create table CT_Campaigns_UserSegments (

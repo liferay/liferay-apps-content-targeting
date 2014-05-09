@@ -3151,6 +3151,7 @@ public class CampaignPersistenceImpl extends BasePersistenceImpl<Campaign>
 		campaignImpl.setStartDate(campaign.getStartDate());
 		campaignImpl.setEndDate(campaign.getEndDate());
 		campaignImpl.setPriority(campaign.getPriority());
+		campaignImpl.setActive(campaign.isActive());
 
 		return campaignImpl;
 	}
@@ -3783,7 +3784,7 @@ public class CampaignPersistenceImpl extends BasePersistenceImpl<Campaign>
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(CampaignPersistenceImpl.class);
 	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
+				"uuid", "active"
 			});
 	private static Campaign _nullCampaign = new CampaignImpl() {
 			@Override

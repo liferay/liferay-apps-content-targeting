@@ -32,6 +32,9 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="priority" />
+			<basic name="active">
+				<column name="ACTIVE_" />
+			</basic>
 			<transient name="descriptionCurrentLanguageId" />
 			<transient name="descriptionMap" />
 			<transient name="modelAttributes" />

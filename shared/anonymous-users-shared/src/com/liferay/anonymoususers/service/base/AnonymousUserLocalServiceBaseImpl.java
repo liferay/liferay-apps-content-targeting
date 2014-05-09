@@ -81,27 +81,27 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	/**
 	 * Creates a new anonymous user with the primary key. Does not add the anonymous user to the database.
 	 *
-	 * @param AnonymousUserId the primary key for the new anonymous user
+	 * @param anonymousUserId the primary key for the new anonymous user
 	 * @return the new anonymous user
 	 */
 	@Override
-	public AnonymousUser createAnonymousUser(long AnonymousUserId) {
-		return anonymousUserPersistence.create(AnonymousUserId);
+	public AnonymousUser createAnonymousUser(long anonymousUserId) {
+		return anonymousUserPersistence.create(anonymousUserId);
 	}
 
 	/**
 	 * Deletes the anonymous user with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param AnonymousUserId the primary key of the anonymous user
+	 * @param anonymousUserId the primary key of the anonymous user
 	 * @return the anonymous user that was removed
 	 * @throws PortalException if a anonymous user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public AnonymousUser deleteAnonymousUser(long AnonymousUserId)
+	public AnonymousUser deleteAnonymousUser(long anonymousUserId)
 		throws PortalException, SystemException {
-		return anonymousUserPersistence.remove(AnonymousUserId);
+		return anonymousUserPersistence.remove(anonymousUserId);
 	}
 
 	/**
@@ -212,9 +212,9 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	}
 
 	@Override
-	public AnonymousUser fetchAnonymousUser(long AnonymousUserId)
+	public AnonymousUser fetchAnonymousUser(long anonymousUserId)
 		throws SystemException {
-		return anonymousUserPersistence.fetchByPrimaryKey(AnonymousUserId);
+		return anonymousUserPersistence.fetchByPrimaryKey(anonymousUserId);
 	}
 
 	/**
@@ -235,15 +235,15 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	/**
 	 * Returns the anonymous user with the primary key.
 	 *
-	 * @param AnonymousUserId the primary key of the anonymous user
+	 * @param anonymousUserId the primary key of the anonymous user
 	 * @return the anonymous user
 	 * @throws PortalException if a anonymous user with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AnonymousUser getAnonymousUser(long AnonymousUserId)
+	public AnonymousUser getAnonymousUser(long anonymousUserId)
 		throws PortalException, SystemException {
-		return anonymousUserPersistence.findByPrimaryKey(AnonymousUserId);
+		return anonymousUserPersistence.findByPrimaryKey(anonymousUserId);
 	}
 
 	@Override

@@ -31,4 +31,5 @@ public interface Campaign extends CampaignModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.contenttargeting.model.impl.CampaignImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String getStatus();
 }

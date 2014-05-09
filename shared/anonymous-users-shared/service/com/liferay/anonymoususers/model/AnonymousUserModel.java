@@ -89,9 +89,9 @@ public interface AnonymousUserModel extends BaseModel<AnonymousUser>,
 	/**
 	 * Sets the anonymous user ID of this anonymous user.
 	 *
-	 * @param AnonymousUserId the anonymous user ID of this anonymous user
+	 * @param anonymousUserId the anonymous user ID of this anonymous user
 	 */
-	public void setAnonymousUserId(long AnonymousUserId);
+	public void setAnonymousUserId(long anonymousUserId);
 
 	/**
 	 * Returns the anonymous user uuid of this anonymous user.
@@ -104,9 +104,9 @@ public interface AnonymousUserModel extends BaseModel<AnonymousUser>,
 	/**
 	 * Sets the anonymous user uuid of this anonymous user.
 	 *
-	 * @param AnonymousUserUuid the anonymous user uuid of this anonymous user
+	 * @param anonymousUserUuid the anonymous user uuid of this anonymous user
 	 */
-	public void setAnonymousUserUuid(String AnonymousUserUuid);
+	public void setAnonymousUserUuid(String anonymousUserUuid);
 
 	/**
 	 * Returns the company ID of this anonymous user.

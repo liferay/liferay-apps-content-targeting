@@ -22,6 +22,7 @@
 		<property name="startDate" type="org.hibernate.type.TimestampType" />
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.contenttargeting.model.impl.RuleInstanceImpl" table="CT_RuleInstance">
 		<cache usage="read-write" />

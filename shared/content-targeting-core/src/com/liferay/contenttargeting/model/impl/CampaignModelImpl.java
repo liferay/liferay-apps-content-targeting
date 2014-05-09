@@ -86,9 +86,10 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 			{ "description", Types.VARCHAR },
 			{ "startDate", Types.TIMESTAMP },
 			{ "endDate", Types.TIMESTAMP },
-			{ "priority", Types.INTEGER }
+			{ "priority", Types.INTEGER },
+			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_Campaign (uuid_ VARCHAR(75) null,campaignId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,startDate DATE null,endDate DATE null,priority INTEGER)";
+	public static final String TABLE_SQL_CREATE = "create table CT_Campaign (uuid_ VARCHAR(75) null,campaignId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,startDate DATE null,endDate DATE null,priority INTEGER,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CT_Campaign";
 	public static final String ORDER_BY_JPQL = " ORDER BY campaign.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_Campaign.priority ASC";
@@ -135,6 +136,7 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 		model.setStartDate(soapModel.getStartDate());
 		model.setEndDate(soapModel.getEndDate());
 		model.setPriority(soapModel.getPriority());
+		model.setActive(soapModel.getActive());
 
 		return model;
 	}
@@ -223,6 +225,7 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
 		attributes.put("priority", getPriority());
+		attributes.put("active", getActive());
 
 		return attributes;
 	}
@@ -305,6 +308,12 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Boolean active = (Boolean)attributes.get("active");
+
+		if (active != null) {
+			setActive(active);
 		}
 	}
 
@@ -685,6 +694,22 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 		_priority = priority;
 	}
 
+	@JSON
+	@Override
+	public boolean getActive() {
+		return _active;
+	}
+
+	@Override
+	public boolean isActive() {
+		return _active;
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		_active = active;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -808,6 +833,7 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 		campaignImpl.setStartDate(getStartDate());
 		campaignImpl.setEndDate(getEndDate());
 		campaignImpl.setPriority(getPriority());
+		campaignImpl.setActive(getActive());
 
 		campaignImpl.resetOriginalValues();
 
@@ -961,12 +987,14 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 
 		campaignCacheModel.priority = getPriority();
 
+		campaignCacheModel.active = getActive();
+
 		return campaignCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -994,6 +1022,8 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 		sb.append(getEndDate());
 		sb.append(", priority=");
 		sb.append(getPriority());
+		sb.append(", active=");
+		sb.append(getActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -1001,7 +1031,7 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.contenttargeting.model.Campaign");
@@ -1059,6 +1089,10 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>active</column-name><column-value><![CDATA[");
+		sb.append(getActive());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1090,6 +1124,7 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 	private Date _startDate;
 	private Date _endDate;
 	private int _priority;
+	private boolean _active;
 	private long _columnBitmask;
 	private Campaign _escapedModel;
 }

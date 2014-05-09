@@ -48,29 +48,29 @@ public class AnonymousUserLocalServiceWrapper
 	/**
 	* Creates a new anonymous user with the primary key. Does not add the anonymous user to the database.
 	*
-	* @param AnonymousUserId the primary key for the new anonymous user
+	* @param anonymousUserId the primary key for the new anonymous user
 	* @return the new anonymous user
 	*/
 	@Override
 	public com.liferay.anonymoususers.model.AnonymousUser createAnonymousUser(
-		long AnonymousUserId) {
-		return _anonymousUserLocalService.createAnonymousUser(AnonymousUserId);
+		long anonymousUserId) {
+		return _anonymousUserLocalService.createAnonymousUser(anonymousUserId);
 	}
 
 	/**
 	* Deletes the anonymous user with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param AnonymousUserId the primary key of the anonymous user
+	* @param anonymousUserId the primary key of the anonymous user
 	* @return the anonymous user that was removed
 	* @throws PortalException if a anonymous user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.anonymoususers.model.AnonymousUser deleteAnonymousUser(
-		long AnonymousUserId)
+		long anonymousUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _anonymousUserLocalService.deleteAnonymousUser(AnonymousUserId);
+		return _anonymousUserLocalService.deleteAnonymousUser(anonymousUserId);
 	}
 
 	/**
@@ -186,9 +186,9 @@ public class AnonymousUserLocalServiceWrapper
 
 	@Override
 	public com.liferay.anonymoususers.model.AnonymousUser fetchAnonymousUser(
-		long AnonymousUserId)
+		long anonymousUserId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _anonymousUserLocalService.fetchAnonymousUser(AnonymousUserId);
+		return _anonymousUserLocalService.fetchAnonymousUser(anonymousUserId);
 	}
 
 	/**
@@ -210,17 +210,17 @@ public class AnonymousUserLocalServiceWrapper
 	/**
 	* Returns the anonymous user with the primary key.
 	*
-	* @param AnonymousUserId the primary key of the anonymous user
+	* @param anonymousUserId the primary key of the anonymous user
 	* @return the anonymous user
 	* @throws PortalException if a anonymous user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.anonymoususers.model.AnonymousUser getAnonymousUser(
-		long AnonymousUserId)
+		long anonymousUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _anonymousUserLocalService.getAnonymousUser(AnonymousUserId);
+		return _anonymousUserLocalService.getAnonymousUser(anonymousUserId);
 	}
 
 	@Override

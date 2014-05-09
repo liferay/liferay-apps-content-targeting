@@ -205,7 +205,7 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 
 		_methodParameterTypes39 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
-				"java.util.Date", "int", "long[][]",
+				"java.util.Date", "int", "boolean", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -245,7 +245,7 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 
 		_methodParameterTypes47 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
-				"java.util.Date", "int", "long[][]",
+				"java.util.Date", "int", "boolean", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -1400,7 +1400,7 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
-		long[] userSegmentIds,
+		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1421,6 +1421,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 					ClpSerializer.translateInput(endDate),
 						
 					priority,
+						
+					active,
 						
 					ClpSerializer.translateInput(userSegmentIds),
 						
@@ -1712,7 +1714,7 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
-		long[] userSegmentIds,
+		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1733,6 +1735,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 					ClpSerializer.translateInput(endDate),
 						
 					priority,
+						
+					active,
 						
 					ClpSerializer.translateInput(userSegmentIds),
 						

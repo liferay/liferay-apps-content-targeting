@@ -36,7 +36,7 @@ public class CampaignServiceClp implements CampaignService {
 
 		_methodParameterTypes3 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
-				"java.util.Date", "int", "long[][]",
+				"java.util.Date", "int", "boolean", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -60,7 +60,7 @@ public class CampaignServiceClp implements CampaignService {
 
 		_methodParameterTypes8 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
-				"java.util.Date", "int", "long[][]",
+				"java.util.Date", "int", "boolean", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -120,7 +120,7 @@ public class CampaignServiceClp implements CampaignService {
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
-		long[] userSegmentIds,
+		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -141,6 +141,8 @@ public class CampaignServiceClp implements CampaignService {
 					ClpSerializer.translateInput(endDate),
 						
 					priority,
+						
+					active,
 						
 					ClpSerializer.translateInput(userSegmentIds),
 						
@@ -311,7 +313,7 @@ public class CampaignServiceClp implements CampaignService {
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
-		long[] userSegmentIds,
+		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -332,6 +334,8 @@ public class CampaignServiceClp implements CampaignService {
 					ClpSerializer.translateInput(endDate),
 						
 					priority,
+						
+					active,
 						
 					ClpSerializer.translateInput(userSegmentIds),
 						

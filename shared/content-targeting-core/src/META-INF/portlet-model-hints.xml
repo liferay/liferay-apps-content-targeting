@@ -23,6 +23,7 @@
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
 		<field name="priority" type="int" />
+		<field name="active" type="boolean" />
 	</model>
 	<model name="com.liferay.contenttargeting.model.RuleInstance">
 		<field name="uuid" type="String" />

@@ -63,6 +63,7 @@ public class CampaignWrapper implements Campaign, ModelWrapper<Campaign> {
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
 		attributes.put("priority", getPriority());
+		attributes.put("active", getActive());
 
 		return attributes;
 	}
@@ -145,6 +146,12 @@ public class CampaignWrapper implements Campaign, ModelWrapper<Campaign> {
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Boolean active = (Boolean)attributes.get("active");
+
+		if (active != null) {
+			setActive(active);
 		}
 	}
 
@@ -692,6 +699,36 @@ public class CampaignWrapper implements Campaign, ModelWrapper<Campaign> {
 		_campaign.setPriority(priority);
 	}
 
+	/**
+	* Returns the active of this campaign.
+	*
+	* @return the active of this campaign
+	*/
+	@Override
+	public boolean getActive() {
+		return _campaign.getActive();
+	}
+
+	/**
+	* Returns <code>true</code> if this campaign is active.
+	*
+	* @return <code>true</code> if this campaign is active; <code>false</code> otherwise
+	*/
+	@Override
+	public boolean isActive() {
+		return _campaign.isActive();
+	}
+
+	/**
+	* Sets whether this campaign is active.
+	*
+	* @param active the active of this campaign
+	*/
+	@Override
+	public void setActive(boolean active) {
+		_campaign.setActive(active);
+	}
+
 	@Override
 	public boolean isNew() {
 		return _campaign.isNew();
@@ -817,6 +854,11 @@ public class CampaignWrapper implements Campaign, ModelWrapper<Campaign> {
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_campaign.persist();
+	}
+
+	@Override
+	public java.lang.String getStatus() {
+		return _campaign.getStatus();
 	}
 
 	@Override

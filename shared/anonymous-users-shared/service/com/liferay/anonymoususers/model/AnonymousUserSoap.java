@@ -85,7 +85,7 @@ public class AnonymousUserSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _AnonymousUserId;
+		return _anonymousUserId;
 	}
 
 	public void setPrimaryKey(long pk) {
@@ -101,11 +101,11 @@ public class AnonymousUserSoap implements Serializable {
 	}
 
 	public long getAnonymousUserId() {
-		return _AnonymousUserId;
+		return _anonymousUserId;
 	}
 
-	public void setAnonymousUserId(long AnonymousUserId) {
-		_AnonymousUserId = AnonymousUserId;
+	public void setAnonymousUserId(long anonymousUserId) {
+		_anonymousUserId = anonymousUserId;
 	}
 
 	public long getCompanyId() {
@@ -165,7 +165,7 @@ public class AnonymousUserSoap implements Serializable {
 	}
 
 	private String _uuid;
-	private long _AnonymousUserId;
+	private long _anonymousUserId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;

@@ -68,7 +68,7 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 	public static final String TABLE_NAME = "AU_AnonymousUser";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
-			{ "AnonymousUserId", Types.BIGINT },
+			{ "anonymousUserId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
 			{ "userName", Types.VARCHAR },
@@ -77,10 +77,10 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 			{ "lastIp", Types.VARCHAR },
 			{ "typeSettings", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table AU_AnonymousUser (uuid_ VARCHAR(75) null,AnonymousUserId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,lastIp VARCHAR(75) null,typeSettings TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table AU_AnonymousUser (uuid_ VARCHAR(75) null,anonymousUserId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,lastIp VARCHAR(75) null,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table AU_AnonymousUser";
-	public static final String ORDER_BY_JPQL = " ORDER BY anonymousUser.AnonymousUserId DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY AU_AnonymousUser.AnonymousUserId DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY anonymousUser.anonymousUserId DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY AU_AnonymousUser.anonymousUserId DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -152,7 +152,7 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 
 	@Override
 	public long getPrimaryKey() {
-		return _AnonymousUserId;
+		return _anonymousUserId;
 	}
 
 	@Override
@@ -162,7 +162,7 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _AnonymousUserId;
+		return _anonymousUserId;
 	}
 
 	@Override
@@ -185,7 +185,7 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("AnonymousUserId", getAnonymousUserId());
+		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -205,10 +205,10 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 			setUuid(uuid);
 		}
 
-		Long AnonymousUserId = (Long)attributes.get("AnonymousUserId");
+		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
 
-		if (AnonymousUserId != null) {
-			setAnonymousUserId(AnonymousUserId);
+		if (anonymousUserId != null) {
+			setAnonymousUserId(anonymousUserId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -281,25 +281,25 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 	@JSON
 	@Override
 	public long getAnonymousUserId() {
-		return _AnonymousUserId;
+		return _anonymousUserId;
 	}
 
 	@Override
-	public void setAnonymousUserId(long AnonymousUserId) {
+	public void setAnonymousUserId(long anonymousUserId) {
 		_columnBitmask = -1L;
 
-		_AnonymousUserId = AnonymousUserId;
+		_anonymousUserId = anonymousUserId;
 	}
 
 	@Override
 	public String getAnonymousUserUuid() throws SystemException {
 		return PortalUtil.getUserValue(getAnonymousUserId(), "uuid",
-			_AnonymousUserUuid);
+			_anonymousUserUuid);
 	}
 
 	@Override
-	public void setAnonymousUserUuid(String AnonymousUserUuid) {
-		_AnonymousUserUuid = AnonymousUserUuid;
+	public void setAnonymousUserUuid(String anonymousUserUuid) {
+		_anonymousUserUuid = anonymousUserUuid;
 	}
 
 	@JSON
@@ -559,7 +559,7 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 			anonymousUserCacheModel.uuid = null;
 		}
 
-		anonymousUserCacheModel.AnonymousUserId = getAnonymousUserId();
+		anonymousUserCacheModel.anonymousUserId = getAnonymousUserId();
 
 		anonymousUserCacheModel.companyId = getCompanyId();
 
@@ -616,7 +616,7 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
-		sb.append(", AnonymousUserId=");
+		sb.append(", anonymousUserId=");
 		sb.append(getAnonymousUserId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
@@ -650,7 +650,7 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>AnonymousUserId</column-name><column-value><![CDATA[");
+			"<column><column-name>anonymousUserId</column-name><column-value><![CDATA[");
 		sb.append(getAnonymousUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
@@ -693,8 +693,8 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 		};
 	private String _uuid;
 	private String _originalUuid;
-	private long _AnonymousUserId;
-	private String _AnonymousUserUuid;
+	private long _anonymousUserId;
+	private String _anonymousUserUuid;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;

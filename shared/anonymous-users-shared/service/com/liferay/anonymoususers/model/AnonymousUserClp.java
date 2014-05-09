@@ -54,7 +54,7 @@ public class AnonymousUserClp extends BaseModelImpl<AnonymousUser>
 
 	@Override
 	public long getPrimaryKey() {
-		return _AnonymousUserId;
+		return _anonymousUserId;
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class AnonymousUserClp extends BaseModelImpl<AnonymousUser>
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _AnonymousUserId;
+		return _anonymousUserId;
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class AnonymousUserClp extends BaseModelImpl<AnonymousUser>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("AnonymousUserId", getAnonymousUserId());
+		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -97,10 +97,10 @@ public class AnonymousUserClp extends BaseModelImpl<AnonymousUser>
 			setUuid(uuid);
 		}
 
-		Long AnonymousUserId = (Long)attributes.get("AnonymousUserId");
+		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
 
-		if (AnonymousUserId != null) {
-			setAnonymousUserId(AnonymousUserId);
+		if (anonymousUserId != null) {
+			setAnonymousUserId(anonymousUserId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -171,12 +171,12 @@ public class AnonymousUserClp extends BaseModelImpl<AnonymousUser>
 
 	@Override
 	public long getAnonymousUserId() {
-		return _AnonymousUserId;
+		return _anonymousUserId;
 	}
 
 	@Override
-	public void setAnonymousUserId(long AnonymousUserId) {
-		_AnonymousUserId = AnonymousUserId;
+	public void setAnonymousUserId(long anonymousUserId) {
+		_anonymousUserId = anonymousUserId;
 
 		if (_anonymousUserRemoteModel != null) {
 			try {
@@ -184,7 +184,7 @@ public class AnonymousUserClp extends BaseModelImpl<AnonymousUser>
 
 				Method method = clazz.getMethod("setAnonymousUserId", long.class);
 
-				method.invoke(_anonymousUserRemoteModel, AnonymousUserId);
+				method.invoke(_anonymousUserRemoteModel, anonymousUserId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -195,12 +195,12 @@ public class AnonymousUserClp extends BaseModelImpl<AnonymousUser>
 	@Override
 	public String getAnonymousUserUuid() throws SystemException {
 		return PortalUtil.getUserValue(getAnonymousUserId(), "uuid",
-			_AnonymousUserUuid);
+			_anonymousUserUuid);
 	}
 
 	@Override
-	public void setAnonymousUserUuid(String AnonymousUserUuid) {
-		_AnonymousUserUuid = AnonymousUserUuid;
+	public void setAnonymousUserUuid(String anonymousUserUuid) {
+		_anonymousUserUuid = anonymousUserUuid;
 	}
 
 	@Override
@@ -538,7 +538,7 @@ public class AnonymousUserClp extends BaseModelImpl<AnonymousUser>
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
-		sb.append(", AnonymousUserId=");
+		sb.append(", anonymousUserId=");
 		sb.append(getAnonymousUserId());
 		sb.append(", companyId=");
 		sb.append(getCompanyId());
@@ -572,7 +572,7 @@ public class AnonymousUserClp extends BaseModelImpl<AnonymousUser>
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>AnonymousUserId</column-name><column-value><![CDATA[");
+			"<column><column-name>anonymousUserId</column-name><column-value><![CDATA[");
 		sb.append(getAnonymousUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
@@ -610,8 +610,8 @@ public class AnonymousUserClp extends BaseModelImpl<AnonymousUser>
 	}
 
 	private String _uuid;
-	private long _AnonymousUserId;
-	private String _AnonymousUserUuid;
+	private long _anonymousUserId;
+	private String _anonymousUserUuid;
 	private long _companyId;
 	private long _userId;
 	private String _userUuid;

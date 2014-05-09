@@ -36,7 +36,7 @@ public class CampaignServiceClpInvoker {
 
 		_methodParameterTypes38 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
-				"java.util.Date", "int", "long[][]",
+				"java.util.Date", "int", "boolean", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -60,7 +60,7 @@ public class CampaignServiceClpInvoker {
 
 		_methodParameterTypes43 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
-				"java.util.Date", "int", "long[][]",
+				"java.util.Date", "int", "boolean", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -85,8 +85,9 @@ public class CampaignServiceClpInvoker {
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
 				(java.util.Date)arguments[3], (java.util.Date)arguments[4],
-				((Integer)arguments[5]).intValue(), (long[])arguments[6],
-				(com.liferay.portal.service.ServiceContext)arguments[7]);
+				((Integer)arguments[5]).intValue(),
+				((Boolean)arguments[6]).booleanValue(), (long[])arguments[7],
+				(com.liferay.portal.service.ServiceContext)arguments[8]);
 		}
 
 		if (_methodName39.equals(name) &&
@@ -116,8 +117,9 @@ public class CampaignServiceClpInvoker {
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
 				(java.util.Date)arguments[3], (java.util.Date)arguments[4],
-				((Integer)arguments[5]).intValue(), (long[])arguments[6],
-				(com.liferay.portal.service.ServiceContext)arguments[7]);
+				((Integer)arguments[5]).intValue(),
+				((Boolean)arguments[6]).booleanValue(), (long[])arguments[7],
+				(com.liferay.portal.service.ServiceContext)arguments[8]);
 		}
 
 		throw new UnsupportedOperationException();

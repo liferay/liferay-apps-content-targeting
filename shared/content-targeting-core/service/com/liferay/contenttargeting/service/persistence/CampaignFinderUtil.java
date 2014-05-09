@@ -21,16 +21,17 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  * @author Brian Wing Shun Chan
  */
 public class CampaignFinderUtil {
-	public static com.liferay.contenttargeting.model.Campaign fetchByG_D_U(
-		long groupId, java.util.Date date, long[] userSegmentIds)
+	public static com.liferay.contenttargeting.model.Campaign fetchByG_D_A_U(
+		long groupId, java.util.Date date, boolean active, long[] userSegmentIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().fetchByG_D_U(groupId, date, userSegmentIds);
+		return getFinder().fetchByG_D_A_U(groupId, date, active, userSegmentIds);
 	}
 
-	public static com.liferay.contenttargeting.model.Campaign filterFetchByG_D_U(
-		long groupId, java.util.Date date, long[] userSegmentIds)
+	public static com.liferay.contenttargeting.model.Campaign filterFetchByG_D_A_U(
+		long groupId, java.util.Date date, boolean active, long[] userSegmentIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().filterFetchByG_D_U(groupId, date, userSegmentIds);
+		return getFinder()
+				   .filterFetchByG_D_A_U(groupId, date, active, userSegmentIds);
 	}
 
 	public static CampaignFinder getFinder() {

@@ -52,7 +52,7 @@ public class AnonymousUserWrapper implements AnonymousUser,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("AnonymousUserId", getAnonymousUserId());
+		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
@@ -72,10 +72,10 @@ public class AnonymousUserWrapper implements AnonymousUser,
 			setUuid(uuid);
 		}
 
-		Long AnonymousUserId = (Long)attributes.get("AnonymousUserId");
+		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
 
-		if (AnonymousUserId != null) {
-			setAnonymousUserId(AnonymousUserId);
+		if (anonymousUserId != null) {
+			setAnonymousUserId(anonymousUserId);
 		}
 
 		Long companyId = (Long)attributes.get("companyId");
@@ -174,11 +174,11 @@ public class AnonymousUserWrapper implements AnonymousUser,
 	/**
 	* Sets the anonymous user ID of this anonymous user.
 	*
-	* @param AnonymousUserId the anonymous user ID of this anonymous user
+	* @param anonymousUserId the anonymous user ID of this anonymous user
 	*/
 	@Override
-	public void setAnonymousUserId(long AnonymousUserId) {
-		_anonymousUser.setAnonymousUserId(AnonymousUserId);
+	public void setAnonymousUserId(long anonymousUserId) {
+		_anonymousUser.setAnonymousUserId(anonymousUserId);
 	}
 
 	/**
@@ -196,11 +196,11 @@ public class AnonymousUserWrapper implements AnonymousUser,
 	/**
 	* Sets the anonymous user uuid of this anonymous user.
 	*
-	* @param AnonymousUserUuid the anonymous user uuid of this anonymous user
+	* @param anonymousUserUuid the anonymous user uuid of this anonymous user
 	*/
 	@Override
-	public void setAnonymousUserUuid(java.lang.String AnonymousUserUuid) {
-		_anonymousUser.setAnonymousUserUuid(AnonymousUserUuid);
+	public void setAnonymousUserUuid(java.lang.String anonymousUserUuid) {
+		_anonymousUser.setAnonymousUserUuid(anonymousUserUuid);
 	}
 
 	/**

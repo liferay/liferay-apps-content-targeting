@@ -97,6 +97,7 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
 		attributes.put("priority", getPriority());
+		attributes.put("active", getActive());
 
 		return attributes;
 	}
@@ -179,6 +180,12 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 
 		if (priority != null) {
 			setPriority(priority);
+		}
+
+		Boolean active = (Boolean)attributes.get("active");
+
+		if (active != null) {
+			setActive(active);
 		}
 	}
 
@@ -694,6 +701,53 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 	}
 
 	@Override
+	public boolean getActive() {
+		return _active;
+	}
+
+	@Override
+	public boolean isActive() {
+		return _active;
+	}
+
+	@Override
+	public void setActive(boolean active) {
+		_active = active;
+
+		if (_campaignRemoteModel != null) {
+			try {
+				Class<?> clazz = _campaignRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setActive", boolean.class);
+
+				method.invoke(_campaignRemoteModel, active);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public java.lang.String getStatus() {
+		try {
+			String methodName = "getStatus";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				Campaign.class.getName()));
@@ -854,6 +908,7 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 		clone.setStartDate(getStartDate());
 		clone.setEndDate(getEndDate());
 		clone.setPriority(getPriority());
+		clone.setActive(getActive());
 
 		return clone;
 	}
@@ -908,7 +963,7 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -936,6 +991,8 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 		sb.append(getEndDate());
 		sb.append(", priority=");
 		sb.append(getPriority());
+		sb.append(", active=");
+		sb.append(getActive());
 		sb.append("}");
 
 		return sb.toString();
@@ -943,7 +1000,7 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(43);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.contenttargeting.model.Campaign");
@@ -1001,6 +1058,10 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>active</column-name><column-value><![CDATA[");
+		sb.append(getActive());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -1023,5 +1084,6 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 	private Date _startDate;
 	private Date _endDate;
 	private int _priority;
+	private boolean _active;
 	private BaseModel<?> _campaignRemoteModel;
 }

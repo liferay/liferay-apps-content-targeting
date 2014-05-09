@@ -178,12 +178,12 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 
 	@Override
 	public com.liferay.anonymoususers.model.AnonymousUser createAnonymousUser(
-		long AnonymousUserId) {
+		long anonymousUserId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { AnonymousUserId });
+					_methodParameterTypes1, new Object[] { anonymousUserId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -202,14 +202,14 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 
 	@Override
 	public com.liferay.anonymoususers.model.AnonymousUser deleteAnonymousUser(
-		long AnonymousUserId)
+		long anonymousUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { AnonymousUserId });
+					_methodParameterTypes2, new Object[] { anonymousUserId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -463,13 +463,13 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 
 	@Override
 	public com.liferay.anonymoususers.model.AnonymousUser fetchAnonymousUser(
-		long AnonymousUserId)
+		long anonymousUserId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { AnonymousUserId });
+					_methodParameterTypes10, new Object[] { anonymousUserId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -522,14 +522,14 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 
 	@Override
 	public com.liferay.anonymoususers.model.AnonymousUser getAnonymousUser(
-		long AnonymousUserId)
+		long anonymousUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName12,
-					_methodParameterTypes12, new Object[] { AnonymousUserId });
+					_methodParameterTypes12, new Object[] { anonymousUserId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

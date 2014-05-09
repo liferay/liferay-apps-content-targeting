@@ -37,7 +37,7 @@ import java.util.Date;
 public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -65,6 +65,8 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 		sb.append(endDate);
 		sb.append(", priority=");
 		sb.append(priority);
+		sb.append(", active=");
+		sb.append(active);
 		sb.append("}");
 
 		return sb.toString();
@@ -136,6 +138,7 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 		}
 
 		campaignImpl.setPriority(priority);
+		campaignImpl.setActive(active);
 
 		campaignImpl.resetOriginalValues();
 
@@ -157,6 +160,7 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 		startDate = objectInput.readLong();
 		endDate = objectInput.readLong();
 		priority = objectInput.readInt();
+		active = objectInput.readBoolean();
 	}
 
 	@Override
@@ -201,6 +205,7 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 		objectOutput.writeLong(startDate);
 		objectOutput.writeLong(endDate);
 		objectOutput.writeInt(priority);
+		objectOutput.writeBoolean(active);
 	}
 
 	public String uuid;
@@ -216,4 +221,5 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 	public long startDate;
 	public long endDate;
 	public int priority;
+	public boolean active;
 }

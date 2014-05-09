@@ -420,7 +420,7 @@ public interface CampaignLocalService extends BaseLocalService,
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
-		long[] userSegmentIds,
+		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -469,7 +469,7 @@ public interface CampaignLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
-		long[] userSegmentIds,
+		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

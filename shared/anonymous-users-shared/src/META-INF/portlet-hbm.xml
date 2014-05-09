@@ -5,7 +5,7 @@
 	<import class="com.liferay.anonymoususers.model.AnonymousUser" />
 	<class name="com.liferay.anonymoususers.model.impl.AnonymousUserImpl" table="AU_AnonymousUser">
 		<cache usage="read-write" />
-		<id name="AnonymousUserId" type="long">
+		<id name="anonymousUserId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />

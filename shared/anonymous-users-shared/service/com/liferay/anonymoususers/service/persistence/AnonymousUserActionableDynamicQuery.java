@@ -32,6 +32,6 @@ public abstract class AnonymousUserActionableDynamicQuery
 
 		setClassLoader(com.liferay.anonymoususers.service.ClpSerializer.class.getClassLoader());
 
-		setPrimaryKeyPropertyName("AnonymousUserId");
+		setPrimaryKeyPropertyName("anonymousUserId");
 	}
 }

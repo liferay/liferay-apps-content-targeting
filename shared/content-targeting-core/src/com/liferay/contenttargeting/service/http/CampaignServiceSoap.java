@@ -71,7 +71,8 @@ public class CampaignServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.util.Date startDate,
-		java.util.Date endDate, int priority, long[] userSegmentIds,
+		java.util.Date endDate, int priority, boolean active,
+		long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -82,7 +83,7 @@ public class CampaignServiceSoap {
 
 			com.liferay.contenttargeting.model.Campaign returnValue = CampaignServiceUtil.addCampaign(userId,
 					nameMap, descriptionMap, startDate, endDate, priority,
-					userSegmentIds, serviceContext);
+					active, userSegmentIds, serviceContext);
 
 			return com.liferay.contenttargeting.model.CampaignSoap.toSoapModel(returnValue);
 		}
@@ -156,7 +157,8 @@ public class CampaignServiceSoap {
 		java.lang.String[] nameMapValues,
 		java.lang.String[] descriptionMapLanguageIds,
 		java.lang.String[] descriptionMapValues, java.util.Date startDate,
-		java.util.Date endDate, int priority, long[] userSegmentIds,
+		java.util.Date endDate, int priority, boolean active,
+		long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
@@ -167,7 +169,7 @@ public class CampaignServiceSoap {
 
 			com.liferay.contenttargeting.model.Campaign returnValue = CampaignServiceUtil.updateCampaign(campaignId,
 					nameMap, descriptionMap, startDate, endDate, priority,
-					userSegmentIds, serviceContext);
+					active, userSegmentIds, serviceContext);
 
 			return com.liferay.contenttargeting.model.CampaignSoap.toSoapModel(returnValue);
 		}

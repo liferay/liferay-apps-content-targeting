@@ -230,7 +230,7 @@ public class AnonymousUserUtil {
 	/**
 	* Returns the anonymous users before and after the current anonymous user in the ordered set where uuid = &#63;.
 	*
-	* @param AnonymousUserId the primary key of the current anonymous user
+	* @param anonymousUserId the primary key of the current anonymous user
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user
@@ -238,12 +238,12 @@ public class AnonymousUserUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.anonymoususers.model.AnonymousUser[] findByUuid_PrevAndNext(
-		long AnonymousUserId, java.lang.String uuid,
+		long anonymousUserId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.anonymoususers.NoSuchAnonymousUserException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByUuid_PrevAndNext(AnonymousUserId, uuid,
+				   .findByUuid_PrevAndNext(anonymousUserId, uuid,
 			orderByComparator);
 	}
 
@@ -402,7 +402,7 @@ public class AnonymousUserUtil {
 	/**
 	* Returns the anonymous users before and after the current anonymous user in the ordered set where uuid = &#63; and companyId = &#63;.
 	*
-	* @param AnonymousUserId the primary key of the current anonymous user
+	* @param anonymousUserId the primary key of the current anonymous user
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -411,12 +411,12 @@ public class AnonymousUserUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.anonymoususers.model.AnonymousUser[] findByUuid_C_PrevAndNext(
-		long AnonymousUserId, java.lang.String uuid, long companyId,
+		long anonymousUserId, java.lang.String uuid, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.anonymoususers.NoSuchAnonymousUserException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByUuid_C_PrevAndNext(AnonymousUserId, uuid, companyId,
+				   .findByUuid_C_PrevAndNext(anonymousUserId, uuid, companyId,
 			orderByComparator);
 	}
 
@@ -565,7 +565,7 @@ public class AnonymousUserUtil {
 	/**
 	* Returns the anonymous users before and after the current anonymous user in the ordered set where userId = &#63;.
 	*
-	* @param AnonymousUserId the primary key of the current anonymous user
+	* @param anonymousUserId the primary key of the current anonymous user
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user
@@ -573,12 +573,12 @@ public class AnonymousUserUtil {
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.anonymoususers.model.AnonymousUser[] findByUserId_PrevAndNext(
-		long AnonymousUserId, long userId,
+		long anonymousUserId, long userId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.anonymoususers.NoSuchAnonymousUserException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByUserId_PrevAndNext(AnonymousUserId, userId,
+				   .findByUserId_PrevAndNext(anonymousUserId, userId,
 			orderByComparator);
 	}
 
@@ -628,27 +628,27 @@ public class AnonymousUserUtil {
 	/**
 	* Creates a new anonymous user with the primary key. Does not add the anonymous user to the database.
 	*
-	* @param AnonymousUserId the primary key for the new anonymous user
+	* @param anonymousUserId the primary key for the new anonymous user
 	* @return the new anonymous user
 	*/
 	public static com.liferay.anonymoususers.model.AnonymousUser create(
-		long AnonymousUserId) {
-		return getPersistence().create(AnonymousUserId);
+		long anonymousUserId) {
+		return getPersistence().create(anonymousUserId);
 	}
 
 	/**
 	* Removes the anonymous user with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param AnonymousUserId the primary key of the anonymous user
+	* @param anonymousUserId the primary key of the anonymous user
 	* @return the anonymous user that was removed
 	* @throws com.liferay.anonymoususers.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.anonymoususers.model.AnonymousUser remove(
-		long AnonymousUserId)
+		long anonymousUserId)
 		throws com.liferay.anonymoususers.NoSuchAnonymousUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().remove(AnonymousUserId);
+		return getPersistence().remove(anonymousUserId);
 	}
 
 	public static com.liferay.anonymoususers.model.AnonymousUser updateImpl(
@@ -660,29 +660,29 @@ public class AnonymousUserUtil {
 	/**
 	* Returns the anonymous user with the primary key or throws a {@link com.liferay.anonymoususers.NoSuchAnonymousUserException} if it could not be found.
 	*
-	* @param AnonymousUserId the primary key of the anonymous user
+	* @param anonymousUserId the primary key of the anonymous user
 	* @return the anonymous user
 	* @throws com.liferay.anonymoususers.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.anonymoususers.model.AnonymousUser findByPrimaryKey(
-		long AnonymousUserId)
+		long anonymousUserId)
 		throws com.liferay.anonymoususers.NoSuchAnonymousUserException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByPrimaryKey(AnonymousUserId);
+		return getPersistence().findByPrimaryKey(anonymousUserId);
 	}
 
 	/**
 	* Returns the anonymous user with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param AnonymousUserId the primary key of the anonymous user
+	* @param anonymousUserId the primary key of the anonymous user
 	* @return the anonymous user, or <code>null</code> if a anonymous user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.anonymoususers.model.AnonymousUser fetchByPrimaryKey(
-		long AnonymousUserId)
+		long anonymousUserId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByPrimaryKey(AnonymousUserId);
+		return getPersistence().fetchByPrimaryKey(anonymousUserId);
 	}
 
 	/**

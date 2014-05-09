@@ -9,7 +9,7 @@
 	</persistence-unit-metadata>
 	<mapped-superclass class="com.liferay.anonymoususers.model.impl.AnonymousUserModelImpl">
 		<attributes>
-			<id name="AnonymousUserId" />
+			<id name="anonymousUserId" />
 			<basic name="uuid">
 				<column name="UUID_" />
 			</basic>

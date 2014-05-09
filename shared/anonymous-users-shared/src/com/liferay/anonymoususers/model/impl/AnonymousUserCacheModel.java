@@ -42,8 +42,8 @@ public class AnonymousUserCacheModel implements CacheModel<AnonymousUser>,
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", AnonymousUserId=");
-		sb.append(AnonymousUserId);
+		sb.append(", anonymousUserId=");
+		sb.append(anonymousUserId);
 		sb.append(", companyId=");
 		sb.append(companyId);
 		sb.append(", userId=");
@@ -74,7 +74,7 @@ public class AnonymousUserCacheModel implements CacheModel<AnonymousUser>,
 			anonymousUserImpl.setUuid(uuid);
 		}
 
-		anonymousUserImpl.setAnonymousUserId(AnonymousUserId);
+		anonymousUserImpl.setAnonymousUserId(anonymousUserId);
 		anonymousUserImpl.setCompanyId(companyId);
 		anonymousUserImpl.setUserId(userId);
 
@@ -121,7 +121,7 @@ public class AnonymousUserCacheModel implements CacheModel<AnonymousUser>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
-		AnonymousUserId = objectInput.readLong();
+		anonymousUserId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
 		userName = objectInput.readUTF();
@@ -141,7 +141,7 @@ public class AnonymousUserCacheModel implements CacheModel<AnonymousUser>,
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(AnonymousUserId);
+		objectOutput.writeLong(anonymousUserId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
 
@@ -171,7 +171,7 @@ public class AnonymousUserCacheModel implements CacheModel<AnonymousUser>,
 	}
 
 	public String uuid;
-	public long AnonymousUserId;
+	public long anonymousUserId;
 	public long companyId;
 	public long userId;
 	public String userName;

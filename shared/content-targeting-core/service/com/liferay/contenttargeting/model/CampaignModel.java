@@ -451,6 +451,27 @@ public interface CampaignModel extends BaseModel<Campaign>, StagedGroupedModel {
 	 */
 	public void setPriority(int priority);
 
+	/**
+	 * Returns the active of this campaign.
+	 *
+	 * @return the active of this campaign
+	 */
+	public boolean getActive();
+
+	/**
+	 * Returns <code>true</code> if this campaign is active.
+	 *
+	 * @return <code>true</code> if this campaign is active; <code>false</code> otherwise
+	 */
+	public boolean isActive();
+
+	/**
+	 * Sets whether this campaign is active.
+	 *
+	 * @param active the active of this campaign
+	 */
+	public void setActive(boolean active);
+
 	@Override
 	public boolean isNew();
 

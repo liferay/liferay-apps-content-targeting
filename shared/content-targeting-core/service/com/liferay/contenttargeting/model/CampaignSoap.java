@@ -44,6 +44,7 @@ public class CampaignSoap implements Serializable {
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setEndDate(model.getEndDate());
 		soapModel.setPriority(model.getPriority());
+		soapModel.setActive(model.getActive());
 
 		return soapModel;
 	}
@@ -200,6 +201,18 @@ public class CampaignSoap implements Serializable {
 		_priority = priority;
 	}
 
+	public boolean getActive() {
+		return _active;
+	}
+
+	public boolean isActive() {
+		return _active;
+	}
+
+	public void setActive(boolean active) {
+		_active = active;
+	}
+
 	private String _uuid;
 	private long _campaignId;
 	private long _groupId;
@@ -213,4 +226,5 @@ public class CampaignSoap implements Serializable {
 	private Date _startDate;
 	private Date _endDate;
 	private int _priority;
+	private boolean _active;
 }
