@@ -14,6 +14,10 @@
 
 package com.liferay.contenttargeting.model.impl;
 
+import com.liferay.contenttargeting.util.CampaignConstants;
+
+import java.util.Date;
+
 /**
  * The extended model implementation for the Campaign service. Represents a row in the &quot;CT_Campaign&quot; database table, with each column mapped to a property of this class.
  *
@@ -26,6 +30,24 @@ package com.liferay.contenttargeting.model.impl;
 public class CampaignImpl extends CampaignBaseImpl {
 
 	public CampaignImpl() {
+	}
+
+	@Override
+	public String getStatus() {
+		if (!isActive()) {
+			return CampaignConstants.STATUS_INACTIVE;
+		}
+
+		Date now = new Date();
+
+		if (getStartDate().getTime() > now.getTime()) {
+			return CampaignConstants.STATUS_UPCOMING;
+		}
+		else if (getEndDate().getTime() < now.getTime()) {
+			return CampaignConstants.STATUS_FINISHED;
+		}
+
+		return CampaignConstants.STATUS_STARTED;
 	}
 
 }

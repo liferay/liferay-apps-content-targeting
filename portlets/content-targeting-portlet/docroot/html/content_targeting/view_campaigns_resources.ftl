@@ -61,6 +61,14 @@
 		/>
 
 		<@liferay_ui["search-container-column-text"]
+			name="status"
+		>
+			<span class="label ${campaignConstants.getStatusCssClass(campaign.getStatus())}">
+				<@liferay_ui["message"] key="${campaign.getStatus()}" />
+			</span>
+		</@>
+
+		<@liferay_ui["search-container-column-text"]
 			align="right"
 			name=""
 		>
