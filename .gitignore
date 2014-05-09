@@ -30,3 +30,4 @@ ivy.xml.MD5
 
 .idea/workspace.xml
 .idea/rebel_project.xml
+.idea/dataSources.*
