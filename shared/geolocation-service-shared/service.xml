@@ -34,7 +34,8 @@
 
 		<!-- Finder methods -->
 
-		<finder name="C_C" return-type="Geolocation" unique="true">
+		<finder name="C_C_C" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>

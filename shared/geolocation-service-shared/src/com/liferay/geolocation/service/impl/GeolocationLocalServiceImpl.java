@@ -17,6 +17,7 @@ package com.liferay.geolocation.service.impl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.geolocation.model.Geolocation;
 import com.liferay.geolocation.service.base.GeolocationLocalServiceBaseImpl;
+import com.liferay.geolocation.util.GeolocationModifiedDateComparator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
@@ -81,8 +82,9 @@ public class GeolocationLocalServiceImpl
 
 		long classNameId = classNameLocalService.getClassNameId(className);
 
-		Geolocation geolocation = geolocationPersistence.fetchByC_C(
-			classNameId, classPK);
+		Geolocation geolocation = geolocationPersistence.fetchByC_C_C_First(
+			companyId, classNameId, classPK,
+			new GeolocationModifiedDateComparator());
 
 		if (geolocation == null) {
 			return addGeolocation(
@@ -109,6 +111,18 @@ public class GeolocationLocalServiceImpl
 		geolocationPersistence.update(geolocation);
 
 		return geolocation;
+	}
+
+	@Override
+	public Geolocation fetchGeolocation(
+			long companyId, String className, long classPK)
+		throws PortalException, SystemException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		return geolocationPersistence.fetchByC_C_C_First(
+			companyId, classNameId, classPK,
+			new GeolocationModifiedDateComparator());
 	}
 
 }
