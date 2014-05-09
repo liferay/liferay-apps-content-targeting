@@ -14,26 +14,101 @@
 
 package com.liferay.geolocation.service.impl;
 
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.geolocation.model.Geolocation;
 import com.liferay.geolocation.service.base.GeolocationLocalServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.service.ServiceContext;
+
+import java.util.Date;
 
 /**
  * The implementation of the geolocation local service.
  *
- * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.geolocation.service.GeolocationLocalService} interface.
- *
- * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
- * </p>
- *
- * @author Brian Wing Shun Chan
+ * @author Julio Camarero
  * @see com.liferay.geolocation.service.base.GeolocationLocalServiceBaseImpl
  * @see com.liferay.geolocation.service.GeolocationLocalServiceUtil
  */
-public class GeolocationLocalServiceImpl extends GeolocationLocalServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.geolocation.service.GeolocationLocalServiceUtil} to access the geolocation local service.
-	 */
+public class GeolocationLocalServiceImpl
+	extends GeolocationLocalServiceBaseImpl {
+
+	@Override
+	public Geolocation addGeolocation(
+			long companyId, String className, long classPK, double latitude,
+			double longitude, String areaCode, String city, String countryCode,
+			String countryName, String metroCode, String regionCode,
+			String regionName, String zipCode, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long geolocationId = CounterLocalServiceUtil.increment();
+
+		Geolocation geolocation = geolocationPersistence.create(geolocationId);
+
+		geolocation.setCompanyId(companyId);
+
+		Date now = new Date();
+
+		geolocation.setModifiedDate(serviceContext.getModifiedDate(now));
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		geolocation.setClassNameId(classNameId);
+		geolocation.setClassPK(classPK);
+		geolocation.setLatitude(latitude);
+		geolocation.setLongitude(longitude);
+		geolocation.setAreaCode(areaCode);
+		geolocation.setCity(city);
+		geolocation.setCountryCode(countryCode);
+		geolocation.setCountryName(countryName);
+		geolocation.setMetroCode(metroCode);
+		geolocation.setRegionCode(regionCode);
+		geolocation.setRegionName(regionName);
+		geolocation.setZipCode(zipCode);
+
+		geolocationPersistence.update(geolocation);
+
+		return geolocation;
+	}
+
+	@Override
+	public Geolocation updateGeolocation(
+			long companyId, String className, long classPK, double latitude,
+			double longitude, String areaCode, String city, String countryCode,
+			String countryName, String metroCode, String regionCode,
+			String regionName, String zipCode, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		long classNameId = classNameLocalService.getClassNameId(className);
+
+		Geolocation geolocation = geolocationPersistence.fetchByC_C(
+			classNameId, classPK);
+
+		if (geolocation == null) {
+			return addGeolocation(
+				companyId, className, classPK, latitude, longitude, areaCode,
+				city, countryCode, countryName, metroCode, regionCode,
+				regionName, zipCode, serviceContext);
+		}
+
+		Date now = new Date();
+
+		geolocation.setModifiedDate(serviceContext.getModifiedDate(now));
+
+		geolocation.setLatitude(latitude);
+		geolocation.setLongitude(longitude);
+		geolocation.setAreaCode(areaCode);
+		geolocation.setCity(city);
+		geolocation.setCountryCode(countryCode);
+		geolocation.setCountryName(countryName);
+		geolocation.setMetroCode(metroCode);
+		geolocation.setRegionCode(regionCode);
+		geolocation.setRegionName(regionName);
+		geolocation.setZipCode(zipCode);
+
+		geolocationPersistence.update(geolocation);
+
+		return geolocation;
+	}
+
 }
