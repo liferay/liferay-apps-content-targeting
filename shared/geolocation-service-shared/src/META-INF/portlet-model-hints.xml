@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.geolocation.model.Geolocation">
+		<field name="uuid" type="String" />
+		<field name="geolocationId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="modifiedDate" type="Date" />
+		<field name="classNameId" type="long" />
+		<field name="classPK" type="long" />
+		<field name="latitude" type="double" />
+		<field name="longitude" type="double" />
+		<field name="areaCode" type="String" />
+		<field name="city" type="String" />
+		<field name="countryCode" type="String" />
+		<field name="countryName" type="String" />
+		<field name="metroCode" type="String" />
+		<field name="regionCode" type="String" />
+		<field name="regionName" type="String" />
+		<field name="zipCode" type="String" />
+	</model>
+</model-hints>
