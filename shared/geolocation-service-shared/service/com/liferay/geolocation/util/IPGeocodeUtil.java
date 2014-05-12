@@ -15,7 +15,7 @@
 package com.liferay.geolocation.util;
 
 import com.liferay.geolocation.model.Geolocation;
-import com.liferay.geolocation.model.impl.GeolocationImpl;
+import com.liferay.geolocation.service.GeolocationLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -34,7 +34,8 @@ public class IPGeocodeUtil {
 		// "latitude":37.4192,"country_code":"US", "country_name":"United
 		// States","city":"Mountain View", "ip":"173.194.0.41"}
 
-		Geolocation geolocation = new GeolocationImpl();
+		Geolocation geolocation = GeolocationLocalServiceUtil.createGeolocation(
+			0);
 
 		geolocation.setLatitude(
 			GetterUtil.getDouble(jsonObject.getString("latitude")));
