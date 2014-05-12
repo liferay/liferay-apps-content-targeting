@@ -14,11 +14,11 @@
 
 package com.liferay.geolocation.service.impl;
 
-import com.liferay.geolocation.util.IPGeocodeUtil;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.geolocation.model.Geolocation;
 import com.liferay.geolocation.service.base.GeolocationLocalServiceBaseImpl;
-import com.liferay.geolocation.util.GeolocationModifiedDateComparator;
+import com.liferay.geolocation.util.comparator.GeolocationModifiedDateComparator;
+import com.liferay.geolocation.util.IPGeocodeUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;

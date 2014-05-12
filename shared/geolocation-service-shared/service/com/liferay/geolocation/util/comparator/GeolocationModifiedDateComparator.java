@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.geolocation.util;
+package com.liferay.geolocation.util.comparator;
 
 import com.liferay.geolocation.model.Geolocation;
 import com.liferay.portal.kernel.util.DateUtil;
