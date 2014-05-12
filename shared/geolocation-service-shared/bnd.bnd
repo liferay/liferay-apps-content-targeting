@@ -4,7 +4,6 @@ Export-Package:\
 	com.liferay.geolocation,\
 	com.liferay.geolocation.model,\
 	com.liferay.geolocation.service,\
-	com.liferay.geolocation.service.messaging,\
 	com.liferay.geolocation.util
 Import-Package =\
 	com.liferay.geolocation,\
