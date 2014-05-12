@@ -301,6 +301,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'autocomplete-base', 'autocomplete-filters']
+		requires: ['aui-form-builder', 'aui-parse-content', 'autocomplete-base', 'autocomplete-filters']
 	}
 );
