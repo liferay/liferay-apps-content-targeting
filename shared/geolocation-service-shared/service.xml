@@ -39,6 +39,12 @@
 			<finder-column name="classNameId" />
 			<finder-column name="classPK" />
 		</finder>
+		<finder name="C_M_C_C" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="modifiedDate" comparator="&gt;" />
+			<finder-column name="classNameId" />
+			<finder-column name="classPK" />
+		</finder>
 
 		<!-- References -->
 
