@@ -8,6 +8,9 @@ Import-Package:\
 	com.liferay.anonymoususers.model,\
 	com.liferay.anonymoususers.service,\
 	com.liferay.anonymoususers.service.messaging,\
+	com.liferay.geolocation.model,\
+	com.liferay.geolocation.service,\
+	com.liferay.geolocation.util,\
 	com.liferay.contenttargeting.model,\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.service,\

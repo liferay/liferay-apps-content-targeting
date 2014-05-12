@@ -14,7 +14,7 @@
 
 package com.liferay.geolocation.service.impl;
 
-import com.liferay.contenttargeting.rules.ipgeocode.util.IPGeocodeUtil;
+import com.liferay.geolocation.util.IPGeocodeUtil;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.geolocation.model.Geolocation;
 import com.liferay.geolocation.service.base.GeolocationLocalServiceBaseImpl;

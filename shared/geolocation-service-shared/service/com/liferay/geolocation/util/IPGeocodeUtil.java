@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contenttargeting.rules.ipgeocode.util;
+package com.liferay.geolocation.util;
 
 import com.liferay.geolocation.model.Geolocation;
 import com.liferay.geolocation.model.impl.GeolocationImpl;

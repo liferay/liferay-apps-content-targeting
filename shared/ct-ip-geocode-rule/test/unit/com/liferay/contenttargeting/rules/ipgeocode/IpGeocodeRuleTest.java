@@ -16,8 +16,8 @@ package com.liferay.contenttargeting.rules.ipgeocode;
 
 import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.model.RuleInstance;
-import com.liferay.contenttargeting.rules.ipgeocode.model.IPInfo;
-import com.liferay.contenttargeting.rules.ipgeocode.util.IPGeocodeUtil;
+import com.liferay.geolocation.util.IPGeocodeUtil;
+import com.liferay.geolocation.service.GeolocationLocalServiceUtil;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -30,6 +30,7 @@ import com.liferay.portal.model.impl.CountryImpl;
 import com.liferay.portal.model.impl.RegionImpl;
 import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -51,7 +52,8 @@ import org.powermock.modules.junit4.PowerMockRunner;
  */
 @PrepareForTest( {
 	CalendarFactoryUtil.class, CountryServiceUtil.class, HttpUtil.class,
-	IPGeocodeUtil.class, JSONFactoryUtil.class, RegionServiceUtil.class
+	GeolocationLocalServiceUtil.class, JSONFactoryUtil.class,
+	RegionServiceUtil.class
 })
 @RunWith(PowerMockRunner.class)
 public class IpGeocodeRuleTest extends PowerMockito {
@@ -61,7 +63,7 @@ public class IpGeocodeRuleTest extends PowerMockito {
 		_ipGeocodeRule = new IpGeocodeRule();
 
 		mockStatic(CountryServiceUtil.class);
-		mockStatic(IPGeocodeUtil.class);
+		mockStatic(GeolocationLocalServiceUtil.class);
 		mockStatic(JSONFactoryUtil.class);
 		mockStatic(RegionServiceUtil.class);
 
@@ -111,15 +113,11 @@ public class IpGeocodeRuleTest extends PowerMockito {
 		);
 
 		when(
-			_anonymousUser.getLastIp()
+			GeolocationLocalServiceUtil.geoLocate(
+				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
+				Mockito.anyString(), (ServiceContext)Mockito.anyObject())
 		).thenReturn(
-			_SPAIN_IP
-		);
-
-		when(
-			IPGeocodeUtil.getIPInfo(Mockito.anyString())
-		).thenReturn(
-			new IPInfo(_generateJSONSpain())
+			IPGeocodeUtil.getGeolocation(_generateJSONSpain())
 		);
 
 		Assert.assertTrue(
@@ -145,15 +143,11 @@ public class IpGeocodeRuleTest extends PowerMockito {
 		);
 
 		when(
-			_anonymousUser.getLastIp()
+			GeolocationLocalServiceUtil.geoLocate(
+				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
+				Mockito.anyString(), (ServiceContext)Mockito.anyObject())
 		).thenReturn(
-			_SPAIN_IP
-		);
-
-		when(
-			IPGeocodeUtil.getIPInfo(Mockito.anyString())
-		).thenReturn(
-			new IPInfo(_generateJSONSpain())
+			IPGeocodeUtil.getGeolocation(_generateJSONSpain())
 		);
 
 		Assert.assertTrue(
@@ -179,15 +173,11 @@ public class IpGeocodeRuleTest extends PowerMockito {
 		);
 
 		when(
-			_anonymousUser.getLastIp()
+			GeolocationLocalServiceUtil.geoLocate(
+				Mockito.anyLong(), Mockito.anyString(), Mockito.anyLong(),
+				Mockito.anyString(), (ServiceContext)Mockito.anyObject())
 		).thenReturn(
-			_US_IP
-		);
-
-		when(
-			IPGeocodeUtil.getIPInfo(Mockito.anyString())
-		).thenReturn(
-			new IPInfo(_generateJSONUSA())
+			IPGeocodeUtil.getGeolocation(_generateJSONUSA())
 		);
 
 		Assert.assertTrue(
@@ -229,10 +219,6 @@ public class IpGeocodeRuleTest extends PowerMockito {
 
 		return jsonObj;
 	}
-
-	private static final String _SPAIN_IP = "81.47.192.13";
-
-	private static final String _US_IP = "173.194.41.248";
 
 	@Mock
 	private AnonymousUser _anonymousUser;

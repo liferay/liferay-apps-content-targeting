@@ -20,8 +20,8 @@ import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
-import com.liferay.contenttargeting.rules.ipgeocode.model.IPInfo;
-import com.liferay.contenttargeting.rules.ipgeocode.util.IPGeocodeUtil;
+import com.liferay.geolocation.model.Geolocation;
+import com.liferay.geolocation.service.GeolocationLocalServiceUtil;
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -33,6 +33,7 @@ import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
+import com.liferay.portal.service.ServiceContext;
 
 import java.util.Locale;
 import java.util.Map;
@@ -51,9 +52,12 @@ public class IpGeocodeRule extends BaseRule {
 			RuleInstance ruleInstance, AnonymousUser anonymousUser)
 		throws Exception {
 
-		IPInfo ipInfo = IPGeocodeUtil.getIPInfo(anonymousUser.getLastIp());
+		Geolocation geolocation = GeolocationLocalServiceUtil.geoLocate(
+			anonymousUser.getCompanyId(), AnonymousUser.class.getName(),
+			anonymousUser.getAnonymousUserId(), anonymousUser.getLastIp(),
+			new ServiceContext());
 
-		if (ipInfo == null) {
+		if (geolocation == null) {
 			return false;
 		}
 
@@ -77,10 +81,10 @@ public class IpGeocodeRule extends BaseRule {
 		catch (Exception e) {
 		}
 
-		String countryCode = ipInfo.getCountryCode();
+		String countryCode = geolocation.getCountryCode();
 
 		if (countryCode.equals(country.getA2())) {
-			String regionName = ipInfo.getRegionName();
+			String regionName = geolocation.getRegionName();
 
 			if ((region == null) || regionName.equals(region.getName())) {
 				return true;
