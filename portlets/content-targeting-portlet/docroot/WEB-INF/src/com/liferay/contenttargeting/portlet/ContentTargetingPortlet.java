@@ -368,7 +368,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				"usedUserSegmentExceptionClass",
 				UsedUserSegmentException.class);
 		}
-		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN)) {
+		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN) ||
+				 path.equals(ContentTargetingPath.VIEW_CAMPAIGN_REPORTS)) {
+
 			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");
 
 			template.put("campaignId", campaignId);

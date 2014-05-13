@@ -73,6 +73,20 @@
 			name=""
 		>
 			<@liferay_ui["icon-menu"]>
+				<@portlet["renderURL"] var="viewCampaignReportsURL">
+					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_CAMPAIGN_REPORTS}" />
+					<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
+					<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
+				</@>
+
+				<@liferay_ui["icon"]
+					image="view"
+					label=true
+					message="reports"
+					method="get"
+					url="${viewCampaignReportsURL}"
+				/>
+
 				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
 					<@portlet["renderURL"] var="editCampaignURL">
 						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
