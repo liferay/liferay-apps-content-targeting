@@ -6,6 +6,7 @@
 		<portlet id="campaigncontentdisplay" />
 		<portlet id="usersegmentcontentdisplay" />
 		<portlet id="usersegmentcontentlist" />
+		<portlet id="ctsimulator" />
 	</category>
 	<category name="category.hidden">
 		<portlet id="ctadmin" />

@@ -39,6 +39,15 @@
 		<header-portlet-css>/css/user_segment_content_list/main.css</header-portlet-css>
 		<css-class-wrapper>user-segment-content-list-portlet</css-class-wrapper>
 	</portlet>
+	<portlet>
+		<portlet-name>ctsimulator</portlet-name>
+		<icon>/icons/icon.png</icon>
+		<instanceable>true</instanceable>
+		<render-weight>1</render-weight>
+		<header-portlet-css>/css/ct_simulator/main.css</header-portlet-css>
+		<header-portlet-javascript>/js/ct_simulator/main.js</header-portlet-javascript>
+		<css-class-wrapper>content-targeting-simulator-portlet</css-class-wrapper>
+	</portlet>
 	<role-mapper>
 		<role-name>administrator</role-name>
 		<role-link>Administrator</role-link>

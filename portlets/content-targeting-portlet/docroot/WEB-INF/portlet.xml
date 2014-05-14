@@ -141,4 +141,39 @@
 			<role-name>user</role-name>
 		</security-role-ref>
 	</portlet>
+	<portlet>
+		<portlet-name>ctsimulator</portlet-name>
+		<display-name>Content Targeting Simulator</display-name>
+		<portlet-class>com.liferay.contenttargeting.portlet.CTFreeMarkerPortlet</portlet-class>
+		<init-param>
+			<name>com.liferay.portal.invokerPortletName</name>
+			<value>o/content-targeting-portlet/1</value>
+		</init-param>
+		<init-param>
+			<name>view-template</name>
+			<value>html/ct_simulator/view.ftl</value>
+		</init-param>
+		<expiration-cache>0</expiration-cache>
+		<supports>
+			<mime-type>text/html</mime-type>
+		</supports>
+		<resource-bundle>content.Language</resource-bundle>
+		<portlet-info>
+			<title>Content Targeting Simulator</title>
+			<short-title>Content Targeting Simulator</short-title>
+			<keywords>Content Targeting Simulator</keywords>
+		</portlet-info>
+		<security-role-ref>
+			<role-name>administrator</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>guest</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>power-user</role-name>
+		</security-role-ref>
+		<security-role-ref>
+			<role-name>user</role-name>
+		</security-role-ref>
+	</portlet>
 </portlet-app>
