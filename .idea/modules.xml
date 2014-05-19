@@ -11,6 +11,7 @@
       <module fileurl="file://$PROJECT_DIR$/portlets/content-targeting-portlet/content-targeting-portlet.iml" filepath="$PROJECT_DIR$/portlets/content-targeting-portlet/content-targeting-portlet.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-tests-shared/content-targeting-tests-shared.iml" filepath="$PROJECT_DIR$/shared/content-targeting-tests-shared/content-targeting-tests-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/ct-age-rule/ct-age-rule.iml" filepath="$PROJECT_DIR$/shared/ct-age-rule/ct-age-rule.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/ct-campaign-content-report/ct-campaign-content-report.iml" filepath="$PROJECT_DIR$/shared/ct-campaign-content-report/ct-campaign-content-report.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/ct-gender-rule/ct-gender-rule.iml" filepath="$PROJECT_DIR$/shared/ct-gender-rule/ct-gender-rule.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/ct-ip-geocode-rule/ct-ip-geocode-rule.iml" filepath="$PROJECT_DIR$/shared/ct-ip-geocode-rule/ct-ip-geocode-rule.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/ct-score-points-rule/ct-score-points-rule.iml" filepath="$PROJECT_DIR$/shared/ct-score-points-rule/ct-score-points-rule.iml" />
