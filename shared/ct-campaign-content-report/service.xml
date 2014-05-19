@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.liferay.contenttargeting.reports.campaigncontent">
+	<namespace>CampaignContentReport</namespace>
+	<entity name="CampaignContent" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="id" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="campaignId" type="long" />
+		<column name="className" type="String" />
+		<column name="classPK" type="long" />
+		<column name="eventType" type="String" />
+		<column name="count" type="int" />
+		<column name="createDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="createDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CampaignId" return-type="Collection">
+			<finder-column name="campaignId" />
+		</finder>
+
+		<finder name="C_GtD" return-type="Collection">
+			<finder-column name="campaignId" />
+			<finder-column name="createDate" comparator="&gt;" />
+		</finder>
+
+		<finder name="C_C_C_E" return-type="CampaignContent">
+			<finder-column name="campaignId" />
+			<finder-column name="className" />
+			<finder-column name="classPK" />
+			<finder-column name="eventType" />
+		</finder>
+	</entity>
+</service-builder>
