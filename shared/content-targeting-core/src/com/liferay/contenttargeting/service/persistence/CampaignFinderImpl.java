@@ -39,9 +39,8 @@ public class CampaignFinderImpl
 		CampaignFinder.class.getName() + ".findByG_D_A_U";
 
 	@Override
-	public Campaign fetchByG_D_A_U(long groupId, Date date, boolean active,
-		long[] userSegmentIds)
-
+	public Campaign fetchByG_D_A_U(
+			long groupId, Date date, boolean active, long[] userSegmentIds)
 		throws SystemException {
 
 		return doFetchByG_D_A_U(groupId, date, active, userSegmentIds, false);

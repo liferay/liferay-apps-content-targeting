@@ -15,9 +15,7 @@
 package com.liferay.analytics.util;
 
 /**
- * @author Eduardo Lundgren
- * @author Fabio Pezzutto
- * @author Bruno Basto
+ * @author Eduardo Garcia
  */
 public class PortletPropsKeys {
 

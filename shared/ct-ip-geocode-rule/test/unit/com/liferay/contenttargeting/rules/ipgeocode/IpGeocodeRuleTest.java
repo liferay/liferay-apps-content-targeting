@@ -209,10 +209,10 @@ public class IpGeocodeRuleTest extends PowerMockito {
 	}
 
 	@Mock
-	private Geolocation _geolocation;
+	private AnonymousUser _anonymousUser;
 
 	@Mock
-	private AnonymousUser _anonymousUser;
+	private Geolocation _geolocation;
 
 	private IpGeocodeRule _ipGeocodeRule;
 
