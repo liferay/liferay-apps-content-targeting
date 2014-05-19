@@ -21,6 +21,7 @@ Import-Package =\
 	com.liferay.contenttargeting.service,\
 	com.liferay.counter.service,\
 	com.liferay.osgi.util,\
+	com.liferay.portlet,\
 	com.liferay.portal,\
 	com.liferay.portal.kernel.annotation,\
 	com.liferay.portal.kernel.bean,\

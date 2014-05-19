@@ -17,6 +17,7 @@ package com.liferay.contenttargeting.hook.filter;
 import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.anonymoususers.util.AnonymousUsersManager;
 import com.liferay.contenttargeting.api.model.RulesEngine;
+import com.liferay.contenttargeting.api.model.UserSegmentSimulator;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
@@ -69,25 +70,10 @@ public class UserSegmentFilter implements Filter {
 
 		HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-		if (_anonymousUsersManager == null) {
-			_intiAnonymousUserManager();
-		}
+		long[] userSegmentsIds = getUserSegmentIds(request, response);
 
-		try {
-			AnonymousUser anonymousUser =
-				_anonymousUsersManager.getAnonymousUser(request, response);
-
-			long[] groupIds = getGroupIds(request);
-
-			long[] userSegmentsIds = getMatchesUserSegmentIds(
-				groupIds, anonymousUser);
-
-			if (ArrayUtil.isNotEmpty(userSegmentsIds)) {
-				request.setAttribute(WebKeys.USER_SEGMENT_IDS, userSegmentsIds);
-			}
-		}
-		catch (Exception e) {
-			e.printStackTrace();
+		if (ArrayUtil.isNotEmpty(userSegmentsIds)) {
+			request.setAttribute(WebKeys.USER_SEGMENT_IDS, userSegmentsIds);
 		}
 
 		filterChain.doFilter(servletRequest, servletResponse);
@@ -180,6 +166,48 @@ public class UserSegmentFilter implements Filter {
 		return ContentTargetingUtil.getAncestorsAndCurrentGroupIds(groupId);
 	}
 
+	protected long[] getUserSegmentIds(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		if (_userSegmentSimulator == null) {
+			_initUserSegmentSimulator();
+		}
+
+		long[] userSegmentsIds = _userSegmentSimulator.getUserSegmentIds(
+			request, response);
+
+		if (userSegmentsIds != null) {
+			request.setAttribute(WebKeys.IS_SIMULATED_USER_SEGMENTS, true);
+
+			return userSegmentsIds;
+		}
+
+		if (_anonymousUsersManager == null) {
+			_intiAnonymousUserManager();
+		}
+
+		try {
+			AnonymousUser anonymousUser =
+				_anonymousUsersManager.getAnonymousUser(request, response);
+
+			long[] groupIds = getGroupIds(request);
+
+			return getMatchesUserSegmentIds(groupIds, anonymousUser);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
+	private void _initUserSegmentSimulator() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_userSegmentSimulator = ServiceTrackerUtil.getService(
+			UserSegmentSimulator.class, bundle.getBundleContext());
+	}
+
 	private void _intiAnonymousUserManager() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
@@ -198,5 +226,6 @@ public class UserSegmentFilter implements Filter {
 
 	private AnonymousUsersManager _anonymousUsersManager;
 	private RulesEngine _rulesEngine;
+	private UserSegmentSimulator _userSegmentSimulator;
 
 }

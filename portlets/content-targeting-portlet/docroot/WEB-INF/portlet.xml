@@ -144,7 +144,11 @@
 	<portlet>
 		<portlet-name>ctsimulator</portlet-name>
 		<display-name>Content Targeting Simulator</display-name>
-		<portlet-class>com.liferay.contenttargeting.portlet.CTFreeMarkerPortlet</portlet-class>
+		<portlet-class>com.liferay.contenttargeting.portlet.CTSimulatorPortlet</portlet-class>
+		<init-param>
+			<name>add-process-action-success-action</name>
+			<value>false</value>
+		</init-param>
 		<init-param>
 			<name>com.liferay.portal.invokerPortletName</name>
 			<value>o/content-targeting-portlet/1</value>
