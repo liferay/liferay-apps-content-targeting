@@ -20,3 +20,18 @@
 	backURL="${redirect}"
 	title='${(campaign.getName(locale))}'
 />
+
+<#if validator.isNotNull(campaignReportsTabNames)>
+	<@liferay_ui["tabs"]
+		names="${campaignReportsTabNames}"
+		refresh=false
+		type="pills"
+		value="${tabs2}"
+	>
+		<#list campaignReportsTemplates as template>
+			<@liferay_ui["section"]>
+				${template.getTemplate()}
+			</@>
+		</#list>
+	</@>
+</#if>
