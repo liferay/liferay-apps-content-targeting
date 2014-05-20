@@ -175,7 +175,8 @@ public class AnalyticsEventLocalServiceImpl
 			createDate);
 	}
 
-	protected Date getMaxAge() throws PortalException, SystemException {
+	@Override
+	public Date getMaxAge() throws PortalException, SystemException {
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(new Date());
