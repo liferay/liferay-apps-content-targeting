@@ -1,9 +1,12 @@
 Bundle-Name: Campaign Content Report
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar
+Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/ct-campaign-content-report-service.jar
 Include-Resource: classes,\
+	{WEB-INF/classes/META-INF=classes/META-INF/},\
+	{WEB-INF/sql=sql},\
 	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
-	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,
+	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+	WEB-INF/lib/ct-campaign-content-report-service.jar=lib/ct-campaign-content-report-service.jar
 Import-Package:\
 	com.liferay.analytics.model,\
 	com.liferay.analytics.service,\
@@ -23,6 +26,7 @@ Import-Package:\
 	com.liferay.portal.model.impl,\
 	com.liferay.portal.kernel.annotation,\
 	com.liferay.portal.kernel.bean,\
+	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.dao.orm,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.io.unsync,\
@@ -38,10 +42,12 @@ Import-Package:\
 	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.util,\
 	com.liferay.portal.kernel.uuid,\
+	com.liferay.portal.security.permission,\
 	com.liferay.portal.service,\
 	com.liferay.portal.service.persistence,\
 	com.liferay.portal.service.persistence.impl,\
 	com.liferay.portal.util,\
+	com.liferay.portlet,\
 	com.liferay.portlet.asset,\
 	com.liferay.portlet.asset.model,\
 	com.liferay.portlet.asset.service,\
