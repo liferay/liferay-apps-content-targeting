@@ -50,5 +50,21 @@
 			<finder-column name="companyId" />
 			<finder-column name="createDate" comparator="&lt;" />
 		</finder>
+
+		<finder name="C_C_E_GtD" return-type="Collection">
+			<finder-column name="className" />
+			<finder-column name="classPK" />
+			<finder-column name="eventType" />
+			<finder-column name="createDate" comparator="&gt;" />
+		</finder>
+
+		<finder name="C_C_R_R_E_GtD" return-type="Collection">
+			<finder-column name="className" />
+			<finder-column name="classPK" />
+			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassPK" />
+			<finder-column name="eventType" />
+			<finder-column name="createDate" comparator="&gt;" />
+		</finder>
 	</entity>
 </service-builder>
