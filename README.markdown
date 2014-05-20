@@ -92,7 +92,7 @@ SDK](http://www.liferay.com/web/mika.koivisto/blog/-/blogs/12322618).
 Liferay welcomes any and all contributions! If you have an idea for a new plugin
 or a new feature in an existing plugin, and wish to implement it, follow the
 contribution steps outlined in the [CONTRIBUTING
-guide](https://github.com/liferay/liferay-portal/blob/master/CONTRIBUTING.markdown).
+guide](CONTRIBUTING.markdown).
 It explains how to contribute to Liferay and contains links to additional useful
 resources.
 
@@ -100,6 +100,11 @@ resources.
 
 The master branch of the plugins is developed for Liferay 6.2 CE GA1 using the
 6.2.0-ce-ga1 version of the plugins SDK.
+
+### Extending the Content Targeting Apps
+
+The content targeting apps are designed as a framework to be extended by other
+developers easily. See this [DEVELOPING guide](DEVELOPING.markdown)
 
 ### Source Code
 
