@@ -227,6 +227,10 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 					queryRule = CampaignQueryRuleUtil.match(
 						campaign.getCampaignId(), portletPreferences,
 						themeDisplay.getLocale());
+
+					template.put("campaignClassName", Campaign.class.getName());
+					template.put("campaignClassPK", campaign.getCampaignId());
+					template.put("groupId", campaign.getGroupId());
 				}
 			}
 
@@ -271,6 +275,9 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 					"view.jsp-show", new Boolean(false));
 				portletRequest.setAttribute(
 					"view.jsp-print", new Boolean(false));
+
+				template.put("assetEntryClassName", AssetEntry.class.getName());
+				template.put("assetEntryClassPK", assetEntry.getPrimaryKey());
 			}
 			else {
 				portletRequest.setAttribute(
