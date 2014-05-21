@@ -47,7 +47,7 @@ public class AnalyticsMessageListener implements MessageListener {
 		String className = message.getString("className");
 		long classPK = message.getLong("classPK");
 		String referrerClassName = message.getString("referrerClassName");
-		long referrerClassPK = message.getLong("plid");
+		long referrerClassPK = message.getLong("referrerClassPK");
 
 		if (Validator.isNull(referrerClassName) ||
 			Validator.isNull(referrerClassPK)) {
