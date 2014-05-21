@@ -19,6 +19,15 @@ import aQute.bnd.annotation.component.Component;
 import com.liferay.contenttargeting.api.model.BaseReport;
 import com.liferay.contenttargeting.api.model.Report;
 import com.liferay.contenttargeting.model.Campaign;
+import com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent;
+import com.liferay.contenttargeting.reports.campaigncontent.service.CampaignContentLocalServiceUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MapUtil;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eduardo Garcia
@@ -35,5 +44,28 @@ public class CampaignContentReport extends BaseReport {
 	public String getReportType() {
 		return Campaign.class.getName();
 	}
+
+	@Override
+	protected void populateContext(Map<String, Object> context) {
+		long campaignId = MapUtil.getLong(context, "campaignId", 0);
+
+		List<CampaignContent> campaignContents = Collections.emptyList();
+
+		if (campaignId != 0) {
+			try {
+				campaignContents =
+					CampaignContentLocalServiceUtil.getCampaignContents(
+						campaignId);
+			}
+			catch (Exception e) {
+				_log.error("Cannot render report for campaign " + campaignId);
+			}
+		}
+
+		context.put("campaignContents", campaignContents);
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CampaignContentReport.class);
 
 }
