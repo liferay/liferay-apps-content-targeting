@@ -76,6 +76,15 @@ AUI.add(
 									A.one('.diagram-builder-fields-container')
 								).removeClass('hide');
 							}
+
+							A.Array.each(
+								instance.get('availableFields'),
+								function(item) {
+									var title = item.labelNode.one('.rule-title').text();
+
+									item.get('node').attr('title', title);
+								}
+							);
 						},
 
 						_createRuleFilter: function() {
