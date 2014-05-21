@@ -30,6 +30,15 @@
 	>
 		<#list campaignReportsTemplates as template>
 			<@liferay_ui["section"]>
+				<@portlet["actionURL"] name="updateReport" var="updateReportURL">
+					<@portlet["param"] name="redirect" value="${currentURL}" />
+					<@portlet["param"] name="reportKey" value="${template.getReportKey()}" />
+				</@>
+
+				<@aui["button-row"]>
+					<@aui["button"] href="${updateReportURL}" value="update-report"/>
+				</@>
+
 				${template.getTemplate()}
 			</@>
 		</#list>

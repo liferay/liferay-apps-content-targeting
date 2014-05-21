@@ -38,4 +38,6 @@ public interface Report {
 
 	public String getReportType();
 
+	public void updateReport();
+
 }

@@ -46,6 +46,16 @@ public class CampaignContentReport extends BaseReport {
 	}
 
 	@Override
+	public void updateReport() {
+		try {
+			CampaignContentLocalServiceUtil.checkCampaignContentEvents();
+		}
+		catch (Exception e) {
+			_log.error("Cannot update report");
+		}
+	}
+
+	@Override
 	protected void populateContext(Map<String, Object> context) {
 		long campaignId = MapUtil.getLong(context, "campaignId", 0);
 

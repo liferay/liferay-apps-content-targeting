@@ -226,6 +226,18 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
+	public void updateReport(ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		String reportKey = ParamUtil.getString(request, "reportKey");
+
+		Report report = _reportsRegistry.getReport(reportKey);
+
+		report.updateReport();
+
+		sendRedirect(request, response);
+	}
+
 	public void updateUserSegment(
 			ActionRequest request, ActionResponse response)
 		throws Exception {
