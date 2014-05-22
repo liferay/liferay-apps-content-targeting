@@ -70,20 +70,20 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 			{ "analyticsEventId", Types.BIGINT },
 			{ "companyId", Types.BIGINT },
 			{ "userId", Types.BIGINT },
-			{ "createDate", Types.TIMESTAMP },
 			{ "anonymousUserId", Types.BIGINT },
-			{ "eventType", Types.VARCHAR },
 			{ "className", Types.VARCHAR },
 			{ "classPK", Types.BIGINT },
 			{ "referrerClassName", Types.VARCHAR },
 			{ "referrerClassPK", Types.BIGINT },
+			{ "eventType", Types.VARCHAR },
 			{ "clientIP", Types.VARCHAR },
 			{ "userAgent", Types.VARCHAR },
 			{ "languageId", Types.VARCHAR },
 			{ "URL", Types.VARCHAR },
-			{ "additionalInfo", Types.CLOB }
+			{ "additionalInfo", Types.CLOB },
+			{ "createDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Analytics_AnalyticsEvent (analyticsEventId LONG not null primary key,companyId LONG,userId LONG,createDate DATE null,anonymousUserId LONG,eventType VARCHAR(75) null,className VARCHAR(75) null,classPK LONG,referrerClassName VARCHAR(75) null,referrerClassPK LONG,clientIP VARCHAR(75) null,userAgent STRING null,languageId VARCHAR(75) null,URL STRING null,additionalInfo TEXT null)";
+	public static final String TABLE_SQL_CREATE = "create table Analytics_AnalyticsEvent (analyticsEventId LONG not null primary key,companyId LONG,userId LONG,anonymousUserId LONG,className VARCHAR(75) null,classPK LONG,referrerClassName VARCHAR(75) null,referrerClassPK LONG,eventType VARCHAR(75) null,clientIP VARCHAR(75) null,userAgent STRING null,languageId VARCHAR(75) null,URL STRING null,additionalInfo TEXT null,createDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Analytics_AnalyticsEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY analyticsEvent.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY Analytics_AnalyticsEvent.createDate DESC";
@@ -99,8 +99,13 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.analytics.model.AnalyticsEvent"),
 			true);
-	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long CREATEDATE_COLUMN_BITMASK = 2L;
+	public static long CLASSNAME_COLUMN_BITMASK = 1L;
+	public static long CLASSPK_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
+	public static long CREATEDATE_COLUMN_BITMASK = 8L;
+	public static long EVENTTYPE_COLUMN_BITMASK = 16L;
+	public static long REFERRERCLASSNAME_COLUMN_BITMASK = 32L;
+	public static long REFERRERCLASSPK_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -118,18 +123,18 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		model.setAnalyticsEventId(soapModel.getAnalyticsEventId());
 		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserId(soapModel.getUserId());
-		model.setCreateDate(soapModel.getCreateDate());
 		model.setAnonymousUserId(soapModel.getAnonymousUserId());
-		model.setEventType(soapModel.getEventType());
 		model.setClassName(soapModel.getClassName());
 		model.setClassPK(soapModel.getClassPK());
 		model.setReferrerClassName(soapModel.getReferrerClassName());
 		model.setReferrerClassPK(soapModel.getReferrerClassPK());
+		model.setEventType(soapModel.getEventType());
 		model.setClientIP(soapModel.getClientIP());
 		model.setUserAgent(soapModel.getUserAgent());
 		model.setLanguageId(soapModel.getLanguageId());
 		model.setURL(soapModel.getURL());
 		model.setAdditionalInfo(soapModel.getAdditionalInfo());
+		model.setCreateDate(soapModel.getCreateDate());
 
 		return model;
 	}
@@ -197,18 +202,18 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		attributes.put("analyticsEventId", getAnalyticsEventId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
 		attributes.put("anonymousUserId", getAnonymousUserId());
-		attributes.put("eventType", getEventType());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
 		attributes.put("referrerClassName", getReferrerClassName());
 		attributes.put("referrerClassPK", getReferrerClassPK());
+		attributes.put("eventType", getEventType());
 		attributes.put("clientIP", getClientIP());
 		attributes.put("userAgent", getUserAgent());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("URL", getURL());
 		attributes.put("additionalInfo", getAdditionalInfo());
+		attributes.put("createDate", getCreateDate());
 
 		return attributes;
 	}
@@ -233,22 +238,10 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 			setUserId(userId);
 		}
 
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
 		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
 
 		if (anonymousUserId != null) {
 			setAnonymousUserId(anonymousUserId);
-		}
-
-		String eventType = (String)attributes.get("eventType");
-
-		if (eventType != null) {
-			setEventType(eventType);
 		}
 
 		String className = (String)attributes.get("className");
@@ -273,6 +266,12 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 		if (referrerClassPK != null) {
 			setReferrerClassPK(referrerClassPK);
+		}
+
+		String eventType = (String)attributes.get("eventType");
+
+		if (eventType != null) {
+			setEventType(eventType);
 		}
 
 		String clientIP = (String)attributes.get("clientIP");
@@ -303,6 +302,12 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 		if (additionalInfo != null) {
 			setAdditionalInfo(additionalInfo);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
 		}
 	}
 
@@ -363,27 +368,6 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@JSON
 	@Override
-	public Date getCreateDate() {
-		return _createDate;
-	}
-
-	@Override
-	public void setCreateDate(Date createDate) {
-		_columnBitmask = -1L;
-
-		if (_originalCreateDate == null) {
-			_originalCreateDate = _createDate;
-		}
-
-		_createDate = createDate;
-	}
-
-	public Date getOriginalCreateDate() {
-		return _originalCreateDate;
-	}
-
-	@JSON
-	@Override
 	public long getAnonymousUserId() {
 		return _anonymousUserId;
 	}
@@ -406,22 +390,6 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@JSON
 	@Override
-	public String getEventType() {
-		if (_eventType == null) {
-			return StringPool.BLANK;
-		}
-		else {
-			return _eventType;
-		}
-	}
-
-	@Override
-	public void setEventType(String eventType) {
-		_eventType = eventType;
-	}
-
-	@JSON
-	@Override
 	public String getClassName() {
 		if (_className == null) {
 			return StringPool.BLANK;
@@ -433,7 +401,17 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public void setClassName(String className) {
+		_columnBitmask |= CLASSNAME_COLUMN_BITMASK;
+
+		if (_originalClassName == null) {
+			_originalClassName = _className;
+		}
+
 		_className = className;
+	}
+
+	public String getOriginalClassName() {
+		return GetterUtil.getString(_originalClassName);
 	}
 
 	@JSON
@@ -444,7 +422,19 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public void setClassPK(long classPK) {
+		_columnBitmask |= CLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalClassPK) {
+			_setOriginalClassPK = true;
+
+			_originalClassPK = _classPK;
+		}
+
 		_classPK = classPK;
+	}
+
+	public long getOriginalClassPK() {
+		return _originalClassPK;
 	}
 
 	@JSON
@@ -460,7 +450,17 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public void setReferrerClassName(String referrerClassName) {
+		_columnBitmask |= REFERRERCLASSNAME_COLUMN_BITMASK;
+
+		if (_originalReferrerClassName == null) {
+			_originalReferrerClassName = _referrerClassName;
+		}
+
 		_referrerClassName = referrerClassName;
+	}
+
+	public String getOriginalReferrerClassName() {
+		return GetterUtil.getString(_originalReferrerClassName);
 	}
 
 	@JSON
@@ -471,7 +471,45 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public void setReferrerClassPK(long referrerClassPK) {
+		_columnBitmask |= REFERRERCLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalReferrerClassPK) {
+			_setOriginalReferrerClassPK = true;
+
+			_originalReferrerClassPK = _referrerClassPK;
+		}
+
 		_referrerClassPK = referrerClassPK;
+	}
+
+	public long getOriginalReferrerClassPK() {
+		return _originalReferrerClassPK;
+	}
+
+	@JSON
+	@Override
+	public String getEventType() {
+		if (_eventType == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _eventType;
+		}
+	}
+
+	@Override
+	public void setEventType(String eventType) {
+		_columnBitmask |= EVENTTYPE_COLUMN_BITMASK;
+
+		if (_originalEventType == null) {
+			_originalEventType = _eventType;
+		}
+
+		_eventType = eventType;
+	}
+
+	public String getOriginalEventType() {
+		return GetterUtil.getString(_originalEventType);
 	}
 
 	@JSON
@@ -554,6 +592,27 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		_additionalInfo = additionalInfo;
 	}
 
+	@JSON
+	@Override
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	@Override
+	public void setCreateDate(Date createDate) {
+		_columnBitmask = -1L;
+
+		if (_originalCreateDate == null) {
+			_originalCreateDate = _createDate;
+		}
+
+		_createDate = createDate;
+	}
+
+	public Date getOriginalCreateDate() {
+		return _originalCreateDate;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -588,18 +647,18 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		analyticsEventImpl.setAnalyticsEventId(getAnalyticsEventId());
 		analyticsEventImpl.setCompanyId(getCompanyId());
 		analyticsEventImpl.setUserId(getUserId());
-		analyticsEventImpl.setCreateDate(getCreateDate());
 		analyticsEventImpl.setAnonymousUserId(getAnonymousUserId());
-		analyticsEventImpl.setEventType(getEventType());
 		analyticsEventImpl.setClassName(getClassName());
 		analyticsEventImpl.setClassPK(getClassPK());
 		analyticsEventImpl.setReferrerClassName(getReferrerClassName());
 		analyticsEventImpl.setReferrerClassPK(getReferrerClassPK());
+		analyticsEventImpl.setEventType(getEventType());
 		analyticsEventImpl.setClientIP(getClientIP());
 		analyticsEventImpl.setUserAgent(getUserAgent());
 		analyticsEventImpl.setLanguageId(getLanguageId());
 		analyticsEventImpl.setURL(getURL());
 		analyticsEventImpl.setAdditionalInfo(getAdditionalInfo());
+		analyticsEventImpl.setCreateDate(getCreateDate());
 
 		analyticsEventImpl.resetOriginalValues();
 
@@ -657,6 +716,20 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 		analyticsEventModelImpl._setOriginalCompanyId = false;
 
+		analyticsEventModelImpl._originalClassName = analyticsEventModelImpl._className;
+
+		analyticsEventModelImpl._originalClassPK = analyticsEventModelImpl._classPK;
+
+		analyticsEventModelImpl._setOriginalClassPK = false;
+
+		analyticsEventModelImpl._originalReferrerClassName = analyticsEventModelImpl._referrerClassName;
+
+		analyticsEventModelImpl._originalReferrerClassPK = analyticsEventModelImpl._referrerClassPK;
+
+		analyticsEventModelImpl._setOriginalReferrerClassPK = false;
+
+		analyticsEventModelImpl._originalEventType = analyticsEventModelImpl._eventType;
+
 		analyticsEventModelImpl._originalCreateDate = analyticsEventModelImpl._createDate;
 
 		analyticsEventModelImpl._columnBitmask = 0;
@@ -672,24 +745,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 		analyticsEventCacheModel.userId = getUserId();
 
-		Date createDate = getCreateDate();
-
-		if (createDate != null) {
-			analyticsEventCacheModel.createDate = createDate.getTime();
-		}
-		else {
-			analyticsEventCacheModel.createDate = Long.MIN_VALUE;
-		}
-
 		analyticsEventCacheModel.anonymousUserId = getAnonymousUserId();
-
-		analyticsEventCacheModel.eventType = getEventType();
-
-		String eventType = analyticsEventCacheModel.eventType;
-
-		if ((eventType != null) && (eventType.length() == 0)) {
-			analyticsEventCacheModel.eventType = null;
-		}
 
 		analyticsEventCacheModel.className = getClassName();
 
@@ -710,6 +766,14 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		}
 
 		analyticsEventCacheModel.referrerClassPK = getReferrerClassPK();
+
+		analyticsEventCacheModel.eventType = getEventType();
+
+		String eventType = analyticsEventCacheModel.eventType;
+
+		if ((eventType != null) && (eventType.length() == 0)) {
+			analyticsEventCacheModel.eventType = null;
+		}
 
 		analyticsEventCacheModel.clientIP = getClientIP();
 
@@ -751,6 +815,15 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 			analyticsEventCacheModel.additionalInfo = null;
 		}
 
+		Date createDate = getCreateDate();
+
+		if (createDate != null) {
+			analyticsEventCacheModel.createDate = createDate.getTime();
+		}
+		else {
+			analyticsEventCacheModel.createDate = Long.MIN_VALUE;
+		}
+
 		return analyticsEventCacheModel;
 	}
 
@@ -764,12 +837,8 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		sb.append(getCompanyId());
 		sb.append(", userId=");
 		sb.append(getUserId());
-		sb.append(", createDate=");
-		sb.append(getCreateDate());
 		sb.append(", anonymousUserId=");
 		sb.append(getAnonymousUserId());
-		sb.append(", eventType=");
-		sb.append(getEventType());
 		sb.append(", className=");
 		sb.append(getClassName());
 		sb.append(", classPK=");
@@ -778,6 +847,8 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		sb.append(getReferrerClassName());
 		sb.append(", referrerClassPK=");
 		sb.append(getReferrerClassPK());
+		sb.append(", eventType=");
+		sb.append(getEventType());
 		sb.append(", clientIP=");
 		sb.append(getClientIP());
 		sb.append(", userAgent=");
@@ -788,6 +859,8 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		sb.append(getURL());
 		sb.append(", additionalInfo=");
 		sb.append(getAdditionalInfo());
+		sb.append(", createDate=");
+		sb.append(getCreateDate());
 		sb.append("}");
 
 		return sb.toString();
@@ -814,16 +887,8 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		sb.append(getUserId());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>createDate</column-name><column-value><![CDATA[");
-		sb.append(getCreateDate());
-		sb.append("]]></column-value></column>");
-		sb.append(
 			"<column><column-name>anonymousUserId</column-name><column-value><![CDATA[");
 		sb.append(getAnonymousUserId());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>eventType</column-name><column-value><![CDATA[");
-		sb.append(getEventType());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>className</column-name><column-value><![CDATA[");
@@ -840,6 +905,10 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		sb.append(
 			"<column><column-name>referrerClassPK</column-name><column-value><![CDATA[");
 		sb.append(getReferrerClassPK());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>eventType</column-name><column-value><![CDATA[");
+		sb.append(getEventType());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>clientIP</column-name><column-value><![CDATA[");
@@ -861,6 +930,10 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 			"<column><column-name>additionalInfo</column-name><column-value><![CDATA[");
 		sb.append(getAdditionalInfo());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>createDate</column-name><column-value><![CDATA[");
+		sb.append(getCreateDate());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -877,20 +950,27 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 	private boolean _setOriginalCompanyId;
 	private long _userId;
 	private String _userUuid;
-	private Date _createDate;
-	private Date _originalCreateDate;
 	private long _anonymousUserId;
 	private String _anonymousUserUuid;
-	private String _eventType;
 	private String _className;
+	private String _originalClassName;
 	private long _classPK;
+	private long _originalClassPK;
+	private boolean _setOriginalClassPK;
 	private String _referrerClassName;
+	private String _originalReferrerClassName;
 	private long _referrerClassPK;
+	private long _originalReferrerClassPK;
+	private boolean _setOriginalReferrerClassPK;
+	private String _eventType;
+	private String _originalEventType;
 	private String _clientIP;
 	private String _userAgent;
 	private String _languageId;
 	private String _URL;
 	private String _additionalInfo;
+	private Date _createDate;
+	private Date _originalCreateDate;
 	private long _columnBitmask;
 	private AnalyticsEvent _escapedModel;
 }

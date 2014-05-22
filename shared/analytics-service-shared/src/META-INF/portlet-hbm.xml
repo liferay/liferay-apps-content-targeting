@@ -10,17 +10,17 @@
 		</id>
 		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="anonymousUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="className" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="referrerClassName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="referrerClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="clientIP" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="userAgent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="URL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="additionalInfo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
 	</class>
 </hibernate-mapping>

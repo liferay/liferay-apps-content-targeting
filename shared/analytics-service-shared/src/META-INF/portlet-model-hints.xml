@@ -5,13 +5,12 @@
 		<field name="analyticsEventId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
-		<field name="createDate" type="Date" />
 		<field name="anonymousUserId" type="long" />
-		<field name="eventType" type="String" />
 		<field name="className" type="String" />
 		<field name="classPK" type="long" />
 		<field name="referrerClassName" type="String" />
 		<field name="referrerClassPK" type="long" />
+		<field name="eventType" type="String" />
 		<field name="clientIP" type="String" />
 		<field name="userAgent" type="String">
 			<hint-collection name="TEXTAREA" />
@@ -23,5 +22,6 @@
 		<field name="additionalInfo" type="String">
 			<hint-collection name="CLOB" />
 		</field>
+		<field name="createDate" type="Date" />
 	</model>
 </model-hints>

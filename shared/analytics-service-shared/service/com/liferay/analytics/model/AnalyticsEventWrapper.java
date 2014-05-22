@@ -53,18 +53,18 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 		attributes.put("analyticsEventId", getAnalyticsEventId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
-		attributes.put("createDate", getCreateDate());
 		attributes.put("anonymousUserId", getAnonymousUserId());
-		attributes.put("eventType", getEventType());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
 		attributes.put("referrerClassName", getReferrerClassName());
 		attributes.put("referrerClassPK", getReferrerClassPK());
+		attributes.put("eventType", getEventType());
 		attributes.put("clientIP", getClientIP());
 		attributes.put("userAgent", getUserAgent());
 		attributes.put("languageId", getLanguageId());
 		attributes.put("URL", getURL());
 		attributes.put("additionalInfo", getAdditionalInfo());
+		attributes.put("createDate", getCreateDate());
 
 		return attributes;
 	}
@@ -89,22 +89,10 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 			setUserId(userId);
 		}
 
-		Date createDate = (Date)attributes.get("createDate");
-
-		if (createDate != null) {
-			setCreateDate(createDate);
-		}
-
 		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
 
 		if (anonymousUserId != null) {
 			setAnonymousUserId(anonymousUserId);
-		}
-
-		String eventType = (String)attributes.get("eventType");
-
-		if (eventType != null) {
-			setEventType(eventType);
 		}
 
 		String className = (String)attributes.get("className");
@@ -129,6 +117,12 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 
 		if (referrerClassPK != null) {
 			setReferrerClassPK(referrerClassPK);
+		}
+
+		String eventType = (String)attributes.get("eventType");
+
+		if (eventType != null) {
+			setEventType(eventType);
 		}
 
 		String clientIP = (String)attributes.get("clientIP");
@@ -159,6 +153,12 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 
 		if (additionalInfo != null) {
 			setAdditionalInfo(additionalInfo);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
 		}
 	}
 
@@ -265,26 +265,6 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	}
 
 	/**
-	* Returns the create date of this analytics event.
-	*
-	* @return the create date of this analytics event
-	*/
-	@Override
-	public java.util.Date getCreateDate() {
-		return _analyticsEvent.getCreateDate();
-	}
-
-	/**
-	* Sets the create date of this analytics event.
-	*
-	* @param createDate the create date of this analytics event
-	*/
-	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_analyticsEvent.setCreateDate(createDate);
-	}
-
-	/**
 	* Returns the anonymous user ID of this analytics event.
 	*
 	* @return the anonymous user ID of this analytics event
@@ -324,26 +304,6 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	@Override
 	public void setAnonymousUserUuid(java.lang.String anonymousUserUuid) {
 		_analyticsEvent.setAnonymousUserUuid(anonymousUserUuid);
-	}
-
-	/**
-	* Returns the event type of this analytics event.
-	*
-	* @return the event type of this analytics event
-	*/
-	@Override
-	public java.lang.String getEventType() {
-		return _analyticsEvent.getEventType();
-	}
-
-	/**
-	* Sets the event type of this analytics event.
-	*
-	* @param eventType the event type of this analytics event
-	*/
-	@Override
-	public void setEventType(java.lang.String eventType) {
-		_analyticsEvent.setEventType(eventType);
 	}
 
 	/**
@@ -424,6 +384,26 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	@Override
 	public void setReferrerClassPK(long referrerClassPK) {
 		_analyticsEvent.setReferrerClassPK(referrerClassPK);
+	}
+
+	/**
+	* Returns the event type of this analytics event.
+	*
+	* @return the event type of this analytics event
+	*/
+	@Override
+	public java.lang.String getEventType() {
+		return _analyticsEvent.getEventType();
+	}
+
+	/**
+	* Sets the event type of this analytics event.
+	*
+	* @param eventType the event type of this analytics event
+	*/
+	@Override
+	public void setEventType(java.lang.String eventType) {
+		_analyticsEvent.setEventType(eventType);
 	}
 
 	/**
@@ -526,6 +506,26 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 		_analyticsEvent.setAdditionalInfo(additionalInfo);
 	}
 
+	/**
+	* Returns the create date of this analytics event.
+	*
+	* @return the create date of this analytics event
+	*/
+	@Override
+	public java.util.Date getCreateDate() {
+		return _analyticsEvent.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this analytics event.
+	*
+	* @param createDate the create date of this analytics event
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_analyticsEvent.setCreateDate(createDate);
+	}
+
 	@Override
 	public boolean isNew() {
 		return _analyticsEvent.isNew();
@@ -590,7 +590,8 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	}
 
 	@Override
-	public int compareTo(AnalyticsEvent analyticsEvent) {
+	public int compareTo(
+		com.liferay.analytics.model.AnalyticsEvent analyticsEvent) {
 		return _analyticsEvent.compareTo(analyticsEvent);
 	}
 
@@ -600,17 +601,17 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<AnalyticsEvent> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.analytics.model.AnalyticsEvent> toCacheModel() {
 		return _analyticsEvent.toCacheModel();
 	}
 
 	@Override
-	public AnalyticsEvent toEscapedModel() {
+	public com.liferay.analytics.model.AnalyticsEvent toEscapedModel() {
 		return new AnalyticsEventWrapper(_analyticsEvent.toEscapedModel());
 	}
 
 	@Override
-	public AnalyticsEvent toUnescapedModel() {
+	public com.liferay.analytics.model.AnalyticsEvent toUnescapedModel() {
 		return new AnalyticsEventWrapper(_analyticsEvent.toUnescapedModel());
 	}
 

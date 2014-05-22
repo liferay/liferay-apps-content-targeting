@@ -118,20 +118,6 @@ public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
 	public void setUserUuid(String userUuid);
 
 	/**
-	 * Returns the create date of this analytics event.
-	 *
-	 * @return the create date of this analytics event
-	 */
-	public Date getCreateDate();
-
-	/**
-	 * Sets the create date of this analytics event.
-	 *
-	 * @param createDate the create date of this analytics event
-	 */
-	public void setCreateDate(Date createDate);
-
-	/**
 	 * Returns the anonymous user ID of this analytics event.
 	 *
 	 * @return the anonymous user ID of this analytics event
@@ -159,21 +145,6 @@ public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
 	 * @param anonymousUserUuid the anonymous user uuid of this analytics event
 	 */
 	public void setAnonymousUserUuid(String anonymousUserUuid);
-
-	/**
-	 * Returns the event type of this analytics event.
-	 *
-	 * @return the event type of this analytics event
-	 */
-	@AutoEscape
-	public String getEventType();
-
-	/**
-	 * Sets the event type of this analytics event.
-	 *
-	 * @param eventType the event type of this analytics event
-	 */
-	public void setEventType(String eventType);
 
 	/**
 	 * Returns the class name of this analytics event.
@@ -232,6 +203,21 @@ public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
 	 * @param referrerClassPK the referrer class p k of this analytics event
 	 */
 	public void setReferrerClassPK(long referrerClassPK);
+
+	/**
+	 * Returns the event type of this analytics event.
+	 *
+	 * @return the event type of this analytics event
+	 */
+	@AutoEscape
+	public String getEventType();
+
+	/**
+	 * Sets the event type of this analytics event.
+	 *
+	 * @param eventType the event type of this analytics event
+	 */
+	public void setEventType(String eventType);
 
 	/**
 	 * Returns the client i p of this analytics event.
@@ -307,6 +293,20 @@ public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
 	 * @param additionalInfo the additional info of this analytics event
 	 */
 	public void setAdditionalInfo(String additionalInfo);
+
+	/**
+	 * Returns the create date of this analytics event.
+	 *
+	 * @return the create date of this analytics event
+	 */
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this analytics event.
+	 *
+	 * @param createDate the create date of this analytics event
+	 */
+	public void setCreateDate(Date createDate);
 
 	@Override
 	public boolean isNew();

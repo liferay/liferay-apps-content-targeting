@@ -34,18 +34,18 @@ public class AnalyticsEventSoap implements Serializable {
 		soapModel.setAnalyticsEventId(model.getAnalyticsEventId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
-		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setAnonymousUserId(model.getAnonymousUserId());
-		soapModel.setEventType(model.getEventType());
 		soapModel.setClassName(model.getClassName());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setReferrerClassName(model.getReferrerClassName());
 		soapModel.setReferrerClassPK(model.getReferrerClassPK());
+		soapModel.setEventType(model.getEventType());
 		soapModel.setClientIP(model.getClientIP());
 		soapModel.setUserAgent(model.getUserAgent());
 		soapModel.setLanguageId(model.getLanguageId());
 		soapModel.setURL(model.getURL());
 		soapModel.setAdditionalInfo(model.getAdditionalInfo());
+		soapModel.setCreateDate(model.getCreateDate());
 
 		return soapModel;
 	}
@@ -122,28 +122,12 @@ public class AnalyticsEventSoap implements Serializable {
 		_userId = userId;
 	}
 
-	public Date getCreateDate() {
-		return _createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		_createDate = createDate;
-	}
-
 	public long getAnonymousUserId() {
 		return _anonymousUserId;
 	}
 
 	public void setAnonymousUserId(long anonymousUserId) {
 		_anonymousUserId = anonymousUserId;
-	}
-
-	public String getEventType() {
-		return _eventType;
-	}
-
-	public void setEventType(String eventType) {
-		_eventType = eventType;
 	}
 
 	public String getClassName() {
@@ -176,6 +160,14 @@ public class AnalyticsEventSoap implements Serializable {
 
 	public void setReferrerClassPK(long referrerClassPK) {
 		_referrerClassPK = referrerClassPK;
+	}
+
+	public String getEventType() {
+		return _eventType;
+	}
+
+	public void setEventType(String eventType) {
+		_eventType = eventType;
 	}
 
 	public String getClientIP() {
@@ -218,19 +210,27 @@ public class AnalyticsEventSoap implements Serializable {
 		_additionalInfo = additionalInfo;
 	}
 
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
+	}
+
 	private long _analyticsEventId;
 	private long _companyId;
 	private long _userId;
-	private Date _createDate;
 	private long _anonymousUserId;
-	private String _eventType;
 	private String _className;
 	private long _classPK;
 	private String _referrerClassName;
 	private long _referrerClassPK;
+	private String _eventType;
 	private String _clientIP;
 	private String _userAgent;
 	private String _languageId;
 	private String _URL;
 	private String _additionalInfo;
+	private Date _createDate;
 }

@@ -12,20 +12,20 @@
 			<id name="analyticsEventId" />
 			<basic name="companyId" />
 			<basic name="userId" />
-			<basic name="createDate">
-				<temporal>TIMESTAMP</temporal>
-			</basic>
 			<basic name="anonymousUserId" />
-			<basic name="eventType" />
 			<basic name="className" />
 			<basic name="classPK" />
 			<basic name="referrerClassName" />
 			<basic name="referrerClassPK" />
+			<basic name="eventType" />
 			<basic name="clientIP" />
 			<basic name="userAgent" />
 			<basic name="languageId" />
 			<basic name="URL" />
 			<basic name="additionalInfo" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
 			<transient name="anonymousUserUuid" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />

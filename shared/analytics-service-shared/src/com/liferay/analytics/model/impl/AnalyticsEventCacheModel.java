@@ -46,12 +46,8 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		sb.append(companyId);
 		sb.append(", userId=");
 		sb.append(userId);
-		sb.append(", createDate=");
-		sb.append(createDate);
 		sb.append(", anonymousUserId=");
 		sb.append(anonymousUserId);
-		sb.append(", eventType=");
-		sb.append(eventType);
 		sb.append(", className=");
 		sb.append(className);
 		sb.append(", classPK=");
@@ -60,6 +56,8 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		sb.append(referrerClassName);
 		sb.append(", referrerClassPK=");
 		sb.append(referrerClassPK);
+		sb.append(", eventType=");
+		sb.append(eventType);
 		sb.append(", clientIP=");
 		sb.append(clientIP);
 		sb.append(", userAgent=");
@@ -70,6 +68,8 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		sb.append(URL);
 		sb.append(", additionalInfo=");
 		sb.append(additionalInfo);
+		sb.append(", createDate=");
+		sb.append(createDate);
 		sb.append("}");
 
 		return sb.toString();
@@ -82,22 +82,7 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		analyticsEventImpl.setAnalyticsEventId(analyticsEventId);
 		analyticsEventImpl.setCompanyId(companyId);
 		analyticsEventImpl.setUserId(userId);
-
-		if (createDate == Long.MIN_VALUE) {
-			analyticsEventImpl.setCreateDate(null);
-		}
-		else {
-			analyticsEventImpl.setCreateDate(new Date(createDate));
-		}
-
 		analyticsEventImpl.setAnonymousUserId(anonymousUserId);
-
-		if (eventType == null) {
-			analyticsEventImpl.setEventType(StringPool.BLANK);
-		}
-		else {
-			analyticsEventImpl.setEventType(eventType);
-		}
 
 		if (className == null) {
 			analyticsEventImpl.setClassName(StringPool.BLANK);
@@ -116,6 +101,13 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		}
 
 		analyticsEventImpl.setReferrerClassPK(referrerClassPK);
+
+		if (eventType == null) {
+			analyticsEventImpl.setEventType(StringPool.BLANK);
+		}
+		else {
+			analyticsEventImpl.setEventType(eventType);
+		}
 
 		if (clientIP == null) {
 			analyticsEventImpl.setClientIP(StringPool.BLANK);
@@ -152,6 +144,13 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 			analyticsEventImpl.setAdditionalInfo(additionalInfo);
 		}
 
+		if (createDate == Long.MIN_VALUE) {
+			analyticsEventImpl.setCreateDate(null);
+		}
+		else {
+			analyticsEventImpl.setCreateDate(new Date(createDate));
+		}
+
 		analyticsEventImpl.resetOriginalValues();
 
 		return analyticsEventImpl;
@@ -162,18 +161,18 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		analyticsEventId = objectInput.readLong();
 		companyId = objectInput.readLong();
 		userId = objectInput.readLong();
-		createDate = objectInput.readLong();
 		anonymousUserId = objectInput.readLong();
-		eventType = objectInput.readUTF();
 		className = objectInput.readUTF();
 		classPK = objectInput.readLong();
 		referrerClassName = objectInput.readUTF();
 		referrerClassPK = objectInput.readLong();
+		eventType = objectInput.readUTF();
 		clientIP = objectInput.readUTF();
 		userAgent = objectInput.readUTF();
 		languageId = objectInput.readUTF();
 		URL = objectInput.readUTF();
 		additionalInfo = objectInput.readUTF();
+		createDate = objectInput.readLong();
 	}
 
 	@Override
@@ -182,15 +181,7 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		objectOutput.writeLong(analyticsEventId);
 		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userId);
-		objectOutput.writeLong(createDate);
 		objectOutput.writeLong(anonymousUserId);
-
-		if (eventType == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(eventType);
-		}
 
 		if (className == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -209,6 +200,13 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		}
 
 		objectOutput.writeLong(referrerClassPK);
+
+		if (eventType == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(eventType);
+		}
 
 		if (clientIP == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -244,21 +242,23 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		else {
 			objectOutput.writeUTF(additionalInfo);
 		}
+
+		objectOutput.writeLong(createDate);
 	}
 
 	public long analyticsEventId;
 	public long companyId;
 	public long userId;
-	public long createDate;
 	public long anonymousUserId;
-	public String eventType;
 	public String className;
 	public long classPK;
 	public String referrerClassName;
 	public long referrerClassPK;
+	public String eventType;
 	public String clientIP;
 	public String userAgent;
 	public String languageId;
 	public String URL;
 	public String additionalInfo;
+	public long createDate;
 }
