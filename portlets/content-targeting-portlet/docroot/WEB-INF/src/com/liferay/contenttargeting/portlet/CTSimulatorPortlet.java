@@ -134,6 +134,8 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
 		template.put(
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
+		template.put(
+			"tabs1", ParamUtil.getString(portletRequest, "tabs1", "campaigns"));
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
