@@ -15,7 +15,9 @@
 package com.liferay.contenttargeting.portlet;
 
 import com.liferay.contenttargeting.api.model.UserSegmentSimulator;
+import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.model.UserSegment;
+import com.liferay.contenttargeting.service.CampaignLocalService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.WebKeys;
@@ -70,6 +72,8 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 			};
 		}
 
+		_campaignLocalService = ServiceTrackerUtil.getService(
+			CampaignLocalService.class, bundle.getBundleContext());
 		_userSegmentLocalService = ServiceTrackerUtil.getService(
 			UserSegmentLocalService.class, bundle.getBundleContext());
 
@@ -153,6 +157,27 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 		long[] userSegmentIds = (long[])portletRequest.getAttribute(
 			WebKeys.USER_SEGMENT_IDS);
 
+		long[] groupIds = ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+			themeDisplay.getSiteGroupId());
+
+		List<Campaign> campaigns = _campaignLocalService.getCampaigns(
+			groupIds, userSegmentIds);
+
+		template.put("campaigns", campaigns);
+
+		List<Campaign> availableCampaigns = _campaignLocalService.getCampaigns(
+			groupIds);
+
+		List<Campaign> notMatchedCampaigns = new ArrayList<Campaign>();
+
+		for (Campaign campaign : availableCampaigns) {
+			if (!campaigns.contains(campaign)) {
+				notMatchedCampaigns.add(campaign);
+			}
+		}
+
+		template.put("notMatchedCampaigns", notMatchedCampaigns);
+
 		template.put("userSegmentIds", userSegmentIds);
 
 		boolean isSimulatedUserSegments = GetterUtil.getBoolean(
@@ -171,9 +196,6 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 
 		template.put("userSegments", userSegments);
 
-		long[] groupIds = ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
-			themeDisplay.getSiteGroupId());
-
 		List<UserSegment> availableUserSegments =
 			_userSegmentLocalService.getUserSegments(groupIds);
 
@@ -190,6 +212,7 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 
 	private static Log _log = LogFactoryUtil.getLog(CTSimulatorPortlet.class);
 
+	private CampaignLocalService _campaignLocalService;
 	private UserSegmentLocalService _userSegmentLocalService;
 	private UserSegmentSimulator _userSegmentSimulator;
 

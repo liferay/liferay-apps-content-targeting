@@ -15,3 +15,33 @@
 -->
 
 <#include "../init.ftl" />
+
+<#if campaigns?has_content>
+	<h2><@liferay_ui["message"] key="matched-campaigns" /></h2>
+
+	<ul>
+
+	<#list campaigns as campaign>
+		<li>${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}</li>
+	</#list>
+
+	</ul>
+<#else>
+	<div class="alert alert-info">
+		<@liferay_ui["message"] key="the-current-user-does-not-match-any-campaign" />
+	</div>
+</#if>
+
+<h2><@liferay_ui["message"] key="not-matched-campaigns" /></h2>
+
+<ul>
+
+<#list notMatchedCampaigns as campaign>
+	<li>
+
+	${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}
+
+	</li>
+</#list>
+
+</ul>

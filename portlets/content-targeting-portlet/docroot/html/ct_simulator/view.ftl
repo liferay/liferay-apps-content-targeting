@@ -16,8 +16,20 @@
 
 <#include "../init.ftl" />
 
+<#assign campaignsLabel = languageUtil.get(locale, "campaigns") />
+
+<#if campaigns?has_content>
+	<#assign campaignsLabel = campaignsLabel + " <span class=\"badge badge-info\">" + campaigns?size + "</span>" />
+</#if>
+
+<#assign userSegmentsLabel = languageUtil.get(locale, "user-segments") />
+
+<#if userSegments?has_content>
+	<#assign userSegmentsLabel = userSegmentsLabel + " <span class=\"badge badge-info\">" + userSegments?size + "</span>" />
+</#if>
+
 <@liferay_ui["tabs"]
-	names="campaigns,user-segments"
+	names="${campaignsLabel},${userSegmentsLabel}"
 	refresh=false
 	type="pills"
 	value="${tabs1}"
