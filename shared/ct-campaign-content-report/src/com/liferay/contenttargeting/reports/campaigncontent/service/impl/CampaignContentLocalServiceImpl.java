@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PortletPreferences;
 import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
 import com.liferay.portlet.PortletPreferencesFactoryUtil;
@@ -122,6 +123,23 @@ public class CampaignContentLocalServiceImpl
 		throws PortalException, SystemException {
 
 		return campaignContentPersistence.findByC_GtD(campaignId, modifiedDate);
+	}
+
+	@Override
+	public List<CampaignContent> getCampaignContents(
+			long campaignId, int start, int end,
+			OrderByComparator orderByComparator)
+		throws PortalException, SystemException {
+
+		return campaignContentPersistence.findByCampaignId(
+				campaignId, start, end, orderByComparator);
+	}
+
+	@Override
+	public int getCampaignContentsCount(long campaignId)
+		throws PortalException, SystemException {
+
+		return campaignContentPersistence.countByCampaignId(campaignId);
 	}
 
 	@Override

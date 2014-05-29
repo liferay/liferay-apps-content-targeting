@@ -21,11 +21,14 @@ import com.liferay.contenttargeting.api.model.Report;
 import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent;
 import com.liferay.contenttargeting.reports.campaigncontent.service.CampaignContentLocalServiceUtil;
+import com.liferay.contenttargeting.reports.campaigncontent.util.comparator.CampaignContentCountComparator;
+import com.liferay.contenttargeting.util.SearchContainerIterator;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -57,22 +60,29 @@ public class CampaignContentReport extends BaseReport {
 
 	@Override
 	protected void populateContext(Map<String, Object> context) {
-		long campaignId = MapUtil.getLong(context, "campaignId", 0);
+		final long campaignId = MapUtil.getLong(context, "campaignId", 0);
 
-		List<CampaignContent> campaignContents = Collections.emptyList();
+		context.put(
+			"searchContainerIterator",
+			new SearchContainerIterator<CampaignContent>() {
 
-		if (campaignId != 0) {
-			try {
-				campaignContents =
-					CampaignContentLocalServiceUtil.getCampaignContents(
-						campaignId);
+				@Override
+				public List<CampaignContent> getResults(int start, int end)
+					throws PortalException, SystemException {
+
+					return CampaignContentLocalServiceUtil.getCampaignContents(
+						campaignId, start, end,
+						new CampaignContentCountComparator());
+				}
+
+				@Override
+				public int getTotal() throws PortalException, SystemException {
+					return
+						CampaignContentLocalServiceUtil.
+							getCampaignContentsCount(campaignId);
+				}
 			}
-			catch (Exception e) {
-				_log.error("Cannot render report for campaign " + campaignId);
-			}
-		}
-
-		context.put("campaignContents", campaignContents);
+		);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

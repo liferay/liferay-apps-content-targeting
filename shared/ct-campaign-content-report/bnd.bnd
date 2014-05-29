@@ -28,6 +28,7 @@ Import-Package:\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.dao.orm,\
+	com.liferay.portal.kernel.dao.search,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.io.unsync,\
 	com.liferay.portal.kernel.json,\
