@@ -19,6 +19,7 @@ import aQute.bnd.annotation.component.Component;
 import com.liferay.contenttargeting.api.model.BaseReport;
 import com.liferay.contenttargeting.api.model.Report;
 import com.liferay.contenttargeting.model.UserSegment;
+import com.liferay.contenttargeting.reports.usersegmentcontent.service.UserSegmentContentLocalServiceUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
@@ -40,6 +41,12 @@ public class UserSegmentContentReport extends BaseReport {
 
 	@Override
 	public void updateReport() {
+		try {
+			UserSegmentContentLocalServiceUtil.checkUserSegmentContentEvents();
+		}
+		catch (Exception e) {
+			_log.error("Cannot update report");
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

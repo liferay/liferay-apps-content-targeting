@@ -4,5 +4,14 @@
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>ct-user-segment-content-report</portlet-name>
+		<scheduler-entry>
+			<scheduler-event-listener-class>com.liferay.contenttargeting.reports.usersegmentcontent.messaging.CheckUserSegmentContentReportMessageListener</scheduler-event-listener-class>
+			<trigger>
+				<simple>
+					<property-key>user.segment.content.report.check.interval</property-key>
+					<time-unit>hour</time-unit>
+				</simple>
+			</trigger>
+		</scheduler-entry>
 	</portlet>
 </liferay-portlet-app>
