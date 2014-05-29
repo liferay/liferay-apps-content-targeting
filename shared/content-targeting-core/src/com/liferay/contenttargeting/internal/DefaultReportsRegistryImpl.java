@@ -64,6 +64,11 @@ public class DefaultReportsRegistryImpl implements ReportsRegistry {
 		_reports.remove(report);
 	}
 
+
+	/**
+	 * @deprecated As of Liferay Portal 7.0 (Replace by MapUtil.filter)
+	 */
+	@Deprecated
 	private <K, V> Map<K, V> _filter(
 		Map<? extends K, ? extends V> inputMap, Map<K, V> outputMap,
 		PredicateFilter<V> predicateFilter) {

@@ -106,7 +106,7 @@ public class CampaignContentLocalServiceImpl
 		throws PortalException, SystemException {
 
 		return campaignContentPersistence.fetchByC_C_C_E(
-				campaignId, className, classPK, eventType);
+			campaignId, className, classPK, eventType);
 	}
 
 	@Override
@@ -131,7 +131,9 @@ public class CampaignContentLocalServiceImpl
 				campaignContentPersistence.findAll(0, 1);
 
 			if (!campaignContentList.isEmpty()) {
-				return campaignContentList.get(0).getCreateDate();
+				CampaignContent campaignContent = campaignContentList.get(0);
+
+				return campaignContent.getCreateDate();
 			}
 			else {
 				return _analyticsEventLocalService.getMaxAge();
