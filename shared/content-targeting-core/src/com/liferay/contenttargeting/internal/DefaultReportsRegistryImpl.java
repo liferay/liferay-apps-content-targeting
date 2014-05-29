@@ -64,7 +64,6 @@ public class DefaultReportsRegistryImpl implements ReportsRegistry {
 		_reports.remove(report);
 	}
 
-
 	/**
 	 * @deprecated As of Liferay Portal 7.0 (Replace by MapUtil.filter)
 	 */
