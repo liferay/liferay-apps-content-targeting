@@ -35,6 +35,9 @@ public class ContentTargetingPath {
 	public static final String VIEW_CAMPAIGNS_RESOURCES =
 		"html/content_targeting/view_campaigns_resources.ftl";
 
+	public static final String VIEW_USER_SEGMENT_REPORTS =
+		"html/content_targeting/view_user_segment_reports.ftl";
+
 	public static final String VIEW_USER_SEGMENTS_RESOURCES =
 		"html/content_targeting/view_user_segments_resources.ftl";
 

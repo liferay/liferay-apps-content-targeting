@@ -50,6 +50,20 @@
 			name=""
 		>
 			<@liferay_ui["icon-menu"]>
+				<@portlet["renderURL"] var="viewUserSegmentReportsURL">
+					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_USER_SEGMENT_REPORTS}" />
+					<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
+					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+				</@>
+
+				<@liferay_ui["icon"]
+					image="view"
+					label=true
+					message="reports"
+					method="get"
+					url="${viewUserSegmentReportsURL}"
+				/>
+
 				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.UPDATE)>
 					<@portlet["renderURL"] var="editUserSegmentURL">
 						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />

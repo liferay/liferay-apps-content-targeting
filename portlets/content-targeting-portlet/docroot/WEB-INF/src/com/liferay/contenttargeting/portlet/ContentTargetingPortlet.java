@@ -461,7 +461,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					"campaignReportsTemplates", campaignReportsTemplates);
 			}
 		}
-		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
+		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT) ||
+				 path.equals(ContentTargetingPath.VIEW_USER_SEGMENT_REPORTS)) {
+
 			long userSegmentId = ParamUtil.getLong(
 				portletRequest, "userSegmentId");
 
@@ -529,6 +531,39 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				}
 
 				template.put("ruleTemplates", ruleTemplates);
+
+				if (path.equals(
+						ContentTargetingPath.VIEW_USER_SEGMENT_REPORTS)) {
+
+					template.put(
+						"tabs2", ParamUtil.getString(portletRequest, "tabs2"));
+
+					Map<String, Report> campaignReports =
+						_reportsRegistry.getReports(
+							UserSegment.class.getName());
+
+					List<ReportTemplate> userSegmentReportsTemplates =
+						new ArrayList<ReportTemplate>();
+
+					for (Report report : campaignReports.values()) {
+						ReportTemplate reportTemplate = new ReportTemplate();
+
+						String html = report.getHTML(
+							_cloneTemplateContext(template));
+
+						reportTemplate.setReport(report);
+						reportTemplate.setTemplate(html);
+
+						userSegmentReportsTemplates.add(reportTemplate);
+					}
+
+					template.put(
+						"userSegmentReportsTabNames",
+						ListUtil.toString(userSegmentReportsTemplates, "name"));
+					template.put(
+						"userSegmentReportsTemplates",
+						userSegmentReportsTemplates);
+				}
 			}
 			finally {
 				themeDisplay.setIsolated(isolated);

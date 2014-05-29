@@ -29,7 +29,7 @@ long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 		Liferay.Analytics.track('view', {
 			className: '<%= assetEntry.getClassName() %>',
 			classPK: '<%= assetEntry.getClassPK() %>',
-            groupId: '<%= assetEntry.getGroupId() %>',
+			groupId: '<%= assetEntry.getGroupId() %>',
 			referrerClassName: 'com.liferay.contenttargeting.model.UserSegment',
 			referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
 		});
