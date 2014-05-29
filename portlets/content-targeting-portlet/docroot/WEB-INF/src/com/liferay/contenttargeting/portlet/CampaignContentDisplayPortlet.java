@@ -276,8 +276,8 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 				portletRequest.setAttribute(
 					"view.jsp-print", new Boolean(false));
 
-				template.put("assetEntryClassName", AssetEntry.class.getName());
-				template.put("assetEntryClassPK", assetEntry.getPrimaryKey());
+				template.put("assetEntryClassName", assetEntry.getClassName());
+				template.put("assetEntryClassPK", assetEntry.getClassPK());
 			}
 			else {
 				portletRequest.setAttribute(

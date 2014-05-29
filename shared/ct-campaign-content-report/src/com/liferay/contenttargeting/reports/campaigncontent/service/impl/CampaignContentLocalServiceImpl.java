@@ -21,6 +21,8 @@ import com.liferay.contenttargeting.reports.campaigncontent.service.base.Campaig
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ProjectionList;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,11 +31,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.model.PortletPreferences;
-import com.liferay.portal.service.PortletPreferencesLocalServiceUtil;
-import com.liferay.portlet.PortletPreferencesFactoryUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -166,70 +163,50 @@ public class CampaignContentLocalServiceImpl
 	protected void addCampaignContentsFromAnalytics(Date date)
 		throws PortalException, SystemException {
 
-		// Get the portlet preferences of all Campaign Content Display portlets
+		// Retrieve analytics
 
-		DynamicQuery dynamicQuery =
-			PortletPreferencesLocalServiceUtil.dynamicQuery();
+		DynamicQuery dynamicQuery = _analyticsEventLocalService.dynamicQuery();
 
-		Property portletIdProperty = PropertyFactoryUtil.forName("portletId");
+		Property referrerClassNameProperty = PropertyFactoryUtil.forName(
+			"referrerClassName");
 
 		dynamicQuery.add(
-			portletIdProperty.like(
-				"%campaigncontentdisplay_WAR_contenttargetingportlet%"));
+			referrerClassNameProperty.eq(Campaign.class.getName()));
 
-		List<PortletPreferences> portletPreferencesList =
-			PortletPreferencesLocalServiceUtil.dynamicQuery(dynamicQuery);
+		Property createDateProperty = PropertyFactoryUtil.forName("createDate");
 
-		// Obtain the contents configured in the portlet preferences
+		dynamicQuery.add(createDateProperty.gt(date));
 
-		for (PortletPreferences preferences : portletPreferencesList) {
-			javax.portlet.PortletPreferences jxPortletPreferences =
-				PortletPreferencesFactoryUtil.fromDefaultXML(
-					preferences.getPreferences());
+		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
 
-			int[] queryRulesIndexes = GetterUtil.getIntegerValues(
-					jxPortletPreferences.getValues("queryLogicIndexes", null));
+		projectionList.add(ProjectionFactoryUtil.groupProperty("className"));
+		projectionList.add(ProjectionFactoryUtil.groupProperty("classPK"));
+		projectionList.add(
+			ProjectionFactoryUtil.groupProperty("referrerClassPK"));
 
-			for (int queryRulesIndex : queryRulesIndexes) {
-				try {
-					long campaignId = GetterUtil.getLong(
-						jxPortletPreferences.getValue(
-							"campaignId" + queryRulesIndex, null));
+		dynamicQuery.setProjection(projectionList);
 
-					long assetEntryId = GetterUtil.getLong(
-						jxPortletPreferences.getValue(
-							"assetEntryId" + queryRulesIndex, null));
+		List<Object[]> results = _analyticsEventLocalService.dynamicQuery(
+			dynamicQuery);
 
-					// Obtain analytics and register data
+		// Process analytics and store data
 
-					int campaignContentViewCount =
-						_analyticsEventLocalService.getAnalyticsEventsCount(
-							AssetEntry.class.getName(), assetEntryId,
-							Campaign.class.getName(), campaignId, "view", date);
+		for (Object[] result : results) {
+			String className = GetterUtil.getString(result[0]);
+			long classPK = GetterUtil.getLong(result[1]);
+			long referrerClassPK = GetterUtil.getLong(result[2]);
 
-					if (campaignContentViewCount == 0) {
-						continue;
-					}
+			int contentViewCount =
+				_analyticsEventLocalService.getAnalyticsEventsCount(
+					className, classPK, Campaign.class.getName(),
+					referrerClassPK, "view", date);
 
-					AssetEntry assetEntry =
-						AssetEntryLocalServiceUtil.getAssetEntry(assetEntryId);
-
-					addCampaignContent(
-						campaignId, assetEntry.getClassName(),
-						assetEntry.getClassPK(), "view",
-						campaignContentViewCount);
-				}
-				catch (Exception e) {
-					if (_log.isDebugEnabled()) {
-						_log.debug(
-							"Error retrieving analytics for portlet " +
-								preferences.getPortletId() + " in plid " +
-									preferences.getPlid());
-					}
-
-					continue;
-				}
+			if (contentViewCount == 0) {
+				continue;
 			}
+
+			addCampaignContent(
+				referrerClassPK, className, classPK, "view", contentViewCount);
 		}
 	}
 
