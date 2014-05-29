@@ -58,5 +58,9 @@
 		/>
 	</@>
 
+	<#if searchContainer.getResults()?has_content>
+		<#include "ct_chart.ftl" />
+	</#if>
+
 	<@liferay_ui["search-iterator"] />
 </@>
