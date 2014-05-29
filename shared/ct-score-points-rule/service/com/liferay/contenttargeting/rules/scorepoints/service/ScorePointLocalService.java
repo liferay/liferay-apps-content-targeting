@@ -59,22 +59,22 @@ public interface ScorePointLocalService extends BaseLocalService,
 	/**
 	* Creates a new score point with the primary key. Does not add the score point to the database.
 	*
-	* @param Id the primary key for the new score point
+	* @param scorePointId the primary key for the new score point
 	* @return the new score point
 	*/
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint createScorePoint(
-		long Id);
+		long scorePointId);
 
 	/**
 	* Deletes the score point with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param Id the primary key of the score point
+	* @param scorePointId the primary key of the score point
 	* @return the score point that was removed
 	* @throws PortalException if a score point with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint deleteScorePoint(
-		long Id)
+		long scorePointId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -168,19 +168,20 @@ public interface ScorePointLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint fetchScorePoint(
-		long Id) throws com.liferay.portal.kernel.exception.SystemException;
+		long scorePointId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the score point with the primary key.
 	*
-	* @param Id the primary key of the score point
+	* @param scorePointId the primary key of the score point
 	* @return the score point
 	* @throws PortalException if a score point with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint getScorePoint(
-		long Id)
+		long scorePointId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

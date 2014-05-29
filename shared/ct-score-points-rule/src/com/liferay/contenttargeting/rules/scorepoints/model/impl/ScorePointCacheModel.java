@@ -40,8 +40,8 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 
 		sb.append("{uuid=");
 		sb.append(uuid);
-		sb.append(", Id=");
-		sb.append(Id);
+		sb.append(", scorePointId=");
+		sb.append(scorePointId);
 		sb.append(", anonymousUserId=");
 		sb.append(anonymousUserId);
 		sb.append(", userSegmentId=");
@@ -64,7 +64,7 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 			scorePointImpl.setUuid(uuid);
 		}
 
-		scorePointImpl.setId(Id);
+		scorePointImpl.setScorePointId(scorePointId);
 		scorePointImpl.setAnonymousUserId(anonymousUserId);
 		scorePointImpl.setUserSegmentId(userSegmentId);
 		scorePointImpl.setPoints(points);
@@ -77,7 +77,7 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
-		Id = objectInput.readLong();
+		scorePointId = objectInput.readLong();
 		anonymousUserId = objectInput.readLong();
 		userSegmentId = objectInput.readLong();
 		points = objectInput.readLong();
@@ -93,14 +93,14 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 			objectOutput.writeUTF(uuid);
 		}
 
-		objectOutput.writeLong(Id);
+		objectOutput.writeLong(scorePointId);
 		objectOutput.writeLong(anonymousUserId);
 		objectOutput.writeLong(userSegmentId);
 		objectOutput.writeLong(points);
 	}
 
 	public String uuid;
-	public long Id;
+	public long scorePointId;
 	public long anonymousUserId;
 	public long userSegmentId;
 	public long points;

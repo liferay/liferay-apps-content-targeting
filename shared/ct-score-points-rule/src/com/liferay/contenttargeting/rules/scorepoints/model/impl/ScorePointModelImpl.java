@@ -66,12 +66,12 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 	public static final String TABLE_NAME = "ScorePoints_ScorePoint";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "uuid_", Types.VARCHAR },
-			{ "Id", Types.BIGINT },
+			{ "scorePointId", Types.BIGINT },
 			{ "anonymousUserId", Types.BIGINT },
 			{ "userSegmentId", Types.BIGINT },
 			{ "points", Types.BIGINT }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ScorePoints_ScorePoint (uuid_ VARCHAR(75) null,Id LONG not null primary key,anonymousUserId LONG,userSegmentId LONG,points LONG)";
+	public static final String TABLE_SQL_CREATE = "create table ScorePoints_ScorePoint (uuid_ VARCHAR(75) null,scorePointId LONG not null primary key,anonymousUserId LONG,userSegmentId LONG,points LONG)";
 	public static final String TABLE_SQL_DROP = "drop table ScorePoints_ScorePoint";
 	public static final String ORDER_BY_JPQL = " ORDER BY scorePoint.anonymousUserId DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY ScorePoints_ScorePoint.anonymousUserId DESC";
@@ -105,7 +105,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 		ScorePoint model = new ScorePointImpl();
 
 		model.setUuid(soapModel.getUuid());
-		model.setId(soapModel.getId());
+		model.setScorePointId(soapModel.getScorePointId());
 		model.setAnonymousUserId(soapModel.getAnonymousUserId());
 		model.setUserSegmentId(soapModel.getUserSegmentId());
 		model.setPoints(soapModel.getPoints());
@@ -141,17 +141,17 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 
 	@Override
 	public long getPrimaryKey() {
-		return _Id;
+		return _scorePointId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setId(primaryKey);
+		setScorePointId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _Id;
+		return _scorePointId;
 	}
 
 	@Override
@@ -174,7 +174,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("Id", getId());
+		attributes.put("scorePointId", getScorePointId());
 		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("points", getPoints());
@@ -190,10 +190,10 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 			setUuid(uuid);
 		}
 
-		Long Id = (Long)attributes.get("Id");
+		Long scorePointId = (Long)attributes.get("scorePointId");
 
-		if (Id != null) {
-			setId(Id);
+		if (scorePointId != null) {
+			setScorePointId(scorePointId);
 		}
 
 		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
@@ -241,13 +241,13 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 
 	@JSON
 	@Override
-	public long getId() {
-		return _Id;
+	public long getScorePointId() {
+		return _scorePointId;
 	}
 
 	@Override
-	public void setId(long Id) {
-		_Id = Id;
+	public void setScorePointId(long scorePointId) {
+		_scorePointId = scorePointId;
 	}
 
 	@JSON
@@ -350,7 +350,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 		ScorePointImpl scorePointImpl = new ScorePointImpl();
 
 		scorePointImpl.setUuid(getUuid());
-		scorePointImpl.setId(getId());
+		scorePointImpl.setScorePointId(getScorePointId());
 		scorePointImpl.setAnonymousUserId(getAnonymousUserId());
 		scorePointImpl.setUserSegmentId(getUserSegmentId());
 		scorePointImpl.setPoints(getPoints());
@@ -439,7 +439,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 			scorePointCacheModel.uuid = null;
 		}
 
-		scorePointCacheModel.Id = getId();
+		scorePointCacheModel.scorePointId = getScorePointId();
 
 		scorePointCacheModel.anonymousUserId = getAnonymousUserId();
 
@@ -456,8 +456,8 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
-		sb.append(", Id=");
-		sb.append(getId());
+		sb.append(", scorePointId=");
+		sb.append(getScorePointId());
 		sb.append(", anonymousUserId=");
 		sb.append(getAnonymousUserId());
 		sb.append(", userSegmentId=");
@@ -483,8 +483,8 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>Id</column-name><column-value><![CDATA[");
-		sb.append(getId());
+			"<column><column-name>scorePointId</column-name><column-value><![CDATA[");
+		sb.append(getScorePointId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>anonymousUserId</column-name><column-value><![CDATA[");
@@ -510,7 +510,7 @@ public class ScorePointModelImpl extends BaseModelImpl<ScorePoint>
 		};
 	private String _uuid;
 	private String _originalUuid;
-	private long _Id;
+	private long _scorePointId;
 	private long _anonymousUserId;
 	private String _anonymousUserUuid;
 	private long _originalAnonymousUserId;

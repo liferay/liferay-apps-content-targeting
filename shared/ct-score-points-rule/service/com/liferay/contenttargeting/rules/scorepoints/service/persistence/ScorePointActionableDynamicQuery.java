@@ -32,6 +32,6 @@ public abstract class ScorePointActionableDynamicQuery
 
 		setClassLoader(com.liferay.contenttargeting.rules.scorepoints.service.ClpSerializer.class.getClassLoader());
 
-		setPrimaryKeyPropertyName("Id");
+		setPrimaryKeyPropertyName("scorePointId");
 	}
 }

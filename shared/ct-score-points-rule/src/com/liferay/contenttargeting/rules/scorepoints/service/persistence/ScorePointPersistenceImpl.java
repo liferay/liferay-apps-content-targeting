@@ -375,7 +375,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	/**
 	 * Returns the score points before and after the current score point in the ordered set where uuid = &#63;.
 	 *
-	 * @param Id the primary key of the current score point
+	 * @param scorePointId the primary key of the current score point
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next score point
@@ -383,10 +383,10 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ScorePoint[] findByUuid_PrevAndNext(long Id, String uuid,
+	public ScorePoint[] findByUuid_PrevAndNext(long scorePointId, String uuid,
 		OrderByComparator orderByComparator)
 		throws NoSuchScorePointException, SystemException {
-		ScorePoint scorePoint = findByPrimaryKey(Id);
+		ScorePoint scorePoint = findByPrimaryKey(scorePointId);
 
 		Session session = null;
 
@@ -1002,15 +1002,15 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	/**
 	 * Creates a new score point with the primary key. Does not add the score point to the database.
 	 *
-	 * @param Id the primary key for the new score point
+	 * @param scorePointId the primary key for the new score point
 	 * @return the new score point
 	 */
 	@Override
-	public ScorePoint create(long Id) {
+	public ScorePoint create(long scorePointId) {
 		ScorePoint scorePoint = new ScorePointImpl();
 
 		scorePoint.setNew(true);
-		scorePoint.setPrimaryKey(Id);
+		scorePoint.setPrimaryKey(scorePointId);
 
 		String uuid = PortalUUIDUtil.generate();
 
@@ -1022,15 +1022,15 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	/**
 	 * Removes the score point with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param Id the primary key of the score point
+	 * @param scorePointId the primary key of the score point
 	 * @return the score point that was removed
 	 * @throws com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException if a score point with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ScorePoint remove(long Id)
+	public ScorePoint remove(long scorePointId)
 		throws NoSuchScorePointException, SystemException {
-		return remove((Serializable)Id);
+		return remove((Serializable)scorePointId);
 	}
 
 	/**
@@ -1189,7 +1189,7 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 		scorePointImpl.setPrimaryKey(scorePoint.getPrimaryKey());
 
 		scorePointImpl.setUuid(scorePoint.getUuid());
-		scorePointImpl.setId(scorePoint.getId());
+		scorePointImpl.setScorePointId(scorePoint.getScorePointId());
 		scorePointImpl.setAnonymousUserId(scorePoint.getAnonymousUserId());
 		scorePointImpl.setUserSegmentId(scorePoint.getUserSegmentId());
 		scorePointImpl.setPoints(scorePoint.getPoints());
@@ -1225,15 +1225,15 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	/**
 	 * Returns the score point with the primary key or throws a {@link com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException} if it could not be found.
 	 *
-	 * @param Id the primary key of the score point
+	 * @param scorePointId the primary key of the score point
 	 * @return the score point
 	 * @throws com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException if a score point with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ScorePoint findByPrimaryKey(long Id)
+	public ScorePoint findByPrimaryKey(long scorePointId)
 		throws NoSuchScorePointException, SystemException {
-		return findByPrimaryKey((Serializable)Id);
+		return findByPrimaryKey((Serializable)scorePointId);
 	}
 
 	/**
@@ -1287,13 +1287,14 @@ public class ScorePointPersistenceImpl extends BasePersistenceImpl<ScorePoint>
 	/**
 	 * Returns the score point with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param Id the primary key of the score point
+	 * @param scorePointId the primary key of the score point
 	 * @return the score point, or <code>null</code> if a score point with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ScorePoint fetchByPrimaryKey(long Id) throws SystemException {
-		return fetchByPrimaryKey((Serializable)Id);
+	public ScorePoint fetchByPrimaryKey(long scorePointId)
+		throws SystemException {
+		return fetchByPrimaryKey((Serializable)scorePointId);
 	}
 
 	/**

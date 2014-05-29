@@ -55,27 +55,27 @@ public class ScorePointLocalServiceUtil {
 	/**
 	* Creates a new score point with the primary key. Does not add the score point to the database.
 	*
-	* @param Id the primary key for the new score point
+	* @param scorePointId the primary key for the new score point
 	* @return the new score point
 	*/
 	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint createScorePoint(
-		long Id) {
-		return getService().createScorePoint(Id);
+		long scorePointId) {
+		return getService().createScorePoint(scorePointId);
 	}
 
 	/**
 	* Deletes the score point with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param Id the primary key of the score point
+	* @param scorePointId the primary key of the score point
 	* @return the score point that was removed
 	* @throws PortalException if a score point with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint deleteScorePoint(
-		long Id)
+		long scorePointId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteScorePoint(Id);
+		return getService().deleteScorePoint(scorePointId);
 	}
 
 	/**
@@ -182,23 +182,24 @@ public class ScorePointLocalServiceUtil {
 	}
 
 	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint fetchScorePoint(
-		long Id) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchScorePoint(Id);
+		long scorePointId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchScorePoint(scorePointId);
 	}
 
 	/**
 	* Returns the score point with the primary key.
 	*
-	* @param Id the primary key of the score point
+	* @param scorePointId the primary key of the score point
 	* @return the score point
 	* @throws PortalException if a score point with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint getScorePoint(
-		long Id)
+		long scorePointId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getScorePoint(Id);
+		return getService().getScorePoint(scorePointId);
 	}
 
 	public static com.liferay.portal.model.PersistedModel getPersistedModel(

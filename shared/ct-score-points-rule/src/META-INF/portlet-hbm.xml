@@ -5,7 +5,7 @@
 	<import class="com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint" />
 	<class name="com.liferay.contenttargeting.rules.scorepoints.model.impl.ScorePointImpl" table="ScorePoints_ScorePoint">
 		<cache usage="read-write" />
-		<id name="Id" type="long">
+		<id name="scorePointId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />

@@ -47,29 +47,29 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	/**
 	* Creates a new score point with the primary key. Does not add the score point to the database.
 	*
-	* @param Id the primary key for the new score point
+	* @param scorePointId the primary key for the new score point
 	* @return the new score point
 	*/
 	@Override
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint createScorePoint(
-		long Id) {
-		return _scorePointLocalService.createScorePoint(Id);
+		long scorePointId) {
+		return _scorePointLocalService.createScorePoint(scorePointId);
 	}
 
 	/**
 	* Deletes the score point with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param Id the primary key of the score point
+	* @param scorePointId the primary key of the score point
 	* @return the score point that was removed
 	* @throws PortalException if a score point with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint deleteScorePoint(
-		long Id)
+		long scorePointId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.deleteScorePoint(Id);
+		return _scorePointLocalService.deleteScorePoint(scorePointId);
 	}
 
 	/**
@@ -185,24 +185,25 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 
 	@Override
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint fetchScorePoint(
-		long Id) throws com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.fetchScorePoint(Id);
+		long scorePointId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _scorePointLocalService.fetchScorePoint(scorePointId);
 	}
 
 	/**
 	* Returns the score point with the primary key.
 	*
-	* @param Id the primary key of the score point
+	* @param scorePointId the primary key of the score point
 	* @return the score point
 	* @throws PortalException if a score point with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint getScorePoint(
-		long Id)
+		long scorePointId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _scorePointLocalService.getScorePoint(Id);
+		return _scorePointLocalService.getScorePoint(scorePointId);
 	}
 
 	@Override

@@ -52,17 +52,17 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 
 	@Override
 	public long getPrimaryKey() {
-		return _Id;
+		return _scorePointId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setId(primaryKey);
+		setScorePointId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _Id;
+		return _scorePointId;
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("Id", getId());
+		attributes.put("scorePointId", getScorePointId());
 		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("points", getPoints());
@@ -91,10 +91,10 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 			setUuid(uuid);
 		}
 
-		Long Id = (Long)attributes.get("Id");
+		Long scorePointId = (Long)attributes.get("scorePointId");
 
-		if (Id != null) {
-			setId(Id);
+		if (scorePointId != null) {
+			setScorePointId(scorePointId);
 		}
 
 		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
@@ -140,21 +140,21 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 	}
 
 	@Override
-	public long getId() {
-		return _Id;
+	public long getScorePointId() {
+		return _scorePointId;
 	}
 
 	@Override
-	public void setId(long Id) {
-		_Id = Id;
+	public void setScorePointId(long scorePointId) {
+		_scorePointId = scorePointId;
 
 		if (_scorePointRemoteModel != null) {
 			try {
 				Class<?> clazz = _scorePointRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setId", long.class);
+				Method method = clazz.getMethod("setScorePointId", long.class);
 
-				method.invoke(_scorePointRemoteModel, Id);
+				method.invoke(_scorePointRemoteModel, scorePointId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -312,7 +312,7 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 		ScorePointClp clone = new ScorePointClp();
 
 		clone.setUuid(getUuid());
-		clone.setId(getId());
+		clone.setScorePointId(getScorePointId());
 		clone.setAnonymousUserId(getAnonymousUserId());
 		clone.setUserSegmentId(getUserSegmentId());
 		clone.setPoints(getPoints());
@@ -376,8 +376,8 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
-		sb.append(", Id=");
-		sb.append(getId());
+		sb.append(", scorePointId=");
+		sb.append(getScorePointId());
 		sb.append(", anonymousUserId=");
 		sb.append(getAnonymousUserId());
 		sb.append(", userSegmentId=");
@@ -403,8 +403,8 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 		sb.append(getUuid());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>Id</column-name><column-value><![CDATA[");
-		sb.append(getId());
+			"<column><column-name>scorePointId</column-name><column-value><![CDATA[");
+		sb.append(getScorePointId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>anonymousUserId</column-name><column-value><![CDATA[");
@@ -425,7 +425,7 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 	}
 
 	private String _uuid;
-	private long _Id;
+	private long _scorePointId;
 	private long _anonymousUserId;
 	private String _anonymousUserUuid;
 	private long _userSegmentId;

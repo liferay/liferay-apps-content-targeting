@@ -9,7 +9,7 @@
 	</persistence-unit-metadata>
 	<mapped-superclass class="com.liferay.contenttargeting.rules.scorepoints.model.impl.ScorePointModelImpl">
 		<attributes>
-			<id name="Id" />
+			<id name="scorePointId" />
 			<basic name="uuid">
 				<column name="UUID_" />
 			</basic>

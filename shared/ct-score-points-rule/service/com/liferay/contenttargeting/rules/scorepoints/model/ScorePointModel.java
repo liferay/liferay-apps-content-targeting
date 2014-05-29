@@ -74,18 +74,18 @@ public interface ScorePointModel extends BaseModel<ScorePoint> {
 	public void setUuid(String uuid);
 
 	/**
-	 * Returns the ID of this score point.
+	 * Returns the score point ID of this score point.
 	 *
-	 * @return the ID of this score point
+	 * @return the score point ID of this score point
 	 */
-	public long getId();
+	public long getScorePointId();
 
 	/**
-	 * Sets the ID of this score point.
+	 * Sets the score point ID of this score point.
 	 *
-	 * @param Id the ID of this score point
+	 * @param scorePointId the score point ID of this score point
 	 */
-	public void setId(long Id);
+	public void setScorePointId(long scorePointId);
 
 	/**
 	 * Returns the anonymous user ID of this score point.

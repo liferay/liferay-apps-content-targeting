@@ -49,7 +49,7 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("uuid", getUuid());
-		attributes.put("Id", getId());
+		attributes.put("scorePointId", getScorePointId());
 		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("points", getPoints());
@@ -65,10 +65,10 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 			setUuid(uuid);
 		}
 
-		Long Id = (Long)attributes.get("Id");
+		Long scorePointId = (Long)attributes.get("scorePointId");
 
-		if (Id != null) {
-			setId(Id);
+		if (scorePointId != null) {
+			setScorePointId(scorePointId);
 		}
 
 		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
@@ -131,23 +131,23 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 	}
 
 	/**
-	* Returns the ID of this score point.
+	* Returns the score point ID of this score point.
 	*
-	* @return the ID of this score point
+	* @return the score point ID of this score point
 	*/
 	@Override
-	public long getId() {
-		return _scorePoint.getId();
+	public long getScorePointId() {
+		return _scorePoint.getScorePointId();
 	}
 
 	/**
-	* Sets the ID of this score point.
+	* Sets the score point ID of this score point.
 	*
-	* @param Id the ID of this score point
+	* @param scorePointId the score point ID of this score point
 	*/
 	@Override
-	public void setId(long Id) {
-		_scorePoint.setId(Id);
+	public void setScorePointId(long scorePointId) {
+		_scorePoint.setScorePointId(scorePointId);
 	}
 
 	/**
@@ -296,7 +296,8 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 	}
 
 	@Override
-	public int compareTo(ScorePoint scorePoint) {
+	public int compareTo(
+		com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint scorePoint) {
 		return _scorePoint.compareTo(scorePoint);
 	}
 
@@ -306,17 +307,17 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<ScorePoint> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint> toCacheModel() {
 		return _scorePoint.toCacheModel();
 	}
 
 	@Override
-	public ScorePoint toEscapedModel() {
+	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint toEscapedModel() {
 		return new ScorePointWrapper(_scorePoint.toEscapedModel());
 	}
 
 	@Override
-	public ScorePoint toUnescapedModel() {
+	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint toUnescapedModel() {
 		return new ScorePointWrapper(_scorePoint.toUnescapedModel());
 	}
 

@@ -164,12 +164,12 @@ public class ScorePointLocalServiceClp implements ScorePointLocalService {
 
 	@Override
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint createScorePoint(
-		long Id) {
+		long scorePointId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
-					_methodParameterTypes1, new Object[] { Id });
+					_methodParameterTypes1, new Object[] { scorePointId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -188,14 +188,14 @@ public class ScorePointLocalServiceClp implements ScorePointLocalService {
 
 	@Override
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint deleteScorePoint(
-		long Id)
+		long scorePointId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
-					_methodParameterTypes2, new Object[] { Id });
+					_methodParameterTypes2, new Object[] { scorePointId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -449,12 +449,13 @@ public class ScorePointLocalServiceClp implements ScorePointLocalService {
 
 	@Override
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint fetchScorePoint(
-		long Id) throws com.liferay.portal.kernel.exception.SystemException {
+		long scorePointId)
+		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
-					_methodParameterTypes10, new Object[] { Id });
+					_methodParameterTypes10, new Object[] { scorePointId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -477,14 +478,14 @@ public class ScorePointLocalServiceClp implements ScorePointLocalService {
 
 	@Override
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint getScorePoint(
-		long Id)
+		long scorePointId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName11,
-					_methodParameterTypes11, new Object[] { Id });
+					_methodParameterTypes11, new Object[] { scorePointId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

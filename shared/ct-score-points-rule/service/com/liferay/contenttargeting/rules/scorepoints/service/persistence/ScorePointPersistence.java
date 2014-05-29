@@ -143,7 +143,7 @@ public interface ScorePointPersistence extends BasePersistence<ScorePoint> {
 	/**
 	* Returns the score points before and after the current score point in the ordered set where uuid = &#63;.
 	*
-	* @param Id the primary key of the current score point
+	* @param scorePointId the primary key of the current score point
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next score point
@@ -151,7 +151,7 @@ public interface ScorePointPersistence extends BasePersistence<ScorePoint> {
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint[] findByUuid_PrevAndNext(
-		long Id, java.lang.String uuid,
+		long scorePointId, java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -257,22 +257,22 @@ public interface ScorePointPersistence extends BasePersistence<ScorePoint> {
 	/**
 	* Creates a new score point with the primary key. Does not add the score point to the database.
 	*
-	* @param Id the primary key for the new score point
+	* @param scorePointId the primary key for the new score point
 	* @return the new score point
 	*/
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint create(
-		long Id);
+		long scorePointId);
 
 	/**
 	* Removes the score point with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param Id the primary key of the score point
+	* @param scorePointId the primary key of the score point
 	* @return the score point that was removed
 	* @throws com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException if a score point with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint remove(
-		long Id)
+		long scorePointId)
 		throws com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -283,25 +283,26 @@ public interface ScorePointPersistence extends BasePersistence<ScorePoint> {
 	/**
 	* Returns the score point with the primary key or throws a {@link com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException} if it could not be found.
 	*
-	* @param Id the primary key of the score point
+	* @param scorePointId the primary key of the score point
 	* @return the score point
 	* @throws com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException if a score point with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint findByPrimaryKey(
-		long Id)
+		long scorePointId)
 		throws com.liferay.contenttargeting.rules.scorepoints.NoSuchScorePointException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the score point with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param Id the primary key of the score point
+	* @param scorePointId the primary key of the score point
 	* @return the score point, or <code>null</code> if a score point with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint fetchByPrimaryKey(
-		long Id) throws com.liferay.portal.kernel.exception.SystemException;
+		long scorePointId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns all the score points.

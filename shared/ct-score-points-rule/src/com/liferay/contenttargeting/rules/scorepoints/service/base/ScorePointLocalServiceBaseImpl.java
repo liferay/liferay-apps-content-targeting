@@ -81,27 +81,27 @@ public abstract class ScorePointLocalServiceBaseImpl
 	/**
 	 * Creates a new score point with the primary key. Does not add the score point to the database.
 	 *
-	 * @param Id the primary key for the new score point
+	 * @param scorePointId the primary key for the new score point
 	 * @return the new score point
 	 */
 	@Override
-	public ScorePoint createScorePoint(long Id) {
-		return scorePointPersistence.create(Id);
+	public ScorePoint createScorePoint(long scorePointId) {
+		return scorePointPersistence.create(scorePointId);
 	}
 
 	/**
 	 * Deletes the score point with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param Id the primary key of the score point
+	 * @param scorePointId the primary key of the score point
 	 * @return the score point that was removed
 	 * @throws PortalException if a score point with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public ScorePoint deleteScorePoint(long Id)
+	public ScorePoint deleteScorePoint(long scorePointId)
 		throws PortalException, SystemException {
-		return scorePointPersistence.remove(Id);
+		return scorePointPersistence.remove(scorePointId);
 	}
 
 	/**
@@ -212,22 +212,23 @@ public abstract class ScorePointLocalServiceBaseImpl
 	}
 
 	@Override
-	public ScorePoint fetchScorePoint(long Id) throws SystemException {
-		return scorePointPersistence.fetchByPrimaryKey(Id);
+	public ScorePoint fetchScorePoint(long scorePointId)
+		throws SystemException {
+		return scorePointPersistence.fetchByPrimaryKey(scorePointId);
 	}
 
 	/**
 	 * Returns the score point with the primary key.
 	 *
-	 * @param Id the primary key of the score point
+	 * @param scorePointId the primary key of the score point
 	 * @return the score point
 	 * @throws PortalException if a score point with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ScorePoint getScorePoint(long Id)
+	public ScorePoint getScorePoint(long scorePointId)
 		throws PortalException, SystemException {
-		return scorePointPersistence.findByPrimaryKey(Id);
+		return scorePointPersistence.findByPrimaryKey(scorePointId);
 	}
 
 	@Override
