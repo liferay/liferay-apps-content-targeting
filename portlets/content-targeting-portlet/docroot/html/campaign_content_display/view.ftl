@@ -42,9 +42,9 @@
 			Liferay.Analytics.track('view', {
 				className: '${assetEntryClassName}',
 				classPK: '${assetEntryClassPK}',
-				groupId: '${groupId}'
+				groupId: '${groupId}',
 				referrerClassName: '${campaignClassName}',
-				referrerClassPK: '${campaignClassPK}',
+				referrerClassPK: '${campaignClassPK}'
 			});
 		</@>
 	</div>
