@@ -84,7 +84,7 @@ public class CampaignContentLocalServiceImpl
 		}
 
 		campaignContent.setCount(campaignContent.getCount() + count);
-		campaignContent.setCreateDate(new Date());
+		campaignContent.setModifiedDate(new Date());
 
 		campaignContentPersistence.update(campaignContent);
 
@@ -118,10 +118,10 @@ public class CampaignContentLocalServiceImpl
 
 	@Override
 	public List<CampaignContent> getCampaignContents(
-			long campaignId, Date createDate)
+			long campaignId, Date modifiedDate)
 		throws PortalException, SystemException {
 
-		return campaignContentPersistence.findByC_GtD(campaignId, createDate);
+		return campaignContentPersistence.findByC_GtD(campaignId, modifiedDate);
 	}
 
 	@Override
@@ -133,7 +133,7 @@ public class CampaignContentLocalServiceImpl
 			if (!campaignContentList.isEmpty()) {
 				CampaignContent campaignContent = campaignContentList.get(0);
 
-				return campaignContent.getCreateDate();
+				return campaignContent.getModifiedDate();
 			}
 			else {
 				return _analyticsEventLocalService.getMaxAge();

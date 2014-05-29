@@ -7,7 +7,7 @@
 
 		<!-- PK fields -->
 
-		<column name="id" type="long" primary="true" />
+		<column name="campaignContentId" type="long" primary="true" />
 
 		<!-- Other fields -->
 
@@ -16,12 +16,12 @@
 		<column name="classPK" type="long" />
 		<column name="eventType" type="String" />
 		<column name="count" type="int" />
-		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
 
 		<!-- Order -->
 
 		<order by="desc">
-			<order-column name="createDate" />
+			<order-column name="modifiedDate" />
 		</order>
 
 		<!-- Finder methods -->
@@ -32,7 +32,7 @@
 
 		<finder name="C_GtD" return-type="Collection">
 			<finder-column name="campaignId" />
-			<finder-column name="createDate" comparator="&gt;" />
+			<finder-column name="modifiedDate" comparator="&gt;" />
 		</finder>
 
 		<finder name="C_C_C_E" return-type="CampaignContent">
