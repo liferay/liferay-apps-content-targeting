@@ -19,7 +19,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.ServiceContext;
@@ -47,13 +49,17 @@ public class AnalyticsMessageListener implements MessageListener {
 		String className = message.getString("className");
 		long classPK = message.getLong("classPK");
 		String referrerClassName = message.getString("referrerClassName");
-		long referrerClassPK = message.getLong("referrerClassPK");
+
+		String[] values = StringUtil.split(
+			message.getString("referrerClassPK"));
+
+		long[] referrerClassPKs = GetterUtil.getLongValues(values);
 
 		if (Validator.isNull(referrerClassName) ||
-			Validator.isNull(referrerClassPK)) {
+			Validator.isNull(referrerClassPKs)) {
 
 			referrerClassName = Layout.class.getName();
-			referrerClassPK = message.getLong("plid");
+			referrerClassPKs = new long[] {message.getLong("plid")};
 		}
 
 		String clientIP = message.getString("clientIP");
@@ -67,7 +73,7 @@ public class AnalyticsMessageListener implements MessageListener {
 
 		AnalyticsEventLocalServiceUtil.addAnalyticsEvent(
 			userId, anonymousUserId, className, classPK, referrerClassName,
-			referrerClassPK, eventType, clientIP, userAgent, languageId, URL,
+			referrerClassPKs, eventType, clientIP, userAgent, languageId, URL,
 			StringPool.BLANK, serviceContext);
 	}
 

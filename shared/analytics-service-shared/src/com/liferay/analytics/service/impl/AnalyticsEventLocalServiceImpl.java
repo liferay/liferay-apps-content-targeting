@@ -27,6 +27,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.CompanyActionableDynamicQuery;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -86,6 +87,28 @@ public class AnalyticsEventLocalServiceImpl
 		analyticsEventPersistence.update(analyticsEvent);
 
 		return analyticsEvent;
+	}
+
+	@Override
+	public List<AnalyticsEvent> addAnalyticsEvent(
+			long userId, long anonymousUserId, String className, long classPK,
+			String referrerClassName, long[] referrerClassPKs, String eventType,
+			String clientIP, String userAgent, String languageId, String URL,
+			String additionalInfo, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		List<AnalyticsEvent> analyticsEvents = new ArrayList<AnalyticsEvent>();
+
+		for (long referrerClassPK : referrerClassPKs) {
+			AnalyticsEvent analyticsEvent = addAnalyticsEvent(
+				userId, anonymousUserId, className, classPK, referrerClassName,
+				referrerClassPK, eventType, clientIP, userAgent, languageId,
+				URL, additionalInfo, serviceContext);
+
+			analyticsEvents.add(analyticsEvent);
+		}
+
+		return analyticsEvents;
 	}
 
 	@Override
