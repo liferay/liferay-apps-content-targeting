@@ -7,7 +7,7 @@
 
 		<!-- PK fields -->
 
-		<column name="Id" type="long" primary="true" />
+		<column name="scorePointId" type="long" primary="true" />
 
 		<!-- Other fields -->
 
