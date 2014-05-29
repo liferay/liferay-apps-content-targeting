@@ -1,9 +1,12 @@
 Bundle-Name: User Segment Content Report
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar
+Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/ct-user-segment-content-report-service.jar
 Include-Resource: classes,\
+	{WEB-INF/classes/META-INF=classes/META-INF/},\
+	{WEB-INF/sql=sql},\
 	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
-	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
+	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+	WEB-INF/lib/ct-user-segment-content-report-service.jar=lib/ct-user-segment-content-report-service.jar
 Import-Package:\
 	com.liferay.analytics.model,\
 	com.liferay.analytics.service,\

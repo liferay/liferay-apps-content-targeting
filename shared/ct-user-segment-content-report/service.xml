@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.liferay.contenttargeting.reports.usersegmentcontent">
+	<namespace>UserSegmentContentReport</namespace>
+	<entity name="UserSegmentContent" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="userSegmentContentId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="userSegmentId" type="long" />
+		<column name="className" type="String" />
+		<column name="classPK" type="long" />
+		<column name="eventType" type="String" />
+		<column name="count" type="int" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="UserSegmentId" return-type="Collection">
+			<finder-column name="userSegmentId" />
+		</finder>
+
+		<finder name="C_GtD" return-type="Collection">
+			<finder-column name="userSegmentId" />
+			<finder-column name="modifiedDate" comparator="&gt;" />
+		</finder>
+
+		<finder name="C_C_C_E" return-type="UserSegmentContent">
+			<finder-column name="userSegmentId" />
+			<finder-column name="className" />
+			<finder-column name="classPK" />
+			<finder-column name="eventType" />
+		</finder>
+	</entity>
+</service-builder>
