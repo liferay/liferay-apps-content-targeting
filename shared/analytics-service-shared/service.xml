@@ -13,21 +13,21 @@
 
 		<column name="companyId" type="long" />
 		<column name="userId" type="long" />
-		<column name="createDate" type="Date" />
 
 		<!-- Other fields -->
 
 		<column name="anonymousUserId" type="long" />
-		<column name="eventType" type="String" />
 		<column name="className" type="String" />
 		<column name="classPK" type="long" />
 		<column name="referrerClassName" type="String" />
 		<column name="referrerClassPK" type="long" />
+		<column name="eventType" type="String" />
 		<column name="clientIP" type="String" />
 		<column name="userAgent" type="String" />
 		<column name="languageId" type="String" />
 		<column name="URL" type="String" />
 		<column name="additionalInfo" type="String" />
+		<column name="createDate" type="Date" />
 
 		<!-- Order -->
 

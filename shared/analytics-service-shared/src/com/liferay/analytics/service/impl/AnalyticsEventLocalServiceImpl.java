@@ -50,11 +50,10 @@ public class AnalyticsEventLocalServiceImpl
 
 	@Override
 	public AnalyticsEvent addAnalyticsEvent(
-			long userId, long anonymousUserId, String eventType,
-			String className, long classPK, String referrerClassName,
-			long referrerClassPK, String clientIP, String userAgent,
-			String languageId, String URL, String additionalInfo,
-			ServiceContext serviceContext)
+			long userId, long anonymousUserId, String className, long classPK,
+			String referrerClassName, long referrerClassPK, String eventType,
+			String clientIP, String userAgent, String languageId, String URL,
+			String additionalInfo, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		long analyticsEventId = CounterLocalServiceUtil.increment();
@@ -73,11 +72,11 @@ public class AnalyticsEventLocalServiceImpl
 		analyticsEvent.setCreateDate(serviceContext.getCreateDate(new Date()));
 
 		analyticsEvent.setAnonymousUserId(anonymousUserId);
-		analyticsEvent.setEventType(eventType);
 		analyticsEvent.setClassName(className);
 		analyticsEvent.setClassPK(classPK);
 		analyticsEvent.setReferrerClassName(referrerClassName);
 		analyticsEvent.setReferrerClassPK(referrerClassPK);
+		analyticsEvent.setEventType(eventType);
 		analyticsEvent.setClientIP(clientIP);
 		analyticsEvent.setUserAgent(userAgent);
 		analyticsEvent.setLanguageId(languageId);

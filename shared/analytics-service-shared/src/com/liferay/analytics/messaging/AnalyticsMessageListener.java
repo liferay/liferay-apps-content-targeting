@@ -66,9 +66,9 @@ public class AnalyticsMessageListener implements MessageListener {
 		serviceContext.setCompanyId(companyId);
 
 		AnalyticsEventLocalServiceUtil.addAnalyticsEvent(
-			userId, anonymousUserId, eventType, className, classPK,
-			referrerClassName, referrerClassPK, clientIP, userAgent, languageId,
-			URL, StringPool.BLANK, serviceContext);
+			userId, anonymousUserId, className, classPK, referrerClassName,
+			referrerClassPK, eventType, clientIP, userAgent, languageId, URL,
+			StringPool.BLANK, serviceContext);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
