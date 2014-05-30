@@ -220,7 +220,8 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 				WebKeys.USER_SEGMENT_IDS);
 
 			if (userSegmentIds != null) {
-				long[] groupIds = ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+				long[] groupIds =
+					ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
 						themeDisplay.getSiteGroupId());
 
 				Campaign campaign =
