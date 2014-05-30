@@ -112,7 +112,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 		Date now = new Date();
 
-		return campaignFinder.fetchByG_D_A_U(
+		return campaignFinder.fetchByG_D_A_U_First(
 			groupId, now, true, userSegmentIds);
 	}
 

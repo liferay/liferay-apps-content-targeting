@@ -39,7 +39,24 @@ public class CampaignFinderImpl
 		CampaignFinder.class.getName() + ".findByG_D_A_U";
 
 	@Override
-	public Campaign fetchByG_D_A_U(
+	public Campaign fetchByG_D_A_U_First(
+			long groupId, Date date, boolean active, long[] userSegmentIds)
+		throws SystemException {
+
+		return doFetchByG_D_A_U_First(
+			groupId, date, active, userSegmentIds, false);
+	}
+
+	@Override
+	public List<Campaign> filterFindByG_D_A_U(
+			long groupId, Date date, boolean active, long[] userSegmentIds)
+		throws SystemException {
+
+		return doFetchByG_D_A_U(groupId, date, active, userSegmentIds, true);
+	}
+
+	@Override
+	public List<Campaign> findByG_D_A_U(
 			long groupId, Date date, boolean active, long[] userSegmentIds)
 		throws SystemException {
 
@@ -47,14 +64,15 @@ public class CampaignFinderImpl
 	}
 
 	@Override
-	public Campaign filterFetchByG_D_A_U(
+	public Campaign filterFetchByG_D_A_U_First(
 			long groupId, Date date, boolean active, long[] userSegmentIds)
 		throws SystemException {
 
-		return doFetchByG_D_A_U(groupId, date, active, userSegmentIds, true);
+		return doFetchByG_D_A_U_First(
+			groupId, date, active, userSegmentIds, true);
 	}
 
-	protected Campaign doFetchByG_D_A_U(
+	protected List<Campaign> doFetchByG_D_A_U(
 			long groupId, Date date, boolean active, long[] userSegmentIds,
 			boolean inlineSQLHelper)
 		throws SystemException {
@@ -88,13 +106,7 @@ public class CampaignFinderImpl
 			qPos.add(date);
 			qPos.add(active);
 
-			List<Campaign> campaigns = q.list();
-
-			if (!campaigns.isEmpty()) {
-				return campaigns.get(0);
-			}
-
-			return null;
+			return q.list();
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
@@ -102,6 +114,21 @@ public class CampaignFinderImpl
 		finally {
 			closeSession(session);
 		}
+	}
+
+	protected Campaign doFetchByG_D_A_U_First(
+			long groupId, Date date, boolean active, long[] userSegmentIds,
+			boolean inlineSQLHelper)
+		throws SystemException {
+
+		List<Campaign> campaigns = doFetchByG_D_A_U(
+			groupId, date, active, userSegmentIds, inlineSQLHelper);
+
+		if ((campaigns != null) && !campaigns.isEmpty()) {
+			return campaigns.get(0);
+		}
+
+		return null;
 	}
 
 }

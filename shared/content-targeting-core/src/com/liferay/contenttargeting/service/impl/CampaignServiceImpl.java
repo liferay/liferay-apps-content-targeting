@@ -78,7 +78,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 
 		Date now = new Date();
 
-		return campaignFinder.filterFetchByG_D_A_U(
+		return campaignFinder.filterFetchByG_D_A_U_First(
 			groupId, now, true, userSegmentIds);
 	}
 
