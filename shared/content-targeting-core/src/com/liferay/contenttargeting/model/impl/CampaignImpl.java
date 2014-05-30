@@ -15,8 +15,15 @@
 package com.liferay.contenttargeting.model.impl;
 
 import com.liferay.contenttargeting.util.CampaignConstants;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * The extended model implementation for the Campaign service. Represents a row in the &quot;CT_Campaign&quot; database table, with each column mapped to a property of this class.
@@ -30,6 +37,34 @@ import java.util.Date;
 public class CampaignImpl extends CampaignBaseImpl {
 
 	public CampaignImpl() {
+	}
+
+	public String getNameWithGroupName(Locale locale, long groupId) {
+		String name = getName(locale);
+
+		if (groupId != getGroupId()) {
+			try {
+				Group group = GroupLocalServiceUtil.getGroup(getGroupId());
+
+				StringBundler sb = new StringBundler(5);
+
+				sb.append(name);
+				sb.append(StringPool.SPACE);
+				sb.append(StringPool.OPEN_PARENTHESIS);
+				sb.append(group.getDescriptiveName(locale));
+				sb.append(StringPool.CLOSE_PARENTHESIS);
+
+				name = sb.toString();
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(
+						"Group can not be found for groupId " + getGroupId());
+				}
+			}
+		}
+
+		return name;
 	}
 
 	@Override
@@ -49,5 +84,7 @@ public class CampaignImpl extends CampaignBaseImpl {
 
 		return CampaignConstants.STATUS_STARTED;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(CampaignImpl.class);
 
 }
