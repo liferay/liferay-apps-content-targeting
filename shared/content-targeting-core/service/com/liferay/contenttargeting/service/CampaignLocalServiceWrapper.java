@@ -527,9 +527,9 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 
 	@Override
 	public com.liferay.contenttargeting.model.Campaign fetchCurrentMaxPriorityCampaign(
-		long groupId, long[] userSegmentIds)
+		long[] groupIds, long[] userSegmentIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.fetchCurrentMaxPriorityCampaign(groupId,
+		return _campaignLocalService.fetchCurrentMaxPriorityCampaign(groupIds,
 			userSegmentIds);
 	}
 
@@ -539,6 +539,14 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _campaignLocalService.getCampaigns(groupId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long[] groupIds, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _campaignLocalService.getCampaigns(groupIds, userSegmentIds);
 	}
 
 	@Override

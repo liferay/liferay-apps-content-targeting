@@ -18,11 +18,23 @@ package com.liferay.contenttargeting.service.persistence;
  * @author Brian Wing Shun Chan
  */
 public interface CampaignFinder {
-	public com.liferay.contenttargeting.model.Campaign fetchByG_D_A_U(
-		long groupId, java.util.Date date, boolean active, long[] userSegmentIds)
+	public com.liferay.contenttargeting.model.Campaign fetchByG_D_A_U_First(
+		long[] groupIds, java.util.Date date, boolean active,
+		long[] userSegmentIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	public com.liferay.contenttargeting.model.Campaign filterFetchByG_D_A_U(
-		long groupId, java.util.Date date, boolean active, long[] userSegmentIds)
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> filterFindByG_D_A_U(
+		long[] groupIds, java.util.Date date, boolean active,
+		long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> findByG_D_A_U(
+		long[] groupIds, java.util.Date date, boolean active,
+		long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.contenttargeting.model.Campaign filterFetchByG_D_A_U_First(
+		long[] groupIds, java.util.Date date, boolean active,
+		long[] userSegmentIds)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

@@ -109,9 +109,9 @@ public class CampaignServiceSoap {
 	}
 
 	public static com.liferay.contenttargeting.model.CampaignSoap fetchCurrentMaxPriorityCampaign(
-		long groupId, long[] userSegmentIds) throws RemoteException {
+		long[] groupIds, long[] userSegmentIds) throws RemoteException {
 		try {
-			com.liferay.contenttargeting.model.Campaign returnValue = CampaignServiceUtil.fetchCurrentMaxPriorityCampaign(groupId,
+			com.liferay.contenttargeting.model.Campaign returnValue = CampaignServiceUtil.fetchCurrentMaxPriorityCampaign(groupIds,
 					userSegmentIds);
 
 			return com.liferay.contenttargeting.model.CampaignSoap.toSoapModel(returnValue);

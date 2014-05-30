@@ -46,7 +46,7 @@ public class CampaignServiceClp implements CampaignService {
 
 		_methodName5 = "fetchCurrentMaxPriorityCampaign";
 
-		_methodParameterTypes5 = new String[] { "long", "long[][]" };
+		_methodParameterTypes5 = new String[] { "long[][]", "long[][]" };
 
 		_methodName6 = "getCampaigns";
 
@@ -208,7 +208,7 @@ public class CampaignServiceClp implements CampaignService {
 
 	@Override
 	public com.liferay.contenttargeting.model.Campaign fetchCurrentMaxPriorityCampaign(
-		long groupId, long[] userSegmentIds)
+		long[] groupIds, long[] userSegmentIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -216,7 +216,7 @@ public class CampaignServiceClp implements CampaignService {
 			returnObj = _invokableService.invokeMethod(_methodName5,
 					_methodParameterTypes5,
 					new Object[] {
-						groupId,
+						ClpSerializer.translateInput(groupIds),
 						
 					ClpSerializer.translateInput(userSegmentIds)
 					});

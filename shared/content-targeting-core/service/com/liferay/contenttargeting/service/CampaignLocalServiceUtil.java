@@ -493,10 +493,10 @@ public class CampaignLocalServiceUtil {
 	}
 
 	public static com.liferay.contenttargeting.model.Campaign fetchCurrentMaxPriorityCampaign(
-		long groupId, long[] userSegmentIds)
+		long[] groupIds, long[] userSegmentIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .fetchCurrentMaxPriorityCampaign(groupId, userSegmentIds);
+				   .fetchCurrentMaxPriorityCampaign(groupIds, userSegmentIds);
 	}
 
 	public static java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
@@ -504,6 +504,13 @@ public class CampaignLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCampaigns(groupId);
+	}
+
+	public static java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long[] groupIds, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCampaigns(groupIds, userSegmentIds);
 	}
 
 	public static java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(

@@ -729,6 +729,28 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 	}
 
 	@Override
+	public java.lang.String getNameWithGroupName(java.util.Locale locale,
+		long groupId) {
+		try {
+			String methodName = "getNameWithGroupName";
+
+			Class<?>[] parameterTypes = new Class<?>[] {
+					java.util.Locale.class, long.class
+				};
+
+			Object[] parameterValues = new Object[] { locale, groupId };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public java.lang.String getStatus() {
 		try {
 			String methodName = "getStatus";

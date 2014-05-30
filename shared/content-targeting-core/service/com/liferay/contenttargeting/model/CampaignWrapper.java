@@ -857,6 +857,12 @@ public class CampaignWrapper implements Campaign, ModelWrapper<Campaign> {
 	}
 
 	@Override
+	public java.lang.String getNameWithGroupName(java.util.Locale locale,
+		long groupId) {
+		return _campaign.getNameWithGroupName(locale, groupId);
+	}
+
+	@Override
 	public java.lang.String getStatus() {
 		return _campaign.getStatus();
 	}

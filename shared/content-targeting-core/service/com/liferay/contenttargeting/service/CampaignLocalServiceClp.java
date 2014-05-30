@@ -211,7 +211,7 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 
 		_methodName40 = "fetchCurrentMaxPriorityCampaign";
 
-		_methodParameterTypes40 = new String[] { "long", "long[][]" };
+		_methodParameterTypes40 = new String[] { "long[][]", "long[][]" };
 
 		_methodName41 = "getCampaigns";
 
@@ -219,31 +219,35 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 
 		_methodName42 = "getCampaigns";
 
-		_methodParameterTypes42 = new String[] { "long[][]" };
+		_methodParameterTypes42 = new String[] { "long[][]", "long[][]" };
 
-		_methodName43 = "getCampaignsCount";
+		_methodName43 = "getCampaigns";
 
-		_methodParameterTypes43 = new String[] { "long" };
+		_methodParameterTypes43 = new String[] { "long[][]" };
 
 		_methodName44 = "getCampaignsCount";
 
-		_methodParameterTypes44 = new String[] { "long[][]" };
+		_methodParameterTypes44 = new String[] { "long" };
 
-		_methodName45 = "search";
+		_methodName45 = "getCampaignsCount";
 
-		_methodParameterTypes45 = new String[] {
-				"long", "java.lang.String", "int", "int"
-			};
+		_methodParameterTypes45 = new String[] { "long[][]" };
 
-		_methodName46 = "searchCampaigns";
+		_methodName46 = "search";
 
 		_methodParameterTypes46 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName47 = "updateCampaign";
+		_methodName47 = "searchCampaigns";
 
 		_methodParameterTypes47 = new String[] {
+				"long", "java.lang.String", "int", "int"
+			};
+
+		_methodName48 = "updateCampaign";
+
+		_methodParameterTypes48 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
 				"java.util.Date", "int", "boolean", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
@@ -1454,7 +1458,7 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 
 	@Override
 	public com.liferay.contenttargeting.model.Campaign fetchCurrentMaxPriorityCampaign(
-		long groupId, long[] userSegmentIds)
+		long[] groupIds, long[] userSegmentIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -1462,7 +1466,7 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName40,
 					_methodParameterTypes40,
 					new Object[] {
-						groupId,
+						ClpSerializer.translateInput(groupIds),
 						
 					ClpSerializer.translateInput(userSegmentIds)
 					});
@@ -1522,7 +1526,7 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 
 	@Override
 	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
-		long[] groupIds)
+		long[] groupIds, long[] userSegmentIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1530,6 +1534,45 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName42,
 					_methodParameterTypes42,
+					new Object[] {
+						ClpSerializer.translateInput(groupIds),
+						
+					ClpSerializer.translateInput(userSegmentIds)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.contenttargeting.model.Campaign>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName43,
+					_methodParameterTypes43,
 					new Object[] { ClpSerializer.translateInput(groupIds) });
 		}
 		catch (Throwable t) {
@@ -1562,8 +1605,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName43,
-					_methodParameterTypes43, new Object[] { groupId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName44,
+					_methodParameterTypes44, new Object[] { groupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1595,8 +1638,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName44,
-					_methodParameterTypes44,
+			returnObj = _invokableLocalService.invokeMethod(_methodName45,
+					_methodParameterTypes45,
 					new Object[] { ClpSerializer.translateInput(groupIds) });
 		}
 		catch (Throwable t) {
@@ -1630,8 +1673,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName45,
-					_methodParameterTypes45,
+			returnObj = _invokableLocalService.invokeMethod(_methodName46,
+					_methodParameterTypes46,
 					new Object[] {
 						groupId,
 						
@@ -1673,8 +1716,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName46,
-					_methodParameterTypes46,
+			returnObj = _invokableLocalService.invokeMethod(_methodName47,
+					_methodParameterTypes47,
 					new Object[] {
 						groupId,
 						
@@ -1721,8 +1764,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName47,
-					_methodParameterTypes47,
+			returnObj = _invokableLocalService.invokeMethod(_methodName48,
+					_methodParameterTypes48,
 					new Object[] {
 						campaignId,
 						
@@ -1861,4 +1904,6 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 	private String[] _methodParameterTypes46;
 	private String _methodName47;
 	private String[] _methodParameterTypes47;
+	private String _methodName48;
+	private String[] _methodParameterTypes48;
 }

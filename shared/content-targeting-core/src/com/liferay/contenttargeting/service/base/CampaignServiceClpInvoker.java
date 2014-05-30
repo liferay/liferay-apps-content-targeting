@@ -46,7 +46,7 @@ public class CampaignServiceClpInvoker {
 
 		_methodName40 = "fetchCurrentMaxPriorityCampaign";
 
-		_methodParameterTypes40 = new String[] { "long", "long[][]" };
+		_methodParameterTypes40 = new String[] { "long[][]", "long[][]" };
 
 		_methodName41 = "getCampaigns";
 
@@ -97,7 +97,7 @@ public class CampaignServiceClpInvoker {
 
 		if (_methodName40.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
-			return CampaignServiceUtil.fetchCurrentMaxPriorityCampaign(((Long)arguments[0]).longValue(),
+			return CampaignServiceUtil.fetchCurrentMaxPriorityCampaign((long[])arguments[0],
 				(long[])arguments[1]);
 		}
 
