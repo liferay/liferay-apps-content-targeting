@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -145,10 +146,26 @@ public class UserSegmentLocalServiceImpl
 	}
 
 	@Override
+	public List<UserSegment> getUserSegments(
+			long groupId, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return getUserSegments(new long[]{groupId}, start, end, obc);
+	}
+
+	@Override
 	public List<UserSegment> getUserSegments(long[] groupIds)
 		throws PortalException, SystemException {
 
 		return userSegmentPersistence.findByGroupId(groupIds);
+	}
+
+	@Override
+	public List<UserSegment> getUserSegments(
+			long[] groupIds, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return userSegmentPersistence.findByGroupId(groupIds, start, end, obc);
 	}
 
 	@Override

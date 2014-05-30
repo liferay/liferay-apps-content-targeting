@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -124,13 +125,11 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<Campaign> getCampaigns(long[] groupIds, long[] userSegmentIds)
+	public List<Campaign> getCampaigns(
+			long groupId, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		Date now = new Date();
-
-		return campaignFinder.findByG_D_A_U(
-			groupIds, now, true, userSegmentIds);
+		return getCampaigns(new long[]{groupId}, start, end, obc);
 	}
 
 	@Override
@@ -141,14 +140,32 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	}
 
 	@Override
-	public long getCampaignsCount(long groupId)
+	public List<Campaign> getCampaigns(
+			long[] groupIds, int start, int end, OrderByComparator obc)
+		throws PortalException, SystemException {
+
+		return campaignPersistence.findByGroupId(groupIds, start, end, obc);
+	}
+
+	@Override
+	public List<Campaign> getCampaigns(long[] groupIds, long[] userSegmentIds)
+		throws PortalException, SystemException {
+
+		Date now = new Date();
+
+		return campaignFinder.findByG_D_A_U(
+			groupIds, now, true, userSegmentIds);
+	}
+
+	@Override
+	public int getCampaignsCount(long groupId)
 		throws PortalException, SystemException {
 
 		return campaignPersistence.countByGroupId(groupId);
 	}
 
 	@Override
-	public long getCampaignsCount(long[] groupIds)
+	public int getCampaignsCount(long[] groupIds)
 		throws PortalException, SystemException {
 
 		return campaignPersistence.countByGroupId(groupIds);

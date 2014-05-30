@@ -16,18 +16,18 @@
 
 <#include "../init.ftl" />
 
-<@portlet["renderURL"] var="viewCampaignsURL">
+<@portlet["renderURL"] varImpl="viewCampaignsURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
 	<@portlet["param"] name="tabs1" value="campaigns" />
 </@>
 
 <@liferay_ui["search-container"]
 	emptyResultsMessage="no-campaigns-were-found"
-	iteratorURL=liferayPortletResponse.createRenderURL()
+	iteratorURL=viewCampaignsURL
+	total=campaignSearchContainerIterator.getTotal()
 >
 	<@liferay_ui["search-container-results"]
-		results=campaigns
-		total=campaigns ?size
+		results=campaignSearchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd())
 	/>
 
 	<@liferay_ui["search-container-row"]

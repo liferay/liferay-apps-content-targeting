@@ -31,8 +31,11 @@ import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.contenttargeting.util.BaseModelSearchResult;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
+import com.liferay.contenttargeting.util.SearchContainerIterator;
 import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -325,8 +328,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			TemplateHashModel staticModels)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		final ThemeDisplay themeDisplay =
+			(ThemeDisplay)portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
 
 		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW) ||
 			path.equals(ContentTargetingPath.VIEW_CAMPAIGNS_RESOURCES) ||
@@ -353,35 +356,92 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					"com.liferay.contenttargeting.service.permission." +
 						"UserSegmentPermission"));
 
-			List<Campaign> campaigns = null;
-			List<UserSegment> userSegments = null;
+			final String keywords = ParamUtil.getString(
+				portletRequest, "keywords");
 
-			String keywords = ParamUtil.getString(portletRequest, "keywords");
+			template.put(
+				"campaignSearchContainerIterator",
+				new SearchContainerIterator<Campaign>() {
 
-			if (Validator.isNull(keywords)) {
-				campaigns = _campaignService.getCampaigns(
-					themeDisplay.getScopeGroupId());
-				userSegments = _userSegmentService.getUserSegments(
-					themeDisplay.getScopeGroupId());
-			}
-			else {
-				BaseModelSearchResult<Campaign> campaignResults =
-					_campaignLocalService.searchCampaigns(
-						themeDisplay.getScopeGroupId(), keywords,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+					@Override
+					public List<Campaign> getResults(int start, int end)
+						throws PortalException, SystemException {
 
-				campaigns = campaignResults.getBaseModels();
+						if (Validator.isNull(keywords)) {
+							return _campaignLocalService.getCampaigns(
+								themeDisplay.getScopeGroupId(), start, end,
+								null);
+						}
 
-				BaseModelSearchResult<UserSegment> userSegmentResults =
-					_userSegmentLocalService.searchUserSegments(
-						themeDisplay.getScopeGroupId(), keywords,
-						QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+						BaseModelSearchResult<Campaign> searchResults =
+							_campaignLocalService.searchCampaigns(
+								themeDisplay.getScopeGroupId(), keywords, start,
+								end);
 
-				userSegments = userSegmentResults.getBaseModels();
-			}
+						return searchResults.getBaseModels();
+					}
 
-			template.put("campaigns", campaigns);
-			template.put("userSegments", userSegments);
+					@Override
+					public int getTotal()
+						throws PortalException, SystemException {
+
+						if (Validator.isNull(keywords)) {
+							return _campaignLocalService.getCampaignsCount(
+								themeDisplay.getScopeGroupId());
+						}
+
+						BaseModelSearchResult<Campaign> searchResults =
+							_campaignLocalService.searchCampaigns(
+								themeDisplay.getScopeGroupId(), keywords,
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+						return searchResults.getLength();
+					}
+				}
+			);
+
+			template.put(
+				"userSegmentSearchContainerIterator",
+				new SearchContainerIterator<UserSegment>() {
+
+					@Override
+					public List<UserSegment> getResults(int start, int end)
+						throws PortalException, SystemException {
+
+						if (Validator.isNull(keywords)) {
+							return _userSegmentLocalService.getUserSegments(
+								themeDisplay.getScopeGroupId(), start, end,
+								null);
+						}
+
+						BaseModelSearchResult<UserSegment> searchResults =
+							_userSegmentLocalService.searchUserSegments(
+								themeDisplay.getScopeGroupId(), keywords, start,
+								end);
+
+						return searchResults.getBaseModels();
+					}
+
+					@Override
+					public int getTotal()
+						throws PortalException, SystemException {
+
+						if (Validator.isNull(keywords)) {
+							return
+								_userSegmentLocalService.getUserSegmentsCount(
+									themeDisplay.getScopeGroupId());
+						}
+
+						BaseModelSearchResult<UserSegment> searchResults =
+							_userSegmentLocalService.searchUserSegments(
+								themeDisplay.getScopeGroupId(), keywords,
+								QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+						return searchResults.getLength();
+					}
+				}
+			);
+
 			template.put(
 				"usedUserSegmentExceptionClass",
 				UsedUserSegmentException.class);

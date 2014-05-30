@@ -16,18 +16,18 @@
 
 <#include "../init.ftl" />
 
-<@portlet["renderURL"] var="viewUserSegmentsURL">
+<@portlet["renderURL"] varImpl="viewUserSegmentsURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
 	<@portlet["param"] name="tabs1" value="user-segments" />
 </@>
 
 <@liferay_ui["search-container"]
 	emptyResultsMessage="no-user-segments-were-found"
-	iteratorURL=liferayPortletResponse.createRenderURL()
+	iteratorURL=viewUserSegmentsURL
+	total=userSegmentSearchContainerIterator.getTotal()
 >
 	<@liferay_ui["search-container-results"]
-		results=userSegments
-		total=userSegments ?size
+		results=userSegmentSearchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd())
 	/>
 
 	<@liferay_ui["search-container-row"]
