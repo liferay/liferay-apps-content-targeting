@@ -124,6 +124,15 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	}
 
 	@Override
+	public List<Campaign> getCampaigns(long groupId, long[] userSegmentIds)
+		throws PortalException, SystemException {
+
+		Date now = new Date();
+
+		return campaignFinder.findByG_D_A_U(groupId, now, true, userSegmentIds);
+	}
+
+	@Override
 	public List<Campaign> getCampaigns(long[] groupIds)
 		throws PortalException, SystemException {
 
