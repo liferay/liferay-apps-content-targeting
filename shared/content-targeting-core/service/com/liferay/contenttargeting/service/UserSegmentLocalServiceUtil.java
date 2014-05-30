@@ -498,10 +498,26 @@ public class UserSegmentLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSegments(groupId, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
 		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getUserSegments(groupIds);
+	}
+
+	public static java.util.List<com.liferay.contenttargeting.model.UserSegment> getUserSegments(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSegments(groupIds, start, end, obc);
 	}
 
 	public static int getUserSegmentsCount(long groupId)

@@ -514,19 +514,35 @@ public class CampaignLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCampaigns(groupId, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
 		long[] groupIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCampaigns(groupIds);
 	}
 
-	public static long getCampaignsCount(long groupId)
+	public static java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCampaigns(groupIds, start, end, obc);
+	}
+
+	public static int getCampaignsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCampaignsCount(groupId);
 	}
 
-	public static long getCampaignsCount(long[] groupIds)
+	public static int getCampaignsCount(long[] groupIds)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCampaignsCount(groupIds);

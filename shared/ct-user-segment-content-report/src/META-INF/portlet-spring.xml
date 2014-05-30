@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.liferay.contenttargeting.reports.usersegmentcontent.service.UserSegmentContentLocalService" class="com.liferay.contenttargeting.reports.usersegmentcontent.service.impl.UserSegmentContentLocalServiceImpl" />
+	<bean id="com.liferay.contenttargeting.reports.usersegmentcontent.service.UserSegmentContentService" class="com.liferay.contenttargeting.reports.usersegmentcontent.service.impl.UserSegmentContentServiceImpl" />
+	<bean id="com.liferay.contenttargeting.reports.usersegmentcontent.service.persistence.UserSegmentContentPersistence" class="com.liferay.contenttargeting.reports.usersegmentcontent.service.persistence.UserSegmentContentPersistenceImpl" parent="basePersistence" />
+</beans>

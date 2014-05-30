@@ -223,31 +223,45 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 
 		_methodName43 = "getCampaigns";
 
-		_methodParameterTypes43 = new String[] { "long[][]" };
-
-		_methodName44 = "getCampaignsCount";
-
-		_methodParameterTypes44 = new String[] { "long" };
-
-		_methodName45 = "getCampaignsCount";
-
-		_methodParameterTypes45 = new String[] { "long[][]" };
-
-		_methodName46 = "search";
-
-		_methodParameterTypes46 = new String[] {
-				"long", "java.lang.String", "int", "int"
+		_methodParameterTypes43 = new String[] {
+				"long", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName47 = "searchCampaigns";
+		_methodName44 = "getCampaigns";
 
-		_methodParameterTypes47 = new String[] {
-				"long", "java.lang.String", "int", "int"
+		_methodParameterTypes44 = new String[] { "long[][]" };
+
+		_methodName45 = "getCampaigns";
+
+		_methodParameterTypes45 = new String[] {
+				"long[][]", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName48 = "updateCampaign";
+		_methodName46 = "getCampaignsCount";
+
+		_methodParameterTypes46 = new String[] { "long" };
+
+		_methodName47 = "getCampaignsCount";
+
+		_methodParameterTypes47 = new String[] { "long[][]" };
+
+		_methodName48 = "search";
 
 		_methodParameterTypes48 = new String[] {
+				"long", "java.lang.String", "int", "int"
+			};
+
+		_methodName49 = "searchCampaigns";
+
+		_methodParameterTypes49 = new String[] {
+				"long", "java.lang.String", "int", "int"
+			};
+
+		_methodName50 = "updateCampaign";
+
+		_methodParameterTypes50 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
 				"java.util.Date", "int", "boolean", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
@@ -1565,7 +1579,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 
 	@Override
 	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
-		long[] groupIds)
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1573,6 +1588,49 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName43,
 					_methodParameterTypes43,
+					new Object[] {
+						groupId,
+						
+					start,
+						
+					end,
+						
+					ClpSerializer.translateInput(obc)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.contenttargeting.model.Campaign>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName44,
+					_methodParameterTypes44,
 					new Object[] { ClpSerializer.translateInput(groupIds) });
 		}
 		catch (Throwable t) {
@@ -1599,14 +1657,25 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 	}
 
 	@Override
-	public long getCampaignsCount(long groupId)
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long[] groupIds, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName44,
-					_methodParameterTypes44, new Object[] { groupId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName45,
+					_methodParameterTypes45,
+					new Object[] {
+						ClpSerializer.translateInput(groupIds),
+						
+					start,
+						
+					end,
+						
+					ClpSerializer.translateInput(obc)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1628,18 +1697,51 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 			}
 		}
 
-		return ((Long)returnObj).longValue();
+		return (java.util.List<com.liferay.contenttargeting.model.Campaign>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
-	public long getCampaignsCount(long[] groupIds)
+	public int getCampaignsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName45,
-					_methodParameterTypes45,
+			returnObj = _invokableLocalService.invokeMethod(_methodName46,
+					_methodParameterTypes46, new Object[] { groupId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public int getCampaignsCount(long[] groupIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName47,
+					_methodParameterTypes47,
 					new Object[] { ClpSerializer.translateInput(groupIds) });
 		}
 		catch (Throwable t) {
@@ -1662,7 +1764,7 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 			}
 		}
 
-		return ((Long)returnObj).longValue();
+		return ((Integer)returnObj).intValue();
 	}
 
 	@Override
@@ -1673,8 +1775,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName46,
-					_methodParameterTypes46,
+			returnObj = _invokableLocalService.invokeMethod(_methodName48,
+					_methodParameterTypes48,
 					new Object[] {
 						groupId,
 						
@@ -1716,8 +1818,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName47,
-					_methodParameterTypes47,
+			returnObj = _invokableLocalService.invokeMethod(_methodName49,
+					_methodParameterTypes49,
 					new Object[] {
 						groupId,
 						
@@ -1764,8 +1866,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName48,
-					_methodParameterTypes48,
+			returnObj = _invokableLocalService.invokeMethod(_methodName50,
+					_methodParameterTypes50,
 					new Object[] {
 						campaignId,
 						
@@ -1906,4 +2008,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 	private String[] _methodParameterTypes47;
 	private String _methodName48;
 	private String[] _methodParameterTypes48;
+	private String _methodName49;
+	private String[] _methodParameterTypes49;
+	private String _methodName50;
+	private String[] _methodParameterTypes50;
 }
