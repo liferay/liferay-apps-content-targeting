@@ -27,6 +27,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -77,6 +78,10 @@ public class CampaignFinderImpl
 			long[] groupIds, Date date, boolean active, long[] userSegmentIds,
 			boolean inlineSQLHelper)
 		throws SystemException {
+
+		if ((userSegmentIds == null) || (userSegmentIds.length == 0)) {
+			return Collections.emptyList();
+		}
 
 		Session session = null;
 
