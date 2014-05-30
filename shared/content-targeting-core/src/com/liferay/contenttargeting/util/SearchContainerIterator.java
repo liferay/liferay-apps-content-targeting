@@ -25,6 +25,14 @@ import java.util.List;
  */
 public class SearchContainerIterator<R> {
 
+	public SearchContainerIterator() {
+	}
+
+	public SearchContainerIterator(long groupId, String keywords) {
+		this.groupId = groupId;
+		this.keywords = keywords;
+	}
+
 	public List<R> getResults(int start, int end)
 		throws PortalException, SystemException {
 
@@ -34,5 +42,8 @@ public class SearchContainerIterator<R> {
 	public int getTotal() throws PortalException, SystemException {
 		return 0;
 	}
+
+	protected long groupId;
+	protected String keywords;
 
 }

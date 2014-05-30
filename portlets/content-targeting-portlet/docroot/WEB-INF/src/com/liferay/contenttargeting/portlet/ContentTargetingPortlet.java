@@ -29,13 +29,10 @@ import com.liferay.contenttargeting.service.CampaignService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
-import com.liferay.contenttargeting.util.BaseModelSearchResult;
+import com.liferay.contenttargeting.util.CampaignSearchContainerIterator;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
-import com.liferay.contenttargeting.util.SearchContainerIterator;
+import com.liferay.contenttargeting.util.UserSegmentSearchContainerIterator;
 import com.liferay.osgi.util.ServiceTrackerUtil;
-import com.liferay.portal.kernel.dao.orm.QueryUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -328,8 +325,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			TemplateHashModel staticModels)
 		throws Exception {
 
-		final ThemeDisplay themeDisplay =
-			(ThemeDisplay)portletRequest.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW) ||
 			path.equals(ContentTargetingPath.VIEW_CAMPAIGNS_RESOURCES) ||
@@ -356,92 +353,16 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					"com.liferay.contenttargeting.service.permission." +
 						"UserSegmentPermission"));
 
-			final String keywords = ParamUtil.getString(
-				portletRequest, "keywords");
+			String keywords = ParamUtil.getString(portletRequest, "keywords");
 
 			template.put(
 				"campaignSearchContainerIterator",
-				new SearchContainerIterator<Campaign>() {
-
-					@Override
-					public List<Campaign> getResults(int start, int end)
-						throws PortalException, SystemException {
-
-						if (Validator.isNull(keywords)) {
-							return _campaignLocalService.getCampaigns(
-								themeDisplay.getScopeGroupId(), start, end,
-								null);
-						}
-
-						BaseModelSearchResult<Campaign> searchResults =
-							_campaignLocalService.searchCampaigns(
-								themeDisplay.getScopeGroupId(), keywords, start,
-								end);
-
-						return searchResults.getBaseModels();
-					}
-
-					@Override
-					public int getTotal()
-						throws PortalException, SystemException {
-
-						if (Validator.isNull(keywords)) {
-							return _campaignLocalService.getCampaignsCount(
-								themeDisplay.getScopeGroupId());
-						}
-
-						BaseModelSearchResult<Campaign> searchResults =
-							_campaignLocalService.searchCampaigns(
-								themeDisplay.getScopeGroupId(), keywords,
-								QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-						return searchResults.getLength();
-					}
-				}
-			);
-
+				new CampaignSearchContainerIterator(
+					themeDisplay.getScopeGroupId(), keywords));
 			template.put(
 				"userSegmentSearchContainerIterator",
-				new SearchContainerIterator<UserSegment>() {
-
-					@Override
-					public List<UserSegment> getResults(int start, int end)
-						throws PortalException, SystemException {
-
-						if (Validator.isNull(keywords)) {
-							return _userSegmentLocalService.getUserSegments(
-								themeDisplay.getScopeGroupId(), start, end,
-								null);
-						}
-
-						BaseModelSearchResult<UserSegment> searchResults =
-							_userSegmentLocalService.searchUserSegments(
-								themeDisplay.getScopeGroupId(), keywords, start,
-								end);
-
-						return searchResults.getBaseModels();
-					}
-
-					@Override
-					public int getTotal()
-						throws PortalException, SystemException {
-
-						if (Validator.isNull(keywords)) {
-							return
-								_userSegmentLocalService.getUserSegmentsCount(
-									themeDisplay.getScopeGroupId());
-						}
-
-						BaseModelSearchResult<UserSegment> searchResults =
-							_userSegmentLocalService.searchUserSegments(
-								themeDisplay.getScopeGroupId(), keywords,
-								QueryUtil.ALL_POS, QueryUtil.ALL_POS);
-
-						return searchResults.getLength();
-					}
-				}
-			);
-
+				new UserSegmentSearchContainerIterator(
+					themeDisplay.getScopeGroupId(), keywords));
 			template.put(
 				"usedUserSegmentExceptionClass",
 				UsedUserSegmentException.class);
@@ -598,14 +519,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					template.put(
 						"tabs2", ParamUtil.getString(portletRequest, "tabs2"));
 
-					Map<String, Report> campaignReports =
+					Map<String, Report> userSegmentReports =
 						_reportsRegistry.getReports(
 							UserSegment.class.getName());
 
 					List<ReportTemplate> userSegmentReportsTemplates =
 						new ArrayList<ReportTemplate>();
 
-					for (Report report : campaignReports.values()) {
+					for (Report report : userSegmentReports.values()) {
 						ReportTemplate reportTemplate = new ReportTemplate();
 
 						String html = report.getHTML(
