@@ -19,6 +19,7 @@ import com.liferay.contenttargeting.portlet.util.CampaignQueryRule;
 import com.liferay.contenttargeting.portlet.util.CampaignQueryRuleUtil;
 import com.liferay.contenttargeting.service.CampaignLocalService;
 import com.liferay.contenttargeting.service.CampaignService;
+import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.WebKeys;
 import com.liferay.osgi.util.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -219,9 +220,12 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 				WebKeys.USER_SEGMENT_IDS);
 
 			if (userSegmentIds != null) {
+				long[] groupIds = ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+						themeDisplay.getSiteGroupId());
+
 				Campaign campaign =
 					_campaignLocalService.fetchCurrentMaxPriorityCampaign(
-						themeDisplay.getScopeGroupId(), userSegmentIds);
+						groupIds, userSegmentIds);
 
 				if (campaign != null) {
 					queryRule = CampaignQueryRuleUtil.match(

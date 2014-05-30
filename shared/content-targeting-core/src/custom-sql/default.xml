@@ -12,7 +12,7 @@
 					(CT_Campaigns_UserSegments.campaignId = CT_Campaign.campaignId) AND
 					(CT_Campaigns_UserSegments.userSegmentId IN ([$USER_SEGMENT_IDS$]))
 			WHERE
-				(CT_Campaign.groupId = ?) AND
+				[$GROUP_ID$]
 				(CT_Campaign.startDate <= ? AND CT_Campaign.endDate >= ?) AND
 				(CT_Campaign.active_ = ?)
 			ORDER BY

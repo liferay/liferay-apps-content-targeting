@@ -107,13 +107,13 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 	@Override
 	public Campaign fetchCurrentMaxPriorityCampaign(
-			long groupId, long[] userSegmentIds)
+			long[] groupIds, long[] userSegmentIds)
 		throws SystemException {
 
 		Date now = new Date();
 
 		return campaignFinder.fetchByG_D_A_U_First(
-			groupId, now, true, userSegmentIds);
+			groupIds, now, true, userSegmentIds);
 	}
 
 	@Override
@@ -124,12 +124,13 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	}
 
 	@Override
-	public List<Campaign> getCampaigns(long groupId, long[] userSegmentIds)
+	public List<Campaign> getCampaigns(long[] groupIds, long[] userSegmentIds)
 		throws PortalException, SystemException {
 
 		Date now = new Date();
 
-		return campaignFinder.findByG_D_A_U(groupId, now, true, userSegmentIds);
+		return campaignFinder.findByG_D_A_U(
+			groupIds, now, true, userSegmentIds);
 	}
 
 	@Override

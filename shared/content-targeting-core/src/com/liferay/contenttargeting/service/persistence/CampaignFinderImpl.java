@@ -20,10 +20,11 @@ import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
-import com.liferay.portal.util.PortalUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Date;
@@ -40,40 +41,40 @@ public class CampaignFinderImpl
 
 	@Override
 	public Campaign fetchByG_D_A_U_First(
-			long groupId, Date date, boolean active, long[] userSegmentIds)
+			long[] groupIds, Date date, boolean active, long[] userSegmentIds)
 		throws SystemException {
 
 		return doFetchByG_D_A_U_First(
-			groupId, date, active, userSegmentIds, false);
+			groupIds, date, active, userSegmentIds, false);
 	}
 
 	@Override
 	public List<Campaign> filterFindByG_D_A_U(
-			long groupId, Date date, boolean active, long[] userSegmentIds)
+			long[] groupIds, Date date, boolean active, long[] userSegmentIds)
 		throws SystemException {
 
-		return doFetchByG_D_A_U(groupId, date, active, userSegmentIds, true);
+		return doFetchByG_D_A_U(groupIds, date, active, userSegmentIds, true);
 	}
 
 	@Override
 	public List<Campaign> findByG_D_A_U(
-			long groupId, Date date, boolean active, long[] userSegmentIds)
+			long[] groupIds, Date date, boolean active, long[] userSegmentIds)
 		throws SystemException {
 
-		return doFetchByG_D_A_U(groupId, date, active, userSegmentIds, false);
+		return doFetchByG_D_A_U(groupIds, date, active, userSegmentIds, false);
 	}
 
 	@Override
 	public Campaign filterFetchByG_D_A_U_First(
-			long groupId, Date date, boolean active, long[] userSegmentIds)
+			long[] groupIds, Date date, boolean active, long[] userSegmentIds)
 		throws SystemException {
 
 		return doFetchByG_D_A_U_First(
-			groupId, date, active, userSegmentIds, true);
+			groupIds, date, active, userSegmentIds, true);
 	}
 
 	protected List<Campaign> doFetchByG_D_A_U(
-			long groupId, Date date, boolean active, long[] userSegmentIds,
+			long[] groupIds, Date date, boolean active, long[] userSegmentIds,
 			boolean inlineSQLHelper)
 		throws SystemException {
 
@@ -87,12 +88,14 @@ public class CampaignFinderImpl
 			String sql = CustomSQLUtil.get(FIND_BY_G_D_A_U);
 
 			sql = StringUtil.replace(
+				sql, "[$GROUP_ID$]", getGroupIds(groupIds));
+			sql = StringUtil.replace(
 				sql, "[$USER_SEGMENT_IDS$]", StringUtil.merge(userSegmentIds));
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
 					sql, Campaign.class.getName(), "CT_Campaign.campaignId",
-					PortalUtil.getSiteGroupId(groupId));
+					groupIds);
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);
@@ -101,7 +104,7 @@ public class CampaignFinderImpl
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(groupId);
+			qPos.add(groupIds);
 			qPos.add(date);
 			qPos.add(date);
 			qPos.add(active);
@@ -117,18 +120,40 @@ public class CampaignFinderImpl
 	}
 
 	protected Campaign doFetchByG_D_A_U_First(
-			long groupId, Date date, boolean active, long[] userSegmentIds,
+			long[] groupIds, Date date, boolean active, long[] userSegmentIds,
 			boolean inlineSQLHelper)
 		throws SystemException {
 
 		List<Campaign> campaigns = doFetchByG_D_A_U(
-			groupId, date, active, userSegmentIds, inlineSQLHelper);
+			groupIds, date, active, userSegmentIds, inlineSQLHelper);
 
 		if ((campaigns != null) && !campaigns.isEmpty()) {
 			return campaigns.get(0);
 		}
 
 		return null;
+	}
+
+	protected String getGroupIds(long[] groupIds) {
+		if (groupIds.length == 0) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(groupIds.length * 2);
+
+		sb.append(StringPool.OPEN_PARENTHESIS);
+
+		for (int i = 0; i < groupIds.length; i++) {
+			sb.append("groupId = ?");
+
+			if ((i + 1) < groupIds.length) {
+				sb.append(" OR ");
+			}
+		}
+
+		sb.append(") AND");
+
+		return sb.toString();
 	}
 
 }

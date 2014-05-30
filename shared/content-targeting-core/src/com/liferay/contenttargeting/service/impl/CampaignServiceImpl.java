@@ -73,13 +73,13 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 
 	@Override
 	public Campaign fetchCurrentMaxPriorityCampaign(
-			long groupId, long[] userSegmentIds)
+			long[] groupIds, long[] userSegmentIds)
 		throws SystemException {
 
 		Date now = new Date();
 
 		return campaignFinder.filterFetchByG_D_A_U_First(
-			groupId, now, true, userSegmentIds);
+			groupIds, now, true, userSegmentIds);
 	}
 
 	@Override
