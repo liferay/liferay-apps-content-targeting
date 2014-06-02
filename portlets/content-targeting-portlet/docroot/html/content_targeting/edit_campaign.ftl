@@ -61,7 +61,7 @@
 		</#list>
 	</@>
 
-	<@aui["input"] name="active" />
+	<@aui["input"] name="active" value=true />
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
