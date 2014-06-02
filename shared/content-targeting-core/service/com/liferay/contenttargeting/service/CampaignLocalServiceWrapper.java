@@ -543,14 +543,6 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 
 	@Override
 	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
-		long[] groupIds, long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignLocalService.getCampaigns(groupIds, userSegmentIds);
-	}
-
-	@Override
-	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -573,6 +565,14 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _campaignLocalService.getCampaigns(groupIds, start, end, obc);
+	}
+
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long[] groupIds, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _campaignLocalService.getCampaigns(groupIds, userSegmentIds);
 	}
 
 	@Override

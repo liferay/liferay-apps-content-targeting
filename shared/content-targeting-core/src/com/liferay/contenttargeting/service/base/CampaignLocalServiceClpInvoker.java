@@ -223,25 +223,25 @@ public class CampaignLocalServiceClpInvoker {
 
 		_methodName78 = "getCampaigns";
 
-		_methodParameterTypes78 = new String[] { "long[][]", "long[][]" };
-
-		_methodName79 = "getCampaigns";
-
-		_methodParameterTypes79 = new String[] {
+		_methodParameterTypes78 = new String[] {
 				"long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
+		_methodName79 = "getCampaigns";
+
+		_methodParameterTypes79 = new String[] { "long[][]" };
+
 		_methodName80 = "getCampaigns";
 
-		_methodParameterTypes80 = new String[] { "long[][]" };
-
-		_methodName81 = "getCampaigns";
-
-		_methodParameterTypes81 = new String[] {
+		_methodParameterTypes80 = new String[] {
 				"long[][]", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
+
+		_methodName81 = "getCampaigns";
+
+		_methodParameterTypes81 = new String[] { "long[][]", "long[][]" };
 
 		_methodName82 = "getCampaignsCount";
 
@@ -541,29 +541,29 @@ public class CampaignLocalServiceClpInvoker {
 
 		if (_methodName78.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes78, parameterTypes)) {
-			return CampaignLocalServiceUtil.getCampaigns((long[])arguments[0],
-				(long[])arguments[1]);
-		}
-
-		if (_methodName79.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes79, parameterTypes)) {
 			return CampaignLocalServiceUtil.getCampaigns(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
+		if (_methodName79.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes79, parameterTypes)) {
+			return CampaignLocalServiceUtil.getCampaigns((long[])arguments[0]);
+		}
+
 		if (_methodName80.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes80, parameterTypes)) {
-			return CampaignLocalServiceUtil.getCampaigns((long[])arguments[0]);
+			return CampaignLocalServiceUtil.getCampaigns((long[])arguments[0],
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue(),
+				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
 		if (_methodName81.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes81, parameterTypes)) {
 			return CampaignLocalServiceUtil.getCampaigns((long[])arguments[0],
-				((Integer)arguments[1]).intValue(),
-				((Integer)arguments[2]).intValue(),
-				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
+				(long[])arguments[1]);
 		}
 
 		if (_methodName82.equals(name) &&

@@ -507,13 +507,6 @@ public class CampaignLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
-		long[] groupIds, long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCampaigns(groupIds, userSegmentIds);
-	}
-
-	public static java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -534,6 +527,13 @@ public class CampaignLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCampaigns(groupIds, start, end, obc);
+	}
+
+	public static java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long[] groupIds, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCampaigns(groupIds, userSegmentIds);
 	}
 
 	public static int getCampaignsCount(long groupId)

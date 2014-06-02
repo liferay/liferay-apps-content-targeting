@@ -219,25 +219,25 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 
 		_methodName42 = "getCampaigns";
 
-		_methodParameterTypes42 = new String[] { "long[][]", "long[][]" };
-
-		_methodName43 = "getCampaigns";
-
-		_methodParameterTypes43 = new String[] {
+		_methodParameterTypes42 = new String[] {
 				"long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
+		_methodName43 = "getCampaigns";
+
+		_methodParameterTypes43 = new String[] { "long[][]" };
+
 		_methodName44 = "getCampaigns";
 
-		_methodParameterTypes44 = new String[] { "long[][]" };
-
-		_methodName45 = "getCampaigns";
-
-		_methodParameterTypes45 = new String[] {
+		_methodParameterTypes44 = new String[] {
 				"long[][]", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
+
+		_methodName45 = "getCampaigns";
+
+		_methodParameterTypes45 = new String[] { "long[][]", "long[][]" };
 
 		_methodName46 = "getCampaignsCount";
 
@@ -1540,45 +1540,6 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 
 	@Override
 	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
-		long[] groupIds, long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName42,
-					_methodParameterTypes42,
-					new Object[] {
-						ClpSerializer.translateInput(groupIds),
-						
-					ClpSerializer.translateInput(userSegmentIds)
-					});
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<com.liferay.contenttargeting.model.Campaign>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
-	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -1586,8 +1547,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName43,
-					_methodParameterTypes43,
+			returnObj = _invokableLocalService.invokeMethod(_methodName42,
+					_methodParameterTypes42,
 					new Object[] {
 						groupId,
 						
@@ -1629,8 +1590,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName44,
-					_methodParameterTypes44,
+			returnObj = _invokableLocalService.invokeMethod(_methodName43,
+					_methodParameterTypes43,
 					new Object[] { ClpSerializer.translateInput(groupIds) });
 		}
 		catch (Throwable t) {
@@ -1665,8 +1626,8 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName45,
-					_methodParameterTypes45,
+			returnObj = _invokableLocalService.invokeMethod(_methodName44,
+					_methodParameterTypes44,
 					new Object[] {
 						ClpSerializer.translateInput(groupIds),
 						
@@ -1675,6 +1636,45 @@ public class CampaignLocalServiceClp implements CampaignLocalService {
 					end,
 						
 					ClpSerializer.translateInput(obc)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.contenttargeting.model.Campaign>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.contenttargeting.model.Campaign> getCampaigns(
+		long[] groupIds, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName45,
+					_methodParameterTypes45,
+					new Object[] {
+						ClpSerializer.translateInput(groupIds),
+						
+					ClpSerializer.translateInput(userSegmentIds)
 					});
 		}
 		catch (Throwable t) {
