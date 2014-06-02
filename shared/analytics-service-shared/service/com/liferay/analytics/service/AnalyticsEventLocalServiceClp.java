@@ -124,51 +124,60 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName20 = "checkAnalyticsEvents";
+		_methodName20 = "addAnalyticsEvent";
 
-		_methodParameterTypes20 = new String[] {  };
+		_methodParameterTypes20 = new String[] {
+				"long", "long", "java.lang.String", "long", "java.lang.String",
+				"long[][]", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+			};
 
-		_methodName21 = "deleteAnalyticsEvents";
+		_methodName21 = "checkAnalyticsEvents";
 
-		_methodParameterTypes21 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes21 = new String[] {  };
 
-		_methodName22 = "getAnalyticsEvents";
+		_methodName22 = "deleteAnalyticsEvents";
 
 		_methodParameterTypes22 = new String[] { "long", "java.util.Date" };
 
 		_methodName23 = "getAnalyticsEvents";
 
-		_methodParameterTypes23 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
-			};
+		_methodParameterTypes23 = new String[] { "long", "java.util.Date" };
 
 		_methodName24 = "getAnalyticsEvents";
 
 		_methodParameterTypes24 = new String[] {
+				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName25 = "getAnalyticsEvents";
+
+		_methodParameterTypes25 = new String[] {
 				"java.lang.String", "long", "java.lang.String", "long",
 				"java.lang.String", "java.util.Date"
 			};
 
-		_methodName25 = "getAnalyticsEventsCount";
-
-		_methodParameterTypes25 = new String[] { "long", "java.util.Date" };
-
 		_methodName26 = "getAnalyticsEventsCount";
 
-		_methodParameterTypes26 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
-			};
+		_methodParameterTypes26 = new String[] { "long", "java.util.Date" };
 
 		_methodName27 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes27 = new String[] {
+				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName28 = "getAnalyticsEventsCount";
+
+		_methodParameterTypes28 = new String[] {
 				"java.lang.String", "long", "java.lang.String", "long",
 				"java.lang.String", "java.util.Date"
 			};
 
-		_methodName28 = "getMaxAge";
+		_methodName29 = "getMaxAge";
 
-		_methodParameterTypes28 = new String[] {  };
+		_methodParameterTypes29 = new String[] {  };
 	}
 
 	@Override
@@ -788,12 +797,79 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	}
 
 	@Override
+	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> addAnalyticsEvent(
+		long userId, long anonymousUserId, java.lang.String className,
+		long classPK, java.lang.String referrerClassName,
+		long[] referrerClassPKs, java.lang.String eventType,
+		java.lang.String clientIP, java.lang.String userAgent,
+		java.lang.String languageId, java.lang.String URL,
+		java.lang.String additionalInfo,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName20,
+					_methodParameterTypes20,
+					new Object[] {
+						userId,
+						
+					anonymousUserId,
+						
+					ClpSerializer.translateInput(className),
+						
+					classPK,
+						
+					ClpSerializer.translateInput(referrerClassName),
+						
+					ClpSerializer.translateInput(referrerClassPKs),
+						
+					ClpSerializer.translateInput(eventType),
+						
+					ClpSerializer.translateInput(clientIP),
+						
+					ClpSerializer.translateInput(userAgent),
+						
+					ClpSerializer.translateInput(languageId),
+						
+					ClpSerializer.translateInput(URL),
+						
+					ClpSerializer.translateInput(additionalInfo),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.analytics.model.AnalyticsEvent>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public void checkAnalyticsEvents()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName20,
-				_methodParameterTypes20, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName21,
+				_methodParameterTypes21, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -821,8 +897,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName21,
-				_methodParameterTypes21,
+			_invokableLocalService.invokeMethod(_methodName22,
+				_methodParameterTypes22,
 				new Object[] { companyId, ClpSerializer.translateInput(
 						createDate) });
 		}
@@ -855,8 +931,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] {
 						companyId,
 						
@@ -895,8 +971,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -940,8 +1016,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -986,8 +1062,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						companyId,
 						
@@ -1025,8 +1101,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1069,8 +1145,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1115,8 +1191,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1198,4 +1274,6 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	private String[] _methodParameterTypes27;
 	private String _methodName28;
 	private String[] _methodParameterTypes28;
+	private String _methodName29;
+	private String[] _methodParameterTypes29;
 }
