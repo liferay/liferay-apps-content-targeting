@@ -10,13 +10,13 @@
       <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-core/content-targeting-core.iml" filepath="$PROJECT_DIR$/shared/content-targeting-core/content-targeting-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/portlets/content-targeting-portlet/content-targeting-portlet.iml" filepath="$PROJECT_DIR$/portlets/content-targeting-portlet/content-targeting-portlet.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-tests-shared/content-targeting-tests-shared.iml" filepath="$PROJECT_DIR$/shared/content-targeting-tests-shared/content-targeting-tests-shared.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/ct-campaign-content-report/ct-campaign-content-report.iml" filepath="$PROJECT_DIR$/shared/ct-campaign-content-report/ct-campaign-content-report.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/ct-user-segment-content-report/ct-user-segment-content-report.iml" filepath="$PROJECT_DIR$/shared/ct-user-segment-content-report/ct-user-segment-content-report.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/freemarker-osgi/freemarker-osgi.iml" filepath="$PROJECT_DIR$/shared/freemarker-osgi/freemarker-osgi.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/geolocation-service-shared/geolocation-service-shared.iml" filepath="$PROJECT_DIR$/shared/geolocation-service-shared/geolocation-service-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/http-service-shared/http-service-shared-master.iml" filepath="$PROJECT_DIR$/shared/http-service-shared/http-service-shared-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/http-service-shared/log-bridge-shared-master.iml" filepath="$PROJECT_DIR$/shared/http-service-shared/log-bridge-shared-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/hooks/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" filepath="$PROJECT_DIR$/hooks/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/report-campaign-content/report-campaign-content.iml" filepath="$PROJECT_DIR$/shared/report-campaign-content/report-campaign-content.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/report-user-segment-content/report-user-segment-content.iml" filepath="$PROJECT_DIR$/shared/report-user-segment-content/report-user-segment-content.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/rule-age/rule-age.iml" filepath="$PROJECT_DIR$/shared/rule-age/rule-age.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/rule-gender/rule-gender.iml" filepath="$PROJECT_DIR$/shared/rule-gender/rule-gender.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/rule-ip-geocode/rule-ip-geocode.iml" filepath="$PROJECT_DIR$/shared/rule-ip-geocode/rule-ip-geocode.iml" />
