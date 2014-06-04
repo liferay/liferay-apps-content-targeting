@@ -17,16 +17,16 @@
 <#include "../init.ftl" />
 
 <@liferay_ui["tabs"]
-	names="campaigns,user-segments"
+	names="user-segments,campaigns"
 	refresh=false
 	type="pills"
 	value="${tabs1}"
 >
 	<@liferay_ui["section"]>
-		<#include "view_campaigns.ftl" />
+		<#include "view_user_segments.ftl" />
 	</@>
 
 	<@liferay_ui["section"]>
-		<#include "view_user_segments.ftl" />
+		<#include "view_campaigns.ftl" />
 	</@>
 </@>

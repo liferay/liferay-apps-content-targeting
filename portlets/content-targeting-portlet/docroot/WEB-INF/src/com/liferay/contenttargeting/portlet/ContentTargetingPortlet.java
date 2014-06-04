@@ -310,7 +310,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put(
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 		template.put(
-			"tabs1", ParamUtil.getString(portletRequest, "tabs1", "campaigns"));
+			"tabs1",
+			ParamUtil.getString(portletRequest, "tabs1", "user-segments"));
 		template.put(
 			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
 		template.put("userSegmentClass", UserSegment.class);
