@@ -6,8 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/unit" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/classes" />
-      <excludeFolder url="file://$MODULE_DIR$/test-classes" />
-      <excludeFolder url="file://$MODULE_DIR$/test-results" />
+      <excludeFolder url="file://$MODULE_DIR$/../ct-age-rule/test-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/../ct-age-rule/test-results" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -16,7 +16,21 @@
     <orderEntry type="library" scope="PROVIDED" name="osgi" level="project" />
     <orderEntry type="library" name="portal" level="project" />
     <orderEntry type="library" name="reference" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/lib" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../ct-age-rule/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../ct-age-rule/lib" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="mockito" level="project" />
+    <orderEntry type="library" name="portal-impl" level="project" />
   </component>
 </module>
 

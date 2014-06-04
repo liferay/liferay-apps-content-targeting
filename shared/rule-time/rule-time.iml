@@ -6,8 +6,8 @@
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test/unit" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/classes" />
-      <excludeFolder url="file://$MODULE_DIR$/test-classes" />
-      <excludeFolder url="file://$MODULE_DIR$/test-results" />
+      <excludeFolder url="file://$MODULE_DIR$/../ct-time-rule/test-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/../ct-time-rule/test-results" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
