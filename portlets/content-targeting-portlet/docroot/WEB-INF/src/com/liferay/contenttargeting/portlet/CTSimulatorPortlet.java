@@ -76,7 +76,6 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 			CampaignLocalService.class, bundle.getBundleContext());
 		_userSegmentLocalService = ServiceTrackerUtil.getService(
 			UserSegmentLocalService.class, bundle.getBundleContext());
-
 		_userSegmentSimulator = ServiceTrackerUtil.getService(
 			UserSegmentSimulator.class, bundle.getBundleContext());
 	}

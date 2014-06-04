@@ -20,11 +20,9 @@
 	<h2><@liferay_ui["message"] key="matched-campaigns" /></h2>
 
 	<ul>
-
-	<#list campaigns as campaign>
-		<li>${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}</li>
-	</#list>
-
+		<#list campaigns as campaign>
+			<li>${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}</li>
+		</#list>
 	</ul>
 <#else>
 	<div class="alert alert-info">
@@ -35,13 +33,7 @@
 <h2><@liferay_ui["message"] key="not-matched-campaigns" /></h2>
 
 <ul>
-
-<#list notMatchedCampaigns as campaign>
-	<li>
-
-	${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}
-
-	</li>
-</#list>
-
+	<#list notMatchedCampaigns as campaign>
+		<li>${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}</li>
+	</#list>
 </ul>

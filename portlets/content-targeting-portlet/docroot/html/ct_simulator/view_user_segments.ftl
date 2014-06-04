@@ -20,25 +20,23 @@
 	<h2><@liferay_ui["message"] key="simulated-user-segments" /></h2>
 
 	<ul>
+		<#list userSegments as userSegment>
+			<li>
+				${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}
 
-	<#list userSegments as userSegment>
-		<li>
-			${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}
+				<@portlet["actionURL"] name="removeSimulateUserSegment" var="removeSimulateUserSegmentURL">
+					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()}" />
+					<@portlet["param"] name="redirect" value="${currentURL}" />
+				</@>
 
-			<@portlet["actionURL"] name="removeSimulateUserSegment" var="removeSimulateUserSegmentURL">
-				<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()}" />
-				<@portlet["param"] name="redirect" value="${currentURL}" />
-			</@>
-
-			<@liferay_ui["icon"]
-				iconCssClass="icon-minus"
-				label=true
-				message="remove"
-				url="${removeSimulateUserSegmentURL}"
-			/>
-		</li>
-	</#list>
-
+				<@liferay_ui["icon"]
+					iconCssClass="icon-minus"
+					label=true
+					message="remove"
+					url="${removeSimulateUserSegmentURL}"
+				/>
+			</li>
+		</#list>
 	</ul>
 
 	<@portlet["actionURL"] name="stopSimulation" var="stopSimulationURL">
@@ -50,11 +48,9 @@
 	<h2><@liferay_ui["message"] key="matched-user-segments" /></h2>
 
 	<ul>
-
-	<#list userSegments as userSegment>
-		<li>${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}</li>
-	</#list>
-
+		<#list userSegments as userSegment>
+			<li>${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}</li>
+		</#list>
 	</ul>
 <#else>
 	<div class="alert alert-info">
@@ -65,25 +61,23 @@
 <h2><@liferay_ui["message"] key="not-matched-user-segments" /></h2>
 
 <ul>
+	<#list notMatchedUserSegments as userSegment>
+		<@portlet["actionURL"] name="simulateUserSegment" var="simulateUserSegmentURL">
+			<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()}" />
+			<@portlet["param"] name="redirect" value="${currentURL}" />
+		</@>
 
-<#list notMatchedUserSegments as userSegment>
-	<@portlet["actionURL"] name="simulateUserSegment" var="simulateUserSegmentURL">
-		<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()}" />
-		<@portlet["param"] name="redirect" value="${currentURL}" />
-	</@>
+		<li>
 
-	<li>
+		${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}
 
-	${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}
+		<@liferay_ui["icon"]
+			iconCssClass="icon-plus"
+			label=true
+			message="simulate"
+			url="${simulateUserSegmentURL}"
+		/>
 
-	<@liferay_ui["icon"]
-		iconCssClass="icon-plus"
-		label=true
-		message="simulate"
-		url="${simulateUserSegmentURL}"
-	/>
-
-	</li>
-</#list>
-
+		</li>
+	</#list>
 </ul>
