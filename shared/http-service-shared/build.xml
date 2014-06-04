@@ -3,6 +3,8 @@
 <project name="http-service-shared" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
+	<property name="plugin.name" value="com.liferay.httpservice" />
+
 	<import file="../../build-common-osgi-plugin.xml" />
 
 	<property name="osgi.plugin.portal.lib.jars" value="axis.jar" />

@@ -3,5 +3,7 @@
 <project name="freemarker-osgi" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
+	<property name="plugin.name" value="com.liferay.freemarker.osgi" />
+
 	<import file="../../build-common-osgi-plugin.xml" />
 </project>

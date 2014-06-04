@@ -3,6 +3,8 @@
 <project name="ct-ip-geocode-rule" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
+	<property name="plugin.name" value="com.liferay.contenttargeting.rules.geocode" />
+
 	<property name="import.shared" value="anonymous-users-shared,content-targeting-core,geolocation-service-shared" />
 
 	<import file="../../build-common-osgi-plugin.xml" />

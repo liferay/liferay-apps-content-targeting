@@ -2,8 +2,11 @@
 <!DOCTYPE project>
 
 <project name="system-packages-extra" basedir="." default="deploy">
-	<property name="import.compat.shared" value="false" />
 	<property name="plugin.version" value="1" />
+
+	<property name="plugin.name" value="com.liferay.contenttargeting.systempackagesextra" />
+
+	<property name="import.compat.shared" value="false" />
 
 	<import file="../../build-common-osgi-plugin.xml" />
 </project>

@@ -3,5 +3,7 @@
 <project name="arquillian-plugin-deployer" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
+	<property name="plugin.name" value="com.liferay.arquilian" />
+
 	<import file="../../build-common-osgi-plugin.xml" />
 </project>

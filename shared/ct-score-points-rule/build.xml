@@ -3,6 +3,8 @@
 <project name="ct-score-points-rule" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
+	<property name="plugin.name" value="com.liferay.contenttargeting.rules.scorepoints" />
+
 	<property name="import.shared" value="service-utils-shared,anonymous-users-shared,content-targeting-core" />
 
 	<import file="../../build-common-osgi-plugin.xml" />

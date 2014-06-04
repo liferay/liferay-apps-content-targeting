@@ -3,6 +3,8 @@
 <project name="ct-user-segment-content-report" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
+	<property name="plugin.name" value="com.liferay.contenttargeting.reports.usersegmentcontent" />
+
 	<property name="import.shared" value="service-utils-shared,analytics-service-shared,anonymous-users-shared,content-targeting-core" />
 
 	<import file="../../build-common-osgi-plugin.xml" />
