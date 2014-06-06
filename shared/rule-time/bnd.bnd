@@ -26,4 +26,4 @@ Private-Package: \
 	com.liferay.contenttargeting.rules.time.*
 Service-Component: \
 	com.liferay.contenttargeting.rules.time.*
-Web-ContextPath: /ct-time-rule
+Web-ContextPath: /rule-time

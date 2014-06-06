@@ -36,4 +36,4 @@ Private-Package: \
 	com.liferay.contenttargeting.rules.ipgeocode.*
 Service-Component: \
 	com.liferay.contenttargeting.rules.ipgeocode.*
-Web-ContextPath: /ct-ip-geocode-rule
+Web-ContextPath: /rule-ip-geocode

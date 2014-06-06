@@ -27,4 +27,4 @@ Private-Package: \
 	com.liferay.contenttargeting.rules.age.*
 Service-Component: \
 	com.liferay.contenttargeting.rules.age.*
-Web-ContextPath: /ct-age-rule
+Web-ContextPath: /rule-age

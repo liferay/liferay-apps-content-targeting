@@ -3,7 +3,7 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>ct-user-segment-content-report</portlet-name>
+		<portlet-name>report-user-segment-content</portlet-name>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.contenttargeting.reports.usersegmentcontent.messaging.CheckUserSegmentContentReportMessageListener</scheduler-event-listener-class>
 			<trigger>

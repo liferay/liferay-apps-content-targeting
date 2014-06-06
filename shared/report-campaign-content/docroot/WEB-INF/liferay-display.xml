@@ -3,6 +3,6 @@
 
 <display>
 	<category name="category.hidden">
-		<portlet id="ct-campaign-content-report" />
+		<portlet id="report-campaign-content" />
 	</category>
 </display>

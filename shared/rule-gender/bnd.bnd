@@ -26,4 +26,4 @@ Private-Package: \
 	com.liferay.contenttargeting.rules.gender.*
 Service-Component: \
 	com.liferay.contenttargeting.rules.gender.*
-Web-ContextPath: /ct-gender-rule
+Web-ContextPath: /rule-gender

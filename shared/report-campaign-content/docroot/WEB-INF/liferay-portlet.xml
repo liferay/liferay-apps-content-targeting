@@ -3,7 +3,7 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>ct-campaign-content-report</portlet-name>
+		<portlet-name>report-campaign-content</portlet-name>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.contenttargeting.reports.campaigncontent.messaging.CheckCampaignContentReportMessageListener</scheduler-event-listener-class>
 			<trigger>

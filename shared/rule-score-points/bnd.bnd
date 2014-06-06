@@ -1,12 +1,12 @@
 Bundle-Name: Score Points Rule
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/ct-score-points-rule-service.jar
+Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/rule-score-points-service.jar
 Include-Resource: classes,\
 	{WEB-INF/classes/META-INF=classes/META-INF/},\
 	{WEB-INF/sql=sql},\
 	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
 	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	WEB-INF/lib/ct-score-points-rule-service.jar=lib/ct-score-points-rule-service.jar
+	WEB-INF/lib/rule-score-points-service.jar=lib/rule-score-points-service.jar
 Import-Package:\
 	com.liferay.anonymoususers.model,\
 	com.liferay.anonymoususers.service,\
@@ -57,4 +57,4 @@ Import-Package:\
 	org.springframework.*
 Service-Component: \
 	com.liferay.contenttargeting.rules.scorepoints.*
-Web-ContextPath: /ct-score-points-rule
+Web-ContextPath: /rule-score-points

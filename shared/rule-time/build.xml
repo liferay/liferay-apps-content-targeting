@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="ct-time-rule" basedir="." default="compile">
+<project name="rule-time" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
 	<property name="import.shared" value="anonymous-users-shared,content-targeting-core" />
