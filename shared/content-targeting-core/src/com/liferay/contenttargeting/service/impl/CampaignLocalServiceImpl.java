@@ -66,6 +66,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		User user = UserLocalServiceUtil.getUser(userId);
+
 		long groupId = serviceContext.getScopeGroupId();
 
 		Date now = new Date();
@@ -75,7 +76,6 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		Campaign campaign = campaignPersistence.create(campaignId);
 
 		campaign.setGroupId(groupId);
-
 		campaign.setCompanyId(user.getCompanyId());
 		campaign.setUserId(user.getUserId());
 		campaign.setUserName(user.getFullName());
@@ -234,7 +234,6 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		Group group = GroupLocalServiceUtil.getGroup(groupId);
 
 		searchContext.setCompanyId(group.getCompanyId());
-
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[]{groupId});
 		searchContext.setKeywords(keywords);
