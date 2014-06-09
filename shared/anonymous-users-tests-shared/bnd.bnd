@@ -1,0 +1,19 @@
+Bundle-Name: Anonymous Users Tests Shared
+
+Bundle-ClassPath: .,WEB-INF/classes
+
+Import-Package =\
+	com.liferay.anonymoususers,\
+	com.liferay.anonymoususers.model,\
+	com.liferay.anonymoususers.service,\
+	com.liferay.portal.model,\
+	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.service,\
+	com.liferay.portal.kernel.util,\
+	com.liferay.portal.util,\
+	org.osgi.framework,\
+	*
+
+Include-Resource: classes
+
+Web-ContextPath: /anonymous-user-tests-shared
