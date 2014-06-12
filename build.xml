@@ -4,8 +4,18 @@
 <project name="plugins" basedir="." default="all" xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="build-common.xml" />
 
+	<path id="plugins.includes.path">
+		<dirset dir="hooks" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+		<dirset dir="layouttpl" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+		<dirset dir="portlets" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+		<dirset dir="shared" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+		<dirset dir="themes" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+		<dirset dir="webs" excludes="${plugins.excludes}" includes="${plugins.includes}" />
+	</path>
+
+	<pathconvert pathsep="," property="plugins.includes.path" refid="plugins.includes.path" targetos="unix" />
+
 	<target name="all">
-		<antcall target="clean-server" />
 		<antcall target="clean" />
 		<antcall target="deploy" />
 	</target>
@@ -38,63 +48,6 @@
 			<arg value="${sdk.dir}/summary.xsl" />
 			<arg value="${sdk.dir}/summary.html" />
 		</java>
-	</target>
-
-	<target name="clean">
-		<ant dir="hooks" target="clean" inheritAll="false" />
-		<ant dir="layouttpl" target="clean" inheritAll="false" />
-		<ant dir="portlets" target="clean" inheritAll="false" />
-		<ant dir="shared" target="clean" inheritAll="false" />
-		<ant dir="themes" target="clean" inheritAll="false" />
-		<ant dir="webs" target="clean" inheritAll="false" />
-	</target>
-
-	<target name="clean-server">
-		<delete dir="${app.server.parent.dir}/data/osgi" />
-		<delete dir="${app.server.dir}/work" />
-		<delete dir="${app.server.dir}/temp" />
-	</target>
-
-	<target name="compile">
-		<ant dir="hooks" target="compile" inheritAll="false" />
-		<ant dir="layouttpl" target="compile" inheritAll="false" />
-		<ant dir="portlets" target="compile" inheritAll="false" />
-		<ant dir="shared" target="compile" inheritAll="false" />
-		<ant dir="themes" target="compile" inheritAll="false" />
-		<ant dir="webs" target="compile" inheritAll="false" />
-	</target>
-
-	<target name="console">
-		<copy todir="${app.server.parent.dir}/data/osgi/modules">
-			<fileset dir="modules" />
-		</copy>
-
-		<exec executable="/bin/sh" os="${os.apple},${os.unix}">
-			<arg value="-c" />
-			<arg value="telnet localhost 6666 &lt; /dev/tty &gt; /dev/tty 2&gt; /dev/tty" />
-		</exec>
-
-		<exec executable="cmd.exe" os="${os.windows}">
-			<arg value="-c" />
-			<arg value="telnet localhost 6666" />
-		</exec>
-	</target>
-
-	<target name="deploy">
-		<ant dir="hooks" target="deploy" inheritAll="false" />
-		<ant dir="layouttpl" target="deploy" inheritAll="false" />
-		<ant dir="portlets" target="deploy" inheritAll="false" />
-		<ant dir="shared" target="deploy" inheritAll="false" />
-		<ant dir="themes" target="deploy" inheritAll="false" />
-		<ant dir="webs" target="deploy" inheritAll="false" />
-	</target>
-
-	<target name="direct-deploy">
-		<ant dir="hooks" target="direct-deploy" inheritAll="false" />
-		<ant dir="layouttpl" target="direct-deploy" inheritAll="false" />
-		<ant dir="portlets" target="direct-deploy" inheritAll="false" />
-		<ant dir="themes" target="direct-deploy" inheritAll="false" />
-		<ant dir="webs" target="direct-deploy" inheritAll="false" />
 	</target>
 
 	<target name="ear">
@@ -202,7 +155,7 @@
 		<zip destfile="dist/liferay-plugins-sdk-${lp.version}.zip">
 			<zipfileset
 				dir="."
-				excludes="*.iml,.git/**,.ivy/**,build.*.properties,dist/**,ext/*-ext/**,hooks/*-hook/**,lib/**,ivy.xml.MD5,layouttpl/*-layouttpl/**,portlets/*-portlet/**,private-plugins.txt,shared/*-shared/**,source_formatter_*,summary.*,themes/*-theme/**,webs/*-web/**"
+				excludes="*.iml,.bnd/**,.git/**,.ivy/**,build.*.properties,dependencies/**/ivy.xml.MD5,dependencies/**/lib/**,dist/**,ext/*-ext/**,hooks/*-hook/**,lib/**,ivy.xml.MD5,layouttpl/*-layouttpl/**,portlets/*-portlet/**,private-plugins.txt,shared/*-shared/**,source_formatter_*,suites/**,summary.*,themes/*-theme/**,webs/*-web/**"
 				prefix="liferay-plugins-sdk-${lp.version}"
 			/>
 			<zipfileset
@@ -228,34 +181,19 @@
 	</target>
 
 	<target name="setup-eclipse">
-		<ant dir="hooks" target="clean" inheritAll="false" />
-		<ant dir="portlets" target="clean" inheritAll="false" />
-		<ant dir="webs" target="clean" inheritAll="false" />
+		<loop-macrodef-or-target
+			module.dirs="${plugins.includes.path}"
+			target.name="clean"
+		/>
 
-		<ant dir="hooks" target="compile" inheritAll="false" />
-		<ant dir="portlets" target="compile" inheritAll="false" />
-		<ant dir="webs" target="compile" inheritAll="false" />
+		<loop-macrodef-or-target
+			module.dirs="${plugins.includes.path}"
+			target.name="compile"
+		/>
 
 		<ant dir="hooks" target="setup-eclipse" inheritAll="false" />
 		<ant dir="portlets" target="setup-eclipse" inheritAll="false" />
 		<ant dir="webs" target="setup-eclipse" inheritAll="false" />
-	</target>
-
-	<target name="test">
-		<ant dir="hooks" target="test" inheritAll="false" />
-		<ant dir="layouttpl" target="test" inheritAll="false" />
-		<ant dir="portlets" target="test" inheritAll="false" />
-		<ant dir="shared" target="test" inheritAll="false" />
-		<ant dir="themes" target="test" inheritAll="false" />
-		<ant dir="webs" target="test" inheritAll="false" />
-	</target>
-
-	<target name="war">
-		<ant dir="hooks" target="war" inheritAll="false" />
-		<ant dir="layouttpl" target="war" inheritAll="false" />
-		<ant dir="portlets" target="war" inheritAll="false" />
-		<ant dir="themes" target="war" inheritAll="false" />
-		<ant dir="webs" target="war" inheritAll="false" />
 	</target>
 
 	<target name="zip-portal">
