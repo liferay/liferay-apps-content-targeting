@@ -20,7 +20,7 @@ import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
-import com.liferay.osgi.util.ServiceTrackerUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;

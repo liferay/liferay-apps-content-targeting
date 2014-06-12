@@ -21,7 +21,7 @@ import com.liferay.contenttargeting.service.CampaignLocalService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.WebKeys;
-import com.liferay.osgi.util.ServiceTrackerUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.Template;

@@ -19,7 +19,7 @@ Import-Package:\
 	com.liferay.contenttargeting.service.permission,\
 	com.liferay.contenttargeting.util,\
 	com.liferay.httpservice.servlet,\
-	com.liferay.osgi.util,\
+	com.liferay.osgi.util.service,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.language,\
 	com.liferay.portal.kernel.lar,\

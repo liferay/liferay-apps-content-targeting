@@ -20,7 +20,7 @@ Import-Package =\
 	com.liferay.contenttargeting.model,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.counter.service,\
-	com.liferay.osgi.util,\
+	com.liferay.osgi.util.service,\
 	com.liferay.portlet,\
 	com.liferay.portal,\
 	com.liferay.portal.kernel.annotation,\

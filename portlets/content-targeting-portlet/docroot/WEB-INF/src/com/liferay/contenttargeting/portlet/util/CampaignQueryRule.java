@@ -16,7 +16,7 @@ package com.liferay.contenttargeting.portlet.util;
 
 import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.service.CampaignLocalService;
-import com.liferay.osgi.util.ServiceTrackerUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;

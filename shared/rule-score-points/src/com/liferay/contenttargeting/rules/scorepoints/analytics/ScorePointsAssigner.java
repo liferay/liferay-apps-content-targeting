@@ -18,7 +18,7 @@ import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.rules.scorepoints.service.ScorePointLocalServiceUtil;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
-import com.liferay.osgi.util.ServiceTrackerUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;

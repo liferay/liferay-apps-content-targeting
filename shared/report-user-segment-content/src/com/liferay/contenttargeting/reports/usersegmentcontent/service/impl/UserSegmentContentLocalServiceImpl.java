@@ -19,7 +19,7 @@ import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.reports.usersegmentcontent.model.UserSegmentContent;
 import com.liferay.contenttargeting.reports.usersegmentcontent.service.base.UserSegmentContentLocalServiceBaseImpl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
-import com.liferay.osgi.util.ServiceTrackerUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionList;

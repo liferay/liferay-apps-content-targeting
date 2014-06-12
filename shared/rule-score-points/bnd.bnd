@@ -17,7 +17,7 @@ Import-Package:\
 	com.liferay.contenttargeting.service.messaging,\
 	com.liferay.contenttargeting.util,\
 	com.liferay.counter.service,\
-	com.liferay.osgi.util,\
+	com.liferay.osgi.util.service,\
 	com.liferay.portal,\
 	com.liferay.portal.model,\
 	com.liferay.portal.model.impl,\

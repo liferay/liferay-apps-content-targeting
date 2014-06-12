@@ -3,7 +3,9 @@
 <project name="report-user-segment-content" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="import.shared" value="service-utils-shared,analytics-service-shared,anonymous-users-shared,content-targeting-core" />
+	<property name="import.shared" value="analytics-service-shared,anonymous-users-shared,content-targeting-core" />
+
+	<property name="osgi.runtime.dependencies" value="com.liferay.osgi.util.jar" />
 
 	<import file="../../build-common-osgi-plugin.xml" />
 </project>

@@ -3,7 +3,9 @@
 <project name="analytics-service-tests-shared" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="import.shared" value="analytics-service-shared,service-utils-shared" />
+	<property name="import.shared" value="analytics-service-shared" />
+
+	<property name="osgi.runtime.dependencies" value="com.liferay.osgi.util.jar" />
 
 	<import file="../../build-common-osgi-plugin.xml" />
 </project>

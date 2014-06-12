@@ -121,7 +121,6 @@ classes for the app.
 * OSGI modules required for the project
  * log-bridge-shared (/shared)
  * system-packages-extra (/shared)
- * service-utils-shared (/shared)
  * freemarker-osgi (/shared)
 * Modules required to run the integration tests
  * arquillian-plugin-deployer (/shared) used for testing
@@ -133,7 +132,7 @@ In order to deploy the audience targeting app, you can add this property to your
 build.username.properties:
 
 ```
-plugins.includes=anonymous-users-shared,content-targeting-core,content-targeting-portlet,ct-age-rule,ct-gender-rule,ct-time-rule,freemarker-osgi,log-bridge-shared,service-utils-shared,system-packages-extra
+plugins.includes=anonymous-users-shared,content-targeting-core,content-targeting-portlet,ct-age-rule,ct-gender-rule,ct-time-rule,freemarker-osgi,log-bridge-shared,system-packages-extra
 ```
 
 

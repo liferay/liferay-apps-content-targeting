@@ -16,7 +16,7 @@ package com.liferay.analyticsprocessor.servlet;
 
 import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.anonymoususers.util.AnonymousUsersManager;
-import com.liferay.osgi.util.ServiceTrackerUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

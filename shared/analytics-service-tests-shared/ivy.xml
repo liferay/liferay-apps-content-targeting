@@ -69,6 +69,7 @@
 	<dependencies defaultconf="default">
 		<dependency org="biz.aQute.bnd"	name="bnd" rev="2.2.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="4.3.1" />
+		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency org="junit" name="junit" rev="4.11" force="true" conf="test->*" />
 		<dependency org="org.jboss.arquillian.junit" name="arquillian-junit-container" rev="1.1.2.Final" force="true" conf="test->*" />
 		<dependency org="org.jboss.arquillian.protocol" name="arquillian-protocol-servlet" rev="1.1.2.Final" force="true" conf="test->*" />

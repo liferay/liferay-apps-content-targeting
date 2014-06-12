@@ -8,6 +8,7 @@ Import-Package:\
 	com.liferay.anonymoususers.model,\
 	com.liferay.anonymoususers.service,\
 	com.liferay.anonymoususers.service.messaging,\
+	com.liferay.osgi.util.service,\
 	com.liferay.portal.json,\
 	com.liferay.portal.model.impl,\
 	com.liferay.portal.kernel.exception,\

@@ -22,7 +22,7 @@ import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.WebKeys;
-import com.liferay.osgi.util.ServiceTrackerUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;

@@ -12,7 +12,7 @@ Import-Package =\
 	com.liferay.analytics.model,\
 	com.liferay.analytics.service,\
 	com.liferay.counter.service,\
-	com.liferay.osgi.util,\
+	com.liferay.osgi.util.service,\
 	com.liferay.portal,\
 	com.liferay.portal.kernel.annotation,\
 	com.liferay.portal.kernel.bean,\

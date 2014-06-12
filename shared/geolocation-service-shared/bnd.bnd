@@ -11,7 +11,7 @@ Import-Package =\
 	com.liferay.geolocation.service,\
 	com.liferay.geolocation.util,\
 	com.liferay.counter.service,\
-	com.liferay.osgi.util,\
+	com.liferay.osgi.util.service,\
 	com.liferay.portal,\
 	com.liferay.portal.kernel.annotation,\
 	com.liferay.portal.kernel.bean,\

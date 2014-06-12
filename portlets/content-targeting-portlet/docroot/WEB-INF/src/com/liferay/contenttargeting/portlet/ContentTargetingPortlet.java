@@ -32,7 +32,7 @@ import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.contenttargeting.util.CampaignSearchContainerIterator;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.UserSegmentSearchContainerIterator;
-import com.liferay.osgi.util.ServiceTrackerUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

@@ -16,7 +16,7 @@ package com.liferay.contenttargeting.util;
 
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
-import com.liferay.osgi.util.ServiceTrackerUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
