@@ -12,7 +12,6 @@
       <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-core/content-targeting-core.iml" filepath="$PROJECT_DIR$/shared/content-targeting-core/content-targeting-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/portlets/content-targeting-portlet/content-targeting-portlet.iml" filepath="$PROJECT_DIR$/portlets/content-targeting-portlet/content-targeting-portlet.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-tests-shared/content-targeting-tests-shared.iml" filepath="$PROJECT_DIR$/shared/content-targeting-tests-shared/content-targeting-tests-shared.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/freemarker-osgi/freemarker-osgi.iml" filepath="$PROJECT_DIR$/shared/freemarker-osgi/freemarker-osgi.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/geolocation-service-shared/geolocation-service-shared.iml" filepath="$PROJECT_DIR$/shared/geolocation-service-shared/geolocation-service-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/http-service-shared/log-bridge-shared-master.iml" filepath="$PROJECT_DIR$/shared/http-service-shared/log-bridge-shared-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/hooks/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" filepath="$PROJECT_DIR$/hooks/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" />
