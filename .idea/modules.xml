@@ -23,7 +23,6 @@
       <module fileurl="file://$PROJECT_DIR$/shared/rule-ip-geocode/rule-ip-geocode.iml" filepath="$PROJECT_DIR$/shared/rule-ip-geocode/rule-ip-geocode.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/rule-score-points/rule-score-points.iml" filepath="$PROJECT_DIR$/shared/rule-score-points/rule-score-points.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/rule-time/rule-time.iml" filepath="$PROJECT_DIR$/shared/rule-time/rule-time.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/service-utils-shared/service-utils-shared.iml" filepath="$PROJECT_DIR$/shared/service-utils-shared/service-utils-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk.iml" filepath="$PROJECT_DIR$/trunk.iml" />
     </modules>
   </component>

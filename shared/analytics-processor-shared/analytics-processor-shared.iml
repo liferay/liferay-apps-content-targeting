@@ -12,7 +12,6 @@
     <orderEntry type="library" name="portal" level="project" />
     <orderEntry type="library" name="reference" level="project" />
     <orderEntry type="module" module-name="anonymous-users-shared" />
-    <orderEntry type="module" module-name="service-utils-shared" />
   </component>
 </module>
 
