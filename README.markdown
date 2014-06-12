@@ -119,7 +119,6 @@ classes for the app.
  * ct-score-rule (/shared) - rule used by the audience targeting app to filter user audiences by their behavior
  * portal-6-2-x-compat-hook (/hooks) - Hook to make the content targeting plugins compatible with Liferay 6.2.x versions.
 * OSGI modules required for the project
- * http-service-shared (/shared)
  * log-bridge-shared (/shared)
  * system-packages-extra (/shared)
  * service-utils-shared (/shared)
@@ -134,7 +133,7 @@ In order to deploy the audience targeting app, you can add this property to your
 build.username.properties:
 
 ```
-plugins.includes=anonymous-users-shared,content-targeting-core,content-targeting-portlet,ct-age-rule,ct-gender-rule,ct-time-rule,freemarker-osgi,http-service-shared,log-bridge-shared,service-utils-shared,system-packages-extra
+plugins.includes=anonymous-users-shared,content-targeting-core,content-targeting-portlet,ct-age-rule,ct-gender-rule,ct-time-rule,freemarker-osgi,log-bridge-shared,service-utils-shared,system-packages-extra
 ```
 
 
