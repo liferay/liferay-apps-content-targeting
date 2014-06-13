@@ -76,7 +76,7 @@
 	</servlet>
 	<servlet>
 		<servlet-name>Freemarker Servlet</servlet-name>
-		<servlet-class>com.liferay.freemarker.osgi.OsgiFreemarkerServlet</servlet-class>
+		<servlet-class>com.liferay.freemarker.osgi.servlet.FreemarkerOSGiServlet</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>1 Servlet</servlet-name>
