@@ -6,7 +6,7 @@
 	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
 	xmlns:m="http://ant.apache.org/ivy/maven"
 >
-	<info module="analytics-service-shared" organisation="com.liferay" >
+	<info module="analytics-service-tests-shared" organisation="com.liferay" >
 		<m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-impl-jboss__version>2.0.0-alpha-3</m:dependency.management__org.jboss.shrinkwrap.descriptors__shrinkwrap-descriptors-impl-jboss__version>
 		<m:dependency.management__org.jboss.arquillian.junit__arquillian-junit-core__version>1.1.2.Final</m:dependency.management__org.jboss.arquillian.junit__arquillian-junit-core__version>
 		<m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-depchain__version>2.0.0</m:dependency.management__org.jboss.shrinkwrap.resolver__shrinkwrap-resolver-depchain__version>
