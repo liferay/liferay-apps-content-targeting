@@ -8,7 +8,6 @@ Export-Package:\
 	content,\
 	com.liferay.contenttargeting.portlet
 Import-Package:\
-	com.liferay.freemarker.osgi,\
 	com.liferay.anonymoususers.model,\
 	com.liferay.anonymoususers.service,\
 	com.liferay.anonymoususers.service.messaging,\
@@ -18,8 +17,9 @@ Import-Package:\
 	com.liferay.contenttargeting.service.messaging,\
 	com.liferay.contenttargeting.service.permission,\
 	com.liferay.contenttargeting.util,\
-	com.liferay.httpservice.servlet,\
+	com.liferay.freemarker.osgi.servlet,\
 	com.liferay.osgi.util.service,\
+	com.liferay.portal.http.service.servlet,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.language,\
 	com.liferay.portal.kernel.lar,\
