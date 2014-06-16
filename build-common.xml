@@ -68,7 +68,6 @@
 		<path refid="plugin.classpath" />
 		<path refid="plugin-test-type.classpath" />
 		<fileset dir="${app.server.lib.portal.dir}" excludes="ant.jar" includes="*.jar" />
-		<fileset dir="${sdk.dir}/lib" includes="junit.jar,mockito-all.jar,powermock-*.jar,spring-test.jar" />
 	</path>
 
 	<path id="classpath.aQute.bnd">
@@ -76,10 +75,6 @@
 	</path>
 
 	<taskdef classpathref="classpath.aQute.bnd" resource="aQute/bnd/ant/taskdef.properties" />
-
-	<path id="classpath.com.liferay.ant.arquillian">
-		<fileset dir="${sdk.dir}/dependencies/com.liferay.ant.arquillian/lib" includes="*.jar" />
-	</path>
 
 	<path id="classpath.com.liferay.ant.bnd">
 		<fileset dir="${sdk.dir}/dependencies/com.liferay.ant.bnd/lib" includes="*.jar" />
@@ -151,11 +146,7 @@ Error-Prone was automatically installed. Please rerun your task.
 	</if>
 
 	<macrodef name="baseline-jar-macro">
-		<attribute name="bndRootFile" />
-		<attribute name="file" />
-		<attribute name="outputPath" />
-		<attribute name="rootProjectDir" />
-		<attribute name="sourcePath" />
+		<attribute name="module.dir" />
 
 		<sequential>
 			<manifest-helper />
@@ -163,13 +154,13 @@ Error-Prone was automatically installed. Please rerun your task.
 			<bndexpand propertyfile="@{bndRootFile}" />
 
 			<baseline-jar
-				bndRootFile="@{bndRootFile}"
-				file="@{file}"
-				outputPath="@{outputPath}"
-				sourcePath="@{sourcePath}"
+				bndRootFile="${sdk.dir}/common.bnd"
+				file="@{module.dir}/bnd.bnd"
+				outputPath="${plugin.file}"
+				sourcePath="@{module.dir}"
 			>
 				<classpath>
-					<pathelement location="@{sourcePath}/classes" />
+					<pathelement location="${plugin.classes.dir}" />
 				</classpath>
 			</baseline-jar>
 		</sequential>
@@ -842,8 +833,22 @@ Please find a solution that does not require portal-impl.jar.
 						<fileset dir="@{module.dir}/test/@{test.type}" includes="**/*.png,**/*.properties,**/*.xml" />
 					</copy>
 
+					<ivy:settings file="${ivy.custom.settings.file}" />
+
+					<ivy:resolve
+						file="${sdk.dir}/ivy-test.xml"
+						log="download-only"
+						transitive="true"
+					/>
+
 					<path id="plugin-test-type.classpath">
 						<pathelement location="@{module.dir}/test-classes/@{test.type}" />
+
+						<ivy:resources
+							conf="test"
+							file="@{module.dir}/ivy-test.xml"
+							transitive="true"
+						/>
 					</path>
 
 					<compile-java
@@ -1452,11 +1457,7 @@ Please find a solution that does not require portal-impl.jar.
 							<var name="jar-macro.bnd.bnd.content" unset="true" />
 
 							<baseline-jar-macro
-								bndRootFile="${sdk.dir}/common.bnd"
-								file="@{module.dir}/bnd.bnd"
-								outputPath="${plugin.file}"
-								rootProjectDir="${sdk.dir}"
-								sourcePath="@{module.dir}"
+								module.dir="@{module.dir}"
 							/>
 						</then>
 					</if>
@@ -1802,14 +1803,22 @@ Please find a solution that does not require portal-impl.jar.
 			</if>
 
 			<if>
-				<or>
-					<antelope:endswith string="${plugin.name}" with="-ext" />
-					<antelope:endswith string="${plugin.name}" with="-hook" />
-					<antelope:endswith string="${plugin.name}" with="-layouttpl" />
-					<antelope:endswith string="${plugin.name}" with="-portlet" />
-					<antelope:endswith string="${plugin.name}" with="-theme" />
-					<antelope:endswith string="${plugin.name}" with="-web" />
-				</or>
+				<and>
+					<or>
+						<antelope:endswith string="${plugin.name}" with="-ext" />
+						<antelope:endswith string="${plugin.name}" with="-hook" />
+						<antelope:endswith string="${plugin.name}" with="-layouttpl" />
+						<antelope:endswith string="${plugin.name}" with="-portlet" />
+						<antelope:endswith string="${plugin.name}" with="-theme" />
+						<antelope:endswith string="${plugin.name}" with="-web" />
+					</or>
+					<not>
+						<resourcecontains
+							resource="${module.dir.unix}/build.xml"
+							substring="/build-common-osgi-plugin.xml&quot;"
+						/>
+					</not>
+				</and>
 				<then>
 					<var name="plugin.packaging" value="war" />
 				</then>
@@ -2022,7 +2031,7 @@ Please find a solution that does not require portal-impl.jar.
 							includes="apache-tomcat-${tomcat.version}/webapps/manager/**/*"
 						/>
 						<mapper>
-							<globmapper from="apache-tomcat-${tomcat.version}/webapps/*" to="*"/>
+							<globmapper from="apache-tomcat-${tomcat.version}/webapps/*" to="*" />
 						</mapper>
 			        </unzip>
 
@@ -2034,24 +2043,20 @@ Please find a solution that does not require portal-impl.jar.
 						tofile="${app.server.tomcat.dir}/conf/tomcat-users.xml.orig"
 					/>
 
-					<echo file="${app.server.tomcat.dir}/conf/tomcat-users.xml">
-						<![CDATA[
-							<?xml version="1.0"?>
+					<echo file="${app.server.tomcat.dir}/conf/tomcat-users.xml"><![CDATA[<?xml version="1.0"?>
 
-							<tomcat-users>
-								<role rolename="tomcat" />
-								<role rolename="manager-gui" />
-								<role rolename="manager-script" />
-								<role rolename="manager-jmx" />
-								<role rolename="manager-status" />
-								<user
-									password="${app.server.tomcat.manager.password}"
-									roles="tomcat,manager-gui,manager-script,manager-jmx,manager-status"
-									username="${app.server.tomcat.manager.user}"
-								/>
-							</tomcat-users>
-						]]>
-					</echo>
+<tomcat-users>
+	<role rolename="tomcat" />
+	<role rolename="manager-gui" />
+	<role rolename="manager-script" />
+	<role rolename="manager-jmx" />
+	<role rolename="manager-status" />
+	<user
+		password="${app.server.tomcat.manager.password}"
+		roles="tomcat,manager-gui,manager-script,manager-jmx,manager-status"
+		username="${app.server.tomcat.manager.user}"
+	/>
+</tomcat-users>]]></echo>
 				</then>
 			</if>
 		</sequential>
@@ -2098,6 +2103,8 @@ Please find a solution that does not require portal-impl.jar.
 				<equals arg1="${test.integration.count}" arg2="1" />
 				<then>
 					<var name="test.type" value="integration" />
+
+					<setup-arquillian module.dir="@{module.dir}" />
 				</then>
 				<elseif>
 					<equals arg1="${test.unit.count}" arg2="1" />
@@ -2162,12 +2169,18 @@ Please find a solution that does not require portal-impl.jar.
 
 					<path id="plugin-test-type.classpath">
 						<pathelement location="@{module.dir}/test-classes/@{test.type}" />
+
+						<ivy:resources
+							conf="test"
+							file="@{module.dir}/ivy-test.xml"
+							transitive="true"
+						/>
 					</path>
 
 					<if>
 						<available file="@{module.dir}/test/@{test.type}" type="dir" />
 						<then>
-							<junit dir="@{module.dir}" fork="on" forkmode="@{junit.forkmode}" outputtoformatters="false" printsummary="on" showoutput="true">
+							<junit dir="@{module.dir}" fork="on" forkmode="@{junit.forkmode}" jvm="${junit.jvm}" outputtoformatters="false" printsummary="on" showoutput="true">
 								<sysproperty key="net.sourceforge.cobertura.datafile" file="@{module.dir}/test-coverage/cobertura.ser" />
 								<jvmarg line="${junit.debug.jpda}" />
 								<jvmarg value="-Xmx${junit.java.mx}" />
@@ -2197,6 +2210,8 @@ Please find a solution that does not require portal-impl.jar.
 		<attribute name="module.dir" />
 
 		<sequential>
+			<setup-arquillian module.dir="@{module.dir}" />
+
 			<test-cmd
 				junit.forkmode="once"
 				module.dir="@{module.dir}"
@@ -2324,83 +2339,97 @@ for (String path : paths) {
 			/>
 
 			<if>
-				<or>
-					<antelope:endswith string="${plugin.name}" with="-hook" />
-					<antelope:endswith string="${plugin.name}" with="-layouttpl" />
-					<antelope:endswith string="${plugin.name}" with="-web" />
-				</or>
+				<resourcecontains
+					resource="${module.dir.unix}/build.xml"
+					substring="/build-common-osgi-plugin.xml&quot;"
+				/>
 				<then>
-					<war-web
-						module.dir="@{module.dir}"
-					/>
-				</then>
-				<elseif>
-					<antelope:endswith string="${plugin.name}" with="-portlet" />
-					<then>
-						<loop-macrodef-or-target
-							module.dirs="@{module.dir}"
-							target.name="compile"
-						/>
-
-						<build-css
-							module.dir="@{module.dir}"
-						/>
-
-						<war-web
-							module.dir="@{module.dir}"
-						/>
-
-						<war-alloy-portlet
-							module.dir="@{module.dir}"
-						/>
-					</then>
-				</elseif>
-				<elseif>
-					<antelope:endswith string="${plugin.name}" with="-theme" />
-					<then>
-						<loop-macrodef-or-target
-							module.dirs="@{module.dir}"
-							target.name="compile"
-						/>
-
-						<build-css
-							module.dir="@{module.dir}"
-						/>
-
-						<if>
-							<not>
-								<available file="@{module.dir}/docroot/images/screenshot.png" />
-							</not>
-							<then>
-								<echo>screenshot.png does not exist.</echo>
-							</then>
-						</if>
-
-						<if>
-							<not>
-								<available file="@{module.dir}/docroot/images/thumbnail.png" />
-							</not>
-							<then>
-								<echo>thumbnail.png does not exist.</echo>
-							</then>
-						</if>
-
-						<mkdir dir="${sdk.dir}/dist" />
-
-						<delete file="${plugin.file}" />
-
-						<zip
-							basedir="@{module.dir}/docroot"
-							destfile="${plugin.file}"
-							excludes="_diffs.*,_diffs/**,${plugins.war.excludes}"
-						/>
-					</then>
-				</elseif>
-				<else>
 					<loop-macrodef-or-target
 						module.dirs="@{module.dir}"
 						target.name="jar"
 					/>
+				</then>
+				<else>
+					<if>
+						<or>
+							<antelope:endswith string="${plugin.name}" with="-hook" />
+							<antelope:endswith string="${plugin.name}" with="-layouttpl" />
+							<antelope:endswith string="${plugin.name}" with="-web" />
+						</or>
+						<then>
+							<war-web
+								module.dir="@{module.dir}"
+							/>
+						</then>
+						<elseif>
+							<antelope:endswith string="${plugin.name}" with="-portlet" />
+							<then>
+								<loop-macrodef-or-target
+									module.dirs="@{module.dir}"
+									target.name="compile"
+								/>
+
+								<build-css
+									module.dir="@{module.dir}"
+								/>
+
+								<war-web
+									module.dir="@{module.dir}"
+								/>
+
+								<war-alloy-portlet
+									module.dir="@{module.dir}"
+								/>
+							</then>
+						</elseif>
+						<elseif>
+							<antelope:endswith string="${plugin.name}" with="-theme" />
+							<then>
+								<loop-macrodef-or-target
+									module.dirs="@{module.dir}"
+									target.name="compile"
+								/>
+
+								<build-css
+									module.dir="@{module.dir}"
+								/>
+
+								<if>
+									<not>
+										<available file="@{module.dir}/docroot/images/screenshot.png" />
+									</not>
+									<then>
+										<echo>screenshot.png does not exist.</echo>
+									</then>
+								</if>
+
+								<if>
+									<not>
+										<available file="@{module.dir}/docroot/images/thumbnail.png" />
+									</not>
+									<then>
+										<echo>thumbnail.png does not exist.</echo>
+									</then>
+								</if>
+
+								<mkdir dir="${sdk.dir}/dist" />
+
+								<delete file="${plugin.file}" />
+
+								<zip
+									basedir="@{module.dir}/docroot"
+									destfile="${plugin.file}"
+									excludes="_diffs.*,_diffs/**,${plugins.war.excludes}"
+								/>
+							</then>
+						</elseif>
+						<else>
+							<loop-macrodef-or-target
+								module.dirs="@{module.dir}"
+								target.name="jar"
+							/>
+						</else>
+					</if>
 				</else>
 			</if>
 		</sequential>
@@ -2650,6 +2679,12 @@ for (String path : paths) {
 				</replace>
 			</then>
 		</if>
+	</target>
+
+	<target name="setup-testable-tomcat">
+		<setup-tomcat-jmx />
+
+		<setup-tomcat-manager />
 	</target>
 
 	<target name="sort-xml-attributes">
