@@ -13,7 +13,6 @@
       <module fileurl="file://$PROJECT_DIR$/portlets/content-targeting-portlet/content-targeting-portlet.iml" filepath="$PROJECT_DIR$/portlets/content-targeting-portlet/content-targeting-portlet.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-tests-shared/content-targeting-tests-shared.iml" filepath="$PROJECT_DIR$/shared/content-targeting-tests-shared/content-targeting-tests-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/geolocation-service-shared/geolocation-service-shared.iml" filepath="$PROJECT_DIR$/shared/geolocation-service-shared/geolocation-service-shared.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/log-bridge-shared/log-bridge-shared-master.iml" filepath="$PROJECT_DIR$/shared/log-bridge-shared/log-bridge-shared-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/hooks/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" filepath="$PROJECT_DIR$/hooks/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/report-campaign-content/report-campaign-content.iml" filepath="$PROJECT_DIR$/shared/report-campaign-content/report-campaign-content.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/report-user-segment-content/report-user-segment-content.iml" filepath="$PROJECT_DIR$/shared/report-user-segment-content/report-user-segment-content.iml" />
