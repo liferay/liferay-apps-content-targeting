@@ -5,5 +5,5 @@
 
 	<property name="import.shared" value="content-targeting-core" />
 
-	<property name="osgi.runtime.dependencies" value="com.liferay.freemarker.osgi.bridge.jar,com.liferay.osgi.util.jar,com.liferay.portal.http.service.jar" />
+	<property name="osgi.runtime.dependencies" value="com.liferay.freemarker.osgi.bridge.jar,com.liferay.osgi.util.jar,com.liferay.portal.http.service.jar,com.liferay.portal.log.bridge" />
 </project>

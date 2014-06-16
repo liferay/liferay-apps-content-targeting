@@ -5,7 +5,7 @@
 
 	<property name="import.shared" value="anonymous-users-shared" />
 
-	<property name="osgi.runtime.dependencies" value="com.liferay.osgi.util.jar,com.liferay.portal.http.service.jar" />
+	<property name="osgi.runtime.dependencies" value="com.liferay.osgi.util.jar,com.liferay.portal.http.service.jar,com.liferay.portal.log.bridge" />
 
 	<property name="service.base.dir" value="." />
 

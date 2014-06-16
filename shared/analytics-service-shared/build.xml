@@ -3,7 +3,7 @@
 <project name="analytics-service-shared" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="osgi.runtime.dependencies" value="com.liferay.osgi.util.jar,com.liferay.portal.http.service.jar" />
+	<property name="osgi.runtime.dependencies" value="com.liferay.osgi.util.jar,com.liferay.portal.http.service.jar,com.liferay.portal.log.bridge" />
 
 	<property name="service.base.dir" value="." />
 
