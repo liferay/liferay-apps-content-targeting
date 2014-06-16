@@ -7,5 +7,7 @@
 
 	<property name="osgi.runtime.dependencies" value="com.liferay.osgi.util.jar" />
 
+	<property name="service.base.dir" value="." />
+
 	<import file="../../build-common-osgi-plugin.xml" />
 </project>
