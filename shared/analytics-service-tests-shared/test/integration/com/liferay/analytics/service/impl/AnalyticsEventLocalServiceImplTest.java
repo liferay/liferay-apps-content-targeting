@@ -12,7 +12,7 @@
  * details.
  */
 
-package integration.con.liferay.analytics.service.impl;
+package com.liferay.analytics.service.impl;
 
 import com.liferay.analytics.model.AnalyticsEvent;
 import com.liferay.analytics.service.AnalyticsEventLocalService;

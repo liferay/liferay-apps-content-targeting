@@ -12,7 +12,7 @@
  * details.
  */
 
-package integration.con.liferay.analytics.service.impl;
+package com.liferay.analytics.service.impl;
 
 import java.io.File;
 import java.io.FileNotFoundException;
