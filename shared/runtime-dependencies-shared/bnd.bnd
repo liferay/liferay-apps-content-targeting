@@ -1,0 +1,18 @@
+Bundle-Name: Runtime dependencies
+Bundle-ClassPath: .
+Include-Resource: classes,\
+	{WEB-INF/web.xml=docroot/WEB-INF/web.xml}
+Import-Package:\
+	com.liferay.portal.json,\
+	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.language,\
+	com.liferay.portal.kernel.lar,\
+	com.liferay.portal.kernel.servlet,\
+	com.liferay.portal.kernel.servlet.filters.invoker,\
+	com.liferay.util.bean,\
+	javax.portlet,\
+	javax.el,\
+	javax.servlet,\
+	javax.servlet.http,\
+	*;resolution:="optional"
+Web-ContextPath: /runtime-dependencies-shared

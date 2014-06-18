@@ -10,5 +10,7 @@ Export-Package: \
 	com.liferay.portal.spring.context,\
 	com.liferay.portal.struts,\
 	com.liferay.util,\
+	com.liferay.util.bean,\
+	com.liferay.util.portlet.PortletProps,\
 	com.liferay.util.service
 Fragment-Host: system.bundle;extension:=framework

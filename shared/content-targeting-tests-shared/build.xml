@@ -5,8 +5,6 @@
 
 	<property name="import.shared" value="content-targeting-core" />
 
-	<property name="osgi.runtime.dependencies" value="com.liferay.arquillian.bundle.manager,com.liferay.osgi.util.jar" />
-
 	<property name="ivy.resolve.transitive.dependencies" value="true" />
 
 	<import file="../../build-common-osgi-plugin.xml" />

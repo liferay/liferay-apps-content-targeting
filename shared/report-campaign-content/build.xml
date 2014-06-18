@@ -5,8 +5,6 @@
 
 	<property name="import.shared" value="analytics-service-shared,anonymous-users-shared,content-targeting-core" />
 
-	<property name="osgi.runtime.dependencies" value="com.liferay.osgi.util.jar" />
-
 	<property name="service.base.dir" value="." />
 
 	<import file="../../build-common-osgi-plugin.xml" />

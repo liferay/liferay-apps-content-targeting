@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
 
 <project name="content-targeting-portlet" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
-	<import file="../../build-common-osgi-plugin.xml" />
-
 	<property name="import.shared" value="content-targeting-core" />
 
-	<property name="osgi.runtime.dependencies" value="com.liferay.freemarker.osgi.bridge.jar,com.liferay.osgi.util.jar,com.liferay.portal.http.service.jar,com.liferay.portal.log.bridge" />
+	<import file="../../build-common-osgi-plugin.xml" />
 </project>

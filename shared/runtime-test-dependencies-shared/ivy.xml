@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<ivy-module
+	version="2.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
+>
+	<info module="runtime-test-dependencies" organisation="com.liferay" />
+
+	<dependencies defaultconf="default">
+		<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.3.Final" force="true"  />
+		<dependency name="arquillian-liferay-container" org="arquillian-liferay-container" rev="0.0.2-SNAPSHOT" force="true" />
+		<dependency name="arquillian-protocol-servlet" org="org.jboss.arquillian.protocol" rev="1.1.3.Final" force="true"  />
+		<dependency name="bnd" org="biz.aQute.bnd" rev="2.2.0" />
+		<dependency name="com.liferay.arquillian.bundle.manager" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="httpclient" org="org.apache.httpcomponents" rev="4.2" force="true" />
+		<dependency name="httpmime" org="org.apache.httpcomponents" rev="4.2" force="true" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="4.3.1" />
+	</dependencies>
+</ivy-module>
