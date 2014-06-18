@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contenttargeting.rules.scorepoints.analytics;
+package com.liferay.contenttargeting.rules.scorepoints.messaging;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;

@@ -10,7 +10,7 @@
 
 	<!-- Listeners -->
 
-	<bean id="messageListener.score_points_analytics_listener" class="com.liferay.contenttargeting.rules.scorepoints.analytics.AnalyticsMessageListener" />
+	<bean id="messageListener.score_points_analytics_listener" class="com.liferay.contenttargeting.rules.scorepoints.messaging.AnalyticsMessageListener" />
 
 	<!-- Configurator -->
 

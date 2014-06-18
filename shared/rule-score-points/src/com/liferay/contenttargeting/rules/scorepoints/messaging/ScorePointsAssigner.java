@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.contenttargeting.rules.scorepoints.analytics;
+package com.liferay.contenttargeting.rules.scorepoints.messaging;
 
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.rules.scorepoints.service.ScorePointLocalServiceUtil;
