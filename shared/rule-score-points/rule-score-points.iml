@@ -10,7 +10,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="anonymous-users-shared" />
+    <orderEntry type="module" module-name="anonymous-users-api" />
     <orderEntry type="module" module-name="content-targeting-core" />
     <orderEntry type="library" name="osgi" level="project" />
     <orderEntry type="library" name="reference" level="project" />

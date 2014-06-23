@@ -11,7 +11,7 @@
     <orderEntry type="library" scope="PROVIDED" name="osgi" level="project" />
     <orderEntry type="library" name="portal" level="project" />
     <orderEntry type="library" name="reference" level="project" />
-    <orderEntry type="module" module-name="anonymous-users-shared" />
+    <orderEntry type="module" module-name="anonymous-users-api" />
     <orderEntry type="module-library">
       <library>
         <CLASSES>
