@@ -22,8 +22,8 @@
         <SOURCES>
           <root url="file://$MODULE_DIR$/lib" />
         </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
+        <jarDirectory url="file://$MODULE_DIR$/../analytics-service-shared/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../analytics-service-shared/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>
