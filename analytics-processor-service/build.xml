@@ -5,5 +5,5 @@
 
 	<property name="import.shared" value="anonymous-users-api" />
 
-	<import file="../../build-common-osgi-plugin.xml" />
+	<import file="../../../build-common-osgi-plugin.xml" />
 </project>

@@ -7,5 +7,5 @@
 
 	<property name="service.base.dir" value="." />
 
-	<import file="../../build-common-osgi-plugin.xml" />
+	<import file="../../../build-common-osgi-plugin.xml" />
 </project>

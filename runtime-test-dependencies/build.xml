@@ -5,5 +5,5 @@
 
 	<property name="osgi.runtime.dependencies" value="com.liferay.arquillian.bundle.manager.jar" />
 
-	<import file="../../build-common-osgi-plugin.xml" />
+	<import file="../../../build-common-osgi-plugin.xml" />
 </project>
