@@ -3,6 +3,8 @@ Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/analyt
 Bundle-Name: Analytics Service
 Export-Package:\
 	com.liferay.analytics,\
+	com.liferay.analytics.messaging,\
+	com.liferay.analytics.messaging.config,\
 	com.liferay.analytics.model,\
 	com.liferay.analytics.service,\
 	com.liferay.analytics.service.messaging,\
@@ -28,6 +30,7 @@ Import-Package =\
 	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.messaging,\
+	com.liferay.portal.kernel.messaging.config,\
 	com.liferay.portal.kernel.portlet,\
 	com.liferay.portal.kernel.search,\
 	com.liferay.portal.kernel.servlet,\
@@ -46,6 +49,7 @@ Import-Package =\
 	com.liferay.portal.util,\
 	com.liferay.portlet.expando.model,\
     com.liferay.portlet.expando.util,\
+    com.liferay.util.portlet.PortletProps,\
 	com.liferay.util.service,\
 	javax.portlet,\
 	javax.servlet,\

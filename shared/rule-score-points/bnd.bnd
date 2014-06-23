@@ -1,12 +1,8 @@
 Bundle-Name: Score Points Rule
 Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/rule-score-points-service.jar
-Include-Resource: classes,\
-	{WEB-INF/classes/META-INF=classes/META-INF/},\
-	{WEB-INF/sql=sql},\
-	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
-	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
-	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	WEB-INF/lib/rule-score-points-service.jar=lib/rule-score-points-service.jar
+Export-Package:\
+	com.liferay.contenttargeting.rules.scorepoints.messaging,\
+	com.liferay.contenttargeting.rules.scorepoints.messaging.config
 Import-Package:\
 	com.liferay.anonymoususers.model,\
 	com.liferay.anonymoususers.service,\
@@ -31,6 +27,7 @@ Import-Package:\
 	com.liferay.portal.kernel.lar,\
 	com.liferay.portal.kernel.log,\
 	com.liferay.portal.kernel.messaging,\
+	com.liferay.portal.kernel.messaging.config,\
 	com.liferay.portal.kernel.servlet,\
 	com.liferay.portal.kernel.servlet.filters.invoker,\
 	com.liferay.portal.kernel.struts,\
@@ -47,14 +44,22 @@ Import-Package:\
 	com.liferay.portlet.asset.service,\
 	com.liferay.portlet.expando.model,\
 	com.liferay.portlet.expando.util,\
+	com.liferay.util.portlet.PortletProps,\
 	com.liferay.util.service,\
 	javax.portlet,\
 	javax.el,\
 	javax.servlet,\
 	javax.servlet.http,\
 	javax.sql,\
-	org.osgi.framework,*\
+	org.osgi.framework,\
 	org.springframework.*
+Include-Resource: classes,\
+	{WEB-INF/classes/META-INF=classes/META-INF/},\
+	{WEB-INF/sql=sql},\
+	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
+	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
+	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+	WEB-INF/lib/rule-score-points-service.jar=lib/rule-score-points-service.jar
 Service-Component: \
 	com.liferay.contenttargeting.rules.scorepoints.*
 Web-ContextPath: /rule-score-points

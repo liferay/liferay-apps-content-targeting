@@ -11,12 +11,31 @@
 	<!-- Listeners -->
 
 	<bean id="messageListener.analytics_listener" class="com.liferay.analytics.messaging.AnalyticsMessageListener" />
+	<bean id="messageListener.analytics_hot_deploy_listener" class="com.liferay.analytics.messaging.AnalyticsHotDeployMessageListener">
+		<constructor-arg>
+			<map>
+				<entry key="analyticsMessageListener" value-ref="messageListener.analytics_listener" />
+				<entry key="analyticsMessageDestination" value="liferay/analytics" />
+			</map>
+		</constructor-arg>
+		<constructor-arg name="servletContextNames">
+			<array>
+				<value>analytics-processor</value>
+			</array>
+		</constructor-arg>
+	</bean>
 
 	<!-- Configurator -->
 
-	<bean id="messagingConfigurator" class="com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator">
+	<bean id="messagingConfigurator" class="com.liferay.analytics.messaging.config.AnalyticsPluginMessagingConfigurator">
+		<property name="analyticsMessageDestination" value="liferay/analytics" />
 		<property name="messageListeners">
 			<map key-type="java.lang.String" value-type="java.util.List">
+				<entry key="liferay/hot_deploy">
+					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
+						<ref bean="messageListener.analytics_hot_deploy_listener" />
+					</list>
+				</entry>
 				<entry key="liferay/analytics">
 					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
 						<ref bean="messageListener.analytics_listener" />
