@@ -588,7 +588,7 @@ public class GeolocationWrapper implements Geolocation,
 	}
 
 	@Override
-	public int compareTo(Geolocation geolocation) {
+	public int compareTo(com.liferay.geolocation.model.Geolocation geolocation) {
 		return _geolocation.compareTo(geolocation);
 	}
 
@@ -598,17 +598,17 @@ public class GeolocationWrapper implements Geolocation,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<Geolocation> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.geolocation.model.Geolocation> toCacheModel() {
 		return _geolocation.toCacheModel();
 	}
 
 	@Override
-	public Geolocation toEscapedModel() {
+	public com.liferay.geolocation.model.Geolocation toEscapedModel() {
 		return new GeolocationWrapper(_geolocation.toEscapedModel());
 	}
 
 	@Override
-	public Geolocation toUnescapedModel() {
+	public com.liferay.geolocation.model.Geolocation toUnescapedModel() {
 		return new GeolocationWrapper(_geolocation.toUnescapedModel());
 	}
 
