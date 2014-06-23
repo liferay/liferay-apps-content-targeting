@@ -3,14 +3,14 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/hooks/analytics-hook/analytics-hook.iml" filepath="$PROJECT_DIR$/hooks/analytics-hook/analytics-hook.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/analytics-processor-shared/analytics-processor-shared.iml" filepath="$PROJECT_DIR$/shared/analytics-processor-shared/analytics-processor-shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/analytics-processor-api/analytics-processor-api.iml" filepath="$PROJECT_DIR$/shared/analytics-processor-api/analytics-processor-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/analytics-service-shared/analytics-service-shared.iml" filepath="$PROJECT_DIR$/shared/analytics-service-shared/analytics-service-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/analytics-service-tests-shared/analytics-service-tests-shared.iml" filepath="$PROJECT_DIR$/shared/analytics-service-tests-shared/analytics-service-tests-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/anonymous-users-shared/anonymous-users-shared.iml" filepath="$PROJECT_DIR$/shared/anonymous-users-shared/anonymous-users-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/anonymous-users-tests-shared/anonymous-users-tests-shared.iml" filepath="$PROJECT_DIR$/shared/anonymous-users-tests-shared/anonymous-users-tests-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-core/content-targeting-core.iml" filepath="$PROJECT_DIR$/shared/content-targeting-core/content-targeting-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/portlets/content-targeting-portlet/content-targeting-portlet.iml" filepath="$PROJECT_DIR$/portlets/content-targeting-portlet/content-targeting-portlet.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-tests-shared/content-targeting-tests-shared.iml" filepath="$PROJECT_DIR$/shared/content-targeting-tests-shared/content-targeting-tests-shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/portlets/content-targeting-web/content-targeting-web.iml" filepath="$PROJECT_DIR$/portlets/content-targeting-web/content-targeting-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/geolocation-service-shared/geolocation-service-shared.iml" filepath="$PROJECT_DIR$/shared/geolocation-service-shared/geolocation-service-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/hooks/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" filepath="$PROJECT_DIR$/hooks/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/report-campaign-content/report-campaign-content.iml" filepath="$PROJECT_DIR$/shared/report-campaign-content/report-campaign-content.iml" />
