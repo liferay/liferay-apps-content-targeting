@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/test/integration" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/classes" />
-      <excludeFolder url="file://$MODULE_DIR$/docroot/WEB-INF/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/../content-targeting-tests-shared/docroot/WEB-INF/classes" />
       <excludeFolder url="file://$MODULE_DIR$/test-classes" />
       <excludeFolder url="file://$MODULE_DIR$/test-results" />
     </content>
@@ -21,8 +21,8 @@
         <SOURCES>
           <root url="file://$MODULE_DIR$/lib" />
         </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
+        <jarDirectory url="file://$MODULE_DIR$/../content-targeting-tests-shared/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../content-targeting-tests-shared/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
     <orderEntry type="library" name="portal" level="project" />
