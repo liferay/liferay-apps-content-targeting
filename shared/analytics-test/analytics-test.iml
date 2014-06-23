@@ -22,8 +22,8 @@
           <root url="file://$MODULE_DIR$/lib" />
           <root url="file://$MODULE_DIR$/../../../../../trunk/portal/modules/test/arquillian-bundle-manager/src" />
         </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
+        <jarDirectory url="file://$MODULE_DIR$/../analytics-service-tests-shared/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../analytics-service-tests-shared/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>
