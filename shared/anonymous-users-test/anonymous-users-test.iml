@@ -20,8 +20,8 @@
         <SOURCES>
           <root url="file://$MODULE_DIR$/lib" />
         </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
+        <jarDirectory url="file://$MODULE_DIR$/../anonymous-users-tests-shared/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../anonymous-users-tests-shared/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
     <orderEntry type="library" name="portal" level="project" />
