@@ -3,7 +3,7 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>analytics-service</portlet-name>
+		<portlet-name>analytics-api</portlet-name>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.analytics.messaging.CheckAnalyticsEventsMessageListener</scheduler-event-listener-class>
 			<trigger>

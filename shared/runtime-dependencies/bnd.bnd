@@ -1,4 +1,4 @@
-Bundle-Name: Runtime dependencies
+Bundle-Name: Runtime Dependencies
 Bundle-ClassPath: .
 Include-Resource: classes,\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml}
@@ -15,4 +15,4 @@ Import-Package:\
 	javax.servlet,\
 	javax.servlet.http,\
 	*;resolution:="optional"
-Web-ContextPath: /runtime-dependencies-shared
+Web-ContextPath: /runtime-dependencies

@@ -1,5 +1,5 @@
 Bundle-Activator: com.liferay.anonymoususers.internal.osgi.AnonymousUserServiceActivator
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/util-taglib.jar,WEB-INF/lib/anonymous-users-shared-service.jar
+Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/util-taglib.jar,WEB-INF/lib/anonymous-users-api-service.jar
 Bundle-Name: Anonymous Users
 Export-Package:\
 	com.liferay.anonymoususers,\
@@ -64,6 +64,6 @@ Include-Resource: classes,\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
 	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	WEB-INF/lib/util-taglib.jar=${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar,\
-	WEB-INF/lib/anonymous-users-shared-service.jar=lib/anonymous-users-shared-service.jar
+	WEB-INF/lib/anonymous-users-api-service.jar=lib/anonymous-users-api-service.jar
 Service-Component:com.liferay.anonymoususers.*
-Web-ContextPath: /anonymous-users-shared
+Web-ContextPath: /anonymous-users-api

@@ -3,7 +3,7 @@
 <project name="report-campaign-content" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="import.shared" value="analytics-service-shared,anonymous-users-shared,content-targeting-core" />
+	<property name="import.shared" value="analytics-api,anonymous-users-api,content-targeting-api" />
 
 	<property name="service.base.dir" value="." />
 

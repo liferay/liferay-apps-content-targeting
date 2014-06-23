@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
-<project name="content-targeting-core" basedir="." default="compile">
+<project name="content-targeting-api" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="import.shared" value="anonymous-users-shared" />
+	<property name="import.shared" value="anonymous-users-api" />
 
 	<property name="service.base.dir" value="." />
 

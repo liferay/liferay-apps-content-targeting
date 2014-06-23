@@ -1,5 +1,5 @@
 Bundle-Activator: com.liferay.contenttargeting.internal.osgi.ContentTargetingActivator
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/util-taglib.jar,WEB-INF/lib/content-targeting-core-service.jar
+Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/util-taglib.jar,WEB-INF/lib/content-targeting-api-service.jar
 Bundle-Name: Content Targeting Core
 Export-Package:\
 	com.liferay.contenttargeting,\
@@ -80,6 +80,6 @@ Include-Resource: classes,\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
 	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	WEB-INF/lib/util-taglib.jar=${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar,\
-	WEB-INF/lib/content-targeting-core-service.jar=lib/content-targeting-core-service.jar
+	WEB-INF/lib/content-targeting-api-service.jar=lib/content-targeting-api-service.jar
 Service-Component:com.liferay.contenttargeting.*
-Web-ContextPath: /content-targeting-core
+Web-ContextPath: /content-targeting-api

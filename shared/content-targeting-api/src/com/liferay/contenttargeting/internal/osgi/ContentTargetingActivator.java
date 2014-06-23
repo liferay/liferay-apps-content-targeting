@@ -155,7 +155,7 @@ public class ContentTargetingActivator
 	}
 
 	protected static final String DESTINATION_NAME =
-		"content-targeting-core-spring";
+		"content-targeting-api-spring";
 
 	private BundleContext _bundleContext;
 	private ServiceRegistration<CampaignLocalService>

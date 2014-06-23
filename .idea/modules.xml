@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/shared/analytics-api/analytics-api.iml" filepath="$PROJECT_DIR$/shared/analytics-api/analytics-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/hooks/analytics-hook/analytics-hook.iml" filepath="$PROJECT_DIR$/hooks/analytics-hook/analytics-hook.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/analytics-processor-api/analytics-processor-api.iml" filepath="$PROJECT_DIR$/shared/analytics-processor-api/analytics-processor-api.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/analytics-service-shared/analytics-service-shared.iml" filepath="$PROJECT_DIR$/shared/analytics-service-shared/analytics-service-shared.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/analytics-service-tests-shared/analytics-service-tests-shared.iml" filepath="$PROJECT_DIR$/shared/analytics-service-tests-shared/analytics-service-tests-shared.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/anonymous-users-shared/anonymous-users-shared.iml" filepath="$PROJECT_DIR$/shared/anonymous-users-shared/anonymous-users-shared.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/anonymous-users-tests-shared/anonymous-users-tests-shared.iml" filepath="$PROJECT_DIR$/shared/anonymous-users-tests-shared/anonymous-users-tests-shared.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-core/content-targeting-core.iml" filepath="$PROJECT_DIR$/shared/content-targeting-core/content-targeting-core.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-tests-shared/content-targeting-tests-shared.iml" filepath="$PROJECT_DIR$/shared/content-targeting-tests-shared/content-targeting-tests-shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/analytics-processor-service/analytics-processor-service.iml" filepath="$PROJECT_DIR$/shared/analytics-processor-service/analytics-processor-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/analytics-test/analytics-test.iml" filepath="$PROJECT_DIR$/shared/analytics-test/analytics-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/anonymous-users-api/anonymous-users-api.iml" filepath="$PROJECT_DIR$/shared/anonymous-users-api/anonymous-users-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/anonymous-users-test/anonymous-users-test.iml" filepath="$PROJECT_DIR$/shared/anonymous-users-test/anonymous-users-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-api/content-targeting-api.iml" filepath="$PROJECT_DIR$/shared/content-targeting-api/content-targeting-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/content-targeting-test/content-targeting-test.iml" filepath="$PROJECT_DIR$/shared/content-targeting-test/content-targeting-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/portlets/content-targeting-web/content-targeting-web.iml" filepath="$PROJECT_DIR$/portlets/content-targeting-web/content-targeting-web.iml" />
-      <module fileurl="file://$PROJECT_DIR$/shared/geolocation-service-shared/geolocation-service-shared.iml" filepath="$PROJECT_DIR$/shared/geolocation-service-shared/geolocation-service-shared.iml" />
+      <module fileurl="file://$PROJECT_DIR$/shared/geolocation-api/geolocation-api.iml" filepath="$PROJECT_DIR$/shared/geolocation-api/geolocation-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/hooks/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" filepath="$PROJECT_DIR$/hooks/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/report-campaign-content/report-campaign-content.iml" filepath="$PROJECT_DIR$/shared/report-campaign-content/report-campaign-content.iml" />
       <module fileurl="file://$PROJECT_DIR$/shared/report-user-segment-content/report-user-segment-content.iml" filepath="$PROJECT_DIR$/shared/report-user-segment-content/report-user-segment-content.iml" />

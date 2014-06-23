@@ -7,7 +7,7 @@
 	xmlns:m="http://ant.apache.org/ivy/maven"
 >	
 
-	<info module="analytics-service-tests-shared" organisation="com.liferay" />
+	<info module="analytics-service-test" organisation="com.liferay" />
 
 	<configurations>
 		<conf name="compile" visibility="public" description="this is the default scope, used if none is specified. Compile dependencies are available in all classpaths." />

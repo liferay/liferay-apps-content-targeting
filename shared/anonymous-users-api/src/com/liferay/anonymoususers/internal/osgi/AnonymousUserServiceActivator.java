@@ -82,7 +82,7 @@ public class AnonymousUserServiceActivator
 	}
 
 	protected static final String DESTINATION_NAME =
-		"anonymous-service-shared-spring";
+		"anonymous-users-api-spring";
 
 	private ServiceRegistration<AnonymousUserLocalService>
 		_anonymousUserLocalServiceServiceRegistration;

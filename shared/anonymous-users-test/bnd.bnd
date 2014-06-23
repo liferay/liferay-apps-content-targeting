@@ -1,4 +1,4 @@
-Bundle-Name: Anonymous Users Tests Shared
+Bundle-Name: Anonymous Users Test
 
 Bundle-ClassPath: .,WEB-INF/classes
 
@@ -16,4 +16,4 @@ Import-Package =\
 
 Include-Resource: classes
 
-Web-ContextPath: /anonymous-user-tests-shared
+Web-ContextPath: /anonymous-user-test

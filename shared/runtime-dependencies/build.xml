@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="runtime-dependencies-shared" basedir="." default="compile">
+<project name="runtime-dependencies" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
 	<property name="osgi.runtime.dependencies" value="com.liferay.arquillian.bundle.manager.jar,com.liferay.freemarker.osgi.bridge.jar,com.liferay.osgi.util.jar,com.liferay.portal.http.service.jar,com.liferay.portal.log.bridge.jar" />

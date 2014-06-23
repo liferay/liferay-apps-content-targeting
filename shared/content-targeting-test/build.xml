@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
-<project name="content-targeting-tests-shared" basedir="." default="compile">
+<project name="content-targeting-test" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="import.shared" value="content-targeting-core" />
+	<property name="import.shared" value="content-targeting-api" />
 
 	<property name="ivy.resolve.transitive.dependencies" value="true" />
 

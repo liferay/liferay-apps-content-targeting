@@ -110,20 +110,14 @@ developers easily. See this [DEVELOPING guide](DEVELOPING.markdown)
 
 The Source code of the WCM plugins is organized in the following way:
 * Audience Targeting
- * content-targeting-core (/shared) - contains all the common services and
+ * content-targeting-api (/shared) - contains all the common services and
 classes for the app.
  * content-targeting-portlet (/portlet) - contains all the all portlets and UIs
- * ct-time-rule (/shared) - rule used by the audience targeting app to filter user audiences by time
- * ct-gender-rule (/shared) - rule used by the audience targeting app to filter user audiences by gender
- * ct-age-rule (/shared) - rule used by the audience targeting app to filter user audiences by age
- * ct-score-rule (/shared) - rule used by the audience targeting app to filter user audiences by their behavior
+ * rule-time (/shared) - rule used by the audience targeting app to filter user audiences by time
+ * rule-gender (/shared) - rule used by the audience targeting app to filter user audiences by gender
+ * rule-age (/shared) - rule used by the audience targeting app to filter user audiences by age
+ * rule-score-pints (/shared) - rule used by the audience targeting app to filter user audiences by their behavior
  * portal-6-2-x-compat-hook (/hooks) - Hook to make the content targeting plugins compatible with Liferay 6.2.x versions.
-* OSGI modules required for the project
- * log-bridge-shared (/shared)
- * system-packages-extra (/shared)
- * freemarker-osgi (/shared)
-* Modules required to run the integration tests
- * arquillian-plugin-deployer (/shared) used for testing
 * /modules - OSGI modules required to start the OSGI console
 
 ### Deployment
@@ -132,7 +126,7 @@ In order to deploy the audience targeting app, you can add this property to your
 build.username.properties:
 
 ```
-plugins.includes=anonymous-users-shared,content-targeting-core,content-targeting-portlet,ct-age-rule,ct-gender-rule,ct-time-rule,freemarker-osgi,log-bridge-shared,system-packages-extra
+plugins.includes=analytics-hook, analytics-api, analytics-processor-api, anonymous-users-api, content-targeting-api, content-targeting-portlet, geolocation-api, portal-6-2-x-compat-hook, report-campaign-content, report-user-segment-content, rule-age, rule-gender, rule-ip-geocode, rule-score-points, rule-time, runtime-dependencies, runtime-test-dependencies, system-packages-extra
 ```
 
 

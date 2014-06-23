@@ -1,6 +1,6 @@
 Bundle-Activator: com.liferay.analytics.internal.osgi.AnalyticsServiceActivator
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/analytics-service-shared-service.jar
-Bundle-Name: Analytics Service
+Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/analytics-api-service.jar
+Bundle-Name: Analytics API
 Export-Package:\
 	com.liferay.analytics,\
 	com.liferay.analytics.messaging,\
@@ -67,6 +67,6 @@ Include-Resource: classes,\
 	{WEB-INF/sql=sql},\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
 	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	WEB-INF/lib/analytics-service-shared-service.jar=lib/analytics-service-shared-service.jar
+	WEB-INF/lib/analytics-api-service.jar=lib/analytics-api-service.jar
 Service-Component:com.liferay.analytics.*
-Web-ContextPath: /analytics-service-shared
+Web-ContextPath: /analytics-api

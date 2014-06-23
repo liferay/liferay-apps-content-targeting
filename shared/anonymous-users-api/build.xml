@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="anonymous-users-shared" basedir="." default="compile">
+<project name="anonymous-users-api" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
 	<property name="service.base.dir" value="." />

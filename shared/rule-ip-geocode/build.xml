@@ -3,7 +3,7 @@
 <project name="rule-ip-geocode" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="import.shared" value="anonymous-users-shared,content-targeting-core,geolocation-service-shared" />
+	<property name="import.shared" value="anonymous-users-api,content-targeting-api,geolocation-api" />
 
 	<import file="../../build-common-osgi-plugin.xml" />
 </project>
