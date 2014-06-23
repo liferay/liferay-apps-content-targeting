@@ -4,13 +4,13 @@
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset" name="Spring Application Context" removed="false">
-          <file>file://$MODULE_DIR$/src/META-INF/base-spring.xml</file>
-          <file>file://$MODULE_DIR$/src/META-INF/cluster-spring.xml</file>
-          <file>file://$MODULE_DIR$/src/META-INF/ext-spring.xml</file>
-          <file>file://$MODULE_DIR$/src/META-INF/hibernate-spring.xml</file>
-          <file>file://$MODULE_DIR$/src/META-INF/infrastructure-spring.xml</file>
-          <file>file://$MODULE_DIR$/src/META-INF/portlet-spring.xml</file>
-          <file>file://$MODULE_DIR$/src/META-INF/shard-data-source-spring.xml</file>
+          <file>file://$MODULE_DIR$/../content-targeting-core/src/META-INF/base-spring.xml</file>
+          <file>file://$MODULE_DIR$/../content-targeting-core/src/META-INF/cluster-spring.xml</file>
+          <file>file://$MODULE_DIR$/../content-targeting-core/src/META-INF/ext-spring.xml</file>
+          <file>file://$MODULE_DIR$/../content-targeting-core/src/META-INF/hibernate-spring.xml</file>
+          <file>file://$MODULE_DIR$/../content-targeting-core/src/META-INF/infrastructure-spring.xml</file>
+          <file>file://$MODULE_DIR$/../content-targeting-core/src/META-INF/portlet-spring.xml</file>
+          <file>file://$MODULE_DIR$/../content-targeting-core/src/META-INF/shard-data-source-spring.xml</file>
         </fileset>
       </configuration>
     </facet>
@@ -37,8 +37,8 @@
         <SOURCES>
           <root url="file://$MODULE_DIR$/lib" />
         </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
-        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
+        <jarDirectory url="file://$MODULE_DIR$/../content-targeting-core/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../content-targeting-core/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="anonymous-users-api" />

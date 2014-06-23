@@ -16,7 +16,7 @@
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$MODULE_DIR$/../../shared/content-targeting-core/service" />
+          <root url="file://$MODULE_DIR$/../../shared/content-targeting-api/service" />
         </SOURCES>
       </library>
     </orderEntry>
@@ -27,7 +27,7 @@
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$MODULE_DIR$/../../shared/content-targeting-core/src" />
+          <root url="file://$MODULE_DIR$/../../shared/content-targeting-api/src" />
         </SOURCES>
       </library>
     </orderEntry>
