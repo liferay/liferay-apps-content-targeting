@@ -38,7 +38,7 @@ Import-Package:\
 	javax.servlet.http,\
 	*;resolution:="optional"
 Service-Component: com.liferay.contenttargeting.portlet.*
-Web-ContextPath: /content-targeting-portlet
+Web-ContextPath: /content-targeting-web
 -wab: \
 	docroot,\
 	{WEB-INF/liferay-display.xml=docroot/WEB-INF/liferay-display.xml},\

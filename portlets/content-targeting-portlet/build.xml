@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-
-<project name="content-targeting-portlet" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
-	<property name="import.shared" value="content-targeting-core" />
-
-	<import file="../../build-common-osgi-plugin.xml" />
-</project>

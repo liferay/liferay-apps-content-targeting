@@ -7,7 +7,7 @@
 		<portlet-class>com.liferay.contenttargeting.portlet.CampaignContentDisplayPortlet</portlet-class>
 		<init-param>
 			<name>com.liferay.portal.invokerPortletName</name>
-			<value>o/content-targeting-portlet/1</value>
+			<value>o/content-targeting-web/1</value>
 		</init-param>
 		<init-param>
 			<name>view-template</name>
@@ -42,7 +42,7 @@
 		<portlet-class>com.liferay.contenttargeting.portlet.ContentTargetingPortlet</portlet-class>
 		<init-param>
 			<name>com.liferay.portal.invokerPortletName</name>
-			<value>o/content-targeting-portlet/1</value>
+			<value>o/content-targeting-web/1</value>
 		</init-param>
 		<init-param>
 			<name>view-template</name>
@@ -81,7 +81,7 @@
 		</init-param>
 		<init-param>
 			<name>com.liferay.portal.invokerPortletName</name>
-			<value>o/content-targeting-portlet/1</value>
+			<value>o/content-targeting-web/1</value>
 		</init-param>
 		<init-param>
 			<name>view-template</name>
@@ -116,7 +116,7 @@
 		<portlet-class>com.liferay.contenttargeting.portlet.UserSegmentContentDisplayPortlet</portlet-class>
 		<init-param>
 			<name>com.liferay.portal.invokerPortletName</name>
-			<value>o/content-targeting-portlet/1</value>
+			<value>o/content-targeting-web/1</value>
 		</init-param>
 		<init-param>
 			<name>view-template</name>
@@ -151,7 +151,7 @@
 		<portlet-class>com.liferay.contenttargeting.portlet.UserSegmentContentListPortlet</portlet-class>
 		<init-param>
 			<name>com.liferay.portal.invokerPortletName</name>
-			<value>o/content-targeting-portlet/1</value>
+			<value>o/content-targeting-web/1</value>
 		</init-param>
 		<init-param>
 			<name>view-template</name>
