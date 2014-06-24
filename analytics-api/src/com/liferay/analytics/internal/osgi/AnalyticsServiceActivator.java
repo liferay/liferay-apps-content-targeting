@@ -81,8 +81,7 @@ public class AnalyticsServiceActivator
 		}
 	}
 
-	protected static final String DESTINATION_NAME =
-		"analytics-api-spring";
+	protected static final String DESTINATION_NAME = "analytics-api-spring";
 
 	private ServiceRegistration<AnalyticsEventLocalService>
 		_analyticsEventLocalServiceServiceRegistration;

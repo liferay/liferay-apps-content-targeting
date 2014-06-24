@@ -1,7 +1,5 @@
-Bundle-Name: Analytics Service Test
-
 Bundle-ClassPath: .,WEB-INF/classes
-
+Bundle-Name: Analytics Service Test
 Import-Package =\
 	com.liferay.analytics,\
 	com.liferay.analytics.model,\
@@ -14,7 +12,5 @@ Import-Package =\
 	com.liferay.portlet.journal.model,\
 	org.osgi.framework,\
 	*
-
 Include-Resource: classes
-
 Web-ContextPath: /analytics-service-test

@@ -1,7 +1,5 @@
-Bundle-Name: Runtime Dependencies
 Bundle-ClassPath: .
-Include-Resource: classes,\
-	{WEB-INF/web.xml=docroot/WEB-INF/web.xml}
+Bundle-Name: Runtime Dependencies
 Import-Package:\
 	com.liferay.portal.json,\
 	com.liferay.portal.kernel.exception,\
@@ -15,4 +13,6 @@ Import-Package:\
 	javax.servlet,\
 	javax.servlet.http,\
 	*;resolution:="optional"
+Include-Resource: classes,\
+	{WEB-INF/web.xml=docroot/WEB-INF/web.xml}
 Web-ContextPath: /runtime-dependencies

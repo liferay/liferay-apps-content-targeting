@@ -1,5 +1,5 @@
-Bundle-Name: Score Points Rule
 Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/com.liferay.portal.content.targeting.rule.score.points-service.jar
+Bundle-Name: Score Points Rule
 Export-Package:\
 	com.liferay.contenttargeting.rules.scorepoints.messaging,\
 	com.liferay.contenttargeting.rules.scorepoints.messaging.config

@@ -1,7 +1,5 @@
-Bundle-Name: Anonymous Users Test
-
 Bundle-ClassPath: .,WEB-INF/classes
-
+Bundle-Name: Anonymous Users Test
 Import-Package =\
 	com.liferay.anonymoususers,\
 	com.liferay.anonymoususers.model,\
@@ -13,7 +11,5 @@ Import-Package =\
 	com.liferay.portal.util,\
 	org.osgi.framework,\
 	*
-
 Include-Resource: classes
-
 Web-ContextPath: /anonymous-user-test

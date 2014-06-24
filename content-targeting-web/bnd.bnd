@@ -1,6 +1,6 @@
 Bundle-Icon: /icons/content_targeting.png;size=16
 Bundle-Localization: WEB-INF/classes/content/Language
-Bundle-Name: Content Targeting Portlet
+Bundle-Name: Content Targeting Web
 DynamicImport-Package:\
 	org.apache.jasper.servlet,\
 	org.eclipse.jetty.servlet.listener

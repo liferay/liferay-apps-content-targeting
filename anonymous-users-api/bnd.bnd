@@ -1,6 +1,6 @@
 Bundle-Activator: com.liferay.anonymoususers.internal.osgi.AnonymousUserServiceActivator
 Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/util-taglib.jar,WEB-INF/lib/com.liferay.portal.anonymous.users.api-service.jar
-Bundle-Name: Anonymous Users
+Bundle-Name: Anonymous Users API
 Export-Package:\
 	com.liferay.anonymoususers,\
 	com.liferay.anonymoususers.model,\
