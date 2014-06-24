@@ -13,20 +13,19 @@
 _sass_cache_*.css
 ivy.xml.MD5
 
-/*/*/bin
-/*/*/classes
-/*/*/ivy.xml.MD5
-/*/*/temp
-/*/*/test-classes
-/*/*/test-results
-/*/*/tmp
+/*/bin
+/*/classes
+/*/ivy.xml.MD5
+/*/temp
+/*/test-classes
+/*/test-results
+/*/tmp
 
-/*/*/docroot/WEB-INF/classes
-/*/*/docroot/WEB-INF/lib/*.jar
-/*/*/lib/*.jar
+/*/docroot/WEB-INF/classes
+/*/docroot/WEB-INF/lib/*.jar
+/*/lib/*.jar
 
 /build.*.properties
-/tools/*/*/*/lib
 
 .idea/workspace.xml
 .idea/rebel_project.xml
