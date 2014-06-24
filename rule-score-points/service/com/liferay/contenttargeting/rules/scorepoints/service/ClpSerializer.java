@@ -59,7 +59,7 @@ public class ClpSerializer {
 						new Class<?>[] { String.class });
 
 				String portletPropsServletContextName = (String)getMethod.invoke(null,
-						"rule-score-points-deployment-context");
+						"com.liferay.portal.content.targeting.rule.score.points-deployment-context");
 
 				if (Validator.isNotNull(portletPropsServletContextName)) {
 					_servletContextName = portletPropsServletContextName;
@@ -75,7 +75,7 @@ public class ClpSerializer {
 			if (Validator.isNull(_servletContextName)) {
 				try {
 					String propsUtilServletContextName = PropsUtil.get(
-							"rule-score-points-deployment-context");
+							"com.liferay.portal.content.targeting.rule.score.points-deployment-context");
 
 					if (Validator.isNotNull(propsUtilServletContextName)) {
 						_servletContextName = propsUtilServletContextName;
@@ -90,7 +90,7 @@ public class ClpSerializer {
 			}
 
 			if (Validator.isNull(_servletContextName)) {
-				_servletContextName = "rule-score-points";
+				_servletContextName = "com.liferay.portal.content.targeting.rule.score.points";
 			}
 
 			return _servletContextName;
