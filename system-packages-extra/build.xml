@@ -2,6 +2,10 @@
 <!DOCTYPE project>
 
 <project name="system-packages-extra" basedir="." default="deploy">
+	<property name="plugin.version" value="1" />
+
+	<property name="plugin.name" value="com.liferay.portal.content.targeting.system.packages.extra" />
+
 	<property name="import.compat.shared" value="false" />
 
 	<property name="plugin.version" value="1" />

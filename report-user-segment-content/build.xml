@@ -3,6 +3,8 @@
 <project name="report-user-segment-content" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
+	<property name="plugin.name" value="com.liferay.portal.content.targeting.report.user.segment.content" />
+
 	<property name="import.shared" value="analytics-api,anonymous-users-api,content-targeting-api" />
 
 	<property name="service.base.dir" value="." />
