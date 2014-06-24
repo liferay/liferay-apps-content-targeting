@@ -1,5 +1,5 @@
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/util-taglib.jar,WEB-INF/lib/geolocation-api-service.jar
-Bundle-Name: Geolocation Service
+Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/util-taglib.jar,WEB-INF/lib/com.liferay.portal.geolocation.api-service.jar
+Bundle-Name: Geolocation API
 Export-Package:\
 	com.liferay.geolocation,\
 	com.liferay.geolocation.model,\
@@ -63,6 +63,6 @@ Include-Resource: classes,\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
 	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	WEB-INF/lib/util-taglib.jar=${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar,\
-	WEB-INF/lib/geolocation-api-service.jar=lib/geolocation-api-service.jar
+	WEB-INF/lib/com.liferay.portal.geolocation.api-service.jar=lib/com.liferay.portal.geolocation.api-service.jar
 Service-Component:com.liferay.geolocation.*
 Web-ContextPath: /geolocation-api
