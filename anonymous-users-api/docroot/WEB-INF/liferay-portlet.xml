@@ -3,6 +3,6 @@
 
 <liferay-portlet-app>
 	<portlet>
-		<portlet-name>anonymoususers</portlet-name>
+		<portlet-name>anonymous-users-api</portlet-name>
 	</portlet>
 </liferay-portlet-app>
