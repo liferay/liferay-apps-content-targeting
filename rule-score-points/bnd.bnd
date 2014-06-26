@@ -19,7 +19,6 @@ Import-Package:\
 	com.liferay.portal.model.impl,\
 	com.liferay.portal.kernel.annotation,\
 	com.liferay.portal.kernel.bean,\
-	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.dao.orm,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.io.unsync,\
@@ -45,15 +44,14 @@ Import-Package:\
 	com.liferay.portlet.asset.service,\
 	com.liferay.portlet.expando.model,\
 	com.liferay.portlet.expando.util,\
-	com.liferay.util.portlet.PortletProps,\
-	com.liferay.util.service,\
 	javax.portlet,\
 	javax.el,\
 	javax.servlet,\
 	javax.servlet.http,\
 	javax.sql,\
 	org.osgi.framework,\
-	org.springframework.*
+	org.springframework.*,\
+	*;resolution:="optional"
 Include-Resource: classes,\
 	{WEB-INF/classes/META-INF=classes/META-INF/},\
 	{WEB-INF/liferay-plugin-package.properties=docroot/WEB-INF/liferay-plugin-package.properties},\

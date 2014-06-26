@@ -26,7 +26,6 @@ Import-Package =\
 	com.liferay.portal.kernel.annotation,\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.cache,\
-	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.dao.db,\
 	com.liferay.portal.kernel.dao.jdbc,\
 	com.liferay.portal.kernel.dao.orm,\
@@ -60,7 +59,6 @@ Import-Package =\
 	com.liferay.portlet.expando.model,\
 	com.liferay.portlet.expando.util,\
 	com.liferay.portlet.journal.model,\
-	com.liferay.util.service,\
 	freemarker.cache,\
     freemarker.template,\javax.servlet.http,\
 	javax.servlet,\
@@ -68,7 +66,8 @@ Import-Package =\
 	javax.sql,\
 	org.apache.el,\
 	org.osgi.framework,\
-	org.springframework.*
+	org.springframework.*,\
+	*;resolution:="optional"
 Include-Resource: classes,\
 	{WEB-INF/liferay-display.xml=docroot/WEB-INF/liferay-display.xml},\
 	{WEB-INF/classes/META-INF=classes/META-INF/},\

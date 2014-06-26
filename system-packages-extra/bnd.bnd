@@ -1,3 +1,4 @@
+Bundle-Name: System Packages Extra
 Export-Package: \
 	com.germinus.easyconf,\
 	com.liferay.portal.apache.bridges.struts,\
@@ -8,9 +9,5 @@ Export-Package: \
 	com.liferay.portal.servlet.filters.dynamiccss,\
 	com.liferay.portal.jsonwebservice,\
 	com.liferay.portal.spring.context,\
-	com.liferay.portal.struts,\
-	com.liferay.util,\
-	com.liferay.util.bean,\
-	com.liferay.util.portlet.PortletProps,\
-	com.liferay.util.service
+	com.liferay.portal.struts
 Fragment-Host: system.bundle;extension:=framework

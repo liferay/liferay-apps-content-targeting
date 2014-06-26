@@ -13,7 +13,6 @@ Import-Package:\
 	com.liferay.contenttargeting.service.messaging,\
 	com.liferay.portal,\
 	com.liferay.portal.kernel.bean,\
-	com.liferay.portal.kernel.configuration,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.json,\
 	com.liferay.portal.kernel.language,\
@@ -27,7 +26,8 @@ Import-Package:\
 	com.liferay.portal.service,\
 	javax.portlet,\
 	javax.naming,\
-	javax.naming.directory
+	javax.naming.directory,\
+	*;resolution:="optional"
 Include-Resource: classes,\
 	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
