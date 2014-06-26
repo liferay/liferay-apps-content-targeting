@@ -3,4 +3,32 @@
 
 <project>
 	<import file="../../build-common-plugins.xml" />
+
+	<target name="build-app">
+		<antcall target="clean" />
+
+		<build-content-targeting-service module.dir="analytics-api" />
+		<build-content-targeting-service module.dir="anonymous-users-api" />
+		<build-content-targeting-service module.dir="geolocation-api" />
+		<build-content-targeting-service module.dir="content-targeting-api" />
+		<build-content-targeting-service module.dir="report-campaign-content" />
+		<build-content-targeting-service module.dir="report-user-segment-content" />
+		<build-content-targeting-service module.dir="rule-score-points" />
+
+		<antcall target="deploy" />
+	</target>
+
+	<macrodef name="build-content-targeting-service">
+		<attribute name="module.dir" />
+
+		<sequential>
+			<process-ivy module.dir="@{module.dir}" />
+
+			<compile-import-shared module.dir="@{module.dir}" />
+
+			<ant dir="@{module.dir}" target="build-service" inheritAll="false" />
+
+			<ant dir="@{module.dir}" target="deploy" inheritAll="false" />
+		</sequential>
+	</macrodef>
 </project>
