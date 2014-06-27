@@ -1,9 +1,13 @@
 <component name="libraryTable">
   <library name="portal-impl">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/portal-impl.jar!/" />
+      <root url="file://$PROJECT_DIR$/../../../portal/portal-impl" />
+      <root url="file://$PROJECT_DIR$/../../../portal/portal-impl" />
     </CLASSES>
     <JAVADOC />
-    <SOURCES />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../../portal/portal-impl/src" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../../../portal/portal-impl" recursive="false" />
   </library>
 </component>
