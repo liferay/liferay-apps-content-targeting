@@ -8,10 +8,11 @@
 	<info module="content-targeting-api" organisation="com.liferay" />
 
 	<dependencies defaultconf="default">
-		<dependency org="biz.aQute.bnd"	name="bnd" rev="2.2.0" />
-		<dependency name="org.osgi.core" org="org.osgi" rev="4.3.1" />
+		<dependency name="bnd" org="biz.aQute.bnd" rev="2.3.0" />
 		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="com.liferay.portal.http.service" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="com.liferay.portal.log.bridge" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="freemarker" org="org.freemarker" rev="2.3.17" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="4.3.1" />
 	</dependencies>
 </ivy-module>
