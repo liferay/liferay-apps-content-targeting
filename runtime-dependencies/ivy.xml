@@ -13,6 +13,10 @@
 		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="com.liferay.portal.http.service" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="com.liferay.portal.log.bridge" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="org.apache.felix.gogo.command" org="org.apache.felix" rev="0.14.0" />
+		<dependency name="org.apache.felix.gogo.runtime" org="org.apache.felix" rev="0.12.1" />
+		<dependency name="org.apache.felix.gogo.shell" org="org.apache.felix" rev="0.10.0" />
+		<dependency name="org.apache.felix.shell.remote" org="org.apache.felix" rev="1.1.2" />
 		<dependency name="org.osgi.compendium" org="org.osgi" rev="4.3.1" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="4.3.1" />
 	</dependencies>
