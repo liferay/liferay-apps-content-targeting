@@ -14,10 +14,10 @@
 
 package com.liferay.contenttargeting.service.impl;
 
-import com.liferay.arquillian.container.enrichers.OSGi;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.tests.util.TestUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -29,16 +29,36 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
 
 /**
  * @author Carlos Sierra Andrés
  */
 @RunWith(Arquillian.class)
-public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
+public class UserSegmentLocalServiceImplTest {
+
+	@Before
+	public void setUp() {
+		try {
+			_bundle.start();
+		}
+		catch (BundleException e) {
+			e.printStackTrace();
+		}
+
+		_assetCategoryLocalService = ServiceTrackerUtil.getService(
+			AssetCategoryLocalService.class, _bundle.getBundleContext());
+		_userSegmentLocalService = ServiceTrackerUtil.getService(
+			UserSegmentLocalService.class, _bundle.getBundleContext());
+	}
 
 	@Test
 	public void testAddAndDeleteUserSegment() throws Exception {
@@ -75,7 +95,11 @@ public class UserSegmentLocalServiceImplTest extends BaseOsgiTestPlugin {
 			_userSegmentLocalService.getUserSegmentsCount(group.getGroupId()));
 	}
 
-	@OSGi private AssetCategoryLocalService _assetCategoryLocalService;
-	@OSGi private UserSegmentLocalService _userSegmentLocalService;
+	private AssetCategoryLocalService _assetCategoryLocalService;
+
+	@ArquillianResource
+	private Bundle _bundle;
+
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

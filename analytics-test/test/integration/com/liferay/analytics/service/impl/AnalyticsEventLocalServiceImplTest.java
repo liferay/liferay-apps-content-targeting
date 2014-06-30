@@ -17,7 +17,7 @@ package com.liferay.analytics.service.impl;
 import com.liferay.analytics.model.AnalyticsEvent;
 import com.liferay.analytics.service.AnalyticsEventLocalService;
 import com.liferay.analytics.test.util.TestUtil;
-import com.liferay.arquillian.container.enrichers.OSGi;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
 import com.liferay.portlet.journal.model.JournalArticle;
@@ -25,16 +25,34 @@ import com.liferay.portlet.journal.model.JournalArticle;
 import java.util.Date;
 
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
 
 /**
  * @author Eduardo Garcia
  */
 @RunWith(Arquillian.class)
-public class AnalyticsEventLocalServiceImplTest extends BaseOsgiTestPlugin {
+public class AnalyticsEventLocalServiceImplTest {
+
+	@Before
+	public void setUp() {
+		try {
+			_bundle.start();
+		}
+		catch (BundleException e) {
+			e.printStackTrace();
+		}
+
+		_analyticsEventLocalService = ServiceTrackerUtil.getService(
+			AnalyticsEventLocalService.class, _bundle.getBundleContext());
+	}
 
 	@Test
 	public void testAddAndDeleteAnalyticsEvent() throws Exception {
@@ -82,6 +100,9 @@ public class AnalyticsEventLocalServiceImplTest extends BaseOsgiTestPlugin {
 			0, _analyticsEventLocalService.getAnalyticsEventsCount());
 	}
 
-	@OSGi private AnalyticsEventLocalService _analyticsEventLocalService;
+	private AnalyticsEventLocalService _analyticsEventLocalService;
+
+	@ArquillianResource
+	private Bundle _bundle;
 
 }

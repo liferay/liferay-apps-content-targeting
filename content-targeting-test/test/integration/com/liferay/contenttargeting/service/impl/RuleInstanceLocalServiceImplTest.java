@@ -14,12 +14,12 @@
 
 package com.liferay.contenttargeting.service.impl;
 
-import com.liferay.arquillian.container.enrichers.OSGi;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.tests.util.TestUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -32,20 +32,38 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
+
 /**
  * @author Eduardo Garcia
  */
 @RunWith(Arquillian.class)
-public class RuleInstanceLocalServiceImplTest extends BaseOsgiTestPlugin {
+public class RuleInstanceLocalServiceImplTest {
 
 	@Before
 	public void setUp() throws PortalException, SystemException {
+		try {
+			_bundle.start();
+		}
+		catch (BundleException e) {
+			e.printStackTrace();
+		}
+
+		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
+			RuleInstanceLocalService.class, _bundle.getBundleContext());
+		_userLocalService = ServiceTrackerUtil.getService(
+			UserLocalService.class, _bundle.getBundleContext());
+		_userSegmentLocalService = ServiceTrackerUtil.getService(
+			UserSegmentLocalService.class, _bundle.getBundleContext());
+
 		Group group = TestUtil.addGroup();
 
 		_serviceContext = TestUtil.getServiceContext(
@@ -97,12 +115,13 @@ public class RuleInstanceLocalServiceImplTest extends BaseOsgiTestPlugin {
 			_ruleInstanceLocalService.getRuleInstancesCount());
 	}
 
+	@ArquillianResource
+	private Bundle _bundle;
+
+	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private ServiceContext _serviceContext;
-
+	private UserLocalService _userLocalService;
 	private UserSegment _userSegment;
-
-	@OSGi private RuleInstanceLocalService _ruleInstanceLocalService;
-	@OSGi private UserLocalService _userLocalService;
-	@OSGi private UserSegmentLocalService _userSegmentLocalService;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

@@ -16,21 +16,39 @@ package com.liferay.anonymoususers.service.impl;
 
 import com.liferay.anonymoususers.service.AnonymousUserLocalService;
 import com.liferay.anonymoususers.tests.util.TestUtil;
-import com.liferay.arquillian.container.enrichers.OSGi;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
 
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
 
 /**
  * @author Eduardo Garcia
  */
 @RunWith(Arquillian.class)
-public class AnonymousUserLocalServiceImplTest extends BaseOsgiTestPlugin {
+public class AnonymousUserLocalServiceImplTest {
+
+	@Before
+	public void setUp() {
+		try {
+			_bundle.start();
+		}
+		catch (BundleException e) {
+			e.printStackTrace();
+		}
+
+		_anonymousUserLocalService = ServiceTrackerUtil.getService(
+			AnonymousUserLocalService.class, _bundle.getBundleContext());
+	}
 
 	@Test
 	public void testAddAnonymousUser() throws Exception {
@@ -47,6 +65,9 @@ public class AnonymousUserLocalServiceImplTest extends BaseOsgiTestPlugin {
 			_anonymousUserLocalService.getAnonymousUsersCount());
 	}
 
-	@OSGi private AnonymousUserLocalService _anonymousUserLocalService;
+	private AnonymousUserLocalService _anonymousUserLocalService;
+
+	@ArquillianResource
+	private Bundle _bundle;
 
 }

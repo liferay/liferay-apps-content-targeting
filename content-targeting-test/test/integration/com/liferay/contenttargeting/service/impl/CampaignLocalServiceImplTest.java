@@ -14,10 +14,10 @@
 
 package com.liferay.contenttargeting.service.impl;
 
-import com.liferay.arquillian.container.enrichers.OSGi;
 import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.service.CampaignLocalService;
 import com.liferay.contenttargeting.tests.util.TestUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -29,52 +29,33 @@ import java.util.Locale;
 import java.util.Map;
 
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.test.api.ArquillianResource;
 
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.BundleException;
 
 /**
  * @author Eduardo Garcia
  */
 @RunWith(Arquillian.class)
-public class CampaignLocalServiceImplTest extends BaseOsgiTestPlugin {
+public class CampaignLocalServiceImplTest {
 
-	@Test
-	public void fetchCurrentMaxPriorityCampaign() throws Exception {
-		Group group = TestUtil.addGroup();
+	@Before
+	public void setUp() {
+		try {
+			_bundle.start();
+		}
+		catch (BundleException e) {
+			e.printStackTrace();
+		}
 
-		ServiceContext serviceContext = TestUtil.getServiceContext(
-			group.getGroupId(), TestUtil.getUserId());
-
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
-
-		nameMap.put(LocaleUtil.getDefault(), "test-campaign");
-
-		Date now = new Date();
-
-		long[] userSegmentIds = new long[] {1, 2};
-
-		Campaign campaign1 = _campaignLocalService.addCampaign(
-			TestUtil.getUserId(), nameMap, null, getDate(now, -1),
-			getDate(now, 1), 1, true, userSegmentIds, serviceContext);
-		Campaign campaign2 = _campaignLocalService.addCampaign(
-			TestUtil.getUserId(), nameMap, null, getDate(now, -1),
-			getDate(now, 1), 2, true, userSegmentIds, serviceContext);
-		Campaign campaign3 = _campaignLocalService.addCampaign(
-			TestUtil.getUserId(), nameMap, null, getDate(now, -1),
-			getDate(now, 1), 1, false, userSegmentIds, serviceContext);
-		Campaign campaign4 = _campaignLocalService.addCampaign(
-			TestUtil.getUserId(), nameMap, null, getDate(now, -2),
-			getDate(now, -1), 1, true, userSegmentIds, serviceContext);
-
-		Campaign currentMaxPriorityCampaign =
-			_campaignLocalService.fetchCurrentMaxPriorityCampaign(
-				new long[] {group.getGroupId()}, userSegmentIds);
-
-		Assert.assertEquals(
-			campaign1.getCampaignId(),
-			currentMaxPriorityCampaign.getCampaignId());
+		_campaignLocalService = ServiceTrackerUtil.getService(
+			CampaignLocalService.class, _bundle.getBundleContext());
 	}
 
 	@Test
@@ -106,6 +87,44 @@ public class CampaignLocalServiceImplTest extends BaseOsgiTestPlugin {
 			_campaignLocalService.getCampaignsCount(group.getGroupId()));
 	}
 
+	@Test
+	public void testFetchCurrentMaxPriorityCampaign() throws Exception {
+		Group group = TestUtil.addGroup();
+
+		ServiceContext serviceContext =
+			TestUtil.getServiceContext(
+				group.getGroupId(), TestUtil.getUserId());
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), "test-campaign");
+
+		Date now = new Date();
+
+		long[] userSegmentIds = new long[] {1, 2};
+
+		Campaign campaign1 = _campaignLocalService.addCampaign(
+			TestUtil.getUserId(), nameMap, null, getDate(now, -1),
+			getDate(now, 1), 1, true, userSegmentIds, serviceContext);
+		Campaign campaign2 = _campaignLocalService.addCampaign(
+			TestUtil.getUserId(), nameMap, null, getDate(now, -1),
+			getDate(now, 1), 2, true, userSegmentIds, serviceContext);
+		Campaign campaign3 = _campaignLocalService.addCampaign(
+			TestUtil.getUserId(), nameMap, null, getDate(now, -1),
+			getDate(now, 1), 1, false, userSegmentIds, serviceContext);
+		Campaign campaign4 = _campaignLocalService.addCampaign(
+			TestUtil.getUserId(), nameMap, null, getDate(now, -2),
+			getDate(now, -1), 1, true, userSegmentIds, serviceContext);
+
+		Campaign currentMaxPriorityCampaign =
+			_campaignLocalService.fetchCurrentMaxPriorityCampaign(
+				new long[] {group.getGroupId()}, userSegmentIds);
+
+		Assert.assertEquals(
+			campaign1.getCampaignId(),
+			currentMaxPriorityCampaign.getCampaignId());
+	}
+
 	protected Date getDate(Date date, int amount) {
 		Calendar calendar = Calendar.getInstance();
 
@@ -116,6 +135,9 @@ public class CampaignLocalServiceImplTest extends BaseOsgiTestPlugin {
 		return calendar.getTime();
 	}
 
-	@OSGi private CampaignLocalService _campaignLocalService;
+	@ArquillianResource
+	private Bundle _bundle;
+
+	private CampaignLocalService _campaignLocalService;
 
 }
