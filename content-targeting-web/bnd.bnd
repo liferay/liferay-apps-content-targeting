@@ -40,12 +40,12 @@ Import-Package:\
 Service-Component: com.liferay.contenttargeting.portlet.*
 Web-ContextPath: /content-targeting-web
 -wab: \
-	{css=docroot/css},\
-	{html=docroot/html},\
-	{icons=docroot/icons},\
-	{js=docroot/js},\
-	{WEB-INF/classes=docroot/WEB-INF/classes},\
-	{WEB-INF/tld=docroot/WEB-INF/tld},\
+	css=docroot/css,\
+	html=docroot/html,\
+	icons=docroot/icons,\
+	js=docroot/js,\
+	WEB-INF/classes=docroot/WEB-INF/classes,\
+	WEB-INF/tld=docroot/WEB-INF/tld,\
 	{WEB-INF/liferay-display.xml=docroot/WEB-INF/liferay-display.xml},\
 	{WEB-INF/liferay-plugin-package.properties=docroot/WEB-INF/liferay-plugin-package.properties},\
 	{WEB-INF/liferay-portlet.xml=docroot/WEB-INF/liferay-portlet.xml},\
