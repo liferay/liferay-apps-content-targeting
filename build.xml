@@ -29,4 +29,12 @@
 			<ant dir="@{module.dir}" target="build-service" inheritAll="false" />
 		</sequential>
 	</macrodef>
+
+	<target name="test-app">
+		<antcall target="test" />
+
+		<ant dir="analytics-test" target="test" inheritAll="false" />
+		<ant dir="anonymous-users-test" target="test" inheritAll="false" />
+		<ant dir="content-targeting-test" target="test" inheritAll="false" />
+	</target>
 </project>
