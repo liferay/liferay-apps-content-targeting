@@ -27,8 +27,6 @@
 			<compile-import-shared module.dir="@{module.dir}" />
 
 			<ant dir="@{module.dir}" target="build-service" inheritAll="false" />
-
-			<ant dir="@{module.dir}" target="deploy" inheritAll="false" />
 		</sequential>
 	</macrodef>
 </project>
