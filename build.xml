@@ -7,18 +7,18 @@
 	<target name="build-app">
 		<antcall target="clean" />
 
-		<build-content-targeting-service module.dir="analytics-api" />
-		<build-content-targeting-service module.dir="anonymous-users-api" />
-		<build-content-targeting-service module.dir="geolocation-api" />
-		<build-content-targeting-service module.dir="content-targeting-api" />
-		<build-content-targeting-service module.dir="report-campaign-content" />
-		<build-content-targeting-service module.dir="report-user-segment-content" />
-		<build-content-targeting-service module.dir="rule-score-points" />
+		<build-app-module-service module.dir="analytics-api" />
+		<build-app-module-service module.dir="anonymous-users-api" />
+		<build-app-module-service module.dir="geolocation-api" />
+		<build-app-module-service module.dir="content-targeting-api" />
+		<build-app-module-service module.dir="report-campaign-content" />
+		<build-app-module-service module.dir="report-user-segment-content" />
+		<build-app-module-service module.dir="rule-score-points" />
 
 		<antcall target="deploy" />
 	</target>
 
-	<macrodef name="build-content-targeting-service">
+	<macrodef name="build-app-module-service">
 		<attribute name="module.dir" />
 
 		<sequential>
