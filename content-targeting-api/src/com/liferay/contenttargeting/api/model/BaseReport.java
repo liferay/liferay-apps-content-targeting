@@ -75,7 +75,7 @@ public abstract class BaseReport implements Report {
 		}
 		catch (Exception e) {
 			_log.error(
-				"Error while processing rule form template " +
+				"Error while processing report form template " +
 					_FORM_TEMPLATE_PATH,
 				e);
 		}
