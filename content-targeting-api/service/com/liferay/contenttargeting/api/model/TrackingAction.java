@@ -14,8 +14,13 @@
 
 package com.liferay.contenttargeting.api.model;
 
+import com.liferay.contenttargeting.model.TrackingActionInstance;
+
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eduardo Garcia
@@ -28,12 +33,22 @@ public interface TrackingAction {
 
 	public String getDescription(Locale locale);
 
-	public String getHTML(Map<String, Object> context);
+	public String getFormHTML(
+		TrackingActionInstance trackingActionInstance,
+		Map<String, Object> context);
 
 	public String getIcon();
 
 	public String getName(Locale locale);
 
+	public String getSummary(
+		TrackingActionInstance trackingActionInstance, Locale locale);
+
 	public String getTrackingActionKey();
+
+	public boolean isInstantiable();
+
+	public void processTrackingAction(
+		PortletRequest request, PortletResponse response);
 
 }

@@ -17,6 +17,7 @@ package com.liferay.contenttargeting.api.model;
 import aQute.bnd.annotation.component.Activate;
 import aQute.bnd.annotation.component.Deactivate;
 
+import com.liferay.contenttargeting.model.TrackingActionInstance;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,6 +32,9 @@ import freemarker.template.Template;
 
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eduardo Garcia
@@ -67,11 +71,14 @@ public abstract class BaseTrackingAction implements TrackingAction {
 	}
 
 	@Override
-	public String getHTML(Map<String, Object> context) {
+	public String getFormHTML(
+		TrackingActionInstance trackingActionInstance,
+		Map<String, Object> context) {
+
 		String content = StringPool.BLANK;
 
 		try {
-			populateContext(context);
+			populateContext(trackingActionInstance, context);
 
 			content = parseTemplate(getClass(), _FORM_TEMPLATE_PATH, context);
 		}
@@ -101,6 +108,15 @@ public abstract class BaseTrackingAction implements TrackingAction {
 		return getClass().getSimpleName();
 	}
 
+	@Override
+	public boolean isInstantiable() {
+		return false;
+	}
+
+	public void processTrackingAction(
+		PortletRequest request, PortletResponse response) {
+	}
+
 	protected String parseTemplate(
 			Class clazz, String templatePath, Map<String, Object> context)
 		throws Exception {
@@ -121,7 +137,9 @@ public abstract class BaseTrackingAction implements TrackingAction {
 		return unsyncStringWriter.toString();
 	}
 
-	protected void populateContext(Map<String, Object> context) {
+	protected void populateContext(
+		TrackingActionInstance trackingActionInstance,
+		Map<String, Object> context) {
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH =
