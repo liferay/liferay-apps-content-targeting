@@ -52,9 +52,10 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public AnalyticsEvent addAnalyticsEvent(
 			long userId, long anonymousUserId, String className, long classPK,
-			String referrerClassName, long referrerClassPK, String eventType,
-			String clientIP, String userAgent, String languageId, String URL,
-			String additionalInfo, ServiceContext serviceContext)
+			String referrerClassName, long referrerClassPK, String elementId,
+			String eventType, String clientIP, String userAgent,
+			String languageId, String URL, String additionalInfo,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		long analyticsEventId = CounterLocalServiceUtil.increment();
@@ -77,6 +78,7 @@ public class AnalyticsEventLocalServiceImpl
 		analyticsEvent.setClassPK(classPK);
 		analyticsEvent.setReferrerClassName(referrerClassName);
 		analyticsEvent.setReferrerClassPK(referrerClassPK);
+		analyticsEvent.setElementId(elementId);
 		analyticsEvent.setEventType(eventType);
 		analyticsEvent.setClientIP(clientIP);
 		analyticsEvent.setUserAgent(userAgent);
@@ -92,9 +94,10 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public List<AnalyticsEvent> addAnalyticsEvent(
 			long userId, long anonymousUserId, String className, long classPK,
-			String referrerClassName, long[] referrerClassPKs, String eventType,
-			String clientIP, String userAgent, String languageId, String URL,
-			String additionalInfo, ServiceContext serviceContext)
+			String referrerClassName, long[] referrerClassPKs, String elementId,
+			String eventType, String clientIP, String userAgent,
+			String languageId, String URL, String additionalInfo,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		List<AnalyticsEvent> analyticsEvents = new ArrayList<AnalyticsEvent>();
@@ -102,8 +105,8 @@ public class AnalyticsEventLocalServiceImpl
 		for (long referrerClassPK : referrerClassPKs) {
 			AnalyticsEvent analyticsEvent = addAnalyticsEvent(
 				userId, anonymousUserId, className, classPK, referrerClassName,
-				referrerClassPK, eventType, clientIP, userAgent, languageId,
-				URL, additionalInfo, serviceContext);
+				referrerClassPK, elementId, eventType, clientIP, userAgent,
+				languageId, URL, additionalInfo, serviceContext);
 
 			analyticsEvents.add(analyticsEvent);
 		}

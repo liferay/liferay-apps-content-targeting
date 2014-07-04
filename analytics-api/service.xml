@@ -21,6 +21,7 @@
 		<column name="classPK" type="long" />
 		<column name="referrerClassName" type="String" />
 		<column name="referrerClassPK" type="long" />
+		<column name="elementId" type="String" />
 		<column name="eventType" type="String" />
 		<column name="clientIP" type="String" />
 		<column name="userAgent" type="String" />
