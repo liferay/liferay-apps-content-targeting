@@ -252,9 +252,10 @@ public interface AnalyticsEventLocalService extends BaseLocalService,
 	public com.liferay.analytics.model.AnalyticsEvent addAnalyticsEvent(
 		long userId, long anonymousUserId, java.lang.String className,
 		long classPK, java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String eventType, java.lang.String clientIP,
-		java.lang.String userAgent, java.lang.String languageId,
-		java.lang.String URL, java.lang.String additionalInfo,
+		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String clientIP, java.lang.String userAgent,
+		java.lang.String languageId, java.lang.String URL,
+		java.lang.String additionalInfo,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -262,10 +263,10 @@ public interface AnalyticsEventLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> addAnalyticsEvent(
 		long userId, long anonymousUserId, java.lang.String className,
 		long classPK, java.lang.String referrerClassName,
-		long[] referrerClassPKs, java.lang.String eventType,
-		java.lang.String clientIP, java.lang.String userAgent,
-		java.lang.String languageId, java.lang.String URL,
-		java.lang.String additionalInfo,
+		long[] referrerClassPKs, java.lang.String elementId,
+		java.lang.String eventType, java.lang.String clientIP,
+		java.lang.String userAgent, java.lang.String languageId,
+		java.lang.String URL, java.lang.String additionalInfo,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

@@ -49,6 +49,23 @@ create table CT_RuleInstance (
 	typeSettings VARCHAR(75) null
 );
 
+create table CT_TrackingActionInstance (
+	uuid_ VARCHAR(75) null,
+	trackingActionInstanceId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	trackingActionKey VARCHAR(75) null,
+	campaignId LONG,
+	referrerClassName VARCHAR(75) null,
+	referrerClassPK LONG,
+	elementId VARCHAR(75) null,
+	eventType VARCHAR(75) null
+);
+
 create table CT_UserSegment (
 	uuid_ VARCHAR(75) null,
 	userSegmentId LONG not null primary key,

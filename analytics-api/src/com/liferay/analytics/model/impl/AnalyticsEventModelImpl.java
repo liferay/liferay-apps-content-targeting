@@ -75,6 +75,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 			{ "classPK", Types.BIGINT },
 			{ "referrerClassName", Types.VARCHAR },
 			{ "referrerClassPK", Types.BIGINT },
+			{ "elementId", Types.VARCHAR },
 			{ "eventType", Types.VARCHAR },
 			{ "clientIP", Types.VARCHAR },
 			{ "userAgent", Types.VARCHAR },
@@ -83,7 +84,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 			{ "additionalInfo", Types.CLOB },
 			{ "createDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table Analytics_AnalyticsEvent (analyticsEventId LONG not null primary key,companyId LONG,userId LONG,anonymousUserId LONG,className VARCHAR(75) null,classPK LONG,referrerClassName VARCHAR(75) null,referrerClassPK LONG,eventType VARCHAR(75) null,clientIP VARCHAR(75) null,userAgent STRING null,languageId VARCHAR(75) null,URL STRING null,additionalInfo TEXT null,createDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table Analytics_AnalyticsEvent (analyticsEventId LONG not null primary key,companyId LONG,userId LONG,anonymousUserId LONG,className VARCHAR(75) null,classPK LONG,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,clientIP VARCHAR(75) null,userAgent STRING null,languageId VARCHAR(75) null,URL STRING null,additionalInfo TEXT null,createDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table Analytics_AnalyticsEvent";
 	public static final String ORDER_BY_JPQL = " ORDER BY analyticsEvent.createDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY Analytics_AnalyticsEvent.createDate DESC";
@@ -128,6 +129,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		model.setClassPK(soapModel.getClassPK());
 		model.setReferrerClassName(soapModel.getReferrerClassName());
 		model.setReferrerClassPK(soapModel.getReferrerClassPK());
+		model.setElementId(soapModel.getElementId());
 		model.setEventType(soapModel.getEventType());
 		model.setClientIP(soapModel.getClientIP());
 		model.setUserAgent(soapModel.getUserAgent());
@@ -207,6 +209,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		attributes.put("classPK", getClassPK());
 		attributes.put("referrerClassName", getReferrerClassName());
 		attributes.put("referrerClassPK", getReferrerClassPK());
+		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
 		attributes.put("clientIP", getClientIP());
 		attributes.put("userAgent", getUserAgent());
@@ -266,6 +269,12 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 		if (referrerClassPK != null) {
 			setReferrerClassPK(referrerClassPK);
+		}
+
+		String elementId = (String)attributes.get("elementId");
+
+		if (elementId != null) {
+			setElementId(elementId);
 		}
 
 		String eventType = (String)attributes.get("eventType");
@@ -488,6 +497,22 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@JSON
 	@Override
+	public String getElementId() {
+		if (_elementId == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _elementId;
+		}
+	}
+
+	@Override
+	public void setElementId(String elementId) {
+		_elementId = elementId;
+	}
+
+	@JSON
+	@Override
 	public String getEventType() {
 		if (_eventType == null) {
 			return StringPool.BLANK;
@@ -652,6 +677,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		analyticsEventImpl.setClassPK(getClassPK());
 		analyticsEventImpl.setReferrerClassName(getReferrerClassName());
 		analyticsEventImpl.setReferrerClassPK(getReferrerClassPK());
+		analyticsEventImpl.setElementId(getElementId());
 		analyticsEventImpl.setEventType(getEventType());
 		analyticsEventImpl.setClientIP(getClientIP());
 		analyticsEventImpl.setUserAgent(getUserAgent());
@@ -767,6 +793,14 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 		analyticsEventCacheModel.referrerClassPK = getReferrerClassPK();
 
+		analyticsEventCacheModel.elementId = getElementId();
+
+		String elementId = analyticsEventCacheModel.elementId;
+
+		if ((elementId != null) && (elementId.length() == 0)) {
+			analyticsEventCacheModel.elementId = null;
+		}
+
 		analyticsEventCacheModel.eventType = getEventType();
 
 		String eventType = analyticsEventCacheModel.eventType;
@@ -829,7 +863,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{analyticsEventId=");
 		sb.append(getAnalyticsEventId());
@@ -847,6 +881,8 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		sb.append(getReferrerClassName());
 		sb.append(", referrerClassPK=");
 		sb.append(getReferrerClassPK());
+		sb.append(", elementId=");
+		sb.append(getElementId());
 		sb.append(", eventType=");
 		sb.append(getEventType());
 		sb.append(", clientIP=");
@@ -868,7 +904,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.analytics.model.AnalyticsEvent");
@@ -905,6 +941,10 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		sb.append(
 			"<column><column-name>referrerClassPK</column-name><column-value><![CDATA[");
 		sb.append(getReferrerClassPK());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>elementId</column-name><column-value><![CDATA[");
+		sb.append(getElementId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>eventType</column-name><column-value><![CDATA[");
@@ -962,6 +1002,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 	private long _referrerClassPK;
 	private long _originalReferrerClassPK;
 	private boolean _setOriginalReferrerClassPK;
+	private String _elementId;
 	private String _eventType;
 	private String _originalEventType;
 	private String _clientIP;

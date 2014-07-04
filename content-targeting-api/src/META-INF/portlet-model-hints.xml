@@ -38,6 +38,22 @@
 		<field name="userSegmentId" type="long" />
 		<field name="typeSettings" type="String" />
 	</model>
+	<model name="com.liferay.contenttargeting.model.TrackingActionInstance">
+		<field name="uuid" type="String" />
+		<field name="trackingActionInstanceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="trackingActionKey" type="String" />
+		<field name="campaignId" type="long" />
+		<field name="referrerClassName" type="String" />
+		<field name="referrerClassPK" type="long" />
+		<field name="elementId" type="String" />
+		<field name="eventType" type="String" />
+	</model>
 	<model name="com.liferay.contenttargeting.model.UserSegment">
 		<field name="uuid" type="String" />
 		<field name="userSegmentId" type="long" />

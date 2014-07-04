@@ -70,6 +70,34 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.contenttargeting.model.impl.TrackingActionInstanceModelImpl">
+		<attributes>
+			<id name="trackingActionInstanceId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="trackingActionKey" />
+			<basic name="campaignId" />
+			<basic name="referrerClassName" />
+			<basic name="referrerClassPK" />
+			<basic name="elementId" />
+			<basic name="eventType" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.liferay.contenttargeting.model.impl.UserSegmentModelImpl">
 		<attributes>
 			<id name="userSegmentId" />
@@ -105,6 +133,10 @@
 	</entity>
 	<entity class="com.liferay.contenttargeting.model.impl.RuleInstanceImpl" name="RuleInstance">
 		<table name="CT_RuleInstance" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.contenttargeting.model.impl.TrackingActionInstanceImpl" name="TrackingActionInstance">
+		<table name="CT_TrackingActionInstance" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.contenttargeting.model.impl.UserSegmentImpl" name="UserSegment">

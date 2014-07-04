@@ -4,6 +4,7 @@
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.contenttargeting.model.Campaign" />
 	<import class="com.liferay.contenttargeting.model.RuleInstance" />
+	<import class="com.liferay.contenttargeting.model.TrackingActionInstance" />
 	<import class="com.liferay.contenttargeting.model.UserSegment" />
 	<class name="com.liferay.contenttargeting.model.impl.CampaignImpl" table="CT_Campaign">
 		<cache usage="read-write" />
@@ -39,6 +40,25 @@
 		<property name="ruleKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="userSegmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.contenttargeting.model.impl.TrackingActionInstanceImpl" table="CT_TrackingActionInstance">
+		<cache usage="read-write" />
+		<id name="trackingActionInstanceId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="trackingActionKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="referrerClassName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="referrerClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="elementId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.contenttargeting.model.impl.UserSegmentImpl" table="CT_UserSegment">
 		<cache usage="read-write" />

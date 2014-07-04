@@ -38,7 +38,7 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{analyticsEventId=");
 		sb.append(analyticsEventId);
@@ -56,6 +56,8 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		sb.append(referrerClassName);
 		sb.append(", referrerClassPK=");
 		sb.append(referrerClassPK);
+		sb.append(", elementId=");
+		sb.append(elementId);
 		sb.append(", eventType=");
 		sb.append(eventType);
 		sb.append(", clientIP=");
@@ -101,6 +103,13 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		}
 
 		analyticsEventImpl.setReferrerClassPK(referrerClassPK);
+
+		if (elementId == null) {
+			analyticsEventImpl.setElementId(StringPool.BLANK);
+		}
+		else {
+			analyticsEventImpl.setElementId(elementId);
+		}
 
 		if (eventType == null) {
 			analyticsEventImpl.setEventType(StringPool.BLANK);
@@ -166,6 +175,7 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		classPK = objectInput.readLong();
 		referrerClassName = objectInput.readUTF();
 		referrerClassPK = objectInput.readLong();
+		elementId = objectInput.readUTF();
 		eventType = objectInput.readUTF();
 		clientIP = objectInput.readUTF();
 		userAgent = objectInput.readUTF();
@@ -200,6 +210,13 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		}
 
 		objectOutput.writeLong(referrerClassPK);
+
+		if (elementId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(elementId);
+		}
 
 		if (eventType == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -254,6 +271,7 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 	public long classPK;
 	public String referrerClassName;
 	public long referrerClassPK;
+	public String elementId;
 	public String eventType;
 	public String clientIP;
 	public String userAgent;

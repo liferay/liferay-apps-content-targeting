@@ -17,6 +17,7 @@
 			<basic name="classPK" />
 			<basic name="referrerClassName" />
 			<basic name="referrerClassPK" />
+			<basic name="elementId" />
 			<basic name="eventType" />
 			<basic name="clientIP" />
 			<basic name="userAgent" />

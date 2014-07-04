@@ -120,7 +120,8 @@ public class AnalyticsEventLocalServiceClpInvoker {
 				"long", "long", "java.lang.String", "long", "java.lang.String",
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+				"java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName41 = "addAnalyticsEvent";
@@ -129,7 +130,8 @@ public class AnalyticsEventLocalServiceClpInvoker {
 				"long", "long", "java.lang.String", "long", "java.lang.String",
 				"long[][]", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+				"java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName42 = "checkAnalyticsEvents";
@@ -292,7 +294,8 @@ public class AnalyticsEventLocalServiceClpInvoker {
 				(java.lang.String)arguments[8], (java.lang.String)arguments[9],
 				(java.lang.String)arguments[10],
 				(java.lang.String)arguments[11],
-				(com.liferay.portal.service.ServiceContext)arguments[12]);
+				(java.lang.String)arguments[12],
+				(com.liferay.portal.service.ServiceContext)arguments[13]);
 		}
 
 		if (_methodName41.equals(name) &&
@@ -306,7 +309,8 @@ public class AnalyticsEventLocalServiceClpInvoker {
 				(java.lang.String)arguments[8], (java.lang.String)arguments[9],
 				(java.lang.String)arguments[10],
 				(java.lang.String)arguments[11],
-				(com.liferay.portal.service.ServiceContext)arguments[12]);
+				(java.lang.String)arguments[12],
+				(com.liferay.portal.service.ServiceContext)arguments[13]);
 		}
 
 		if (_methodName42.equals(name) &&

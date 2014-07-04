@@ -58,6 +58,7 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 		attributes.put("classPK", getClassPK());
 		attributes.put("referrerClassName", getReferrerClassName());
 		attributes.put("referrerClassPK", getReferrerClassPK());
+		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
 		attributes.put("clientIP", getClientIP());
 		attributes.put("userAgent", getUserAgent());
@@ -117,6 +118,12 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 
 		if (referrerClassPK != null) {
 			setReferrerClassPK(referrerClassPK);
+		}
+
+		String elementId = (String)attributes.get("elementId");
+
+		if (elementId != null) {
+			setElementId(elementId);
 		}
 
 		String eventType = (String)attributes.get("eventType");
@@ -384,6 +391,26 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	@Override
 	public void setReferrerClassPK(long referrerClassPK) {
 		_analyticsEvent.setReferrerClassPK(referrerClassPK);
+	}
+
+	/**
+	* Returns the element ID of this analytics event.
+	*
+	* @return the element ID of this analytics event
+	*/
+	@Override
+	public java.lang.String getElementId() {
+		return _analyticsEvent.getElementId();
+	}
+
+	/**
+	* Sets the element ID of this analytics event.
+	*
+	* @param elementId the element ID of this analytics event
+	*/
+	@Override
+	public void setElementId(java.lang.String elementId) {
+		_analyticsEvent.setElementId(elementId);
 	}
 
 	/**

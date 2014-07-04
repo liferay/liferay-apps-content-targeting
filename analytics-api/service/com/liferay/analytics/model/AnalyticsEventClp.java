@@ -84,6 +84,7 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 		attributes.put("classPK", getClassPK());
 		attributes.put("referrerClassName", getReferrerClassName());
 		attributes.put("referrerClassPK", getReferrerClassPK());
+		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
 		attributes.put("clientIP", getClientIP());
 		attributes.put("userAgent", getUserAgent());
@@ -143,6 +144,12 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 
 		if (referrerClassPK != null) {
 			setReferrerClassPK(referrerClassPK);
+		}
+
+		String elementId = (String)attributes.get("elementId");
+
+		if (elementId != null) {
+			setElementId(elementId);
 		}
 
 		String eventType = (String)attributes.get("eventType");
@@ -396,6 +403,29 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 	}
 
 	@Override
+	public String getElementId() {
+		return _elementId;
+	}
+
+	@Override
+	public void setElementId(String elementId) {
+		_elementId = elementId;
+
+		if (_analyticsEventRemoteModel != null) {
+			try {
+				Class<?> clazz = _analyticsEventRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setElementId", String.class);
+
+				method.invoke(_analyticsEventRemoteModel, elementId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public String getEventType() {
 		return _eventType;
 	}
@@ -636,6 +666,7 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 		clone.setClassPK(getClassPK());
 		clone.setReferrerClassName(getReferrerClassName());
 		clone.setReferrerClassPK(getReferrerClassPK());
+		clone.setElementId(getElementId());
 		clone.setEventType(getEventType());
 		clone.setClientIP(getClientIP());
 		clone.setUserAgent(getUserAgent());
@@ -692,7 +723,7 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{analyticsEventId=");
 		sb.append(getAnalyticsEventId());
@@ -710,6 +741,8 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 		sb.append(getReferrerClassName());
 		sb.append(", referrerClassPK=");
 		sb.append(getReferrerClassPK());
+		sb.append(", elementId=");
+		sb.append(getElementId());
 		sb.append(", eventType=");
 		sb.append(getEventType());
 		sb.append(", clientIP=");
@@ -731,7 +764,7 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.analytics.model.AnalyticsEvent");
@@ -768,6 +801,10 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 		sb.append(
 			"<column><column-name>referrerClassPK</column-name><column-value><![CDATA[");
 		sb.append(getReferrerClassPK());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>elementId</column-name><column-value><![CDATA[");
+		sb.append(getElementId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>eventType</column-name><column-value><![CDATA[");
@@ -813,6 +850,7 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 	private long _classPK;
 	private String _referrerClassName;
 	private long _referrerClassPK;
+	private String _elementId;
 	private String _eventType;
 	private String _clientIP;
 	private String _userAgent;

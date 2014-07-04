@@ -10,6 +10,7 @@
 		<field name="classPK" type="long" />
 		<field name="referrerClassName" type="String" />
 		<field name="referrerClassPK" type="long" />
+		<field name="elementId" type="String" />
 		<field name="eventType" type="String" />
 		<field name="clientIP" type="String" />
 		<field name="userAgent" type="String">

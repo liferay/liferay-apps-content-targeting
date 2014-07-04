@@ -45,6 +45,7 @@ public class AnalyticsMessageListener implements MessageListener {
 		long companyId = message.getLong("companyId");
 		long userId = message.getLong("userId");
 		long anonymousUserId = message.getLong("anonymousUserId");
+		String elementId = message.getString("elementId");
 		String eventType = message.getString("event");
 		String className = message.getString("className");
 		long classPK = message.getLong("classPK");
@@ -73,8 +74,8 @@ public class AnalyticsMessageListener implements MessageListener {
 
 		AnalyticsEventLocalServiceUtil.addAnalyticsEvent(
 			userId, anonymousUserId, className, classPK, referrerClassName,
-			referrerClassPKs, eventType, clientIP, userAgent, languageId, URL,
-			StringPool.BLANK, serviceContext);
+			referrerClassPKs, elementId, eventType, clientIP, userAgent,
+			languageId, URL, StringPool.BLANK, serviceContext);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -19,6 +19,8 @@ import com.liferay.contenttargeting.service.CampaignServiceUtil;
 import com.liferay.contenttargeting.service.ClpSerializer;
 import com.liferay.contenttargeting.service.RuleInstanceLocalServiceUtil;
 import com.liferay.contenttargeting.service.RuleInstanceServiceUtil;
+import com.liferay.contenttargeting.service.TrackingActionInstanceLocalServiceUtil;
+import com.liferay.contenttargeting.service.TrackingActionInstanceServiceUtil;
 import com.liferay.contenttargeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.contenttargeting.service.UserSegmentServiceUtil;
 
@@ -46,6 +48,9 @@ public class ClpMessageListener extends BaseMessageListener {
 			RuleInstanceLocalServiceUtil.clearService();
 
 			RuleInstanceServiceUtil.clearService();
+			TrackingActionInstanceLocalServiceUtil.clearService();
+
+			TrackingActionInstanceServiceUtil.clearService();
 			UserSegmentLocalServiceUtil.clearService();
 
 			UserSegmentServiceUtil.clearService();

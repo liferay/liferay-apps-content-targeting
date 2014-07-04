@@ -121,7 +121,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 				"long", "long", "java.lang.String", "long", "java.lang.String",
 				"long", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+				"java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName20 = "addAnalyticsEvent";
@@ -130,7 +131,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 				"long", "long", "java.lang.String", "long", "java.lang.String",
 				"long[][]", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+				"java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName21 = "checkAnalyticsEvents";
@@ -734,9 +736,10 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	public com.liferay.analytics.model.AnalyticsEvent addAnalyticsEvent(
 		long userId, long anonymousUserId, java.lang.String className,
 		long classPK, java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String eventType, java.lang.String clientIP,
-		java.lang.String userAgent, java.lang.String languageId,
-		java.lang.String URL, java.lang.String additionalInfo,
+		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String clientIP, java.lang.String userAgent,
+		java.lang.String languageId, java.lang.String URL,
+		java.lang.String additionalInfo,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -757,6 +760,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 					ClpSerializer.translateInput(referrerClassName),
 						
 					referrerClassPK,
+						
+					ClpSerializer.translateInput(elementId),
 						
 					ClpSerializer.translateInput(eventType),
 						
@@ -800,10 +805,10 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> addAnalyticsEvent(
 		long userId, long anonymousUserId, java.lang.String className,
 		long classPK, java.lang.String referrerClassName,
-		long[] referrerClassPKs, java.lang.String eventType,
-		java.lang.String clientIP, java.lang.String userAgent,
-		java.lang.String languageId, java.lang.String URL,
-		java.lang.String additionalInfo,
+		long[] referrerClassPKs, java.lang.String elementId,
+		java.lang.String eventType, java.lang.String clientIP,
+		java.lang.String userAgent, java.lang.String languageId,
+		java.lang.String URL, java.lang.String additionalInfo,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -824,6 +829,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 					ClpSerializer.translateInput(referrerClassName),
 						
 					ClpSerializer.translateInput(referrerClassPKs),
+						
+					ClpSerializer.translateInput(elementId),
 						
 					ClpSerializer.translateInput(eventType),
 						

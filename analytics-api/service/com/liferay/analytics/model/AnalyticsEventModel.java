@@ -205,6 +205,21 @@ public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
 	public void setReferrerClassPK(long referrerClassPK);
 
 	/**
+	 * Returns the element ID of this analytics event.
+	 *
+	 * @return the element ID of this analytics event
+	 */
+	@AutoEscape
+	public String getElementId();
+
+	/**
+	 * Sets the element ID of this analytics event.
+	 *
+	 * @param elementId the element ID of this analytics event
+	 */
+	public void setElementId(String elementId);
+
+	/**
 	 * Returns the event type of this analytics event.
 	 *
 	 * @return the event type of this analytics event

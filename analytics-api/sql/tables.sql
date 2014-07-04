@@ -7,6 +7,7 @@ create table Analytics_AnalyticsEvent (
 	classPK LONG,
 	referrerClassName VARCHAR(75) null,
 	referrerClassPK LONG,
+	elementId VARCHAR(75) null,
 	eventType VARCHAR(75) null,
 	clientIP VARCHAR(75) null,
 	userAgent STRING null,

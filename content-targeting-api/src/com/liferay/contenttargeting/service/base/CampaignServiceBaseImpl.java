@@ -19,6 +19,7 @@ import com.liferay.contenttargeting.service.CampaignService;
 import com.liferay.contenttargeting.service.persistence.CampaignFinder;
 import com.liferay.contenttargeting.service.persistence.CampaignPersistence;
 import com.liferay.contenttargeting.service.persistence.RuleInstancePersistence;
+import com.liferay.contenttargeting.service.persistence.TrackingActionInstancePersistence;
 import com.liferay.contenttargeting.service.persistence.UserSegmentPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -180,6 +181,63 @@ public abstract class CampaignServiceBaseImpl extends BaseServiceImpl
 	public void setRuleInstancePersistence(
 		RuleInstancePersistence ruleInstancePersistence) {
 		this.ruleInstancePersistence = ruleInstancePersistence;
+	}
+
+	/**
+	 * Returns the tracking action instance local service.
+	 *
+	 * @return the tracking action instance local service
+	 */
+	public com.liferay.contenttargeting.service.TrackingActionInstanceLocalService getTrackingActionInstanceLocalService() {
+		return trackingActionInstanceLocalService;
+	}
+
+	/**
+	 * Sets the tracking action instance local service.
+	 *
+	 * @param trackingActionInstanceLocalService the tracking action instance local service
+	 */
+	public void setTrackingActionInstanceLocalService(
+		com.liferay.contenttargeting.service.TrackingActionInstanceLocalService trackingActionInstanceLocalService) {
+		this.trackingActionInstanceLocalService = trackingActionInstanceLocalService;
+	}
+
+	/**
+	 * Returns the tracking action instance remote service.
+	 *
+	 * @return the tracking action instance remote service
+	 */
+	public com.liferay.contenttargeting.service.TrackingActionInstanceService getTrackingActionInstanceService() {
+		return trackingActionInstanceService;
+	}
+
+	/**
+	 * Sets the tracking action instance remote service.
+	 *
+	 * @param trackingActionInstanceService the tracking action instance remote service
+	 */
+	public void setTrackingActionInstanceService(
+		com.liferay.contenttargeting.service.TrackingActionInstanceService trackingActionInstanceService) {
+		this.trackingActionInstanceService = trackingActionInstanceService;
+	}
+
+	/**
+	 * Returns the tracking action instance persistence.
+	 *
+	 * @return the tracking action instance persistence
+	 */
+	public TrackingActionInstancePersistence getTrackingActionInstancePersistence() {
+		return trackingActionInstancePersistence;
+	}
+
+	/**
+	 * Sets the tracking action instance persistence.
+	 *
+	 * @param trackingActionInstancePersistence the tracking action instance persistence
+	 */
+	public void setTrackingActionInstancePersistence(
+		TrackingActionInstancePersistence trackingActionInstancePersistence) {
+		this.trackingActionInstancePersistence = trackingActionInstancePersistence;
 	}
 
 	/**
@@ -424,6 +482,12 @@ public abstract class CampaignServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.contenttargeting.service.RuleInstanceService ruleInstanceService;
 	@BeanReference(type = RuleInstancePersistence.class)
 	protected RuleInstancePersistence ruleInstancePersistence;
+	@BeanReference(type = com.liferay.contenttargeting.service.TrackingActionInstanceLocalService.class)
+	protected com.liferay.contenttargeting.service.TrackingActionInstanceLocalService trackingActionInstanceLocalService;
+	@BeanReference(type = com.liferay.contenttargeting.service.TrackingActionInstanceService.class)
+	protected com.liferay.contenttargeting.service.TrackingActionInstanceService trackingActionInstanceService;
+	@BeanReference(type = TrackingActionInstancePersistence.class)
+	protected TrackingActionInstancePersistence trackingActionInstancePersistence;
 	@BeanReference(type = com.liferay.contenttargeting.service.UserSegmentLocalService.class)
 	protected com.liferay.contenttargeting.service.UserSegmentLocalService userSegmentLocalService;
 	@BeanReference(type = com.liferay.contenttargeting.service.UserSegmentService.class)

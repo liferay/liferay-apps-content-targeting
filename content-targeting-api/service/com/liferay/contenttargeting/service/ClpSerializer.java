@@ -16,6 +16,7 @@ package com.liferay.contenttargeting.service;
 
 import com.liferay.contenttargeting.model.CampaignClp;
 import com.liferay.contenttargeting.model.RuleInstanceClp;
+import com.liferay.contenttargeting.model.TrackingActionInstanceClp;
 import com.liferay.contenttargeting.model.UserSegmentClp;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -112,6 +113,10 @@ public class ClpSerializer {
 			return translateInputRuleInstance(oldModel);
 		}
 
+		if (oldModelClassName.equals(TrackingActionInstanceClp.class.getName())) {
+			return translateInputTrackingActionInstance(oldModel);
+		}
+
 		if (oldModelClassName.equals(UserSegmentClp.class.getName())) {
 			return translateInputUserSegment(oldModel);
 		}
@@ -145,6 +150,17 @@ public class ClpSerializer {
 		RuleInstanceClp oldClpModel = (RuleInstanceClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getRuleInstanceRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputTrackingActionInstance(
+		BaseModel<?> oldModel) {
+		TrackingActionInstanceClp oldClpModel = (TrackingActionInstanceClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getTrackingActionInstanceRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -186,6 +202,11 @@ public class ClpSerializer {
 		if (oldModelClassName.equals(
 					"com.liferay.contenttargeting.model.impl.RuleInstanceImpl")) {
 			return translateOutputRuleInstance(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					"com.liferay.contenttargeting.model.impl.TrackingActionInstanceImpl")) {
+			return translateOutputTrackingActionInstance(oldModel);
 		}
 
 		if (oldModelClassName.equals(
@@ -289,6 +310,11 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
+					"com.liferay.contenttargeting.NoSuchTrackingActionInstanceException")) {
+			return new com.liferay.contenttargeting.NoSuchTrackingActionInstanceException();
+		}
+
+		if (className.equals(
 					"com.liferay.contenttargeting.NoSuchUserSegmentException")) {
 			return new com.liferay.contenttargeting.NoSuchUserSegmentException();
 		}
@@ -312,6 +338,17 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setRuleInstanceRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputTrackingActionInstance(
+		BaseModel<?> oldModel) {
+		TrackingActionInstanceClp newModel = new TrackingActionInstanceClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setTrackingActionInstanceRemoteModel(oldModel);
 
 		return newModel;
 	}

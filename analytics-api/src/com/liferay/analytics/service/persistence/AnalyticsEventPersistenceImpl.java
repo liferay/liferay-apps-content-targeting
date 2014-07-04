@@ -3514,6 +3514,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		analyticsEventImpl.setClassPK(analyticsEvent.getClassPK());
 		analyticsEventImpl.setReferrerClassName(analyticsEvent.getReferrerClassName());
 		analyticsEventImpl.setReferrerClassPK(analyticsEvent.getReferrerClassPK());
+		analyticsEventImpl.setElementId(analyticsEvent.getElementId());
 		analyticsEventImpl.setEventType(analyticsEvent.getEventType());
 		analyticsEventImpl.setClientIP(analyticsEvent.getClientIP());
 		analyticsEventImpl.setUserAgent(analyticsEvent.getUserAgent());

@@ -18,6 +18,12 @@ create index IX_74DA7D2F on CT_RuleInstance (uuid_);
 create index IX_E3BCC399 on CT_RuleInstance (uuid_, companyId);
 create unique index IX_B8A35C5B on CT_RuleInstance (uuid_, groupId);
 
+create index IX_E9845BF5 on CT_TrackingActionInstance (campaignId);
+create index IX_8EAC9E74 on CT_TrackingActionInstance (groupId);
+create index IX_E97F3DFE on CT_TrackingActionInstance (uuid_);
+create index IX_5544BB6A on CT_TrackingActionInstance (uuid_, companyId);
+create unique index IX_D8B9146C on CT_TrackingActionInstance (uuid_, groupId);
+
 create index IX_34C5416A on CT_UserSegment (groupId);
 create index IX_78302674 on CT_UserSegment (uuid_);
 create index IX_42550D34 on CT_UserSegment (uuid_, companyId);

@@ -8,6 +8,9 @@
 	<bean id="com.liferay.contenttargeting.service.RuleInstanceLocalService" class="com.liferay.contenttargeting.service.impl.RuleInstanceLocalServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.RuleInstanceService" class="com.liferay.contenttargeting.service.impl.RuleInstanceServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.persistence.RuleInstancePersistence" class="com.liferay.contenttargeting.service.persistence.RuleInstancePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.contenttargeting.service.TrackingActionInstanceLocalService" class="com.liferay.contenttargeting.service.impl.TrackingActionInstanceLocalServiceImpl" />
+	<bean id="com.liferay.contenttargeting.service.TrackingActionInstanceService" class="com.liferay.contenttargeting.service.impl.TrackingActionInstanceServiceImpl" />
+	<bean id="com.liferay.contenttargeting.service.persistence.TrackingActionInstancePersistence" class="com.liferay.contenttargeting.service.persistence.TrackingActionInstancePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.contenttargeting.service.UserSegmentLocalService" class="com.liferay.contenttargeting.service.impl.UserSegmentLocalServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.UserSegmentService" class="com.liferay.contenttargeting.service.impl.UserSegmentServiceImpl" />
 	<bean id="com.liferay.contenttargeting.service.persistence.UserSegmentPersistence" class="com.liferay.contenttargeting.service.persistence.UserSegmentPersistenceImpl" parent="basePersistence" />
