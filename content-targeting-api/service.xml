@@ -89,6 +89,48 @@
 			<finder-column name="userSegmentId" />
 		</finder>
 	</entity>
+	<entity name="TrackingActionInstance" uuid="true" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="trackingActionInstanceId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="trackingActionKey" type="String" />
+		<column name="campaignId" type="long" />
+		<column name="referrerClassName" type="String" />
+		<column name="referrerClassPK" type="long" />
+		<column name="elementId" type="String" />
+		<column name="eventType" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="trackingActionKey" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CampaignId" return-type="Collection">
+			<finder-column name="campaignId" />
+		</finder>
+	</entity>
 	<entity name="UserSegment" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
