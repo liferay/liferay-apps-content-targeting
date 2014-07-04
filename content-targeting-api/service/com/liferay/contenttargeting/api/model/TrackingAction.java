@@ -16,6 +16,7 @@ package com.liferay.contenttargeting.api.model;
 
 import com.liferay.contenttargeting.model.TrackingActionInstance;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -32,6 +33,8 @@ public interface TrackingAction {
 	public void deActivate();
 
 	public String getDescription(Locale locale);
+
+	public List<String> getEventTypes();
 
 	public String getFormHTML(
 		TrackingActionInstance trackingActionInstance,
