@@ -102,6 +102,7 @@ public abstract class BaseRule implements Rule {
 		return getClass().getSimpleName();
 	}
 
+	@Override
 	public boolean isInstantiable() {
 		return false;
 	}

@@ -34,7 +34,7 @@
 
 	<@aui["input"] name="description" />
 
-	<@aui["field-wrapper"] label="Rules">
+	<@aui["field-wrapper"] label="rules">
 		<div id="formBuilderBB" class="yui3-widget component diagram-builder form-builder liferayctformbuilder">
 			<div id="formBuilderCB" class="diagram-builder-content form-builder-content">
 				<div class="tabbable">
