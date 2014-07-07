@@ -1,24 +1,24 @@
 AUI.add(
 	'liferay-ct-form-builder',
 	function(A) {
-		var AVAILABLE_FIELD_LABEL_TPL = '<div class="row"><div class="rule-title">{name}</div><div class="rule-description">{description}</div></div>',
+		var AVAILABLE_FIELD_LABEL_TPL = '<div class="row"><div class="field-title">{name}</div><div class="field-description">{description}</div></div>',
 
 			FIELD_LABEL_TPL = '{name}',
 
-			RULE_FIELD_TPL = '<div>' +
-				'<div class="rule-header">' +
-					'<div class="rule-icon">' +
+			ITEM_FIELD_TPL = '<div>' +
+				'<div class="field-header">' +
+					'<div class="field-icon">' +
 						'<i class="{icon}"></i>' +
 					'</div>' +
-					'<div class="row rule-info">' +
-						'<div class="rule-title">{name}</div>' +
-						'<div class="rule-description">{description}</div>' +
+					'<div class="row field-info">' +
+						'<div class="field-title">{name}</div>' +
+						'<div class="field-description">{description}</div>' +
 					'</div>' +
 				'</div>' +
-				'<div class="rule-editor">{editor}</div>' +
+				'<div class="field-editor">{editor}</div>' +
 			'</div>',
 
-			LiferayCTFormRuleSearch = A.Base.create('ruleSearch', A.Base, [A.AutoCompleteBase],
+			LiferayCTFormItemSearch = A.Base.create('Search', A.Base, [A.AutoCompleteBase],
 				{
 					initializer: function() {
 						this._bindUIACBase();
@@ -43,15 +43,15 @@ AUI.add(
 						initializer: function() {
 							var instance = this,
 								eventHandles = [],
-								rulesFilter;
+								fieldsFilter;
 
 							instance._parseFields();
 
 							if (instance.get('searchBox')) {
-								rulesFilter = instance._createRuleFilter();
+								fieldsFilter = instance._createItemFilter();
 
 								eventHandles.push(
-									rulesFilter.on('results', instance._onRuleFilterResults, instance)
+									fieldsFilter.on('results', instance._onItemFilterResults, instance)
 								);
 							}
 
@@ -80,16 +80,16 @@ AUI.add(
 							A.Array.each(
 								instance.get('availableFields'),
 								function(item) {
-									var title = item.labelNode.one('.rule-title').text();
+									var title = item.labelNode.one('.field-title').text();
 
 									item.get('node').attr('title', title);
 								}
 							);
 						},
 
-						_createRuleFilter: function() {
+						_createItemFilter: function() {
 							var instance = this,
-								ruleSearch = new LiferayCTFormRuleSearch
+								fieldSearch = new LiferayCTFormItemSearch
 								(
 									{
 										inputNode: instance.get('searchBox').one('input'),
@@ -102,7 +102,7 @@ AUI.add(
 												function(field) {
 													return {
 														node: field.labelNode,
-														searchData: field.labelNode.one('.rule-title').text()
+														searchData: field.labelNode.one('.field-title').text()
 													}
 												}
 											);
@@ -114,7 +114,7 @@ AUI.add(
 									}
 								);
 
-							return ruleSearch;
+							return fieldSearch;
 						},
 
 						_onClickField: function(event) {
@@ -126,7 +126,7 @@ AUI.add(
 							event.stopPropagation();
 						},
 
-						_onRuleFilterResults: function(event) {
+						_onItemFilterResults: function(event) {
 							var instance = this;
 
 							A.all('.diagram-builder-field').addClass('hide');
@@ -165,11 +165,11 @@ AUI.add(
 
 							fieldsContainer.all('.form-builder-field').each(
 								function(field) {
-									var description = field.one('.rule-description').text(),
+									var description = field.one('.field-description').text(),
 										editor = field.attr('data-template'),
 										icon = field.attr('data-icon'),
 										key = field.attr('data-key'),
-										name = field.one('.rule-title').text(),
+										name = field.one('.field-title').text(),
 										unique = field.attr('data-unique') === 'true';
 
 									A.LiferayCTFormBuilder.registerField(
@@ -205,13 +205,13 @@ AUI.add(
 
 						exportAsJSON: function() {
 							var instance = this,
-								userSegment = {
-									rules: []
+								fields = {
+									fields: []
 								};
 
 							instance.get('fields').each(
 								function(item) {
-									var rule = {
+									var field = {
 										id: item.get('id'),
 										data: [],
 										type: item.get('type')
@@ -221,7 +221,7 @@ AUI.add(
 
 									contentBox.all('input, select, textarea').each(
 										function(input) {
-											rule.data.push(
+											field.data.push(
 												{
 													name: input.attr('name'),
 													value: input.val()
@@ -230,11 +230,11 @@ AUI.add(
 										}
 									);
 
-									userSegment.rules.push(rule);
+									fields.fields.push(field);
 								}
 							);
 
-							return JSON.stringify(userSegment);
+							return JSON.stringify(fields);
 						},
 
 						simulateFocusField: function(field, target) {
@@ -256,7 +256,7 @@ AUI.add(
 			);
 
 		LiferayCTFormBuilder.registerField = function(field) {
-			var fieldName = 'ct-' + field.key + '-rule-field';
+			var fieldName = 'ct-' + field.key + '-field-field';
 
 			var ctFormField = A.Component.create(
 				{
@@ -276,7 +276,7 @@ AUI.add(
 							var instance = this;
 
 							return A.Lang.sub(
-								RULE_FIELD_TPL,
+								ITEM_FIELD_TPL,
 								{
 									description: field.description,
 									editor: field.editor,
@@ -299,7 +299,7 @@ AUI.add(
 				}
 			);
 
-			A['CT'+ field.key + 'RuleField'] = ctFormField;
+			A['CT'+ field.key + 'ItemField'] = ctFormField;
 
 			if (!A.FormBuilder.types[field.key]) {
 				A.FormBuilder.types[field.key] = ctFormField;

@@ -1,5 +1,5 @@
 .content-targeting-portlet {
-	.add-rule-bar {
+	.add-field-bar {
 		display: inline-block;
 	}
 
@@ -68,13 +68,13 @@
 						position: absolute;
 						top: 5px;
 
-						.row {
-							margin: 0;
-						}
-
-						.rule-title {
+						.field-title {
 							font-size: 14px;
 							font-weight: 400;
+						}
+
+						.row {
+							margin: 0;
 						}
 					}
 				}
@@ -132,32 +132,32 @@
 							display: none;
 						}
 
-						.rule-header {
+						.field-header {
 							margin: 0 5px;
 							position: relative;
 
-							.rule-icon {
+							.field-icon {
 								font-size: 35px;
 								position: absolute;
 								text-align: center;
 								width: 35px;
 							}
 
-							.rule-info {
+							.field-info {
 								display: inline-block;
 								margin-left: 45px;
 							}
 
-							.rule-description {
+							.field-description {
 								font-size: 13px;
 							}
 
-							.rule-title {
+							.field-title {
 								font-size: 18px;
 							}
 						}
 
-						.rule-editor {
+						.field-editor {
 							margin: 30px 50px;
 						}
 					}
@@ -174,7 +174,7 @@
 						padding-left: 5px;
 					}
 
-					.rule-header, .btn-group :last-child {
+					.field-header, .btn-group :last-child {
 						color: #009ae5;
 					}
 				}

@@ -23,7 +23,7 @@
 
 <@portlet["actionURL"] name="updateUserSegment" var="addUserSegmentURL" />
 
-<@aui["form"] action="${addUserSegmentURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveRules();">
+<@aui["form"] action="${addUserSegmentURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
 	<@aui["input"] name="userSegmentId" type="hidden" value=userSegmentId />
 	<@aui["input"] name="userSegmentRules" type="hidden" />
@@ -64,8 +64,8 @@
 											<span class="icon diagram-builder-field-icon ${rule.getIcon()}"></span>
 											<div class="diagram-builder-field-label">
 												<div class="row">
-													<div class="rule-title">${rule.getName(locale)}</div>
-													<div class="rule-description">${rule.getDescription(locale)}</div>
+													<div class="field-title">${rule.getName(locale)}</div>
+													<div class="field-description">${rule.getDescription(locale)}</div>
 												</div>
 											</div>
 										</li>
@@ -88,14 +88,14 @@
 									<div class="widget component form-builder-field yui3-widget hide" data-icon="${rule.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!rule.isInstantiable())?string}">
 										<div>
 											<div>
-												<div class="rule-header">
-													<div class="rule-icon"><i class="${rule.getIcon()}"></i></div>
-													<div class="row rule-info">
-														<div class="rule-title">${rule.getName(locale)}</div>
-														<div class="rule-description">${rule.getDescription(locale)}</div>
+												<div class="field-header">
+													<div class="field-icon"><i class="${rule.getIcon()}"></i></div>
+													<div class="row field-info">
+														<div class="field-title">${rule.getName(locale)}</div>
+														<div class="field-description">${rule.getDescription(locale)}</div>
 													</div>
 												</div>
-												<div class="rule-editor">
+												<div class="field-editor">
 												</div>
 											</div>
 										</div>
@@ -125,7 +125,7 @@
 		}
 	).render();
 
-	saveRules = function() {
+	saveFields = function() {
 		document.<@portlet["namespace"] />fm.<@portlet["namespace"] />userSegmentRules.value = userSegmentBuilder.exportAsJSON();
 
 		submitForm(document.<@portlet["namespace"] />fm);
