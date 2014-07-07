@@ -4,7 +4,9 @@
     <facet type="IvyIDEA" name="IvyIDEA">
       <configuration ivyFile="$MODULE_DIR$/ivy.xml" useProjectSettings="false" useCustomIvySettings="true" ivySettingsFile="$MODULE_DIR$/../../../ivy-settings.xml" onlyResolveSelectedConfigs="false">
         <propertiesSettings>
-          <propertiesFiles includeProjectLevelPropertiesFiles="true" />
+          <propertiesFiles includeProjectLevelPropertiesFiles="true">
+            <fileName>$MODULE_DIR$/../ivy.idea.properties</fileName>
+          </propertiesFiles>
         </propertiesSettings>
       </configuration>
     </facet>
