@@ -18,6 +18,8 @@ import com.liferay.contenttargeting.service.CampaignLocalService;
 import com.liferay.contenttargeting.service.CampaignService;
 import com.liferay.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
+import com.liferay.contenttargeting.service.TrackingActionInstanceLocalService;
+import com.liferay.contenttargeting.service.TrackingActionInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
@@ -78,6 +80,24 @@ public class ContentTargetingActivator
 		_ruleInstanceServiceServiceRegistration =
 			_bundleContext.registerService(
 				RuleInstanceService.class, ruleInstanceService, null);
+
+		TrackingActionInstanceLocalService trackingActionInstanceLocalService =
+			(TrackingActionInstanceLocalService)applicationContext.getBean(
+				TrackingActionInstanceLocalService.class.getName());
+
+		_trackingActionInstanceLocalServiceServiceRegistration =
+			_bundleContext.registerService(
+				TrackingActionInstanceLocalService.class,
+				trackingActionInstanceLocalService, null);
+
+		TrackingActionInstanceService trackingActionInstanceService =
+			(TrackingActionInstanceService)applicationContext.getBean(
+				TrackingActionInstanceService.class.getName());
+
+		_trackingActionInstanceServiceServiceRegistration =
+			_bundleContext.registerService(
+				TrackingActionInstanceService.class,
+				trackingActionInstanceService, null);
 
 		UserSegmentLocalService userSegmentLocalService =
 			(UserSegmentLocalService)applicationContext.getBean(
@@ -141,6 +161,18 @@ public class ContentTargetingActivator
 			_ruleInstanceServiceServiceRegistration = null;
 		}
 
+		if (_trackingActionInstanceLocalServiceServiceRegistration != null) {
+			_trackingActionInstanceLocalServiceServiceRegistration.unregister();
+
+			_trackingActionInstanceLocalServiceServiceRegistration = null;
+		}
+
+		if (_trackingActionInstanceServiceServiceRegistration != null) {
+			_trackingActionInstanceServiceServiceRegistration.unregister();
+
+			_trackingActionInstanceServiceServiceRegistration = null;
+		}
+
 		if (_userSegmentLocalServiceServiceRegistration != null) {
 			_userSegmentLocalServiceServiceRegistration.unregister();
 
@@ -166,6 +198,10 @@ public class ContentTargetingActivator
 		_ruleInstanceLocalServiceServiceRegistration;
 	private ServiceRegistration<RuleInstanceService>
 		_ruleInstanceServiceServiceRegistration;
+	private ServiceRegistration<TrackingActionInstanceLocalService>
+		_trackingActionInstanceLocalServiceServiceRegistration;
+	private ServiceRegistration<TrackingActionInstanceService>
+		_trackingActionInstanceServiceServiceRegistration;
 	private ServiceRegistration<UserSegmentLocalService>
 		_userSegmentLocalServiceServiceRegistration;
 	private ServiceRegistration<UserSegmentService>
