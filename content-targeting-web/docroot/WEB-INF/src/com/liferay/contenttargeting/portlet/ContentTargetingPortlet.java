@@ -19,14 +19,19 @@ import com.liferay.contenttargeting.api.model.Report;
 import com.liferay.contenttargeting.api.model.ReportsRegistry;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
+import com.liferay.contenttargeting.api.model.TrackingAction;
+import com.liferay.contenttargeting.api.model.TrackingActionsRegistry;
 import com.liferay.contenttargeting.model.Campaign;
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.contenttargeting.model.TrackingActionInstance;
 import com.liferay.contenttargeting.model.UserSegment;
 import com.liferay.contenttargeting.portlet.util.ReportTemplate;
 import com.liferay.contenttargeting.portlet.util.RuleTemplate;
+import com.liferay.contenttargeting.portlet.util.TrackingActionTemplate;
 import com.liferay.contenttargeting.service.CampaignLocalService;
 import com.liferay.contenttargeting.service.CampaignService;
 import com.liferay.contenttargeting.service.RuleInstanceService;
+import com.liferay.contenttargeting.service.TrackingActionInstanceService;
 import com.liferay.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.contenttargeting.service.UserSegmentService;
 import com.liferay.contenttargeting.util.CampaignSearchContainerIterator;
@@ -36,6 +41,8 @@ import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
@@ -158,6 +165,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			RuleInstanceService.class, bundle.getBundleContext());
 		_rulesRegistry = ServiceTrackerUtil.getService(
 			RulesRegistry.class, bundle.getBundleContext());
+		_trackingActionInstanceService = ServiceTrackerUtil.getService(
+			TrackingActionInstanceService.class, bundle.getBundleContext());
+		_trackingActionsRegistry = ServiceTrackerUtil.getService(
+			TrackingActionsRegistry.class, bundle.getBundleContext());
 		_userSegmentLocalService = ServiceTrackerUtil.getService(
 			UserSegmentLocalService.class, bundle.getBundleContext());
 		_userSegmentService = ServiceTrackerUtil.getService(
@@ -198,17 +209,21 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		try {
+			Campaign campaign = null;
+
 			if (campaignId > 0) {
-				_campaignService.updateCampaign(
+				campaign = _campaignService.updateCampaign(
 					campaignId, nameMap, descriptionMap, startDate, endDate,
 					priority, active, userSegmentIds, serviceContext);
 			}
 			else {
-				_campaignService.addCampaign(
+				campaign = _campaignService.addCampaign(
 					themeDisplay.getUserId(), nameMap, descriptionMap,
 					startDate, endDate, priority, active, userSegmentIds,
 					serviceContext);
 			}
+
+			updateTrackingActions(campaign.getCampaignId(), request, response);
 
 			sendRedirect(request, response);
 		}
@@ -414,33 +429,106 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			template.put("userSegments", userSegments);
 
-			if (path.equals(ContentTargetingPath.VIEW_CAMPAIGN_REPORTS)) {
-				template.put(
-					"tabs2", ParamUtil.getString(portletRequest, "tabs2"));
+			template.put("trackingActionsRegistry", _trackingActionsRegistry);
 
-				Map<String, Report> campaignReports =
-					_reportsRegistry.getReports(Campaign.class.getName());
+			Map<String, TrackingAction> trackingActions =
+				_trackingActionsRegistry.getTrackingActions();
 
-				List<ReportTemplate> campaignReportsTemplates =
-					new ArrayList<ReportTemplate>();
+			boolean isolated = themeDisplay.isIsolated();
 
-				for (Report report : campaignReports.values()) {
-					ReportTemplate reportTemplate = new ReportTemplate();
+			try {
+				themeDisplay.setIsolated(true);
 
-					String html = report.getHTML(
-						_cloneTemplateContext(template));
+				template.put("trackingActions", trackingActions.values());
 
-					reportTemplate.setReport(report);
-					reportTemplate.setTemplate(html);
+				if (campaignId > 0) {
+					List<TrackingActionInstance> instances =
+						_trackingActionInstanceService.
+							getTrackingActionInstances(campaignId);
 
-					campaignReportsTemplates.add(reportTemplate);
+					template.put("trackingActionInstances", instances);
+
+					List<TrackingActionTemplate> addedTrackingActionTemplates =
+						new ArrayList<TrackingActionTemplate>();
+
+					for (TrackingActionInstance instance : instances) {
+						TrackingAction trackingAction =
+							_trackingActionsRegistry.getTrackingAction(
+								instance.getTrackingActionKey());
+
+						TrackingActionTemplate trackingActionTemplate =
+							new TrackingActionTemplate();
+
+						String html = trackingAction.getFormHTML(
+							instance, _cloneTemplateContext(template));
+
+						trackingActionTemplate.setInstanceId(
+							instance.getTrackingActionInstanceId());
+						trackingActionTemplate.setTrackingAction(
+							trackingAction);
+						trackingActionTemplate.setTemplate(
+							HtmlUtil.escapeAttribute(html));
+
+						addedTrackingActionTemplates.add(
+							trackingActionTemplate);
+					}
+
+					template.put(
+						"addedTrackingActionTemplates",
+						addedTrackingActionTemplates);
+				}
+
+				List<TrackingActionTemplate> trackingActionTemplates =
+					new ArrayList<TrackingActionTemplate>();
+
+				for (TrackingAction trackingAction : trackingActions.values()) {
+					TrackingActionTemplate trackingActionTemplate =
+						new TrackingActionTemplate();
+
+					String html = trackingAction.getFormHTML(
+						null, _cloneTemplateContext(template));
+
+					trackingActionTemplate.setTrackingAction(trackingAction);
+					trackingActionTemplate.setTemplate(
+						HtmlUtil.escapeAttribute(html));
+
+					trackingActionTemplates.add(trackingActionTemplate);
 				}
 
 				template.put(
-					"campaignReportsTabNames",
-					ListUtil.toString(campaignReportsTemplates, "name"));
-				template.put(
-					"campaignReportsTemplates", campaignReportsTemplates);
+					"trackingActionTemplates", trackingActionTemplates);
+
+				if (path.equals(ContentTargetingPath.VIEW_CAMPAIGN_REPORTS)) {
+					template.put(
+						"tabs2", ParamUtil.getString(portletRequest, "tabs2"));
+
+					Map<String, Report> campaignReports =
+						_reportsRegistry.getReports(Campaign.class.getName());
+
+					List<ReportTemplate> campaignReportsTemplates =
+						new ArrayList<ReportTemplate>();
+
+					for (Report report : campaignReports.values()) {
+						ReportTemplate reportTemplate = new ReportTemplate();
+
+						String html = report.getHTML(
+							_cloneTemplateContext(template));
+
+						reportTemplate.setReport(report);
+						reportTemplate.setTemplate(html);
+
+						campaignReportsTemplates.add(reportTemplate);
+					}
+
+					template.put(
+						"campaignReportsTabNames",
+						ListUtil.toString(campaignReportsTemplates, "name"));
+					template.put(
+						"campaignReportsTemplates", campaignReportsTemplates);
+				}
+			}
+			finally {
+				themeDisplay.setIsolated(isolated);
 			}
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT) ||
@@ -573,7 +661,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		JSONObject jSONObject = JSONFactoryUtil.createJSONObject(
 			userSegmentRules);
 
-		String rules = jSONObject.getString("rules");
+		String rules = jSONObject.getString("fields");
 
 		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(rules);
 
@@ -606,6 +694,75 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				}
 			}
 			catch (Exception e) {
+				_log.error("Cannot update rule", e);
+			}
+		}
+	}
+
+	protected void updateTrackingActions(
+			long campaignId, ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		String campaignTrackingActions = ParamUtil.getString(
+			request, "campaignTrackingActions");
+
+		if (Validator.isNull(campaignTrackingActions)) {
+			return;
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			TrackingActionInstance.class.getName(), request);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		JSONObject jSONObject = JSONFactoryUtil.createJSONObject(
+			campaignTrackingActions);
+
+		String trackingActions = jSONObject.getString("fields");
+
+		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(trackingActions);
+
+		for (int i = 0; i < jSONArray.length(); i++) {
+			JSONObject jSONObjectRule = jSONArray.getJSONObject(i);
+
+			long trackingActionInstanceId = 0;
+			String type = jSONObjectRule.getString("type");
+
+			if (type.contains(StringPool.UNDERLINE)) {
+				String[] ids = type.split(StringPool.UNDERLINE);
+
+				trackingActionInstanceId = GetterUtil.getLong(ids[1]);
+				type = ids[0];
+			}
+
+			TrackingAction trackingAction =
+				_trackingActionsRegistry.getTrackingAction(type);
+
+			trackingAction.processTrackingAction(request, response);
+
+			String referrerClassName = ParamUtil.getString(
+				request, "referrerClassName");
+			long referrerClassPK = ParamUtil.getLong(
+				request, "referrerClassPK");
+			String elementId = ParamUtil.getString(request, "elementId");
+			String eventType = ParamUtil.getString(request, "eventType");
+
+			try {
+				if (trackingActionInstanceId > 0) {
+					_trackingActionInstanceService.updateTrackingActionInstance(
+						trackingActionInstanceId, referrerClassName,
+						referrerClassPK, elementId, eventType, serviceContext);
+				}
+				else {
+					_trackingActionInstanceService.addTrackingActionInstance(
+						themeDisplay.getUserId(), type, campaignId,
+						referrerClassName, referrerClassPK, elementId,
+						eventType, serviceContext);
+				}
+			}
+			catch (Exception e) {
+				_log.error("Cannot update tracking action", e);
 			}
 		}
 	}
@@ -654,11 +811,16 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return calendar.getTime();
 	}
 
+	private static Log _log = LogFactoryUtil.getLog(
+		ContentTargetingPortlet.class);
+
 	private CampaignLocalService _campaignLocalService;
 	private CampaignService _campaignService;
 	private ReportsRegistry _reportsRegistry;
 	private RuleInstanceService _ruleInstanceService;
 	private RulesRegistry _rulesRegistry;
+	private TrackingActionInstanceService _trackingActionInstanceService;
+	private TrackingActionsRegistry _trackingActionsRegistry;
 	private UserSegmentLocalService _userSegmentLocalService;
 	private UserSegmentService _userSegmentService;
 

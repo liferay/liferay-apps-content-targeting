@@ -23,9 +23,10 @@
 
 <@portlet["actionURL"] name="updateCampaign" var="addCampaignURL" />
 
-<@aui["form"] action="${addCampaignURL}" method="post" name="fm">
+<@aui["form"] action="${addCampaignURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
 	<@aui["input"] name="campaignId" type="hidden" value=campaignId />
+	<@aui["input"] name="campaignTrackingActions" type="hidden" />
 
 	<@aui["model-context"] bean=campaign model=campaignClass />
 
@@ -63,7 +64,101 @@
 
 	<@aui["input"] name="active" value=true />
 
+	<@aui["field-wrapper"] label="tracking-actions">
+		<div id="formBuilderBB" class="yui3-widget component diagram-builder form-builder liferayctformbuilder">
+			<div id="formBuilderCB" class="diagram-builder-content form-builder-content">
+				<div class="tabbable">
+					<div class="tabbable-content">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="javascript:;">Add node</a></li>
+							<li><a href="javascript:;">Settings</a></li>
+						</ul>
+
+						<div class="tab-content">
+							<div class="tab-pane">
+								<div class="panel-page-menu hide" id="formBuilderSB">
+									<div class="search-panels">
+										<i class="icon-search"></i>
+
+										<div class="search-panels-bar">
+											<@aui["input"] cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
+										</div>
+									</div>
+								</div>
+
+								<ul class="diagram-builder-fields-container form-builder-fields-container clearfix">
+									<#list trackingActionTemplates as template>
+										<#assign trackingAction = template.getTrackingAction()>
+										<#assign templateKey = template.getTemplateKey()>
+
+										<li class="diagram-builder-field form-builder-field hide" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
+											<span class="icon diagram-builder-field-icon ${trackingAction.getIcon()}"></span>
+											<div class="diagram-builder-field-label">
+												<div class="row">
+													<div class="field-title">${trackingAction.getName(locale)}</div>
+													<div class="field-description">${trackingAction.getDescription(locale)}</div>
+												</div>
+											</div>
+										</li>
+									</#list>
+								</ul>
+							</div>
+
+							<div class="tab-pane"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="diagram-builder-content-container form-builder-content-container">
+					<div class="diagram-builder-canvas form-builder-canvas">
+						<div class="diagram-builder-drop-container form-builder-drop-container">
+							<#if campaign??>
+								<#list addedTrackingActionTemplates as template>
+									<#assign trackingAction = template.getTrackingAction()>
+									<#assign templateKey = template.getTemplateKey()>
+
+									<div class="widget component form-builder-field yui3-widget hide" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
+										<div>
+											<div>
+												<div class="field-header">
+													<div class="field-icon"><i class="${trackingAction.getIcon()}"></i></div>
+													<div class="row field-info">
+														<div class="field-title">${trackingAction.getName(locale)}</div>
+														<div class="field-description">${trackingAction.getDescription(locale)}</div>
+													</div>
+												</div>
+												<div class="field-editor">
+												</div>
+											</div>
+										</div>
+									</div>
+								</#list>
+							</#if>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</@>
+
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
+	</@>
+
+	<@aui["script"] use="liferay-ct-form-builder">
+		var campaignBuilder = new A.LiferayCTFormBuilder(
+			{
+				boundingBox: '#formBuilderBB',
+				contentBox: '#formBuilderCB',
+				searchBox: '#formBuilderSB'
+			}
+		).render();
+
+		saveFields = function() {
+			document.<@portlet["namespace"] />fm.<@portlet["namespace"] />campaignTrackingActions.value = campaignBuilder.exportAsJSON();
+
+			submitForm(document.<@portlet["namespace"] />fm);
+		};
 	</@>
 </@>
