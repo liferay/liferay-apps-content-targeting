@@ -11,7 +11,6 @@
       <module fileurl="file://$PROJECT_DIR$/content-targeting-api/content-targeting-api.iml" filepath="$PROJECT_DIR$/content-targeting-api/content-targeting-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-test/content-targeting-test.iml" filepath="$PROJECT_DIR$/content-targeting-test/content-targeting-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-web/content-targeting-web.iml" filepath="$PROJECT_DIR$/content-targeting-web/content-targeting-web.iml" />
-      <module fileurl="file://$PROJECT_DIR$/geolocation-api/geolocation-api.iml" filepath="$PROJECT_DIR$/geolocation-api/geolocation-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" filepath="$PROJECT_DIR$/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-campaign-content/report-campaign-content.iml" filepath="$PROJECT_DIR$/report-campaign-content/report-campaign-content.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-user-segment-content/report-user-segment-content.iml" filepath="$PROJECT_DIR$/report-user-segment-content/report-user-segment-content.iml" />

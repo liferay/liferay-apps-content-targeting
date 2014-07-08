@@ -52,6 +52,8 @@ public class IpGeocodeRule extends BaseRule {
 			RuleInstance ruleInstance, AnonymousUser anonymousUser)
 		throws Exception {
 
+
+
 		Geolocation geolocation = GeolocationLocalServiceUtil.geoLocate(
 			anonymousUser.getCompanyId(), AnonymousUser.class.getName(),
 			anonymousUser.getAnonymousUserId(), anonymousUser.getLastIp(),
