@@ -23,11 +23,10 @@
 		<dependency name="arquillian-container-karaf-remote" org="org.jboss.arquillian.container" rev="1.1.0.Final" />
 		<dependency name="arquillian-container-liferay" org="com.liferay.arquillian" rev="1.0.0.Alpha1-SNAPSHOT" />
 		<dependency name="arquillian-deployment-generator-bnd" org="com.liferay.arquillian" rev="1.0.0.Alpha1-SNAPSHOT" />
-		<dependency name="bnd" org="biz.aQute.bnd" rev="2.3.0" />
 		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.0-SNAPSHOT" />
 		<dependency name="junit" org="junit" rev="4.11" />
+		<dependency name="org.osgi.compendium" org="org.osgi" rev="4.3.1" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
-		<dependency name="org.osgi.enterprise" org="org.osgi" rev="5.0.0" />
 		<dependency name="shrinkwrap-osgi" org="org.jboss.shrinkwrap.osgi" rev="1.0.0-alpha-1-SNAPSHOT" />
 	</dependencies>
 </ivy-module>

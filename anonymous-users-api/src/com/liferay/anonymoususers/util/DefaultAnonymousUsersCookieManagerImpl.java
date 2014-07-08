@@ -14,8 +14,6 @@
 
 package com.liferay.anonymoususers.util;
 
-import aQute.bnd.annotation.component.Component;
-
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -23,6 +21,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso

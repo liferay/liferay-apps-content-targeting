@@ -14,14 +14,14 @@
 
 package com.liferay.contenttargeting.internal;
 
-import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Reference;
-
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.api.model.RulesRegistry;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -39,7 +39,7 @@ public class DefaultRulesRegistryImpl implements RulesRegistry {
 		return _rules;
 	}
 
-	@Reference(type = '*', unbind = "unregisterRule")
+	@Reference(unbind = "unregisterRule")
 	public void registerRule(Rule rule) {
 		_rules.put(rule.getRuleKey(), rule);
 	}

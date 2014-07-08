@@ -14,8 +14,6 @@
 
 package com.liferay.contenttargeting.internal;
 
-import aQute.bnd.annotation.component.Component;
-
 import com.liferay.contenttargeting.api.model.UserSegmentSimulator;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -29,6 +27,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Julio Camarero

@@ -14,14 +14,14 @@
 
 package com.liferay.contenttargeting.internal;
 
-import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Reference;
-
 import com.liferay.contenttargeting.api.model.TrackingAction;
 import com.liferay.contenttargeting.api.model.TrackingActionsRegistry;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -40,7 +40,7 @@ public class DefaultTrackingActionsRegistryImpl
 		return _trackingActions;
 	}
 
-	@Reference(type = '*', unbind = "unregisterTrackingAction")
+	@Reference(unbind = "unregisterTrackingAction")
 	public void registerTrackingAction(TrackingAction trackingAction) {
 		_trackingActions.put(
 			trackingAction.getTrackingActionKey(), trackingAction);

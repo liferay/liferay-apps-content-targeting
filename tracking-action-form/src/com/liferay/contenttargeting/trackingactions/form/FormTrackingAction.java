@@ -14,8 +14,6 @@
 
 package com.liferay.contenttargeting.trackingactions.form;
 
-import aQute.bnd.annotation.component.Component;
-
 import com.liferay.contenttargeting.api.model.BaseTrackingAction;
 import com.liferay.contenttargeting.api.model.TrackingAction;
 import com.liferay.contenttargeting.model.TrackingActionInstance;
@@ -27,10 +25,12 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Garcia
  */
-@Component(immediate = true, provide = TrackingAction.class)
+@Component(immediate = true, service = TrackingAction.class)
 public class FormTrackingAction extends BaseTrackingAction {
 
 	@Override

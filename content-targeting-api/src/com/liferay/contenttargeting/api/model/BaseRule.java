@@ -14,9 +14,6 @@
 
 package com.liferay.contenttargeting.api.model;
 
-import aQute.bnd.annotation.component.Activate;
-import aQute.bnd.annotation.component.Deactivate;
-
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
@@ -32,6 +29,9 @@ import freemarker.template.Template;
 
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Eduardo Garcia

@@ -14,8 +14,6 @@
 
 package com.liferay.contenttargeting.reports.usersegmentcontent;
 
-import aQute.bnd.annotation.component.Component;
-
 import com.liferay.contenttargeting.api.model.BaseReport;
 import com.liferay.contenttargeting.api.model.Report;
 import com.liferay.contenttargeting.model.UserSegment;
@@ -32,10 +30,12 @@ import com.liferay.portal.kernel.util.MapUtil;
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Garcia
  */
-@Component(immediate = true, provide = Report.class)
+@Component(immediate = true, service = Report.class)
 public class UserSegmentContentReport extends BaseReport {
 
 	@Override

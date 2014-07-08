@@ -14,9 +14,6 @@
 
 package com.liferay.anonymoususers.util;
 
-import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Reference;
-
 import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.anonymoususers.service.AnonymousUserLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -29,6 +26,9 @@ import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso

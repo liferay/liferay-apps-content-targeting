@@ -14,9 +14,6 @@
 
 package com.liferay.contenttargeting.internal;
 
-import aQute.bnd.annotation.component.Component;
-import aQute.bnd.annotation.component.Reference;
-
 import com.liferay.contenttargeting.api.model.Report;
 import com.liferay.contenttargeting.api.model.ReportsRegistry;
 import com.liferay.portal.kernel.util.PredicateFilter;
@@ -24,6 +21,9 @@ import com.liferay.portal.kernel.util.PredicateFilter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -55,7 +55,7 @@ public class DefaultReportsRegistryImpl implements ReportsRegistry {
 			});
 	}
 
-	@Reference(type = '*', unbind = "unregisterReport")
+	@Reference(unbind = "unregisterReport")
 	public void registerReport(Report report) {
 		_reports.put(report.getReportKey(), report);
 	}

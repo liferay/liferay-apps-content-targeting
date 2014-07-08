@@ -14,8 +14,6 @@
 
 package com.liferay.contenttargeting.rules.age;
 
-import aQute.bnd.annotation.component.Component;
-
 import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
@@ -40,10 +38,12 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Julio Camarero
  */
-@Component(immediate = true, provide = Rule.class)
+@Component(immediate = true, service = Rule.class)
 public class AgeRule extends BaseRule {
 
 	@Override
