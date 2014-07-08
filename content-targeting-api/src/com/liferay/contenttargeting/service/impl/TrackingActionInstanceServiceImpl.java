@@ -16,6 +16,8 @@ package com.liferay.contenttargeting.service.impl;
 
 import com.liferay.contenttargeting.model.TrackingActionInstance;
 import com.liferay.contenttargeting.service.base.TrackingActionInstanceServiceBaseImpl;
+import com.liferay.contenttargeting.service.permission.CampaignPermission;
+import com.liferay.contenttargeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
@@ -52,9 +54,29 @@ public class TrackingActionInstanceServiceImpl
 			String eventType, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		CampaignPermission.check(
+			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
+
 		return trackingActionInstanceLocalService.addTrackingActionInstance(
 			userId, trackingActionKey, campaignId, referrerClassName,
 			referrerClassPK, elementId, eventType, serviceContext);
+	}
+
+	@Override
+	public TrackingActionInstance deleteTrackingActionInstance(
+			long trackingActionInstanceId)
+		throws PortalException, SystemException {
+
+		TrackingActionInstance trackingActionInstance =
+			trackingActionInstanceLocalService.getTrackingActionInstance(
+				trackingActionInstanceId);
+
+		CampaignPermission.check(
+			getPermissionChecker(), trackingActionInstance.getCampaignId(),
+			ActionKeys.UPDATE);
+
+		return trackingActionInstanceLocalService.deleteTrackingActionInstance(
+			trackingActionInstanceId);
 	}
 
 	@Override
@@ -63,7 +85,7 @@ public class TrackingActionInstanceServiceImpl
 		throws SystemException {
 
 		return trackingActionInstanceLocalService.getTrackingActionInstances(
-				campaignId);
+			campaignId);
 	}
 
 	@Override
@@ -72,7 +94,7 @@ public class TrackingActionInstanceServiceImpl
 
 		return
 			trackingActionInstanceLocalService.getTrackingActionInstancesCount(
-					campaignId);
+				campaignId);
 	}
 
 	@Override
@@ -81,6 +103,14 @@ public class TrackingActionInstanceServiceImpl
 			long referrerClassPK, String elementId, String eventType,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		TrackingActionInstance trackingActionInstance =
+			trackingActionInstanceLocalService.getTrackingActionInstance(
+				trackingActionInstanceId);
+
+		CampaignPermission.check(
+			getPermissionChecker(), trackingActionInstance.getCampaignId(),
+			ActionKeys.UPDATE);
 
 		return trackingActionInstanceLocalService.updateTrackingActionInstance(
 			trackingActionInstanceId, referrerClassName, referrerClassPK,

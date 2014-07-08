@@ -16,6 +16,8 @@ package com.liferay.contenttargeting.service.impl;
 
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.service.base.RuleInstanceServiceBaseImpl;
+import com.liferay.contenttargeting.service.permission.UserSegmentPermission;
+import com.liferay.contenttargeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
@@ -44,6 +46,9 @@ public class RuleInstanceServiceImpl extends RuleInstanceServiceBaseImpl {
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		UserSegmentPermission.check(
+			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
+
 		return ruleInstanceLocalService.addRuleInstance(
 				userId, ruleKey, userSegmentId, typeSettings, serviceContext);
 	}
@@ -51,6 +56,13 @@ public class RuleInstanceServiceImpl extends RuleInstanceServiceBaseImpl {
 	@Override
 	public RuleInstance deleteRuleInstance(long ruleInstanceId)
 		throws PortalException, SystemException {
+
+		RuleInstance ruleInstance = ruleInstanceLocalService.getRuleInstance(
+			ruleInstanceId);
+
+		UserSegmentPermission.check(
+			getPermissionChecker(), ruleInstance.getUserSegmentId(),
+			ActionKeys.UPDATE);
 
 		return ruleInstanceLocalService.deleteRuleInstance(ruleInstanceId);
 	}
@@ -74,6 +86,13 @@ public class RuleInstanceServiceImpl extends RuleInstanceServiceBaseImpl {
 			long ruleInstanceId, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		RuleInstance ruleInstance = ruleInstanceLocalService.getRuleInstance(
+			ruleInstanceId);
+
+		UserSegmentPermission.check(
+			getPermissionChecker(), ruleInstance.getUserSegmentId(),
+			ActionKeys.UPDATE);
 
 		return ruleInstanceLocalService.updateRuleInstance(
 			ruleInstanceId, typeSettings, serviceContext);
