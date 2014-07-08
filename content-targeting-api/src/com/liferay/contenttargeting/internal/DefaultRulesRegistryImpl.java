@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Eudaldo Alonso
@@ -39,7 +40,7 @@ public class DefaultRulesRegistryImpl implements RulesRegistry {
 		return _rules;
 	}
 
-	@Reference(unbind = "unregisterRule")
+	@Reference(unbind = "unregisterRule", cardinality = ReferenceCardinality.MULTIPLE)
 	public void registerRule(Rule rule) {
 		_rules.put(rule.getRuleKey(), rule);
 	}

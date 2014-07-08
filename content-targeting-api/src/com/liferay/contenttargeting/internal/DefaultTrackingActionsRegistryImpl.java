@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 
 /**
  * @author Eduardo Garcia
@@ -40,7 +41,7 @@ public class DefaultTrackingActionsRegistryImpl
 		return _trackingActions;
 	}
 
-	@Reference(unbind = "unregisterTrackingAction")
+	@Reference(unbind = "unregisterTrackingAction", cardinality = ReferenceCardinality.MULTIPLE)
 	public void registerTrackingAction(TrackingAction trackingAction) {
 		_trackingActions.put(
 			trackingAction.getTrackingActionKey(), trackingAction);
