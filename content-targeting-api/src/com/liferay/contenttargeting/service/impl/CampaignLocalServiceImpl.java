@@ -15,6 +15,7 @@
 package com.liferay.contenttargeting.service.impl;
 
 import com.liferay.contenttargeting.model.Campaign;
+import com.liferay.contenttargeting.model.TrackingActionInstance;
 import com.liferay.contenttargeting.service.base.CampaignLocalServiceBaseImpl;
 import com.liferay.contenttargeting.util.BaseModelSearchResult;
 import com.liferay.contenttargeting.util.CampaignUtil;
@@ -103,7 +104,17 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	public Campaign deleteCampaign(long campaignId)
 		throws PortalException, SystemException {
 
-		return campaignPersistence.remove(campaignId);
+		Campaign campaign = campaignPersistence.remove(campaignId);
+
+		for (TrackingActionInstance trackingActionInstance :
+				trackingActionInstanceLocalService.getTrackingActionInstances(
+					campaignId)) {
+
+			trackingActionInstanceLocalService.deleteTrackingActionInstance(
+				trackingActionInstance.getTrackingActionInstanceId());
+		}
+
+		return campaign;
 	}
 
 	@Override
