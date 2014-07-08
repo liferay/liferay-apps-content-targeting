@@ -26,6 +26,7 @@ ivy.xml.MD5
 /*/lib/*.jar
 
 /build.*.properties
+/ivy.idea.properties
 
 .idea/workspace.xml
 .idea/rebel_project.xml
