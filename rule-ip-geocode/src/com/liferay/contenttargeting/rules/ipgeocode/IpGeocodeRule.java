@@ -20,8 +20,8 @@ import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
-import com.liferay.geolocation.model.Geolocation;
-import com.liferay.geolocation.service.GeolocationLocalServiceUtil;
+import com.liferay.ip.geocoder.IPGeocoder;
+import com.liferay.ip.geocoder.IPInfo;
 import com.liferay.portal.NoSuchRegionException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -33,13 +33,14 @@ import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.service.CountryServiceUtil;
 import com.liferay.portal.service.RegionServiceUtil;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -52,14 +53,9 @@ public class IpGeocodeRule extends BaseRule {
 			RuleInstance ruleInstance, AnonymousUser anonymousUser)
 		throws Exception {
 
+		IPInfo ipInfo = _ipGeocoder.getIPInfo(anonymousUser.getLastIp());
 
-
-		Geolocation geolocation = GeolocationLocalServiceUtil.geoLocate(
-			anonymousUser.getCompanyId(), AnonymousUser.class.getName(),
-			anonymousUser.getAnonymousUserId(), anonymousUser.getLastIp(),
-			new ServiceContext());
-
-		if (geolocation == null) {
+		if (ipInfo == null) {
 			return false;
 		}
 
@@ -83,10 +79,10 @@ public class IpGeocodeRule extends BaseRule {
 		catch (Exception e) {
 		}
 
-		String countryCode = geolocation.getCountryCode();
+		String countryCode = ipInfo.getCountryCode();
 
 		if (countryCode.equals(country.getA2())) {
-			String regionName = geolocation.getRegionName();
+			String regionName = ipInfo.getRegion();
 
 			if ((region == null) || regionName.equals(region.getName())) {
 				return true;
@@ -157,6 +153,15 @@ public class IpGeocodeRule extends BaseRule {
 		return jsonObj.toString();
 	}
 
+	@Reference(unbind = "unsetIPGeocoder")
+	public void setIPGeocoder(IPGeocoder ipGeocoder) {
+		_ipGeocoder = ipGeocoder;
+	}
+
+	public void unsetIPGeocoder(IPGeocoder ipGeocoder) {
+		_ipGeocoder = null;
+	}
+
 	@Override
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
@@ -181,5 +186,7 @@ public class IpGeocodeRule extends BaseRule {
 		context.put("countryId", countryId);
 		context.put("regionId", regionId);
 	}
+
+	private static IPGeocoder _ipGeocoder;
 
 }

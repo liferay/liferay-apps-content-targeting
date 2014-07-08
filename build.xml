@@ -9,7 +9,6 @@
 
 		<build-app-module-service module.dir="analytics-api" />
 		<build-app-module-service module.dir="anonymous-users-api" />
-		<build-app-module-service module.dir="geolocation-api" />
 		<build-app-module-service module.dir="content-targeting-api" />
 		<build-app-module-service module.dir="report-campaign-content" />
 		<build-app-module-service module.dir="report-user-segment-content" />

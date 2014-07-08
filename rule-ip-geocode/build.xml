@@ -5,7 +5,9 @@
 
 	<property name="plugin.name" value="com.liferay.portal.content.targeting.rule.ip.geocode" />
 
-	<property name="import.shared" value="anonymous-users-api,content-targeting-api,geolocation-api" />
+	<property name="import.shared" value="anonymous-users-api,content-targeting-api" />
+
+	<property name="osgi.runtime.dependencies" value="com.liferay.ip.geocoder.jar" />
 
 	<import file="../../../build-common-osgi-plugin.xml" />
 </project>

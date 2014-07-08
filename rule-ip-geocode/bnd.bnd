@@ -4,13 +4,11 @@ Import-Package:\
 	com.liferay.anonymoususers.model,\
 	com.liferay.anonymoususers.service,\
 	com.liferay.anonymoususers.service.messaging,\
-	com.liferay.geolocation.model,\
-	com.liferay.geolocation.service,\
-	com.liferay.geolocation.util,\
 	com.liferay.contenttargeting.model,\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.contenttargeting.service.messaging,\
+	com.liferay.ip.geocoder,\
 	com.liferay.portal,\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.exception,\

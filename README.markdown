@@ -126,7 +126,7 @@ In order to deploy the audience targeting app, you can add this property to your
 build.username.properties:
 
 ```
-plugins.includes=analytics-hook, analytics-api, analytics-processor-api, anonymous-users-api, content-targeting-api, content-targeting-portlet, geolocation-api, portal-6-2-x-compat-hook, report-campaign-content, report-user-segment-content, rule-age, rule-gender, rule-ip-geocode, rule-score-points, rule-time, runtime-dependencies, runtime-test-dependencies, system-packages-extra
+plugins.includes=analytics-hook, analytics-api, analytics-processor-api, anonymous-users-api, content-targeting-api, content-targeting-portlet, portal-6-2-x-compat-hook, report-campaign-content, report-user-segment-content, rule-age, rule-gender, rule-ip-geocode, rule-score-points, rule-time, runtime-dependencies, runtime-test-dependencies, system-packages-extra
 ```
 
 
