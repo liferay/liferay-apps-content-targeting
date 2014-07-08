@@ -78,6 +78,14 @@ public class TrackingActionInstanceServiceWrapper
 	}
 
 	@Override
+	public com.liferay.contenttargeting.model.TrackingActionInstance deleteTrackingActionInstance(
+		long trackingActionInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _trackingActionInstanceService.deleteTrackingActionInstance(trackingActionInstanceId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.contenttargeting.model.TrackingActionInstance> getTrackingActionInstances(
 		long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException {

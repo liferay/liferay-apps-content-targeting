@@ -88,6 +88,21 @@ public class TrackingActionInstanceServiceSoap {
 		}
 	}
 
+	public static com.liferay.contenttargeting.model.TrackingActionInstanceSoap deleteTrackingActionInstance(
+		long trackingActionInstanceId) throws RemoteException {
+		try {
+			com.liferay.contenttargeting.model.TrackingActionInstance returnValue =
+				TrackingActionInstanceServiceUtil.deleteTrackingActionInstance(trackingActionInstanceId);
+
+			return com.liferay.contenttargeting.model.TrackingActionInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.contenttargeting.model.TrackingActionInstanceSoap[] getTrackingActionInstances(
 		long campaignId) throws RemoteException {
 		try {

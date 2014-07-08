@@ -41,17 +41,21 @@ public class TrackingActionInstanceServiceClp
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName4 = "getTrackingActionInstances";
+		_methodName4 = "deleteTrackingActionInstance";
 
 		_methodParameterTypes4 = new String[] { "long" };
 
-		_methodName5 = "getTrackingActionInstancesCount";
+		_methodName5 = "getTrackingActionInstances";
 
 		_methodParameterTypes5 = new String[] { "long" };
 
-		_methodName6 = "updateTrackingActionInstance";
+		_methodName6 = "getTrackingActionInstancesCount";
 
-		_methodParameterTypes6 = new String[] {
+		_methodParameterTypes6 = new String[] { "long" };
+
+		_methodName7 = "updateTrackingActionInstance";
+
+		_methodParameterTypes7 = new String[] {
 				"long", "java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
@@ -162,14 +166,49 @@ public class TrackingActionInstanceServiceClp
 	}
 
 	@Override
+	public com.liferay.contenttargeting.model.TrackingActionInstance deleteTrackingActionInstance(
+		long trackingActionInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName4,
+					_methodParameterTypes4,
+					new Object[] { trackingActionInstanceId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.contenttargeting.model.TrackingActionInstance)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<com.liferay.contenttargeting.model.TrackingActionInstance> getTrackingActionInstances(
 		long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName4,
-					_methodParameterTypes4, new Object[] { campaignId });
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -196,8 +235,8 @@ public class TrackingActionInstanceServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName5,
-					_methodParameterTypes5, new Object[] { campaignId });
+			returnObj = _invokableService.invokeMethod(_methodName6,
+					_methodParameterTypes6, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -229,8 +268,8 @@ public class TrackingActionInstanceServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName6,
-					_methodParameterTypes6,
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7,
 					new Object[] {
 						trackingActionInstanceId,
 						
@@ -281,4 +320,6 @@ public class TrackingActionInstanceServiceClp
 	private String[] _methodParameterTypes5;
 	private String _methodName6;
 	private String[] _methodParameterTypes6;
+	private String _methodName7;
+	private String[] _methodParameterTypes7;
 }

@@ -81,6 +81,14 @@ public class TrackingActionInstanceServiceUtil {
 			eventType, serviceContext);
 	}
 
+	public static com.liferay.contenttargeting.model.TrackingActionInstance deleteTrackingActionInstance(
+		long trackingActionInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .deleteTrackingActionInstance(trackingActionInstanceId);
+	}
+
 	public static java.util.List<com.liferay.contenttargeting.model.TrackingActionInstance> getTrackingActionInstances(
 		long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException {

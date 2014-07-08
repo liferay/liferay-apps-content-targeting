@@ -40,17 +40,21 @@ public class TrackingActionInstanceServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName45 = "getTrackingActionInstances";
+		_methodName45 = "deleteTrackingActionInstance";
 
 		_methodParameterTypes45 = new String[] { "long" };
 
-		_methodName46 = "getTrackingActionInstancesCount";
+		_methodName46 = "getTrackingActionInstances";
 
 		_methodParameterTypes46 = new String[] { "long" };
 
-		_methodName47 = "updateTrackingActionInstance";
+		_methodName47 = "getTrackingActionInstancesCount";
 
-		_methodParameterTypes47 = new String[] {
+		_methodParameterTypes47 = new String[] { "long" };
+
+		_methodName48 = "updateTrackingActionInstance";
+
+		_methodParameterTypes48 = new String[] {
 				"long", "java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
@@ -83,16 +87,21 @@ public class TrackingActionInstanceServiceClpInvoker {
 
 		if (_methodName45.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
-			return TrackingActionInstanceServiceUtil.getTrackingActionInstances(((Long)arguments[0]).longValue());
+			return TrackingActionInstanceServiceUtil.deleteTrackingActionInstance(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName46.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
-			return TrackingActionInstanceServiceUtil.getTrackingActionInstancesCount(((Long)arguments[0]).longValue());
+			return TrackingActionInstanceServiceUtil.getTrackingActionInstances(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName47.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
+			return TrackingActionInstanceServiceUtil.getTrackingActionInstancesCount(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName48.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
 			return TrackingActionInstanceServiceUtil.updateTrackingActionInstance(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -115,4 +124,6 @@ public class TrackingActionInstanceServiceClpInvoker {
 	private String[] _methodParameterTypes46;
 	private String _methodName47;
 	private String[] _methodParameterTypes47;
+	private String _methodName48;
+	private String[] _methodParameterTypes48;
 }
