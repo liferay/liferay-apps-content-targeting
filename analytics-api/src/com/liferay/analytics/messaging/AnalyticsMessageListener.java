@@ -20,7 +20,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
@@ -67,6 +66,7 @@ public class AnalyticsMessageListener implements MessageListener {
 		String userAgent = message.getString("userAgent");
 		String languageId = message.getString("languageId");
 		String URL = message.getString("layoutURL");
+		String additionalInfo = message.getString("additionalInfo");
 
 		ServiceContext serviceContext = new ServiceContext();
 
@@ -75,7 +75,7 @@ public class AnalyticsMessageListener implements MessageListener {
 		AnalyticsEventLocalServiceUtil.addAnalyticsEvent(
 			userId, anonymousUserId, className, classPK, referrerClassName,
 			referrerClassPKs, elementId, eventType, clientIP, userAgent,
-			languageId, URL, StringPool.BLANK, serviceContext);
+			languageId, URL, additionalInfo, serviceContext);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
