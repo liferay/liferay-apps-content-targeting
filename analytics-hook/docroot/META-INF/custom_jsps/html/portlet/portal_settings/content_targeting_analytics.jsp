@@ -21,7 +21,7 @@
 <aui:fieldset>
 	<aui:input label="form-view" name="settings--content.targeting.analytics.form.view--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view") %>' />
 
-	<aui:input label="form-fill" name="settings--content.targeting.analytics.form.fill--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.fill") %>' />
+	<aui:input label="form-fill" name="settings--content.targeting.analytics.form.interact--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact") %>' />
 
 	<aui:input label="form-submit" name="settings--content.targeting.analytics.form.submit--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit") %>' />
 

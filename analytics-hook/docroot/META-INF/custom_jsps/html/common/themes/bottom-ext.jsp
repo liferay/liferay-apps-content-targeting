@@ -40,8 +40,8 @@
 		);
 	</c:if>
 
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.fill") %>'>
-        var DOC = A.getDoc();
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact") %>'>
+		var DOC = A.getDoc();
 
 		var interactedForms = [];
 
@@ -55,7 +55,7 @@
 				if (interactedForms.indexOf(formId) === -1) {
 					interactedForms.push(formId);
 
-					trackFormEvent('fill', form);
+					trackFormEvent('interact', form);
 				}
 			},
 			'form'
