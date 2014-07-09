@@ -24,7 +24,7 @@ AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 %>
 
-<c:if test="<%= (assetEntry != null) && Validator.isNotNull(userSegmentIds) %>">
+<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.web.content.view") && (assetEntry != null) && Validator.isNotNull(userSegmentIds) %>'>
 	<aui:script position="inline">
 		Liferay.Analytics.track('view', {
 			className: '<%= assetEntry.getClassName() %>',

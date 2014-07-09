@@ -31,9 +31,11 @@
 		}
 	);
 
-	Liferay.Analytics.track('view', {
-		className: '<%= Layout.class.getName() %>',
-		classPK: '<%= layout.getPlid() %>',
-		groupId: '<%= layout.getGroupId() %>'
-	});
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.view") %>'>
+		Liferay.Analytics.track('view', {
+			className: '<%= Layout.class.getName() %>',
+			classPK: '<%= layout.getPlid() %>',
+			groupId: '<%= layout.getGroupId() %>'
+		});
+	</c:if>
 </script>

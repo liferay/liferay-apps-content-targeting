@@ -14,47 +14,53 @@
  */
 --%>
 
-<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+<%@ include file="/html/common/init.jsp" %>
 
 <aui:script position="inline" use="aui-base">
-	var DOC = A.getDoc();
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view") %>'>
+		var trackFormEvent = function(eventType, form) {
+			Liferay.Analytics.track(
+				eventType,
+				{
+					elementId: form.attr('id')
+				}
+			);
+		};
 
-	var trackFormEvent = function(eventType, form) {
-		Liferay.Analytics.track(
-			eventType,
-			{
-				elementId: form.attr('id')
+		A.all('form').each(A.bind(trackFormEvent, this, 'view'));
+	</c:if>
+
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit") %>'>
+		Liferay.on(
+			'submitForm',
+			function(event) {
+				trackFormEvent('submit', event.form);
+				Liferay.Analytics.flush();
 			}
 		);
-	};
+	</c:if>
 
-	A.all('form').each(A.bind(trackFormEvent, this, 'view'));
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.fill") %>'>
+        var DOC = A.getDoc();
 
-	Liferay.on(
-		'submitForm',
-		function(event) {
-			trackFormEvent('submit', event.form);
-			Liferay.Analytics.flush();
-		}
-	);
+		var interactedForms = [];
 
-	var interactedForms = [];
+		DOC.delegate(
+			['change', 'input'],
+			function(event) {
+				var form = event.currentTarget;
 
-	DOC.delegate(
-		['change', 'input'],
-		function(event) {
-			var form = event.currentTarget;
+				var formId = form.attr('id');
 
-			var formId = form.attr('id');
+				if (interactedForms.indexOf(formId) === -1) {
+					interactedForms.push(formId);
 
-			if (interactedForms.indexOf(formId) === -1) {
-				interactedForms.push(formId);
-
-				trackFormEvent('fill', form);
-			}
-		},
-		'form'
-	);
+					trackFormEvent('fill', form);
+				}
+			},
+			'form'
+		);
+	</c:if>
 
 	Liferay.Analytics.flush();
 </aui:script>
