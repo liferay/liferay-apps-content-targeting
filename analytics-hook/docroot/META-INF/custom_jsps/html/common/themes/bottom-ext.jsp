@@ -14,6 +14,47 @@
  */
 --%>
 
-<script>
+<%@ taglib uri="http://liferay.com/tld/aui" prefix="aui" %>
+
+<aui:script position="inline" use="aui-base">
+	var DOC = A.getDoc();
+
+	var trackFormEvent = function(eventType, form) {
+		Liferay.Analytics.track(
+			eventType,
+			{
+				elementId: form.attr('id')
+			}
+		);
+	};
+
+	A.all('form').each(A.bind(trackFormEvent, this, 'view'));
+
+	Liferay.on(
+		'submitForm',
+		function(event) {
+			trackFormEvent('submit', event.form);
+			Liferay.Analytics.flush();
+		}
+	);
+
+	var interactedForms = [];
+
+	DOC.delegate(
+		['change', 'input'],
+		function(event) {
+			var form = event.currentTarget;
+
+			var formId = form.attr('id');
+
+			if (interactedForms.indexOf(formId) === -1) {
+				interactedForms.push(formId);
+
+				trackFormEvent('fill', form);
+			}
+		},
+		'form'
+	);
+
 	Liferay.Analytics.flush();
-</script>
+</aui:script>
