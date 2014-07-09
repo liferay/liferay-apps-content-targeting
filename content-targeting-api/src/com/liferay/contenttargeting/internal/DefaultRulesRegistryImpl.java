@@ -40,7 +40,8 @@ public class DefaultRulesRegistryImpl implements RulesRegistry {
 		return _rules;
 	}
 
-	@Reference(unbind = "unregisterRule", cardinality = ReferenceCardinality.MULTIPLE)
+	@Reference(
+		unbind = "unregisterRule", cardinality = ReferenceCardinality.MULTIPLE)
 	public void registerRule(Rule rule) {
 		_rules.put(rule.getRuleKey(), rule);
 	}

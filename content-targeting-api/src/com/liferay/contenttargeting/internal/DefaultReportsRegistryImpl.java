@@ -56,7 +56,9 @@ public class DefaultReportsRegistryImpl implements ReportsRegistry {
 			});
 	}
 
-	@Reference(unbind = "unregisterReport", cardinality = ReferenceCardinality.MULTIPLE)
+	@Reference(
+		unbind = "unregisterReport",
+		cardinality = ReferenceCardinality.MULTIPLE)
 	public void registerReport(Report report) {
 		_reports.put(report.getReportKey(), report);
 	}

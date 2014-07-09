@@ -41,7 +41,9 @@ public class DefaultTrackingActionsRegistryImpl
 		return _trackingActions;
 	}
 
-	@Reference(unbind = "unregisterTrackingAction", cardinality = ReferenceCardinality.MULTIPLE)
+	@Reference(
+		unbind = "unregisterTrackingAction",
+		cardinality = ReferenceCardinality.MULTIPLE)
 	public void registerTrackingAction(TrackingAction trackingAction) {
 		_trackingActions.put(
 			trackingAction.getTrackingActionKey(), trackingAction);
