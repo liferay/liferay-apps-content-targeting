@@ -10,4 +10,6 @@
 	<property name="ivy.resolve.transitive.dependencies" value="true" />
 
 	<import file="../../../build-common-osgi-plugin.xml" />
+
+	<target name="deploy" />
 </project>
