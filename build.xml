@@ -4,20 +4,35 @@
 <project>
 	<import file="../../build-common-plugins.xml" />
 
+	<property name="app.services" value="analytics-api,anonymous-users-api,content-targeting-api,report-campaign-content,report-user-segment-content,rule-score-points" />
+
+	<path id="app.services.path">
+		<dirset dir="." includes="${app.services}" />
+	</path>
+
+	<pathconvert pathsep="," property="app.services.path" refid="app.services.path" targetos="unix" />
+
 	<target name="build-app">
 		<antcall target="clean" />
 
-		<build-app-module-service module.dir="analytics-api" />
-		<build-app-module-service module.dir="anonymous-users-api" />
-		<build-app-module-service module.dir="content-targeting-api" />
-		<build-app-module-service module.dir="report-campaign-content" />
-		<build-app-module-service module.dir="report-user-segment-content" />
-		<build-app-module-service module.dir="rule-score-points" />
+		<antcall target="build-app-services" />
+
+		<loop-macrodef-or-target
+			module.dirs="${plugins.includes.path}"
+			target.name="compile-import-shared"
+		/>
 
 		<antcall target="deploy" />
 	</target>
 
-	<macrodef name="build-app-module-service">
+	<target name="build-app-services">
+		<loop-macrodef-or-target
+			module.dirs="${app.services.path}"
+			target.name="build-app-service"
+		/>
+	</target>
+
+	<macrodef name="build-app-service">
 		<attribute name="module.dir" />
 
 		<sequential>
