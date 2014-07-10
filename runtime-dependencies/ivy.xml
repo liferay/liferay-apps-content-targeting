@@ -18,7 +18,7 @@
 		<dependency name="org.apache.felix.gogo.runtime" org="org.apache.felix" rev="0.12.1" />
 		<dependency name="org.apache.felix.gogo.shell" org="org.apache.felix" rev="0.10.0" />
 		<dependency name="org.apache.felix.shell.remote" org="org.apache.felix" rev="1.1.2" />
-		<dependency name="org.osgi.compendium" org="org.osgi" rev="4.3.1" />
-		<dependency name="org.osgi.core" org="org.osgi" rev="4.3.1" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
+		<dependency name="org.osgi.enterprise" org="org.osgi" rev="5.0.0" />
 	</dependencies>
 </ivy-module>
