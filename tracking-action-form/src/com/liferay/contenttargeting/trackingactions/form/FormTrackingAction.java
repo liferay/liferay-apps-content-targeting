@@ -75,6 +75,6 @@ public class FormTrackingAction extends BaseTrackingAction {
 		context.put("eventTypes", getEventTypes());
 	}
 
-	private static final String[] _EVENT_TYPES = {"view", "submit"};
+	private static final String[] _EVENT_TYPES = {"view", "interact", "submit"};
 
 }
