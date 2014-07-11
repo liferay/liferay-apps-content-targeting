@@ -85,18 +85,14 @@ the following steps:
 (https://github.com/liferay/liferay-plugins) repository.
 2. Init the Audience Targeting application submodule in the Liferay 6.2 SDK by
 running these commands:
-
-```
-git submodule init
-git submodule update
-```
-
+	```
+	git submodule init
+	git submodule update
+	```
 3. Set this property in the build.<username>.properties of your Liferay SDK:
-
-```
-plugins.includes= analytics-api, analytics-hook, analytics-processor-service, analytics-test, anonymous-users-api, anonymous-users-test, content-targeting-api, content-targeting-test, content-targeting-web, portal-6-2-x-compat-hook, report-campaign-content, report-user-segment-content, rule-age, rule-gender, rule-ip-geocode, rule-score-points, rule-time, runtime-dependencies, runtime-test-dependencies
-```
-
+	```
+	plugins.includes= analytics-api, analytics-hook, analytics-processor-service, analytics-test, anonymous-users-api, anonymous-users-test, content-targeting-api, content-targeting-test, content-targeting-web, portal-6-2-x-compat-hook, report-campaign-content, report-user-segment-content, rule-age, rule-gender, rule-ip-geocode, rule-score-points, rule-time, runtime-dependencies, runtime-test-dependencies
+	```
 4. Go to apps/content-targeting and run `ant build-app`
 
 ### OSGI Console
@@ -115,24 +111,17 @@ Some useful commands:
 
 ### Testing
 
-In order to to execute the Integration tests locally you should follow the
+In order to to execute the Integration tests locally you have to go through the
 following steps:
 
-1. Clone the following repositories in your local environment:
-* [arquillian-container-liferay](https://github.com/csierra/arquillian-extension-liferay)
-* [arquillian-deployment-generator-bnd](https://github.com/csierra/arquillian-deployment-generator-bnd)
-* [shrinkwrap-osgi](https://github.com/csierra/shrinkwrap-osgi)
-2. Execute `mvn install` from the root folder of each of the previous projects
-3. Append the test modules to the `plugins.includes` property of your
+1. Append the test modules to the `plugins.includes` property of your
 build.<username>.properties file:
-
-```
-plugins.includes=<all other audience targeting application modules>, analytics-test, anonymous-users-test, content-targeting-test, runtime-test-dependencies
-```
-
-4. Make sure you have deployed all the Audience Targeting application plugins
+	```
+	plugins.includes=<all other audience targeting application modules>, analytics-test, anonymous-users-test, content-targeting-test, runtime-test-dependencies
+	```
+2. Make sure you have deployed all the Audience Targeting application plugins
 and that your server is running.
-5. Go to apps/content-targeting and run `ant test`. In order to run the tests
+3. Go to apps/content-targeting and run `ant test`. In order to run the tests
 from the IDE (e.g. IntelliJ), you should update the
 folder of the runner to use the folder of your plugin as the working directory.
 
@@ -143,7 +132,9 @@ There are some issues with the Spring context and OSGI context. They can easily
 by bypassed deploying the apps when the server is already started or also adding
 this property to portal-ext.properties:
 
-`module.framework.properties.felix.fileinstall.start.level=20`
+	```
+	module.framework.properties.felix.fileinstall.start.level=20
+	```
 
 ## More Information
 
