@@ -11,22 +11,12 @@
 		<extends extendType="configurations,description,info" location="${sdk.dir}/ivy.xml" module="com.liferay.sdk" organisation="com.liferay" revision="latest.integration" />
 	</info>
 
-	<configurations>
-		<conf name="compile" visibility="public" description="this is the default scope, used if none is specified. Compile dependencies are available in all classpaths." />
-		<conf name="default" visibility="public" description="runtime dependencies and master artifact can be used with this conf" extends="runtime" />
-		<conf name="runtime" visibility="public" description="this scope indicates that the dependency is not required for compilation, but is for execution. It is in the runtime and test classpaths, but not the compile classpath." extends="compile" />
-		<conf name="test" visibility="private" description="this scope indicates that the dependency is not required for normal use of the application, and is only available for the test compilation and execution phases." extends="runtime" />
-	</configurations>
-
-	<dependencies defaultconf="default">
-		<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.3.Final" force="true"  />
-		<dependency name="arquillian-container-karaf-remote" org="org.jboss.arquillian.container" rev="1.1.0.Final" />
-		<dependency name="arquillian-container-liferay" org="com.liferay.arquillian" rev="1.0.0.Alpha1-SNAPSHOT" />
-		<dependency name="arquillian-deployment-generator-bnd" org="com.liferay.arquillian" rev="1.0.0.Alpha1-SNAPSHOT" />
+	<dependencies defaultconf="test->default">
+		<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.2.Final" force="true"  />
+		<dependency name="arquillian-container-liferay" org="com.liferay.arquillian" rev="latest.integration" />
+		<dependency name="arquillian-deployment-generator-bnd" org="com.liferay.arquillian" rev="latest.integration" />
 		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.0-SNAPSHOT" />
-		<dependency name="junit" org="junit" rev="4.11" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.enterprise" org="org.osgi" rev="5.0.0" />
-		<dependency name="shrinkwrap-osgi" org="org.jboss.shrinkwrap.osgi" rev="1.0.0-alpha-1-SNAPSHOT" />
 	</dependencies>
 </ivy-module>
