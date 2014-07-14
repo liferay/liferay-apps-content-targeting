@@ -17,16 +17,16 @@
 <%@ include file="/html/common/init.jsp" %>
 
 <aui:script position="inline" use="aui-base">
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view") %>'>
-		var trackFormEvent = function(eventType, form) {
-			Liferay.Analytics.track(
-				eventType,
-				{
-					elementId: form.attr('id')
-				}
-			);
-		};
+	var trackFormEvent = function(eventType, form) {
+		Liferay.Analytics.track(
+			eventType,
+			{
+				elementId: form.attr('id')
+			}
+		);
+	};
 
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view") %>'>
 		A.all('form').each(A.bind(trackFormEvent, this, 'view'));
 	</c:if>
 
