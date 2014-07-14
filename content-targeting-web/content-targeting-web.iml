@@ -33,11 +33,13 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.http.service/jars/com.liferay.portal.http.service-1.0.0-SNAPSHOT.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.birt.runtime/org.eclipse.osgi.services/jars/org.eclipse.osgi.services-3.3.100.v20120522-1822.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.log.bridge/jars/com.liferay.portal.log.bridge-1.0.0-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/javadocs/org.osgi.compendium-5.0.0-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/javadocs/org.osgi.core-5.0.0-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.birt.runtime/org.eclipse.osgi.services/javadocs/org.eclipse.osgi.services-3.3.100.v20120522-1822-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/javadocs/org.osgi.enterprise-5.0.0-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.freemarker.osgi.bridge/sources/com.liferay.freemarker.osgi.bridge-1.0.0-SNAPSHOT-sources.jar!/" />
@@ -48,6 +50,7 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.http.service/sources/com.liferay.portal.http.service-1.0.0-SNAPSHOT-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.birt.runtime/org.eclipse.osgi.services/sources/org.eclipse.osgi.services-3.3.100.v20120522-1822-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.log.bridge/sources/com.liferay.portal.log.bridge-1.0.0-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/sources/org.osgi.enterprise-5.0.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
