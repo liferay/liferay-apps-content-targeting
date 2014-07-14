@@ -174,6 +174,26 @@ public class AnalyticsEventLocalServiceImpl
 	}
 
 	@Override
+	public List<AnalyticsEvent> getAnalyticsEvents(
+			String referrerClassName, long referrerClassPK, String elementId,
+			String eventType, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.findByR_R_E_E_GtD(
+			referrerClassName, referrerClassPK, elementId, eventType,
+			createDate);
+	}
+
+	@Override
+	public List<AnalyticsEvent> getAnalyticsEvents(
+			String elementId, String eventType, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.findByE_E_GtD(
+			elementId, eventType, createDate);
+	}
+
+	@Override
 	public int getAnalyticsEventsCount(long companyId, Date createDate)
 		throws PortalException, SystemException {
 
@@ -198,6 +218,26 @@ public class AnalyticsEventLocalServiceImpl
 		return analyticsEventPersistence.countByC_C_R_R_E_GtD(
 			className, classPK, referrerClassName, referrerClassPK, eventType,
 			createDate);
+	}
+
+	@Override
+	public int getAnalyticsEventsCount(
+			String referrerClassName, long referrerClassPK, String elementId,
+			String eventType, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.countByR_R_E_E_GtD(
+			referrerClassName, referrerClassPK, elementId, eventType,
+			createDate);
+	}
+
+	@Override
+	public int getAnalyticsEventsCount(
+			String elementId, String eventType, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.countByE_E_GtD(
+			elementId, eventType, createDate);
 	}
 
 	@Override
