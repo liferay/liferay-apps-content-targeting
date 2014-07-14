@@ -16,12 +16,20 @@
 
 <%@ include file="/html/common/init.jsp" %>
 
+<%
+long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
+%>
+
 <aui:script position="inline" use="aui-base">
 	var trackFormEvent = function(eventType, form) {
 		Liferay.Analytics.track(
 			eventType,
 			{
-				elementId: form.attr('id')
+				className: '<%= Layout.class.getName() %>',
+				classPK: '<%= plid %>',
+				elementId: form.attr('id'),
+				referrerClassName: 'com.liferay.contenttargeting.model.UserSegment',
+				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
 			}
 		);
 	};
