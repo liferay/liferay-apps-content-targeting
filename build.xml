@@ -4,7 +4,7 @@
 <project>
 	<import file="../../build-common-plugins.xml" />
 
-	<property name="app.services" value="analytics-api,anonymous-users-api,content-targeting-api,report-campaign-content,report-user-segment-content,rule-score-points" />
+	<property name="app.services" value="analytics-api,anonymous-users-api,content-targeting-api,report-campaign-content,report-campaign-forms,report-user-segment-content,rule-score-points" />
 
 	<path id="app.services.path">
 		<dirset dir="." includes="${app.services}" />

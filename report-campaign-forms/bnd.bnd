@@ -1,4 +1,4 @@
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar
+Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/com.liferay.portal.content.targeting.report.campaign.forms-service.jar
 Bundle-Name: Campaign Forms Report
 Import-Package:\
 	com.liferay.analytics.model,\
@@ -56,8 +56,10 @@ Import-Package:\
 	*;resolution:="optional"
 Include-Resource: classes,\
 	{WEB-INF/classes/META-INF=classes/META-INF/},\
+	{WEB-INF/sql=sql},\
 	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
 	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
 	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+	WEB-INF/lib/com.liferay.portal.content.targeting.report.campaign.forms-service.jar=lib/com.liferay.portal.content.targeting.report.campaign.forms-service.jar
 	com.liferay.contenttargeting.reports.campaignforms.*
 Web-ContextPath: /report-campaign-forms
