@@ -17,9 +17,17 @@ package com.liferay.contenttargeting.reports.campaignforms;
 import com.liferay.contenttargeting.api.model.BaseReport;
 import com.liferay.contenttargeting.api.model.Report;
 import com.liferay.contenttargeting.model.Campaign;
+import com.liferay.contenttargeting.reports.campaignforms.model.CampaignForm;
+import com.liferay.contenttargeting.reports.campaignforms.service.CampaignFormLocalServiceUtil;
+import com.liferay.contenttargeting.reports.campaignforms.util.comparator.CampaignFormCountComparator;
+import com.liferay.contenttargeting.util.SearchContainerIterator;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.MapUtil;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Component;
@@ -42,10 +50,38 @@ public class CampaignFormsReport extends BaseReport {
 
 	@Override
 	public void updateReport() {
+		try {
+			CampaignFormLocalServiceUtil.checkCampaignFormEvents();
+		}
+		catch (Exception e) {
+			_log.error("Cannot update report", e);
+		}
 	}
 
 	@Override
 	protected void populateContext(Map<String, Object> context) {
+		final long campaignId = MapUtil.getLong(context, "campaignId", 0);
+
+		context.put(
+			"searchContainerIterator",
+			new SearchContainerIterator<CampaignForm>() {
+
+				@Override
+				public List<CampaignForm> getResults(int start, int end)
+					throws PortalException, SystemException {
+
+					return CampaignFormLocalServiceUtil.getCampaignForms(
+						campaignId, start, end,
+						new CampaignFormCountComparator());
+				}
+
+				@Override
+				public int getTotal() throws PortalException, SystemException {
+					return CampaignFormLocalServiceUtil.getCampaignFormsCount(
+						campaignId);
+				}
+			}
+		);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(CampaignFormsReport.class);
