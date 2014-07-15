@@ -112,6 +112,8 @@ public interface Rule {
 	 * @return the result of evaluating the rule's form fields in the context of
 	 *         the request and response
 	 */
-	public String processRule(PortletRequest request, PortletResponse response);
+	public String processRule(
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values);
 
 }

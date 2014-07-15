@@ -54,6 +54,7 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
@@ -299,6 +300,26 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					"mvcPath", ContentTargetingPath.ERROR);
 			}
 		}
+	}
+
+	protected Map<String, String> getRuleValues(
+		JSONArray data, String namespace, String id) {
+
+		Map<String, String> values = new HashMap<String, String>(data.length());
+
+		for (int i = 0; i < data.length(); i++) {
+			JSONObject jsonObject = data.getJSONObject(i);
+
+			String name = jsonObject.getString("name");
+
+			name = StringUtil.replace(
+				name, new String[] {namespace, id},
+				new String[] {StringPool.BLANK, StringPool.BLANK});
+
+			values.put(name, jsonObject.getString("value"));
+		}
+
+		return values;
 	}
 
 	protected void populateContext(
@@ -680,7 +701,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			Rule rule = _rulesRegistry.getRule(type);
 
-			String typeSettings = rule.processRule(request, response);
+			String id = jSONObjectRule.getString("id");
+
+			Map<String, String> ruleValues = getRuleValues(
+				jSONObjectRule.getJSONArray("data"), response.getNamespace(),
+				id);
+
+			String typeSettings = rule.processRule(
+				request, response, id, ruleValues);
 
 			try {
 				if (ruleInstanceId > 0) {

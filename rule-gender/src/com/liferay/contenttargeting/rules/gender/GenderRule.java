@@ -20,7 +20,6 @@ import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -75,9 +74,10 @@ public class GenderRule extends BaseRule {
 
 	@Override
 	public String processRule(
-		PortletRequest request, PortletResponse response) {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
-		return ParamUtil.getString(request, "gender");
+		return values.get("gender");
 	}
 
 	@Override

@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
@@ -92,9 +92,10 @@ public class ScorePointsRule extends BaseRule {
 
 	@Override
 	public String processRule(
-		PortletRequest request, PortletResponse response) {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
-		int scorePoints = ParamUtil.getInteger(request, "scorePoints");
+		int scorePoints = GetterUtil.getInteger(values.get("scorePoints"));
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 

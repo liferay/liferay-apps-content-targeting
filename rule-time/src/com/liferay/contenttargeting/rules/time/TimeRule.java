@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.text.Format;
 
@@ -89,15 +89,17 @@ public class TimeRule extends BaseRule {
 
 	@Override
 	public String processRule(
-		PortletRequest request, PortletResponse response) {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
-		int endTimeHour = ParamUtil.getInteger(request, "endTimeHour");
-		int endTimeMinute = ParamUtil.getInteger(request, "endTimeMinute");
-		int endTimeAmPm = ParamUtil.getInteger(request, "endTimeAmPm");
+		int endTimeHour = GetterUtil.getInteger(values.get("endTimeHour"));
+		int endTimeMinute = GetterUtil.getInteger(values.get("endTimeMinute"));
+		int endTimeAmPm = GetterUtil.getInteger(values.get("endTimeAmPm"));
 
-		int startTimeHour = ParamUtil.getInteger(request, "startTimeHour");
-		int startTimeMinute = ParamUtil.getInteger(request, "startTimeMinute");
-		int startTimeAmPm = ParamUtil.getInteger(request, "startTimeAmPm");
+		int startTimeHour = GetterUtil.getInteger(values.get("startTimeHour"));
+		int startTimeMinute = GetterUtil.getInteger(
+			values.get("startTimeMinute"));
+		int startTimeAmPm = GetterUtil.getInteger(values.get("startTimeAmPm"));
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 

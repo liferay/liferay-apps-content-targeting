@@ -23,7 +23,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
@@ -111,10 +111,11 @@ public class AgeRule extends BaseRule {
 
 	@Override
 	public String processRule(
-		PortletRequest request, PortletResponse response) {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
-		int youngerThan = ParamUtil.getInteger(request, "youngerThan");
-		int olderThan = ParamUtil.getInteger(request, "olderThan");
+		int youngerThan = GetterUtil.getInteger(values.get("youngerThan"));
+		int olderThan = GetterUtil.getInteger(values.get("olderThan"));
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 

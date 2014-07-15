@@ -25,7 +25,7 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Region;
@@ -139,10 +139,11 @@ public class IpGeocodeRule extends BaseRule {
 
 	@Override
 	public String processRule(
-		PortletRequest request, PortletResponse response) {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
-		long countryId = ParamUtil.getLong(request, "countryId");
-		long regionId = ParamUtil.getLong(request, "regionId");
+		long countryId = GetterUtil.getLong(values.get("countryId"));
+		long regionId = GetterUtil.getLong(values.get("regionId"));
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 
