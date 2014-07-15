@@ -74,7 +74,7 @@ public abstract class BaseRule implements Rule {
 		try {
 			populateContext(ruleInstance, context);
 
-			content = parseTemplate(getClass(), _FORM_TEMPLATE_PATH, context);
+			content = parseTemplate(getClass(), getFormTemplatePath(), context);
 		}
 		catch (Exception e) {
 			_log.error(
@@ -105,6 +105,10 @@ public abstract class BaseRule implements Rule {
 	@Override
 	public boolean isInstantiable() {
 		return false;
+	}
+
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH;
 	}
 
 	protected String parseTemplate(
