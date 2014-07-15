@@ -91,7 +91,7 @@ running these commands:
 	```
 3. Set this property in the build.<username>.properties of your Liferay SDK:
 	```
-	plugins.includes= analytics-api, analytics-hook, analytics-processor-service, analytics-test, anonymous-users-api, anonymous-users-test, content-targeting-api, content-targeting-test, content-targeting-web, portal-6-2-x-compat-hook, report-campaign-content, report-user-segment-content, rule-age, rule-gender, rule-ip-geocode, rule-score-points, rule-time, runtime-dependencies, runtime-test-dependencies
+	plugins.includes= analytics-api, analytics-hook, analytics-processor-service, anonymous-users-api, content-targeting-api, content-targeting-web, portal-6-2-x-compat-hook, report-campaign-content, report-user-segment-content, rule-age, rule-gender, rule-ip-geocode, rule-score-points, rule-time, runtime-dependencies
 	```
 4. Go to apps/content-targeting and run `ant build-app`
 
