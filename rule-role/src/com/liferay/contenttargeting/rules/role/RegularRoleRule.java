@@ -19,18 +19,14 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
-import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.CalendarFactoryUtil;
-import com.liferay.portal.kernel.util.FastDateFormatFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
-
-import java.text.Format;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Company;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -38,17 +34,10 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import com.liferay.portal.kernel.util.StringBundler;
-import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.RoleLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
 /**
- * @author Julio Camarero
+ * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
 public class RegularRoleRule extends BaseRule {
@@ -93,6 +82,11 @@ public class RegularRoleRule extends BaseRule {
 	}
 
 	@Override
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH;
+	}
+
+	@Override
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
@@ -117,5 +111,8 @@ public class RegularRoleRule extends BaseRule {
 
 		context.put("roles", roles);
 	}
+
+	protected static final String _FORM_TEMPLATE_PATH =
+		"templates/ct_fields_regular.ftl";
 
 }
