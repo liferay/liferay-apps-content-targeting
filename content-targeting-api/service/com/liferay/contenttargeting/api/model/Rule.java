@@ -109,6 +109,10 @@ public interface Rule {
 	 *
 	 * @param  request the request from which to get the request parameters
 	 * @param  response the response to receive the render parameters
+	 * @param  id an identifier that allows us to differentiate several rule
+	 *            instances of the same type of an instantiable rule
+	 * @param  values the values configured by users for the current rule
+	 *            instance based on the form controls from the html
 	 * @return the result of evaluating the rule's form fields in the context of
 	 *         the request and response
 	 */
