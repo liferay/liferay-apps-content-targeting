@@ -19,12 +19,15 @@ import com.liferay.contenttargeting.model.RuleInstance;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author Julio Camarero
  */
 public interface RulesEngine {
 
 	public boolean matches(
-		AnonymousUser anonymousUser, List<RuleInstance> ruleInstances);
+		HttpServletRequest request, AnonymousUser anonymousUser,
+		List<RuleInstance> ruleInstances);
 
 }

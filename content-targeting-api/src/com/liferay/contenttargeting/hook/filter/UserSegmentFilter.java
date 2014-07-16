@@ -80,7 +80,8 @@ public class UserSegmentFilter implements Filter {
 	}
 
 	public long[] getMatchesUserSegmentIds(
-			long[] groupIds, AnonymousUser anonymousUser)
+			HttpServletRequest request, long[] groupIds,
+			AnonymousUser anonymousUser)
 		throws Exception {
 
 		if (ArrayUtil.isEmpty(groupIds)) {
@@ -93,7 +94,7 @@ public class UserSegmentFilter implements Filter {
 			UserSegmentLocalServiceUtil.getUserSegments(groupIds);
 
 		for (UserSegment userSegment : userSegments) {
-			if (matches(anonymousUser, userSegment)) {
+			if (matches(request, anonymousUser, userSegment)) {
 				userSegmentIds.add(userSegment.getUserSegmentId());
 			}
 		}
@@ -107,7 +108,9 @@ public class UserSegmentFilter implements Filter {
 		_intiRulesEngine();
 	}
 
-	public boolean matches(AnonymousUser anonymousUser, UserSegment userSegment)
+	public boolean matches(
+			HttpServletRequest request, AnonymousUser anonymousUser,
+			UserSegment userSegment)
 		throws Exception {
 
 		if (_rulesEngine == null) {
@@ -115,7 +118,7 @@ public class UserSegmentFilter implements Filter {
 		}
 
 		return _rulesEngine.matches(
-			anonymousUser, userSegment.getRuleInstances());
+			request, anonymousUser, userSegment.getRuleInstances());
 	}
 
 	protected long[] getGroupIds(HttpServletRequest request)
@@ -192,7 +195,7 @@ public class UserSegmentFilter implements Filter {
 
 			long[] groupIds = getGroupIds(request);
 
-			return getMatchesUserSegmentIds(groupIds, anonymousUser);
+			return getMatchesUserSegmentIds(request, groupIds, anonymousUser);
 		}
 		catch (Exception e) {
 			e.printStackTrace();

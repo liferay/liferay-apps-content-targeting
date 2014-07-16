@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -35,7 +37,8 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 
 	@Override
 	public boolean matches(
-		AnonymousUser anonymousUser, List<RuleInstance> ruleInstances) {
+		HttpServletRequest request, AnonymousUser anonymousUser,
+		List<RuleInstance> ruleInstances) {
 
 		for (RuleInstance ruleInstance : ruleInstances) {
 			Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
@@ -45,7 +48,7 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 			}
 
 			try {
-				if (!rule.evaluate(ruleInstance, anonymousUser)) {
+				if (!rule.evaluate(request, ruleInstance, anonymousUser)) {
 					return false;
 				}
 			}

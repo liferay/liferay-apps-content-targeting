@@ -23,6 +23,8 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Provides the Rule interface, allowing custom rule creation and evaluation
  * for the Content Targeting Portlet.
@@ -44,7 +46,8 @@ public interface Rule {
 	 *         <code>false</code> otherwise
 	 */
 	public boolean evaluate(
-			RuleInstance ruleInstance, AnonymousUser anonymousUser)
+			HttpServletRequest request, RuleInstance ruleInstance,
+			AnonymousUser anonymousUser)
 		throws Exception;
 
 	/**
