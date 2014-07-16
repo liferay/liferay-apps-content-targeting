@@ -35,9 +35,9 @@ public class TrackingActionInstanceServiceClpInvoker {
 		_methodName44 = "addTrackingActionInstance";
 
 		_methodParameterTypes44 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String", "long",
-				"java.lang.String", "java.lang.String",
-				"com.liferay.portal.service.ServiceContext"
+				"long", "java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName45 = "deleteTrackingActionInstance";
@@ -55,8 +55,9 @@ public class TrackingActionInstanceServiceClpInvoker {
 		_methodName48 = "updateTrackingActionInstance";
 
 		_methodParameterTypes48 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String",
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+				"long", "java.lang.String", "java.lang.String", "long",
+				"java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
 			};
 	}
 
@@ -79,10 +80,10 @@ public class TrackingActionInstanceServiceClpInvoker {
 			return TrackingActionInstanceServiceUtil.addTrackingActionInstance(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
-				(java.lang.String)arguments[3],
-				((Long)arguments[4]).longValue(),
-				(java.lang.String)arguments[5], (java.lang.String)arguments[6],
-				(com.liferay.portal.service.ServiceContext)arguments[7]);
+				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
+				((Long)arguments[5]).longValue(),
+				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
+				(com.liferay.portal.service.ServiceContext)arguments[8]);
 		}
 
 		if (_methodName45.equals(name) &&
@@ -103,10 +104,10 @@ public class TrackingActionInstanceServiceClpInvoker {
 		if (_methodName48.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
 			return TrackingActionInstanceServiceUtil.updateTrackingActionInstance(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1],
-				((Long)arguments[2]).longValue(),
-				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
-				(com.liferay.portal.service.ServiceContext)arguments[5]);
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				((Long)arguments[3]).longValue(),
+				(java.lang.String)arguments[4], (java.lang.String)arguments[5],
+				(com.liferay.portal.service.ServiceContext)arguments[6]);
 		}
 
 		throw new UnsupportedOperationException();

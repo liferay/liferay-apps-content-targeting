@@ -133,9 +133,9 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 		_methodName64 = "addTrackingActionInstance";
 
 		_methodParameterTypes64 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String", "long",
-				"java.lang.String", "java.lang.String",
-				"com.liferay.portal.service.ServiceContext"
+				"long", "java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName65 = "getTrackingActionInstances";
@@ -149,8 +149,9 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 		_methodName67 = "updateTrackingActionInstance";
 
 		_methodParameterTypes67 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String",
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+				"long", "java.lang.String", "java.lang.String", "long",
+				"java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
 			};
 	}
 
@@ -284,10 +285,10 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 			return TrackingActionInstanceLocalServiceUtil.addTrackingActionInstance(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
-				(java.lang.String)arguments[3],
-				((Long)arguments[4]).longValue(),
-				(java.lang.String)arguments[5], (java.lang.String)arguments[6],
-				(com.liferay.portal.service.ServiceContext)arguments[7]);
+				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
+				((Long)arguments[5]).longValue(),
+				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
+				(com.liferay.portal.service.ServiceContext)arguments[8]);
 		}
 
 		if (_methodName65.equals(name) &&
@@ -303,10 +304,10 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 		if (_methodName67.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
 			return TrackingActionInstanceLocalServiceUtil.updateTrackingActionInstance(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1],
-				((Long)arguments[2]).longValue(),
-				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
-				(com.liferay.portal.service.ServiceContext)arguments[5]);
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				((Long)arguments[3]).longValue(),
+				(java.lang.String)arguments[4], (java.lang.String)arguments[5],
+				(com.liferay.portal.service.ServiceContext)arguments[6]);
 		}
 
 		throw new UnsupportedOperationException();

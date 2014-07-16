@@ -237,6 +237,21 @@ public interface TrackingActionInstanceModel extends BaseModel<TrackingActionIns
 	public void setCampaignId(long campaignId);
 
 	/**
+	 * Returns the alias of this tracking action instance.
+	 *
+	 * @return the alias of this tracking action instance
+	 */
+	@AutoEscape
+	public String getAlias();
+
+	/**
+	 * Sets the alias of this tracking action instance.
+	 *
+	 * @param alias the alias of this tracking action instance
+	 */
+	public void setAlias(String alias);
+
+	/**
 	 * Returns the referrer class name of this tracking action instance.
 	 *
 	 * @return the referrer class name of this tracking action instance

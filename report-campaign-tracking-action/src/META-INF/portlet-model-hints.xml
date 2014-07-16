@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction">
+		<field name="campaignTrackingActionId" type="long" />
+		<field name="campaignId" type="long" />
+		<field name="userSegmentId" type="long" />
+		<field name="alias" type="String" />
+		<field name="plid" type="long" />
+		<field name="elementId" type="String" />
+		<field name="eventType" type="String" />
+		<field name="count" type="int" />
+		<field name="modifiedDate" type="Date" />
+	</model>
+</model-hints>

@@ -88,6 +88,9 @@
 			</basic>
 			<basic name="trackingActionKey" />
 			<basic name="campaignId" />
+			<basic name="alias">
+				<column name="ALIAS_" />
+			</basic>
 			<basic name="referrerClassName" />
 			<basic name="referrerClassPK" />
 			<basic name="elementId" />

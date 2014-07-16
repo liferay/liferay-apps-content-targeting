@@ -60,6 +60,7 @@ create table CT_TrackingActionInstance (
 	modifiedDate DATE null,
 	trackingActionKey VARCHAR(75) null,
 	campaignId LONG,
+	alias_ VARCHAR(75) null,
 	referrerClassName VARCHAR(75) null,
 	referrerClassPK LONG,
 	elementId VARCHAR(75) null,

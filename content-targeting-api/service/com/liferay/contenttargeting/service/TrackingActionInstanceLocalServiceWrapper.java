@@ -361,14 +361,15 @@ public class TrackingActionInstanceLocalServiceWrapper
 	@Override
 	public com.liferay.contenttargeting.model.TrackingActionInstance addTrackingActionInstance(
 		long userId, java.lang.String trackingActionKey, long campaignId,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String alias, java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _trackingActionInstanceLocalService.addTrackingActionInstance(userId,
-			trackingActionKey, campaignId, referrerClassName, referrerClassPK,
-			elementId, eventType, serviceContext);
+			trackingActionKey, campaignId, alias, referrerClassName,
+			referrerClassPK, elementId, eventType, serviceContext);
 	}
 
 	@Override
@@ -386,14 +387,14 @@ public class TrackingActionInstanceLocalServiceWrapper
 
 	@Override
 	public com.liferay.contenttargeting.model.TrackingActionInstance updateTrackingActionInstance(
-		long trackingActionInstanceId, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType,
+		long trackingActionInstanceId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _trackingActionInstanceLocalService.updateTrackingActionInstance(trackingActionInstanceId,
-			referrerClassName, referrerClassPK, elementId, eventType,
+			alias, referrerClassName, referrerClassPK, elementId, eventType,
 			serviceContext);
 	}
 

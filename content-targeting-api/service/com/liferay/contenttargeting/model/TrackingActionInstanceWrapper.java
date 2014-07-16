@@ -62,6 +62,7 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("trackingActionKey", getTrackingActionKey());
 		attributes.put("campaignId", getCampaignId());
+		attributes.put("alias", getAlias());
 		attributes.put("referrerClassName", getReferrerClassName());
 		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
@@ -131,6 +132,12 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 
 		if (campaignId != null) {
 			setCampaignId(campaignId);
+		}
+
+		String alias = (String)attributes.get("alias");
+
+		if (alias != null) {
+			setAlias(alias);
 		}
 
 		String referrerClassName = (String)attributes.get("referrerClassName");
@@ -401,6 +408,26 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	}
 
 	/**
+	* Returns the alias of this tracking action instance.
+	*
+	* @return the alias of this tracking action instance
+	*/
+	@Override
+	public java.lang.String getAlias() {
+		return _trackingActionInstance.getAlias();
+	}
+
+	/**
+	* Sets the alias of this tracking action instance.
+	*
+	* @param alias the alias of this tracking action instance
+	*/
+	@Override
+	public void setAlias(java.lang.String alias) {
+		_trackingActionInstance.setAlias(alias);
+	}
+
+	/**
 	* Returns the referrer class name of this tracking action instance.
 	*
 	* @return the referrer class name of this tracking action instance
@@ -544,8 +571,7 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.contenttargeting.model.TrackingActionInstance trackingActionInstance) {
+	public int compareTo(TrackingActionInstance trackingActionInstance) {
 		return _trackingActionInstance.compareTo(trackingActionInstance);
 	}
 
@@ -555,17 +581,17 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.contenttargeting.model.TrackingActionInstance> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<TrackingActionInstance> toCacheModel() {
 		return _trackingActionInstance.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.TrackingActionInstance toEscapedModel() {
+	public TrackingActionInstance toEscapedModel() {
 		return new TrackingActionInstanceWrapper(_trackingActionInstance.toEscapedModel());
 	}
 
 	@Override
-	public com.liferay.contenttargeting.model.TrackingActionInstance toUnescapedModel() {
+	public TrackingActionInstance toUnescapedModel() {
 		return new TrackingActionInstanceWrapper(_trackingActionInstance.toUnescapedModel());
 	}
 

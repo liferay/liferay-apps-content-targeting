@@ -160,26 +160,52 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 				"java.lang.String", "java.util.Date"
 			};
 
-		_methodName26 = "getAnalyticsEventsCount";
+		_methodName26 = "getAnalyticsEvents";
 
-		_methodParameterTypes26 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes26 = new String[] {
+				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "java.util.Date"
+			};
 
-		_methodName27 = "getAnalyticsEventsCount";
+		_methodName27 = "getAnalyticsEvents";
 
 		_methodParameterTypes27 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+				"java.lang.String", "java.lang.String", "java.util.Date"
 			};
 
 		_methodName28 = "getAnalyticsEventsCount";
 
-		_methodParameterTypes28 = new String[] {
+		_methodParameterTypes28 = new String[] { "long", "java.util.Date" };
+
+		_methodName29 = "getAnalyticsEventsCount";
+
+		_methodParameterTypes29 = new String[] {
+				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName30 = "getAnalyticsEventsCount";
+
+		_methodParameterTypes30 = new String[] {
 				"java.lang.String", "long", "java.lang.String", "long",
 				"java.lang.String", "java.util.Date"
 			};
 
-		_methodName29 = "getMaxAge";
+		_methodName31 = "getAnalyticsEventsCount";
 
-		_methodParameterTypes29 = new String[] {  };
+		_methodParameterTypes31 = new String[] {
+				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "java.util.Date"
+			};
+
+		_methodName32 = "getAnalyticsEventsCount";
+
+		_methodParameterTypes32 = new String[] {
+				"java.lang.String", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName33 = "getMaxAge";
+
+		_methodParameterTypes33 = new String[] {  };
 	}
 
 	@Override
@@ -1063,7 +1089,10 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	}
 
 	@Override
-	public int getAnalyticsEventsCount(long companyId, java.util.Date createDate)
+	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1071,6 +1100,92 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName26,
 					_methodParameterTypes26,
+					new Object[] {
+						ClpSerializer.translateInput(referrerClassName),
+						
+					referrerClassPK,
+						
+					ClpSerializer.translateInput(elementId),
+						
+					ClpSerializer.translateInput(eventType),
+						
+					ClpSerializer.translateInput(createDate)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.analytics.model.AnalyticsEvent>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
+					new Object[] {
+						ClpSerializer.translateInput(elementId),
+						
+					ClpSerializer.translateInput(eventType),
+						
+					ClpSerializer.translateInput(createDate)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.analytics.model.AnalyticsEvent>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int getAnalyticsEventsCount(long companyId, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						companyId,
 						
@@ -1108,8 +1223,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1152,8 +1267,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1192,14 +1307,101 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	}
 
 	@Override
+	public int getAnalyticsEventsCount(java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
+					new Object[] {
+						ClpSerializer.translateInput(referrerClassName),
+						
+					referrerClassPK,
+						
+					ClpSerializer.translateInput(elementId),
+						
+					ClpSerializer.translateInput(eventType),
+						
+					ClpSerializer.translateInput(createDate)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public int getAnalyticsEventsCount(java.lang.String elementId,
+		java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
+					new Object[] {
+						ClpSerializer.translateInput(elementId),
+						
+					ClpSerializer.translateInput(eventType),
+						
+					ClpSerializer.translateInput(createDate)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
 	public java.util.Date getMaxAge()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1283,4 +1485,12 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	private String[] _methodParameterTypes28;
 	private String _methodName29;
 	private String[] _methodParameterTypes29;
+	private String _methodName30;
+	private String[] _methodParameterTypes30;
+	private String _methodName31;
+	private String[] _methodParameterTypes31;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
+	private String _methodName33;
+	private String[] _methodParameterTypes33;
 }

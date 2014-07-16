@@ -69,14 +69,15 @@ public class TrackingActionInstanceServiceSoap {
 	*/
 	public static com.liferay.contenttargeting.model.TrackingActionInstanceSoap addTrackingActionInstance(
 		long userId, java.lang.String trackingActionKey, long campaignId,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String alias, java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.contenttargeting.model.TrackingActionInstance returnValue =
 				TrackingActionInstanceServiceUtil.addTrackingActionInstance(userId,
-					trackingActionKey, campaignId, referrerClassName,
+					trackingActionKey, campaignId, alias, referrerClassName,
 					referrerClassPK, elementId, eventType, serviceContext);
 
 			return com.liferay.contenttargeting.model.TrackingActionInstanceSoap.toSoapModel(returnValue);
@@ -133,16 +134,16 @@ public class TrackingActionInstanceServiceSoap {
 	}
 
 	public static com.liferay.contenttargeting.model.TrackingActionInstanceSoap updateTrackingActionInstance(
-		long trackingActionInstanceId, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType,
+		long trackingActionInstanceId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.contenttargeting.model.TrackingActionInstance returnValue =
 				TrackingActionInstanceServiceUtil.updateTrackingActionInstance(trackingActionInstanceId,
-					referrerClassName, referrerClassPK, elementId, eventType,
-					serviceContext);
+					alias, referrerClassName, referrerClassPK, elementId,
+					eventType, serviceContext);
 
 			return com.liferay.contenttargeting.model.TrackingActionInstanceSoap.toSoapModel(returnValue);
 		}

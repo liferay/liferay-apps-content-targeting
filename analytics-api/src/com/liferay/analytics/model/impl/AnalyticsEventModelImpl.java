@@ -104,9 +104,10 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 	public static long CLASSPK_COLUMN_BITMASK = 2L;
 	public static long COMPANYID_COLUMN_BITMASK = 4L;
 	public static long CREATEDATE_COLUMN_BITMASK = 8L;
-	public static long EVENTTYPE_COLUMN_BITMASK = 16L;
-	public static long REFERRERCLASSNAME_COLUMN_BITMASK = 32L;
-	public static long REFERRERCLASSPK_COLUMN_BITMASK = 64L;
+	public static long ELEMENTID_COLUMN_BITMASK = 16L;
+	public static long EVENTTYPE_COLUMN_BITMASK = 32L;
+	public static long REFERRERCLASSNAME_COLUMN_BITMASK = 64L;
+	public static long REFERRERCLASSPK_COLUMN_BITMASK = 128L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -508,7 +509,17 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public void setElementId(String elementId) {
+		_columnBitmask |= ELEMENTID_COLUMN_BITMASK;
+
+		if (_originalElementId == null) {
+			_originalElementId = _elementId;
+		}
+
 		_elementId = elementId;
+	}
+
+	public String getOriginalElementId() {
+		return GetterUtil.getString(_originalElementId);
 	}
 
 	@JSON
@@ -753,6 +764,8 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 		analyticsEventModelImpl._originalReferrerClassPK = analyticsEventModelImpl._referrerClassPK;
 
 		analyticsEventModelImpl._setOriginalReferrerClassPK = false;
+
+		analyticsEventModelImpl._originalElementId = analyticsEventModelImpl._elementId;
 
 		analyticsEventModelImpl._originalEventType = analyticsEventModelImpl._eventType;
 
@@ -1003,6 +1016,7 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 	private long _originalReferrerClassPK;
 	private boolean _setOriginalReferrerClassPK;
 	private String _elementId;
+	private String _originalElementId;
 	private String _eventType;
 	private String _originalEventType;
 	private String _clientIP;

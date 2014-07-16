@@ -2876,6 +2876,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		trackingActionInstanceImpl.setModifiedDate(trackingActionInstance.getModifiedDate());
 		trackingActionInstanceImpl.setTrackingActionKey(trackingActionInstance.getTrackingActionKey());
 		trackingActionInstanceImpl.setCampaignId(trackingActionInstance.getCampaignId());
+		trackingActionInstanceImpl.setAlias(trackingActionInstance.getAlias());
 		trackingActionInstanceImpl.setReferrerClassName(trackingActionInstance.getReferrerClassName());
 		trackingActionInstanceImpl.setReferrerClassPK(trackingActionInstance.getReferrerClassPK());
 		trackingActionInstanceImpl.setElementId(trackingActionInstance.getElementId());
@@ -3207,7 +3208,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
 	private static Log _log = LogFactoryUtil.getLog(TrackingActionInstancePersistenceImpl.class);
 	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
-				"uuid"
+				"uuid", "alias"
 			});
 	private static TrackingActionInstance _nullTrackingActionInstance = new TrackingActionInstanceImpl() {
 			@Override

@@ -38,7 +38,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -60,6 +60,8 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		sb.append(trackingActionKey);
 		sb.append(", campaignId=");
 		sb.append(campaignId);
+		sb.append(", alias=");
+		sb.append(alias);
 		sb.append(", referrerClassName=");
 		sb.append(referrerClassName);
 		sb.append(", referrerClassPK=");
@@ -119,6 +121,13 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 
 		trackingActionInstanceImpl.setCampaignId(campaignId);
 
+		if (alias == null) {
+			trackingActionInstanceImpl.setAlias(StringPool.BLANK);
+		}
+		else {
+			trackingActionInstanceImpl.setAlias(alias);
+		}
+
 		if (referrerClassName == null) {
 			trackingActionInstanceImpl.setReferrerClassName(StringPool.BLANK);
 		}
@@ -159,6 +168,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		modifiedDate = objectInput.readLong();
 		trackingActionKey = objectInput.readUTF();
 		campaignId = objectInput.readLong();
+		alias = objectInput.readUTF();
 		referrerClassName = objectInput.readUTF();
 		referrerClassPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
@@ -199,6 +209,13 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 
 		objectOutput.writeLong(campaignId);
 
+		if (alias == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(alias);
+		}
+
 		if (referrerClassName == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -233,6 +250,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 	public long modifiedDate;
 	public String trackingActionKey;
 	public long campaignId;
+	public String alias;
 	public String referrerClassName;
 	public long referrerClassPK;
 	public String elementId;

@@ -843,6 +843,207 @@ public class AnalyticsEventUtil {
 	}
 
 	/**
+	* Returns all the analytics events where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @return the matching analytics events
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.analytics.model.AnalyticsEvent> findByE_E_GtD(
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByE_E_GtD(elementId, eventType, createDate);
+	}
+
+	/**
+	* Returns a range of all the analytics events where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @return the range of matching analytics events
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.analytics.model.AnalyticsEvent> findByE_E_GtD(
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByE_E_GtD(elementId, eventType, createDate, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the analytics events where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching analytics events
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.analytics.model.AnalyticsEvent> findByE_E_GtD(
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByE_E_GtD(elementId, eventType, createDate, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first analytics event in the ordered set where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching analytics event
+	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.analytics.model.AnalyticsEvent findByE_E_GtD_First(
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.analytics.NoSuchEventException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByE_E_GtD_First(elementId, eventType, createDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first analytics event in the ordered set where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.analytics.model.AnalyticsEvent fetchByE_E_GtD_First(
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByE_E_GtD_First(elementId, eventType, createDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last analytics event in the ordered set where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching analytics event
+	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.analytics.model.AnalyticsEvent findByE_E_GtD_Last(
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.analytics.NoSuchEventException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByE_E_GtD_Last(elementId, eventType, createDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last analytics event in the ordered set where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.analytics.model.AnalyticsEvent fetchByE_E_GtD_Last(
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByE_E_GtD_Last(elementId, eventType, createDate,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the analytics events before and after the current analytics event in the ordered set where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param analyticsEventId the primary key of the current analytics event
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next analytics event
+	* @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.analytics.model.AnalyticsEvent[] findByE_E_GtD_PrevAndNext(
+		long analyticsEventId, java.lang.String elementId,
+		java.lang.String eventType, java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.analytics.NoSuchEventException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByE_E_GtD_PrevAndNext(analyticsEventId, elementId,
+			eventType, createDate, orderByComparator);
+	}
+
+	/**
+	* Removes all the analytics events where elementId = &#63; and eventType = &#63; and createDate &gt; &#63; from the database.
+	*
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByE_E_GtD(java.lang.String elementId,
+		java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByE_E_GtD(elementId, eventType, createDate);
+	}
+
+	/**
+	* Returns the number of analytics events where elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @return the number of matching analytics events
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByE_E_GtD(java.lang.String elementId,
+		java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByE_E_GtD(elementId, eventType, createDate);
+	}
+
+	/**
 	* Returns all the analytics events where className = &#63; and classPK = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and eventType = &#63; and createDate &gt; &#63;.
 	*
 	* @param className the class name
@@ -1095,6 +1296,245 @@ public class AnalyticsEventUtil {
 		return getPersistence()
 				   .countByC_C_R_R_E_GtD(className, classPK, referrerClassName,
 			referrerClassPK, eventType, createDate);
+	}
+
+	/**
+	* Returns all the analytics events where referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @return the matching analytics events
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.analytics.model.AnalyticsEvent> findByR_R_E_E_GtD(
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByR_R_E_E_GtD(referrerClassName, referrerClassPK,
+			elementId, eventType, createDate);
+	}
+
+	/**
+	* Returns a range of all the analytics events where referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @return the range of matching analytics events
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.analytics.model.AnalyticsEvent> findByR_R_E_E_GtD(
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByR_R_E_E_GtD(referrerClassName, referrerClassPK,
+			elementId, eventType, createDate, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the analytics events where referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching analytics events
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.analytics.model.AnalyticsEvent> findByR_R_E_E_GtD(
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByR_R_E_E_GtD(referrerClassName, referrerClassPK,
+			elementId, eventType, createDate, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the first analytics event in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching analytics event
+	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.analytics.model.AnalyticsEvent findByR_R_E_E_GtD_First(
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.analytics.NoSuchEventException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByR_R_E_E_GtD_First(referrerClassName, referrerClassPK,
+			elementId, eventType, createDate, orderByComparator);
+	}
+
+	/**
+	* Returns the first analytics event in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.analytics.model.AnalyticsEvent fetchByR_R_E_E_GtD_First(
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByR_R_E_E_GtD_First(referrerClassName,
+			referrerClassPK, elementId, eventType, createDate, orderByComparator);
+	}
+
+	/**
+	* Returns the last analytics event in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching analytics event
+	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.analytics.model.AnalyticsEvent findByR_R_E_E_GtD_Last(
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.analytics.NoSuchEventException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByR_R_E_E_GtD_Last(referrerClassName, referrerClassPK,
+			elementId, eventType, createDate, orderByComparator);
+	}
+
+	/**
+	* Returns the last analytics event in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.analytics.model.AnalyticsEvent fetchByR_R_E_E_GtD_Last(
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByR_R_E_E_GtD_Last(referrerClassName, referrerClassPK,
+			elementId, eventType, createDate, orderByComparator);
+	}
+
+	/**
+	* Returns the analytics events before and after the current analytics event in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param analyticsEventId the primary key of the current analytics event
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next analytics event
+	* @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.analytics.model.AnalyticsEvent[] findByR_R_E_E_GtD_PrevAndNext(
+		long analyticsEventId, java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType, java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.analytics.NoSuchEventException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByR_R_E_E_GtD_PrevAndNext(analyticsEventId,
+			referrerClassName, referrerClassPK, elementId, eventType,
+			createDate, orderByComparator);
+	}
+
+	/**
+	* Removes all the analytics events where referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; and createDate &gt; &#63; from the database.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByR_R_E_E_GtD(java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence()
+			.removeByR_R_E_E_GtD(referrerClassName, referrerClassPK, elementId,
+			eventType, createDate);
+	}
+
+	/**
+	* Returns the number of analytics events where referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; and createDate &gt; &#63;.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param createDate the create date
+	* @return the number of matching analytics events
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByR_R_E_E_GtD(java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .countByR_R_E_E_GtD(referrerClassName, referrerClassPK,
+			elementId, eventType, createDate);
 	}
 
 	/**

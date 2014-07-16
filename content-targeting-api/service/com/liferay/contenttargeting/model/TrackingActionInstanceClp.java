@@ -86,6 +86,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("trackingActionKey", getTrackingActionKey());
 		attributes.put("campaignId", getCampaignId());
+		attributes.put("alias", getAlias());
 		attributes.put("referrerClassName", getReferrerClassName());
 		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
@@ -155,6 +156,12 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 
 		if (campaignId != null) {
 			setCampaignId(campaignId);
+		}
+
+		String alias = (String)attributes.get("alias");
+
+		if (alias != null) {
+			setAlias(alias);
 		}
 
 		String referrerClassName = (String)attributes.get("referrerClassName");
@@ -427,6 +434,29 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 	}
 
 	@Override
+	public String getAlias() {
+		return _alias;
+	}
+
+	@Override
+	public void setAlias(String alias) {
+		_alias = alias;
+
+		if (_trackingActionInstanceRemoteModel != null) {
+			try {
+				Class<?> clazz = _trackingActionInstanceRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setAlias", String.class);
+
+				method.invoke(_trackingActionInstanceRemoteModel, alias);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public String getReferrerClassName() {
 		return _referrerClassName;
 	}
@@ -608,6 +638,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 		clone.setModifiedDate(getModifiedDate());
 		clone.setTrackingActionKey(getTrackingActionKey());
 		clone.setCampaignId(getCampaignId());
+		clone.setAlias(getAlias());
 		clone.setReferrerClassName(getReferrerClassName());
 		clone.setReferrerClassPK(getReferrerClassPK());
 		clone.setElementId(getElementId());
@@ -661,7 +692,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -683,6 +714,8 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 		sb.append(getTrackingActionKey());
 		sb.append(", campaignId=");
 		sb.append(getCampaignId());
+		sb.append(", alias=");
+		sb.append(getAlias());
 		sb.append(", referrerClassName=");
 		sb.append(getReferrerClassName());
 		sb.append(", referrerClassPK=");
@@ -698,7 +731,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.contenttargeting.model.TrackingActionInstance");
@@ -745,6 +778,10 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 		sb.append(getCampaignId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>alias</column-name><column-value><![CDATA[");
+		sb.append(getAlias());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>referrerClassName</column-name><column-value><![CDATA[");
 		sb.append(getReferrerClassName());
 		sb.append("]]></column-value></column>");
@@ -777,6 +814,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 	private Date _modifiedDate;
 	private String _trackingActionKey;
 	private long _campaignId;
+	private String _alias;
 	private String _referrerClassName;
 	private long _referrerClassPK;
 	private String _elementId;

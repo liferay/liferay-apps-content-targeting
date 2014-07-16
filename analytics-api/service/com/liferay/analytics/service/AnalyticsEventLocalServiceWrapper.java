@@ -367,6 +367,27 @@ public class AnalyticsEventLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.getAnalyticsEvents(referrerClassName,
+			referrerClassPK, elementId, eventType, createDate);
+	}
+
+	@Override
+	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.getAnalyticsEvents(elementId,
+			eventType, createDate);
+	}
+
+	@Override
 	public int getAnalyticsEventsCount(long companyId, java.util.Date createDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -391,6 +412,25 @@ public class AnalyticsEventLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _analyticsEventLocalService.getAnalyticsEventsCount(className,
 			classPK, referrerClassName, referrerClassPK, eventType, createDate);
+	}
+
+	@Override
+	public int getAnalyticsEventsCount(java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.getAnalyticsEventsCount(referrerClassName,
+			referrerClassPK, elementId, eventType, createDate);
+	}
+
+	@Override
+	public int getAnalyticsEventsCount(java.lang.String elementId,
+		java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.getAnalyticsEventsCount(elementId,
+			eventType, createDate);
 	}
 
 	@Override
