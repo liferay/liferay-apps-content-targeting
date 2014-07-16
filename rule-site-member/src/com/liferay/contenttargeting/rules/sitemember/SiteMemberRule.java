@@ -19,21 +19,13 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.json.JSONException;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
-import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,26 +48,10 @@ public class SiteMemberRule extends BaseRule {
 			RuleInstance ruleInstance, AnonymousUser anonymousUser)
 		throws Exception {
 
-		String typeSettings = ruleInstance.getTypeSettings();
+		long siteId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-		try {
-			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
-
-			long siteId = jsonObj.getLong("siteId");
-
-			if (siteId <= 0) {
-				return false;
-			}
-
-			long roleId = jsonObj.getLong("roleId");
-
-			return UserGroupRoleLocalServiceUtil.hasUserGroupRole(
-				anonymousUser.getUserId(), siteId, roleId);
-		}
-		catch (JSONException e) {
-		}
-
-		return false;
+		return UserLocalServiceUtil.hasGroupUser(
+			siteId, anonymousUser.getUserId());
 	}
 
 	@Override
@@ -85,34 +61,16 @@ public class SiteMemberRule extends BaseRule {
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
-		String typeSettings = ruleInstance.getTypeSettings();
-
 		try {
-			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
-
-			long roleId = jsonObj.getLong("roleId");
-
-			Role role = RoleLocalServiceUtil.fetchRole(roleId);
-
-			if (role == null) {
-				return StringPool.BLANK;
-			}
-
-			long siteId = jsonObj.getLong("siteId");
+			long siteId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
 			Group group = GroupLocalServiceUtil.fetchGroup(siteId);
 
 			if (group == null) {
-				return role.getTitle(locale);
+				return StringPool.BLANK;
 			}
 
-			StringBundler sb = new StringBundler();
-
-			sb.append(role.getTitle(locale));
-			sb.append(StringPool.SPACE);
-			sb.append(group.getDescriptiveName(locale));
-
-			return sb.toString();
+			return group.getDescriptiveName(locale);
 		}
 		catch (Exception e) {
 		}
@@ -125,67 +83,22 @@ public class SiteMemberRule extends BaseRule {
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) {
 
-		long roleId = GetterUtil.getLong(values.get("roleId"));
-		long siteId = GetterUtil.getLong(values.get("siteId"));
-
-		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
-
-		jsonObj.put("roleId", roleId);
-		jsonObj.put("siteId", siteId);
-
-		return jsonObj.toString();
-	}
-
-	@Override
-	protected String getFormTemplatePath() {
-		return _FORM_TEMPLATE_PATH;
+		return values.get("siteId");
 	}
 
 	@Override
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
-		long roleId = 0;
 		long siteId = 0;
 
 		if (ruleInstance != null) {
-			String typeSettings = ruleInstance.getTypeSettings();
-
-			try {
-				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
-					typeSettings);
-
-				roleId = jsonObj.getLong("roleId");
-				siteId = jsonObj.getLong("siteId");
-			}
-			catch (JSONException jse) {
-			}
+			siteId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 		}
 
-		context.put("roleId", roleId);
 		context.put("siteId", siteId);
 
 		Company company = (Company)context.get("company");
-
-		List<Role> roles = new ArrayList<Role>();
-
-		try {
-			roles = RoleLocalServiceUtil.getRoles(
-				company.getCompanyId(), new int[] {RoleConstants.TYPE_SITE});
-
-			Role role = RoleLocalServiceUtil.fetchRole(
-				company.getCompanyId(), RoleConstants.SITE_MEMBER);
-
-			List<Role> removeRoles = new ArrayList<Role>();
-
-			removeRoles.add(role);
-
-			roles = ListUtil.remove(roles, removeRoles);
-		}
-		catch (SystemException e) {
-		}
-
-		context.put("roles", roles);
 
 		List<Group> sites = new ArrayList<Group>();
 
@@ -199,8 +112,5 @@ public class SiteMemberRule extends BaseRule {
 
 		context.put("sites", sites);
 	}
-
-	protected static final String _FORM_TEMPLATE_PATH =
-		"templates/ct_fields_site.ftl";
 
 }
