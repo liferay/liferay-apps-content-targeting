@@ -43,6 +43,8 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -53,7 +55,8 @@ public class SiteRoleRule extends BaseRule {
 
 	@Override
 	public boolean evaluate(
-			RuleInstance ruleInstance, AnonymousUser anonymousUser)
+			HttpServletRequest request, RuleInstance ruleInstance,
+			AnonymousUser anonymousUser)
 		throws Exception {
 
 		String typeSettings = ruleInstance.getTypeSettings();
