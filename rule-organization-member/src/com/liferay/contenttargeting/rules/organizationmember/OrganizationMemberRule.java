@@ -22,9 +22,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,6 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import com.liferay.portal.service.UserLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -48,10 +48,11 @@ public class OrganizationMemberRule extends BaseRule {
 			RuleInstance ruleInstance, AnonymousUser anonymousUser)
 		throws Exception {
 
-		long siteId = GetterUtil.getLong(ruleInstance.getTypeSettings());
+		long organizationId = GetterUtil.getLong(
+			ruleInstance.getTypeSettings());
 
-		return UserLocalServiceUtil.hasGroupUser(
-			siteId, anonymousUser.getUserId());
+		return UserLocalServiceUtil.hasOrganizationUser(
+			organizationId, anonymousUser.getUserId());
 	}
 
 	@Override
@@ -62,17 +63,19 @@ public class OrganizationMemberRule extends BaseRule {
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
 		try {
-			long siteId = GetterUtil.getLong(ruleInstance.getTypeSettings());
+			long organizationId = GetterUtil.getLong(
+				ruleInstance.getTypeSettings());
 
-			Group group = GroupLocalServiceUtil.fetchGroup(siteId);
+			Organization organization =
+				OrganizationLocalServiceUtil.fetchOrganization(organizationId);
 
-			if (group == null) {
+			if (organization == null) {
 				return StringPool.BLANK;
 			}
 
-			return group.getDescriptiveName(locale);
+			return organization.getName();
 		}
-		catch (Exception e) {
+		catch (SystemException e) {
 		}
 
 		return StringPool.BLANK;
@@ -83,34 +86,34 @@ public class OrganizationMemberRule extends BaseRule {
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) {
 
-		return values.get("siteId");
+		return values.get("organizationId");
 	}
 
 	@Override
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
-		long siteId = 0;
+		long organizationId = 0;
 
 		if (ruleInstance != null) {
-			siteId = GetterUtil.getLong(ruleInstance.getTypeSettings());
+			organizationId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 		}
 
-		context.put("siteId", siteId);
+		context.put("organizationId", organizationId);
 
 		Company company = (Company)context.get("company");
 
-		List<Group> sites = new ArrayList<Group>();
+		List<Organization> organizations = new ArrayList<Organization>();
 
 		try {
-			sites = GroupLocalServiceUtil.getGroups(
-				company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
-				true);
+			organizations = OrganizationLocalServiceUtil.getOrganizations(
+				company.getCompanyId(),
+				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
 		}
 		catch (SystemException e) {
 		}
 
-		context.put("sites", sites);
+		context.put("organizations", organizations);
 	}
 
 }
