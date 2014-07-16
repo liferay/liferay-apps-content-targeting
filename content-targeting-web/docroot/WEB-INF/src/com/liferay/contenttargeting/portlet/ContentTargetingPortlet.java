@@ -686,6 +686,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(rules);
 
+		List<RuleInstance> ruleInstances = ListUtil.copy(
+			_ruleInstanceService.getRuleInstances(userSegmentId));
+
 		for (int i = 0; i < jSONArray.length(); i++) {
 			JSONObject jSONObjectRule = jSONArray.getJSONObject(i);
 
@@ -712,8 +715,11 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			try {
 				if (ruleInstanceId > 0) {
-					_ruleInstanceService.updateRuleInstance(
-						ruleInstanceId, typeSettings, serviceContext);
+					RuleInstance ruleInstance =
+						_ruleInstanceService.updateRuleInstance(
+							ruleInstanceId, typeSettings, serviceContext);
+
+					ruleInstances.remove(ruleInstance);
 				}
 				else {
 					_ruleInstanceService.addRuleInstance(
@@ -724,6 +730,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			catch (Exception e) {
 				_log.error("Cannot update rule", e);
 			}
+		}
+
+		// Delete removed rules
+
+		for (RuleInstance ruleInstance : ruleInstances) {
+			_ruleInstanceService.deleteRuleInstance(
+				ruleInstance.getRuleInstanceId());
+
 		}
 	}
 
@@ -750,6 +764,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		String trackingActions = jSONObject.getString("fields");
 
 		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(trackingActions);
+
+		List<TrackingActionInstance> trackingActionInstances = ListUtil.copy(
+			_trackingActionInstanceService.getTrackingActionInstances(
+				campaignId));
 
 		for (int i = 0; i < jSONArray.length(); i++) {
 			JSONObject jSONObjectRule = jSONArray.getJSONObject(i);
@@ -779,9 +797,15 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			try {
 				if (trackingActionInstanceId > 0) {
-					_trackingActionInstanceService.updateTrackingActionInstance(
-						trackingActionInstanceId, alias, referrerClassName,
-						referrerClassPK, elementId, eventType, serviceContext);
+					TrackingActionInstance trackingActionInstance =
+						_trackingActionInstanceService.
+							updateTrackingActionInstance(
+								trackingActionInstanceId, alias,
+								referrerClassName, referrerClassPK, elementId,
+								eventType, serviceContext);
+
+					trackingActionInstances.remove(
+						trackingActionInstance.getTrackingActionInstanceId());
 				}
 				else {
 					_trackingActionInstanceService.addTrackingActionInstance(
@@ -792,6 +816,15 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			}
 			catch (Exception e) {
 				_log.error("Cannot update tracking action", e);
+			}
+
+			// Delete removed Tracking Actions
+
+			for (TrackingActionInstance trackingActionInstance :
+					trackingActionInstances) {
+
+				_trackingActionInstanceService.deleteTrackingActionInstance(
+					trackingActionInstance.getTrackingActionInstanceId());
 			}
 		}
 	}
