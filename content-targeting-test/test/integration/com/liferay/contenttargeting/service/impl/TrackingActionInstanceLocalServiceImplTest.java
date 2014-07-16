@@ -23,6 +23,7 @@ import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalService;
@@ -89,8 +90,8 @@ public class TrackingActionInstanceLocalServiceImplTest {
 		TrackingActionInstance trackingActionInstance =
 			_trackingActionInstanceLocalService.addTrackingActionInstance(
 					TestUtil.getUserId(), "tracking-action-key",
-					_campaign.getCampaignId(), null, 1, null, null,
-					_serviceContext);
+					_campaign.getCampaignId(), StringPool.BLANK, null, 1, null,
+					null, _serviceContext);
 
 		Assert.assertEquals(
 			initTrackingActionInstancesCount + 1,
@@ -114,7 +115,8 @@ public class TrackingActionInstanceLocalServiceImplTest {
 
 		_trackingActionInstanceLocalService.addTrackingActionInstance(
 			TestUtil.getUserId(), "tracking-action-key",
-			_campaign.getCampaignId(), null, 1, null, null, _serviceContext);
+			_campaign.getCampaignId(), StringPool.BLANK, null, 1, null, null,
+			_serviceContext);
 
 		_campaignLocalService.deleteCampaign(_campaign.getCampaignId());
 
