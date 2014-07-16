@@ -1,34 +1,16 @@
-*~
-*-ext.properties
-*.bak
-*.ipr
-*.iws
-*.processed
-*.swp
-.ant_targets
-.ant-targets-build.xml
-.ivy
-.sass-cache
-.sass_cache_*.css
-_sass_cache_*.css
-ivy.xml.MD5
-
 /*/bin
 /*/classes
 /*/ivy.xml.MD5
-/*/temp
+/*/javadoc
+/*/lib
 /*/test-classes
 /*/test-results
-/*/tmp
 
 /*/docroot/WEB-INF/classes
-/*/docroot/WEB-INF/lib/*.jar
-/*/lib/*.jar
+/*/docroot/WEB-INF/lib
 
-/build.*.properties
 /ivy.idea.properties
 
 .idea/workspace.xml
 .idea/rebel_project.xml
 .idea/dataSources.*
-.idea/libraries
