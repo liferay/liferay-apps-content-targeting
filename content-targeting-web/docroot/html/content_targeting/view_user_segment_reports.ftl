@@ -30,8 +30,14 @@
 	>
 		<#list userSegmentReportsTemplates as template>
 			<@liferay_ui["section"]>
+				<@portlet["renderURL"] var="redirectURL">
+					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_USER_SEGMENT_REPORTS}" />
+					<@portlet["param"] name="tabs2" value="${template.getName()}" />
+					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+				</@>
+
 				<@portlet["actionURL"] name="updateReport" var="updateReportURL">
-					<@portlet["param"] name="redirect" value="${currentURL}" />
+					<@portlet["param"] name="redirect" value="${redirectURL}" />
 					<@portlet["param"] name="reportKey" value="${template.getReportKey()}" />
 				</@>
 
