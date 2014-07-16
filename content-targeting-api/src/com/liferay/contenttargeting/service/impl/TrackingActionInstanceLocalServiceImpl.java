@@ -46,8 +46,8 @@ public class TrackingActionInstanceLocalServiceImpl
 	@Override
 	public TrackingActionInstance addTrackingActionInstance(
 			long userId, String trackingActionKey, long campaignId,
-			String referrerClassName, long referrerClassPK, String elementId,
-			String eventType, ServiceContext serviceContext)
+			String alias, String referrerClassName, long referrerClassPK,
+			String elementId, String eventType, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		User user = UserLocalServiceUtil.getUser(userId);
@@ -70,6 +70,7 @@ public class TrackingActionInstanceLocalServiceImpl
 			serviceContext.getModifiedDate(now));
 		trackingActionInstance.setTrackingActionKey(trackingActionKey);
 		trackingActionInstance.setCampaignId(campaignId);
+		trackingActionInstance.setAlias(alias);
 		trackingActionInstance.setReferrerClassName(referrerClassName);
 		trackingActionInstance.setReferrerClassPK(referrerClassPK);
 		trackingActionInstance.setElementId(elementId);
@@ -97,9 +98,9 @@ public class TrackingActionInstanceLocalServiceImpl
 
 	@Override
 	public TrackingActionInstance updateTrackingActionInstance(
-			long trackingActionInstanceId, String referrerClassName,
-			long referrerClassPK, String elementId, String eventType,
-			ServiceContext serviceContext)
+			long trackingActionInstanceId, String alias,
+			String referrerClassName, long referrerClassPK, String elementId,
+			String eventType, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Date now = new Date();
@@ -110,6 +111,7 @@ public class TrackingActionInstanceLocalServiceImpl
 
 		trackingActionInstance.setModifiedDate(
 			serviceContext.getModifiedDate(now));
+		trackingActionInstance.setAlias(alias);
 		trackingActionInstance.setReferrerClassName(referrerClassName);
 		trackingActionInstance.setReferrerClassPK(referrerClassPK);
 		trackingActionInstance.setElementId(elementId);

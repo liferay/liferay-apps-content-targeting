@@ -769,6 +769,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			trackingAction.processTrackingAction(request, response);
 
+			String alias = ParamUtil.getString(request, "alias");
 			String referrerClassName = ParamUtil.getString(
 				request, "referrerClassName");
 			long referrerClassPK = ParamUtil.getLong(
@@ -779,12 +780,12 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			try {
 				if (trackingActionInstanceId > 0) {
 					_trackingActionInstanceService.updateTrackingActionInstance(
-						trackingActionInstanceId, referrerClassName,
+						trackingActionInstanceId, alias, referrerClassName,
 						referrerClassPK, elementId, eventType, serviceContext);
 				}
 				else {
 					_trackingActionInstanceService.addTrackingActionInstance(
-						themeDisplay.getUserId(), type, campaignId,
+						themeDisplay.getUserId(), type, campaignId, alias,
 						referrerClassName, referrerClassPK, elementId,
 						eventType, serviceContext);
 				}

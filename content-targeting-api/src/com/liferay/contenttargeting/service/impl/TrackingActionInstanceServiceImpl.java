@@ -50,15 +50,15 @@ public class TrackingActionInstanceServiceImpl
 	@Override
 	public TrackingActionInstance addTrackingActionInstance(
 			long userId, String trackingActionKey, long campaignId,
-			String referrerClassName, long referrerClassPK, String elementId,
-			String eventType, ServiceContext serviceContext)
+			String alias, String referrerClassName, long referrerClassPK,
+			String elementId, String eventType, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		CampaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
 
 		return trackingActionInstanceLocalService.addTrackingActionInstance(
-			userId, trackingActionKey, campaignId, referrerClassName,
+			userId, trackingActionKey, campaignId, alias, referrerClassName,
 			referrerClassPK, elementId, eventType, serviceContext);
 	}
 
@@ -99,9 +99,9 @@ public class TrackingActionInstanceServiceImpl
 
 	@Override
 	public TrackingActionInstance updateTrackingActionInstance(
-			long trackingActionInstanceId, String referrerClassName,
-			long referrerClassPK, String elementId, String eventType,
-			ServiceContext serviceContext)
+			long trackingActionInstanceId, String alias,
+			String referrerClassName, long referrerClassPK, String elementId,
+			String eventType, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		TrackingActionInstance trackingActionInstance =
@@ -113,7 +113,7 @@ public class TrackingActionInstanceServiceImpl
 			ActionKeys.UPDATE);
 
 		return trackingActionInstanceLocalService.updateTrackingActionInstance(
-			trackingActionInstanceId, referrerClassName, referrerClassPK,
+			trackingActionInstanceId, alias, referrerClassName, referrerClassPK,
 			elementId, eventType, serviceContext);
 	}
 

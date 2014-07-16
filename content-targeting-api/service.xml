@@ -111,6 +111,7 @@
 
 		<column name="trackingActionKey" type="String" />
 		<column name="campaignId" type="long" />
+		<column name="alias" type="String" />
 		<column name="referrerClassName" type="String" />
 		<column name="referrerClassPK" type="long" />
 		<column name="elementId" type="String" />

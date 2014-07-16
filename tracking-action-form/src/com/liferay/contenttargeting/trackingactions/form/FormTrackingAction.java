@@ -62,14 +62,17 @@ public class FormTrackingAction extends BaseTrackingAction {
 		TrackingActionInstance trackingActionInstance,
 		Map<String, Object> context) {
 
+		String alias = StringPool.BLANK;
 		String elementId = StringPool.BLANK;
 		String eventType = StringPool.BLANK;
 
 		if (trackingActionInstance != null) {
+			alias = trackingActionInstance.getAlias();
 			elementId = trackingActionInstance.getElementId();
 			eventType = trackingActionInstance.getEventType();
 		}
 
+		context.put("alias", alias);
 		context.put("elementId", elementId);
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
