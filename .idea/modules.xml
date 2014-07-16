@@ -20,6 +20,7 @@
       <module fileurl="file://$PROJECT_DIR$/rule-ip-geocode/rule-ip-geocode.iml" filepath="$PROJECT_DIR$/rule-ip-geocode/rule-ip-geocode.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-role/rule-role.iml" filepath="$PROJECT_DIR$/rule-role/rule-role.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-score-points/rule-score-points.iml" filepath="$PROJECT_DIR$/rule-score-points/rule-score-points.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule-site-member/rule-site-member.iml" filepath="$PROJECT_DIR$/rule-site-member/rule-site-member.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-time/rule-time.iml" filepath="$PROJECT_DIR$/rule-time/rule-time.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" filepath="$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-link/tracking-action-link.iml" filepath="$PROJECT_DIR$/tracking-action-link/tracking-action-link.iml" />
