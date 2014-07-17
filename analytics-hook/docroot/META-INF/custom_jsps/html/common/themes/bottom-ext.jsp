@@ -21,36 +21,36 @@ long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 %>
 
 <aui:script position="inline" use="aui-base">
-	var trackFormEvent = function(eventType, form) {
+	var trackElementEvent = function(eventType, element) {
 		Liferay.Analytics.track(
 			eventType,
 			{
 				className: '<%= Layout.class.getName() %>',
 				classPK: '<%= plid %>',
-				elementId: form.attr('id'),
+				elementId: element.attr('id'),
 				referrerClassName: 'com.liferay.contenttargeting.model.UserSegment',
 				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
 			}
 		);
 	};
 
+	var DOC = A.getDoc();
+
 	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view") %>'>
-		A.all('form').each(A.bind(trackFormEvent, this, 'view'));
+		A.all('form').each(A.bind(trackElementEvent, this, 'view'));
 	</c:if>
 
 	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit") %>'>
 		Liferay.on(
 			'submitForm',
 			function(event) {
-				trackFormEvent('submit', event.form);
+				trackElementEvent('submit', event.form);
 				Liferay.Analytics.flush();
 			}
 		);
 	</c:if>
 
 	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact") %>'>
-		var DOC = A.getDoc();
-
 		var interactedForms = [];
 
 		DOC.delegate(
@@ -63,10 +63,28 @@ long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 				if (interactedForms.indexOf(formId) === -1) {
 					interactedForms.push(formId);
 
-					trackFormEvent('interact', form);
+					trackElementEvent('interact', form);
 				}
 			},
 			'form'
+		);
+	</c:if>
+
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.click") %>'>
+		DOC.delegate(
+			'click',
+			function(event) {
+				event.preventDefault();
+
+				var link = event.currentTarget;
+
+				trackElementEvent('click', link);
+
+				Liferay.Analytics.flush();
+
+				document.location = link.attr('href');
+			},
+			'a'
 		);
 	</c:if>
 
