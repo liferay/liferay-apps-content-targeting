@@ -17,7 +17,9 @@ package com.liferay.contenttargeting.trackingactions.link;
 import com.liferay.contenttargeting.api.model.BaseTrackingAction;
 import com.liferay.contenttargeting.api.model.TrackingAction;
 import com.liferay.contenttargeting.model.TrackingActionInstance;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.Locale;
@@ -38,22 +40,44 @@ public class LinkTrackingAction extends BaseTrackingAction {
 
 	@Override
 	public String getIcon() {
-		return null;
+		return "icon-link";
 	}
 
 	@Override
 	public String getSummary(
 		TrackingActionInstance trackingActionInstance, Locale locale) {
 
-		return null;
+		String summary = LanguageUtil.format(
+			locale, "tracking-action-x-in-link-x",
+			new Object[] {
+				trackingActionInstance.getEventType(),
+				trackingActionInstance.getElementId()
+			});
+
+		return summary;
 	}
 
 	@Override
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
 		Map<String, Object> context) {
+
+		String alias = StringPool.BLANK;
+		String elementId = StringPool.BLANK;
+		String eventType = StringPool.BLANK;
+
+		if (trackingActionInstance != null) {
+			alias = trackingActionInstance.getAlias();
+			elementId = trackingActionInstance.getElementId();
+			eventType = trackingActionInstance.getEventType();
+		}
+
+		context.put("alias", alias);
+		context.put("elementId", elementId);
+		context.put("eventType", eventType);
+		context.put("eventTypes", getEventTypes());
 	}
 
-	private static final String[] _EVENT_TYPES = {};
+	private static final String[] _EVENT_TYPES = {"click"};
 
 }
