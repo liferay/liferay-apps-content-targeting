@@ -110,7 +110,7 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 	@Override
 	public boolean isInstantiable() {
-		return false;
+		return true;
 	}
 
 	public void processTrackingAction(
