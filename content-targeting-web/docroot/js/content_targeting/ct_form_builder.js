@@ -259,6 +259,7 @@ AUI.add(
 										editor = field.attr('data-template'),
 										icon = field.attr('data-icon'),
 										key = field.attr('data-key'),
+										fieldData = /^([^_]*)(?:_(.*))?$/.exec(key),
 										name = field.one('.field-title').text(),
 										unique = field.attr('data-unique') === 'true';
 
@@ -267,6 +268,7 @@ AUI.add(
 											description: description,
 											editor: editor,
 											icon: icon,
+											id: fieldData[2] ? key : '',
 											key: key,
 											name: name
 										}
@@ -275,7 +277,7 @@ AUI.add(
 									fields.push(
 										{
 											iconClass: icon,
-											id: /^([^_]*)(_.*)?$/.exec(key)[1],
+											id: fieldData[1],
 											label: A.Lang.sub(
 												labelTpl,
 												{
@@ -366,6 +368,11 @@ AUI.add(
 						acceptChildren: {
 							readOnly: true,
 							value: false
+						},
+
+						fieldId: {
+							validator: A.Lang.isString,
+							value: field.id
 						}
 					},
 
@@ -373,11 +380,13 @@ AUI.add(
 						getHTML: function() {
 							var instance = this;
 
+							var fieldId = instance.get('fieldId') || A.guid();
+
 							return A.Lang.sub(
 								ITEM_FIELD_TPL,
 								{
 									description: field.description,
-									editor: field.editor,
+									editor: field.editor.replace(/\{ct_field_guid\}/g, fieldId),
 									icon: field.icon,
 									name: field.name
 								}
