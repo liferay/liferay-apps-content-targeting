@@ -3,7 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction" />
-	<class name="com.liferay.contenttargeting.reports.campaigntrackingaction.model.impl.CampaignTrackingActionImpl" table="CampaignTrackingActions_CampaignTrackingAction">
+	<class name="com.liferay.contenttargeting.reports.campaigntrackingaction.model.impl.CampaignTrackingActionImpl" table="CampaignTrackingActionReport_CampaignTrackingAction">
 		<cache usage="read-write" />
 		<id name="campaignTrackingActionId" type="long">
 			<generator class="assigned" />

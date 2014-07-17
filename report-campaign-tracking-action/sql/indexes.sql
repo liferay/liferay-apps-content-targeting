@@ -1,3 +1,3 @@
-create index IX_2BAEC2CB on CampaignTrackingActions_CampaignTrackingAction (campaignId);
-create index IX_C3639DD6 on CampaignTrackingActions_CampaignTrackingAction (campaignId, modifiedDate);
-create index IX_2C17D810 on CampaignTrackingActions_CampaignTrackingAction (campaignId, userSegmentId, plid, elementId, eventType);
+create index IX_EBDBB5F0 on CampaignTrackingActionReport_CampaignTrackingAction (campaignId);
+create index IX_921AC3B on CampaignTrackingActionReport_CampaignTrackingAction (campaignId, modifiedDate);
+create index IX_1C9C3FCB on CampaignTrackingActionReport_CampaignTrackingAction (campaignId, userSegmentId, plid, elementId, eventType);

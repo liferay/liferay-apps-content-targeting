@@ -386,7 +386,8 @@ public class CampaignTrackingActionWrapper implements CampaignTrackingAction,
 	}
 
 	@Override
-	public int compareTo(CampaignTrackingAction campaignTrackingAction) {
+	public int compareTo(
+		com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction campaignTrackingAction) {
 		return _campaignTrackingAction.compareTo(campaignTrackingAction);
 	}
 
@@ -396,17 +397,17 @@ public class CampaignTrackingActionWrapper implements CampaignTrackingAction,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<CampaignTrackingAction> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction> toCacheModel() {
 		return _campaignTrackingAction.toCacheModel();
 	}
 
 	@Override
-	public CampaignTrackingAction toEscapedModel() {
+	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction toEscapedModel() {
 		return new CampaignTrackingActionWrapper(_campaignTrackingAction.toEscapedModel());
 	}
 
 	@Override
-	public CampaignTrackingAction toUnescapedModel() {
+	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction toUnescapedModel() {
 		return new CampaignTrackingActionWrapper(_campaignTrackingAction.toUnescapedModel());
 	}
 
