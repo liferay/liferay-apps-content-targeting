@@ -25,6 +25,8 @@
 
 	<aui:input label="form-submit" name="settings--content.targeting.analytics.form.submit--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit") %>' />
 
+	<aui:input label="link-click" name="settings--content.targeting.analytics.link.click--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.click") %>' />
+
 	<aui:input label="page-view" name="settings--content.targeting.analytics.page.view--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.view") %>' />
 
 	<aui:input label="web-content-view" name="settings--content.targeting.analytics.web.content.view--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.web.content.view") %>' />
