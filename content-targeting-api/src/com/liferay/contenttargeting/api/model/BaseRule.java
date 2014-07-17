@@ -53,6 +53,11 @@ public abstract class BaseRule implements Rule {
 	}
 
 	@Override
+	public String getCategory() {
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public String getDescription(Locale locale) {
 		String key = getClass().getName().concat(".description");
 

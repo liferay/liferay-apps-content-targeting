@@ -66,6 +66,11 @@ public class TimeRule extends BaseRule {
 	}
 
 	@Override
+	public String getCategory() {
+		return "time";
+	}
+
+	@Override
 	public String getIcon() {
 		return "icon-time";
 	}

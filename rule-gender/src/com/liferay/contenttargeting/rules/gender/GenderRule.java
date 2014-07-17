@@ -66,6 +66,11 @@ public class GenderRule extends BaseRule {
 	}
 
 	@Override
+	public String getCategory() {
+		return "user";
+	}
+
+	@Override
 	public String getIcon() {
 		return "icon-female";
 	}

@@ -66,6 +66,11 @@ public class ScorePointsRule extends BaseRule {
 	}
 
 	@Override
+	public String getCategory() {
+		return "user";
+	}
+
+	@Override
 	public String getIcon() {
 		return "icon-star";
 	}

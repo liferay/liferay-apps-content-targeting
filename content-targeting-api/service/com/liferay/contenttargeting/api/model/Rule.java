@@ -51,6 +51,13 @@ public interface Rule {
 		throws Exception;
 
 	/**
+	 * Returns the rule category.
+	 *
+	 * @return the rule category
+	 */
+	public String getCategory();
+
+	/**
 	 * Returns the rule description.
 	 *
 	 * @param  locale the language's locale

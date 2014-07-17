@@ -95,6 +95,11 @@ public class IpGeocodeRule extends BaseRule {
 	}
 
 	@Override
+	public String getCategory() {
+		return "location";
+	}
+
+	@Override
 	public String getIcon() {
 		return "icon-globe";
 	}
