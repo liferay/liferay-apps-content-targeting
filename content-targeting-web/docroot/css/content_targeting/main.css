@@ -10,7 +10,9 @@
 			}
 
 			.tabbable {
+				float: left;
 				margin-left: 0;
+				position: relative;
 				width: 240px;
 			}
 
