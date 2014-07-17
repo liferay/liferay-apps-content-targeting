@@ -1,10 +1,10 @@
 <#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
 
-<@aui["input"] name="alias" type="text" value=alias />
+<@aui["input"] label="alias" name="{ct_field_guid}alias" type="text" value=alias />
 
-<@aui["input"] helpMessage="enter-the-id-of-the-form-to-be-tracked" label="form-id" name="elementId" type="text" value=elementId />
+<@aui["input"] helpMessage="enter-the-id-of-the-form-to-be-tracked" label="form-id" name="{ct_field_guid}elementId" type="text" value=elementId />
 
-<@aui["select"] label="tracking-action" name="eventType">
+<@aui["select"] label="tracking-action" name="{ct_field_guid}eventType">
 	<#list eventTypes as curEventType>
 		<@aui["option"] label="${curEventType}" selected=(eventType == curEventType) value=curEventType />
 	</#list>
