@@ -21,6 +21,7 @@
       <module fileurl="file://$PROJECT_DIR$/rule-score-points/rule-score-points.iml" filepath="$PROJECT_DIR$/rule-score-points/rule-score-points.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-time/rule-time.iml" filepath="$PROJECT_DIR$/rule-time/rule-time.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" filepath="$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tracking-action-link/tracking-action-link.iml" filepath="$PROJECT_DIR$/tracking-action-link/tracking-action-link.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk.iml" filepath="$PROJECT_DIR$/trunk.iml" />
     </modules>
   </component>
