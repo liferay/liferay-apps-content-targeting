@@ -18,6 +18,7 @@ import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.contenttargeting.rulecategories.UserAttributesRuleCategory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -76,13 +77,13 @@ public class AgeRule extends BaseRule {
 	}
 
 	@Override
-	public String getCategoryKey() {
-		return "user-attributes";
+	public String getIcon() {
+		return "icon-calendar-empty";
 	}
 
 	@Override
-	public String getIcon() {
-		return "icon-calendar-empty";
+	public String getRuleCategoryKey() {
+		return UserAttributesRuleCategory.KEY;
 	}
 
 	@Override

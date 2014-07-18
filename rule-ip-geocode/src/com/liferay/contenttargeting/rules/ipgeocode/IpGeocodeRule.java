@@ -18,6 +18,7 @@ import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.contenttargeting.rulecategories.SessionAttributesRuleCategory;
 import com.liferay.ip.geocoder.IPGeocoder;
 import com.liferay.ip.geocoder.IPInfo;
 import com.liferay.portal.NoSuchRegionException;
@@ -95,13 +96,13 @@ public class IpGeocodeRule extends BaseRule {
 	}
 
 	@Override
-	public String getCategoryKey() {
-		return "session-attributes";
+	public String getIcon() {
+		return "icon-globe";
 	}
 
 	@Override
-	public String getIcon() {
-		return "icon-globe";
+	public String getRuleCategoryKey() {
+		return SessionAttributesRuleCategory.KEY;
 	}
 
 	@Override

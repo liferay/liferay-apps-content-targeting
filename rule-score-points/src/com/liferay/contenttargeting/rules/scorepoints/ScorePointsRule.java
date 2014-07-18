@@ -18,6 +18,7 @@ import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.contenttargeting.rulecategories.BehaviorRuleCategory;
 import com.liferay.contenttargeting.rules.scorepoints.service.ScorePointLocalServiceUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -66,13 +67,13 @@ public class ScorePointsRule extends BaseRule {
 	}
 
 	@Override
-	public String getCategoryKey() {
-		return "behavior";
+	public String getIcon() {
+		return "icon-star";
 	}
 
 	@Override
-	public String getIcon() {
-		return "icon-star";
+	public String getRuleCategoryKey() {
+		return BehaviorRuleCategory.KEY;
 	}
 
 	@Override

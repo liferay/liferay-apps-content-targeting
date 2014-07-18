@@ -51,13 +51,6 @@ public interface Rule {
 		throws Exception;
 
 	/**
-	 * Returns the key that identifies the category of the rule.
-	 *
-	 * @return the key that identifies the category
-	 */
-	public String getCategoryKey();
-
-	/**
 	 * Returns the rule description.
 	 *
 	 * @param  locale the language's locale
@@ -93,6 +86,20 @@ public interface Rule {
 	 * @return the rule's name
 	 */
 	public String getName(Locale locale);
+
+	/**
+	 * Returns the the category of the rule.
+	 *
+	 * @return the the category
+	 */
+	public RuleCategory getRuleCategory();
+
+	/**
+	 * Returns the key that identifies the category of the rule.
+	 *
+	 * @return the key that identifies the category
+	 */
+	public String getRuleCategoryKey();
 
 	/**
 	 * Returns the key that identifies the rule. The rule instances of this rule

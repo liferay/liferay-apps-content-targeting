@@ -18,6 +18,7 @@ import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.contenttargeting.rulecategories.SessionAttributesRuleCategory;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -66,13 +67,13 @@ public class TimeRule extends BaseRule {
 	}
 
 	@Override
-	public String getCategoryKey() {
-		return "session-attributes";
+	public String getIcon() {
+		return "icon-time";
 	}
 
 	@Override
-	public String getIcon() {
-		return "icon-time";
+	public String getRuleCategoryKey() {
+		return SessionAttributesRuleCategory.KEY;
 	}
 
 	@Override

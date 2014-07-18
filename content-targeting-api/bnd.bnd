@@ -5,6 +5,7 @@ Export-Package:\
 	com.liferay.contenttargeting,\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.model,\
+	com.liferay.contenttargeting.rulecategories,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.contenttargeting.service.messaging,\
 	com.liferay.contenttargeting.service.permission,\
@@ -18,6 +19,7 @@ Import-Package =\
  	com.liferay.contenttargeting,\
 	com.liferay.contenttargeting.api.model,\
 	com.liferay.contenttargeting.model,\
+	com.liferay.contenttargeting.rulecategories,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.counter.service,\
 	com.liferay.osgi.util.service,\

@@ -5,6 +5,7 @@ Import-Package:\
 	com.liferay.anonymoususers.service,\
 	com.liferay.anonymoususers.service.messaging,\
 	com.liferay.contenttargeting.api.model,\
+	com.liferay.contenttargeting.rulecategories,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.contenttargeting.service.messaging,\
 	com.liferay.portal.json,\

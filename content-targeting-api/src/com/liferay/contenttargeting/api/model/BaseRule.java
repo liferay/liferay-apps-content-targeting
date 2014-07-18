@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 
 import freemarker.cache.ClassTemplateLoader;
@@ -32,6 +33,7 @@ import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -50,11 +52,6 @@ public abstract class BaseRule implements Rule {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Rule deactivate: " + getClass().getSimpleName());
 		}
-	}
-
-	@Override
-	public String getCategoryKey() {
-		return StringPool.BLANK;
 	}
 
 	@Override
@@ -103,6 +100,20 @@ public abstract class BaseRule implements Rule {
 	}
 
 	@Override
+	public RuleCategory getRuleCategory() {
+		if (Validator.isNull(getRuleCategoryKey())) {
+			return null;
+		}
+
+		return _ruleCategoriesRegistry.getRuleCategory(getRuleCategoryKey());
+	}
+
+	@Override
+	public String getRuleCategoryKey() {
+		return StringPool.BLANK;
+	}
+
+	@Override
 	public String getRuleKey() {
 		return getClass().getSimpleName();
 	}
@@ -110,6 +121,13 @@ public abstract class BaseRule implements Rule {
 	@Override
 	public boolean isInstantiable() {
 		return false;
+	}
+
+	@Reference
+	public void setRuleCategoriesRegistry(
+		RuleCategoriesRegistry ruleCategoriesRegistry) {
+
+		this._ruleCategoriesRegistry = ruleCategoriesRegistry;
 	}
 
 	protected String getFormTemplatePath() {
@@ -144,5 +162,7 @@ public abstract class BaseRule implements Rule {
 		"templates/ct_fields.ftl";
 
 	private static Log _log = LogFactoryUtil.getLog(BaseRule.class);
+
+	private RuleCategoriesRegistry _ruleCategoriesRegistry;
 
 }

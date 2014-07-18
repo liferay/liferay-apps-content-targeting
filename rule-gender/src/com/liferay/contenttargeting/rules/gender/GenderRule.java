@@ -18,6 +18,7 @@ import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.contenttargeting.rulecategories.UserAttributesRuleCategory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
@@ -66,13 +67,13 @@ public class GenderRule extends BaseRule {
 	}
 
 	@Override
-	public String getCategoryKey() {
-		return "user-attributes";
+	public String getIcon() {
+		return "icon-female";
 	}
 
 	@Override
-	public String getIcon() {
-		return "icon-female";
+	public String getRuleCategoryKey() {
+		return UserAttributesRuleCategory.KEY;
 	}
 
 	@Override
