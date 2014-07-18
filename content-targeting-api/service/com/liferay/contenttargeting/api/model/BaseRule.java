@@ -36,9 +36,6 @@ import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-
-import javax.portlet.UnavailableException;
 
 /**
  * @author Eduardo Garcia
@@ -117,17 +114,6 @@ public abstract class BaseRule implements Rule {
 		return _ruleCategoriesRegistry.getRuleCategory(getRuleCategoryKey());
 	}
 
-	private void initRuleCategoriesRegistry() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		if (bundle == null) {
-			_log.error("Can't find a reference to the OSGi bundle");
-		}
-
-		_ruleCategoriesRegistry = ServiceTrackerUtil.getService(
-			RuleCategoriesRegistry.class, bundle.getBundleContext());
-	}
-
 	@Override
 	public String getRuleCategoryKey() {
 		return StringPool.BLANK;
@@ -141,13 +127,6 @@ public abstract class BaseRule implements Rule {
 	@Override
 	public boolean isInstantiable() {
 		return false;
-	}
-
-	@Reference
-	public void setRuleCategoriesRegistry(
-		RuleCategoriesRegistry ruleCategoriesRegistry) {
-
-		this._ruleCategoriesRegistry = ruleCategoriesRegistry;
 	}
 
 	protected String getFormTemplatePath() {
@@ -180,6 +159,17 @@ public abstract class BaseRule implements Rule {
 
 	protected static final String _FORM_TEMPLATE_PATH =
 		"templates/ct_fields.ftl";
+
+	private void initRuleCategoriesRegistry() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		if (bundle == null) {
+			_log.error("Can't find a reference to the OSGi bundle");
+		}
+
+		_ruleCategoriesRegistry = ServiceTrackerUtil.getService(
+			RuleCategoriesRegistry.class, bundle.getBundleContext());
+	}
 
 	private static Log _log = LogFactoryUtil.getLog(BaseRule.class);
 
