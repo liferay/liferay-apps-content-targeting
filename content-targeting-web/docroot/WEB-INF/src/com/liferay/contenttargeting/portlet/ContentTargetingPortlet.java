@@ -737,7 +737,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		for (RuleInstance ruleInstance : ruleInstances) {
 			_ruleInstanceService.deleteRuleInstance(
 				ruleInstance.getRuleInstanceId());
-
 		}
 	}
 
