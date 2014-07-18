@@ -59,8 +59,9 @@
 									<#list ruleTemplates as template>
 										<#assign rule = template.getRule()>
 										<#assign templateKey = template.getTemplateKey()>
+										<#assign ruleCategory = rule.getRuleCategory()>
 
-										<li class="diagram-builder-field form-builder-field hide" data-icon="${rule.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!rule.isInstantiable())?string}">
+										<li class="diagram-builder-field form-builder-field hide" data-icon="${rule.getIcon()}" data-key="${templateKey}" data-categorykey="${ruleCategory.getCategoryKey()}" data-categorytitle="${ruleCategory.getName(locale)}" data-categoryicon="${ruleCategory.getIcon()}" data-template="${template.getTemplate()}" data-unique="${(!rule.isInstantiable())?string}">
 											<span class="icon diagram-builder-field-icon ${rule.getIcon()}"></span>
 											<div class="diagram-builder-field-label">
 												<div class="row">
