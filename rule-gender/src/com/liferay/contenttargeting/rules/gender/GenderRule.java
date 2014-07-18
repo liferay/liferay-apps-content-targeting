@@ -66,8 +66,8 @@ public class GenderRule extends BaseRule {
 	}
 
 	@Override
-	public String getCategory() {
-		return "user";
+	public String getCategoryKey() {
+		return "user-attributes";
 	}
 
 	@Override

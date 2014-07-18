@@ -66,8 +66,8 @@ public class ScorePointsRule extends BaseRule {
 	}
 
 	@Override
-	public String getCategory() {
-		return "user";
+	public String getCategoryKey() {
+		return "behavior";
 	}
 
 	@Override

@@ -51,11 +51,11 @@ public interface Rule {
 		throws Exception;
 
 	/**
-	 * Returns the rule category.
+	 * Returns the key that identifies the category of the rule.
 	 *
-	 * @return the rule category
+	 * @return the key that identifies the category
 	 */
-	public String getCategory();
+	public String getCategoryKey();
 
 	/**
 	 * Returns the rule description.

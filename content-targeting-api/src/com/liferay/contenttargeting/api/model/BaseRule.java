@@ -53,7 +53,7 @@ public abstract class BaseRule implements Rule {
 	}
 
 	@Override
-	public String getCategory() {
+	public String getCategoryKey() {
 		return StringPool.BLANK;
 	}
 

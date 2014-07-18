@@ -66,8 +66,8 @@ public class TimeRule extends BaseRule {
 	}
 
 	@Override
-	public String getCategory() {
-		return "time";
+	public String getCategoryKey() {
+		return "session-attributes";
 	}
 
 	@Override

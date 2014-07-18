@@ -95,8 +95,8 @@ public class IpGeocodeRule extends BaseRule {
 	}
 
 	@Override
-	public String getCategory() {
-		return "location";
+	public String getCategoryKey() {
+		return "session-attributes";
 	}
 
 	@Override
