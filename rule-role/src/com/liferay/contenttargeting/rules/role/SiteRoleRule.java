@@ -82,6 +82,11 @@ public class SiteRoleRule extends BaseRule {
 	}
 
 	@Override
+	public String getCategoryKey() {
+		return "user-membership";
+	}
+
+	@Override
 	public String getIcon() {
 		return "icon-globe";
 	}
