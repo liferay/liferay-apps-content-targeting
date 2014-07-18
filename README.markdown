@@ -111,7 +111,7 @@ Some useful commands:
 
 ### Testing
 
-In order to to execute the Integration tests locally you have to go through the
+In order to execute the Integration tests locally you have to go through the
 following steps:
 
 1. Append the test modules to the `plugins.includes` property of your
