@@ -251,7 +251,8 @@ AUI.add(
 
 							fieldsContainer.all('.form-builder-field').each(
 								function(field) {
-									var categoryIcon = field.attr('data-categoryicon'),
+									var categoryDescription = field.attr('data-categorydescription'),
+										categoryIcon = field.attr('data-categoryicon'),
 										categoryKey = field.attr('data-categorykey'),
 										categoryName = field.attr('data-categoryname'),
 										description = field.one('.field-description').text(),
@@ -284,6 +285,7 @@ AUI.add(
 											),
 											options: {
 												category: {
+													description: categoryDescription,
 													icon: categoryIcon,
 													key: categoryKey,
 													name: categoryName
