@@ -7,7 +7,7 @@
 
 	<property name="import.shared" value="system-packages-extra-shared" />
 
-	<property name="osgi.runtime.dependencies" value="com.liferay.arquillian.bundle.manager.jar,com.liferay.freemarker.osgi.bridge.jar,com.liferay.osgi.util.jar,com.liferay.portal.http.service.jar,com.liferay.portal.log.bridge.jar,org.apache.felix.gogo.command.jar,org.apache.felix.gogo.runtime.jar,org.apache.felix.gogo.shell.jar,org.apache.felix.shell.remote.jar,system-packages-extra-shared.jar" />
+	<property name="osgi.runtime.dependencies" value="com.liferay.arquillian.bundle.manager.jar,com.liferay.freemarker.osgi.bridge.jar,com.liferay.osgi.util.jar,com.liferay.portal.http.service.jar,com.liferay.portal.log.bridge.jar,org.apache.felix.gogo.command.jar,org.apache.felix.gogo.runtime.jar,org.apache.felix.gogo.shell.jar,org.apache.felix.shell.remote.jar,org.eclipse.equinox.console.jar,system-packages-extra-shared.jar" />
 
 	<import file="../../../build-common-osgi-plugin.xml" />
 </project>
