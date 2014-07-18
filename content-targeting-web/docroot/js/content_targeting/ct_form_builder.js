@@ -18,6 +18,16 @@ AUI.add(
 				'<div class="field-editor">{editor}</div>' +
 			'</div>',
 
+			ITEM_CATEGORY_HEADER_TPL = '<div class="category-header toggler-header toggler-header-expanded">' +
+				'<span class="category-icon icon {icon}"></span>' +
+				'<div class="category-info"> ' +
+					'<div class="category-title">{name}</div>' +
+					'<div class="category-description">{description}</div>' +
+				'</div>' +
+			'</div>',
+
+			ITEM_CATEGORY_CONTENT_TPL = '<div class="category-content toggler-content toggler-content-expanded"></div>',
+
 			LiferayCTFormItemSearch = A.Base.create('Search', A.Base, [A.AutoCompleteBase],
 				{
 					initializer: function() {
@@ -68,23 +78,45 @@ AUI.add(
 
 						_afterUiSetAvailableFields: function(event) {
 							var instance = this,
+								fieldsContainer = A.one('.diagram-builder-fields-container'),
 								searchBox = instance.get('searchBox');
 
 							if (searchBox) {
 								A.one('.tab-pane.active').insertBefore(
 									searchBox,
-									A.one('.diagram-builder-fields-container')
+									fieldsContainer
 								).removeClass('hide');
 							}
+
+							var categories = {};
 
 							A.Array.each(
 								instance.get('availableFields'),
 								function(item) {
 									var title = item.labelNode.one('.field-title').text();
 
-									item.get('node').attr('title', title);
+									var itemNode = item.get('node');
+
+									itemNode.attr('title', title);
+
+									var category = item.get('options').category;
+
+									var categoryKey = category.key;
+
+									if (category && categoryKey) {
+										if (!categories[categoryKey]) {
+											categories[categoryKey] = {
+												category: category,
+												fields: []
+											};
+										}
+
+										categories[categoryKey].fields.push(itemNode);
+									}
 								}
 							);
+
+							instance._groupFields(categories, fieldsContainer);
 						},
 
 						_createItemFilter: function() {
@@ -115,6 +147,60 @@ AUI.add(
 								);
 
 							return fieldSearch;
+						},
+
+						_groupFields: function(categories, fieldsContainer) {
+							var instance = this,
+								categoryContent,
+								categoryHeader,
+								categoryWrapper;
+
+							A.Object.each(
+								categories,
+								function(item) {
+									categoryHeader = A.Node.create(
+										A.Lang.sub(
+											ITEM_CATEGORY_HEADER_TPL,
+											{
+												description: item.category.description,
+												icon: item.category.icon,
+												name: item.category.name
+											}
+										)
+									);
+
+									categoryContent = A.Node.create(
+										A.Lang.sub(
+											ITEM_CATEGORY_CONTENT_TPL
+										)
+									);
+
+									A.Array.each(
+										item.fields,
+										function(field) {
+											categoryContent.append(field);
+										}
+									);
+
+									categoryWrapper = A.Node.create('<div class="category-wrapper"></div>');
+									categoryWrapper.append(categoryHeader);
+									categoryWrapper.append(categoryContent);
+
+									fieldsContainer.append(categoryWrapper);
+								}
+							);
+
+							if (!instance._togglerDelegate) {
+								instance._togglerDelegate = new A.TogglerDelegate(
+									{
+										animated: true,
+										container: fieldsContainer,
+										content: '.category-content',
+										expanded: true,
+										header: '.category-header'
+									}
+								);
+							}
 						},
 
 						_onClickField: function(event) {
@@ -165,7 +251,10 @@ AUI.add(
 
 							fieldsContainer.all('.form-builder-field').each(
 								function(field) {
-									var description = field.one('.field-description').text(),
+									var categoryIcon = field.attr('data-categoryicon'),
+										categoryKey = field.attr('data-categorykey'),
+										categoryName = field.attr('data-categoryname'),
+										description = field.one('.field-description').text(),
 										editor = field.attr('data-template'),
 										icon = field.attr('data-icon'),
 										key = field.attr('data-key'),
@@ -193,6 +282,13 @@ AUI.add(
 													description: description
 												}
 											),
+											options: {
+												category: {
+													icon: categoryIcon,
+													key: categoryKey,
+													name: categoryName
+												}
+											},
 											type: key,
 											unique: unique
 										}
@@ -310,6 +406,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-form-builder', 'aui-parse-content', 'autocomplete-base', 'autocomplete-filters']
+		requires: ['aui-form-builder', 'aui-parse-content', 'aui-toggler', 'autocomplete-base', 'autocomplete-filters']
 	}
 );

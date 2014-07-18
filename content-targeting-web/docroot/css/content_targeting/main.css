@@ -46,8 +46,72 @@
 				margin: 10px 0;
 				overflow: hidden;
 
+				.category-header {
+					border-bottom: solid 1px #DDD;
+					margin-bottom: 5px;
+					margin-right: 20px;
+					padding: 10px 0;
+					position: relative;
+
+					.category-icon {
+						background-color: #009AE5;
+						color: #FFF;
+						display: inline-block;
+						font-size: 30px;
+						padding: 5px;
+					}
+
+					.category-info {
+						left: 50px;
+						line-height: 16px;
+						position: absolute;
+						top: 10px;
+
+						.category-title {
+							color: #009AE5;
+							font-size: 15px;
+							font-weight: 400;
+						}
+
+						.category-description {
+							font-size: 13px;
+						}
+					}
+
+					&:after{
+						color: #009AE5;
+						content: "\f054";
+						font-family: "fontawesome-alloy";
+						font-size: 14px;
+						position: absolute;
+						right: 0;
+						top: 20px;
+					}
+
+					&.toggler-header-expanded:after {
+						content: "\f078";
+					}
+				}
+
+				.category-content {
+					margin-right: 20px;
+					padding-left: 40px;
+
+					&.toggler-content-expanded {
+						border-bottom: solid 1px #DDD;
+					}
+				}
+
+				.category-wrapper:last-child {
+					.category-content.toggler-content-expanded {
+						border-bottom: none;
+					}
+				}
+
 				.diagram-builder-field {
+					float: none;
 					height: inherit;
+					margin-bottom: 10px;
 					position: relative;
 					text-align: left;
 					width: 100%;
@@ -55,6 +119,10 @@
 					&:hover {
 						background-color: transparent;
 						color: #009ae5;
+					}
+
+					&.unselectable {
+						color: inherit;
 					}
 
 					.diagram-builder-field-icon {
