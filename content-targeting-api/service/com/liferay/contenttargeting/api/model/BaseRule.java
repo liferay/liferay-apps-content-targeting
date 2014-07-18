@@ -15,6 +15,7 @@
 package com.liferay.contenttargeting.api.model;
 
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,9 +32,13 @@ import freemarker.template.Template;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+
+import javax.portlet.UnavailableException;
 
 /**
  * @author Eduardo Garcia
@@ -105,7 +110,22 @@ public abstract class BaseRule implements Rule {
 			return null;
 		}
 
+		if (_ruleCategoriesRegistry == null) {
+			initRuleCategoriesRegistry();
+		}
+
 		return _ruleCategoriesRegistry.getRuleCategory(getRuleCategoryKey());
+	}
+
+	private void initRuleCategoriesRegistry() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		if (bundle == null) {
+			_log.error("Can't find a reference to the OSGi bundle");
+		}
+
+		_ruleCategoriesRegistry = ServiceTrackerUtil.getService(
+			RuleCategoriesRegistry.class, bundle.getBundleContext());
 	}
 
 	@Override
