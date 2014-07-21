@@ -312,7 +312,7 @@ AUI.add(
 							instance.get('fields').each(
 								function(item) {
 									var field = {
-										id: item.get('id'),
+										id: item.get('fieldId'),
 										data: [],
 										type: item.get('type')
 									};
@@ -371,8 +371,8 @@ AUI.add(
 						},
 
 						fieldId: {
-							validator: A.Lang.isString,
-							value: field.id
+							readOnly: true,
+							value: field.id || A.guid()
 						}
 					},
 
@@ -380,7 +380,7 @@ AUI.add(
 						getHTML: function() {
 							var instance = this;
 
-							var fieldId = instance.get('fieldId') || A.guid();
+							var fieldId = instance.get('fieldId');
 
 							return A.Lang.sub(
 								ITEM_FIELD_TPL,
