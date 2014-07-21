@@ -18,15 +18,10 @@ import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.contenttargeting.rulecategories.UserAttributesRuleCategory;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Company;
-import com.liferay.portal.model.UserGroup;
-import com.liferay.portal.service.UserGroupLocalServiceUtil;
+import com.liferay.portal.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -49,40 +44,27 @@ public class UserLoggedRule extends BaseRule {
 			AnonymousUser anonymousUser)
 		throws Exception {
 
-		long userGroupId = GetterUtil.getLong(ruleInstance.getTypeSettings());
+		User user = anonymousUser.getUser();
 
-		return UserGroupLocalServiceUtil.hasUserUserGroup(
-			anonymousUser.getUserId(), userGroupId);
-	}
+		if (user != null) {
+			return true;
+		}
 
-	@Override
-	public String getCategoryKey() {
-		return "user-membership";
+		return false;
 	}
 
 	@Override
 	public String getIcon() {
-		return "icon-group";
+		return "icon-user";
+	}
+
+	@Override
+	public String getRuleCategoryKey() {
+		return UserAttributesRuleCategory.KEY;
 	}
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
-		try {
-			long userGroupId = GetterUtil.getLong(
-				ruleInstance.getTypeSettings());
-
-			UserGroup userGroup = UserGroupLocalServiceUtil.fetchUserGroup(
-				userGroupId);
-
-			if (userGroup == null) {
-				return StringPool.BLANK;
-			}
-
-			return userGroup.getName();
-		}
-		catch (Exception e) {
-		}
-
 		return StringPool.BLANK;
 	}
 
@@ -91,33 +73,7 @@ public class UserLoggedRule extends BaseRule {
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) {
 
-		return values.get("userGroupId");
-	}
-
-	@Override
-	protected void populateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
-
-		long userGroupId = 0;
-
-		if (ruleInstance != null) {
-			userGroupId = GetterUtil.getLong(ruleInstance.getTypeSettings());
-		}
-
-		context.put("userGroupId", userGroupId);
-
-		Company company = (Company)context.get("company");
-
-		List<UserGroup> userGroups = new ArrayList<UserGroup>();
-
-		try {
-			userGroups = UserGroupLocalServiceUtil.getUserGroups(
-				company.getCompanyId());
-		}
-		catch (SystemException e) {
-		}
-
-		context.put("userGroups", userGroups);
+		return StringPool.BLANK;
 	}
 
 }
