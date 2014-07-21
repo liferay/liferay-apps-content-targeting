@@ -36,53 +36,78 @@ long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 
 	var DOC = A.getDoc();
 
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view") %>'>
-		A.all('form').each(A.bind(trackElementEvent, this, 'view'));
-	</c:if>
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.enabled") %>'>
+		var formExcludedIdsRegexStr = '<%= PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.form.excluded.ids.regex") %>';
 
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit") %>'>
-		Liferay.on(
-			'submitForm',
-			function(event) {
-				trackElementEvent('submit', event.form);
-				Liferay.Analytics.flush();
-			}
-		);
-	</c:if>
+		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view") %>'>
+			var trackingForms = [];
 
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact") %>'>
-		var interactedForms = [];
-
-		DOC.delegate(
-			['change', 'input'],
-			function(event) {
-				var form = event.currentTarget;
-
-				var formId = form.attr('id');
-
-				if (interactedForms.indexOf(formId) === -1) {
-					interactedForms.push(formId);
-
-					trackElementEvent('interact', form);
+			A.all('form').each(
+				function(item) {
+				   if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(item.attr('id'))) {
+					   trackingForms.push(item);
+				   }
 				}
-			},
-			'form'
-		);
+			);
+
+			A.Array.each(
+				trackingForms,
+				A.bind(trackElementEvent, this, 'view')
+			);
+		</c:if>
+
+		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit") %>'>
+			Liferay.on(
+				'submitForm',
+				function(event) {
+					var form = event.form;
+
+					if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(item.attr('id'))) {
+						trackElementEvent('submit', form);
+						Liferay.Analytics.flush();
+					}
+				}
+			);
+		</c:if>
+
+		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact") %>'>
+			var interactedForms = [];
+
+			DOC.delegate(
+				['change', 'input'],
+				function(event) {
+					var form = event.currentTarget;
+
+					var formId = form.attr('id');
+
+					if ((!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(item.attr('id'))) && (interactedForms.indexOf(formId) === -1)) {
+						interactedForms.push(formId);
+
+						trackElementEvent('interact', form);
+					}
+				},
+				'form'
+			);
+		</c:if>
 	</c:if>
 
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.click") %>'>
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.enabled") && PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.click") %>'>
 		DOC.delegate(
 			'click',
 			function(event) {
-				event.preventDefault();
+				var linkExcludedIdsRegexStr = '<%= PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.link.excluded.ids.regex") %>';
 
 				var link = event.currentTarget;
 
-				trackElementEvent('click', link);
+				if (!linkExcludedIdsRegexStr || !new RegExp(linkExcludedIdsRegexStr).test(link.attr('id'))) {
+					event.preventDefault();
 
-				Liferay.Analytics.flush();
+					trackElementEvent('click', link);
 
-				document.location = link.attr('href');
+					Liferay.Analytics.flush();
+
+					document.location = link.attr('href');
+				}
 			},
 			'a'
 		);
