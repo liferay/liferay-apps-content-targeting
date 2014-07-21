@@ -18,6 +18,7 @@ import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.contenttargeting.rulecategories.UserAttributesRuleCategory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -57,13 +58,13 @@ public class RegularRoleRule extends BaseRule {
 	}
 
 	@Override
-	public String getCategoryKey() {
-		return "user-membership";
+	public String getIcon() {
+		return "icon-group";
 	}
 
 	@Override
-	public String getIcon() {
-		return "icon-group";
+	public String getRuleCategoryKey() {
+		return UserAttributesRuleCategory.KEY;
 	}
 
 	@Override
