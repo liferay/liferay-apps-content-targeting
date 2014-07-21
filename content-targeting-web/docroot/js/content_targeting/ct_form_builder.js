@@ -213,16 +213,65 @@ AUI.add(
 						},
 
 						_onItemFilterResults: function(event) {
-							var instance = this;
+							var instance = this,
+								contentBox = instance.get('contentBox'),
+								availableFieldsContainer = contentBox.one('.diagram-builder-fields-container'),
+								categories = availableFieldsContainer.all('.category-wrapper'),
+								query = event.query;
 
-							A.all('.diagram-builder-field').addClass('hide');
+							if (!instance._collapsedCategories) {
+								instance._collapsedCategories = [];
 
-							A.Array.each(
-								event.results,
-								function(result) {
-									result.raw.node.ancestor('.diagram-builder-field').removeClass('hide');
+								categories.each(
+									function(item, index) {
+										var header = item.one('.toggler-header');
+
+										if (header && header.hasClass('toggler-header-collapsed')) {
+											instance._collapsedCategories.push(item);
+										}
+									}
+								);
+							}
+
+							if (!query) {
+								availableFieldsContainer.all('.category-wrapper, .diagram-builder-field').removeClass('hide');
+
+								if (instance._collapsedCategories) {
+									A.each(
+										instance._collapsedCategories,
+										function(item, index) {
+											var categoryIndex = categories.indexOf(item);
+
+											var togglerItems = instance._togglerDelegate.items;
+
+											togglerItems[categoryIndex].collapse(
+												{
+													silent: true
+												}
+											);
+										}
+									);
+
+									instance._collapsedCategories = null;
 								}
-							);
+							}
+							else {
+								availableFieldsContainer.all('.category-wrapper, .diagram-builder-field').addClass('hide');
+
+								A.Array.each(
+									event.results,
+									function(result) {
+										result.raw.node.ancestor('.diagram-builder-field').removeClass('hide');
+										result.raw.node.ancestor('.category-wrapper').removeClass('hide');
+									}
+								);
+
+								instance._togglerDelegate.expandAll(
+									{
+										silent: true
+									}
+								);
+							}
 						},
 
 						_parseFields: function() {
