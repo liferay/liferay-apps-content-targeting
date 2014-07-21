@@ -18,14 +18,13 @@ import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
+import com.liferay.contenttargeting.rulecategories.UserAttributesRuleCategory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.GroupConstants;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.model.UserGroup;
+import com.liferay.portal.service.UserGroupLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,34 +50,36 @@ public class UserGroupMemberRule extends BaseRule {
 			AnonymousUser anonymousUser)
 		throws Exception {
 
-		long siteId = GetterUtil.getLong(ruleInstance.getTypeSettings());
+		long userGroupId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-		return UserLocalServiceUtil.hasGroupUser(
-			siteId, anonymousUser.getUserId());
-	}
-
-	@Override
-	public String getCategoryKey() {
-		return "user-membership";
+		return UserGroupLocalServiceUtil.hasUserUserGroup(
+			anonymousUser.getUserId(), userGroupId);
 	}
 
 	@Override
 	public String getIcon() {
-		return "icon-globe";
+		return "icon-group";
+	}
+
+	@Override
+	public String getRuleCategoryKey() {
+		return UserAttributesRuleCategory.KEY;
 	}
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
 		try {
-			long siteId = GetterUtil.getLong(ruleInstance.getTypeSettings());
+			long userGroupId = GetterUtil.getLong(
+				ruleInstance.getTypeSettings());
 
-			Group group = GroupLocalServiceUtil.fetchGroup(siteId);
+			UserGroup userGroup = UserGroupLocalServiceUtil.fetchUserGroup(
+				userGroupId);
 
-			if (group == null) {
+			if (userGroup == null) {
 				return StringPool.BLANK;
 			}
 
-			return group.getDescriptiveName(locale);
+			return userGroup.getName();
 		}
 		catch (Exception e) {
 		}
@@ -91,34 +92,33 @@ public class UserGroupMemberRule extends BaseRule {
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) {
 
-		return values.get("siteId");
+		return values.get("userGroupId");
 	}
 
 	@Override
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
-		long siteId = 0;
+		long userGroupId = 0;
 
 		if (ruleInstance != null) {
-			siteId = GetterUtil.getLong(ruleInstance.getTypeSettings());
+			userGroupId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 		}
 
-		context.put("siteId", siteId);
+		context.put("userGroupId", userGroupId);
 
 		Company company = (Company)context.get("company");
 
-		List<Group> sites = new ArrayList<Group>();
+		List<UserGroup> userGroups = new ArrayList<UserGroup>();
 
 		try {
-			sites = GroupLocalServiceUtil.getGroups(
-				company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
-				true);
+			userGroups = UserGroupLocalServiceUtil.getUserGroups(
+				company.getCompanyId());
 		}
 		catch (SystemException e) {
 		}
 
-		context.put("sites", sites);
+		context.put("userGroups", userGroups);
 	}
 
 }
