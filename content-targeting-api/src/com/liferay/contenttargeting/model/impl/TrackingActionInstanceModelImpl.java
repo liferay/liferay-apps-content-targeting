@@ -81,9 +81,10 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 			{ "referrerClassName", Types.VARCHAR },
 			{ "referrerClassPK", Types.BIGINT },
 			{ "elementId", Types.VARCHAR },
-			{ "eventType", Types.VARCHAR }
+			{ "eventType", Types.VARCHAR },
+			{ "typeSettings", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_TrackingActionInstance (uuid_ VARCHAR(75) null,trackingActionInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,trackingActionKey VARCHAR(75) null,campaignId LONG,alias_ VARCHAR(75) null,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_TrackingActionInstance (uuid_ VARCHAR(75) null,trackingActionInstanceId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,trackingActionKey VARCHAR(75) null,campaignId LONG,alias_ VARCHAR(75) null,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_TrackingActionInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY trackingActionInstance.trackingActionKey DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_TrackingActionInstance.trackingActionKey DESC";
@@ -134,6 +135,7 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		model.setReferrerClassPK(soapModel.getReferrerClassPK());
 		model.setElementId(soapModel.getElementId());
 		model.setEventType(soapModel.getEventType());
+		model.setTypeSettings(soapModel.getTypeSettings());
 
 		return model;
 	}
@@ -214,6 +216,7 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
+		attributes.put("typeSettings", getTypeSettings());
 
 		return attributes;
 	}
@@ -309,6 +312,12 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 
 		if (eventType != null) {
 			setEventType(eventType);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 	}
 
@@ -568,6 +577,22 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		_eventType = eventType;
 	}
 
+	@JSON
+	@Override
+	public String getTypeSettings() {
+		if (_typeSettings == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _typeSettings;
+		}
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		_typeSettings = typeSettings;
+	}
+
 	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
@@ -620,6 +645,7 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		trackingActionInstanceImpl.setReferrerClassPK(getReferrerClassPK());
 		trackingActionInstanceImpl.setElementId(getElementId());
 		trackingActionInstanceImpl.setEventType(getEventType());
+		trackingActionInstanceImpl.setTypeSettings(getTypeSettings());
 
 		trackingActionInstanceImpl.resetOriginalValues();
 
@@ -780,12 +806,20 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 			trackingActionInstanceCacheModel.eventType = null;
 		}
 
+		trackingActionInstanceCacheModel.typeSettings = getTypeSettings();
+
+		String typeSettings = trackingActionInstanceCacheModel.typeSettings;
+
+		if ((typeSettings != null) && (typeSettings.length() == 0)) {
+			trackingActionInstanceCacheModel.typeSettings = null;
+		}
+
 		return trackingActionInstanceCacheModel;
 	}
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -817,6 +851,8 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		sb.append(getElementId());
 		sb.append(", eventType=");
 		sb.append(getEventType());
+		sb.append(", typeSettings=");
+		sb.append(getTypeSettings());
 		sb.append("}");
 
 		return sb.toString();
@@ -824,7 +860,7 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.contenttargeting.model.TrackingActionInstance");
@@ -890,6 +926,10 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 			"<column><column-name>eventType</column-name><column-value><![CDATA[");
 		sb.append(getEventType());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
+		sb.append(getTypeSettings());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -923,6 +963,7 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 	private long _referrerClassPK;
 	private String _elementId;
 	private String _eventType;
+	private String _typeSettings;
 	private long _columnBitmask;
 	private TrackingActionInstance _escapedModel;
 }

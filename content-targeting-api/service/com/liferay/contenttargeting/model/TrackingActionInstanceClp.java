@@ -91,6 +91,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
+		attributes.put("typeSettings", getTypeSettings());
 
 		return attributes;
 	}
@@ -186,6 +187,12 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 
 		if (eventType != null) {
 			setEventType(eventType);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 	}
 
@@ -552,6 +559,29 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 	}
 
 	@Override
+	public String getTypeSettings() {
+		return _typeSettings;
+	}
+
+	@Override
+	public void setTypeSettings(String typeSettings) {
+		_typeSettings = typeSettings;
+
+		if (_trackingActionInstanceRemoteModel != null) {
+			try {
+				Class<?> clazz = _trackingActionInstanceRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setTypeSettings", String.class);
+
+				method.invoke(_trackingActionInstanceRemoteModel, typeSettings);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				TrackingActionInstance.class.getName()));
@@ -643,6 +673,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 		clone.setReferrerClassPK(getReferrerClassPK());
 		clone.setElementId(getElementId());
 		clone.setEventType(getEventType());
+		clone.setTypeSettings(getTypeSettings());
 
 		return clone;
 	}
@@ -692,7 +723,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -724,6 +755,8 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 		sb.append(getElementId());
 		sb.append(", eventType=");
 		sb.append(getEventType());
+		sb.append(", typeSettings=");
+		sb.append(getTypeSettings());
 		sb.append("}");
 
 		return sb.toString();
@@ -731,7 +764,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(49);
+		StringBundler sb = new StringBundler(52);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.contenttargeting.model.TrackingActionInstance");
@@ -797,6 +830,10 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 			"<column><column-name>eventType</column-name><column-value><![CDATA[");
 		sb.append(getEventType());
 		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>typeSettings</column-name><column-value><![CDATA[");
+		sb.append(getTypeSettings());
+		sb.append("]]></column-value></column>");
 
 		sb.append("</model>");
 
@@ -819,5 +856,6 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 	private long _referrerClassPK;
 	private String _elementId;
 	private String _eventType;
+	private String _typeSettings;
 	private BaseModel<?> _trackingActionInstanceRemoteModel;
 }

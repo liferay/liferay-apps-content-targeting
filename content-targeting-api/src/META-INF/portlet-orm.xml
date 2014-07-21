@@ -95,6 +95,7 @@
 			<basic name="referrerClassPK" />
 			<basic name="elementId" />
 			<basic name="eventType" />
+			<basic name="typeSettings" />
 			<transient name="modelAttributes" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />

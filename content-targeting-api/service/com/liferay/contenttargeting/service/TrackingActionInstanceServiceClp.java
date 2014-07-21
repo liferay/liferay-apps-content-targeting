@@ -38,7 +38,8 @@ public class TrackingActionInstanceServiceClp
 		_methodParameterTypes3 = new String[] {
 				"long", "java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "long", "java.lang.String",
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+				"java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName4 = "deleteTrackingActionInstance";
@@ -57,7 +58,7 @@ public class TrackingActionInstanceServiceClp
 
 		_methodParameterTypes7 = new String[] {
 				"long", "java.lang.String", "java.lang.String", "long",
-				"java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -117,7 +118,7 @@ public class TrackingActionInstanceServiceClp
 		long userId, java.lang.String trackingActionKey, long campaignId,
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType,
+		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -142,6 +143,8 @@ public class TrackingActionInstanceServiceClp
 					ClpSerializer.translateInput(elementId),
 						
 					ClpSerializer.translateInput(eventType),
+						
+					ClpSerializer.translateInput(typeSettings),
 						
 					ClpSerializer.translateInput(serviceContext)
 					});
@@ -266,6 +269,7 @@ public class TrackingActionInstanceServiceClp
 		long trackingActionInstanceId, java.lang.String alias,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -286,6 +290,8 @@ public class TrackingActionInstanceServiceClp
 					ClpSerializer.translateInput(elementId),
 						
 					ClpSerializer.translateInput(eventType),
+						
+					ClpSerializer.translateInput(typeSettings),
 						
 					ClpSerializer.translateInput(serviceContext)
 					});

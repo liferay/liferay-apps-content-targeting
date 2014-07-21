@@ -64,7 +64,8 @@ create table CT_TrackingActionInstance (
 	referrerClassName VARCHAR(75) null,
 	referrerClassPK LONG,
 	elementId VARCHAR(75) null,
-	eventType VARCHAR(75) null
+	eventType VARCHAR(75) null,
+	typeSettings TEXT null
 );
 
 create table CT_UserSegment (

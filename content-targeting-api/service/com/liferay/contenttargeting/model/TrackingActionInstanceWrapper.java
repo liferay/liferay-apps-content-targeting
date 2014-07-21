@@ -67,6 +67,7 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
+		attributes.put("typeSettings", getTypeSettings());
 
 		return attributes;
 	}
@@ -162,6 +163,12 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 
 		if (eventType != null) {
 			setEventType(eventType);
+		}
+
+		String typeSettings = (String)attributes.get("typeSettings");
+
+		if (typeSettings != null) {
+			setTypeSettings(typeSettings);
 		}
 	}
 
@@ -505,6 +512,26 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	@Override
 	public void setEventType(java.lang.String eventType) {
 		_trackingActionInstance.setEventType(eventType);
+	}
+
+	/**
+	* Returns the type settings of this tracking action instance.
+	*
+	* @return the type settings of this tracking action instance
+	*/
+	@Override
+	public java.lang.String getTypeSettings() {
+		return _trackingActionInstance.getTypeSettings();
+	}
+
+	/**
+	* Sets the type settings of this tracking action instance.
+	*
+	* @param typeSettings the type settings of this tracking action instance
+	*/
+	@Override
+	public void setTypeSettings(java.lang.String typeSettings) {
+		_trackingActionInstance.setTypeSettings(typeSettings);
 	}
 
 	@Override

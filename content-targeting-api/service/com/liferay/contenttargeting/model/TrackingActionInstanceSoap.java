@@ -47,6 +47,7 @@ public class TrackingActionInstanceSoap implements Serializable {
 		soapModel.setReferrerClassPK(model.getReferrerClassPK());
 		soapModel.setElementId(model.getElementId());
 		soapModel.setEventType(model.getEventType());
+		soapModel.setTypeSettings(model.getTypeSettings());
 
 		return soapModel;
 	}
@@ -222,6 +223,14 @@ public class TrackingActionInstanceSoap implements Serializable {
 		_eventType = eventType;
 	}
 
+	public String getTypeSettings() {
+		return _typeSettings;
+	}
+
+	public void setTypeSettings(String typeSettings) {
+		_typeSettings = typeSettings;
+	}
+
 	private String _uuid;
 	private long _trackingActionInstanceId;
 	private long _groupId;
@@ -237,4 +246,5 @@ public class TrackingActionInstanceSoap implements Serializable {
 	private long _referrerClassPK;
 	private String _elementId;
 	private String _eventType;
+	private String _typeSettings;
 }

@@ -38,7 +38,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(33);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -70,6 +70,8 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		sb.append(elementId);
 		sb.append(", eventType=");
 		sb.append(eventType);
+		sb.append(", typeSettings=");
+		sb.append(typeSettings);
 		sb.append("}");
 
 		return sb.toString();
@@ -151,6 +153,13 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 			trackingActionInstanceImpl.setEventType(eventType);
 		}
 
+		if (typeSettings == null) {
+			trackingActionInstanceImpl.setTypeSettings(StringPool.BLANK);
+		}
+		else {
+			trackingActionInstanceImpl.setTypeSettings(typeSettings);
+		}
+
 		trackingActionInstanceImpl.resetOriginalValues();
 
 		return trackingActionInstanceImpl;
@@ -173,6 +182,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		referrerClassPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
 		eventType = objectInput.readUTF();
+		typeSettings = objectInput.readUTF();
 	}
 
 	@Override
@@ -238,6 +248,13 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		else {
 			objectOutput.writeUTF(eventType);
 		}
+
+		if (typeSettings == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(typeSettings);
+		}
 	}
 
 	public String uuid;
@@ -255,4 +272,5 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 	public long referrerClassPK;
 	public String elementId;
 	public String eventType;
+	public String typeSettings;
 }

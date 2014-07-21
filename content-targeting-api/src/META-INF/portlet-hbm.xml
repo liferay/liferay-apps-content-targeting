@@ -60,6 +60,7 @@
 		<property name="referrerClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="elementId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.contenttargeting.model.impl.UserSegmentImpl" table="CT_UserSegment">
 		<cache usage="read-write" />

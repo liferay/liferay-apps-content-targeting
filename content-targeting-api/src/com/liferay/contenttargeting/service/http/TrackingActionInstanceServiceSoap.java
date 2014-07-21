@@ -71,14 +71,15 @@ public class TrackingActionInstanceServiceSoap {
 		long userId, java.lang.String trackingActionKey, long campaignId,
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType,
+		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.contenttargeting.model.TrackingActionInstance returnValue =
 				TrackingActionInstanceServiceUtil.addTrackingActionInstance(userId,
 					trackingActionKey, campaignId, alias, referrerClassName,
-					referrerClassPK, elementId, eventType, serviceContext);
+					referrerClassPK, elementId, eventType, typeSettings,
+					serviceContext);
 
 			return com.liferay.contenttargeting.model.TrackingActionInstanceSoap.toSoapModel(returnValue);
 		}
@@ -137,13 +138,14 @@ public class TrackingActionInstanceServiceSoap {
 		long trackingActionInstanceId, java.lang.String alias,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.contenttargeting.model.TrackingActionInstance returnValue =
 				TrackingActionInstanceServiceUtil.updateTrackingActionInstance(trackingActionInstanceId,
 					alias, referrerClassName, referrerClassPK, elementId,
-					eventType, serviceContext);
+					eventType, typeSettings, serviceContext);
 
 			return com.liferay.contenttargeting.model.TrackingActionInstanceSoap.toSoapModel(returnValue);
 		}

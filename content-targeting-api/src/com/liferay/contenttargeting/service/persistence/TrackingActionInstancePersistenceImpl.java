@@ -2881,6 +2881,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		trackingActionInstanceImpl.setReferrerClassPK(trackingActionInstance.getReferrerClassPK());
 		trackingActionInstanceImpl.setElementId(trackingActionInstance.getElementId());
 		trackingActionInstanceImpl.setEventType(trackingActionInstance.getEventType());
+		trackingActionInstanceImpl.setTypeSettings(trackingActionInstance.getTypeSettings());
 
 		return trackingActionInstanceImpl;
 	}

@@ -310,6 +310,21 @@ public interface TrackingActionInstanceModel extends BaseModel<TrackingActionIns
 	 */
 	public void setEventType(String eventType);
 
+	/**
+	 * Returns the type settings of this tracking action instance.
+	 *
+	 * @return the type settings of this tracking action instance
+	 */
+	@AutoEscape
+	public String getTypeSettings();
+
+	/**
+	 * Sets the type settings of this tracking action instance.
+	 *
+	 * @param typeSettings the type settings of this tracking action instance
+	 */
+	public void setTypeSettings(String typeSettings);
+
 	@Override
 	public boolean isNew();
 

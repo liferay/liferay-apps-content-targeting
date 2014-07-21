@@ -72,14 +72,14 @@ public class TrackingActionInstanceServiceUtil {
 		long userId, java.lang.String trackingActionKey, long campaignId,
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType,
+		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addTrackingActionInstance(userId, trackingActionKey,
 			campaignId, alias, referrerClassName, referrerClassPK, elementId,
-			eventType, serviceContext);
+			eventType, typeSettings, serviceContext);
 	}
 
 	public static com.liferay.contenttargeting.model.TrackingActionInstance deleteTrackingActionInstance(
@@ -105,13 +105,14 @@ public class TrackingActionInstanceServiceUtil {
 		long trackingActionInstanceId, java.lang.String alias,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .updateTrackingActionInstance(trackingActionInstanceId,
 			alias, referrerClassName, referrerClassPK, elementId, eventType,
-			serviceContext);
+			typeSettings, serviceContext);
 	}
 
 	public static void clearService() {

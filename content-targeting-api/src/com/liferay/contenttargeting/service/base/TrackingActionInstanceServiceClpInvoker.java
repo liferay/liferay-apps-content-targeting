@@ -37,7 +37,8 @@ public class TrackingActionInstanceServiceClpInvoker {
 		_methodParameterTypes44 = new String[] {
 				"long", "java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "long", "java.lang.String",
-				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+				"java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
 			};
 
 		_methodName45 = "deleteTrackingActionInstance";
@@ -56,7 +57,7 @@ public class TrackingActionInstanceServiceClpInvoker {
 
 		_methodParameterTypes48 = new String[] {
 				"long", "java.lang.String", "java.lang.String", "long",
-				"java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -83,7 +84,8 @@ public class TrackingActionInstanceServiceClpInvoker {
 				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
 				((Long)arguments[5]).longValue(),
 				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
-				(com.liferay.portal.service.ServiceContext)arguments[8]);
+				(java.lang.String)arguments[8],
+				(com.liferay.portal.service.ServiceContext)arguments[9]);
 		}
 
 		if (_methodName45.equals(name) &&
@@ -107,7 +109,8 @@ public class TrackingActionInstanceServiceClpInvoker {
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				((Long)arguments[3]).longValue(),
 				(java.lang.String)arguments[4], (java.lang.String)arguments[5],
-				(com.liferay.portal.service.ServiceContext)arguments[6]);
+				(java.lang.String)arguments[6],
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
 		throw new UnsupportedOperationException();
