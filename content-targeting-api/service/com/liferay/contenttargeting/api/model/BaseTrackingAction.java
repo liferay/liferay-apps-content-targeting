@@ -113,8 +113,12 @@ public abstract class BaseTrackingAction implements TrackingAction {
 		return true;
 	}
 
-	public void processTrackingAction(
-		PortletRequest request, PortletResponse response) {
+	@Override
+	public String processTrackingAction(
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
+
+		return null;
 	}
 
 	protected String parseTemplate(

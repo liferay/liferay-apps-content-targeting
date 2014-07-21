@@ -302,7 +302,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
-	protected Map<String, String> getRuleValues(
+	protected Map<String, String> getJSONValues(
 		JSONArray data, String namespace, String id) {
 
 		Map<String, String> values = new HashMap<String, String>(data.length());
@@ -706,7 +706,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			String id = jSONObjectRule.getString("id");
 
-			Map<String, String> ruleValues = getRuleValues(
+			Map<String, String> ruleValues = getJSONValues(
 				jSONObjectRule.getJSONArray("data"), response.getNamespace(),
 				id);
 
@@ -769,10 +769,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				campaignId));
 
 		for (int i = 0; i < jSONArray.length(); i++) {
-			JSONObject jSONObjectRule = jSONArray.getJSONObject(i);
+			JSONObject jSONObjectTrackingAction = jSONArray.getJSONObject(i);
 
 			long trackingActionInstanceId = 0;
-			String type = jSONObjectRule.getString("type");
+			String type = jSONObjectTrackingAction.getString("type");
 
 			if (type.contains(StringPool.UNDERLINE)) {
 				String[] ids = type.split(StringPool.UNDERLINE);
@@ -784,15 +784,22 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			TrackingAction trackingAction =
 				_trackingActionsRegistry.getTrackingAction(type);
 
-			trackingAction.processTrackingAction(request, response);
+			String id = jSONObjectTrackingAction.getString("id");
 
-			String alias = ParamUtil.getString(request, "alias");
-			String referrerClassName = ParamUtil.getString(
-				request, "referrerClassName");
-			long referrerClassPK = ParamUtil.getLong(
-				request, "referrerClassPK");
-			String elementId = ParamUtil.getString(request, "elementId");
-			String eventType = ParamUtil.getString(request, "eventType");
+			Map<String, String> trackingActionValues = getJSONValues(
+				jSONObjectTrackingAction.getJSONArray("data"),
+				response.getNamespace(), id);
+
+			trackingAction.processTrackingAction(
+				request, response, id, trackingActionValues);
+
+			String alias = trackingActionValues.get("alias");
+			String referrerClassName = trackingActionValues.get(
+				"referrerClassName");
+			long referrerClassPK = GetterUtil.getLong(
+				trackingActionValues.get("referrerClassPK"));
+			String elementId = trackingActionValues.get("elementId");
+			String eventType = trackingActionValues.get("eventType");
 
 			try {
 				if (trackingActionInstanceId > 0) {
@@ -803,8 +810,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 								referrerClassName, referrerClassPK, elementId,
 								eventType, serviceContext);
 
-					trackingActionInstances.remove(
-						trackingActionInstance.getTrackingActionInstanceId());
+					trackingActionInstances.remove(trackingActionInstance);
 				}
 				else {
 					_trackingActionInstanceService.addTrackingActionInstance(
@@ -816,15 +822,15 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			catch (Exception e) {
 				_log.error("Cannot update tracking action", e);
 			}
+		}
 
-			// Delete removed Tracking Actions
+		// Delete removed Tracking Actions
 
-			for (TrackingActionInstance trackingActionInstance :
-					trackingActionInstances) {
+		for (TrackingActionInstance trackingActionInstance :
+				trackingActionInstances) {
 
-				_trackingActionInstanceService.deleteTrackingActionInstance(
-					trackingActionInstance.getTrackingActionInstanceId());
-			}
+			_trackingActionInstanceService.deleteTrackingActionInstance(
+				trackingActionInstance.getTrackingActionInstanceId());
 		}
 	}
 

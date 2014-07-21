@@ -51,7 +51,8 @@ public interface TrackingAction {
 
 	public boolean isInstantiable();
 
-	public void processTrackingAction(
-		PortletRequest request, PortletResponse response);
+	public String processTrackingAction(
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values);
 
 }
