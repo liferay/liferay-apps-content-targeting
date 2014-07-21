@@ -1,0 +1,29 @@
+Bundle-ClassPath: .,WEB-INF/lib/util-java.jar
+Bundle-Name: UserGroup Member Rule
+Import-Package:\
+	com.liferay.anonymoususers.model,\
+	com.liferay.anonymoususers.service,\
+	com.liferay.anonymoususers.service.messaging,\
+	com.liferay.contenttargeting.api.model,\
+	com.liferay.contenttargeting.service,\
+	com.liferay.contenttargeting.service.messaging,\
+	com.liferay.portal.json,\
+	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.language,\
+	com.liferay.portal.kernel.lar,\
+	com.liferay.portal.kernel.servlet,\
+	com.liferay.portal.kernel.servlet.filters.invoker,\
+	javax.portlet,\
+	javax.el,\
+	javax.servlet,\
+	javax.servlet.http,\
+	*;resolution:="optional"
+Include-Resource: classes,\
+	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
+	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
+	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
+Private-Package: \
+	com.liferay.contenttargeting.rules.usergroupmember.*
+Service-Component: \
+	com.liferay.contenttargeting.rules.usergroupmember.*
+Web-ContextPath: /rule-usergroup-member
