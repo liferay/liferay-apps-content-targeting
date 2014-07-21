@@ -62,7 +62,8 @@ public class GenderRuleTest extends PowerMockito {
 			"female"
 		);
 
-		Assert.assertTrue(_genderRule.evaluate(_ruleInstance, _anonymousUser));
+		Assert.assertTrue(
+			_genderRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	@Test
@@ -85,7 +86,8 @@ public class GenderRuleTest extends PowerMockito {
 			"male"
 		);
 
-		Assert.assertTrue(_genderRule.evaluate(_ruleInstance, _anonymousUser));
+		Assert.assertTrue(
+			_genderRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	@Test
@@ -96,7 +98,8 @@ public class GenderRuleTest extends PowerMockito {
 			null
 		);
 
-		Assert.assertFalse(_genderRule.evaluate(_ruleInstance, _anonymousUser));
+		Assert.assertFalse(
+			_genderRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	@Mock

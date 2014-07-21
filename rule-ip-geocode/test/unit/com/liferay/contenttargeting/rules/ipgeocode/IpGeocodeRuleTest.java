@@ -130,7 +130,7 @@ public class IpGeocodeRuleTest extends PowerMockito {
 		);
 
 		Assert.assertTrue(
-			_ipGeocodeRule.evaluate(_ruleInstance, _anonymousUser));
+			_ipGeocodeRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	@Test
@@ -164,7 +164,7 @@ public class IpGeocodeRuleTest extends PowerMockito {
 		);
 
 		Assert.assertTrue(
-			_ipGeocodeRule.evaluate(_ruleInstance, _anonymousUser));
+			_ipGeocodeRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	@Test
@@ -198,7 +198,7 @@ public class IpGeocodeRuleTest extends PowerMockito {
 		);
 
 		Assert.assertTrue(
-			_ipGeocodeRule.evaluate(_ruleInstance, _anonymousUser));
+			_ipGeocodeRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	@Mock

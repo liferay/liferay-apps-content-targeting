@@ -124,7 +124,8 @@ public class TimeRuleTest extends PowerMockito {
 			_generateJSON(_5minutesAgo, _in5minutes)
 		);
 
-		Assert.assertTrue(_timeRule.evaluate(_ruleInstance, _anonymousUser));
+		Assert.assertTrue(
+			_timeRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	@Test
@@ -141,7 +142,8 @@ public class TimeRuleTest extends PowerMockito {
 			_generateJSON(_in5minutes, _5minutesAgo)
 		);
 
-		Assert.assertFalse(_timeRule.evaluate(_ruleInstance, _anonymousUser));
+		Assert.assertFalse(
+			_timeRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	@Test
@@ -158,7 +160,8 @@ public class TimeRuleTest extends PowerMockito {
 			_generateJSON(_5minutesAgo, _in5minutes)
 		);
 
-		Assert.assertTrue(_timeRule.evaluate(_ruleInstance, _anonymousUser));
+		Assert.assertTrue(
+			_timeRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	private String _generateJSON(Calendar startDate, Calendar endDate) {

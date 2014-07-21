@@ -99,7 +99,8 @@ public class AgeRuleTest extends PowerMockito {
 			_generateJSON(20, 30)
 		);
 
-		Assert.assertTrue(_ageRule.evaluate(_ruleInstance, _anonymousUser));
+		Assert.assertTrue(
+			_ageRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	@Test
@@ -116,7 +117,8 @@ public class AgeRuleTest extends PowerMockito {
 			_generateJSON(10, 20)
 		);
 
-		Assert.assertFalse(_ageRule.evaluate(_ruleInstance, _anonymousUser));
+		Assert.assertFalse(
+			_ageRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	@Test
@@ -133,7 +135,8 @@ public class AgeRuleTest extends PowerMockito {
 			_generateJSON(30, 40)
 		);
 
-		Assert.assertFalse(_ageRule.evaluate(_ruleInstance, _anonymousUser));
+		Assert.assertFalse(
+			_ageRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	@Test
@@ -144,7 +147,8 @@ public class AgeRuleTest extends PowerMockito {
 			null
 		);
 
-		Assert.assertFalse(_ageRule.evaluate(_ruleInstance, _anonymousUser));
+		Assert.assertFalse(
+			_ageRule.evaluate(null, _ruleInstance, _anonymousUser));
 	}
 
 	private String _generateJSON(int olderThan, int youngerThan) {
