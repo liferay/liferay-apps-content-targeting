@@ -103,7 +103,8 @@ public class TrackingActionInstanceServiceImpl
 	public TrackingActionInstance updateTrackingActionInstance(
 			long trackingActionInstanceId, String alias,
 			String referrerClassName, long referrerClassPK, String elementId,
-			String eventType, String typeSettings, ServiceContext serviceContext)
+			String eventType, String typeSettings,
+			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		TrackingActionInstance trackingActionInstance =
