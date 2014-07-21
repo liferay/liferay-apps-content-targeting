@@ -91,7 +91,7 @@ public class TrackingActionInstanceLocalServiceImplTest {
 			_trackingActionInstanceLocalService.addTrackingActionInstance(
 					TestUtil.getUserId(), "tracking-action-key",
 					_campaign.getCampaignId(), StringPool.BLANK, null, 1, null,
-					null, _serviceContext);
+					null, null, _serviceContext);
 
 		Assert.assertEquals(
 			initTrackingActionInstancesCount + 1,
@@ -116,7 +116,7 @@ public class TrackingActionInstanceLocalServiceImplTest {
 		_trackingActionInstanceLocalService.addTrackingActionInstance(
 			TestUtil.getUserId(), "tracking-action-key",
 			_campaign.getCampaignId(), StringPool.BLANK, null, 1, null, null,
-			_serviceContext);
+			null, _serviceContext);
 
 		_campaignLocalService.deleteCampaign(_campaign.getCampaignId());
 

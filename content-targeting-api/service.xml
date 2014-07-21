@@ -116,6 +116,7 @@
 		<column name="referrerClassPK" type="long" />
 		<column name="elementId" type="String" />
 		<column name="eventType" type="String" />
+		<column name="typeSettings" type="String" />
 
 		<!-- Order -->
 

@@ -52,6 +52,9 @@
 		<field name="referrerClassPK" type="long" />
 		<field name="elementId" type="String" />
 		<field name="eventType" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 	<model name="com.liferay.contenttargeting.model.UserSegment">
 		<field name="uuid" type="String" />

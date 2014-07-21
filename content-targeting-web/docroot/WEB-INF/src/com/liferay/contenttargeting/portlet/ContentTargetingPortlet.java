@@ -790,7 +790,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				jSONObjectTrackingAction.getJSONArray("data"),
 				response.getNamespace(), id);
 
-			trackingAction.processTrackingAction(
+			String typeSettings = trackingAction.processTrackingAction(
 				request, response, id, trackingActionValues);
 
 			String alias = trackingActionValues.get("alias");
@@ -808,7 +808,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 							updateTrackingActionInstance(
 								trackingActionInstanceId, alias,
 								referrerClassName, referrerClassPK, elementId,
-								eventType, serviceContext);
+								eventType, typeSettings, serviceContext);
 
 					trackingActionInstances.remove(trackingActionInstance);
 				}
@@ -816,7 +816,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					_trackingActionInstanceService.addTrackingActionInstance(
 						themeDisplay.getUserId(), type, campaignId, alias,
 						referrerClassName, referrerClassPK, elementId,
-						eventType, serviceContext);
+						eventType, typeSettings, serviceContext);
 				}
 			}
 			catch (Exception e) {
