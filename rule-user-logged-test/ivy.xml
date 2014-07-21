@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<ivy-module
+	version="2.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd"
+	xmlns:m="http://ant.apache.org/ivy/maven"
+>
+
+	<info module="rule-user-logged-test" organisation="com.liferay">
+		<extends extendType="configurations,description,info" location="${sdk.dir}/ivy.xml" module="com.liferay.sdk" organisation="com.liferay" revision="latest.integration" />
+	</info>
+
+	<dependencies defaultconf="test->default">
+		<dependency name="arquillian-junit-container" org="org.jboss.arquillian.junit" rev="1.1.2.Final" force="true"  />
+		<dependency name="arquillian-container-liferay" org="com.liferay.arquillian" rev="latest.integration" />
+		<dependency name="arquillian-deployment-generator-bnd" org="com.liferay.arquillian" rev="latest.integration" />
+		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.0-SNAPSHOT" />
+		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
+		<dependency name="org.osgi.enterprise" org="org.osgi" rev="5.0.0" />
+	</dependencies>
+</ivy-module>

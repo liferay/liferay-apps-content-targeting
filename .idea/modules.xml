@@ -27,6 +27,7 @@
       <module fileurl="file://$PROJECT_DIR$/rule-site-member-test/rule-site-member-test.iml" filepath="$PROJECT_DIR$/rule-site-member-test/rule-site-member-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-time/rule-time.iml" filepath="$PROJECT_DIR$/rule-time/rule-time.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-user-logged/rule-user-logged.iml" filepath="$PROJECT_DIR$/rule-user-logged/rule-user-logged.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule-user-logged-test/rule-user-logged-test.iml" filepath="$PROJECT_DIR$/rule-user-logged-test/rule-user-logged-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-usergroup-member/rule-usergroup-member.iml" filepath="$PROJECT_DIR$/rule-usergroup-member/rule-usergroup-member.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-usergroup-member-test/rule-usergroup-member-test.iml" filepath="$PROJECT_DIR$/rule-usergroup-member-test/rule-usergroup-member-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" filepath="$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" />
