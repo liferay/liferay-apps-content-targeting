@@ -91,7 +91,7 @@ running these commands:
 	```
 3. Set this property in the build.<username>.properties of your Liferay SDK:
 	```
-	plugins.includes= analytics-api, analytics-hook, analytics-processor-service, analytics-test, anonymous-users-api, anonymous-users-test, content-targeting-api, content-targeting-test, content-targeting-web, portal-6-2-x-compat-hook, report-campaign-content, report-user-segment-content, rule-age, rule-gender, rule-ip-geocode, rule-score-points, rule-time, runtime-dependencies, runtime-test-dependencies
+	plugins.includes=*-api,*-hook,*-service,*-web,report-*,rule-*,runtime-dependencies,tracking-action-*
 	```
 4. Go to apps/content-targeting and run `ant build-app`
 
@@ -117,7 +117,7 @@ following steps:
 1. Append the test modules to the `plugins.includes` property of your
 build.<username>.properties file:
 	```
-	plugins.includes=<all other audience targeting application modules>, analytics-test, anonymous-users-test, content-targeting-test, runtime-test-dependencies
+	plugins.includes=<all other audience targeting application modules>,*-test,runtime-test-dependencies
 	```
 2. Make sure you have deployed all the Audience Targeting application plugins
 and that your server is running.
