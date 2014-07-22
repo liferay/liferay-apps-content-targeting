@@ -14,6 +14,7 @@
 
 package com.liferay.contenttargeting.reports.campaigntrackingaction.messaging;
 
+import com.liferay.contenttargeting.reports.campaigntrackingaction.service.CampaignTrackingActionLocalServiceUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
@@ -25,6 +26,8 @@ public class CheckCampaignTrackingActionReportMessageListener
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
+		CampaignTrackingActionLocalServiceUtil.
+			checkCampaignTrackingActionEvents();
 	}
 
 }
