@@ -98,8 +98,9 @@ public class TimeRule extends BaseRule {
 
 	@Override
 	public String processRule(
-		PortletRequest request, PortletResponse response, String id,
-		Map<String, String> values) {
+			PortletRequest request, PortletResponse response, String id,
+			Map<String, String> values)
+		throws Exception {
 
 		int endTimeHour = GetterUtil.getInteger(values.get("endTimeHour"));
 		int endTimeMinute = GetterUtil.getInteger(values.get("endTimeMinute"));

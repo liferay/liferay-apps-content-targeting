@@ -120,8 +120,9 @@ public class AgeRule extends BaseRule {
 
 	@Override
 	public String processRule(
-		PortletRequest request, PortletResponse response, String id,
-		Map<String, String> values) {
+			PortletRequest request, PortletResponse response, String id,
+			Map<String, String> values)
+		throws Exception {
 
 		int youngerThan = GetterUtil.getInteger(values.get("youngerThan"));
 		int olderThan = GetterUtil.getInteger(values.get("olderThan"));

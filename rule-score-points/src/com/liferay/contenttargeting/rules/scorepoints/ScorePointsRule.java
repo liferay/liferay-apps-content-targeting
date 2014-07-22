@@ -101,8 +101,9 @@ public class ScorePointsRule extends BaseRule {
 
 	@Override
 	public String processRule(
-		PortletRequest request, PortletResponse response, String id,
-		Map<String, String> values) {
+			PortletRequest request, PortletResponse response, String id,
+			Map<String, String> values)
+		throws Exception {
 
 		int scorePoints = GetterUtil.getInteger(values.get("scorePoints"));
 

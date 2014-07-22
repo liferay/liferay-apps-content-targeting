@@ -148,8 +148,9 @@ public class IpGeocodeRule extends BaseRule {
 
 	@Override
 	public String processRule(
-		PortletRequest request, PortletResponse response, String id,
-		Map<String, String> values) {
+			PortletRequest request, PortletResponse response, String id,
+			Map<String, String> values)
+		throws Exception {
 
 		long countryId = GetterUtil.getLong(values.get("countryId"));
 		long regionId = GetterUtil.getLong(values.get("regionId"));

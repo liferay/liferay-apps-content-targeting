@@ -115,8 +115,9 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 	@Override
 	public String processTrackingAction(
-		PortletRequest request, PortletResponse response, String id,
-		Map<String, String> values) {
+			PortletRequest request, PortletResponse response, String id,
+			Map<String, String> values)
+		throws Exception {
 
 		return null;
 	}

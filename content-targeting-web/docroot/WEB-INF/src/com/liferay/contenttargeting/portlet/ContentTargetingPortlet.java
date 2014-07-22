@@ -38,6 +38,7 @@ import com.liferay.contenttargeting.util.CampaignSearchContainerIterator;
 import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.UserSegmentSearchContainerIterator;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -231,7 +232,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 
-			if (e instanceof PrincipalException) {
+			if (e instanceof NoSuchModelException ||
+				e instanceof PrincipalException) {
+
 				response.setRenderParameter(
 					"mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
 			}
