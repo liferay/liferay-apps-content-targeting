@@ -1,4 +1,13 @@
 <#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
+<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
+
+<#if !trackingFormEnabled >
+	<div class="alert alert-error">
+		<strong><@liferay_ui["message"] key="this-tracking-action-will-not-work-properly-because-form-tracking-is-not-enabled" /></strong>
+
+		<@liferay_ui["message"] key="it-can-be-enabled-in-portal-settings-content-targeting-analytics" />
+	</div>
+</#if>
 
 <@aui["input"] label="alias" name="{ct_field_guid}alias" type="text" value=alias />
 

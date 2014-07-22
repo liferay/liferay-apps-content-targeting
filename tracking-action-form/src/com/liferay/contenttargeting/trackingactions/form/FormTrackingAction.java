@@ -17,9 +17,12 @@ package com.liferay.contenttargeting.trackingactions.form;
 import com.liferay.contenttargeting.api.model.BaseTrackingAction;
 import com.liferay.contenttargeting.api.model.TrackingAction;
 import com.liferay.contenttargeting.model.TrackingActionInstance;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Company;
 
 import java.util.List;
 import java.util.Locale;
@@ -76,6 +79,20 @@ public class FormTrackingAction extends BaseTrackingAction {
 		context.put("elementId", elementId);
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
+
+		boolean trackingFormEnabled = false;
+
+		Company company = (Company)context.get("company");
+
+		try {
+			trackingFormEnabled = PrefsPropsUtil.getBoolean(
+				company.getCompanyId(),
+				"content.targeting.analytics.form.enabled");
+		}
+		catch (SystemException se) {
+		}
+
+		context.put("trackingFormEnabled", trackingFormEnabled);
 	}
 
 	private static final String[] _EVENT_TYPES = {"view", "interact", "submit"};
