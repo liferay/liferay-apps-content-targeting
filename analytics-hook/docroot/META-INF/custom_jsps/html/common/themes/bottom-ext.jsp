@@ -97,9 +97,13 @@ long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 			function(event) {
 				var linkExcludedIdsRegexStr = '<%= PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.link.excluded.ids.regex") %>';
 
+				var defaultLinkExcludedIdsRegex = /^yui_.*/;
+
 				var link = event.currentTarget;
 
-				if (!linkExcludedIdsRegexStr || !new RegExp(linkExcludedIdsRegexStr).test(link.attr('id'))) {
+				var linkId = link.attr('id');
+
+				if (!defaultLinkExcludedIdsRegex.test(linkId) && (!linkExcludedIdsRegexStr || !new RegExp(linkExcludedIdsRegexStr).test(linkId))) {
 					event.preventDefault();
 
 					trackElementEvent('click', link);
