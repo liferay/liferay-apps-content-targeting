@@ -18,7 +18,7 @@ AUI.add(
 				'<div class="field-editor">{editor}</div>' +
 			'</div>',
 
-			ITEM_CATEGORY_HEADER_TPL = '<div class="category-header toggler-header toggler-header-expanded">' +
+			ITEM_CATEGORY_HEADER_TPL = '<div class="category-header toggler-header toggler-header-collapsed">' +
 				'<span class="category-icon icon {icon}"></span>' +
 				'<div class="category-info"> ' +
 					'<div class="category-title">{name}</div>' +
@@ -26,7 +26,7 @@ AUI.add(
 				'</div>' +
 			'</div>',
 
-			ITEM_CATEGORY_CONTENT_TPL = '<div class="category-content toggler-content toggler-content-expanded"></div>',
+			ITEM_CATEGORY_CONTENT_TPL = '<div class="category-content toggler-content toggler-content-collapsed"></div>',
 
 			LiferayCTFormItemSearch = A.Base.create('Search', A.Base, [A.AutoCompleteBase],
 				{
@@ -194,6 +194,7 @@ AUI.add(
 								instance._togglerDelegate = new A.TogglerDelegate(
 									{
 										animated: true,
+										closeAllOnExpand: true,
 										container: fieldsContainer,
 										content: '.category-content',
 										expanded: true,
