@@ -64,7 +64,6 @@ long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 
 					if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(item.attr('id'))) {
 						trackElementEvent('submit', form);
-						Liferay.Analytics.flush();
 					}
 				}
 			);
@@ -104,13 +103,7 @@ long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 				var linkId = link.attr('id');
 
 				if (!defaultLinkExcludedIdsRegex.test(linkId) && (!linkExcludedIdsRegexStr || !new RegExp(linkExcludedIdsRegexStr).test(linkId))) {
-					event.preventDefault();
-
 					trackElementEvent('click', link);
-
-					Liferay.Analytics.flush();
-
-					document.location = link.attr('href');
 				}
 			},
 			'a'
