@@ -1,6 +1,5 @@
 ;(function() {
-	var events = [],
-		ioRequest,
+	var ioRequest,
 		pendingFlush,
 		requestId,
 		requestInterval,
@@ -12,7 +11,8 @@
 	LiferayAnalyticsProcessor.prototype._ready = true;
 
 	LiferayAnalyticsProcessor.prototype.flush = function() {
-		var instance = this;
+		var instance = this,
+			events = instance.getPendingEvents();
 
 		pendingFlush = false;
 
@@ -28,7 +28,7 @@
 					}
 				);
 
-				events.length = 0;
+				instance.store([]);
 
 				requestId = clearInterval(requestId);
 			}
@@ -36,6 +36,13 @@
 				pendingFlush = true;
 			}
 		}
+	};
+
+	LiferayAnalyticsProcessor.prototype.getPendingEvents = function() {
+		var instance = this,
+			storedEvents = localStorage.getItem('ct-analytics-events') || '[]';
+
+		return JSON.parse(storedEvents);
 	};
 
 	LiferayAnalyticsProcessor.prototype.initialize = function() {
@@ -61,18 +68,24 @@
 				);
 
 				ioRequest = A.io.request;
-
-				if (pendingFlush) {
-					instance.flush();
-				}
 			}
 		);
-	}
+	};
+
+	LiferayAnalyticsProcessor.prototype.store = function(events) {
+		var instance = this,
+			events = events || [];
+
+		localStorage.setItem('ct-analytics-events', JSON.stringify(events));
+	};
 
 	LiferayAnalyticsProcessor.prototype.track = function(event, properties) {
-		var instance = this;
+		var instance = this,
+			events = instance.getPendingEvents();
 
 		events.push(event.obj);
+
+		instance.store(events);
 
 		if (!requestId) {
 			requestId = setTimeout(instance.flush, requestInterval);
