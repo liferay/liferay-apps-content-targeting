@@ -1,14 +1,16 @@
 ;(function() {
-	var LiferayAnalytics = function(analyticsImpl) {
+	var LiferayAnalytics = function(analyticsImpl, integrationImpl) {
 		var _libs = {},
-			_impl = analyticsImpl;
+			_impl = analyticsImpl,
+			_integration = integrationImpl;
 
 		this.addIntegration = _impl.addIntegration;
 		this.getIntegrations = function() { return _impl._integrations; };
 
 		this.initialize = _impl.initialize;
-		this.integration = _impl.integration;
+		this.integration = _integration;
 		this.track = _impl.track;
+		this._impl = _impl;
 
 		this.flush = function() {
 			var integrations = this.getIntegrations(),
@@ -24,5 +26,5 @@
 		};
 	};
 
-	Liferay.Analytics = new LiferayAnalytics(Liferay._analytics);
+	Liferay.Analytics = new LiferayAnalytics(Liferay._analytics, Liferay._integration);
 })();
