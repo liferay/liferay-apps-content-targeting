@@ -58,7 +58,7 @@ public class AnalyticsHotDeployMessageListener
 		catch (Exception e) {
 			_log.error(
 				"Cannot register message listener for" +
-					_analyticsMessageDestination);
+					_analyticsMessageDestination, e);
 		}
 	}
 

@@ -1,5 +1,5 @@
 Bundle-Activator: com.liferay.analytics.internal.osgi.AnalyticsServiceActivator
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/com.liferay.portal.analytics.api-service.jar
+Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.analytics.api-service.jar
 Bundle-Name: Analytics API
 Export-Package:\
 	com.liferay.analytics,\
@@ -9,7 +9,7 @@ Export-Package:\
 	com.liferay.analytics.service,\
 	com.liferay.analytics.service.messaging,\
 	com.liferay.analytics.util
-Import-Package =\
+Import-Package:\
 	com.liferay.analytics,\
 	com.liferay.analytics.model,\
 	com.liferay.analytics.service,\
@@ -56,15 +56,15 @@ Import-Package =\
 	org.osgi.framework,\
 	org.springframework.*,\
 	*;resolution:="optional"
-Include-Resource: classes,\
-	{WEB-INF/classes/META-INF=classes/META-INF/},\
-	{WEB-INF/liferay-display.xml=docroot/WEB-INF/liferay-display.xml},\
-	{WEB-INF/liferay-plugin-package.properties=docroot/WEB-INF/liferay-plugin-package.properties},\
-	{WEB-INF/liferay-portlet.xml=docroot/WEB-INF/liferay-portlet.xml},\
-	{WEB-INF/portlet.xml=docroot/WEB-INF/portlet.xml},\
-	{WEB-INF/sql=sql},\
-	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
-	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	WEB-INF/lib/com.liferay.portal.analytics.api-service.jar=lib/com.liferay.portal.analytics.api-service.jar
+Include-Resource:\
+ 	classes,\
+	WEB-INF/classes/META-INF=classes/META-INF/,\
+	WEB-INF/liferay-display.xml=META-INF/liferay-display.xml,\
+	WEB-INF/liferay-plugin-package.properties=META-INF/liferay-plugin-package.properties,\
+	WEB-INF/liferay-portlet.xml=META-INF/liferay-portlet.xml,\
+	WEB-INF/portlet.xml=META-INF/portlet.xml,\
+	WEB-INF/sql=sql,\
+	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+	lib/com.liferay.portal.analytics.api-service.jar=lib/com.liferay.portal.analytics.api-service.jar
 Service-Component:com.liferay.analytics.*
 Web-ContextPath: /analytics-api
