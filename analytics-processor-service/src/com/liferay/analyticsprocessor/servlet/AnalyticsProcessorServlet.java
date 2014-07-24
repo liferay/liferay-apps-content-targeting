@@ -34,6 +34,7 @@ import java.io.IOException;
 
 import java.util.Iterator;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -42,10 +43,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	property = {
+		"servletName=Analytics Processor", "urlPattern=/track"
+	},
+	service = Servlet.class)
 public class AnalyticsProcessorServlet extends HttpServlet {
 
 	@Override
