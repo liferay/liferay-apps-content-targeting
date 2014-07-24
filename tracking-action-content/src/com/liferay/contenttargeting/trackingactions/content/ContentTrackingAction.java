@@ -44,13 +44,27 @@ import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = TrackingAction.class)
 public class ContentTrackingAction extends BaseTrackingAction {
+
+	@Activate
+	@Override
+	public void activate() {
+		super.activate();
+	}
+
+	@Deactivate
+	@Override
+	public void deActivate() {
+		super.deActivate();
+	}
 
 	@Override
 	public List<String> getEventTypes() {

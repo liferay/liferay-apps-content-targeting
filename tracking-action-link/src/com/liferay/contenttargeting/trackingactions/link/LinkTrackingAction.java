@@ -28,13 +28,27 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 
 /**
  * @author Eduardo Garcia
  */
 @Component(immediate = true, service = TrackingAction.class)
 public class LinkTrackingAction extends BaseTrackingAction {
+
+	@Activate
+	@Override
+	public void activate() {
+		super.activate();
+	}
+
+	@Deactivate
+	@Override
+	public void deActivate() {
+		super.deActivate();
+	}
 
 	@Override
 	public List<String> getEventTypes() {

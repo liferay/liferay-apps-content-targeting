@@ -1,4 +1,4 @@
-Bundle-ClassPath: .,WEB-INF/lib/util-java.jar
+Bundle-ClassPath: .,lib/util-java.jar
 Bundle-Name: Content Tracking Action
 Import-Package:\
 	com.liferay.contenttargeting.api.model,\
@@ -16,12 +16,10 @@ Import-Package:\
 	javax.servlet,\
 	javax.servlet.http,\
 	*;resolution:="optional"
-Include-Resource: classes,\
-	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
-	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
-	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
-Private-Package: \
-	com.liferay.contenttargeting.trackingactions.content.*
-Service-Component: \
-	com.liferay.contenttargeting.trackingactions.content.*
+Include-Resource:\
+	classes,\
+	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
+	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
+Private-Package: com.liferay.contenttargeting.trackingactions.content.*
+Service-Component: com.liferay.contenttargeting.trackingactions.content.*
 Web-ContextPath: /tracking-action-content

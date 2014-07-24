@@ -41,7 +41,7 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 public abstract class BaseTrackingAction implements TrackingAction {
 
-	@Activate
+	@Override
 	public void activate() {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -49,7 +49,7 @@ public abstract class BaseTrackingAction implements TrackingAction {
 		}
 	}
 
-	@Deactivate
+	@Override
 	public void deActivate() {
 		if (_log.isDebugEnabled()) {
 			_log.debug(
