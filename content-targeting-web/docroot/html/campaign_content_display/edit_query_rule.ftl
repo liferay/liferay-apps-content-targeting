@@ -90,8 +90,8 @@
 	<#if queryRule.isValid()>
 		<div class="summary-view ${summaryViewClass}">
 			<@aui["column"] columnWidth=50>
-				<span class="query-campaigns-text"><@liferay_ui["message"] key="if-the-user-belongs-to-this-campaign" /></span>
-				<span class="query-campaigns-value">${queryRule.getCampaignName(locale)} (${languageUtil.get(locale, "priority")} ${queryRule.getCampaignPriority()})</span>
+				<span class="query-content-text"><@liferay_ui["message"] key="if-the-user-belongs-to-this-campaign" /></span>
+				<span class="query-content-value">${queryRule.getCampaignName(locale)} (${languageUtil.get(locale, "priority")} ${queryRule.getCampaignPriority()})</span>
 			</@>
 
 			<@aui["column"] columnWidth=50>

@@ -147,8 +147,8 @@
 			</@>
 
 			<@aui["column"] columnWidth=30>
-				<span class="query-user-segments-text"><@liferay_ui["message"] key="of-the-following-user-segments" /></span>
-				<span class="query-user-segments-value">${queryRule.getUserSegmentNames(locale)}</span>
+				<span class="query-content-text"><@liferay_ui["message"] key="of-the-following-user-segments" /></span>
+				<span class="query-content-value">${queryRule.getUserSegmentNames(locale)}</span>
 			</@>
 
 			<@aui["column"] columnWidth=40>

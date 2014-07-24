@@ -8,6 +8,7 @@
 		<instanceable>true</instanceable>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/campaign_content_display/main.css</header-portlet-css>
+		<header-portlet-css>/css/content_targeting/rules_panel.css</header-portlet-css>
 		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
 		<css-class-wrapper>campaign-content-display-portlet</css-class-wrapper>
 	</portlet>
@@ -18,6 +19,7 @@
 		<control-panel-entry-weight>10.0</control-panel-entry-weight>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/content_targeting/main.css</header-portlet-css>
+		<header-portlet-css>/css/content_targeting/rules_panel.css</header-portlet-css>
 		<header-portlet-javascript>/js/content_targeting/input_slider.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/content_targeting/search.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/content_targeting/ct_form_builder.js</header-portlet-javascript>
@@ -38,6 +40,7 @@
 		<instanceable>true</instanceable>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/user_segment_content_display/main.css</header-portlet-css>
+		<header-portlet-css>/css/content_targeting/rules_panel.css</header-portlet-css>
 		<css-class-wrapper>user-segment-content-display-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
