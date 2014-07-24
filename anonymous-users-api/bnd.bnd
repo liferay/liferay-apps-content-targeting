@@ -1,5 +1,5 @@
 Bundle-Activator: com.liferay.anonymoususers.internal.osgi.AnonymousUserServiceActivator
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/util-taglib.jar,WEB-INF/lib/com.liferay.portal.anonymous.users.api-service.jar
+Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.anonymous.users.api-service.jar
 Bundle-Name: Anonymous Users API
 Export-Package:\
 	com.liferay.anonymoususers,\
@@ -7,7 +7,7 @@ Export-Package:\
 	com.liferay.anonymoususers.service,\
 	com.liferay.anonymoususers.service.messaging,\
 	com.liferay.anonymoususers.util
-Import-Package =\
+Import-Package:\
 	com.liferay.anonymoususers,\
 	com.liferay.anonymoususers.model,\
 	com.liferay.anonymoususers.service,\
@@ -54,11 +54,9 @@ Import-Package =\
 	org.springframework.*,\
 	*;resolution:="optional"
 Include-Resource: classes,\
-	{WEB-INF/classes/META-INF=classes/META-INF/},\
-	{WEB-INF/sql=sql},\
-	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
-	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	WEB-INF/lib/util-taglib.jar=${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar,\
-	WEB-INF/lib/com.liferay.portal.anonymous.users.api-service.jar=lib/com.liferay.portal.anonymous.users.api-service.jar
+	WEB-INF/classes/META-INF=classes/META-INF/,\
+	WEB-INF/sql=sql,\
+	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+	lib/com.liferay.portal.anonymous.users.api-service.jar=lib/com.liferay.portal.anonymous.users.api-service.jar
 Service-Component:com.liferay.anonymoususers.*
 Web-ContextPath: /anonymous-users-api
