@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/anonymous-users-api/anonymous-users-api.iml" filepath="$PROJECT_DIR$/anonymous-users-api/anonymous-users-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/anonymous-users-test/anonymous-users-test.iml" filepath="$PROJECT_DIR$/anonymous-users-test/anonymous-users-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-api/content-targeting-api.iml" filepath="$PROJECT_DIR$/content-targeting-api/content-targeting-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/content-targeting-deploy-extender/content-targeting-deploy-extender.iml" filepath="$PROJECT_DIR$/content-targeting-deploy-extender/content-targeting-deploy-extender.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-test/content-targeting-test.iml" filepath="$PROJECT_DIR$/content-targeting-test/content-targeting-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-web/content-targeting-web.iml" filepath="$PROJECT_DIR$/content-targeting-web/content-targeting-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" filepath="$PROJECT_DIR$/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" />
