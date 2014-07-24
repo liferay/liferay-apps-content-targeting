@@ -1,4 +1,4 @@
-Bundle-ClassPath: .,WEB-INF/lib/util-java.jar
+Bundle-ClassPath: .,lib/util-java.jar
 Bundle-Name: Age Rule
 Import-Package:\
 	com.liferay.anonymoususers.model,\
@@ -20,12 +20,10 @@ Import-Package:\
 	javax.servlet,\
 	javax.servlet.http,\
 	*;resolution:="optional"
-Include-Resource: classes,\
-	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
-	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
+Include-Resource:\
+	classes,\
+	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
 	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
-Private-Package: \
-	com.liferay.contenttargeting.rules.age.*
-Service-Component: \
-	com.liferay.contenttargeting.rules.age.*
+Private-Package: com.liferay.contenttargeting.rules.age.*
+Service-Component: com.liferay.contenttargeting.rules.age.*
 Web-ContextPath: /rule-age

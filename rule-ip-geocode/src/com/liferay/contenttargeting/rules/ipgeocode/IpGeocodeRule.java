@@ -41,7 +41,9 @@ import javax.portlet.PortletResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 
 /**
@@ -49,6 +51,18 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = Rule.class)
 public class IpGeocodeRule extends BaseRule {
+
+	@Activate
+	@Override
+	public void activate() {
+		super.activate();
+	}
+
+	@Deactivate
+	@Override
+	public void deActivate() {
+		super.deActivate();
+	}
 
 	@Override
 	public boolean evaluate(

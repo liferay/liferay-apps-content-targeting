@@ -42,14 +42,14 @@ import org.osgi.service.component.annotations.Deactivate;
  */
 public abstract class BaseRule implements Rule {
 
-	@Activate
+	@Override
 	public void activate() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Rule activate: " + getClass().getSimpleName());
 		}
 	}
 
-	@Deactivate
+	@Override
 	public void deActivate() {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Rule deactivate: " + getClass().getSimpleName());
