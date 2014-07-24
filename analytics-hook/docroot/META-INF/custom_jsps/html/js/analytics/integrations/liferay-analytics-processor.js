@@ -1,5 +1,6 @@
 ;(function() {
 	var ioRequest,
+		isFunction,
 		pendingFlush,
 		requestId,
 		requestInterval,
@@ -10,7 +11,7 @@
 
 	LiferayAnalyticsProcessor.prototype._ready = true;
 
-	LiferayAnalyticsProcessor.prototype.flush = function() {
+	LiferayAnalyticsProcessor.prototype.flush = function(callback) {
 		var instance = this,
 			events = instance.getPendingEvents();
 
@@ -24,6 +25,16 @@
 						data: {
 							themeDisplayData: JSON.stringify(themeDisplayData),
 							events: JSON.stringify(events)
+						},
+						on: {
+							success: function() {
+								if (isFunction(callback)) {
+									callback();
+								}
+							},
+							failure: function(err) {
+								console.error(err.type);
+							}
 						}
 					}
 				);
@@ -67,6 +78,7 @@
 					}
 				);
 
+				isFunction = A.Lang.isFunction;
 				ioRequest = A.io.request;
 			}
 		);

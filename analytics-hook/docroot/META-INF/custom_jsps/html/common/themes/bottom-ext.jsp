@@ -104,6 +104,16 @@ long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 
 				if (!defaultLinkExcludedIdsRegex.test(linkId) && (!linkExcludedIdsRegexStr || !new RegExp(linkExcludedIdsRegexStr).test(linkId))) {
 					trackElementEvent('click', link);
+
+					if (link.hasClass('outbound-link')) {
+						event.preventDefault();
+
+						Liferay.Analytics.flush(
+							function() {
+								document.location = link.attr('href');
+							}
+						);
+					}
 				}
 			},
 			'a'

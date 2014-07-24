@@ -12,7 +12,7 @@
 		this.track = _impl.track;
 		this._impl = _impl;
 
-		this.flush = function() {
+		this.flush = function(callback) {
 			var integrations = this.getIntegrations(),
 				integration;
 
@@ -20,7 +20,7 @@
 				integration = integrations[prop];
 
 				if (integration.flush) {
-					integration.flush();
+					integration.flush(callback);
 				}
 			}
 		};
