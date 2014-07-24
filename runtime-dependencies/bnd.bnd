@@ -1,18 +1,1 @@
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar
 Bundle-Name: Runtime Dependencies
-Import-Package:\
-	com.liferay.portal.json,\
-	com.liferay.portal.kernel.exception,\
-	com.liferay.portal.kernel.language,\
-	com.liferay.portal.kernel.lar,\
-	com.liferay.portal.kernel.servlet,\
-	com.liferay.portal.kernel.servlet.filters.invoker,\
-	javax.portlet,\
-	javax.el,\
-	javax.servlet,\
-	javax.servlet.http,\
-	*;resolution:="optional"
-Include-Resource: classes,\
-	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
-	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
-Web-ContextPath: /runtime-dependencies
