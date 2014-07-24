@@ -25,6 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
 /**
  * @author Eduardo Garcia
@@ -58,7 +59,8 @@ public class DefaultReportsRegistryImpl implements ReportsRegistry {
 
 	@Reference(
 		unbind = "unregisterReport",
-		cardinality = ReferenceCardinality.MULTIPLE)
+		cardinality = ReferenceCardinality.MULTIPLE,
+		policy = ReferencePolicy.DYNAMIC)
 	public void registerReport(Report report) {
 		_reports.put(report.getReportKey(), report);
 	}
