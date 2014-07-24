@@ -17,7 +17,8 @@ package com.liferay.contenttargeting.trackingactions.content;
 import com.liferay.contenttargeting.api.model.BaseTrackingAction;
 import com.liferay.contenttargeting.api.model.TrackingAction;
 import com.liferay.contenttargeting.model.TrackingActionInstance;
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.contenttargeting.trackingactions.content.util.ContentTrackingActionUtil;
+import com.liferay.contenttargeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -26,18 +27,22 @@ import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
+import com.liferay.portlet.asset.model.AssetEntry;
+import com.liferay.portlet.asset.model.AssetRenderer;
+import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
 
 import org.osgi.service.component.annotations.Component;
 
@@ -54,14 +59,20 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 	@Override
 	public String getIcon() {
-		return null;
+		return "icon-file-alt";
 	}
 
 	@Override
 	public String getSummary(
 		TrackingActionInstance trackingActionInstance, Locale locale) {
 
-		return null;
+		String summary = LanguageUtil.format(
+			locale, "tracking-content-x",
+			new Object[] {
+				trackingActionInstance.getAlias(),
+			});
+
+		return summary;
 	}
 
 	@Override
@@ -70,13 +81,126 @@ public class ContentTrackingAction extends BaseTrackingAction {
 			Map<String, String> values)
 		throws Exception {
 
-		return null;
+		String assetEntryId = values.get("assetEntryId");
+
+		if (Validator.isNotNull(assetEntryId)) {
+			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+				Long.valueOf(assetEntryId));
+
+			values.put("referrerClassName", assetEntry.getClassName());
+			values.put(
+				"referrerClassPK", String.valueOf(assetEntry.getClassPK()));
+
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+			jsonObj.put("assetEntryId", assetEntryId);
+
+			return jsonObj.toString();
+		}
+
+		return StringPool.BLANK;
+	}
+
+	protected List<AssetRendererFactory> getSelectableAssetRendererFactories(
+		long companyId) {
+
+		List<AssetRendererFactory> selectableAssetRendererFactories =
+			new ArrayList<AssetRendererFactory>();
+
+		List<AssetRendererFactory> assetRendererFactories =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactories(
+					companyId);
+
+		for (AssetRendererFactory rendererFactory : assetRendererFactories) {
+			if (!rendererFactory.isSelectable()) {
+				continue;
+			}
+
+			selectableAssetRendererFactories.add(rendererFactory);
+		}
+
+		return selectableAssetRendererFactories;
 	}
 
 	@Override
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
 		Map<String, Object> context) {
+
+		String alias = StringPool.BLANK;
+		long assetEntryId = 0;
+		String assetImagePreview = StringPool.BLANK;
+		String assetTitlePreview = StringPool.BLANK;
+		String assetTypePreview = StringPool.BLANK;
+		String eventType = StringPool.BLANK;
+
+		if (trackingActionInstance != null) {
+			alias = trackingActionInstance.getAlias();
+			eventType = trackingActionInstance.getEventType();
+
+			try {
+				AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+					trackingActionInstance.getReferrerClassName(),
+					trackingActionInstance.getReferrerClassPK());
+
+				assetEntryId = assetEntry.getEntryId();
+
+				AssetRendererFactory assetRendererFactory =
+					AssetRendererFactoryRegistryUtil.
+						getAssetRendererFactoryByClassName(
+							assetEntry.getClassName());
+
+				AssetRenderer assetRenderer =
+					assetRendererFactory.getAssetRenderer(
+						assetEntry.getClassPK());
+
+				RenderRequest renderRequest = (RenderRequest)context.get(
+					"renderRequest");
+
+				assetImagePreview = assetRenderer.getThumbnailPath(
+					renderRequest);
+
+				ThemeDisplay themeDisplay =
+					(ThemeDisplay)renderRequest.getAttribute(
+						WebKeys.THEME_DISPLAY);
+
+				assetTitlePreview = assetRenderer.getTitle(
+					themeDisplay.getLocale());
+				assetTypePreview = assetRendererFactory.getTypeName(
+					themeDisplay.getLocale(), true);
+			}
+			catch (Exception e) {
+			}
+		}
+
+		context.put("alias", alias);
+		context.put("assetEntryId", assetEntryId);
+		context.put("assetImagePreview", assetImagePreview);
+		context.put("assetTitlePreview", assetTitlePreview);
+		context.put("assetTypePreview", assetTypePreview);
+		context.put("eventType", eventType);
+		context.put("eventTypes", getEventTypes());
+
+		boolean trackingContentEnabled = false;
+
+		Company company = (Company)context.get("company");
+
+		context.put(
+			"assetRendererFactories",
+			getSelectableAssetRendererFactories(company.getCompanyId()));
+
+		context.put(
+			"contentTrackingActionUtilClass", new ContentTrackingActionUtil());
+
+		try {
+			trackingContentEnabled = PrefsPropsUtil.getBoolean(
+				company.getCompanyId(),
+				"content.targeting.analytics.content.view");
+		}
+		catch (SystemException se) {
+		}
+
+		context.put("trackingContentEnabled", trackingContentEnabled);
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};
