@@ -32,6 +32,7 @@
       <module fileurl="file://$PROJECT_DIR$/rule-usergroup-member/rule-usergroup-member.iml" filepath="$PROJECT_DIR$/rule-usergroup-member/rule-usergroup-member.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-usergroup-member-test/rule-usergroup-member-test.iml" filepath="$PROJECT_DIR$/rule-usergroup-member-test/rule-usergroup-member-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/runtime-dependencies/runtime-dependencies.iml" filepath="$PROJECT_DIR$/runtime-dependencies/runtime-dependencies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/runtime-test-dependencies/runtime-test-dependencies.iml" filepath="$PROJECT_DIR$/runtime-test-dependencies/runtime-test-dependencies.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-content/tracking-action-content.iml" filepath="$PROJECT_DIR$/tracking-action-content/tracking-action-content.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" filepath="$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-link/tracking-action-link.iml" filepath="$PROJECT_DIR$/tracking-action-link/tracking-action-link.iml" />
