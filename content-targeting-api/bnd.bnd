@@ -1,5 +1,5 @@
 Bundle-Activator: com.liferay.contenttargeting.internal.osgi.ContentTargetingActivator
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/util-taglib.jar,WEB-INF/lib/com.liferay.portal.content.targeting.api-service.jar
+Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.content.targeting.api-service.jar
 Bundle-Name: Content Targeting API
 Export-Package:\
 	com.liferay.contenttargeting,\
@@ -10,7 +10,7 @@ Export-Package:\
 	com.liferay.contenttargeting.service.messaging,\
 	com.liferay.contenttargeting.service.permission,\
 	com.liferay.contenttargeting.util
-Import-Package =\
+Import-Package:\
 	com.germinus.easyconf,\
 	com.liferay.anonymoususers,\
 	com.liferay.anonymoususers.model,\
@@ -70,17 +70,16 @@ Import-Package =\
 	org.osgi.framework,\
 	org.springframework.*,\
 	*;resolution:="optional"
-Include-Resource: classes,\
-	{WEB-INF/liferay-display.xml=docroot/WEB-INF/liferay-display.xml},\
-	{WEB-INF/classes/META-INF=classes/META-INF/},\
-	{WEB-INF/liferay-plugin-package.properties=docroot/WEB-INF/liferay-plugin-package.properties},\
-	{WEB-INF/sql=sql},\
-	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
-	{WEB-INF/liferay-portlet.xml=docroot/WEB-INF/liferay-portlet.xml},\
-	{WEB-INF/portlet.xml=docroot/WEB-INF/portlet.xml},\
-	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
-	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	WEB-INF/lib/util-taglib.jar=${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar,\
-	WEB-INF/lib/com.liferay.portal.content.targeting.api-service.jar=lib/com.liferay.portal.content.targeting.api-service.jar
+Include-Resource:\
+ 	classes,\
+	WEB-INF/liferay-display.xml=META-INF/liferay-display.xml,\
+	WEB-INF/classes/META-INF=classes/META-INF/,\
+	WEB-INF/liferay-plugin-package.properties=META-INF/liferay-plugin-package.properties,\
+	WEB-INF/sql=sql,\
+	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
+	WEB-INF/liferay-portlet.xml=META-INF/liferay-portlet.xml,\
+	WEB-INF/portlet.xml=META-INF/portlet.xml,\
+	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+    lib/com.liferay.portal.content.targeting.api-service.jar=lib/com.liferay.portal.content.targeting.api-service.jar
 Service-Component:com.liferay.contenttargeting.*
 Web-ContextPath: /content-targeting-api
