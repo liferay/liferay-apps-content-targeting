@@ -41,7 +41,7 @@
 
 	<aui:input label="page-view" name="settings--content.targeting.analytics.page.view--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.view") %>' />
 
-	<aui:input label="web-content-view" name="settings--content.targeting.analytics.web.content.view--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.web.content.view") %>' />
+	<aui:input label="content-view" name="settings--content.targeting.analytics.content.view--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.view") %>' />
 </aui:fieldset>
 
 <aui:script>
