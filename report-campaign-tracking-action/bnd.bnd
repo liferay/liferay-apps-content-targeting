@@ -1,4 +1,4 @@
-Bundle-ClassPath: .,WEB-INF/classes,WEB-INF/lib/util-java.jar,WEB-INF/lib/com.liferay.portal.content.targeting.report.campaign.tracking.action-service.jar
+Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.content.targeting.report.campaign.tracking.action-service.jar
 Bundle-Name: Campaign Tracking Actions Report
 Import-Package:\
 	com.liferay.analytics.model,\
@@ -54,12 +54,16 @@ Import-Package:\
 	org.osgi.framework,*\
 	org.springframework.*,\
 	*;resolution:="optional"
-Include-Resource: classes,\
-	{WEB-INF/classes/META-INF=classes/META-INF/},\
-	{WEB-INF/sql=sql},\
-	{WEB-INF/liferay-hook.xml=docroot/WEB-INF/liferay-hook.xml},\
-	{WEB-INF/web.xml=docroot/WEB-INF/web.xml},\
-	WEB-INF/lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	WEB-INF/lib/com.liferay.portal.content.targeting.report.campaign.tracking.action-service.jar=lib/com.liferay.portal.content.targeting.report.campaign.tracking.action-service.jar
-	com.liferay.contenttargeting.reports.campaigntrackingaction.*
+Include-Resource:\
+	classes,\
+	WEB-INF/classes/META-INF=classes/META-INF/,\
+	WEB-INF/liferay-display.xml=META-INF/liferay-display.xml,\
+	WEB-INF/liferay-plugin-package.properties=META-INF/liferay-plugin-package.properties,\
+	WEB-INF/liferay-portlet.xml=META-INF/liferay-portlet.xml,\
+	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
+	WEB-INF/portlet.xml=META-INF/portlet.xml,\
+	WEB-INF/sql=sql,\
+	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+	lib/com.liferay.portal.content.targeting.report.campaign.tracking.action-service.jar=lib/com.liferay.portal.content.targeting.report.campaign.tracking.action-service.jar
+Service-Component: com.liferay.contenttargeting.reports.campaigntrackingaction.*
 Web-ContextPath: /report-campaign-tracking-action
