@@ -19,7 +19,6 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.rulecategories.SocialRuleCategory;
-import com.liferay.contenttargeting.rules.facebook.util.FacebookUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 
 import com.restfb.DefaultFacebookClient;
@@ -64,8 +63,7 @@ public class FacebookFriendsRule extends BaseRule {
 			AnonymousUser anonymousUser)
 		throws Exception {
 
-		FacebookClient facebookClient = new DefaultFacebookClient(
-			FacebookUtil.getAccessToken());
+		FacebookClient facebookClient = new DefaultFacebookClient();
 
 		int numberOfFriends = GetterUtil.getInteger(
 			ruleInstance.getTypeSettings());

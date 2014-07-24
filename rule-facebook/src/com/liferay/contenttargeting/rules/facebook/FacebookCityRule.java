@@ -64,8 +64,7 @@ public class FacebookCityRule extends BaseRule {
 			AnonymousUser anonymousUser)
 		throws Exception {
 
-		FacebookClient facebookClient = new DefaultFacebookClient(
-			StringPool.BLANK);
+		FacebookClient facebookClient = new DefaultFacebookClient();
 
 		User user = facebookClient.fetchObject("me", User.class);
 

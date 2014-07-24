@@ -19,7 +19,6 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.rulecategories.SocialRuleCategory;
-import com.liferay.contenttargeting.rules.facebook.util.FacebookUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 
+import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.types.User;
 
@@ -75,8 +75,7 @@ public class FacebookEducationRule extends BaseRule {
 		boolean highSchool = jsonObj.getBoolean("highSchool");
 		String schoolName = jsonObj.getString("schoolName");
 
-		FacebookClient facebookClient = new DefaultFacebookClient(
-			FacebookUtil.getAccessToken());
+		FacebookClient facebookClient = new DefaultFacebookClient();
 
 		User user = facebookClient.fetchObject("me", User.class);
 

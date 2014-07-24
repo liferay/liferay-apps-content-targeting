@@ -19,9 +19,9 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.rulecategories.SocialRuleCategory;
-import com.liferay.contenttargeting.rules.facebook.util.FacebookUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.types.NamedFacebookType;
 import com.restfb.types.Page;
@@ -64,8 +64,7 @@ public class FacebookLikeRule extends BaseRule {
 			AnonymousUser anonymousUser)
 		throws Exception {
 
-		FacebookClient facebookClient = new DefaultFacebookClient(
-			FacebookUtil.getAccessToken());
+		FacebookClient facebookClient = new DefaultFacebookClient();
 
 		Page page = null;
 
