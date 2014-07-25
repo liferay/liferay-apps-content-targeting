@@ -15,7 +15,8 @@
 			<basic name="alias">
 				<column name="ALIAS_" />
 			</basic>
-			<basic name="plid" />
+			<basic name="referrerClassName" />
+			<basic name="referrerClassPK" />
 			<basic name="elementId" />
 			<basic name="eventType" />
 			<basic name="count" />
@@ -28,7 +29,7 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.liferay.contenttargeting.reports.campaigntrackingaction.model.impl.CampaignTrackingActionImpl" name="CampaignTrackingAction">
-		<table name="ContentTargeting_CampaignTrackingActionReport_CampaignTrackingAction" />
+		<table name="ContentTargeting_CampaignTAReport_CampaignTrackingAction" />
 		<attributes />
 	</entity>
 </entity-mappings>

@@ -36,7 +36,8 @@ public class CampaignTrackingActionSoap implements Serializable {
 		soapModel.setCampaignId(model.getCampaignId());
 		soapModel.setUserSegmentId(model.getUserSegmentId());
 		soapModel.setAlias(model.getAlias());
-		soapModel.setPlid(model.getPlid());
+		soapModel.setReferrerClassName(model.getReferrerClassName());
+		soapModel.setReferrerClassPK(model.getReferrerClassPK());
 		soapModel.setElementId(model.getElementId());
 		soapModel.setEventType(model.getEventType());
 		soapModel.setCount(model.getCount());
@@ -128,12 +129,20 @@ public class CampaignTrackingActionSoap implements Serializable {
 		_alias = alias;
 	}
 
-	public long getPlid() {
-		return _plid;
+	public String getReferrerClassName() {
+		return _referrerClassName;
 	}
 
-	public void setPlid(long plid) {
-		_plid = plid;
+	public void setReferrerClassName(String referrerClassName) {
+		_referrerClassName = referrerClassName;
+	}
+
+	public long getReferrerClassPK() {
+		return _referrerClassPK;
+	}
+
+	public void setReferrerClassPK(long referrerClassPK) {
+		_referrerClassPK = referrerClassPK;
 	}
 
 	public String getElementId() {
@@ -172,7 +181,8 @@ public class CampaignTrackingActionSoap implements Serializable {
 	private long _campaignId;
 	private long _userSegmentId;
 	private String _alias;
-	private long _plid;
+	private String _referrerClassName;
+	private long _referrerClassPK;
 	private String _elementId;
 	private String _eventType;
 	private int _count;

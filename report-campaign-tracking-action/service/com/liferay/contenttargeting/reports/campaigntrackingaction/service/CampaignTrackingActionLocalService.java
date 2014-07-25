@@ -250,7 +250,21 @@ public interface CampaignTrackingActionLocalService extends BaseLocalService,
 		throws java.lang.Throwable;
 
 	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction addCampaignTrackingAction(
-		long campaignId, long userSegmentId, java.lang.String alias, long plid,
+		long campaignId, long userSegmentId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction addCampaignTrackingAction(
+		long campaignId, long userSegmentId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction addCampaignTrackingAction(
+		long campaignId, long userSegmentId, java.lang.String alias,
 		java.lang.String elementId, java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -261,7 +275,8 @@ public interface CampaignTrackingActionLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction getCampaignTrackingAction(
-		long campaignId, long userSegmentId, long plid,
+		long campaignId, long userSegmentId,
+		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

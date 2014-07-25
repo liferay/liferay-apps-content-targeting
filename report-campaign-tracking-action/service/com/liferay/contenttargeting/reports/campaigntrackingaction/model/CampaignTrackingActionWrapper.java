@@ -55,7 +55,8 @@ public class CampaignTrackingActionWrapper implements CampaignTrackingAction,
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("alias", getAlias());
-		attributes.put("plid", getPlid());
+		attributes.put("referrerClassName", getReferrerClassName());
+		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
 		attributes.put("count", getCount());
@@ -91,10 +92,16 @@ public class CampaignTrackingActionWrapper implements CampaignTrackingAction,
 			setAlias(alias);
 		}
 
-		Long plid = (Long)attributes.get("plid");
+		String referrerClassName = (String)attributes.get("referrerClassName");
 
-		if (plid != null) {
-			setPlid(plid);
+		if (referrerClassName != null) {
+			setReferrerClassName(referrerClassName);
+		}
+
+		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
+
+		if (referrerClassPK != null) {
+			setReferrerClassPK(referrerClassPK);
 		}
 
 		String elementId = (String)attributes.get("elementId");
@@ -223,23 +230,43 @@ public class CampaignTrackingActionWrapper implements CampaignTrackingAction,
 	}
 
 	/**
-	* Returns the plid of this campaign tracking action.
+	* Returns the referrer class name of this campaign tracking action.
 	*
-	* @return the plid of this campaign tracking action
+	* @return the referrer class name of this campaign tracking action
 	*/
 	@Override
-	public long getPlid() {
-		return _campaignTrackingAction.getPlid();
+	public java.lang.String getReferrerClassName() {
+		return _campaignTrackingAction.getReferrerClassName();
 	}
 
 	/**
-	* Sets the plid of this campaign tracking action.
+	* Sets the referrer class name of this campaign tracking action.
 	*
-	* @param plid the plid of this campaign tracking action
+	* @param referrerClassName the referrer class name of this campaign tracking action
 	*/
 	@Override
-	public void setPlid(long plid) {
-		_campaignTrackingAction.setPlid(plid);
+	public void setReferrerClassName(java.lang.String referrerClassName) {
+		_campaignTrackingAction.setReferrerClassName(referrerClassName);
+	}
+
+	/**
+	* Returns the referrer class p k of this campaign tracking action.
+	*
+	* @return the referrer class p k of this campaign tracking action
+	*/
+	@Override
+	public long getReferrerClassPK() {
+		return _campaignTrackingAction.getReferrerClassPK();
+	}
+
+	/**
+	* Sets the referrer class p k of this campaign tracking action.
+	*
+	* @param referrerClassPK the referrer class p k of this campaign tracking action
+	*/
+	@Override
+	public void setReferrerClassPK(long referrerClassPK) {
+		_campaignTrackingAction.setReferrerClassPK(referrerClassPK);
 	}
 
 	/**

@@ -325,86 +325,96 @@ public interface CampaignTrackingActionPersistence extends BasePersistence<Campa
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and plid = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link com.liferay.contenttargeting.reports.campaigntrackingaction.NoSuchCampaignTrackingActionException} if it could not be found.
+	* Returns the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link com.liferay.contenttargeting.reports.campaigntrackingaction.NoSuchCampaignTrackingActionException} if it could not be found.
 	*
 	* @param campaignId the campaign ID
 	* @param userSegmentId the user segment ID
-	* @param plid the plid
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the matching campaign tracking action
 	* @throws com.liferay.contenttargeting.reports.campaigntrackingaction.NoSuchCampaignTrackingActionException if a matching campaign tracking action could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction findByC_U_P_E_E(
-		long campaignId, long userSegmentId, long plid,
+	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction findByC_U_R_R_E_E(
+		long campaignId, long userSegmentId,
+		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.contenttargeting.reports.campaigntrackingaction.NoSuchCampaignTrackingActionException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and plid = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
 	* @param campaignId the campaign ID
 	* @param userSegmentId the user segment ID
-	* @param plid the plid
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the matching campaign tracking action, or <code>null</code> if a matching campaign tracking action could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction fetchByC_U_P_E_E(
-		long campaignId, long userSegmentId, long plid,
+	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction fetchByC_U_R_R_E_E(
+		long campaignId, long userSegmentId,
+		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and plid = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param campaignId the campaign ID
 	* @param userSegmentId the user segment ID
-	* @param plid the plid
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @param retrieveFromCache whether to use the finder cache
 	* @return the matching campaign tracking action, or <code>null</code> if a matching campaign tracking action could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction fetchByC_U_P_E_E(
-		long campaignId, long userSegmentId, long plid,
+	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction fetchByC_U_R_R_E_E(
+		long campaignId, long userSegmentId,
+		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType,
 		boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Removes the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and plid = &#63; and elementId = &#63; and eventType = &#63; from the database.
+	* Removes the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
 	*
 	* @param campaignId the campaign ID
 	* @param userSegmentId the user segment ID
-	* @param plid the plid
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the campaign tracking action that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction removeByC_U_P_E_E(
-		long campaignId, long userSegmentId, long plid,
+	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction removeByC_U_R_R_E_E(
+		long campaignId, long userSegmentId,
+		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.contenttargeting.reports.campaigntrackingaction.NoSuchCampaignTrackingActionException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the number of campaign tracking actions where campaignId = &#63; and userSegmentId = &#63; and plid = &#63; and elementId = &#63; and eventType = &#63;.
+	* Returns the number of campaign tracking actions where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
 	*
 	* @param campaignId the campaign ID
 	* @param userSegmentId the user segment ID
-	* @param plid the plid
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
 	* @param eventType the event type
 	* @return the number of matching campaign tracking actions
 	* @throws SystemException if a system exception occurred
 	*/
-	public int countByC_U_P_E_E(long campaignId, long userSegmentId, long plid,
+	public int countByC_U_R_R_E_E(long campaignId, long userSegmentId,
+		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.SystemException;
 

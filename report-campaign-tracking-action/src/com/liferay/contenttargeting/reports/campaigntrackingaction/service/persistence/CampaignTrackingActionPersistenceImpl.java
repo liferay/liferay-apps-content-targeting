@@ -1140,33 +1140,37 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 	private static final String _FINDER_COLUMN_C_GTD_CAMPAIGNID_2 = "campaignTrackingAction.campaignId = ? AND ";
 	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_1 = "campaignTrackingAction.modifiedDate > NULL";
 	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_2 = "campaignTrackingAction.modifiedDate > ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_U_P_E_E = new FinderPath(CampaignTrackingActionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_U_R_R_E_E = new FinderPath(CampaignTrackingActionModelImpl.ENTITY_CACHE_ENABLED,
 			CampaignTrackingActionModelImpl.FINDER_CACHE_ENABLED,
 			CampaignTrackingActionImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_U_P_E_E",
+			"fetchByC_U_R_R_E_E",
 			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			},
 			CampaignTrackingActionModelImpl.CAMPAIGNID_COLUMN_BITMASK |
 			CampaignTrackingActionModelImpl.USERSEGMENTID_COLUMN_BITMASK |
-			CampaignTrackingActionModelImpl.PLID_COLUMN_BITMASK |
+			CampaignTrackingActionModelImpl.REFERRERCLASSNAME_COLUMN_BITMASK |
+			CampaignTrackingActionModelImpl.REFERRERCLASSPK_COLUMN_BITMASK |
 			CampaignTrackingActionModelImpl.ELEMENTID_COLUMN_BITMASK |
 			CampaignTrackingActionModelImpl.EVENTTYPE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_U_P_E_E = new FinderPath(CampaignTrackingActionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_U_R_R_E_E = new FinderPath(CampaignTrackingActionModelImpl.ENTITY_CACHE_ENABLED,
 			CampaignTrackingActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U_P_E_E",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U_R_R_E_E",
 			new String[] {
-				Long.class.getName(), Long.class.getName(), Long.class.getName(),
+				Long.class.getName(), Long.class.getName(),
+				String.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			});
 
 	/**
-	 * Returns the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and plid = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link com.liferay.contenttargeting.reports.campaigntrackingaction.NoSuchCampaignTrackingActionException} if it could not be found.
+	 * Returns the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link com.liferay.contenttargeting.reports.campaigntrackingaction.NoSuchCampaignTrackingActionException} if it could not be found.
 	 *
 	 * @param campaignId the campaign ID
 	 * @param userSegmentId the user segment ID
-	 * @param plid the plid
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
 	 * @return the matching campaign tracking action
@@ -1174,14 +1178,16 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CampaignTrackingAction findByC_U_P_E_E(long campaignId,
-		long userSegmentId, long plid, String elementId, String eventType)
+	public CampaignTrackingAction findByC_U_R_R_E_E(long campaignId,
+		long userSegmentId, String referrerClassName, long referrerClassPK,
+		String elementId, String eventType)
 		throws NoSuchCampaignTrackingActionException, SystemException {
-		CampaignTrackingAction campaignTrackingAction = fetchByC_U_P_E_E(campaignId,
-				userSegmentId, plid, elementId, eventType);
+		CampaignTrackingAction campaignTrackingAction = fetchByC_U_R_R_E_E(campaignId,
+				userSegmentId, referrerClassName, referrerClassPK, elementId,
+				eventType);
 
 		if (campaignTrackingAction == null) {
-			StringBundler msg = new StringBundler(12);
+			StringBundler msg = new StringBundler(14);
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
@@ -1191,8 +1197,11 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 			msg.append(", userSegmentId=");
 			msg.append(userSegmentId);
 
-			msg.append(", plid=");
-			msg.append(plid);
+			msg.append(", referrerClassName=");
+			msg.append(referrerClassName);
+
+			msg.append(", referrerClassPK=");
+			msg.append(referrerClassPK);
 
 			msg.append(", elementId=");
 			msg.append(elementId);
@@ -1213,30 +1222,32 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 	}
 
 	/**
-	 * Returns the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and plid = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param campaignId the campaign ID
 	 * @param userSegmentId the user segment ID
-	 * @param plid the plid
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
 	 * @return the matching campaign tracking action, or <code>null</code> if a matching campaign tracking action could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CampaignTrackingAction fetchByC_U_P_E_E(long campaignId,
-		long userSegmentId, long plid, String elementId, String eventType)
-		throws SystemException {
-		return fetchByC_U_P_E_E(campaignId, userSegmentId, plid, elementId,
-			eventType, true);
+	public CampaignTrackingAction fetchByC_U_R_R_E_E(long campaignId,
+		long userSegmentId, String referrerClassName, long referrerClassPK,
+		String elementId, String eventType) throws SystemException {
+		return fetchByC_U_R_R_E_E(campaignId, userSegmentId, referrerClassName,
+			referrerClassPK, elementId, eventType, true);
 	}
 
 	/**
-	 * Returns the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and plid = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param campaignId the campaign ID
 	 * @param userSegmentId the user segment ID
-	 * @param plid the plid
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
 	 * @param retrieveFromCache whether to use the finder cache
@@ -1244,17 +1255,19 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CampaignTrackingAction fetchByC_U_P_E_E(long campaignId,
-		long userSegmentId, long plid, String elementId, String eventType,
-		boolean retrieveFromCache) throws SystemException {
+	public CampaignTrackingAction fetchByC_U_R_R_E_E(long campaignId,
+		long userSegmentId, String referrerClassName, long referrerClassPK,
+		String elementId, String eventType, boolean retrieveFromCache)
+		throws SystemException {
 		Object[] finderArgs = new Object[] {
-				campaignId, userSegmentId, plid, elementId, eventType
+				campaignId, userSegmentId, referrerClassName, referrerClassPK,
+				elementId, eventType
 			};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_U_P_E_E,
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E,
 					finderArgs, this);
 		}
 
@@ -1263,7 +1276,9 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 
 			if ((campaignId != campaignTrackingAction.getCampaignId()) ||
 					(userSegmentId != campaignTrackingAction.getUserSegmentId()) ||
-					(plid != campaignTrackingAction.getPlid()) ||
+					!Validator.equals(referrerClassName,
+						campaignTrackingAction.getReferrerClassName()) ||
+					(referrerClassPK != campaignTrackingAction.getReferrerClassPK()) ||
 					!Validator.equals(elementId,
 						campaignTrackingAction.getElementId()) ||
 					!Validator.equals(eventType,
@@ -1273,42 +1288,56 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 		}
 
 		if (result == null) {
-			StringBundler query = new StringBundler(7);
+			StringBundler query = new StringBundler(8);
 
 			query.append(_SQL_SELECT_CAMPAIGNTRACKINGACTION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_U_P_E_E_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_C_U_R_R_E_E_CAMPAIGNID_2);
 
-			query.append(_FINDER_COLUMN_C_U_P_E_E_USERSEGMENTID_2);
+			query.append(_FINDER_COLUMN_C_U_R_R_E_E_USERSEGMENTID_2);
 
-			query.append(_FINDER_COLUMN_C_U_P_E_E_PLID_2);
+			boolean bindReferrerClassName = false;
+
+			if (referrerClassName == null) {
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_1);
+			}
+			else if (referrerClassName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_3);
+			}
+			else {
+				bindReferrerClassName = true;
+
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSPK_2);
 
 			boolean bindElementId = false;
 
 			if (elementId == null) {
-				query.append(_FINDER_COLUMN_C_U_P_E_E_ELEMENTID_1);
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_1);
 			}
 			else if (elementId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_U_P_E_E_ELEMENTID_3);
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_3);
 			}
 			else {
 				bindElementId = true;
 
-				query.append(_FINDER_COLUMN_C_U_P_E_E_ELEMENTID_2);
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_2);
 			}
 
 			boolean bindEventType = false;
 
 			if (eventType == null) {
-				query.append(_FINDER_COLUMN_C_U_P_E_E_EVENTTYPE_1);
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_1);
 			}
 			else if (eventType.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_U_P_E_E_EVENTTYPE_3);
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_3);
 			}
 			else {
 				bindEventType = true;
 
-				query.append(_FINDER_COLUMN_C_U_P_E_E_EVENTTYPE_2);
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_2);
 			}
 
 			String sql = query.toString();
@@ -1326,7 +1355,11 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 
 				qPos.add(userSegmentId);
 
-				qPos.add(plid);
+				if (bindReferrerClassName) {
+					qPos.add(referrerClassName);
+				}
+
+				qPos.add(referrerClassPK);
 
 				if (bindElementId) {
 					qPos.add(elementId);
@@ -1339,13 +1372,13 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 				List<CampaignTrackingAction> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_P_E_E,
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E,
 						finderArgs, list);
 				}
 				else {
 					if ((list.size() > 1) && _log.isWarnEnabled()) {
 						_log.warn(
-							"CampaignTrackingActionPersistenceImpl.fetchByC_U_P_E_E(long, long, long, String, String, boolean) with parameters (" +
+							"CampaignTrackingActionPersistenceImpl.fetchByC_U_R_R_E_E(long, long, String, long, String, String, boolean) with parameters (" +
 							StringUtil.merge(finderArgs) +
 							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
 					}
@@ -1358,20 +1391,23 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 
 					if ((campaignTrackingAction.getCampaignId() != campaignId) ||
 							(campaignTrackingAction.getUserSegmentId() != userSegmentId) ||
-							(campaignTrackingAction.getPlid() != plid) ||
+							(campaignTrackingAction.getReferrerClassName() == null) ||
+							!campaignTrackingAction.getReferrerClassName()
+													   .equals(referrerClassName) ||
+							(campaignTrackingAction.getReferrerClassPK() != referrerClassPK) ||
 							(campaignTrackingAction.getElementId() == null) ||
 							!campaignTrackingAction.getElementId()
 													   .equals(elementId) ||
 							(campaignTrackingAction.getEventType() == null) ||
 							!campaignTrackingAction.getEventType()
 													   .equals(eventType)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_P_E_E,
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E,
 							finderArgs, campaignTrackingAction);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_P_E_E,
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E,
 					finderArgs);
 
 				throw processException(e);
@@ -1390,86 +1426,106 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 	}
 
 	/**
-	 * Removes the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and plid = &#63; and elementId = &#63; and eventType = &#63; from the database.
+	 * Removes the campaign tracking action where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
 	 *
 	 * @param campaignId the campaign ID
 	 * @param userSegmentId the user segment ID
-	 * @param plid the plid
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
 	 * @return the campaign tracking action that was removed
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CampaignTrackingAction removeByC_U_P_E_E(long campaignId,
-		long userSegmentId, long plid, String elementId, String eventType)
+	public CampaignTrackingAction removeByC_U_R_R_E_E(long campaignId,
+		long userSegmentId, String referrerClassName, long referrerClassPK,
+		String elementId, String eventType)
 		throws NoSuchCampaignTrackingActionException, SystemException {
-		CampaignTrackingAction campaignTrackingAction = findByC_U_P_E_E(campaignId,
-				userSegmentId, plid, elementId, eventType);
+		CampaignTrackingAction campaignTrackingAction = findByC_U_R_R_E_E(campaignId,
+				userSegmentId, referrerClassName, referrerClassPK, elementId,
+				eventType);
 
 		return remove(campaignTrackingAction);
 	}
 
 	/**
-	 * Returns the number of campaign tracking actions where campaignId = &#63; and userSegmentId = &#63; and plid = &#63; and elementId = &#63; and eventType = &#63;.
+	 * Returns the number of campaign tracking actions where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
 	 *
 	 * @param campaignId the campaign ID
 	 * @param userSegmentId the user segment ID
-	 * @param plid the plid
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
 	 * @param eventType the event type
 	 * @return the number of matching campaign tracking actions
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_U_P_E_E(long campaignId, long userSegmentId, long plid,
-		String elementId, String eventType) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_U_P_E_E;
+	public int countByC_U_R_R_E_E(long campaignId, long userSegmentId,
+		String referrerClassName, long referrerClassPK, String elementId,
+		String eventType) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_U_R_R_E_E;
 
 		Object[] finderArgs = new Object[] {
-				campaignId, userSegmentId, plid, elementId, eventType
+				campaignId, userSegmentId, referrerClassName, referrerClassPK,
+				elementId, eventType
 			};
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(6);
+			StringBundler query = new StringBundler(7);
 
 			query.append(_SQL_COUNT_CAMPAIGNTRACKINGACTION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_U_P_E_E_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_C_U_R_R_E_E_CAMPAIGNID_2);
 
-			query.append(_FINDER_COLUMN_C_U_P_E_E_USERSEGMENTID_2);
+			query.append(_FINDER_COLUMN_C_U_R_R_E_E_USERSEGMENTID_2);
 
-			query.append(_FINDER_COLUMN_C_U_P_E_E_PLID_2);
+			boolean bindReferrerClassName = false;
+
+			if (referrerClassName == null) {
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_1);
+			}
+			else if (referrerClassName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_3);
+			}
+			else {
+				bindReferrerClassName = true;
+
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSPK_2);
 
 			boolean bindElementId = false;
 
 			if (elementId == null) {
-				query.append(_FINDER_COLUMN_C_U_P_E_E_ELEMENTID_1);
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_1);
 			}
 			else if (elementId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_U_P_E_E_ELEMENTID_3);
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_3);
 			}
 			else {
 				bindElementId = true;
 
-				query.append(_FINDER_COLUMN_C_U_P_E_E_ELEMENTID_2);
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_2);
 			}
 
 			boolean bindEventType = false;
 
 			if (eventType == null) {
-				query.append(_FINDER_COLUMN_C_U_P_E_E_EVENTTYPE_1);
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_1);
 			}
 			else if (eventType.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_U_P_E_E_EVENTTYPE_3);
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_3);
 			}
 			else {
 				bindEventType = true;
 
-				query.append(_FINDER_COLUMN_C_U_P_E_E_EVENTTYPE_2);
+				query.append(_FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_2);
 			}
 
 			String sql = query.toString();
@@ -1487,7 +1543,11 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 
 				qPos.add(userSegmentId);
 
-				qPos.add(plid);
+				if (bindReferrerClassName) {
+					qPos.add(referrerClassName);
+				}
+
+				qPos.add(referrerClassPK);
 
 				if (bindElementId) {
 					qPos.add(elementId);
@@ -1514,15 +1574,18 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_U_P_E_E_CAMPAIGNID_2 = "campaignTrackingAction.campaignId = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_P_E_E_USERSEGMENTID_2 = "campaignTrackingAction.userSegmentId = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_P_E_E_PLID_2 = "campaignTrackingAction.plid = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_P_E_E_ELEMENTID_1 = "campaignTrackingAction.elementId IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_U_P_E_E_ELEMENTID_2 = "campaignTrackingAction.elementId = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_P_E_E_ELEMENTID_3 = "(campaignTrackingAction.elementId IS NULL OR campaignTrackingAction.elementId = '') AND ";
-	private static final String _FINDER_COLUMN_C_U_P_E_E_EVENTTYPE_1 = "campaignTrackingAction.eventType IS NULL";
-	private static final String _FINDER_COLUMN_C_U_P_E_E_EVENTTYPE_2 = "campaignTrackingAction.eventType = ?";
-	private static final String _FINDER_COLUMN_C_U_P_E_E_EVENTTYPE_3 = "(campaignTrackingAction.eventType IS NULL OR campaignTrackingAction.eventType = '')";
+	private static final String _FINDER_COLUMN_C_U_R_R_E_E_CAMPAIGNID_2 = "campaignTrackingAction.campaignId = ? AND ";
+	private static final String _FINDER_COLUMN_C_U_R_R_E_E_USERSEGMENTID_2 = "campaignTrackingAction.userSegmentId = ? AND ";
+	private static final String _FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_1 = "campaignTrackingAction.referrerClassName IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_2 = "campaignTrackingAction.referrerClassName = ? AND ";
+	private static final String _FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_3 = "(campaignTrackingAction.referrerClassName IS NULL OR campaignTrackingAction.referrerClassName = '') AND ";
+	private static final String _FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSPK_2 = "campaignTrackingAction.referrerClassPK = ? AND ";
+	private static final String _FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_1 = "campaignTrackingAction.elementId IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_2 = "campaignTrackingAction.elementId = ? AND ";
+	private static final String _FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_3 = "(campaignTrackingAction.elementId IS NULL OR campaignTrackingAction.elementId = '') AND ";
+	private static final String _FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_1 = "campaignTrackingAction.eventType IS NULL";
+	private static final String _FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_2 = "campaignTrackingAction.eventType = ?";
+	private static final String _FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_3 = "(campaignTrackingAction.eventType IS NULL OR campaignTrackingAction.eventType = '')";
 
 	public CampaignTrackingActionPersistenceImpl() {
 		setModelClass(CampaignTrackingAction.class);
@@ -1539,11 +1602,12 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 			CampaignTrackingActionImpl.class,
 			campaignTrackingAction.getPrimaryKey(), campaignTrackingAction);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_P_E_E,
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E,
 			new Object[] {
 				campaignTrackingAction.getCampaignId(),
 				campaignTrackingAction.getUserSegmentId(),
-				campaignTrackingAction.getPlid(),
+				campaignTrackingAction.getReferrerClassName(),
+				campaignTrackingAction.getReferrerClassPK(),
 				campaignTrackingAction.getElementId(),
 				campaignTrackingAction.getEventType()
 			}, campaignTrackingAction);
@@ -1631,33 +1695,35 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 			Object[] args = new Object[] {
 					campaignTrackingAction.getCampaignId(),
 					campaignTrackingAction.getUserSegmentId(),
-					campaignTrackingAction.getPlid(),
+					campaignTrackingAction.getReferrerClassName(),
+					campaignTrackingAction.getReferrerClassPK(),
 					campaignTrackingAction.getElementId(),
 					campaignTrackingAction.getEventType()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_P_E_E, args,
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_R_R_E_E, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_P_E_E, args,
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E, args,
 				campaignTrackingAction);
 		}
 		else {
 			CampaignTrackingActionModelImpl campaignTrackingActionModelImpl = (CampaignTrackingActionModelImpl)campaignTrackingAction;
 
 			if ((campaignTrackingActionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_U_P_E_E.getColumnBitmask()) != 0) {
+					FINDER_PATH_FETCH_BY_C_U_R_R_E_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						campaignTrackingAction.getCampaignId(),
 						campaignTrackingAction.getUserSegmentId(),
-						campaignTrackingAction.getPlid(),
+						campaignTrackingAction.getReferrerClassName(),
+						campaignTrackingAction.getReferrerClassPK(),
 						campaignTrackingAction.getElementId(),
 						campaignTrackingAction.getEventType()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_P_E_E, args,
-					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_P_E_E, args,
-					campaignTrackingAction);
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_R_R_E_E,
+					args, Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E,
+					args, campaignTrackingAction);
 			}
 		}
 	}
@@ -1669,26 +1735,28 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 		Object[] args = new Object[] {
 				campaignTrackingAction.getCampaignId(),
 				campaignTrackingAction.getUserSegmentId(),
-				campaignTrackingAction.getPlid(),
+				campaignTrackingAction.getReferrerClassName(),
+				campaignTrackingAction.getReferrerClassPK(),
 				campaignTrackingAction.getElementId(),
 				campaignTrackingAction.getEventType()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_P_E_E, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_P_E_E, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_R_R_E_E, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E, args);
 
 		if ((campaignTrackingActionModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_C_U_P_E_E.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_C_U_R_R_E_E.getColumnBitmask()) != 0) {
 			args = new Object[] {
 					campaignTrackingActionModelImpl.getOriginalCampaignId(),
 					campaignTrackingActionModelImpl.getOriginalUserSegmentId(),
-					campaignTrackingActionModelImpl.getOriginalPlid(),
+					campaignTrackingActionModelImpl.getOriginalReferrerClassName(),
+					campaignTrackingActionModelImpl.getOriginalReferrerClassPK(),
 					campaignTrackingActionModelImpl.getOriginalElementId(),
 					campaignTrackingActionModelImpl.getOriginalEventType()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_P_E_E, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_P_E_E, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_R_R_E_E, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E, args);
 		}
 	}
 
@@ -1882,7 +1950,8 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 		campaignTrackingActionImpl.setCampaignId(campaignTrackingAction.getCampaignId());
 		campaignTrackingActionImpl.setUserSegmentId(campaignTrackingAction.getUserSegmentId());
 		campaignTrackingActionImpl.setAlias(campaignTrackingAction.getAlias());
-		campaignTrackingActionImpl.setPlid(campaignTrackingAction.getPlid());
+		campaignTrackingActionImpl.setReferrerClassName(campaignTrackingAction.getReferrerClassName());
+		campaignTrackingActionImpl.setReferrerClassPK(campaignTrackingAction.getReferrerClassPK());
 		campaignTrackingActionImpl.setElementId(campaignTrackingAction.getElementId());
 		campaignTrackingActionImpl.setEventType(campaignTrackingAction.getEventType());
 		campaignTrackingActionImpl.setCount(campaignTrackingAction.getCount());

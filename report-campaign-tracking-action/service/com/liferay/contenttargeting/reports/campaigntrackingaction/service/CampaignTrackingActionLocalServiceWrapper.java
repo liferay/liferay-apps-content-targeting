@@ -292,12 +292,36 @@ public class CampaignTrackingActionLocalServiceWrapper
 
 	@Override
 	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction addCampaignTrackingAction(
-		long campaignId, long userSegmentId, java.lang.String alias, long plid,
+		long campaignId, long userSegmentId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _campaignTrackingActionLocalService.addCampaignTrackingAction(campaignId,
+			userSegmentId, alias, referrerClassName, referrerClassPK,
+			eventType, count);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction addCampaignTrackingAction(
+		long campaignId, long userSegmentId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _campaignTrackingActionLocalService.addCampaignTrackingAction(campaignId,
-			userSegmentId, alias, plid, elementId, eventType, count);
+			userSegmentId, alias, referrerClassName, referrerClassPK,
+			elementId, eventType, count);
+	}
+
+	@Override
+	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction addCampaignTrackingAction(
+		long campaignId, long userSegmentId, java.lang.String alias,
+		java.lang.String elementId, java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _campaignTrackingActionLocalService.addCampaignTrackingAction(campaignId,
+			userSegmentId, alias, elementId, eventType, count);
 	}
 
 	@Override
@@ -309,12 +333,14 @@ public class CampaignTrackingActionLocalServiceWrapper
 
 	@Override
 	public com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction getCampaignTrackingAction(
-		long campaignId, long userSegmentId, long plid,
+		long campaignId, long userSegmentId,
+		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _campaignTrackingActionLocalService.getCampaignTrackingAction(campaignId,
-			userSegmentId, plid, elementId, eventType);
+			userSegmentId, referrerClassName, referrerClassPK, elementId,
+			eventType);
 	}
 
 	@Override

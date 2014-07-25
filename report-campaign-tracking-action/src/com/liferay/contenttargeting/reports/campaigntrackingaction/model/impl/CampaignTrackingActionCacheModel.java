@@ -38,7 +38,7 @@ public class CampaignTrackingActionCacheModel implements CacheModel<CampaignTrac
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{campaignTrackingActionId=");
 		sb.append(campaignTrackingActionId);
@@ -48,8 +48,10 @@ public class CampaignTrackingActionCacheModel implements CacheModel<CampaignTrac
 		sb.append(userSegmentId);
 		sb.append(", alias=");
 		sb.append(alias);
-		sb.append(", plid=");
-		sb.append(plid);
+		sb.append(", referrerClassName=");
+		sb.append(referrerClassName);
+		sb.append(", referrerClassPK=");
+		sb.append(referrerClassPK);
 		sb.append(", elementId=");
 		sb.append(elementId);
 		sb.append(", eventType=");
@@ -78,7 +80,14 @@ public class CampaignTrackingActionCacheModel implements CacheModel<CampaignTrac
 			campaignTrackingActionImpl.setAlias(alias);
 		}
 
-		campaignTrackingActionImpl.setPlid(plid);
+		if (referrerClassName == null) {
+			campaignTrackingActionImpl.setReferrerClassName(StringPool.BLANK);
+		}
+		else {
+			campaignTrackingActionImpl.setReferrerClassName(referrerClassName);
+		}
+
+		campaignTrackingActionImpl.setReferrerClassPK(referrerClassPK);
 
 		if (elementId == null) {
 			campaignTrackingActionImpl.setElementId(StringPool.BLANK);
@@ -114,7 +123,8 @@ public class CampaignTrackingActionCacheModel implements CacheModel<CampaignTrac
 		campaignId = objectInput.readLong();
 		userSegmentId = objectInput.readLong();
 		alias = objectInput.readUTF();
-		plid = objectInput.readLong();
+		referrerClassName = objectInput.readUTF();
+		referrerClassPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
 		eventType = objectInput.readUTF();
 		count = objectInput.readInt();
@@ -135,7 +145,14 @@ public class CampaignTrackingActionCacheModel implements CacheModel<CampaignTrac
 			objectOutput.writeUTF(alias);
 		}
 
-		objectOutput.writeLong(plid);
+		if (referrerClassName == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(referrerClassName);
+		}
+
+		objectOutput.writeLong(referrerClassPK);
 
 		if (elementId == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -159,7 +176,8 @@ public class CampaignTrackingActionCacheModel implements CacheModel<CampaignTrac
 	public long campaignId;
 	public long userSegmentId;
 	public String alias;
-	public long plid;
+	public String referrerClassName;
+	public long referrerClassPK;
 	public String elementId;
 	public String eventType;
 	public int count;

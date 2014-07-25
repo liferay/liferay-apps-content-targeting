@@ -79,7 +79,8 @@ public class CampaignTrackingActionClp extends BaseModelImpl<CampaignTrackingAct
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("alias", getAlias());
-		attributes.put("plid", getPlid());
+		attributes.put("referrerClassName", getReferrerClassName());
+		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
 		attributes.put("count", getCount());
@@ -115,10 +116,16 @@ public class CampaignTrackingActionClp extends BaseModelImpl<CampaignTrackingAct
 			setAlias(alias);
 		}
 
-		Long plid = (Long)attributes.get("plid");
+		String referrerClassName = (String)attributes.get("referrerClassName");
 
-		if (plid != null) {
-			setPlid(plid);
+		if (referrerClassName != null) {
+			setReferrerClassName(referrerClassName);
+		}
+
+		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
+
+		if (referrerClassPK != null) {
+			setReferrerClassPK(referrerClassPK);
 		}
 
 		String elementId = (String)attributes.get("elementId");
@@ -241,21 +248,47 @@ public class CampaignTrackingActionClp extends BaseModelImpl<CampaignTrackingAct
 	}
 
 	@Override
-	public long getPlid() {
-		return _plid;
+	public String getReferrerClassName() {
+		return _referrerClassName;
 	}
 
 	@Override
-	public void setPlid(long plid) {
-		_plid = plid;
+	public void setReferrerClassName(String referrerClassName) {
+		_referrerClassName = referrerClassName;
 
 		if (_campaignTrackingActionRemoteModel != null) {
 			try {
 				Class<?> clazz = _campaignTrackingActionRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setPlid", long.class);
+				Method method = clazz.getMethod("setReferrerClassName",
+						String.class);
 
-				method.invoke(_campaignTrackingActionRemoteModel, plid);
+				method.invoke(_campaignTrackingActionRemoteModel,
+					referrerClassName);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getReferrerClassPK() {
+		return _referrerClassPK;
+	}
+
+	@Override
+	public void setReferrerClassPK(long referrerClassPK) {
+		_referrerClassPK = referrerClassPK;
+
+		if (_campaignTrackingActionRemoteModel != null) {
+			try {
+				Class<?> clazz = _campaignTrackingActionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setReferrerClassPK", long.class);
+
+				method.invoke(_campaignTrackingActionRemoteModel,
+					referrerClassPK);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -449,7 +482,8 @@ public class CampaignTrackingActionClp extends BaseModelImpl<CampaignTrackingAct
 		clone.setCampaignId(getCampaignId());
 		clone.setUserSegmentId(getUserSegmentId());
 		clone.setAlias(getAlias());
-		clone.setPlid(getPlid());
+		clone.setReferrerClassName(getReferrerClassName());
+		clone.setReferrerClassPK(getReferrerClassPK());
 		clone.setElementId(getElementId());
 		clone.setEventType(getEventType());
 		clone.setCount(getCount());
@@ -503,7 +537,7 @@ public class CampaignTrackingActionClp extends BaseModelImpl<CampaignTrackingAct
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(21);
 
 		sb.append("{campaignTrackingActionId=");
 		sb.append(getCampaignTrackingActionId());
@@ -513,8 +547,10 @@ public class CampaignTrackingActionClp extends BaseModelImpl<CampaignTrackingAct
 		sb.append(getUserSegmentId());
 		sb.append(", alias=");
 		sb.append(getAlias());
-		sb.append(", plid=");
-		sb.append(getPlid());
+		sb.append(", referrerClassName=");
+		sb.append(getReferrerClassName());
+		sb.append(", referrerClassPK=");
+		sb.append(getReferrerClassPK());
 		sb.append(", elementId=");
 		sb.append(getElementId());
 		sb.append(", eventType=");
@@ -530,7 +566,7 @@ public class CampaignTrackingActionClp extends BaseModelImpl<CampaignTrackingAct
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(31);
+		StringBundler sb = new StringBundler(34);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -554,8 +590,12 @@ public class CampaignTrackingActionClp extends BaseModelImpl<CampaignTrackingAct
 		sb.append(getAlias());
 		sb.append("]]></column-value></column>");
 		sb.append(
-			"<column><column-name>plid</column-name><column-value><![CDATA[");
-		sb.append(getPlid());
+			"<column><column-name>referrerClassName</column-name><column-value><![CDATA[");
+		sb.append(getReferrerClassName());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>referrerClassPK</column-name><column-value><![CDATA[");
+		sb.append(getReferrerClassPK());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>elementId</column-name><column-value><![CDATA[");
@@ -583,7 +623,8 @@ public class CampaignTrackingActionClp extends BaseModelImpl<CampaignTrackingAct
 	private long _campaignId;
 	private long _userSegmentId;
 	private String _alias;
-	private long _plid;
+	private String _referrerClassName;
+	private long _referrerClassPK;
 	private String _elementId;
 	private String _eventType;
 	private int _count;

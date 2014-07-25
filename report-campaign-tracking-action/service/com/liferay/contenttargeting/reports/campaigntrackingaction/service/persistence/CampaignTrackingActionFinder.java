@@ -18,7 +18,11 @@ package com.liferay.contenttargeting.reports.campaigntrackingaction.service.pers
  * @author Brian Wing Shun Chan
  */
 public interface CampaignTrackingActionFinder {
-	public java.util.List<java.lang.Object[]> findByAnalytics(
+	public java.util.List<java.lang.Object[]> findByAnalyticsWithClassName(
+		java.util.Date modifiedDate)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<java.lang.Object[]> findByAnalyticsWithElementId(
 		java.util.Date modifiedDate)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }
