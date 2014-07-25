@@ -1,4 +1,4 @@
-create table ContentTargeting_CampaignTrackingAction (
+create table ContentTargeting_CampaignTrackingActionReport_CampaignTrackingAction (
 	campaignTrackingActionId LONG not null primary key,
 	campaignId LONG,
 	userSegmentId LONG,

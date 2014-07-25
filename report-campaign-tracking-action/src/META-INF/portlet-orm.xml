@@ -28,7 +28,7 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.liferay.contenttargeting.reports.campaigntrackingaction.model.impl.CampaignTrackingActionImpl" name="CampaignTrackingAction">
-		<table name="ContentTargeting_CampaignTrackingAction" />
+		<table name="ContentTargeting_CampaignTrackingActionReport_CampaignTrackingAction" />
 		<attributes />
 	</entity>
 </entity-mappings>

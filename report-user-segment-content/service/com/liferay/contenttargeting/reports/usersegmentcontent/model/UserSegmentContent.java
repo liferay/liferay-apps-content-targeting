@@ -17,7 +17,7 @@ package com.liferay.contenttargeting.reports.usersegmentcontent.model;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the UserSegmentContent service. Represents a row in the &quot;ContentTargeting_UserSegmentContent&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the UserSegmentContent service. Represents a row in the &quot;ContentTargeting_UserSegmentContentReport_UserSegmentContent&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see UserSegmentContentModel

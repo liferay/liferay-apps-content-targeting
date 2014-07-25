@@ -1,4 +1,4 @@
-create table ContentTargeting_CampaignContent (
+create table ContentTargeting_CampaignContentReport_CampaignContent (
 	campaignContentId LONG not null primary key,
 	campaignId LONG,
 	className VARCHAR(75) null,

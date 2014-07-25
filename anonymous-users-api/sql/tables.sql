@@ -1,4 +1,4 @@
-create table ContentTargeting_AnonymousUser (
+create table ContentTargeting_AnonymousUsers_AnonymousUser (
 	uuid_ VARCHAR(75) null,
 	anonymousUserId LONG not null primary key,
 	companyId LONG,

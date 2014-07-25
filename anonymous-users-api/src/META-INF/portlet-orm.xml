@@ -32,7 +32,7 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.liferay.anonymoususers.model.impl.AnonymousUserImpl" name="AnonymousUser">
-		<table name="ContentTargeting_AnonymousUser" />
+		<table name="ContentTargeting_AnonymousUsers_AnonymousUser" />
 		<attributes />
 	</entity>
 </entity-mappings>

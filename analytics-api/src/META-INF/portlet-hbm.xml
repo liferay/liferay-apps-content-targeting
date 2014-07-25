@@ -3,7 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.analytics.model.AnalyticsEvent" />
-	<class name="com.liferay.analytics.model.impl.AnalyticsEventImpl" table="ContentTargeting_AnalyticsEvent">
+	<class name="com.liferay.analytics.model.impl.AnalyticsEventImpl" table="ContentTargeting_Analytics_AnalyticsEvent">
 		<cache usage="read-write" />
 		<id name="analyticsEventId" type="long">
 			<generator class="assigned" />

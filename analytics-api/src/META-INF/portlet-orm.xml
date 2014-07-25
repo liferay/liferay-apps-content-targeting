@@ -35,7 +35,7 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.liferay.analytics.model.impl.AnalyticsEventImpl" name="AnalyticsEvent">
-		<table name="ContentTargeting_AnalyticsEvent" />
+		<table name="ContentTargeting_Analytics_AnalyticsEvent" />
 		<attributes />
 	</entity>
 </entity-mappings>

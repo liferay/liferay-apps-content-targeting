@@ -1,4 +1,4 @@
-create table ContentTargeting_AnalyticsEvent (
+create table ContentTargeting_Analytics_AnalyticsEvent (
 	analyticsEventId LONG not null primary key,
 	companyId LONG,
 	userId LONG,

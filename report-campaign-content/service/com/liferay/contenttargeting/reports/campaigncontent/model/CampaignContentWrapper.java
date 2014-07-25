@@ -330,7 +330,8 @@ public class CampaignContentWrapper implements CampaignContent,
 	}
 
 	@Override
-	public int compareTo(CampaignContent campaignContent) {
+	public int compareTo(
+		com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent campaignContent) {
 		return _campaignContent.compareTo(campaignContent);
 	}
 
@@ -340,17 +341,17 @@ public class CampaignContentWrapper implements CampaignContent,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<CampaignContent> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent> toCacheModel() {
 		return _campaignContent.toCacheModel();
 	}
 
 	@Override
-	public CampaignContent toEscapedModel() {
+	public com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent toEscapedModel() {
 		return new CampaignContentWrapper(_campaignContent.toEscapedModel());
 	}
 
 	@Override
-	public CampaignContent toUnescapedModel() {
+	public com.liferay.contenttargeting.reports.campaigncontent.model.CampaignContent toUnescapedModel() {
 		return new CampaignContentWrapper(_campaignContent.toUnescapedModel());
 	}
 

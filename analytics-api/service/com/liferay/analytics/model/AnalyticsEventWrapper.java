@@ -617,7 +617,8 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	}
 
 	@Override
-	public int compareTo(AnalyticsEvent analyticsEvent) {
+	public int compareTo(
+		com.liferay.analytics.model.AnalyticsEvent analyticsEvent) {
 		return _analyticsEvent.compareTo(analyticsEvent);
 	}
 
@@ -627,17 +628,17 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<AnalyticsEvent> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.analytics.model.AnalyticsEvent> toCacheModel() {
 		return _analyticsEvent.toCacheModel();
 	}
 
 	@Override
-	public AnalyticsEvent toEscapedModel() {
+	public com.liferay.analytics.model.AnalyticsEvent toEscapedModel() {
 		return new AnalyticsEventWrapper(_analyticsEvent.toEscapedModel());
 	}
 
 	@Override
-	public AnalyticsEvent toUnescapedModel() {
+	public com.liferay.analytics.model.AnalyticsEvent toUnescapedModel() {
 		return new AnalyticsEventWrapper(_analyticsEvent.toUnescapedModel());
 	}
 

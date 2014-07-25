@@ -3,7 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.contenttargeting.reports.usersegmentcontent.model.UserSegmentContent" />
-	<class name="com.liferay.contenttargeting.reports.usersegmentcontent.model.impl.UserSegmentContentImpl" table="ContentTargeting_UserSegmentContent">
+	<class name="com.liferay.contenttargeting.reports.usersegmentcontent.model.impl.UserSegmentContentImpl" table="ContentTargeting_UserSegmentContentReport_UserSegmentContent">
 		<cache usage="read-write" />
 		<id name="userSegmentContentId" type="long">
 			<generator class="assigned" />
