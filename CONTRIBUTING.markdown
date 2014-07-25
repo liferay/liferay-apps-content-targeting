@@ -81,3 +81,8 @@ sync changes from upstream. You can accomplish this with the following commands:
 		```
 
 Now the local, origin, and upstream repositories are all current
+
+6.Add this line to your portal-ext.properties. (It is only needed for building the apps, but it won't have any effect during runtime, therefore it is only used when developing).
+```
+resource.actions.configs=META-INF/resource-actions/default.xml,resource-actions/default.xml
+```
