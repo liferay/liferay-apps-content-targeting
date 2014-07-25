@@ -4,13 +4,13 @@
 	<sql id="com.liferay.contenttargeting.reports.campaigntrackingaction.service.persistence.CampaignTrackingActionFinder.findByAnalytics">
 		<![CDATA[
 			SELECT
-				DISTINCT ContentTargeting_Analytics_AnalyticsEvent.classPK AS classPK, ContentTargeting_Analytics_AnalyticsEvent.referrerClassPK AS referrerClassPK, ContentTargeting_Analytics_AnalyticsEvent.elementId AS elementId, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.campaignId AS campaignId, CT_TrackingActionInstance.alias_ AS alias
+				DISTINCT ContentTargeting_Analytics_AnalyticsEvent.classPK AS classPK, ContentTargeting_Analytics_AnalyticsEvent.referrerClassPK AS referrerClassPK, ContentTargeting_Analytics_AnalyticsEvent.elementId AS elementId, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, ContentTargeting_TrackingActionInstance.campaignId AS campaignId, ContentTargeting_TrackingActionInstance.alias_ AS alias
 			FROM
 				ContentTargeting_Analytics_AnalyticsEvent
 			INNER JOIN
-				CT_TrackingActionInstance ON
-					(CT_TrackingActionInstance.elementId = ContentTargeting_Analytics_AnalyticsEvent.elementId) AND
-					(CT_TrackingActionInstance.eventType = ContentTargeting_Analytics_AnalyticsEvent.eventType)
+				ContentTargeting_TrackingActionInstance ON
+					(ContentTargeting_TrackingActionInstance.elementId = ContentTargeting_Analytics_AnalyticsEvent.elementId) AND
+					(ContentTargeting_TrackingActionInstance.eventType = ContentTargeting_Analytics_AnalyticsEvent.eventType)
 			WHERE
 				(ContentTargeting_Analytics_AnalyticsEvent.createDate >= ?)
 			ORDER BY
