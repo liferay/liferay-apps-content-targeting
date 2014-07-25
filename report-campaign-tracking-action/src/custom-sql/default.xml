@@ -1,16 +1,33 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.contenttargeting.reports.campaigntrackingaction.service.persistence.CampaignTrackingActionFinder.findByAnalytics">
+	<sql id="com.liferay.contenttargeting.reports.campaigntrackingaction.service.persistence.CampaignTrackingActionFinder.findByAnalyticsWithClassName">
 		<![CDATA[
 			SELECT
-				DISTINCT ContentTargeting_Analytics_AnalyticsEvent.classPK AS classPK, ContentTargeting_Analytics_AnalyticsEvent.referrerClassPK AS referrerClassPK, ContentTargeting_Analytics_AnalyticsEvent.elementId AS elementId, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, ContentTargeting_TrackingActionInstance.campaignId AS campaignId, ContentTargeting_TrackingActionInstance.alias_ AS alias
+				DISTINCT ContentTargeting_Analytics_AnalyticsEvent.referrerClassPK AS referrerClassPK, ContentTargeting_Analytics_AnalyticsEvent.className AS className, ContentTargeting_Analytics_AnalyticsEvent.referrerClassPK AS classPK, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, ContentTargeting_TrackingActionInstance.campaignId AS campaignId, ContentTargeting_TrackingActionInstance.alias_ AS alias
 			FROM
 				ContentTargeting_Analytics_AnalyticsEvent
 			INNER JOIN
 				ContentTargeting_TrackingActionInstance ON
-					(ContentTargeting_TrackingActionInstance.elementId = ContentTargeting_Analytics_AnalyticsEvent.elementId) AND
-					(ContentTargeting_TrackingActionInstance.eventType = ContentTargeting_Analytics_AnalyticsEvent.eventType)
+					(ContentTargeting_TrackingActionInstance.eventType = ContentTargeting_Analytics_AnalyticsEvent.eventType) AND
+					(ContentTargeting_TrackingActionInstance.referrerClassName = ContentTargeting_Analytics_AnalyticsEvent.className) AND
+					(ContentTargeting_TrackingActionInstance.referrerClassPK = ContentTargeting_Analytics_AnalyticsEvent.classPK)
+			WHERE
+				(ContentTargeting_Analytics_AnalyticsEvent.createDate >= ?)
+			ORDER BY
+				ContentTargeting_Analytics_AnalyticsEvent.createDate DESC
+		]]>
+	</sql>
+	<sql id="com.liferay.contenttargeting.reports.campaigntrackingaction.service.persistence.CampaignTrackingActionFinder.findByAnalyticsWithElementId">
+		<![CDATA[
+			SELECT
+				DISTINCT ContentTargeting_Analytics_AnalyticsEvent.referrerClassPK AS referrerClassPK, ContentTargeting_Analytics_AnalyticsEvent.elementId AS elementId, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, ContentTargeting_TrackingActionInstance.campaignId AS campaignId, ContentTargeting_TrackingActionInstance.alias_ AS alias
+			FROM
+				ContentTargeting_Analytics_AnalyticsEvent
+			INNER JOIN
+				ContentTargeting_TrackingActionInstance ON
+					(ContentTargeting_TrackingActionInstance.eventType = ContentTargeting_Analytics_AnalyticsEvent.eventType) AND
+					(ContentTargeting_TrackingActionInstance.elementId = ContentTargeting_Analytics_AnalyticsEvent.elementId)
 			WHERE
 				(ContentTargeting_Analytics_AnalyticsEvent.createDate >= ?)
 			ORDER BY

@@ -55,13 +55,27 @@ public class CampaignTrackingActionLocalServiceImpl
 
 	@Override
 	public CampaignTrackingAction addCampaignTrackingAction(
-			long campaignId, long userSegmentId, String alias, long plid,
-			String elementId, String eventType, int count)
+			long campaignId, long userSegmentId, String alias,
+			String referrerClassName, long referrerClassPK, String eventType,
+			int count)
+		throws PortalException, SystemException {
+
+		return addCampaignTrackingAction(
+			campaignId, userSegmentId, alias, referrerClassName,
+			referrerClassPK, null, eventType, count);
+	}
+
+	@Override
+	public CampaignTrackingAction addCampaignTrackingAction(
+			long campaignId, long userSegmentId, String alias,
+			String referrerClassName, long referrerClassPK, String elementId,
+			String eventType, int count)
 		throws PortalException, SystemException {
 
 		CampaignTrackingAction campaignTrackingAction =
 			getCampaignTrackingAction(
-				campaignId, userSegmentId, plid, elementId, eventType);
+				campaignId, userSegmentId, referrerClassName, referrerClassPK,
+				elementId, eventType);
 
 		if (campaignTrackingAction == null) {
 			long campaignTrackingActionId = CounterLocalServiceUtil.increment();
@@ -73,7 +87,8 @@ public class CampaignTrackingActionLocalServiceImpl
 			campaignTrackingAction.setCampaignId(campaignId);
 			campaignTrackingAction.setUserSegmentId(userSegmentId);
 			campaignTrackingAction.setAlias(alias);
-			campaignTrackingAction.setPlid(plid);
+			campaignTrackingAction.setReferrerClassName(referrerClassName);
+			campaignTrackingAction.setReferrerClassPK(referrerClassPK);
 			campaignTrackingAction.setElementId(elementId);
 			campaignTrackingAction.setEventType(eventType);
 			campaignTrackingAction.setCount(count);
@@ -89,23 +104,38 @@ public class CampaignTrackingActionLocalServiceImpl
 	}
 
 	@Override
+	public CampaignTrackingAction addCampaignTrackingAction(
+			long campaignId, long userSegmentId, String alias, String elementId,
+			String eventType, int count)
+		throws PortalException, SystemException {
+
+		return addCampaignTrackingAction(
+			campaignId, userSegmentId, alias, null, -1, elementId, eventType,
+			count);
+	}
+
+	@Override
 	public void checkCampaignTrackingActionEvents()
 		throws PortalException, SystemException {
 
-		// Process analytics from last date
+		Date lastCampaignTrackingActionDate =
+			getLastCampaignTrackingActionDate();
 
-		addCampaignTrackingActionsFromAnalytics(
-			getLastCampaignTrackingActionDate());
+		addCampaignTrackingActionsFromAnalyticsWithElementId(
+			lastCampaignTrackingActionDate);
+		addCampaignTrackingActionsFromAnalyticsWithClassName(
+			lastCampaignTrackingActionDate);
 	}
 
 	@Override
 	public CampaignTrackingAction getCampaignTrackingAction(
-			long campaignId, long userSegmentId, long plid, String elementId,
-			String eventType)
+			long campaignId, long userSegmentId, String referrerClassName,
+			long referrerClassPK, String elementId, String eventType)
 		throws PortalException, SystemException {
 
-		return campaignTrackingActionPersistence.fetchByC_U_P_E_E(
-				campaignId, userSegmentId, plid, elementId, eventType);
+		return campaignTrackingActionPersistence.fetchByC_U_R_R_E_E(
+			campaignId, userSegmentId, referrerClassName, referrerClassPK,
+			elementId, eventType);
 	}
 
 	@Override
@@ -164,21 +194,52 @@ public class CampaignTrackingActionLocalServiceImpl
 		return null;
 	}
 
-	protected void addCampaignTrackingActionsFromAnalytics(Date date)
+	protected void addCampaignTrackingActionsFromAnalyticsWithClassName(
+			Date date)
 		throws PortalException, SystemException {
 
 		List<Object[]> campaignTrackingActionAnalyticsList =
-			campaignTrackingActionFinder.findByAnalytics(date);
+			campaignTrackingActionFinder.findByAnalyticsWithClassName(date);
 
 		for (Object[] campaignTrackingActionAnalytics :
 				campaignTrackingActionAnalyticsList) {
 
-			long plid = (Long)campaignTrackingActionAnalytics[0];
-			long userSegmentId = (Long)campaignTrackingActionAnalytics[1];
-			String elementId = (String)campaignTrackingActionAnalytics[2];
+			long userSegmentId = (Long)campaignTrackingActionAnalytics[0];
+			String className = (String)campaignTrackingActionAnalytics[1];
+			long classPK = (Long)campaignTrackingActionAnalytics[2];
 			String eventType = (String)campaignTrackingActionAnalytics[3];
 			long campaignId = (Long)campaignTrackingActionAnalytics[4];
 			String alias = (String)campaignTrackingActionAnalytics[5];
+
+			int count = _analyticsEventLocalService.getAnalyticsEventsCount(
+				className, classPK, UserSegment.class.getName(), userSegmentId,
+				eventType, date);
+
+			if (count == 0) {
+				continue;
+			}
+
+			addCampaignTrackingAction(
+				campaignId, userSegmentId, alias, className, classPK, eventType,
+				count);
+		}
+	}
+
+	protected void addCampaignTrackingActionsFromAnalyticsWithElementId(
+			Date date)
+		throws PortalException, SystemException {
+
+		List<Object[]> campaignTrackingActionAnalyticsList =
+			campaignTrackingActionFinder.findByAnalyticsWithElementId(date);
+
+		for (Object[] campaignTrackingActionAnalytics :
+				campaignTrackingActionAnalyticsList) {
+
+			long userSegmentId = (Long)campaignTrackingActionAnalytics[0];
+			String elementId = (String)campaignTrackingActionAnalytics[1];
+			String eventType = (String)campaignTrackingActionAnalytics[2];
+			long campaignId = (Long)campaignTrackingActionAnalytics[3];
+			String alias = (String)campaignTrackingActionAnalytics[4];
 
 			int count = _analyticsEventLocalService.getAnalyticsEventsCount(
 				UserSegment.class.getName(), userSegmentId, elementId,
@@ -189,8 +250,7 @@ public class CampaignTrackingActionLocalServiceImpl
 			}
 
 			addCampaignTrackingAction(
-				campaignId, userSegmentId, alias, plid, elementId, eventType,
-				count);
+				campaignId, userSegmentId, alias, elementId, eventType, count);
 		}
 	}
 

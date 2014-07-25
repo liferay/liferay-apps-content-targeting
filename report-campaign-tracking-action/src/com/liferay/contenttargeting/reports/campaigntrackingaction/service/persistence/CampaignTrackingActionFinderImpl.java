@@ -34,11 +34,16 @@ public class CampaignTrackingActionFinderImpl
 	extends BasePersistenceImpl<CampaignTrackingAction>
 	implements CampaignTrackingActionFinder {
 
-	public static final String FIND_BY_MODIFIED_DATE =
-		CampaignTrackingActionFinder.class.getName() + ".findByAnalytics";
+	public static final String FIND_BY_ANALYICS_WITH_CLASS_NAME =
+		CampaignTrackingActionFinder.class.getName() +
+			".findByAnalyticsWithClassName";
+
+	public static final String FIND_BY_ANALYICS_WITH_ELEMENT_ID =
+		CampaignTrackingActionFinder.class.getName() +
+			".findByAnalyticsWithElementId";
 
 	@Override
-	public List<Object[]> findByAnalytics(Date modifiedDate)
+	public List<Object[]> findByAnalyticsWithClassName(Date modifiedDate)
 		throws SystemException {
 
 		Session session = null;
@@ -46,11 +51,44 @@ public class CampaignTrackingActionFinderImpl
 		try {
 			session = openSession();
 
-			String sql = CustomSQLUtil.get(FIND_BY_MODIFIED_DATE);
+			String sql = CustomSQLUtil.get(FIND_BY_ANALYICS_WITH_CLASS_NAME);
 
 			SQLQuery q = session.createSQLQuery(sql);
 
+			q.addScalar("referrerClassPK", Type.LONG);
+			q.addScalar("className", Type.STRING);
 			q.addScalar("classPK", Type.LONG);
+			q.addScalar("eventType", Type.STRING);
+			q.addScalar("campaignId", Type.LONG);
+			q.addScalar("alias", Type.STRING);
+
+			QueryPos qPos = QueryPos.getInstance(q);
+
+			qPos.add(modifiedDate);
+
+			return q.list();
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	@Override
+	public List<Object[]> findByAnalyticsWithElementId(Date modifiedDate)
+		throws SystemException {
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			String sql = CustomSQLUtil.get(FIND_BY_ANALYICS_WITH_ELEMENT_ID);
+
+			SQLQuery q = session.createSQLQuery(sql);
+
 			q.addScalar("referrerClassPK", Type.LONG);
 			q.addScalar("elementId", Type.STRING);
 			q.addScalar("eventType", Type.STRING);

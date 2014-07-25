@@ -14,7 +14,8 @@
 		<column name="campaignId" type="long" />
 		<column name="userSegmentId" type="long" />
 		<column name="alias" type="String" />
-		<column name="plid" type="long" />
+		<column name="referrerClassName" type="String" />
+		<column name="referrerClassPK" type="long" />
 		<column name="elementId" type="String" />
 		<column name="eventType" type="String" />
 		<column name="count" type="int" />
@@ -37,10 +38,11 @@
 			<finder-column name="modifiedDate" comparator="&gt;" />
 		</finder>
 
-		<finder name="C_U_P_E_E" return-type="CampaignTrackingAction">
+		<finder name="C_U_R_R_E_E" return-type="CampaignTrackingAction">
 			<finder-column name="campaignId" />
 			<finder-column name="userSegmentId" />
-			<finder-column name="plid" />
+			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassPK" />
 			<finder-column name="elementId" />
 			<finder-column name="eventType" />
 		</finder>
