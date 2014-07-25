@@ -18,6 +18,7 @@
       <module fileurl="file://$PROJECT_DIR$/report-user-segment-content/report-user-segment-content.iml" filepath="$PROJECT_DIR$/report-user-segment-content/report-user-segment-content.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-age/rule-age.iml" filepath="$PROJECT_DIR$/rule-age/rule-age.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-browser/rule-browser.iml" filepath="$PROJECT_DIR$/rule-browser/rule-browser.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule-device/rule-device.iml" filepath="$PROJECT_DIR$/rule-device/rule-device.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-facebook/rule-facebook.iml" filepath="$PROJECT_DIR$/rule-facebook/rule-facebook.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-gender/rule-gender.iml" filepath="$PROJECT_DIR$/rule-gender/rule-gender.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-ip-geocode/rule-ip-geocode.iml" filepath="$PROJECT_DIR$/rule-ip-geocode/rule-ip-geocode.iml" />

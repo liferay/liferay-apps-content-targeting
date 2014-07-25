@@ -1,0 +1,28 @@
+Bundle-ClassPath: .,lib/util-java.jar
+Bundle-Name: Device Rule
+Import-Package:\
+	com.liferay.anonymoususers.model,\
+	com.liferay.anonymoususers.service,\
+	com.liferay.anonymoususers.service.messaging,\
+	com.liferay.contenttargeting.api.model,\
+	com.liferay.contenttargeting.rulecategories,\
+	com.liferay.contenttargeting.service,\
+	com.liferay.contenttargeting.service.messaging,\
+	com.liferay.portal.kernel.exception,\
+	com.liferay.portal.kernel.language,\
+	com.liferay.portal.kernel.lar,\
+	com.liferay.portal.kernel.servlet,\
+	com.liferay.portal.kernel.servlet.filters.invoker,\
+	com.liferay.portal.kernel.util,\
+	javax.portlet,\
+	javax.el,\
+	javax.servlet,\
+	javax.servlet.http,\
+	*;resolution:="optional"
+Include-Resource:\
+ 	classes,\
+	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
+	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
+Private-Package: com.liferay.contenttargeting.rules.device.*
+Service-Component: com.liferay.contenttargeting.rules.device.*
+Web-ContextPath: /rule-device
