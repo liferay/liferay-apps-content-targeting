@@ -29,9 +29,6 @@ import freemarker.template.Template;
 import java.util.Locale;
 import java.util.Map;
 
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Deactivate;
-
 /**
  * @author Eduardo Garcia
  */

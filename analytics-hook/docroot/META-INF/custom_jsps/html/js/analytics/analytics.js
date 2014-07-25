@@ -1,86 +1,86 @@
-(function outer(modules, cache, entries){
+(function outer(modules, cache, entries) {
 
-  /**
-   * Global
-   */
+/**
+* Global
+*/
 
-  var global = (function(){ return this; })();
+var global = (function(){ return this; })();
 
-  /**
-   * Require `name`.
-   *
-   * @param {String} name
-   * @param {Boolean} jumped
-   * @api public
-   */
+/**
+* Require `name`.
+*
+* @param {String} name
+* @param {Boolean} jumped
+* @api public
+*/
 
-  function require(name, jumped){
-    if (cache[name]) return cache[name].exports;
-    if (modules[name]) return call(name, require);
-    throw new Error('cannot find module "' + name + '"');
-  }
+function require(name, jumped) {
+	if (cache[name]) return cache[name].exports;
+	if (modules[name]) return call(name, require);
+	throw new Error('cannot find module "' + name + '"');
+}
 
-  /**
-   * Call module `id` and cache it.
-   *
-   * @param {Number} id
-   * @param {Function} require
-   * @return {Function}
-   * @api private
-   */
+/**
+* Call module `id` and cache it.
+*
+* @param {Number} id
+* @param {Function} require
+* @return {Function}
+* @api private
+*/
 
-  function call(id, require){
-    var m = cache[id] = { exports: {} };
-    var mod = modules[id];
-    var name = mod[2];
-    var fn = mod[0];
+function call(id, require) {
+	var m = cache[id] = { exports: {} };
+	var mod = modules[id];
+	var name = mod[2];
+	var fn = mod[0];
 
-    fn.call(m.exports, function(req){
-      var dep = modules[id][1][req];
-      return require(dep ? dep : req);
-    }, m, m.exports, outer, modules, cache, entries);
+	fn.call(m.exports, function(req) {
+	  var dep = modules[id][1][req];
+	  return require(dep ? dep : req);
+	}, m, m.exports, outer, modules, cache, entries);
 
-    // expose as `name`.
-    if (name) cache[name] = cache[id];
+	// expose as `name`.
+	if (name) cache[name] = cache[id];
 
-    return cache[id].exports;
-  }
+	return cache[id].exports;
+}
 
-  /**
-   * Require all entries exposing them on global if needed.
-   */
+/**
+* Require all entries exposing them on global if needed.
+*/
 
-  for (var id in entries) {
-    if (entries[id]) {
-      global[entries[id]] = require(id);
-    } else {
-      require(id);
-    }
-  }
+for (var id in entries) {
+	if (entries[id]) {
+	  global[entries[id]] = require(id);
+	} else {
+	  require(id);
+	}
+}
 
-  /**
-   * Duo flag.
-   */
+/**
+* Duo flag.
+*/
 
-  require.duo = true;
+require.duo = true;
 
-  /**
-   * Expose cache.
-   */
+/**
+* Expose cache.
+*/
 
-  require.cache = cache;
+require.cache = cache;
 
-  /**
-   * Expose modules
-   */
+/**
+* Expose modules
+*/
 
-  require.modules = modules;
+require.modules = modules;
 
-  /**
-   * Return newest require.
-   */
+/**
+* Return newest require.
+*/
 
-   return require;
+return require;
 })({
 1: [function(require, module, exports) {
 
@@ -119,8 +119,8 @@ exports.VERSION = require('./version');
  * Add integrations.
  */
 
-each(Integrations, function (name, Integration) {
-  analytics.use(Integration);
+each(Integrations, function(name, Integration) {
+analytics.use(Integration);
 });
 
 }, {"./analytics":2,"./version":3,"analytics.js-integrations":4,"each":5}],
@@ -174,21 +174,21 @@ exports.store = store;
  */
 
 function Analytics () {
-  this.Integrations = {};
-  this._integrations = {};
-  this._readied = false;
-  this._timeout = 300;
-  this._user = user; // BACKWARDS COMPATIBILITY
-  bind.all(this);
+this.Integrations = {};
+this._integrations = {};
+this._readied = false;
+this._timeout = 300;
+this._user = user; // BACKWARDS COMPATIBILITY
+bind.all(this);
 
-  var self = this;
-  this.on('initialize', function (settings, options) {
-    if (options.initialPageview) self.page();
-  });
+var self = this;
+this.on('initialize', function(settings, options) {
+	if (options.initialPageview) self.page();
+});
 
-  this.on('initialize', function () {
-    self._parseQuery();
-  });
+this.on('initialize', function() {
+	self._parseQuery();
+});
 
 }
 
@@ -207,9 +207,9 @@ Emitter(Analytics.prototype);
  * @return {Analytics}
  */
 
-Analytics.prototype.use = function (plugin) {
-  plugin(this);
-  return this;
+Analytics.prototype.use = function(plugin) {
+plugin(this);
+return this;
 };
 
 
@@ -220,11 +220,11 @@ Analytics.prototype.use = function (plugin) {
  * @return {Analytics}
  */
 
-Analytics.prototype.addIntegration = function (Integration) {
-  var name = Integration.prototype.name;
-  if (!name) throw new TypeError('attempted to add an invalid integration');
-  this.Integrations[name] = Integration;
-  return this;
+Analytics.prototype.addIntegration = function(Integration) {
+var name = Integration.prototype.name;
+if (!name) throw new TypeError('attempted to add an invalid integration');
+this.Integrations[name] = Integration;
+return this;
 };
 
 
@@ -238,56 +238,56 @@ Analytics.prototype.addIntegration = function (Integration) {
  */
 
 Analytics.prototype.init =
-Analytics.prototype.initialize = function (settings, options) {
-  settings = settings || {};
-  options = options || {};
+Analytics.prototype.initialize = function(settings, options) {
+settings = settings || {};
+options = options || {};
 
-  this._options(options);
-  this._readied = false;
+this._options(options);
+this._readied = false;
 
-  // clean unknown integrations from settings
-  var self = this;
-  each(settings, function (name) {
-    var Integration = self.Integrations[name];
-    if (!Integration) delete settings[name];
-  });
+// clean unknown integrations from settings
+var self = this;
+each(settings, function(name) {
+	var Integration = self.Integrations[name];
+	if (!Integration) delete settings[name];
+});
 
-  // add integrations
-  each(settings, function (name, opts) {
-    var Integration = self.Integrations[name];
-    var integration = new Integration(clone(opts));
-    self.add(integration);
-  });
+// add integrations
+each(settings, function(name, opts) {
+	var Integration = self.Integrations[name];
+	var integration = new Integration(clone(opts));
+	self.add(integration);
+});
 
-  var integrations = this._integrations;
+var integrations = this._integrations;
 
-  // load user now that options are set
-  user.load();
-  group.load();
+// load user now that options are set
+user.load();
+group.load();
 
-  // make ready callback
-  var ready = after(size(integrations), function () {
-    self._readied = true;
-    self.emit('ready');
-  });
+// make ready callback
+var ready = after(size(integrations), function() {
+	self._readied = true;
+	self.emit('ready');
+});
 
-  // initialize integrations, passing ready
-  each(integrations, function (name, integration) {
-    if (options.initialPageview && integration.options.initialPageview === false) {
-      integration.page = after(2, integration.page);
-    }
+// initialize integrations, passing ready
+each(integrations, function(name, integration) {
+	if (options.initialPageview && integration.options.initialPageview === false) {
+	  integration.page = after(2, integration.page);
+	}
 
-    integration.analytics = self;
-    integration.once('ready', ready);
-    integration.initialize();
-  });
+	integration.analytics = self;
+	integration.once('ready', ready);
+	integration.initialize();
+});
 
-  // backwards compat with angular plugin.
-  // TODO: remove
-  this.initialized = true;
+// backwards compat with angular plugin.
+// TODO: remove
+this.initialized = true;
 
-  this.emit('initialize', settings, options);
-  return this;
+this.emit('initialize', settings, options);
+return this;
 };
 
 /**
@@ -296,9 +296,9 @@ Analytics.prototype.initialize = function (settings, options) {
  * @param {Integration} integration
  */
 
-Analytics.prototype.add = function(integration){
-  this._integrations[integration.name] = integration;
-  return this;
+Analytics.prototype.add = function(integration) {
+this._integrations[integration.name] = integration;
+return this;
 };
 
 
@@ -312,28 +312,28 @@ Analytics.prototype.add = function(integration){
  * @return {Analytics}
  */
 
-Analytics.prototype.identify = function (id, traits, options, fn) {
-  if (is.fn(options)) fn = options, options = null;
-  if (is.fn(traits)) fn = traits, options = null, traits = null;
-  if (is.object(id)) options = traits, traits = id, id = user.id();
+Analytics.prototype.identify = function(id, traits, options, fn) {
+if (is.fn(options)) fn = options, options = null;
+if (is.fn(traits)) fn = traits, options = null, traits = null;
+if (is.object(id)) options = traits, traits = id, id = user.id();
 
 
-  // clone traits before we manipulate so we don't do anything uncouth, and take
-  // from `user` so that we carryover anonymous traits
-  user.identify(id, traits);
-  id = user.id();
-  traits = user.traits();
+// clone traits before we manipulate so we don't do anything uncouth, and take
+// from `user` so that we carryover anonymous traits
+user.identify(id, traits);
+id = user.id();
+traits = user.traits();
 
-  this._invoke('identify', message(Identify, {
-    options: options,
-    traits: traits,
-    userId: id
-  }));
+this._invoke('identify', message(Identify, {
+	options: options,
+	traits: traits,
+	userId: id
+}));
 
-  // emit
-  this.emit('identify', id, traits, options);
-  this._callback(fn);
-  return this;
+// emit
+this.emit('identify', id, traits, options);
+this._callback(fn);
+return this;
 };
 
 
@@ -343,8 +343,8 @@ Analytics.prototype.identify = function (id, traits, options, fn) {
  * @return {Object}
  */
 
-Analytics.prototype.user = function () {
-  return user;
+Analytics.prototype.user = function() {
+return user;
 };
 
 
@@ -359,27 +359,27 @@ Analytics.prototype.user = function () {
  * @return {Analytics or Object}
  */
 
-Analytics.prototype.group = function (id, traits, options, fn) {
-  if (0 === arguments.length) return group;
-  if (is.fn(options)) fn = options, options = null;
-  if (is.fn(traits)) fn = traits, options = null, traits = null;
-  if (is.object(id)) options = traits, traits = id, id = group.id();
+Analytics.prototype.group = function(id, traits, options, fn) {
+if (0 === arguments.length) return group;
+if (is.fn(options)) fn = options, options = null;
+if (is.fn(traits)) fn = traits, options = null, traits = null;
+if (is.object(id)) options = traits, traits = id, id = group.id();
 
 
-  // grab from group again to make sure we're taking from the source
-  group.identify(id, traits);
-  id = group.id();
-  traits = group.traits();
+// grab from group again to make sure we're taking from the source
+group.identify(id, traits);
+id = group.id();
+traits = group.traits();
 
-  this._invoke('group', message(Group, {
-    options: options,
-    traits: traits,
-    groupId: id
-  }));
+this._invoke('group', message(Group, {
+	options: options,
+	traits: traits,
+	groupId: id
+}));
 
-  this.emit('group', id, traits, options);
-  this._callback(fn);
-  return this;
+this.emit('group', id, traits, options);
+this._callback(fn);
+return this;
 };
 
 
@@ -393,19 +393,19 @@ Analytics.prototype.group = function (id, traits, options, fn) {
  * @return {Analytics}
  */
 
-Analytics.prototype.track = function (event, properties, options, fn) {
-  if (is.fn(options)) fn = options, options = null;
-  if (is.fn(properties)) fn = properties, options = null, properties = null;
+Analytics.prototype.track = function(event, properties, options, fn) {
+if (is.fn(options)) fn = options, options = null;
+if (is.fn(properties)) fn = properties, options = null, properties = null;
 
-  this._invoke('track', message(Track, {
-    properties: properties,
-    options: options,
-    event: event
-  }));
+this._invoke('track', message(Track, {
+	properties: properties,
+	options: options,
+	event: event
+}));
 
-  this.emit('track', event, properties, options);
-  this._callback(fn);
-  return this;
+this.emit('track', event, properties, options);
+this._callback(fn);
+return this;
 };
 
 
@@ -422,28 +422,28 @@ Analytics.prototype.track = function (event, properties, options, fn) {
  */
 
 Analytics.prototype.trackClick =
-Analytics.prototype.trackLink = function (links, event, properties) {
-  if (!links) return this;
-  if (is.element(links)) links = [links]; // always arrays, handles jquery
+Analytics.prototype.trackLink = function(links, event, properties) {
+if (!links) return this;
+if (is.element(links)) links = [links]; // always arrays, handles jquery
 
-  var self = this;
-  each(links, function (el) {
-    if (!is.element(el)) throw new TypeError('Must pass HTMLElement to `analytics.trackLink`.');
-    on(el, 'click', function (e) {
-      var ev = is.fn(event) ? event(el) : event;
-      var props = is.fn(properties) ? properties(el) : properties;
-      self.track(ev, props);
+var self = this;
+each(links, function(el) {
+	if (!is.element(el)) throw new TypeError('Must pass HTMLElement to `analytics.trackLink`.');
+	on(el, 'click', function(e) {
+	  var ev = is.fn(event) ? event(el) : event;
+	  var props = is.fn(properties) ? properties(el) : properties;
+	  self.track(ev, props);
 
-      if (el.href && el.target !== '_blank' && !isMeta(e)) {
-        prevent(e);
-        self._callback(function () {
-          window.location.href = el.href;
-        });
-      }
-    });
-  });
+	  if (el.href && el.target !== '_blank' && !isMeta(e)) {
+		prevent(e);
+		self._callback(function() {
+		  window.location.href = el.href;
+		});
+	  }
+	});
+});
 
-  return this;
+return this;
 };
 
 
@@ -460,36 +460,36 @@ Analytics.prototype.trackLink = function (links, event, properties) {
  */
 
 Analytics.prototype.trackSubmit =
-Analytics.prototype.trackForm = function (forms, event, properties) {
-  if (!forms) return this;
-  if (is.element(forms)) forms = [forms]; // always arrays, handles jquery
+Analytics.prototype.trackForm = function(forms, event, properties) {
+if (!forms) return this;
+if (is.element(forms)) forms = [forms]; // always arrays, handles jquery
 
-  var self = this;
-  each(forms, function (el) {
-    if (!is.element(el)) throw new TypeError('Must pass HTMLElement to `analytics.trackForm`.');
-    function handler (e) {
-      prevent(e);
+var self = this;
+each(forms, function(el) {
+	if (!is.element(el)) throw new TypeError('Must pass HTMLElement to `analytics.trackForm`.');
+	function handler (e) {
+	  prevent(e);
 
-      var ev = is.fn(event) ? event(el) : event;
-      var props = is.fn(properties) ? properties(el) : properties;
-      self.track(ev, props);
+	  var ev = is.fn(event) ? event(el) : event;
+	  var props = is.fn(properties) ? properties(el) : properties;
+	  self.track(ev, props);
 
-      self._callback(function () {
-        el.submit();
-      });
-    }
+	  self._callback(function() {
+		el.submit();
+	  });
+	}
 
-    // support the events happening through jQuery or Zepto instead of through
-    // the normal DOM API, since `el.submit` doesn't bubble up events...
-    var $ = window.jQuery || window.Zepto;
-    if ($) {
-      $(el).submit(handler);
-    } else {
-      on(el, 'submit', handler);
-    }
-  });
+	// support the events happening through jQuery or Zepto instead of through
+	// the normal DOM API, since `el.submit` doesn't bubble up events...
+	var $ = window.jQuery || window.Zepto;
+	if ($) {
+	  $(el).submit(handler);
+	} else {
+	  on(el, 'submit', handler);
+	}
+});
 
-  return this;
+return this;
 };
 
 
@@ -505,38 +505,38 @@ Analytics.prototype.trackForm = function (forms, event, properties) {
  * @return {Analytics}
  */
 
-Analytics.prototype.page = function (category, name, properties, options, fn) {
-  if (is.fn(options)) fn = options, options = null;
-  if (is.fn(properties)) fn = properties, options = properties = null;
-  if (is.fn(name)) fn = name, options = properties = name = null;
-  if (is.object(category)) options = name, properties = category, name = category = null;
-  if (is.object(name)) options = properties, properties = name, name = null;
-  if (is.string(category) && !is.string(name)) name = category, category = null;
+Analytics.prototype.page = function(category, name, properties, options, fn) {
+if (is.fn(options)) fn = options, options = null;
+if (is.fn(properties)) fn = properties, options = properties = null;
+if (is.fn(name)) fn = name, options = properties = name = null;
+if (is.object(category)) options = name, properties = category, name = category = null;
+if (is.object(name)) options = properties, properties = name, name = null;
+if (is.string(category) && !is.string(name)) name = category, category = null;
 
-  var defs = {
-    path: canonicalPath(),
-    referrer: document.referrer,
-    title: document.title,
-    search: location.search
-  };
+var defs = {
+	path: canonicalPath(),
+	referrer: document.referrer,
+	title: document.title,
+	search: location.search
+};
 
-  if (name) defs.name = name;
-  if (category) defs.category = category;
+if (name) defs.name = name;
+if (category) defs.category = category;
 
-  properties = clone(properties) || {};
-  defaults(properties, defs);
-  properties.url = properties.url || canonicalUrl(properties.search);
+properties = clone(properties) || {};
+defaults(properties, defs);
+properties.url = properties.url || canonicalUrl(properties.search);
 
-  this._invoke('page', message(Page, {
-    properties: properties,
-    category: category,
-    options: options,
-    name: name
-  }));
+this._invoke('page', message(Page, {
+	properties: properties,
+	category: category,
+	options: options,
+	name: name
+}));
 
-  this.emit('page', category, name, properties, options);
-  this._callback(fn);
-  return this;
+this.emit('page', category, name, properties, options);
+this._callback(fn);
+return this;
 };
 
 
@@ -549,11 +549,11 @@ Analytics.prototype.page = function (category, name, properties, options, fn) {
  * @api private
  */
 
-Analytics.prototype.pageview = function (url, options) {
-  var properties = {};
-  if (url) properties.path = url;
-  this.page(properties);
-  return this;
+Analytics.prototype.pageview = function(url, options) {
+var properties = {};
+if (url) properties.path = url;
+this.page(properties);
+return this;
 };
 
 
@@ -567,20 +567,20 @@ Analytics.prototype.pageview = function (url, options) {
  * @return {Analytics}
  */
 
-Analytics.prototype.alias = function (to, from, options, fn) {
-  if (is.fn(options)) fn = options, options = null;
-  if (is.fn(from)) fn = from, options = null, from = null;
-  if (is.object(from)) options = from, from = null;
+Analytics.prototype.alias = function(to, from, options, fn) {
+if (is.fn(options)) fn = options, options = null;
+if (is.fn(from)) fn = from, options = null, from = null;
+if (is.object(from)) options = from, from = null;
 
-  this._invoke('alias', message(Alias, {
-    options: options,
-    from: from,
-    to: to
-  }));
+this._invoke('alias', message(Alias, {
+	options: options,
+	from: from,
+	to: to
+}));
 
-  this.emit('alias', to, from, options);
-  this._callback(fn);
-  return this;
+this.emit('alias', to, from, options);
+this._callback(fn);
+return this;
 };
 
 
@@ -591,12 +591,12 @@ Analytics.prototype.alias = function (to, from, options, fn) {
  * @return {Analytics}
  */
 
-Analytics.prototype.ready = function (fn) {
-  if (!is.fn(fn)) return this;
-  this._readied
-    ? callback.async(fn)
-    : this.once('ready', fn);
-  return this;
+Analytics.prototype.ready = function(fn) {
+if (!is.fn(fn)) return this;
+this._readied
+	? callback.async(fn)
+	: this.once('ready', fn);
+return this;
 };
 
 
@@ -606,8 +606,8 @@ Analytics.prototype.ready = function (fn) {
  * @param {Number} timeout
  */
 
-Analytics.prototype.timeout = function (timeout) {
-  this._timeout = timeout;
+Analytics.prototype.timeout = function(timeout) {
+this._timeout = timeout;
 };
 
 
@@ -617,12 +617,12 @@ Analytics.prototype.timeout = function (timeout) {
  * @param {String or Boolean} str
  */
 
-Analytics.prototype.debug = function(str){
-  if (0 == arguments.length || str) {
-    debug.enable('analytics:' + (str || '*'));
-  } else {
-    debug.disable();
-  }
+Analytics.prototype.debug = function(str) {
+if (0 == arguments.length || str) {
+	debug.enable('analytics:' + (str || '*'));
+} else {
+	debug.disable();
+}
 };
 
 
@@ -634,13 +634,13 @@ Analytics.prototype.debug = function(str){
  * @api private
  */
 
-Analytics.prototype._options = function (options) {
-  options = options || {};
-  cookie.options(options.cookie);
-  store.options(options.localStorage);
-  user.options(options.user);
-  group.options(options.group);
-  return this;
+Analytics.prototype._options = function(options) {
+options = options || {};
+cookie.options(options.cookie);
+store.options(options.localStorage);
+user.options(options.user);
+group.options(options.group);
+return this;
 };
 
 
@@ -652,9 +652,9 @@ Analytics.prototype._options = function (options) {
  * @api private
  */
 
-Analytics.prototype._callback = function (fn) {
-  callback.async(fn, this._timeout);
-  return this;
+Analytics.prototype._callback = function(fn) {
+callback.async(fn, this._timeout);
+return this;
 };
 
 
@@ -667,17 +667,17 @@ Analytics.prototype._callback = function (fn) {
  * @api private
  */
 
-Analytics.prototype._invoke = function (method, facade) {
-  var options = facade.options();
+Analytics.prototype._invoke = function(method, facade) {
+var options = facade.options();
 
-  this.emit('invoke', facade);
+this.emit('invoke', facade);
 
-  each(this._integrations, function (name, integration) {
-    if (!facade.enabled(name)) return;
-    integration.invoke.call(integration, method, facade);
-  });
+each(this._integrations, function(name, integration) {
+	if (!facade.enabled(name)) return;
+	integration.invoke.call(integration, method, facade);
+});
 
-  return this;
+return this;
 };
 
 /**
@@ -687,10 +687,10 @@ Analytics.prototype._invoke = function (method, facade) {
  * @api private
  */
 
-Analytics.prototype.push = function(args){
-  var method = args.shift();
-  if (!this[method]) return;
-  this[method].apply(this, args);
+Analytics.prototype.push = function(args) {
+var method = args.shift();
+if (!this[method]) return;
+this[method].apply(this, args);
 };
 
 /**
@@ -700,12 +700,12 @@ Analytics.prototype.push = function(args){
  * @api private
  */
 
-Analytics.prototype._parseQuery = function () {
-  // Identify and track any `ajs_uid` and `ajs_event` parameters in the URL.
-  var q = querystring.parse(window.location.search);
-  if (q.ajs_uid) this.identify(q.ajs_uid);
-  if (q.ajs_event) this.track(q.ajs_event);
-  return this;
+Analytics.prototype._parseQuery = function() {
+// Identify and track any `ajs_uid` and `ajs_event` parameters in the URL.
+var q = querystring.parse(window.location.search);
+if (q.ajs_uid) this.identify(q.ajs_uid);
+if (q.ajs_event) this.track(q.ajs_event);
+return this;
 };
 
 
@@ -716,10 +716,10 @@ Analytics.prototype._parseQuery = function () {
  */
 
 function canonicalPath () {
-  var canon = canonical();
-  if (!canon) return window.location.pathname;
-  var parsed = url.parse(canon);
-  return parsed.pathname;
+var canon = canonical();
+if (!canon) return window.location.pathname;
+var parsed = url.parse(canon);
+return parsed.pathname;
 }
 
 /**
@@ -731,11 +731,11 @@ function canonicalPath () {
  */
 
 function canonicalUrl (search) {
-  var canon = canonical();
-  if (canon) return ~canon.indexOf('?') ? canon : canon + search;
-  var url = window.location.href;
-  var i = url.indexOf('#');
-  return -1 == i ? url : url.slice(0, i);
+var canon = canonical();
+if (canon) return ~canon.indexOf('?') ? canon : canon + search;
+var url = window.location.href;
+var i = url.indexOf('#');
+return -1 == i ? url : url.slice(0, i);
 }
 
 /**
@@ -768,15 +768,15 @@ function canonicalUrl (search) {
  * @return {Facade}
  */
 
-function message(Type, msg){
-  var ctx = msg.options || {};
+function message(Type, msg) {
+var ctx = msg.options || {};
 
-  if (ctx.timestamp || ctx.integrations || ctx.context) {
-    msg = defaults(ctx, msg);
-    delete msg.options;
-  }
+if (ctx.timestamp || ctx.integrations || ctx.context) {
+	msg = defaults(ctx, msg);
+	delete msg.options;
+}
 
-  return new Type(msg);
+return new Type(msg);
 }
 
 }, {"./cookie":6,"./group":7,"./store":8,"./user":9,"after":10,"bind":11,"callback":12,"canonical":13,"clone":14,"debug":15,"defaults":16,"each":5,"emitter":17,"is":18,"is-email":19,"is-meta":20,"new-date":21,"event":22,"prevent":23,"querystring":24,"object":25,"url":26,"facade":27}],
@@ -798,7 +798,7 @@ var topDomain = require('top-domain');
  */
 
 function Cookie (options) {
-  this.options(options);
+this.options(options);
 }
 
 
@@ -812,32 +812,32 @@ function Cookie (options) {
  *   @field {Boolean} secure
  */
 
-Cookie.prototype.options = function (options) {
-  if (arguments.length === 0) return this._options;
+Cookie.prototype.options = function(options) {
+if (arguments.length === 0) return this._options;
 
-  options = options || {};
+options = options || {};
 
-  var domain = '.' + topDomain(window.location.href);
+var domain = '.' + topDomain(window.location.href);
 
-  this._options = defaults(options, {
-    maxage: 31536000000, // default to a year
-    path: '/',
-    domain: domain
-  });
+this._options = defaults(options, {
+	maxage: 31536000000, // default to a year
+	path: '/',
+	domain: domain
+});
 
-  // http://curl.haxx.se/rfc/cookie_spec.html
-  // https://publicsuffix.org/list/effective_tld_names.dat
-  //
-  // try setting a dummy cookie with the options
-  // if the cookie isn't set, it probably means
-  // that the domain is on the public suffix list
-  // like myapp.herokuapp.com or localhost / ip.
-  this.set('ajs:test', true);
-  if (!this.get('ajs:test')) {
-    debug('fallback to domain=null');
-    this._options.domain = null;
-  }
-  this.remove('ajs:test');
+// http://curl.haxx.se/rfc/cookie_spec.html
+// https://publicsuffix.org/list/effective_tld_names.dat
+//
+// try setting a dummy cookie with the options
+// if the cookie isn't set, it probably means
+// that the domain is on the public suffix list
+// like myapp.herokuapp.com or localhost / ip.
+this.set('ajs:test', true);
+if (!this.get('ajs:test')) {
+	debug('fallback to domain=null');
+	this._options.domain = null;
+}
+this.remove('ajs:test');
 };
 
 
@@ -849,14 +849,14 @@ Cookie.prototype.options = function (options) {
  * @return {Boolean} saved
  */
 
-Cookie.prototype.set = function (key, value) {
-  try {
-    value = json.stringify(value);
-    cookie(key, value, clone(this._options));
-    return true;
-  } catch (e) {
-    return false;
-  }
+Cookie.prototype.set = function(key, value) {
+try {
+	value = json.stringify(value);
+	cookie(key, value, clone(this._options));
+	return true;
+} catch (e) {
+	return false;
+}
 };
 
 
@@ -867,14 +867,14 @@ Cookie.prototype.set = function (key, value) {
  * @return {Object} value
  */
 
-Cookie.prototype.get = function (key) {
-  try {
-    var value = cookie(key);
-    value = value ? json.parse(value) : null;
-    return value;
-  } catch (e) {
-    return null;
-  }
+Cookie.prototype.get = function(key) {
+try {
+	var value = cookie(key);
+	value = value ? json.parse(value) : null;
+	return value;
+} catch (e) {
+	return null;
+}
 };
 
 
@@ -885,13 +885,13 @@ Cookie.prototype.get = function (key) {
  * @return {Boolean} removed
  */
 
-Cookie.prototype.remove = function (key) {
-  try {
-    cookie(key, null, clone(this._options));
-    return true;
-  } catch (e) {
-    return false;
-  }
+Cookie.prototype.remove = function(key) {
+try {
+	cookie(key, null, clone(this._options));
+	return true;
+} catch (e) {
+	return false;
+}
 };
 
 
@@ -911,9 +911,9 @@ module.exports.Cookie = Cookie;
 }, {"debug":15,"bind":11,"cookie":28,"clone":14,"defaults":16,"json":29,"top-domain":30}],
 15: [function(require, module, exports) {
 if ('undefined' == typeof window) {
-  module.exports = require('./lib/debug');
+module.exports = require('./lib/debug');
 } else {
-  module.exports = require('./debug');
+module.exports = require('./debug');
 }
 
 }, {"./lib/debug":31,"./debug":32}],
@@ -935,18 +935,18 @@ module.exports = debug;
  */
 
 var names = []
-  , skips = [];
+, skips = [];
 
 (process.env.DEBUG || '')
-  .split(/[\s,]+/)
-  .forEach(function(name){
-    name = name.replace('*', '.*?');
-    if (name[0] === '-') {
-      skips.push(new RegExp('^' + name.substr(1) + '$'));
-    } else {
-      names.push(new RegExp('^' + name + '$'));
-    }
-  });
+.split(/[\s,]+/)
+.forEach(function(name) {
+	name = name.replace('*', '.*?');
+	if (name[0] === '-') {
+	  skips.push(new RegExp('^' + name.substr(1) + '$'));
+	} else {
+	  names.push(new RegExp('^' + name + '$'));
+	}
+});
 
 /**
  * Colors.
@@ -980,7 +980,7 @@ var isatty = tty.isatty(2);
  */
 
 function color() {
-  return colors[prevColor++ % colors.length];
+return colors[prevColor++ % colors.length];
 }
 
 /**
@@ -992,14 +992,14 @@ function color() {
  */
 
 function humanize(ms) {
-  var sec = 1000
-    , min = 60 * 1000
-    , hour = 60 * min;
+var sec = 1000
+	, min = 60 * 1000
+	, hour = 60 * min;
 
-  if (ms >= hour) return (ms / hour).toFixed(1) + 'h';
-  if (ms >= min) return (ms / min).toFixed(1) + 'm';
-  if (ms >= sec) return (ms / sec | 0) + 's';
-  return ms + 'ms';
+if (ms >= hour) return (ms / hour).toFixed(1) + 'h';
+if (ms >= min) return (ms / min).toFixed(1) + 'm';
+if (ms >= sec) return (ms / sec | 0) + 's';
+return ms + 'ms';
 }
 
 /**
@@ -1011,50 +1011,50 @@ function humanize(ms) {
  */
 
 function debug(name) {
-  function disabled(){}
-  disabled.enabled = false;
+function disabled(){}
+disabled.enabled = false;
 
-  var match = skips.some(function(re){
-    return re.test(name);
-  });
+var match = skips.some(function(re) {
+	return re.test(name);
+});
 
-  if (match) return disabled;
+if (match) return disabled;
 
-  match = names.some(function(re){
-    return re.test(name);
-  });
+match = names.some(function(re) {
+	return re.test(name);
+});
 
-  if (!match) return disabled;
-  var c = color();
+if (!match) return disabled;
+var c = color();
 
-  function colored(fmt) {
-    fmt = coerce(fmt);
+function colored(fmt) {
+	fmt = coerce(fmt);
 
-    var curr = new Date;
-    var ms = curr - (prev[name] || curr);
-    prev[name] = curr;
+	var curr = new Date;
+	var ms = curr - (prev[name] || curr);
+	prev[name] = curr;
 
-    fmt = '  \u001b[9' + c + 'm' + name + ' '
-      + '\u001b[3' + c + 'm\u001b[90m'
-      + fmt + '\u001b[3' + c + 'm'
-      + ' +' + humanize(ms) + '\u001b[0m';
+	fmt = '  \u001b[9' + c + 'm' + name + ' '
+	  + '\u001b[3' + c + 'm\u001b[90m'
+	  + fmt + '\u001b[3' + c + 'm'
+	  + ' +' + humanize(ms) + '\u001b[0m';
 
-    console.error.apply(this, arguments);
-  }
+	console.error.apply(this, arguments);
+}
 
-  function plain(fmt) {
-    fmt = coerce(fmt);
+function plain(fmt) {
+	fmt = coerce(fmt);
 
-    fmt = new Date().toUTCString()
-      + ' ' + name + ' ' + fmt;
-    console.error.apply(this, arguments);
-  }
+	fmt = new Date().toUTCString()
+	  + ' ' + name + ' ' + fmt;
+	console.error.apply(this, arguments);
+}
 
-  colored.enabled = plain.enabled = true;
+colored.enabled = plain.enabled = true;
 
-  return isatty || process.env.DEBUG_COLORS
-    ? colored
-    : plain;
+return isatty || process.env.DEBUG_COLORS
+	? colored
+	: plain;
 }
 
 /**
@@ -1062,8 +1062,8 @@ function debug(name) {
  */
 
 function coerce(val) {
-  if (val instanceof Error) return val.stack || val.message;
-  return val;
+if (val instanceof Error) return val.stack || val.message;
+return val;
 }
 
 }, {}],
@@ -1084,26 +1084,26 @@ module.exports = debug;
  */
 
 function debug(name) {
-  if (!debug.enabled(name)) return function(){};
+if (!debug.enabled(name)) return function(){};
 
-  return function(fmt){
-    fmt = coerce(fmt);
+return function(fmt) {
+	fmt = coerce(fmt);
 
-    var curr = new Date;
-    var ms = curr - (debug[name] || curr);
-    debug[name] = curr;
+	var curr = new Date;
+	var ms = curr - (debug[name] || curr);
+	debug[name] = curr;
 
-    fmt = name
-      + ' '
-      + fmt
-      + ' +' + debug.humanize(ms);
+	fmt = name
+	  + ' '
+	  + fmt
+	  + ' +' + debug.humanize(ms);
 
-    // This hackery is required for IE8
-    // where `console.log` doesn't have 'apply'
-    window.console
-      && console.log
-      && Function.prototype.apply.call(console.log, console, arguments);
-  }
+	// This hackery is required for IE8
+	// where `console.log` doesn't have 'apply'
+	window.console
+	  && console.log
+	  && Function.prototype.apply.call(console.log, console, arguments);
+}
 }
 
 /**
@@ -1122,22 +1122,22 @@ debug.skips = [];
  */
 
 debug.enable = function(name) {
-  try {
-    localStorage.debug = name;
-  } catch(e){}
+try {
+	localStorage.debug = name;
+} catch(e){}
 
-  var split = (name || '').split(/[\s,]+/)
-    , len = split.length;
+var split = (name || '').split(/[\s,]+/)
+	, len = split.length;
 
-  for (var i = 0; i < len; i++) {
-    name = split[i].replace('*', '.*?');
-    if (name[0] === '-') {
-      debug.skips.push(new RegExp('^' + name.substr(1) + '$'));
-    }
-    else {
-      debug.names.push(new RegExp('^' + name + '$'));
-    }
-  }
+for (var i = 0; i < len; i++) {
+	name = split[i].replace('*', '.*?');
+	if (name[0] === '-') {
+	  debug.skips.push(new RegExp('^' + name.substr(1) + '$'));
+	}
+	else {
+	  debug.names.push(new RegExp('^' + name + '$'));
+	}
+}
 };
 
 /**
@@ -1146,8 +1146,8 @@ debug.enable = function(name) {
  * @api public
  */
 
-debug.disable = function(){
-  debug.enable('');
+debug.disable = function() {
+debug.enable('');
 };
 
 /**
@@ -1159,14 +1159,14 @@ debug.disable = function(){
  */
 
 debug.humanize = function(ms) {
-  var sec = 1000
-    , min = 60 * 1000
-    , hour = 60 * min;
+var sec = 1000
+	, min = 60 * 1000
+	, hour = 60 * min;
 
-  if (ms >= hour) return (ms / hour).toFixed(1) + 'h';
-  if (ms >= min) return (ms / min).toFixed(1) + 'm';
-  if (ms >= sec) return (ms / sec | 0) + 's';
-  return ms + 'ms';
+if (ms >= hour) return (ms / hour).toFixed(1) + 'h';
+if (ms >= min) return (ms / min).toFixed(1) + 'm';
+if (ms >= sec) return (ms / sec | 0) + 's';
+return ms + 'ms';
 };
 
 /**
@@ -1178,17 +1178,17 @@ debug.humanize = function(ms) {
  */
 
 debug.enabled = function(name) {
-  for (var i = 0, len = debug.skips.length; i < len; i++) {
-    if (debug.skips[i].test(name)) {
-      return false;
-    }
-  }
-  for (var i = 0, len = debug.names.length; i < len; i++) {
-    if (debug.names[i].test(name)) {
-      return true;
-    }
-  }
-  return false;
+for (var i = 0, len = debug.skips.length; i < len; i++) {
+	if (debug.skips[i].test(name)) {
+	  return false;
+	}
+}
+for (var i = 0, len = debug.names.length; i < len; i++) {
+	if (debug.names[i].test(name)) {
+	  return true;
+	}
+}
+return false;
 };
 
 /**
@@ -1196,23 +1196,23 @@ debug.enabled = function(name) {
  */
 
 function coerce(val) {
-  if (val instanceof Error) return val.stack || val.message;
-  return val;
+if (val instanceof Error) return val.stack || val.message;
+return val;
 }
 
 // persist
 
 try {
-  if (window.localStorage) debug.enable(localStorage.debug);
+if (window.localStorage) debug.enable(localStorage.debug);
 } catch(e){}
 
 }, {}],
 11: [function(require, module, exports) {
 
 try {
-  var bind = require('bind');
+var bind = require('bind');
 } catch (e) {
-  var bind = require('bind-component');
+var bind = require('bind-component');
 }
 
 var bindAll = require('bind-all');
@@ -1247,11 +1247,11 @@ exports.methods = bindMethods;
  */
 
 function bindMethods (obj, methods) {
-  methods = [].slice.call(arguments, 1);
-  for (var i = 0, method; method = methods[i]; i++) {
-    obj[method] = bind(obj, obj[method]);
-  }
-  return obj;
+methods = [].slice.call(arguments, 1);
+for (var i = 0, method; method = methods[i]; i++) {
+	obj[method] = bind(obj, obj[method]);
+}
+return obj;
 }
 }, {"bind":33,"bind-all":34}],
 33: [function(require, module, exports) {
@@ -1270,32 +1270,32 @@ var slice = [].slice;
  * @api public
  */
 
-module.exports = function(obj, fn){
-  if ('string' == typeof fn) fn = obj[fn];
-  if ('function' != typeof fn) throw new Error('bind() requires a function');
-  var args = slice.call(arguments, 2);
-  return function(){
-    return fn.apply(obj, args.concat(slice.call(arguments)));
-  }
+module.exports = function(obj, fn) {
+if ('string' == typeof fn) fn = obj[fn];
+if ('function' != typeof fn) throw new Error('bind() requires a function');
+var args = slice.call(arguments, 2);
+return function() {
+	return fn.apply(obj, args.concat(slice.call(arguments)));
+}
 };
 
 }, {}],
 34: [function(require, module, exports) {
 
 try {
-  var bind = require('bind');
-  var type = require('type');
+var bind = require('bind');
+var type = require('type');
 } catch (e) {
-  var bind = require('bind-component');
-  var type = require('type-component');
+var bind = require('bind-component');
+var type = require('type-component');
 }
 
-module.exports = function (obj) {
-  for (var key in obj) {
-    var val = obj[key];
-    if (type(val) === 'function') obj[key] = bind(obj, obj[key]);
-  }
-  return obj;
+module.exports = function(obj) {
+for (var key in obj) {
+	var val = obj[key];
+	if (type(val) === 'function') obj[key] = bind(obj, obj[key]);
+}
+return obj;
 };
 }, {"bind":33,"type":35}],
 35: [function(require, module, exports) {
@@ -1314,22 +1314,22 @@ var toString = Object.prototype.toString;
  * @api public
  */
 
-module.exports = function(val){
-  switch (toString.call(val)) {
-    case '[object Function]': return 'function';
-    case '[object Date]': return 'date';
-    case '[object RegExp]': return 'regexp';
-    case '[object Arguments]': return 'arguments';
-    case '[object Array]': return 'array';
-    case '[object String]': return 'string';
-  }
+module.exports = function(val) {
+switch (toString.call(val)) {
+	case '[object Function]': return 'function';
+	case '[object Date]': return 'date';
+	case '[object RegExp]': return 'regexp';
+	case '[object Arguments]': return 'arguments';
+	case '[object Array]': return 'array';
+	case '[object String]': return 'string';
+}
 
-  if (val === null) return 'null';
-  if (val === undefined) return 'undefined';
-  if (val && val.nodeType === 1) return 'element';
-  if (val === Object(val)) return 'object';
+if (val === null) return 'null';
+if (val === undefined) return 'undefined';
+if (val && val.nodeType === 1) return 'element';
+if (val === Object(val)) return 'object';
 
-  return typeof val;
+return typeof val;
 };
 
 }, {}],
@@ -1356,16 +1356,16 @@ var decode = decodeURIComponent;
  * @api public
  */
 
-module.exports = function(name, value, options){
-  switch (arguments.length) {
-    case 3:
-    case 2:
-      return set(name, value, options);
-    case 1:
-      return get(name);
-    default:
-      return all();
-  }
+module.exports = function(name, value, options) {
+switch (arguments.length) {
+	case 3:
+	case 2:
+	  return set(name, value, options);
+	case 1:
+	  return get(name);
+	default:
+	  return all();
+}
 };
 
 /**
@@ -1378,21 +1378,21 @@ module.exports = function(name, value, options){
  */
 
 function set(name, value, options) {
-  options = options || {};
-  var str = encode(name) + '=' + encode(value);
+options = options || {};
+var str = encode(name) + '=' + encode(value);
 
-  if (null == value) options.maxage = -1;
+if (null == value) options.maxage = -1;
 
-  if (options.maxage) {
-    options.expires = new Date(+new Date + options.maxage);
-  }
+if (options.maxage) {
+	options.expires = new Date(+new Date + options.maxage);
+}
 
-  if (options.path) str += '; path=' + options.path;
-  if (options.domain) str += '; domain=' + options.domain;
-  if (options.expires) str += '; expires=' + options.expires.toGMTString();
-  if (options.secure) str += '; secure';
+if (options.path) str += '; path=' + options.path;
+if (options.domain) str += '; domain=' + options.domain;
+if (options.expires) str += '; expires=' + options.expires.toGMTString();
+if (options.secure) str += '; secure';
 
-  document.cookie = str;
+document.cookie = str;
 }
 
 /**
@@ -1403,7 +1403,7 @@ function set(name, value, options) {
  */
 
 function all() {
-  return parse(document.cookie);
+return parse(document.cookie);
 }
 
 /**
@@ -1415,7 +1415,7 @@ function all() {
  */
 
 function get(name) {
-  return all()[name];
+return all()[name];
 }
 
 /**
@@ -1427,15 +1427,15 @@ function get(name) {
  */
 
 function parse(str) {
-  var obj = {};
-  var pairs = str.split(/ *; */);
-  var pair;
-  if ('' == pairs[0]) return obj;
-  for (var i = 0; i < pairs.length; ++i) {
-    pair = pairs[i].split('=');
-    obj[decode(pair[0])] = decode(pair[1]);
-  }
-  return obj;
+var obj = {};
+var pairs = str.split(/ *; */);
+var pair;
+if ('' == pairs[0]) return obj;
+for (var i = 0; i < pairs.length; ++i) {
+	pair = pairs[i].split('=');
+	obj[decode(pair[0])] = decode(pair[1]);
+}
+return obj;
 }
 
 }, {}],
@@ -1448,9 +1448,9 @@ function parse(str) {
 var type;
 
 try {
-  type = require('type');
-} catch(e){
-  type = require('type-component');
+type = require('type');
+} catch(e) {
+type = require('type-component');
 }
 
 /**
@@ -1466,38 +1466,38 @@ module.exports = clone;
  * @api public
  */
 
-function clone(obj){
-  switch (type(obj)) {
-    case 'object':
-      var copy = {};
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          copy[key] = clone(obj[key]);
-        }
-      }
-      return copy;
+function clone(obj) {
+switch (type(obj)) {
+	case 'object':
+	  var copy = {};
+	  for (var key in obj) {
+		if (obj.hasOwnProperty(key)) {
+		  copy[key] = clone(obj[key]);
+		}
+	  }
+	  return copy;
 
-    case 'array':
-      var copy = new Array(obj.length);
-      for (var i = 0, l = obj.length; i < l; i++) {
-        copy[i] = clone(obj[i]);
-      }
-      return copy;
+	case 'array':
+	  var copy = new Array(obj.length);
+	  for (var i = 0, l = obj.length; i < l; i++) {
+		copy[i] = clone(obj[i]);
+	  }
+	  return copy;
 
-    case 'regexp':
-      // from millermedeiros/amd-utils - MIT
-      var flags = '';
-      flags += obj.multiline ? 'm' : '';
-      flags += obj.global ? 'g' : '';
-      flags += obj.ignoreCase ? 'i' : '';
-      return new RegExp(obj.source, flags);
+	case 'regexp':
+	  // from millermedeiros/amd-utils - MIT
+	  var flags = '';
+	  flags += obj.multiline ? 'm' : '';
+	  flags += obj.global ? 'g' : '';
+	  flags += obj.ignoreCase ? 'i' : '';
+	  return new RegExp(obj.source, flags);
 
-    case 'date':
-      return new Date(obj.getTime());
+	case 'date':
+	  return new Date(obj.getTime());
 
-    default: // string, number, boolean, …
-      return obj;
-  }
+	default: // string, number, boolean, …
+	  return obj;
+}
 }
 
 }, {"type":35}],
@@ -1512,16 +1512,16 @@ function clone(obj){
  * @return {Object}
  * @api public
  */
-var defaults = function (dest, src, recursive) {
-  for (var prop in src) {
-    if (recursive && dest[prop] instanceof Object && src[prop] instanceof Object) {
-      dest[prop] = defaults(dest[prop], src[prop], true);
-    } else if (! (prop in dest)) {
-      dest[prop] = src[prop];
-    }
-  }
+var defaults = function(dest, src, recursive) {
+for (var prop in src) {
+	if (recursive && dest[prop] instanceof Object && src[prop] instanceof Object) {
+	  dest[prop] = defaults(dest[prop], src[prop], true);
+	} else if (! (prop in dest)) {
+	  dest[prop] = src[prop];
+	}
+}
 
-  return dest;
+return dest;
 };
 
 /**
@@ -1537,370 +1537,371 @@ var stringify = json.stringify;
 var parse = json.parse;
 
 module.exports = parse && stringify
-  ? JSON
-  : require('json-fallback');
+? JSON
+: require('json-fallback');
 
 }, {"json-fallback":36}],
 36: [function(require, module, exports) {
 /*
-    json2.js
-    2014-02-04
+	json2.js
+	2014-02-04
 
-    Public Domain.
+	Public Domain.
 
-    NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
+	NO WARRANTY EXPRESSED OR IMPLIED. USE AT YOUR OWN RISK.
 
-    See http://www.JSON.org/js.html
-
-
-    This code should be minified before deployment.
-    See http://javascript.crockford.com/jsmin.html
-
-    USE YOUR OWN COPY. IT IS EXTREMELY UNWISE TO LOAD CODE FROM SERVERS YOU DO
-    NOT CONTROL.
+	See http://www.JSON.org/js.html
 
 
-    This file creates a global JSON object containing two methods: stringify
-    and parse.
+	This code should be minified before deployment.
+	See http://javascript.crockford.com/jsmin.html
 
-        JSON.stringify(value, replacer, space)
-            value       any JavaScript value, usually an object or array.
-
-            replacer    an optional parameter that determines how object
-                        values are stringified for objects. It can be a
-                        function or an array of strings.
-
-            space       an optional parameter that specifies the indentation
-                        of nested structures. If it is omitted, the text will
-                        be packed without extra whitespace. If it is a number,
-                        it will specify the number of spaces to indent at each
-                        level. If it is a string (such as '\t' or '&nbsp;'),
-                        it contains the characters used to indent at each level.
-
-            This method produces a JSON text from a JavaScript value.
-
-            When an object value is found, if the object contains a toJSON
-            method, its toJSON method will be called and the result will be
-            stringified. A toJSON method does not serialize: it returns the
-            value represented by the name/value pair that should be serialized,
-            or undefined if nothing should be serialized. The toJSON method
-            will be passed the key associated with the value, and this will be
-            bound to the value
-
-            For example, this would serialize Dates as ISO strings.
-
-                Date.prototype.toJSON = function (key) {
-                    function f(n) {
-                        // Format integers to have at least two digits.
-                        return n < 10 ? '0' + n : n;
-                    }
-
-                    return this.getUTCFullYear()   + '-' +
-                         f(this.getUTCMonth() + 1) + '-' +
-                         f(this.getUTCDate())      + 'T' +
-                         f(this.getUTCHours())     + ':' +
-                         f(this.getUTCMinutes())   + ':' +
-                         f(this.getUTCSeconds())   + 'Z';
-                };
-
-            You can provide an optional replacer method. It will be passed the
-            key and value of each member, with this bound to the containing
-            object. The value that is returned from your method will be
-            serialized. If your method returns undefined, then the member will
-            be excluded from the serialization.
-
-            If the replacer parameter is an array of strings, then it will be
-            used to select the members to be serialized. It filters the results
-            such that only members with keys listed in the replacer array are
-            stringified.
-
-            Values that do not have JSON representations, such as undefined or
-            functions, will not be serialized. Such values in objects will be
-            dropped; in arrays they will be replaced with null. You can use
-            a replacer function to replace those with JSON values.
-            JSON.stringify(undefined) returns undefined.
-
-            The optional space parameter produces a stringification of the
-            value that is filled with line breaks and indentation to make it
-            easier to read.
-
-            If the space parameter is a non-empty string, then that string will
-            be used for indentation. If the space parameter is a number, then
-            the indentation will be that many spaces.
-
-            Example:
-
-            text = JSON.stringify(['e', {pluribus: 'unum'}]);
-            // text is '["e",{"pluribus":"unum"}]'
+	USE YOUR OWN COPY. IT IS EXTREMELY UNWISE TO LOAD CODE FROM SERVERS YOU DO
+	NOT CONTROL.
 
 
-            text = JSON.stringify(['e', {pluribus: 'unum'}], null, '\t');
-            // text is '[\n\t"e",\n\t{\n\t\t"pluribus": "unum"\n\t}\n]'
+	This file creates a global JSON object containing two methods: stringify
+	and parse.
 
-            text = JSON.stringify([new Date()], function (key, value) {
-                return this[key] instanceof Date ?
-                    'Date(' + this[key] + ')' : value;
-            });
-            // text is '["Date(---current time---)"]'
+		JSON.stringify(value, replacer, space)
+			value       any JavaScript value, usually an object or array.
+
+			replacer    an optional parameter that determines how object
+						values are stringified for objects. It can be a
+						function or an array of strings.
+
+			space       an optional parameter that specifies the indentation
+						of nested structures. If it is omitted, the text will
+						be packed without extra whitespace. If it is a number,
+						it will specify the number of spaces to indent at each
+						level. If it is a string (such as '\t' or '&nbsp;'),
+						it contains the characters used to indent at each level.
+
+			This method produces a JSON text from a JavaScript value.
+
+			When an object value is found, if the object contains a toJSON
+			method, its toJSON method will be called and the result will be
+			stringified. A toJSON method does not serialize: it returns the
+			value represented by the name/value pair that should be serialized,
+			or undefined if nothing should be serialized. The toJSON method
+			will be passed the key associated with the value, and this will be
+			bound to the value
+
+			For example, this would serialize Dates as ISO strings.
+
+				Date.prototype.toJSON = function(key) {
+					function f(n) {
+						// Format integers to have at least two digits.
+						return n < 10 ? '0' + n : n;
+					}
+
+					return this.getUTCFullYear()   + '-' +
+						 f(this.getUTCMonth() + 1) + '-' +
+						 f(this.getUTCDate())      + 'T' +
+						 f(this.getUTCHours())     + ':' +
+						 f(this.getUTCMinutes())   + ':' +
+						 f(this.getUTCSeconds())   + 'Z';
+				};
+
+			You can provide an optional replacer method. It will be passed the
+			key and value of each member, with this bound to the containing
+			object. The value that is returned from your method will be
+			serialized. If your method returns undefined, then the member will
+			be excluded from the serialization.
+
+			If the replacer parameter is an array of strings, then it will be
+			used to select the members to be serialized. It filters the results
+			such that only members with keys listed in the replacer array are
+			stringified.
+
+			Values that do not have JSON representations, such as undefined or
+			functions, will not be serialized. Such values in objects will be
+			dropped; in arrays they will be replaced with null. You can use
+			a replacer function to replace those with JSON values.
+			JSON.stringify(undefined) returns undefined.
+
+			The optional space parameter produces a stringification of the
+			value that is filled with line breaks and indentation to make it
+			easier to read.
+
+			If the space parameter is a non-empty string, then that string will
+			be used for indentation. If the space parameter is a number, then
+			the indentation will be that many spaces.
+
+			Example:
+
+			text = JSON.stringify(['e', {pluribus: 'unum'}]);
+			// text is '["e",{"pluribus":"unum"}]'
 
 
-        JSON.parse(text, reviver)
-            This method parses a JSON text to produce an object or array.
-            It can throw a SyntaxError exception.
+			text = JSON.stringify(['e', {pluribus: 'unum'}], null, '\t');
+			// text is '[\n\t"e",\n\t{\n\t\t"pluribus": "unum"\n\t}\n]'
 
-            The optional reviver parameter is a function that can filter and
-            transform the results. It receives each of the keys and values,
-            and its return value is used instead of the original value.
-            If it returns what it received, then the structure is not modified.
-            If it returns undefined then the member is deleted.
+			text = JSON.stringify([new Date()], function(key, value) {
+				return this[key] instanceof Date ?
+					'Date(' + this[key] + ')' : value;
+			});
+			// text is '["Date(---current time---)"]'
 
-            Example:
 
-            // Parse the text. Values that look like ISO date strings will
-            // be converted to Date objects.
+		JSON.parse(text, reviver)
+			This method parses a JSON text to produce an object or array.
+			It can throw a SyntaxError exception.
 
-            myData = JSON.parse(text, function (key, value) {
-                var a;
-                if (typeof value === 'string') {
-                    a =
+			The optional reviver parameter is a function that can filter and
+			transform the results. It receives each of the keys and values,
+			and its return value is used instead of the original value.
+			If it returns what it received, then the structure is not modified.
+			If it returns undefined then the member is deleted.
+
+			Example:
+
+			// Parse the text. Values that look like ISO date strings will
+			// be converted to Date objects.
+
+			myData = JSON.parse(text, function(key, value) {
+				var a;
+				if (typeof value === 'string') {
+					a =
 /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2}(?:\.\d*)?)Z$/.exec(value);
-                    if (a) {
-                        return new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4],
-                            +a[5], +a[6]));
-                    }
-                }
-                return value;
-            });
+					if (a) {
+						return new Date(Date.UTC(+a[1], +a[2] - 1, +a[3], +a[4],
+							+a[5], +a[6]));
+					}
+				}
+				return value;
+			});
 
-            myData = JSON.parse('["Date(09/09/2001)"]', function (key, value) {
-                var d;
-                if (typeof value === 'string' &&
-                        value.slice(0, 5) === 'Date(' &&
-                        value.slice(-1) === ')') {
-                    d = new Date(value.slice(5, -1));
-                    if (d) {
-                        return d;
-                    }
-                }
-                return value;
-            });
+			myData = JSON.parse('["Date(09/09/2001)"]', function(key, value) {
+				var d;
+				if (typeof value === 'string' &&
+						value.slice(0, 5) === 'Date(' &&
+						value.slice(-1) === ')') {
+					d = new Date(value.slice(5, -1));
+					if (d) {
+						return d;
+					}
+				}
+				return value;
+			});
 
 
-    This is a reference implementation. You are free to copy, modify, or
-    redistribute.
+	This is a reference implementation. You are free to copy, modify, or
+	redistribute.
 */
 
 /*jslint evil: true, regexp: true */
 
 /*members "", "\b", "\t", "\n", "\f", "\r", "\"", JSON, "\\", apply,
-    call, charCodeAt, getUTCDate, getUTCFullYear, getUTCHours,
-    getUTCMinutes, getUTCMonth, getUTCSeconds, hasOwnProperty, join,
-    lastIndex, length, parse, prototype, push, replace, slice, stringify,
-    test, toJSON, toString, valueOf
+	call, charCodeAt, getUTCDate, getUTCFullYear, getUTCHours,
+	getUTCMinutes, getUTCMonth, getUTCSeconds, hasOwnProperty, join,
+	lastIndex, length, parse, prototype, push, replace, slice, stringify,
+	test, toJSON, toString, valueOf
 */
 
 
 // Create a JSON object only if one does not already exist. We create the
 // methods in a closure to avoid creating global variables.
 
-(function () {
-    'use strict';
+(function() {
+	'use strict';
 
-    var JSON = module.exports = {};
+	var JSON = module.exports = {};
 
-    function f(n) {
-        // Format integers to have at least two digits.
-        return n < 10 ? '0' + n : n;
-    }
+	function f(n) {
+		// Format integers to have at least two digits.
+		return n < 10 ? '0' + n : n;
+	}
 
-    if (typeof Date.prototype.toJSON !== 'function') {
+	if (typeof Date.prototype.toJSON !== 'function') {
 
-        Date.prototype.toJSON = function () {
+		Date.prototype.toJSON = function() {
 
-            return isFinite(this.valueOf())
-                ? this.getUTCFullYear()     + '-' +
-                    f(this.getUTCMonth() + 1) + '-' +
-                    f(this.getUTCDate())      + 'T' +
-                    f(this.getUTCHours())     + ':' +
-                    f(this.getUTCMinutes())   + ':' +
-                    f(this.getUTCSeconds())   + 'Z'
-                : null;
-        };
+			return isFinite(this.valueOf())
+				? this.getUTCFullYear()     + '-' +
+					f(this.getUTCMonth() + 1) + '-' +
+					f(this.getUTCDate())      + 'T' +
+					f(this.getUTCHours())     + ':' +
+					f(this.getUTCMinutes())   + ':' +
+					f(this.getUTCSeconds())   + 'Z'
+				: null;
+		};
 
-        String.prototype.toJSON      =
-            Number.prototype.toJSON  =
-            Boolean.prototype.toJSON = function () {
-                return this.valueOf();
-            };
-    }
+		String.prototype.toJSON      =
+			Number.prototype.toJSON  =
+			Boolean.prototype.toJSON = function() {
+				return this.valueOf();
+			};
+	}
 
-    var cx,
-        escapable,
-        gap,
-        indent,
-        meta,
-        rep;
+	var cx,
+		escapable,
+		gap,
+		indent,
+		meta,
+		rep;
 
 
-    function quote(string) {
+	function quote(string) {
 
 // If the string contains no control characters, no quote characters, and no
 // backslash characters, then we can safely slap some quotes around it.
 // Otherwise we must also replace the offending characters with safe escape
 // sequences.
 
-        escapable.lastIndex = 0;
-        return escapable.test(string) ? '"' + string.replace(escapable, function (a) {
-            var c = meta[a];
-            return typeof c === 'string'
-                ? c
-                : '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-        }) + '"' : '"' + string + '"';
-    }
+		escapable.lastIndex = 0;
+		return escapable.test(string) ? '"' + string.replace(escapable, function(a) {
+			var c = meta[a];
+			return typeof c === 'string'
+				? c
+				: '\\u' + ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+		}) + '"' : '"' + string + '"';
+	}
 
 
-    function str(key, holder) {
+	function str(key, holder) {
 
 // Produce a string from holder[key].
 
-        var i,          // The loop counter.
-            k,          // The member key.
-            v,          // The member value.
-            length,
-            mind = gap,
-            partial,
-            value = holder[key];
+		var i;
+		var          // The loop counter.
+			k,          // The member key.
+			v,          // The member value.
+			length,
+			mind = gap,
+			partial,
+			value = holder[key];
 
 // If the value has a toJSON method, call it to obtain a replacement value.
 
-        if (value && typeof value === 'object' &&
-                typeof value.toJSON === 'function') {
-            value = value.toJSON(key);
-        }
+		if (value && typeof value === 'object' &&
+				typeof value.toJSON === 'function') {
+			value = value.toJSON(key);
+		}
 
 // If we were called with a replacer function, then call the replacer to
 // obtain a replacement value.
 
-        if (typeof rep === 'function') {
-            value = rep.call(holder, key, value);
-        }
+		if (typeof rep === 'function') {
+			value = rep.call(holder, key, value);
+		}
 
 // What happens next depends on the value's type.
 
-        switch (typeof value) {
-        case 'string':
-            return quote(value);
+		switch (typeof value) {
+		case 'string':
+			return quote(value);
 
-        case 'number':
+		case 'number':
 
 // JSON numbers must be finite. Encode non-finite numbers as null.
 
-            return isFinite(value) ? String(value) : 'null';
+			return isFinite(value) ? String(value) : 'null';
 
-        case 'boolean':
-        case 'null':
+		case 'boolean':
+		case 'null':
 
 // If the value is a boolean or null, convert it to a string. Note:
 // typeof null does not produce 'null'. The case is included here in
 // the remote chance that this gets fixed someday.
 
-            return String(value);
+			return String(value);
 
 // If the type is 'object', we might be dealing with an object or an array or
 // null.
 
-        case 'object':
+		case 'object':
 
 // Due to a specification blunder in ECMAScript, typeof null is 'object',
 // so watch out for that case.
 
-            if (!value) {
-                return 'null';
-            }
+			if (!value) {
+				return 'null';
+			}
 
 // Make an array to hold the partial results of stringifying this object value.
 
-            gap += indent;
-            partial = [];
+			gap += indent;
+			partial = [];
 
 // Is the value an array?
 
-            if (Object.prototype.toString.apply(value) === '[object Array]') {
+			if (Object.prototype.toString.apply(value) === '[object Array]') {
 
 // The value is an array. Stringify every element. Use null as a placeholder
 // for non-JSON values.
 
-                length = value.length;
-                for (i = 0; i < length; i += 1) {
-                    partial[i] = str(i, value) || 'null';
-                }
+				length = value.length;
+				for (i = 0; i < length; i += 1) {
+					partial[i] = str(i, value) || 'null';
+				}
 
 // Join all of the elements together, separated with commas, and wrap them in
 // brackets.
 
-                v = partial.length === 0
-                    ? '[]'
-                    : gap
-                    ? '[\n' + gap + partial.join(',\n' + gap) + '\n' + mind + ']'
-                    : '[' + partial.join(',') + ']';
-                gap = mind;
-                return v;
-            }
+				v = partial.length === 0
+					? '[]'
+					: gap
+					? '[\n' + gap + partial.join(',\n' + gap) + '\n' + mind + ']'
+					: '[' + partial.join(',') + ']';
+				gap = mind;
+				return v;
+			}
 
 // If the replacer is an array, use it to select the members to be stringified.
 
-            if (rep && typeof rep === 'object') {
-                length = rep.length;
-                for (i = 0; i < length; i += 1) {
-                    if (typeof rep[i] === 'string') {
-                        k = rep[i];
-                        v = str(k, value);
-                        if (v) {
-                            partial.push(quote(k) + (gap ? ': ' : ':') + v);
-                        }
-                    }
-                }
-            } else {
+			if (rep && typeof rep === 'object') {
+				length = rep.length;
+				for (i = 0; i < length; i += 1) {
+					if (typeof rep[i] === 'string') {
+						k = rep[i];
+						v = str(k, value);
+						if (v) {
+							partial.push(quote(k) + (gap ? ': ' : ':') + v);
+						}
+					}
+				}
+			} else {
 
 // Otherwise, iterate through all of the keys in the object.
 
-                for (k in value) {
-                    if (Object.prototype.hasOwnProperty.call(value, k)) {
-                        v = str(k, value);
-                        if (v) {
-                            partial.push(quote(k) + (gap ? ': ' : ':') + v);
-                        }
-                    }
-                }
-            }
+				for (k in value) {
+					if (Object.prototype.hasOwnProperty.call(value, k)) {
+						v = str(k, value);
+						if (v) {
+							partial.push(quote(k) + (gap ? ': ' : ':') + v);
+						}
+					}
+				}
+			}
 
 // Join all of the member texts together, separated with commas,
 // and wrap them in braces.
 
-            v = partial.length === 0
-                ? '{}'
-                : gap
-                ? '{\n' + gap + partial.join(',\n' + gap) + '\n' + mind + '}'
-                : '{' + partial.join(',') + '}';
-            gap = mind;
-            return v;
-        }
-    }
+			v = partial.length === 0
+				? '{}'
+				: gap
+				? '{\n' + gap + partial.join(',\n' + gap) + '\n' + mind + '}'
+				: '{' + partial.join(',') + '}';
+			gap = mind;
+			return v;
+		}
+	}
 
 // If the JSON object does not yet have a stringify method, give it one.
 
-    if (typeof JSON.stringify !== 'function') {
-        escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
-        meta = {    // table of character substitutions
-            '\b': '\\b',
-            '\t': '\\t',
-            '\n': '\\n',
-            '\f': '\\f',
-            '\r': '\\r',
-            '"' : '\\"',
-            '\\': '\\\\'
-        };
-        JSON.stringify = function (value, replacer, space) {
+	if (typeof JSON.stringify !== 'function') {
+		escapable = /[\\\"\x00-\x1f\x7f-\x9f\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
+		meta = {    // table of character substitutions
+			'\b': '\\b',
+			'\t': '\\t',
+			'\n': '\\n',
+			'\f': '\\f',
+			'\r': '\\r',
+			'"' : '\\"',
+			'\\': '\\\\'
+		};
+		JSON.stringify = function(value, replacer, space) {
 
 // The stringify method takes a value and an optional replacer, and an optional
 // space parameter, and returns a JSON text. The replacer can be a function
@@ -1908,87 +1909,89 @@ module.exports = parse && stringify
 // A default replacer method can be provided. Use of the space parameter can
 // produce text that is more easily readable.
 
-            var i;
-            gap = '';
-            indent = '';
+			var i;
+			gap = '';
+			indent = '';
 
 // If the space parameter is a number, make an indent string containing that
 // many spaces.
 
-            if (typeof space === 'number') {
-                for (i = 0; i < space; i += 1) {
-                    indent += ' ';
-                }
+			if (typeof space === 'number') {
+				for (i = 0; i < space; i += 1) {
+					indent += ' ';
+				}
 
 // If the space parameter is a string, it will be used as the indent string.
 
-            } else if (typeof space === 'string') {
-                indent = space;
-            }
+			} else if (typeof space === 'string') {
+				indent = space;
+			}
 
 // If there is a replacer, it must be a function or an array.
 // Otherwise, throw an error.
 
-            rep = replacer;
-            if (replacer && typeof replacer !== 'function' &&
-                    (typeof replacer !== 'object' ||
-                    typeof replacer.length !== 'number')) {
-                throw new Error('JSON.stringify');
-            }
+			rep = replacer;
+			if (replacer && typeof replacer !== 'function' &&
+					(typeof replacer !== 'object' ||
+					typeof replacer.length !== 'number')) {
+				throw new Error('JSON.stringify');
+			}
 
 // Make a fake root object containing our value under the key of ''.
 // Return the result of stringifying the value.
 
-            return str('', {'': value});
-        };
-    }
+			return str('', {'': value});
+		};
+	}
 
 
 // If the JSON object does not yet have a parse method, give it one.
 
-    if (typeof JSON.parse !== 'function') {
-        cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
-        JSON.parse = function (text, reviver) {
+	if (typeof JSON.parse !== 'function') {
+		cx = /[\u0000\u00ad\u0600-\u0604\u070f\u17b4\u17b5\u200c-\u200f\u2028-\u202f\u2060-\u206f\ufeff\ufff0-\uffff]/g;
+		JSON.parse = function(text, reviver) {
 
 // The parse method takes a text and an optional reviver function, and returns
 // a JavaScript value if the text is a valid JSON text.
 
-            var j;
+			var j;
 
-            function walk(holder, key) {
+			function walk(holder, key) {
 
 // The walk method is used to recursively walk the resulting structure so
 // that modifications can be made.
 
-                var k, v, value = holder[key];
-                if (value && typeof value === 'object') {
-                    for (k in value) {
-                        if (Object.prototype.hasOwnProperty.call(value, k)) {
-                            v = walk(value, k);
-                            if (v !== undefined) {
-                                value[k] = v;
-                            } else {
-                                delete value[k];
-                            }
-                        }
-                    }
-                }
-                return reviver.call(holder, key, value);
-            }
+				var k;
+				var v;
+				var value = holder[key];
+				if (value && typeof value === 'object') {
+					for (k in value) {
+						if (Object.prototype.hasOwnProperty.call(value, k)) {
+							v = walk(value, k);
+							if (v !== undefined) {
+								value[k] = v;
+							} else {
+								delete value[k];
+							}
+						}
+					}
+				}
+				return reviver.call(holder, key, value);
+			}
 
 
 // Parsing happens in four stages. In the first stage, we replace certain
 // Unicode characters with escape sequences. JavaScript handles many characters
 // incorrectly, either silently deleting them, or treating them as line endings.
 
-            text = String(text);
-            cx.lastIndex = 0;
-            if (cx.test(text)) {
-                text = text.replace(cx, function (a) {
-                    return '\\u' +
-                        ('0000' + a.charCodeAt(0).toString(16)).slice(-4);
-                });
-            }
+			text = String(text);
+			cx.lastIndex = 0;
+			if (cx.test(text)) {
+				text = text.replace(cx, function(a) {
+					return '\\u' +
+						('0000' + a.charCodeAt(0).toString(16)).slice(-4);
+				});
+			}
 
 // In the second stage, we run the text against regular expressions that look
 // for non-JSON patterns. We are especially concerned with '()' and 'new'
@@ -2003,31 +2006,31 @@ module.exports = parse && stringify
 // we look to see that the remaining characters are only whitespace or ']' or
 // ',' or ':' or '{' or '}'. If that is so, then the text is safe for eval.
 
-            if (/^[\],:{}\s]*$/
-                    .test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
-                        .replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
-                        .replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
+			if (/^[\],:{}\s]*$/
+					.test(text.replace(/\\(?:["\\\/bfnrt]|u[0-9a-fA-F]{4})/g, '@')
+						.replace(/"[^"\\\n\r]*"|true|false|null|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?/g, ']')
+						.replace(/(?:^|:|,)(?:\s*\[)+/g, ''))) {
 
 // In the third stage we use the eval function to compile the text into a
 // JavaScript structure. The '{' operator is subject to a syntactic ambiguity
 // in JavaScript: it can begin a block or an object literal. We wrap the text
 // in parens to eliminate the ambiguity.
 
-                j = eval('(' + text + ')');
+				j = eval('(' + text + ')');
 
 // In the optional fourth stage, we recursively walk the new structure, passing
 // each name/value pair to a reviver function for possible transformation.
 
-                return typeof reviver === 'function'
-                    ? walk({'': j}, '')
-                    : j;
-            }
+				return typeof reviver === 'function'
+					? walk({'': j}, '')
+					: j;
+			}
 
 // If the text is not JSON parseable, then a SyntaxError is thrown.
 
-            throw new SyntaxError('JSON.parse');
-        };
-    }
+			throw new SyntaxError('JSON.parse');
+		};
+	}
 }());
 
 }, {}],
@@ -2073,10 +2076,10 @@ var regexp = /[a-z0-9][a-z0-9\-]*[a-z0-9]\.[a-z\.]{2,6}$/i;
  * @api public
  */
 
-function domain(url){
-  var host = parse(url).hostname;
-  var match = host.match(regexp);
-  return match ? match[0] : '';
+function domain(url) {
+var host = parse(url).hostname;
+var match = host.match(regexp);
+return match ? match[0] : '';
 };
 
 }, {"url":26}],
@@ -2090,20 +2093,20 @@ function domain(url){
  * @api public
  */
 
-exports.parse = function(url){
-  var a = document.createElement('a');
-  a.href = url;
-  return {
-    href: a.href,
-    host: a.host,
-    port: a.port,
-    hash: a.hash,
-    hostname: a.hostname,
-    pathname: a.pathname,
-    protocol: a.protocol,
-    search: a.search,
-    query: a.search.slice(1)
-  }
+exports.parse = function(url) {
+var a = document.createElement('a');
+a.href = url;
+return {
+	href: a.href,
+	host: a.host,
+	port: a.port,
+	hash: a.hash,
+	hostname: a.hostname,
+	pathname: a.pathname,
+	protocol: a.protocol,
+	search: a.search,
+	query: a.search.slice(1)
+}
 };
 
 /**
@@ -2114,10 +2117,10 @@ exports.parse = function(url){
  * @api public
  */
 
-exports.isAbsolute = function(url){
-  if (0 == url.indexOf('//')) return true;
-  if (~url.indexOf('://')) return true;
-  return false;
+exports.isAbsolute = function(url) {
+if (0 == url.indexOf('//')) return true;
+if (~url.indexOf('://')) return true;
+return false;
 };
 
 /**
@@ -2128,8 +2131,8 @@ exports.isAbsolute = function(url){
  * @api public
  */
 
-exports.isRelative = function(url){
-  return ! exports.isAbsolute(url);
+exports.isRelative = function(url) {
+return ! exports.isAbsolute(url);
 };
 
 /**
@@ -2140,11 +2143,11 @@ exports.isRelative = function(url){
  * @api public
  */
 
-exports.isCrossDomain = function(url){
-  url = exports.parse(url);
-  return url.hostname != location.hostname
-    || url.port != location.port
-    || url.protocol != location.protocol;
+exports.isCrossDomain = function(url) {
+url = exports.parse(url);
+return url.hostname != location.hostname
+	|| url.port != location.port
+	|| url.protocol != location.protocol;
 };
 }, {}],
 7: [function(require, module, exports) {
@@ -2160,13 +2163,13 @@ var bind = require('bind');
  */
 
 Group.defaults = {
-  persist: true,
-  cookie: {
-    key: 'ajs_group_id'
-  },
-  localStorage: {
-    key: 'ajs_group_properties'
-  }
+persist: true,
+cookie: {
+	key: 'ajs_group_id'
+},
+localStorage: {
+	key: 'ajs_group_properties'
+}
 };
 
 
@@ -2177,9 +2180,9 @@ Group.defaults = {
  */
 
 function Group (options) {
-  this.defaults = Group.defaults;
-  this.debug = debug;
-  Entity.call(this, options);
+this.defaults = Group.defaults;
+this.debug = debug;
+Entity.call(this, options);
 }
 
 
@@ -2227,8 +2230,8 @@ module.exports = Entity;
  * @param {Object} options
  */
 
-function Entity(options){
-  this.options(options);
+function Entity(options) {
+this.options(options);
 }
 
 
@@ -2241,11 +2244,11 @@ function Entity(options){
  *   @property {Boolean} persist (default: `true`)
  */
 
-Entity.prototype.options = function (options) {
-  if (arguments.length === 0) return this._options;
-  options || (options = {});
-  defaults(options, this.defaults || {});
-  this._options = options;
+Entity.prototype.options = function(options) {
+if (arguments.length === 0) return this._options;
+options || (options = {});
+defaults(options, this.defaults || {});
+this._options = options;
 };
 
 
@@ -2255,11 +2258,11 @@ Entity.prototype.options = function (options) {
  * @param {String} id
  */
 
-Entity.prototype.id = function (id) {
-  switch (arguments.length) {
-    case 0: return this._getId();
-    case 1: return this._setId(id);
-  }
+Entity.prototype.id = function(id) {
+switch (arguments.length) {
+	case 0: return this._getId();
+	case 1: return this._setId(id);
+}
 };
 
 
@@ -2269,11 +2272,11 @@ Entity.prototype.id = function (id) {
  * @return {String}
  */
 
-Entity.prototype._getId = function () {
-  var ret = this._options.persist
-    ? cookie.get(this._options.cookie.key)
-    : this._id;
-  return ret === undefined ? null : ret;
+Entity.prototype._getId = function() {
+var ret = this._options.persist
+	? cookie.get(this._options.cookie.key)
+	: this._id;
+return ret === undefined ? null : ret;
 };
 
 
@@ -2283,12 +2286,12 @@ Entity.prototype._getId = function () {
  * @param {String} id
  */
 
-Entity.prototype._setId = function (id) {
-  if (this._options.persist) {
-    cookie.set(this._options.cookie.key, id);
-  } else {
-    this._id = id;
-  }
+Entity.prototype._setId = function(id) {
+if (this._options.persist) {
+	cookie.set(this._options.cookie.key, id);
+} else {
+	this._id = id;
+}
 };
 
 
@@ -2301,11 +2304,11 @@ Entity.prototype._setId = function (id) {
  */
 
 Entity.prototype.properties =
-Entity.prototype.traits = function (traits) {
-  switch (arguments.length) {
-    case 0: return this._getTraits();
-    case 1: return this._setTraits(traits);
-  }
+Entity.prototype.traits = function(traits) {
+switch (arguments.length) {
+	case 0: return this._getTraits();
+	case 1: return this._setTraits(traits);
+}
 };
 
 
@@ -2316,11 +2319,11 @@ Entity.prototype.traits = function (traits) {
  * @return {Object}
  */
 
-Entity.prototype._getTraits = function () {
-  var ret = this._options.persist
-    ? store.get(this._options.localStorage.key)
-    : this._traits;
-  return ret ? traverse(clone(ret)) : {};
+Entity.prototype._getTraits = function() {
+var ret = this._options.persist
+	? store.get(this._options.localStorage.key)
+	: this._traits;
+return ret ? traverse(clone(ret)) : {};
 };
 
 
@@ -2330,13 +2333,13 @@ Entity.prototype._getTraits = function () {
  * @param {Object} traits
  */
 
-Entity.prototype._setTraits = function (traits) {
-  traits || (traits = {});
-  if (this._options.persist) {
-    store.set(this._options.localStorage.key, traits);
-  } else {
-    this._traits = traits;
-  }
+Entity.prototype._setTraits = function(traits) {
+traits || (traits = {});
+if (this._options.persist) {
+	store.set(this._options.localStorage.key, traits);
+} else {
+	this._traits = traits;
+}
 };
 
 
@@ -2348,14 +2351,14 @@ Entity.prototype._setTraits = function (traits) {
  * @param {Object} traits
  */
 
-Entity.prototype.identify = function (id, traits) {
-  traits || (traits = {});
-  var current = this.id();
-  if (current === null || current === id) traits = extend(this.traits(), traits);
-  if (id) this.id(id);
-  this.debug('identify %o, %o', id, traits);
-  this.traits(traits);
-  this.save();
+Entity.prototype.identify = function(id, traits) {
+traits || (traits = {});
+var current = this.id();
+if (current === null || current === id) traits = extend(this.traits(), traits);
+if (id) this.id(id);
+this.debug('identify %o, %o', id, traits);
+this.traits(traits);
+this.save();
 };
 
 
@@ -2365,11 +2368,11 @@ Entity.prototype.identify = function (id, traits) {
  * @return {Boolean}
  */
 
-Entity.prototype.save = function () {
-  if (!this._options.persist) return false;
-  cookie.set(this._options.cookie.key, this.id());
-  store.set(this._options.localStorage.key, this.traits());
-  return true;
+Entity.prototype.save = function() {
+if (!this._options.persist) return false;
+cookie.set(this._options.cookie.key, this.id());
+store.set(this._options.localStorage.key, this.traits());
+return true;
 };
 
 
@@ -2377,11 +2380,11 @@ Entity.prototype.save = function () {
  * Log the entity out, reseting `id` and `traits` to defaults.
  */
 
-Entity.prototype.logout = function () {
-  this.id(null);
-  this.traits({});
-  cookie.remove(this._options.cookie.key);
-  store.remove(this._options.localStorage.key);
+Entity.prototype.logout = function() {
+this.id(null);
+this.traits({});
+cookie.remove(this._options.cookie.key);
+store.remove(this._options.localStorage.key);
 };
 
 
@@ -2389,9 +2392,9 @@ Entity.prototype.logout = function () {
  * Reset all entity state, logging out and returning options to defaults.
  */
 
-Entity.prototype.reset = function () {
-  this.logout();
-  this.options({});
+Entity.prototype.reset = function() {
+this.logout();
+this.options({});
 };
 
 
@@ -2399,9 +2402,9 @@ Entity.prototype.reset = function () {
  * Load saved entity `id` or `traits` from storage.
  */
 
-Entity.prototype.load = function () {
-  this.id(cookie.get(this._options.cookie.key));
-  this.traits(store.get(this._options.localStorage.key));
+Entity.prototype.load = function() {
+this.id(cookie.get(this._options.cookie.key));
+this.traits(store.get(this._options.localStorage.key));
 };
 
 
@@ -2420,7 +2423,7 @@ var store = require('store.js');
  */
 
 function Store (options) {
-  this.options(options);
+this.options(options);
 }
 
 
@@ -2431,14 +2434,14 @@ function Store (options) {
  *   @field {Boolean} enabled (true)
  */
 
-Store.prototype.options = function (options) {
-  if (arguments.length === 0) return this._options;
+Store.prototype.options = function(options) {
+if (arguments.length === 0) return this._options;
 
-  options = options || {};
-  defaults(options, { enabled : true });
+options = options || {};
+defaults(options, { enabled : true });
 
-  this.enabled  = options.enabled && store.enabled;
-  this._options = options;
+this.enabled  = options.enabled && store.enabled;
+this._options = options;
 };
 
 
@@ -2449,9 +2452,9 @@ Store.prototype.options = function (options) {
  * @param {Object} value
  */
 
-Store.prototype.set = function (key, value) {
-  if (!this.enabled) return false;
-  return store.set(key, value);
+Store.prototype.set = function(key, value) {
+if (!this.enabled) return false;
+return store.set(key, value);
 };
 
 
@@ -2462,9 +2465,9 @@ Store.prototype.set = function (key, value) {
  * @return {Object}
  */
 
-Store.prototype.get = function (key) {
-  if (!this.enabled) return null;
-  return store.get(key);
+Store.prototype.get = function(key) {
+if (!this.enabled) return null;
+return store.get(key);
 };
 
 
@@ -2474,9 +2477,9 @@ Store.prototype.get = function (key) {
  * @param {String} key
  */
 
-Store.prototype.remove = function (key) {
-  if (!this.enabled) return false;
-  return store.remove(key);
+Store.prototype.remove = function(key) {
+if (!this.enabled) return false;
+return store.remove(key);
 };
 
 
@@ -2496,8 +2499,8 @@ module.exports.Store = Store;
 }, {"bind":11,"defaults":16,"store.js":41}],
 41: [function(require, module, exports) {
 var json             = require('json')
-  , store            = {}
-  , win              = window
+, store            = {}
+, win              = window
 	,	doc              = win.document
 	,	localStorageName = 'localStorage'
 	,	namespace        = '__storejs__'
@@ -2654,9 +2657,9 @@ var isodate = require('isodate');
 var each;
 
 try {
-  each = require('each');
+each = require('each');
 } catch (err) {
-  each = require('each-component');
+each = require('each-component');
 }
 
 /**
@@ -2674,11 +2677,11 @@ module.exports = traverse;
  */
 
 function traverse (input, strict) {
-  if (strict === undefined) strict = true;
+if (strict === undefined) strict = true;
 
-  if (is.object(input)) return object(input, strict);
-  if (is.array(input)) return array(input, strict);
-  return input;
+if (is.object(input)) return object(input, strict);
+if (is.array(input)) return array(input, strict);
+return input;
 }
 
 /**
@@ -2690,14 +2693,14 @@ function traverse (input, strict) {
  */
 
 function object (obj, strict) {
-  each(obj, function (key, val) {
-    if (isodate.is(val, strict)) {
-      obj[key] = isodate.parse(val);
-    } else if (is.object(val) || is.array(val)) {
-      traverse(val, strict);
-    }
-  });
-  return obj;
+each(obj, function(key, val) {
+	if (isodate.is(val, strict)) {
+	  obj[key] = isodate.parse(val);
+	} else if (is.object(val) || is.array(val)) {
+	  traverse(val, strict);
+	}
+});
+return obj;
 }
 
 /**
@@ -2709,14 +2712,14 @@ function object (obj, strict) {
  */
 
 function array (arr, strict) {
-  each(arr, function (val, x) {
-    if (is.object(val)) {
-      traverse(val, strict);
-    } else if (isodate.is(val, strict)) {
-      arr[x] = isodate.parse(val);
-    }
-  });
-  return arr;
+each(arr, function(val, x) {
+	if (is.object(val)) {
+	  traverse(val, strict);
+	} else if (isodate.is(val, strict)) {
+	  arr[x] = isodate.parse(val);
+	}
+});
+return arr;
 }
 
 }, {"is":42,"isodate":43,"each":5}],
@@ -2725,9 +2728,9 @@ function array (arr, strict) {
 var isEmpty = require('is-empty');
 
 try {
-  var typeOf = require('type');
+var typeOf = require('type');
 } catch (e) {
-  var typeOf = require('component-type');
+var typeOf = require('component-type');
 }
 
 
@@ -2736,18 +2739,18 @@ try {
  */
 
 var types = [
-  'arguments',
-  'array',
-  'boolean',
-  'date',
-  'element',
-  'function',
-  'null',
-  'number',
-  'object',
-  'regexp',
-  'string',
-  'undefined'
+'arguments',
+'array',
+'boolean',
+'date',
+'element',
+'function',
+'null',
+'number',
+'object',
+'regexp',
+'string',
+'undefined'
 ];
 
 
@@ -2779,8 +2782,8 @@ exports.empty = isEmpty;
  * Expose `nan` check.
  */
 
-exports.nan = function (val) {
-  return exports.number(val) && val != val;
+exports.nan = function(val) {
+return exports.number(val) && val != val;
 };
 
 
@@ -2792,9 +2795,9 @@ exports.nan = function (val) {
  */
 
 function generate (type) {
-  return function (value) {
-    return type === typeOf(value);
-  };
+return function(value) {
+	return type === typeOf(value);
+};
 }
 }, {"is-empty":44,"type":35,"component-type":35}],
 44: [function(require, module, exports) {
@@ -2821,11 +2824,11 @@ var has = Object.prototype.hasOwnProperty;
  */
 
 function isEmpty (val) {
-  if (null == val) return true;
-  if ('number' == typeof val) return 0 === val;
-  if (undefined !== val.length) return 0 === val.length;
-  for (var key in val) if (has.call(val, key)) return false;
-  return true;
+if (null == val) return true;
+if ('number' == typeof val) return 0 === val;
+if (undefined !== val.length) return 0 === val.length;
+for (var key in val) if (has.call(val, key)) return false;
+return true;
 }
 }, {}],
 43: [function(require, module, exports) {
@@ -2848,41 +2851,41 @@ var matcher = /^(\d{4})(?:-?(\d{2})(?:-?(\d{2}))?)?(?:([ T])(\d{2}):?(\d{2})(?::
  * @return {Date}
  */
 
-exports.parse = function (iso) {
-  var numericKeys = [1, 5, 6, 7, 11, 12];
-  var arr = matcher.exec(iso);
-  var offset = 0;
+exports.parse = function(iso) {
+var numericKeys = [1, 5, 6, 7, 11, 12];
+var arr = matcher.exec(iso);
+var offset = 0;
 
-  // fallback to native parsing
-  if (!arr) return new Date(iso);
+// fallback to native parsing
+if (!arr) return new Date(iso);
 
-  // remove undefined values
-  for (var i = 0, val; val = numericKeys[i]; i++) {
-    arr[val] = parseInt(arr[val], 10) || 0;
-  }
+// remove undefined values
+for (var i = 0, val; val = numericKeys[i]; i++) {
+	arr[val] = parseInt(arr[val], 10) || 0;
+}
 
-  // allow undefined days and months
-  arr[2] = parseInt(arr[2], 10) || 1;
-  arr[3] = parseInt(arr[3], 10) || 1;
+// allow undefined days and months
+arr[2] = parseInt(arr[2], 10) || 1;
+arr[3] = parseInt(arr[3], 10) || 1;
 
-  // month is 0-11
-  arr[2]--;
+// month is 0-11
+arr[2]--;
 
-  // allow abitrary sub-second precision
-  arr[8] = arr[8]
-    ? (arr[8] + '00').substring(0, 3)
-    : 0;
+// allow abitrary sub-second precision
+arr[8] = arr[8]
+	? (arr[8] + '00').substring(0, 3)
+	: 0;
 
-  // apply timezone if one exists
-  if (arr[4] == ' ') {
-    offset = new Date().getTimezoneOffset();
-  } else if (arr[9] !== 'Z' && arr[10]) {
-    offset = arr[11] * 60 + arr[12];
-    if ('+' == arr[10]) offset = 0 - offset;
-  }
+// apply timezone if one exists
+if (arr[4] == ' ') {
+	offset = new Date().getTimezoneOffset();
+} else if (arr[9] !== 'Z' && arr[10]) {
+	offset = arr[11] * 60 + arr[12];
+	if ('+' == arr[10]) offset = 0 - offset;
+}
 
-  var millis = Date.UTC(arr[1], arr[2], arr[3], arr[5], arr[6] + offset, arr[7], arr[8]);
-  return new Date(millis);
+var millis = Date.UTC(arr[1], arr[2], arr[3], arr[5], arr[6] + offset, arr[7], arr[8]);
+return new Date(millis);
 };
 
 
@@ -2895,9 +2898,9 @@ exports.parse = function (iso) {
  * @return {Boolean}
  */
 
-exports.is = function (string, strict) {
-  if (strict && false === /^\d{4}-\d{2}-\d{2}/.test(string)) return false;
-  return matcher.test(string);
+exports.is = function(string, strict) {
+if (strict && false === /^\d{4}-\d{2}-\d{2}/.test(string)) return false;
+return matcher.test(string);
 };
 }, {}],
 5: [function(require, module, exports) {
@@ -2922,16 +2925,16 @@ var has = Object.prototype.hasOwnProperty;
  * @api public
  */
 
-module.exports = function(obj, fn){
-  switch (type(obj)) {
-    case 'array':
-      return array(obj, fn);
-    case 'object':
-      if ('number' == typeof obj.length) return array(obj, fn);
-      return object(obj, fn);
-    case 'string':
-      return string(obj, fn);
-  }
+module.exports = function(obj, fn) {
+switch (type(obj)) {
+	case 'array':
+	  return array(obj, fn);
+	case 'object':
+	  if ('number' == typeof obj.length) return array(obj, fn);
+	  return object(obj, fn);
+	case 'string':
+	  return string(obj, fn);
+}
 };
 
 /**
@@ -2943,9 +2946,9 @@ module.exports = function(obj, fn){
  */
 
 function string(obj, fn) {
-  for (var i = 0; i < obj.length; ++i) {
-    fn(obj.charAt(i), i);
-  }
+for (var i = 0; i < obj.length; ++i) {
+	fn(obj.charAt(i), i);
+}
 }
 
 /**
@@ -2957,11 +2960,11 @@ function string(obj, fn) {
  */
 
 function object(obj, fn) {
-  for (var key in obj) {
-    if (has.call(obj, key)) {
-      fn(key, obj[key]);
-    }
-  }
+for (var key in obj) {
+	if (has.call(obj, key)) {
+	  fn(key, obj[key]);
+	}
+}
 }
 
 /**
@@ -2973,35 +2976,35 @@ function object(obj, fn) {
  */
 
 function array(obj, fn) {
-  for (var i = 0; i < obj.length; ++i) {
-    fn(obj[i], i);
-  }
+for (var i = 0; i < obj.length; ++i) {
+	fn(obj[i], i);
+}
 }
 }, {"type":35}],
 40: [function(require, module, exports) {
 
 module.exports = function extend (object) {
-    // Takes an unlimited number of extenders.
-    var args = Array.prototype.slice.call(arguments, 1);
+	// Takes an unlimited number of extenders.
+	var args = Array.prototype.slice.call(arguments, 1);
 
-    // For each extender, copy their properties on our object.
-    for (var i = 0, source; source = args[i]; i++) {
-        if (!source) continue;
-        for (var property in source) {
-            object[property] = source[property];
-        }
-    }
+	// For each extender, copy their properties on our object.
+	for (var i = 0, source; source = args[i]; i++) {
+		if (!source) continue;
+		for (var property in source) {
+			object[property] = source[property];
+		}
+	}
 
-    return object;
+	return object;
 };
 }, {}],
 38: [function(require, module, exports) {
 
-module.exports = function(a, b){
-  var fn = function(){};
-  fn.prototype = b.prototype;
-  a.prototype = new fn;
-  a.prototype.constructor = a;
+module.exports = function(a, b) {
+var fn = function(){};
+fn.prototype = b.prototype;
+a.prototype = new fn;
+a.prototype.constructor = a;
 };
 }, {}],
 9: [function(require, module, exports) {
@@ -3018,14 +3021,14 @@ var cookie = require('./cookie');
  */
 
 User.defaults = {
-  persist: true,
-  cookie: {
-    key: 'ajs_user_id',
-    oldKey: 'ajs_user'
-  },
-  localStorage: {
-    key: 'ajs_user_traits'
-  }
+persist: true,
+cookie: {
+	key: 'ajs_user_id',
+	oldKey: 'ajs_user'
+},
+localStorage: {
+	key: 'ajs_user_traits'
+}
 };
 
 
@@ -3036,9 +3039,9 @@ User.defaults = {
  */
 
 function User (options) {
-  this.defaults = User.defaults;
-  this.debug = debug;
-  Entity.call(this, options);
+this.defaults = User.defaults;
+this.debug = debug;
+Entity.call(this, options);
 }
 
 
@@ -3053,9 +3056,9 @@ inherit(User, Entity);
  * Load saved user `id` or `traits` from storage.
  */
 
-User.prototype.load = function () {
-  if (this._loadOldCookie()) return;
-  Entity.prototype.load.call(this);
+User.prototype.load = function() {
+if (this._loadOldCookie()) return;
+Entity.prototype.load.call(this);
 };
 
 
@@ -3066,14 +3069,14 @@ User.prototype.load = function () {
  * @api private
  */
 
-User.prototype._loadOldCookie = function () {
-  var user = cookie.get(this._options.cookie.oldKey);
-  if (!user) return false;
+User.prototype._loadOldCookie = function() {
+var user = cookie.get(this._options.cookie.oldKey);
+if (!user) return false;
 
-  this.id(user.id);
-  this.traits(user.traits);
-  cookie.remove(this._options.cookie.oldKey);
-  return true;
+this.id(user.id);
+this.traits(user.traits);
+cookie.remove(this._options.cookie.oldKey);
+return true;
 };
 
 
@@ -3094,15 +3097,15 @@ module.exports.User = User;
 10: [function(require, module, exports) {
 
 module.exports = function after (times, func) {
-  // After 0, really?
-  if (times <= 0) return func();
+// After 0, really?
+if (times <= 0) return func();
 
-  // That's more like it.
-  return function() {
-    if (--times < 1) {
-      return func.apply(this, arguments);
-    }
-  };
+// That's more like it.
+return function() {
+	if (--times < 1) {
+	  return func.apply(this, arguments);
+	}
+};
 };
 }, {}],
 12: [function(require, module, exports) {
@@ -3123,7 +3126,7 @@ module.exports = callback;
  */
 
 function callback (fn) {
-  if ('function' === typeof fn) fn();
+if ('function' === typeof fn) fn();
 }
 
 
@@ -3135,10 +3138,10 @@ function callback (fn) {
  * @param {Number} wait (optional)
  */
 
-callback.async = function (fn, wait) {
-  if ('function' !== typeof fn) return;
-  if (!wait) return next(fn);
-  setTimeout(fn, wait);
+callback.async = function(fn, wait) {
+if ('function' !== typeof fn) return;
+if (!wait) return next(fn);
+setTimeout(fn, wait);
 };
 
 
@@ -3153,44 +3156,44 @@ callback.sync = callback;
 "use strict"
 
 if (typeof setImmediate == 'function') {
-  module.exports = function(f){ setImmediate(f) }
+module.exports = function(f){ setImmediate(f) }
 }
 // legacy node.js
 else if (typeof process != 'undefined' && typeof process.nextTick == 'function') {
-  module.exports = process.nextTick
+module.exports = process.nextTick
 }
 // fallback for other environments / postMessage behaves badly on IE8
 else if (typeof window == 'undefined' || window.ActiveXObject || !window.postMessage) {
-  module.exports = function(f){ setTimeout(f) };
+module.exports = function(f){ setTimeout(f) };
 } else {
-  var q = [];
+var q = [];
 
-  window.addEventListener('message', function(){
-    var i = 0;
-    while (i < q.length) {
-      try { q[i++](); }
-      catch (e) {
-        q = q.slice(i);
-        window.postMessage('tic!', '*');
-        throw e;
-      }
-    }
-    q.length = 0;
-  }, true);
+window.addEventListener('message', function() {
+	var i = 0;
+	while (i < q.length) {
+	  try { q[i++](); }
+	  catch (e) {
+		q = q.slice(i);
+		window.postMessage('tic!', '*');
+		throw e;
+	  }
+	}
+	q.length = 0;
+}, true);
 
-  module.exports = function(fn){
-    if (!q.length) window.postMessage('tic!', '*');
-    q.push(fn);
-  }
+module.exports = function(fn) {
+	if (!q.length) window.postMessage('tic!', '*');
+	q.push(fn);
+}
 }
 
 }, {}],
 13: [function(require, module, exports) {
 module.exports = function canonical () {
-  var tags = document.getElementsByTagName('link');
-  for (var i = 0, tag; tag = tags[i]; i++) {
-    if ('canonical' == tag.getAttribute('rel')) return tag.getAttribute('href');
-  }
+var tags = document.getElementsByTagName('link');
+for (var i = 0, tag; tag = tags[i]; i++) {
+	if ('canonical' == tag.getAttribute('rel')) return tag.getAttribute('href');
+}
 };
 }, {}],
 17: [function(require, module, exports) {
@@ -3214,7 +3217,7 @@ module.exports = Emitter;
  */
 
 function Emitter(obj) {
-  if (obj) return mixin(obj);
+if (obj) return mixin(obj);
 };
 
 /**
@@ -3226,10 +3229,10 @@ function Emitter(obj) {
  */
 
 function mixin(obj) {
-  for (var key in Emitter.prototype) {
-    obj[key] = Emitter.prototype[key];
-  }
-  return obj;
+for (var key in Emitter.prototype) {
+	obj[key] = Emitter.prototype[key];
+}
+return obj;
 }
 
 /**
@@ -3242,11 +3245,11 @@ function mixin(obj) {
  */
 
 Emitter.prototype.on =
-Emitter.prototype.addEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
-  (this._callbacks[event] = this._callbacks[event] || [])
-    .push(fn);
-  return this;
+Emitter.prototype.addEventListener = function(event, fn) {
+this._callbacks = this._callbacks || {};
+(this._callbacks[event] = this._callbacks[event] || [])
+	.push(fn);
+return this;
 };
 
 /**
@@ -3259,18 +3262,18 @@ Emitter.prototype.addEventListener = function(event, fn){
  * @api public
  */
 
-Emitter.prototype.once = function(event, fn){
-  var self = this;
-  this._callbacks = this._callbacks || {};
+Emitter.prototype.once = function(event, fn) {
+var self = this;
+this._callbacks = this._callbacks || {};
 
-  function on() {
-    self.off(event, on);
-    fn.apply(this, arguments);
-  }
+function on() {
+	self.off(event, on);
+	fn.apply(this, arguments);
+}
 
-  fn._off = on;
-  this.on(event, on);
-  return this;
+fn._off = on;
+this.on(event, on);
+return this;
 };
 
 /**
@@ -3286,29 +3289,29 @@ Emitter.prototype.once = function(event, fn){
 Emitter.prototype.off =
 Emitter.prototype.removeListener =
 Emitter.prototype.removeAllListeners =
-Emitter.prototype.removeEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
+Emitter.prototype.removeEventListener = function(event, fn) {
+this._callbacks = this._callbacks || {};
 
-  // all
-  if (0 == arguments.length) {
-    this._callbacks = {};
-    return this;
-  }
+// all
+if (0 == arguments.length) {
+	this._callbacks = {};
+	return this;
+}
 
-  // specific event
-  var callbacks = this._callbacks[event];
-  if (!callbacks) return this;
+// specific event
+var callbacks = this._callbacks[event];
+if (!callbacks) return this;
 
-  // remove all handlers
-  if (1 == arguments.length) {
-    delete this._callbacks[event];
-    return this;
-  }
+// remove all handlers
+if (1 == arguments.length) {
+	delete this._callbacks[event];
+	return this;
+}
 
-  // remove specific handler
-  var i = index(callbacks, fn._off || fn);
-  if (~i) callbacks.splice(i, 1);
-  return this;
+// remove specific handler
+var i = index(callbacks, fn._off || fn);
+if (~i) callbacks.splice(i, 1);
+return this;
 };
 
 /**
@@ -3319,19 +3322,19 @@ Emitter.prototype.removeEventListener = function(event, fn){
  * @return {Emitter}
  */
 
-Emitter.prototype.emit = function(event){
-  this._callbacks = this._callbacks || {};
-  var args = [].slice.call(arguments, 1)
-    , callbacks = this._callbacks[event];
+Emitter.prototype.emit = function(event) {
+this._callbacks = this._callbacks || {};
+var args = [].slice.call(arguments, 1)
+	, callbacks = this._callbacks[event];
 
-  if (callbacks) {
-    callbacks = callbacks.slice(0);
-    for (var i = 0, len = callbacks.length; i < len; ++i) {
-      callbacks[i].apply(this, args);
-    }
-  }
+if (callbacks) {
+	callbacks = callbacks.slice(0);
+	for (var i = 0, len = callbacks.length; i < len; ++i) {
+	  callbacks[i].apply(this, args);
+	}
+}
 
-  return this;
+return this;
 };
 
 /**
@@ -3342,9 +3345,9 @@ Emitter.prototype.emit = function(event){
  * @api public
  */
 
-Emitter.prototype.listeners = function(event){
-  this._callbacks = this._callbacks || {};
-  return this._callbacks[event] || [];
+Emitter.prototype.listeners = function(event) {
+this._callbacks = this._callbacks || {};
+return this._callbacks[event] || [];
 };
 
 /**
@@ -3355,18 +3358,18 @@ Emitter.prototype.listeners = function(event){
  * @api public
  */
 
-Emitter.prototype.hasListeners = function(event){
-  return !! this.listeners(event).length;
+Emitter.prototype.hasListeners = function(event) {
+return !! this.listeners(event).length;
 };
 
 }, {"indexof":46}],
 46: [function(require, module, exports) {
-module.exports = function(arr, obj){
-  if (arr.indexOf) return arr.indexOf(obj);
-  for (var i = 0; i < arr.length; ++i) {
-    if (arr[i] === obj) return i;
-  }
-  return -1;
+module.exports = function(arr, obj) {
+if (arr.indexOf) return arr.indexOf(obj);
+for (var i = 0; i < arr.length; ++i) {
+	if (arr[i] === obj) return i;
+}
+return -1;
 };
 }, {}],
 18: [function(require, module, exports) {
@@ -3374,9 +3377,9 @@ module.exports = function(arr, obj){
 var isEmpty = require('is-empty');
 
 try {
-  var typeOf = require('type');
+var typeOf = require('type');
 } catch (e) {
-  var typeOf = require('component-type');
+var typeOf = require('component-type');
 }
 
 
@@ -3385,18 +3388,18 @@ try {
  */
 
 var types = [
-  'arguments',
-  'array',
-  'boolean',
-  'date',
-  'element',
-  'function',
-  'null',
-  'number',
-  'object',
-  'regexp',
-  'string',
-  'undefined'
+'arguments',
+'array',
+'boolean',
+'date',
+'element',
+'function',
+'null',
+'number',
+'object',
+'regexp',
+'string',
+'undefined'
 ];
 
 
@@ -3428,8 +3431,8 @@ exports.empty = isEmpty;
  * Expose `nan` check.
  */
 
-exports.nan = function (val) {
-  return exports.number(val) && val != val;
+exports.nan = function(val) {
+return exports.number(val) && val != val;
 };
 
 
@@ -3441,9 +3444,9 @@ exports.nan = function (val) {
  */
 
 function generate (type) {
-  return function (value) {
-    return type === typeOf(value);
-  };
+return function(value) {
+	return type === typeOf(value);
+};
 }
 }, {"is-empty":44,"type":35,"component-type":35}],
 19: [function(require, module, exports) {
@@ -3470,23 +3473,23 @@ var matcher = /.+\@.+\..+/;
  */
 
 function isEmail (string) {
-  return matcher.test(string);
+return matcher.test(string);
 }
 }, {}],
 20: [function(require, module, exports) {
 module.exports = function isMeta (e) {
-    if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) return true;
+	if (e.metaKey || e.altKey || e.ctrlKey || e.shiftKey) return true;
 
-    // Logic that handles checks for the middle mouse button, based
-    // on [jQuery](https://github.com/jquery/jquery/blob/master/src/event.js#L466).
-    var which = e.which, button = e.button;
-    if (!which && button !== undefined) {
-      return (!button & 1) && (!button & 2) && (button & 4);
-    } else if (which === 2) {
-      return true;
-    }
+	// Logic that handles checks for the middle mouse button, based
+	// on [jQuery](https://github.com/jquery/jquery/blob/master/src/event.js#L466).
+	var which = e.which, button = e.button;
+	if (!which && button !== undefined) {
+	  return (!button & 1) && (!button & 2) && (button & 4);
+	} else if (which === 2) {
+	  return true;
+	}
 
-    return false;
+	return false;
 };
 }, {}],
 21: [function(require, module, exports) {
@@ -3505,16 +3508,16 @@ var seconds = require('./seconds');
  */
 
 module.exports = function newDate (val) {
-  if (is.date(val)) return val;
-  if (is.number(val)) return new Date(toMs(val));
+if (is.date(val)) return val;
+if (is.number(val)) return new Date(toMs(val));
 
-  // date strings
-  if (isodate.is(val)) return isodate.parse(val);
-  if (milliseconds.is(val)) return milliseconds.parse(val);
-  if (seconds.is(val)) return seconds.parse(val);
+// date strings
+if (isodate.is(val)) return isodate.parse(val);
+if (milliseconds.is(val)) return milliseconds.parse(val);
+if (seconds.is(val)) return seconds.parse(val);
 
-  // fallback to Date.parse
-  return new Date(val);
+// fallback to Date.parse
+return new Date(val);
 };
 
 
@@ -3526,8 +3529,8 @@ module.exports = function newDate (val) {
  */
 
 function toMs (num) {
-  if (num < 31557600000) return num * 1000;
-  return num;
+if (num < 31557600000) return num * 1000;
+return num;
 }
 }, {"./milliseconds":47,"./seconds":48,"is":49,"isodate":43}],
 47: [function(require, module, exports) {
@@ -3546,8 +3549,8 @@ var matcher = /\d{13}/;
  * @return {Boolean}
  */
 
-exports.is = function (string) {
-  return matcher.test(string);
+exports.is = function(string) {
+return matcher.test(string);
 };
 
 
@@ -3558,9 +3561,9 @@ exports.is = function (string) {
  * @return {Date}
  */
 
-exports.parse = function (millis) {
-  millis = parseInt(millis, 10);
-  return new Date(millis);
+exports.parse = function(millis) {
+millis = parseInt(millis, 10);
+return new Date(millis);
 };
 }, {}],
 48: [function(require, module, exports) {
@@ -3579,8 +3582,8 @@ var matcher = /\d{10}/;
  * @return {Boolean}
  */
 
-exports.is = function (string) {
-  return matcher.test(string);
+exports.is = function(string) {
+return matcher.test(string);
 };
 
 
@@ -3591,15 +3594,15 @@ exports.is = function (string) {
  * @return {Date}
  */
 
-exports.parse = function (seconds) {
-  var millis = parseInt(seconds, 10) * 1000;
-  return new Date(millis);
+exports.parse = function(seconds) {
+var millis = parseInt(seconds, 10) * 1000;
+return new Date(millis);
 };
 }, {}],
 49: [function(require, module, exports) {
 
 var isEmpty = require('is-empty')
-  , typeOf = require('type');
+, typeOf = require('type');
 
 
 /**
@@ -3607,18 +3610,18 @@ var isEmpty = require('is-empty')
  */
 
 var types = [
-  'arguments',
-  'array',
-  'boolean',
-  'date',
-  'element',
-  'function',
-  'null',
-  'number',
-  'object',
-  'regexp',
-  'string',
-  'undefined'
+'arguments',
+'array',
+'boolean',
+'date',
+'element',
+'function',
+'null',
+'number',
+'object',
+'regexp',
+'string',
+'undefined'
 ];
 
 
@@ -3650,8 +3653,8 @@ exports.empty = isEmpty;
  * Expose `nan` check.
  */
 
-exports.nan = function (val) {
-  return exports.number(val) && val != val;
+exports.nan = function(val) {
+return exports.number(val) && val != val;
 };
 
 
@@ -3663,9 +3666,9 @@ exports.nan = function (val) {
  */
 
 function generate (type) {
-  return function (value) {
-    return type === typeOf(value);
-  };
+return function(value) {
+	return type === typeOf(value);
+};
 }
 }, {"is-empty":44,"type":35}],
 22: [function(require, module, exports) {
@@ -3681,13 +3684,13 @@ function generate (type) {
  * @api public
  */
 
-exports.bind = function(el, type, fn, capture){
-  if (el.addEventListener) {
-    el.addEventListener(type, fn, capture || false);
-  } else {
-    el.attachEvent('on' + type, fn);
-  }
-  return fn;
+exports.bind = function(el, type, fn, capture) {
+if (el.addEventListener) {
+	el.addEventListener(type, fn, capture || false);
+} else {
+	el.attachEvent('on' + type, fn);
+}
+return fn;
 };
 
 /**
@@ -3701,13 +3704,13 @@ exports.bind = function(el, type, fn, capture){
  * @api public
  */
 
-exports.unbind = function(el, type, fn, capture){
-  if (el.removeEventListener) {
-    el.removeEventListener(type, fn, capture || false);
-  } else {
-    el.detachEvent('on' + type, fn);
-  }
-  return fn;
+exports.unbind = function(el, type, fn, capture) {
+if (el.removeEventListener) {
+	el.removeEventListener(type, fn, capture || false);
+} else {
+	el.detachEvent('on' + type, fn);
+}
+return fn;
 };
 
 }, {}],
@@ -3719,18 +3722,18 @@ exports.unbind = function(el, type, fn, capture){
  * examples:
  *
  *      anchor.onclick = prevent;
- *      anchor.onclick = function(e){
+ *      anchor.onclick = function(e) {
  *        if (something) return prevent(e);
  *      };
  *
  * @param {Event} e
  */
 
-module.exports = function(e){
-  e = e || window.event
-  return e.preventDefault
-    ? e.preventDefault()
-    : e.returnValue = false;
+module.exports = function(e) {
+e = e || window.event
+return e.preventDefault
+	? e.preventDefault()
+	: e.returnValue = false;
 };
 
 }, {}],
@@ -3753,32 +3756,32 @@ var type = require('type');
  * @api public
  */
 
-exports.parse = function(str){
-  if ('string' != typeof str) return {};
+exports.parse = function(str) {
+if ('string' != typeof str) return {};
 
-  str = trim(str);
-  if ('' == str) return {};
-  if ('?' == str.charAt(0)) str = str.slice(1);
+str = trim(str);
+if ('' == str) return {};
+if ('?' == str.charAt(0)) str = str.slice(1);
 
-  var obj = {};
-  var pairs = str.split('&');
-  for (var i = 0; i < pairs.length; i++) {
-    var parts = pairs[i].split('=');
-    var key = decode(parts[0]);
-    var m;
+var obj = {};
+var pairs = str.split('&');
+for (var i = 0; i < pairs.length; i++) {
+	var parts = pairs[i].split('=');
+	var key = decode(parts[0]);
+	var m;
 
-    if (m = /(\w+)\[(\d+)\]/.exec(key)) {
-      obj[m[1]] = obj[m[1]] || [];
-      obj[m[1]][m[2]] = decode(parts[1]);
-      continue;
-    }
+	if (m = /(\w+)\[(\d+)\]/.exec(key)) {
+	  obj[m[1]] = obj[m[1]] || [];
+	  obj[m[1]][m[2]] = decode(parts[1]);
+	  continue;
+	}
 
-    obj[parts[0]] = null == parts[1]
-      ? ''
-      : decode(parts[1]);
-  }
+	obj[parts[0]] = null == parts[1]
+	  ? ''
+	  : decode(parts[1]);
+}
 
-  return obj;
+return obj;
 };
 
 /**
@@ -3789,24 +3792,24 @@ exports.parse = function(str){
  * @api public
  */
 
-exports.stringify = function(obj){
-  if (!obj) return '';
-  var pairs = [];
+exports.stringify = function(obj) {
+if (!obj) return '';
+var pairs = [];
 
-  for (var key in obj) {
-    var value = obj[key];
+for (var key in obj) {
+	var value = obj[key];
 
-    if ('array' == type(value)) {
-      for (var i = 0; i < value.length; ++i) {
-        pairs.push(encode(key + '[' + i + ']') + '=' + encode(value[i]));
-      }
-      continue;
-    }
+	if ('array' == type(value)) {
+	  for (var i = 0; i < value.length; ++i) {
+		pairs.push(encode(key + '[' + i + ']') + '=' + encode(value[i]));
+	  }
+	  continue;
+	}
 
-    pairs.push(encode(key) + '=' + encode(obj[key]));
-  }
+	pairs.push(encode(key) + '=' + encode(obj[key]));
+}
 
-  return pairs.join('&');
+return pairs.join('&');
 };
 
 }, {"trim":50,"type":35}],
@@ -3814,19 +3817,19 @@ exports.stringify = function(obj){
 
 exports = module.exports = trim;
 
-function trim(str){
-  if (str.trim) return str.trim();
-  return str.replace(/^\s*|\s*$/g, '');
+function trim(str) {
+if (str.trim) return str.trim();
+return str.replace(/^\s*|\s*$/g, '');
 }
 
-exports.left = function(str){
-  if (str.trimLeft) return str.trimLeft();
-  return str.replace(/^\s*/, '');
+exports.left = function(str) {
+if (str.trimLeft) return str.trimLeft();
+return str.replace(/^\s*/, '');
 };
 
-exports.right = function(str){
-  if (str.trimRight) return str.trimRight();
-  return str.replace(/\s*$/, '');
+exports.right = function(str) {
+if (str.trimRight) return str.trimRight();
+return str.replace(/\s*$/, '');
 };
 
 }, {}],
@@ -3846,14 +3849,14 @@ var has = Object.prototype.hasOwnProperty;
  * @api public
  */
 
-exports.keys = Object.keys || function(obj){
-  var keys = [];
-  for (var key in obj) {
-    if (has.call(obj, key)) {
-      keys.push(key);
-    }
-  }
-  return keys;
+exports.keys = Object.keys || function(obj) {
+var keys = [];
+for (var key in obj) {
+	if (has.call(obj, key)) {
+	  keys.push(key);
+	}
+}
+return keys;
 };
 
 /**
@@ -3864,14 +3867,14 @@ exports.keys = Object.keys || function(obj){
  * @api public
  */
 
-exports.values = function(obj){
-  var vals = [];
-  for (var key in obj) {
-    if (has.call(obj, key)) {
-      vals.push(obj[key]);
-    }
-  }
-  return vals;
+exports.values = function(obj) {
+var vals = [];
+for (var key in obj) {
+	if (has.call(obj, key)) {
+	  vals.push(obj[key]);
+	}
+}
+return vals;
 };
 
 /**
@@ -3883,13 +3886,13 @@ exports.values = function(obj){
  * @api public
  */
 
-exports.merge = function(a, b){
-  for (var key in b) {
-    if (has.call(b, key)) {
-      a[key] = b[key];
-    }
-  }
-  return a;
+exports.merge = function(a, b) {
+for (var key in b) {
+	if (has.call(b, key)) {
+	  a[key] = b[key];
+	}
+}
+return a;
 };
 
 /**
@@ -3900,8 +3903,8 @@ exports.merge = function(a, b){
  * @api public
  */
 
-exports.length = function(obj){
-  return exports.keys(obj).length;
+exports.length = function(obj) {
+return exports.keys(obj).length;
 };
 
 /**
@@ -3912,8 +3915,8 @@ exports.length = function(obj){
  * @api public
  */
 
-exports.isEmpty = function(obj){
-  return 0 == exports.length(obj);
+exports.isEmpty = function(obj) {
+return 0 == exports.length(obj);
 };
 }, {}],
 27: [function(require, module, exports) {
@@ -3959,9 +3962,9 @@ module.exports = Facade;
  */
 
 function Facade (obj) {
-  if (!obj.hasOwnProperty('timestamp')) obj.timestamp = new Date();
-  else obj.timestamp = newDate(obj.timestamp);
-  this.obj = obj;
+if (!obj.hasOwnProperty('timestamp')) obj.timestamp = new Date();
+else obj.timestamp = newDate(obj.timestamp);
+this.obj = obj;
 }
 
 /**
@@ -3974,18 +3977,18 @@ function Facade (obj) {
  * @param {String} field
  */
 
-Facade.prototype.proxy = function (field) {
-  var fields = field.split('.');
-  field = fields.shift();
+Facade.prototype.proxy = function(field) {
+var fields = field.split('.');
+field = fields.shift();
 
-  // Call a function at the beginning to take advantage of facaded fields
-  var obj = this[field] || this.field(field);
-  if (!obj) return obj;
-  if (typeof obj === 'function') obj = obj.call(this) || {};
-  if (fields.length === 0) return transform(obj);
+// Call a function at the beginning to take advantage of facaded fields
+var obj = this[field] || this.field(field);
+if (!obj) return obj;
+if (typeof obj === 'function') obj = obj.call(this) || {};
+if (fields.length === 0) return transform(obj);
 
-  obj = objCase(obj, fields.join('.'));
-  return transform(obj);
+obj = objCase(obj, fields.join('.'));
+return transform(obj);
 };
 
 /**
@@ -3996,9 +3999,9 @@ Facade.prototype.proxy = function (field) {
  * @return {Mixed}
  */
 
-Facade.prototype.field = function (field) {
-  var obj = this.obj[field];
-  return transform(obj);
+Facade.prototype.field = function(field) {
+var obj = this.obj[field];
+return transform(obj);
 };
 
 /**
@@ -4011,10 +4014,10 @@ Facade.prototype.field = function (field) {
  * @return {Function}
  */
 
-Facade.proxy = function (field) {
-  return function () {
-    return this.proxy(field);
-  };
+Facade.proxy = function(field) {
+return function() {
+	return this.proxy(field);
+};
 };
 
 /**
@@ -4024,10 +4027,10 @@ Facade.proxy = function (field) {
  * @return {Function}
  */
 
-Facade.field = function (field) {
-  return function () {
-    return this.field(field);
-  };
+Facade.field = function(field) {
+return function() {
+	return this.field(field);
+};
 };
 
 /**
@@ -4036,10 +4039,10 @@ Facade.field = function (field) {
  * @return {Object}
  */
 
-Facade.prototype.json = function () {
-  var ret = clone(this.obj);
-  if (this.type) ret.type = this.type();
-  return ret;
+Facade.prototype.json = function() {
+var ret = clone(this.obj);
+if (this.type) ret.type = this.type();
+return ret;
 };
 
 /**
@@ -4052,14 +4055,14 @@ Facade.prototype.json = function () {
  */
 
 Facade.prototype.context =
-Facade.prototype.options = function (integration) {
-  var options = clone(this.obj.options || this.obj.context) || {};
-  if (!integration) return clone(options);
-  if (!this.enabled(integration)) return;
-  var integrations = this.integrations();
-  var value = integrations[integration] || objCase(integrations, integration);
-  if ('boolean' == typeof value) value = {};
-  return value || {};
+Facade.prototype.options = function(integration) {
+var options = clone(this.obj.options || this.obj.context) || {};
+if (!integration) return clone(options);
+if (!this.enabled(integration)) return;
+var integrations = this.integrations();
+var value = integrations[integration] || objCase(integrations, integration);
+if ('boolean' == typeof value) value = {};
+return value || {};
 };
 
 /**
@@ -4069,33 +4072,33 @@ Facade.prototype.options = function (integration) {
  * @return {Boolean}
  */
 
-Facade.prototype.enabled = function (integration) {
-  var allEnabled = this.proxy('options.providers.all');
-  if (typeof allEnabled !== 'boolean') allEnabled = this.proxy('options.all');
-  if (typeof allEnabled !== 'boolean') allEnabled = this.proxy('integrations.all');
-  if (typeof allEnabled !== 'boolean') allEnabled = true;
+Facade.prototype.enabled = function(integration) {
+var allEnabled = this.proxy('options.providers.all');
+if (typeof allEnabled !== 'boolean') allEnabled = this.proxy('options.all');
+if (typeof allEnabled !== 'boolean') allEnabled = this.proxy('integrations.all');
+if (typeof allEnabled !== 'boolean') allEnabled = true;
 
-  var enabled = allEnabled && isEnabled(integration);
-  var options = this.integrations();
+var enabled = allEnabled && isEnabled(integration);
+var options = this.integrations();
 
-  // If the integration is explicitly enabled or disabled, use that
-  // First, check options.providers for backwards compatibility
-  if (options.providers && options.providers.hasOwnProperty(integration)) {
-    enabled = options.providers[integration];
-  }
+// If the integration is explicitly enabled or disabled, use that
+// First, check options.providers for backwards compatibility
+if (options.providers && options.providers.hasOwnProperty(integration)) {
+	enabled = options.providers[integration];
+}
 
-  // Next, check for the integration's existence in 'options' to enable it.
-  // If the settings are a boolean, use that, otherwise it should be enabled.
-  if (options.hasOwnProperty(integration)) {
-    var settings = options[integration];
-    if (typeof settings === 'boolean') {
-      enabled = settings;
-    } else {
-      enabled = true;
-    }
-  }
+// Next, check for the integration's existence in 'options' to enable it.
+// If the settings are a boolean, use that, otherwise it should be enabled.
+if (options.hasOwnProperty(integration)) {
+	var settings = options[integration];
+	if (typeof settings === 'boolean') {
+	  enabled = settings;
+	} else {
+	  enabled = true;
+	}
+}
 
-  return enabled ? true : false;
+return enabled ? true : false;
 };
 
 /**
@@ -4106,10 +4109,10 @@ Facade.prototype.enabled = function (integration) {
  * @api private
  */
 
-Facade.prototype.integrations = function(){
-  return this.obj.integrations
-    || this.proxy('options.providers')
-    || this.options();
+Facade.prototype.integrations = function() {
+return this.obj.integrations
+	|| this.proxy('options.providers')
+	|| this.options();
 };
 
 /**
@@ -4118,10 +4121,10 @@ Facade.prototype.integrations = function(){
  * @return {Boolean}
  */
 
-Facade.prototype.active = function () {
-  var active = this.proxy('options.active');
-  if (active === null || active === undefined) active = true;
-  return active;
+Facade.prototype.active = function() {
+var active = this.proxy('options.active');
+if (active === null || active === undefined) active = true;
+return active;
 };
 
 /**
@@ -4132,9 +4135,9 @@ Facade.prototype.active = function () {
  */
 
 Facade.prototype.sessionId =
-Facade.prototype.anonymousId = function(){
-  return this.field('anonymousId')
-    || this.field('sessionId');
+Facade.prototype.anonymousId = function() {
+return this.field('anonymousId')
+	|| this.field('sessionId');
 };
 
 /**
@@ -4154,34 +4157,34 @@ Facade.prototype.groupId = Facade.proxy('options.groupId');
  * @return {Object}
  */
 
-Facade.prototype.traits = function (aliases) {
-  var ret = this.proxy('options.traits') || {};
-  var id = this.userId();
-  aliases = aliases || {};
+Facade.prototype.traits = function(aliases) {
+var ret = this.proxy('options.traits') || {};
+var id = this.userId();
+aliases = aliases || {};
 
-  if (id) ret.id = id;
+if (id) ret.id = id;
 
-  for (var alias in aliases) {
-    var value = null == this[alias]
-      ? this.proxy('options.traits.' + alias)
-      : this[alias]();
-    if (null == value) continue;
-    ret[aliases[alias]] = value;
-    delete ret[alias];
-  }
+for (var alias in aliases) {
+	var value = null == this[alias]
+	  ? this.proxy('options.traits.' + alias)
+	  : this[alias]();
+	if (null == value) continue;
+	ret[aliases[alias]] = value;
+	delete ret[alias];
+}
 
-  return ret;
+return ret;
 };
 
 /**
  * Add a convenient way to get the library name and version
  */
 
-Facade.prototype.library = function(){
-  var library = this.proxy('options.library');
-  if (!library) return { name: 'unknown', version: null };
-  if (typeof library === 'string') return { name: library, version: null };
-  return library;
+Facade.prototype.library = function() {
+var library = this.proxy('options.library');
+if (!library) return { name: 'unknown', version: null };
+if (typeof library === 'string') return { name: library, version: null };
+return library;
 };
 
 /**
@@ -4201,10 +4204,10 @@ Facade.prototype.ip = Facade.proxy('options.ip');
  * @return {Mixed}
  */
 
-function transform(obj){
-  var cloned = clone(obj);
-  traverse(cloned);
-  return cloned;
+function transform(obj) {
+var cloned = clone(obj);
+traverse(cloned);
+return cloned;
 }
 
 }, {"./utils":58,"./is-enabled":59,"obj-case":60,"isodate-traverse":39,"new-date":21}],
@@ -4215,21 +4218,21 @@ function transform(obj){
  */
 
 try {
-  exports.inherit = require('inherit');
-  exports.clone = require('clone');
+exports.inherit = require('inherit');
+exports.clone = require('clone');
 } catch (e) {
-  exports.inherit = require('inherit-component');
-  exports.clone = require('clone-component');
+exports.inherit = require('inherit-component');
+exports.clone = require('clone-component');
 }
 
 }, {"inherit":61,"clone":62}],
 61: [function(require, module, exports) {
 
-module.exports = function(a, b){
-  var fn = function(){};
-  fn.prototype = b.prototype;
-  a.prototype = new fn;
-  a.prototype.constructor = a;
+module.exports = function(a, b) {
+var fn = function(){};
+fn.prototype = b.prototype;
+a.prototype = new fn;
+a.prototype.constructor = a;
 };
 }, {}],
 62: [function(require, module, exports) {
@@ -4239,9 +4242,9 @@ module.exports = function(a, b){
 
 var type;
 try {
-  type = require('component-type');
+type = require('component-type');
 } catch (_) {
-  type = require('type');
+type = require('type');
 }
 
 /**
@@ -4257,38 +4260,38 @@ module.exports = clone;
  * @api public
  */
 
-function clone(obj){
-  switch (type(obj)) {
-    case 'object':
-      var copy = {};
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          copy[key] = clone(obj[key]);
-        }
-      }
-      return copy;
+function clone(obj) {
+switch (type(obj)) {
+	case 'object':
+	  var copy = {};
+	  for (var key in obj) {
+		if (obj.hasOwnProperty(key)) {
+		  copy[key] = clone(obj[key]);
+		}
+	  }
+	  return copy;
 
-    case 'array':
-      var copy = new Array(obj.length);
-      for (var i = 0, l = obj.length; i < l; i++) {
-        copy[i] = clone(obj[i]);
-      }
-      return copy;
+	case 'array':
+	  var copy = new Array(obj.length);
+	  for (var i = 0, l = obj.length; i < l; i++) {
+		copy[i] = clone(obj[i]);
+	  }
+	  return copy;
 
-    case 'regexp':
-      // from millermedeiros/amd-utils - MIT
-      var flags = '';
-      flags += obj.multiline ? 'm' : '';
-      flags += obj.global ? 'g' : '';
-      flags += obj.ignoreCase ? 'i' : '';
-      return new RegExp(obj.source, flags);
+	case 'regexp':
+	  // from millermedeiros/amd-utils - MIT
+	  var flags = '';
+	  flags += obj.multiline ? 'm' : '';
+	  flags += obj.global ? 'g' : '';
+	  flags += obj.ignoreCase ? 'i' : '';
+	  return new RegExp(obj.source, flags);
 
-    case 'date':
-      return new Date(obj.getTime());
+	case 'date':
+	  return new Date(obj.getTime());
 
-    default: // string, number, boolean, …
-      return obj;
-  }
+	default: // string, number, boolean, …
+	  return obj;
+}
 }
 
 }, {"component-type":35,"type":35}],
@@ -4300,8 +4303,8 @@ function clone(obj){
  */
 
 var disabled = {
-  Salesforce: true,
-  Marketo: true
+Salesforce: true,
+Marketo: true
 };
 
 /**
@@ -4311,8 +4314,8 @@ var disabled = {
  * @return {Boolean}
  */
 
-module.exports = function (integration) {
-  return ! disabled[integration];
+module.exports = function(integration) {
+return ! disabled[integration];
 };
 }, {}],
 60: [function(require, module, exports) {
@@ -4326,16 +4329,16 @@ var identity = function(_){ return _; };
  */
 
 var cases = [
-  identity,
-  Case.upper,
-  Case.lower,
-  Case.snake,
-  Case.pascal,
-  Case.camel,
-  Case.constant,
-  Case.title,
-  Case.capital,
-  Case.sentence
+identity,
+Case.upper,
+Case.lower,
+Case.snake,
+Case.pascal,
+Case.camel,
+Case.constant,
+Case.title,
+Case.capital,
+Case.sentence
 ];
 
 
@@ -4350,9 +4353,9 @@ module.exports = module.exports.find = multiple(find);
  * Export the replacement function, return the modified object
  */
 
-module.exports.replace = function (obj, key, val) {
-  multiple(replace).apply(this, arguments);
-  return obj;
+module.exports.replace = function(obj, key, val) {
+multiple(replace).apply(this, arguments);
+return obj;
 };
 
 
@@ -4360,9 +4363,9 @@ module.exports.replace = function (obj, key, val) {
  * Export the delete function, return the modified object
  */
 
-module.exports.del = function (obj, key) {
-  multiple(del).apply(this, arguments);
-  return obj;
+module.exports.del = function(obj, key) {
+multiple(del).apply(this, arguments);
+return obj;
 };
 
 
@@ -4371,20 +4374,20 @@ module.exports.del = function (obj, key) {
  */
 
 function multiple (fn) {
-  return function (obj, key, val) {
-    var keys = key.split('.');
-    if (keys.length === 0) return;
+return function(obj, key, val) {
+	var keys = key.split('.');
+	if (keys.length === 0) return;
 
-    while (keys.length > 1) {
-      key = keys.shift();
-      obj = find(obj, key);
+	while (keys.length > 1) {
+	  key = keys.shift();
+	  obj = find(obj, key);
 
-      if (obj === null || obj === undefined) return;
-    }
+	  if (obj === null || obj === undefined) return;
+	}
 
-    key = keys.shift();
-    return fn(obj, key, val);
-  };
+	key = keys.shift();
+	return fn(obj, key, val);
+};
 }
 
 
@@ -4395,10 +4398,10 @@ function multiple (fn) {
  */
 
 function find (obj, key) {
-  for (var i = 0; i < cases.length; i++) {
-    var cased = cases[i](key);
-    if (obj.hasOwnProperty(cased)) return obj[cased];
-  }
+for (var i = 0; i < cases.length; i++) {
+	var cased = cases[i](key);
+	if (obj.hasOwnProperty(cased)) return obj[cased];
+}
 }
 
 
@@ -4409,11 +4412,11 @@ function find (obj, key) {
  */
 
 function del (obj, key) {
-  for (var i = 0; i < cases.length; i++) {
-    var cased = cases[i](key);
-    if (obj.hasOwnProperty(cased)) delete obj[cased];
-  }
-  return obj;
+for (var i = 0; i < cases.length; i++) {
+	var cased = cases[i](key);
+	if (obj.hasOwnProperty(cased)) delete obj[cased];
+}
+return obj;
 }
 
 
@@ -4424,11 +4427,11 @@ function del (obj, key) {
  */
 
 function replace (obj, key, val) {
-  for (var i = 0; i < cases.length; i++) {
-    var cased = cases[i](key);
-    if (obj.hasOwnProperty(cased)) obj[cased] = val;
-  }
-  return obj;
+for (var i = 0; i < cases.length; i++) {
+	var cased = cases[i](key);
+	if (obj.hasOwnProperty(cased)) obj[cased] = val;
+}
+return obj;
 }
 
 }, {"case":63}],
@@ -4452,12 +4455,12 @@ module.exports = exports = determineCase;
  */
 
 function determineCase (string) {
-  for (var key in cases) {
-    if (key == 'none') continue;
-    var convert = cases[key];
-    if (convert(string) == string) return key;
-  }
-  return null;
+for (var key in cases) {
+	if (key == 'none') continue;
+	var convert = cases[key];
+	if (convert(string) == string) return key;
+}
+return null;
 }
 
 
@@ -4468,8 +4471,8 @@ function determineCase (string) {
  * @param {Object} convert
  */
 
-exports.add = function (name, convert) {
-  exports[name] = cases[name] = convert;
+exports.add = function(name, convert) {
+exports[name] = cases[name] = convert;
 };
 
 
@@ -4478,22 +4481,22 @@ exports.add = function (name, convert) {
  */
 
 for (var key in cases) {
-  exports.add(key, cases[key]);
+exports.add(key, cases[key]);
 }
 }, {"./cases":64}],
 64: [function(require, module, exports) {
 
 var camel = require('to-camel-case')
-  , capital = require('to-capital-case')
-  , constant = require('to-constant-case')
-  , dot = require('to-dot-case')
-  , none = require('to-no-case')
-  , pascal = require('to-pascal-case')
-  , sentence = require('to-sentence-case')
-  , slug = require('to-slug-case')
-  , snake = require('to-snake-case')
-  , space = require('to-space-case')
-  , title = require('to-title-case');
+, capital = require('to-capital-case')
+, constant = require('to-constant-case')
+, dot = require('to-dot-case')
+, none = require('to-no-case')
+, pascal = require('to-pascal-case')
+, sentence = require('to-sentence-case')
+, slug = require('to-slug-case')
+, snake = require('to-snake-case')
+, space = require('to-space-case')
+, title = require('to-title-case');
 
 
 /**
@@ -4574,8 +4577,8 @@ exports.sentence = sentence;
  * @return {String}
  */
 
-exports.lower = function (string) {
-  return none(string).toLowerCase();
+exports.lower = function(string) {
+return none(string).toLowerCase();
 };
 
 
@@ -4587,8 +4590,8 @@ exports.lower = function (string) {
  * @return {String}
  */
 
-exports.upper = function (string) {
-  return none(string).toUpperCase();
+exports.upper = function(string) {
+return none(string).toUpperCase();
 };
 
 
@@ -4599,14 +4602,14 @@ exports.upper = function (string) {
  * @return {String}
  */
 
-exports.inverse = function (string) {
-  for (var i = 0, char; char = string[i]; i++) {
-    if (!/[a-z]/i.test(char)) continue;
-    var upper = char.toUpperCase();
-    var lower = char.toLowerCase();
-    string[i] = char == upper ? lower : upper;
-  }
-  return string;
+exports.inverse = function(string) {
+for (var i = 0, char; char = string[i]; i++) {
+	if (!/[a-z]/i.test(char)) continue;
+	var upper = char.toUpperCase();
+	var lower = char.toLowerCase();
+	string[i] = char == upper ? lower : upper;
+}
+return string;
 };
 
 
@@ -4637,9 +4640,9 @@ module.exports = toCamelCase;
 
 
 function toCamelCase (string) {
-  return toSpace(string).replace(/\s(\w)/g, function (matches, letter) {
-    return letter.toUpperCase();
-  });
+return toSpace(string).replace(/\s(\w)/g, function(matches, letter) {
+	return letter.toUpperCase();
+});
 }
 }, {"to-space-case":74}],
 74: [function(require, module, exports) {
@@ -4663,9 +4666,9 @@ module.exports = toSpaceCase;
 
 
 function toSpaceCase (string) {
-  return clean(string).replace(/[\W_]+(.|$)/g, function (matches, match) {
-    return match ? ' ' + match : '';
-  });
+return clean(string).replace(/[\W_]+(.|$)/g, function(matches, match) {
+	return match ? ' ' + match : '';
+});
 }
 }, {"to-no-case":69}],
 69: [function(require, module, exports) {
@@ -4695,11 +4698,11 @@ var hasSeparator = /[\W_]/;
  */
 
 function toNoCase (string) {
-  if (hasSpace.test(string)) return string.toLowerCase();
+if (hasSpace.test(string)) return string.toLowerCase();
 
-  if (hasSeparator.test(string)) string = unseparate(string);
-  if (hasCamel.test(string)) string = uncamelize(string);
-  return string.toLowerCase();
+if (hasSeparator.test(string)) string = unseparate(string);
+if (hasCamel.test(string)) string = uncamelize(string);
+return string.toLowerCase();
 }
 
 
@@ -4718,9 +4721,9 @@ var separatorSplitter = /[\W_]+(.|$)/g;
  */
 
 function unseparate (string) {
-  return string.replace(separatorSplitter, function (m, next) {
-    return next ? ' ' + next : '';
-  });
+return string.replace(separatorSplitter, function(m, next) {
+	return next ? ' ' + next : '';
+});
 }
 
 
@@ -4739,9 +4742,9 @@ var camelSplitter = /(.)([A-Z]+)/g;
  */
 
 function uncamelize (string) {
-  return string.replace(camelSplitter, function (m, previous, uppers) {
-    return previous + ' ' + uppers.toLowerCase().split('').join(' ');
-  });
+return string.replace(camelSplitter, function(m, previous, uppers) {
+	return previous + ' ' + uppers.toLowerCase().split('').join(' ');
+});
 }
 }, {}],
 66: [function(require, module, exports) {
@@ -4765,9 +4768,9 @@ module.exports = toCapitalCase;
 
 
 function toCapitalCase (string) {
-  return clean(string).replace(/(^|\s)(\w)/g, function (matches, previous, letter) {
-    return previous + letter.toUpperCase();
-  });
+return clean(string).replace(/(^|\s)(\w)/g, function(matches, previous, letter) {
+	return previous + letter.toUpperCase();
+});
 }
 }, {"to-no-case":69}],
 67: [function(require, module, exports) {
@@ -4791,7 +4794,7 @@ module.exports = toConstantCase;
 
 
 function toConstantCase (string) {
-  return snake(string).toUpperCase();
+return snake(string).toUpperCase();
 }
 }, {"to-snake-case":73}],
 73: [function(require, module, exports) {
@@ -4814,7 +4817,7 @@ module.exports = toSnakeCase;
 
 
 function toSnakeCase (string) {
-  return toSpace(string).replace(/\s/g, '_');
+return toSpace(string).replace(/\s/g, '_');
 }
 
 }, {"to-space-case":74}],
@@ -4839,7 +4842,7 @@ module.exports = toDotCase;
 
 
 function toDotCase (string) {
-  return toSpace(string).replace(/\s/g, '.');
+return toSpace(string).replace(/\s/g, '.');
 }
 }, {"to-space-case":74}],
 70: [function(require, module, exports) {
@@ -4863,9 +4866,9 @@ module.exports = toPascalCase;
 
 
 function toPascalCase (string) {
-  return toSpace(string).replace(/(?:^|\s)(\w)/g, function (matches, letter) {
-    return letter.toUpperCase();
-  });
+return toSpace(string).replace(/(?:^|\s)(\w)/g, function(matches, letter) {
+	return letter.toUpperCase();
+});
 }
 }, {"to-space-case":74}],
 71: [function(require, module, exports) {
@@ -4889,9 +4892,9 @@ module.exports = toSentenceCase;
 
 
 function toSentenceCase (string) {
-  return clean(string).replace(/[a-z]/i, function (letter) {
-    return letter.toUpperCase();
-  });
+return clean(string).replace(/[a-z]/i, function(letter) {
+	return letter.toUpperCase();
+});
 }
 }, {"to-no-case":69}],
 72: [function(require, module, exports) {
@@ -4915,15 +4918,15 @@ module.exports = toSlugCase;
 
 
 function toSlugCase (string) {
-  return toSpace(string).replace(/\s/g, '-');
+return toSpace(string).replace(/\s/g, '-');
 }
 }, {"to-space-case":74}],
 75: [function(require, module, exports) {
 
 var capital = require('to-capital-case')
-  , escape = require('escape-regexp')
-  , map = require('map')
-  , minors = require('title-case-minors');
+, escape = require('escape-regexp')
+, map = require('map')
+, minors = require('title-case-minors');
 
 
 /**
@@ -4951,13 +4954,13 @@ var colonMatcher = /:\s*(\w)/g;
 
 
 function toTitleCase (string) {
-  return capital(string)
-    .replace(minorMatcher, function (minor) {
-      return minor.toLowerCase();
-    })
-    .replace(colonMatcher, function (letter) {
-      return letter.toUpperCase();
-    });
+return capital(string)
+	.replace(minorMatcher, function(minor) {
+	  return minor.toLowerCase();
+	})
+	.replace(colonMatcher, function(letter) {
+	  return letter.toUpperCase();
+	});
 }
 }, {"to-capital-case":66,"escape-regexp":76,"map":77,"title-case-minors":78}],
 76: [function(require, module, exports) {
@@ -4970,8 +4973,8 @@ function toTitleCase (string) {
  * @api public
  */
 
-module.exports = function(str){
-  return String(str).replace(/([.*+?=^!:${}()|[\]\/\\])/g, '\\$1');
+module.exports = function(str) {
+return String(str).replace(/([.*+?=^!:${}()|[\]\/\\])/g, '\\$1');
 };
 }, {}],
 77: [function(require, module, exports) {
@@ -4988,11 +4991,11 @@ var each = require('each');
  */
 
 module.exports = function map (obj, iterator) {
-  var arr = [];
-  each(obj, function (o) {
-    arr.push(iterator.apply(null, arguments));
-  });
-  return arr;
+var arr = [];
+each(obj, function(o) {
+	arr.push(iterator.apply(null, arguments));
+});
+return arr;
 };
 }, {"each":79}],
 79: [function(require, module, exports) {
@@ -5002,9 +5005,9 @@ module.exports = function map (obj, iterator) {
  */
 
 try {
-  var type = require('type');
+var type = require('type');
 } catch (err) {
-  var type = require('component-type');
+var type = require('component-type');
 }
 
 var toFunction = require('to-function');
@@ -5025,18 +5028,18 @@ var has = Object.prototype.hasOwnProperty;
  * @api public
  */
 
-module.exports = function(obj, fn, ctx){
-  fn = toFunction(fn);
-  ctx = ctx || this;
-  switch (type(obj)) {
-    case 'array':
-      return array(obj, fn, ctx);
-    case 'object':
-      if ('number' == typeof obj.length) return array(obj, fn, ctx);
-      return object(obj, fn, ctx);
-    case 'string':
-      return string(obj, fn, ctx);
-  }
+module.exports = function(obj, fn, ctx) {
+fn = toFunction(fn);
+ctx = ctx || this;
+switch (type(obj)) {
+	case 'array':
+	  return array(obj, fn, ctx);
+	case 'object':
+	  if ('number' == typeof obj.length) return array(obj, fn, ctx);
+	  return object(obj, fn, ctx);
+	case 'string':
+	  return string(obj, fn, ctx);
+}
 };
 
 /**
@@ -5049,9 +5052,9 @@ module.exports = function(obj, fn, ctx){
  */
 
 function string(obj, fn, ctx) {
-  for (var i = 0; i < obj.length; ++i) {
-    fn.call(ctx, obj.charAt(i), i);
-  }
+for (var i = 0; i < obj.length; ++i) {
+	fn.call(ctx, obj.charAt(i), i);
+}
 }
 
 /**
@@ -5064,11 +5067,11 @@ function string(obj, fn, ctx) {
  */
 
 function object(obj, fn, ctx) {
-  for (var key in obj) {
-    if (has.call(obj, key)) {
-      fn.call(ctx, key, obj[key]);
-    }
-  }
+for (var key in obj) {
+	if (has.call(obj, key)) {
+	  fn.call(ctx, key, obj[key]);
+	}
+}
 }
 
 /**
@@ -5081,9 +5084,9 @@ function object(obj, fn, ctx) {
  */
 
 function array(obj, fn, ctx) {
-  for (var i = 0; i < obj.length; ++i) {
-    fn.call(ctx, obj[i], i);
-  }
+for (var i = 0; i < obj.length; ++i) {
+	fn.call(ctx, obj[i], i);
+}
 }
 
 }, {"type":35,"component-type":35,"to-function":80}],
@@ -5095,9 +5098,9 @@ function array(obj, fn, ctx) {
 
 var expr;
 try {
-  expr = require('props');
+expr = require('props');
 } catch(e) {
-  expr = require('component-props');
+expr = require('component-props');
 }
 
 /**
@@ -5115,18 +5118,18 @@ module.exports = toFunction;
  */
 
 function toFunction(obj) {
-  switch ({}.toString.call(obj)) {
-    case '[object Object]':
-      return objectToFunction(obj);
-    case '[object Function]':
-      return obj;
-    case '[object String]':
-      return stringToFunction(obj);
-    case '[object RegExp]':
-      return regexpToFunction(obj);
-    default:
-      return defaultToFunction(obj);
-  }
+switch ({}.toString.call(obj)) {
+	case '[object Object]':
+	  return objectToFunction(obj);
+	case '[object Function]':
+	  return obj;
+	case '[object String]':
+	  return stringToFunction(obj);
+	case '[object RegExp]':
+	  return regexpToFunction(obj);
+	default:
+	  return defaultToFunction(obj);
+}
 }
 
 /**
@@ -5138,9 +5141,9 @@ function toFunction(obj) {
  */
 
 function defaultToFunction(val) {
-  return function(obj){
-    return val === obj;
-  };
+return function(obj) {
+	return val === obj;
+};
 }
 
 /**
@@ -5152,9 +5155,9 @@ function defaultToFunction(val) {
  */
 
 function regexpToFunction(re) {
-  return function(obj){
-    return re.test(obj);
-  };
+return function(obj) {
+	return re.test(obj);
+};
 }
 
 /**
@@ -5166,11 +5169,11 @@ function regexpToFunction(re) {
  */
 
 function stringToFunction(str) {
-  // immediate such as "> 20"
-  if (/^ *\W+/.test(str)) return new Function('_', 'return _ ' + str);
+// immediate such as "> 20"
+if (/^ *\W+/.test(str)) return new Function('_', 'return _ ' + str);
 
-  // properties such as "name.first" or "age > 18" or "age > 18 && age < 36"
-  return new Function('_', 'return ' + get(str));
+// properties such as "name.first" or "age > 18" or "age > 18 && age < 36"
+return new Function('_', 'return ' + get(str));
 }
 
 /**
@@ -5182,20 +5185,20 @@ function stringToFunction(str) {
  */
 
 function objectToFunction(obj) {
-  var match = {};
-  for (var key in obj) {
-    match[key] = typeof obj[key] === 'string'
-      ? defaultToFunction(obj[key])
-      : toFunction(obj[key]);
-  }
-  return function(val){
-    if (typeof val !== 'object') return false;
-    for (var key in match) {
-      if (!(key in val)) return false;
-      if (!match[key](val[key])) return false;
-    }
-    return true;
-  };
+var match = {};
+for (var key in obj) {
+	match[key] = typeof obj[key] === 'string'
+	  ? defaultToFunction(obj[key])
+	  : toFunction(obj[key]);
+}
+return function(val) {
+	if (typeof val !== 'object') return false;
+	for (var key in match) {
+	  if (!(key in val)) return false;
+	  if (!match[key](val[key])) return false;
+	}
+	return true;
+};
 }
 
 /**
@@ -5207,20 +5210,20 @@ function objectToFunction(obj) {
  */
 
 function get(str) {
-  var props = expr(str);
-  if (!props.length) return '_.' + str;
+var props = expr(str);
+if (!props.length) return '_.' + str;
 
-  var val, i, prop;
-  for (i = 0; i < props.length; i++) {
-    prop = props[i];
-    val = '_.' + prop;
-    val = "('function' == typeof " + val + " ? " + val + "() : " + val + ")";
+var val, i, prop;
+for (i = 0; i < props.length; i++) {
+	prop = props[i];
+	val = '_.' + prop;
+	val = "('function' == typeof " + val + " ? " + val + "() : " + val + ")";
 
-    // mimic negative lookbehind to avoid problems with nested properties
-    str = stripNested(prop, str, val);
-  }
+	// mimic negative lookbehind to avoid problems with nested properties
+	str = stripNested(prop, str, val);
+}
 
-  return str;
+return str;
 }
 
 /**
@@ -5236,9 +5239,9 @@ function get(str) {
  */
 
 function stripNested (prop, str, val) {
-  return str.replace(new RegExp('(\\.)?' + prop, 'g'), function($0, $1) {
-    return $1 ? $0 : val;
-  });
+return str.replace(new RegExp('(\\.)?' + prop, 'g'), function($0, $1) {
+	return $1 ? $0 : val;
+});
 }
 
 }, {"props":81,"component-props":81}],
@@ -5258,11 +5261,11 @@ var globals = /\b(this|Array|Date|Object|Math|JSON)\b/g;
  * @api public
  */
 
-module.exports = function(str, fn){
-  var p = unique(props(str));
-  if (fn && 'string' == typeof fn) fn = prefixed(fn);
-  if (fn) return map(str, p, fn);
-  return p;
+module.exports = function(str, fn) {
+var p = unique(props(str));
+if (fn && 'string' == typeof fn) fn = prefixed(fn);
+if (fn) return map(str, p, fn);
+return p;
 };
 
 /**
@@ -5274,11 +5277,11 @@ module.exports = function(str, fn){
  */
 
 function props(str) {
-  return str
-    .replace(/\.\w+|\w+ *\(|"[^"]*"|'[^']*'|\/([^/]+)\//g, '')
-    .replace(globals, '')
-    .match(/[$a-zA-Z_]\w*/g)
-    || [];
+return str
+	.replace(/\.\w+|\w+ *\(|"[^"]*"|'[^']*'|\/([^/]+)\//g, '')
+	.replace(globals, '')
+	.match(/[$a-zA-Z_]\w*/g)
+	|| [];
 }
 
 /**
@@ -5292,12 +5295,12 @@ function props(str) {
  */
 
 function map(str, props, fn) {
-  var re = /\.\w+|\w+ *\(|"[^"]*"|'[^']*'|\/([^/]+)\/|[a-zA-Z_]\w*/g;
-  return str.replace(re, function(_){
-    if ('(' == _[_.length - 1]) return fn(_);
-    if (!~props.indexOf(_)) return _;
-    return fn(_);
-  });
+var re = /\.\w+|\w+ *\(|"[^"]*"|'[^']*'|\/([^/]+)\/|[a-zA-Z_]\w*/g;
+return str.replace(re, function(_) {
+	if ('(' == _[_.length - 1]) return fn(_);
+	if (!~props.indexOf(_)) return _;
+	return fn(_);
+});
 }
 
 /**
@@ -5309,14 +5312,14 @@ function map(str, props, fn) {
  */
 
 function unique(arr) {
-  var ret = [];
+var ret = [];
 
-  for (var i = 0; i < arr.length; i++) {
-    if (~ret.indexOf(arr[i])) continue;
-    ret.push(arr[i]);
-  }
+for (var i = 0; i < arr.length; i++) {
+	if (~ret.indexOf(arr[i])) continue;
+	ret.push(arr[i]);
+}
 
-  return ret;
+return ret;
 }
 
 /**
@@ -5324,55 +5327,55 @@ function unique(arr) {
  */
 
 function prefixed(str) {
-  return function(_){
-    return str + _;
-  };
+return function(_) {
+	return str + _;
+};
 }
 
 }, {}],
 78: [function(require, module, exports) {
 
 module.exports = [
-  'a',
-  'an',
-  'and',
-  'as',
-  'at',
-  'but',
-  'by',
-  'en',
-  'for',
-  'from',
-  'how',
-  'if',
-  'in',
-  'neither',
-  'nor',
-  'of',
-  'on',
-  'only',
-  'onto',
-  'out',
-  'or',
-  'per',
-  'so',
-  'than',
-  'that',
-  'the',
-  'to',
-  'until',
-  'up',
-  'upon',
-  'v',
-  'v.',
-  'versus',
-  'vs',
-  'vs.',
-  'via',
-  'when',
-  'with',
-  'without',
-  'yet'
+'a',
+'an',
+'and',
+'as',
+'at',
+'but',
+'by',
+'en',
+'for',
+'from',
+'how',
+'if',
+'in',
+'neither',
+'nor',
+'of',
+'on',
+'only',
+'onto',
+'out',
+'or',
+'per',
+'so',
+'than',
+'that',
+'the',
+'to',
+'until',
+'up',
+'upon',
+'v',
+'v.',
+'versus',
+'vs',
+'vs.',
+'via',
+'when',
+'with',
+'without',
+'yet'
 ];
 }, {}],
 52: [function(require, module, exports) {
@@ -5400,7 +5403,7 @@ module.exports = Alias;
  */
 
 function Alias (dictionary) {
-  Facade.call(this, dictionary);
+Facade.call(this, dictionary);
 }
 
 /**
@@ -5416,8 +5419,8 @@ inherit(Alias, Facade);
  */
 
 Alias.prototype.type =
-Alias.prototype.action = function () {
-  return 'alias';
+Alias.prototype.action = function() {
+return 'alias';
 };
 
 /**
@@ -5428,9 +5431,9 @@ Alias.prototype.action = function () {
  */
 
 Alias.prototype.from =
-Alias.prototype.previousId = function(){
-  return this.field('previousId')
-    || this.field('from');
+Alias.prototype.previousId = function() {
+return this.field('previousId')
+	|| this.field('from');
 };
 
 /**
@@ -5441,9 +5444,9 @@ Alias.prototype.previousId = function(){
  */
 
 Alias.prototype.to =
-Alias.prototype.userId = function(){
-  return this.field('userId')
-    || this.field('to');
+Alias.prototype.userId = function() {
+return this.field('userId')
+	|| this.field('to');
 };
 
 }, {"./utils":58,"./facade":51}],
@@ -5470,7 +5473,7 @@ module.exports = Group;
  */
 
 function Group (dictionary) {
-  Facade.call(this, dictionary);
+Facade.call(this, dictionary);
 }
 
 /**
@@ -5484,8 +5487,8 @@ inherit(Group, Facade);
  */
 
 Group.prototype.type =
-Group.prototype.action = function () {
-  return 'group';
+Group.prototype.action = function() {
+return 'group';
 };
 
 /**
@@ -5500,13 +5503,13 @@ Group.prototype.groupId = Facade.field('groupId');
  * @return {Date}
  */
 
-Group.prototype.created = function(){
-  var created = this.proxy('traits.createdAt')
-    || this.proxy('traits.created')
-    || this.proxy('properties.createdAt')
-    || this.proxy('properties.created');
+Group.prototype.created = function() {
+var created = this.proxy('traits.createdAt')
+	|| this.proxy('traits.created')
+	|| this.proxy('properties.createdAt')
+	|| this.proxy('properties.created');
 
-  if (created) return newDate(created);
+if (created) return newDate(created);
 };
 
 /**
@@ -5516,23 +5519,23 @@ Group.prototype.created = function(){
  * @return {Object}
  */
 
-Group.prototype.traits = function (aliases) {
-  var ret = this.properties();
-  var id = this.groupId();
-  aliases = aliases || {};
+Group.prototype.traits = function(aliases) {
+var ret = this.properties();
+var id = this.groupId();
+aliases = aliases || {};
 
-  if (id) ret.id = id;
+if (id) ret.id = id;
 
-  for (var alias in aliases) {
-    var value = null == this[alias]
-      ? this.proxy('traits.' + alias)
-      : this[alias]();
-    if (null == value) continue;
-    ret[aliases[alias]] = value;
-    delete ret[alias];
-  }
+for (var alias in aliases) {
+	var value = null == this[alias]
+	  ? this.proxy('traits.' + alias)
+	  : this[alias]();
+	if (null == value) continue;
+	ret[aliases[alias]] = value;
+	delete ret[alias];
+}
 
-  return ret;
+return ret;
 };
 
 /**
@@ -5543,10 +5546,10 @@ Group.prototype.traits = function (aliases) {
  * @return {Object}
  */
 
-Group.prototype.properties = function(){
-  return this.field('traits')
-    || this.field('properties')
-    || {};
+Group.prototype.properties = function() {
+return this.field('traits')
+	|| this.field('properties')
+	|| {};
 };
 
 }, {"./utils":58,"./facade":51,"new-date":21}],
@@ -5577,7 +5580,7 @@ module.exports = Identify;
  */
 
 function Identify (dictionary) {
-  Facade.call(this, dictionary);
+Facade.call(this, dictionary);
 }
 
 /**
@@ -5591,8 +5594,8 @@ inherit(Identify, Facade);
  */
 
 Identify.prototype.type =
-Identify.prototype.action = function () {
-  return 'identify';
+Identify.prototype.action = function() {
+return 'identify';
 };
 
 /**
@@ -5602,23 +5605,23 @@ Identify.prototype.action = function () {
  * @return {Object}
  */
 
-Identify.prototype.traits = function (aliases) {
-  var ret = this.field('traits') || {};
-  var id = this.userId();
-  aliases = aliases || {};
+Identify.prototype.traits = function(aliases) {
+var ret = this.field('traits') || {};
+var id = this.userId();
+aliases = aliases || {};
 
-  if (id) ret.id = id;
+if (id) ret.id = id;
 
-  for (var alias in aliases) {
-    var value = null == this[alias]
-      ? this.proxy('traits.' + alias)
-      : this[alias]();
-    if (null == value) continue;
-    ret[aliases[alias]] = value;
-    delete ret[alias];
-  }
+for (var alias in aliases) {
+	var value = null == this[alias]
+	  ? this.proxy('traits.' + alias)
+	  : this[alias]();
+	if (null == value) continue;
+	ret[aliases[alias]] = value;
+	delete ret[alias];
+}
 
-  return ret;
+return ret;
 };
 
 /**
@@ -5627,12 +5630,12 @@ Identify.prototype.traits = function (aliases) {
  * @return {String}
  */
 
-Identify.prototype.email = function () {
-  var email = this.proxy('traits.email');
-  if (email) return email;
+Identify.prototype.email = function() {
+var email = this.proxy('traits.email');
+if (email) return email;
 
-  var userId = this.userId();
-  if (isEmail(userId)) return userId;
+var userId = this.userId();
+if (isEmail(userId)) return userId;
 };
 
 /**
@@ -5642,9 +5645,9 @@ Identify.prototype.email = function () {
  * @return {Date or Undefined}
  */
 
-Identify.prototype.created = function () {
-  var created = this.proxy('traits.created') || this.proxy('traits.createdAt');
-  if (created) return newDate(created);
+Identify.prototype.created = function() {
+var created = this.proxy('traits.created') || this.proxy('traits.createdAt');
+if (created) return newDate(created);
 };
 
 /**
@@ -5653,11 +5656,11 @@ Identify.prototype.created = function () {
  * @return {Date or undefined}
  */
 
-Identify.prototype.companyCreated = function(){
-  var created = this.proxy('traits.company.created')
-    || this.proxy('traits.company.createdAt');
+Identify.prototype.companyCreated = function() {
+var created = this.proxy('traits.company.created')
+	|| this.proxy('traits.company.createdAt');
 
-  if (created) return newDate(created);
+if (created) return newDate(created);
 };
 
 /**
@@ -5667,13 +5670,13 @@ Identify.prototype.companyCreated = function(){
  * @return {String or Undefined}
  */
 
-Identify.prototype.name = function () {
-  var name = this.proxy('traits.name');
-  if (typeof name === 'string') return trim(name);
+Identify.prototype.name = function() {
+var name = this.proxy('traits.name');
+if (typeof name === 'string') return trim(name);
 
-  var firstName = this.firstName();
-  var lastName = this.lastName();
-  if (firstName && lastName) return trim(firstName + ' ' + lastName);
+var firstName = this.firstName();
+var lastName = this.lastName();
+if (firstName && lastName) return trim(firstName + ' ' + lastName);
 };
 
 /**
@@ -5683,12 +5686,12 @@ Identify.prototype.name = function () {
  * @return {String or Undefined}
  */
 
-Identify.prototype.firstName = function () {
-  var firstName = this.proxy('traits.firstName');
-  if (typeof firstName === 'string') return trim(firstName);
+Identify.prototype.firstName = function() {
+var firstName = this.proxy('traits.firstName');
+if (typeof firstName === 'string') return trim(firstName);
 
-  var name = this.proxy('traits.name');
-  if (typeof name === 'string') return trim(name).split(' ')[0];
+var name = this.proxy('traits.name');
+if (typeof name === 'string') return trim(name).split(' ')[0];
 };
 
 /**
@@ -5698,17 +5701,17 @@ Identify.prototype.firstName = function () {
  * @return {String or Undefined}
  */
 
-Identify.prototype.lastName = function () {
-  var lastName = this.proxy('traits.lastName');
-  if (typeof lastName === 'string') return trim(lastName);
+Identify.prototype.lastName = function() {
+var lastName = this.proxy('traits.lastName');
+if (typeof lastName === 'string') return trim(lastName);
 
-  var name = this.proxy('traits.name');
-  if (typeof name !== 'string') return;
+var name = this.proxy('traits.name');
+if (typeof name !== 'string') return;
 
-  var space = trim(name).indexOf(' ');
-  if (space === -1) return;
+var space = trim(name).indexOf(' ');
+if (space === -1) return;
 
-  return trim(name.substr(space + 1));
+return trim(name.substr(space + 1));
 };
 
 /**
@@ -5717,10 +5720,10 @@ Identify.prototype.lastName = function () {
  * @return {String or undefined}
  */
 
-Identify.prototype.uid = function(){
-  return this.userId()
-    || this.username()
-    || this.email();
+Identify.prototype.uid = function() {
+return this.userId()
+	|| this.username()
+	|| this.email();
 };
 
 /**
@@ -5729,9 +5732,9 @@ Identify.prototype.uid = function(){
  * @return {String}
  */
 
-Identify.prototype.description = function(){
-  return this.proxy('traits.description')
-    || this.proxy('traits.background');
+Identify.prototype.description = function() {
+return this.proxy('traits.description')
+	|| this.proxy('traits.background');
 };
 
 /**
@@ -5771,7 +5774,7 @@ module.exports = Track;
  */
 
 function Track (dictionary) {
-  Facade.call(this, dictionary);
+Facade.call(this, dictionary);
 }
 
 /**
@@ -5787,8 +5790,8 @@ inherit(Track, Facade);
  */
 
 Track.prototype.type =
-Track.prototype.action = function () {
-  return 'track';
+Track.prototype.action = function() {
+return 'track';
 };
 
 /**
@@ -5828,9 +5831,9 @@ Track.prototype.shipping = Facade.proxy('properties.shipping');
  * @api public
  */
 
-Track.prototype.orderId = function(){
-  return this.proxy('properties.id')
-    || this.proxy('properties.orderId');
+Track.prototype.orderId = function() {
+return this.proxy('properties.id')
+	|| this.proxy('properties.orderId');
 };
 
 /**
@@ -5839,17 +5842,17 @@ Track.prototype.orderId = function(){
  * @return {Number}
  */
 
-Track.prototype.subtotal = function(){
-  var subtotal = this.obj.properties.subtotal;
-  var total = this.total();
-  var n;
+Track.prototype.subtotal = function() {
+var subtotal = this.obj.properties.subtotal;
+var total = this.total();
+var n;
 
-  if (subtotal) return subtotal;
-  if (!total) return 0;
-  if (n = this.tax()) total -= n;
-  if (n = this.shipping()) total -= n;
+if (subtotal) return subtotal;
+if (!total) return 0;
+if (n = this.tax()) total -= n;
+if (n = this.shipping()) total -= n;
 
-  return total;
+return total;
 };
 
 /**
@@ -5858,9 +5861,9 @@ Track.prototype.subtotal = function(){
  * @return {Array}
  */
 
-Track.prototype.products = function(){
-  var props = this.obj.properties || {};
-  return props.products || [];
+Track.prototype.products = function() {
+var props = this.obj.properties || {};
+return props.products || [];
 };
 
 /**
@@ -5869,9 +5872,9 @@ Track.prototype.products = function(){
  * @return {Number}
  */
 
-Track.prototype.quantity = function(){
-  var props = this.obj.properties || {};
-  return props.quantity || 1;
+Track.prototype.quantity = function() {
+var props = this.obj.properties || {};
+return props.quantity || 1;
 };
 
 /**
@@ -5880,9 +5883,9 @@ Track.prototype.quantity = function(){
  * @return {String}
  */
 
-Track.prototype.currency = function(){
-  var props = this.obj.properties || {};
-  return props.currency || 'USD';
+Track.prototype.currency = function() {
+var props = this.obj.properties || {};
+return props.currency || 'USD';
 };
 
 /**
@@ -5899,20 +5902,20 @@ Track.prototype.query = Facade.proxy('options.query');
  * @return {Object}
  */
 
-Track.prototype.properties = function (aliases) {
-  var ret = this.field('properties') || {};
-  aliases = aliases || {};
+Track.prototype.properties = function(aliases) {
+var ret = this.field('properties') || {};
+aliases = aliases || {};
 
-  for (var alias in aliases) {
-    var value = null == this[alias]
-      ? this.proxy('properties.' + alias)
-      : this[alias]();
-    if (null == value) continue;
-    ret[aliases[alias]] = value;
-    delete ret[alias];
-  }
+for (var alias in aliases) {
+	var value = null == this[alias]
+	  ? this.proxy('properties.' + alias)
+	  : this[alias]();
+	if (null == value) continue;
+	ret[aliases[alias]] = value;
+	delete ret[alias];
+}
 
-  return ret;
+return ret;
 };
 
 /**
@@ -5921,11 +5924,11 @@ Track.prototype.properties = function (aliases) {
  * @return {String or Undefined}
  */
 
-Track.prototype.username = function () {
-  return this.proxy('traits.username') ||
-         this.proxy('properties.username') ||
-         this.userId() ||
-         this.sessionId();
+Track.prototype.username = function() {
+return this.proxy('traits.username') ||
+		 this.proxy('properties.username') ||
+		 this.userId() ||
+		 this.sessionId();
 };
 
 /**
@@ -5934,13 +5937,13 @@ Track.prototype.username = function () {
  * @return {String or Undefined}
  */
 
-Track.prototype.email = function () {
-  var email = this.proxy('traits.email');
-  email = email || this.proxy('properties.email');
-  if (email) return email;
+Track.prototype.email = function() {
+var email = this.proxy('traits.email');
+email = email || this.proxy('properties.email');
+if (email) return email;
 
-  var userId = this.userId();
-  if (isEmail(userId)) return userId;
+var userId = this.userId();
+if (isEmail(userId)) return userId;
 };
 
 /**
@@ -5962,16 +5965,16 @@ Track.prototype.email = function () {
  * @return {Number}
  */
 
-Track.prototype.revenue = function () {
-  var revenue = this.proxy('properties.revenue');
-  var event = this.event();
+Track.prototype.revenue = function() {
+var revenue = this.proxy('properties.revenue');
+var event = this.event();
 
-  // it's always revenue, unless it's called during an order completion.
-  if (!revenue && event && event.match(/completed ?order/i)) {
-    revenue = this.proxy('properties.total');
-  }
+// it's always revenue, unless it's called during an order completion.
+if (!revenue && event && event.match(/completed ?order/i)) {
+	revenue = this.proxy('properties.total');
+}
 
-  return currency(revenue);
+return currency(revenue);
 };
 
 /**
@@ -5980,11 +5983,11 @@ Track.prototype.revenue = function () {
  * @return {Number}
  */
 
-Track.prototype.cents = function(){
-  var revenue = this.revenue();
-  return 'number' != typeof revenue
-    ? this.value() || 0
-    : revenue * 100;
+Track.prototype.cents = function() {
+var revenue = this.revenue();
+return 'number' != typeof revenue
+	? this.value() || 0
+	: revenue * 100;
 };
 
 /**
@@ -5996,10 +5999,10 @@ Track.prototype.cents = function(){
  * @return {Facade}
  */
 
-Track.prototype.identify = function () {
-  var json = this.json();
-  json.traits = this.traits();
-  return new Identify(json);
+Track.prototype.identify = function() {
+var json = this.json();
+json.traits = this.traits();
+return new Identify(json);
 };
 
 /**
@@ -6010,14 +6013,14 @@ Track.prototype.identify = function () {
  */
 
 function currency(val) {
-  if (!val) return;
-  if (typeof val === 'number') return val;
-  if (typeof val !== 'string') return;
+if (!val) return;
+if (typeof val === 'number') return val;
+if (typeof val !== 'string') return;
 
-  val = val.replace(/\$/g, '');
-  val = parseFloat(val);
+val = val.replace(/\$/g, '');
+val = parseFloat(val);
 
-  if (!isNaN(val)) return val;
+if (!isNaN(val)) return val;
 }
 
 }, {"./utils":58,"./facade":51,"./identify":54,"is-email":19}],
@@ -6043,8 +6046,8 @@ module.exports = Page;
  *   @param {Object} options
  */
 
-function Page(dictionary){
-  Facade.call(this, dictionary);
+function Page(dictionary) {
+Facade.call(this, dictionary);
 }
 
 /**
@@ -6060,8 +6063,8 @@ inherit(Page, Facade);
  */
 
 Page.prototype.type =
-Page.prototype.action = function(){
-  return 'page';
+Page.prototype.action = function() {
+return 'page';
 };
 
 /**
@@ -6077,13 +6080,13 @@ Page.prototype.name = Facade.field('name');
  * @return {Object}
  */
 
-Page.prototype.properties = function(){
-  var props = this.field('properties') || {};
-  var category = this.category();
-  var name = this.name();
-  if (category) props.category = category;
-  if (name) props.name = name;
-  return props;
+Page.prototype.properties = function() {
+var props = this.field('properties') || {};
+var category = this.category();
+var name = this.name();
+if (category) props.category = category;
+if (name) props.name = name;
+return props;
 };
 
 /**
@@ -6092,12 +6095,12 @@ Page.prototype.properties = function(){
  * @return {String}
  */
 
-Page.prototype.fullName = function(){
-  var category = this.category();
-  var name = this.name();
-  return name && category
-    ? category + ' ' + name
-    : name;
+Page.prototype.fullName = function() {
+var category = this.category();
+var name = this.name();
+return name && category
+	? category + ' ' + name
+	: name;
 };
 
 /**
@@ -6106,10 +6109,10 @@ Page.prototype.fullName = function(){
  * @return {String}
  */
 
-Page.prototype.event = function(name){
-  return name
-    ? 'Viewed ' + name + ' Page'
-    : 'Loaded a Page';
+Page.prototype.event = function(name) {
+return name
+	? 'Viewed ' + name + ' Page'
+	: 'Loaded a Page';
 };
 
 /**
@@ -6119,12 +6122,12 @@ Page.prototype.event = function(name){
  * @return {Track}
  */
 
-Page.prototype.track = function(name){
-  var props = this.properties();
-  return new Track({
-    event: this.event(name),
-    properties: props
-  });
+Page.prototype.track = function(name) {
+var props = this.properties();
+return new Track({
+	event: this.event(name),
+	properties: props
+});
 };
 
 }, {"./utils":58,"./facade":51,"./track":55}],
@@ -6150,8 +6153,8 @@ module.exports = Screen;
  *   @param {Object} options
  */
 
-function Screen(dictionary){
-  Page.call(this, dictionary);
+function Screen(dictionary) {
+Page.call(this, dictionary);
 }
 
 /**
@@ -6168,8 +6171,8 @@ inherit(Screen, Page);
  */
 
 Screen.prototype.type =
-Screen.prototype.action = function(){
-  return 'screen';
+Screen.prototype.action = function() {
+return 'screen';
 };
 
 /**
@@ -6180,10 +6183,10 @@ Screen.prototype.action = function(){
  * @api public
  */
 
-Screen.prototype.event = function(name){
-  return name
-    ? 'Viewed ' + name + ' Screen'
-    : 'Loaded a Screen';
+Screen.prototype.event = function(name) {
+return name
+	? 'Viewed ' + name + ' Screen'
+	: 'Loaded a Screen';
 };
 
 /**
@@ -6194,12 +6197,12 @@ Screen.prototype.event = function(name){
  * @api public
  */
 
-Screen.prototype.track = function(name){
-  var props = this.properties();
-  return new Track({
-    event: this.event(name),
-    properties: props
-  });
+Screen.prototype.track = function(name) {
+var props = this.properties();
+return new Track({
+	event: this.event(name),
+	properties: props
+});
 };
 
 }, {"./utils":58,"./page":56,"./track":55}],
@@ -6221,9 +6224,9 @@ var plugins = require('./integrations.js');
  * Expose the integrations, using their own `name` from their `prototype`.
  */
 
-each(plugins, function(plugin){
-  var name = (plugin.Integration || plugin).prototype.name;
-  exports[name] = plugin;
+each(plugins, function(plugin) {
+var name = (plugin.Integration || plugin).prototype.name;
+exports[name] = plugin;
 });
 
 
@@ -6236,82 +6239,82 @@ each(plugins, function(plugin){
  */
 
 module.exports = [
-  require('./lib/adroll'),
-  require('./lib/adwords'),
-  require('./lib/alexa'),
-  require('./lib/amplitude'),
-  require('./lib/appcues'),
-  require('./lib/awesm'),
-  require('./lib/awesomatic'),
-  require('./lib/bing-ads'),
-  require('./lib/bronto'),
-  require('./lib/bugherd'),
-  require('./lib/bugsnag'),
-  require('./lib/chartbeat'),
-  require('./lib/churnbee'),
-  require('./lib/clicktale'),
-  require('./lib/clicky'),
-  require('./lib/comscore'),
-  require('./lib/crazy-egg'),
-  require('./lib/curebit'),
-  require('./lib/customerio'),
-  require('./lib/drip'),
-  require('./lib/errorception'),
-  require('./lib/evergage'),
-  require('./lib/facebook-ads'),
-  require('./lib/foxmetrics'),
-  require('./lib/frontleaf'),
-  require('./lib/gauges'),
-  require('./lib/get-satisfaction'),
-  require('./lib/google-analytics'),
-  require('./lib/google-tag-manager'),
-  require('./lib/gosquared'),
-  require('./lib/heap'),
-  require('./lib/hellobar'),
-  require('./lib/hittail'),
-  require('./lib/hublo'),
-  require('./lib/hubspot'),
-  require('./lib/improvely'),
-  require('./lib/insidevault'),
-  require('./lib/inspectlet'),
-  require('./lib/intercom'),
-  require('./lib/keen-io'),
-  require('./lib/kenshoo'),
-  require('./lib/kissmetrics'),
-  require('./lib/klaviyo'),
-  require('./lib/leadlander'),
-  require('./lib/livechat'),
-  require('./lib/lucky-orange'),
-  require('./lib/lytics'),
-  require('./lib/mixpanel'),
-  require('./lib/mojn'),
-  require('./lib/mouseflow'),
-  require('./lib/mousestats'),
-  require('./lib/navilytics'),
-  require('./lib/olark'),
-  require('./lib/optimizely'),
-  require('./lib/perfect-audience'),
-  require('./lib/pingdom'),
-  require('./lib/piwik'),
-  require('./lib/preact'),
-  require('./lib/qualaroo'),
-  require('./lib/quantcast'),
-  require('./lib/rollbar'),
-  require('./lib/saasquatch'),
-  require('./lib/sentry'),
-  require('./lib/snapengage'),
-  require('./lib/spinnakr'),
-  require('./lib/tapstream'),
-  require('./lib/trakio'),
-  require('./lib/twitter-ads'),
-  require('./lib/usercycle'),
-  require('./lib/userfox'),
-  require('./lib/uservoice'),
-  require('./lib/vero'),
-  require('./lib/visual-website-optimizer'),
-  require('./lib/webengage'),
-  require('./lib/woopra'),
-  require('./lib/yandex-metrica')
+require('./lib/adroll'),
+require('./lib/adwords'),
+require('./lib/alexa'),
+require('./lib/amplitude'),
+require('./lib/appcues'),
+require('./lib/awesm'),
+require('./lib/awesomatic'),
+require('./lib/bing-ads'),
+require('./lib/bronto'),
+require('./lib/bugherd'),
+require('./lib/bugsnag'),
+require('./lib/chartbeat'),
+require('./lib/churnbee'),
+require('./lib/clicktale'),
+require('./lib/clicky'),
+require('./lib/comscore'),
+require('./lib/crazy-egg'),
+require('./lib/curebit'),
+require('./lib/customerio'),
+require('./lib/drip'),
+require('./lib/errorception'),
+require('./lib/evergage'),
+require('./lib/facebook-ads'),
+require('./lib/foxmetrics'),
+require('./lib/frontleaf'),
+require('./lib/gauges'),
+require('./lib/get-satisfaction'),
+require('./lib/google-analytics'),
+require('./lib/google-tag-manager'),
+require('./lib/gosquared'),
+require('./lib/heap'),
+require('./lib/hellobar'),
+require('./lib/hittail'),
+require('./lib/hublo'),
+require('./lib/hubspot'),
+require('./lib/improvely'),
+require('./lib/insidevault'),
+require('./lib/inspectlet'),
+require('./lib/intercom'),
+require('./lib/keen-io'),
+require('./lib/kenshoo'),
+require('./lib/kissmetrics'),
+require('./lib/klaviyo'),
+require('./lib/leadlander'),
+require('./lib/livechat'),
+require('./lib/lucky-orange'),
+require('./lib/lytics'),
+require('./lib/mixpanel'),
+require('./lib/mojn'),
+require('./lib/mouseflow'),
+require('./lib/mousestats'),
+require('./lib/navilytics'),
+require('./lib/olark'),
+require('./lib/optimizely'),
+require('./lib/perfect-audience'),
+require('./lib/pingdom'),
+require('./lib/piwik'),
+require('./lib/preact'),
+require('./lib/qualaroo'),
+require('./lib/quantcast'),
+require('./lib/rollbar'),
+require('./lib/saasquatch'),
+require('./lib/sentry'),
+require('./lib/snapengage'),
+require('./lib/spinnakr'),
+require('./lib/tapstream'),
+require('./lib/trakio'),
+require('./lib/twitter-ads'),
+require('./lib/usercycle'),
+require('./lib/userfox'),
+require('./lib/uservoice'),
+require('./lib/vero'),
+require('./lib/visual-website-optimizer'),
+require('./lib/webengage'),
+require('./lib/woopra'),
+require('./lib/yandex-metrica')
 ];
 
 }, {"./lib/adroll":83,"./lib/adwords":84,"./lib/alexa":85,"./lib/amplitude":86,"./lib/appcues":87,"./lib/awesm":88,"./lib/awesomatic":89,"./lib/bing-ads":90,"./lib/bronto":91,"./lib/bugherd":92,"./lib/bugsnag":93,"./lib/chartbeat":94,"./lib/churnbee":95,"./lib/clicktale":96,"./lib/clicky":97,"./lib/comscore":98,"./lib/crazy-egg":99,"./lib/curebit":100,"./lib/customerio":101,"./lib/drip":102,"./lib/errorception":103,"./lib/evergage":104,"./lib/facebook-ads":105,"./lib/foxmetrics":106,"./lib/frontleaf":107,"./lib/gauges":108,"./lib/get-satisfaction":109,"./lib/google-analytics":110,"./lib/google-tag-manager":111,"./lib/gosquared":112,"./lib/heap":113,"./lib/hellobar":114,"./lib/hittail":115,"./lib/hublo":116,"./lib/hubspot":117,"./lib/improvely":118,"./lib/insidevault":119,"./lib/inspectlet":120,"./lib/intercom":121,"./lib/keen-io":122,"./lib/kenshoo":123,"./lib/kissmetrics":124,"./lib/klaviyo":125,"./lib/leadlander":126,"./lib/livechat":127,"./lib/lucky-orange":128,"./lib/lytics":129,"./lib/mixpanel":130,"./lib/mojn":131,"./lib/mouseflow":132,"./lib/mousestats":133,"./lib/navilytics":134,"./lib/olark":135,"./lib/optimizely":136,"./lib/perfect-audience":137,"./lib/pingdom":138,"./lib/piwik":139,"./lib/preact":140,"./lib/qualaroo":141,"./lib/quantcast":142,"./lib/rollbar":143,"./lib/saasquatch":144,"./lib/sentry":145,"./lib/snapengage":146,"./lib/spinnakr":147,"./lib/tapstream":148,"./lib/trakio":149,"./lib/twitter-ads":150,"./lib/usercycle":151,"./lib/userfox":152,"./lib/uservoice":153,"./lib/vero":154,"./lib/visual-website-optimizer":155,"./lib/webengage":156,"./lib/woopra":157,"./lib/yandex-metrica":158}],
@@ -6339,16 +6342,16 @@ var has = Object.prototype.hasOwnProperty;
  */
 
 var AdRoll = module.exports = integration('AdRoll')
-  .assumesPageview()
-  .global('__adroll_loaded')
-  .global('adroll_adv_id')
-  .global('adroll_pix_id')
-  .global('adroll_custom_data')
-  .option('advId', '')
-  .option('pixId', '')
-  .tag('http', '<script src="http://a.adroll.com/j/roundtrip.js">')
-  .tag('https', '<script src="https://s.adroll.com/j/roundtrip.js">')
-  .mapping('events');
+.assumesPageview()
+.global('__adroll_loaded')
+.global('adroll_adv_id')
+.global('adroll_pix_id')
+.global('adroll_custom_data')
+.option('advId', '')
+.option('pixId', '')
+.tag('http', '<script src="http://a.adroll.com/j/roundtrip.js">')
+.tag('https', '<script src="https://s.adroll.com/j/roundtrip.js">')
+.mapping('events');
 
 /**
  * Initialize.
@@ -6359,12 +6362,12 @@ var AdRoll = module.exports = integration('AdRoll')
  * @param {Object} page
  */
 
-AdRoll.prototype.initialize = function(page){
-  window.adroll_adv_id = this.options.advId;
-  window.adroll_pix_id = this.options.pixId;
-  window.__adroll_loaded = true;
-  var name = useHttps() ? 'https' : 'http';
-  this.load(name, this.ready);
+AdRoll.prototype.initialize = function(page) {
+window.adroll_adv_id = this.options.advId;
+window.adroll_pix_id = this.options.pixId;
+window.__adroll_loaded = true;
+var name = useHttps() ? 'https' : 'http';
+this.load(name, this.ready);
 };
 
 /**
@@ -6373,8 +6376,8 @@ AdRoll.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-AdRoll.prototype.loaded = function(){
-  return window.__adroll;
+AdRoll.prototype.loaded = function() {
+return window.__adroll;
 };
 
 /**
@@ -6385,9 +6388,9 @@ AdRoll.prototype.loaded = function(){
  * @param {Page} page
  */
 
-AdRoll.prototype.page = function(page){
-  var name = page.fullName();
-  this.track(page.track(name));
+AdRoll.prototype.page = function(page) {
+var name = page.fullName();
+this.track(page.track(name));
 };
 
 /**
@@ -6396,31 +6399,31 @@ AdRoll.prototype.page = function(page){
  * @param {Track} track
  */
 
-AdRoll.prototype.track = function(track){
-  var event = track.event();
-  var user = this.analytics.user();
-  var events = this.events(event);
-  var total = track.revenue() || track.total() || 0;
-  var orderId = track.orderId() || 0;
+AdRoll.prototype.track = function(track) {
+var event = track.event();
+var user = this.analytics.user();
+var events = this.events(event);
+var total = track.revenue() || track.total() || 0;
+var orderId = track.orderId() || 0;
 
-  each(events, function(event){
-    var data = {};
-    if (user.id()) data.user_id = user.id();
-    data.adroll_conversion_value_in_dollars = total;
-    data.order_id = orderId;
-    // the adroll interface only allows for
-    // segment names which are snake cased.
-    data.adroll_segments = snake(event);
-    window.__adroll.record_user(data);
-  });
+each(events, function(event) {
+	var data = {};
+	if (user.id()) data.user_id = user.id();
+	data.adroll_conversion_value_in_dollars = total;
+	data.order_id = orderId;
+	// the adroll interface only allows for
+	// segment names which are snake cased.
+	data.adroll_segments = snake(event);
+	window.__adroll.record_user(data);
+});
 
-  // no events found
-  if (!events.length) {
-    var data = {};
-    if (user.id()) data.user_id = user.id();
-    data.adroll_segments = snake(event);
-    window.__adroll.record_user(data);
-  }
+// no events found
+if (!events.length) {
+	var data = {};
+	if (user.id()) data.user_id = user.id();
+	data.adroll_segments = snake(event);
+	window.__adroll.record_user(data);
+}
 };
 
 }, {"segmentio/analytics.js-integration":159,"to-snake-case":160,"use-https":161,"each":5,"is":18}],
@@ -6452,38 +6455,38 @@ module.exports = createIntegration;
  * @return {Function} Integration
  */
 
-function createIntegration(name){
+function createIntegration(name) {
 
-  /**
-   * Initialize a new `Integration`.
-   *
-   * @param {Object} options
-   */
+/**
+* Initialize a new `Integration`.
+*
+* @param {Object} options
+*/
 
-  function Integration(options){
-    if (options && options.addIntegration) {
-      // plugin
-      return options.addIntegration(Integration);
-    }
-    this.debug = debug('analytics:integration:' + slug(name));
-    this.options = defaults(clone(options) || {}, this.defaults);
-    this._queue = [];
-    this.once('ready', bind(this, this.flush));
+function Integration(options) {
+	if (options && options.addIntegration) {
+	  // plugin
+	  return options.addIntegration(Integration);
+	}
+	this.debug = debug('analytics:integration:' + slug(name));
+	this.options = defaults(clone(options) || {}, this.defaults);
+	this._queue = [];
+	this.once('ready', bind(this, this.flush));
 
-    Integration.emit('construct', this);
-    this.ready = bind(this, this.ready);
-    this._wrapInitialize();
-    this._wrapPage();
-    this._wrapTrack();
-  }
+	Integration.emit('construct', this);
+	this.ready = bind(this, this.ready);
+	this._wrapInitialize();
+	this._wrapPage();
+	this._wrapTrack();
+}
 
-  Integration.prototype.defaults = {};
-  Integration.prototype.globals = [];
-  Integration.prototype.templates = {};
-  Integration.prototype.name = name;
-  for (var key in statics) Integration[key] = statics[key];
-  for (var key in protos) Integration.prototype[key] = protos[key];
-  return Integration;
+Integration.prototype.defaults = {};
+Integration.prototype.globals = [];
+Integration.prototype.templates = {};
+Integration.prototype.name = name;
+for (var key in statics) Integration[key] = statics[key];
+for (var key in protos) Integration.prototype[key] = protos[key];
+return Integration;
 }
 
 }, {"./protos":162,"./statics":163,"bind":164,"callback":12,"clone":14,"debug":165,"defaults":16,"slug":166}],
@@ -6524,9 +6527,9 @@ Emitter(exports);
  * Initialize.
  */
 
-exports.initialize = function(){
-  var ready = this.ready;
-  tick(ready);
+exports.initialize = function() {
+var ready = this.ready;
+tick(ready);
 };
 
 /**
@@ -6536,8 +6539,8 @@ exports.initialize = function(){
  * @api private
  */
 
-exports.loaded = function(){
-  return false;
+exports.loaded = function() {
+return false;
 };
 
 /**
@@ -6546,8 +6549,8 @@ exports.loaded = function(){
  * @param {Function} cb
  */
 
-exports.load = function(cb){
-  callback.async(cb);
+exports.load = function(cb) {
+callback.async(cb);
 };
 
 /**
@@ -6588,35 +6591,35 @@ exports.track = function(track){};
  * @api public
  */
 
-exports.map = function(obj, str){
-  var a = normalize(str);
-  var ret = [];
+exports.map = function(obj, str) {
+var a = normalize(str);
+var ret = [];
 
-  // noop
-  if (!obj) return ret;
+// noop
+if (!obj) return ret;
 
-  // object
-  if ('object' == type(obj)) {
-    for (var k in obj) {
-      var item = obj[k];
-      var b = normalize(k);
-      if (b == a) ret.push(item);
-    }
-  }
+// object
+if ('object' == type(obj)) {
+	for (var k in obj) {
+	  var item = obj[k];
+	  var b = normalize(k);
+	  if (b == a) ret.push(item);
+	}
+}
 
-  // array
-  if ('array' == type(obj)) {
-    if (!obj.length) return ret;
-    if (!obj[0].key) return ret;
+// array
+if ('array' == type(obj)) {
+	if (!obj.length) return ret;
+	if (!obj[0].key) return ret;
 
-    for (var i = 0; i < obj.length; ++i) {
-      var item = obj[i];
-      var b = normalize(item.key);
-      if (b == a) ret.push(item.value);
-    }
-  }
+	for (var i = 0; i < obj.length; ++i) {
+	  var item = obj[i];
+	  var b = normalize(item.key);
+	  if (b == a) ret.push(item.value);
+	}
+}
 
-  return ret;
+return ret;
 };
 
 /**
@@ -6629,20 +6632,20 @@ exports.map = function(obj, str){
  * @api private
  */
 
-exports.invoke = function(method){
-  if (!this[method]) return;
-  var args = [].slice.call(arguments, 1);
-  if (!this._ready) return this.queue(method, args);
-  var ret;
+exports.invoke = function(method) {
+if (!this[method]) return;
+var args = [].slice.call(arguments, 1);
+if (!this._ready) return this.queue(method, args);
+var ret;
 
-  try {
-    this.debug('%s with %o', method, args);
-    ret = this[method].apply(this, args);
-  } catch (e) {
-    this.debug('error %o calling %s with %o', e, method, args);
-  }
+try {
+	this.debug('%s with %o', method, args);
+	ret = this[method].apply(this, args);
+} catch (e) {
+	this.debug('error %o calling %s with %o', e, method, args);
+}
 
-  return ret;
+return ret;
 };
 
 /**
@@ -6654,12 +6657,12 @@ exports.invoke = function(method){
  * @api private
  */
 
-exports.queue = function(method, args){
-  if ('page' == method && this._assumesPageview && !this._initialized) {
-    return this.page.apply(this, args);
-  }
+exports.queue = function(method, args) {
+if ('page' == method && this._assumesPageview && !this._initialized) {
+	return this.page.apply(this, args);
+}
 
-  this._queue.push({ method: method, args: args });
+this._queue.push({ method: method, args: args });
 };
 
 /**
@@ -6668,10 +6671,10 @@ exports.queue = function(method, args){
  * @api private
  */
 
-exports.flush = function(){
-  this._ready = true;
-  var call;
-  while (call = this._queue.shift()) this[call.method].apply(this, call.args);
+exports.flush = function() {
+this._ready = true;
+var call;
+while (call = this._queue.shift()) this[call.method].apply(this, call.args);
 };
 
 /**
@@ -6680,12 +6683,12 @@ exports.flush = function(){
  * @api private
  */
 
-exports.reset = function(){
-  for (var i = 0, key; key = this.globals[i]; i++) window[key] = undefined;
-  window.setTimeout = setTimeout;
-  window.setInterval = setInterval;
-  window.onerror = onerror;
-  window.onload = onload;
+exports.reset = function() {
+for (var i = 0, key; key = this.globals[i]; i++) window[key] = undefined;
+window.setTimeout = setTimeout;
+window.setInterval = setInterval;
+window.onerror = onerror;
+window.onload = onload;
 };
 
 /**
@@ -6695,38 +6698,38 @@ exports.reset = function(){
  * @param {Function} [fn]
  */
 
-exports.load = function(name, locals, fn){
-  if ('function' == typeof name) fn = name, locals = null, name = null;
-  if (name && 'object' == typeof name) fn = locals, locals = name, name = null;
-  if ('function' == typeof locals) fn = locals, locals = null;
-  name = name || 'library';
-  locals = locals || {};
-  locals = this.locals(locals);
-  var template = this.templates[name];
-  assert(template, fmt('Template "%s" not defined.', name));
-  var attrs = render(template, locals);
-  var el;
+exports.load = function(name, locals, fn) {
+if ('function' == typeof name) fn = name, locals = null, name = null;
+if (name && 'object' == typeof name) fn = locals, locals = name, name = null;
+if ('function' == typeof locals) fn = locals, locals = null;
+name = name || 'library';
+locals = locals || {};
+locals = this.locals(locals);
+var template = this.templates[name];
+assert(template, fmt('Template "%s" not defined.', name));
+var attrs = render(template, locals);
+var el;
 
-  switch (template.type) {
-    case 'img':
-      attrs.width = 1;
-      attrs.height = 1;
-      el = loadImage(attrs, fn);
-      break;
-    case 'script':
-      el = loadScript(attrs, fn);
-      // TODO: hack until refactoring load-script
-      delete attrs.src;
-      each(attrs, function(key, val){
-        el.setAttribute(key, val);
-      });
-      break;
-    case 'iframe':
-      el = loadIframe(attrs, fn);
-      break;
-  }
+switch (template.type) {
+	case 'img':
+	  attrs.width = 1;
+	  attrs.height = 1;
+	  el = loadImage(attrs, fn);
+	  break;
+	case 'script':
+	  el = loadScript(attrs, fn);
+	  // TODO: hack until refactoring load-script
+	  delete attrs.src;
+	  each(attrs, function(key, val) {
+		el.setAttribute(key, val);
+	  });
+	  break;
+	case 'iframe':
+	  el = loadIframe(attrs, fn);
+	  break;
+}
 
-  return el;
+return el;
 };
 
 /**
@@ -6739,22 +6742,22 @@ exports.load = function(name, locals, fn){
  * @return {Object}
  */
 
-exports.locals = function(locals){
-  locals = locals || {};
-  var cache = Math.floor(new Date().getTime() / 3600000);
-  if (!locals.hasOwnProperty('cache')) locals.cache = cache;
-  each(this.options, function(key, val){
-    if (!locals.hasOwnProperty(key)) locals[key] = val;
-  });
-  return locals;
+exports.locals = function(locals) {
+locals = locals || {};
+var cache = Math.floor(new Date().getTime() / 3600000);
+if (!locals.hasOwnProperty('cache')) locals.cache = cache;
+each(this.options, function(key, val) {
+	if (!locals.hasOwnProperty(key)) locals[key] = val;
+});
+return locals;
 };
 
 /**
  * Simple way to emit ready.
  */
 
-exports.ready = function(){
-  this.emit('ready');
+exports.ready = function() {
+this.emit('ready');
 };
 
 /**
@@ -6764,17 +6767,17 @@ exports.ready = function(){
  * @api private
  */
 
-exports._wrapInitialize = function(){
-  var initialize = this.initialize;
-  this.initialize = function(){
-    this.debug('initialize');
-    this._initialized = true;
-    var ret = initialize.apply(this, arguments);
-    this.emit('initialize');
-    return ret;
-  };
+exports._wrapInitialize = function() {
+var initialize = this.initialize;
+this.initialize = function() {
+	this.debug('initialize');
+	this._initialized = true;
+	var ret = initialize.apply(this, arguments);
+	this.emit('initialize');
+	return ret;
+};
 
-  if (this._assumesPageview) this.initialize = after(2, this.initialize);
+if (this._assumesPageview) this.initialize = after(2, this.initialize);
 };
 
 /**
@@ -6784,15 +6787,15 @@ exports._wrapInitialize = function(){
  * @api private
  */
 
-exports._wrapPage = function(){
-  var page = this.page;
-  this.page = function(){
-    if (this._assumesPageview && !this._initialized) {
-      return this.initialize.apply(this, arguments);
-    }
+exports._wrapPage = function() {
+var page = this.page;
+this.page = function() {
+	if (this._assumesPageview && !this._initialized) {
+	  return this.initialize.apply(this, arguments);
+	}
 
-    return page.apply(this, arguments);
-  };
+	return page.apply(this, arguments);
+};
 };
 
 /**
@@ -6802,46 +6805,46 @@ exports._wrapPage = function(){
  * @api private
  */
 
-exports._wrapTrack = function(){
-  var t = this.track;
-  this.track = function(track){
-    var event = track.event();
-    var called;
-    var ret;
+exports._wrapTrack = function() {
+var t = this.track;
+this.track = function(track) {
+	var event = track.event();
+	var called;
+	var ret;
 
-    for (var method in events) {
-      var regexp = events[method];
-      if (!this[method]) continue;
-      if (!regexp.test(event)) continue;
-      ret = this[method].apply(this, arguments);
-      called = true;
-      break;
-    }
+	for (var method in events) {
+	  var regexp = events[method];
+	  if (!this[method]) continue;
+	  if (!regexp.test(event)) continue;
+	  ret = this[method].apply(this, arguments);
+	  called = true;
+	  break;
+	}
 
-    if (!called) ret = t.apply(this, arguments);
-    return ret;
-  };
+	if (!called) ret = t.apply(this, arguments);
+	return ret;
+};
 };
 
 function loadImage(attrs, fn) {
-  fn = fn || function(){};
-  var img = new Image;
-  img.onerror = error(fn, 'failed to load pixel', img);
-  img.onload = function(){ fn(); };
-  img.src = attrs.src;
-  img.width = 1;
-  img.height = 1;
-  return img;
+fn = fn || function(){};
+var img = new Image;
+img.onerror = error(fn, 'failed to load pixel', img);
+img.onload = function(){ fn(); };
+img.src = attrs.src;
+img.width = 1;
+img.height = 1;
+return img;
 }
 
-function error(fn, message, img){
-  return function(e){
-    e = e || window.event;
-    var err = new Error(message);
-    err.event = e;
-    err.source = img;
-    fn(err);
-  };
+function error(fn, message, img) {
+return function(e) {
+	e = e || window.event;
+	var err = new Error(message);
+	err.event = e;
+	err.source = img;
+	fn(err);
+};
 }
 
 /**
@@ -6853,13 +6856,13 @@ function error(fn, message, img){
  */
 
 function render(template, locals) {
-  var attrs = {};
-  each(template.attrs, function(key, val){
-    attrs[key] = val.replace(/\{\{\ *(\w+)\ *\}\}/g, function(_, $1){
-      return locals[$1];
-    });
-  });
-  return attrs;
+var attrs = {};
+each(template.attrs, function(key, val) {
+	attrs[key] = val.replace(/\{\{\ *(\w+)\ *\}\}/g, function(_, $1) {
+	  return locals[$1];
+	});
+});
+return attrs;
 }
 }, {"./events":167,"segmentio/load-script":168,"to-no-case":169,"callback":12,"emitter":17,"next-tick":45,"assert":170,"after":10,"component/each":79,"type":35,"yields/fmt":171}],
 167: [function(require, module, exports) {
@@ -6869,10 +6872,10 @@ function render(template, locals) {
  */
 
 module.exports = {
-  removedProduct: /removed[ _]?product/i,
-  viewedProduct: /viewed[ _]?product/i,
-  addedProduct: /added[ _]?product/i,
-  completedOrder: /completed[ _]?order/i
+removedProduct: /removed[ _]?product/i,
+viewedProduct: /viewed[ _]?product/i,
+addedProduct: /added[ _]?product/i,
+completedOrder: /completed[ _]?order/i
 };
 
 }, {}],
@@ -6894,48 +6897,48 @@ var type = require('type');
  * @api public
  */
 
-module.exports = function loadScript(options, fn){
-  if (!options) throw new Error('Cant load nothing...');
+module.exports = function loadScript(options, fn) {
+if (!options) throw new Error('Cant load nothing...');
 
-  // Allow for the simplest case, just passing a `src` string.
-  if ('string' == type(options)) options = { src : options };
+// Allow for the simplest case, just passing a `src` string.
+if ('string' == type(options)) options = { src : options };
 
-  var https = document.location.protocol === 'https:' ||
-              document.location.protocol === 'chrome-extension:';
+var https = document.location.protocol === 'https:' ||
+			  document.location.protocol === 'chrome-extension:';
 
-  // If you use protocol relative URLs, third-party scripts like Google
-  // Analytics break when testing with `file:` so this fixes that.
-  if (options.src && options.src.indexOf('//') === 0) {
-    options.src = https ? 'https:' + options.src : 'http:' + options.src;
-  }
+// If you use protocol relative URLs, third-party scripts like Google
+// Analytics break when testing with `file:` so this fixes that.
+if (options.src && options.src.indexOf('//') === 0) {
+	options.src = https ? 'https:' + options.src : 'http:' + options.src;
+}
 
-  // Allow them to pass in different URLs depending on the protocol.
-  if (https && options.https) options.src = options.https;
-  else if (!https && options.http) options.src = options.http;
+// Allow them to pass in different URLs depending on the protocol.
+if (https && options.https) options.src = options.https;
+else if (!https && options.http) options.src = options.http;
 
-  // Make the `<script>` element and insert it before the first script on the
-  // page, which is guaranteed to exist since this Javascript is running.
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.async = true;
-  script.src = options.src;
+// Make the `<script>` element and insert it before the first script on the
+// page, which is guaranteed to exist since this Javascript is running.
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.async = true;
+script.src = options.src;
 
-  // If we have a fn, attach event handlers, even in IE. Based off of
-  // the Third-Party Javascript script loading example:
-  // https://github.com/thirdpartyjs/thirdpartyjs-code/blob/master/examples/templates/02/loading-files/index.html
-  if ('function' == type(fn)) {
-    onload(script, fn);
-  }
+// If we have a fn, attach event handlers, even in IE. Based off of
+// the Third-Party Javascript script loading example:
+// https://github.com/thirdpartyjs/thirdpartyjs-code/blob/master/examples/templates/02/loading-files/index.html
+if ('function' == type(fn)) {
+	onload(script, fn);
+}
 
-  tick(function(){
-    // Append after event listeners are attached for IE.
-    var firstScript = document.getElementsByTagName('script')[0];
-    firstScript.parentNode.insertBefore(script, firstScript);
-  });
+tick(function() {
+	// Append after event listeners are attached for IE.
+	var firstScript = document.getElementsByTagName('script')[0];
+	firstScript.parentNode.insertBefore(script, firstScript);
+});
 
-  // Return the script element in case they want to do anything special, like
-  // give it an ID or attributes.
-  return script;
+// Return the script element in case they want to do anything special, like
+// give it an ID or attributes.
+return script;
 };
 }, {"script-onload":172,"next-tick":45,"type":35}],
 172: [function(require, module, exports) {
@@ -6950,10 +6953,10 @@ module.exports = function loadScript(options, fn){
  * @api public
  */
 
-module.exports = function(el, fn){
-  return el.addEventListener
-    ? add(el, fn)
-    : attach(el, fn);
+module.exports = function(el, fn) {
+return el.addEventListener
+	? add(el, fn)
+	: attach(el, fn);
 };
 
 /**
@@ -6964,13 +6967,13 @@ module.exports = function(el, fn){
  * @api private
  */
 
-function add(el, fn){
-  el.addEventListener('load', function(_, e){ fn(null, e); }, false);
-  el.addEventListener('error', function(e){
-    var err = new Error('failed to load the script "' + el.src + '"');
-    err.event = e;
-    fn(err);
-  }, false);
+function add(el, fn) {
+el.addEventListener('load', function(_, e){ fn(null, e); }, false);
+el.addEventListener('error', function(e) {
+	var err = new Error('failed to load the script "' + el.src + '"');
+	err.event = e;
+	fn(err);
+}, false);
 }
 
 /**
@@ -6981,11 +6984,11 @@ function add(el, fn){
  * @api private
  */
 
-function attach(el, fn){
-  el.attachEvent('onreadystatechange', function(e){
-    if (!/complete|loaded/.test(el.readyState)) return;
-    fn(null, e);
-  });
+function attach(el, fn) {
+el.attachEvent('onreadystatechange', function(e) {
+	if (!/complete|loaded/.test(el.readyState)) return;
+	fn(null, e);
+});
 }
 
 }, {}],
@@ -7015,9 +7018,9 @@ var hasSeparator = /[\W_]/;
  */
 
 function toNoCase (string) {
-  if (hasSpace.test(string)) return string.toLowerCase();
-  if (hasSeparator.test(string)) return unseparate(string).toLowerCase();
-  return uncamelize(string).toLowerCase();
+if (hasSpace.test(string)) return string.toLowerCase();
+if (hasSeparator.test(string)) return unseparate(string).toLowerCase();
+return uncamelize(string).toLowerCase();
 }
 
 
@@ -7036,9 +7039,9 @@ var separatorSplitter = /[\W_]+(.|$)/g;
  */
 
 function unseparate (string) {
-  return string.replace(separatorSplitter, function (m, next) {
-    return next ? ' ' + next : '';
-  });
+return string.replace(separatorSplitter, function(m, next) {
+	return next ? ' ' + next : '';
+});
 }
 
 
@@ -7057,9 +7060,9 @@ var camelSplitter = /(.)([A-Z]+)/g;
  */
 
 function uncamelize (string) {
-  return string.replace(camelSplitter, function (m, previous, uppers) {
-    return previous + ' ' + uppers.toLowerCase().split('').join(' ');
-  });
+return string.replace(camelSplitter, function(m, previous, uppers) {
+	return previous + ' ' + uppers.toLowerCase().split('').join(' ');
+});
 }
 }, {}],
 170: [function(require, module, exports) {
@@ -7080,9 +7083,9 @@ var stack = require('stack');
  * @api public
  */
 
-module.exports = exports = function (expr, msg) {
-  if (expr) return;
-  throw new Error(msg || message());
+module.exports = exports = function(expr, msg) {
+if (expr) return;
+throw new Error(msg || message());
 };
 
 /**
@@ -7094,9 +7097,9 @@ module.exports = exports = function (expr, msg) {
  * @api public
  */
 
-exports.equal = function (actual, expected, msg) {
-  if (actual == expected) return;
-  throw new Error(msg || fmt('Expected %o to equal %o.', actual, expected));
+exports.equal = function(actual, expected, msg) {
+if (actual == expected) return;
+throw new Error(msg || fmt('Expected %o to equal %o.', actual, expected));
 };
 
 /**
@@ -7108,9 +7111,9 @@ exports.equal = function (actual, expected, msg) {
  * @api public
  */
 
-exports.notEqual = function (actual, expected, msg) {
-  if (actual != expected) return;
-  throw new Error(msg || fmt('Expected %o not to equal %o.', actual, expected));
+exports.notEqual = function(actual, expected, msg) {
+if (actual != expected) return;
+throw new Error(msg || fmt('Expected %o not to equal %o.', actual, expected));
 };
 
 /**
@@ -7122,9 +7125,9 @@ exports.notEqual = function (actual, expected, msg) {
  * @api public
  */
 
-exports.deepEqual = function (actual, expected, msg) {
-  if (equals(actual, expected)) return;
-  throw new Error(msg || fmt('Expected %o to deeply equal %o.', actual, expected));
+exports.deepEqual = function(actual, expected, msg) {
+if (equals(actual, expected)) return;
+throw new Error(msg || fmt('Expected %o to deeply equal %o.', actual, expected));
 };
 
 /**
@@ -7136,9 +7139,9 @@ exports.deepEqual = function (actual, expected, msg) {
  * @api public
  */
 
-exports.notDeepEqual = function (actual, expected, msg) {
-  if (!equals(actual, expected)) return;
-  throw new Error(msg || fmt('Expected %o not to deeply equal %o.', actual, expected));
+exports.notDeepEqual = function(actual, expected, msg) {
+if (!equals(actual, expected)) return;
+throw new Error(msg || fmt('Expected %o not to deeply equal %o.', actual, expected));
 };
 
 /**
@@ -7150,9 +7153,9 @@ exports.notDeepEqual = function (actual, expected, msg) {
  * @api public
  */
 
-exports.strictEqual = function (actual, expected, msg) {
-  if (actual === expected) return;
-  throw new Error(msg || fmt('Expected %o to strictly equal %o.', actual, expected));
+exports.strictEqual = function(actual, expected, msg) {
+if (actual === expected) return;
+throw new Error(msg || fmt('Expected %o to strictly equal %o.', actual, expected));
 };
 
 /**
@@ -7164,9 +7167,9 @@ exports.strictEqual = function (actual, expected, msg) {
  * @api public
  */
 
-exports.notStrictEqual = function (actual, expected, msg) {
-  if (actual !== expected) return;
-  throw new Error(msg || fmt('Expected %o not to strictly equal %o.', actual, expected));
+exports.notStrictEqual = function(actual, expected, msg) {
+if (actual !== expected) return;
+throw new Error(msg || fmt('Expected %o not to strictly equal %o.', actual, expected));
 };
 
 /**
@@ -7178,18 +7181,18 @@ exports.notStrictEqual = function (actual, expected, msg) {
  * @api public
  */
 
-exports.throws = function (block, error, msg) {
-  var err;
-  try {
-    block();
-  } catch (e) {
-    err = e;
-  }
+exports.throws = function(block, error, msg) {
+var err;
+try {
+	block();
+} catch (e) {
+	err = e;
+}
 
-  if (!err) throw new Error(msg || fmt('Expected %s to throw an error.', block.toString()));
-  if (error && !(err instanceof error)) {
-    throw new Error(msg || fmt('Expected %s to throw an %o.', block.toString(), error));
-  }
+if (!err) throw new Error(msg || fmt('Expected %s to throw an error.', block.toString()));
+if (error && !(err instanceof error)) {
+	throw new Error(msg || fmt('Expected %s to throw an %o.', block.toString(), error));
+}
 };
 
 /**
@@ -7201,18 +7204,18 @@ exports.throws = function (block, error, msg) {
  * @api public
  */
 
-exports.doesNotThrow = function (block, error, msg) {
-  var err;
-  try {
-    block();
-  } catch (e) {
-    err = e;
-  }
+exports.doesNotThrow = function(block, error, msg) {
+var err;
+try {
+	block();
+} catch (e) {
+	err = e;
+}
 
-  if (err) throw new Error(msg || fmt('Expected %s not to throw an error.', block.toString()));
-  if (error && (err instanceof error)) {
-    throw new Error(msg || fmt('Expected %s not to throw an %o.', block.toString(), error));
-  }
+if (err) throw new Error(msg || fmt('Expected %s not to throw an error.', block.toString()));
+if (error && (err instanceof error)) {
+	throw new Error(msg || fmt('Expected %s not to throw an %o.', block.toString(), error));
+}
 };
 
 /**
@@ -7223,16 +7226,16 @@ exports.doesNotThrow = function (block, error, msg) {
  */
 
 function message() {
-  if (!Error.captureStackTrace) return 'assertion failed';
-  var callsite = stack()[2];
-  var fn = callsite.getFunctionName();
-  var file = callsite.getFileName();
-  var line = callsite.getLineNumber() - 1;
-  var col = callsite.getColumnNumber() - 1;
-  var src = get(file);
-  line = src.split('\n')[line].slice(col);
-  var m = line.match(/assert\((.*)\)/);
-  return m && m[1].trim();
+if (!Error.captureStackTrace) return 'assertion failed';
+var callsite = stack()[2];
+var fn = callsite.getFunctionName();
+var file = callsite.getFileName();
+var line = callsite.getLineNumber() - 1;
+var col = callsite.getColumnNumber() - 1;
+var src = get(file);
+line = src.split('\n')[line].slice(col);
+var m = line.match(/assert\((.*)\)/);
+return m && m[1].trim();
 }
 
 /**
@@ -7244,10 +7247,10 @@ function message() {
  */
 
 function get(script) {
-  var xhr = new XMLHttpRequest;
-  xhr.open('GET', script, false);
-  xhr.send(null);
-  return xhr.responseText;
+var xhr = new XMLHttpRequest;
+xhr.open('GET', script, false);
+xhr.send(null);
+return xhr.responseText;
 }
 
 }, {"equals":173,"fmt":171,"stack":174}],
@@ -7269,126 +7272,126 @@ equals.compare = compare
  * @return {Boolean}
  */
 
- function equals(){
-  var i = arguments.length - 1
-  while (i > 0) {
-    if (!compare(arguments[i], arguments[--i])) return false
-  }
-  return true
+function equals() {
+var i = arguments.length - 1
+while (i > 0) {
+	if (!compare(arguments[i], arguments[--i])) return false
+}
+return true
 }
 
 // (any, any, [array]) -> boolean
-function compare(a, b, memos){
-  // All identical values are equivalent
-  if (a === b) return true
-  var fnA = types[type(a)]
-  var fnB = types[type(b)]
-  return fnA && fnA === fnB
-    ? fnA(a, b, memos)
-    : false
+function compare(a, b, memos) {
+// All identical values are equivalent
+if (a === b) return true
+var fnA = types[type(a)]
+var fnB = types[type(b)]
+return fnA && fnA === fnB
+	? fnA(a, b, memos)
+	: false
 }
 
 var types = {}
 
 // (Number) -> boolean
-types.number = function(a){
-  // NaN check
-  return a !== a
+types.number = function(a) {
+// NaN check
+return a !== a
 }
 
 // (function, function, array) -> boolean
-types['function'] = function(a, b, memos){
-  return a.toString() === b.toString()
-    // Functions can act as objects
-    && types.object(a, b, memos)
-    && compare(a.prototype, b.prototype)
+types['function'] = function(a, b, memos) {
+return a.toString() === b.toString()
+	// Functions can act as objects
+	&& types.object(a, b, memos)
+	&& compare(a.prototype, b.prototype)
 }
 
 // (date, date) -> boolean
-types.date = function(a, b){
-  return +a === +b
+types.date = function(a, b) {
+return +a === +b
 }
 
 // (regexp, regexp) -> boolean
-types.regexp = function(a, b){
-  return a.toString() === b.toString()
+types.regexp = function(a, b) {
+return a.toString() === b.toString()
 }
 
 // (DOMElement, DOMElement) -> boolean
-types.element = function(a, b){
-  return a.outerHTML === b.outerHTML
+types.element = function(a, b) {
+return a.outerHTML === b.outerHTML
 }
 
 // (textnode, textnode) -> boolean
-types.textnode = function(a, b){
-  return a.textContent === b.textContent
+types.textnode = function(a, b) {
+return a.textContent === b.textContent
 }
 
 // decorate `fn` to prevent it re-checking objects
 // (function) -> function
-function memoGaurd(fn){
-  return function(a, b, memos){
-    if (!memos) return fn(a, b, [])
-    var i = memos.length, memo
-    while (memo = memos[--i]) {
-      if (memo[0] === a && memo[1] === b) return true
-    }
-    return fn(a, b, memos)
-  }
+function memoGaurd(fn) {
+return function(a, b, memos) {
+	if (!memos) return fn(a, b, [])
+	var i = memos.length, memo
+	while (memo = memos[--i]) {
+	  if (memo[0] === a && memo[1] === b) return true
+	}
+	return fn(a, b, memos)
+}
 }
 
 types['arguments'] =
 types.array = memoGaurd(compareArrays)
 
 // (array, array, array) -> boolean
-function compareArrays(a, b, memos){
-  var i = a.length
-  if (i !== b.length) return false
-  memos.push([a, b])
-  while (i--) {
-    if (!compare(a[i], b[i], memos)) return false
-  }
-  return true
+function compareArrays(a, b, memos) {
+var i = a.length
+if (i !== b.length) return false
+memos.push([a, b])
+while (i--) {
+	if (!compare(a[i], b[i], memos)) return false
+}
+return true
 }
 
 types.object = memoGaurd(compareObjects)
 
 // (object, object, array) -> boolean
 function compareObjects(a, b, memos) {
-  var ka = getEnumerableProperties(a)
-  var kb = getEnumerableProperties(b)
-  var i = ka.length
+var ka = getEnumerableProperties(a)
+var kb = getEnumerableProperties(b)
+var i = ka.length
 
-  // same number of properties
-  if (i !== kb.length) return false
+// same number of properties
+if (i !== kb.length) return false
 
-  // although not necessarily the same order
-  ka.sort()
-  kb.sort()
+// although not necessarily the same order
+ka.sort()
+kb.sort()
 
-  // cheap key test
-  while (i--) if (ka[i] !== kb[i]) return false
+// cheap key test
+while (i--) if (ka[i] !== kb[i]) return false
 
-  // remember
-  memos.push([a, b])
+// remember
+memos.push([a, b])
 
-  // iterate again this time doing a thorough check
-  i = ka.length
-  while (i--) {
-    var key = ka[i]
-    if (!compare(a[key], b[key], memos)) return false
-  }
+// iterate again this time doing a thorough check
+i = ka.length
+while (i--) {
+	var key = ka[i]
+	if (!compare(a[key], b[key], memos)) return false
+}
 
-  return true
+return true
 }
 
 // (object) -> array
 function getEnumerableProperties (object) {
-  var result = []
-  for (var k in object) if (k !== 'constructor') {
-    result.push(k)
-  }
-  return result
+var result = []
+for (var k in object) if (k !== 'constructor') {
+	result.push(k)
+}
+return result
 }
 
 }, {"type":175}],
@@ -7396,8 +7399,8 @@ function getEnumerableProperties (object) {
 
 var toString = {}.toString
 var DomNode = typeof window != 'undefined'
-  ? window.Node
-  : Function
+? window.Node
+: Function
 
 /**
  * Return the type of `val`.
@@ -7407,41 +7410,41 @@ var DomNode = typeof window != 'undefined'
  * @api public
  */
 
-module.exports = exports = function(x){
-  var type = typeof x
-  if (type != 'object') return type
-  type = types[toString.call(x)]
-  if (type) return type
-  if (x instanceof DomNode) switch (x.nodeType) {
-    case 1:  return 'element'
-    case 3:  return 'text-node'
-    case 9:  return 'document'
-    case 11: return 'document-fragment'
-    default: return 'dom-node'
-  }
+module.exports = exports = function(x) {
+var type = typeof x
+if (type != 'object') return type
+type = types[toString.call(x)]
+if (type) return type
+if (x instanceof DomNode) switch (x.nodeType) {
+	case 1:  return 'element'
+	case 3:  return 'text-node'
+	case 9:  return 'document'
+	case 11: return 'document-fragment'
+	default: return 'dom-node'
+}
 }
 
 var types = exports.types = {
-  '[object Function]': 'function',
-  '[object Date]': 'date',
-  '[object RegExp]': 'regexp',
-  '[object Arguments]': 'arguments',
-  '[object Array]': 'array',
-  '[object String]': 'string',
-  '[object Null]': 'null',
-  '[object Undefined]': 'undefined',
-  '[object Number]': 'number',
-  '[object Boolean]': 'boolean',
-  '[object Object]': 'object',
-  '[object Text]': 'text-node',
-  '[object Uint8Array]': 'bit-array',
-  '[object Uint16Array]': 'bit-array',
-  '[object Uint32Array]': 'bit-array',
-  '[object Uint8ClampedArray]': 'bit-array',
-  '[object Error]': 'error',
-  '[object FormData]': 'form-data',
-  '[object File]': 'file',
-  '[object Blob]': 'blob'
+'[object Function]': 'function',
+'[object Date]': 'date',
+'[object RegExp]': 'regexp',
+'[object Arguments]': 'arguments',
+'[object Array]': 'array',
+'[object String]': 'string',
+'[object Null]': 'null',
+'[object Undefined]': 'undefined',
+'[object Number]': 'number',
+'[object Boolean]': 'boolean',
+'[object Object]': 'object',
+'[object Text]': 'text-node',
+'[object Uint8Array]': 'bit-array',
+'[object Uint16Array]': 'bit-array',
+'[object Uint32Array]': 'bit-array',
+'[object Uint8ClampedArray]': 'bit-array',
+'[object Error]': 'error',
+'[object FormData]': 'form-data',
+'[object File]': 'file',
+'[object Blob]': 'blob'
 }
 
 }, {}],
@@ -7470,15 +7473,15 @@ fmt.d = parseInt;
  * @api public
  */
 
-function fmt(str){
-  var args = [].slice.call(arguments, 1);
-  var j = 0;
+function fmt(str) {
+var args = [].slice.call(arguments, 1);
+var j = 0;
 
-  return str.replace(/%([a-z])/gi, function(_, f){
-    return fmt[f]
-      ? fmt[f](args[j++])
-      : _ + f;
-  });
+return str.replace(/%([a-z])/gi, function(_, f) {
+	return fmt[f]
+	  ? fmt[f](args[j++])
+	  : _ + f;
+});
 }
 
 }, {}],
@@ -7498,13 +7501,13 @@ module.exports = stack;
  */
 
 function stack() {
-  var orig = Error.prepareStackTrace;
-  Error.prepareStackTrace = function(_, stack){ return stack; };
-  var err = new Error;
-  Error.captureStackTrace(err, arguments.callee);
-  var stack = err.stack;
-  Error.prepareStackTrace = orig;
-  return stack;
+var orig = Error.prepareStackTrace;
+Error.prepareStackTrace = function(_, stack){ return stack; };
+var err = new Error;
+Error.captureStackTrace(err, arguments.callee);
+var stack = err.stack;
+Error.prepareStackTrace = orig;
+return stack;
 }
 }, {}],
 163: [function(require, module, exports) {
@@ -7532,9 +7535,9 @@ Emitter(exports);
  * @return {Integration}
  */
 
-exports.option = function(key, value){
-  this.prototype.defaults[key] = value;
-  return this;
+exports.option = function(key, value) {
+this.prototype.defaults[key] = value;
+return this;
 };
 
 /**
@@ -7550,21 +7553,21 @@ exports.option = function(key, value){
  *
  *    new MyIntegration().track('My Event');
  *
- *    .track = function(track){
-  *      var events = this.events(track.event());
-  *      each(events, send);
+ *    .track = function(track) {
+*      var events = this.events(track.event());
+*      each(events, send);
  *     };
  *
  * @param {String} name
  * @return {Integration}
  */
 
-exports.mapping = function(name){
-  this.option(name, []);
-  this.prototype[name] = function(str){
-    return this.map(this.options[name], str);
-  };
-  return this;
+exports.mapping = function(name) {
+this.option(name, []);
+this.prototype[name] = function(str) {
+	return this.map(this.options[name], str);
+};
+return this;
 };
 
 /**
@@ -7575,9 +7578,9 @@ exports.mapping = function(name){
  * @return {Integration}
  */
 
-exports.global = function(key){
-  this.prototype.globals.push(key);
-  return this;
+exports.global = function(key) {
+this.prototype.globals.push(key);
+return this;
 };
 
 /**
@@ -7587,9 +7590,9 @@ exports.global = function(key){
  * @return {Integration}
  */
 
-exports.assumesPageview = function(){
-  this.prototype._assumesPageview = true;
-  return this;
+exports.assumesPageview = function() {
+this.prototype._assumesPageview = true;
+return this;
 };
 
 /**
@@ -7598,9 +7601,9 @@ exports.assumesPageview = function(){
  * @return {Integration}
  */
 
-exports.readyOnLoad = function(){
-  this.prototype._readyOnLoad = true;
-  return this;
+exports.readyOnLoad = function() {
+this.prototype._readyOnLoad = true;
+return this;
 };
 
 /**
@@ -7609,9 +7612,9 @@ exports.readyOnLoad = function(){
  * @return {Integration}
  */
 
-exports.readyOnInitialize = function(){
-  this.prototype._readyOnInitialize = true;
-  return this;
+exports.readyOnInitialize = function() {
+this.prototype._readyOnInitialize = true;
+return this;
 };
 
 /**
@@ -7621,13 +7624,13 @@ exports.readyOnInitialize = function(){
  * @return {Integration}
  */
 
-exports.tag = function(name, str){
-  if (null == str) {
-    str = name;
-    name = 'library';
-  }
-  this.prototype.templates[name] = objectify(str);
-  return this;
+exports.tag = function(name, str) {
+if (null == str) {
+	str = name;
+	name = 'library';
+}
+this.prototype.templates[name] = objectify(str);
+return this;
 };
 
 /**
@@ -7643,22 +7646,22 @@ exports.tag = function(name, str){
  */
 
 function objectify(str) {
-  // replace `src` with `data-src` to prevent image loading
-  str = str.replace(' src="', ' data-src="');
+// replace `src` with `data-src` to prevent image loading
+str = str.replace(' src="', ' data-src="');
 
-  var el = domify(str);
-  var attrs = {};
+var el = domify(str);
+var attrs = {};
 
-  each(el.attributes, function(attr){
-    // then replace it back
-    var name = 'data-src' == attr.name ? 'src' : attr.name;
-    attrs[name] = attr.value;
-  });
+each(el.attributes, function(attr) {
+	// then replace it back
+	var name = 'data-src' == attr.name ? 'src' : attr.name;
+	attrs[name] = attr.value;
+});
 
-  return {
-    type: el.tagName.toLowerCase(),
-    attrs: attrs
-  };
+return {
+	type: el.tagName.toLowerCase(),
+	attrs: attrs
+};
 }
 }, {"after":10,"component/domify":176,"component/each":79,"emitter":17}],
 176: [function(require, module, exports) {
@@ -7686,12 +7689,12 @@ div = undefined;
  */
 
 var map = {
-  legend: [1, '<fieldset>', '</fieldset>'],
-  tr: [2, '<table><tbody>', '</tbody></table>'],
-  col: [2, '<table><tbody></tbody><colgroup>', '</colgroup></table>'],
-  // for script/link/style tags to work in IE6-8, you have to wrap
-  // in a div with a non-whitespace character in front, ha!
-  _default: innerHTMLBug ? [1, 'X<div>', '</div>'] : [0, '', '']
+legend: [1, '<fieldset>', '</fieldset>'],
+tr: [2, '<table><tbody>', '</tbody></table>'],
+col: [2, '<table><tbody></tbody><colgroup>', '</colgroup></table>'],
+// for script/link/style tags to work in IE6-8, you have to wrap
+// in a div with a non-whitespace character in front, ha!
+_default: innerHTMLBug ? [1, 'X<div>', '</div>'] : [0, '', '']
 };
 
 map.td =
@@ -7727,54 +7730,54 @@ map.rect = [1, '<svg xmlns="http://www.w3.org/2000/svg" version="1.1">','</svg>'
  */
 
 function parse(html, doc) {
-  if ('string' != typeof html) throw new TypeError('String expected');
+if ('string' != typeof html) throw new TypeError('String expected');
 
-  // default to the global `document` object
-  if (!doc) doc = document;
+// default to the global `document` object
+if (!doc) doc = document;
 
-  // tag name
-  var m = /<([\w:]+)/.exec(html);
-  if (!m) return doc.createTextNode(html);
+// tag name
+var m = /<([\w:]+)/.exec(html);
+if (!m) return doc.createTextNode(html);
 
-  html = html.replace(/^\s+|\s+$/g, ''); // Remove leading/trailing whitespace
+html = html.replace(/^\s+|\s+$/g, ''); // Remove leading/trailing whitespace
 
-  var tag = m[1];
+var tag = m[1];
 
-  // body support
-  if (tag == 'body') {
-    var el = doc.createElement('html');
-    el.innerHTML = html;
-    return el.removeChild(el.lastChild);
-  }
+// body support
+if (tag == 'body') {
+	var el = doc.createElement('html');
+	el.innerHTML = html;
+	return el.removeChild(el.lastChild);
+}
 
-  // wrap map
-  var wrap = map[tag] || map._default;
-  var depth = wrap[0];
-  var prefix = wrap[1];
-  var suffix = wrap[2];
-  var el = doc.createElement('div');
-  el.innerHTML = prefix + html + suffix;
-  while (depth--) el = el.lastChild;
+// wrap map
+var wrap = map[tag] || map._default;
+var depth = wrap[0];
+var prefix = wrap[1];
+var suffix = wrap[2];
+var el = doc.createElement('div');
+el.innerHTML = prefix + html + suffix;
+while (depth--) el = el.lastChild;
 
-  // one element
-  if (el.firstChild == el.lastChild) {
-    return el.removeChild(el.firstChild);
-  }
+// one element
+if (el.firstChild == el.lastChild) {
+	return el.removeChild(el.firstChild);
+}
 
-  // several elements
-  var fragment = doc.createDocumentFragment();
-  while (el.firstChild) {
-    fragment.appendChild(el.removeChild(el.firstChild));
-  }
+// several elements
+var fragment = doc.createDocumentFragment();
+while (el.firstChild) {
+	fragment.appendChild(el.removeChild(el.firstChild));
+}
 
-  return fragment;
+return fragment;
 }
 
 }, {}],
 164: [function(require, module, exports) {
 
 var bind = require('bind')
-  , bindAll = require('bind-all');
+, bindAll = require('bind-all');
 
 
 /**
@@ -7806,18 +7809,18 @@ exports.methods = bindMethods;
  */
 
 function bindMethods (obj, methods) {
-  methods = [].slice.call(arguments, 1);
-  for (var i = 0, method; method = methods[i]; i++) {
-    obj[method] = bind(obj, obj[method]);
-  }
-  return obj;
+methods = [].slice.call(arguments, 1);
+for (var i = 0, method; method = methods[i]; i++) {
+	obj[method] = bind(obj, obj[method]);
+}
+return obj;
 }
 }, {"bind":33,"bind-all":34}],
 165: [function(require, module, exports) {
 if ('undefined' == typeof window) {
-  module.exports = require('./lib/debug');
+module.exports = require('./lib/debug');
 } else {
-  module.exports = require('./debug');
+module.exports = require('./debug');
 }
 
 }, {"./lib/debug":177,"./debug":178}],
@@ -7839,18 +7842,18 @@ module.exports = debug;
  */
 
 var names = []
-  , skips = [];
+, skips = [];
 
 (process.env.DEBUG || '')
-  .split(/[\s,]+/)
-  .forEach(function(name){
-    name = name.replace('*', '.*?');
-    if (name[0] === '-') {
-      skips.push(new RegExp('^' + name.substr(1) + '$'));
-    } else {
-      names.push(new RegExp('^' + name + '$'));
-    }
-  });
+.split(/[\s,]+/)
+.forEach(function(name) {
+	name = name.replace('*', '.*?');
+	if (name[0] === '-') {
+	  skips.push(new RegExp('^' + name.substr(1) + '$'));
+	} else {
+	  names.push(new RegExp('^' + name + '$'));
+	}
+});
 
 /**
  * Colors.
@@ -7884,7 +7887,7 @@ var isatty = tty.isatty(2);
  */
 
 function color() {
-  return colors[prevColor++ % colors.length];
+return colors[prevColor++ % colors.length];
 }
 
 /**
@@ -7896,14 +7899,14 @@ function color() {
  */
 
 function humanize(ms) {
-  var sec = 1000
-    , min = 60 * 1000
-    , hour = 60 * min;
+var sec = 1000
+	, min = 60 * 1000
+	, hour = 60 * min;
 
-  if (ms >= hour) return (ms / hour).toFixed(1) + 'h';
-  if (ms >= min) return (ms / min).toFixed(1) + 'm';
-  if (ms >= sec) return (ms / sec | 0) + 's';
-  return ms + 'ms';
+if (ms >= hour) return (ms / hour).toFixed(1) + 'h';
+if (ms >= min) return (ms / min).toFixed(1) + 'm';
+if (ms >= sec) return (ms / sec | 0) + 's';
+return ms + 'ms';
 }
 
 /**
@@ -7915,50 +7918,50 @@ function humanize(ms) {
  */
 
 function debug(name) {
-  function disabled(){}
-  disabled.enabled = false;
+function disabled(){}
+disabled.enabled = false;
 
-  var match = skips.some(function(re){
-    return re.test(name);
-  });
+var match = skips.some(function(re) {
+	return re.test(name);
+});
 
-  if (match) return disabled;
+if (match) return disabled;
 
-  match = names.some(function(re){
-    return re.test(name);
-  });
+match = names.some(function(re) {
+	return re.test(name);
+});
 
-  if (!match) return disabled;
-  var c = color();
+if (!match) return disabled;
+var c = color();
 
-  function colored(fmt) {
-    fmt = coerce(fmt);
+function colored(fmt) {
+	fmt = coerce(fmt);
 
-    var curr = new Date;
-    var ms = curr - (prev[name] || curr);
-    prev[name] = curr;
+	var curr = new Date;
+	var ms = curr - (prev[name] || curr);
+	prev[name] = curr;
 
-    fmt = '  \u001b[9' + c + 'm' + name + ' '
-      + '\u001b[3' + c + 'm\u001b[90m'
-      + fmt + '\u001b[3' + c + 'm'
-      + ' +' + humanize(ms) + '\u001b[0m';
+	fmt = '  \u001b[9' + c + 'm' + name + ' '
+	  + '\u001b[3' + c + 'm\u001b[90m'
+	  + fmt + '\u001b[3' + c + 'm'
+	  + ' +' + humanize(ms) + '\u001b[0m';
 
-    console.error.apply(this, arguments);
-  }
+	console.error.apply(this, arguments);
+}
 
-  function plain(fmt) {
-    fmt = coerce(fmt);
+function plain(fmt) {
+	fmt = coerce(fmt);
 
-    fmt = new Date().toUTCString()
-      + ' ' + name + ' ' + fmt;
-    console.error.apply(this, arguments);
-  }
+	fmt = new Date().toUTCString()
+	  + ' ' + name + ' ' + fmt;
+	console.error.apply(this, arguments);
+}
 
-  colored.enabled = plain.enabled = true;
+colored.enabled = plain.enabled = true;
 
-  return isatty || process.env.DEBUG_COLORS
-    ? colored
-    : plain;
+return isatty || process.env.DEBUG_COLORS
+	? colored
+	: plain;
 }
 
 /**
@@ -7966,8 +7969,8 @@ function debug(name) {
  */
 
 function coerce(val) {
-  if (val instanceof Error) return val.stack || val.message;
-  return val;
+if (val instanceof Error) return val.stack || val.message;
+return val;
 }
 
 }, {}],
@@ -7988,26 +7991,26 @@ module.exports = debug;
  */
 
 function debug(name) {
-  if (!debug.enabled(name)) return function(){};
+if (!debug.enabled(name)) return function(){};
 
-  return function(fmt){
-    fmt = coerce(fmt);
+return function(fmt) {
+	fmt = coerce(fmt);
 
-    var curr = new Date;
-    var ms = curr - (debug[name] || curr);
-    debug[name] = curr;
+	var curr = new Date;
+	var ms = curr - (debug[name] || curr);
+	debug[name] = curr;
 
-    fmt = name
-      + ' '
-      + fmt
-      + ' +' + debug.humanize(ms);
+	fmt = name
+	  + ' '
+	  + fmt
+	  + ' +' + debug.humanize(ms);
 
-    // This hackery is required for IE8
-    // where `console.log` doesn't have 'apply'
-    window.console
-      && console.log
-      && Function.prototype.apply.call(console.log, console, arguments);
-  }
+	// This hackery is required for IE8
+	// where `console.log` doesn't have 'apply'
+	window.console
+	  && console.log
+	  && Function.prototype.apply.call(console.log, console, arguments);
+}
 }
 
 /**
@@ -8026,22 +8029,22 @@ debug.skips = [];
  */
 
 debug.enable = function(name) {
-  try {
-    localStorage.debug = name;
-  } catch(e){}
+try {
+	localStorage.debug = name;
+} catch(e){}
 
-  var split = (name || '').split(/[\s,]+/)
-    , len = split.length;
+var split = (name || '').split(/[\s,]+/)
+	, len = split.length;
 
-  for (var i = 0; i < len; i++) {
-    name = split[i].replace('*', '.*?');
-    if (name[0] === '-') {
-      debug.skips.push(new RegExp('^' + name.substr(1) + '$'));
-    }
-    else {
-      debug.names.push(new RegExp('^' + name + '$'));
-    }
-  }
+for (var i = 0; i < len; i++) {
+	name = split[i].replace('*', '.*?');
+	if (name[0] === '-') {
+	  debug.skips.push(new RegExp('^' + name.substr(1) + '$'));
+	}
+	else {
+	  debug.names.push(new RegExp('^' + name + '$'));
+	}
+}
 };
 
 /**
@@ -8050,8 +8053,8 @@ debug.enable = function(name) {
  * @api public
  */
 
-debug.disable = function(){
-  debug.enable('');
+debug.disable = function() {
+debug.enable('');
 };
 
 /**
@@ -8063,14 +8066,14 @@ debug.disable = function(){
  */
 
 debug.humanize = function(ms) {
-  var sec = 1000
-    , min = 60 * 1000
-    , hour = 60 * min;
+var sec = 1000
+	, min = 60 * 1000
+	, hour = 60 * min;
 
-  if (ms >= hour) return (ms / hour).toFixed(1) + 'h';
-  if (ms >= min) return (ms / min).toFixed(1) + 'm';
-  if (ms >= sec) return (ms / sec | 0) + 's';
-  return ms + 'ms';
+if (ms >= hour) return (ms / hour).toFixed(1) + 'h';
+if (ms >= min) return (ms / min).toFixed(1) + 'm';
+if (ms >= sec) return (ms / sec | 0) + 's';
+return ms + 'ms';
 };
 
 /**
@@ -8082,17 +8085,17 @@ debug.humanize = function(ms) {
  */
 
 debug.enabled = function(name) {
-  for (var i = 0, len = debug.skips.length; i < len; i++) {
-    if (debug.skips[i].test(name)) {
-      return false;
-    }
-  }
-  for (var i = 0, len = debug.names.length; i < len; i++) {
-    if (debug.names[i].test(name)) {
-      return true;
-    }
-  }
-  return false;
+for (var i = 0, len = debug.skips.length; i < len; i++) {
+	if (debug.skips[i].test(name)) {
+	  return false;
+	}
+}
+for (var i = 0, len = debug.names.length; i < len; i++) {
+	if (debug.names[i].test(name)) {
+	  return true;
+	}
+}
+return false;
 };
 
 /**
@@ -8100,14 +8103,14 @@ debug.enabled = function(name) {
  */
 
 function coerce(val) {
-  if (val instanceof Error) return val.stack || val.message;
-  return val;
+if (val instanceof Error) return val.stack || val.message;
+return val;
 }
 
 // persist
 
 try {
-  if (window.localStorage) debug.enable(localStorage.debug);
+if (window.localStorage) debug.enable(localStorage.debug);
 } catch(e){}
 
 }, {}],
@@ -8128,12 +8131,12 @@ try {
  * @return {String}
  */
 
-module.exports = function (str, options) {
-  options || (options = {});
-  return str.toLowerCase()
-    .replace(options.replace || /[^a-z0-9]/g, ' ')
-    .replace(/^ +| +$/g, '')
-    .replace(/ +/g, options.separator || '-')
+module.exports = function(str, options) {
+options || (options = {});
+return str.toLowerCase()
+	.replace(options.replace || /[^a-z0-9]/g, ' ')
+	.replace(/^ +| +$/g, '')
+	.replace(/ +/g, options.separator || '-')
 };
 
 }, {}],
@@ -8157,7 +8160,7 @@ module.exports = toSnakeCase;
 
 
 function toSnakeCase (string) {
-  return toSpace(string).replace(/\s/g, '_');
+return toSpace(string).replace(/\s/g, '_');
 }
 
 }, {"to-space-case":179}],
@@ -8182,9 +8185,9 @@ module.exports = toSpaceCase;
 
 
 function toSpaceCase (string) {
-  return clean(string).replace(/[\W_]+(.|$)/g, function (matches, match) {
-    return match ? ' ' + match : '';
-  });
+return clean(string).replace(/[\W_]+(.|$)/g, function(matches, match) {
+	return match ? ' ' + match : '';
+});
 }
 }, {"to-no-case":69}],
 161: [function(require, module, exports) {
@@ -8193,11 +8196,11 @@ function toSpaceCase (string) {
  * Protocol.
  */
 
-module.exports = function (url) {
-  switch (arguments.length) {
-    case 0: return check();
-    case 1: return transform(url);
-  }
+module.exports = function(url) {
+switch (arguments.length) {
+	case 0: return check();
+	case 1: return transform(url);
+}
 };
 
 
@@ -8209,7 +8212,7 @@ module.exports = function (url) {
  */
 
 function transform (url) {
-  return check() ? 'https:' + url : 'http:' + url;
+return check() ? 'https:' + url : 'http:' + url;
 }
 
 
@@ -8220,10 +8223,10 @@ function transform (url) {
  */
 
 function check () {
-  return (
-    location.protocol == 'https:' ||
-    location.protocol == 'chrome-extension:'
-  );
+return (
+	location.protocol == 'https:' ||
+	location.protocol == 'chrome-extension:'
+);
 }
 }, {}],
 84: [function(require, module, exports) {
@@ -8255,10 +8258,10 @@ var q = new Queue({ concurrency: 1, timeout: 2000 });
  */
 
 var AdWords = module.exports = integration('AdWords')
-  .option('conversionId', '')
-  .option('remarketing', false)
-  .tag('conversion', '<script src="//www.googleadservices.com/pagead/conversion.js">')
-  .mapping('events');
+.option('conversionId', '')
+.option('remarketing', false)
+.tag('conversion', '<script src="//www.googleadservices.com/pagead/conversion.js">')
+.mapping('events');
 
 /**
  * Load.
@@ -8267,8 +8270,8 @@ var AdWords = module.exports = integration('AdWords')
  * @api public
  */
 
-AdWords.prototype.initialize = function(){
-  onbody(this.ready);
+AdWords.prototype.initialize = function() {
+onbody(this.ready);
 };
 
 /**
@@ -8278,8 +8281,8 @@ AdWords.prototype.initialize = function(){
  * @api public
  */
 
-AdWords.prototype.loaded = function(){
-  return !! document.body;
+AdWords.prototype.loaded = function() {
+return !! document.body;
 };
 
 /**
@@ -8290,10 +8293,10 @@ AdWords.prototype.loaded = function(){
  * @param {Page} page
  */
 
-AdWords.prototype.page = function(page){
-  var remarketing = this.options.remarketing;
-  var id = this.options.conversionId;
-  if (remarketing) this.remarketing(id);
+AdWords.prototype.page = function(page) {
+var remarketing = this.options.remarketing;
+var id = this.options.conversionId;
+if (remarketing) this.remarketing(id);
 };
 
 /**
@@ -8303,18 +8306,18 @@ AdWords.prototype.page = function(page){
  * @api public
  */
 
-AdWords.prototype.track = function(track){
-  var id = this.options.conversionId;
-  var events = this.events(track.event());
-  var revenue = track.revenue() || 0;
-  var self = this;
-  each(events, function(label){
-    self.conversion({
-      conversionId: id,
-      value: revenue,
-      label: label,
-    });
-  });
+AdWords.prototype.track = function(track) {
+var id = this.options.conversionId;
+var events = this.events(track.event());
+var revenue = track.revenue() || 0;
+var self = this;
+each(events, function(label) {
+	self.conversion({
+	  conversionId: id,
+	  value: revenue,
+	  label: label,
+	});
+});
 };
 
 /**
@@ -8325,16 +8328,16 @@ AdWords.prototype.track = function(track){
  * @api private
  */
 
-AdWords.prototype.conversion = function(obj, fn){
-  this.enqueue({
-    google_conversion_id: obj.conversionId,
-    google_conversion_language: 'en',
-    google_conversion_format: '3',
-    google_conversion_color: 'ffffff',
-    google_conversion_label: obj.label,
-    google_conversion_value: obj.value,
-    google_remarketing_only: false
-  }, fn);
+AdWords.prototype.conversion = function(obj, fn) {
+this.enqueue({
+	google_conversion_id: obj.conversionId,
+	google_conversion_language: 'en',
+	google_conversion_format: '3',
+	google_conversion_color: 'ffffff',
+	google_conversion_label: obj.label,
+	google_conversion_value: obj.value,
+	google_remarketing_only: false
+}, fn);
 };
 
 /**
@@ -8344,11 +8347,11 @@ AdWords.prototype.conversion = function(obj, fn){
  * @api private
  */
 
-AdWords.prototype.remarketing = function(id){
-  this.enqueue({
-    google_conversion_id: id,
-    google_remarketing_only: true
-  });
+AdWords.prototype.remarketing = function(id) {
+this.enqueue({
+	google_conversion_id: id,
+	google_remarketing_only: true
+});
 };
 
 /**
@@ -8358,19 +8361,19 @@ AdWords.prototype.remarketing = function(id){
  * @param {Function} [fn]
  */
 
-AdWords.prototype.enqueue = function(obj, fn){
-  this.debug('sending %o', obj);
-  var self = this;
+AdWords.prototype.enqueue = function(obj, fn) {
+this.debug('sending %o', obj);
+var self = this;
 
-  q.push(function(next){
-    self.globalize(obj);
-    self.shim();
+q.push(function(next) {
+	self.globalize(obj);
+	self.shim();
 
-    self.load('conversion', function(){
-      if (fn) fn();
-      next();
-    });
-  });
+	self.load('conversion', function() {
+	  if (fn) fn();
+	  next();
+	});
+});
 };
 
 /**
@@ -8379,12 +8382,12 @@ AdWords.prototype.enqueue = function(obj, fn){
  * @param {Object} obj
  */
 
-AdWords.prototype.globalize = function(obj){
-  for (var name in obj) {
-    if (obj.hasOwnProperty(name)) {
-      window[name] = obj[name];
-    }
-  }
+AdWords.prototype.globalize = function(obj) {
+for (var name in obj) {
+	if (obj.hasOwnProperty(name)) {
+	  window[name] = obj[name];
+	}
+}
 };
 
 /**
@@ -8393,19 +8396,19 @@ AdWords.prototype.globalize = function(obj){
  * @api private
  */
 
-AdWords.prototype.shim = function(){
-  var self = this;
-  var write = document.write;
-  document.write = append;
+AdWords.prototype.shim = function() {
+var self = this;
+var write = document.write;
+document.write = append;
 
-  function append(str){
-    var el = domify(str);
-    if (!el.src) return write(str);
-    if (!/googleadservices/.test(el.src)) return write(str);
-    self.debug('append %o', el);
-    document.body.appendChild(el);
-    document.write = write;
-  }
+function append(str) {
+	var el = domify(str);
+	if (!el.src) return write(str);
+	if (!/googleadservices/.test(el.src)) return write(str);
+	self.debug('append %o', el);
+	document.body.appendChild(el);
+	document.write = write;
+}
 }
 
 }, {"segmentio/analytics.js-integration":159,"on-body":180,"domify":181,"queue":182,"each":5}],
@@ -8434,11 +8437,11 @@ var callbacks = [];
  */
 
 module.exports = function onBody (callback) {
-  if (body) {
-    call(callback);
-  } else {
-    callbacks.push(callback);
-  }
+if (body) {
+	call(callback);
+} else {
+	callbacks.push(callback);
+}
 };
 
 
@@ -8446,11 +8449,11 @@ module.exports = function onBody (callback) {
  * Set an interval to check for `document.body`.
  */
 
-var interval = setInterval(function () {
-  if (!document.body) return;
-  body = true;
-  each(callbacks, call);
-  clearInterval(interval);
+var interval = setInterval(function() {
+if (!document.body) return;
+body = true;
+each(callbacks, call);
+clearInterval(interval);
 }, 5);
 
 
@@ -8461,7 +8464,7 @@ var interval = setInterval(function () {
  */
 
 function call (callback) {
-  callback(document.body);
+callback(document.body);
 }
 }, {"each":79}],
 181: [function(require, module, exports) {
@@ -8477,10 +8480,10 @@ module.exports = parse;
  */
 
 var map = {
-  legend: [1, '<fieldset>', '</fieldset>'],
-  tr: [2, '<table><tbody>', '</tbody></table>'],
-  col: [2, '<table><tbody></tbody><colgroup>', '</colgroup></table>'],
-  _default: [0, '', '']
+legend: [1, '<fieldset>', '</fieldset>'],
+tr: [2, '<table><tbody>', '</tbody></table>'],
+col: [2, '<table><tbody></tbody><colgroup>', '</colgroup></table>'],
+_default: [0, '', '']
 };
 
 map.td =
@@ -8513,43 +8516,43 @@ map.rect = [1, '<svg xmlns="http://www.w3.org/2000/svg" version="1.1">','</svg>'
  */
 
 function parse(html) {
-  if ('string' != typeof html) throw new TypeError('String expected');
+if ('string' != typeof html) throw new TypeError('String expected');
 
-  html = html.replace(/^\s+|\s+$/g, ''); // Remove leading/trailing whitespace
+html = html.replace(/^\s+|\s+$/g, ''); // Remove leading/trailing whitespace
 
-  // tag name
-  var m = /<([\w:]+)/.exec(html);
-  if (!m) return document.createTextNode(html);
-  var tag = m[1];
+// tag name
+var m = /<([\w:]+)/.exec(html);
+if (!m) return document.createTextNode(html);
+var tag = m[1];
 
-  // body support
-  if (tag == 'body') {
-    var el = document.createElement('html');
-    el.innerHTML = html;
-    return el.removeChild(el.lastChild);
-  }
+// body support
+if (tag == 'body') {
+	var el = document.createElement('html');
+	el.innerHTML = html;
+	return el.removeChild(el.lastChild);
+}
 
-  // wrap map
-  var wrap = map[tag] || map._default;
-  var depth = wrap[0];
-  var prefix = wrap[1];
-  var suffix = wrap[2];
-  var el = document.createElement('div');
-  el.innerHTML = prefix + html + suffix;
-  while (depth--) el = el.lastChild;
+// wrap map
+var wrap = map[tag] || map._default;
+var depth = wrap[0];
+var prefix = wrap[1];
+var suffix = wrap[2];
+var el = document.createElement('div');
+el.innerHTML = prefix + html + suffix;
+while (depth--) el = el.lastChild;
 
-  // one element
-  if (el.firstChild == el.lastChild) {
-    return el.removeChild(el.firstChild);
-  }
+// one element
+if (el.firstChild == el.lastChild) {
+	return el.removeChild(el.firstChild);
+}
 
-  // several elements
-  var fragment = document.createDocumentFragment();
-  while (el.firstChild) {
-    fragment.appendChild(el.removeChild(el.firstChild));
-  }
+// several elements
+var fragment = document.createDocumentFragment();
+while (el.firstChild) {
+	fragment.appendChild(el.removeChild(el.firstChild));
+}
 
-  return fragment;
+return fragment;
 }
 
 }, {}],
@@ -8563,11 +8566,11 @@ var Emitter;
 var bind;
 
 try {
-  Emitter = require('emitter');
-  bind = require('bind');
+Emitter = require('emitter');
+bind = require('bind');
 } catch (err) {
-  Emitter = require('component-emitter');
-  bind = require('component-bind');
+Emitter = require('component-emitter');
+bind = require('component-bind');
 }
 
 /**
@@ -8587,11 +8590,11 @@ module.exports = Queue;
  */
 
 function Queue(options) {
-  options = options || {};
-  this.timeout = options.timeout || 0;
-  this.concurrency = options.concurrency || 1;
-  this.pending = 0;
-  this.jobs = [];
+options = options || {};
+this.timeout = options.timeout || 0;
+this.concurrency = options.concurrency || 1;
+this.pending = 0;
+this.jobs = [];
 }
 
 /**
@@ -8607,8 +8610,8 @@ Emitter(Queue.prototype);
  * @api public
  */
 
-Queue.prototype.length = function(){
-  return this.pending + this.jobs.length;
+Queue.prototype.length = function() {
+return this.pending + this.jobs.length;
 };
 
 /**
@@ -8619,9 +8622,9 @@ Queue.prototype.length = function(){
  * @api public
  */
 
-Queue.prototype.push = function(fn, cb){
-  this.jobs.push([fn, cb]);
-  setTimeout(bind(this, this.run), 0);
+Queue.prototype.push = function(fn, cb) {
+this.jobs.push([fn, cb]);
+setTimeout(bind(this, this.run), 0);
 };
 
 /**
@@ -8630,12 +8633,12 @@ Queue.prototype.push = function(fn, cb){
  * @api private
  */
 
-Queue.prototype.run = function(){
-  while (this.pending < this.concurrency) {
-    var job = this.jobs.shift();
-    if (!job) break;
-    this.exec(job);
-  }
+Queue.prototype.run = function() {
+while (this.pending < this.concurrency) {
+	var job = this.jobs.shift();
+	if (!job) break;
+	this.exec(job);
+}
 };
 
 /**
@@ -8645,20 +8648,20 @@ Queue.prototype.run = function(){
  * @api private
  */
 
-Queue.prototype.exec = function(job){
-  var self = this;
-  var ms = this.timeout;
+Queue.prototype.exec = function(job) {
+var self = this;
+var ms = this.timeout;
 
-  var fn = job[0];
-  var cb = job[1];
-  if (ms) fn = timeout(fn, ms);
+var fn = job[0];
+var cb = job[1];
+if (ms) fn = timeout(fn, ms);
 
-  this.pending++;
-  fn(function(err, res){
-    cb && cb(err, res);
-    self.pending--;
-    self.run();
-  });
+this.pending++;
+fn(function(err, res) {
+	cb && cb(err, res);
+	self.pending--;
+	self.run();
+});
 };
 
 /**
@@ -8671,22 +8674,22 @@ Queue.prototype.exec = function(job){
  */
 
 function timeout(fn, ms) {
-  return function(cb){
-    var done;
+return function(cb) {
+	var done;
 
-    var id = setTimeout(function(){
-      done = true;
-      var err = new Error('Timeout of ' + ms + 'ms exceeded');
-      err.timeout = timeout;
-      cb(err);
-    }, ms);
+	var id = setTimeout(function() {
+	  done = true;
+	  var err = new Error('Timeout of ' + ms + 'ms exceeded');
+	  err.timeout = timeout;
+	  cb(err);
+	}, ms);
 
-    fn(function(err, res){
-      if (done) return;
-      clearTimeout(id);
-      cb(err, res);
-    });
-  }
+	fn(function(err, res) {
+	  if (done) return;
+	  clearTimeout(id);
+	  cb(err, res);
+	});
+}
 }
 
 }, {"emitter":183,"bind":33,"component-emitter":183,"component-bind":33}],
@@ -8705,7 +8708,7 @@ module.exports = Emitter;
  */
 
 function Emitter(obj) {
-  if (obj) return mixin(obj);
+if (obj) return mixin(obj);
 };
 
 /**
@@ -8717,10 +8720,10 @@ function Emitter(obj) {
  */
 
 function mixin(obj) {
-  for (var key in Emitter.prototype) {
-    obj[key] = Emitter.prototype[key];
-  }
-  return obj;
+for (var key in Emitter.prototype) {
+	obj[key] = Emitter.prototype[key];
+}
+return obj;
 }
 
 /**
@@ -8733,11 +8736,11 @@ function mixin(obj) {
  */
 
 Emitter.prototype.on =
-Emitter.prototype.addEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
-  (this._callbacks[event] = this._callbacks[event] || [])
-    .push(fn);
-  return this;
+Emitter.prototype.addEventListener = function(event, fn) {
+this._callbacks = this._callbacks || {};
+(this._callbacks[event] = this._callbacks[event] || [])
+	.push(fn);
+return this;
 };
 
 /**
@@ -8750,18 +8753,18 @@ Emitter.prototype.addEventListener = function(event, fn){
  * @api public
  */
 
-Emitter.prototype.once = function(event, fn){
-  var self = this;
-  this._callbacks = this._callbacks || {};
+Emitter.prototype.once = function(event, fn) {
+var self = this;
+this._callbacks = this._callbacks || {};
 
-  function on() {
-    self.off(event, on);
-    fn.apply(this, arguments);
-  }
+function on() {
+	self.off(event, on);
+	fn.apply(this, arguments);
+}
 
-  on.fn = fn;
-  this.on(event, on);
-  return this;
+on.fn = fn;
+this.on(event, on);
+return this;
 };
 
 /**
@@ -8777,35 +8780,35 @@ Emitter.prototype.once = function(event, fn){
 Emitter.prototype.off =
 Emitter.prototype.removeListener =
 Emitter.prototype.removeAllListeners =
-Emitter.prototype.removeEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
+Emitter.prototype.removeEventListener = function(event, fn) {
+this._callbacks = this._callbacks || {};
 
-  // all
-  if (0 == arguments.length) {
-    this._callbacks = {};
-    return this;
-  }
+// all
+if (0 == arguments.length) {
+	this._callbacks = {};
+	return this;
+}
 
-  // specific event
-  var callbacks = this._callbacks[event];
-  if (!callbacks) return this;
+// specific event
+var callbacks = this._callbacks[event];
+if (!callbacks) return this;
 
-  // remove all handlers
-  if (1 == arguments.length) {
-    delete this._callbacks[event];
-    return this;
-  }
+// remove all handlers
+if (1 == arguments.length) {
+	delete this._callbacks[event];
+	return this;
+}
 
-  // remove specific handler
-  var cb;
-  for (var i = 0; i < callbacks.length; i++) {
-    cb = callbacks[i];
-    if (cb === fn || cb.fn === fn) {
-      callbacks.splice(i, 1);
-      break;
-    }
-  }
-  return this;
+// remove specific handler
+var cb;
+for (var i = 0; i < callbacks.length; i++) {
+	cb = callbacks[i];
+	if (cb === fn || cb.fn === fn) {
+	  callbacks.splice(i, 1);
+	  break;
+	}
+}
+return this;
 };
 
 /**
@@ -8816,19 +8819,19 @@ Emitter.prototype.removeEventListener = function(event, fn){
  * @return {Emitter}
  */
 
-Emitter.prototype.emit = function(event){
-  this._callbacks = this._callbacks || {};
-  var args = [].slice.call(arguments, 1)
-    , callbacks = this._callbacks[event];
+Emitter.prototype.emit = function(event) {
+this._callbacks = this._callbacks || {};
+var args = [].slice.call(arguments, 1)
+	, callbacks = this._callbacks[event];
 
-  if (callbacks) {
-    callbacks = callbacks.slice(0);
-    for (var i = 0, len = callbacks.length; i < len; ++i) {
-      callbacks[i].apply(this, args);
-    }
-  }
+if (callbacks) {
+	callbacks = callbacks.slice(0);
+	for (var i = 0, len = callbacks.length; i < len; ++i) {
+	  callbacks[i].apply(this, args);
+	}
+}
 
-  return this;
+return this;
 };
 
 /**
@@ -8839,9 +8842,9 @@ Emitter.prototype.emit = function(event){
  * @api public
  */
 
-Emitter.prototype.listeners = function(event){
-  this._callbacks = this._callbacks || {};
-  return this._callbacks[event] || [];
+Emitter.prototype.listeners = function(event) {
+this._callbacks = this._callbacks || {};
+return this._callbacks[event] || [];
 };
 
 /**
@@ -8852,8 +8855,8 @@ Emitter.prototype.listeners = function(event){
  * @api public
  */
 
-Emitter.prototype.hasListeners = function(event){
-  return !! this.listeners(event).length;
+Emitter.prototype.hasListeners = function(event) {
+return !! this.listeners(event).length;
 };
 
 }, {}],
@@ -8870,12 +8873,12 @@ var integration = require('segmentio/analytics.js-integration');
  */
 
 var Alexa = module.exports = integration('Alexa')
-  .assumesPageview()
-  .global('_atrk_opts')
-  .option('account', null)
-  .option('domain', '')
-  .option('dynamic', true)
-  .tag('<script src="//d31qbv1cthcecs.cloudfront.net/atrk.js">');
+.assumesPageview()
+.global('_atrk_opts')
+.option('account', null)
+.option('domain', '')
+.option('dynamic', true)
+.tag('<script src="//d31qbv1cthcecs.cloudfront.net/atrk.js">');
 
 /**
  * Initialize.
@@ -8883,17 +8886,17 @@ var Alexa = module.exports = integration('Alexa')
  * @param {Object} page
  */
 
-Alexa.prototype.initialize = function(page){
-  var self = this;
-  window._atrk_opts = {
-    atrk_acct: this.options.account,
-    domain: this.options.domain,
-    dynamic: this.options.dynamic
-  };
-  this.load(function(){
-    window.atrk();
-    self.ready();
-  });
+Alexa.prototype.initialize = function(page) {
+var self = this;
+window._atrk_opts = {
+	atrk_acct: this.options.account,
+	domain: this.options.domain,
+	dynamic: this.options.dynamic
+};
+this.load(function() {
+	window.atrk();
+	self.ready();
+});
 };
 
 /**
@@ -8902,8 +8905,8 @@ Alexa.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Alexa.prototype.loaded = function(){
-  return !! window.atrk;
+Alexa.prototype.loaded = function() {
+return !! window.atrk;
 };
 }, {"segmentio/analytics.js-integration":159}],
 86: [function(require, module, exports) {
@@ -8919,13 +8922,13 @@ var integration = require('segmentio/analytics.js-integration');
  */
 
 var Amplitude = module.exports = integration('Amplitude')
-  .assumesPageview()
-  .global('amplitude')
-  .option('apiKey', '')
-  .option('trackAllPages', false)
-  .option('trackNamedPages', true)
-  .option('trackCategorizedPages', true)
-  .tag('<script src="https://d24n15hnbwhuhn.cloudfront.net/libs/amplitude-1.1-min.js">');
+.assumesPageview()
+.global('amplitude')
+.option('apiKey', '')
+.option('trackAllPages', false)
+.option('trackNamedPages', true)
+.option('trackCategorizedPages', true)
+.tag('<script src="https://d24n15hnbwhuhn.cloudfront.net/libs/amplitude-1.1-min.js">');
 
 /**
  * Initialize.
@@ -8935,10 +8938,10 @@ var Amplitude = module.exports = integration('Amplitude')
  * @param {Object} page
  */
 
-Amplitude.prototype.initialize = function(page){
-  (function(e,t){var r=e.amplitude||{}; r._q=[];function i(e){r[e]=function(){r._q.push([e].concat(Array.prototype.slice.call(arguments,0)));};} var s=["init","logEvent","setUserId","setGlobalUserProperties","setVersionName","setDomain"]; for (var c=0;c<s.length;c++){i(s[c]);}e.amplitude=r;})(window,document);
-  window.amplitude.init(this.options.apiKey);
-  this.load(this.ready);
+Amplitude.prototype.initialize = function(page) {
+(function(e,t){var r=e.amplitude||{}; r._q=[];function i(e){r[e]=function(){r._q.push([e].concat(Array.prototype.slice.call(arguments,0)));};} var s=["init","logEvent","setUserId","setGlobalUserProperties","setVersionName","setDomain"]; for (var c=0;c<s.length;c++){i(s[c]);}e.amplitude=r;})(window,document);
+window.amplitude.init(this.options.apiKey);
+this.load(this.ready);
 };
 
 /**
@@ -8947,8 +8950,8 @@ Amplitude.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Amplitude.prototype.loaded = function(){
-  return !! (window.amplitude && window.amplitude.options);
+Amplitude.prototype.loaded = function() {
+return !! (window.amplitude && window.amplitude.options);
 };
 
 /**
@@ -8957,26 +8960,26 @@ Amplitude.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Amplitude.prototype.page = function(page){
-  var properties = page.properties();
-  var category = page.category();
-  var name = page.fullName();
-  var opts = this.options;
+Amplitude.prototype.page = function(page) {
+var properties = page.properties();
+var category = page.category();
+var name = page.fullName();
+var opts = this.options;
 
-  // all pages
-  if (opts.trackAllPages) {
-    this.track(page.track());
-  }
+// all pages
+if (opts.trackAllPages) {
+	this.track(page.track());
+}
 
-  // categorized pages
-  if (category && opts.trackCategorizedPages) {
-    this.track(page.track(category));
-  }
+// categorized pages
+if (category && opts.trackCategorizedPages) {
+	this.track(page.track(category));
+}
 
-  // named pages
-  if (name && opts.trackNamedPages) {
-    this.track(page.track(name));
-  }
+// named pages
+if (name && opts.trackNamedPages) {
+	this.track(page.track(name));
+}
 };
 
 /**
@@ -8985,11 +8988,11 @@ Amplitude.prototype.page = function(page){
  * @param {Facade} identify
  */
 
-Amplitude.prototype.identify = function(identify){
-  var id = identify.userId();
-  var traits = identify.traits();
-  if (id) window.amplitude.setUserId(id);
-  if (traits) window.amplitude.setGlobalUserProperties(traits);
+Amplitude.prototype.identify = function(identify) {
+var id = identify.userId();
+var traits = identify.traits();
+if (id) window.amplitude.setUserId(id);
+if (traits) window.amplitude.setGlobalUserProperties(traits);
 };
 
 /**
@@ -8998,10 +9001,10 @@ Amplitude.prototype.identify = function(identify){
  * @param {Track} event
  */
 
-Amplitude.prototype.track = function(track){
-  var props = track.properties();
-  var event = track.event();
-  window.amplitude.logEvent(event, props);
+Amplitude.prototype.track = function(track) {
+var props = track.properties();
+var event = track.event();
+window.amplitude.logEvent(event, props);
 };
 
 }, {"segmentio/analytics.js-integration":159}],
@@ -9019,8 +9022,8 @@ var is = require('is');
  * Expose plugin.
  */
 
-module.exports = exports = function (analytics) {
-  analytics.addIntegration(Appcues);
+module.exports = exports = function(analytics) {
+analytics.addIntegration(Appcues);
 };
 
 /**
@@ -9028,12 +9031,12 @@ module.exports = exports = function (analytics) {
  */
 
 var Appcues = exports.Integration = integration('Appcues')
-  .assumesPageview()
-  .global('Appcues')
-  .global('AppcuesIdentity')
-  .option('appcuesId', '')
-  .option('userId', '')
-  .option('userEmail', '');
+.assumesPageview()
+.global('Appcues')
+.global('AppcuesIdentity')
+.option('appcuesId', '')
+.option('userId', '')
+.option('userEmail', '');
 
 /**
  * Initialize.
@@ -9043,10 +9046,10 @@ var Appcues = exports.Integration = integration('Appcues')
  * @param {Object}
  */
 
-Appcues.prototype.initialize = function(){
-  this.load(function() {
-    window.Appcues.init();
-  });
+Appcues.prototype.initialize = function() {
+this.load(function() {
+	window.Appcues.init();
+});
 };
 
 /**
@@ -9055,8 +9058,8 @@ Appcues.prototype.initialize = function(){
  * @return {Boolean}
  */
 
-Appcues.prototype.loaded = function(){
-  return is.object(window.Appcues);
+Appcues.prototype.loaded = function() {
+return is.object(window.Appcues);
 };
 
 /**
@@ -9065,11 +9068,11 @@ Appcues.prototype.loaded = function(){
  * @param {Function} callback
  */
 
-Appcues.prototype.load = function(callback){
-  var script = load('//d2dubfq97s02eu.cloudfront.net/appcues-bundle.min.js', callback);
-  script.setAttribute('data-appcues-id', this.options.appcuesId);
-  script.setAttribute('data-user-id', this.options.userId);
-  script.setAttribute('data-user-email', this.options.userEmail);
+Appcues.prototype.load = function(callback) {
+var script = load('//d2dubfq97s02eu.cloudfront.net/appcues-bundle.min.js', callback);
+script.setAttribute('data-appcues-id', this.options.appcuesId);
+script.setAttribute('data-user-id', this.options.userId);
+script.setAttribute('data-user-email', this.options.userEmail);
 };
 
 
@@ -9081,8 +9084,8 @@ Appcues.prototype.load = function(callback){
  * @param {Identify} identify
  */
 
-Appcues.prototype.identify = function(identify){
-  window.Appcues.identify(identify.traits());
+Appcues.prototype.identify = function(identify) {
+window.Appcues.identify(identify.traits());
 };
 
 }, {"segmentio/analytics.js-integration":159,"load-script":168,"is":18}],
@@ -9100,11 +9103,11 @@ var each = require('each');
  */
 
 var Awesm = module.exports = integration('awe.sm')
-  .assumesPageview()
-  .global('AWESM')
-  .option('apiKey', '')
-  .tag('<script src="//widgets.awe.sm/v3/widgets.js?key={{ apiKey }}&async=true">')
-  .mapping('events');
+.assumesPageview()
+.global('AWESM')
+.option('apiKey', '')
+.tag('<script src="//widgets.awe.sm/v3/widgets.js?key={{ apiKey }}&async=true">')
+.mapping('events');
 
 /**
  * Initialize.
@@ -9114,9 +9117,9 @@ var Awesm = module.exports = integration('awe.sm')
  * @param {Object} page
  */
 
-Awesm.prototype.initialize = function(page){
-  window.AWESM = { api_key: this.options.apiKey };
-  this.load(this.ready);
+Awesm.prototype.initialize = function(page) {
+window.AWESM = { api_key: this.options.apiKey };
+this.load(this.ready);
 };
 
 /**
@@ -9125,8 +9128,8 @@ Awesm.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Awesm.prototype.loaded = function(){
-  return !! (window.AWESM && window.AWESM._exists);
+Awesm.prototype.loaded = function() {
+return !! (window.AWESM && window.AWESM._exists);
 };
 
 /**
@@ -9135,12 +9138,12 @@ Awesm.prototype.loaded = function(){
  * @param {Track} track
  */
 
-Awesm.prototype.track = function(track){
-  var user = this.analytics.user();
-  var goals = this.events(track.event());
-  each(goals, function(goal){
-    window.AWESM.convert(goal, track.cents(), null, user.id());
-  });
+Awesm.prototype.track = function(track) {
+var user = this.analytics.user();
+var goals = this.events(track.event());
+each(goals, function(goal) {
+	window.AWESM.convert(goal, track.cents(), null, user.id());
+});
 };
 
 }, {"segmentio/analytics.js-integration":159,"each":5}],
@@ -9160,13 +9163,13 @@ var onBody = require('on-body');
  */
 
 var Awesomatic = module.exports = integration('Awesomatic')
-  .assumesPageview()
-  .global('Awesomatic')
-  .global('AwesomaticSettings')
-  .global('AwsmSetup')
-  .global('AwsmTmp')
-  .option('appId', '')
-  .tag('<script src="https://1c817b7a15b6941337c0-dff9b5f4adb7ba28259631e99c3f3691.ssl.cf2.rackcdn.com/gen/embed.js">');
+.assumesPageview()
+.global('Awesomatic')
+.global('AwesomaticSettings')
+.global('AwsmSetup')
+.global('AwsmTmp')
+.option('appId', '')
+.tag('<script src="https://1c817b7a15b6941337c0-dff9b5f4adb7ba28259631e99c3f3691.ssl.cf2.rackcdn.com/gen/embed.js">');
 
 /**
  * Initialize.
@@ -9174,20 +9177,20 @@ var Awesomatic = module.exports = integration('Awesomatic')
  * @param {Object} page
  */
 
-Awesomatic.prototype.initialize = function(page){
-  var self = this;
-  var user = this.analytics.user();
-  var id = user.id();
-  var options = user.traits();
+Awesomatic.prototype.initialize = function(page) {
+var self = this;
+var user = this.analytics.user();
+var id = user.id();
+var options = user.traits();
 
-  options.appId = this.options.appId;
-  if (id) options.user_id = id;
+options.appId = this.options.appId;
+if (id) options.user_id = id;
 
-  this.load(function(){
-    window.Awesomatic.initialize(options, function(){
-      self.ready(); // need to wait for initialize to callback
-    });
-  });
+this.load(function() {
+	window.Awesomatic.initialize(options, function() {
+	  self.ready(); // need to wait for initialize to callback
+	});
+});
 };
 
 /**
@@ -9196,8 +9199,8 @@ Awesomatic.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Awesomatic.prototype.loaded = function(){
-  return is.object(window.Awesomatic);
+Awesomatic.prototype.loaded = function() {
+return is.object(window.Awesomatic);
 };
 }, {"segmentio/analytics.js-integration":159,"is":18,"on-body":180}],
 90: [function(require, module, exports) {
@@ -9233,10 +9236,10 @@ var noop = function(){};
  */
 
 var Bing = module.exports = integration('Bing Ads')
-  .option('siteId', '')
-  .option('domainId', '')
-  .tag('<script id="mstag_tops" src="//flex.msn.com/mstag/site/{{ siteId }}/mstag.js">')
-  .mapping('events');
+.option('siteId', '')
+.option('domainId', '')
+.tag('<script id="mstag_tops" src="//flex.msn.com/mstag/site/{{ siteId }}/mstag.js">')
+.mapping('events');
 
 /**
  * Initialize.
@@ -9246,30 +9249,30 @@ var Bing = module.exports = integration('Bing Ads')
  * @param {Object} page
  */
 
-Bing.prototype.initialize = function(page){
-  if (!window.mstag) {
-    window.mstag = {
-      loadTag: noop,
-      time: (new Date()).getTime(),
-      // they use document.write, which doesn't work when loaded async.
-      // they provide a way to override it.
-      // the first time it is called, load the script,
-      // and only when that script is done, is "loading" done.
-      _write: writeToAppend
-    };
-  };
-  var self = this;
-  onbody(function(){
-    self.load(function(){
-      var loaded = bind(self, self.loaded);
+Bing.prototype.initialize = function(page) {
+if (!window.mstag) {
+	window.mstag = {
+	  loadTag: noop,
+	  time: (new Date()).getTime(),
+	  // they use document.write, which doesn't work when loaded async.
+	  // they provide a way to override it.
+	  // the first time it is called, load the script,
+	  // and only when that script is done, is "loading" done.
+	  _write: writeToAppend
+	};
+};
+var self = this;
+onbody(function() {
+	self.load(function() {
+	  var loaded = bind(self, self.loaded);
 
-      // poll until this.loaded() is true.
-      // have to do a weird hack like this because
-      // the first script loads a second script,
-      // and only after the second script is it actually loaded.
-      when(loaded, self.ready);
-    });
-  });
+	  // poll until this.loaded() is true.
+	  // have to do a weird hack like this because
+	  // the first script loads a second script,
+	  // and only after the second script is it actually loaded.
+	  when(loaded, self.ready);
+	});
+});
 };
 
 /**
@@ -9278,8 +9281,8 @@ Bing.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Bing.prototype.loaded = function(){
-  return !! (window.mstag && window.mstag.loadTag !== noop);
+Bing.prototype.loaded = function() {
+return !! (window.mstag && window.mstag.loadTag !== noop);
 };
 
 /**
@@ -9288,19 +9291,19 @@ Bing.prototype.loaded = function(){
  * @param {Track} track
  */
 
-Bing.prototype.track = function(track){
-  var events = this.events(track.event());
-  var revenue = track.revenue() || 0;
-  var self = this;
-  each(events, function(goal){
-    window.mstag.loadTag('analytics', {
-      domainId: self.options.domainId,
-      revenue: revenue,
-      dedup: '1',
-      type: '1',
-      actionid: goal
-    });
-  });
+Bing.prototype.track = function(track) {
+var events = this.events(track.event());
+var revenue = track.revenue() || 0;
+var self = this;
+each(events, function(goal) {
+	window.mstag.loadTag('analytics', {
+	  domainId: self.options.domainId,
+	  revenue: revenue,
+	  dedup: '1',
+	  type: '1',
+	  actionid: goal
+	});
+});
 };
 
 /**
@@ -9312,16 +9315,16 @@ Bing.prototype.track = function(track){
  */
 
 function writeToAppend(str) {
-  var first = document.getElementsByTagName('script')[0];
-  var el = domify(str);
-  // https://github.com/component/domify/issues/14
-  if ('script' == el.tagName.toLowerCase() && el.getAttribute('src')) {
-    var tmp = document.createElement('script');
-    tmp.src = el.getAttribute('src');
-    tmp.async = true;
-    el = tmp;
-  }
-  document.body.appendChild(el);
+var first = document.getElementsByTagName('script')[0];
+var el = domify(str);
+// https://github.com/component/domify/issues/14
+if ('script' == el.tagName.toLowerCase() && el.getAttribute('src')) {
+	var tmp = document.createElement('script');
+	tmp.src = el.getAttribute('src');
+	tmp.async = true;
+	el = tmp;
+}
+document.body.appendChild(el);
 }
 
 }, {"segmentio/analytics.js-integration":159,"on-body":180,"domify":181,"extend":40,"bind":33,"when":184,"each":5}],
@@ -9346,13 +9349,13 @@ module.exports = when;
  */
 
 function when (condition, fn, interval) {
-  if (condition()) return callback.async(fn);
+if (condition()) return callback.async(fn);
 
-  var ref = setInterval(function () {
-    if (!condition()) return;
-    callback(fn);
-    clearInterval(ref);
-  }, interval || 10);
+var ref = setInterval(function() {
+	if (!condition()) return;
+	callback(fn);
+	clearInterval(ref);
+}, interval || 10);
 }
 }, {"callback":12}],
 91: [function(require, module, exports) {
@@ -9373,10 +9376,10 @@ var each = require('each');
  */
 
 var Bronto = module.exports = integration('Bronto')
-  .global('__bta')
-  .option('siteId', '')
-  .option('host', '')
-  .tag('<script src="//p.bm23.com/bta.js">');
+.global('__bta')
+.option('siteId', '')
+.option('host', '')
+.tag('<script src="//p.bm23.com/bta.js">');
 
 /**
  * Initialize.
@@ -9388,18 +9391,18 @@ var Bronto = module.exports = integration('Bronto')
  * @param {Object} page
  */
 
-Bronto.prototype.initialize = function(page){
-  var self = this;
-  var params = qs.parse(window.location.search);
-  if (!params._bta_tid && !params._bta_c) {
-    this.debug('missing tracking URL parameters `_bta_tid` and `_bta_c`.');
-  }
-  this.load(function(){
-    var opts = self.options;
-    self.bta = new window.__bta(opts.siteId);
-    if (opts.host) self.bta.setHost(opts.host);
-    self.ready();
-  });
+Bronto.prototype.initialize = function(page) {
+var self = this;
+var params = qs.parse(window.location.search);
+if (!params._bta_tid && !params._bta_c) {
+	this.debug('missing tracking URL parameters `_bta_tid` and `_bta_c`.');
+}
+this.load(function() {
+	var opts = self.options;
+	self.bta = new window.__bta(opts.siteId);
+	if (opts.host) self.bta.setHost(opts.host);
+	self.ready();
+});
 };
 
 /**
@@ -9408,8 +9411,8 @@ Bronto.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Bronto.prototype.loaded = function(){
-  return this.bta;
+Bronto.prototype.loaded = function() {
+return this.bta;
 };
 
 /**
@@ -9434,11 +9437,11 @@ Bronto.prototype.loaded = function(){
  * @param {Track} event
  */
 
-Bronto.prototype.track = function(track){
-  var revenue = track.revenue();
-  var event = track.event();
-  var type = 'number' == typeof revenue ? '$' : 't';
-  this.bta.addConversionLegacy(type, event, revenue);
+Bronto.prototype.track = function(track) {
+var revenue = track.revenue();
+var event = track.event();
+var type = 'number' == typeof revenue ? '$' : 't';
+this.bta.addConversionLegacy(type, event, revenue);
 };
 
 /**
@@ -9454,37 +9457,37 @@ Bronto.prototype.track = function(track){
  * @api private
  */
 
-Bronto.prototype.completedOrder = function(track){
-  var user = this.analytics.user();
-  var products = track.products();
-  var props = track.properties();
-  var items = [];
-  var identify = new Identify({
-    userId: user.id(),
-    traits: user.traits()
-  });
-  var email = identify.email();
+Bronto.prototype.completedOrder = function(track) {
+var user = this.analytics.user();
+var products = track.products();
+var props = track.properties();
+var items = [];
+var identify = new Identify({
+	userId: user.id(),
+	traits: user.traits()
+});
+var email = identify.email();
 
-  // items
-  each(products, function(product){
-    var track = new Track({ properties: product });
-    items.push({
-      item_id: track.id() || track.sku(),
-      desc: product.description || track.name(),
-      quantity: track.quantity(),
-      amount: track.price(),
-    });
-  });
+// items
+each(products, function(product) {
+	var track = new Track({ properties: product });
+	items.push({
+	  item_id: track.id() || track.sku(),
+	  desc: product.description || track.name(),
+	  quantity: track.quantity(),
+	  amount: track.price(),
+	});
+});
 
-  // add conversion
-  this.bta.addOrder({
-    order_id: track.orderId(),
-    email: email,
-    // they recommend not putting in a date
-    // because it needs to be formatted correctly
-    // YYYY-MM-DDTHH:MM:SS
-    items: items
-  });
+// add conversion
+this.bta.addOrder({
+	order_id: track.orderId(),
+	email: email,
+	// they recommend not putting in a date
+	// because it needs to be formatted correctly
+	// YYYY-MM-DDTHH:MM:SS
+	items: items
+});
 };
 
 }, {"segmentio/analytics.js-integration":159,"facade":27,"load-pixel":185,"querystring":186,"each":5}],
@@ -9505,22 +9508,22 @@ var sub = require('substitute');
  * @api public
  */
 
-module.exports = function(path){
-  return function(query, obj, fn){
-    if ('function' == typeof obj) fn = obj, obj = {};
-    obj = obj || {};
-    fn = fn || function(){};
-    var url = sub(path, obj);
-    var img = new Image;
-    img.onerror = error(fn, 'failed to load pixel', img);
-    img.onload = function(){ fn(); };
-    query = stringify(query);
-    if (query) query = '?' + query;
-    img.src = url + query;
-    img.width = 1;
-    img.height = 1;
-    return img;
-  };
+module.exports = function(path) {
+return function(query, obj, fn) {
+	if ('function' == typeof obj) fn = obj, obj = {};
+	obj = obj || {};
+	fn = fn || function(){};
+	var url = sub(path, obj);
+	var img = new Image;
+	img.onerror = error(fn, 'failed to load pixel', img);
+	img.onload = function(){ fn(); };
+	query = stringify(query);
+	if (query) query = '?' + query;
+	img.src = url + query;
+	img.width = 1;
+	img.height = 1;
+	return img;
+};
 };
 
 /**
@@ -9533,14 +9536,14 @@ module.exports = function(path){
  * @api private
  */
 
-function error(fn, message, img){
-  return function(e){
-    e = e || window.event;
-    var err = new Error(message);
-    err.event = e;
-    err.source = img;
-    fn(err);
-  };
+function error(fn, message, img) {
+return function(e) {
+	e = e || window.event;
+	var err = new Error(message);
+	err.event = e;
+	err.source = img;
+	fn(err);
+};
 }
 
 }, {"querystring":186,"substitute":187}],
@@ -9563,32 +9566,32 @@ var type = require('type');
  * @api public
  */
 
-exports.parse = function(str){
-  if ('string' != typeof str) return {};
+exports.parse = function(str) {
+if ('string' != typeof str) return {};
 
-  str = trim(str);
-  if ('' == str) return {};
-  if ('?' == str.charAt(0)) str = str.slice(1);
+str = trim(str);
+if ('' == str) return {};
+if ('?' == str.charAt(0)) str = str.slice(1);
 
-  var obj = {};
-  var pairs = str.split('&');
-  for (var i = 0; i < pairs.length; i++) {
-    var parts = pairs[i].split('=');
-    var key = decode(parts[0]);
-    var m;
+var obj = {};
+var pairs = str.split('&');
+for (var i = 0; i < pairs.length; i++) {
+	var parts = pairs[i].split('=');
+	var key = decode(parts[0]);
+	var m;
 
-    if (m = /(\w+)\[(\d+)\]/.exec(key)) {
-      obj[m[1]] = obj[m[1]] || [];
-      obj[m[1]][m[2]] = decode(parts[1]);
-      continue;
-    }
+	if (m = /(\w+)\[(\d+)\]/.exec(key)) {
+	  obj[m[1]] = obj[m[1]] || [];
+	  obj[m[1]][m[2]] = decode(parts[1]);
+	  continue;
+	}
 
-    obj[parts[0]] = null == parts[1]
-      ? ''
-      : decode(parts[1]);
-  }
+	obj[parts[0]] = null == parts[1]
+	  ? ''
+	  : decode(parts[1]);
+}
 
-  return obj;
+return obj;
 };
 
 /**
@@ -9599,24 +9602,24 @@ exports.parse = function(str){
  * @api public
  */
 
-exports.stringify = function(obj){
-  if (!obj) return '';
-  var pairs = [];
+exports.stringify = function(obj) {
+if (!obj) return '';
+var pairs = [];
 
-  for (var key in obj) {
-    var value = obj[key];
+for (var key in obj) {
+	var value = obj[key];
 
-    if ('array' == type(value)) {
-      for (var i = 0; i < value.length; ++i) {
-        pairs.push(encode(key + '[' + i + ']') + '=' + encode(value[i]));
-      }
-      continue;
-    }
+	if ('array' == type(value)) {
+	  for (var i = 0; i < value.length; ++i) {
+		pairs.push(encode(key + '[' + i + ']') + '=' + encode(value[i]));
+	  }
+	  continue;
+	}
 
-    pairs.push(encode(key) + '=' + encode(obj[key]));
-  }
+	pairs.push(encode(key) + '=' + encode(obj[key]));
+}
 
-  return pairs.join('&');
+return pairs.join('&');
 };
 
 }, {"trim":50,"type":35}],
@@ -9638,14 +9641,14 @@ module.exports = substitute;
  * @api public
  */
 
-function substitute(str, obj, expr){
-  if (!obj) throw new TypeError('expected an object');
-  expr = expr || /:(\w+)/g;
-  return str.replace(expr, function(_, prop){
-    return null != obj[prop]
-      ? obj[prop]
-      : _;
-  });
+function substitute(str, obj, expr) {
+if (!obj) throw new TypeError('expected an object');
+expr = expr || /:(\w+)/g;
+return str.replace(expr, function(_, prop) {
+	return null != obj[prop]
+	  ? obj[prop]
+	  : _;
+});
 }
 
 }, {}],
@@ -9663,12 +9666,12 @@ var tick = require('next-tick');
  */
 
 var BugHerd = module.exports = integration('BugHerd')
-  .assumesPageview()
-  .global('BugHerdConfig')
-  .global('_bugHerd')
-  .option('apiKey', '')
-  .option('showFeedbackTab', true)
-  .tag('<script src="//www.bugherd.com/sidebarv2.js?apikey={{ apiKey }}">');
+.assumesPageview()
+.global('BugHerdConfig')
+.global('_bugHerd')
+.option('apiKey', '')
+.option('showFeedbackTab', true)
+.tag('<script src="//www.bugherd.com/sidebarv2.js?apikey={{ apiKey }}">');
 
 /**
  * Initialize.
@@ -9678,12 +9681,12 @@ var BugHerd = module.exports = integration('BugHerd')
  * @param {Object} page
  */
 
-BugHerd.prototype.initialize = function(page){
-  window.BugHerdConfig = { feedback: { hide: !this.options.showFeedbackTab }};
-  var ready = this.ready;
-  this.load(function(){
-    tick(ready);
-  });
+BugHerd.prototype.initialize = function(page) {
+window.BugHerdConfig = { feedback: { hide: !this.options.showFeedbackTab }};
+var ready = this.ready;
+this.load(function() {
+	tick(ready);
+});
 };
 
 /**
@@ -9692,8 +9695,8 @@ BugHerd.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-BugHerd.prototype.loaded = function(){
-  return !! window._bugHerd;
+BugHerd.prototype.loaded = function() {
+return !! window._bugHerd;
 };
 }, {"segmentio/analytics.js-integration":159,"next-tick":45}],
 93: [function(require, module, exports) {
@@ -9712,9 +9715,9 @@ var onError = require('on-error');
  */
 
 var Bugsnag = module.exports = integration('Bugsnag')
-  .global('Bugsnag')
-  .option('apiKey', '')
-  .tag('<script src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js">');
+.global('Bugsnag')
+.option('apiKey', '')
+.tag('<script src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js">');
 
 /**
  * Initialize.
@@ -9724,12 +9727,12 @@ var Bugsnag = module.exports = integration('Bugsnag')
  * @param {Object} page
  */
 
-Bugsnag.prototype.initialize = function(page){
-  var self = this;
-  this.load(function(){
-    window.Bugsnag.apiKey = self.options.apiKey;
-    self.ready();
-  });
+Bugsnag.prototype.initialize = function(page) {
+var self = this;
+this.load(function() {
+	window.Bugsnag.apiKey = self.options.apiKey;
+	self.ready();
+});
 };
 
 /**
@@ -9738,8 +9741,8 @@ Bugsnag.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Bugsnag.prototype.loaded = function(){
-  return is.object(window.Bugsnag);
+Bugsnag.prototype.loaded = function() {
+return is.object(window.Bugsnag);
 };
 
 /**
@@ -9748,9 +9751,9 @@ Bugsnag.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-Bugsnag.prototype.identify = function(identify){
-  window.Bugsnag.metaData = window.Bugsnag.metaData || {};
-  extend(window.Bugsnag.metaData, identify.traits());
+Bugsnag.prototype.identify = function(identify) {
+window.Bugsnag.metaData = window.Bugsnag.metaData || {};
+extend(window.Bugsnag.metaData, identify.traits());
 };
 
 }, {"segmentio/analytics.js-integration":159,"is":18,"extend":40,"on-error":188}],
@@ -9789,7 +9792,7 @@ window.onerror = handler;
  */
 
 function handler () {
-  for (var i = 0, fn; fn = callbacks[i]; i++) fn.apply(this, arguments);
+for (var i = 0, fn; fn = callbacks[i]; i++) fn.apply(this, arguments);
 }
 
 
@@ -9800,11 +9803,11 @@ function handler () {
  */
 
 function onError (fn) {
-  callbacks.push(fn);
-  if (window.onerror != handler) {
-    callbacks.push(window.onerror);
-    window.onerror = handler;
-  }
+callbacks.push(fn);
+if (window.onerror != handler) {
+	callbacks.push(window.onerror);
+	window.onerror = handler;
+}
 }
 }, {}],
 94: [function(require, module, exports) {
@@ -9822,13 +9825,13 @@ var onBody = require('on-body');
  */
 
 var Chartbeat = module.exports = integration('Chartbeat')
-  .assumesPageview()
-  .global('_sf_async_config')
-  .global('_sf_endpt')
-  .global('pSUPERFLY')
-  .option('domain', '')
-  .option('uid', null)
-  .tag('<script src="//static.chartbeat.com/js/chartbeat.js">');
+.assumesPageview()
+.global('_sf_async_config')
+.global('_sf_endpt')
+.global('pSUPERFLY')
+.option('domain', '')
+.option('uid', null)
+.tag('<script src="//static.chartbeat.com/js/chartbeat.js">');
 
 /**
  * Initialize.
@@ -9838,19 +9841,19 @@ var Chartbeat = module.exports = integration('Chartbeat')
  * @param {Object} page
  */
 
-Chartbeat.prototype.initialize = function(page){
-  var self = this;
+Chartbeat.prototype.initialize = function(page) {
+var self = this;
 
-  window._sf_async_config = window._sf_async_config || {};
-  window._sf_async_config.useCanonical = true;
-  defaults(window._sf_async_config, this.options);
+window._sf_async_config = window._sf_async_config || {};
+window._sf_async_config.useCanonical = true;
+defaults(window._sf_async_config, this.options);
 
-  onBody(function(){
-    window._sf_endpt = new Date().getTime();
-    // Note: Chartbeat depends on document.body existing so the script does
-    // not load until that is confirmed. Otherwise it may trigger errors.
-    self.load(self.ready);
-  });
+onBody(function() {
+	window._sf_endpt = new Date().getTime();
+	// Note: Chartbeat depends on document.body existing so the script does
+	// not load until that is confirmed. Otherwise it may trigger errors.
+	self.load(self.ready);
+});
 };
 
 /**
@@ -9859,8 +9862,8 @@ Chartbeat.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Chartbeat.prototype.loaded = function(){
-  return !! window.pSUPERFLY;
+Chartbeat.prototype.loaded = function() {
+return !! window.pSUPERFLY;
 };
 
 /**
@@ -9871,10 +9874,10 @@ Chartbeat.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Chartbeat.prototype.page = function(page){
-  var props = page.properties();
-  var name = page.fullName();
-  window.pSUPERFLY.virtualPage(props.path, name || props.title);
+Chartbeat.prototype.page = function(page) {
+var props = page.properties();
+var name = page.fullName();
+window.pSUPERFLY.virtualPage(props.path, name || props.title);
 };
 
 }, {"segmentio/analytics.js-integration":159,"defaults":189,"on-body":180}],
@@ -9885,13 +9888,13 @@ Chartbeat.prototype.page = function(page){
 module.exports = defaults;
 
 function defaults (dest, defaults) {
-  for (var prop in defaults) {
-    if (! (prop in dest)) {
-      dest[prop] = defaults[prop];
-    }
-  }
+for (var prop in defaults) {
+	if (! (prop in dest)) {
+	  dest[prop] = defaults[prop];
+	}
+}
 
-  return dest;
+return dest;
 };
 
 }, {}],
@@ -9916,13 +9919,13 @@ var has = Object.prototype.hasOwnProperty;
  */
 
 var supported = {
-  activation: true,
-  changePlan: true,
-  register: true,
-  refund: true,
-  charge: true,
-  cancel: true,
-  login: true
+activation: true,
+changePlan: true,
+register: true,
+refund: true,
+charge: true,
+cancel: true,
+login: true
 };
 
 /**
@@ -9930,11 +9933,11 @@ var supported = {
  */
 
 var ChurnBee = module.exports = integration('ChurnBee')
-  .global('_cbq')
-  .global('ChurnBee')
-  .option('apiKey', '')
-  .tag('<script src="//api.churnbee.com/cb.js">')
-  .mapping('events');
+.global('_cbq')
+.global('ChurnBee')
+.option('apiKey', '')
+.tag('<script src="//api.churnbee.com/cb.js">')
+.mapping('events');
 
 /**
  * Initialize.
@@ -9944,9 +9947,9 @@ var ChurnBee = module.exports = integration('ChurnBee')
  * @param {Object} page
  */
 
-ChurnBee.prototype.initialize = function(page){
-  push('_setApiKey', this.options.apiKey);
-  this.load(this.ready);
+ChurnBee.prototype.initialize = function(page) {
+push('_setApiKey', this.options.apiKey);
+this.load(this.ready);
 };
 
 /**
@@ -9955,8 +9958,8 @@ ChurnBee.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-ChurnBee.prototype.loaded = function(){
-  return !! window.ChurnBee;
+ChurnBee.prototype.loaded = function() {
+return !! window.ChurnBee;
 };
 
 /**
@@ -9965,14 +9968,14 @@ ChurnBee.prototype.loaded = function(){
  * @param {Track} event
  */
 
-ChurnBee.prototype.track = function(track){
-  var event = track.event();
-  var events = this.events(event);
-  events.push(event);
-  each(events, function(event){
-    if (true != supported[event]) return;
-    push(event, track.properties({ revenue: 'amount' }));
-  });
+ChurnBee.prototype.track = function(track) {
+var event = track.event();
+var events = this.events(event);
+events.push(event);
+each(events, function(event) {
+	if (true != supported[event]) return;
+	push(event, track.properties({ revenue: 'amount' }));
+});
 };
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"each":5}],
@@ -9995,15 +9998,15 @@ module.exports = generate;
  */
 
 function generate (name, options) {
-  options = options || {};
+options = options || {};
 
-  return function (args) {
-    args = [].slice.call(arguments);
-    window[name] || (window[name] = []);
-    options.wrap === false
-      ? window[name].push.apply(window[name], args)
-      : window[name].push(args);
-  };
+return function(args) {
+	args = [].slice.call(arguments);
+	window[name] || (window[name] = []);
+	options.wrap === false
+	  ? window[name].push.apply(window[name], args)
+	  : window[name].push(args);
+};
 }
 }, {}],
 96: [function(require, module, exports) {
@@ -10025,18 +10028,18 @@ var onBody = require('on-body');
  */
 
 var ClickTale = module.exports = integration('ClickTale')
-  .assumesPageview()
-  .global('WRInitTime')
-  .global('ClickTale')
-  .global('ClickTaleSetUID')
-  .global('ClickTaleField')
-  .global('ClickTaleEvent')
-  .option('httpCdnUrl', 'http://s.clicktale.net/WRe0.js')
-  .option('httpsCdnUrl', '')
-  .option('projectId', '')
-  .option('recordingRatio', 0.01)
-  .option('partitionId', '')
-  .tag('<script src="{{src}}">');
+.assumesPageview()
+.global('WRInitTime')
+.global('ClickTale')
+.global('ClickTaleSetUID')
+.global('ClickTaleField')
+.global('ClickTaleEvent')
+.option('httpCdnUrl', 'http://s.clicktale.net/WRe0.js')
+.option('httpsCdnUrl', '')
+.option('projectId', '')
+.option('recordingRatio', 0.01)
+.option('partitionId', '')
+.tag('<script src="{{src}}">');
 
 /**
  * Initialize.
@@ -10046,27 +10049,27 @@ var ClickTale = module.exports = integration('ClickTale')
  * @param {Object} page
  */
 
-ClickTale.prototype.initialize = function(page){
-  var self = this;
-  window.WRInitTime = date.getTime();
+ClickTale.prototype.initialize = function(page) {
+var self = this;
+window.WRInitTime = date.getTime();
 
-  onBody(function(body){
-    body.appendChild(domify('<div id="ClickTaleDiv" style="display: none;">'));
-  });
+onBody(function(body) {
+	body.appendChild(domify('<div id="ClickTaleDiv" style="display: none;">'));
+});
 
-  var http = this.options.httpCdnUrl;
-  var https = this.options.httpsCdnUrl;
-  if (useHttps() && !https) return this.debug('https option required');
-  var src = useHttps() ? https : http;
+var http = this.options.httpCdnUrl;
+var https = this.options.httpsCdnUrl;
+if (useHttps() && !https) return this.debug('https option required');
+var src = useHttps() ? https : http;
 
-  this.load({ src: src }, function(){
-    window.ClickTale(
-      self.options.projectId,
-      self.options.recordingRatio,
-      self.options.partitionId
-    );
-    self.ready();
-  });
+this.load({ src: src }, function() {
+	window.ClickTale(
+	  self.options.projectId,
+	  self.options.recordingRatio,
+	  self.options.partitionId
+	);
+	self.ready();
+});
 };
 
 /**
@@ -10075,8 +10078,8 @@ ClickTale.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-ClickTale.prototype.loaded = function(){
-  return is.fn(window.ClickTale);
+ClickTale.prototype.loaded = function() {
+return is.fn(window.ClickTale);
 };
 
 /**
@@ -10088,12 +10091,12 @@ ClickTale.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-ClickTale.prototype.identify = function(identify){
-  var id = identify.userId();
-  window.ClickTaleSetUID(id);
-  each(identify.traits(), function(key, value){
-    window.ClickTaleField(key, value);
-  });
+ClickTale.prototype.identify = function(identify) {
+var id = identify.userId();
+window.ClickTaleSetUID(id);
+each(identify.traits(), function(key, value) {
+	window.ClickTaleField(key, value);
+});
 };
 
 /**
@@ -10104,8 +10107,8 @@ ClickTale.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-ClickTale.prototype.track = function(track){
-  window.ClickTaleEvent(track.event());
+ClickTale.prototype.track = function(track) {
+window.ClickTaleEvent(track.event());
 };
 
 }, {"load-date":191,"domify":181,"each":5,"segmentio/analytics.js-integration":159,"is":18,"use-https":161,"on-body":180}],
@@ -10119,10 +10122,10 @@ ClickTale.prototype.track = function(track){
  */
 
 var time = new Date()
-  , perf = window.performance;
+, perf = window.performance;
 
 if (perf && perf.timing && perf.timing.responseEnd) {
-  time = new Date(perf.timing.responseEnd);
+time = new Date(perf.timing.responseEnd);
 }
 
 module.exports = time;
@@ -10143,12 +10146,12 @@ var is = require('is');
  */
 
 var Clicky = module.exports = integration('Clicky')
-  .assumesPageview()
-  .global('clicky')
-  .global('clicky_site_ids')
-  .global('clicky_custom')
-  .option('siteId', null)
-  .tag('<script src="//static.getclicky.com/js"></script>');
+.assumesPageview()
+.global('clicky')
+.global('clicky_site_ids')
+.global('clicky_custom')
+.option('siteId', null)
+.tag('<script src="//static.getclicky.com/js"></script>');
 
 /**
  * Initialize.
@@ -10158,14 +10161,14 @@ var Clicky = module.exports = integration('Clicky')
  * @param {Object} page
  */
 
-Clicky.prototype.initialize = function(page){
-  var user = this.analytics.user();
-  window.clicky_site_ids = window.clicky_site_ids || [this.options.siteId];
-  this.identify(new Identify({
-    userId: user.id(),
-    traits: user.traits()
-  }));
-  this.load(this.ready);
+Clicky.prototype.initialize = function(page) {
+var user = this.analytics.user();
+window.clicky_site_ids = window.clicky_site_ids || [this.options.siteId];
+this.identify(new Identify({
+	userId: user.id(),
+	traits: user.traits()
+}));
+this.load(this.ready);
 };
 
 /**
@@ -10174,8 +10177,8 @@ Clicky.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Clicky.prototype.loaded = function(){
-  return is.object(window.clicky);
+Clicky.prototype.loaded = function() {
+return is.object(window.clicky);
 };
 
 /**
@@ -10186,11 +10189,11 @@ Clicky.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Clicky.prototype.page = function(page){
-  var properties = page.properties();
-  var category = page.category();
-  var name = page.fullName();
-  window.clicky.log(properties.path, name || properties.title);
+Clicky.prototype.page = function(page) {
+var properties = page.properties();
+var category = page.category();
+var name = page.fullName();
+window.clicky.log(properties.path, name || properties.title);
 };
 
 /**
@@ -10199,10 +10202,10 @@ Clicky.prototype.page = function(page){
  * @param {Identify} id (optional)
  */
 
-Clicky.prototype.identify = function(identify){
-  window.clicky_custom = window.clicky_custom || {};
-  window.clicky_custom.session = window.clicky_custom.session || {};
-  extend(window.clicky_custom.session, identify.traits());
+Clicky.prototype.identify = function(identify) {
+window.clicky_custom = window.clicky_custom || {};
+window.clicky_custom.session = window.clicky_custom.session || {};
+extend(window.clicky_custom.session, identify.traits());
 };
 
 /**
@@ -10213,8 +10216,8 @@ Clicky.prototype.identify = function(identify){
  * @param {Track} event
  */
 
-Clicky.prototype.track = function(track){
-  window.clicky.goal(track.event(), track.revenue());
+Clicky.prototype.track = function(track) {
+window.clicky.goal(track.event(), track.revenue());
 };
 
 }, {"facade":27,"extend":40,"segmentio/analytics.js-integration":159,"is":18}],
@@ -10232,13 +10235,13 @@ var useHttps = require('use-https');
  */
 
 var Comscore = module.exports = integration('comScore')
-  .assumesPageview()
-  .global('_comscore')
-  .global('COMSCORE')
-  .option('c1', '2')
-  .option('c2', '')
-  .tag('http', '<script src="http://b.scorecardresearch.com/beacon.js">')
-  .tag('https', '<script src="https://sb.scorecardresearch.com/beacon.js">');
+.assumesPageview()
+.global('_comscore')
+.global('COMSCORE')
+.option('c1', '2')
+.option('c2', '')
+.tag('http', '<script src="http://b.scorecardresearch.com/beacon.js">')
+.tag('https', '<script src="https://sb.scorecardresearch.com/beacon.js">');
 
 /**
  * Initialize.
@@ -10246,10 +10249,10 @@ var Comscore = module.exports = integration('comScore')
  * @param {Object} page
  */
 
-Comscore.prototype.initialize = function(page){
-  window._comscore = window._comscore || [this.options];
-  var name = useHttps() ? 'https' : 'http';
-  this.load(name, this.ready);
+Comscore.prototype.initialize = function(page) {
+window._comscore = window._comscore || [this.options];
+var name = useHttps() ? 'https' : 'http';
+this.load(name, this.ready);
 };
 
 /**
@@ -10258,8 +10261,8 @@ Comscore.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Comscore.prototype.loaded = function(){
-  return !! window.COMSCORE;
+Comscore.prototype.loaded = function() {
+return !! window.COMSCORE;
 };
 }, {"segmentio/analytics.js-integration":159,"use-https":161}],
 99: [function(require, module, exports) {
@@ -10275,10 +10278,10 @@ var integration = require('segmentio/analytics.js-integration');
  */
 
 var CrazyEgg = module.exports = integration('Crazy Egg')
-  .assumesPageview()
-  .global('CE2')
-  .option('accountNumber', '')
-  .tag('<script src="//dnn506yrbagrg.cloudfront.net/pages/scripts/{{ path }}.js?{{ cache }}">');
+.assumesPageview()
+.global('CE2')
+.option('accountNumber', '')
+.tag('<script src="//dnn506yrbagrg.cloudfront.net/pages/scripts/{{ path }}.js?{{ cache }}">');
 
 /**
  * Initialize.
@@ -10286,11 +10289,11 @@ var CrazyEgg = module.exports = integration('Crazy Egg')
  * @param {Object} page
  */
 
-CrazyEgg.prototype.initialize = function(page){
-  var number = this.options.accountNumber;
-  var path = number.slice(0,4) + '/' + number.slice(4);
-  var cache = Math.floor(new Date().getTime() / 3600000);
-  this.load({ path: path, cache: cache }, this.ready);
+CrazyEgg.prototype.initialize = function(page) {
+var number = this.options.accountNumber;
+var path = number.slice(0,4) + '/' + number.slice(4);
+var cache = Math.floor(new Date().getTime() / 3600000);
+this.load({ path: path, cache: cache }, this.ready);
 };
 
 /**
@@ -10299,8 +10302,8 @@ CrazyEgg.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-CrazyEgg.prototype.loaded = function(){
-  return !! window.CE2;
+CrazyEgg.prototype.loaded = function() {
+return !! window.CE2;
 };
 }, {"segmentio/analytics.js-integration":159}],
 100: [function(require, module, exports) {
@@ -10324,19 +10327,19 @@ var bind = require('bind');
  */
 
 var Curebit = module.exports = integration('Curebit')
-  .global('_curebitq')
-  .global('curebit')
-  .option('siteId', '')
-  .option('iframeWidth', '100%')
-  .option('iframeHeight', '480')
-  .option('iframeBorder', 0)
-  .option('iframeId', 'curebit_integration')
-  .option('responsive', true)
-  .option('device', '')
-  .option('insertIntoId', '')
-  .option('campaigns', {})
-  .option('server', 'https://www.curebit.com')
-  .tag('<script src="//d2jjzw81hqbuqv.cloudfront.net/integration/curebit-1.0.min.js">');
+.global('_curebitq')
+.global('curebit')
+.option('siteId', '')
+.option('iframeWidth', '100%')
+.option('iframeHeight', '480')
+.option('iframeBorder', 0)
+.option('iframeId', 'curebit_integration')
+.option('responsive', true)
+.option('device', '')
+.option('insertIntoId', '')
+.option('campaigns', {})
+.option('server', 'https://www.curebit.com')
+.tag('<script src="//d2jjzw81hqbuqv.cloudfront.net/integration/curebit-1.0.min.js">');
 
 /**
  * Initialize.
@@ -10344,12 +10347,12 @@ var Curebit = module.exports = integration('Curebit')
  * @param {Object} page
  */
 
-Curebit.prototype.initialize = function(page){
-  push('init', { site_id: this.options.siteId, server: this.options.server });
-  this.load(this.ready);
+Curebit.prototype.initialize = function(page) {
+push('init', { site_id: this.options.siteId, server: this.options.server });
+this.load(this.ready);
 
-  // throttle the call to `page` since curebit needs to append an iframe
-  this.page = throttle(bind(this, this.page), 250);
+// throttle the call to `page` since curebit needs to append an iframe
+this.page = throttle(bind(this, this.page), 250);
 };
 
 /**
@@ -10358,8 +10361,8 @@ Curebit.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Curebit.prototype.loaded = function(){
-  return !!window.curebit;
+Curebit.prototype.loaded = function() {
+return !!window.curebit;
 };
 
 /**
@@ -10380,17 +10383,17 @@ Curebit.prototype.loaded = function(){
  * @api private
  */
 
-Curebit.prototype.injectIntoId = function(url, id, fn){
-  var server = this.options.server;
-  when(function(){
-    return document.getElementById(id);
-  }, function(){
-    var script = document.createElement('script');
-    script.src = url;
-    var parent = document.getElementById(id);
-    parent.appendChild(script);
-    onload(script, fn);
-  });
+Curebit.prototype.injectIntoId = function(url, id, fn) {
+var server = this.options.server;
+when(function() {
+	return document.getElementById(id);
+}, function() {
+	var script = document.createElement('script');
+	script.src = url;
+	var parent = document.getElementById(id);
+	parent.appendChild(script);
+	onload(script, fn);
+});
 };
 
 /**
@@ -10399,44 +10402,44 @@ Curebit.prototype.injectIntoId = function(url, id, fn){
  * @param {Page} page
  */
 
-Curebit.prototype.page = function(page){
-  var user = this.analytics.user();
-  var campaigns = this.options.campaigns;
-  var path = window.location.pathname;
-  if (!campaigns[path]) return;
+Curebit.prototype.page = function(page) {
+var user = this.analytics.user();
+var campaigns = this.options.campaigns;
+var path = window.location.pathname;
+if (!campaigns[path]) return;
 
-  var tags = (campaigns[path] || '').split(',');
-  if (!tags.length) return;
+var tags = (campaigns[path] || '').split(',');
+if (!tags.length) return;
 
-  var settings = {
-    responsive: this.options.responsive,
-    device: this.options.device,
-    campaign_tags: tags,
-    iframe: {
-      width: this.options.iframeWidth,
-      height: this.options.iframeHeight,
-      id: this.options.iframeId,
-      frameborder: this.options.iframeBorder,
-      container: this.options.insertIntoId
-    }
-  };
+var settings = {
+	responsive: this.options.responsive,
+	device: this.options.device,
+	campaign_tags: tags,
+	iframe: {
+	  width: this.options.iframeWidth,
+	  height: this.options.iframeHeight,
+	  id: this.options.iframeId,
+	  frameborder: this.options.iframeBorder,
+	  container: this.options.insertIntoId
+	}
+};
 
-  var identify = new Identify({
-    userId: user.id(),
-    traits: user.traits()
-  });
+var identify = new Identify({
+	userId: user.id(),
+	traits: user.traits()
+});
 
-  // if we have an email, add any information about the user
-  if (identify.email()) {
-    settings.affiliate_member = {
-      email: identify.email(),
-      first_name: identify.firstName(),
-      last_name: identify.lastName(),
-      customer_id: identify.userId()
-    };
-  }
+// if we have an email, add any information about the user
+if (identify.email()) {
+	settings.affiliate_member = {
+	  email: identify.email(),
+	  first_name: identify.firstName(),
+	  last_name: identify.lastName(),
+	  customer_id: identify.userId()
+	};
+}
 
-  push('register_affiliate', settings);
+push('register_affiliate', settings);
 };
 
 /**
@@ -10449,40 +10452,40 @@ Curebit.prototype.page = function(page){
  * @param {Track} track
  */
 
-Curebit.prototype.completedOrder = function(track){
-  var user = this.analytics.user();
-  var orderId = track.orderId();
-  var products = track.products();
-  var props = track.properties();
-  var items = [];
-  var identify = new Identify({
-    traits: user.traits(),
-    userId: user.id()
-  });
+Curebit.prototype.completedOrder = function(track) {
+var user = this.analytics.user();
+var orderId = track.orderId();
+var products = track.products();
+var props = track.properties();
+var items = [];
+var identify = new Identify({
+	traits: user.traits(),
+	userId: user.id()
+});
 
-  each(products, function(product){
-    var track = new Track({ properties: product });
-    items.push({
-      product_id: track.id() || track.sku(),
-      quantity: track.quantity(),
-      image_url: product.image,
-      price: track.price(),
-      title: track.name(),
-      url: product.url,
-    });
-  });
+each(products, function(product) {
+	var track = new Track({ properties: product });
+	items.push({
+	  product_id: track.id() || track.sku(),
+	  quantity: track.quantity(),
+	  image_url: product.image,
+	  price: track.price(),
+	  title: track.name(),
+	  url: product.url,
+	});
+});
 
-  push('register_purchase', {
-    order_date: iso(props.date || new Date()),
-    order_number: orderId,
-    coupon_code: track.coupon(),
-    subtotal: track.total(),
-    customer_id: identify.userId(),
-    first_name: identify.firstName(),
-    last_name: identify.lastName(),
-    email: identify.email(),
-    items: items
-  });
+push('register_purchase', {
+	order_date: iso(props.date || new Date()),
+	order_number: orderId,
+	coupon_code: track.coupon(),
+	subtotal: track.total(),
+	customer_id: identify.userId(),
+	first_name: identify.firstName(),
+	last_name: identify.lastName(),
+	email: identify.email(),
+	items: items
+});
 };
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"facade":27,"throttle":192,"to-iso-string":193,"clone":194,"each":5,"bind":33}],
@@ -10505,17 +10508,17 @@ module.exports = throttle;
  */
 
 function throttle (func, wait) {
-  var rtn; // return value
-  var last = 0; // last invokation timestamp
-  return function throttled () {
-    var now = new Date().getTime();
-    var delta = now - last;
-    if (delta >= wait) {
-      rtn = func.apply(this, arguments);
-      last = now;
-    }
-    return rtn;
-  };
+var rtn; // return value
+var last = 0; // last invokation timestamp
+return function throttled () {
+	var now = new Date().getTime();
+	var delta = now - last;
+	if (delta >= wait) {
+	  rtn = func.apply(this, arguments);
+	  last = now;
+	}
+	return rtn;
+};
 }
 
 }, {}],
@@ -10538,14 +10541,14 @@ module.exports = toIsoString;
  */
 
 function toIsoString (date) {
-  return date.getUTCFullYear()
-    + '-' + pad(date.getUTCMonth() + 1)
-    + '-' + pad(date.getUTCDate())
-    + 'T' + pad(date.getUTCHours())
-    + ':' + pad(date.getUTCMinutes())
-    + ':' + pad(date.getUTCSeconds())
-    + '.' + String((date.getUTCMilliseconds()/1000).toFixed(3)).slice(2, 5)
-    + 'Z';
+return date.getUTCFullYear()
+	+ '-' + pad(date.getUTCMonth() + 1)
+	+ '-' + pad(date.getUTCDate())
+	+ 'T' + pad(date.getUTCHours())
+	+ ':' + pad(date.getUTCMinutes())
+	+ ':' + pad(date.getUTCSeconds())
+	+ '.' + String((date.getUTCMilliseconds()/1000).toFixed(3)).slice(2, 5)
+	+ 'Z';
 }
 
 
@@ -10557,8 +10560,8 @@ function toIsoString (date) {
  */
 
 function pad (number) {
-  var n = number.toString();
-  return n.length === 1 ? '0' + n : n;
+var n = number.toString();
+return n.length === 1 ? '0' + n : n;
 }
 }, {}],
 194: [function(require, module, exports) {
@@ -10570,9 +10573,9 @@ function pad (number) {
 var type;
 
 try {
-  type = require('type');
-} catch(e){
-  type = require('type-component');
+type = require('type');
+} catch(e) {
+type = require('type-component');
 }
 
 /**
@@ -10588,38 +10591,38 @@ module.exports = clone;
  * @api public
  */
 
-function clone(obj){
-  switch (type(obj)) {
-    case 'object':
-      var copy = {};
-      for (var key in obj) {
-        if (obj.hasOwnProperty(key)) {
-          copy[key] = clone(obj[key]);
-        }
-      }
-      return copy;
+function clone(obj) {
+switch (type(obj)) {
+	case 'object':
+	  var copy = {};
+	  for (var key in obj) {
+		if (obj.hasOwnProperty(key)) {
+		  copy[key] = clone(obj[key]);
+		}
+	  }
+	  return copy;
 
-    case 'array':
-      var copy = new Array(obj.length);
-      for (var i = 0, l = obj.length; i < l; i++) {
-        copy[i] = clone(obj[i]);
-      }
-      return copy;
+	case 'array':
+	  var copy = new Array(obj.length);
+	  for (var i = 0, l = obj.length; i < l; i++) {
+		copy[i] = clone(obj[i]);
+	  }
+	  return copy;
 
-    case 'regexp':
-      // from millermedeiros/amd-utils - MIT
-      var flags = '';
-      flags += obj.multiline ? 'm' : '';
-      flags += obj.global ? 'g' : '';
-      flags += obj.ignoreCase ? 'i' : '';
-      return new RegExp(obj.source, flags);
+	case 'regexp':
+	  // from millermedeiros/amd-utils - MIT
+	  var flags = '';
+	  flags += obj.multiline ? 'm' : '';
+	  flags += obj.global ? 'g' : '';
+	  flags += obj.ignoreCase ? 'i' : '';
+	  return new RegExp(obj.source, flags);
 
-    case 'date':
-      return new Date(obj.getTime());
+	case 'date':
+	  return new Date(obj.getTime());
 
-    default: // string, number, boolean, …
-      return obj;
-  }
+	default: // string, number, boolean, …
+	  return obj;
+}
 }
 
 }, {"type":35}],
@@ -10639,10 +10642,10 @@ var integration = require('segmentio/analytics.js-integration');
  */
 
 var Customerio = module.exports = integration('Customer.io')
-  .assumesPageview()
-  .global('_cio')
-  .option('siteId', '')
-  .tag('<script id="cio-tracker" src="https://assets.customer.io/assets/track.js" data-site-id="{{ siteId }}">');
+.assumesPageview()
+.global('_cio')
+.option('siteId', '')
+.tag('<script id="cio-tracker" src="https://assets.customer.io/assets/track.js" data-site-id="{{ siteId }}">');
 
 /**
  * Initialize.
@@ -10652,10 +10655,10 @@ var Customerio = module.exports = integration('Customer.io')
  * @param {Object} page
  */
 
-Customerio.prototype.initialize = function(page){
-  window._cio = window._cio || [];
-  (function(){var a,b,c; a = function(f){return function(){window._cio.push([f].concat(Array.prototype.slice.call(arguments,0))); }; }; b = ['identify', 'track']; for (c = 0; c < b.length; c++) {window._cio[b[c]] = a(b[c]); } })();
-  this.load(this.ready);
+Customerio.prototype.initialize = function(page) {
+window._cio = window._cio || [];
+(function(){var a,b,c; a = function(f){return function(){window._cio.push([f].concat(Array.prototype.slice.call(arguments,0))); }; }; b = ['identify', 'track']; for (c = 0; c < b.length; c++) {window._cio[b[c]] = a(b[c]); } })();
+this.load(this.ready);
 };
 
 /**
@@ -10664,8 +10667,8 @@ Customerio.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Customerio.prototype.loaded = function(){
-  return !! (window._cio && window._cio.pageHasLoaded);
+Customerio.prototype.loaded = function() {
+return !! (window._cio && window._cio.pageHasLoaded);
 };
 
 /**
@@ -10676,11 +10679,11 @@ Customerio.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-Customerio.prototype.identify = function(identify){
-  if (!identify.userId()) return this.debug('user id required');
-  var traits = identify.traits({ created: 'created_at' });
-  traits = convertDates(traits, convertDate);
-  window._cio.identify(traits);
+Customerio.prototype.identify = function(identify) {
+if (!identify.userId()) return this.debug('user id required');
+var traits = identify.traits({ created: 'created_at' });
+traits = convertDates(traits, convertDate);
+window._cio.identify(traits);
 };
 
 /**
@@ -10689,18 +10692,18 @@ Customerio.prototype.identify = function(identify){
  * @param {Group} group
  */
 
-Customerio.prototype.group = function(group){
-  var traits = group.traits();
-  var user = this.analytics.user();
+Customerio.prototype.group = function(group) {
+var traits = group.traits();
+var user = this.analytics.user();
 
-  traits = alias(traits, function(trait){
-    return 'Group ' + trait;
-  });
+traits = alias(traits, function(trait) {
+	return 'Group ' + trait;
+});
 
-  this.identify(new Identify({
-    userId: user.id(),
-    traits: traits
-  }));
+this.identify(new Identify({
+	userId: user.id(),
+	traits: traits
+}));
 };
 
 /**
@@ -10711,10 +10714,10 @@ Customerio.prototype.group = function(group){
  * @param {Track} track
  */
 
-Customerio.prototype.track = function(track){
-  var properties = track.properties();
-  properties = convertDates(properties, convertDate);
-  window._cio.track(track.event(), properties);
+Customerio.prototype.track = function(track) {
+var properties = track.properties();
+properties = convertDates(properties, convertDate);
+window._cio.track(track.event(), properties);
 };
 
 /**
@@ -10724,8 +10727,8 @@ Customerio.prototype.track = function(track){
  * @return {Number}
  */
 
-function convertDate(date){
-  return Math.floor(date.getTime() / 1000);
+function convertDate(date) {
+return Math.floor(date.getTime() / 1000);
 }
 
 }, {"alias":195,"convert-dates":196,"facade":27,"segmentio/analytics.js-integration":159}],
@@ -10734,9 +10737,9 @@ function convertDate(date){
 var type = require('type');
 
 try {
-  var clone = require('clone');
+var clone = require('clone');
 } catch (e) {
-  var clone = require('clone-component');
+var clone = require('clone-component');
 }
 
 
@@ -10755,10 +10758,10 @@ module.exports = alias;
  */
 
 function alias (obj, method) {
-  switch (type(method)) {
-    case 'object': return aliasByDictionary(clone(obj), method);
-    case 'function': return aliasByFunction(clone(obj), method);
-  }
+switch (type(method)) {
+	case 'object': return aliasByDictionary(clone(obj), method);
+	case 'function': return aliasByFunction(clone(obj), method);
+}
 }
 
 
@@ -10770,12 +10773,12 @@ function alias (obj, method) {
  */
 
 function aliasByDictionary (obj, aliases) {
-  for (var key in aliases) {
-    if (undefined === obj[key]) continue;
-    obj[aliases[key]] = obj[key];
-    delete obj[key];
-  }
-  return obj;
+for (var key in aliases) {
+	if (undefined === obj[key]) continue;
+	obj[aliases[key]] = obj[key];
+	delete obj[key];
+}
+return obj;
 }
 
 
@@ -10787,10 +10790,10 @@ function aliasByDictionary (obj, aliases) {
  */
 
 function aliasByFunction (obj, convert) {
-  // have to create another object so that ie8 won't infinite loop on keys
-  var output = {};
-  for (var key in obj) output[convert(key)] = obj[key];
-  return output;
+// have to create another object so that ie8 won't infinite loop on keys
+var output = {};
+for (var key in obj) output[convert(key)] = obj[key];
+return output;
 }
 }, {"type":35,"clone":62}],
 196: [function(require, module, exports) {
@@ -10798,9 +10801,9 @@ function aliasByFunction (obj, convert) {
 var is = require('is');
 
 try {
-  var clone = require('clone');
+var clone = require('clone');
 } catch (e) {
-  var clone = require('clone-component');
+var clone = require('clone-component');
 }
 
 
@@ -10820,13 +10823,13 @@ module.exports = convertDates;
  */
 
 function convertDates (obj, convert) {
-  obj = clone(obj);
-  for (var key in obj) {
-    var val = obj[key];
-    if (is.date(val)) obj[key] = convert(val);
-    if (is.object(val)) obj[key] = convertDates(val, convert);
-  }
-  return obj;
+obj = clone(obj);
+for (var key in obj) {
+	var val = obj[key];
+	if (is.date(val)) obj[key] = convert(val);
+	if (is.object(val)) obj[key] = convertDates(val, convert);
+}
+return obj;
 }
 }, {"is":18,"clone":14}],
 102: [function(require, module, exports) {
@@ -10846,12 +10849,12 @@ var push = require('global-queue')('_dcq');
  */
 
 var Drip = module.exports = integration('Drip')
-  .assumesPageview()
-  .global('dc')
-  .global('_dcq')
-  .global('_dcs')
-  .option('account', '')
-  .tag('<script src="//tag.getdrip.com/{{ account }}.js">');
+.assumesPageview()
+.global('dc')
+.global('_dcq')
+.global('_dcs')
+.option('account', '')
+.tag('<script src="//tag.getdrip.com/{{ account }}.js">');
 
 /**
  * Initialize.
@@ -10859,11 +10862,11 @@ var Drip = module.exports = integration('Drip')
  * @param {Object} page
  */
 
-Drip.prototype.initialize = function(page){
-  window._dcq = window._dcq || [];
-  window._dcs = window._dcs || {};
-  window._dcs.account = this.options.account;
-  this.load(this.ready);
+Drip.prototype.initialize = function(page) {
+window._dcq = window._dcq || [];
+window._dcs = window._dcs || {};
+window._dcs.account = this.options.account;
+this.load(this.ready);
 };
 
 /**
@@ -10872,8 +10875,8 @@ Drip.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Drip.prototype.loaded = function(){
-  return is.object(window.dc);
+Drip.prototype.loaded = function() {
+return is.object(window.dc);
 };
 
 /**
@@ -10882,13 +10885,13 @@ Drip.prototype.loaded = function(){
  * @param {Track} track
  */
 
-Drip.prototype.track = function(track){
-  var props = track.properties();
-  var cents = Math.round(track.cents());
-  props.action = track.event();
-  if (cents) props.value = cents;
-  delete props.revenue;
-  push('track', props);
+Drip.prototype.track = function(track) {
+var props = track.properties();
+var cents = Math.round(track.cents());
+props.action = track.event();
+if (cents) props.value = cents;
+delete props.revenue;
+push('track', props);
 };
 
 }, {"alias":195,"segmentio/analytics.js-integration":159,"is":18,"load-script":168,"global-queue":190}],
@@ -10908,11 +10911,11 @@ var push = require('global-queue')('_errs');
  */
 
 var Errorception = module.exports = integration('Errorception')
-  .assumesPageview()
-  .global('_errs')
-  .option('projectId', '')
-  .option('meta', true)
-  .tag('<script src="//beacon.errorception.com/{{ projectId }}.js">');
+.assumesPageview()
+.global('_errs')
+.option('projectId', '')
+.option('meta', true)
+.tag('<script src="//beacon.errorception.com/{{ projectId }}.js">');
 
 /**
  * Initialize.
@@ -10922,10 +10925,10 @@ var Errorception = module.exports = integration('Errorception')
  * @param {Object} page
  */
 
-Errorception.prototype.initialize = function(page){
-  window._errs = window._errs || [this.options.projectId];
-  onError(push);
-  this.load(this.ready);
+Errorception.prototype.initialize = function(page) {
+window._errs = window._errs || [this.options.projectId];
+onError(push);
+this.load(this.ready);
 };
 
 /**
@@ -10934,8 +10937,8 @@ Errorception.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Errorception.prototype.loaded = function(){
-  return !! (window._errs && window._errs.push !== Array.prototype.push);
+Errorception.prototype.loaded = function() {
+return !! (window._errs && window._errs.push !== Array.prototype.push);
 };
 
 /**
@@ -10946,12 +10949,12 @@ Errorception.prototype.loaded = function(){
  * @param {Object} identify
  */
 
-Errorception.prototype.identify = function(identify){
-  if (!this.options.meta) return;
-  var traits = identify.traits();
-  window._errs = window._errs || [];
-  window._errs.meta = window._errs.meta || {};
-  extend(window._errs.meta, traits);
+Errorception.prototype.identify = function(identify) {
+if (!this.options.meta) return;
+var traits = identify.traits();
+window._errs = window._errs || [];
+window._errs.meta = window._errs.meta || {};
+extend(window._errs.meta, traits);
 };
 
 }, {"extend":40,"segmentio/analytics.js-integration":159,"on-error":188,"global-queue":190}],
@@ -10970,11 +10973,11 @@ var push = require('global-queue')('_aaq');
  */
 
 var Evergage = module.exports = integration('Evergage')
-  .assumesPageview()
-  .global('_aaq')
-  .option('account', '')
-  .option('dataset', '')
-  .tag('<script src="//cdn.evergage.com/beacon/{{ account }}/{{ dataset }}/scripts/evergage.min.js">');
+.assumesPageview()
+.global('_aaq')
+.option('account', '')
+.option('dataset', '')
+.tag('<script src="//cdn.evergage.com/beacon/{{ account }}/{{ dataset }}/scripts/evergage.min.js">');
 
 /**
  * Initialize.
@@ -10982,16 +10985,16 @@ var Evergage = module.exports = integration('Evergage')
  * @param {Object} page
  */
 
-Evergage.prototype.initialize = function(page){
-  var account = this.options.account;
-  var dataset = this.options.dataset;
+Evergage.prototype.initialize = function(page) {
+var account = this.options.account;
+var dataset = this.options.dataset;
 
-  window._aaq = window._aaq || [];
-  push('setEvergageAccount', account);
-  push('setDataset', dataset);
-  push('setUseSiteConfig', true);
+window._aaq = window._aaq || [];
+push('setEvergageAccount', account);
+push('setDataset', dataset);
+push('setUseSiteConfig', true);
 
-  this.load(this.ready);
+this.load(this.ready);
 };
 
 /**
@@ -11000,8 +11003,8 @@ Evergage.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Evergage.prototype.loaded = function(){
-  return !! (window._aaq && window._aaq.push !== Array.prototype.push);
+Evergage.prototype.loaded = function() {
+return !! (window._aaq && window._aaq.push !== Array.prototype.push);
 };
 
 /**
@@ -11010,16 +11013,16 @@ Evergage.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Evergage.prototype.page = function(page){
-  var props = page.properties();
-  var name = page.name();
-  if (name) push('namePage', name);
+Evergage.prototype.page = function(page) {
+var props = page.properties();
+var name = page.name();
+if (name) push('namePage', name);
 
-  each(props, function(key, value){
-    push('setCustomField', key, value, 'page');
-  });
+each(props, function(key, value) {
+	push('setCustomField', key, value, 'page');
+});
 
-  window.Evergage.init(true);
+window.Evergage.init(true);
 };
 
 /**
@@ -11028,20 +11031,20 @@ Evergage.prototype.page = function(page){
  * @param {Identify} identify
  */
 
-Evergage.prototype.identify = function(identify){
-  var id = identify.userId();
-  if (!id) return;
+Evergage.prototype.identify = function(identify) {
+var id = identify.userId();
+if (!id) return;
 
-  push('setUser', id);
+push('setUser', id);
 
-  var traits = identify.traits({
-    email: 'userEmail',
-    name: 'userName'
-  });
+var traits = identify.traits({
+	email: 'userEmail',
+	name: 'userName'
+});
 
-  each(traits, function(key, value){
-    push('setUserField', key, value, 'page');
-  });
+each(traits, function(key, value) {
+	push('setUserField', key, value, 'page');
+});
 };
 
 /**
@@ -11050,15 +11053,15 @@ Evergage.prototype.identify = function(identify){
  * @param {Group} group
  */
 
-Evergage.prototype.group = function(group){
-  var props = group.traits();
-  var id = group.groupId();
-  if (!id) return;
+Evergage.prototype.group = function(group) {
+var props = group.traits();
+var id = group.groupId();
+if (!id) return;
 
-  push('setCompany', id);
-  each(props, function(key, value){
-    push('setAccountField', key, value, 'page');
-  });
+push('setCompany', id);
+each(props, function(key, value) {
+	push('setAccountField', key, value, 'page');
+});
 };
 
 /**
@@ -11067,8 +11070,8 @@ Evergage.prototype.group = function(group){
  * @param {Track} track
  */
 
-Evergage.prototype.track = function(track){
-  push('trackAction', track.event(), track.properties());
+Evergage.prototype.track = function(track) {
+push('trackAction', track.event(), track.properties());
 };
 
 }, {"each":5,"segmentio/analytics.js-integration":159,"global-queue":190}],
@@ -11093,10 +11096,10 @@ var has = Object.prototype.hasOwnProperty;
  */
 
 var Facebook = module.exports = integration('Facebook Ads')
-  .global('_fbq')
-  .option('currency', 'USD')
-  .tag('<script src="//connect.facebook.net/en_US/fbds.js">')
-  .mapping('events');
+.global('_fbq')
+.option('currency', 'USD')
+.tag('<script src="//connect.facebook.net/en_US/fbds.js">')
+.mapping('events');
 
 /**
  * Initialize Facebook Ads.
@@ -11106,10 +11109,10 @@ var Facebook = module.exports = integration('Facebook Ads')
  * @param {Object} page
  */
 
-Facebook.prototype.initialize = function(page){
-  window._fbq = window._fbq || [];
-  this.load(this.ready);
-  window._fbq.loaded = true;
+Facebook.prototype.initialize = function(page) {
+window._fbq = window._fbq || [];
+this.load(this.ready);
+window._fbq.loaded = true;
 };
 
 /**
@@ -11118,8 +11121,8 @@ Facebook.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Facebook.prototype.loaded = function(){
-  return !! (window._fbq && window._fbq.loaded);
+Facebook.prototype.loaded = function() {
+return !! (window._fbq && window._fbq.loaded);
 };
 
 /**
@@ -11130,23 +11133,23 @@ Facebook.prototype.loaded = function(){
  * @param {Track} track
  */
 
-Facebook.prototype.track = function(track){
-  var event = track.event();
-  var events = this.events(event);
-  var revenue = track.revenue() || 0;
-  var self = this;
+Facebook.prototype.track = function(track) {
+var event = track.event();
+var events = this.events(event);
+var revenue = track.revenue() || 0;
+var self = this;
 
-  each(events, function(event){
-    push('track', event, {
-      value: String(revenue.toFixed(2)),
-      currency: self.options.currency
-    });
-  });
+each(events, function(event) {
+	push('track', event, {
+	  value: String(revenue.toFixed(2)),
+	  currency: self.options.currency
+	});
+});
 
-  if (!events.length) {
-    var data = track.properties();
-    push('track', event, data);
-  }
+if (!events.length) {
+	var data = track.properties();
+	push('track', event, data);
+}
 };
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"each":5}],
@@ -11166,10 +11169,10 @@ var each = require('each');
  */
 
 var FoxMetrics = module.exports = integration('FoxMetrics')
-  .assumesPageview()
-  .global('_fxm')
-  .option('appId', '')
-  .tag('<script src="//d35tca7vmefkrc.cloudfront.net/scripts/{{ appId }}.js">');
+.assumesPageview()
+.global('_fxm')
+.option('appId', '')
+.tag('<script src="//d35tca7vmefkrc.cloudfront.net/scripts/{{ appId }}.js">');
 
 /**
  * Initialize.
@@ -11179,9 +11182,9 @@ var FoxMetrics = module.exports = integration('FoxMetrics')
  * @param {Object} page
  */
 
-FoxMetrics.prototype.initialize = function(page){
-  window._fxm = window._fxm || [];
-  this.load(this.ready);
+FoxMetrics.prototype.initialize = function(page) {
+window._fxm = window._fxm || [];
+this.load(this.ready);
 };
 
 /**
@@ -11190,8 +11193,8 @@ FoxMetrics.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-FoxMetrics.prototype.loaded = function(){
-  return !! (window._fxm && window._fxm.appId);
+FoxMetrics.prototype.loaded = function() {
+return !! (window._fxm && window._fxm.appId);
 };
 
 /**
@@ -11200,20 +11203,20 @@ FoxMetrics.prototype.loaded = function(){
  * @param {Page} page
  */
 
-FoxMetrics.prototype.page = function(page){
-  var properties = page.proxy('properties');
-  var category = page.category();
-  var name = page.name();
-  this._category = category; // store for later
+FoxMetrics.prototype.page = function(page) {
+var properties = page.proxy('properties');
+var category = page.category();
+var name = page.name();
+this._category = category; // store for later
 
-  push(
-    '_fxm.pages.view',
-    properties.title,   // title
-    name,               // name
-    category,           // category
-    properties.url,     // url
-    properties.referrer // referrer
-  );
+push(
+	'_fxm.pages.view',
+	properties.title,   // title
+	name,               // name
+	category,           // category
+	properties.url,     // url
+	properties.referrer // referrer
+);
 };
 
 /**
@@ -11222,22 +11225,22 @@ FoxMetrics.prototype.page = function(page){
  * @param {Identify} identify
  */
 
-FoxMetrics.prototype.identify = function(identify){
-  var id = identify.userId();
+FoxMetrics.prototype.identify = function(identify) {
+var id = identify.userId();
 
-  if (!id) return;
+if (!id) return;
 
-  push(
-    '_fxm.visitor.profile',
-    id,                    // user id
-    identify.firstName(), // first name
-    identify.lastName(),  // last name
-    identify.email(),     // email
-    identify.address(),   // address
-    undefined,            // social
-    undefined,            // partners
-    identify.traits()     // attributes
-  );
+push(
+	'_fxm.visitor.profile',
+	id,                    // user id
+	identify.firstName(), // first name
+	identify.lastName(),  // last name
+	identify.email(),     // email
+	identify.address(),   // address
+	undefined,            // social
+	undefined,            // partners
+	identify.traits()     // attributes
+);
 };
 
 /**
@@ -11246,10 +11249,10 @@ FoxMetrics.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-FoxMetrics.prototype.track = function(track){
-  var props = track.properties();
-  var category = this._category || props.category;
-  push(track.event(), category, props);
+FoxMetrics.prototype.track = function(track) {
+var props = track.properties();
+var category = this._category || props.category;
+push(track.event(), category, props);
 };
 
 /**
@@ -11259,8 +11262,8 @@ FoxMetrics.prototype.track = function(track){
  * @api private
  */
 
-FoxMetrics.prototype.viewedProduct = function(track){
-  ecommerce('productview', track);
+FoxMetrics.prototype.viewedProduct = function(track) {
+ecommerce('productview', track);
 };
 
 /**
@@ -11270,8 +11273,8 @@ FoxMetrics.prototype.viewedProduct = function(track){
  * @api private
  */
 
-FoxMetrics.prototype.removedProduct = function(track){
-  ecommerce('removecartitem', track);
+FoxMetrics.prototype.removedProduct = function(track) {
+ecommerce('removecartitem', track);
 };
 
 /**
@@ -11281,8 +11284,8 @@ FoxMetrics.prototype.removedProduct = function(track){
  * @api private
  */
 
-FoxMetrics.prototype.addedProduct = function(track){
-  ecommerce('cartitem', track);
+FoxMetrics.prototype.addedProduct = function(track) {
+ecommerce('cartitem', track);
 };
 
 /**
@@ -11292,31 +11295,31 @@ FoxMetrics.prototype.addedProduct = function(track){
  * @api private
  */
 
-FoxMetrics.prototype.completedOrder = function(track){
-  var orderId = track.orderId();
+FoxMetrics.prototype.completedOrder = function(track) {
+var orderId = track.orderId();
 
-  // transaction
-  push(
-    '_fxm.ecommerce.order',
-    orderId,
-    track.subtotal(),
-    track.shipping(),
-    track.tax(),
-    track.city(),
-    track.state(),
-    track.zip(),
-    track.quantity()
-  );
+// transaction
+push(
+	'_fxm.ecommerce.order',
+	orderId,
+	track.subtotal(),
+	track.shipping(),
+	track.tax(),
+	track.city(),
+	track.state(),
+	track.zip(),
+	track.quantity()
+);
 
-  // items
-  each(track.products(), function(product){
-    var track = new Track({ properties: product });
-    ecommerce('purchaseitem', track, [
-      track.quantity(),
-      track.price(),
-      orderId
-    ]);
-  });
+// items
+each(track.products(), function(product) {
+	var track = new Track({ properties: product });
+	ecommerce('purchaseitem', track, [
+	  track.quantity(),
+	  track.price(),
+	  orderId
+	]);
+});
 };
 
 /**
@@ -11329,13 +11332,13 @@ FoxMetrics.prototype.completedOrder = function(track){
  * @api private
  */
 
-function ecommerce(event, track, arr){
-  push.apply(null, [
-    '_fxm.ecommerce.' + event,
-    track.id() || track.sku(),
-    track.name(),
-    track.category()
-  ].concat(arr || []));
+function ecommerce(event, track, arr) {
+push.apply(null, [
+	'_fxm.ecommerce.' + event,
+	track.id() || track.sku(),
+	track.name(),
+	track.category()
+].concat(arr || []));
 }
 
 }, {"global-queue":190,"segmentio/analytics.js-integration":159,"facade":27,"each":5}],
@@ -11355,15 +11358,15 @@ var is = require('is');
  */
 
 var Frontleaf = module.exports = integration('Frontleaf')
-  .assumesPageview()
-  .global('_fl')
-  .global('_flBaseUrl')
-  .option('baseUrl', 'https://api.frontleaf.com')
-  .option('token', '')
-  .option('stream', '')
-  .option('trackNamedPages', false)
-  .option('trackCategorizedPages', false)
-  .tag('<script id="_fl" src="{{ baseUrl }}/lib/tracker.js">');
+.assumesPageview()
+.global('_fl')
+.global('_flBaseUrl')
+.option('baseUrl', 'https://api.frontleaf.com')
+.option('token', '')
+.option('stream', '')
+.option('trackNamedPages', false)
+.option('trackCategorizedPages', false)
+.tag('<script id="_fl" src="{{ baseUrl }}/lib/tracker.js">');
 
 /**
  * Initialize.
@@ -11373,14 +11376,14 @@ var Frontleaf = module.exports = integration('Frontleaf')
  * @param {Object} page
  */
 
-Frontleaf.prototype.initialize = function(page){
-  window._fl = window._fl || [];
-  window._flBaseUrl = window._flBaseUrl || this.options.baseUrl;
-  this._push('setApiToken', this.options.token);
-  this._push('setStream', this.options.stream);
-  var loaded = bind(this, this.loaded);
-  var ready = this.ready;
-  this.load({ baseUrl: window._flBaseUrl }, this.ready);
+Frontleaf.prototype.initialize = function(page) {
+window._fl = window._fl || [];
+window._flBaseUrl = window._flBaseUrl || this.options.baseUrl;
+this._push('setApiToken', this.options.token);
+this._push('setStream', this.options.stream);
+var loaded = bind(this, this.loaded);
+var ready = this.ready;
+this.load({ baseUrl: window._flBaseUrl }, this.ready);
 };
 
 /**
@@ -11389,8 +11392,8 @@ Frontleaf.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Frontleaf.prototype.loaded = function(){
-  return is.array(window._fl) && window._fl.ready === true;
+Frontleaf.prototype.loaded = function() {
+return is.array(window._fl) && window._fl.ready === true;
 };
 
 /**
@@ -11399,15 +11402,15 @@ Frontleaf.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-Frontleaf.prototype.identify = function(identify){
-  var userId = identify.userId();
-  if (userId) {
-    this._push('setUser', {
-      id: userId,
-      name: identify.name() || identify.username(),
-      data: clean(identify.traits())
-    });
-  }
+Frontleaf.prototype.identify = function(identify) {
+var userId = identify.userId();
+if (userId) {
+	this._push('setUser', {
+	  id: userId,
+	  name: identify.name() || identify.username(),
+	  data: clean(identify.traits())
+	});
+}
 };
 
 /**
@@ -11416,15 +11419,15 @@ Frontleaf.prototype.identify = function(identify){
  * @param {Group} group
  */
 
-Frontleaf.prototype.group = function(group){
-  var groupId = group.groupId();
-  if (groupId) {
-    this._push('setAccount', {
-      id: groupId,
-      name: group.proxy('traits.name'),
-      data: clean(group.traits())
-    });
-  }
+Frontleaf.prototype.group = function(group) {
+var groupId = group.groupId();
+if (groupId) {
+	this._push('setAccount', {
+	  id: groupId,
+	  name: group.proxy('traits.name'),
+	  data: clean(group.traits())
+	});
+}
 };
 
 /**
@@ -11433,20 +11436,20 @@ Frontleaf.prototype.group = function(group){
  * @param {Page} page
  */
 
-Frontleaf.prototype.page = function(page){
-  var category = page.category();
-  var name = page.fullName();
-  var opts = this.options;
+Frontleaf.prototype.page = function(page) {
+var category = page.category();
+var name = page.fullName();
+var opts = this.options;
 
-  // categorized pages
-  if (category && opts.trackCategorizedPages) {
-    this.track(page.track(category));
-  }
+// categorized pages
+if (category && opts.trackCategorizedPages) {
+	this.track(page.track(category));
+}
 
-  // named pages
-  if (name && opts.trackNamedPages) {
-    this.track(page.track(name));
-  }
+// named pages
+if (name && opts.trackNamedPages) {
+	this.track(page.track(name));
+}
 };
 
 /**
@@ -11455,9 +11458,9 @@ Frontleaf.prototype.page = function(page){
  * @param {Track} track
  */
 
-Frontleaf.prototype.track = function(track){
-  var event = track.event();
-  this._push('event', event, clean(track.properties()));
+Frontleaf.prototype.track = function(track) {
+var event = track.event();
+this._push('event', event, clean(track.properties()));
 };
 
 /**
@@ -11468,9 +11471,9 @@ Frontleaf.prototype.track = function(track){
  * @api private
  */
 
-Frontleaf.prototype._push = function(command){
-  var args = [].slice.call(arguments, 1);
-  window._fl.push(function(t){ t[command].apply(command, args); });
+Frontleaf.prototype._push = function(command) {
+var args = [].slice.call(arguments, 1);
+window._fl.push(function(t){ t[command].apply(command, args); });
 };
 
 /**
@@ -11481,36 +11484,36 @@ Frontleaf.prototype._push = function(command){
  * @api private
  */
 
-function clean(obj){
-  var ret = {};
+function clean(obj) {
+var ret = {};
 
-  // Remove traits/properties that are already represented
-  // outside of the data container
-  var excludeKeys = ["id","name","firstName","lastName"];
-  var len = excludeKeys.length;
-  for (var i = 0; i < len; i++) {
-    clear(obj, excludeKeys[i]);
-  }
+// Remove traits/properties that are already represented
+// outside of the data container
+var excludeKeys = ["id","name","firstName","lastName"];
+var len = excludeKeys.length;
+for (var i = 0; i < len; i++) {
+	clear(obj, excludeKeys[i]);
+}
 
-  // Flatten nested hierarchy, preserving arrays
-  obj = flatten(obj);
+// Flatten nested hierarchy, preserving arrays
+obj = flatten(obj);
 
-  // Discard nulls, represent arrays as comma-separated strings
-  for (var key in obj) {
-    var val = obj[key];
-    if (null == val) {
-      continue;
-    }
+// Discard nulls, represent arrays as comma-separated strings
+for (var key in obj) {
+	var val = obj[key];
+	if (null == val) {
+	  continue;
+	}
 
-    if (is.array(val)) {
-      ret[key] = val.toString();
-      continue;
-    }
+	if (is.array(val)) {
+	  ret[key] = val.toString();
+	  continue;
+	}
 
-    ret[key] = val;
-  }
+	ret[key] = val;
+}
 
-  return ret;
+return ret;
 }
 
 /**
@@ -11521,10 +11524,10 @@ function clean(obj){
  * @api private
  */
 
-function clear(obj, key){
-  if (obj.hasOwnProperty(key)) {
-    delete obj[key];
-  }
+function clear(obj, key) {
+if (obj.hasOwnProperty(key)) {
+	delete obj[key];
+}
 }
 
 /**
@@ -11538,25 +11541,25 @@ function clear(obj, key){
  * @api private
  */
 
-function flatten(source){
-  var output = {};
+function flatten(source) {
+var output = {};
 
-  function step(object, prev){
-    for (var key in object) {
-      var value = object[key];
-      var newKey = prev ? prev + ' ' + key : key;
+function step(object, prev) {
+	for (var key in object) {
+	  var value = object[key];
+	  var newKey = prev ? prev + ' ' + key : key;
 
-      if (!is.array(value) && is.object(value)) {
-        return step(value, newKey);
-      }
+	  if (!is.array(value) && is.object(value)) {
+		return step(value, newKey);
+	  }
 
-      output[newKey] = value;
-    }
-  }
+	  output[newKey] = value;
+	}
+}
 
-  step(source);
+step(source);
 
-  return output;
+return output;
 }
 
 }, {"segmentio/analytics.js-integration":159,"bind":33,"when":184,"is":18}],
@@ -11574,10 +11577,10 @@ var push = require('global-queue')('_gauges');
  */
 
 var Gauges = module.exports = integration('Gauges')
-  .assumesPageview()
-  .global('_gauges')
-  .option('siteId', '')
-  .tag('<script id="gauges-tracker" src="//secure.gaug.es/track.js" data-site-id="{{ siteId }}">');
+.assumesPageview()
+.global('_gauges')
+.option('siteId', '')
+.tag('<script id="gauges-tracker" src="//secure.gaug.es/track.js" data-site-id="{{ siteId }}">');
 
 /**
  * Initialize Gauges.
@@ -11587,9 +11590,9 @@ var Gauges = module.exports = integration('Gauges')
  * @param {Object} page
  */
 
-Gauges.prototype.initialize = function(page){
-  window._gauges = window._gauges || [];
-  this.load(this.ready);
+Gauges.prototype.initialize = function(page) {
+window._gauges = window._gauges || [];
+this.load(this.ready);
 };
 
 /**
@@ -11598,8 +11601,8 @@ Gauges.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Gauges.prototype.loaded = function(){
-  return !! (window._gauges && window._gauges.push !== Array.prototype.push);
+Gauges.prototype.loaded = function() {
+return !! (window._gauges && window._gauges.push !== Array.prototype.push);
 };
 
 /**
@@ -11608,8 +11611,8 @@ Gauges.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Gauges.prototype.page = function(page){
-  push('track');
+Gauges.prototype.page = function(page) {
+push('track');
 };
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190}],
@@ -11627,10 +11630,10 @@ var onBody = require('on-body');
  */
 
 var GetSatisfaction = module.exports = integration('Get Satisfaction')
-  .assumesPageview()
-  .global('GSFN')
-  .option('widgetId', '')
-  .tag('<script src="https://loader.engage.gsfn.us/loader.js">');
+.assumesPageview()
+.global('GSFN')
+.option('widgetId', '')
+.tag('<script src="https://loader.engage.gsfn.us/loader.js">');
 
 /**
  * Initialize.
@@ -11640,18 +11643,18 @@ var GetSatisfaction = module.exports = integration('Get Satisfaction')
  * @param {Object} page
  */
 
-GetSatisfaction.prototype.initialize = function(page){
-  var self = this;
-  var widget = this.options.widgetId;
-  var div = document.createElement('div');
-  var id = div.id = 'getsat-widget-' + widget;
-  onBody(function(body){ body.appendChild(div); });
+GetSatisfaction.prototype.initialize = function(page) {
+var self = this;
+var widget = this.options.widgetId;
+var div = document.createElement('div');
+var id = div.id = 'getsat-widget-' + widget;
+onBody(function(body){ body.appendChild(div); });
 
-  // usually the snippet is sync, so wait for it before initializing the tab
-  this.load(function(){
-    window.GSFN.loadWidget(widget, { containerId: id });
-    self.ready();
-  });
+// usually the snippet is sync, so wait for it before initializing the tab
+this.load(function() {
+	window.GSFN.loadWidget(widget, { containerId: id });
+	self.ready();
+});
 };
 
 /**
@@ -11660,8 +11663,8 @@ GetSatisfaction.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-GetSatisfaction.prototype.loaded = function(){
-  return !! window.GSFN;
+GetSatisfaction.prototype.loaded = function() {
+return !! window.GSFN;
 };
 }, {"segmentio/analytics.js-integration":159,"on-body":180}],
 110: [function(require, module, exports) {
@@ -11691,10 +11694,10 @@ var user;
  * Expose plugin.
  */
 
-module.exports = exports = function(analytics){
-  analytics.addIntegration(GA);
-  group = analytics.group();
-  user = analytics.user();
+module.exports = exports = function(analytics) {
+analytics.addIntegration(GA);
+group = analytics.group();
+user = analytics.user();
 };
 
 /**
@@ -11705,42 +11708,42 @@ module.exports = exports = function(analytics){
  */
 
 var GA = exports.Integration = integration('Google Analytics')
-  .readyOnLoad()
-  .global('ga')
-  .global('gaplugins')
-  .global('_gaq')
-  .global('GoogleAnalyticsObject')
-  .option('anonymizeIp', false)
-  .option('classic', false)
-  .option('domain', 'none')
-  .option('doubleClick', false)
-  .option('enhancedLinkAttribution', false)
-  .option('ignoredReferrers', null)
-  .option('includeSearch', false)
-  .option('siteSpeedSampleRate', 1)
-  .option('trackingId', '')
-  .option('trackNamedPages', true)
-  .option('trackCategorizedPages', true)
-  .option('sendUserId', false)
-  .option('metrics', {})
-  .option('dimensions', {})
-  .tag('library', '<script src="//www.google-analytics.com/analytics.js">')
-  .tag('double click', '<script src="//stats.g.doubleclick.net/dc.js">')
-  .tag('http', '<script src="http://www.google-analytics.com/ga.js">')
-  .tag('https', '<script src="https://ssl.google-analytics.com/ga.js">');
+.readyOnLoad()
+.global('ga')
+.global('gaplugins')
+.global('_gaq')
+.global('GoogleAnalyticsObject')
+.option('anonymizeIp', false)
+.option('classic', false)
+.option('domain', 'none')
+.option('doubleClick', false)
+.option('enhancedLinkAttribution', false)
+.option('ignoredReferrers', null)
+.option('includeSearch', false)
+.option('siteSpeedSampleRate', 1)
+.option('trackingId', '')
+.option('trackNamedPages', true)
+.option('trackCategorizedPages', true)
+.option('sendUserId', false)
+.option('metrics', {})
+.option('dimensions', {})
+.tag('library', '<script src="//www.google-analytics.com/analytics.js">')
+.tag('double click', '<script src="//stats.g.doubleclick.net/dc.js">')
+.tag('http', '<script src="http://www.google-analytics.com/ga.js">')
+.tag('https', '<script src="https://ssl.google-analytics.com/ga.js">');
 
 /**
  * When in "classic" mode, on `construct` swap all of the method to point to
  * their classic counterparts.
  */
 
-GA.on('construct', function(integration){
-  if (!integration.options.classic) return;
-  integration.initialize = integration.initializeClassic;
-  integration.loaded = integration.loadedClassic;
-  integration.page = integration.pageClassic;
-  integration.track = integration.trackClassic;
-  integration.completedOrder = integration.completedOrderClassic;
+GA.on('construct', function(integration) {
+if (!integration.options.classic) return;
+integration.initialize = integration.initializeClassic;
+integration.loaded = integration.loadedClassic;
+integration.page = integration.pageClassic;
+integration.track = integration.trackClassic;
+integration.completedOrder = integration.completedOrderClassic;
 });
 
 /**
@@ -11749,42 +11752,42 @@ GA.on('construct', function(integration){
  * https://developers.google.com/analytics/devguides/collection/analyticsjs/advanced
  */
 
-GA.prototype.initialize = function(){
-  var opts = this.options;
+GA.prototype.initialize = function() {
+var opts = this.options;
 
-  // setup the tracker globals
-  window.GoogleAnalyticsObject = 'ga';
-  window.ga = window.ga || function(){
-    window.ga.q = window.ga.q || [];
-    window.ga.q.push(arguments);
-  };
-  window.ga.l = new Date().getTime();
+// setup the tracker globals
+window.GoogleAnalyticsObject = 'ga';
+window.ga = window.ga || function() {
+	window.ga.q = window.ga.q || [];
+	window.ga.q.push(arguments);
+};
+window.ga.l = new Date().getTime();
 
-  window.ga('create', opts.trackingId, {
-    cookieDomain: opts.domain || GA.prototype.defaults.domain, // to protect against empty string
-    siteSpeedSampleRate: opts.siteSpeedSampleRate,
-    allowLinker: true
-  });
+window.ga('create', opts.trackingId, {
+	cookieDomain: opts.domain || GA.prototype.defaults.domain, // to protect against empty string
+	siteSpeedSampleRate: opts.siteSpeedSampleRate,
+	allowLinker: true
+});
 
-  // display advertising
-  if (opts.doubleClick) {
-    window.ga('require', 'displayfeatures');
-  }
+// display advertising
+if (opts.doubleClick) {
+	window.ga('require', 'displayfeatures');
+}
 
-  // send global id
-  if (opts.sendUserId && user.id()) {
-    window.ga('set', '&uid', user.id());
-  }
+// send global id
+if (opts.sendUserId && user.id()) {
+	window.ga('set', '&uid', user.id());
+}
 
-  // anonymize after initializing, otherwise a warning is shown
-  // in google analytics debugger
-  if (opts.anonymizeIp) window.ga('set', 'anonymizeIp', true);
+// anonymize after initializing, otherwise a warning is shown
+// in google analytics debugger
+if (opts.anonymizeIp) window.ga('set', 'anonymizeIp', true);
 
-  // custom dimensions & metrics
-  var custom = metrics(user.traits(), opts);
-  if (length(custom)) window.ga('set', custom);
+// custom dimensions & metrics
+var custom = metrics(user.traits(), opts);
+if (length(custom)) window.ga('set', custom);
 
-  this.load('library', this.ready);
+this.load('library', this.ready);
 };
 
 /**
@@ -11793,8 +11796,8 @@ GA.prototype.initialize = function(){
  * @return {Boolean}
  */
 
-GA.prototype.loaded = function(){
-  return !! window.gaplugins;
+GA.prototype.loaded = function() {
+return !! window.gaplugins;
 };
 
 /**
@@ -11805,33 +11808,33 @@ GA.prototype.loaded = function(){
  * @param {Page} page
  */
 
-GA.prototype.page = function(page){
-  var category = page.category();
-  var props = page.properties();
-  var name = page.fullName();
-  var pageview = {};
-  var track;
+GA.prototype.page = function(page) {
+var category = page.category();
+var props = page.properties();
+var name = page.fullName();
+var pageview = {};
+var track;
 
-  this._category = category; // store for later
+this._category = category; // store for later
 
-  // send
-  window.ga('send', 'pageview', {
-    page: path(props, this.options),
-    title: name || props.title,
-    location: props.url
-  });
+// send
+window.ga('send', 'pageview', {
+	page: path(props, this.options),
+	title: name || props.title,
+	location: props.url
+});
 
-  // categorized pages
-  if (category && this.options.trackCategorizedPages) {
-    track = page.track(category);
-    this.track(track, { noninteraction: true });
-  }
+// categorized pages
+if (category && this.options.trackCategorizedPages) {
+	track = page.track(category);
+	this.track(track, { noninteraction: true });
+}
 
-  // named pages
-  if (name && this.options.trackNamedPages) {
-    track = page.track(name);
-    this.track(track, { noninteraction: true });
-  }
+// named pages
+if (name && this.options.trackNamedPages) {
+	track = page.track(name);
+	this.track(track, { noninteraction: true });
+}
 };
 
 /**
@@ -11843,16 +11846,16 @@ GA.prototype.page = function(page){
  * @param {Track} event
  */
 
-GA.prototype.track = function(track, options){
-  var opts = options || track.options(this.name);
-  var props = track.properties();
-  window.ga('send', 'event', {
-    eventAction: track.event(),
-    eventCategory: props.category || this._category || 'All',
-    eventLabel: props.label,
-    eventValue: formatValue(props.value || track.revenue()),
-    nonInteraction: props.noninteraction || opts.noninteraction
-  });
+GA.prototype.track = function(track, options) {
+var opts = options || track.options(this.name);
+var props = track.properties();
+window.ga('send', 'event', {
+	eventAction: track.event(),
+	eventCategory: props.category || this._category || 'All',
+	eventLabel: props.label,
+	eventValue: formatValue(props.value || track.revenue()),
+	nonInteraction: props.noninteraction || opts.noninteraction
+});
 };
 
 /**
@@ -11864,45 +11867,45 @@ GA.prototype.track = function(track, options){
  * @api private
  */
 
-GA.prototype.completedOrder = function(track){
-  var total = track.total() || track.revenue() || 0;
-  var orderId = track.orderId();
-  var products = track.products();
-  var props = track.properties();
+GA.prototype.completedOrder = function(track) {
+var total = track.total() || track.revenue() || 0;
+var orderId = track.orderId();
+var products = track.products();
+var props = track.properties();
 
-  // orderId is required.
-  if (!orderId) return;
+// orderId is required.
+if (!orderId) return;
 
-  // require ecommerce
-  if (!this.ecommerce) {
-    window.ga('require', 'ecommerce', 'ecommerce.js');
-    this.ecommerce = true;
-  }
+// require ecommerce
+if (!this.ecommerce) {
+	window.ga('require', 'ecommerce', 'ecommerce.js');
+	this.ecommerce = true;
+}
 
-  // add transaction
-  window.ga('ecommerce:addTransaction', {
-    affiliation: props.affiliation,
-    shipping: track.shipping(),
-    revenue: total,
-    tax: track.tax(),
-    id: orderId
-  });
+// add transaction
+window.ga('ecommerce:addTransaction', {
+	affiliation: props.affiliation,
+	shipping: track.shipping(),
+	revenue: total,
+	tax: track.tax(),
+	id: orderId
+});
 
-  // add products
-  each(products, function(product){
-    var track = new Track({ properties: product });
-    window.ga('ecommerce:addItem', {
-      category: track.category(),
-      quantity: track.quantity(),
-      price: track.price(),
-      name: track.name(),
-      sku: track.sku(),
-      id: orderId
-    });
-  });
+// add products
+each(products, function(product) {
+	var track = new Track({ properties: product });
+	window.ga('ecommerce:addItem', {
+	  category: track.category(),
+	  quantity: track.quantity(),
+	  price: track.price(),
+	  name: track.name(),
+	  sku: track.sku(),
+	  id: orderId
+	});
+});
 
-  // send
-  window.ga('ecommerce:send');
+// send
+window.ga('ecommerce:send');
 };
 
 /**
@@ -11911,42 +11914,42 @@ GA.prototype.completedOrder = function(track){
  * https://developers.google.com/analytics/devguides/collection/gajs/methods/gaJSApiBasicConfiguration
  */
 
-GA.prototype.initializeClassic = function(){
-  var opts = this.options;
-  var anonymize = opts.anonymizeIp;
-  var db = opts.doubleClick;
-  var domain = opts.domain;
-  var enhanced = opts.enhancedLinkAttribution;
-  var ignore = opts.ignoredReferrers;
-  var sample = opts.siteSpeedSampleRate;
+GA.prototype.initializeClassic = function() {
+var opts = this.options;
+var anonymize = opts.anonymizeIp;
+var db = opts.doubleClick;
+var domain = opts.domain;
+var enhanced = opts.enhancedLinkAttribution;
+var ignore = opts.ignoredReferrers;
+var sample = opts.siteSpeedSampleRate;
 
-  window._gaq = window._gaq || [];
-  push('_setAccount', opts.trackingId);
-  push('_setAllowLinker', true);
+window._gaq = window._gaq || [];
+push('_setAccount', opts.trackingId);
+push('_setAllowLinker', true);
 
-  if (anonymize) push('_gat._anonymizeIp');
-  if (domain) push('_setDomainName', domain);
-  if (sample) push('_setSiteSpeedSampleRate', sample);
+if (anonymize) push('_gat._anonymizeIp');
+if (domain) push('_setDomainName', domain);
+if (sample) push('_setSiteSpeedSampleRate', sample);
 
-  if (enhanced) {
-    var protocol = 'https:' === document.location.protocol ? 'https:' : 'http:';
-    var pluginUrl = protocol + '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
-    push('_require', 'inpage_linkid', pluginUrl);
-  }
+if (enhanced) {
+	var protocol = 'https:' === document.location.protocol ? 'https:' : 'http:';
+	var pluginUrl = protocol + '//www.google-analytics.com/plugins/ga/inpage_linkid.js';
+	push('_require', 'inpage_linkid', pluginUrl);
+}
 
-  if (ignore) {
-    if (!is.array(ignore)) ignore = [ignore];
-    each(ignore, function (domain) {
-      push('_addIgnoredRef', domain);
-    });
-  }
+if (ignore) {
+	if (!is.array(ignore)) ignore = [ignore];
+	each(ignore, function(domain) {
+	  push('_addIgnoredRef', domain);
+	});
+}
 
-  if (this.options.doubleClick) {
-    this.load('double click', this.ready);
-  } else {
-    var name = useHttps() ? 'https' : 'http';
-    this.load(name, this.ready);
-  }
+if (this.options.doubleClick) {
+	this.load('double click', this.ready);
+} else {
+	var name = useHttps() ? 'https' : 'http';
+	this.load(name, this.ready);
+}
 };
 
 /**
@@ -11955,8 +11958,8 @@ GA.prototype.initializeClassic = function(){
  * @return {Boolean}
  */
 
-GA.prototype.loadedClassic = function(){
-  return !! (window._gaq && window._gaq.push !== Array.prototype.push);
+GA.prototype.loadedClassic = function() {
+return !! (window._gaq && window._gaq.push !== Array.prototype.push);
 };
 
 /**
@@ -11967,26 +11970,26 @@ GA.prototype.loadedClassic = function(){
  * @param {Page} page
  */
 
-GA.prototype.pageClassic = function(page){
-  var opts = page.options(this.name);
-  var category = page.category();
-  var props = page.properties();
-  var name = page.fullName();
-  var track;
+GA.prototype.pageClassic = function(page) {
+var opts = page.options(this.name);
+var category = page.category();
+var props = page.properties();
+var name = page.fullName();
+var track;
 
-  push('_trackPageview', path(props, this.options));
+push('_trackPageview', path(props, this.options));
 
-  // categorized pages
-  if (category && this.options.trackCategorizedPages) {
-    track = page.track(category);
-    this.track(track, { noninteraction: true });
-  }
+// categorized pages
+if (category && this.options.trackCategorizedPages) {
+	track = page.track(category);
+	this.track(track, { noninteraction: true });
+}
 
-  // named pages
-  if (name && this.options.trackNamedPages) {
-    track = page.track(name);
-    this.track(track, { noninteraction: true });
-  }
+// named pages
+if (name && this.options.trackNamedPages) {
+	track = page.track(name);
+	this.track(track, { noninteraction: true });
+}
 };
 
 /**
@@ -11997,16 +12000,16 @@ GA.prototype.pageClassic = function(page){
  * @param {Track} track
  */
 
-GA.prototype.trackClassic = function(track, options){
-  var opts = options || track.options(this.name);
-  var props = track.properties();
-  var revenue = track.revenue();
-  var event = track.event();
-  var category = this._category || props.category || 'All';
-  var label = props.label;
-  var value = formatValue(revenue || props.value);
-  var noninteraction = props.noninteraction || opts.noninteraction;
-  push('_trackEvent', category, event, label, value, noninteraction);
+GA.prototype.trackClassic = function(track, options) {
+var opts = options || track.options(this.name);
+var props = track.properties();
+var revenue = track.revenue();
+var event = track.event();
+var category = this._category || props.category || 'All';
+var label = props.label;
+var value = formatValue(revenue || props.value);
+var noninteraction = props.noninteraction || opts.noninteraction;
+push('_trackEvent', category, event, label, value, noninteraction);
 };
 
 /**
@@ -12018,40 +12021,40 @@ GA.prototype.trackClassic = function(track, options){
  * @api private
  */
 
-GA.prototype.completedOrderClassic = function(track){
-  var total = track.total() || track.revenue() || 0;
-  var orderId = track.orderId();
-  var products = track.products() || [];
-  var props = track.properties();
+GA.prototype.completedOrderClassic = function(track) {
+var total = track.total() || track.revenue() || 0;
+var orderId = track.orderId();
+var products = track.products() || [];
+var props = track.properties();
 
-  // required
-  if (!orderId) return;
+// required
+if (!orderId) return;
 
-  // add transaction
-  push('_addTrans'
-    , orderId
-    , props.affiliation
-    , total
-    , track.tax()
-    , track.shipping()
-    , track.city()
-    , track.state()
-    , track.country());
+// add transaction
+push('_addTrans'
+	, orderId
+	, props.affiliation
+	, total
+	, track.tax()
+	, track.shipping()
+	, track.city()
+	, track.state()
+	, track.country());
 
-  // add items
-  each(products, function(product){
-    var track = new Track({ properties: product });
-    push('_addItem'
-      , orderId
-      , track.sku()
-      , track.name()
-      , track.category()
-      , track.price()
-      , track.quantity());
-  })
+// add items
+each(products, function(product) {
+	var track = new Track({ properties: product });
+	push('_addItem'
+	  , orderId
+	  , track.sku()
+	  , track.name()
+	  , track.category()
+	  , track.price()
+	  , track.quantity());
+})
 
-  // send
-  push('_trackTrans');
+// send
+push('_trackTrans');
 };
 
 /**
@@ -12062,10 +12065,10 @@ GA.prototype.completedOrderClassic = function(track){
  */
 
 function path(properties, options) {
-  if (!properties) return;
-  var str = properties.path;
-  if (options.includeSearch && properties.search) str += properties.search;
-  return str;
+if (!properties) return;
+var str = properties.path;
+if (options.includeSearch && properties.search) str += properties.search;
+return str;
 }
 
 /**
@@ -12076,8 +12079,8 @@ function path(properties, options) {
  */
 
 function formatValue(value) {
-  if (!value || value < 0) return 0;
-  return Math.round(value);
+if (!value || value < 0) return 0;
+return Math.round(value);
 }
 
 /**
@@ -12097,21 +12100,21 @@ function formatValue(value) {
  * @api private
  */
 
-function metrics(obj, data){
-  var dimensions = data.dimensions;
-  var metrics = data.metrics;
-  var names = keys(metrics).concat(keys(dimensions));
-  var ret = {};
+function metrics(obj, data) {
+var dimensions = data.dimensions;
+var metrics = data.metrics;
+var names = keys(metrics).concat(keys(dimensions));
+var ret = {};
 
-  for (var i = 0; i < names.length; ++i) {
-    var name = names[i];
-    var key = metrics[name] || dimensions[name];
-    var value = dot(obj, name);
-    if (null == value) continue;
-    ret[key] = value;
-  }
+for (var i = 0; i < names.length; ++i) {
+	var name = names[i];
+	var key = metrics[name] || dimensions[name];
+	var value = dot(obj, name);
+	if (null == value) continue;
+	ret[key] = value;
+}
 
-  return ret;
+return ret;
 }
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"object":25,"canonical":13,"use-https":161,"facade":27,"callback":12,"load-script":168,"obj-case":60,"each":5,"type":35,"url":26,"is":18}],
@@ -12129,13 +12132,13 @@ var integration = require('segmentio/analytics.js-integration');
  */
 
 var GTM = module.exports = integration('Google Tag Manager')
-  .assumesPageview()
-  .global('dataLayer')
-  .global('google_tag_manager')
-  .option('containerId', '')
-  .option('trackNamedPages', true)
-  .option('trackCategorizedPages', true)
-  .tag('<script src="//www.googletagmanager.com/gtm.js?id={{ containerId }}&l=dataLayer">');
+.assumesPageview()
+.global('dataLayer')
+.global('google_tag_manager')
+.option('containerId', '')
+.option('trackNamedPages', true)
+.option('trackCategorizedPages', true)
+.tag('<script src="//www.googletagmanager.com/gtm.js?id={{ containerId }}&l=dataLayer">');
 
 /**
  * Initialize.
@@ -12145,9 +12148,9 @@ var GTM = module.exports = integration('Google Tag Manager')
  * @param {Object} page
  */
 
-GTM.prototype.initialize = function(){
-  push({ 'gtm.start': +new Date, event: 'gtm.js' });
-  this.load(this.ready);
+GTM.prototype.initialize = function() {
+push({ 'gtm.start': +new Date, event: 'gtm.js' });
+this.load(this.ready);
 };
 
 /**
@@ -12156,8 +12159,8 @@ GTM.prototype.initialize = function(){
  * @return {Boolean}
  */
 
-GTM.prototype.loaded = function(){
-  return !! (window.dataLayer && [].push != window.dataLayer.push);
+GTM.prototype.loaded = function() {
+return !! (window.dataLayer && [].push != window.dataLayer.push);
 };
 
 /**
@@ -12167,27 +12170,27 @@ GTM.prototype.loaded = function(){
  * @api public
  */
 
-GTM.prototype.page = function(page){
-  var category = page.category();
-  var props = page.properties();
-  var name = page.fullName();
-  var opts = this.options;
-  var track;
+GTM.prototype.page = function(page) {
+var category = page.category();
+var props = page.properties();
+var name = page.fullName();
+var opts = this.options;
+var track;
 
-  // all
-  if (opts.trackAllPages) {
-    this.track(page.track());
-  }
+// all
+if (opts.trackAllPages) {
+	this.track(page.track());
+}
 
-  // categorized
-  if (category && opts.trackCategorizedPages) {
-    this.track(page.track(category));
-  }
+// categorized
+if (category && opts.trackCategorizedPages) {
+	this.track(page.track(category));
+}
 
-  // named
-  if (name && opts.trackNamedPages) {
-    this.track(page.track(name));
-  }
+// named
+if (name && opts.trackNamedPages) {
+	this.track(page.track(name));
+}
 };
 
 /**
@@ -12199,10 +12202,10 @@ GTM.prototype.page = function(page){
  * @api public
  */
 
-GTM.prototype.track = function(track){
-  var props = track.properties();
-  props.event = track.event();
-  push(props);
+GTM.prototype.track = function(track) {
+var props = track.properties();
+props.event = track.event();
+push(props);
 };
 
 }, {"global-queue":190,"segmentio/analytics.js-integration":159}],
@@ -12225,16 +12228,16 @@ var each = require('each');
  */
 
 var GoSquared = module.exports = integration('GoSquared')
-  .assumesPageview()
-  .global('_gs')
-  .option('siteToken', '')
-  .option('anonymizeIP', false)
-  .option('cookieDomain', null)
-  .option('useCookies', true)
-  .option('trackHash', false)
-  .option('trackLocal', false)
-  .option('trackParams', true)
-  .tag('<script src="//d1l6p2sc9645hc.cloudfront.net/tracker.js">');
+.assumesPageview()
+.global('_gs')
+.option('siteToken', '')
+.option('anonymizeIP', false)
+.option('cookieDomain', null)
+.option('useCookies', true)
+.option('trackHash', false)
+.option('trackLocal', false)
+.option('trackParams', true)
+.tag('<script src="//d1l6p2sc9645hc.cloudfront.net/tracker.js">');
 
 /**
  * Initialize.
@@ -12245,24 +12248,24 @@ var GoSquared = module.exports = integration('GoSquared')
  * @param {Object} page
  */
 
-GoSquared.prototype.initialize = function(page){
-  var self = this;
-  var options = this.options;
-  var user = this.analytics.user();
-  push(options.siteToken);
+GoSquared.prototype.initialize = function(page) {
+var self = this;
+var options = this.options;
+var user = this.analytics.user();
+push(options.siteToken);
 
-  each(options, function(name, value){
-    if ('siteToken' == name) return;
-    if (null == value) return;
-    push('set', name, value);
-  });
+each(options, function(name, value) {
+	if ('siteToken' == name) return;
+	if (null == value) return;
+	push('set', name, value);
+});
 
-  self.identify(new Identify({
-    traits: user.traits(),
-    userId: user.id()
-  }));
+self.identify(new Identify({
+	traits: user.traits(),
+	userId: user.id()
+}));
 
-  self.load(this.ready);
+self.load(this.ready);
 };
 
 /**
@@ -12271,8 +12274,8 @@ GoSquared.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-GoSquared.prototype.loaded = function(){
-  return !! (window._gs && window._gs.v);
+GoSquared.prototype.loaded = function() {
+return !! (window._gs && window._gs.v);
 };
 
 /**
@@ -12283,10 +12286,10 @@ GoSquared.prototype.loaded = function(){
  * @param {Page} page
  */
 
-GoSquared.prototype.page = function(page){
-  var props = page.properties();
-  var name = page.fullName();
-  push('track', props.path, name || props.title)
+GoSquared.prototype.page = function(page) {
+var props = page.properties();
+var name = page.fullName();
+push('track', props.path, name || props.title)
 };
 
 /**
@@ -12297,15 +12300,15 @@ GoSquared.prototype.page = function(page){
  * @param {Identify} identify
  */
 
-GoSquared.prototype.identify = function(identify){
-  var traits = identify.traits({ userId: 'userID' });
-  var username = identify.username();
-  var email = identify.email();
-  var id = identify.userId();
-  if (id) push('set', 'visitorID', id);
-  var name =  email || username || id;
-  if (name) push('set', 'visitorName', name);
-  push('set', 'visitor', traits);
+GoSquared.prototype.identify = function(identify) {
+var traits = identify.traits({ userId: 'userID' });
+var username = identify.username();
+var email = identify.email();
+var id = identify.userId();
+if (id) push('set', 'visitorID', id);
+var name =  email || username || id;
+if (name) push('set', 'visitorName', name);
+push('set', 'visitor', traits);
 };
 
 /**
@@ -12316,8 +12319,8 @@ GoSquared.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-GoSquared.prototype.track = function(track){
-  push('event', track.event(), track.properties());
+GoSquared.prototype.track = function(track) {
+push('event', track.event(), track.properties());
 };
 
 /**
@@ -12327,24 +12330,24 @@ GoSquared.prototype.track = function(track){
  * @api private
  */
 
-GoSquared.prototype.completedOrder = function(track){
-  var products = track.products();
-  var items = [];
+GoSquared.prototype.completedOrder = function(track) {
+var products = track.products();
+var items = [];
 
-  each(products, function(product){
-    var track = new Track({ properties: product });
-    items.push({
-      category: track.category(),
-      quantity: track.quantity(),
-      price: track.price(),
-      name: track.name(),
-    });
-  })
+each(products, function(product) {
+	var track = new Track({ properties: product });
+	items.push({
+	  category: track.category(),
+	  quantity: track.quantity(),
+	  price: track.price(),
+	  name: track.name(),
+	});
+})
 
-  push('transaction', track.orderId(), {
-    revenue: track.total(),
-    track: true
-  }, items);
+push('transaction', track.orderId(), {
+	revenue: track.total(),
+	track: true
+}, items);
 };
 
 /**
@@ -12354,11 +12357,11 @@ GoSquared.prototype.completedOrder = function(track){
  * @api private
  */
 
-function push(){
-  var _gs = window._gs = window._gs || function(){
-    (_gs.q = _gs.q || []).push(arguments);
-  };
-  _gs.apply(null, arguments);
+function push() {
+var _gs = window._gs = window._gs || function() {
+	(_gs.q = _gs.q || []).push(arguments);
+};
+_gs.apply(null, arguments);
 }
 
 }, {"segmentio/analytics.js-integration":159,"facade":27,"callback":12,"load-script":168,"on-body":180,"each":5}],
@@ -12376,11 +12379,11 @@ var alias = require('alias');
  */
 
 var Heap = module.exports = integration('Heap')
-  .assumesPageview()
-  .global('heap')
-  .global('_heapid')
-  .option('apiKey', '')
-  .tag('<script src="//d36lvucg9kzous.cloudfront.net">');
+.assumesPageview()
+.global('heap')
+.global('_heapid')
+.option('apiKey', '')
+.tag('<script src="//d36lvucg9kzous.cloudfront.net">');
 
 /**
  * Initialize.
@@ -12390,10 +12393,10 @@ var Heap = module.exports = integration('Heap')
  * @param {Object} page
  */
 
-Heap.prototype.initialize = function(page){
-  window.heap=window.heap||[];window.heap.load=function(a){window._heapid=a;var d=function(a){return function(){window.heap.push([a].concat(Array.prototype.slice.call(arguments,0)));};},e=["identify","track"];for (var f=0;f<e.length;f++)window.heap[e[f]]=d(e[f]);};
-  window.heap.load(this.options.apiKey);
-  this.load(this.ready);
+Heap.prototype.initialize = function(page) {
+window.heap=window.heap||[];window.heap.load=function(a){window._heapid=a;var d=function(a){return function(){window.heap.push([a].concat(Array.prototype.slice.call(arguments,0)));};},e=["identify","track"];for (var f=0;f<e.length;f++)window.heap[e[f]]=d(e[f]);};
+window.heap.load(this.options.apiKey);
+this.load(this.ready);
 };
 
 /**
@@ -12402,8 +12405,8 @@ Heap.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Heap.prototype.loaded = function(){
-  return (window.heap && window.heap.appid);
+Heap.prototype.loaded = function() {
+return (window.heap && window.heap.appid);
 };
 
 /**
@@ -12414,14 +12417,14 @@ Heap.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-Heap.prototype.identify = function(identify){
-  var traits = identify.traits();
-  var username = identify.username();
-  var id = identify.userId();
-  var handle = username || id;
-  if (handle) traits.handle = handle;
-  delete traits.username;
-  window.heap.identify(traits);
+Heap.prototype.identify = function(identify) {
+var traits = identify.traits();
+var username = identify.username();
+var id = identify.userId();
+var handle = username || id;
+if (handle) traits.handle = handle;
+delete traits.username;
+window.heap.identify(traits);
 };
 
 /**
@@ -12432,8 +12435,8 @@ Heap.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-Heap.prototype.track = function(track){
-  window.heap.track(track.event(), track.properties());
+Heap.prototype.track = function(track) {
+window.heap.track(track.event(), track.properties());
 };
 
 }, {"segmentio/analytics.js-integration":159,"alias":195}],
@@ -12450,10 +12453,10 @@ var integration = require('segmentio/analytics.js-integration');
  */
 
 var Hellobar = module.exports = integration('Hello Bar')
-  .assumesPageview()
-  .global('_hbq')
-  .option('apiKey', '')
-  .tag('<script src="//s3.amazonaws.com/scripts.hellobar.com/{{ apiKey }}.js">');
+.assumesPageview()
+.global('_hbq')
+.option('apiKey', '')
+.tag('<script src="//s3.amazonaws.com/scripts.hellobar.com/{{ apiKey }}.js">');
 
 /**
  * Initialize.
@@ -12463,9 +12466,9 @@ var Hellobar = module.exports = integration('Hello Bar')
  * @param {Object} page
  */
 
-Hellobar.prototype.initialize = function(page){
-  window._hbq = window._hbq || [];
-  this.load(this.ready);
+Hellobar.prototype.initialize = function(page) {
+window._hbq = window._hbq || [];
+this.load(this.ready);
 };
 
 /**
@@ -12474,8 +12477,8 @@ Hellobar.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Hellobar.prototype.loaded = function(){
-  return !! (window._hbq && window._hbq.push !== Array.prototype.push);
+Hellobar.prototype.loaded = function() {
+return !! (window._hbq && window._hbq.push !== Array.prototype.push);
 };
 
 }, {"segmentio/analytics.js-integration":159}],
@@ -12493,10 +12496,10 @@ var is = require('is');
  */
 
 var HitTail = module.exports = integration('HitTail')
-  .assumesPageview()
-  .global('htk')
-  .option('siteId', '')
-  .tag('<script src="//{{ siteId }}.hittail.com/mlt.js">');
+.assumesPageview()
+.global('htk')
+.option('siteId', '')
+.tag('<script src="//{{ siteId }}.hittail.com/mlt.js">');
 
 /**
  * Initialize.
@@ -12504,8 +12507,8 @@ var HitTail = module.exports = integration('HitTail')
  * @param {Object} page
  */
 
-HitTail.prototype.initialize = function(page){
-  this.load(this.ready);
+HitTail.prototype.initialize = function(page) {
+this.load(this.ready);
 };
 
 /**
@@ -12514,8 +12517,8 @@ HitTail.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-HitTail.prototype.loaded = function(){
-  return is.fn(window.htk);
+HitTail.prototype.loaded = function() {
+return is.fn(window.htk);
 };
 }, {"segmentio/analytics.js-integration":159,"is":18}],
 116: [function(require, module, exports) {
@@ -12531,10 +12534,10 @@ var integration = require('analytics.js-integration');
  */
 
 var Hublo = module.exports = integration('Hublo')
-  .assumesPageview()
-  .global('_hublo_')
-  .option('apiKey', null)
-  .tag('<script src="//cdn.hublo.co/{{ apiKey }}.js">');
+.assumesPageview()
+.global('_hublo_')
+.option('apiKey', null)
+.tag('<script src="//cdn.hublo.co/{{ apiKey }}.js">');
 
 /**
  * Initialize.
@@ -12544,8 +12547,8 @@ var Hublo = module.exports = integration('Hublo')
  * @param {Object} page
  */
 
-Hublo.prototype.initialize = function(page){
-  this.load(this.ready);
+Hublo.prototype.initialize = function(page) {
+this.load(this.ready);
 };
 
 /**
@@ -12554,8 +12557,8 @@ Hublo.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Hublo.prototype.loaded = function(){
-  return !! (window._hublo_ && typeof window._hublo_.setup === 'function');
+Hublo.prototype.loaded = function() {
+return !! (window._hublo_ && typeof window._hublo_.setup === 'function');
 };
 
 }, {"analytics.js-integration":159}],
@@ -12574,10 +12577,10 @@ var convert = require('convert-dates');
  */
 
 var HubSpot = module.exports = integration('HubSpot')
-  .assumesPageview()
-  .global('_hsq')
-  .option('portalId', null)
-  .tag('<script id="hs-analytics" src="https://js.hs-analytics.net/analytics/{{ cache }}/{{ portalId }}.js">');
+.assumesPageview()
+.global('_hsq')
+.option('portalId', null)
+.tag('<script id="hs-analytics" src="https://js.hs-analytics.net/analytics/{{ cache }}/{{ portalId }}.js">');
 
 /**
  * Initialize.
@@ -12585,10 +12588,10 @@ var HubSpot = module.exports = integration('HubSpot')
  * @param {Object} page
  */
 
-HubSpot.prototype.initialize = function(page){
-  window._hsq = [];
-  var cache = Math.ceil(new Date() / 300000) * 300000;
-  this.load({ cache: cache }, this.ready);
+HubSpot.prototype.initialize = function(page) {
+window._hsq = [];
+var cache = Math.ceil(new Date() / 300000) * 300000;
+this.load({ cache: cache }, this.ready);
 };
 
 /**
@@ -12597,8 +12600,8 @@ HubSpot.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-HubSpot.prototype.loaded = function(){
-  return !! (window._hsq && window._hsq.push !== Array.prototype.push);
+HubSpot.prototype.loaded = function() {
+return !! (window._hsq && window._hsq.push !== Array.prototype.push);
 };
 
 /**
@@ -12610,8 +12613,8 @@ HubSpot.prototype.loaded = function(){
  * @param {Object} options (optional)
  */
 
-HubSpot.prototype.page = function(page){
-  push('_trackPageview');
+HubSpot.prototype.page = function(page) {
+push('_trackPageview');
 };
 
 /**
@@ -12620,11 +12623,11 @@ HubSpot.prototype.page = function(page){
  * @param {Identify} identify
  */
 
-HubSpot.prototype.identify = function(identify){
-  if (!identify.email()) return;
-  var traits = identify.traits();
-  traits = convertDates(traits);
-  push('identify', traits);
+HubSpot.prototype.identify = function(identify) {
+if (!identify.email()) return;
+var traits = identify.traits();
+traits = convertDates(traits);
+push('identify', traits);
 };
 
 /**
@@ -12633,10 +12636,10 @@ HubSpot.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-HubSpot.prototype.track = function(track){
-  var props = track.properties();
-  props = convertDates(props);
-  push('trackEvent', track.event(), props);
+HubSpot.prototype.track = function(track) {
+var props = track.properties();
+props = convertDates(props);
+push('trackEvent', track.event(), props);
 };
 
 /**
@@ -12645,8 +12648,8 @@ HubSpot.prototype.track = function(track){
  * @param {Object} properties
  */
 
-function convertDates(properties){
-  return convert(properties, function(date){ return date.getTime(); });
+function convertDates(properties) {
+return convert(properties, function(date){ return date.getTime(); });
 }
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"convert-dates":196}],
@@ -12664,12 +12667,12 @@ var alias = require('alias');
  */
 
 var Improvely = module.exports = integration('Improvely')
-  .assumesPageview()
-  .global('_improvely')
-  .global('improvely')
-  .option('domain', '')
-  .option('projectId', null)
-  .tag('<script src="//{{ domain }}.iljmp.com/improvely.js">');
+.assumesPageview()
+.global('_improvely')
+.global('improvely')
+.option('domain', '')
+.option('projectId', null)
+.tag('<script src="//{{ domain }}.iljmp.com/improvely.js">');
 
 /**
  * Initialize.
@@ -12679,14 +12682,14 @@ var Improvely = module.exports = integration('Improvely')
  * @param {Object} page
  */
 
-Improvely.prototype.initialize = function(page){
-  window._improvely = [];
-  window.improvely = { init: function(e, t){ window._improvely.push(["init", e, t]); }, goal: function(e){ window._improvely.push(["goal", e]); }, label: function(e){ window._improvely.push(["label", e]); }};
+Improvely.prototype.initialize = function(page) {
+window._improvely = [];
+window.improvely = { init: function(e, t){ window._improvely.push(["init", e, t]); }, goal: function(e){ window._improvely.push(["goal", e]); }, label: function(e){ window._improvely.push(["label", e]); }};
 
-  var domain = this.options.domain;
-  var id = this.options.projectId;
-  window.improvely.init(domain, id);
-  this.load(this.ready);
+var domain = this.options.domain;
+var id = this.options.projectId;
+window.improvely.init(domain, id);
+this.load(this.ready);
 };
 
 /**
@@ -12695,8 +12698,8 @@ Improvely.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Improvely.prototype.loaded = function(){
-  return !! (window.improvely && window.improvely.identify);
+Improvely.prototype.loaded = function() {
+return !! (window.improvely && window.improvely.identify);
 };
 
 /**
@@ -12707,9 +12710,9 @@ Improvely.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-Improvely.prototype.identify = function(identify){
-  var id = identify.userId();
-  if (id) window.improvely.label(id);
+Improvely.prototype.identify = function(identify) {
+var id = identify.userId();
+if (id) window.improvely.label(id);
 };
 
 /**
@@ -12720,10 +12723,10 @@ Improvely.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-Improvely.prototype.track = function(track){
-  var props = track.properties({ revenue: 'amount' });
-  props.type = track.event();
-  window.improvely.goal(props);
+Improvely.prototype.track = function(track) {
+var props = track.properties({ revenue: 'amount' });
+props.type = track.event();
+window.improvely.goal(props);
 };
 
 }, {"segmentio/analytics.js-integration":159,"alias":195}],
@@ -12742,10 +12745,10 @@ var is = require('is');
  */
 
 var InsideVault = module.exports = integration('InsideVault')
-  .global('_iva')
-  .option('clientId', '')
-  .option('domain', '')
-  .tag('<script src="//analytics.staticiv.com/iva.js">');
+.global('_iva')
+.option('clientId', '')
+.option('domain', '')
+.tag('<script src="//analytics.staticiv.com/iva.js">');
 
 /**
  * Initialize.
@@ -12753,15 +12756,15 @@ var InsideVault = module.exports = integration('InsideVault')
  * @param page
  */
 
-InsideVault.prototype.initialize = function(page){
-  var domain = this.options.domain;
+InsideVault.prototype.initialize = function(page) {
+var domain = this.options.domain;
 
-  window._iva = window._iva || [];
+window._iva = window._iva || [];
 
-  push('setClientId', this.options.clientId);
-  if (domain) push('setDomain', domain);
+push('setClientId', this.options.clientId);
+if (domain) push('setDomain', domain);
 
-  this.load(this.ready);
+this.load(this.ready);
 };
 
 /**
@@ -12770,8 +12773,8 @@ InsideVault.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-InsideVault.prototype.loaded = function(){
-  return !! (window._iva && window._iva.push !== Array.prototype.push);
+InsideVault.prototype.loaded = function() {
+return !! (window._iva && window._iva.push !== Array.prototype.push);
 };
 
 /**
@@ -12782,16 +12785,16 @@ InsideVault.prototype.loaded = function(){
  * @param {Track} track
  */
 
-InsideVault.prototype.track = function(track){
-  var event = track.event();
-  var value = track.revenue() || track.value() || 0;
-  var orderId = track.orderId() || '';
+InsideVault.prototype.track = function(track) {
+var event = track.event();
+var value = track.revenue() || track.value() || 0;
+var orderId = track.orderId() || '';
 
-  // 'sale' is a special event that will be routed to a table that is deprecated on our end.
-  // We don't want a generic 'sale' event to go to our deprecated table.
-  if (event != 'sale') {
-    push('trackEvent', event, value, orderId);
-  }
+// 'sale' is a special event that will be routed to a table that is deprecated on our end.
+// We don't want a generic 'sale' event to go to our deprecated table.
+if (event != 'sale') {
+	push('trackEvent', event, value, orderId);
+}
 };
 }, {"analytics.js-integration":159,"global-queue":190,"is":18}],
 120: [function(require, module, exports) {
@@ -12810,11 +12813,11 @@ var clone = require('clone');
  */
 
 var Inspectlet = module.exports = integration('Inspectlet')
-  .assumesPageview()
-  .global('__insp')
-  .global('__insp_')
-  .option('wid', '')
-  .tag('<script src="//www.inspectlet.com/inspectlet.js">');
+.assumesPageview()
+.global('__insp')
+.global('__insp_')
+.option('wid', '')
+.tag('<script src="//www.inspectlet.com/inspectlet.js">');
 
 /**
  * Initialize.
@@ -12824,9 +12827,9 @@ var Inspectlet = module.exports = integration('Inspectlet')
  * @param {Object} page
  */
 
-Inspectlet.prototype.initialize = function(page){
-  push('wid', this.options.wid);
-  this.load(this.ready);
+Inspectlet.prototype.initialize = function(page) {
+push('wid', this.options.wid);
+this.load(this.ready);
 };
 
 /**
@@ -12835,8 +12838,8 @@ Inspectlet.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Inspectlet.prototype.loaded = function(){
-  return !! window.__insp_;
+Inspectlet.prototype.loaded = function() {
+return !! window.__insp_;
 };
 
 /**
@@ -12847,9 +12850,9 @@ Inspectlet.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-Inspectlet.prototype.identify = function (identify) {
-  var traits = identify.traits({ id: 'userid' });
-  push('tagSession', traits);
+Inspectlet.prototype.identify = function(identify) {
+var traits = identify.traits({ id: 'userid' });
+push('tagSession', traits);
 };
 
 /**
@@ -12860,8 +12863,8 @@ Inspectlet.prototype.identify = function (identify) {
  * @param {Track} track
  */
 
-Inspectlet.prototype.track = function(track){
-  push('tagSession', track.event());
+Inspectlet.prototype.track = function(track) {
+push('tagSession', track.event());
 };
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"alias":195,"clone":194}],
@@ -12887,12 +12890,12 @@ var is = require('is');
  */
 
 var Intercom = module.exports = integration('Intercom')
-  .assumesPageview()
-  .global('Intercom')
-  .option('activator', '#IntercomDefaultWidget')
-  .option('appId', '')
-  .option('inbox', false)
-  .tag('<script src="https://static.intercomcdn.com/intercom.v1.js">');
+.assumesPageview()
+.global('Intercom')
+.option('activator', '#IntercomDefaultWidget')
+.option('appId', '')
+.option('inbox', false)
+.tag('<script src="https://static.intercomcdn.com/intercom.v1.js">');
 
 /**
  * Initialize.
@@ -12903,11 +12906,11 @@ var Intercom = module.exports = integration('Intercom')
  * @param {Object} page
  */
 
-Intercom.prototype.initialize = function(page){
-  var self = this;
-  this.load(function(){
-    when(function(){ return self.loaded(); }, self.ready);
-  });
+Intercom.prototype.initialize = function(page) {
+var self = this;
+this.load(function() {
+	when(function(){ return self.loaded(); }, self.ready);
+});
 };
 
 /**
@@ -12916,8 +12919,8 @@ Intercom.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Intercom.prototype.loaded = function(){
-  return is.fn(window.Intercom);
+Intercom.prototype.loaded = function() {
+return is.fn(window.Intercom);
 };
 
 /**
@@ -12926,8 +12929,8 @@ Intercom.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Intercom.prototype.page = function(page){
-  window.Intercom('update');
+Intercom.prototype.page = function(page) {
+window.Intercom('update');
 };
 
 /**
@@ -12938,55 +12941,55 @@ Intercom.prototype.page = function(page){
  * @param {Identify} identify
  */
 
-Intercom.prototype.identify = function(identify){
-  var traits = identify.traits({ userId: 'user_id' });
-  var activator = this.options.activator;
-  var opts = identify.options(this.name);
-  var companyCreated = identify.companyCreated();
-  var created = identify.created();
-  var email = identify.email();
-  var name = identify.name();
-  var id = identify.userId();
-  var group = this.analytics.group();
+Intercom.prototype.identify = function(identify) {
+var traits = identify.traits({ userId: 'user_id' });
+var activator = this.options.activator;
+var opts = identify.options(this.name);
+var companyCreated = identify.companyCreated();
+var created = identify.created();
+var email = identify.email();
+var name = identify.name();
+var id = identify.userId();
+var group = this.analytics.group();
 
-  if (!id && !traits.email) return; // one is required
+if (!id && !traits.email) return; // one is required
 
-  traits.app_id = this.options.appId;
+traits.app_id = this.options.appId;
 
-  // intercom requires `company` to be an object. default it with group traits
-  // so that we guarantee an `id` is there, since they require it
-  if (null != traits.company && !is.object(traits.company)) delete traits.company;
-  if (traits.company) defaults(traits.company, group.traits());
+// intercom requires `company` to be an object. default it with group traits
+// so that we guarantee an `id` is there, since they require it
+if (null != traits.company && !is.object(traits.company)) delete traits.company;
+if (traits.company) defaults(traits.company, group.traits());
 
-  // name
-  if (name) traits.name = name;
+// name
+if (name) traits.name = name;
 
-  // handle dates
-  if (traits.company && companyCreated) traits.company.created = companyCreated;
-  if (created) traits.created = created;
+// handle dates
+if (traits.company && companyCreated) traits.company.created = companyCreated;
+if (created) traits.created = created;
 
-  // convert dates
-  traits = convertDates(traits, formatDate);
-  traits = alias(traits, { created: 'created_at'});
-  if (traits.company) traits.company = alias(traits.company, { created: 'created_at' });
+// convert dates
+traits = convertDates(traits, formatDate);
+traits = alias(traits, { created: 'created_at'});
+if (traits.company) traits.company = alias(traits.company, { created: 'created_at' });
 
-  // handle options
-  if (opts.increments) traits.increments = opts.increments;
-  if (opts.userHash) traits.user_hash = opts.userHash;
-  if (opts.user_hash) traits.user_hash = opts.user_hash;
+// handle options
+if (opts.increments) traits.increments = opts.increments;
+if (opts.userHash) traits.user_hash = opts.userHash;
+if (opts.user_hash) traits.user_hash = opts.user_hash;
 
-  // Intercom, will force the widget to appear
-  // if the selector is #IntercomDefaultWidget
-  // so no need to check inbox, just need to check
-  // that the selector isn't #IntercomDefaultWidget.
-  if ('#IntercomDefaultWidget' != activator) {
-    traits.widget = { activator: activator };
-  }
+// Intercom, will force the widget to appear
+// if the selector is #IntercomDefaultWidget
+// so no need to check inbox, just need to check
+// that the selector isn't #IntercomDefaultWidget.
+if ('#IntercomDefaultWidget' != activator) {
+	traits.widget = { activator: activator };
+}
 
-  var method = this._id !== id ? 'boot': 'update';
-  this._id = id; // cache for next time
+var method = this._id !== id ? 'boot': 'update';
+this._id = id; // cache for next time
 
-  window.Intercom(method, traits);
+window.Intercom(method, traits);
 };
 
 /**
@@ -12995,11 +12998,11 @@ Intercom.prototype.identify = function(identify){
  * @param {Group} group
  */
 
-Intercom.prototype.group = function(group){
-  var props = group.properties();
-  var id = group.groupId();
-  if (id) props.id = id;
-  window.Intercom('update', { company: props });
+Intercom.prototype.group = function(group) {
+var props = group.properties();
+var id = group.groupId();
+if (id) props.id = id;
+window.Intercom('update', { company: props });
 };
 
 /**
@@ -13008,8 +13011,8 @@ Intercom.prototype.group = function(group){
  * @param {Track} track
  */
 
-Intercom.prototype.track = function(track){
-  window.Intercom('trackEvent', track.event(), track.properties());
+Intercom.prototype.track = function(track) {
+window.Intercom('trackEvent', track.event(), track.properties());
 };
 
 /**
@@ -13020,7 +13023,7 @@ Intercom.prototype.track = function(track){
  */
 
 function formatDate(date) {
-  return Math.floor(date / 1000);
+return Math.floor(date / 1000);
 }
 
 }, {"segmentio/analytics.js-integration":159,"convert-dates":196,"defaults":189,"is-email":19,"load-script":168,"is-empty":44,"alias":195,"each":5,"when":184,"is":18}],
@@ -13037,14 +13040,14 @@ var integration = require('segmentio/analytics.js-integration');
  */
 
 var Keen = module.exports = integration('Keen IO')
-  .global('Keen')
-  .option('projectId', '')
-  .option('readKey', '')
-  .option('writeKey', '')
-  .option('trackNamedPages', true)
-  .option('trackAllPages', false)
-  .option('trackCategorizedPages', true)
-  .tag('<script src="//dc8na2hxrj29i.cloudfront.net/code/keen-2.1.0-min.js">');
+.global('Keen')
+.option('projectId', '')
+.option('readKey', '')
+.option('writeKey', '')
+.option('trackNamedPages', true)
+.option('trackAllPages', false)
+.option('trackCategorizedPages', true)
+.tag('<script src="//dc8na2hxrj29i.cloudfront.net/code/keen-2.1.0-min.js">');
 
 /**
  * Initialize.
@@ -13052,15 +13055,15 @@ var Keen = module.exports = integration('Keen IO')
  * https://keen.io/docs/
  */
 
-Keen.prototype.initialize = function(){
-  var options = this.options;
-  window.Keen = window.Keen||{ configure:function(e){this._cf=e;}, addEvent:function(e,t,n,i){this._eq=this._eq||[],this._eq.push([e,t,n,i]);}, setGlobalProperties:function(e){this._gp=e;}, onChartsReady:function(e){this._ocrq=this._ocrq||[],this._ocrq.push(e);}};
-  window.Keen.configure({
-    projectId: options.projectId,
-    writeKey: options.writeKey,
-    readKey: options.readKey
-  });
-  this.load(this.ready);
+Keen.prototype.initialize = function() {
+var options = this.options;
+window.Keen = window.Keen||{ configure:function(e){this._cf=e;}, addEvent:function(e,t,n,i){this._eq=this._eq||[],this._eq.push([e,t,n,i]);}, setGlobalProperties:function(e){this._gp=e;}, onChartsReady:function(e){this._ocrq=this._ocrq||[],this._ocrq.push(e);}};
+window.Keen.configure({
+	projectId: options.projectId,
+	writeKey: options.writeKey,
+	readKey: options.readKey
+});
+this.load(this.ready);
 };
 
 /**
@@ -13069,8 +13072,8 @@ Keen.prototype.initialize = function(){
  * @return {Boolean}
  */
 
-Keen.prototype.loaded = function(){
-  return !! (window.Keen && window.Keen.Base64);
+Keen.prototype.loaded = function() {
+return !! (window.Keen && window.Keen.Base64);
 };
 
 /**
@@ -13079,26 +13082,26 @@ Keen.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Keen.prototype.page = function(page){
-  var category = page.category();
-  var props = page.properties();
-  var name = page.fullName();
-  var opts = this.options;
+Keen.prototype.page = function(page) {
+var category = page.category();
+var props = page.properties();
+var name = page.fullName();
+var opts = this.options;
 
-  // all pages
-  if (opts.trackAllPages) {
-    this.track(page.track());
-  }
+// all pages
+if (opts.trackAllPages) {
+	this.track(page.track());
+}
 
-  // named pages
-  if (name && opts.trackNamedPages) {
-    this.track(page.track(name));
-  }
+// named pages
+if (name && opts.trackNamedPages) {
+	this.track(page.track(name));
+}
 
-  // categorized pages
-  if (category && opts.trackCategorizedPages) {
-    this.track(page.track(category));
-  }
+// categorized pages
+if (category && opts.trackCategorizedPages) {
+	this.track(page.track(category));
+}
 };
 
 /**
@@ -13109,15 +13112,15 @@ Keen.prototype.page = function(page){
  * @param {Identify} identify
  */
 
-Keen.prototype.identify = function(identify){
-  var traits = identify.traits();
-  var id = identify.userId();
-  var user = {};
-  if (id) user.userId = id;
-  if (traits) user.traits = traits;
-  window.Keen.setGlobalProperties(function(){
-    return { user: user };
-  });
+Keen.prototype.identify = function(identify) {
+var traits = identify.traits();
+var id = identify.userId();
+var user = {};
+if (id) user.userId = id;
+if (traits) user.traits = traits;
+window.Keen.setGlobalProperties(function() {
+	return { user: user };
+});
 };
 
 /**
@@ -13126,8 +13129,8 @@ Keen.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-Keen.prototype.track = function(track){
-  window.Keen.addEvent(track.event(), track.properties());
+Keen.prototype.track = function(track) {
+window.Keen.addEvent(track.event(), track.properties());
 };
 
 }, {"segmentio/analytics.js-integration":159}],
@@ -13146,11 +13149,11 @@ var is = require('is');
  */
 
 var Kenshoo = module.exports = integration('Kenshoo')
-  .global('k_trackevent')
-  .option('cid', '')
-  .option('subdomain', '')
-  .option('events', [])
-  .tag('<script src="//{{ subdomain }}.xg4ken.com/media/getpx.php?cid={{ cid }}">');
+.global('k_trackevent')
+.option('cid', '')
+.option('subdomain', '')
+.option('events', [])
+.tag('<script src="//{{ subdomain }}.xg4ken.com/media/getpx.php?cid={{ cid }}">');
 
 /**
  * Initialize.
@@ -13160,8 +13163,8 @@ var Kenshoo = module.exports = integration('Kenshoo')
  * @param {Object} page
  */
 
-Kenshoo.prototype.initialize = function(page){
-  this.load(this.ready);
+Kenshoo.prototype.initialize = function(page) {
+this.load(this.ready);
 };
 
 /**
@@ -13170,8 +13173,8 @@ Kenshoo.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Kenshoo.prototype.loaded = function(){
-  return is.fn(window.k_trackevent);
+Kenshoo.prototype.loaded = function() {
+return is.fn(window.k_trackevent);
 };
 
 /**
@@ -13185,28 +13188,28 @@ Kenshoo.prototype.loaded = function(){
  * @param {Track} event
  */
 
-Kenshoo.prototype.track = function(track){
-  var events = this.options.events;
-  var traits = track.traits();
-  var event = track.event();
-  var revenue = track.revenue() || 0;
-  if (!~indexof(events, event)) return;
+Kenshoo.prototype.track = function(track) {
+var events = this.options.events;
+var traits = track.traits();
+var event = track.event();
+var revenue = track.revenue() || 0;
+if (!~indexof(events, event)) return;
 
-  var params = [
-    'id=' + this.options.cid,
-    'type=conv',
-    'val=' + revenue,
-    'orderId=' + track.orderId(),
-    'promoCode=' + track.coupon(),
-    'valueCurrency=' + track.currency(),
+var params = [
+	'id=' + this.options.cid,
+	'type=conv',
+	'val=' + revenue,
+	'orderId=' + track.orderId(),
+	'promoCode=' + track.coupon(),
+	'valueCurrency=' + track.currency(),
 
-    // Live tracking fields. Ignored for now (until we get documentation).
-    'GCID=',
-    'kw=',
-    'product='
-  ];
+	// Live tracking fields. Ignored for now (until we get documentation).
+	'GCID=',
+	'kw=',
+	'product='
+];
 
-  window.k_trackevent(params, this.options.subdomain);
+window.k_trackevent(params, this.options.subdomain);
 };
 
 }, {"segmentio/analytics.js-integration":159,"indexof":46,"is":18}],
@@ -13229,16 +13232,16 @@ var is = require('is');
  */
 
 var KISSmetrics = module.exports = integration('KISSmetrics')
-  .assumesPageview()
-  .global('_kmq')
-  .global('KM')
-  .global('_kmil')
-  .option('apiKey', '')
-  .option('trackNamedPages', true)
-  .option('trackCategorizedPages', true)
-  .option('prefixProperties', true)
-  .tag('useless', '<script src="//i.kissmetrics.com/i.js">')
-  .tag('library', '<script src="//doug1izaerwt3.cloudfront.net/{{ apiKey }}.1.js">');
+.assumesPageview()
+.global('_kmq')
+.global('KM')
+.global('_kmil')
+.option('apiKey', '')
+.option('trackNamedPages', true)
+.option('trackCategorizedPages', true)
+.option('prefixProperties', true)
+.tag('useless', '<script src="//i.kissmetrics.com/i.js">')
+.tag('library', '<script src="//doug1izaerwt3.cloudfront.net/{{ apiKey }}.1.js">');
 
 /**
  * Check if browser is mobile, for kissmetrics.
@@ -13247,11 +13250,11 @@ var KISSmetrics = module.exports = integration('KISSmetrics')
  */
 
 exports.isMobile = navigator.userAgent.match(/Android/i)
-  || navigator.userAgent.match(/BlackBerry/i)
-  || navigator.userAgent.match(/iPhone|iPod/i)
-  || navigator.userAgent.match(/iPad/i)
-  || navigator.userAgent.match(/Opera Mini/i)
-  || navigator.userAgent.match(/IEMobile/i);
+|| navigator.userAgent.match(/BlackBerry/i)
+|| navigator.userAgent.match(/iPhone|iPod/i)
+|| navigator.userAgent.match(/iPad/i)
+|| navigator.userAgent.match(/Opera Mini/i)
+|| navigator.userAgent.match(/IEMobile/i);
 
 /**
  * Initialize.
@@ -13261,18 +13264,18 @@ exports.isMobile = navigator.userAgent.match(/Android/i)
  * @param {Object} page
  */
 
-KISSmetrics.prototype.initialize = function(page){
-  var self = this;
-  window._kmq = [];
-  if (exports.isMobile) push('set', { 'Mobile Session': 'Yes' });
+KISSmetrics.prototype.initialize = function(page) {
+var self = this;
+window._kmq = [];
+if (exports.isMobile) push('set', { 'Mobile Session': 'Yes' });
 
-  var batch = new Batch();
-  batch.push(function(done){ self.load('useless', done); }) // :)
-  batch.push(function(done){ self.load('library', done); })
-  batch.end(function(){
-    self.trackPage(page);
-    self.ready();
-  });
+var batch = new Batch();
+batch.push(function(done){ self.load('useless', done); }) // :)
+batch.push(function(done){ self.load('library', done); })
+batch.end(function() {
+	self.trackPage(page);
+	self.ready();
+});
 };
 
 /**
@@ -13281,8 +13284,8 @@ KISSmetrics.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-KISSmetrics.prototype.loaded = function(){
-  return is.object(window.KM);
+KISSmetrics.prototype.loaded = function() {
+return is.object(window.KM);
 };
 
 /**
@@ -13291,9 +13294,9 @@ KISSmetrics.prototype.loaded = function(){
  * @param {Page} page
  */
 
-KISSmetrics.prototype.page = function(page){
-  if (!window.KM_SKIP_PAGE_VIEW) window.KM.pageView();
-  this.trackPage(page);
+KISSmetrics.prototype.page = function(page) {
+if (!window.KM_SKIP_PAGE_VIEW) window.KM.pageView();
+this.trackPage(page);
 };
 
 /**
@@ -13302,20 +13305,20 @@ KISSmetrics.prototype.page = function(page){
  * @param {Page} page
  */
 
-KISSmetrics.prototype.trackPage = function(page){
-  var category = page.category();
-  var name = page.fullName();
-  var opts = this.options;
+KISSmetrics.prototype.trackPage = function(page) {
+var category = page.category();
+var name = page.fullName();
+var opts = this.options;
 
-  // named pages
-  if (name && opts.trackNamedPages) {
-    this.track(page.track(name));
-  }
+// named pages
+if (name && opts.trackNamedPages) {
+	this.track(page.track(name));
+}
 
-  // categorized pages
-  if (category && opts.trackCategorizedPages) {
-    this.track(page.track(category));
-  }
+// categorized pages
+if (category && opts.trackCategorizedPages) {
+	this.track(page.track(category));
+}
 };
 
 /**
@@ -13324,11 +13327,11 @@ KISSmetrics.prototype.trackPage = function(page){
  * @param {Identify} identify
  */
 
-KISSmetrics.prototype.identify = function(identify){
-  var traits = identify.traits();
-  var id = identify.userId();
-  if (id) push('identify', id);
-  if (traits) push('set', traits);
+KISSmetrics.prototype.identify = function(identify) {
+var traits = identify.traits();
+var id = identify.userId();
+if (id) push('identify', id);
+if (traits) push('set', traits);
 };
 
 /**
@@ -13337,12 +13340,12 @@ KISSmetrics.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-KISSmetrics.prototype.track = function(track){
-  var mapping = { revenue: 'Billing Amount' };
-  var event = track.event();
-  var properties = track.properties(mapping);
-  if (this.options.prefixProperties) properties = prefix(event, properties);
-  push('record', event, properties);
+KISSmetrics.prototype.track = function(track) {
+var mapping = { revenue: 'Billing Amount' };
+var event = track.event();
+var properties = track.properties(mapping);
+if (this.options.prefixProperties) properties = prefix(event, properties);
+push('record', event, properties);
 };
 
 /**
@@ -13351,8 +13354,8 @@ KISSmetrics.prototype.track = function(track){
  * @param {Alias} to
  */
 
-KISSmetrics.prototype.alias = function(alias){
-  push('alias', alias.to(), alias.from());
+KISSmetrics.prototype.alias = function(alias) {
+push('alias', alias.to(), alias.from());
 };
 
 /**
@@ -13362,24 +13365,24 @@ KISSmetrics.prototype.alias = function(alias){
  * @api private
  */
 
-KISSmetrics.prototype.completedOrder = function(track){
-  var products = track.products();
-  var event = track.event();
+KISSmetrics.prototype.completedOrder = function(track) {
+var products = track.products();
+var event = track.event();
 
-  // transaction
-  push('record', event, prefix(event, track.properties()));
+// transaction
+push('record', event, prefix(event, track.properties()));
 
-  // items
-  window._kmq.push(function(){
-    var km = window.KM;
-    each(products, function(product, i){
-      var temp = new Track({ event: event, properties: product });
-      var item = prefix(event, product);
-      item._t = km.ts() + i;
-      item._d = 1;
-      km.set(item);
-    });
-  });
+// items
+window._kmq.push(function() {
+	var km = window.KM;
+	each(products, function(product, i) {
+	  var temp = new Track({ event: event, properties: product });
+	  var item = prefix(event, product);
+	  item._t = km.ts() + i;
+	  item._d = 1;
+	  km.set(item);
+	});
+});
 };
 
 /**
@@ -13391,16 +13394,16 @@ KISSmetrics.prototype.completedOrder = function(track){
  * @api private
  */
 
-function prefix(event, properties){
-  var prefixed = {};
-  each(properties, function(key, val){
-    if (key === 'Billing Amount') {
-      prefixed[key] = val;
-    } else {
-      prefixed[event + ' - ' + key] = val;
-    }
-  });
-  return prefixed;
+function prefix(event, properties) {
+var prefixed = {};
+each(properties, function(key, val) {
+	if (key === 'Billing Amount') {
+	  prefixed[key] = val;
+	} else {
+	  prefixed[event + ' - ' + key] = val;
+	}
+});
+return prefixed;
 }
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"facade":27,"alias":195,"batch":197,"each":5,"is":18}],
@@ -13410,9 +13413,9 @@ function prefix(event, properties){
  */
 
 try {
-  var EventEmitter = require('events').EventEmitter;
+var EventEmitter = require('events').EventEmitter;
 } catch (err) {
-  var Emitter = require('emitter');
+var Emitter = require('emitter');
 }
 
 /**
@@ -13432,13 +13435,13 @@ module.exports = Batch;
  */
 
 function Batch() {
-  if (!(this instanceof Batch)) return new Batch;
-  this.fns = [];
-  this.concurrency(Infinity);
-  this.throws(true);
-  for (var i = 0, len = arguments.length; i < len; ++i) {
-    this.push(arguments[i]);
-  }
+if (!(this instanceof Batch)) return new Batch;
+this.fns = [];
+this.concurrency(Infinity);
+this.throws(true);
+for (var i = 0, len = arguments.length; i < len; ++i) {
+	this.push(arguments[i]);
+}
 }
 
 /**
@@ -13446,9 +13449,9 @@ function Batch() {
  */
 
 if (EventEmitter) {
-  Batch.prototype.__proto__ = EventEmitter.prototype;
+Batch.prototype.__proto__ = EventEmitter.prototype;
 } else {
-  Emitter(Batch.prototype);
+Emitter(Batch.prototype);
 }
 
 /**
@@ -13459,9 +13462,9 @@ if (EventEmitter) {
  * @api public
  */
 
-Batch.prototype.concurrency = function(n){
-  this.n = n;
-  return this;
+Batch.prototype.concurrency = function(n) {
+this.n = n;
+return this;
 };
 
 /**
@@ -13472,9 +13475,9 @@ Batch.prototype.concurrency = function(n){
  * @api public
  */
 
-Batch.prototype.push = function(fn){
-  this.fns.push(fn);
-  return this;
+Batch.prototype.push = function(fn) {
+this.fns.push(fn);
+return this;
 };
 
 /**
@@ -13485,8 +13488,8 @@ Batch.prototype.push = function(fn){
  * @api public
  */
 Batch.prototype.throws = function(throws) {
-  this.e = !!throws;
-  return this;
+this.e = !!throws;
+return this;
 };
 
 /**
@@ -13498,70 +13501,70 @@ Batch.prototype.throws = function(throws) {
  * @api public
  */
 
-Batch.prototype.end = function(cb){
-  var self = this
-    , total = this.fns.length
-    , pending = total
-    , results = []
-    , errors = []
-    , cb = cb || noop
-    , fns = this.fns
-    , max = this.n
-    , throws = this.e
-    , index = 0
-    , done;
+Batch.prototype.end = function(cb) {
+var self = this
+	, total = this.fns.length
+	, pending = total
+	, results = []
+	, errors = []
+	, cb = cb || noop
+	, fns = this.fns
+	, max = this.n
+	, throws = this.e
+	, index = 0
+	, done;
 
-  // empty
-  if (!fns.length) return cb(null, results);
+// empty
+if (!fns.length) return cb(null, results);
 
-  // process
-  function next() {
-    var i = index++;
-    var fn = fns[i];
-    if (!fn) return;
-    var start = new Date;
+// process
+function next() {
+	var i = index++;
+	var fn = fns[i];
+	if (!fn) return;
+	var start = new Date;
 
-    try {
-      fn(callback);
-    } catch (err) {
-      callback(err);
-    }
+	try {
+	  fn(callback);
+	} catch (err) {
+	  callback(err);
+	}
 
-    function callback(err, res){
-      if (done) return;
-      if (err && throws) return done = true, cb(err);
-      var complete = total - pending + 1;
-      var end = new Date;
+	function callback(err, res) {
+	  if (done) return;
+	  if (err && throws) return done = true, cb(err);
+	  var complete = total - pending + 1;
+	  var end = new Date;
 
-      results[i] = res;
-      errors[i] = err;
+	  results[i] = res;
+	  errors[i] = err;
 
-      self.emit('progress', {
-        index: i,
-        value: res,
-        error: err,
-        pending: pending,
-        total: total,
-        complete: complete,
-        percent: complete / total * 100 | 0,
-        start: start,
-        end: end,
-        duration: end - start
-      });
+	  self.emit('progress', {
+		index: i,
+		value: res,
+		error: err,
+		pending: pending,
+		total: total,
+		complete: complete,
+		percent: complete / total * 100 | 0,
+		start: start,
+		end: end,
+		duration: end - start
+	  });
 
-      if (--pending) next()
-      else if(!throws) cb(errors, results);
-      else cb(null, results);
-    }
-  }
+	  if (--pending) next()
+	  else if (!throws) cb(errors, results);
+	  else cb(null, results);
+	}
+}
 
-  // concurrency
-  for (var i = 0; i < fns.length; i++) {
-    if (i == max) break;
-    next();
-  }
+// concurrency
+for (var i = 0; i < fns.length; i++) {
+	if (i == max) break;
+	next();
+}
 
-  return this;
+return this;
 };
 
 }, {"emitter":198}],
@@ -13580,7 +13583,7 @@ module.exports = Emitter;
  */
 
 function Emitter(obj) {
-  if (obj) return mixin(obj);
+if (obj) return mixin(obj);
 };
 
 /**
@@ -13592,10 +13595,10 @@ function Emitter(obj) {
  */
 
 function mixin(obj) {
-  for (var key in Emitter.prototype) {
-    obj[key] = Emitter.prototype[key];
-  }
-  return obj;
+for (var key in Emitter.prototype) {
+	obj[key] = Emitter.prototype[key];
+}
+return obj;
 }
 
 /**
@@ -13608,11 +13611,11 @@ function mixin(obj) {
  */
 
 Emitter.prototype.on =
-Emitter.prototype.addEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
-  (this._callbacks[event] = this._callbacks[event] || [])
-    .push(fn);
-  return this;
+Emitter.prototype.addEventListener = function(event, fn) {
+this._callbacks = this._callbacks || {};
+(this._callbacks[event] = this._callbacks[event] || [])
+	.push(fn);
+return this;
 };
 
 /**
@@ -13625,18 +13628,18 @@ Emitter.prototype.addEventListener = function(event, fn){
  * @api public
  */
 
-Emitter.prototype.once = function(event, fn){
-  var self = this;
-  this._callbacks = this._callbacks || {};
+Emitter.prototype.once = function(event, fn) {
+var self = this;
+this._callbacks = this._callbacks || {};
 
-  function on() {
-    self.off(event, on);
-    fn.apply(this, arguments);
-  }
+function on() {
+	self.off(event, on);
+	fn.apply(this, arguments);
+}
 
-  on.fn = fn;
-  this.on(event, on);
-  return this;
+on.fn = fn;
+this.on(event, on);
+return this;
 };
 
 /**
@@ -13652,35 +13655,35 @@ Emitter.prototype.once = function(event, fn){
 Emitter.prototype.off =
 Emitter.prototype.removeListener =
 Emitter.prototype.removeAllListeners =
-Emitter.prototype.removeEventListener = function(event, fn){
-  this._callbacks = this._callbacks || {};
+Emitter.prototype.removeEventListener = function(event, fn) {
+this._callbacks = this._callbacks || {};
 
-  // all
-  if (0 == arguments.length) {
-    this._callbacks = {};
-    return this;
-  }
+// all
+if (0 == arguments.length) {
+	this._callbacks = {};
+	return this;
+}
 
-  // specific event
-  var callbacks = this._callbacks[event];
-  if (!callbacks) return this;
+// specific event
+var callbacks = this._callbacks[event];
+if (!callbacks) return this;
 
-  // remove all handlers
-  if (1 == arguments.length) {
-    delete this._callbacks[event];
-    return this;
-  }
+// remove all handlers
+if (1 == arguments.length) {
+	delete this._callbacks[event];
+	return this;
+}
 
-  // remove specific handler
-  var cb;
-  for (var i = 0; i < callbacks.length; i++) {
-    cb = callbacks[i];
-    if (cb === fn || cb.fn === fn) {
-      callbacks.splice(i, 1);
-      break;
-    }
-  }
-  return this;
+// remove specific handler
+var cb;
+for (var i = 0; i < callbacks.length; i++) {
+	cb = callbacks[i];
+	if (cb === fn || cb.fn === fn) {
+	  callbacks.splice(i, 1);
+	  break;
+	}
+}
+return this;
 };
 
 /**
@@ -13691,19 +13694,19 @@ Emitter.prototype.removeEventListener = function(event, fn){
  * @return {Emitter}
  */
 
-Emitter.prototype.emit = function(event){
-  this._callbacks = this._callbacks || {};
-  var args = [].slice.call(arguments, 1)
-    , callbacks = this._callbacks[event];
+Emitter.prototype.emit = function(event) {
+this._callbacks = this._callbacks || {};
+var args = [].slice.call(arguments, 1)
+	, callbacks = this._callbacks[event];
 
-  if (callbacks) {
-    callbacks = callbacks.slice(0);
-    for (var i = 0, len = callbacks.length; i < len; ++i) {
-      callbacks[i].apply(this, args);
-    }
-  }
+if (callbacks) {
+	callbacks = callbacks.slice(0);
+	for (var i = 0, len = callbacks.length; i < len; ++i) {
+	  callbacks[i].apply(this, args);
+	}
+}
 
-  return this;
+return this;
 };
 
 /**
@@ -13714,9 +13717,9 @@ Emitter.prototype.emit = function(event){
  * @api public
  */
 
-Emitter.prototype.listeners = function(event){
-  this._callbacks = this._callbacks || {};
-  return this._callbacks[event] || [];
+Emitter.prototype.listeners = function(event) {
+this._callbacks = this._callbacks || {};
+return this._callbacks[event] || [];
 };
 
 /**
@@ -13727,8 +13730,8 @@ Emitter.prototype.listeners = function(event){
  * @api public
  */
 
-Emitter.prototype.hasListeners = function(event){
-  return !! this.listeners(event).length;
+Emitter.prototype.hasListeners = function(event) {
+return !! this.listeners(event).length;
 };
 
 }, {}],
@@ -13748,12 +13751,12 @@ var alias = require('alias');
  */
 
 var aliases = {
-  id: '$id',
-  email: '$email',
-  firstName: '$first_name',
-  lastName: '$last_name',
-  phone: '$phone_number',
-  title: '$title'
+id: '$id',
+email: '$email',
+firstName: '$first_name',
+lastName: '$last_name',
+phone: '$phone_number',
+title: '$title'
 };
 
 /**
@@ -13761,10 +13764,10 @@ var aliases = {
  */
 
 var Klaviyo = module.exports = integration('Klaviyo')
-  .assumesPageview()
-  .global('_learnq')
-  .option('apiKey', '')
-  .tag('<script src="//a.klaviyo.com/media/js/learnmarklet.js">');
+.assumesPageview()
+.global('_learnq')
+.option('apiKey', '')
+.tag('<script src="//a.klaviyo.com/media/js/learnmarklet.js">');
 
 /**
  * Initialize.
@@ -13774,12 +13777,12 @@ var Klaviyo = module.exports = integration('Klaviyo')
  * @param {Object} page
  */
 
-Klaviyo.prototype.initialize = function(page){
-  var self = this;
-  push('account', this.options.apiKey);
-  this.load(function(){
-    tick(self.ready);
-  });
+Klaviyo.prototype.initialize = function(page) {
+var self = this;
+push('account', this.options.apiKey);
+this.load(function() {
+	tick(self.ready);
+});
 };
 
 /**
@@ -13788,8 +13791,8 @@ Klaviyo.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Klaviyo.prototype.loaded = function(){
-  return !! (window._learnq && window._learnq.push !== Array.prototype.push);
+Klaviyo.prototype.loaded = function() {
+return !! (window._learnq && window._learnq.push !== Array.prototype.push);
 };
 
 /**
@@ -13798,10 +13801,10 @@ Klaviyo.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-Klaviyo.prototype.identify = function(identify){
-  var traits = identify.traits(aliases);
-  if (!traits.$id && !traits.$email) return;
-  push('identify', traits);
+Klaviyo.prototype.identify = function(identify) {
+var traits = identify.traits(aliases);
+if (!traits.$id && !traits.$email) return;
+push('identify', traits);
 };
 
 /**
@@ -13810,10 +13813,10 @@ Klaviyo.prototype.identify = function(identify){
  * @param {Group} group
  */
 
-Klaviyo.prototype.group = function(group){
-  var props = group.properties();
-  if (!props.name) return;
-  push('identify', { $organization: props.name });
+Klaviyo.prototype.group = function(group) {
+var props = group.properties();
+if (!props.name) return;
+push('identify', { $organization: props.name });
 };
 
 /**
@@ -13822,10 +13825,10 @@ Klaviyo.prototype.group = function(group){
  * @param {Track} track
  */
 
-Klaviyo.prototype.track = function(track){
-  push('track', track.event(), track.properties({
-    revenue: '$value'
-  }));
+Klaviyo.prototype.track = function(track) {
+push('track', track.event(), track.properties({
+	revenue: '$value'
+}));
 };
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"next-tick":45,"alias":195}],
@@ -13842,11 +13845,11 @@ var integration = require('segmentio/analytics.js-integration');
  */
 
 var LeadLander = module.exports = integration('LeadLander')
-  .assumesPageview()
-  .global('llactid')
-  .global('trackalyzer')
-  .option('accountId', null)
-  .tag('<script src="http://t6.trackalyzer.com/trackalyze-nodoc.js">');
+.assumesPageview()
+.global('llactid')
+.global('trackalyzer')
+.option('accountId', null)
+.tag('<script src="http://t6.trackalyzer.com/trackalyze-nodoc.js">');
 
 /**
  * Initialize.
@@ -13854,9 +13857,9 @@ var LeadLander = module.exports = integration('LeadLander')
  * @param {Object} page
  */
 
-LeadLander.prototype.initialize = function(page){
-  window.llactid = this.options.accountId;
-  this.load(this.ready);
+LeadLander.prototype.initialize = function(page) {
+window.llactid = this.options.accountId;
+this.load(this.ready);
 };
 
 /**
@@ -13865,8 +13868,8 @@ LeadLander.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-LeadLander.prototype.loaded = function(){
-  return !! window.trackalyzer;
+LeadLander.prototype.loaded = function() {
+return !! window.trackalyzer;
 };
 }, {"segmentio/analytics.js-integration":159}],
 127: [function(require, module, exports) {
@@ -13885,14 +13888,14 @@ var when = require('when');
  */
 
 var LiveChat = module.exports = integration('LiveChat')
-  .assumesPageview()
-  .global('__lc')
-  .global('__lc_inited')
-  .global('LC_API')
-  .global('LC_Invite')
-  .option('group', 0)
-  .option('license', '')
-  .tag('<script src="//cdn.livechatinc.com/tracking.js">');
+.assumesPageview()
+.global('__lc')
+.global('__lc_inited')
+.global('LC_API')
+.global('LC_Invite')
+.option('group', 0)
+.option('license', '')
+.tag('<script src="//cdn.livechatinc.com/tracking.js">');
 
 /**
  * Initialize.
@@ -13902,12 +13905,12 @@ var LiveChat = module.exports = integration('LiveChat')
  * @param {Object} page
  */
 
-LiveChat.prototype.initialize = function(page){
-  var self = this;
-  window.__lc = clone(this.options);
-  this.load(function(){
-    when(function(){ return self.loaded(); }, self.ready);
-  });
+LiveChat.prototype.initialize = function(page) {
+var self = this;
+window.__lc = clone(this.options);
+this.load(function() {
+	when(function(){ return self.loaded(); }, self.ready);
+});
 };
 
 /**
@@ -13916,8 +13919,8 @@ LiveChat.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-LiveChat.prototype.loaded = function(){
-  return !!(window.LC_API && window.LC_Invite);
+LiveChat.prototype.loaded = function() {
+return !!(window.LC_API && window.LC_Invite);
 };
 
 /**
@@ -13926,9 +13929,9 @@ LiveChat.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-LiveChat.prototype.identify = function(identify){
-  var traits = identify.traits({ userId: 'User ID' });
-  window.LC_API.set_custom_variables(convert(traits));
+LiveChat.prototype.identify = function(identify) {
+var traits = identify.traits({ userId: 'User ID' });
+window.LC_API.set_custom_variables(convert(traits));
 };
 
 /**
@@ -13938,12 +13941,12 @@ LiveChat.prototype.identify = function(identify){
  * @return {Array}
  */
 
-function convert(traits){
-  var arr = [];
-  each(traits, function(key, value){
-    arr.push({ name: key, value: value });
-  });
-  return arr;
+function convert(traits) {
+var arr = [];
+each(traits, function(key, value) {
+	arr.push({ name: key, value: value });
+});
+return arr;
 }
 
 }, {"segmentio/analytics.js-integration":159,"clone":194,"each":5,"when":184}],
@@ -13962,15 +13965,15 @@ var useHttps = require('use-https');
  */
 
 var LuckyOrange = module.exports = integration('Lucky Orange')
-  .assumesPageview()
-  .global('_loq')
-  .global('__wtw_watcher_added')
-  .global('__wtw_lucky_site_id')
-  .global('__wtw_lucky_is_segment_io')
-  .global('__wtw_custom_user_data')
-  .option('siteId', null)
-  .tag('http', '<script src="http://www.luckyorange.com/w.js?{{ cache }}">')
-  .tag('https', '<script src="https://ssl.luckyorange.com/w.js?{{ cache }}">');
+.assumesPageview()
+.global('_loq')
+.global('__wtw_watcher_added')
+.global('__wtw_lucky_site_id')
+.global('__wtw_lucky_is_segment_io')
+.global('__wtw_custom_user_data')
+.option('siteId', null)
+.tag('http', '<script src="http://www.luckyorange.com/w.js?{{ cache }}">')
+.tag('https', '<script src="https://ssl.luckyorange.com/w.js?{{ cache }}">');
 
 /**
  * Initialize.
@@ -13978,17 +13981,17 @@ var LuckyOrange = module.exports = integration('Lucky Orange')
  * @param {Object} page
  */
 
-LuckyOrange.prototype.initialize = function(page){
-  var user = this.analytics.user();
-  window._loq || (window._loq = []);
-  window.__wtw_lucky_site_id = this.options.siteId;
-  this.identify(new Identify({
-    traits: user.traits(),
-    userId: user.id()
-  }));
-  var cache = Math.floor(new Date().getTime() / 60000);
-  var name = useHttps() ? 'https' : 'http';
-  this.load(name, { cache: cache }, this.ready);
+LuckyOrange.prototype.initialize = function(page) {
+var user = this.analytics.user();
+window._loq || (window._loq = []);
+window.__wtw_lucky_site_id = this.options.siteId;
+this.identify(new Identify({
+	traits: user.traits(),
+	userId: user.id()
+}));
+var cache = Math.floor(new Date().getTime() / 60000);
+var name = useHttps() ? 'https' : 'http';
+this.load(name, { cache: cache }, this.ready);
 };
 
 /**
@@ -13997,8 +14000,8 @@ LuckyOrange.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-LuckyOrange.prototype.loaded = function(){
-  return !! window.__wtw_watcher_added;
+LuckyOrange.prototype.loaded = function() {
+return !! window.__wtw_watcher_added;
 };
 
 /**
@@ -14007,13 +14010,13 @@ LuckyOrange.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-LuckyOrange.prototype.identify = function(identify){
-  var traits = identify.traits();
-  var email = identify.email();
-  var name = identify.name();
-  if (name) traits.name = name;
-  if (email) traits.email = email;
-  window.__wtw_custom_user_data = traits;
+LuckyOrange.prototype.identify = function(identify) {
+var traits = identify.traits();
+var email = identify.email();
+var name = identify.name();
+if (name) traits.name = name;
+if (email) traits.email = email;
+window.__wtw_custom_user_data = traits;
 };
 
 }, {"segmentio/analytics.js-integration":159,"facade":27,"use-https":161}],
@@ -14031,20 +14034,20 @@ var alias = require('alias');
  */
 
 var Lytics = module.exports = integration('Lytics')
-  .global('jstag')
-  .option('cid', '')
-  .option('cookie', 'seerid')
-  .option('delay', 2000)
-  .option('sessionTimeout', 1800)
-  .option('url', '//c.lytics.io')
-  .tag('<script src="//c.lytics.io/static/io.min.js">');
+.global('jstag')
+.option('cid', '')
+.option('cookie', 'seerid')
+.option('delay', 2000)
+.option('sessionTimeout', 1800)
+.option('url', '//c.lytics.io')
+.tag('<script src="//c.lytics.io/static/io.min.js">');
 
 /**
  * Options aliases.
  */
 
 var aliases = {
-  sessionTimeout: 'sessecs'
+sessionTimeout: 'sessecs'
 };
 
 /**
@@ -14055,10 +14058,10 @@ var aliases = {
  * @param {Object} page
  */
 
-Lytics.prototype.initialize = function(page){
-  var options = alias(this.options, aliases);
-  window.jstag = (function(){var t = { _q: [], _c: options, ts: (new Date()).getTime() }; t.send = function(){this._q.push(['ready', 'send', Array.prototype.slice.call(arguments)]); return this; }; return t; })();
-  this.load(this.ready);
+Lytics.prototype.initialize = function(page) {
+var options = alias(this.options, aliases);
+window.jstag = (function(){var t = { _q: [], _c: options, ts: (new Date()).getTime() }; t.send = function(){this._q.push(['ready', 'send', Array.prototype.slice.call(arguments)]); return this; }; return t; })();
+this.load(this.ready);
 };
 
 /**
@@ -14067,8 +14070,8 @@ Lytics.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Lytics.prototype.loaded = function(){
-  return !! (window.jstag && window.jstag.bind);
+Lytics.prototype.loaded = function() {
+return !! (window.jstag && window.jstag.bind);
 };
 
 /**
@@ -14077,8 +14080,8 @@ Lytics.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Lytics.prototype.page = function(page){
-  window.jstag.send(page.properties());
+Lytics.prototype.page = function(page) {
+window.jstag.send(page.properties());
 };
 
 /**
@@ -14087,9 +14090,9 @@ Lytics.prototype.page = function(page){
  * @param {Identify} identify
  */
 
-Lytics.prototype.identify = function(identify){
-  var traits = identify.traits({ userId: '_uid' });
-  window.jstag.send(traits);
+Lytics.prototype.identify = function(identify) {
+var traits = identify.traits({ userId: '_uid' });
+window.jstag.send(traits);
 };
 
 /**
@@ -14100,10 +14103,10 @@ Lytics.prototype.identify = function(identify){
  * @param {Object} options (optional)
  */
 
-Lytics.prototype.track = function(track){
-  var props = track.properties();
-  props._e = track.event();
-  window.jstag.send(props);
+Lytics.prototype.track = function(track) {
+var props = track.properties();
+props._e = track.event();
+window.jstag.send(props);
 };
 
 }, {"segmentio/analytics.js-integration":159,"alias":195}],
@@ -14126,24 +14129,24 @@ var del = require('obj-case').del;
  */
 
 var Mixpanel = module.exports = integration('Mixpanel')
-  .global('mixpanel')
-  .option('increments', [])
-  .option('cookieName', '')
-  .option('nameTag', true)
-  .option('pageview', false)
-  .option('people', false)
-  .option('token', '')
-  .option('trackAllPages', false)
-  .option('trackNamedPages', true)
-  .option('trackCategorizedPages', true)
-  .tag('<script src="//cdn.mxpnl.com/libs/mixpanel-2.2.min.js">');
+.global('mixpanel')
+.option('increments', [])
+.option('cookieName', '')
+.option('nameTag', true)
+.option('pageview', false)
+.option('people', false)
+.option('token', '')
+.option('trackAllPages', false)
+.option('trackNamedPages', true)
+.option('trackCategorizedPages', true)
+.tag('<script src="//cdn.mxpnl.com/libs/mixpanel-2.2.min.js">');
 
 /**
  * Options aliases.
  */
 
 var optionsAliases = {
-  cookieName: 'cookie_name'
+cookieName: 'cookie_name'
 };
 
 /**
@@ -14153,12 +14156,12 @@ var optionsAliases = {
  * https://mixpanel.com/help/reference/javascript-full-api-reference#mixpanel.init
  */
 
-Mixpanel.prototype.initialize = function(){
-  (function(c, a){window.mixpanel = a; var b, d, h, e; a._i = []; a.init = function(b, c, f){function d(a, b){var c = b.split('.'); 2 == c.length && (a = a[c[0]], b = c[1]); a[b] = function(){a.push([b].concat(Array.prototype.slice.call(arguments, 0))); }; } var g = a; 'undefined' !== typeof f ? g = a[f] = [] : f = 'mixpanel'; g.people = g.people || []; h = ['disable', 'track', 'track_pageview', 'track_links', 'track_forms', 'register', 'register_once', 'unregister', 'identify', 'alias', 'name_tag', 'set_config', 'people.set', 'people.increment', 'people.track_charge', 'people.append']; for (e = 0; e < h.length; e++) d(g, h[e]); a._i.push([b, c, f]); }; a.__SV = 1.2; })(document, window.mixpanel || []);
-  this.options.increments = lowercase(this.options.increments);
-  var options = alias(this.options, optionsAliases);
-  window.mixpanel.init(options.token, options);
-  this.load(this.ready);
+Mixpanel.prototype.initialize = function() {
+(function(c, a){window.mixpanel = a; var b, d, h, e; a._i = []; a.init = function(b, c, f){function d(a, b){var c = b.split('.'); 2 == c.length && (a = a[c[0]], b = c[1]); a[b] = function(){a.push([b].concat(Array.prototype.slice.call(arguments, 0))); }; } var g = a; 'undefined' !== typeof f ? g = a[f] = [] : f = 'mixpanel'; g.people = g.people || []; h = ['disable', 'track', 'track_pageview', 'track_links', 'track_forms', 'register', 'register_once', 'unregister', 'identify', 'alias', 'name_tag', 'set_config', 'people.set', 'people.increment', 'people.track_charge', 'people.append']; for (e = 0; e < h.length; e++) d(g, h[e]); a._i.push([b, c, f]); }; a.__SV = 1.2; })(document, window.mixpanel || []);
+this.options.increments = lowercase(this.options.increments);
+var options = alias(this.options, optionsAliases);
+window.mixpanel.init(options.token, options);
+this.load(this.ready);
 };
 
 /**
@@ -14167,8 +14170,8 @@ Mixpanel.prototype.initialize = function(){
  * @return {Boolean}
  */
 
-Mixpanel.prototype.loaded = function(){
-  return !! (window.mixpanel && window.mixpanel.config);
+Mixpanel.prototype.loaded = function() {
+return !! (window.mixpanel && window.mixpanel.config);
 };
 
 /**
@@ -14182,25 +14185,25 @@ Mixpanel.prototype.loaded = function(){
  * @param {Object} options (optional)
  */
 
-Mixpanel.prototype.page = function(page){
-  var category = page.category();
-  var name = page.fullName();
-  var opts = this.options;
+Mixpanel.prototype.page = function(page) {
+var category = page.category();
+var name = page.fullName();
+var opts = this.options;
 
-  // all pages
-  if (opts.trackAllPages) {
-    this.track(page.track());
-  }
+// all pages
+if (opts.trackAllPages) {
+	this.track(page.track());
+}
 
-  // categorized pages
-  if (category && opts.trackCategorizedPages) {
-    this.track(page.track(category));
-  }
+// categorized pages
+if (category && opts.trackCategorizedPages) {
+	this.track(page.track(category));
+}
 
-  // named pages
-  if (name && opts.trackNamedPages) {
-    this.track(page.track(name));
-  }
+// named pages
+if (name && opts.trackNamedPages) {
+	this.track(page.track(name));
+}
 };
 
 /**
@@ -14208,14 +14211,14 @@ Mixpanel.prototype.page = function(page){
  */
 
 var traitAliases = {
-  created: '$created',
-  email: '$email',
-  firstName: '$first_name',
-  lastName: '$last_name',
-  lastSeen: '$last_seen',
-  name: '$name',
-  username: '$username',
-  phone: '$phone'
+created: '$created',
+email: '$email',
+firstName: '$first_name',
+lastName: '$last_name',
+lastSeen: '$last_seen',
+name: '$name',
+username: '$username',
+phone: '$phone'
 };
 
 /**
@@ -14228,23 +14231,23 @@ var traitAliases = {
  * @param {Identify} identify
  */
 
-Mixpanel.prototype.identify = function(identify){
-  var username = identify.username();
-  var email = identify.email();
-  var id = identify.userId();
+Mixpanel.prototype.identify = function(identify) {
+var username = identify.username();
+var email = identify.email();
+var id = identify.userId();
 
-  // id
-  if (id) window.mixpanel.identify(id);
+// id
+if (id) window.mixpanel.identify(id);
 
-  // name tag
-  var nametag = email || username || id;
-  if (nametag) window.mixpanel.name_tag(nametag);
+// name tag
+var nametag = email || username || id;
+if (nametag) window.mixpanel.name_tag(nametag);
 
-  // traits
-  var traits = identify.traits(traitAliases);
-  if (traits.$created) del(traits, 'createdAt');
-  window.mixpanel.register(traits);
-  if (this.options.people) window.mixpanel.people.set(traits);
+// traits
+var traits = identify.traits(traitAliases);
+if (traits.$created) del(traits, 'createdAt');
+window.mixpanel.register(traits);
+if (this.options.people) window.mixpanel.people.set(traits);
 };
 
 /**
@@ -14256,34 +14259,34 @@ Mixpanel.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-Mixpanel.prototype.track = function(track){
-  var increments = this.options.increments;
-  var increment = track.event().toLowerCase();
-  var people = this.options.people;
-  var props = track.properties();
-  var revenue = track.revenue();
+Mixpanel.prototype.track = function(track) {
+var increments = this.options.increments;
+var increment = track.event().toLowerCase();
+var people = this.options.people;
+var props = track.properties();
+var revenue = track.revenue();
 
-  // delete mixpanel's reserved properties, so they don't conflict
-  delete props.distinct_id;
-  delete props.ip;
-  delete props.mp_name_tag;
-  delete props.mp_note;
-  delete props.token;
+// delete mixpanel's reserved properties, so they don't conflict
+delete props.distinct_id;
+delete props.ip;
+delete props.mp_name_tag;
+delete props.mp_note;
+delete props.token;
 
-  // increment properties in mixpanel people
-  if (people && ~indexof(increments, increment)) {
-    window.mixpanel.people.increment(track.event());
-    window.mixpanel.people.set('Last ' + track.event(), new Date);
-  }
+// increment properties in mixpanel people
+if (people && ~indexof(increments, increment)) {
+	window.mixpanel.people.increment(track.event());
+	window.mixpanel.people.set('Last ' + track.event(), new Date);
+}
 
-  // track the event
-  props = dates(props, iso);
-  window.mixpanel.track(track.event(), props);
+// track the event
+props = dates(props, iso);
+window.mixpanel.track(track.event(), props);
 
-  // track revenue specifically
-  if (revenue && people) {
-    window.mixpanel.people.track_charge(revenue);
-  }
+// track revenue specifically
+if (revenue && people) {
+	window.mixpanel.people.track_charge(revenue);
+}
 };
 
 /**
@@ -14295,14 +14298,14 @@ Mixpanel.prototype.track = function(track){
  * @param {Alias} alias
  */
 
-Mixpanel.prototype.alias = function(alias){
-  var mp = window.mixpanel;
-  var to = alias.to();
-  if (mp.get_distinct_id && mp.get_distinct_id() === to) return;
-  // HACK: internal mixpanel API to ensure we don't overwrite
-  if (mp.get_property && mp.get_property('$people_distinct_id') === to) return;
-  // although undocumented, mixpanel takes an optional original id
-  mp.alias(to, alias.from());
+Mixpanel.prototype.alias = function(alias) {
+var mp = window.mixpanel;
+var to = alias.to();
+if (mp.get_distinct_id && mp.get_distinct_id() === to) return;
+// HACK: internal mixpanel API to ensure we don't overwrite
+if (mp.get_property && mp.get_property('$people_distinct_id') === to) return;
+// although undocumented, mixpanel takes an optional original id
+mp.alias(to, alias.from());
 };
 
 /**
@@ -14313,14 +14316,14 @@ Mixpanel.prototype.alias = function(alias){
  * @api private
  */
 
-function lowercase(arr){
-  var ret = new Array(arr.length);
+function lowercase(arr) {
+var ret = new Array(arr.length);
 
-  for (var i = 0; i < arr.length; ++i) {
-    ret[i] = String(arr[i]).toLowerCase();
-  }
+for (var i = 0; i < arr.length; ++i) {
+	ret[i] = String(arr[i]).toLowerCase();
+}
 
-  return ret;
+return ret;
 }
 
 }, {"alias":195,"clone":194,"convert-dates":196,"segmentio/analytics.js-integration":159,"to-iso-string":193,"indexof":46,"obj-case":60}],
@@ -14340,9 +14343,9 @@ var is = require('is');
  */
 
 var Mojn = module.exports = integration('Mojn')
-  .option('customerCode', '')
-  .global('_mojnTrack')
-  .tag('<script src="https://track.idtargeting.com/{{ customerCode }}/track.js">');
+.option('customerCode', '')
+.global('_mojnTrack')
+.tag('<script src="https://track.idtargeting.com/{{ customerCode }}/track.js">');
 
 /**
  * Initialize.
@@ -14350,14 +14353,14 @@ var Mojn = module.exports = integration('Mojn')
  * @param {Object} page
  */
 
-Mojn.prototype.initialize = function(){
-  window._mojnTrack = window._mojnTrack || [];
-  window._mojnTrack.push({ cid: this.options.customerCode });
-  var loaded = bind(this, this.loaded);
-  var ready = this.ready;
-  this.load(function(){
-    when(loaded, ready);
-  });
+Mojn.prototype.initialize = function() {
+window._mojnTrack = window._mojnTrack || [];
+window._mojnTrack.push({ cid: this.options.customerCode });
+var loaded = bind(this, this.loaded);
+var ready = this.ready;
+this.load(function() {
+	when(loaded, ready);
+});
 };
 
 /**
@@ -14366,8 +14369,8 @@ Mojn.prototype.initialize = function(){
  * @return {Boolean}
  */
 
-Mojn.prototype.loaded = function(){
-  return is.object(window._mojnTrack);
+Mojn.prototype.loaded = function() {
+return is.object(window._mojnTrack);
 };
 
 /**
@@ -14376,14 +14379,14 @@ Mojn.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-Mojn.prototype.identify = function(identify){
-  var email = identify.email();
-  if (!email) return;
-  var img = new Image();
-  img.src = '//matcher.idtargeting.com/analytics.gif?cid=' + this.options.customerCode + '&_mjnctid='+email;
-  img.width = 1;
-  img.height = 1;
-  return img;
+Mojn.prototype.identify = function(identify) {
+var email = identify.email();
+if (!email) return;
+var img = new Image();
+img.src = '//matcher.idtargeting.com/analytics.gif?cid=' + this.options.customerCode + '&_mjnctid='+email;
+img.width = 1;
+img.height = 1;
+return img;
 };
 
 /**
@@ -14392,14 +14395,14 @@ Mojn.prototype.identify = function(identify){
  * @param {Track} event
  */
 
-Mojn.prototype.track = function(track){
-  var properties = track.properties();
-  var revenue = properties.revenue;
-  var currency = properties.currency || '';
-  var conv = currency + revenue;
-  if (!revenue) return;
-  window._mojnTrack.push({ conv: conv });
-  return conv;
+Mojn.prototype.track = function(track) {
+var properties = track.properties();
+var revenue = properties.revenue;
+var currency = properties.currency || '';
+var conv = currency + revenue;
+if (!revenue) return;
+window._mojnTrack.push({ conv: conv });
+return conv;
 };
 
 }, {"segmentio/analytics.js-integration":159,"bind":33,"when":184,"is":18}],
@@ -14418,12 +14421,12 @@ var each = require('each');
  */
 
 var Mouseflow = module.exports = integration('Mouseflow')
-  .assumesPageview()
-  .global('mouseflow')
-  .global('_mfq')
-  .option('apiKey', '')
-  .option('mouseflowHtmlDelay', 0)
-  .tag('<script src="//cdn.mouseflow.com/projects/{{ apiKey }}.js">');
+.assumesPageview()
+.global('mouseflow')
+.global('_mfq')
+.option('apiKey', '')
+.option('mouseflowHtmlDelay', 0)
+.tag('<script src="//cdn.mouseflow.com/projects/{{ apiKey }}.js">');
 
 /**
  * Initalize.
@@ -14431,9 +14434,9 @@ var Mouseflow = module.exports = integration('Mouseflow')
  * @param {Object} page
  */
 
-Mouseflow.prototype.initialize = function(page){
-  window.mouseflowHtmlDelay = this.options.mouseflowHtmlDelay;
-  this.load(this.ready);
+Mouseflow.prototype.initialize = function(page) {
+window.mouseflowHtmlDelay = this.options.mouseflowHtmlDelay;
+this.load(this.ready);
 };
 
 /**
@@ -14442,8 +14445,8 @@ Mouseflow.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Mouseflow.prototype.loaded = function(){
-  return !! window.mouseflow;
+Mouseflow.prototype.loaded = function() {
+return !! window.mouseflow;
 };
 
 /**
@@ -14454,10 +14457,10 @@ Mouseflow.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Mouseflow.prototype.page = function(page){
-  if (!window.mouseflow) return;
-  if ('function' != typeof mouseflow.newPageView) return;
-  mouseflow.newPageView();
+Mouseflow.prototype.page = function(page) {
+if (!window.mouseflow) return;
+if ('function' != typeof mouseflow.newPageView) return;
+mouseflow.newPageView();
 };
 
 /**
@@ -14468,8 +14471,8 @@ Mouseflow.prototype.page = function(page){
  * @param {Identify} identify
  */
 
-Mouseflow.prototype.identify = function(identify){
-  set(identify.traits());
+Mouseflow.prototype.identify = function(identify) {
+set(identify.traits());
 };
 
 /**
@@ -14480,10 +14483,10 @@ Mouseflow.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-Mouseflow.prototype.track = function(track){
-  var props = track.properties();
-  props.event = track.event();
-  set(props);
+Mouseflow.prototype.track = function(track) {
+var props = track.properties();
+props.event = track.event();
+set(props);
 };
 
 /**
@@ -14492,10 +14495,10 @@ Mouseflow.prototype.track = function(track){
  * @param {Object} obj
  */
 
-function set(obj){
-  each(obj, function(key, value){
-    push('setVariable', key, value);
-  });
+function set(obj) {
+each(obj, function(key, value) {
+	push('setVariable', key, value);
+});
 }
 
 }, {"global-queue":190,"segmentio/analytics.js-integration":159,"each":5}],
@@ -14515,12 +14518,12 @@ var is = require('is');
  */
 
 var MouseStats = module.exports = integration('MouseStats')
-  .assumesPageview()
-  .global('msaa')
-  .global('MouseStatsVisitorPlaybacks')
-  .option('accountNumber', '')
-  .tag('http', '<script src="http://www2.mousestats.com/js/{{ path }}.js?{{ cache }}">')
-  .tag('https', '<script src="https://ssl.mousestats.com/js/{{ path }}.js?{{ cache }}">');
+.assumesPageview()
+.global('msaa')
+.global('MouseStatsVisitorPlaybacks')
+.option('accountNumber', '')
+.tag('http', '<script src="http://www2.mousestats.com/js/{{ path }}.js?{{ cache }}">')
+.tag('https', '<script src="https://ssl.mousestats.com/js/{{ path }}.js?{{ cache }}">');
 
 /**
  * Initialize.
@@ -14530,12 +14533,12 @@ var MouseStats = module.exports = integration('MouseStats')
  * @param {Object} page
  */
 
-MouseStats.prototype.initialize = function(page){
-  var number = this.options.accountNumber;
-  var path = number.slice(0,1) + '/' + number.slice(1,2) + '/' + number;
-  var cache = Math.floor(new Date().getTime() / 60000);
-  var name = useHttps() ? 'https' : 'http';
-  this.load(name, { path: path, cache: cache }, this.ready);
+MouseStats.prototype.initialize = function(page) {
+var number = this.options.accountNumber;
+var path = number.slice(0,1) + '/' + number.slice(1,2) + '/' + number;
+var cache = Math.floor(new Date().getTime() / 60000);
+var name = useHttps() ? 'https' : 'http';
+this.load(name, { path: path, cache: cache }, this.ready);
 };
 
 /**
@@ -14544,8 +14547,8 @@ MouseStats.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-MouseStats.prototype.loaded = function(){
-  return is.array(window.MouseStatsVisitorPlaybacks);
+MouseStats.prototype.loaded = function() {
+return is.array(window.MouseStatsVisitorPlaybacks);
 };
 
 /**
@@ -14556,10 +14559,10 @@ MouseStats.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-MouseStats.prototype.identify = function(identify){
-  each(identify.traits(), function (key, value) {
-    window.MouseStatsVisitorPlaybacks.customVariable(key, value);
-  });
+MouseStats.prototype.identify = function(identify) {
+each(identify.traits(), function(key, value) {
+	window.MouseStatsVisitorPlaybacks.customVariable(key, value);
+});
 };
 
 }, {"segmentio/analytics.js-integration":159,"use-https":161,"each":5,"is":18}],
@@ -14577,11 +14580,11 @@ var push = require('global-queue')('__nls');
  */
 
 var Navilytics = module.exports = integration('Navilytics')
-  .assumesPageview()
-  .global('__nls')
-  .option('memberId', '')
-  .option('projectId', '')
-  .tag('<script src="//www.navilytics.com/nls.js?mid={{ memberId }}&pid={{ projectId }}">');
+.assumesPageview()
+.global('__nls')
+.option('memberId', '')
+.option('projectId', '')
+.tag('<script src="//www.navilytics.com/nls.js?mid={{ memberId }}&pid={{ projectId }}">');
 
 /**
  * Initialize.
@@ -14591,9 +14594,9 @@ var Navilytics = module.exports = integration('Navilytics')
  * @param {Object} page
  */
 
-Navilytics.prototype.initialize = function(page){
-  window.__nls = window.__nls || [];
-  this.load(this.ready);
+Navilytics.prototype.initialize = function(page) {
+window.__nls = window.__nls || [];
+this.load(this.ready);
 };
 
 /**
@@ -14602,8 +14605,8 @@ Navilytics.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Navilytics.prototype.loaded = function(){
-  return !! (window.__nls && [].push != window.__nls.push);
+Navilytics.prototype.loaded = function() {
+return !! (window.__nls && [].push != window.__nls.push);
 };
 
 /**
@@ -14614,8 +14617,8 @@ Navilytics.prototype.loaded = function(){
  * @param {Track} track
  */
 
-Navilytics.prototype.track = function(track){
-  push('tagRecording', track.event());
+Navilytics.prototype.track = function(track) {
+push('tagRecording', track.event());
 };
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190}],
@@ -14634,13 +14637,13 @@ var tick = require('next-tick');
  */
 
 var Olark = module.exports = integration('Olark')
-  .assumesPageview()
-  .global('olark')
-  .option('identify', true)
-  .option('page', true)
-  .option('siteId', '')
-  .option('groupId', '')
-  .option('track', false);
+.assumesPageview()
+.global('olark')
+.option('identify', true)
+.option('page', true)
+.option('siteId', '')
+.option('groupId', '')
+.option('track', false);
 
 /**
  * Initialize.
@@ -14651,22 +14654,22 @@ var Olark = module.exports = integration('Olark')
  * @param {Object} page
  */
 
-Olark.prototype.initialize = function(page){
-  var self = this;
-  this.load(function(){
-    tick(self.ready);
-  });
+Olark.prototype.initialize = function(page) {
+var self = this;
+this.load(function() {
+	tick(self.ready);
+});
 
-  // assign chat to a specific site
-  var groupId = this.options.groupId;
-  if (groupId) {
-    chat('setOperatorGroup', { group: groupId });
-  }
+// assign chat to a specific site
+var groupId = this.options.groupId;
+if (groupId) {
+	chat('setOperatorGroup', { group: groupId });
+}
 
-  // keep track of the widget's open state
-  var self = this;
-  box('onExpand', function(){ self._open = true; });
-  box('onShrink', function(){ self._open = false; });
+// keep track of the widget's open state
+var self = this;
+box('onExpand', function(){ self._open = true; });
+box('onShrink', function(){ self._open = false; });
 };
 
 /**
@@ -14675,8 +14678,8 @@ Olark.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Olark.prototype.loaded = function(){
-  return !! window.olark;
+Olark.prototype.loaded = function() {
+return !! window.olark;
 };
 
 /**
@@ -14685,13 +14688,13 @@ Olark.prototype.loaded = function(){
  * @param {Function} callback
  */
 
-Olark.prototype.load = function(callback){
-  var el = document.getElementById('olark');
-  //if (!el) {
-    window.olark||(function(c){var f=window,d=document,l=https()?"https:":"http:",z=c.name,r="load";var nt=function(){f[z]=function(){(a.s=a.s||[]).push(arguments)};var a=f[z]._={},q=c.methods.length;while (q--) {(function(n){f[z][n]=function(){f[z]("call",n,arguments)}})(c.methods[q])}a.l=c.loader;a.i=nt;a.p={ 0:+new Date() };a.P=function(u){a.p[u]=new Date()-a.p[0]};function s(){a.P(r);f[z](r)}f.addEventListener?f.addEventListener(r,s,false):f.attachEvent("on"+r,s);var ld=function(){function p(hd){hd="head";return ["<",hd,"></",hd,"><",i,' onl' + 'oad="var d=',g,";d.getElementsByTagName('head')[0].",j,"(d.",h,"('script')).",k,"='",l,"//",a.l,"'",'"',"></",i,">"].join("")}var i="body",m=d[i];if (!m) {return setTimeout(ld,100)}a.P(1);var j="appendChild",h="createElement",k="src",n=d[h]("div"),v=n[j](d[h](z)),b=d[h]("iframe"),g="document",e="domain",o;n.style.display="none";m.insertBefore(n,m.firstChild).id=z;b.frameBorder="0";b.id=z+"-loader";if (/MSIE[ ]+6/.test(navigator.userAgent)) {b.src="javascript:false"}b.allowTransparency="true";v[j](b);try {b.contentWindow[g].open()}catch (w) {c[e]=d[e];o="javascript:var d="+g+".open();d.domain='"+d.domain+"';";b[k]=o+"void(0);"}try {var t=b.contentWindow[g];t.write(p());t.close()}catch (x) {b[k]=o+'d.write("'+p().replace(/"/g,String.fromCharCode(92)+'"')+'");d.close();'}a.P(2)};ld()};nt()})({ loader: "static.olark.com/jsclient/loader0.js", name:"olark", methods:["configure","extend","declare","identify"] });
-    window.olark.identify(this.options.siteId);
-  //}
-  callback();
+Olark.prototype.load = function(callback) {
+var el = document.getElementById('olark');
+//if (!el) {
+	window.olark||(function(c){var f=window,d=document,l=https()?"https:":"http:",z=c.name,r="load";var nt=function(){f[z]=function(){(a.s=a.s||[]).push(arguments)};var a=f[z]._={},q=c.methods.length;while (q--) {(function(n){f[z][n]=function(){f[z]("call",n,arguments)}})(c.methods[q])}a.l=c.loader;a.i=nt;a.p={ 0:+new Date() };a.P=function(u){a.p[u]=new Date()-a.p[0]};function s(){a.P(r);f[z](r)}f.addEventListener?f.addEventListener(r,s,false):f.attachEvent("on"+r,s);var ld=function(){function p(hd){hd="head";return ["<",hd,"></",hd,"><",i,' onl' + 'oad="var d=',g,";d.getElementsByTagName('head')[0].",j,"(d.",h,"('script')).",k,"='",l,"//",a.l,"'",'"',"></",i,">"].join("")}var i="body",m=d[i];if (!m) {return setTimeout(ld,100)}a.P(1);var j="appendChild",h="createElement",k="src",n=d[h]("div"),v=n[j](d[h](z)),b=d[h]("iframe"),g="document",e="domain",o;n.style.display="none";m.insertBefore(n,m.firstChild).id=z;b.frameBorder="0";b.id=z+"-loader";if (/MSIE[ ]+6/.test(navigator.userAgent)) {b.src="javascript:false"}b.allowTransparency="true";v[j](b);try {b.contentWindow[g].open()}catch (w) {c[e]=d[e];o="javascript:var d="+g+".open();d.domain='"+d.domain+"';";b[k]=o+"void(0);"}try {var t=b.contentWindow[g];t.write(p());t.close()}catch (x) {b[k]=o+'d.write("'+p().replace(/"/g,String.fromCharCode(92)+'"')+'");d.close();'}a.P(2)};ld()};nt()})({ loader: "static.olark.com/jsclient/loader0.js", name:"olark", methods:["configure","extend","declare","identify"] });
+	window.olark.identify(this.options.siteId);
+//}
+callback();
 };
 
 /**
@@ -14700,18 +14703,18 @@ Olark.prototype.load = function(callback){
  * @param {Page} page
  */
 
-Olark.prototype.page = function(page){
-  if (!this.options.page || !this._open) return;
-  var props = page.properties();
-  var name = page.fullName();
+Olark.prototype.page = function(page) {
+if (!this.options.page || !this._open) return;
+var props = page.properties();
+var name = page.fullName();
 
-  if (!name && !props.url) return;
+if (!name && !props.url) return;
 
-  var msg = name ? name.toLowerCase() + ' page' : props.url;
+var msg = name ? name.toLowerCase() + ' page' : props.url;
 
-  chat('sendNotificationToOperator', {
-    body: 'looking at ' + msg // lowercase since olark does
-  });
+chat('sendNotificationToOperator', {
+	body: 'looking at ' + msg // lowercase since olark does
+});
 };
 
 /**
@@ -14722,28 +14725,28 @@ Olark.prototype.page = function(page){
  * @param {Object} options (optional)
  */
 
-Olark.prototype.identify = function(identify){
-  if (!this.options.identify) return;
+Olark.prototype.identify = function(identify) {
+if (!this.options.identify) return;
 
-  var username = identify.username();
-  var traits = identify.traits();
-  var id = identify.userId();
-  var email = identify.email();
-  var phone = identify.phone();
-  var name = identify.name()
-    || identify.firstName();
+var username = identify.username();
+var traits = identify.traits();
+var id = identify.userId();
+var email = identify.email();
+var phone = identify.phone();
+var name = identify.name()
+	|| identify.firstName();
 
-  visitor('updateCustomFields', traits);
-  if (email) visitor('updateEmailAddress', { emailAddress: email });
-  if (phone) visitor('updatePhoneNumber', { phoneNumber: phone });
+visitor('updateCustomFields', traits);
+if (email) visitor('updateEmailAddress', { emailAddress: email });
+if (phone) visitor('updatePhoneNumber', { phoneNumber: phone });
 
-  // figure out best name
-  if (name) visitor('updateFullName', { fullName: name });
+// figure out best name
+if (name) visitor('updateFullName', { fullName: name });
 
-  // figure out best nickname
-  var nickname = name || email || username || id;
-  if (name && email) nickname += ' (' + email + ')';
-  if (nickname) chat('updateVisitorNickname', { snippet: nickname });
+// figure out best nickname
+var nickname = name || email || username || id;
+if (name && email) nickname += ' (' + email + ')';
+if (nickname) chat('updateVisitorNickname', { snippet: nickname });
 };
 
 /**
@@ -14754,11 +14757,11 @@ Olark.prototype.identify = function(identify){
  * @param {Object} options (optional)
  */
 
-Olark.prototype.track = function(track){
-  if (!this.options.track || !this._open) return;
-  chat('sendNotificationToOperator', {
-    body: 'visitor triggered "' + track.event() + '"' // lowercase since olark does
-  });
+Olark.prototype.track = function(track) {
+if (!this.options.track || !this._open) return;
+chat('sendNotificationToOperator', {
+	body: 'visitor triggered "' + track.event() + '"' // lowercase since olark does
+});
 };
 
 /**
@@ -14768,8 +14771,8 @@ Olark.prototype.track = function(track){
  * @param {Object} value
  */
 
-function box(action, value){
-  window.olark('api.box.' + action, value);
+function box(action, value) {
+window.olark('api.box.' + action, value);
 }
 
 /**
@@ -14779,8 +14782,8 @@ function box(action, value){
  * @param {Object} value
  */
 
-function visitor(action, value){
-  window.olark('api.visitor.' + action, value);
+function visitor(action, value) {
+window.olark('api.visitor.' + action, value);
 }
 
 /**
@@ -14790,8 +14793,8 @@ function visitor(action, value){
  * @param {Object} value
  */
 
-function chat(action, value){
-  window.olark('api.chat.' + action, value);
+function chat(action, value) {
+window.olark('api.chat.' + action, value);
 }
 
 }, {"segmentio/analytics.js-integration":159,"use-https":161,"next-tick":45}],
@@ -14813,9 +14816,9 @@ var each = require('each');
  */
 
 var Optimizely = module.exports = integration('Optimizely')
-  .option('variations', true)
-  .option('trackNamedPages', true)
-  .option('trackCategorizedPages', true);
+.option('variations', true)
+.option('trackNamedPages', true)
+.option('trackCategorizedPages', true);
 
 /**
  * Initialize.
@@ -14823,14 +14826,14 @@ var Optimizely = module.exports = integration('Optimizely')
  * https://www.optimizely.com/docs/api#function-calls
  */
 
-Optimizely.prototype.initialize = function(){
-  if (this.options.variations) {
-    var self = this;
-    tick(function(){
-      self.replay();
-    });
-  }
-  this.ready();
+Optimizely.prototype.initialize = function() {
+if (this.options.variations) {
+	var self = this;
+	tick(function() {
+	  self.replay();
+	});
+}
+this.ready();
 };
 
 /**
@@ -14841,10 +14844,10 @@ Optimizely.prototype.initialize = function(){
  * @param {Track} track
  */
 
-Optimizely.prototype.track = function(track){
-  var props = track.properties();
-  if (props.revenue) props.revenue *= 100;
-  push('trackEvent', track.event(), props);
+Optimizely.prototype.track = function(track) {
+var props = track.properties();
+if (props.revenue) props.revenue *= 100;
+push('trackEvent', track.event(), props);
 };
 
 /**
@@ -14855,20 +14858,20 @@ Optimizely.prototype.track = function(track){
  * @param {Page} page
  */
 
-Optimizely.prototype.page = function(page){
-  var category = page.category();
-  var name = page.fullName();
-  var opts = this.options;
+Optimizely.prototype.page = function(page) {
+var category = page.category();
+var name = page.fullName();
+var opts = this.options;
 
-  // categorized pages
-  if (category && opts.trackCategorizedPages) {
-    this.track(page.track(category));
-  }
+// categorized pages
+if (category && opts.trackCategorizedPages) {
+	this.track(page.track(category));
+}
 
-  // named pages
-  if (name && opts.trackNamedPages) {
-    this.track(page.track(name));
-  }
+// named pages
+if (name && opts.trackNamedPages) {
+	this.track(page.track(name));
+}
 };
 
 /**
@@ -14877,22 +14880,22 @@ Optimizely.prototype.page = function(page){
  * https://www.optimizely.com/docs/api#data-object
  */
 
-Optimizely.prototype.replay = function(){
-  if (!window.optimizely) return; // in case the snippet isnt on the page
+Optimizely.prototype.replay = function() {
+if (!window.optimizely) return; // in case the snippet isnt on the page
 
-  var data = window.optimizely.data;
-  if (!data) return;
+var data = window.optimizely.data;
+if (!data) return;
 
-  var experiments = data.experiments;
-  var map = data.state.variationNamesMap;
-  var traits = {};
+var experiments = data.experiments;
+var map = data.state.variationNamesMap;
+var traits = {};
 
-  each(map, function(experimentId, variation){
-    var experiment = experiments[experimentId].name;
-    traits['Experiment: ' + experiment] = variation;
-  });
+each(map, function(experimentId, variation) {
+	var experiment = experiments[experimentId].name;
+	traits['Experiment: ' + experiment] = variation;
+});
 
-  this.analytics.identify(traits);
+this.analytics.identify(traits);
 };
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"callback":12,"next-tick":45,"bind":33,"each":5}],
 137: [function(require, module, exports) {
@@ -14908,10 +14911,10 @@ var integration = require('segmentio/analytics.js-integration');
  */
 
 var PerfectAudience = module.exports = integration('Perfect Audience')
-  .assumesPageview()
-  .global('_pa')
-  .option('siteId', '')
-  .tag('<script src="//tag.perfectaudience.com/serve/{{ siteId }}.js">');
+.assumesPageview()
+.global('_pa')
+.option('siteId', '')
+.tag('<script src="//tag.perfectaudience.com/serve/{{ siteId }}.js">');
 
 /**
  * Initialize.
@@ -14921,9 +14924,9 @@ var PerfectAudience = module.exports = integration('Perfect Audience')
  * @param {Object} page
  */
 
-PerfectAudience.prototype.initialize = function(page){
-  window._pa = window._pa || {};
-  this.load(this.ready);
+PerfectAudience.prototype.initialize = function(page) {
+window._pa = window._pa || {};
+this.load(this.ready);
 };
 
 /**
@@ -14932,8 +14935,8 @@ PerfectAudience.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-PerfectAudience.prototype.loaded = function(){
-  return !! (window._pa && window._pa.track);
+PerfectAudience.prototype.loaded = function() {
+return !! (window._pa && window._pa.track);
 };
 
 /**
@@ -14942,8 +14945,8 @@ PerfectAudience.prototype.loaded = function(){
  * @param {Track} event
  */
 
-PerfectAudience.prototype.track = function(track){
-  window._pa.track(track.event(), track.properties());
+PerfectAudience.prototype.track = function(track) {
+window._pa.track(track.event(), track.properties());
 };
 
 }, {"segmentio/analytics.js-integration":159}],
@@ -14962,11 +14965,11 @@ var date = require('load-date');
  */
 
 var Pingdom = module.exports = integration('Pingdom')
-  .assumesPageview()
-  .global('_prum')
-  .global('PRUM_EPISODES')
-  .option('id', '')
-  .tag('<script src="//rum-static.pingdom.net/prum.min.js">');
+.assumesPageview()
+.global('_prum')
+.global('PRUM_EPISODES')
+.option('id', '')
+.tag('<script src="//rum-static.pingdom.net/prum.min.js">');
 
 /**
  * Initialize.
@@ -14974,12 +14977,12 @@ var Pingdom = module.exports = integration('Pingdom')
  * @param {Object} page
  */
 
-Pingdom.prototype.initialize = function(page){
-  window._prum = window._prum || [];
-  push('id', this.options.id);
-  push('mark', 'firstbyte', date.getTime());
-  var self = this;
-  this.load(this.ready);
+Pingdom.prototype.initialize = function(page) {
+window._prum = window._prum || [];
+push('id', this.options.id);
+push('mark', 'firstbyte', date.getTime());
+var self = this;
+this.load(this.ready);
 };
 
 /**
@@ -14988,8 +14991,8 @@ Pingdom.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Pingdom.prototype.loaded = function(){
-  return !! (window._prum && window._prum.push !== Array.prototype.push);
+Pingdom.prototype.loaded = function() {
+return !! (window._prum && window._prum.push !== Array.prototype.push);
 };
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"load-date":191}],
@@ -15008,11 +15011,11 @@ var each = require('each');
  */
 
 var Piwik = module.exports = integration('Piwik')
-  .global('_paq')
-  .option('url', null)
-  .option('siteId', '')
-  .mapping('goals')
-  .tag('<script src="{{ url }}/piwik.js">');
+.global('_paq')
+.option('url', null)
+.option('siteId', '')
+.mapping('goals')
+.tag('<script src="{{ url }}/piwik.js">');
 
 /**
  * Initialize.
@@ -15020,20 +15023,20 @@ var Piwik = module.exports = integration('Piwik')
  * http://piwik.org/docs/javascript-tracking/#toc-asynchronous-tracking
  */
 
-Piwik.prototype.initialize = function(){
-  window._paq = window._paq || [];
-  push('setSiteId', this.options.siteId);
-  push('setTrackerUrl', this.options.url + '/piwik.php');
-  push('enableLinkTracking');
-  this.load(this.ready);
+Piwik.prototype.initialize = function() {
+window._paq = window._paq || [];
+push('setSiteId', this.options.siteId);
+push('setTrackerUrl', this.options.url + '/piwik.php');
+push('enableLinkTracking');
+this.load(this.ready);
 };
 
 /**
  * Check if Piwik is loaded
  */
 
-Piwik.prototype.loaded = function(){
-  return !! (window._paq && window._paq.push != [].push);
+Piwik.prototype.loaded = function() {
+return !! (window._paq && window._paq.push != [].push);
 };
 
 /**
@@ -15042,8 +15045,8 @@ Piwik.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Piwik.prototype.page = function(page){
-  push('trackPageView');
+Piwik.prototype.page = function(page) {
+push('trackPageView');
 };
 
 /**
@@ -15052,12 +15055,12 @@ Piwik.prototype.page = function(page){
  * @param {Track} track
  */
 
-Piwik.prototype.track = function(track){
-  var goals = this.goals(track.event());
-  var revenue = track.revenue() || 0;
-  each(goals, function(goal){
-    push('trackGoal', goal, revenue);
-  });
+Piwik.prototype.track = function(track) {
+var goals = this.goals(track.event());
+var revenue = track.revenue() || 0;
+each(goals, function(goal) {
+	push('trackGoal', goal, revenue);
+});
 };
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"each":5}],
@@ -15077,10 +15080,10 @@ var alias = require('alias');
  */
 
 var Preact = module.exports = integration('Preact')
-  .assumesPageview()
-  .global('_lnq')
-  .option('projectCode', '')
-  .tag('<script src="//d2bbvl6dq48fa6.cloudfront.net/js/ln-2.4.min.js">');
+.assumesPageview()
+.global('_lnq')
+.option('projectCode', '')
+.tag('<script src="//d2bbvl6dq48fa6.cloudfront.net/js/ln-2.4.min.js">');
 
 /**
  * Initialize.
@@ -15090,10 +15093,10 @@ var Preact = module.exports = integration('Preact')
  * @param {Object} page
  */
 
-Preact.prototype.initialize = function(page){
-  window._lnq = window._lnq || [];
-  push('_setCode', this.options.projectCode);
-  this.load(this.ready);
+Preact.prototype.initialize = function(page) {
+window._lnq = window._lnq || [];
+push('_setCode', this.options.projectCode);
+this.load(this.ready);
 };
 
 /**
@@ -15102,8 +15105,8 @@ Preact.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Preact.prototype.loaded = function(){
-  return !! (window._lnq && window._lnq.push !== Array.prototype.push);
+Preact.prototype.loaded = function() {
+return !! (window._lnq && window._lnq.push !== Array.prototype.push);
 };
 
 /**
@@ -15112,16 +15115,16 @@ Preact.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-Preact.prototype.identify = function(identify){
-  if (!identify.userId()) return;
-  var traits = identify.traits({ created: 'created_at' });
-  traits = convertDates(traits, convertDate);
-  push('_setPersonData', {
-    name: identify.name(),
-    email: identify.email(),
-    uid: identify.userId(),
-    properties: traits
-  });
+Preact.prototype.identify = function(identify) {
+if (!identify.userId()) return;
+var traits = identify.traits({ created: 'created_at' });
+traits = convertDates(traits, convertDate);
+push('_setPersonData', {
+	name: identify.name(),
+	email: identify.email(),
+	uid: identify.userId(),
+	properties: traits
+});
 };
 
 /**
@@ -15132,9 +15135,9 @@ Preact.prototype.identify = function(identify){
  * @param {Object} options (optional)
  */
 
-Preact.prototype.group = function(group){
-  if (!group.groupId()) return;
-  push('_setAccount', group.traits());
+Preact.prototype.group = function(group) {
+if (!group.groupId()) return;
+push('_setAccount', group.traits());
 };
 
 /**
@@ -15143,23 +15146,23 @@ Preact.prototype.group = function(group){
  * @param {Track} track
  */
 
-Preact.prototype.track = function(track){
-  var props = track.properties();
-  var revenue = track.revenue();
-  var event = track.event();
-  var special = { name: event };
+Preact.prototype.track = function(track) {
+var props = track.properties();
+var revenue = track.revenue();
+var event = track.event();
+var special = { name: event };
 
-  if (revenue) {
-    special.revenue = revenue * 100;
-    delete props.revenue;
-  }
+if (revenue) {
+	special.revenue = revenue * 100;
+	delete props.revenue;
+}
 
-  if (props.note) {
-    special.note = props.note;
-    delete props.note;
-  }
+if (props.note) {
+	special.note = props.note;
+	delete props.note;
+}
 
-  push('_logEvent', special, props);
+push('_logEvent', special, props);
 };
 
 /**
@@ -15169,8 +15172,8 @@ Preact.prototype.track = function(track){
  * @return {Number}
  */
 
-function convertDate(date){
-  return Math.floor(date / 1000);
+function convertDate(date) {
+return Math.floor(date / 1000);
 }
 
 }, {"segmentio/analytics.js-integration":159,"convert-dates":196,"global-queue":190,"alias":195}],
@@ -15192,12 +15195,12 @@ var when = require('when');
  */
 
 var Qualaroo = module.exports = integration('Qualaroo')
-  .assumesPageview()
-  .global('_kiq')
-  .option('customerId', '')
-  .option('siteToken', '')
-  .option('track', false)
-  .tag('<script src="//s3.amazonaws.com/ki.js/{{ customerId }}/{{ siteToken }}.js">');
+.assumesPageview()
+.global('_kiq')
+.option('customerId', '')
+.option('siteToken', '')
+.option('track', false)
+.tag('<script src="//s3.amazonaws.com/ki.js/{{ customerId }}/{{ siteToken }}.js">');
 
 /**
  * Initialize.
@@ -15205,13 +15208,13 @@ var Qualaroo = module.exports = integration('Qualaroo')
  * @param {Object} page
  */
 
-Qualaroo.prototype.initialize = function(page){
-  window._kiq = window._kiq || [];
-  var loaded = bind(this, this.loaded);
-  var ready = this.ready;
-  this.load(function(){
-    when(loaded, ready);
-  });
+Qualaroo.prototype.initialize = function(page) {
+window._kiq = window._kiq || [];
+var loaded = bind(this, this.loaded);
+var ready = this.ready;
+this.load(function() {
+	when(loaded, ready);
+});
 };
 
 /**
@@ -15220,8 +15223,8 @@ Qualaroo.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Qualaroo.prototype.loaded = function(){
-  return !! (window._kiq && window._kiq.push !== Array.prototype.push);
+Qualaroo.prototype.loaded = function() {
+return !! (window._kiq && window._kiq.push !== Array.prototype.push);
 };
 
 /**
@@ -15233,13 +15236,13 @@ Qualaroo.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-Qualaroo.prototype.identify = function(identify){
-  var traits = identify.traits();
-  var id = identify.userId();
-  var email = identify.email();
-  if (email) id = email;
-  if (id) push('identify', id);
-  if (traits) push('set', traits);
+Qualaroo.prototype.identify = function(identify) {
+var traits = identify.traits();
+var id = identify.userId();
+var email = identify.email();
+if (email) id = email;
+if (id) push('identify', id);
+if (traits) push('set', traits);
 };
 
 /**
@@ -15250,12 +15253,12 @@ Qualaroo.prototype.identify = function(identify){
  * @param {Object} options (optional)
  */
 
-Qualaroo.prototype.track = function(track){
-  if (!this.options.track) return;
-  var event = track.event();
-  var traits = {};
-  traits['Triggered: ' + event] = true;
-  this.identify(new Identify({ traits: traits }));
+Qualaroo.prototype.track = function(track) {
+if (!this.options.track) return;
+var event = track.event();
+var traits = {};
+traits['Triggered: ' + event] = true;
+this.identify(new Identify({ traits: traits }));
 };
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"facade":27,"bind":33,"when":184}],
@@ -15274,13 +15277,13 @@ var useHttps = require('use-https');
  */
 
 var Quantcast = module.exports = integration('Quantcast')
-  .assumesPageview()
-  .global('_qevents')
-  .global('__qc')
-  .option('pCode', null)
-  .option('advertise', false)
-  .tag('http', '<script src="http://edge.quantserve.com/quant.js">')
-  .tag('https', '<script src="https://secure.quantserve.com/quant.js">');
+.assumesPageview()
+.global('_qevents')
+.global('__qc')
+.option('pCode', null)
+.option('advertise', false)
+.tag('http', '<script src="http://edge.quantserve.com/quant.js">')
+.tag('https', '<script src="https://secure.quantserve.com/quant.js">');
 
 /**
  * Initialize.
@@ -15291,22 +15294,22 @@ var Quantcast = module.exports = integration('Quantcast')
  * @param {Page} page
  */
 
-Quantcast.prototype.initialize = function(page){
-  window._qevents = window._qevents || [];
+Quantcast.prototype.initialize = function(page) {
+window._qevents = window._qevents || [];
 
-  var opts = this.options;
-  var settings = { qacct: opts.pCode };
-  var user = this.analytics.user();
-  if (user.id()) settings.uid = user.id();
+var opts = this.options;
+var settings = { qacct: opts.pCode };
+var user = this.analytics.user();
+if (user.id()) settings.uid = user.id();
 
-  if (page) {
-    settings.labels = this.labels('page', page.category(), page.name());
-  }
+if (page) {
+	settings.labels = this.labels('page', page.category(), page.name());
+}
 
-  push(settings);
+push(settings);
 
-  var name = useHttps() ? 'https' : 'http';
-  this.load(name, this.ready);
+var name = useHttps() ? 'https' : 'http';
+this.load(name, this.ready);
 };
 
 /**
@@ -15315,8 +15318,8 @@ Quantcast.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Quantcast.prototype.loaded = function(){
-  return !! window.__qc;
+Quantcast.prototype.loaded = function() {
+return !! window.__qc;
 };
 
 /**
@@ -15327,17 +15330,17 @@ Quantcast.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Quantcast.prototype.page = function(page){
-  var category = page.category();
-  var name = page.name();
-  var settings = {
-    event: 'refresh',
-    labels: this.labels('page', category, name),
-    qacct: this.options.pCode,
-  };
-  var user = this.analytics.user();
-  if (user.id()) settings.uid = user.id();
-  push(settings);
+Quantcast.prototype.page = function(page) {
+var category = page.category();
+var name = page.name();
+var settings = {
+	event: 'refresh',
+	labels: this.labels('page', category, name),
+	qacct: this.options.pCode,
+};
+var user = this.analytics.user();
+if (user.id()) settings.uid = user.id();
+push(settings);
 };
 
 /**
@@ -15348,14 +15351,14 @@ Quantcast.prototype.page = function(page){
  * @param {String} id (optional)
  */
 
-Quantcast.prototype.identify = function(identify){
-  // edit the initial quantcast settings
-  // TODO: could be done in a cleaner way
-  var id = identify.userId();
-  if (id) {
-    window._qevents[0] = window._qevents[0] || {};
-    window._qevents[0].uid = id;
-  }
+Quantcast.prototype.identify = function(identify) {
+// edit the initial quantcast settings
+// TODO: could be done in a cleaner way
+var id = identify.userId();
+if (id) {
+	window._qevents[0] = window._qevents[0] || {};
+	window._qevents[0].uid = id;
+}
 };
 
 /**
@@ -15366,18 +15369,18 @@ Quantcast.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-Quantcast.prototype.track = function(track){
-  var name = track.event();
-  var revenue = track.revenue();
-  var settings = {
-    event: 'click',
-    labels: this.labels('event', name),
-    qacct: this.options.pCode
-  };
-  var user = this.analytics.user();
-  if (null != revenue) settings.revenue = (revenue+''); // convert to string
-  if (user.id()) settings.uid = user.id();
-  push(settings);
+Quantcast.prototype.track = function(track) {
+var name = track.event();
+var revenue = track.revenue();
+var settings = {
+	event: 'click',
+	labels: this.labels('event', name),
+	qacct: this.options.pCode
+};
+var user = this.analytics.user();
+if (null != revenue) settings.revenue = (revenue+''); // convert to string
+if (user.id()) settings.uid = user.id();
+push(settings);
 };
 
 /**
@@ -15387,24 +15390,24 @@ Quantcast.prototype.track = function(track){
  * @api private
  */
 
-Quantcast.prototype.completedOrder = function(track){
-  var name = track.event();
-  var revenue = track.total();
-  var labels = this.labels('event', name);
-  var category = track.category();
+Quantcast.prototype.completedOrder = function(track) {
+var name = track.event();
+var revenue = track.total();
+var labels = this.labels('event', name);
+var category = track.category();
 
-  if (this.options.advertise && category) {
-    labels += ',' + this.labels('pcat', category);
-  }
+if (this.options.advertise && category) {
+	labels += ',' + this.labels('pcat', category);
+}
 
-  var settings = {
-    event: 'refresh', // the example Quantcast sent has completed order send refresh not click
-    labels: labels,
-    revenue: (revenue+''), // convert to string
-    orderid: track.orderId(),
-    qacct: this.options.pCode
-  };
-  push(settings);
+var settings = {
+	event: 'refresh', // the example Quantcast sent has completed order send refresh not click
+	labels: labels,
+	revenue: (revenue+''), // convert to string
+	orderid: track.orderId(),
+	qacct: this.options.pCode
+};
+push(settings);
 };
 
 /**
@@ -15426,22 +15429,22 @@ Quantcast.prototype.completedOrder = function(track){
  * @api private
  */
 
-Quantcast.prototype.labels = function(type){
-  var args = [].slice.call(arguments, 1);
-  var advertise = this.options.advertise;
-  var ret = [];
+Quantcast.prototype.labels = function(type) {
+var args = [].slice.call(arguments, 1);
+var advertise = this.options.advertise;
+var ret = [];
 
-  if (advertise && 'page' == type) type = 'event';
-  if (advertise) type = '_fp.' + type;
+if (advertise && 'page' == type) type = 'event';
+if (advertise) type = '_fp.' + type;
 
-  for (var i = 0; i < args.length; ++i) {
-    if (null == args[i]) continue;
-    var value = String(args[i]);
-    ret.push(value.replace(/,/g, ';'));
-  }
+for (var i = 0; i < args.length; ++i) {
+	if (null == args[i]) continue;
+	var value = String(args[i]);
+	ret.push(value.replace(/,/g, ';'));
+}
 
-  ret = advertise ? ret.join(' ') : ret.join('.');
-  return [type, ret].join('.');
+ret = advertise ? ret.join(' ') : ret.join('.');
+return [type, ret].join('.');
 };
 
 }, {"global-queue":190,"segmentio/analytics.js-integration":159,"use-https":161}],
@@ -15460,11 +15463,11 @@ var is = require('is');
  */
 
 var RollbarIntegration = module.exports = integration('Rollbar')
-  .global('Rollbar')
-  .option('identify', true)
-  .option('accessToken', '')
-  .option('environment', 'unknown')
-  .option('captureUncaught', true);
+.global('Rollbar')
+.option('identify', true)
+.option('accessToken', '')
+.option('environment', 'unknown')
+.option('captureUncaught', true);
 
 /**
  * Initialize.
@@ -15472,17 +15475,17 @@ var RollbarIntegration = module.exports = integration('Rollbar')
  * @param {Object} page
  */
 
-RollbarIntegration.prototype.initialize = function(page){
-  var _rollbarConfig = this.config = {
-    accessToken: this.options.accessToken,
-    captureUncaught: this.options.captureUncaught,
-    payload: {
-      environment: this.options.environment
-    }
-  };
+RollbarIntegration.prototype.initialize = function(page) {
+var _rollbarConfig = this.config = {
+	accessToken: this.options.accessToken,
+	captureUncaught: this.options.captureUncaught,
+	payload: {
+	  environment: this.options.environment
+	}
+};
 
-  (function(a){function b(b){this.shimId=++g,this.notifier=null,this.parentShim=b,this.logger=function(){},a.console&&void 0 === a.console.shimId&&(this.logger=a.console.log)}function c(b,c,d){!d[4]&&a._rollbarWrappedError&&(d[4]=a._rollbarWrappedError,a._rollbarWrappedError=null),b.uncaughtError.apply(b,d),c&&c.apply(a,d)}function d(c){var d=b;return f(function(){if (this.notifier)return this.notifier[c].apply(this.notifier,arguments);var b=this,e="scope"===c;e&&(b=new d(this));var f=Array.prototype.slice.call(arguments,0),g={ shim:b, method:c, args:f, ts:new Date };return a._rollbarShimQueue.push(g),e?b:void 0})}function e(a,b){if (b.hasOwnProperty&&b.hasOwnProperty("addEventListener")){var c=b.addEventListener;b.addEventListener=function(b,d,e){c.call(this,b,a.wrap(d),e)};var d=b.removeEventListener;b.removeEventListener=function(a,b,c){d.call(this,a,b._wrapped||b,c)}}}function f(a,b){return b=b||this.logger,function(){try {return a.apply(this,arguments)} catch (c) {b("Rollbar internal error:",c)}}}var g=0;b.init=function(a,d){var g=d.globalAlias||"Rollbar";if ("object"==typeof a[g])return a[g];a._rollbarShimQueue=[],a._rollbarWrappedError=null,d=d||{};var h=new b;return f(function(){if (h.configure(d),d.captureUncaught){var b=a.onerror;a.onerror=function(){var a=Array.prototype.slice.call(arguments,0);c(h,b,a)};var f,i,j=["EventTarget","Window","Node","ApplicationCache","AudioTrackList","ChannelMergerNode","CryptoOperation","EventSource","FileReader","HTMLUnknownElement","IDBDatabase","IDBRequest","IDBTransaction","KeyOperation","MediaController","MessagePort","ModalWindow","Notification","SVGElementInstance","Screen","TextTrack","TextTrackCue","TextTrackList","WebSocket","WebSocketWorker","Worker","XMLHttpRequest","XMLHttpRequestEventTarget","XMLHttpRequestUpload"];for (f=0;f<j.length;++f)i=j[f],a[i]&&a[i].prototype&&e(h,a[i].prototype)}return a[g]=h,h},h.logger)()},b.prototype.loadFull=function(a,b,c,d,e){var g=f(function(){var a=b.createElement("script"),e=b.getElementsByTagName("script")[0];a.src=d.rollbarJsUrl,a.async=!c,a.onload=h,e.parentNode.insertBefore(a,e)},this.logger),h=f(function(){var b;if (void 0===a._rollbarPayloadQueue){var c,d,f,g;for (b=new Error("rollbar.js did not load");c=a._rollbarShimQueue.shift();)for (f=c.args,g=0;g<f.length;++g)if (d=f[g],"function"==typeof d){d(b);break}}e&&e(b)},this.logger);f(function(){c?g():a.addEventListener?a.addEventListener("load",g,!1):a.attachEvent("onload",g)},this.logger)()},b.prototype.wrap=function(b){if ("function"!=typeof b)return b;if (b._isWrap)return b;if (!b._wrapped){b._wrapped=function(){try {return b.apply(this,arguments)} catch (c) {throw a._rollbarWrappedError=c,c}},b._wrapped._isWrap=!0;for (var c in b)b.hasOwnProperty(c)&&(b._wrapped[c]=b[c])}return b._wrapped};for (var h="log,debug,info,warn,warning,error,critical,global,configure,scope,uncaughtError".split(","),i=0;i<h.length;++i)b.prototype[h[i]]=d(h[i]);var j="//d37gvrvc0wt4s1.cloudfront.net/js/v1.0/rollbar.min.js";_rollbarConfig.rollbarJsUrl=_rollbarConfig.rollbarJsUrl||j,b.init(a,_rollbarConfig)})(window,document);
-  this.load(this.ready);
+(function(a){function b(b){this.shimId=++g,this.notifier=null,this.parentShim=b,this.logger=function(){},a.console&&void 0 === a.console.shimId&&(this.logger=a.console.log)}function c(b,c,d){!d[4]&&a._rollbarWrappedError&&(d[4]=a._rollbarWrappedError,a._rollbarWrappedError=null),b.uncaughtError.apply(b,d),c&&c.apply(a,d)}function d(c){var d=b;return f(function(){if (this.notifier)return this.notifier[c].apply(this.notifier,arguments);var b=this,e="scope"===c;e&&(b=new d(this));var f=Array.prototype.slice.call(arguments,0),g={ shim:b, method:c, args:f, ts:new Date };return a._rollbarShimQueue.push(g),e?b:void 0})}function e(a,b){if (b.hasOwnProperty&&b.hasOwnProperty("addEventListener")){var c=b.addEventListener;b.addEventListener=function(b,d,e){c.call(this,b,a.wrap(d),e)};var d=b.removeEventListener;b.removeEventListener=function(a,b,c){d.call(this,a,b._wrapped||b,c)}}}function f(a,b){return b=b||this.logger,function(){try {return a.apply(this,arguments)} catch (c) {b("Rollbar internal error:",c)}}}var g=0;b.init=function(a,d){var g=d.globalAlias||"Rollbar";if ("object"==typeof a[g])return a[g];a._rollbarShimQueue=[],a._rollbarWrappedError=null,d=d||{};var h=new b;return f(function(){if (h.configure(d),d.captureUncaught){var b=a.onerror;a.onerror=function(){var a=Array.prototype.slice.call(arguments,0);c(h,b,a)};var f,i,j=["EventTarget","Window","Node","ApplicationCache","AudioTrackList","ChannelMergerNode","CryptoOperation","EventSource","FileReader","HTMLUnknownElement","IDBDatabase","IDBRequest","IDBTransaction","KeyOperation","MediaController","MessagePort","ModalWindow","Notification","SVGElementInstance","Screen","TextTrack","TextTrackCue","TextTrackList","WebSocket","WebSocketWorker","Worker","XMLHttpRequest","XMLHttpRequestEventTarget","XMLHttpRequestUpload"];for (f=0;f<j.length;++f)i=j[f],a[i]&&a[i].prototype&&e(h,a[i].prototype)}return a[g]=h,h},h.logger)()},b.prototype.loadFull=function(a,b,c,d,e){var g=f(function(){var a=b.createElement("script"),e=b.getElementsByTagName("script")[0];a.src=d.rollbarJsUrl,a.async=!c,a.onload=h,e.parentNode.insertBefore(a,e)},this.logger),h=f(function(){var b;if (void 0===a._rollbarPayloadQueue){var c,d,f,g;for (b=new Error("rollbar.js did not load");c=a._rollbarShimQueue.shift();)for (f=c.args,g=0;g<f.length;++g)if (d=f[g],"function"==typeof d){d(b);break}}e&&e(b)},this.logger);f(function(){c?g():a.addEventListener?a.addEventListener("load",g,!1):a.attachEvent("onload",g)},this.logger)()},b.prototype.wrap=function(b){if ("function"!=typeof b)return b;if (b._isWrap)return b;if (!b._wrapped){b._wrapped=function(){try {return b.apply(this,arguments)} catch (c) {throw a._rollbarWrappedError=c,c}},b._wrapped._isWrap=!0;for (var c in b)b.hasOwnProperty(c)&&(b._wrapped[c]=b[c])}return b._wrapped};for (var h="log,debug,info,warn,warning,error,critical,global,configure,scope,uncaughtError".split(","),i=0;i<h.length;++i)b.prototype[h[i]]=d(h[i]);var j="//d37gvrvc0wt4s1.cloudfront.net/js/v1.0/rollbar.min.js";_rollbarConfig.rollbarJsUrl=_rollbarConfig.rollbarJsUrl||j,b.init(a,_rollbarConfig)})(window,document);
+this.load(this.ready);
 };
 
 /**
@@ -15491,8 +15494,8 @@ RollbarIntegration.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-RollbarIntegration.prototype.loaded = function(){
-  return is.object(window.Rollbar) && null == window.Rollbar.shimId;
+RollbarIntegration.prototype.loaded = function() {
+return is.object(window.Rollbar) && null == window.Rollbar.shimId;
 };
 
 /**
@@ -15501,8 +15504,8 @@ RollbarIntegration.prototype.loaded = function(){
  * @param {Function} callback
  */
 
-RollbarIntegration.prototype.load = function(callback){
-  window.Rollbar.loadFull(window, document, true, this.config, callback);
+RollbarIntegration.prototype.load = function(callback) {
+window.Rollbar.loadFull(window, document, true, this.config, callback);
 };
 
 /**
@@ -15510,18 +15513,18 @@ RollbarIntegration.prototype.load = function(callback){
  *
  * @param {Identify} identify
  */
-RollbarIntegration.prototype.identify = function(identify){
-  // do stuff with `id` or `traits`
-  if (!this.options.identify) return;
+RollbarIntegration.prototype.identify = function(identify) {
+// do stuff with `id` or `traits`
+if (!this.options.identify) return;
 
-  // Don't allow identify without a user id
-  var uid = identify.userId();
-  if (uid === null || uid === undefined) return;
+// Don't allow identify without a user id
+var uid = identify.userId();
+if (uid === null || uid === undefined) return;
 
-  var rollbar = window.Rollbar;
-  var person = { id: uid };
-  extend(person, identify.traits());
-  rollbar.configure({ payload: { person: person }});
+var rollbar = window.Rollbar;
+var person = { id: uid };
+extend(person, identify.traits());
+rollbar.configure({ payload: { person: person }});
 };
 
 }, {"segmentio/analytics.js-integration":159,"extend":40,"is":18}],
@@ -15538,9 +15541,9 @@ var integration = require('segmentio/analytics.js-integration');
  */
 
 var SaaSquatch = module.exports = integration('SaaSquatch')
-  .option('tenantAlias', '')
-  .global('_sqh')
-  .tag('<script src="//d2rcp9ak152ke1.cloudfront.net/assets/javascripts/squatch.min.js">');
+.option('tenantAlias', '')
+.global('_sqh')
+.tag('<script src="//d2rcp9ak152ke1.cloudfront.net/assets/javascripts/squatch.min.js">');
 
 /**
  * Initialize.
@@ -15548,9 +15551,9 @@ var SaaSquatch = module.exports = integration('SaaSquatch')
  * @param {Page} page
  */
 
-SaaSquatch.prototype.initialize = function(page){
-  window._sqh = window._sqh || [];
-  this.load(this.ready);
+SaaSquatch.prototype.initialize = function(page) {
+window._sqh = window._sqh || [];
+this.load(this.ready);
 };
 
 /**
@@ -15559,8 +15562,8 @@ SaaSquatch.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-SaaSquatch.prototype.loaded = function(){
-  return window._sqh && window._sqh.push != [].push;
+SaaSquatch.prototype.loaded = function() {
+return window._sqh && window._sqh.push != [].push;
 };
 
 /**
@@ -15569,33 +15572,33 @@ SaaSquatch.prototype.loaded = function(){
  * @param {Facade} identify
  */
 
-SaaSquatch.prototype.identify = function(identify){
-  var sqh = window._sqh;
-  var accountId = identify.proxy('traits.accountId');
-  var image = identify.proxy('traits.referralImage');
-  var opts = identify.options(this.name);
-  var id = identify.userId();
-  var email = identify.email();
+SaaSquatch.prototype.identify = function(identify) {
+var sqh = window._sqh;
+var accountId = identify.proxy('traits.accountId');
+var image = identify.proxy('traits.referralImage');
+var opts = identify.options(this.name);
+var id = identify.userId();
+var email = identify.email();
 
-  if (!(id || email)) return;
-  if (this.called) return;
+if (!(id || email)) return;
+if (this.called) return;
 
-  var init = {
-    tenant_alias: this.options.tenantAlias,
-    first_name: identify.firstName(),
-    last_name: identify.lastName(),
-    user_image: identify.avatar(),
-    email: email,
-    user_id: id,
-  };
+var init = {
+	tenant_alias: this.options.tenantAlias,
+	first_name: identify.firstName(),
+	last_name: identify.lastName(),
+	user_image: identify.avatar(),
+	email: email,
+	user_id: id,
+};
 
-  if (accountId) init.account_id = accountId;
-  if (opts.checksum) init.checksum = opts.checksum;
-  if (image) init.fb_share_image = image;
+if (accountId) init.account_id = accountId;
+if (opts.checksum) init.checksum = opts.checksum;
+if (image) init.fb_share_image = image;
 
-  sqh.push(['init', init]);
-  this.called = true;
-  this.load();
+sqh.push(['init', init]);
+this.called = true;
+this.load();
 };
 }, {"segmentio/analytics.js-integration":159}],
 145: [function(require, module, exports) {
@@ -15612,9 +15615,9 @@ var is = require('is');
  */
 
 var Sentry = module.exports = integration('Sentry')
-  .global('Raven')
-  .option('config', '')
-  .tag('<script src="//cdn.ravenjs.com/1.1.10/native/raven.min.js">');
+.global('Raven')
+.option('config', '')
+.tag('<script src="//cdn.ravenjs.com/1.1.10/native/raven.min.js">');
 
 /**
  * Initialize.
@@ -15622,15 +15625,15 @@ var Sentry = module.exports = integration('Sentry')
  * http://raven-js.readthedocs.org/en/latest/config/index.html
  */
 
-Sentry.prototype.initialize = function(){
-  var config = this.options.config;
-  var self = this;
-  this.load(function(){
-    // for now, raven basically requires `install` to be called
-    // https://github.com/getsentry/raven-js/blob/master/src/raven.js#L113
-    window.Raven.config(config).install();
-    self.ready();
-  });
+Sentry.prototype.initialize = function() {
+var config = this.options.config;
+var self = this;
+this.load(function() {
+	// for now, raven basically requires `install` to be called
+	// https://github.com/getsentry/raven-js/blob/master/src/raven.js#L113
+	window.Raven.config(config).install();
+	self.ready();
+});
 };
 
 /**
@@ -15639,8 +15642,8 @@ Sentry.prototype.initialize = function(){
  * @return {Boolean}
  */
 
-Sentry.prototype.loaded = function(){
-  return is.object(window.Raven);
+Sentry.prototype.loaded = function() {
+return is.object(window.Raven);
 };
 
 /**
@@ -15649,8 +15652,8 @@ Sentry.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-Sentry.prototype.identify = function(identify){
-  window.Raven.setUser(identify.traits());
+Sentry.prototype.identify = function(identify) {
+window.Raven.setUser(identify.traits());
 };
 
 }, {"segmentio/analytics.js-integration":159,"is":18}],
@@ -15668,10 +15671,10 @@ var is = require('is');
  */
 
 var SnapEngage = module.exports = integration('SnapEngage')
-  .assumesPageview()
-  .global('SnapABug')
-  .option('apiKey', '')
-  .tag('<script src="//commondatastorage.googleapis.com/code.snapengage.com/js/{{ apiKey }}.js">');
+.assumesPageview()
+.global('SnapABug')
+.option('apiKey', '')
+.tag('<script src="//commondatastorage.googleapis.com/code.snapengage.com/js/{{ apiKey }}.js">');
 
 /**
  * Initialize.
@@ -15681,8 +15684,8 @@ var SnapEngage = module.exports = integration('SnapEngage')
  * @param {Object} page
  */
 
-SnapEngage.prototype.initialize = function(page){
-  this.load(this.ready);
+SnapEngage.prototype.initialize = function(page) {
+this.load(this.ready);
 };
 
 /**
@@ -15691,8 +15694,8 @@ SnapEngage.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-SnapEngage.prototype.loaded = function(){
-  return is.object(window.SnapABug);
+SnapEngage.prototype.loaded = function() {
+return is.object(window.SnapABug);
 };
 
 /**
@@ -15701,10 +15704,10 @@ SnapEngage.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-SnapEngage.prototype.identify = function(identify){
-  var email = identify.email();
-  if (!email) return;
-  window.SnapABug.setUserEmail(email);
+SnapEngage.prototype.identify = function(identify) {
+var email = identify.email();
+if (!email) return;
+window.SnapABug.setUserEmail(email);
 };
 
 }, {"segmentio/analytics.js-integration":159,"is":18}],
@@ -15723,11 +15726,11 @@ var when = require('when');
  */
 
 var Spinnakr = module.exports = integration('Spinnakr')
-  .assumesPageview()
-  .global('_spinnakr_site_id')
-  .global('_spinnakr')
-  .option('siteId', '')
-  .tag('<script src="//d3ojzyhbolvoi5.cloudfront.net/js/so.js">');
+.assumesPageview()
+.global('_spinnakr_site_id')
+.global('_spinnakr')
+.option('siteId', '')
+.tag('<script src="//d3ojzyhbolvoi5.cloudfront.net/js/so.js">');
 
 /**
  * Initialize.
@@ -15735,13 +15738,13 @@ var Spinnakr = module.exports = integration('Spinnakr')
  * @param {Object} page
  */
 
-Spinnakr.prototype.initialize = function(page){
-  window._spinnakr_site_id = this.options.siteId;
-  var loaded = bind(this, this.loaded);
-  var ready = this.ready;
-  this.load(function(){
-    when(loaded, ready);
-  });
+Spinnakr.prototype.initialize = function(page) {
+window._spinnakr_site_id = this.options.siteId;
+var loaded = bind(this, this.loaded);
+var ready = this.ready;
+this.load(function() {
+	when(loaded, ready);
+});
 };
 
 /**
@@ -15750,8 +15753,8 @@ Spinnakr.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Spinnakr.prototype.loaded = function(){
-  return !! window._spinnakr;
+Spinnakr.prototype.loaded = function() {
+return !! window._spinnakr;
 };
 }, {"segmentio/analytics.js-integration":159,"bind":33,"when":184}],
 148: [function(require, module, exports) {
@@ -15769,13 +15772,13 @@ var push = require('global-queue')('_tsq');
  */
 
 var Tapstream = module.exports = integration('Tapstream')
-  .assumesPageview()
-  .global('_tsq')
-  .option('accountName', '')
-  .option('trackAllPages', true)
-  .option('trackNamedPages', true)
-  .option('trackCategorizedPages', true)
-  .tag('<script src="//cdn.tapstream.com/static/js/tapstream.js">');
+.assumesPageview()
+.global('_tsq')
+.option('accountName', '')
+.option('trackAllPages', true)
+.option('trackNamedPages', true)
+.option('trackCategorizedPages', true)
+.tag('<script src="//cdn.tapstream.com/static/js/tapstream.js">');
 
 /**
  * Initialize.
@@ -15783,10 +15786,10 @@ var Tapstream = module.exports = integration('Tapstream')
  * @param {Object} page
  */
 
-Tapstream.prototype.initialize = function(page){
-  window._tsq = window._tsq || [];
-  push('setAccountName', this.options.accountName);
-  this.load(this.ready);
+Tapstream.prototype.initialize = function(page) {
+window._tsq = window._tsq || [];
+push('setAccountName', this.options.accountName);
+this.load(this.ready);
 };
 
 /**
@@ -15795,8 +15798,8 @@ Tapstream.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Tapstream.prototype.loaded = function(){
-  return !! (window._tsq && window._tsq.push !== Array.prototype.push);
+Tapstream.prototype.loaded = function() {
+return !! (window._tsq && window._tsq.push !== Array.prototype.push);
 };
 
 /**
@@ -15805,25 +15808,25 @@ Tapstream.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Tapstream.prototype.page = function(page){
-  var category = page.category();
-  var opts = this.options;
-  var name = page.fullName();
+Tapstream.prototype.page = function(page) {
+var category = page.category();
+var opts = this.options;
+var name = page.fullName();
 
-  // all pages
-  if (opts.trackAllPages) {
-    this.track(page.track());
-  }
+// all pages
+if (opts.trackAllPages) {
+	this.track(page.track());
+}
 
-  // named pages
-  if (name && opts.trackNamedPages) {
-    this.track(page.track(name));
-  }
+// named pages
+if (name && opts.trackNamedPages) {
+	this.track(page.track(name));
+}
 
-  // categorized pages
-  if (category && opts.trackCategorizedPages) {
-    this.track(page.track(category));
-  }
+// categorized pages
+if (category && opts.trackCategorizedPages) {
+	this.track(page.track(category));
+}
 };
 
 /**
@@ -15832,9 +15835,9 @@ Tapstream.prototype.page = function(page){
  * @param {Track} track
  */
 
-Tapstream.prototype.track = function(track){
-  var props = track.properties();
-  push('fireHit', slug(track.event()), [props.url]); // needs events as slugs
+Tapstream.prototype.track = function(track) {
+var props = track.properties();
+push('fireHit', slug(track.event()), [props.url]); // needs events as slugs
 };
 
 }, {"segmentio/analytics.js-integration":159,"slug":166,"global-queue":190}],
@@ -15853,19 +15856,19 @@ var clone = require('clone');
  */
 
 var Trakio = module.exports = integration('trak.io')
-  .assumesPageview()
-  .global('trak')
-  .option('token', '')
-  .option('trackNamedPages', true)
-  .option('trackCategorizedPages', true)
-  .tag('<script src="//d29p64779x43zo.cloudfront.net/v1/trak.io.min.js">');
+.assumesPageview()
+.global('trak')
+.option('token', '')
+.option('trackNamedPages', true)
+.option('trackCategorizedPages', true)
+.tag('<script src="//d29p64779x43zo.cloudfront.net/v1/trak.io.min.js">');
 
 /**
  * Options aliases.
  */
 
 var optionsAliases = {
-  initialPageview: 'auto_track_page_view'
+initialPageview: 'auto_track_page_view'
 };
 
 /**
@@ -15876,14 +15879,14 @@ var optionsAliases = {
  * @param {Object} page
  */
 
-Trakio.prototype.initialize = function(page){
-  var options = this.options;
-  window.trak = window.trak || [];
-  window.trak.io = window.trak.io || {};
-  window.trak.push = window.trak.push || function(){};
-  window.trak.io.load = window.trak.io.load || function(e){var r = function(e){return function(){window.trak.push([e].concat(Array.prototype.slice.call(arguments,0))); }; } ,i=["initialize","identify","track","alias","channel","source","host","protocol","page_view"]; for (var s=0;s<i.length;s++) window.trak.io[i[s]]=r(i[s]); window.trak.io.initialize.apply(window.trak.io,arguments); };
-  window.trak.io.load(options.token, alias(options, optionsAliases));
-  this.load(this.ready);
+Trakio.prototype.initialize = function(page) {
+var options = this.options;
+window.trak = window.trak || [];
+window.trak.io = window.trak.io || {};
+window.trak.push = window.trak.push || function(){};
+window.trak.io.load = window.trak.io.load || function(e){var r = function(e){return function(){window.trak.push([e].concat(Array.prototype.slice.call(arguments,0))); }; } ,i=["initialize","identify","track","alias","channel","source","host","protocol","page_view"]; for (var s=0;s<i.length;s++) window.trak.io[i[s]]=r(i[s]); window.trak.io.initialize.apply(window.trak.io,arguments); };
+window.trak.io.load(options.token, alias(options, optionsAliases));
+this.load(this.ready);
 };
 
 /**
@@ -15892,8 +15895,8 @@ Trakio.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Trakio.prototype.loaded = function(){
-  return !! (window.trak && window.trak.loaded);
+Trakio.prototype.loaded = function() {
+return !! (window.trak && window.trak.loaded);
 };
 
 /**
@@ -15902,22 +15905,22 @@ Trakio.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Trakio.prototype.page = function(page){
-  var category = page.category();
-  var props = page.properties();
-  var name = page.fullName();
+Trakio.prototype.page = function(page) {
+var category = page.category();
+var props = page.properties();
+var name = page.fullName();
 
-  window.trak.io.page_view(props.path, name || props.title);
+window.trak.io.page_view(props.path, name || props.title);
 
-  // named pages
-  if (name && this.options.trackNamedPages) {
-    this.track(page.track(name));
-  }
+// named pages
+if (name && this.options.trackNamedPages) {
+	this.track(page.track(name));
+}
 
-  // categorized pages
-  if (category && this.options.trackCategorizedPages) {
-    this.track(page.track(category));
-  }
+// categorized pages
+if (category && this.options.trackCategorizedPages) {
+	this.track(page.track(category));
+}
 };
 
 /**
@@ -15927,9 +15930,9 @@ Trakio.prototype.page = function(page){
  */
 
 var traitAliases = {
-  avatar: 'avatar_url',
-  firstName: 'first_name',
-  lastName: 'last_name'
+avatar: 'avatar_url',
+firstName: 'first_name',
+lastName: 'last_name'
 };
 
 /**
@@ -15938,15 +15941,15 @@ var traitAliases = {
  * @param {Identify} identify
  */
 
-Trakio.prototype.identify = function(identify){
-  var traits = identify.traits(traitAliases);
-  var id = identify.userId();
+Trakio.prototype.identify = function(identify) {
+var traits = identify.traits(traitAliases);
+var id = identify.userId();
 
-  if (id) {
-    window.trak.io.identify(id, traits);
-  } else {
-    window.trak.io.identify(traits);
-  }
+if (id) {
+	window.trak.io.identify(id, traits);
+} else {
+	window.trak.io.identify(traits);
+}
 };
 
 /**
@@ -15966,8 +15969,8 @@ Trakio.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-Trakio.prototype.track = function(track){
-  window.trak.io.track(track.event(), track.properties());
+Trakio.prototype.track = function(track) {
+window.trak.io.track(track.event(), track.properties());
 };
 
 /**
@@ -15976,18 +15979,18 @@ Trakio.prototype.track = function(track){
  * @param {Alias} alias
  */
 
-Trakio.prototype.alias = function(alias){
-  if (!window.trak.io.distinct_id) return;
-  var from = alias.from();
-  var to = alias.to();
+Trakio.prototype.alias = function(alias) {
+if (!window.trak.io.distinct_id) return;
+var from = alias.from();
+var to = alias.to();
 
-  if (to === window.trak.io.distinct_id()) return;
+if (to === window.trak.io.distinct_id()) return;
 
-  if (from) {
-    window.trak.io.alias(from, to);
-  } else {
-    window.trak.io.alias(to);
-  }
+if (from) {
+	window.trak.io.alias(from, to);
+} else {
+	window.trak.io.alias(to);
+}
 };
 
 }, {"segmentio/analytics.js-integration":159,"alias":195,"clone":194}],
@@ -16011,8 +16014,8 @@ var has = Object.prototype.hasOwnProperty;
  */
 
 var TwitterAds = module.exports = integration('Twitter Ads')
-  .tag('pixel', '<img src="//analytics.twitter.com/i/adsct?txn_id={{ event }}&p_id=Twitter"/>')
-  .mapping('events');
+.tag('pixel', '<img src="//analytics.twitter.com/i/adsct?txn_id={{ event }}&p_id=Twitter"/>')
+.mapping('events');
 
 /**
  * Initialize.
@@ -16020,8 +16023,8 @@ var TwitterAds = module.exports = integration('Twitter Ads')
  * @param {Object} page
  */
 
-TwitterAds.prototype.initialize = function(){
-  this.ready();
+TwitterAds.prototype.initialize = function() {
+this.ready();
 };
 
 /**
@@ -16030,14 +16033,14 @@ TwitterAds.prototype.initialize = function(){
  * @param {Track} track
  */
 
-TwitterAds.prototype.track = function(track){
-  var events = this.events(track.event());
-  var self = this;
-  each(events, function(event){
-    var el = self.load('pixel', {
-      event: event
-    });
-  });
+TwitterAds.prototype.track = function(track) {
+var events = this.events(track.event());
+var self = this;
+each(events, function(event) {
+	var el = self.load('pixel', {
+	  event: event
+	});
+});
 };
 
 }, {"segmentio/analytics.js-integration":159,"each":5}],
@@ -16055,10 +16058,10 @@ var push = require('global-queue')('_uc');
  */
 
 var Usercycle = module.exports = integration('USERcycle')
-  .assumesPageview()
-  .global('_uc')
-  .option('key', '')
-  .tag('<script src="//api.usercycle.com/javascripts/track.js">');
+.assumesPageview()
+.global('_uc')
+.option('key', '')
+.tag('<script src="//api.usercycle.com/javascripts/track.js">');
 
 /**
  * Initialize.
@@ -16068,9 +16071,9 @@ var Usercycle = module.exports = integration('USERcycle')
  * @param {Object} page
  */
 
-Usercycle.prototype.initialize = function(page){
-  push('_key', this.options.key);
-  this.load(this.ready);
+Usercycle.prototype.initialize = function(page) {
+push('_key', this.options.key);
+this.load(this.ready);
 };
 
 /**
@@ -16079,8 +16082,8 @@ Usercycle.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Usercycle.prototype.loaded = function(){
-  return !! (window._uc && window._uc.push !== Array.prototype.push);
+Usercycle.prototype.loaded = function() {
+return !! (window._uc && window._uc.push !== Array.prototype.push);
 };
 
 /**
@@ -16089,12 +16092,12 @@ Usercycle.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-Usercycle.prototype.identify = function(identify){
-  var traits = identify.traits();
-  var id = identify.userId();
-  if (id) push('uid', id);
-  // there's a special `came_back` event used for retention and traits
-  push('action', 'came_back', traits);
+Usercycle.prototype.identify = function(identify) {
+var traits = identify.traits();
+var id = identify.userId();
+if (id) push('uid', id);
+// there's a special `came_back` event used for retention and traits
+push('action', 'came_back', traits);
 };
 
 /**
@@ -16103,10 +16106,10 @@ Usercycle.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-Usercycle.prototype.track = function(track){
-  push('action', track.event(), track.properties({
-    revenue: 'revenue_amount'
-  }));
+Usercycle.prototype.track = function(track) {
+push('action', track.event(), track.properties({
+	revenue: 'revenue_amount'
+}));
 };
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190}],
@@ -16127,8 +16130,8 @@ var push = require('global-queue')('_ufq');
  * Expose plugin.
  */
 
-module.exports = exports = function(analytics){
-  analytics.addIntegration(Userfox);
+module.exports = exports = function(analytics) {
+analytics.addIntegration(Userfox);
 };
 
 /**
@@ -16136,10 +16139,10 @@ module.exports = exports = function(analytics){
  */
 
 var Userfox = exports.Integration = integration('userfox')
-  .assumesPageview()
-  .readyOnLoad()
-  .global('_ufq')
-  .option('clientId', '');
+.assumesPageview()
+.readyOnLoad()
+.global('_ufq')
+.option('clientId', '');
 
 /**
  * Initialize.
@@ -16149,9 +16152,9 @@ var Userfox = exports.Integration = integration('userfox')
  * @param {Object} page
  */
 
-Userfox.prototype.initialize = function(page){
-  window._ufq = [];
-  this.load();
+Userfox.prototype.initialize = function(page) {
+window._ufq = [];
+this.load();
 };
 
 /**
@@ -16160,8 +16163,8 @@ Userfox.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Userfox.prototype.loaded = function(){
-  return !! (window._ufq && window._ufq.push !== Array.prototype.push);
+Userfox.prototype.loaded = function() {
+return !! (window._ufq && window._ufq.push !== Array.prototype.push);
 };
 
 /**
@@ -16170,8 +16173,8 @@ Userfox.prototype.loaded = function(){
  * @param {Function} callback
  */
 
-Userfox.prototype.load = function(callback){
-  load('//d2y71mjhnajxcg.cloudfront.net/js/userfox-stable.js', callback);
+Userfox.prototype.load = function(callback) {
+load('//d2y71mjhnajxcg.cloudfront.net/js/userfox-stable.js', callback);
 };
 
 /**
@@ -16182,20 +16185,20 @@ Userfox.prototype.load = function(callback){
  * @param {Identify} identify
  */
 
-Userfox.prototype.identify = function(identify){
-  var traits = identify.traits({ created: 'signup_date' });
-  var email = identify.email();
+Userfox.prototype.identify = function(identify) {
+var traits = identify.traits({ created: 'signup_date' });
+var email = identify.email();
 
-  if (!email) return;
+if (!email) return;
 
-  // initialize the library with the email now that we have it
-  push('init', {
-    clientId: this.options.clientId,
-    email: email
-  });
+// initialize the library with the email now that we have it
+push('init', {
+	clientId: this.options.clientId,
+	email: email
+});
 
-  traits = convertDates(traits, formatDate);
-  push('track', traits);
+traits = convertDates(traits, formatDate);
+push('track', traits);
 };
 
 /**
@@ -16205,8 +16208,8 @@ Userfox.prototype.identify = function(identify){
  * @return {String}
  */
 
-function formatDate(date){
-  return Math.round(date.getTime() / 1000).toString();
+function formatDate(date) {
+return Math.round(date.getTime() / 1000).toString();
 }
 
 }, {"alias":195,"callback":12,"convert-dates":196,"analytics.js-integration":159,"load-script":168,"global-queue":190}],
@@ -16228,41 +16231,41 @@ var clone = require('clone');
  */
 
 var UserVoice = module.exports = integration('UserVoice')
-  .assumesPageview()
-  .global('UserVoice')
-  .global('showClassicWidget')
-  .option('apiKey', '')
-  .option('classic', false)
-  .option('forumId', null)
-  .option('showWidget', true)
-  .option('mode', 'contact')
-  .option('accentColor', '#448dd6')
-  .option('smartvote', true)
-  .option('trigger', null)
-  .option('triggerPosition', 'bottom-right')
-  .option('triggerColor', '#ffffff')
-  .option('triggerBackgroundColor', 'rgba(46, 49, 51, 0.6)')
-  // BACKWARDS COMPATIBILITY: classic options
-  .option('classicMode', 'full')
-  .option('primaryColor', '#cc6d00')
-  .option('linkColor', '#007dbf')
-  .option('defaultMode', 'support')
-  .option('tabLabel', 'Feedback & Support')
-  .option('tabColor', '#cc6d00')
-  .option('tabPosition', 'middle-right')
-  .option('tabInverted', false)
-  .tag('<script src="//widget.uservoice.com/{{ apiKey }}.js">');
+.assumesPageview()
+.global('UserVoice')
+.global('showClassicWidget')
+.option('apiKey', '')
+.option('classic', false)
+.option('forumId', null)
+.option('showWidget', true)
+.option('mode', 'contact')
+.option('accentColor', '#448dd6')
+.option('smartvote', true)
+.option('trigger', null)
+.option('triggerPosition', 'bottom-right')
+.option('triggerColor', '#ffffff')
+.option('triggerBackgroundColor', 'rgba(46, 49, 51, 0.6)')
+// BACKWARDS COMPATIBILITY: classic options
+.option('classicMode', 'full')
+.option('primaryColor', '#cc6d00')
+.option('linkColor', '#007dbf')
+.option('defaultMode', 'support')
+.option('tabLabel', 'Feedback & Support')
+.option('tabColor', '#cc6d00')
+.option('tabPosition', 'middle-right')
+.option('tabInverted', false)
+.tag('<script src="//widget.uservoice.com/{{ apiKey }}.js">');
 
 /**
  * When in "classic" mode, on `construct` swap all of the method to point to
  * their classic counterparts.
  */
 
-UserVoice.on('construct', function(integration){
-  if (!integration.options.classic) return;
-  integration.group = undefined;
-  integration.identify = integration.identifyClassic;
-  integration.initialize = integration.initializeClassic;
+UserVoice.on('construct', function(integration) {
+if (!integration.options.classic) return;
+integration.group = undefined;
+integration.identify = integration.identifyClassic;
+integration.initialize = integration.initializeClassic;
 });
 
 /**
@@ -16271,18 +16274,18 @@ UserVoice.on('construct', function(integration){
  * @param {Object} page
  */
 
-UserVoice.prototype.initialize = function(page){
-  var options = this.options;
-  var opts = formatOptions(options);
-  push('set', opts);
-  push('autoprompt', {});
-  if (options.showWidget) {
-    options.trigger
-      ? push('addTrigger', options.trigger, opts)
-      : push('addTrigger', opts);
-  }
+UserVoice.prototype.initialize = function(page) {
+var options = this.options;
+var opts = formatOptions(options);
+push('set', opts);
+push('autoprompt', {});
+if (options.showWidget) {
+	options.trigger
+	  ? push('addTrigger', options.trigger, opts)
+	  : push('addTrigger', opts);
+}
 
-  this.load(this.ready);
+this.load(this.ready);
 };
 
 /**
@@ -16291,8 +16294,8 @@ UserVoice.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-UserVoice.prototype.loaded = function(){
-  return !! (window.UserVoice && window.UserVoice.push !== Array.prototype.push);
+UserVoice.prototype.loaded = function() {
+return !! (window.UserVoice && window.UserVoice.push !== Array.prototype.push);
 };
 
 /**
@@ -16301,10 +16304,10 @@ UserVoice.prototype.loaded = function(){
  * @param {Identify} identify
  */
 
-UserVoice.prototype.identify = function(identify){
-  var traits = identify.traits({ created: 'created_at' });
-  traits = convertDates(traits, unix);
-  push('identify', traits);
+UserVoice.prototype.identify = function(identify) {
+var traits = identify.traits({ created: 'created_at' });
+traits = convertDates(traits, unix);
+push('identify', traits);
 };
 
 /**
@@ -16313,10 +16316,10 @@ UserVoice.prototype.identify = function(identify){
  * @param {Group} group
  */
 
-UserVoice.prototype.group = function(group){
-  var traits = group.traits({ created: 'created_at' });
-  traits = convertDates(traits, unix);
-  push('identify', { account: traits });
+UserVoice.prototype.group = function(group) {
+var traits = group.traits({ created: 'created_at' });
+traits = convertDates(traits, unix);
+push('identify', { account: traits });
 };
 
 /**
@@ -16326,11 +16329,11 @@ UserVoice.prototype.group = function(group){
  * @param {Function} ready
  */
 
-UserVoice.prototype.initializeClassic = function(){
-  var options = this.options;
-  window.showClassicWidget = showClassicWidget; // part of public api
-  if (options.showWidget) showClassicWidget('showTab', formatClassicOptions(options));
-  this.load(this.ready);
+UserVoice.prototype.initializeClassic = function() {
+var options = this.options;
+window.showClassicWidget = showClassicWidget; // part of public api
+if (options.showWidget) showClassicWidget('showTab', formatClassicOptions(options));
+this.load(this.ready);
 };
 
 /**
@@ -16339,8 +16342,8 @@ UserVoice.prototype.initializeClassic = function(){
  * @param {Identify} identify
  */
 
-UserVoice.prototype.identifyClassic = function(identify){
-  push('setCustomFields', identify.traits());
+UserVoice.prototype.identifyClassic = function(identify) {
+push('setCustomFields', identify.traits());
 };
 
 /**
@@ -16350,15 +16353,15 @@ UserVoice.prototype.identifyClassic = function(identify){
  * @return {Object}
  */
 
-function formatOptions(options){
-  return alias(options, {
-    forumId: 'forum_id',
-    accentColor: 'accent_color',
-    smartvote: 'smartvote_enabled',
-    triggerColor: 'trigger_color',
-    triggerBackgroundColor: 'trigger_background_color',
-    triggerPosition: 'trigger_position'
-  });
+function formatOptions(options) {
+return alias(options, {
+	forumId: 'forum_id',
+	accentColor: 'accent_color',
+	smartvote: 'smartvote_enabled',
+	triggerColor: 'trigger_color',
+	triggerBackgroundColor: 'trigger_background_color',
+	triggerPosition: 'trigger_position'
+});
 }
 
 /**
@@ -16368,18 +16371,18 @@ function formatOptions(options){
  * @return {Object}
  */
 
-function formatClassicOptions(options){
-  return alias(options, {
-    forumId: 'forum_id',
-    classicMode: 'mode',
-    primaryColor: 'primary_color',
-    tabPosition: 'tab_position',
-    tabColor: 'tab_color',
-    linkColor: 'link_color',
-    defaultMode: 'default_mode',
-    tabLabel: 'tab_label',
-    tabInverted: 'tab_inverted'
-  });
+function formatClassicOptions(options) {
+return alias(options, {
+	forumId: 'forum_id',
+	classicMode: 'mode',
+	primaryColor: 'primary_color',
+	tabPosition: 'tab_position',
+	tabColor: 'tab_color',
+	linkColor: 'link_color',
+	defaultMode: 'default_mode',
+	tabLabel: 'tab_label',
+	tabInverted: 'tab_inverted'
+});
 }
 
 /**
@@ -16390,9 +16393,9 @@ function formatClassicOptions(options){
  * @param {Object} options (optional)
  */
 
-function showClassicWidget(type, options){
-  type = type || 'showLightbox';
-  push(type, 'classic_widget', options);
+function showClassicWidget(type, options) {
+type = type || 'showLightbox';
+push(type, 'classic_widget', options);
 }
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"convert-dates":196,"to-unix-timestamp":199,"alias":195,"clone":194}],
@@ -16413,7 +16416,7 @@ module.exports = toUnixTimestamp;
  */
 
 function toUnixTimestamp (date) {
-  return Math.floor(date.getTime() / 1000);
+return Math.floor(date.getTime() / 1000);
 }
 }, {}],
 154: [function(require, module, exports) {
@@ -16431,9 +16434,9 @@ var cookie = require('component/cookie');
  */
 
 var Vero = module.exports = integration('Vero')
-  .global('_veroq')
-  .option('apiKey', '')
-  .tag('<script src="//d3qxef4rp70elm.cloudfront.net/m.js">');
+.global('_veroq')
+.option('apiKey', '')
+.tag('<script src="//d3qxef4rp70elm.cloudfront.net/m.js">');
 
 /**
  * Initialize.
@@ -16443,15 +16446,15 @@ var Vero = module.exports = integration('Vero')
  * @param {Object} page
  */
 
-Vero.prototype.initialize = function(page){
-  // clear default cookie so vero parses correctly.
-  // this is for the tests.
-  // basically, they have window.addEventListener('unload')
-  // which then saves their "command_store", which is an array.
-  // so we just want to create that initially so we can reload the tests.
-  if (!cookie('__veroc4')) cookie('__veroc4', '[]');
-  push('init', { api_key: this.options.apiKey });
-  this.load(this.ready);
+Vero.prototype.initialize = function(page) {
+// clear default cookie so vero parses correctly.
+// this is for the tests.
+// basically, they have window.addEventListener('unload')
+// which then saves their "command_store", which is an array.
+// so we just want to create that initially so we can reload the tests.
+if (!cookie('__veroc4')) cookie('__veroc4', '[]');
+push('init', { api_key: this.options.apiKey });
+this.load(this.ready);
 };
 
 /**
@@ -16460,8 +16463,8 @@ Vero.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Vero.prototype.loaded = function(){
-  return !! (window._veroq && window._veroq.push !== Array.prototype.push);
+Vero.prototype.loaded = function() {
+return !! (window._veroq && window._veroq.push !== Array.prototype.push);
 };
 
 /**
@@ -16472,8 +16475,8 @@ Vero.prototype.loaded = function(){
  * @param {Page} page
  */
 
-Vero.prototype.page = function(page){
-  push('trackPageview');
+Vero.prototype.page = function(page) {
+push('trackPageview');
 };
 
 /**
@@ -16484,12 +16487,12 @@ Vero.prototype.page = function(page){
  * @param {Identify} identify
  */
 
-Vero.prototype.identify = function(identify){
-  var traits = identify.traits();
-  var email = identify.email();
-  var id = identify.userId();
-  if (!id || !email) return; // both required
-  push('user', traits);
+Vero.prototype.identify = function(identify) {
+var traits = identify.traits();
+var email = identify.email();
+var id = identify.userId();
+if (!id || !email) return; // both required
+push('user', traits);
 };
 
 /**
@@ -16500,8 +16503,8 @@ Vero.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-Vero.prototype.track = function(track){
-  push('track', track.event(), track.properties());
+Vero.prototype.track = function(track) {
+push('track', track.event(), track.properties());
 };
 
 }, {"segmentio/analytics.js-integration":159,"global-queue":190,"component/cookie":28}],
@@ -16520,7 +16523,7 @@ var each = require('each');
  */
 
 var VWO = module.exports = integration('Visual Website Optimizer')
-  .option('replay', true);
+.option('replay', true);
 
 /**
  * Initialize.
@@ -16528,9 +16531,9 @@ var VWO = module.exports = integration('Visual Website Optimizer')
  * http://v2.visualwebsiteoptimizer.com/tools/get_tracking_code.php
  */
 
-VWO.prototype.initialize = function(){
-  if (this.options.replay) this.replay();
-  this.ready();
+VWO.prototype.initialize = function() {
+if (this.options.replay) this.replay();
+this.ready();
 };
 
 /**
@@ -16539,13 +16542,13 @@ VWO.prototype.initialize = function(){
  * the integrations are fully initialized.
  */
 
-VWO.prototype.replay = function(){
-  var analytics = this.analytics;
-  tick(function(){
-    experiments(function(err, traits){
-      if (traits) analytics.identify(traits);
-    });
-  });
+VWO.prototype.replay = function() {
+var analytics = this.analytics;
+tick(function() {
+	experiments(function(err, traits) {
+	  if (traits) analytics.identify(traits);
+	});
+});
 };
 
 /**
@@ -16557,17 +16560,17 @@ VWO.prototype.replay = function(){
  * @return {Object}
  */
 
-function experiments(fn){
-  enqueue(function(){
-    var data = {};
-    var ids = window._vwo_exp_ids;
-    if (!ids) return fn();
-    each(ids, function(id){
-      var name = variation(id);
-      if (name) data['Experiment: ' + id] = name;
-    });
-    fn(null, data);
-  });
+function experiments(fn) {
+enqueue(function() {
+	var data = {};
+	var ids = window._vwo_exp_ids;
+	if (!ids) return fn();
+	each(ids, function(id) {
+	  var name = variation(id);
+	  if (name) data['Experiment: ' + id] = name;
+	});
+	fn(null, data);
+});
 }
 
 /**
@@ -16576,9 +16579,9 @@ function experiments(fn){
  * @param {Function} fn
  */
 
-function enqueue(fn){
-  window._vis_opt_queue = window._vis_opt_queue || [];
-  window._vis_opt_queue.push(fn);
+function enqueue(fn) {
+window._vis_opt_queue = window._vis_opt_queue || [];
+window._vis_opt_queue.push(fn);
 }
 
 /**
@@ -16590,12 +16593,12 @@ function enqueue(fn){
  * @return {String}
  */
 
-function variation(id){
-  var experiments = window._vwo_exp;
-  if (!experiments) return null;
-  var experiment = experiments[id];
-  var variationId = experiment.combination_chosen;
-  return variationId ? experiment.comb_n[variationId] : null;
+function variation(id) {
+var experiments = window._vwo_exp;
+if (!experiments) return null;
+var experiment = experiments[id];
+var variationId = experiment.combination_chosen;
+return variationId ? experiment.comb_n[variationId] : null;
 }
 
 }, {"segmentio/analytics.js-integration":159,"next-tick":45,"each":5}],
@@ -16613,13 +16616,13 @@ var useHttps = require('use-https');
  */
 
 var WebEngage = module.exports = integration('WebEngage')
-  .assumesPageview()
-  .global('_weq')
-  .global('webengage')
-  .option('widgetVersion', '4.0')
-  .option('licenseCode', '')
-  .tag('http', '<script src="http://cdn.widgets.webengage.com/js/widget/webengage-min-v-4.0.js">')
-  .tag('https', '<script src="https://ssl.widgets.webengage.com/js/widget/webengage-min-v-4.0.js">');
+.assumesPageview()
+.global('_weq')
+.global('webengage')
+.option('widgetVersion', '4.0')
+.option('licenseCode', '')
+.tag('http', '<script src="http://cdn.widgets.webengage.com/js/widget/webengage-min-v-4.0.js">')
+.tag('https', '<script src="https://ssl.widgets.webengage.com/js/widget/webengage-min-v-4.0.js">');
 
 /**
  * Initialize.
@@ -16627,12 +16630,12 @@ var WebEngage = module.exports = integration('WebEngage')
  * @param {Object} page
  */
 
-WebEngage.prototype.initialize = function(page){
-  var _weq = window._weq = window._weq || {};
-  _weq['webengage.licenseCode'] = this.options.licenseCode;
-  _weq['webengage.widgetVersion'] = this.options.widgetVersion;
-  var name = useHttps() ? 'https' : 'http';
-  this.load(name, this.ready);
+WebEngage.prototype.initialize = function(page) {
+var _weq = window._weq = window._weq || {};
+_weq['webengage.licenseCode'] = this.options.licenseCode;
+_weq['webengage.widgetVersion'] = this.options.widgetVersion;
+var name = useHttps() ? 'https' : 'http';
+this.load(name, this.ready);
 };
 
 /**
@@ -16641,8 +16644,8 @@ WebEngage.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-WebEngage.prototype.loaded = function(){
-  return !! window.webengage;
+WebEngage.prototype.loaded = function() {
+return !! window.webengage;
 };
 
 }, {"segmentio/analytics.js-integration":159,"use-https":161}],
@@ -16664,22 +16667,22 @@ var type = require('type');
  */
 
 var Woopra = module.exports = integration('Woopra')
-  .global('woopra')
-  .option('domain', '')
-  .option('cookieName', 'wooTracker')
-  .option('cookieDomain', null)
-  .option('cookiePath', '/')
-  .option('ping', true)
-  .option('pingInterval', 12000)
-  .option('idleTimeout', 300000)
-  .option('downloadTracking', true)
-  .option('outgoingTracking', true)
-  .option('outgoingIgnoreSubdomain', true)
-  .option('downloadPause', 200)
-  .option('outgoingPause', 400)
-  .option('ignoreQueryUrl', true)
-  .option('hideCampaign', false)
-  .tag('<script src="//static.woopra.com/js/w.js">');
+.global('woopra')
+.option('domain', '')
+.option('cookieName', 'wooTracker')
+.option('cookieDomain', null)
+.option('cookiePath', '/')
+.option('ping', true)
+.option('pingInterval', 12000)
+.option('idleTimeout', 300000)
+.option('downloadTracking', true)
+.option('outgoingTracking', true)
+.option('outgoingIgnoreSubdomain', true)
+.option('downloadPause', 200)
+.option('outgoingPause', 400)
+.option('ignoreQueryUrl', true)
+.option('hideCampaign', false)
+.tag('<script src="//static.woopra.com/js/w.js">');
 
 /**
  * Initialize.
@@ -16689,15 +16692,15 @@ var Woopra = module.exports = integration('Woopra')
  * @param {Object} page
  */
 
-Woopra.prototype.initialize = function(page){
-  (function () {var i, s, z, w = window, d = document, a = arguments, q = 'script', f = ['config', 'track', 'identify', 'visit', 'push', 'call'], c = function () {var i, self = this; self._e = []; for (i = 0; i < f.length; i++) {(function (f) {self[f] = function () {self._e.push([f].concat(Array.prototype.slice.call(arguments, 0))); return self; }; })(f[i]); } }; w._w = w._w || {}; for (i = 0; i < a.length; i++) { w._w[a[i]] = w[a[i]] = w[a[i]] || new c(); } })('woopra');
-  this.load(this.ready);
-  each(this.options, function(key, value){
-    key = snake(key);
-    if (null == value) return;
-    if ('' === value) return;
-    window.woopra.config(key, value);
-  });
+Woopra.prototype.initialize = function(page) {
+(function() {var i, s, z, w = window, d = document, a = arguments, q = 'script', f = ['config', 'track', 'identify', 'visit', 'push', 'call'], c = function() {var i, self = this; self._e = []; for (i = 0; i < f.length; i++) {(function(f) {self[f] = function() {self._e.push([f].concat(Array.prototype.slice.call(arguments, 0))); return self; }; })(f[i]); } }; w._w = w._w || {}; for (i = 0; i < a.length; i++) { w._w[a[i]] = w[a[i]] = w[a[i]] || new c(); } })('woopra');
+this.load(this.ready);
+each(this.options, function(key, value) {
+	key = snake(key);
+	if (null == value) return;
+	if ('' === value) return;
+	window.woopra.config(key, value);
+});
 };
 
 /**
@@ -16706,8 +16709,8 @@ Woopra.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Woopra.prototype.loaded = function(){
-  return !! (window.woopra && window.woopra.loaded);
+Woopra.prototype.loaded = function() {
+return !! (window.woopra && window.woopra.loaded);
 };
 
 /**
@@ -16716,11 +16719,11 @@ Woopra.prototype.loaded = function(){
  * @param {String} category (optional)
  */
 
-Woopra.prototype.page = function(page){
-  var props = page.properties();
-  var name = page.fullName();
-  if (name) props.title = name;
-  window.woopra.track('pv', props);
+Woopra.prototype.page = function(page) {
+var props = page.properties();
+var name = page.fullName();
+if (name) props.title = name;
+window.woopra.track('pv', props);
 };
 
 /**
@@ -16729,10 +16732,10 @@ Woopra.prototype.page = function(page){
  * @param {Identify} identify
  */
 
-Woopra.prototype.identify = function(identify){
-  var traits = identify.traits();
-  if (identify.name()) traits.name = identify.name();
-  window.woopra.identify(traits).push(); // `push` sends it off async
+Woopra.prototype.identify = function(identify) {
+var traits = identify.traits();
+if (identify.name()) traits.name = identify.name();
+window.woopra.identify(traits).push(); // `push` sends it off async
 };
 
 /**
@@ -16741,8 +16744,8 @@ Woopra.prototype.identify = function(identify){
  * @param {Track} track
  */
 
-Woopra.prototype.track = function(track){
-  window.woopra.track(track.event(), track.properties());
+Woopra.prototype.track = function(track) {
+window.woopra.track(track.event(), track.properties());
 };
 
 }, {"segmentio/analytics.js-integration":159,"to-snake-case":160,"is-email":19,"extend":40,"each":5,"type":35}],
@@ -16762,11 +16765,11 @@ var when = require('when');
  */
 
 var Yandex = module.exports = integration('Yandex Metrica')
-  .assumesPageview()
-  .global('yandex_metrika_callbacks')
-  .global('Ya')
-  .option('counterId', null)
-  .tag('<script src="//mc.yandex.ru/metrika/watch.js">');
+.assumesPageview()
+.global('yandex_metrika_callbacks')
+.global('Ya')
+.option('counterId', null)
+.tag('<script src="//mc.yandex.ru/metrika/watch.js">');
 
 /**
  * Initialize.
@@ -16777,20 +16780,20 @@ var Yandex = module.exports = integration('Yandex Metrica')
  * @param {Object} page
  */
 
-Yandex.prototype.initialize = function(page){
-  var id = this.options.counterId;
+Yandex.prototype.initialize = function(page) {
+var id = this.options.counterId;
 
-  push(function(){
-    window['yaCounter' + id] = new window.Ya.Metrika({ id: id });
-  });
+push(function() {
+	window['yaCounter' + id] = new window.Ya.Metrika({ id: id });
+});
 
-  var loaded = bind(this, this.loaded);
-  var ready = this.ready;
-  this.load(function(){
-    when(loaded, function(){
-      tick(ready);
-    });
-  });
+var loaded = bind(this, this.loaded);
+var ready = this.ready;
+this.load(function() {
+	when(loaded, function() {
+	  tick(ready);
+	});
+});
 };
 
 /**
@@ -16799,8 +16802,8 @@ Yandex.prototype.initialize = function(page){
  * @return {Boolean}
  */
 
-Yandex.prototype.loaded = function(){
-  return !! (window.Ya && window.Ya.Metrika);
+Yandex.prototype.loaded = function() {
+return !! (window.Ya && window.Ya.Metrika);
 };
 
 /**
@@ -16809,9 +16812,9 @@ Yandex.prototype.loaded = function(){
  * @param {Function} callback
  */
 
-function push(callback){
-  window.yandex_metrika_callbacks = window.yandex_metrika_callbacks || [];
-  window.yandex_metrika_callbacks.push(callback);
+function push(callback) {
+window.yandex_metrika_callbacks = window.yandex_metrika_callbacks || [];
+window.yandex_metrika_callbacks.push(callback);
 }
 
 }, {"segmentio/analytics.js-integration":159,"next-tick":45,"bind":33,"when":184}]}, {}, {"1":"analytics"})

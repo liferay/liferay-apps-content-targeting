@@ -42,8 +42,7 @@ public class DefaultRulesRegistryImpl implements RulesRegistry {
 	}
 
 	@Reference(
-		unbind = "unregisterRule",
-		cardinality = ReferenceCardinality.MULTIPLE,
+		unbind = "unregisterRule", cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC)
 	public void registerRule(Rule rule) {
 		_rules.put(rule.getRuleKey(), rule);
