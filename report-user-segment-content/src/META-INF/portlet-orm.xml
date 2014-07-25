@@ -24,7 +24,7 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.liferay.contenttargeting.reports.usersegmentcontent.model.impl.UserSegmentContentImpl" name="UserSegmentContent">
-		<table name="UserSegmentContentReport_UserSegmentContent" />
+		<table name="ContentTargeting_UserSegmentContent" />
 		<attributes />
 	</entity>
 </entity-mappings>

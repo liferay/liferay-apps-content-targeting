@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -19,21 +19,21 @@ import com.liferay.portal.NoSuchModelException;
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchEventException extends NoSuchModelException {
+public class NoSuchAnalyticsEventException extends NoSuchModelException {
 
-	public NoSuchEventException() {
+	public NoSuchAnalyticsEventException() {
 		super();
 	}
 
-	public NoSuchEventException(String msg) {
+	public NoSuchAnalyticsEventException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchEventException(String msg, Throwable cause) {
+	public NoSuchAnalyticsEventException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchEventException(Throwable cause) {
+	public NoSuchAnalyticsEventException(Throwable cause) {
 		super(cause);
 	}
 

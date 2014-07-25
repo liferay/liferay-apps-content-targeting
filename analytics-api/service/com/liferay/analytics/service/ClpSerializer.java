@@ -233,8 +233,9 @@ public class ClpSerializer {
 			return new SystemException();
 		}
 
-		if (className.equals("com.liferay.analytics.NoSuchEventException")) {
-			return new com.liferay.analytics.NoSuchEventException();
+		if (className.equals(
+					"com.liferay.analytics.NoSuchAnalyticsEventException")) {
+			return new com.liferay.analytics.NoSuchAnalyticsEventException();
 		}
 
 		return throwable;

@@ -90,13 +90,13 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByCompanyId_First(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -118,13 +118,13 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByCompanyId_Last(
 		long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -147,13 +147,13 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent[] findByCompanyId_PrevAndNext(
 		long analyticsEventId, long companyId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -232,13 +232,13 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByC_GtD_First(
 		long companyId, java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -262,13 +262,13 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByC_GtD_Last(
 		long companyId, java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -293,13 +293,13 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent[] findByC_GtD_PrevAndNext(
 		long analyticsEventId, long companyId, java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -380,13 +380,13 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByC_LtD_First(
 		long companyId, java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -410,13 +410,13 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByC_LtD_Last(
 		long companyId, java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -441,13 +441,13 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent[] findByC_LtD_PrevAndNext(
 		long analyticsEventId, long companyId, java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -539,14 +539,14 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByC_C_E_GtD_First(
 		java.lang.String className, long classPK, java.lang.String eventType,
 		java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -575,14 +575,14 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByC_C_E_GtD_Last(
 		java.lang.String className, long classPK, java.lang.String eventType,
 		java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -612,14 +612,14 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent[] findByC_C_E_GtD_PrevAndNext(
 		long analyticsEventId, java.lang.String className, long classPK,
 		java.lang.String eventType, java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -713,14 +713,14 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByE_E_GtD_First(
 		java.lang.String elementId, java.lang.String eventType,
 		java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -747,14 +747,14 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByE_E_GtD_Last(
 		java.lang.String elementId, java.lang.String eventType,
 		java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -782,14 +782,14 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent[] findByE_E_GtD_PrevAndNext(
 		long analyticsEventId, java.lang.String elementId,
 		java.lang.String eventType, java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -897,7 +897,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByC_C_R_R_E_GtD_First(
@@ -905,7 +905,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType, java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -939,7 +939,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByC_C_R_R_E_GtD_Last(
@@ -947,7 +947,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType, java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -982,7 +982,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent[] findByC_C_R_R_E_GtD_PrevAndNext(
@@ -990,7 +990,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType, java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1101,7 +1101,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByR_R_E_E_GtD_First(
@@ -1109,7 +1109,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 		java.lang.String elementId, java.lang.String eventType,
 		java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1141,7 +1141,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByR_R_E_E_GtD_Last(
@@ -1149,7 +1149,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 		java.lang.String elementId, java.lang.String eventType,
 		java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1182,7 +1182,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent[] findByR_R_E_E_GtD_PrevAndNext(
@@ -1190,7 +1190,7 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.util.Date createDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
@@ -1254,12 +1254,12 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 	*
 	* @param analyticsEventId the primary key of the analytics event
 	* @return the analytics event that was removed
-	* @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent remove(
 		long analyticsEventId)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.analytics.model.AnalyticsEvent updateImpl(
@@ -1267,16 +1267,16 @@ public interface AnalyticsEventPersistence extends BasePersistence<AnalyticsEven
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
-	* Returns the analytics event with the primary key or throws a {@link com.liferay.analytics.NoSuchEventException} if it could not be found.
+	* Returns the analytics event with the primary key or throws a {@link com.liferay.analytics.NoSuchAnalyticsEventException} if it could not be found.
 	*
 	* @param analyticsEventId the primary key of the analytics event
 	* @return the analytics event
-	* @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	* @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.analytics.model.AnalyticsEvent findByPrimaryKey(
 		long analyticsEventId)
-		throws com.liferay.analytics.NoSuchEventException,
+		throws com.liferay.analytics.NoSuchAnalyticsEventException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**

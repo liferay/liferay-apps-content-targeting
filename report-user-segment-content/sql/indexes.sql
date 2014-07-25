@@ -1,3 +1,3 @@
-create index IX_D00D8502 on UserSegmentContentReport_UserSegmentContent (userSegmentId);
-create index IX_2BD71E32 on UserSegmentContentReport_UserSegmentContent (userSegmentId, className, classPK, eventType);
-create index IX_FFEAB3CD on UserSegmentContentReport_UserSegmentContent (userSegmentId, modifiedDate);
+create index IX_95B0BCB5 on ContentTargeting_UserSegmentContent (userSegmentId);
+create index IX_949B01F on ContentTargeting_UserSegmentContent (userSegmentId, className, classPK, eventType);
+create index IX_A48CF640 on ContentTargeting_UserSegmentContent (userSegmentId, modifiedDate);

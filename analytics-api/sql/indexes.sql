@@ -1,8 +1,6 @@
-create index IX_6110241 on Analytics_AnalyticsEvent (className, classPK, createDate);
-create index IX_658AD8FF on Analytics_AnalyticsEvent (className, classPK, eventType, createDate);
-create index IX_E20EEC51 on Analytics_AnalyticsEvent (className, classPK, referrerClassName, referrerClassPK, createDate);
-create index IX_F5B104EF on Analytics_AnalyticsEvent (className, classPK, referrerClassName, referrerClassPK, eventType, createDate);
-create index IX_906DCCF5 on Analytics_AnalyticsEvent (companyId);
-create index IX_C02F5433 on Analytics_AnalyticsEvent (companyId, createDate);
-create index IX_1707C1EE on Analytics_AnalyticsEvent (elementId, eventType, createDate);
-create index IX_145957FE on Analytics_AnalyticsEvent (referrerClassName, referrerClassPK, elementId, eventType, createDate);
+create index IX_7C956EF1 on ContentTargeting_AnalyticsEvent (className, classPK, eventType, createDate);
+create index IX_127B09E1 on ContentTargeting_AnalyticsEvent (className, classPK, referrerClassName, referrerClassPK, eventType, createDate);
+create index IX_2C3CAAE7 on ContentTargeting_AnalyticsEvent (companyId);
+create index IX_AB76D725 on ContentTargeting_AnalyticsEvent (companyId, createDate);
+create index IX_A54953BC on ContentTargeting_AnalyticsEvent (elementId, eventType, createDate);
+create index IX_35F29ACC on ContentTargeting_AnalyticsEvent (referrerClassName, referrerClassPK, elementId, eventType, createDate);

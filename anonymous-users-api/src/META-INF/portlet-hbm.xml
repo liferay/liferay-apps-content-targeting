@@ -3,7 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.anonymoususers.model.AnonymousUser" />
-	<class name="com.liferay.anonymoususers.model.impl.AnonymousUserImpl" table="AU_AnonymousUser">
+	<class name="com.liferay.anonymoususers.model.impl.AnonymousUserImpl" table="ContentTargeting_AnonymousUser">
 		<cache usage="read-write" />
 		<id name="anonymousUserId" type="long">
 			<generator class="assigned" />

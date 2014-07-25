@@ -14,7 +14,7 @@
 
 package com.liferay.analytics.service.persistence;
 
-import com.liferay.analytics.NoSuchEventException;
+import com.liferay.analytics.NoSuchAnalyticsEventException;
 import com.liferay.analytics.model.AnalyticsEvent;
 import com.liferay.analytics.model.impl.AnalyticsEventImpl;
 import com.liferay.analytics.model.impl.AnalyticsEventModelImpl;
@@ -262,13 +262,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByCompanyId_First(long companyId,
 		OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByCompanyId_First(companyId,
 				orderByComparator);
 
@@ -285,7 +285,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -315,13 +315,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByCompanyId_Last(long companyId,
 		OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByCompanyId_Last(companyId,
 				orderByComparator);
 
@@ -338,7 +338,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -375,13 +375,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent[] findByCompanyId_PrevAndNext(long analyticsEventId,
 		long companyId, OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = findByPrimaryKey(analyticsEventId);
 
 		Session session = null;
@@ -766,13 +766,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByC_GtD_First(long companyId, Date createDate,
 		OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByC_GtD_First(companyId,
 				createDate, orderByComparator);
 
@@ -792,7 +792,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -824,13 +824,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByC_GtD_Last(long companyId, Date createDate,
 		OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByC_GtD_Last(companyId,
 				createDate, orderByComparator);
 
@@ -850,7 +850,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -889,13 +889,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent[] findByC_GtD_PrevAndNext(long analyticsEventId,
 		long companyId, Date createDate, OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = findByPrimaryKey(analyticsEventId);
 
 		Session session = null;
@@ -1316,13 +1316,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByC_LtD_First(long companyId, Date createDate,
 		OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByC_LtD_First(companyId,
 				createDate, orderByComparator);
 
@@ -1342,7 +1342,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -1374,13 +1374,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByC_LtD_Last(long companyId, Date createDate,
 		OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByC_LtD_Last(companyId,
 				createDate, orderByComparator);
 
@@ -1400,7 +1400,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -1439,13 +1439,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent[] findByC_LtD_PrevAndNext(long analyticsEventId,
 		long companyId, Date createDate, OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = findByPrimaryKey(analyticsEventId);
 
 		Session session = null;
@@ -1921,13 +1921,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByC_C_E_GtD_First(String className, long classPK,
 		String eventType, Date createDate, OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByC_C_E_GtD_First(className,
 				classPK, eventType, createDate, orderByComparator);
 
@@ -1953,7 +1953,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -1990,13 +1990,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByC_C_E_GtD_Last(String className, long classPK,
 		String eventType, Date createDate, OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByC_C_E_GtD_Last(className,
 				classPK, eventType, createDate, orderByComparator);
 
@@ -2022,7 +2022,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -2066,14 +2066,14 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent[] findByC_C_E_GtD_PrevAndNext(long analyticsEventId,
 		String className, long classPK, String eventType, Date createDate,
 		OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = findByPrimaryKey(analyticsEventId);
 
 		Session session = null;
@@ -2625,13 +2625,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByE_E_GtD_First(String elementId,
 		String eventType, Date createDate, OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByE_E_GtD_First(elementId,
 				eventType, createDate, orderByComparator);
 
@@ -2654,7 +2654,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -2689,13 +2689,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByE_E_GtD_Last(String elementId,
 		String eventType, Date createDate, OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByE_E_GtD_Last(elementId,
 				eventType, createDate, orderByComparator);
 
@@ -2718,7 +2718,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -2760,14 +2760,14 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent[] findByE_E_GtD_PrevAndNext(long analyticsEventId,
 		String elementId, String eventType, Date createDate,
 		OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = findByPrimaryKey(analyticsEventId);
 
 		Session session = null;
@@ -3355,14 +3355,14 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByC_C_R_R_E_GtD_First(String className,
 		long classPK, String referrerClassName, long referrerClassPK,
 		String eventType, Date createDate, OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByC_C_R_R_E_GtD_First(className,
 				classPK, referrerClassName, referrerClassPK, eventType,
 				createDate, orderByComparator);
@@ -3395,7 +3395,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -3438,14 +3438,14 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByC_C_R_R_E_GtD_Last(String className,
 		long classPK, String referrerClassName, long referrerClassPK,
 		String eventType, Date createDate, OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByC_C_R_R_E_GtD_Last(className,
 				classPK, referrerClassName, referrerClassPK, eventType,
 				createDate, orderByComparator);
@@ -3478,7 +3478,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -3529,7 +3529,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -3537,7 +3537,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		long analyticsEventId, String className, long classPK,
 		String referrerClassName, long referrerClassPK, String eventType,
 		Date createDate, OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = findByPrimaryKey(analyticsEventId);
 
 		Session session = null;
@@ -4189,14 +4189,14 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByR_R_E_E_GtD_First(String referrerClassName,
 		long referrerClassPK, String elementId, String eventType,
 		Date createDate, OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByR_R_E_E_GtD_First(referrerClassName,
 				referrerClassPK, elementId, eventType, createDate,
 				orderByComparator);
@@ -4226,7 +4226,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -4267,14 +4267,14 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a matching analytics event could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByR_R_E_E_GtD_Last(String referrerClassName,
 		long referrerClassPK, String elementId, String eventType,
 		Date createDate, OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByR_R_E_E_GtD_Last(referrerClassName,
 				referrerClassPK, elementId, eventType, createDate,
 				orderByComparator);
@@ -4304,7 +4304,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
 
-		throw new NoSuchEventException(msg.toString());
+		throw new NoSuchAnalyticsEventException(msg.toString());
 	}
 
 	/**
@@ -4353,7 +4353,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
@@ -4361,7 +4361,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		long analyticsEventId, String referrerClassName, long referrerClassPK,
 		String elementId, String eventType, Date createDate,
 		OrderByComparator orderByComparator)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = findByPrimaryKey(analyticsEventId);
 
 		Session session = null;
@@ -4836,12 +4836,12 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 *
 	 * @param analyticsEventId the primary key of the analytics event
 	 * @return the analytics event that was removed
-	 * @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent remove(long analyticsEventId)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		return remove((Serializable)analyticsEventId);
 	}
 
@@ -4850,12 +4850,12 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 *
 	 * @param primaryKey the primary key of the analytics event
 	 * @return the analytics event that was removed
-	 * @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent remove(Serializable primaryKey)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		Session session = null;
 
 		try {
@@ -4869,13 +4869,13 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 					_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 				}
 
-				throw new NoSuchEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+				throw new NoSuchAnalyticsEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
 					primaryKey);
 			}
 
 			return remove(analyticsEvent);
 		}
-		catch (NoSuchEventException nsee) {
+		catch (NoSuchAnalyticsEventException nsee) {
 			throw nsee;
 		}
 		catch (Exception e) {
@@ -5019,12 +5019,12 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 *
 	 * @param primaryKey the primary key of the analytics event
 	 * @return the analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		AnalyticsEvent analyticsEvent = fetchByPrimaryKey(primaryKey);
 
 		if (analyticsEvent == null) {
@@ -5032,7 +5032,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 				_log.warn(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY + primaryKey);
 			}
 
-			throw new NoSuchEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
+			throw new NoSuchAnalyticsEventException(_NO_SUCH_ENTITY_WITH_PRIMARY_KEY +
 				primaryKey);
 		}
 
@@ -5040,16 +5040,16 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the analytics event with the primary key or throws a {@link com.liferay.analytics.NoSuchEventException} if it could not be found.
+	 * Returns the analytics event with the primary key or throws a {@link com.liferay.analytics.NoSuchAnalyticsEventException} if it could not be found.
 	 *
 	 * @param analyticsEventId the primary key of the analytics event
 	 * @return the analytics event
-	 * @throws com.liferay.analytics.NoSuchEventException if a analytics event with the primary key could not be found
+	 * @throws com.liferay.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent findByPrimaryKey(long analyticsEventId)
-		throws NoSuchEventException, SystemException {
+		throws NoSuchAnalyticsEventException, SystemException {
 		return findByPrimaryKey((Serializable)analyticsEventId);
 	}
 

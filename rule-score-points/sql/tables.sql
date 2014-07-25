@@ -1,4 +1,4 @@
-create table ScorePoints_ScorePoint (
+create table ContentTargeting_ScorePoint (
 	uuid_ VARCHAR(75) null,
 	scorePointId LONG not null primary key,
 	anonymousUserId LONG,
