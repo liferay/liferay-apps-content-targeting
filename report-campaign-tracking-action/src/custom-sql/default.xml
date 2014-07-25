@@ -4,17 +4,17 @@
 	<sql id="com.liferay.contenttargeting.reports.campaigntrackingaction.service.persistence.CampaignTrackingActionFinder.findByAnalytics">
 		<![CDATA[
 			SELECT
-				DISTINCT Analytics_AnalyticsEvent.classPK AS classPK, Analytics_AnalyticsEvent.referrerClassPK AS referrerClassPK, Analytics_AnalyticsEvent.elementId AS elementId, Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.campaignId AS campaignId, CT_TrackingActionInstance.alias_ AS alias
+				DISTINCT ContentTargeting_Analytics_AnalyticsEvent.classPK AS classPK, ContentTargeting_Analytics_AnalyticsEvent.referrerClassPK AS referrerClassPK, ContentTargeting_Analytics_AnalyticsEvent.elementId AS elementId, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.campaignId AS campaignId, CT_TrackingActionInstance.alias_ AS alias
 			FROM
-				Analytics_AnalyticsEvent
+				ContentTargeting_Analytics_AnalyticsEvent
 			INNER JOIN
 				CT_TrackingActionInstance ON
-					(CT_TrackingActionInstance.elementId = Analytics_AnalyticsEvent.elementId) AND
-					(CT_TrackingActionInstance.eventType = Analytics_AnalyticsEvent.eventType)
+					(CT_TrackingActionInstance.elementId = ContentTargeting_Analytics_AnalyticsEvent.elementId) AND
+					(CT_TrackingActionInstance.eventType = ContentTargeting_Analytics_AnalyticsEvent.eventType)
 			WHERE
-				(Analytics_AnalyticsEvent.createDate >= ?)
+				(ContentTargeting_Analytics_AnalyticsEvent.createDate >= ?)
 			ORDER BY
-				Analytics_AnalyticsEvent.createDate DESC
+				ContentTargeting_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
 </custom-sql>

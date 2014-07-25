@@ -4,19 +4,19 @@
 	 <sql id="com.liferay.contenttargeting.service.persistence.CampaignFinder.findByG_D_A_U">
 		<![CDATA[
 			SELECT
-				CT_Campaign.*
+				ContentTargeting_Campaign.*
 			FROM
-				CT_Campaign
+				ContentTargeting_Campaign
 			INNER JOIN
-				CT_Campaigns_UserSegments ON
-					(CT_Campaigns_UserSegments.campaignId = CT_Campaign.campaignId) AND
-					(CT_Campaigns_UserSegments.userSegmentId IN ([$USER_SEGMENT_IDS$]))
+				ContentTargeting_Campaigns_UserSegments ON
+					(ContentTargeting_Campaigns_UserSegments.campaignId = ContentTargeting_Campaign.campaignId) AND
+					(ContentTargeting_Campaigns_UserSegments.userSegmentId IN ([$USER_SEGMENT_IDS$]))
 			WHERE
 				[$GROUP_ID$]
-				(CT_Campaign.startDate <= ? AND CT_Campaign.endDate >= ?) AND
-				(CT_Campaign.active_ = ?)
+				(ContentTargeting_Campaign.startDate <= ? AND ContentTargeting_Campaign.endDate >= ?) AND
+				(ContentTargeting_Campaign.active_ = ?)
 			ORDER BY
-				CT_Campaign.priority ASC
+				ContentTargeting_Campaign.priority ASC
 		]]>
 	</sql>
 </custom-sql>
