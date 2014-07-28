@@ -30,4 +30,8 @@
 
 		<@aui["nav-item"] href="${addUserSegmentURL}" iconCssClass="icon-plus" label="add-user-segment" />
 	</#if>
+
+	<#if contentTargetingPermission.contains(permissionChecker, scopeGroupId, actionKeys.DELETE_USER_SEGMENT)>
+		<@aui["nav-item"] cssClass="hide" id="deleteUserSegments" iconCssClass="icon-remove" label="delete" />
+	</#if>
 </@>

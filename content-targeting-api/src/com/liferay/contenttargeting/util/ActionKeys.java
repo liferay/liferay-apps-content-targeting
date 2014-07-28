@@ -24,4 +24,8 @@ public class ActionKeys
 
 	public static final String ADD_USER_SEGMENT = "ADD_USER_SEGMENT";
 
+	public static final String DELETE_CAMPAIGN = "DELETE_CAMPAIGN";
+
+	public static final String DELETE_USER_SEGMENT = "DELETE_USER_SEGMENT";
+
 }

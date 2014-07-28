@@ -31,8 +31,9 @@
 	<@portlet["param"] name="tabs1" value="user-segments" />
 </@>
 
-<@aui["form"] action="${searchURL}" method="post" name="fm">
+<@aui["form"] action="${searchURL}" method="post" name="fmUserSegment">
 	<@aui["input"] name="redirect" type="hidden" value="${currentURL}" />
+	<@aui["input"] name="userSegmentIds" type="hidden" />
 
 	<@aui["nav-bar"]>
 		<#include "user_segment_toolbar.ftl" />

@@ -24,6 +24,7 @@
 <@liferay_ui["search-container"]
 	emptyResultsMessage="no-campaigns-were-found"
 	iteratorURL=viewCampaignsURL
+	rowChecker=rowChecker
 	total=campaignSearchContainerIterator.getTotal()
 >
 	<@liferay_ui["search-container-results"]
@@ -32,6 +33,7 @@
 
 	<@liferay_ui["search-container-row"]
 		className="com.liferay.contenttargeting.model.Campaign"
+		keyProperty="campaignId"
 		modelVar="campaign"
 	>
 
@@ -133,4 +135,38 @@
 	</@>
 
 	<@liferay_ui["search-iterator"] />
+</@>
+
+<@aui["script"] use="liferay-util-list-fields">
+	var deleteCampaigns = A.one('#<@portlet["namespace"] />deleteCampaigns');
+
+	A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').on(
+		'click',
+		function() {
+			var hide = (Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmCampaigns, '<@portlet["namespace"] />allRowIds').length == 0);
+
+			deleteCampaigns.toggle(!hide);
+		},
+		'input[type=checkbox]'
+	);
+
+	deleteCampaigns.on(
+		'click',
+		function(event) {
+			if (confirm('${languageUtil.get(locale, "are-you-sure-you-want-to-delete-this")}')) {
+				document.<@portlet["namespace"] />fmCampaigns.<@portlet["namespace"] />campaignsIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmCampaigns, '<@portlet["namespace"] />allRowIds');
+
+				<@portlet["renderURL"] var="redirectURL">
+					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+					<@portlet["param"] name="tabs1" value="campaigns" />
+				</@>
+
+				<@portlet["actionURL"] name="deleteCampaign" var="deleteCampaignsURL">
+					<@portlet["param"] name="redirect" value="${redirectURL}" />
+				</@>
+
+				submitForm(document.<@portlet["namespace"] />fmCampaigns, '${deleteCampaignsURL}');
+			}
+		}
+	);
 </@>

@@ -24,6 +24,7 @@
 <@liferay_ui["search-container"]
 	emptyResultsMessage="no-user-segments-were-found"
 	iteratorURL=viewUserSegmentsURL
+	rowChecker=rowChecker
 	total=userSegmentSearchContainerIterator.getTotal()
 >
 	<@liferay_ui["search-container-results"]
@@ -32,6 +33,7 @@
 
 	<@liferay_ui["search-container-row"]
 		className="com.liferay.contenttargeting.model.UserSegment"
+		keyProperty="userSegmentId"
 		modelVar="userSegment"
 	>
 
@@ -110,4 +112,38 @@
 	</@>
 
 	<@liferay_ui["search-iterator"] />
+</@>
+
+<@aui["script"] use="liferay-util-list-fields">
+	var deleteUserSegments = A.one('#<@portlet["namespace"] />deleteUserSegments');
+
+	A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').on(
+		'click',
+		function() {
+			var hide = (Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmUserSegment, '<@portlet["namespace"] />allRowIds').length == 0);
+
+			deleteUserSegments.toggle(!hide);
+		},
+		'input[type=checkbox]'
+	);
+
+	deleteUserSegments.on(
+		'click',
+		function(event) {
+			if (confirm('${languageUtil.get(locale, "are-you-sure-you-want-to-delete-this")}')) {
+				document.<@portlet["namespace"] />fmUserSegment.<@portlet["namespace"] />userSegmentIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmUserSegment, '<@portlet["namespace"] />allRowIds');
+
+				<@portlet["renderURL"] var="redirectURL">
+					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+					<@portlet["param"] name="tabs1" value="user-segments" />
+				</@>
+
+				<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
+					<@portlet["param"] name="redirect" value="${redirectURL}" />
+				</@>
+
+				submitForm(document.<@portlet["namespace"] />fmUserSegment, '${deleteUserSegmentURL}');
+			}
+		}
+	);
 </@>

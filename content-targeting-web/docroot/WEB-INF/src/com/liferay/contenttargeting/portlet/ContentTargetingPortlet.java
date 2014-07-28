@@ -39,6 +39,7 @@ import com.liferay.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.contenttargeting.util.UserSegmentSearchContainerIterator;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.NoSuchModelException;
+import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -95,10 +96,22 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 	public void deleteCampaign(ActionRequest request, ActionResponse response)
 		throws Exception {
 
-		long campaignId = ParamUtil.getLong(request, "campaignId");
-
 		try {
-			_campaignService.deleteCampaign(campaignId);
+			long[] deleteCampaignsIds = null;
+
+			long campaignId = ParamUtil.getLong(request, "campaignId");
+
+			if (campaignId > 0) {
+				deleteCampaignsIds = new long[] {campaignId};
+			}
+			else {
+				deleteCampaignsIds = StringUtil.split(
+					ParamUtil.getString(request, "campaignsIds"), 0L);
+			}
+
+			for (long deleteCampaignId : deleteCampaignsIds) {
+				_campaignService.deleteCampaign(deleteCampaignId);
+			}
 
 			sendRedirect(request, response);
 		}
@@ -113,10 +126,22 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			ActionRequest request, ActionResponse response)
 		throws Exception {
 
-		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
-
 		try {
-			_userSegmentService.deleteUserSegment(userSegmentId);
+			long[] deleteUserSegmentIds = null;
+
+			long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
+
+			if (userSegmentId > 0) {
+				deleteUserSegmentIds = new long[] {userSegmentId};
+			}
+			else {
+				deleteUserSegmentIds = StringUtil.split(
+					ParamUtil.getString(request, "userSegmentIds"), 0L);
+			}
+
+			for (long deleteUserSegmentId : deleteUserSegmentIds) {
+				_userSegmentService.deleteUserSegment(deleteUserSegmentId);
+			}
 
 			sendRedirect(request, response);
 		}
@@ -392,6 +417,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				staticModels.get(
 					"com.liferay.contenttargeting.service.permission." +
 						"UserSegmentPermission"));
+
+			template.put("rowChecker", new RowChecker(portletResponse));
 
 			String keywords = ParamUtil.getString(portletRequest, "keywords");
 

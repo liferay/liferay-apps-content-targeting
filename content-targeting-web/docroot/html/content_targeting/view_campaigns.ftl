@@ -21,8 +21,9 @@
 	<@portlet["param"] name="tabs1" value="campaigns" />
 </@>
 
-<@aui["form"] action="${searchURL}" method="post" name="fm">
+<@aui["form"] action="${searchURL}" method="post" name="fmCampaigns">
 	<@aui["input"] name="redirect" type="hidden" value="${currentURL}" />
+	<@aui["input"] name="campaignsIds" type="hidden" />
 
 	<@aui["nav-bar"]>
 		<#include "campaign_toolbar.ftl" />
