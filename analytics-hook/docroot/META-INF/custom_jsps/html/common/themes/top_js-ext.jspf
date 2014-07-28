@@ -38,4 +38,21 @@
 			groupId: '<%= layout.getGroupId() %>'
 		});
 	</c:if>
+
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") %>'>
+		var A = AUI();
+
+		A.applyConfig(
+			{
+				modules: {
+					'youtube-iframe': {
+						fullpath: '/html/js/analytics/integrations/youtube_iframe.js',
+						requires: [
+							'aui-base'
+						]
+					}
+				}
+			}
+		)
+	</c:if>
 </script>

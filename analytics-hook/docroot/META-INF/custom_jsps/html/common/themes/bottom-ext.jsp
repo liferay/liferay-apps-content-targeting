@@ -18,9 +18,15 @@
 
 <%
 long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
+
+String modules = "aui-base";
+
+if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled")) {
+	modules += ",youtube-iframe";
+}
 %>
 
-<aui:script position="inline" use="aui-base">
+<aui:script position="inline" use="<%= modules %>">
 	var trackElementEvent = function(eventType, element) {
 		Liferay.Analytics.track(
 			eventType,
@@ -117,6 +123,18 @@ long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 				}
 			},
 			'a'
+		);
+	</c:if>
+
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") %>'>
+		var yt = new Liferay.YoutubeIframe(
+			{
+				on: {
+					stateChange: function(event) {
+						console.log(event.playerId + ' is now ' + event.state);
+					}
+				}
+			}
 		);
 	</c:if>
 
