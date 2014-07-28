@@ -62,9 +62,8 @@ public class AnalyticsEventLocalServiceImplTest {
 		AnalyticsEvent analyticsEvent =
 			_analyticsEventLocalService.addAnalyticsEvent(
 				1, 1, JournalArticle.class.getName(), 1, Layout.class.getName(),
-				1, StringPool.BLANK, null, "view", "127.0.0.1", "ES",
-				"http://localhost", StringPool.BLANK,
-				TestUtil.getServiceContext());
+				1, null, "view", "127.0.0.1", "User Agent", "ES",
+				"http://localhost", null, TestUtil.getServiceContext());
 
 		Assert.assertEquals(
 			initAnalyticsEventsCount + 1,
@@ -84,7 +83,7 @@ public class AnalyticsEventLocalServiceImplTest {
 
 		_analyticsEventLocalService.addAnalyticsEvent(
 			1, 1, JournalArticle.class.getName(), 1, Layout.class.getName(),
-			new long[] {1, 2}, StringPool.BLANK, null, "view", "127.0.0.1",
+			new long[] {1, 2}, null, "view", "127.0.0.1", "User Agent",
 			"ES", "http://localhost", StringPool.BLANK,
 			TestUtil.getServiceContext());
 
