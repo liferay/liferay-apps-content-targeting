@@ -111,7 +111,7 @@ public class IpGeocodeRule extends BaseRule {
 
 	@Override
 	public String getIcon() {
-		return "icon-globe";
+		return "icon-location-arrow";
 	}
 
 	@Override
