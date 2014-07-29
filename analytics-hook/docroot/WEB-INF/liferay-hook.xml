@@ -5,4 +5,17 @@
 	<portal-properties>portal.properties</portal-properties>
 	<language-properties>content/Language*.properties</language-properties>
 	<custom-jsp-dir>/META-INF/custom_jsps</custom-jsp-dir>
+	<servlet-filter>
+		<servlet-filter-name>Youtube URL Filter</servlet-filter-name>
+		<servlet-filter-impl>com.liferay.contenttargeting.analytics.hook.filter.YoutubeVideoHtmlFilter</servlet-filter-impl>
+	</servlet-filter>
+	<servlet-filter-mapping>
+		<servlet-filter-name>Youtube URL Filter</servlet-filter-name>
+		<before-filter>Valid Html Filter</before-filter>
+		<url-pattern>/group/*</url-pattern>
+		<url-pattern>/user/*</url-pattern>
+		<url-pattern>/web/*</url-pattern>
+		<dispatcher>REQUEST</dispatcher>
+		<dispatcher>FORWARD</dispatcher>
+	</servlet-filter-mapping>
 </hook>
