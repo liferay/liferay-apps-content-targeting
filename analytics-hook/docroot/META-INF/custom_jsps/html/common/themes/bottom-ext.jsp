@@ -27,13 +27,13 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 %>
 
 <aui:script position="inline" use="<%= modules %>">
-	var trackElementEvent = function(eventType, element) {
+	var trackElementEvent = function(eventType, elementId) {
 		Liferay.Analytics.track(
 			eventType,
 			{
 				className: '<%= Layout.class.getName() %>',
 				classPK: '<%= plid %>',
-				elementId: element.attr('id'),
+				elementId: elementId,
 				referrerClassName: 'com.liferay.contenttargeting.model.UserSegment',
 				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
 			}
@@ -50,8 +50,10 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 
 			A.all('form').each(
 				function(item) {
-				   if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(item.attr('id'))) {
-					   trackingForms.push(item);
+					var itemId = item.attr('id');
+
+				   if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(itemId)) {
+					   trackingForms.push(itemId);
 				   }
 				}
 			);
@@ -66,10 +68,10 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 			Liferay.on(
 				'submitForm',
 				function(event) {
-					var form = event.form;
+					var formId = event.form.attr('id');
 
-					if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(form.attr('id'))) {
-						trackElementEvent('submit', form);
+					if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId)) {
+						trackElementEvent('submit', formId);
 					}
 				}
 			);
@@ -88,7 +90,7 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 					if ((!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId)) && (interactedForms.indexOf(formId) === -1)) {
 						interactedForms.push(formId);
 
-						trackElementEvent('interact', form);
+						trackElementEvent('interact', formId);
 					}
 				},
 				'form'
@@ -109,7 +111,7 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 				var linkId = link.attr('id');
 
 				if (!defaultLinkExcludedIdsRegex.test(linkId) && (!linkExcludedIdsRegexStr || !new RegExp(linkExcludedIdsRegexStr).test(linkId))) {
-					trackElementEvent('click', link);
+					trackElementEvent('click', linkId);
 
 					if (link.hasClass('outbound-link')) {
 						event.preventDefault();
@@ -131,7 +133,9 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 			{
 				on: {
 					stateChange: function(event) {
-						console.log(event.playerId + ' is now ' + event.state);
+						trackElementEvent(event.state, event.playerId);
+
+						Liferay.Analytics.flush();
 					}
 				}
 			}
