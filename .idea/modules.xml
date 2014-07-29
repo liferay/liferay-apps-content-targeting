@@ -14,6 +14,7 @@
       <module fileurl="file://$PROJECT_DIR$/content-targeting-web/content-targeting-web.iml" filepath="$PROJECT_DIR$/content-targeting-web/content-targeting-web.iml" />
       <module fileurl="file://$PROJECT_DIR$/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" filepath="$PROJECT_DIR$/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-campaign-content/report-campaign-content.iml" filepath="$PROJECT_DIR$/report-campaign-content/report-campaign-content.iml" />
+      <module fileurl="file://$PROJECT_DIR$/report-campaign-content-test/report-campaign-content-test.iml" filepath="$PROJECT_DIR$/report-campaign-content-test/report-campaign-content-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-campaign-tracking-action/report-campaign-tracking-action.iml" filepath="$PROJECT_DIR$/report-campaign-tracking-action/report-campaign-tracking-action.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-campaign-tracking-action-test/report-campaign-tracking-action-test.iml" filepath="$PROJECT_DIR$/report-campaign-tracking-action-test/report-campaign-tracking-action-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-user-segment-content/report-user-segment-content.iml" filepath="$PROJECT_DIR$/report-user-segment-content/report-user-segment-content.iml" />
