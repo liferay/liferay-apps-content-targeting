@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<project name="report-user-segment-content-test" basedir="." default="compile">
+	<property name="plugin.version" value="1" />
+
+	<property name="plugin.name" value="com.liferay.portal.content.targeting.report.user.segment.content.test" />
+
+	<property name="import.shared" value="report-user-segment-content" />
+
+	<property name="ivy.resolve.transitive.dependencies" value="true" />
+
+	<import file="../../../build-common-osgi-plugin.xml" />
+
+	<target name="deploy" />
+</project>
