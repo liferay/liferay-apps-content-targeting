@@ -18,6 +18,10 @@
 
 <h3><liferay-ui:message key="content-targeting-analytics" /></h3>
 
+<div class="alert alert-info">
+	<liferay-ui:message key="select-the-elements-and-actions-that-will-be-tracked-by-content-targeting-analytics" />
+</div>
+
 <aui:fieldset>
 	<aui:input label="pages" name="settings--content.targeting.analytics.page.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") %>' />
 
