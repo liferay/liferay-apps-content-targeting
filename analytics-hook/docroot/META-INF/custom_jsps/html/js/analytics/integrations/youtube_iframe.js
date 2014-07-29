@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var WIN = A.config.win;
 
-        var IFRAME_API_SRC = 'https://www.youtube.com/iframe_api';
+		var IFRAME_API_SRC = 'https://www.youtube.com/iframe_api';
 
 		var YoutubeIframe = A.Component.create(
 			{
@@ -22,7 +22,7 @@ AUI.add(
 							instance._initializePlayers();
 						}
 
-        				A.Get.js(IFRAME_API_SRC);
+						A.Get.js(IFRAME_API_SRC);
 					},
 
 					destructor: function() {
