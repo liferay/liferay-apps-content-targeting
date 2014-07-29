@@ -19,26 +19,26 @@
 <h3><liferay-ui:message key="content-targeting-analytics" /></h3>
 
 <aui:fieldset>
-	<aui:input label="page-view" name="settings--content.targeting.analytics.page.view--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.view") %>' />
+	<aui:input label="pages" name="settings--content.targeting.analytics.page.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") %>' />
 
-	<aui:input label="content-view" name="settings--content.targeting.analytics.content.view--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.view") %>' />
+	<aui:input label="content" name="settings--content.targeting.analytics.content.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") %>' />
 
-	<aui:input id="contentTargetingAnalyticsFormEnabled" label="form" name="settings--content.targeting.analytics.form.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.enabled") %>' />
+	<aui:input id="contentTargetingAnalyticsFormEnabled" label="forms" name="settings--content.targeting.analytics.form.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.enabled") %>' />
 
 	<div class="organization-details" id="<portlet:namespace />formOptions">
-		<aui:input label="form-view" name="settings--content.targeting.analytics.form.view--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view") %>' />
+		<aui:input label="form-views" name="settings--content.targeting.analytics.form.view.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view.enabled") %>' />
 
-		<aui:input label="form-interact" name="settings--content.targeting.analytics.form.interact--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact") %>' />
+		<aui:input label="form-interactions" name="settings--content.targeting.analytics.form.interact.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact.enabled") %>' />
 
-		<aui:input label="form-submit" name="settings--content.targeting.analytics.form.submit--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit") %>' />
+		<aui:input label="form-submits" name="settings--content.targeting.analytics.form.submit.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit.enabled") %>' />
 
 		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name="settings--content.targeting.analytics.form.excluded.ids.regex--" type="text" value='<%= PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.form.excluded.ids.regex") %>' />
 	</div>
 
-	<aui:input id="contentTargetingAnalyticsLinkEnabled" label="link" name="settings--content.targeting.analytics.link.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.enabled") %>' />
+	<aui:input id="contentTargetingAnalyticsLinkEnabled" label="links" name="settings--content.targeting.analytics.link.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.enabled") %>' />
 
 	<div class="organization-details" id="<portlet:namespace />linkOptions">
-		<aui:input label="link-click" name="settings--content.targeting.analytics.link.click--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.click") %>' />
+		<aui:input label="link-clicks" name="settings--content.targeting.analytics.link.click.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.click.enabled") %>' />
 
 		<aui:input helpMessage="excluded-ids-help" label="excluded-ids" name="settings--content.targeting.analytics.link.excluded.ids.regex--" type="text" value='<%= PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.link.excluded.ids.regex") %>' />
 	</div>

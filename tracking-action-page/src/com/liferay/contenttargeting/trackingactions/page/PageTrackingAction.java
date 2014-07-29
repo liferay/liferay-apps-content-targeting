@@ -162,7 +162,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 		try {
 			trackingPageEnabled = PrefsPropsUtil.getBoolean(
 				company.getCompanyId(),
-				"content.targeting.analytics.page.view");
+				"content.targeting.analytics.page.enabled");
 		}
 		catch (SystemException se) {
 		}

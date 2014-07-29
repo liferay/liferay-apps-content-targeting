@@ -209,7 +209,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 		try {
 			trackingContentEnabled = PrefsPropsUtil.getBoolean(
 				company.getCompanyId(),
-				"content.targeting.analytics.content.view");
+				"content.targeting.analytics.content.enabled");
 		}
 		catch (SystemException se) {
 		}

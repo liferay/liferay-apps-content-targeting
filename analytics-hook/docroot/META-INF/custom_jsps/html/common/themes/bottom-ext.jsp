@@ -45,7 +45,7 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.enabled") %>'>
 		var formExcludedIdsRegexStr = '<%= PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.form.excluded.ids.regex") %>';
 
-		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view") %>'>
+		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view.enabled") %>'>
 			var trackingForms = [];
 
 			A.all('form').each(
@@ -62,7 +62,7 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 			);
 		</c:if>
 
-		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit") %>'>
+		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit.enabled") %>'>
 			Liferay.on(
 				'submitForm',
 				function(event) {
@@ -75,7 +75,7 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 			);
 		</c:if>
 
-		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact") %>'>
+		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact.enabled") %>'>
 			var interactedForms = [];
 
 			DOC.delegate(
@@ -96,7 +96,7 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 		</c:if>
 	</c:if>
 
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.enabled") && PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.click") %>'>
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.enabled") && PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.click.enabled") %>'>
 		DOC.delegate(
 			'click',
 			function(event) {

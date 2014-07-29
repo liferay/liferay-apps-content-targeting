@@ -22,7 +22,7 @@
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 %>
 
-<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.view") && (articleDisplay != null) %>'>
+<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && (articleDisplay != null) %>'>
 	<aui:script position="inline">
 		Liferay.Analytics.track('view', {
 			className: '<%= JournalArticle.class.getName() %>',

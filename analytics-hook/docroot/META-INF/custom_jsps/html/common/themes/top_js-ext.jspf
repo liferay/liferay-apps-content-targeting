@@ -31,7 +31,7 @@
 		}
 	);
 
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.view") %>'>
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") %>'>
 		Liferay.Analytics.track('view', {
 			className: '<%= Layout.class.getName() %>',
 			classPK: '<%= layout.getPlid() %>',
