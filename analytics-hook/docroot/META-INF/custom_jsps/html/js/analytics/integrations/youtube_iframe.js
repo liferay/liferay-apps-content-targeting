@@ -58,7 +58,7 @@ AUI.add(
 						states[YT.PlayerState.PLAYING] = 'playing';
 						states[YT.PlayerState.PAUSED] = 'paused';
 						states[YT.PlayerState.BUFFERING] = 'buffering';
-						states[YT.PlayerState.VIDEO_CUED] = 'video_cued';
+						states[YT.PlayerState.VIDEO_CUED] = 'video-cued';
 
 						instance._states = states;
 					},
