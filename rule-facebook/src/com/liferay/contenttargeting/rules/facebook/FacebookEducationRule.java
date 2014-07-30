@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.util.WebKeys;
 
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
@@ -75,7 +76,11 @@ public class FacebookEducationRule extends BaseRule {
 		boolean highSchool = jsonObj.getBoolean("highSchool");
 		String schoolName = jsonObj.getString("schoolName");
 
-		FacebookClient facebookClient = new DefaultFacebookClient();
+		JSONObject typeSettings = JSONFactoryUtil.createJSONObject(
+			anonymousUser.getTypeSettings());
+
+		FacebookClient facebookClient = new DefaultFacebookClient(
+			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
 
 		User user = facebookClient.fetchObject("me", User.class);
 
