@@ -51,23 +51,9 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 		AnonymousUser anonymousUser = null;
 
 		if (userId > 0) {
-			anonymousUser =
-				AnonymousUserLocalServiceUtil.fetchAnonymousUserByUserId(
-					userId);
+			anonymousUser = getAnonymousUser(request, userId);
 
-			if (anonymousUser == null) {
-				anonymousUser = getAnonymousUserFromCookie(request);
-
-				if (anonymousUser == null) {
-					anonymousUser =
-						AnonymousUserLocalServiceUtil.addAnonymousUser(
-							userId, request.getRemoteAddr(), null,
-							serviceContext);
-				}
-			}
-			else if (!anonymousUser.getLastIp().equals(
-						request.getRemoteAddr())) {
-
+			if (!anonymousUser.getLastIp().equals(request.getRemoteAddr())) {
 				AnonymousUserLocalServiceUtil.updateLastIp(
 					anonymousUser.getAnonymousUserId(),
 					request.getRemoteAddr());
@@ -88,6 +74,33 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 		else if (!anonymousUser.getLastIp().equals(request.getRemoteAddr())) {
 			AnonymousUserLocalServiceUtil.updateLastIp(
 				anonymousUser.getAnonymousUserId(), request.getRemoteAddr());
+		}
+
+		return anonymousUser;
+	}
+
+	@Override
+	public AnonymousUser getAnonymousUser(
+			HttpServletRequest request, long userId)
+		throws PortalException, SystemException {
+
+		long companyId = PortalUtil.getCompanyId(request);
+
+		ServiceContext serviceContext = new ServiceContext();
+
+		serviceContext.setCompanyId(companyId);
+
+		AnonymousUser anonymousUser =
+			AnonymousUserLocalServiceUtil.fetchAnonymousUserByUserId(userId);
+
+		if (anonymousUser == null) {
+			anonymousUser = getAnonymousUserFromCookie(request);
+
+			if (anonymousUser == null) {
+				anonymousUser =
+					AnonymousUserLocalServiceUtil.addAnonymousUser(
+						userId, request.getRemoteAddr(), null, serviceContext);
+			}
 		}
 
 		return anonymousUser;

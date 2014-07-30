@@ -34,6 +34,10 @@ public interface AnonymousUsersManager {
 		throws PortalException, SystemException;
 
 	public AnonymousUser getAnonymousUser(
+			HttpServletRequest request, long userId)
+		throws PortalException, SystemException;
+
+	public AnonymousUser getAnonymousUser(
 			RenderRequest renderRequest, RenderResponse renderResponse)
 		throws PortalException, SystemException;
 
