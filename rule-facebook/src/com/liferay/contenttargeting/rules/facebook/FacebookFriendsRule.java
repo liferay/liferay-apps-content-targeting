@@ -27,7 +27,6 @@ import com.liferay.portal.util.WebKeys;
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 import com.restfb.json.JsonObject;
-import com.restfb.types.User;
 
 import java.util.List;
 import java.util.Locale;
@@ -75,10 +74,7 @@ public class FacebookFriendsRule extends BaseRule {
 		int numberOfFriends = GetterUtil.getInteger(
 			ruleInstance.getTypeSettings());
 
-		User user = facebookClient.fetchObject("me", User.class);
-
-		String query =
-			"SELECT friend_count FROM user WHERE uid = " + user.getId();
+		String query = "SELECT friend_count FROM user WHERE uid = me()";
 
 		List<JsonObject> jsonObjects = facebookClient.executeFqlQuery(
 			query, JsonObject.class);
