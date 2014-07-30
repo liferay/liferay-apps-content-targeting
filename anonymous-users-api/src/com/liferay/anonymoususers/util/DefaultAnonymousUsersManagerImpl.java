@@ -56,8 +56,14 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 					userId);
 
 			if (anonymousUser == null) {
-				anonymousUser = AnonymousUserLocalServiceUtil.addAnonymousUser(
-					userId, request.getRemoteAddr(), null, serviceContext);
+				anonymousUser = getAnonymousUserFromCookie(request);
+
+				if (anonymousUser == null) {
+					anonymousUser =
+						AnonymousUserLocalServiceUtil.addAnonymousUser(
+							userId, request.getRemoteAddr(), null,
+							serviceContext);
+				}
 			}
 			else if (!anonymousUser.getLastIp().equals(
 						request.getRemoteAddr())) {
@@ -70,14 +76,7 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 			return anonymousUser;
 		}
 
-		long anonymousUserId = _anonymousUsersCookieManager.getAnonymousUserId(
-			request);
-
-		if (anonymousUserId > 0) {
-			anonymousUser =
-				AnonymousUserLocalServiceUtil.fetchAnonymousUser(
-					anonymousUserId);
-		}
+		anonymousUser = getAnonymousUserFromCookie(request);
 
 		if (anonymousUser == null) {
 			anonymousUser = AnonymousUserLocalServiceUtil.addAnonymousUser(
@@ -116,6 +115,24 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 		AnonymousUsersCookieManager anonymousUsersCookieManager) {
 
 		this._anonymousUsersCookieManager = anonymousUsersCookieManager;
+	}
+
+	protected AnonymousUser getAnonymousUserFromCookie(
+			HttpServletRequest request)
+		throws SystemException {
+
+		AnonymousUser anonymousUser = null;
+
+		long anonymousUserId = _anonymousUsersCookieManager.getAnonymousUserId(
+			request);
+
+		if (anonymousUserId > 0) {
+			anonymousUser =
+				AnonymousUserLocalServiceUtil.fetchAnonymousUser(
+					anonymousUserId);
+		}
+
+		return anonymousUser;
 	}
 
 	private AnonymousUsersCookieManager _anonymousUsersCookieManager;
