@@ -68,7 +68,7 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 				function(event) {
 					var form = event.form;
 
-					if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(item.attr('id'))) {
+					if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(form.attr('id'))) {
 						trackElementEvent('submit', form);
 					}
 				}
@@ -85,7 +85,7 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 
 					var formId = form.attr('id');
 
-					if ((!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(item.attr('id'))) && (interactedForms.indexOf(formId) === -1)) {
+					if ((!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId)) && (interactedForms.indexOf(formId) === -1)) {
 						interactedForms.push(formId);
 
 						trackElementEvent('interact', form);
