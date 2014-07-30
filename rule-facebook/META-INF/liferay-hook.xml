@@ -3,4 +3,8 @@
 
 <hook>
 	<language-properties>content/Language.properties</language-properties>
+	<struts-action>
+		<struts-action-path>/login/facebook_connect_oauth</struts-action-path>
+		<struts-action-impl>com.liferay.contenttargeting.rules.facebook.hook.CTFacebookConnectionAction</struts-action-impl>
+	</struts-action>
 </hook>
