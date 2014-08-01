@@ -23,7 +23,9 @@ import com.liferay.contenttargeting.rules.facebook.util.FacebookUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -119,6 +121,24 @@ public class FacebookEducationRule extends BaseRule {
 			boolean college = jsonObj.getBoolean("college");
 			boolean highSchool = jsonObj.getBoolean("highSchool");
 			String schoolName = jsonObj.getString("schoolName");
+
+			StringBundler sb = new StringBundler();
+
+			if (highSchool) {
+				sb.append(
+					LanguageUtil.get(locale, "user-attended-high-school"));
+				sb.append(StringPool.SPACE);
+			}
+
+			if (college) {
+				sb.append(LanguageUtil.get(locale, "user-attended-college"));
+				sb.append(StringPool.SPACE);
+			}
+
+			if (Validator.isNotNull(schoolName)) {
+				sb.append(
+					LanguageUtil.get(locale, "with-college-school-name-x"));
+			}
 		}
 		catch (JSONException jse) {
 		}
