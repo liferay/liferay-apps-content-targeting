@@ -1,5 +1,11 @@
+Bundle-Activator: com.liferay.contenttargeting.reports.usersegmentcontent.internal.osgi.UserSegmentContentServiceActivator
 Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.content.targeting.report.user.segment.content-service.jar
 Bundle-Name: User Segment Content Report
+Export-Package:\
+	com.liferay.contenttargeting.reports.usersegmentcontent,\
+	com.liferay.contenttargeting.reports.usersegmentcontent.model,\
+	com.liferay.contenttargeting.reports.usersegmentcontent.service,\
+    com.liferay.contenttargeting.reports.usersegmentcontent.service.messaging
 Import-Package:\
 	com.liferay.analytics.model,\
 	com.liferay.analytics.service,\
@@ -9,6 +15,9 @@ Import-Package:\
 	com.liferay.anonymoususers.service.messaging,\
 	com.liferay.contenttargeting.model,\
 	com.liferay.contenttargeting.api.model,\
+	com.liferay.contenttargeting.reports.usersegmentcontent,\
+	com.liferay.contenttargeting.reports.usersegmentcontent.model,\
+	com.liferay.contenttargeting.reports.usersegmentcontent.service,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.contenttargeting.service.messaging,\
 	com.liferay.contenttargeting.util,\
