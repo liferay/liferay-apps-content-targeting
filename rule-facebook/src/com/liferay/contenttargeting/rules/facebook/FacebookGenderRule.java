@@ -19,6 +19,7 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.rulecategories.SocialRuleCategory;
+import com.liferay.contenttargeting.rules.facebook.util.FacebookUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -69,10 +70,8 @@ public class FacebookGenderRule extends BaseRule {
 		JSONObject typeSettings = JSONFactoryUtil.createJSONObject(
 			anonymousUser.getTypeSettings());
 
-		FacebookClient facebookClient = new DefaultFacebookClient(
+		User user = FacebookUtil.getFacebookUser(
 			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
-
-		User user = facebookClient.fetchObject("me", User.class);
 
 		String gender = ruleInstance.getTypeSettings();
 
@@ -104,6 +103,10 @@ public class FacebookGenderRule extends BaseRule {
 		Map<String, String> values) {
 
 		return values.get("gender");
+	}
+
+	protected FacebookClient createFacebookClient(String accessToken) {
+		return new DefaultFacebookClient(accessToken);
 	}
 
 	protected String getFormTemplatePath() {

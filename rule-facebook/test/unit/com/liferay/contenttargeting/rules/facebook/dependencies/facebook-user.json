@@ -1,0 +1,33 @@
+{
+	"id": "328716990618095",
+	"birthday": "12/04/1990",
+	"education": [
+		{
+			"school": {
+				"id": "155805031116",
+				"name": "Graduate Program in Design at California College of the Arts"
+			},
+			"type": "High School"
+		},
+		{
+			"school": {
+				"id": "105930651606",
+				"name": "Harvard University"
+			},
+			"type": "College"
+		}
+	],
+	"first_name": "Liferay",
+	"gender": "female",
+	"last_name": "Labs",
+	"link": "https://www.facebook.com/app_scoped_user_id/328716990618095/",
+	"location": {
+		"id": "106504859386230",
+		"name": "Madrid, Spain"
+	},
+	"locale": "es_ES",
+	"name": "Liferay Labs",
+	"timezone": 2,
+	"updated_time": "2014-07-30T10:23:19+0000",
+	"verified": true
+}

@@ -19,6 +19,7 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.rulecategories.SocialRuleCategory;
+import com.liferay.contenttargeting.rules.facebook.util.FacebookUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -27,8 +28,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.WebKeys;
 
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
 import com.restfb.types.User;
 
 import java.util.Calendar;
@@ -78,10 +77,8 @@ public class FacebookAgeRule extends BaseRule {
 		JSONObject typeSettings = JSONFactoryUtil.createJSONObject(
 			anonymousUser.getTypeSettings());
 
-		FacebookClient facebookClient = new DefaultFacebookClient(
+		User user = FacebookUtil.getFacebookUser(
 			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
-
-		User user = facebookClient.fetchObject("me", User.class);
 
 		int age = getAge(user.getBirthdayAsDate());
 

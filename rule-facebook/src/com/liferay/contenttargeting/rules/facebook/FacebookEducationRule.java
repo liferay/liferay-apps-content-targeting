@@ -19,6 +19,7 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.rulecategories.SocialRuleCategory;
+import com.liferay.contenttargeting.rules.facebook.util.FacebookUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -28,8 +29,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.WebKeys;
 
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
 import com.restfb.types.User;
 
 import java.util.List;
@@ -79,56 +78,18 @@ public class FacebookEducationRule extends BaseRule {
 		JSONObject typeSettings = JSONFactoryUtil.createJSONObject(
 			anonymousUser.getTypeSettings());
 
-		FacebookClient facebookClient = new DefaultFacebookClient(
+		User user = FacebookUtil.getFacebookUser(
 			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
 
-		User user = facebookClient.fetchObject("me", User.class);
+		boolean hasHighSchoolEducation = hasEducation(
+				user, _EDUCATION_TYPE_HIGH_SCHOOL);
 
-		List<User.Education> educations = user.getEducation();
+		boolean hasCollegeEducation = hasEducation(
+			user, _EDUCATION_TYPE_COLLEGE);
 
-		boolean hasCollegeEducation = false;
-
-		if (college) {
-			for (User.Education education : educations) {
-				if (_EDUCATION_TYPE_COLLEGE.equals(education.getType())) {
-					hasCollegeEducation = true;
-
-					break;
-				}
-			}
-		}
-
-		boolean hasHighSchoolEducation = false;
-
-		if (highSchool) {
-			for (User.Education education : educations) {
-				if (_EDUCATION_TYPE_HIGH_SCHOOL.equals(education.getType())) {
-					hasHighSchoolEducation = true;
-
-					break;
-				}
-			}
-		}
-
-		boolean hasSchoolName = false;
-
-		if (Validator.isNotNull(schoolName)) {
-			for (User.Education education : educations) {
-				String educationSchoolName = education.getSchool().getName();
-
-				if (StringUtil.toLowerCase(educationSchoolName).contains(
-						StringUtil.toLowerCase(schoolName))) {
-
-					hasSchoolName = true;
-
-					break;
-				}
-			}
-		}
-
-		if (((college && hasCollegeEducation) || !college) &&
-			((highSchool && hasHighSchoolEducation) || !highSchool) &&
-			(hasSchoolName || Validator.isNull(schoolName))) {
+		if ((hasCollegeEducation || !college) &&
+			(hasHighSchoolEducation || !highSchool) &&
+			matchEducationName(user, schoolName)) {
 
 			return true;
 		}
@@ -185,6 +146,36 @@ public class FacebookEducationRule extends BaseRule {
 
 	protected String getFormTemplatePath() {
 		return _FORM_TEMPLATE_PATH_EDUCATION;
+	}
+
+	protected boolean hasEducation(User user, String type) {
+		List<User.Education> educations = user.getEducation();
+
+		for (User.Education education : educations) {
+			if (type.equals(education.getType())) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+
+	protected boolean matchEducationName(User user, String schoolName) {
+		if (Validator.isNull(schoolName)) {
+			return true;
+		}
+
+		for (User.Education education : user.getEducation()) {
+			String educationSchoolName = education.getSchool().getName();
+
+			if (StringUtil.toLowerCase(educationSchoolName).contains(
+					StringUtil.toLowerCase(schoolName))) {
+
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	@Override

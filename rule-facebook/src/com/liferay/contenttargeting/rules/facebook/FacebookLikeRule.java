@@ -19,18 +19,12 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.rulecategories.SocialRuleCategory;
+import com.liferay.contenttargeting.rules.facebook.util.FacebookUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.util.WebKeys;
 
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.types.NamedFacebookType;
-import com.restfb.types.Page;
-import com.restfb.types.Post;
-
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -70,29 +64,11 @@ public class FacebookLikeRule extends BaseRule {
 		JSONObject typeSettings = JSONFactoryUtil.createJSONObject(
 			anonymousUser.getTypeSettings());
 
-		FacebookClient facebookClient = new DefaultFacebookClient(
-			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
+		String accessToken = typeSettings.getString(
+			WebKeys.FACEBOOK_ACCESS_TOKEN);
 
-		Page page = null;
-
-		try {
-			page = facebookClient.fetchObject(
-				ruleInstance.getTypeSettings(), Page.class);
-		}
-		catch (Exception e) {
-			return false;
-		}
-
-		Post.Likes postLikes = facebookClient.fetchObject(
-			"me/likes/" + page.getId(), Post.Likes.class);
-
-		List<NamedFacebookType> likes = postLikes.getData();
-
-		if (likes.size() > 0) {
-			return true;
-		}
-
-		return false;
+		return FacebookUtil.isUserLikes(
+			accessToken, ruleInstance.getTypeSettings());
 	}
 
 	@Override

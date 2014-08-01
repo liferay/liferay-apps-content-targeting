@@ -19,16 +19,12 @@ import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
 import com.liferay.contenttargeting.rulecategories.SocialRuleCategory;
+import com.liferay.contenttargeting.rules.facebook.util.FacebookUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.util.WebKeys;
 
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.json.JsonObject;
-
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -68,22 +64,13 @@ public class FacebookFriendsRule extends BaseRule {
 		JSONObject typeSettings = JSONFactoryUtil.createJSONObject(
 			anonymousUser.getTypeSettings());
 
-		FacebookClient facebookClient = new DefaultFacebookClient(
-			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
-
 		int numberOfFriends = GetterUtil.getInteger(
 			ruleInstance.getTypeSettings());
 
-		String query = "SELECT friend_count FROM user WHERE uid = me()";
+		long friendsCount = FacebookUtil.getFriendsCount(
+			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
 
-		List<JsonObject> jsonObjects = facebookClient.executeFqlQuery(
-			query, JsonObject.class);
-
-		JsonObject jsonObject = jsonObjects.get(0);
-
-		long friendCount = GetterUtil.getLong(jsonObject.get("friend_count"));
-
-		if (friendCount >= numberOfFriends) {
+		if (friendsCount >= numberOfFriends) {
 			return true;
 		}
 
