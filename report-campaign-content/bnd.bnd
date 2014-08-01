@@ -1,5 +1,11 @@
+Bundle-Activator: com.liferay.contenttargeting.reports.campaigncontent.internal.osgi.CampaignContentServiceActivator
 Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.content.targeting.report.campaign.content-service.jar
 Bundle-Name: Campaign Content Report
+Export-Package:\
+	com.liferay.contenttargeting.reports.campaigncontent,\
+	com.liferay.contenttargeting.reports.campaigncontent.model,\
+	com.liferay.contenttargeting.reports.campaigncontent.service,\
+    com.liferay.contenttargeting.reports.campaigncontent.service.messaging
 Import-Package:\
 	com.liferay.analytics.model,\
 	com.liferay.analytics.service,\
@@ -9,6 +15,9 @@ Import-Package:\
 	com.liferay.anonymoususers.service.messaging,\
 	com.liferay.contenttargeting.model,\
 	com.liferay.contenttargeting.api.model,\
+	com.liferay.contenttargeting.reports.campaigncontent,\
+	com.liferay.contenttargeting.reports.campaigncontent.model,\
+	com.liferay.contenttargeting.reports.campaigncontent.service,\
 	com.liferay.contenttargeting.service,\
 	com.liferay.contenttargeting.service.messaging,\
 	com.liferay.contenttargeting.util,\
