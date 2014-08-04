@@ -38,6 +38,7 @@
       <module fileurl="file://$PROJECT_DIR$/rule-user-logged-test/rule-user-logged-test.iml" filepath="$PROJECT_DIR$/rule-user-logged-test/rule-user-logged-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-usergroup-member/rule-usergroup-member.iml" filepath="$PROJECT_DIR$/rule-usergroup-member/rule-usergroup-member.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-usergroup-member-test/rule-usergroup-member-test.iml" filepath="$PROJECT_DIR$/rule-usergroup-member-test/rule-usergroup-member-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule-visited/rule-visited.iml" filepath="$PROJECT_DIR$/rule-visited/rule-visited.iml" />
       <module fileurl="file://$PROJECT_DIR$/runtime-dependencies/runtime-dependencies.iml" filepath="$PROJECT_DIR$/runtime-dependencies/runtime-dependencies.iml" />
       <module fileurl="file://$PROJECT_DIR$/runtime-test-dependencies/runtime-test-dependencies.iml" filepath="$PROJECT_DIR$/runtime-test-dependencies/runtime-test-dependencies.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-content/tracking-action-content.iml" filepath="$PROJECT_DIR$/tracking-action-content/tracking-action-content.iml" />
