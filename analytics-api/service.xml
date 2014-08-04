@@ -52,6 +52,12 @@
 			<finder-column name="createDate" comparator="&lt;" />
 		</finder>
 
+		<finder name="C_C_E" return-type="Collection">
+			<finder-column name="className" />
+			<finder-column name="classPK" />
+			<finder-column name="eventType" />
+		</finder>
+
 		<finder name="C_C_E_GtD" return-type="Collection">
 			<finder-column name="className" />
 			<finder-column name="classPK" />
