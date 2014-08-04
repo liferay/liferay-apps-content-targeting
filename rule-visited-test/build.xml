@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<project name="rule-organization-member-test" basedir="." default="compile">
+	<property name="plugin.version" value="1" />
+
+	<property name="plugin.name" value="com.liferay.portal.visited.test" />
+
+	<property name="import.shared" value="rule-visited" />
+
+	<property name="ivy.resolve.transitive.dependencies" value="true" />
+
+	<import file="../../../build-common-osgi-plugin.xml" />
+
+	<target name="deploy" />
+</project>
