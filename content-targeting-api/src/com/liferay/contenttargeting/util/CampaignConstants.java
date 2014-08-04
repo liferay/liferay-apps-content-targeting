@@ -30,13 +30,13 @@ public class CampaignConstants {
 	public static final String STATUS_UPCOMING = "upcoming";
 
 	public static String getStatusCssClass(String status) {
-		if (status == STATUS_FINISHED) {
+		if (status.equals(STATUS_FINISHED)) {
 			return "label-important";
 		}
-		else if (status == STATUS_STARTED) {
+		else if (status.equals(STATUS_STARTED)) {
 			return "label-success";
 		}
-		else if (status == STATUS_UPCOMING) {
+		else if (status.equals(STATUS_UPCOMING)) {
 			return "label-warning";
 		}
 
