@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 
-<project>
+<project xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="../../build-common-plugins.xml" />
 
 	<property name="app.services" value="analytics-api,anonymous-users-api,content-targeting-api,report-campaign-content,report-campaign-tracking-action,report-user-segment-content,rule-score-points" />
@@ -30,6 +30,60 @@
 			module.dirs="${app.services.path}"
 			target.name="build-app-service"
 		/>
+	</target>
+
+	<target name="create">
+		<if>
+			<or>
+				<not>
+					<isset property="rule.display.name" />
+				</not>
+				<not>
+					<isset property="rule.name" />
+				</not>
+			</or>
+			<then>
+				<fail>This task must be called by the create script.</fail>
+			</then>
+		</if>
+
+		<property name="rule.parent.dir" value="${user.dir}" />
+		<property name="rule.dir" value="${rule.parent.dir}/rule-${rule.name}" />
+
+		<if>
+			<available file="${rule.dir}" />
+			<then>
+				<fail>${rule.dir} already exists.</fail>
+			</then>
+		</if>
+
+		<copy todir="${rule.dir}">
+			<fileset
+				dir="${user.dir}/tools/rule_tmpl"
+			/>
+		</copy>
+
+		<antelope:stringutil string="${rule.display.name}" property="rule.java.class.name">
+			<antelope:replace regex="\s+" replacement="" />
+			<antelope:trim />
+		</antelope:stringutil>
+
+		<antelope:stringutil string="${rule.name}" property="rule.java.package.name">
+			<antelope:replace regex="-" replacement="" />
+			<antelope:trim />
+		</antelope:stringutil>
+
+		<move
+			file="${rule.dir}/src/com/liferay/contenttargeting/rules/Rule.java"
+			tofile="${rule.dir}/src/com/liferay/contenttargeting/rules/${rule.java.package.name}/${rule.java.class.name}Rule.java"
+		/>
+
+		<replace dir="${rule.dir}">
+			<replacefilter token="@rule.display.name@" value="${rule.display.name}" />
+			<replacefilter token="@rule.java.class.name@" value="${rule.java.class.name}" />
+			<replacefilter token="@rule.java.package.name@" value="${rule.java.package.name}" />
+			<replacefilter token="@rule.name@" value="${rule.name}" />
+		</replace>
 	</target>
 
 	<macrodef name="build-app-service">
