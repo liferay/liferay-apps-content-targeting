@@ -23,6 +23,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="anonymous-users-api" />
     <orderEntry type="module" module-name="content-targeting-api" />
+    <orderEntry type="module" module-name="analytics-api" />
     <orderEntry type="library" name="portal" level="project" />
     <orderEntry type="module-library">
       <library name="IvyIDEA">
@@ -250,6 +251,34 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-impl-base/sources/shrinkwrap-impl-base-1.2.2-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/sources/shrinkwrap-descriptors-api-base-2.0.0-alpha-3-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/sources/shrinkwrap-descriptors-spi-2.0.0-alpha-3-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="reference" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.0-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/jars/org.osgi.compendium-5.0.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/jars/org.osgi.core-5.0.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.http.service/jars/com.liferay.portal.http.service-1.0.0-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.birt.runtime/org.eclipse.osgi.services/jars/org.eclipse.osgi.services-3.3.100.v20120522-1822.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.log.bridge/jars/com.liferay.portal.log.bridge-1.0.0-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.freemarker/freemarker/jars/freemarker-2.3.17.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/javadocs/org.osgi.compendium-5.0.0-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/javadocs/org.osgi.core-5.0.0-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.birt.runtime/org.eclipse.osgi.services/javadocs/org.eclipse.osgi.services-3.3.100.v20120522-1822-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.0-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/sources/org.osgi.compendium-5.0.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/sources/org.osgi.core-5.0.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.http.service/sources/com.liferay.portal.http.service-1.0.0-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.birt.runtime/org.eclipse.osgi.services/sources/org.eclipse.osgi.services-3.3.100.v20120522-1822-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.log.bridge/sources/com.liferay.portal.log.bridge-1.0.0-SNAPSHOT-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.freemarker/freemarker/sources/freemarker-2.3.17-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

@@ -18,7 +18,7 @@ import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
-import com.liferay.contenttargeting.rulecategories.TestRuleCategory;
+import com.liferay.contenttargeting.rulecategories.BehaviorRuleCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -35,10 +35,10 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Brian Chan
+ * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
-public class VisitedRule extends BaseRule {
+public class PageVisitedRule extends BaseRule {
 
 	@Activate
 	@Override
@@ -63,12 +63,12 @@ public class VisitedRule extends BaseRule {
 
 	@Override
 	public String getIcon() {
-		return "icon-puzzle";
+		return "icon-file";
 	}
 
 	@Override
 	public String getRuleCategoryKey() {
-		return TestRuleCategory.KEY;
+		return BehaviorRuleCategory.KEY;
 	}
 
 	@Override
@@ -85,10 +85,16 @@ public class VisitedRule extends BaseRule {
 		return StringPool.BLANK;
 	}
 
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH_PAGE;
+	}
+
 	@Override
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
-
 	}
+
+	protected static final String _FORM_TEMPLATE_PATH_PAGE =
+		"templates/ct_fields_page.ftl";
 
 }
