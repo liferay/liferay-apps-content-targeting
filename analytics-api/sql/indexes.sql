@@ -1,3 +1,4 @@
+create index IX_3F70B29A on ContentTargeting_Analytics_AnalyticsEvent (className, classPK, eventType);
 create index IX_EB75EA58 on ContentTargeting_Analytics_AnalyticsEvent (className, classPK, eventType, createDate);
 create index IX_1C801DC8 on ContentTargeting_Analytics_AnalyticsEvent (className, classPK, referrerClassName, referrerClassPK, eventType, createDate);
 create index IX_466C824E on ContentTargeting_Analytics_AnalyticsEvent (companyId);

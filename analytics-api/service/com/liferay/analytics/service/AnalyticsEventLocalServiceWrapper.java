@@ -347,6 +347,15 @@ public class AnalyticsEventLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		java.lang.String className, long classPK, java.lang.String eventType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.getAnalyticsEvents(className,
+			classPK, eventType);
+	}
+
+	@Override
+	public java.util.List<com.liferay.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String className, long classPK, java.lang.String eventType,
 		java.util.Date createDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -393,6 +402,15 @@ public class AnalyticsEventLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _analyticsEventLocalService.getAnalyticsEventsCount(companyId,
 			createDate);
+	}
+
+	@Override
+	public int getAnalyticsEventsCount(java.lang.String className,
+		long classPK, java.lang.String eventType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.getAnalyticsEventsCount(className,
+			classPK, eventType);
 	}
 
 	@Override
