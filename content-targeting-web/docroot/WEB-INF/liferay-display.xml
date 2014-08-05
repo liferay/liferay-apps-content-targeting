@@ -4,11 +4,11 @@
 <display>
 	<category name="category.ct">
 		<portlet id="campaigncontentdisplay" />
-		<portlet id="ctsimulator" />
 		<portlet id="usersegmentcontentdisplay" />
 		<portlet id="usersegmentcontentlist" />
 	</category>
 	<category name="category.hidden">
 		<portlet id="ctadmin" />
+		<portlet id="ctsimulator" />
 	</category>
 </display>

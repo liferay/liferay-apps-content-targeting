@@ -33,6 +33,7 @@
 		<header-portlet-css>/css/ct_simulator/main.css</header-portlet-css>
 		<header-portlet-javascript>/js/ct_simulator/main.js</header-portlet-javascript>
 		<css-class-wrapper>content-targeting-simulator-portlet</css-class-wrapper>
+		<add-default-resource>true</add-default-resource>
 	</portlet>
 	<portlet>
 		<portlet-name>usersegmentcontentdisplay</portlet-name>
