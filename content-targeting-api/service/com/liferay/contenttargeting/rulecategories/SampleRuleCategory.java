@@ -23,9 +23,9 @@ import org.osgi.service.component.annotations.Component;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = RuleCategory.class)
-public class TestRuleCategory extends BaseRuleCategory {
+public class SampleRuleCategory extends BaseRuleCategory {
 
-	public static final String KEY = "test";
+	public static final String KEY = "sample";
 
 	@Override
 	public String getCategoryKey() {

@@ -18,7 +18,7 @@ import com.liferay.anonymoususers.model.AnonymousUser;
 import com.liferay.contenttargeting.api.model.BaseRule;
 import com.liferay.contenttargeting.api.model.Rule;
 import com.liferay.contenttargeting.model.RuleInstance;
-import com.liferay.contenttargeting.rulecategories.TestRuleCategory;
+import com.liferay.contenttargeting.rulecategories.SampleRuleCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -68,7 +68,7 @@ public class @rule.java.class.name@Rule extends BaseRule {
 
 	@Override
 	public String getRuleCategoryKey() {
-		return TestRuleCategory.KEY;
+		return SampleRuleCategory.KEY;
 	}
 
 	@Override
