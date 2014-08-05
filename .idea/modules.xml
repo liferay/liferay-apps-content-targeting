@@ -43,6 +43,7 @@
       <module fileurl="file://$PROJECT_DIR$/runtime-dependencies/runtime-dependencies.iml" filepath="$PROJECT_DIR$/runtime-dependencies/runtime-dependencies.iml" />
       <module fileurl="file://$PROJECT_DIR$/runtime-test-dependencies/runtime-test-dependencies.iml" filepath="$PROJECT_DIR$/runtime-test-dependencies/runtime-test-dependencies.iml" />
       <module fileurl="file://$PROJECT_DIR$/simulator-hook/simulator-hook.iml" filepath="$PROJECT_DIR$/simulator-hook/simulator-hook.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tools/tools.iml" filepath="$PROJECT_DIR$/tools/tools.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-content/tracking-action-content.iml" filepath="$PROJECT_DIR$/tracking-action-content/tracking-action-content.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" filepath="$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-link/tracking-action-link.iml" filepath="$PROJECT_DIR$/tracking-action-link/tracking-action-link.iml" />
