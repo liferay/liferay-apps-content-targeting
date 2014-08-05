@@ -28,28 +28,22 @@ In the case of a rule OSGi plugin, it will be consumed by the Audience
 Targeting application.
 
 Adding a new type of rule to the Audience Targeting application is easy.
-For example, let's see how to create a very simple rule called
-"Timezone Rule"
+For example, let's see how to create a very simple rule called `Timezone`.
 
-1. Create a folder inside the /shared folder of your Liferay Plugins SDK. (such
-as timezone-rule) (Developers can also copy one of the existing rule plugins
-included in the Content Targeting repository and use it as a basis).
-2. Add the following files to this folder:
-	* [bnd.bnd](https://github.com/liferay/liferay-apps-content-targeting/blob/master/rule-time/bnd.bnd)
-	* [build.xml](https://github.com/liferay/liferay-apps-content-targeting/blob/master/rule-time/build.xml)
-3. Modify these files with the name of your rule and update the dependencies your
-rule has. Now you have an OSGI plugin :)
-4. Create a sources folder (src) in your rule folder and create a Java class
-that implements the interface Rule and implement all the required method. (It
-will be handy to extend the existing [BaseRule]
-(https://github.com/liferay/liferay-apps-content-targeting/blob/master/content-targeting-api/src/com/liferay/contenttargeting/api/model/BaseRule.java)
-but you are not forced to do so).
-You will need this code to declare your class as an OSGI component that can be
-consumed by the Rules Engine when your plugin is deployed:
+1. In the root of the Audience Targeting project, run the create_rule command
+(depending on your OS):
 	```
-	@Component(immediate = true, service = Rule.class)
+	./create_rule.sh time-zone "Time Zone"
+	create_rule.bat time-zone "Time Zone"
 	```
-Some of the methods that have to be implemented are:
+2. Move to the newly generated folder `rule-time-zone`. Notice that all the
+necessary files have been added by the create_rule command. If you now run the
+`ant deploy` command in the root of the `rule-time-zone` folder, you'll find
+this new rule listed when creating or editing a User Segment in the Audience
+Targeting application.
+3. Of course you still need to make some changes to define how your rule works.
+Open the `TimezoneRule.java` file. Some of the methods that you can implement to
+modify your rule behavior are:
 	* `processRule`: This method will handle the information provided by the
 	administrator when configuring this rule through the Rule GUI.
 	For example, to store the selected time zone in the typeSettings field in the
@@ -69,7 +63,6 @@ Some of the methods that have to be implemented are:
 	* `getName`: The name of your Rule. (It can be localized)
 	* `getSummary`: A description of the Rule once it is configured. This will be used
 	to help administrators. For example, for "Users who are in Timezone GMT".
-
 4. Finally, deploy the rule plugin in the Liferay server. The new rule will be
 available in the add/edit User Segment form. When the User Segment admin selects
 it, the piece of GUI defined by the developer (eg. the time zone selector) is
