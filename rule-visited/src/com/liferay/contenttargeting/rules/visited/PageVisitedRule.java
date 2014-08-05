@@ -129,8 +129,8 @@ public class PageVisitedRule extends BaseRule {
 			Map<String, String> values)
 		throws Exception {
 
-		ThemeDisplay themeDisplay =
-			(ThemeDisplay)request.getAttribute(WebKeys.THEME_DISPLAY);
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		String friendlyURL = values.get("friendlyURL");
 
