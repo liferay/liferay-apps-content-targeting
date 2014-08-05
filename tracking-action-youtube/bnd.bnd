@@ -1,9 +1,9 @@
 Bundle-ClassPath: .,lib/util-java.jar
 Bundle-Name: Youtube Tracking Action
 Import-Package:\
-	com.liferay.contenttargeting.api.model,\
-	com.liferay.contenttargeting.service,\
-	com.liferay.contenttargeting.service.messaging,\
+	com.liferay.portal.contenttargeting.api.model,\
+	com.liferay.portal.contenttargeting.service,\
+	com.liferay.portal.contenttargeting.service.messaging,\
 	com.liferay.portal.json,\
 	com.liferay.portal.model.impl,\
 	com.liferay.portal.kernel.exception,\
@@ -20,6 +20,6 @@ Include-Resource:\
 	classes,\
 	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
 	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
-Private-Package: com.liferay.contenttargeting.trackingactions.youtube.*
-Service-Component: com.liferay.contenttargeting.trackingactions.youtube.*
+Private-Package: com.liferay.portal.contenttargeting.trackingaction.youtube.*
+Service-Component: com.liferay.portal.contenttargeting.trackingaction.youtube.*
 Web-ContextPath: /tracking-action-youtube

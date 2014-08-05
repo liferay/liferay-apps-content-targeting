@@ -3,7 +3,7 @@
 <project name="rule-user-logged" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.content.targeting.rule.userlogged" />
+	<property name="plugin.name" value="com.liferay.portal.contenttargeting.rule.userlogged" />
 
 	<property name="import.shared" value="anonymous-users-api,content-targeting-api" />
 

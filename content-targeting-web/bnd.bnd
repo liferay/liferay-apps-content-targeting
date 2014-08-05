@@ -6,20 +6,20 @@ DynamicImport-Package:\
 	org.eclipse.jetty.servlet.listener
 Export-Package:\
 	content,\
-	com.liferay.contenttargeting.portlet
+	com.liferay.portal.contenttargeting.portlet
 Import-Package:\
-	com.liferay.anonymoususers.model,\
-	com.liferay.anonymoususers.service,\
-	com.liferay.anonymoususers.service.messaging,\
-	com.liferay.anonymoususers.util,\
-	com.liferay.contenttargeting.api.model,\
-	com.liferay.contenttargeting.service,\
-	com.liferay.contenttargeting.rulecategories,\
-	com.liferay.contenttargeting.service.messaging,\
-	com.liferay.contenttargeting.service.permission,\
-	com.liferay.contenttargeting.util,\
 	com.liferay.freemarker.osgi.servlet,\
 	com.liferay.osgi.util.service,\
+	com.liferay.portal.contenttargeting.anonymoususers.model,\
+	com.liferay.portal.contenttargeting.anonymoususers.service,\
+	com.liferay.portal.contenttargeting.anonymoususers.service.messaging,\
+	com.liferay.portal.contenttargeting.anonymoususers.util,\
+	com.liferay.portal.contenttargeting.api.model,\
+	com.liferay.portal.contenttargeting.rulecategories,\
+	com.liferay.portal.contenttargeting.service,\
+	com.liferay.portal.contenttargeting.service.messaging,\
+	com.liferay.portal.contenttargeting.service.permission,\
+	com.liferay.portal.contenttargeting.util,\
 	com.liferay.portal.http.service.servlet,\
 	com.liferay.portal.kernel.exception,\
 	com.liferay.portal.kernel.language,\
@@ -38,7 +38,7 @@ Import-Package:\
 	javax.servlet,\
 	javax.servlet.http,\
 	*;resolution:="optional"
-Service-Component: com.liferay.contenttargeting.portlet.*
+Service-Component: com.liferay.portal.contenttargeting.portlet.*
 Web-ContextPath: /content-targeting-web
 -wab: \
 	css=docroot/css,\

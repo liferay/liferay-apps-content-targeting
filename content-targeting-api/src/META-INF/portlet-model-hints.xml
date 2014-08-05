@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.contenttargeting.model.Campaign">
+	<model name="com.liferay.portal.contenttargeting.model.Campaign">
 		<field name="uuid" type="String" />
 		<field name="campaignId" type="long" />
 		<field name="groupId" type="long" />
@@ -21,7 +21,7 @@
 		<field name="priority" type="int" />
 		<field name="active" type="boolean" />
 	</model>
-	<model name="com.liferay.contenttargeting.model.RuleInstance">
+	<model name="com.liferay.portal.contenttargeting.model.RuleInstance">
 		<field name="uuid" type="String" />
 		<field name="ruleInstanceId" type="long" />
 		<field name="groupId" type="long" />
@@ -36,7 +36,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.contenttargeting.model.TrackingActionInstance">
+	<model name="com.liferay.portal.contenttargeting.model.TrackingActionInstance">
 		<field name="uuid" type="String" />
 		<field name="trackingActionInstanceId" type="long" />
 		<field name="groupId" type="long" />
@@ -56,7 +56,7 @@
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.contenttargeting.model.UserSegment">
+	<model name="com.liferay.portal.contenttargeting.model.UserSegment">
 		<field name="uuid" type="String" />
 		<field name="userSegmentId" type="long" />
 		<field name="groupId" type="long" />

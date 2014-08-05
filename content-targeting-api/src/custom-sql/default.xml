@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	 <sql id="com.liferay.contenttargeting.service.persistence.CampaignFinder.findByG_D_A_U">
+	 <sql id="com.liferay.portal.contenttargeting.service.persistence.CampaignFinder.findByG_D_A_U">
 		<![CDATA[
 			SELECT
 				ContentTargeting_Campaign.*

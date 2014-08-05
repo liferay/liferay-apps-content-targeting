@@ -1,19 +1,19 @@
-Bundle-Activator: com.liferay.anonymoususers.internal.osgi.AnonymousUserServiceActivator
-Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.anonymous.users.api-service.jar
+Bundle-Activator: com.liferay.portal.contenttargeting.anonymoususers.internal.osgi.AnonymousUserServiceActivator
+Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.anonymoususers.api-service.jar
 Bundle-Name: Anonymous Users API
 Export-Package:\
-	com.liferay.anonymoususers,\
-	com.liferay.anonymoususers.model,\
-	com.liferay.anonymoususers.service,\
-	com.liferay.anonymoususers.service.messaging,\
-	com.liferay.anonymoususers.util
+	com.liferay.portal.contenttargeting.anonymoususers,\
+	com.liferay.portal.contenttargeting.anonymoususers.model,\
+	com.liferay.portal.contenttargeting.anonymoususers.service,\
+	com.liferay.portal.contenttargeting.anonymoususers.service.messaging,\
+	com.liferay.portal.contenttargeting.anonymoususers.util
 Import-Package:\
-	com.liferay.anonymoususers,\
-	com.liferay.anonymoususers.model,\
-	com.liferay.anonymoususers.service,\
 	com.liferay.counter.service,\
 	com.liferay.osgi.util.service,\
 	com.liferay.portal,\
+	com.liferay.portal.contenttargeting.anonymoususers,\
+	com.liferay.portal.contenttargeting.anonymoususers.model,\
+	com.liferay.portal.contenttargeting.anonymoususers.service,\
 	com.liferay.portal.kernel.annotation,\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.cache,\
@@ -57,6 +57,6 @@ Include-Resource: classes,\
 	WEB-INF/classes/META-INF=classes/META-INF/,\
 	WEB-INF/sql=sql,\
 	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	lib/com.liferay.portal.anonymous.users.api-service.jar=lib/com.liferay.portal.anonymous.users.api-service.jar
-Service-Component:com.liferay.anonymoususers.*
+	lib/com.liferay.portal.contenttargeting.anonymoususers.api-service.jar=lib/com.liferay.portal.contenttargeting.anonymoususers.api-service.jar
+Service-Component:com.liferay.portal.contenttargeting.anonymoususers.*
 Web-ContextPath: /anonymous-users-api

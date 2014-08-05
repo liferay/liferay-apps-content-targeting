@@ -3,7 +3,7 @@
 <project name="rule-user-logged-test" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.userloggedrule.test" />
+	<property name="plugin.name" value="com.liferay.portal.contenttargeting.rule.userlogged.test" />
 
 	<property name="import.shared" value="rule-user-logged" />
 

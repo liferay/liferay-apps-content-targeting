@@ -3,7 +3,7 @@
 <project name="rule-facebook" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.content.targeting.rule.facebook" />
+	<property name="plugin.name" value="com.liferay.portal.contenttargeting.rule.facebook" />
 
 	<property name="import.shared" value="anonymous-users-api,content-targeting-api" />
 

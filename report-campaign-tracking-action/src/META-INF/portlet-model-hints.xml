@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction">
+	<model name="com.liferay.portal.contenttargeting.report.campaigntrackingaction.model.CampaignTrackingAction">
 		<field name="campaignTrackingActionId" type="long" />
 		<field name="campaignId" type="long" />
 		<field name="userSegmentId" type="long" />

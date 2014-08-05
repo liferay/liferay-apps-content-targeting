@@ -34,7 +34,7 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 				className: '<%= Layout.class.getName() %>',
 				classPK: '<%= plid %>',
 				elementId: elementId,
-				referrerClassName: 'com.liferay.contenttargeting.model.UserSegment',
+				referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
 				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
 			}
 		);

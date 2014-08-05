@@ -1,29 +1,29 @@
-Bundle-Activator: com.liferay.contenttargeting.reports.campaigntrackingaction.internal.osgi.CampaignTrackingActionServiceActivator
-Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.content.targeting.report.campaign.tracking.action-service.jar
+Bundle-Activator: com.liferay.portal.contenttargeting.report.campaigntrackingaction.internal.osgi.CampaignTrackingActionServiceActivator
+Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.report.campaigntrackingaction-service.jar
 Bundle-Name: Campaign Tracking Actions Report
 Export-Package:\
-	com.liferay.contenttargeting.reports.campaigntrackingaction,\
-	com.liferay.contenttargeting.reports.campaigntrackingaction.model,\
-	com.liferay.contenttargeting.reports.campaigntrackingaction.service,\
-    com.liferay.contenttargeting.reports.campaigntrackingaction.service.messaging
+	com.liferay.portal.contenttargeting.report.campaigntrackingaction,\
+	com.liferay.portal.contenttargeting.report.campaigntrackingaction.model,\
+	com.liferay.portal.contenttargeting.report.campaigntrackingaction.service,\
+    com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.messaging
 Import-Package:\
-	com.liferay.analytics.model,\
-	com.liferay.analytics.service,\
-	com.liferay.analytics.service.messaging,\
-	com.liferay.anonymoususers.model,\
-	com.liferay.anonymoususers.service,\
-	com.liferay.anonymoususers.service.messaging,\
-	com.liferay.contenttargeting.model,\
-	com.liferay.contenttargeting.api.model,\
-	com.liferay.contenttargeting.reports.campaigntrackingaction,\
-	com.liferay.contenttargeting.reports.campaigntrackingaction.model,\
-	com.liferay.contenttargeting.reports.campaigntrackingaction.service,\
-	com.liferay.contenttargeting.service,\
-	com.liferay.contenttargeting.service.messaging,\
-	com.liferay.contenttargeting.util,\
 	com.liferay.counter.service,\
 	com.liferay.osgi.util.service,\
 	com.liferay.portal,\
+	com.liferay.portal.contenttargeting.analytics.model,\
+	com.liferay.portal.contenttargeting.analytics.service,\
+	com.liferay.portal.contenttargeting.analytics.service.messaging,\
+	com.liferay.portal.contenttargeting.anonymoususers.model,\
+	com.liferay.portal.contenttargeting.anonymoususers.service,\
+	com.liferay.portal.contenttargeting.anonymoususers.service.messaging,\
+	com.liferay.portal.contenttargeting.api.model,\
+	com.liferay.portal.contenttargeting.model,\
+	com.liferay.portal.contenttargeting.report.campaigntrackingaction,\
+	com.liferay.portal.contenttargeting.report.campaigntrackingaction.model,\
+	com.liferay.portal.contenttargeting.report.campaigntrackingaction.service,\
+	com.liferay.portal.contenttargeting.service,\
+	com.liferay.portal.contenttargeting.service.messaging,\
+	com.liferay.portal.contenttargeting.util,\
 	com.liferay.portal.model,\
 	com.liferay.portal.model.impl,\
 	com.liferay.portal.kernel.annotation,\
@@ -73,6 +73,6 @@ Include-Resource:\
 	WEB-INF/portlet.xml=META-INF/portlet.xml,\
 	WEB-INF/sql=sql,\
 	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	lib/com.liferay.portal.content.targeting.report.campaign.tracking.action-service.jar=lib/com.liferay.portal.content.targeting.report.campaign.tracking.action-service.jar
-Service-Component: com.liferay.contenttargeting.reports.campaigntrackingaction.*
+	lib/com.liferay.portal.contenttargeting.report.campaigntrackingaction-service.jar=lib/com.liferay.portal.contenttargeting.report.campaigntrackingaction-service.jar
+Service-Component: com.liferay.portal.contenttargeting.report.campaigntrackingaction.*
 Web-ContextPath: /report-campaign-tracking-action

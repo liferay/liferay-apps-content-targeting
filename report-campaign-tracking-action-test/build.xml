@@ -3,7 +3,7 @@
 <project name="report-campaign-tracking-action-test" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.content.targeting.report.campaign.tracking.action.test" />
+	<property name="plugin.name" value="com.liferay.portal.contenttargeting.report.campaigntrackingaction.test" />
 
 	<property name="import.shared" value="report-campaign-tracking-action" />
 

@@ -1,26 +1,26 @@
-Bundle-Activator: com.liferay.contenttargeting.internal.osgi.ContentTargetingActivator
-Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.content.targeting.api-service.jar
+Bundle-Activator: com.liferay.portal.contenttargeting.internal.osgi.ContentTargetingActivator
+Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.api-service.jar
 Bundle-Name: Content Targeting API
 Export-Package:\
-	com.liferay.contenttargeting,\
-	com.liferay.contenttargeting.api.model,\
-	com.liferay.contenttargeting.model,\
-	com.liferay.contenttargeting.rulecategories,\
-	com.liferay.contenttargeting.service,\
-	com.liferay.contenttargeting.service.messaging,\
-	com.liferay.contenttargeting.service.permission,\
-	com.liferay.contenttargeting.util
+	com.liferay.portal.contenttargeting,\
+	com.liferay.portal.contenttargeting.api.model,\
+	com.liferay.portal.contenttargeting.model,\
+	com.liferay.portal.contenttargeting.rulecategories,\
+	com.liferay.portal.contenttargeting.service,\
+	com.liferay.portal.contenttargeting.service.messaging,\
+	com.liferay.portal.contenttargeting.service.permission,\
+	com.liferay.portal.contenttargeting.util
 Import-Package:\
 	com.germinus.easyconf,\
-	com.liferay.anonymoususers,\
-	com.liferay.anonymoususers.model,\
-	com.liferay.anonymoususers.service,\
-	com.liferay.anonymoususers.util,\
- 	com.liferay.contenttargeting,\
-	com.liferay.contenttargeting.api.model,\
-	com.liferay.contenttargeting.model,\
-	com.liferay.contenttargeting.rulecategories,\
-	com.liferay.contenttargeting.service,\
+ 	com.liferay.portal.contenttargeting,\
+	com.liferay.portal.contenttargeting.anonymoususers,\
+	com.liferay.portal.contenttargeting.anonymoususers.model,\
+	com.liferay.portal.contenttargeting.anonymoususers.service,\
+	com.liferay.portal.contenttargeting.anonymoususers.util,\
+	com.liferay.portal.contenttargeting.api.model,\
+	com.liferay.portal.contenttargeting.model,\
+	com.liferay.portal.contenttargeting.rulecategories,\
+	com.liferay.portal.contenttargeting.service,\
 	com.liferay.counter.service,\
 	com.liferay.osgi.util.service,\
 	com.liferay.portlet,\
@@ -80,6 +80,6 @@ Include-Resource:\
 	WEB-INF/liferay-portlet.xml=META-INF/liferay-portlet.xml,\
 	WEB-INF/portlet.xml=META-INF/portlet.xml,\
 	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-    lib/com.liferay.portal.content.targeting.api-service.jar=lib/com.liferay.portal.content.targeting.api-service.jar
-Service-Component:com.liferay.contenttargeting.*
+    lib/com.liferay.portal.contenttargeting.api-service.jar=lib/com.liferay.portal.contenttargeting.api-service.jar
+Service-Component:com.liferay.portal.contenttargeting.*
 Web-ContextPath: /content-targeting-api

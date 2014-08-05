@@ -28,7 +28,7 @@
 	/>
 
 	<@liferay_ui["search-container-row"]
-		className="com.liferay.contenttargeting.reports.usersegmentcontent.model.UserSegmentContent"
+		className="com.liferay.portal.contenttargeting.report.usersegmentcontent.model.UserSegmentContent"
 		modelVar="userSegmentContent"
 	>
 

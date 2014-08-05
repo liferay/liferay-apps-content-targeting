@@ -28,7 +28,7 @@
 	/>
 
 	<@liferay_ui["search-container-row"]
-		className="com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction"
+		className="com.liferay.portal.contenttargeting.report.campaigntrackingaction.model.CampaignTrackingAction"
 		modelVar="campaignTrackingAction"
 	>
 

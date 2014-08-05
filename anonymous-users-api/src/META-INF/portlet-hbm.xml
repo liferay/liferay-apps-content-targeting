@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="com.liferay.anonymoususers.model.AnonymousUser" />
-	<class name="com.liferay.anonymoususers.model.impl.AnonymousUserImpl" table="ContentTargeting_AnonymousUsers_AnonymousUser">
+	<import class="com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser" />
+	<class name="com.liferay.portal.contenttargeting.anonymoususers.model.impl.AnonymousUserImpl" table="ContentTargeting_AnonymousUsers_AnonymousUser">
 		<cache usage="read-write" />
 		<id name="anonymousUserId" type="long">
 			<generator class="assigned" />

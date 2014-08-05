@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
-	<bean id="com.liferay.contenttargeting.reports.campaigntrackingaction.service.CampaignTrackingActionLocalService" class="com.liferay.contenttargeting.reports.campaigntrackingaction.service.impl.CampaignTrackingActionLocalServiceImpl" />
-	<bean id="com.liferay.contenttargeting.reports.campaigntrackingaction.service.CampaignTrackingActionService" class="com.liferay.contenttargeting.reports.campaigntrackingaction.service.impl.CampaignTrackingActionServiceImpl" />
-	<bean id="com.liferay.contenttargeting.reports.campaigntrackingaction.service.persistence.CampaignTrackingActionPersistence" class="com.liferay.contenttargeting.reports.campaigntrackingaction.service.persistence.CampaignTrackingActionPersistenceImpl" parent="basePersistence" />
-	<bean id="com.liferay.contenttargeting.reports.campaigntrackingaction.service.persistence.CampaignTrackingActionFinder" class="com.liferay.contenttargeting.reports.campaigntrackingaction.service.persistence.CampaignTrackingActionFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.CampaignTrackingActionLocalService" class="com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.impl.CampaignTrackingActionLocalServiceImpl" />
+	<bean id="com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.CampaignTrackingActionService" class="com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.impl.CampaignTrackingActionServiceImpl" />
+	<bean id="com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.persistence.CampaignTrackingActionPersistence" class="com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.persistence.CampaignTrackingActionPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.persistence.CampaignTrackingActionFinder" class="com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.persistence.CampaignTrackingActionFinderImpl" parent="basePersistence" />
 </beans>

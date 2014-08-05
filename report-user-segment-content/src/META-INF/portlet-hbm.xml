@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="com.liferay.contenttargeting.reports.usersegmentcontent.model.UserSegmentContent" />
-	<class name="com.liferay.contenttargeting.reports.usersegmentcontent.model.impl.UserSegmentContentImpl" table="ContentTargeting_UserSegmentContentReport_UserSegmentContent">
+	<import class="com.liferay.portal.contenttargeting.report.usersegmentcontent.model.UserSegmentContent" />
+	<class name="com.liferay.portal.contenttargeting.report.usersegmentcontent.model.impl.UserSegmentContentImpl" table="ContentTargeting_UserSegmentContentReport_UserSegmentContent">
 		<cache usage="read-write" />
 		<id name="userSegmentContentId" type="long">
 			<generator class="assigned" />

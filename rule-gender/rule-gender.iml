@@ -19,6 +19,8 @@
       <excludeFolder url="file://$MODULE_DIR$/../ct-gender-rule/test-classes" />
       <excludeFolder url="file://$MODULE_DIR$/../ct-gender-rule/test-results" />
       <excludeFolder url="file://$MODULE_DIR$/classes" />
+      <excludeFolder url="file://$MODULE_DIR$/test-classes" />
+      <excludeFolder url="file://$MODULE_DIR$/test-results" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

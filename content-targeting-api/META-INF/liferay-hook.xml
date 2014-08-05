@@ -5,11 +5,11 @@
 	<language-properties>content/Language.properties</language-properties>
 	<service>
 		<service-type>com.liferay.portlet.asset.service.AssetVocabularyService</service-type>
-		<service-impl>com.liferay.contenttargeting.hook.CTAssetVocabularyServiceImpl</service-impl>
+		<service-impl>com.liferay.portal.contenttargeting.hook.CTAssetVocabularyServiceImpl</service-impl>
 	</service>
 	<servlet-filter>
 		<servlet-filter-name>User Segment Filter</servlet-filter-name>
-		<servlet-filter-impl>com.liferay.contenttargeting.hook.filter.UserSegmentFilter</servlet-filter-impl>
+		<servlet-filter-impl>com.liferay.portal.contenttargeting.hook.filter.UserSegmentFilter</servlet-filter-impl>
 	</servlet-filter>
 	<servlet-filter-mapping>
 		<servlet-filter-name>User Segment Filter</servlet-filter-name>

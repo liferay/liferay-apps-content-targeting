@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.anonymoususers.model.AnonymousUser">
+	<model name="com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser">
 		<field name="uuid" type="String" />
 		<field name="anonymousUserId" type="long" />
 		<field name="companyId" type="long" />

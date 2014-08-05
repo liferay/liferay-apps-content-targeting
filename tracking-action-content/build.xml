@@ -3,7 +3,7 @@
 <project name="tracking-action-content" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.content.targeting.tracking.action.content" />
+	<property name="plugin.name" value="com.liferay.portal.contenttargeting.trackingaction.content" />
 
 	<property name="import.shared" value="content-targeting-api" />
 

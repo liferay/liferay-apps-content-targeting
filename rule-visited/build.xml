@@ -3,7 +3,7 @@
 <project name="rule-visited" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.content.targeting.rule.visited" />
+	<property name="plugin.name" value="com.liferay.portal.contenttargeting.rule.visited" />
 
 	<property name="import.shared" value="analytics-api,anonymous-users-api,content-targeting-api" />
 

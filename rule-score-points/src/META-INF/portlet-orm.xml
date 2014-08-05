@@ -7,7 +7,7 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<mapped-superclass class="com.liferay.contenttargeting.rules.scorepoints.model.impl.ScorePointModelImpl">
+	<mapped-superclass class="com.liferay.portal.contenttargeting.rule.scorepoints.model.impl.ScorePointModelImpl">
 		<attributes>
 			<id name="scorePointId" />
 			<basic name="uuid">
@@ -22,7 +22,7 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<entity class="com.liferay.contenttargeting.rules.scorepoints.model.impl.ScorePointImpl" name="ScorePoint">
+	<entity class="com.liferay.portal.contenttargeting.rule.scorepoints.model.impl.ScorePointImpl" name="ScorePoint">
 		<table name="ContentTargeting_ScorePoints_ScorePoint" />
 		<attributes />
 	</entity>

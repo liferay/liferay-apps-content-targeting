@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="com.liferay.contenttargeting.reports.campaigntrackingaction.model.CampaignTrackingAction" />
-	<class name="com.liferay.contenttargeting.reports.campaigntrackingaction.model.impl.CampaignTrackingActionImpl" table="ContentTargeting_CampaignTAReport_CampaignTrackingAction">
+	<import class="com.liferay.portal.contenttargeting.report.campaigntrackingaction.model.CampaignTrackingAction" />
+	<class name="com.liferay.portal.contenttargeting.report.campaigntrackingaction.model.impl.CampaignTrackingActionImpl" table="ContentTargeting_CampaignTAReport_CampaignTrackingAction">
 		<cache usage="read-write" />
 		<id name="campaignTrackingActionId" type="long">
 			<generator class="assigned" />

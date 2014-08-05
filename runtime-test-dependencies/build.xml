@@ -3,7 +3,7 @@
 <project name="runtime-test-dependencies" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.content.targeting.runtime.test.dependencies" />
+	<property name="plugin.name" value="com.liferay.portal.contenttargeting.runtime.test.dependencies" />
 
 	<property name="osgi.runtime.dependencies" value="org.apache.aries.util.jar,org.apache.aries.jmx.jar,org.apache.aries.jmx.api.jar,org.apache.aries.jmx.core.jar" />
 

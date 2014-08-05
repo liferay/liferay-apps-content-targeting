@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint">
+	<model name="com.liferay.portal.contenttargeting.rule.scorepoints.model.ScorePoint">
 		<field name="uuid" type="String" />
 		<field name="scorePointId" type="long" />
 		<field name="anonymousUserId" type="long" />

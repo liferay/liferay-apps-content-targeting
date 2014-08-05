@@ -32,7 +32,7 @@
 	/>
 
 	<@liferay_ui["search-container-row"]
-		className="com.liferay.contenttargeting.model.UserSegment"
+		className="com.liferay.portal.contenttargeting.model.UserSegment"
 		keyProperty="userSegmentId"
 		modelVar="userSegment"
 	>

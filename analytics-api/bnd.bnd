@@ -1,21 +1,21 @@
-Bundle-Activator: com.liferay.analytics.internal.osgi.AnalyticsServiceActivator
-Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.analytics.api-service.jar
+Bundle-Activator: com.liferay.portal.contenttargeting.analytics.internal.osgi.AnalyticsServiceActivator
+Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.analytics.api-service.jar
 Bundle-Name: Analytics API
 Export-Package:\
-	com.liferay.analytics,\
-	com.liferay.analytics.messaging,\
-	com.liferay.analytics.messaging.config,\
-	com.liferay.analytics.model,\
-	com.liferay.analytics.service,\
-	com.liferay.analytics.service.messaging,\
-	com.liferay.analytics.util
+	com.liferay.portal.contenttargeting.analytics,\
+	com.liferay.portal.contenttargeting.analytics.messaging,\
+	com.liferay.portal.contenttargeting.analytics.messaging.config,\
+	com.liferay.portal.contenttargeting.analytics.model,\
+	com.liferay.portal.contenttargeting.analytics.service,\
+	com.liferay.portal.contenttargeting.analytics.service.messaging,\
+	com.liferay.portal.contenttargeting.analytics.util
 Import-Package:\
-	com.liferay.analytics,\
-	com.liferay.analytics.model,\
-	com.liferay.analytics.service,\
 	com.liferay.counter.service,\
 	com.liferay.osgi.util.service,\
 	com.liferay.portal,\
+	com.liferay.portal.contenttargeting.analytics,\
+	com.liferay.portal.contenttargeting.analytics.model,\
+	com.liferay.portal.contenttargeting.analytics.service,\
 	com.liferay.portal.kernel.annotation,\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.cache,\
@@ -65,6 +65,6 @@ Include-Resource:\
 	WEB-INF/portlet.xml=META-INF/portlet.xml,\
 	WEB-INF/sql=sql,\
 	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	lib/com.liferay.portal.analytics.api-service.jar=lib/com.liferay.portal.analytics.api-service.jar
-Service-Component:com.liferay.analytics.*
+	lib/com.liferay.portal.contenttargeting.analytics.api-service.jar=lib/com.liferay.portal.contenttargeting.analytics.api-service.jar
+Service-Component:com.liferay.portal.contenttargeting.analytics.*
 Web-ContextPath: /analytics-api

@@ -7,7 +7,7 @@
 	<custom-jsp-dir>/META-INF/custom_jsps</custom-jsp-dir>
 	<servlet-filter>
 		<servlet-filter-name>Youtube URL Filter</servlet-filter-name>
-		<servlet-filter-impl>com.liferay.contenttargeting.analytics.hook.filter.YoutubeVideoHtmlFilter</servlet-filter-impl>
+		<servlet-filter-impl>com.liferay.portal.contenttargeting.analytics.hook.filter.YoutubeVideoHtmlFilter</servlet-filter-impl>
 	</servlet-filter>
 	<servlet-filter-mapping>
 		<servlet-filter-name>Youtube URL Filter</servlet-filter-name>

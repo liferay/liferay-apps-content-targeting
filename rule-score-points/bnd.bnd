@@ -1,18 +1,18 @@
-Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.content.targeting.rule.score.points-service.jar
+Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.rule.scorepoints-service.jar
 Bundle-Name: Score Points Rule
 Export-Package:\
-	com.liferay.contenttargeting.rules.scorepoints.messaging,\
-	com.liferay.contenttargeting.rules.scorepoints.messaging.config
+	com.liferay.portal.contenttargeting.rule.scorepoints.messaging,\
+	com.liferay.portal.contenttargeting.rule.scorepoints.messaging.config
 Import-Package:\
-	com.liferay.anonymoususers.model,\
-	com.liferay.anonymoususers.service,\
-	com.liferay.anonymoususers.service.messaging,\
-	com.liferay.contenttargeting.model,\
-	com.liferay.contenttargeting.api.model,\
-	com.liferay.contenttargeting.rulecategories,\
-	com.liferay.contenttargeting.service,\
-	com.liferay.contenttargeting.service.messaging,\
-	com.liferay.contenttargeting.util,\
+	com.liferay.portal.contenttargeting.anonymoususers.model,\
+	com.liferay.portal.contenttargeting.anonymoususers.service,\
+	com.liferay.portal.contenttargeting.anonymoususers.service.messaging,\
+	com.liferay.portal.contenttargeting.model,\
+	com.liferay.portal.contenttargeting.api.model,\
+	com.liferay.portal.contenttargeting.rulecategories,\
+	com.liferay.portal.contenttargeting.service,\
+	com.liferay.portal.contenttargeting.service.messaging,\
+	com.liferay.portal.contenttargeting.util,\
 	com.liferay.counter.service,\
 	com.liferay.osgi.util.service,\
 	com.liferay.portal,\
@@ -59,6 +59,6 @@ Include-Resource:\
 	WEB-INF/sql=sql,\
 	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
 	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	lib/com.liferay.portal.content.targeting.rule.score.points-service.jar=lib/com.liferay.portal.content.targeting.rule.score.points-service.jar
-Service-Component: com.liferay.contenttargeting.rules.scorepoints.*
+	lib/com.liferay.portal.contenttargeting.rule.scorepoints-service.jar=lib/com.liferay.portal.contenttargeting.rule.scorepoints-service.jar
+Service-Component: com.liferay.portal.contenttargeting.rule.scorepoints.*
 Web-ContextPath: /rule-score-points

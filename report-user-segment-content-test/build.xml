@@ -3,7 +3,7 @@
 <project name="report-user-segment-content-test" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.content.targeting.report.user.segment.content.test" />
+	<property name="plugin.name" value="com.liferay.portal.contenttargeting.report.usersegmentcontent.test" />
 
 	<property name="import.shared" value="report-user-segment-content" />
 

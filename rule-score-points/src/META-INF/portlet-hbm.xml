@@ -2,8 +2,8 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="com.liferay.contenttargeting.rules.scorepoints.model.ScorePoint" />
-	<class name="com.liferay.contenttargeting.rules.scorepoints.model.impl.ScorePointImpl" table="ContentTargeting_ScorePoints_ScorePoint">
+	<import class="com.liferay.portal.contenttargeting.rule.scorepoints.model.ScorePoint" />
+	<class name="com.liferay.portal.contenttargeting.rule.scorepoints.model.impl.ScorePointImpl" table="ContentTargeting_ScorePoints_ScorePoint">
 		<cache usage="read-write" />
 		<id name="scorePointId" type="long">
 			<generator class="assigned" />

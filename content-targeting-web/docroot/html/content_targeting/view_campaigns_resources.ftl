@@ -32,7 +32,7 @@
 	/>
 
 	<@liferay_ui["search-container-row"]
-		className="com.liferay.contenttargeting.model.Campaign"
+		className="com.liferay.portal.contenttargeting.model.Campaign"
 		keyProperty="campaignId"
 		modelVar="campaign"
 	>
