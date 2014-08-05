@@ -32,7 +32,7 @@
 		/>
 	</target>
 
-	<target name="create">
+	<target name="create-rule">
 		<if>
 			<or>
 				<not>
@@ -43,7 +43,7 @@
 				</not>
 			</or>
 			<then>
-				<fail>This task must be called by the create script.</fail>
+				<fail>This task must be called by the create_rule script.</fail>
 			</then>
 		</if>
 
