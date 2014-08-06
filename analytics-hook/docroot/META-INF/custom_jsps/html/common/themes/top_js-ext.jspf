@@ -33,16 +33,16 @@
 
 	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") %>'>
 
-        <%
-        long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
-        %>
+		<%
+		long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
+		%>
 
 		Liferay.Analytics.track('view', {
 			className: '<%= Layout.class.getName() %>',
 			classPK: '<%= layout.getPlid() %>',
 			groupId: '<%= layout.getGroupId() %>',
-            referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
-            referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
+			referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
+			referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
 		});
 	</c:if>
 
