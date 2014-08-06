@@ -4,7 +4,7 @@
 	<sql id="com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.persistence.CampaignTrackingActionFinder.findByAnalyticsWithClassName">
 		<![CDATA[
 			SELECT
-				DISTINCT ContentTargeting_Analytics_AnalyticsEvent.referrerClassPK AS referrerClassPK, ContentTargeting_Analytics_AnalyticsEvent.className AS className, ContentTargeting_Analytics_AnalyticsEvent.referrerClassPK AS classPK, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, ContentTargeting_TrackingActionInstance.campaignId AS campaignId, ContentTargeting_TrackingActionInstance.alias_ AS alias
+				DISTINCT ContentTargeting_Analytics_AnalyticsEvent.referrerClassPK AS referrerClassPK, ContentTargeting_Analytics_AnalyticsEvent.className AS className, ContentTargeting_Analytics_AnalyticsEvent.classPK AS classPK, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, ContentTargeting_TrackingActionInstance.campaignId AS campaignId, ContentTargeting_TrackingActionInstance.alias_ AS alias
 			FROM
 				ContentTargeting_Analytics_AnalyticsEvent
 			INNER JOIN
