@@ -1,4 +1,22 @@
 .user-segment-content-display-portlet {
+	.content-preview-container {
+		.content-preview {
+			display: inline-block;
+			opacity: 0.5;
+
+			&.selected {
+				opacity: 1;
+			}
+
+			img {
+				height: auto;
+				max-height: 50px;
+				max-width: 50px;
+				vertical-align: middle;
+			}
+		}
+	}
+
 	.rules-panel {
 		.undomanager {
 			margin: 0 10px 0 30px;
@@ -21,5 +39,17 @@
 
 	.title {
 		font-size: 20px;
+	}
+}
+
+.controls-hidden {
+	.user-segment-content-display-portlet {
+		.content-preview {
+	    	display: none;
+		}
+
+		.full-content {
+			display: none;
+		}
 	}
 }

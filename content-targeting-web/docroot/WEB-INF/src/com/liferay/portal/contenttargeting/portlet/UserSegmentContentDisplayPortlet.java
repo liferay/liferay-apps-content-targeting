@@ -19,6 +19,8 @@ import com.liferay.portal.contenttargeting.portlet.util.UserSegmentQueryRuleUtil
 import com.liferay.portal.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.portal.contenttargeting.util.UserSegmentUtil;
 import com.liferay.portal.contenttargeting.util.WebKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -44,6 +46,7 @@ import freemarker.template.TemplateHashModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -156,6 +159,37 @@ public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 		return selectableAssetRendererFactories;
 	}
 
+	protected List<UserSegmentQueryRule> getUserSegmentQueryRule(
+			PortletPreferences portletPreferences, long assetEntryIdDefault,
+			Locale locale)
+		throws PortalException, SystemException {
+
+		List<UserSegmentQueryRule> userSegmentQueryRules =
+			new ArrayList<UserSegmentQueryRule>();
+
+		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
+			portletPreferences.getValues("queryLogicIndexes", null),
+			new int[]{0});
+
+		for (int queryRulesIndex : queryRulesIndexes) {
+			UserSegmentQueryRule userSegmentQueryRule =
+				UserSegmentQueryRuleUtil.getQueryRule(
+					portletPreferences, queryRulesIndex, locale);
+
+			userSegmentQueryRules.add(userSegmentQueryRule);
+		}
+
+		if (assetEntryIdDefault > 0) {
+			UserSegmentQueryRule userSegmentQueryRule =
+				new UserSegmentQueryRule(
+					true, true, assetEntryIdDefault, null, -1, locale);
+
+			userSegmentQueryRules.add(userSegmentQueryRule);
+		}
+
+		return userSegmentQueryRules;
+	}
+
 	protected void populateContext(
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template)
@@ -260,6 +294,21 @@ public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 			template.put("isMatchingRule", isMatchingRule);
 			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
+
+			List<UserSegmentQueryRule> userSegmentQueryRules =
+				getUserSegmentQueryRule(
+					portletPreferences, assetEntryIdDefault,
+					themeDisplay.getLocale());
+
+			template.put("userSegmentQueryRules", userSegmentQueryRules);
+
+			int selectedIndex = userSegmentQueryRules.size() - 1;
+
+			if (queryRule != null) {
+				selectedIndex = queryRule.getIndex();
+			}
+
+			template.put("selectedIndex", selectedIndex);
 		}
 		else if (path.equals(UserSegmentContentDisplayPath.EDIT_QUERY_RULE) ||
 				 path.equals(UserSegmentContentDisplayPath.CONFIGURATION)) {

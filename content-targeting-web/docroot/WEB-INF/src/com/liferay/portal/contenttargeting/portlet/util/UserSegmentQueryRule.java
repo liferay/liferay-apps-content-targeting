@@ -16,6 +16,7 @@ package com.liferay.portal.contenttargeting.portlet.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -49,20 +50,19 @@ public class UserSegmentQueryRule {
 		_userSegmentAssetCategoryIds = userSegmentAssetCategoryIds;
 		_index = index;
 
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
-			_assetEntryId);
+		_assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(_assetEntryId);
 
-		if (assetEntry == null) {
+		if (_assetEntry == null) {
 			return;
 		}
 
 		AssetRendererFactory assetRendererFactory =
 			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				assetEntry.getClassName());
+				_assetEntry.getClassName());
 
-		_assetClassName = assetEntry.getClassName();
-		_assetClassPK = assetEntry.getClassPK();
-		_assetTitle = assetEntry.getTitle(locale);
+		_assetClassName = _assetEntry.getClassName();
+		_assetClassPK = _assetEntry.getClassPK();
+		_assetTitle = _assetEntry.getTitle(locale);
 		_assetType = assetRendererFactory.getTypeName(locale, true);
 	}
 
@@ -127,6 +127,10 @@ public class UserSegmentQueryRule {
 		return _assetClassPK;
 	}
 
+	public AssetEntry getAssetEntry() throws SystemException {
+		return _assetEntry;
+	}
+
 	public long getAssetEntryId() {
 		return _assetEntryId;
 	}
@@ -158,6 +162,20 @@ public class UserSegmentQueryRule {
 
 	public int getIndex() {
 		return _index;
+	}
+
+	public String getSummary(Locale locale) throws SystemException {
+		String userSegmentQueryRuleContains =
+			_contains ? "belongs" : "does-not-belong";
+
+		String userSegmentQueryRuleAndOperator = _andOperator ? "all" : "any";
+
+		return UnicodeLanguageUtil.format(
+			locale, "if-the-user-x-to-x-of-the-following-user-segments-x",
+			new Object[] {
+				userSegmentQueryRuleContains, userSegmentQueryRuleAndOperator,
+				getUserSegmentNames(locale)},
+			true);
 	}
 
 	public long[] getUserSegmentAssetCategoryIds() {
@@ -274,6 +292,7 @@ public class UserSegmentQueryRule {
 	private boolean _andOperator;
 	private String _assetClassName = StringPool.BLANK;
 	private long _assetClassPK;
+	private AssetEntry _assetEntry;
 	private long _assetEntryId;
 	private String _assetTitle = StringPool.BLANK;
 	private String _assetType = StringPool.BLANK;
