@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<project name="tracking-action-@tracking.action.java.package.name@" basedir="." default="compile">
+	<property name="plugin.version" value="1" />
+
+	<property name="plugin.name" value="com.liferay.portal.contenttargeting.trackingaction.@tracking.action.java.package.name@" />
+
+	<property name="import.shared" value="content-targeting-api" />
+
+	<import file="../../../build-common-osgi-plugin.xml" />
+</project>

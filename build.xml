@@ -86,6 +86,60 @@
 		</replace>
 	</target>
 
+	<target name="create-tracking-action">
+		<if>
+			<or>
+				<not>
+					<isset property="tracking.action.display.name" />
+				</not>
+				<not>
+					<isset property="tracking.action.name" />
+				</not>
+			</or>
+			<then>
+				<fail>This task must be called by the create_tracking_action script.</fail>
+			</then>
+		</if>
+
+		<property name="tracking.action.parent.dir" value="${user.dir}" />
+		<property name="tracking.action.dir" value="${tracking.action.parent.dir}/tracking-action-${tracking.action.name}" />
+
+		<if>
+			<available file="${tracking.action.dir}" />
+			<then>
+				<fail>${tracking.action.dir} already exists.</fail>
+			</then>
+		</if>
+
+		<copy todir="${tracking.action.dir}">
+			<fileset
+				dir="${user.dir}/tools/tracking_action_tmpl"
+			/>
+		</copy>
+
+		<antelope:stringutil string="${tracking.action.display.name}" property="tracking.action.java.class.name">
+			<antelope:replace regex="\s+" replacement="" />
+			<antelope:trim />
+		</antelope:stringutil>
+
+		<antelope:stringutil string="${tracking.action.name}" property="tracking.action.java.package.name">
+			<antelope:replace regex="-" replacement="" />
+			<antelope:trim />
+		</antelope:stringutil>
+
+		<move
+			file="${tracking.action.dir}/src/com/liferay/portal/contenttargeting/trackingaction/TrackingAction.java"
+			tofile="${tracking.action.dir}/src/com/liferay/portal/contenttargeting/trackingaction/${tracking.action.java.package.name}/${tracking.action.java.class.name}TrackingAction.java"
+		/>
+
+		<replace dir="${tracking.action.dir}">
+			<replacefilter token="@tracking.action.display.name@" value="${tracking.action.display.name}" />
+			<replacefilter token="@tracking.action.java.class.name@" value="${tracking.action.java.class.name}" />
+			<replacefilter token="@tracking.action.java.package.name@" value="${tracking.action.java.package.name}" />
+			<replacefilter token="@tracking.action.name@" value="${tracking.action.name}" />
+		</replace>
+	</target>
+
 	<macrodef name="build-app-service">
 		<attribute name="module.dir" />
 
