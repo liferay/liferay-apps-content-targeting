@@ -20,6 +20,7 @@ import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rule.facebook.util.FacebookUtil;
 import com.liferay.portal.contenttargeting.rulecategories.SocialRuleCategory;
+import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -61,16 +62,23 @@ public class FacebookFriendsRule extends BaseRule {
 			AnonymousUser anonymousUser)
 		throws Exception {
 
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+			ruleInstance.getTypeSettings());
+
+		int numberOfFriends = jsonObj.getInt("numberOfFriends");
+		String selector = jsonObj.getString("selector");
+
 		JSONObject typeSettings = JSONFactoryUtil.createJSONObject(
 			anonymousUser.getTypeSettings());
-
-		int numberOfFriends = GetterUtil.getInteger(
-			ruleInstance.getTypeSettings());
 
 		long friendsCount = FacebookUtil.getFriendsCount(
 			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
 
-		if (friendsCount >= numberOfFriends) {
+		if (selector.equals("more") && (friendsCount >= numberOfFriends)) {
+			return true;
+		}
+
+		if (selector.equals("less") && (friendsCount < numberOfFriends)) {
 			return true;
 		}
 
@@ -97,7 +105,16 @@ public class FacebookFriendsRule extends BaseRule {
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) {
 
-		return values.get("numberOfFriends");
+		int numberOfFriends = GetterUtil.getInteger(
+			values.get("numberOfFriends"));
+		String selector = GetterUtil.getString(values.get("selector"), "more");
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+		jsonObj.put("numberOfFriends", numberOfFriends);
+		jsonObj.put("selector", selector);
+
+		return jsonObj.toString();
 	}
 
 	protected String getFormTemplatePath() {
@@ -109,13 +126,26 @@ public class FacebookFriendsRule extends BaseRule {
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
 		int numberOfFriends = 0;
+		String selector = "more";
 
 		if (ruleInstance != null) {
-			numberOfFriends = GetterUtil.getInteger(
-				ruleInstance.getTypeSettings());
+			String typeSettings = ruleInstance.getTypeSettings();
+
+			try {
+				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+					typeSettings);
+
+				numberOfFriends = GetterUtil.getInteger(
+					jsonObj.getInt("numberOfFriends"));
+				selector = GetterUtil.getString(
+					jsonObj.getString("selector"), "more");
+			}
+			catch (JSONException jse) {
+			}
 		}
 
 		context.put("numberOfFriends", numberOfFriends);
+		context.put("selector", selector);
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH_FRIENDS =

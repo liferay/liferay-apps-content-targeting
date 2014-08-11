@@ -67,11 +67,11 @@ public class FacebookFriendsRuleTest extends PowerMockito {
 	}
 
 	@Test
-	public void testLessFriends() throws Exception {
+	public void testHasNotMoreThanXFriends() throws Exception {
 		when(
 			_ruleInstance.getTypeSettings()
 		).thenReturn(
-			String.valueOf(10)
+			_generateJSON(10, "more")
 		);
 
 		when(
@@ -85,11 +85,11 @@ public class FacebookFriendsRuleTest extends PowerMockito {
 	}
 
 	@Test
-	public void testMoreFriends() throws Exception {
+	public void testHasMoreThanXFriends() throws Exception {
 		when(
 			_ruleInstance.getTypeSettings()
 		).thenReturn(
-			String.valueOf(10)
+			_generateJSON(10, "more")
 		);
 
 		when(
@@ -100,6 +100,51 @@ public class FacebookFriendsRuleTest extends PowerMockito {
 
 		Assert.assertTrue(
 			_facebookFriendsRule.evaluate(null, _ruleInstance, _anonymousUser));
+	}
+
+	@Test
+	public void testHasNotLessThanXFriends() throws Exception {
+		when(
+			_ruleInstance.getTypeSettings()
+		).thenReturn(
+			_generateJSON(10, "less")
+		);
+
+		when(
+			FacebookUtil.getFriendsCount(Mockito.anyString())
+		).thenReturn(
+			15L
+		);
+
+		Assert.assertFalse(
+			_facebookFriendsRule.evaluate(null, _ruleInstance, _anonymousUser));
+	}
+
+	@Test
+	public void testHasLessThanXFriends() throws Exception {
+		when(
+			_ruleInstance.getTypeSettings()
+		).thenReturn(
+			_generateJSON(10, "less")
+		);
+
+		when(
+			FacebookUtil.getFriendsCount(Mockito.anyString())
+		).thenReturn(
+			1L
+		);
+
+		Assert.assertTrue(
+			_facebookFriendsRule.evaluate(null, _ruleInstance, _anonymousUser));
+	}
+
+	private String _generateJSON(int numberOfFriends, String selector) {
+		JSONObject jsonObj = new JSONObjectImpl();
+
+		jsonObj.put("numberOfFriends", numberOfFriends);
+		jsonObj.put("selector", selector);
+
+		return jsonObj.toString();
 	}
 
 	@Mock
