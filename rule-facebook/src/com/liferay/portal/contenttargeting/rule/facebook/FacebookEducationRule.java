@@ -73,8 +73,7 @@ public class FacebookEducationRule extends BaseRule {
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
 			ruleInstance.getTypeSettings());
 
-		boolean college = jsonObj.getBoolean("college");
-		boolean highSchool = jsonObj.getBoolean("highSchool");
+		String educationLevel = jsonObj.getString("educationLevel");
 		String schoolName = jsonObj.getString("schoolName");
 
 		JSONObject typeSettings = JSONFactoryUtil.createJSONObject(
@@ -83,14 +82,8 @@ public class FacebookEducationRule extends BaseRule {
 		User user = FacebookUtil.getFacebookUser(
 			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
 
-		boolean hasHighSchoolEducation = hasEducation(
-				user, _EDUCATION_TYPE_HIGH_SCHOOL);
 
-		boolean hasCollegeEducation = hasEducation(
-			user, _EDUCATION_TYPE_COLLEGE);
-
-		if ((hasCollegeEducation || !college) &&
-			(hasHighSchoolEducation || !highSchool) &&
+		if (matchEducationLevel(user, educationLevel) &&
 			matchEducationName(user, schoolName)) {
 
 			return true;
@@ -118,26 +111,27 @@ public class FacebookEducationRule extends BaseRule {
 		try {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
 
-			boolean college = jsonObj.getBoolean("college");
-			boolean highSchool = jsonObj.getBoolean("highSchool");
+			String educationLevel = jsonObj.getString("educationLevel");
 			String schoolName = jsonObj.getString("schoolName");
 
 			StringBundler sb = new StringBundler();
 
-			if (highSchool) {
+			if (Validator.isNotNull(educationLevel)) {
 				sb.append(
-					LanguageUtil.get(locale, "user-attended-high-school"));
+					LanguageUtil.get(locale, "education-level"));
+				sb.append(StringPool.COLON);
+				sb.append(
+					LanguageUtil.get(locale, educationLevel));
+				sb.append(StringPool.PERIOD);
 				sb.append(StringPool.SPACE);
-			}
 
-			if (college) {
-				sb.append(LanguageUtil.get(locale, "user-attended-college"));
-				sb.append(StringPool.SPACE);
 			}
 
 			if (Validator.isNotNull(schoolName)) {
 				sb.append(
-					LanguageUtil.get(locale, "with-college-school-name-x"));
+					LanguageUtil.get(locale, "college-high-school-name"));
+				sb.append(StringPool.COLON);
+				sb.append(schoolName);
 			}
 		}
 		catch (JSONException jse) {
@@ -151,14 +145,13 @@ public class FacebookEducationRule extends BaseRule {
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) {
 
-		boolean highSchool = GetterUtil.getBoolean(values.get("highSchool"));
-		boolean college = GetterUtil.getBoolean(values.get("college"));
+		String educationLevel = GetterUtil.getString(
+			values.get("educationLevel"));
 		String schoolName = GetterUtil.getString(values.get("schoolName"));
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 
-		jsonObj.put("highSchool", highSchool);
-		jsonObj.put("college", college);
+		jsonObj.put("educationLevel", educationLevel);
 		jsonObj.put("schoolName", schoolName);
 
 		return jsonObj.toString();
@@ -178,6 +171,26 @@ public class FacebookEducationRule extends BaseRule {
 		}
 
 		return false;
+	}
+
+	protected boolean matchEducationLevel(
+		User user, String educationLevel) {
+
+		if (Validator.isNotNull(educationLevel)) {
+			if (educationLevel.equals(_EDUCATION_TYPE_HIGH_SCHOOL) &&
+				!hasEducation(user, _EDUCATION_TYPE_HIGH_SCHOOL)) {
+
+				return false;
+			}
+
+			if (educationLevel.equals(_EDUCATION_TYPE_COLLEGE) &&
+				!hasEducation(user, _EDUCATION_TYPE_COLLEGE)) {
+
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	protected boolean matchEducationName(User user, String schoolName) {
@@ -202,8 +215,7 @@ public class FacebookEducationRule extends BaseRule {
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
-		boolean college = false;
-		boolean highSchool = false;
+		String educationLevel = StringPool.BLANK;
 		String schoolName = StringPool.BLANK;
 
 		if (ruleInstance != null) {
@@ -213,24 +225,22 @@ public class FacebookEducationRule extends BaseRule {
 				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
 					typeSettings);
 
-				college = jsonObj.getBoolean("college");
-				highSchool = jsonObj.getBoolean("highSchool");
+				educationLevel = jsonObj.getString("educationLevel");
 				schoolName = jsonObj.getString("schoolName");
 			}
 			catch (JSONException jse) {
 			}
 		}
 
-		context.put("college", college);
-		context.put("highSchool", highSchool);
+		context.put("educationLevel", educationLevel);
 		context.put("schoolName", schoolName);
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH_EDUCATION =
 		"templates/ct_fields_education.ftl";
 
-	private final static String _EDUCATION_TYPE_COLLEGE = "College";
+	protected final static String _EDUCATION_TYPE_COLLEGE = "College";
 
-	private final static String _EDUCATION_TYPE_HIGH_SCHOOL = "High School";
+	protected final static String _EDUCATION_TYPE_HIGH_SCHOOL = "High School";
 
 }
