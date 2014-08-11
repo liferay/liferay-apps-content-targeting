@@ -74,8 +74,8 @@
 		</antelope:stringutil>
 
 		<move
-			file="${rule.dir}/src/com/liferay/contenttargeting/rules/Rule.java"
-			tofile="${rule.dir}/src/com/liferay/contenttargeting/rules/${rule.java.package.name}/${rule.java.class.name}Rule.java"
+			file="${rule.dir}/src/com/liferay/portal/contenttargeting/rule/Rule.java"
+			tofile="${rule.dir}/src/com/liferay/portal/contenttargeting/rule/${rule.java.package.name}/${rule.java.class.name}Rule.java"
 		/>
 
 		<replace dir="${rule.dir}">
