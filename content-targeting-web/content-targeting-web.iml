@@ -30,7 +30,7 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/jars/org.osgi.compendium-5.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/jars/org.osgi.core-5.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.0-SNAPSHOT.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.http.service/jars/com.liferay.portal.http.service-1.0.0-SNAPSHOT.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.http.service/jars/com.liferay.portal.http.service-1.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.birt.runtime/org.eclipse.osgi.services/jars/org.eclipse.osgi.services-3.3.100.v20120522-1822.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.log.bridge/jars/com.liferay.portal.log.bridge-1.0.0-SNAPSHOT.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar!/" />
