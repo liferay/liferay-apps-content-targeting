@@ -17,20 +17,27 @@ package com.liferay.portal.contenttargeting.report.usersegmentcontent.service.im
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.contenttargeting.analytics.service.AnalyticsEventLocalService;
+import com.liferay.portal.contenttargeting.model.ReportInstance;
 import com.liferay.portal.contenttargeting.model.UserSegment;
+import com.liferay.portal.contenttargeting.report.usersegmentcontent.UserSegmentContentReport;
 import com.liferay.portal.contenttargeting.report.usersegmentcontent.model.UserSegmentContent;
 import com.liferay.portal.contenttargeting.report.usersegmentcontent.service.base.UserSegmentContentLocalServiceBaseImpl;
+import com.liferay.portal.contenttargeting.service.ReportInstanceLocalService;
+import com.liferay.portal.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionList;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.service.ServiceContext;
 
 import java.util.Date;
 import java.util.List;
@@ -56,7 +63,7 @@ public class UserSegmentContentLocalServiceImpl
 	extends UserSegmentContentLocalServiceBaseImpl {
 
 	public UserSegmentContentLocalServiceImpl() {
-		_initAnalyticsEventService();
+		_initServices();
 	}
 
 	@Override
@@ -93,28 +100,37 @@ public class UserSegmentContentLocalServiceImpl
 	public void checkUserSegmentContentEvents()
 		throws PortalException, SystemException {
 
-		// Process analytics from last date
+		List<UserSegment> userSegments =
+			_userSegmentLocalService.getUserSegments(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		addUserSegmentContentsFromAnalytics(getLastUserSegmentContentDate());
+		for (UserSegment userSegment : userSegments) {
+			checkUserSegmentContentEvents(userSegment.getUserSegmentId());
+
+			_reportInstanceLocalService.addReportInstance(
+				userSegment.getUserId(),
+				UserSegmentContentReport.class.getSimpleName(),
+				UserSegment.class.getName(), userSegment.getUserSegmentId(),
+				StringPool.BLANK, new ServiceContext());
+		}
 	}
 
 	@Override
-	public Date getLastUserSegmentContentDate() {
-		try {
-			List<UserSegmentContent> userSegmentContentList =
-				userSegmentContentPersistence.findAll(0, 1);
+	public void checkUserSegmentContentEvents(long userSegmentId)
+		throws PortalException, SystemException {
 
-			if (!userSegmentContentList.isEmpty()) {
-				return userSegmentContentList.get(0).getModifiedDate();
-			}
-			else {
-				return _analyticsEventLocalService.getMaxAge();
-			}
-		}
-		catch (Exception e) {
+		Date modifiedDate = null;
+
+		ReportInstance reportInstance =
+			_reportInstanceLocalService.getReportInstance(
+				UserSegmentContentReport.class.getSimpleName(),
+				UserSegment.class.getName(), userSegmentId);
+
+		if (reportInstance != null) {
+			modifiedDate = reportInstance.getModifiedDate();
 		}
 
-		return null;
+		addUserSegmentContentsFromAnalytics(userSegmentId, modifiedDate);
 	}
 
 	@Override
@@ -161,7 +177,8 @@ public class UserSegmentContentLocalServiceImpl
 			userSegmentId);
 	}
 
-	protected void addUserSegmentContentsFromAnalytics(Date date)
+	protected void addUserSegmentContentsFromAnalytics(
+			long userSegmentId, Date date)
 		throws PortalException, SystemException {
 
 		// Retrieve analytics
@@ -170,9 +187,16 @@ public class UserSegmentContentLocalServiceImpl
 
 		Property referrerClassNameProperty = PropertyFactoryUtil.forName(
 			"referrerClassName");
+		Property referrerClassPKProperty = PropertyFactoryUtil.forName(
+			"referrerClassPK");
 
 		dynamicQuery.add(
 			referrerClassNameProperty.eq(UserSegment.class.getName()));
+		dynamicQuery.add(referrerClassPKProperty.eq(userSegmentId));
+
+		if (date == null) {
+			date = _analyticsEventLocalService.getMaxAge();
+		}
 
 		Property createDateProperty = PropertyFactoryUtil.forName("createDate");
 
@@ -211,16 +235,22 @@ public class UserSegmentContentLocalServiceImpl
 		}
 	}
 
-	private void _initAnalyticsEventService() {
+	private void _initServices() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		_analyticsEventLocalService = ServiceTrackerUtil.getService(
 			AnalyticsEventLocalService.class, bundle.getBundleContext());
+		_reportInstanceLocalService = ServiceTrackerUtil.getService(
+			ReportInstanceLocalService.class, bundle.getBundleContext());
+		_userSegmentLocalService = ServiceTrackerUtil.getService(
+			UserSegmentLocalService.class, bundle.getBundleContext());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		UserSegmentContentLocalServiceImpl.class);
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
+	private ReportInstanceLocalService _reportInstanceLocalService;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.Map;
@@ -63,18 +64,21 @@ public class UserSegmentContentReport extends BaseReport {
 	}
 
 	@Override
-	public void updateReport() {
+	public String updateReport(long classPK) {
 		try {
-			UserSegmentContentLocalServiceUtil.checkUserSegmentContentEvents();
+			UserSegmentContentLocalServiceUtil.checkUserSegmentContentEvents(
+				classPK);
 		}
 		catch (Exception e) {
-			_log.error("Cannot update report");
+			_log.error("Cannot update report", e);
 		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
 	protected void populateContext(Map<String, Object> context) {
-		final long userSegmentId = MapUtil.getLong(context, "userSegmentId", 0);
+		final long classPK = MapUtil.getLong(context, "classPK", 0);
 
 		context.put(
 			"searchContainerIterator",
@@ -86,14 +90,14 @@ public class UserSegmentContentReport extends BaseReport {
 
 					return UserSegmentContentLocalServiceUtil.
 						getUserSegmentContents(
-							userSegmentId, start, end,
+							classPK, start, end,
 							new UserSegmentContentCountComparator());
 				}
 
 				@Override
 				public int getTotal() throws PortalException, SystemException {
 					return UserSegmentContentLocalServiceUtil.
-						getUserSegmentContentsCount(userSegmentId);
+						getUserSegmentContentsCount(classPK);
 				}
 			}
 		);

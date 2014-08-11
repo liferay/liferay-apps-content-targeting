@@ -17,14 +17,22 @@ package com.liferay.portal.contenttargeting.report.campaigntrackingaction.servic
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.contenttargeting.analytics.service.AnalyticsEventLocalService;
+import com.liferay.portal.contenttargeting.model.Campaign;
+import com.liferay.portal.contenttargeting.model.ReportInstance;
 import com.liferay.portal.contenttargeting.model.UserSegment;
+import com.liferay.portal.contenttargeting.report.campaigntrackingaction.CampaignTrackingActionReport;
 import com.liferay.portal.contenttargeting.report.campaigntrackingaction.model.CampaignTrackingAction;
 import com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.base.CampaignTrackingActionLocalServiceBaseImpl;
+import com.liferay.portal.contenttargeting.service.CampaignLocalService;
+import com.liferay.portal.contenttargeting.service.ReportInstanceLocalService;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.service.ServiceContext;
 
 import java.util.Date;
 import java.util.List;
@@ -118,13 +126,39 @@ public class CampaignTrackingActionLocalServiceImpl
 	public void checkCampaignTrackingActionEvents()
 		throws PortalException, SystemException {
 
-		Date lastCampaignTrackingActionDate =
-			getLastCampaignTrackingActionDate();
+		List<Campaign> campaigns = _campaignLocalService.getCampaigns(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+		for (Campaign campaign : campaigns) {
+			checkCampaignTrackingActionEvents(campaign.getCampaignId());
+
+			_reportInstanceLocalService.addReportInstance(
+				campaign.getUserId(),
+				CampaignTrackingActionReport.class.getSimpleName(),
+				Campaign.class.getName(), campaign.getCampaignId(),
+				StringPool.BLANK, new ServiceContext());
+		}
+	}
+
+	@Override
+	public void checkCampaignTrackingActionEvents(long campaignId)
+		throws PortalException, SystemException {
+
+		Date modifiedDate = null;
+
+		ReportInstance reportInstance =
+			_reportInstanceLocalService.getReportInstance(
+				CampaignTrackingActionReport.class.getSimpleName(),
+				Campaign.class.getName(), campaignId);
+
+		if (reportInstance != null) {
+			modifiedDate = reportInstance.getModifiedDate();
+		}
 
 		addCampaignTrackingActionsFromAnalyticsWithElementId(
-			lastCampaignTrackingActionDate);
+			campaignId, modifiedDate);
 		addCampaignTrackingActionsFromAnalyticsWithClassName(
-			lastCampaignTrackingActionDate);
+			campaignId, modifiedDate);
 	}
 
 	@Override
@@ -172,34 +206,13 @@ public class CampaignTrackingActionLocalServiceImpl
 		return campaignTrackingActionPersistence.countByCampaignId(campaignId);
 	}
 
-	@Override
-	public Date getLastCampaignTrackingActionDate() {
-		try {
-			List<CampaignTrackingAction> campaignTrackingActionList =
-				campaignTrackingActionPersistence.findAll(0, 1);
-
-			if (!campaignTrackingActionList.isEmpty()) {
-				CampaignTrackingAction campaignTrackingAction =
-					campaignTrackingActionList.get(0);
-
-				return campaignTrackingAction.getModifiedDate();
-			}
-			else {
-				return _analyticsEventLocalService.getMaxAge();
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return null;
-	}
-
 	protected void addCampaignTrackingActionsFromAnalyticsWithClassName(
-			Date date)
+			long campaignId, Date date)
 		throws PortalException, SystemException {
 
 		List<Object[]> campaignTrackingActionAnalyticsList =
-			campaignTrackingActionFinder.findByAnalyticsWithClassName(date);
+			campaignTrackingActionFinder.findByAnalyticsWithClassName(
+				campaignId, date);
 
 		for (Object[] campaignTrackingActionAnalytics :
 				campaignTrackingActionAnalyticsList) {
@@ -208,8 +221,7 @@ public class CampaignTrackingActionLocalServiceImpl
 			String className = (String)campaignTrackingActionAnalytics[1];
 			long classPK = (Long)campaignTrackingActionAnalytics[2];
 			String eventType = (String)campaignTrackingActionAnalytics[3];
-			long campaignId = (Long)campaignTrackingActionAnalytics[4];
-			String alias = (String)campaignTrackingActionAnalytics[5];
+			String alias = (String)campaignTrackingActionAnalytics[4];
 
 			int count = _analyticsEventLocalService.getAnalyticsEventsCount(
 				className, classPK, UserSegment.class.getName(), userSegmentId,
@@ -226,11 +238,16 @@ public class CampaignTrackingActionLocalServiceImpl
 	}
 
 	protected void addCampaignTrackingActionsFromAnalyticsWithElementId(
-			Date date)
+			long campaignId, Date date)
 		throws PortalException, SystemException {
 
+		if (date == null) {
+			date = _analyticsEventLocalService.getMaxAge();
+		}
+
 		List<Object[]> campaignTrackingActionAnalyticsList =
-			campaignTrackingActionFinder.findByAnalyticsWithElementId(date);
+			campaignTrackingActionFinder.findByAnalyticsWithElementId(
+				campaignId, date);
 
 		for (Object[] campaignTrackingActionAnalytics :
 				campaignTrackingActionAnalyticsList) {
@@ -238,8 +255,7 @@ public class CampaignTrackingActionLocalServiceImpl
 			long userSegmentId = (Long)campaignTrackingActionAnalytics[0];
 			String elementId = (String)campaignTrackingActionAnalytics[1];
 			String eventType = (String)campaignTrackingActionAnalytics[2];
-			long campaignId = (Long)campaignTrackingActionAnalytics[3];
-			String alias = (String)campaignTrackingActionAnalytics[4];
+			String alias = (String)campaignTrackingActionAnalytics[3];
 
 			int count = _analyticsEventLocalService.getAnalyticsEventsCount(
 				UserSegment.class.getName(), userSegmentId, elementId,
@@ -259,11 +275,17 @@ public class CampaignTrackingActionLocalServiceImpl
 
 		_analyticsEventLocalService = ServiceTrackerUtil.getService(
 			AnalyticsEventLocalService.class, bundle.getBundleContext());
+		_campaignLocalService = ServiceTrackerUtil.getService(
+			CampaignLocalService.class, bundle.getBundleContext());
+		_reportInstanceLocalService = ServiceTrackerUtil.getService(
+			ReportInstanceLocalService.class, bundle.getBundleContext());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		CampaignTrackingActionLocalServiceImpl.class);
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
+	private CampaignLocalService _campaignLocalService;
+	private ReportInstanceLocalService _reportInstanceLocalService;
 
 }

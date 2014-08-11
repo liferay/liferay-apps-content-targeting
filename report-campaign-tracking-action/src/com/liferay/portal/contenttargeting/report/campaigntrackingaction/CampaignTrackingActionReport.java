@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.Map;
@@ -63,19 +64,21 @@ public class CampaignTrackingActionReport extends BaseReport {
 	}
 
 	@Override
-	public void updateReport() {
+	public String updateReport(long classPK) {
 		try {
 			CampaignTrackingActionLocalServiceUtil.
-				checkCampaignTrackingActionEvents();
+				checkCampaignTrackingActionEvents(classPK);
 		}
 		catch (Exception e) {
 			_log.error("Cannot update report", e);
 		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
 	protected void populateContext(Map<String, Object> context) {
-		final long campaignId = MapUtil.getLong(context, "campaignId", 0);
+		final long classPK = MapUtil.getLong(context, "classPK", 0);
 
 		context.put(
 			"searchContainerIterator",
@@ -88,14 +91,14 @@ public class CampaignTrackingActionReport extends BaseReport {
 
 					return CampaignTrackingActionLocalServiceUtil.
 							getCampaignTrackingActions(
-								campaignId, start, end,
+								classPK, start, end,
 								new CampaignTrackingActionCountComparator());
 				}
 
 				@Override
 				public int getTotal() throws PortalException, SystemException {
 					return CampaignTrackingActionLocalServiceUtil.
-						getCampaignTrackingActionsCount(campaignId);
+						getCampaignTrackingActionsCount(classPK);
 				}
 			}
 		);

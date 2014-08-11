@@ -18,13 +18,18 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.contenttargeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.portal.contenttargeting.model.Campaign;
+import com.liferay.portal.contenttargeting.model.ReportInstance;
+import com.liferay.portal.contenttargeting.report.campaigncontent.CampaignContentReport;
 import com.liferay.portal.contenttargeting.report.campaigncontent.model.CampaignContent;
 import com.liferay.portal.contenttargeting.report.campaigncontent.service.base.CampaignContentLocalServiceBaseImpl;
+import com.liferay.portal.contenttargeting.service.CampaignLocalService;
+import com.liferay.portal.contenttargeting.service.ReportInstanceLocalService;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.ProjectionList;
 import com.liferay.portal.kernel.dao.orm.Property;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -56,7 +61,7 @@ public class CampaignContentLocalServiceImpl
 	extends CampaignContentLocalServiceBaseImpl {
 
 	public CampaignContentLocalServiceImpl() {
-		_initAnalyticsEventService();
+		_initServices();
 	}
 
 	@Override
@@ -93,9 +98,30 @@ public class CampaignContentLocalServiceImpl
 	public void checkCampaignContentEvents()
 		throws PortalException, SystemException {
 
-		// Process analytics from last date
+		List<Campaign> campaigns = _campaignLocalService.getCampaigns(
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		addCampaignContentsFromAnalytics(getLastCampaignContentDate());
+		for (Campaign campaign : campaigns) {
+			checkCampaignContentEvents(campaign.getCampaignId());
+		}
+	}
+
+	@Override
+	public void checkCampaignContentEvents(long campaignId)
+		throws PortalException, SystemException {
+
+		Date modifiedDate = null;
+
+		ReportInstance reportInstance =
+			_reportInstanceLocalService.getReportInstance(
+				CampaignContentReport.class.getSimpleName(),
+				Campaign.class.getName(), campaignId);
+
+		if (reportInstance != null) {
+			modifiedDate = reportInstance.getModifiedDate();
+		}
+
+		addCampaignContentsFromAnalytics(campaignId, modifiedDate);
 	}
 
 	@Override
@@ -139,28 +165,7 @@ public class CampaignContentLocalServiceImpl
 		return campaignContentPersistence.countByCampaignId(campaignId);
 	}
 
-	@Override
-	public Date getLastCampaignContentDate() {
-		try {
-			List<CampaignContent> campaignContentList =
-				campaignContentPersistence.findAll(0, 1);
-
-			if (!campaignContentList.isEmpty()) {
-				CampaignContent campaignContent = campaignContentList.get(0);
-
-				return campaignContent.getModifiedDate();
-			}
-			else {
-				return _analyticsEventLocalService.getMaxAge();
-			}
-		}
-		catch (Exception e) {
-		}
-
-		return null;
-	}
-
-	protected void addCampaignContentsFromAnalytics(Date date)
+	protected void addCampaignContentsFromAnalytics(long campaignId, Date date)
 		throws PortalException, SystemException {
 
 		// Retrieve analytics
@@ -169,9 +174,16 @@ public class CampaignContentLocalServiceImpl
 
 		Property referrerClassNameProperty = PropertyFactoryUtil.forName(
 			"referrerClassName");
+		Property referrerClassPKProperty = PropertyFactoryUtil.forName(
+			"referrerClassPK");
 
 		dynamicQuery.add(
 			referrerClassNameProperty.eq(Campaign.class.getName()));
+		dynamicQuery.add(referrerClassPKProperty.eq(campaignId));
+
+		if (date == null) {
+			date = _analyticsEventLocalService.getMaxAge();
+		}
 
 		Property createDateProperty = PropertyFactoryUtil.forName("createDate");
 
@@ -210,16 +222,22 @@ public class CampaignContentLocalServiceImpl
 		}
 	}
 
-	private void _initAnalyticsEventService() {
+	private void _initServices() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		_analyticsEventLocalService = ServiceTrackerUtil.getService(
 			AnalyticsEventLocalService.class, bundle.getBundleContext());
+		_campaignLocalService = ServiceTrackerUtil.getService(
+			CampaignLocalService.class, bundle.getBundleContext());
+		_reportInstanceLocalService = ServiceTrackerUtil.getService(
+			ReportInstanceLocalService.class, bundle.getBundleContext());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
 		CampaignContentLocalServiceImpl.class);
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
+	private CampaignLocalService _campaignLocalService;
+	private ReportInstanceLocalService _reportInstanceLocalService;
 
 }

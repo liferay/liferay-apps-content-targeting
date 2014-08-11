@@ -12,10 +12,11 @@
 <#setting number_format="computer">
 
 <@portlet["renderURL"] varImpl="portletURL">
-	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_USER_SEGMENT_REPORTS}" />
-	<@portlet["param"] name="tabs1" value="${tabs1}" />
-	<@portlet["param"] name="tabs2" value="${tabs2}" />
-	<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORT}" />
+	<@portlet["param"] name="redirect" value="${redirect}" />
+	<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
+	<@portlet["param"] name="className" value="${className}" />
+	<@portlet["param"] name="classPK" value="${classPK?string}" />
 </@>
 
 <@liferay_ui["search-container"]
