@@ -9,6 +9,11 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 	</model>
+	<model name="com.liferay.portal.contenttargeting.model.ReportInstance">
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
 	<model name="com.liferay.portal.contenttargeting.model.RuleInstance">
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />

@@ -46,6 +46,44 @@
 			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
 	</entity>
+	<entity name="ReportInstance" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="reportInstanceId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="reportKey" type="String" />
+		<column name="className" type="String" />
+		<column name="classPK" type="long" />
+		<column name="typeSettings" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="reportKey" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="R_C_C" return-type="ReportInstance">
+			<finder-column name="reportKey" />
+			<finder-column name="className" />
+			<finder-column name="classPK" />
+		</finder>
+	</entity>
 	<entity name="RuleInstance" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->

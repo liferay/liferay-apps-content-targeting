@@ -17,6 +17,8 @@ package com.liferay.portal.contenttargeting.internal.osgi;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.contenttargeting.service.CampaignLocalService;
 import com.liferay.portal.contenttargeting.service.CampaignService;
+import com.liferay.portal.contenttargeting.service.ReportInstanceLocalService;
+import com.liferay.portal.contenttargeting.service.ReportInstanceService;
 import com.liferay.portal.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.portal.contenttargeting.service.RuleInstanceService;
 import com.liferay.portal.contenttargeting.service.TrackingActionInstanceLocalService;
@@ -64,6 +66,23 @@ public class ContentTargetingActivator
 		_campaignServiceServiceRegistration =
 			_bundleContext.registerService(
 				CampaignService.class, campaignService, null);
+
+		ReportInstanceLocalService reportInstanceLocalService =
+			(ReportInstanceLocalService)applicationContext.getBean(
+				ReportInstanceLocalService.class.getName());
+
+		_reportInstanceLocalServiceServiceRegistration =
+			_bundleContext.registerService(
+				ReportInstanceLocalService.class, reportInstanceLocalService,
+				null);
+
+		ReportInstanceService reportInstanceService =
+			(ReportInstanceService)applicationContext.getBean(
+				ReportInstanceService.class.getName());
+
+		_reportInstanceServiceServiceRegistration =
+			_bundleContext.registerService(
+				ReportInstanceService.class, reportInstanceService, null);
 
 		RuleInstanceLocalService ruleInstanceLocalService =
 			(RuleInstanceLocalService)applicationContext.getBean(
@@ -149,6 +168,18 @@ public class ContentTargetingActivator
 			_campaignServiceServiceRegistration = null;
 		}
 
+		if (_reportInstanceLocalServiceServiceRegistration != null) {
+			_reportInstanceLocalServiceServiceRegistration.unregister();
+
+			_reportInstanceLocalServiceServiceRegistration = null;
+		}
+
+		if (_reportInstanceServiceServiceRegistration != null) {
+			_reportInstanceServiceServiceRegistration.unregister();
+
+			_reportInstanceServiceServiceRegistration = null;
+		}
+
 		if (_ruleInstanceLocalServiceServiceRegistration != null) {
 			_ruleInstanceLocalServiceServiceRegistration.unregister();
 
@@ -194,6 +225,10 @@ public class ContentTargetingActivator
 		_campaignLocalServiceServiceRegistration;
 	private ServiceRegistration<CampaignService>
 		_campaignServiceServiceRegistration;
+	private ServiceRegistration<ReportInstanceLocalService>
+		_reportInstanceLocalServiceServiceRegistration;
+	private ServiceRegistration<ReportInstanceService>
+		_reportInstanceServiceServiceRegistration;
 	private ServiceRegistration<RuleInstanceLocalService>
 		_ruleInstanceLocalServiceServiceRegistration;
 	private ServiceRegistration<RuleInstanceService>
