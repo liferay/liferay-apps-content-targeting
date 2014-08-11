@@ -14,6 +14,9 @@
 
 package com.liferay.portal.contenttargeting.api.model;
 
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.contenttargeting.model.ReportInstance;
+import com.liferay.portal.contenttargeting.service.ReportInstanceLocalService;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -26,8 +29,12 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eduardo Garcia
@@ -83,6 +90,26 @@ public abstract class BaseReport implements Report {
 	@Override
 	public String getIcon() {
 		return "icon-file";
+	}
+
+	@Override
+	public Date getModifiedDate(long classPK) {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		ReportInstanceLocalService reportInstanceLocalService =
+			ServiceTrackerUtil.getService(
+				ReportInstanceLocalService.class, bundle.getBundleContext());
+
+		try {
+			ReportInstance reportInstance =
+				reportInstanceLocalService.getReportInstance(
+					getReportKey(), getReportType(), classPK);
+
+			return reportInstance.getModifiedDate();
+		}
+		catch (Exception e) {
+			return null;
+		}
 	}
 
 	@Override

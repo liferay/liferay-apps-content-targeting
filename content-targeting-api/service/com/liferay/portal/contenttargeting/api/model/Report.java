@@ -14,6 +14,7 @@
 
 package com.liferay.portal.contenttargeting.api.model;
 
+import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
@@ -32,12 +33,14 @@ public interface Report {
 
 	public String getIcon();
 
+	public Date getModifiedDate(long classPK);
+
 	public String getName(Locale locale);
 
 	public String getReportKey();
 
 	public String getReportType();
 
-	public void updateReport();
+	public String updateReport(long classPK);
 
 }
