@@ -8,3 +8,7 @@
 <#assign isFemale = gender?string == "female" />
 
 <@aui["input"] checked=isFemale label="female" name="gender" type="radio" value="female" />
+
+<#assign isCustom = gender?string == "custom" />
+
+<@aui["input"] checked=isCustom label="custom-or-not-specified" name="gender" type="radio" value="custom" />

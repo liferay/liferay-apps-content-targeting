@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.WebKeys;
 
 import com.restfb.DefaultFacebookClient;
@@ -74,6 +75,10 @@ public class FacebookGenderRule extends BaseRule {
 			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
 
 		String gender = ruleInstance.getTypeSettings();
+
+		if (gender.equals("custom") && Validator.isNull(user.getGender())) {
+			return true;
+		}
 
 		if (StringUtil.equalsIgnoreCase(gender, user.getGender())) {
 			return true;
