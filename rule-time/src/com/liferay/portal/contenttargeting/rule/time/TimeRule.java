@@ -167,6 +167,10 @@ public class TimeRule extends BaseRule {
 			context.put("startTimeMinute", 0);
 			context.put("startTimeAmPm", 0);
 		}
+
+		Calendar now = CalendarFactoryUtil.getCalendar();
+
+		context.put("now", now.getTime());
 	}
 
 	private Calendar _getEndCalendar(String typeSettings) {

@@ -1,5 +1,10 @@
 <#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
 <#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
+<#assign nowTime = now?time />
+
+<div class="alert alert-info">
+	<@liferay_ui["message"] arguments=nowTime?string.short key="this-rule-checks-the-server-time-which-currently-is-x" />
+</div>
 
 <@aui["fieldset"] cssClass="time-selector" label="start-time">
 	<@liferay_ui["input-time"]
