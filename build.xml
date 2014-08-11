@@ -32,6 +32,60 @@
 		/>
 	</target>
 
+	<target name="create-report">
+		<if>
+			<or>
+				<not>
+					<isset property="report.display.name" />
+				</not>
+				<not>
+					<isset property="report.name" />
+				</not>
+			</or>
+			<then>
+				<fail>This task must be called by the create_report script.</fail>
+			</then>
+		</if>
+
+		<property name="report.parent.dir" value="${user.dir}" />
+		<property name="report.dir" value="${report.parent.dir}/report-${report.name}" />
+
+		<if>
+			<available file="${report.dir}" />
+			<then>
+				<fail>${report.dir} already exists.</fail>
+			</then>
+		</if>
+
+		<copy todir="${report.dir}">
+			<fileset
+				dir="${user.dir}/tools/report_tmpl"
+			/>
+		</copy>
+
+		<antelope:stringutil string="${report.display.name}" property="report.java.class.name">
+			<antelope:replace regex="\s+" replacement="" />
+			<antelope:trim />
+		</antelope:stringutil>
+
+		<antelope:stringutil string="${report.name}" property="report.java.package.name">
+			<antelope:replace regex="-" replacement="" />
+			<antelope:trim />
+		</antelope:stringutil>
+
+		<move
+			file="${report.dir}/src/com/liferay/portal/contenttargeting/report/Report.java"
+			tofile="${report.dir}/src/com/liferay/portal/contenttargeting/report/${report.java.package.name}/${report.java.class.name}Report.java"
+		/>
+
+		<replace dir="${report.dir}">
+			<replacefilter token="@report.display.name@" value="${report.display.name}" />
+			<replacefilter token="@report.java.class.name@" value="${report.java.class.name}" />
+			<replacefilter token="@report.java.package.name@" value="${report.java.package.name}" />
+			<replacefilter token="@report.name@" value="${report.name}" />
+		</replace>
+	</target>
+
 	<target name="create-rule">
 		<if>
 			<or>
