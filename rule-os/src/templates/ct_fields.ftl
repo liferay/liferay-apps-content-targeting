@@ -2,7 +2,7 @@
 <#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
 
 <@aui["select"] label="" name="os">
-	<#list operativeSystems as operativeSystem>
-		<@aui["option"] label="${operativeSystem}" selected=(operativeSystem == os) value=operativeSystem />
+	<#list operatingSystems as operatingSystem>
+		<@aui["option"] label="${operatingSystem}" selected=(operatingSystem == os) value=operatingSystem />
 	</#list>
 </@>

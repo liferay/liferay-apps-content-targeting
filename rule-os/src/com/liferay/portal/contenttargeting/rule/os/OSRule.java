@@ -128,7 +128,7 @@ public class OSRule extends BaseRule {
 			os = ruleInstance.getTypeSettings();
 		}
 
-		context.put("operativeSystems", _AVAILABLE_OS);
+		context.put("operatingSystems", _AVAILABLE_OS);
 		context.put("os", os);
 	}
 
