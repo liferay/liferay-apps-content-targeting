@@ -88,8 +88,7 @@ public class FacebookEducationRuleTest extends PowerMockito {
 			_ruleInstance.getTypeSettings()
 		).thenReturn(
 			_generateJSON(
-				FacebookEducationRule._EDUCATION_TYPE_COLLEGE,
-				StringPool.BLANK)
+				FacebookEducationRule._EDUCATION_TYPE_COLLEGE, StringPool.BLANK)
 		);
 
 		Assert.assertTrue(
@@ -127,9 +126,7 @@ public class FacebookEducationRuleTest extends PowerMockito {
 				null, _ruleInstance, _anonymousUser));
 	}
 
-	private String _generateJSON(
-		String educationLevel, String schoolName) {
-
+	private String _generateJSON(String educationLevel, String schoolName) {
 		JSONObject jsonObj = new JSONObjectImpl();
 
 		jsonObj.put("educationLevel", educationLevel);

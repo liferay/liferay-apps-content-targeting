@@ -82,7 +82,6 @@ public class FacebookEducationRule extends BaseRule {
 		User user = FacebookUtil.getFacebookUser(
 			typeSettings.getString(WebKeys.FACEBOOK_ACCESS_TOKEN));
 
-
 		if (matchEducationLevel(user, educationLevel) &&
 			matchEducationName(user, schoolName)) {
 
@@ -117,19 +116,15 @@ public class FacebookEducationRule extends BaseRule {
 			StringBundler sb = new StringBundler();
 
 			if (Validator.isNotNull(educationLevel)) {
-				sb.append(
-					LanguageUtil.get(locale, "education-level"));
+				sb.append(LanguageUtil.get(locale, "education-level"));
 				sb.append(StringPool.COLON);
-				sb.append(
-					LanguageUtil.get(locale, educationLevel));
+				sb.append(LanguageUtil.get(locale, educationLevel));
 				sb.append(StringPool.PERIOD);
 				sb.append(StringPool.SPACE);
-
 			}
 
 			if (Validator.isNotNull(schoolName)) {
-				sb.append(
-					LanguageUtil.get(locale, "college-high-school-name"));
+				sb.append(LanguageUtil.get(locale, "college-high-school-name"));
 				sb.append(StringPool.COLON);
 				sb.append(schoolName);
 			}
@@ -173,9 +168,7 @@ public class FacebookEducationRule extends BaseRule {
 		return false;
 	}
 
-	protected boolean matchEducationLevel(
-		User user, String educationLevel) {
-
+	protected boolean matchEducationLevel(User user, String educationLevel) {
 		if (Validator.isNotNull(educationLevel)) {
 			if (educationLevel.equals(_EDUCATION_TYPE_HIGH_SCHOOL) &&
 				!hasEducation(user, _EDUCATION_TYPE_HIGH_SCHOOL)) {
