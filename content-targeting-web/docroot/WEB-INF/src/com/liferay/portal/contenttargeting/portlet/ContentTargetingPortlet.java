@@ -24,25 +24,28 @@ import com.liferay.portal.contenttargeting.api.model.RulesRegistry;
 import com.liferay.portal.contenttargeting.api.model.TrackingAction;
 import com.liferay.portal.contenttargeting.api.model.TrackingActionsRegistry;
 import com.liferay.portal.contenttargeting.model.Campaign;
+import com.liferay.portal.contenttargeting.model.ReportInstance;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
 import com.liferay.portal.contenttargeting.model.UserSegment;
-import com.liferay.portal.contenttargeting.portlet.util.ReportTemplate;
 import com.liferay.portal.contenttargeting.portlet.util.RuleTemplate;
 import com.liferay.portal.contenttargeting.portlet.util.TrackingActionTemplate;
 import com.liferay.portal.contenttargeting.service.CampaignLocalService;
 import com.liferay.portal.contenttargeting.service.CampaignService;
+import com.liferay.portal.contenttargeting.service.ReportInstanceService;
 import com.liferay.portal.contenttargeting.service.RuleInstanceService;
 import com.liferay.portal.contenttargeting.service.TrackingActionInstanceService;
 import com.liferay.portal.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.portal.contenttargeting.service.UserSegmentService;
 import com.liferay.portal.contenttargeting.util.CampaignSearchContainerIterator;
 import com.liferay.portal.contenttargeting.util.ContentTargetingUtil;
+import com.liferay.portal.contenttargeting.util.ReportSearchContainerIterator;
 import com.liferay.portal.contenttargeting.util.UserSegmentSearchContainerIterator;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -186,6 +189,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			CampaignLocalService.class, bundle.getBundleContext());
 		_campaignService = ServiceTrackerUtil.getService(
 			CampaignService.class, bundle.getBundleContext());
+		_reportInstanceService = ServiceTrackerUtil.getService(
+			ReportInstanceService.class, bundle.getBundleContext());
 		_reportsRegistry = ServiceTrackerUtil.getService(
 			ReportsRegistry.class, bundle.getBundleContext());
 		_ruleInstanceService = ServiceTrackerUtil.getService(
@@ -273,11 +278,22 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 	public void updateReport(ActionRequest request, ActionResponse response)
 		throws Exception {
 
+		long classPK = ParamUtil.getLong(request, "classPK");
 		String reportKey = ParamUtil.getString(request, "reportKey");
 
 		Report report = _reportsRegistry.getReport(reportKey);
 
-		report.updateReport();
+		String typeSettings = report.updateReport(classPK);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ReportInstance.class.getName(), request);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		_reportInstanceService.addReportInstance(
+			themeDisplay.getUserId(), reportKey, report.getReportType(),
+			classPK, typeSettings, serviceContext);
 
 		sendRedirect(request, response);
 	}
@@ -435,9 +451,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				"usedUserSegmentExceptionClass",
 				UsedUserSegmentException.class);
 		}
-		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN) ||
-				 path.equals(ContentTargetingPath.VIEW_CAMPAIGN_REPORTS)) {
-
+		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN)) {
 			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");
 
 			template.put("campaignId", campaignId);
@@ -549,43 +563,12 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				template.put(
 					"trackingActionTemplates", trackingActionTemplates);
-
-				if (path.equals(ContentTargetingPath.VIEW_CAMPAIGN_REPORTS)) {
-					template.put(
-						"tabs2", ParamUtil.getString(portletRequest, "tabs2"));
-
-					Map<String, Report> campaignReports =
-						_reportsRegistry.getReports(Campaign.class.getName());
-
-					List<ReportTemplate> campaignReportsTemplates =
-						new ArrayList<ReportTemplate>();
-
-					for (Report report : campaignReports.values()) {
-						ReportTemplate reportTemplate = new ReportTemplate();
-
-						String html = report.getHTML(
-							_cloneTemplateContext(template));
-
-						reportTemplate.setReport(report);
-						reportTemplate.setTemplate(html);
-
-						campaignReportsTemplates.add(reportTemplate);
-					}
-
-					template.put(
-						"campaignReportsTabNames",
-						ListUtil.toString(campaignReportsTemplates, "name"));
-					template.put(
-						"campaignReportsTemplates", campaignReportsTemplates);
-				}
 			}
 			finally {
 				themeDisplay.setIsolated(isolated);
 			}
 		}
-		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT) ||
-				 path.equals(ContentTargetingPath.VIEW_USER_SEGMENT_REPORTS)) {
-
+		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
 			long userSegmentId = ParamUtil.getLong(
 				portletRequest, "userSegmentId");
 
@@ -653,42 +636,58 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				}
 
 				template.put("ruleTemplates", ruleTemplates);
-
-				if (path.equals(
-						ContentTargetingPath.VIEW_USER_SEGMENT_REPORTS)) {
-
-					template.put(
-						"tabs2", ParamUtil.getString(portletRequest, "tabs2"));
-
-					Map<String, Report> userSegmentReports =
-						_reportsRegistry.getReports(
-							UserSegment.class.getName());
-
-					List<ReportTemplate> userSegmentReportsTemplates =
-						new ArrayList<ReportTemplate>();
-
-					for (Report report : userSegmentReports.values()) {
-						ReportTemplate reportTemplate = new ReportTemplate();
-
-						String html = report.getHTML(
-							_cloneTemplateContext(template));
-
-						reportTemplate.setReport(report);
-						reportTemplate.setTemplate(html);
-
-						userSegmentReportsTemplates.add(reportTemplate);
-					}
-
-					template.put(
-						"userSegmentReportsTabNames",
-						ListUtil.toString(userSegmentReportsTemplates, "name"));
-					template.put(
-						"userSegmentReportsTemplates",
-						userSegmentReportsTemplates);
-				}
 			}
 			finally {
 				themeDisplay.setIsolated(isolated);
+			}
+		}
+		else if (path.equals(ContentTargetingPath.VIEW_REPORT) ||
+				 path.equals(ContentTargetingPath.VIEW_REPORTS)) {
+
+			String className = ParamUtil.getString(portletRequest, "className");
+			long classPK = ParamUtil.getLong(portletRequest, "classPK");
+
+			template.put("className", className);
+			template.put("classPK", classPK);
+
+			if (path.equals(ContentTargetingPath.VIEW_REPORT)) {
+				String reportKey = ParamUtil.getString(
+					portletRequest, "reportKey");
+
+				Report report = _reportsRegistry.getReport(reportKey);
+
+				template.put("report", report);
+				template.put(
+					"reportHtml",
+					report.getHTML(_cloneTemplateContext(template)));
+			}
+
+			if (path.equals(ContentTargetingPath.VIEW_REPORTS)) {
+				String title = "reports";
+
+				if (className.equals(Campaign.class.getName())) {
+					Campaign campaign = _campaignLocalService.getCampaign(
+						classPK);
+
+					title = LanguageUtil.format(
+						themeDisplay.getLocale(), "reports-for-campaign-x",
+						campaign.getName(themeDisplay.getLocale()));
+				}
+				else if (className.equals(UserSegment.class.getName())) {
+					UserSegment userSegment =
+						_userSegmentLocalService.getUserSegment(classPK);
+
+					title = LanguageUtil.format(
+						themeDisplay.getLocale(), "reports-for-user-segment-x",
+						userSegment.getName(themeDisplay.getLocale()), false);
+				}
+
+				template.put("title", title);
+
+				template.put(
+					"reportSearchContainerIterator",
+					new ReportSearchContainerIterator(
+						themeDisplay.getScopeGroupId(), null, className));
 			}
 		}
 	}
@@ -914,6 +913,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 	private CampaignLocalService _campaignLocalService;
 	private CampaignService _campaignService;
+	private ReportInstanceService _reportInstanceService;
 	private ReportsRegistry _reportsRegistry;
 	private RuleInstanceService _ruleInstanceService;
 	private RulesRegistry _rulesRegistry;

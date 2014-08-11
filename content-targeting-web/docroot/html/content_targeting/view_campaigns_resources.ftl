@@ -76,9 +76,10 @@
 		>
 			<@liferay_ui["icon-menu"]>
 				<@portlet["renderURL"] var="viewCampaignReportsURL">
-					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_CAMPAIGN_REPORTS}" />
+					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
 					<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
-					<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
+					<@portlet["param"] name="className" value="${campaignClass.getName()}" />
+					<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
 				</@>
 
 				<@liferay_ui["icon"]

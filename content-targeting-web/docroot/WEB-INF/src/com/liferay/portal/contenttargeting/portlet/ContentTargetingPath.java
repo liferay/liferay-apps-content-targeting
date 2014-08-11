@@ -29,11 +29,14 @@ public class ContentTargetingPath {
 
 	public static final String VIEW = "html/content_targeting/view.ftl";
 
-	public static final String VIEW_CAMPAIGN_REPORTS =
-		"html/content_targeting/view_campaign_reports.ftl";
-
 	public static final String VIEW_CAMPAIGNS_RESOURCES =
-		"html/content_targeting/view_campaigns_resources.ftl";
+			"html/content_targeting/view_campaigns_resources.ftl";
+
+	public static final String VIEW_REPORT =
+			"html/content_targeting/view_report.ftl";
+
+	public static final String VIEW_REPORTS =
+		"html/content_targeting/view_reports.ftl";
 
 	public static final String VIEW_USER_SEGMENT_REPORTS =
 		"html/content_targeting/view_user_segment_reports.ftl";

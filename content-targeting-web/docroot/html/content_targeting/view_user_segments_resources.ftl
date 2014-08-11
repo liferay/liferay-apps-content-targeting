@@ -53,9 +53,10 @@
 		>
 			<@liferay_ui["icon-menu"]>
 				<@portlet["renderURL"] var="viewUserSegmentReportsURL">
-					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_USER_SEGMENT_REPORTS}" />
+					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
 					<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
-					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+					<@portlet["param"] name="className" value="${userSegmentClass.getName()}" />
+					<@portlet["param"] name="classPK" value="${userSegment.getUserSegmentId()?string}" />
 				</@>
 
 				<@liferay_ui["icon"]
