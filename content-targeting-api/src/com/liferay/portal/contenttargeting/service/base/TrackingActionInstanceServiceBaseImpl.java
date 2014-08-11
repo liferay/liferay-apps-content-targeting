@@ -18,6 +18,7 @@ import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
 import com.liferay.portal.contenttargeting.service.TrackingActionInstanceService;
 import com.liferay.portal.contenttargeting.service.persistence.CampaignFinder;
 import com.liferay.portal.contenttargeting.service.persistence.CampaignPersistence;
+import com.liferay.portal.contenttargeting.service.persistence.ReportInstancePersistence;
 import com.liferay.portal.contenttargeting.service.persistence.RuleInstancePersistence;
 import com.liferay.portal.contenttargeting.service.persistence.TrackingActionInstancePersistence;
 import com.liferay.portal.contenttargeting.service.persistence.UserSegmentPersistence;
@@ -124,6 +125,63 @@ public abstract class TrackingActionInstanceServiceBaseImpl
 	 */
 	public void setCampaignFinder(CampaignFinder campaignFinder) {
 		this.campaignFinder = campaignFinder;
+	}
+
+	/**
+	 * Returns the report instance local service.
+	 *
+	 * @return the report instance local service
+	 */
+	public com.liferay.portal.contenttargeting.service.ReportInstanceLocalService getReportInstanceLocalService() {
+		return reportInstanceLocalService;
+	}
+
+	/**
+	 * Sets the report instance local service.
+	 *
+	 * @param reportInstanceLocalService the report instance local service
+	 */
+	public void setReportInstanceLocalService(
+		com.liferay.portal.contenttargeting.service.ReportInstanceLocalService reportInstanceLocalService) {
+		this.reportInstanceLocalService = reportInstanceLocalService;
+	}
+
+	/**
+	 * Returns the report instance remote service.
+	 *
+	 * @return the report instance remote service
+	 */
+	public com.liferay.portal.contenttargeting.service.ReportInstanceService getReportInstanceService() {
+		return reportInstanceService;
+	}
+
+	/**
+	 * Sets the report instance remote service.
+	 *
+	 * @param reportInstanceService the report instance remote service
+	 */
+	public void setReportInstanceService(
+		com.liferay.portal.contenttargeting.service.ReportInstanceService reportInstanceService) {
+		this.reportInstanceService = reportInstanceService;
+	}
+
+	/**
+	 * Returns the report instance persistence.
+	 *
+	 * @return the report instance persistence
+	 */
+	public ReportInstancePersistence getReportInstancePersistence() {
+		return reportInstancePersistence;
+	}
+
+	/**
+	 * Sets the report instance persistence.
+	 *
+	 * @param reportInstancePersistence the report instance persistence
+	 */
+	public void setReportInstancePersistence(
+		ReportInstancePersistence reportInstancePersistence) {
+		this.reportInstancePersistence = reportInstancePersistence;
 	}
 
 	/**
@@ -476,6 +534,12 @@ public abstract class TrackingActionInstanceServiceBaseImpl
 	protected CampaignPersistence campaignPersistence;
 	@BeanReference(type = CampaignFinder.class)
 	protected CampaignFinder campaignFinder;
+	@BeanReference(type = com.liferay.portal.contenttargeting.service.ReportInstanceLocalService.class)
+	protected com.liferay.portal.contenttargeting.service.ReportInstanceLocalService reportInstanceLocalService;
+	@BeanReference(type = com.liferay.portal.contenttargeting.service.ReportInstanceService.class)
+	protected com.liferay.portal.contenttargeting.service.ReportInstanceService reportInstanceService;
+	@BeanReference(type = ReportInstancePersistence.class)
+	protected ReportInstancePersistence reportInstancePersistence;
 	@BeanReference(type = com.liferay.portal.contenttargeting.service.RuleInstanceLocalService.class)
 	protected com.liferay.portal.contenttargeting.service.RuleInstanceLocalService ruleInstanceLocalService;
 	@BeanReference(type = com.liferay.portal.contenttargeting.service.RuleInstanceService.class)

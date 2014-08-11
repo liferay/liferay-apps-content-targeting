@@ -259,8 +259,9 @@ public interface UserSegmentContentLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date getLastUserSegmentContentDate();
+	public void checkUserSegmentContentEvents(long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.contenttargeting.report.usersegmentcontent.model.UserSegmentContent getUserSegmentContent(

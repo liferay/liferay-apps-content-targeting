@@ -45,6 +45,26 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.portal.contenttargeting.model.impl.ReportInstanceModelImpl">
+		<attributes>
+			<id name="reportInstanceId" />
+			<basic name="groupId" />
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="reportKey" />
+			<basic name="className" />
+			<basic name="classPK" />
+			<basic name="typeSettings" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.liferay.portal.contenttargeting.model.impl.RuleInstanceModelImpl">
 		<attributes>
 			<id name="ruleInstanceId" />
@@ -133,6 +153,10 @@
 	</mapped-superclass>
 	<entity class="com.liferay.portal.contenttargeting.model.impl.CampaignImpl" name="Campaign">
 		<table name="ContentTargeting_Campaign" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.portal.contenttargeting.model.impl.ReportInstanceImpl" name="ReportInstance">
+		<table name="ContentTargeting_ReportInstance" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.portal.contenttargeting.model.impl.RuleInstanceImpl" name="RuleInstance">

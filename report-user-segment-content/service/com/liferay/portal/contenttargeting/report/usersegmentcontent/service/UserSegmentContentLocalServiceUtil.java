@@ -291,8 +291,10 @@ public class UserSegmentContentLocalServiceUtil {
 		getService().checkUserSegmentContentEvents();
 	}
 
-	public static java.util.Date getLastUserSegmentContentDate() {
-		return getService().getLastUserSegmentContentDate();
+	public static void checkUserSegmentContentEvents(long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().checkUserSegmentContentEvents(userSegmentId);
 	}
 
 	public static com.liferay.portal.contenttargeting.report.usersegmentcontent.model.UserSegmentContent getUserSegmentContent(

@@ -3,6 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.portal.contenttargeting.model.Campaign" />
+	<import class="com.liferay.portal.contenttargeting.model.ReportInstance" />
 	<import class="com.liferay.portal.contenttargeting.model.RuleInstance" />
 	<import class="com.liferay.portal.contenttargeting.model.TrackingActionInstance" />
 	<import class="com.liferay.portal.contenttargeting.model.UserSegment" />
@@ -24,6 +25,21 @@
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
+	</class>
+	<class name="com.liferay.portal.contenttargeting.model.impl.ReportInstanceImpl" table="ContentTargeting_ReportInstance">
+		<cache usage="read-write" />
+		<id name="reportInstanceId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="reportKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="className" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.portal.contenttargeting.model.impl.RuleInstanceImpl" table="ContentTargeting_RuleInstance">
 		<cache usage="read-write" />

@@ -139,35 +139,35 @@ public class CampaignTrackingActionLocalServiceClpInvoker {
 
 		_methodParameterTypes46 = new String[] {  };
 
-		_methodName47 = "getCampaignTrackingAction";
+		_methodName47 = "checkCampaignTrackingActionEvents";
 
-		_methodParameterTypes47 = new String[] {
+		_methodParameterTypes47 = new String[] { "long" };
+
+		_methodName48 = "getCampaignTrackingAction";
+
+		_methodParameterTypes48 = new String[] {
 				"long", "long", "java.lang.String", "long", "java.lang.String",
 				"java.lang.String"
 			};
 
-		_methodName48 = "getCampaignTrackingActions";
-
-		_methodParameterTypes48 = new String[] { "long" };
-
 		_methodName49 = "getCampaignTrackingActions";
 
-		_methodParameterTypes49 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes49 = new String[] { "long" };
 
 		_methodName50 = "getCampaignTrackingActions";
 
-		_methodParameterTypes50 = new String[] {
+		_methodParameterTypes50 = new String[] { "long", "java.util.Date" };
+
+		_methodName51 = "getCampaignTrackingActions";
+
+		_methodParameterTypes51 = new String[] {
 				"long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName51 = "getCampaignTrackingActionsCount";
+		_methodName52 = "getCampaignTrackingActionsCount";
 
-		_methodParameterTypes51 = new String[] { "long" };
-
-		_methodName52 = "getLastCampaignTrackingActionDate";
-
-		_methodParameterTypes52 = new String[] {  };
+		_methodParameterTypes52 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -309,6 +309,13 @@ public class CampaignTrackingActionLocalServiceClpInvoker {
 
 		if (_methodName47.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
+			CampaignTrackingActionLocalServiceUtil.checkCampaignTrackingActionEvents(((Long)arguments[0]).longValue());
+
+			return null;
+		}
+
+		if (_methodName48.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
 			return CampaignTrackingActionLocalServiceUtil.getCampaignTrackingAction(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2],
@@ -316,33 +323,28 @@ public class CampaignTrackingActionLocalServiceClpInvoker {
 				(java.lang.String)arguments[4], (java.lang.String)arguments[5]);
 		}
 
-		if (_methodName48.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
-			return CampaignTrackingActionLocalServiceUtil.getCampaignTrackingActions(((Long)arguments[0]).longValue());
-		}
-
 		if (_methodName49.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
-			return CampaignTrackingActionLocalServiceUtil.getCampaignTrackingActions(((Long)arguments[0]).longValue(),
-				(java.util.Date)arguments[1]);
+			return CampaignTrackingActionLocalServiceUtil.getCampaignTrackingActions(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName50.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
+			return CampaignTrackingActionLocalServiceUtil.getCampaignTrackingActions(((Long)arguments[0]).longValue(),
+				(java.util.Date)arguments[1]);
+		}
+
+		if (_methodName51.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
 			return CampaignTrackingActionLocalServiceUtil.getCampaignTrackingActions(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
-		if (_methodName51.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
-			return CampaignTrackingActionLocalServiceUtil.getCampaignTrackingActionsCount(((Long)arguments[0]).longValue());
-		}
-
 		if (_methodName52.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
-			return CampaignTrackingActionLocalServiceUtil.getLastCampaignTrackingActionDate();
+			return CampaignTrackingActionLocalServiceUtil.getCampaignTrackingActionsCount(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();

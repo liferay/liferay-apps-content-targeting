@@ -259,6 +259,10 @@ public interface CampaignContentLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void checkCampaignContentEvents(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.contenttargeting.report.campaigncontent.model.CampaignContent getCampaignContent(
 		long campaignId, java.lang.String className, long classPK,
@@ -289,7 +293,4 @@ public interface CampaignContentLocalService extends BaseLocalService,
 	public int getCampaignContentsCount(long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date getLastCampaignContentDate();
 }

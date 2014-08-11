@@ -126,34 +126,34 @@ public class CampaignContentLocalServiceClp
 
 		_methodParameterTypes20 = new String[] {  };
 
-		_methodName21 = "getCampaignContent";
+		_methodName21 = "checkCampaignContentEvents";
 
-		_methodParameterTypes21 = new String[] {
+		_methodParameterTypes21 = new String[] { "long" };
+
+		_methodName22 = "getCampaignContent";
+
+		_methodParameterTypes22 = new String[] {
 				"long", "java.lang.String", "long", "java.lang.String"
 			};
 
-		_methodName22 = "getCampaignContents";
-
-		_methodParameterTypes22 = new String[] { "long" };
-
 		_methodName23 = "getCampaignContents";
 
-		_methodParameterTypes23 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes23 = new String[] { "long" };
 
 		_methodName24 = "getCampaignContents";
 
-		_methodParameterTypes24 = new String[] {
+		_methodParameterTypes24 = new String[] { "long", "java.util.Date" };
+
+		_methodName25 = "getCampaignContents";
+
+		_methodParameterTypes25 = new String[] {
 				"long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName25 = "getCampaignContentsCount";
+		_methodName26 = "getCampaignContentsCount";
 
-		_methodParameterTypes25 = new String[] { "long" };
-
-		_methodName26 = "getLastCampaignContentDate";
-
-		_methodParameterTypes26 = new String[] {  };
+		_methodParameterTypes26 = new String[] { "long" };
 	}
 
 	@Override
@@ -782,6 +782,35 @@ public class CampaignContentLocalServiceClp
 	}
 
 	@Override
+	public void checkCampaignContentEvents(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName21,
+				_methodParameterTypes21, new Object[] { campaignId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
 	public com.liferay.portal.contenttargeting.report.campaigncontent.model.CampaignContent getCampaignContent(
 		long campaignId, java.lang.String className, long classPK,
 		java.lang.String eventType)
@@ -790,8 +819,8 @@ public class CampaignContentLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
 					new Object[] {
 						campaignId,
 						
@@ -833,8 +862,8 @@ public class CampaignContentLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22, new Object[] { campaignId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -867,8 +896,8 @@ public class CampaignContentLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						campaignId,
 						
@@ -907,8 +936,8 @@ public class CampaignContentLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						campaignId,
 						
@@ -949,8 +978,8 @@ public class CampaignContentLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] { campaignId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -973,29 +1002,6 @@ public class CampaignContentLocalServiceClp
 		}
 
 		return ((Integer)returnObj).intValue();
-	}
-
-	@Override
-	public java.util.Date getLastCampaignContentDate() {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26, new Object[] {  });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.Date)ClpSerializer.translateOutput(returnObj);
 	}
 
 	private InvokableLocalService _invokableLocalService;

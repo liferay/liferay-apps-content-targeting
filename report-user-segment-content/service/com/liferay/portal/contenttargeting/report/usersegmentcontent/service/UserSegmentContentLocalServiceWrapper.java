@@ -307,8 +307,10 @@ public class UserSegmentContentLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.Date getLastUserSegmentContentDate() {
-		return _userSegmentContentLocalService.getLastUserSegmentContentDate();
+	public void checkUserSegmentContentEvents(long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentContentLocalService.checkUserSegmentContentEvents(userSegmentId);
 	}
 
 	@Override

@@ -43,7 +43,8 @@ public class CampaignTrackingActionFinderImpl
 			".findByAnalyticsWithElementId";
 
 	@Override
-	public List<Object[]> findByAnalyticsWithClassName(Date modifiedDate)
+	public List<Object[]> findByAnalyticsWithClassName(
+			long campaignId, Date modifiedDate)
 		throws SystemException {
 
 		Session session = null;
@@ -59,11 +60,11 @@ public class CampaignTrackingActionFinderImpl
 			q.addScalar("className", Type.STRING);
 			q.addScalar("classPK", Type.LONG);
 			q.addScalar("eventType", Type.STRING);
-			q.addScalar("campaignId", Type.LONG);
 			q.addScalar("alias", Type.STRING);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(campaignId);
 			qPos.add(modifiedDate);
 
 			return q.list();
@@ -77,7 +78,8 @@ public class CampaignTrackingActionFinderImpl
 	}
 
 	@Override
-	public List<Object[]> findByAnalyticsWithElementId(Date modifiedDate)
+	public List<Object[]> findByAnalyticsWithElementId(
+			long campaignId, Date modifiedDate)
 		throws SystemException {
 
 		Session session = null;
@@ -92,11 +94,11 @@ public class CampaignTrackingActionFinderImpl
 			q.addScalar("referrerClassPK", Type.LONG);
 			q.addScalar("elementId", Type.STRING);
 			q.addScalar("eventType", Type.STRING);
-			q.addScalar("campaignId", Type.LONG);
 			q.addScalar("alias", Type.STRING);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
+			qPos.add(campaignId);
 			qPos.add(modifiedDate);
 
 			return q.list();

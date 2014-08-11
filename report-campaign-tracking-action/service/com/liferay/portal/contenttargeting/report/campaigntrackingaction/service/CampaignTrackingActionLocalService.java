@@ -273,6 +273,10 @@ public interface CampaignTrackingActionLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void checkCampaignTrackingActionEvents(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.contenttargeting.report.campaigntrackingaction.model.CampaignTrackingAction getCampaignTrackingAction(
 		long campaignId, long userSegmentId,
@@ -304,7 +308,4 @@ public interface CampaignTrackingActionLocalService extends BaseLocalService,
 	public int getCampaignTrackingActionsCount(long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date getLastCampaignTrackingActionDate();
 }

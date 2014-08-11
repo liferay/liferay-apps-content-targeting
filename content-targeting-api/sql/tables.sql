@@ -21,6 +21,19 @@ create table ContentTargeting_Campaigns_UserSegments (
 	primary key (campaignId, userSegmentId)
 );
 
+create table ContentTargeting_ReportInstance (
+	reportInstanceId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	modifiedDate DATE null,
+	reportKey VARCHAR(75) null,
+	className VARCHAR(75) null,
+	classPK LONG,
+	typeSettings TEXT null
+);
+
 create table ContentTargeting_RuleInstance (
 	uuid_ VARCHAR(75) null,
 	ruleInstanceId LONG not null primary key,

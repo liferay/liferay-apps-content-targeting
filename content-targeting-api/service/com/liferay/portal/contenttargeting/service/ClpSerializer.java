@@ -15,6 +15,7 @@
 package com.liferay.portal.contenttargeting.service;
 
 import com.liferay.portal.contenttargeting.model.CampaignClp;
+import com.liferay.portal.contenttargeting.model.ReportInstanceClp;
 import com.liferay.portal.contenttargeting.model.RuleInstanceClp;
 import com.liferay.portal.contenttargeting.model.TrackingActionInstanceClp;
 import com.liferay.portal.contenttargeting.model.UserSegmentClp;
@@ -108,6 +109,10 @@ public class ClpSerializer {
 			return translateInputCampaign(oldModel);
 		}
 
+		if (oldModelClassName.equals(ReportInstanceClp.class.getName())) {
+			return translateInputReportInstance(oldModel);
+		}
+
 		if (oldModelClassName.equals(RuleInstanceClp.class.getName())) {
 			return translateInputRuleInstance(oldModel);
 		}
@@ -139,6 +144,16 @@ public class ClpSerializer {
 		CampaignClp oldClpModel = (CampaignClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getCampaignRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputReportInstance(BaseModel<?> oldModel) {
+		ReportInstanceClp oldClpModel = (ReportInstanceClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getReportInstanceRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -196,6 +211,11 @@ public class ClpSerializer {
 		if (oldModelClassName.equals(
 					"com.liferay.portal.contenttargeting.model.impl.CampaignImpl")) {
 			return translateOutputCampaign(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					"com.liferay.portal.contenttargeting.model.impl.ReportInstanceImpl")) {
+			return translateOutputReportInstance(oldModel);
 		}
 
 		if (oldModelClassName.equals(
@@ -304,6 +324,11 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
+					"com.liferay.portal.contenttargeting.NoSuchReportInstanceException")) {
+			return new com.liferay.portal.contenttargeting.NoSuchReportInstanceException();
+		}
+
+		if (className.equals(
 					"com.liferay.portal.contenttargeting.NoSuchRuleInstanceException")) {
 			return new com.liferay.portal.contenttargeting.NoSuchRuleInstanceException();
 		}
@@ -327,6 +352,16 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setCampaignRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputReportInstance(BaseModel<?> oldModel) {
+		ReportInstanceClp newModel = new ReportInstanceClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setReportInstanceRemoteModel(oldModel);
 
 		return newModel;
 	}

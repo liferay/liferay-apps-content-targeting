@@ -126,9 +126,9 @@ public class UserSegmentContentLocalServiceClp
 
 		_methodParameterTypes20 = new String[] {  };
 
-		_methodName21 = "getLastUserSegmentContentDate";
+		_methodName21 = "checkUserSegmentContentEvents";
 
-		_methodParameterTypes21 = new String[] {  };
+		_methodParameterTypes21 = new String[] { "long" };
 
 		_methodName22 = "getUserSegmentContent";
 
@@ -792,15 +792,23 @@ public class UserSegmentContentLocalServiceClp
 	}
 
 	@Override
-	public java.util.Date getLastUserSegmentContentDate() {
-		Object returnObj = null;
-
+	public void checkUserSegmentContentEvents(long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21, new Object[] {  });
+			_invokableLocalService.invokeMethod(_methodName21,
+				_methodParameterTypes21, new Object[] { userSegmentId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
 
 			if (t instanceof RuntimeException) {
 				throw (RuntimeException)t;
@@ -810,8 +818,6 @@ public class UserSegmentContentLocalServiceClp
 					" is not a valid exception");
 			}
 		}
-
-		return (java.util.Date)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override

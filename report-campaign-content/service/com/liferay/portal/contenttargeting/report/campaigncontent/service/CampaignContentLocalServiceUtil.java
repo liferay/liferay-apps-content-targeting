@@ -291,6 +291,12 @@ public class CampaignContentLocalServiceUtil {
 		getService().checkCampaignContentEvents();
 	}
 
+	public static void checkCampaignContentEvents(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().checkCampaignContentEvents(campaignId);
+	}
+
 	public static com.liferay.portal.contenttargeting.report.campaigncontent.model.CampaignContent getCampaignContent(
 		long campaignId, java.lang.String className, long classPK,
 		java.lang.String eventType)
@@ -328,10 +334,6 @@ public class CampaignContentLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCampaignContentsCount(campaignId);
-	}
-
-	public static java.util.Date getLastCampaignContentDate() {
-		return getService().getLastCampaignContentDate();
 	}
 
 	public static void clearService() {

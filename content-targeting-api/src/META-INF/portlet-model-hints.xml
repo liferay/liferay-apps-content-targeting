@@ -21,6 +21,20 @@
 		<field name="priority" type="int" />
 		<field name="active" type="boolean" />
 	</model>
+	<model name="com.liferay.portal.contenttargeting.model.ReportInstance">
+		<field name="reportInstanceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="modifiedDate" type="Date" />
+		<field name="reportKey" type="String" />
+		<field name="className" type="String" />
+		<field name="classPK" type="long" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
 	<model name="com.liferay.portal.contenttargeting.model.RuleInstance">
 		<field name="uuid" type="String" />
 		<field name="ruleInstanceId" type="long" />

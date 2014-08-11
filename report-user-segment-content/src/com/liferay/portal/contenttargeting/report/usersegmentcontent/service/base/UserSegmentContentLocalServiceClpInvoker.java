@@ -124,9 +124,9 @@ public class UserSegmentContentLocalServiceClpInvoker {
 
 		_methodParameterTypes42 = new String[] {  };
 
-		_methodName43 = "getLastUserSegmentContentDate";
+		_methodName43 = "checkUserSegmentContentEvents";
 
-		_methodParameterTypes43 = new String[] {  };
+		_methodParameterTypes43 = new String[] { "long" };
 
 		_methodName44 = "getUserSegmentContent";
 
@@ -273,7 +273,9 @@ public class UserSegmentContentLocalServiceClpInvoker {
 
 		if (_methodName43.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
-			return UserSegmentContentLocalServiceUtil.getLastUserSegmentContentDate();
+			UserSegmentContentLocalServiceUtil.checkUserSegmentContentEvents(((Long)arguments[0]).longValue());
+
+			return null;
 		}
 
 		if (_methodName44.equals(name) &&

@@ -332,6 +332,13 @@ public class CampaignTrackingActionLocalServiceWrapper
 	}
 
 	@Override
+	public void checkCampaignTrackingActionEvents(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_campaignTrackingActionLocalService.checkCampaignTrackingActionEvents(campaignId);
+	}
+
+	@Override
 	public com.liferay.portal.contenttargeting.report.campaigntrackingaction.model.CampaignTrackingAction getCampaignTrackingAction(
 		long campaignId, long userSegmentId,
 		java.lang.String referrerClassName, long referrerClassPK,
@@ -375,11 +382,6 @@ public class CampaignTrackingActionLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _campaignTrackingActionLocalService.getCampaignTrackingActionsCount(campaignId);
-	}
-
-	@Override
-	public java.util.Date getLastCampaignTrackingActionDate() {
-		return _campaignTrackingActionLocalService.getLastCampaignTrackingActionDate();
 	}
 
 	/**
