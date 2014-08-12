@@ -97,7 +97,7 @@ public class CampaignTrackingActionReportTest {
 
 		// Test update report without analytics
 
-		report.updateReport();
+		report.updateReport(campaignId);
 
 		Assert.assertEquals(
 			initialCampaignTrackingActionCount,
@@ -118,7 +118,7 @@ public class CampaignTrackingActionReportTest {
 
 		// Test update report with analytics
 
-		report.updateReport();
+		report.updateReport(campaignId);
 
 		Assert.assertEquals(
 			initialCampaignTrackingActionCount + 2,

@@ -73,7 +73,7 @@ public class CampaignContentReportTest {
 
 		// Test update report without analytics
 
-		report.updateReport();
+		report.updateReport(campaignId);
 
 		Assert.assertEquals(
 			initialCampaignContentCount,
@@ -88,7 +88,7 @@ public class CampaignContentReportTest {
 
 		// Test update report with analytics
 
-		report.updateReport();
+		report.updateReport(campaignId);
 
 		Assert.assertEquals(
 			initialCampaignContentCount + 1,

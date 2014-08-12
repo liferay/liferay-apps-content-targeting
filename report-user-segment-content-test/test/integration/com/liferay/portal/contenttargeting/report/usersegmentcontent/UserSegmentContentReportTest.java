@@ -74,7 +74,7 @@ public class UserSegmentContentReportTest {
 
 		// Test update report without analytics
 
-		report.updateReport();
+		report.updateReport(userSegmentId);
 
 		Assert.assertEquals(
 			initialUserSegmentContentCount,
@@ -91,7 +91,7 @@ public class UserSegmentContentReportTest {
 
 		// Test update report with analytics
 
-		report.updateReport();
+		report.updateReport(userSegmentId);
 
 		Assert.assertEquals(
 			initialUserSegmentContentCount + 1,
