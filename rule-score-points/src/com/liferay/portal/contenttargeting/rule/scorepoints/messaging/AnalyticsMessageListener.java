@@ -38,7 +38,7 @@ public class AnalyticsMessageListener implements MessageListener {
 		String className = message.getString("className");
 		long classPK = message.getLong("classPK");
 		long anonymousUserId = message.getLong("anonymousUserId");
-		long groupId = message.getLong("groupId");
+		long groupId = message.getLong("scopeGroupId");
 
 		ScorePointsAssigner.assignPoints(
 			groupId, anonymousUserId, className, classPK);
