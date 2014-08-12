@@ -7,7 +7,7 @@
 
 	<property name="import.shared" value="anonymous-users-api,content-targeting-api" />
 
-	<property name="osgi.runtime.dependencies" value="com.liferay.ip.geocoder.jar" />
+	<property name="osgi.runtime.dependencies" value="com.liferay.ip.geocoder.jar,geoip-api.jar" />
 
 	<import file="../../../build-common-osgi-plugin.xml" />
 </project>
