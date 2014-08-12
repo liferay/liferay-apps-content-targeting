@@ -1,5 +1,5 @@
 Bundle-Activator: com.liferay.portal.contenttargeting.report.usersegmentcontent.internal.osgi.UserSegmentContentServiceActivator
-Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.report.usersegment.content-service.jar
+Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.report.usersegmentcontent-service.jar
 Bundle-Name: User Segment Content Report
 Export-Package:\
 	com.liferay.portal.contenttargeting.report.usersegmentcontent,\
@@ -73,6 +73,6 @@ Include-Resource:\
  	WEB-INF/portlet.xml=META-INF/portlet.xml,\
  	WEB-INF/sql=sql,\
  	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	lib/com.liferay.portal.contenttargeting.report.usersegment.content-service.jar=lib/com.liferay.portal.contenttargeting.report.usersegment.content-service.jar
+	lib/com.liferay.portal.contenttargeting.report.usersegmentcontent-service.jar=lib/com.liferay.portal.contenttargeting.report.usersegmentcontent-service.jar
 Service-Component: com.liferay.portal.contenttargeting.report.usersegmentcontent.*
 Web-ContextPath: /report-user-segment-content
