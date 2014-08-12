@@ -19,10 +19,29 @@ import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rulecategories.SessionAttributesRuleCategory;
+import com.liferay.portal.contenttargeting.util.WebKeys;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.servlet.BrowserSnifferUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil;
+import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.mobiledevicerules.model.MDRRule;
+import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
+import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -36,20 +55,11 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
+ * @author Julio Camarero
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
 public class DeviceRule extends BaseRule {
-
-	public static final String DESKTOP = "Desktop";
-
-	public static final String MOBILE = "Mobile";
-
-	public static final String TABLET = "Tablet";
-
-	public static boolean isTablet(HttpServletRequest request) {
-		return false;
-	}
 
 	@Activate
 	@Override
@@ -69,23 +79,37 @@ public class DeviceRule extends BaseRule {
 			AnonymousUser anonymousUser)
 		throws Exception {
 
-		String device = ruleInstance.getTypeSettings();
+		long mdrRuleGroupId = 0;
 
-		if (device.equals(DESKTOP) && !BrowserSnifferUtil.isMobile(request) &&
-			!isTablet(request)) {
+		try {
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+				ruleInstance.getTypeSettings());
 
-			return true;
+			mdrRuleGroupId = jsonObj.getLong("mdrRuleGroupId");
 		}
-		else if (device.equals(MOBILE) &&
-				 BrowserSnifferUtil.isMobile(request)) {
-
-			return true;
-		}
-		else if (device.equals(TABLET) && isTablet(request)) {
-			return true;
+		catch (JSONException jse) {
 		}
 
-		return false;
+		if (mdrRuleGroupId <= 0) {
+			return false;
+		}
+
+		MDRRuleGroup mdrRuleGroup = null;
+
+		try {
+			mdrRuleGroup = MDRRuleGroupLocalServiceUtil.getMDRRuleGroup(
+				mdrRuleGroupId);
+		}
+		catch (SystemException se) {
+			_log.error(se);
+
+			return false;
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		return evaluateRuleGroup(mdrRuleGroup, themeDisplay);
 	}
 
 	@Override
@@ -100,7 +124,51 @@ public class DeviceRule extends BaseRule {
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
-		return LanguageUtil.get(locale, ruleInstance.getTypeSettings());
+		long mdrRuleGroupId = 0;
+
+		try {
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+				ruleInstance.getTypeSettings());
+
+			mdrRuleGroupId = jsonObj.getLong("mdrRuleGroupId");
+		}
+		catch (JSONException jse) {
+		}
+
+		if (mdrRuleGroupId <= 0) {
+			return StringPool.BLANK;
+		}
+
+		MDRRuleGroup mdrRuleGroup = null;
+
+		try {
+			mdrRuleGroup = MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroup(
+				mdrRuleGroupId);
+		}
+		catch (SystemException se) {
+			_log.error(se);
+		}
+
+		if (mdrRuleGroup == null) {
+			return StringPool.BLANK;
+		}
+
+		StringBuilder sb = new StringBuilder(3);
+
+		sb.append(LanguageUtil.get(locale, "device-family"));
+		sb.append(StringPool.COLON);
+		sb.append(StringPool.SPACE);
+		sb.append(mdrRuleGroup.getName(locale));
+
+		String description = mdrRuleGroup.getDescription(locale);
+
+		if (Validator.isNotNull(description)) {
+			sb.append(StringPool.COLON);
+			sb.append(StringPool.SPACE);
+			sb.append(mdrRuleGroup.getDescription(locale));
+		}
+
+		return sb.toString();
 	}
 
 	@Override
@@ -109,25 +177,89 @@ public class DeviceRule extends BaseRule {
 			Map<String, String> values)
 		throws Exception {
 
-		return values.get("device");
+		long mdrRuleGroupId = GetterUtil.getInteger(
+			values.get("mdrRuleGroupId"));
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+		jsonObj.put("mdrRuleGroupId", mdrRuleGroupId);
+
+		return jsonObj.toString();
+	}
+
+	protected boolean evaluateRule(MDRRule rule, ThemeDisplay themeDisplay) {
+		RuleGroupProcessorUtil.getRuleHandler(rule.getType());
+
+		RuleHandler ruleHandler = RuleGroupProcessorUtil.getRuleHandler(
+			rule.getType());
+
+		if (ruleHandler != null) {
+			return ruleHandler.evaluateRule(rule, themeDisplay);
+		}
+		else if (_log.isWarnEnabled()) {
+			_log.warn("No rule handler registered for type " + rule.getType());
+		}
+
+		return false;
+	}
+
+	protected boolean evaluateRuleGroup(
+			MDRRuleGroup mdrRuleGroup, ThemeDisplay themeDisplay)
+		throws SystemException {
+
+		Collection<MDRRule> mdrRules = mdrRuleGroup.getRules();
+
+		for (MDRRule mdrRule : mdrRules) {
+			if (!evaluateRule(mdrRule, themeDisplay)) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	@Override
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
-		String device = StringPool.BLANK;
+		long mdrRuleGroupId = 0;
 
 		if (ruleInstance != null) {
-			device = ruleInstance.getTypeSettings();
+			String typeSettings = ruleInstance.getTypeSettings();
+
+			try {
+				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+					typeSettings);
+
+				mdrRuleGroupId = jsonObj.getInt("mdrRuleGroupId");
+			}
+			catch (JSONException jse) {
+			}
 		}
 
-		context.put("devices", _AVAILABLE_DEVICES);
-		context.put("device", device);
+		context.put("mdrRuleGroupId", mdrRuleGroupId);
+
+		LinkedHashMap<String, Object> params =
+			new LinkedHashMap<String, Object>();
+
+		params.put("includeGlobalScope", Boolean.TRUE);
+
+		long groupId = GetterUtil.getLong(context.get("scopeGroupId"));
+
+		List<MDRRuleGroup> mdrRuleGroups = new ArrayList<MDRRuleGroup>();
+
+		try {
+			mdrRuleGroups = MDRRuleGroupLocalServiceUtil.searchByKeywords(
+				groupId, null, params, false, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+		}
+		catch (SystemException se) {
+			_log.error(se);
+		}
+
+		context.put("mdrRuleGroups", mdrRuleGroups);
 	}
 
-	private static final String[] _AVAILABLE_DEVICES = {
-		DESKTOP, MOBILE, TABLET
-	};
+	private static Log _log = LogFactoryUtil.getLog(DeviceRule.class);
 
 }
