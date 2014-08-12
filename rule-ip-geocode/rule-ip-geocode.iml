@@ -28,7 +28,6 @@
     <orderEntry type="module-library">
       <library name="IvyIDEA">
         <CLASSES>
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.0-SNAPSHOT.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/jars/org.osgi.compendium-5.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/jars/org.osgi.core-5.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/jars/junit-4.11.jar!/" />
@@ -42,9 +41,10 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.javassist/javassist/bundles/javassist-3.17.1-GA.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4/jars/powermock-module-junit4-1.5.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4-common/jars/powermock-module-junit4-common-1.5.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.ip.geocoder/jars/com.liferay.ip.geocoder.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.maxmind.geoip/geoip-api/jars/geoip-api-1.2.10.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.ip.geocoder/jars/com.liferay.ip.geocoder-1.0.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.maxmind.geoip/geoip-api/bundles/geoip-api-1.2.14.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.0.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/javadocs/org.osgi.compendium-5.0.0-javadoc.jar!/" />
@@ -59,11 +59,10 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.objenesis/objenesis/javadocs/objenesis-1.2-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4/javadocs/powermock-module-junit4-1.5-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4-common/javadocs/powermock-module-junit4-common-1.5-javadoc.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.maxmind.geoip/geoip-api/javadocs/geoip-api-1.2.10-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/javadocs/org.osgi.enterprise-5.0.0-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.maxmind.geoip/geoip-api/javadocs/geoip-api-1.2.14-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.0-SNAPSHOT-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/sources/org.osgi.compendium-5.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/sources/org.osgi.core-5.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/sources/junit-4.11-sources.jar!/" />
@@ -77,9 +76,10 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.javassist/javassist/sources/javassist-3.17.1-GA-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4/sources/powermock-module-junit4-1.5-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4-common/sources/powermock-module-junit4-common-1.5-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.ip.geocoder/sources/com.liferay.ip.geocoder-1.0.0-SNAPSHOT-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.maxmind.geoip/geoip-api/sources/geoip-api-1.2.10-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/sources/org.osgi.enterprise-5.0.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.ip.geocoder/sources/com.liferay.ip.geocoder-1.0.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.maxmind.geoip/geoip-api/sources/geoip-api-1.2.14-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

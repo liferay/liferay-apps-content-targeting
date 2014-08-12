@@ -27,8 +27,6 @@
     <orderEntry type="module-library">
       <library name="IvyIDEA">
         <CLASSES>
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.0-SNAPSHOT.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/jars/org.osgi.compendium-5.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/jars/org.osgi.core-5.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/jars/junit-4.11.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar!/" />
@@ -41,10 +39,10 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.javassist/javassist/bundles/javassist-3.17.1-GA.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4/jars/powermock-module-junit4-1.5.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4-common/jars/powermock-module-junit4-common-1.5.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/biz.aQute.bnd/bnd/jars/bnd-2.3.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar!/" />
         </CLASSES>
         <JAVADOC>
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/javadocs/org.osgi.compendium-5.0.0-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/javadocs/org.osgi.core-5.0.0-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/javadocs/junit-4.11-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/javadocs/hamcrest-core-1.3-javadoc.jar!/" />
@@ -56,11 +54,9 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.objenesis/objenesis/javadocs/objenesis-1.2-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4/javadocs/powermock-module-junit4-1.5-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4-common/javadocs/powermock-module-junit4-common-1.5-javadoc.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/biz.aQute.bnd/bnd/javadocs/bnd-2.3.0-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/javadocs/org.osgi.enterprise-5.0.0-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.0-SNAPSHOT-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/sources/org.osgi.compendium-5.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/sources/org.osgi.core-5.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/sources/junit-4.11-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/sources/hamcrest-core-1.3-sources.jar!/" />
@@ -73,7 +69,8 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.javassist/javassist/sources/javassist-3.17.1-GA-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4/sources/powermock-module-junit4-1.5-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4-common/sources/powermock-module-junit4-common-1.5-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/biz.aQute.bnd/bnd/sources/bnd-2.3.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/sources/org.osgi.enterprise-5.0.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
