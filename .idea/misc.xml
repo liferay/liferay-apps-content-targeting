@@ -12,6 +12,7 @@
         <option name="sourcesTypes" value="source, src, sources, srcs" />
       </ArtifactTypeSettings>
     </option>
+    <option name="ivySettingsFile" value="$PROJECT_DIR$/../../ivy-settings.xml" />
     <option name="propertiesSettings">
       <PropertiesSettings />
     </option>
