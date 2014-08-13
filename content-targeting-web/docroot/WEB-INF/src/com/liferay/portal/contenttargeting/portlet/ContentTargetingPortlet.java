@@ -234,11 +234,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			userSegmentIds = new long[] {userSegmentId};
 		}
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			UserSegment.class.getName(), request);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		serviceContext.setScopeGroupId(
+			themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		try {
 			Campaign campaign = null;
@@ -309,11 +312,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			UserSegment.class.getName(), request);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+		serviceContext.setScopeGroupId(
+			themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		UserSegment userSegment = null;
 
@@ -442,11 +448,11 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			template.put(
 				"campaignSearchContainerIterator",
 				new CampaignSearchContainerIterator(
-					themeDisplay.getScopeGroupId(), keywords));
+					themeDisplay.getSiteGroupIdOrLiveGroupId(), keywords));
 			template.put(
 				"userSegmentSearchContainerIterator",
 				new UserSegmentSearchContainerIterator(
-					themeDisplay.getScopeGroupId(), keywords));
+					themeDisplay.getSiteGroupIdOrLiveGroupId(), keywords));
 			template.put(
 				"usedUserSegmentExceptionClass",
 				UsedUserSegmentException.class);
