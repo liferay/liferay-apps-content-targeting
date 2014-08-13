@@ -42,9 +42,9 @@
 		</#list>
 	</@>
 
-	<@aui["input"] name="startDate" />
+	<@aui["input"] name="startDate" value=startDate />
 
-	<@aui["input"] name="endDate" />
+	<@aui["input"] name="endDate" value=endDate />
 
 	<@aui["select"] name="priority">
 		<#assign maxPriority=5>

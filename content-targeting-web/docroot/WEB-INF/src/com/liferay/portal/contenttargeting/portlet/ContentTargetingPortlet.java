@@ -470,6 +470,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			int priority = 1;
 			long userSegmentId = -1;
 
+			Calendar endDate = Calendar.getInstance();
+			Calendar startDate = Calendar.getInstance();
+
 			if (campaignId > 0) {
 				Campaign campaign = _campaignLocalService.getCampaign(
 					campaignId);
@@ -492,9 +495,22 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 					userSegmentId = campaignUserSegment.getUserSegmentId();
 				}
+
+				endDate.setTime(campaign.getEndDate());
+				startDate.setTime(campaign.getStartDate());
+			}
+			else {
+				Date now = new Date();
+
+				endDate.setTime(now);
+				endDate.add(Calendar.DATE, 1);
+
+				startDate.setTime(now);
 			}
 
+			template.put("endDate", endDate);
 			template.put("priority", priority);
+			template.put("startDate", startDate);
 			template.put("userSegmentId", userSegmentId);
 
 			long[] groupIds =
