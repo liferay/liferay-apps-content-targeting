@@ -5,7 +5,7 @@
 
 	<property name="plugin.name" value="com.liferay.portal.contenttargeting.runtime.test.dependencies" />
 
-	<property name="osgi.runtime.dependencies" value="org.apache.aries.util.jar,org.apache.aries.jmx.jar,org.apache.aries.jmx.api.jar,org.apache.aries.jmx.core.jar" />
+	<property name="osgi.runtime.dependencies" value="org.apache.aries.util.jar,org.apache.aries.jmx.jar,org.apache.aries.jmx.api.jar,org.apache.aries.jmx.core.jar,spring-test.jar" />
 
 	<import file="../../../build-common-osgi-plugin.xml" />
 </project>

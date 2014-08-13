@@ -14,5 +14,6 @@
 		<dependency name="org.apache.aries.jmx" org="org.apache.aries.jmx" rev="1.1.0" />
 		<dependency name="org.apache.aries.jmx.api" org="org.apache.aries.jmx" rev="1.1.0" />
 		<dependency name="org.apache.aries.jmx.core" org="org.apache.aries.jmx" rev="1.1.0" />
+		<dependency name="spring-test" org="org.springframework" rev="2.5" />
 	</dependencies>
 </ivy-module>
