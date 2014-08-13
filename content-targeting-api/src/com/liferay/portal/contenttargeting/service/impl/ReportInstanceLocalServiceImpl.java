@@ -53,6 +53,7 @@ public class ReportInstanceLocalServiceImpl
 
 		if (reportInstance == null) {
 			User user = UserLocalServiceUtil.getUser(userId);
+
 			long groupId = serviceContext.getScopeGroupId();
 
 			long reportInstanceId = CounterLocalServiceUtil.increment();
@@ -60,7 +61,6 @@ public class ReportInstanceLocalServiceImpl
 			reportInstance = reportInstancePersistence.create(reportInstanceId);
 
 			reportInstance.setGroupId(groupId);
-
 			reportInstance.setCompanyId(user.getCompanyId());
 			reportInstance.setUserId(user.getUserId());
 			reportInstance.setUserName(user.getFullName());

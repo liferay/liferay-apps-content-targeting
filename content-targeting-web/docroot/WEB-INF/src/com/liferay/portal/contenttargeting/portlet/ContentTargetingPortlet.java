@@ -294,6 +294,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		serviceContext.setScopeGroupId(
+			themeDisplay.getSiteGroupIdOrLiveGroupId());
+
 		_reportInstanceService.addReportInstance(
 			themeDisplay.getUserId(), reportKey, report.getReportType(),
 			classPK, typeSettings, serviceContext);

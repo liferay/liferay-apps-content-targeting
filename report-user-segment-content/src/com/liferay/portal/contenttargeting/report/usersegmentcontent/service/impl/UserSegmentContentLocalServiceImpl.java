@@ -104,8 +104,12 @@ public class UserSegmentContentLocalServiceImpl
 			_userSegmentLocalService.getUserSegments(
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
+		ServiceContext serviceContext = new ServiceContext();
+
 		for (UserSegment userSegment : userSegments) {
 			checkUserSegmentContentEvents(userSegment.getUserSegmentId());
+
+			serviceContext.setScopeGroupId(userSegment.getGroupId());
 
 			_reportInstanceLocalService.addReportInstance(
 				userSegment.getUserId(),
