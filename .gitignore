@@ -8,6 +8,7 @@
 
 /*/docroot/WEB-INF/classes
 /*/docroot/WEB-INF/lib
+/*/docroot/WEB-INF/liferay-hook.xml.processed
 
 /ivy.idea.properties
 
