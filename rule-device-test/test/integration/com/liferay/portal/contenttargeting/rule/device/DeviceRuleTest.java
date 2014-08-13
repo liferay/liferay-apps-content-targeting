@@ -20,6 +20,7 @@ import com.liferay.portal.contenttargeting.anonymoususers.service.AnonymousUserL
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.api.model.RulesRegistry;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
+import com.liferay.portal.contenttargeting.rule.device.test.util.MockiPhoneDevice;
 import com.liferay.portal.contenttargeting.rule.device.test.util.TestUtil;
 import com.liferay.portal.contenttargeting.service.RuleInstanceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -118,9 +119,9 @@ public class DeviceRuleTest {
 				TestUtil.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
-		// This rule is valid for iphones only.
+		// This rule is valid for Android devices only.
 
-		long mdrRuleGroupId = addMDRRuleGroup("os=iPhone OS", serviceContext);
+		long mdrRuleGroupId = addMDRRuleGroup("os=Android", serviceContext);
 
 		Rule rule = _rulesRegistry.getRule("DeviceRule");
 
