@@ -16,6 +16,7 @@ package com.liferay.portal.contenttargeting.report.@report.java.package.name@;
 
 import com.liferay.portal.contenttargeting.api.model.BaseReport;
 import com.liferay.portal.contenttargeting.model.Campaign;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Map;
 
@@ -54,7 +55,8 @@ public class @report.java.class.name@Report extends BaseReport {
 	}
 
 	@Override
-	public void updateReport() {
+	public String updateReport(long classPK) {
+		return StringPool.BLANK;
 	}
 
 	@Override
