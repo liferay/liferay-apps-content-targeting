@@ -6,6 +6,7 @@
       <root url="jar://$PROJECT_DIR$/../../../portal/lib/portal/spring-context.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../../portal/lib/global/portlet.jar!/" />
       <root url="jar://$PROJECT_DIR$/../../../portal/lib/development/servlet-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../portal/lib/development/spring-test.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

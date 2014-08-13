@@ -255,6 +255,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="reference" level="project" />
   </component>
 </module>
 

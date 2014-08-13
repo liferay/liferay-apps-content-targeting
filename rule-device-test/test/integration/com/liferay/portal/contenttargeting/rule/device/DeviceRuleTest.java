@@ -26,11 +26,14 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.mobile.device.Device;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleGroupLocalServiceUtil;
 import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
@@ -38,6 +41,8 @@ import com.liferay.portlet.mobiledevicerules.service.MDRRuleLocalServiceUtil;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -50,8 +55,10 @@ import org.junit.runner.RunWith;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
 
+import org.springframework.mock.web.MockHttpServletRequest;
+
 /**
- * @author Eudaldo Alonso
+ * @author Julio Camarero
  */
 @RunWith(Arquillian.class)
 public class DeviceRuleTest {
@@ -95,7 +102,8 @@ public class DeviceRuleTest {
 			TestUtil.getUserId(), rule.getRuleKey(), 0,
 			getTypeSettings(mdrRuleGroupId), serviceContext);
 
-		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
+		Assert.assertTrue(
+			rule.evaluate(getRequest(), ruleInstance, anonymousUser));
 	}
 
 	@Test
@@ -120,7 +128,8 @@ public class DeviceRuleTest {
 			TestUtil.getUserId(), rule.getRuleKey(), 0,
 			getTypeSettings(mdrRuleGroupId), serviceContext);
 
-		Assert.assertFalse(rule.evaluate(null, ruleInstance, anonymousUser));
+		Assert.assertFalse(
+			rule.evaluate(getRequest(), ruleInstance, anonymousUser));
 	}
 
 	protected long addMDRRuleGroup(
@@ -140,6 +149,20 @@ public class DeviceRuleTest {
 				"SimpleRuleHandler", typeSettings, serviceContext);
 
 		return mdrRuleGroup.getRuleGroupId();
+	}
+
+	protected HttpServletRequest getRequest() {
+		HttpServletRequest request = new MockHttpServletRequest();
+
+		ThemeDisplay themeDisplay = new ThemeDisplay();
+
+		Device device = new MockiPhoneDevice();
+
+		themeDisplay.setDevice(device);
+
+		request.setAttribute(WebKeys.THEME_DISPLAY, themeDisplay);
+
+		return request;
 	}
 
 	protected String getTypeSettings(long mdrRuleGroupId) {
