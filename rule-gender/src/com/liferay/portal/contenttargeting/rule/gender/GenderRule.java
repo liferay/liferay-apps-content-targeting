@@ -23,7 +23,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 
@@ -108,7 +107,7 @@ public class GenderRule extends BaseRule {
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
-		String gender = StringPool.BLANK;
+		String gender = "male";
 
 		if (ruleInstance != null) {
 			gender = ruleInstance.getTypeSettings();

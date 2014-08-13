@@ -23,7 +23,6 @@ import com.liferay.portal.contenttargeting.rulecategories.SocialRuleCategory;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.WebKeys;
@@ -107,7 +106,7 @@ public class FacebookGenderRule extends BaseRule {
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) {
 
-		return values.get("gender");
+		return values.get("fbGender");
 	}
 
 	protected FacebookClient createFacebookClient(String accessToken) {
@@ -122,7 +121,7 @@ public class FacebookGenderRule extends BaseRule {
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
-		String gender = StringPool.BLANK;
+		String gender = "male";
 
 		if (ruleInstance != null) {
 			gender = ruleInstance.getTypeSettings();
