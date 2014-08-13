@@ -57,7 +57,6 @@
 			value=report.getName(locale)
 		/>
 
-
 		<@liferay_ui["search-container-column-text"]
 			href=viewReportURL
 			name="description"
@@ -80,7 +79,7 @@
 					label=true
 					message="view-report"
 					method="get"
-					url="${viewReportURL.toString()}"
+					url="${viewReportURL}"
 				/>
 
 				<@portlet["actionURL"] name="updateReport" var="updateReportURL">

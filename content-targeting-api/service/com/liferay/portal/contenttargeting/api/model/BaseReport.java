@@ -17,6 +17,7 @@ package com.liferay.portal.contenttargeting.api.model;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.contenttargeting.model.ReportInstance;
 import com.liferay.portal.contenttargeting.service.ReportInstanceLocalService;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -102,14 +103,18 @@ public abstract class BaseReport implements Report {
 
 		try {
 			ReportInstance reportInstance =
-				reportInstanceLocalService.getReportInstance(
+				reportInstanceLocalService.fetchReportInstance(
 					getReportKey(), getReportType(), classPK);
 
-			return reportInstance.getModifiedDate();
+			if (reportInstance != null) {
+				return reportInstance.getModifiedDate();
+			}
 		}
-		catch (Exception e) {
-			return null;
+		catch (SystemException se) {
+			_log.error(se);
 		}
+
+		return null;
 	}
 
 	@Override

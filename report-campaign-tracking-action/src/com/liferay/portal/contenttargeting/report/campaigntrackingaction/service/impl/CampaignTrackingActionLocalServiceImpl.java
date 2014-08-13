@@ -147,7 +147,7 @@ public class CampaignTrackingActionLocalServiceImpl
 		Date modifiedDate = null;
 
 		ReportInstance reportInstance =
-			_reportInstanceLocalService.getReportInstance(
+			_reportInstanceLocalService.fetchReportInstance(
 				CampaignTrackingActionReport.class.getSimpleName(),
 				Campaign.class.getName(), campaignId);
 

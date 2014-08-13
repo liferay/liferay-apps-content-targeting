@@ -122,7 +122,7 @@ public class UserSegmentContentLocalServiceImpl
 		Date modifiedDate = null;
 
 		ReportInstance reportInstance =
-			_reportInstanceLocalService.getReportInstance(
+			_reportInstanceLocalService.fetchReportInstance(
 				UserSegmentContentReport.class.getSimpleName(),
 				UserSegment.class.getName(), userSegmentId);
 

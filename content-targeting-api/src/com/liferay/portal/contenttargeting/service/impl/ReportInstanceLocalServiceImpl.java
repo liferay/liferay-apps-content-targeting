@@ -48,7 +48,7 @@ public class ReportInstanceLocalServiceImpl
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		ReportInstance reportInstance = getReportInstance(
+		ReportInstance reportInstance = fetchReportInstance(
 			reportKey, className, classPK);
 
 		if (reportInstance == null) {
@@ -78,9 +78,9 @@ public class ReportInstanceLocalServiceImpl
 	}
 
 	@Override
-	public ReportInstance getReportInstance(
+	public ReportInstance fetchReportInstance(
 			String reportKey, String className, long classPK)
-		throws PortalException, SystemException {
+		throws SystemException {
 
 		return reportInstancePersistence.fetchByR_C_C(
 			reportKey, className, classPK);

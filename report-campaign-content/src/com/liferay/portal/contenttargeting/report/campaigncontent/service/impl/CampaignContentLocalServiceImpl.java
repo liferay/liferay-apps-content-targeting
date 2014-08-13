@@ -113,7 +113,7 @@ public class CampaignContentLocalServiceImpl
 		Date modifiedDate = null;
 
 		ReportInstance reportInstance =
-			_reportInstanceLocalService.getReportInstance(
+			_reportInstanceLocalService.fetchReportInstance(
 				CampaignContentReport.class.getSimpleName(),
 				Campaign.class.getName(), campaignId);
 

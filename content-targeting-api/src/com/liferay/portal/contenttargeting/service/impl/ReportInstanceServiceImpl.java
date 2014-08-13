@@ -55,11 +55,11 @@ public class ReportInstanceServiceImpl extends ReportInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public ReportInstance getReportInstance(
+	public ReportInstance fetchReportInstance(
 			String reportKey, String className, long classPK)
-		throws PortalException, SystemException {
+		throws SystemException {
 
-		return reportInstanceLocalService.getReportInstance(
+		return reportInstanceLocalService.fetchReportInstance(
 			reportKey, className, classPK);
 	}
 
