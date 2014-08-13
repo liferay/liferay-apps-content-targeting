@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.contenttargeting.rule.device;
+package com.liferay.portal.contenttargeting.rule.device.test.util;
 
 import com.liferay.portal.kernel.mobile.device.AbstractDevice;
 import com.liferay.portal.kernel.mobile.device.Capability;
@@ -72,12 +72,12 @@ public class MockiPhoneDevice extends AbstractDevice {
 
 	@Override
 	public Dimensions getScreenPhysicalSize() {
-		return null;
+		return Dimensions.UNKNOWN;
 	}
 
 	@Override
 	public Dimensions getScreenResolution() {
-		return null;
+		return Dimensions.UNKNOWN;
 	}
 
 	@Override
