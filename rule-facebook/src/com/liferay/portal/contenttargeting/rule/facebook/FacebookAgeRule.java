@@ -71,8 +71,8 @@ public class FacebookAgeRule extends BaseRule {
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
 			ruleInstance.getTypeSettings());
 
-		int youngerThan = jsonObj.getInt("youngerThan");
-		int olderThan = jsonObj.getInt("olderThan");
+		int youngerThan = jsonObj.getInt("fbYoungerThan");
+		int olderThan = jsonObj.getInt("fbOlderThan");
 
 		JSONObject typeSettings = JSONFactoryUtil.createJSONObject(
 			anonymousUser.getTypeSettings());
