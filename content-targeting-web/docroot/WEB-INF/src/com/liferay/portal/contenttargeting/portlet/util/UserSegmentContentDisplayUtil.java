@@ -16,6 +16,7 @@ package com.liferay.portal.contenttargeting.portlet.util;
 
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -26,6 +27,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletURL;
@@ -67,6 +69,9 @@ public class UserSegmentContentDisplayUtil {
 			AssetRendererFactory assetRendererFactory, String index)
 		throws Exception {
 
+		PortletConfig portletConfig = (PortletConfig)request.getAttribute(
+			JavaConstants.JAVAX_PORTLET_CONFIG);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -84,7 +89,8 @@ public class UserSegmentContentDisplayUtil {
 		data.put(
 			"title",
 			LanguageUtil.format(
-				themeDisplay.getLocale(), "select-x", typeName, false));
+				portletConfig, themeDisplay.getLocale(), "select-x", typeName,
+				false));
 		data.put("type", typeName);
 
 		return data;

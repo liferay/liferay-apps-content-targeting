@@ -32,6 +32,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.Locale;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 
 /**
@@ -164,14 +165,17 @@ public class UserSegmentQueryRule {
 		return _index;
 	}
 
-	public String getSummary(Locale locale) throws SystemException {
+	public String getSummary(PortletConfig portletConfig, Locale locale)
+		throws SystemException {
+
 		String userSegmentQueryRuleContains =
 			_contains ? "belongs" : "does-not-belong";
 
 		String userSegmentQueryRuleAndOperator = _andOperator ? "all" : "any";
 
 		return UnicodeLanguageUtil.format(
-			locale, "if-the-user-x-to-x-of-the-following-user-segments-x",
+			portletConfig, locale,
+			"if-the-user-x-to-x-of-the-following-user-segments-x",
 			new Object[] {
 				userSegmentQueryRuleContains, userSegmentQueryRuleAndOperator,
 				getUserSegmentNames(locale)},

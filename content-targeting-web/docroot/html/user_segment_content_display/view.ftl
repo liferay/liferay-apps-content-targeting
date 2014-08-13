@@ -56,7 +56,7 @@
 					<#assign userSegmentQueryRuleAndOperator = "any" />
 				</#if>
 
-				<#assign toolTipMessage = userSegmentQueryRule.getSummary(locale) />
+				<#assign toolTipMessage = userSegmentQueryRule.getSummary(portletConfig, locale) />
 
 				<#if !userSegmentQueryRule_has_next>
 					<#assign toolTipMessage = languageUtil.get(locale, "default") />

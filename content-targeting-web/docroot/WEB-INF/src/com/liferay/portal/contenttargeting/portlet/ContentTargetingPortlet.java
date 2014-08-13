@@ -55,6 +55,7 @@ import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
+import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -82,6 +83,7 @@ import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -672,6 +674,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			}
 
 			if (path.equals(ContentTargetingPath.VIEW_REPORTS)) {
+				PortletConfig portletConfig =
+					(PortletConfig)portletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_CONFIG);
+
 				String title = "reports";
 
 				if (className.equals(Campaign.class.getName())) {
@@ -679,7 +685,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						classPK);
 
 					title = LanguageUtil.format(
-						themeDisplay.getLocale(), "reports-for-campaign-x",
+						portletConfig, themeDisplay.getLocale(),
+						"reports-for-campaign-x",
 						campaign.getName(themeDisplay.getLocale()));
 				}
 				else if (className.equals(UserSegment.class.getName())) {
@@ -687,7 +694,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						_userSegmentLocalService.getUserSegment(classPK);
 
 					title = LanguageUtil.format(
-						themeDisplay.getLocale(), "reports-for-user-segment-x",
+						portletConfig, themeDisplay.getLocale(),
+						"reports-for-user-segment-x",
 						userSegment.getName(themeDisplay.getLocale()), false);
 				}
 
