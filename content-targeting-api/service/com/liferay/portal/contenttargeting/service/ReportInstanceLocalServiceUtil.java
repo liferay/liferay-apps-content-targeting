@@ -286,11 +286,10 @@ public class ReportInstanceLocalServiceUtil {
 			typeSettings, serviceContext);
 	}
 
-	public static com.liferay.portal.contenttargeting.model.ReportInstance getReportInstance(
+	public static com.liferay.portal.contenttargeting.model.ReportInstance fetchReportInstance(
 		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getReportInstance(reportKey, className, classPK);
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchReportInstance(reportKey, className, classPK);
 	}
 
 	public static void clearService() {

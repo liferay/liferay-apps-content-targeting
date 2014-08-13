@@ -80,12 +80,12 @@ public class ReportInstanceServiceSoap {
 		}
 	}
 
-	public static com.liferay.portal.contenttargeting.model.ReportInstanceSoap getReportInstance(
+	public static com.liferay.portal.contenttargeting.model.ReportInstanceSoap fetchReportInstance(
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws RemoteException {
 		try {
 			com.liferay.portal.contenttargeting.model.ReportInstance returnValue =
-				ReportInstanceServiceUtil.getReportInstance(reportKey,
+				ReportInstanceServiceUtil.fetchReportInstance(reportKey,
 					className, classPK);
 
 			return com.liferay.portal.contenttargeting.model.ReportInstanceSoap.toSoapModel(returnValue);

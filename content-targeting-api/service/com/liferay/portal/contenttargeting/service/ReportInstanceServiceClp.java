@@ -39,7 +39,7 @@ public class ReportInstanceServiceClp implements ReportInstanceService {
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName4 = "getReportInstance";
+		_methodName4 = "fetchReportInstance";
 
 		_methodParameterTypes4 = new String[] {
 				"java.lang.String", "java.lang.String", "long"
@@ -146,10 +146,9 @@ public class ReportInstanceServiceClp implements ReportInstanceService {
 	}
 
 	@Override
-	public com.liferay.portal.contenttargeting.model.ReportInstance getReportInstance(
+	public com.liferay.portal.contenttargeting.model.ReportInstance fetchReportInstance(
 		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
@@ -165,10 +164,6 @@ public class ReportInstanceServiceClp implements ReportInstanceService {
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
 
 			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
 				throw (com.liferay.portal.kernel.exception.SystemException)t;

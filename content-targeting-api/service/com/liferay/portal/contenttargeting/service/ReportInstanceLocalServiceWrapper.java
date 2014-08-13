@@ -300,11 +300,10 @@ public class ReportInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public com.liferay.portal.contenttargeting.model.ReportInstance getReportInstance(
+	public com.liferay.portal.contenttargeting.model.ReportInstance fetchReportInstance(
 		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _reportInstanceLocalService.getReportInstance(reportKey,
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _reportInstanceLocalService.fetchReportInstance(reportKey,
 			className, classPK);
 	}
 

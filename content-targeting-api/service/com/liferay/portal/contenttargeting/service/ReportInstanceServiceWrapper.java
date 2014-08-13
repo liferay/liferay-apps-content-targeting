@@ -70,11 +70,10 @@ public class ReportInstanceServiceWrapper implements ReportInstanceService,
 	}
 
 	@Override
-	public com.liferay.portal.contenttargeting.model.ReportInstance getReportInstance(
+	public com.liferay.portal.contenttargeting.model.ReportInstance fetchReportInstance(
 		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _reportInstanceService.getReportInstance(reportKey, className,
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _reportInstanceService.fetchReportInstance(reportKey, className,
 			classPK);
 	}
 

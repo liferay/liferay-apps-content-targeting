@@ -39,7 +39,7 @@ public class ReportInstanceServiceClpInvoker {
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName51 = "getReportInstance";
+		_methodName51 = "fetchReportInstance";
 
 		_methodParameterTypes51 = new String[] {
 				"java.lang.String", "java.lang.String", "long"
@@ -71,7 +71,7 @@ public class ReportInstanceServiceClpInvoker {
 
 		if (_methodName51.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
-			return ReportInstanceServiceUtil.getReportInstance((java.lang.String)arguments[0],
+			return ReportInstanceServiceUtil.fetchReportInstance((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], ((Long)arguments[2]).longValue());
 		}
 
