@@ -40,4 +40,5 @@ public class ContentTargetingControlPanelEntry extends BaseControlPanelEntry {
 
 		return false;
 	}
+
 }
