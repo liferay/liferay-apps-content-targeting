@@ -5,7 +5,21 @@
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-tracking-action-will-not-work-properly-because-form-tracking-is-not-enabled" /></strong>
 
-		<@liferay_ui["message"] key="it-can-be-enabled-in-portal-settings-content-targeting-analytics" />
+		<#assign enableLocationPortalLabel = languageUtil.get(locale, "portal-settings-content-targeting-analytics") />
+
+		<#if portalSettingsURL??>
+			<#assign enableLocationPortalLabel = "<a href=\"" + portalSettingsURL + "\">" + enableLocationPortalLabel + "</a>" />
+		</#if>
+
+		<#assign enableLocationSiteLabel = languageUtil.get(locale, "site-settings-content-targeting-analytics") />
+
+		<#if siteSettingsURL??>
+			<#assign enableLocationSiteLabel = "<a href=\"" + siteSettingsURL + "\">" + enableLocationSiteLabel + "</a>" />
+		</#if>
+
+		<#assign enableLocationLabels = [enableLocationPortalLabel, enableLocationSiteLabel] />
+
+		${languageUtil.format(locale, "it-can-be-enabled-in-x-or-in-x", enableLocationLabels)}
 	</div>
 </#if>
 

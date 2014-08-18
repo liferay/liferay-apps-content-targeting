@@ -209,6 +209,10 @@ public class ContentTrackingAction extends BaseTrackingAction {
 			AnalyticsUtil.isAnalyticsContentEnabled(groupId);
 
 		context.put("trackingContentEnabled", trackingContentEnabled);
+
+		if (!trackingContentEnabled) {
+			populateContextURLs(context);
+		}
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};

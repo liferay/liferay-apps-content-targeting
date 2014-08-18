@@ -98,6 +98,10 @@ public class FormTrackingAction extends BaseTrackingAction {
 			groupId);
 
 		context.put("trackingFormEnabled", trackingFormEnabled);
+
+		if (!trackingFormEnabled) {
+			populateContextURLs(context);
+		}
 	}
 
 	private static final String[] _EVENT_TYPES = {"view", "interact", "submit"};

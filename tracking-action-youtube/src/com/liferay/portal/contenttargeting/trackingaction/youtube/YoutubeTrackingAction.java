@@ -98,6 +98,10 @@ public class YoutubeTrackingAction extends BaseTrackingAction {
 			AnalyticsUtil.isAnalyticsYoutubeEnabled(groupId);
 
 		context.put("trackingYoutubeEnabled", trackingYoutubeEnabled);
+
+		if (!trackingYoutubeEnabled) {
+			populateContextURLs(context);
+		}
 	}
 
 	// See html/js/analytics/integrations/youtube_iframe.js in Analytics Hook

@@ -98,6 +98,10 @@ public class LinkTrackingAction extends BaseTrackingAction {
 			groupId);
 
 		context.put("trackingLinkEnabled", trackingLinkEnabled);
+
+		if (!trackingLinkEnabled) {
+			populateContextURLs(context);
+		}
 	}
 
 	private static final String[] _EVENT_TYPES = {"click"};

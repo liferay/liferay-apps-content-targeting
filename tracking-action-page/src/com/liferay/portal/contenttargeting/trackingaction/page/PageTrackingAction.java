@@ -159,6 +159,10 @@ public class PageTrackingAction extends BaseTrackingAction {
 			groupId);
 
 		context.put("trackingPageEnabled", trackingPageEnabled);
+
+		if (!trackingPageEnabled) {
+			populateContextURLs(context);
+		}
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};
