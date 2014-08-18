@@ -1,6 +1,4 @@
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
+<#include "init.ftl" />
 
 <@aui["input"] cssClass="slider-input" inlineField=true label="older-than" name="fbOlderThan" size="2" maxlength="3" value=olderThan /> <span class="slider-holder older"></span>
 

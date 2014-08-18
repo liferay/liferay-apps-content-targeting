@@ -1,5 +1,4 @@
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
+<#include "init.ftl" />
 
 <#assign isMale = gender?string == "male" />
 

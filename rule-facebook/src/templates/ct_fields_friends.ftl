@@ -1,6 +1,4 @@
-<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
-<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
-<#assign liferay_util = PortletJspTagLibs["/META-INF/liferay-util.tld"] />
+<#include "init.ftl" />
 
 <@liferay_util["buffer"] var="selectorField" >
 	<@aui["select"] inlineField=true label="" name="selector" style="width: auto;">

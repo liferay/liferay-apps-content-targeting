@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
 import com.liferay.portal.model.Company;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -49,16 +50,22 @@ public abstract class BaseFacebookRule extends BaseRule {
 
 		context.put("isFbLoginEnabled", isFbLoginEnabled);
 
-		boolean hasPortalSettingsViewPermission = false;
-
 		if (!isFbLoginEnabled) {
-			hasPortalSettingsViewPermission =
+			boolean hasPortalSettingsViewPermission =
 				ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
 					context, PortletKeys.PORTAL_SETTINGS);
-		}
 
-		context.put(
-			"hasPortalSettingsViewPermission", hasPortalSettingsViewPermission);
+			if (hasPortalSettingsViewPermission) {
+				Map<String, String> params = new HashMap<String, String>();
+
+				params.put("historyKey", "_130_authentication");
+
+				context.put(
+					"portalSettingsURL",
+					ContentTargetingRuleUtil.getControlPanelPortletURL(
+						context, PortletKeys.PORTAL_SETTINGS, params));
+			}
+		}
 
 		doPopulateContext(ruleInstance, context);
 	}
