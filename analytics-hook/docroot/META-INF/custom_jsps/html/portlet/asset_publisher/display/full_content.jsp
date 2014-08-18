@@ -22,9 +22,11 @@
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
 
 long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
+
+UnicodeProperties groupTypeSettingsProperties = themeDisplay.getScopeGroup().getParentLiveGroupTypeSettingsProperties();
 %>
 
-<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && (assetEntry != null) && Validator.isNotNull(userSegmentIds) %>'>
+<c:if test='<%= (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), true)) && (assetEntry != null) && Validator.isNotNull(userSegmentIds) %>'>
 	<aui:script position="inline">
 		Liferay.Analytics.track('view', {
 			className: '<%= assetEntry.getClassName() %>',

@@ -14,17 +14,16 @@
 
 package com.liferay.portal.contenttargeting.trackingaction.content;
 
+import com.liferay.portal.contenttargeting.analytics.util.AnalyticsUtil;
 import com.liferay.portal.contenttargeting.api.model.BaseTrackingAction;
 import com.liferay.portal.contenttargeting.api.model.TrackingAction;
 import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
 import com.liferay.portal.contenttargeting.trackingaction.content.util.ContentTrackingActionUtil;
 import com.liferay.portal.contenttargeting.util.WebKeys;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
@@ -195,8 +194,6 @@ public class ContentTrackingAction extends BaseTrackingAction {
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
 
-		boolean trackingContentEnabled = false;
-
 		Company company = (Company)context.get("company");
 
 		context.put(
@@ -206,13 +203,10 @@ public class ContentTrackingAction extends BaseTrackingAction {
 		context.put(
 			"contentTrackingActionUtilClass", new ContentTrackingActionUtil());
 
-		try {
-			trackingContentEnabled = PrefsPropsUtil.getBoolean(
-				company.getCompanyId(),
-				"content.targeting.analytics.content.enabled");
-		}
-		catch (SystemException se) {
-		}
+		long groupId = (Long)context.get("scopeGroupId");
+
+		boolean trackingContentEnabled =
+			AnalyticsUtil.isAnalyticsContentEnabled(groupId);
 
 		context.put("trackingContentEnabled", trackingContentEnabled);
 	}

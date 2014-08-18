@@ -15,19 +15,17 @@
 package com.liferay.portal.contenttargeting.trackingaction.page;
 
 import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.contenttargeting.analytics.util.AnalyticsUtil;
 import com.liferay.portal.contenttargeting.api.model.BaseTrackingAction;
 import com.liferay.portal.contenttargeting.api.model.TrackingAction;
 import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -155,17 +153,10 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 		context.put("friendlyURL", friendlyURL);
 
-		boolean trackingPageEnabled = false;
+		long groupId = (Long)context.get("scopeGroupId");
 
-		Company company = (Company)context.get("company");
-
-		try {
-			trackingPageEnabled = PrefsPropsUtil.getBoolean(
-				company.getCompanyId(),
-				"content.targeting.analytics.page.enabled");
-		}
-		catch (SystemException se) {
-		}
+		boolean trackingPageEnabled = AnalyticsUtil.isAnalyticsPageEnabled(
+			groupId);
 
 		context.put("trackingPageEnabled", trackingPageEnabled);
 	}

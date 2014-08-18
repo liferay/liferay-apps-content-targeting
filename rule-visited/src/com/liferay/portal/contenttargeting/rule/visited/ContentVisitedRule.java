@@ -16,6 +16,7 @@ package com.liferay.portal.contenttargeting.rule.visited;
 
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.contenttargeting.analytics.service.AnalyticsEventLocalService;
+import com.liferay.portal.contenttargeting.analytics.util.AnalyticsUtil;
 import com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser;
 import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
@@ -25,7 +26,6 @@ import com.liferay.portal.contenttargeting.rulecategories.BehaviorRuleCategory;
 import com.liferay.portal.contenttargeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -233,15 +233,10 @@ public class ContentVisitedRule extends BaseRule {
 			"assetRendererFactories",
 			getSelectableAssetRendererFactories(company.getCompanyId()));
 
-		boolean trackingContentEnabled = false;
+		long groupId = (Long)context.get("scopeGroupId");
 
-		try {
-			trackingContentEnabled = PrefsPropsUtil.getBoolean(
-				company.getCompanyId(),
-				"content.targeting.analytics.content.enabled");
-		}
-		catch (SystemException e) {
-		}
+		boolean trackingContentEnabled =
+			AnalyticsUtil.isAnalyticsContentEnabled(groupId);
 
 		context.put("trackingContentEnabled", trackingContentEnabled);
 

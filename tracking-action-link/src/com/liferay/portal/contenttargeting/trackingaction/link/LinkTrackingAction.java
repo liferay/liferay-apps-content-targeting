@@ -14,15 +14,13 @@
 
 package com.liferay.portal.contenttargeting.trackingaction.link;
 
+import com.liferay.portal.contenttargeting.analytics.util.AnalyticsUtil;
 import com.liferay.portal.contenttargeting.api.model.BaseTrackingAction;
 import com.liferay.portal.contenttargeting.api.model.TrackingAction;
 import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Company;
 
 import java.util.List;
 import java.util.Locale;
@@ -94,17 +92,10 @@ public class LinkTrackingAction extends BaseTrackingAction {
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
 
-		boolean trackingLinkEnabled = false;
+		long groupId = (Long)context.get("scopeGroupId");
 
-		Company company = (Company)context.get("company");
-
-		try {
-			trackingLinkEnabled = PrefsPropsUtil.getBoolean(
-				company.getCompanyId(),
-				"content.targeting.analytics.link.enabled");
-		}
-		catch (SystemException se) {
-		}
+		boolean trackingLinkEnabled = AnalyticsUtil.isAnalyticsLinkEnabled(
+			groupId);
 
 		context.put("trackingLinkEnabled", trackingLinkEnabled);
 	}

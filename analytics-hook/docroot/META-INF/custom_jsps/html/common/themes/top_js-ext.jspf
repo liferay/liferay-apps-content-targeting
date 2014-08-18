@@ -14,6 +14,10 @@
  */
 --%>
 
+<%
+UnicodeProperties groupTypeSettingsProperties = themeDisplay.getScopeGroup().getParentLiveGroupTypeSettingsProperties();
+%>
+
 <script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/analytics.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
 
 <script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/liferay-analytics-api.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
@@ -31,7 +35,7 @@
 		}
 	);
 
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") %>'>
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.page.enabled"), true) %>'>
 
 		<%
 		long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
@@ -46,7 +50,7 @@
 		});
 	</c:if>
 
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") %>'>
+	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.youtube.enabled"), true) %>'>
 		var A = AUI();
 
 		A.applyConfig(

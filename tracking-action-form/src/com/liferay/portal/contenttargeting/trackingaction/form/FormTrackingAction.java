@@ -14,15 +14,13 @@
 
 package com.liferay.portal.contenttargeting.trackingaction.form;
 
+import com.liferay.portal.contenttargeting.analytics.util.AnalyticsUtil;
 import com.liferay.portal.contenttargeting.api.model.BaseTrackingAction;
 import com.liferay.portal.contenttargeting.api.model.TrackingAction;
 import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Company;
 
 import java.util.List;
 import java.util.Locale;
@@ -94,17 +92,10 @@ public class FormTrackingAction extends BaseTrackingAction {
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
 
-		boolean trackingFormEnabled = false;
+		long groupId = (Long)context.get("scopeGroupId");
 
-		Company company = (Company)context.get("company");
-
-		try {
-			trackingFormEnabled = PrefsPropsUtil.getBoolean(
-				company.getCompanyId(),
-				"content.targeting.analytics.form.enabled");
-		}
-		catch (SystemException se) {
-		}
+		boolean trackingFormEnabled = AnalyticsUtil.isAnalyticsFormEnabled(
+			groupId);
 
 		context.put("trackingFormEnabled", trackingFormEnabled);
 	}

@@ -14,15 +14,13 @@
 
 package com.liferay.portal.contenttargeting.trackingaction.youtube;
 
+import com.liferay.portal.contenttargeting.analytics.util.AnalyticsUtil;
 import com.liferay.portal.contenttargeting.api.model.BaseTrackingAction;
 import com.liferay.portal.contenttargeting.api.model.TrackingAction;
 import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Company;
 
 import java.util.List;
 import java.util.Locale;
@@ -94,17 +92,10 @@ public class YoutubeTrackingAction extends BaseTrackingAction {
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
 
-		boolean trackingYoutubeEnabled = false;
+		long groupId = (Long)context.get("scopeGroupId");
 
-		Company company = (Company)context.get("company");
-
-		try {
-			trackingYoutubeEnabled = PrefsPropsUtil.getBoolean(
-				company.getCompanyId(),
-				"content.targeting.analytics.youtube.enabled");
-		}
-		catch (SystemException se) {
-		}
+		boolean trackingYoutubeEnabled =
+			AnalyticsUtil.isAnalyticsYoutubeEnabled(groupId);
 
 		context.put("trackingYoutubeEnabled", trackingYoutubeEnabled);
 	}

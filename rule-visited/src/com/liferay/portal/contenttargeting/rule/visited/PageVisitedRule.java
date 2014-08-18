@@ -16,6 +16,7 @@ package com.liferay.portal.contenttargeting.rule.visited;
 
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.contenttargeting.analytics.service.AnalyticsEventLocalService;
+import com.liferay.portal.contenttargeting.analytics.util.AnalyticsUtil;
 import com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser;
 import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
@@ -23,10 +24,8 @@ import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rulecategories.BehaviorRuleCategory;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -175,17 +174,10 @@ public class PageVisitedRule extends BaseRule {
 
 		context.put("friendlyURL", friendlyURL);
 
-		Company company = (Company)context.get("company");
+		long groupId = (Long)context.get("scopeGroupId");
 
-		boolean trackingPageEnabled = false;
-
-		try {
-			trackingPageEnabled = PrefsPropsUtil.getBoolean(
-				company.getCompanyId(),
-				"content.targeting.analytics.page.enabled");
-		}
-		catch (SystemException e) {
-		}
+		boolean trackingPageEnabled = AnalyticsUtil.isAnalyticsPageEnabled(
+			groupId);
 
 		context.put("trackingPageEnabled", trackingPageEnabled);
 	}
