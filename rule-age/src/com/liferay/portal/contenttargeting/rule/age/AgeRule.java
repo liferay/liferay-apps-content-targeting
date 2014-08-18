@@ -35,6 +35,7 @@ import com.liferay.portal.model.User;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -209,16 +210,22 @@ public class AgeRule extends BaseRule {
 
 		context.put("birthdayEnabled", birthdayEnabled);
 
-		boolean hasPortalSettingsViewPermission = false;
-
 		if (!birthdayEnabled) {
-			hasPortalSettingsViewPermission =
+			boolean hasPortalSettingsViewPermission =
 				ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
 					context, PortletKeys.PORTAL_SETTINGS);
-		}
 
-		context.put(
-			"hasPortalSettingsViewPermission", hasPortalSettingsViewPermission);
+			if (hasPortalSettingsViewPermission) {
+				Map<String, String> params = new HashMap<String, String>();
+
+				params.put("historyKey", "_130_users");
+
+				context.put(
+					"portalSettingsURL",
+					ContentTargetingRuleUtil.getControlPanelPortletURL(
+						context, PortletKeys.PORTAL_SETTINGS, params));
+			}
+		}
 	}
 
 }

@@ -16,16 +16,74 @@ package com.liferay.portal.contenttargeting.util;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.model.LayoutConstants;
+import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletURL;
 
 /**
  * @author Julio Camarero
  */
 public class ContentTargetingRuleUtil {
+
+	public static String getControlPanelPortletURL(
+		Map<String, Object> context, String portletId,
+		Map<String, String> params) {
+
+		LiferayPortletResponse liferayPortletResponse =
+			(LiferayPortletResponse)context.get("renderResponse");
+
+		Company company = (Company)context.get("company");
+
+		try {
+			PortletURL portletURL =
+				liferayPortletResponse.createLiferayPortletURL(
+					PortalUtil.getControlPanelPlid(company.getCompanyId()),
+					portletId, PortletRequest.RENDER_PHASE, false);
+
+			if ((params != null) && !params.isEmpty()) {
+				for (String param : params.keySet()) {
+					portletURL.setParameter(param, params.get(param));
+				}
+			}
+
+			return portletURL.toString();
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
+		return null;
+	}
+
+	public static String getSiteAdministrationPortletURL(
+		Map<String, Object> context, String portletId,
+		Map<String, String> params) {
+
+		String portletURLString = getControlPanelPortletURL(
+			context, portletId, params);
+
+		if (Validator.isNull(portletURLString)) {
+			return null;
+		}
+
+		long scopeGroupId = GetterUtil.getLong(context.get("scopeGroupId"));
+
+		portletURLString = HttpUtil.addParameter(
+			portletURLString, "doAsGroupId", scopeGroupId);
+
+		return HttpUtil.addParameter(
+			portletURLString, "controlPanelCategory", "current_site");
+	}
 
 	public static boolean hasControlPanelPortletViewPermission(
 		Map<String, Object> context, String portletId) {
@@ -33,10 +91,11 @@ public class ContentTargetingRuleUtil {
 		PermissionChecker permissionChecker = (PermissionChecker)context.get(
 			"permissionChecker");
 
+		long scopeGroupId = GetterUtil.getLong(context.get("scopeGroupId"));
+
 		try {
-			return PortletPermissionUtil.contains(
-				permissionChecker, 0, LayoutConstants.DEFAULT_PLID, portletId,
-				ActionKeys.ACCESS_IN_CONTROL_PANEL, true);
+			return PortletPermissionUtil.hasControlPanelAccessPermission(
+				permissionChecker, scopeGroupId, portletId);
 		}
 		catch (Exception e) {
 			_log.error(e);

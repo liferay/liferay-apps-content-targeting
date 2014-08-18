@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -131,16 +132,22 @@ public class GenderRule extends BaseRule {
 
 		context.put("genderEnabled", genderEnabled);
 
-		boolean hasPortalSettingsViewPermission = false;
-
 		if (!genderEnabled) {
-			hasPortalSettingsViewPermission =
+			boolean hasPortalSettingsViewPermission =
 				ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
 					context, PortletKeys.PORTAL_SETTINGS);
-		}
 
-		context.put(
-			"hasPortalSettingsViewPermission", hasPortalSettingsViewPermission);
+			if (hasPortalSettingsViewPermission) {
+				Map<String, String> params = new HashMap<String, String>();
+
+				params.put("historyKey", "_130_users");
+
+				context.put(
+					"portalSettingsURL",
+					ContentTargetingRuleUtil.getControlPanelPortletURL(
+						context, PortletKeys.PORTAL_SETTINGS, params));
+			}
+		}
 	}
 
 }
