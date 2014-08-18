@@ -22,6 +22,7 @@ import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rulecategories.BehaviorRuleCategory;
+import com.liferay.portal.contenttargeting.util.ContentTargetingRuleUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -29,7 +30,9 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -180,6 +183,38 @@ public class PageVisitedRule extends BaseRule {
 			groupId);
 
 		context.put("trackingPageEnabled", trackingPageEnabled);
+
+		if (!trackingPageEnabled) {
+			boolean hasPortalSettingsViewPermission =
+			ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+			context, PortletKeys.PORTAL_SETTINGS);
+
+			if (hasPortalSettingsViewPermission) {
+				Map<String, String> params = new HashMap<String, String>();
+
+				params.put("historyKey", "_130_contentTargetingAnalytics");
+
+				context.put(
+					"portalSettingsURL",
+					ContentTargetingRuleUtil.getControlPanelPortletURL(
+						context, PortletKeys.PORTAL_SETTINGS, params));
+			}
+
+			boolean hasSiteSettingsViewPermission =
+				ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+					context, PortletKeys.SITE_SETTINGS);
+
+			if (hasSiteSettingsViewPermission) {
+				Map<String, String> params = new HashMap<String, String>();
+
+				params.put("historyKey", "_165_contentTargetingAnalytics");
+
+				context.put(
+					"siteSettingsURL",
+					ContentTargetingRuleUtil.getSiteAdministrationPortletURL(
+						context, PortletKeys.SITE_SETTINGS, params));
+			}
+		}
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH_PAGE =

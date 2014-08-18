@@ -23,12 +23,14 @@ import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rule.visited.util.VisitedRuleUtil;
 import com.liferay.portal.contenttargeting.rulecategories.BehaviorRuleCategory;
+import com.liferay.portal.contenttargeting.util.ContentTargetingRuleUtil;
 import com.liferay.portal.contenttargeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
@@ -36,6 +38,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -239,6 +242,38 @@ public class ContentVisitedRule extends BaseRule {
 			AnalyticsUtil.isAnalyticsContentEnabled(groupId);
 
 		context.put("trackingContentEnabled", trackingContentEnabled);
+
+		if (!trackingContentEnabled) {
+			boolean hasPortalSettingsViewPermission =
+			ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+			context, PortletKeys.PORTAL_SETTINGS);
+
+			if (hasPortalSettingsViewPermission) {
+				Map<String, String> params = new HashMap<String, String>();
+
+				params.put("historyKey", "_130_contentTargetingAnalytics");
+
+				context.put(
+					"portalSettingsURL",
+					ContentTargetingRuleUtil.getControlPanelPortletURL(
+						context, PortletKeys.PORTAL_SETTINGS, params));
+			}
+
+			boolean hasSiteSettingsViewPermission =
+				ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+					context, PortletKeys.SITE_SETTINGS);
+
+			if (hasSiteSettingsViewPermission) {
+				Map<String, String> params = new HashMap<String, String>();
+
+				params.put("historyKey", "_165_contentTargetingAnalytics");
+
+				context.put(
+					"siteSettingsURL",
+					ContentTargetingRuleUtil.getSiteAdministrationPortletURL(
+						context, PortletKeys.SITE_SETTINGS, params));
+			}
+		}
 
 		context.put("visitedRuleUtilClass", new VisitedRuleUtil());
 	}
