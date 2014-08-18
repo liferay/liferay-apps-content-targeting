@@ -15,7 +15,6 @@
 package com.liferay.portal.contenttargeting.rule.facebook;
 
 import com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser;
-import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rule.facebook.util.FacebookUtil;
@@ -46,7 +45,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
-public class FacebookCityRule extends BaseRule {
+public class FacebookCityRule extends BaseFacebookRule {
 
 	@Activate
 	@Override
@@ -112,12 +111,8 @@ public class FacebookCityRule extends BaseRule {
 		return values.get("cityName");
 	}
 
-	protected String getFormTemplatePath() {
-		return _FORM_TEMPLATE_PATH_CITY;
-	}
-
 	@Override
-	protected void populateContext(
+	protected void doPopulateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
 		String cityName = StringPool.BLANK;
@@ -127,6 +122,10 @@ public class FacebookCityRule extends BaseRule {
 		}
 
 		context.put("cityName", cityName);
+	}
+
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH_CITY;
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH_CITY =

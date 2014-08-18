@@ -15,7 +15,6 @@
 package com.liferay.portal.contenttargeting.rule.facebook;
 
 import com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser;
-import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rule.facebook.util.FacebookUtil;
@@ -41,7 +40,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
-public class FacebookLikeRule extends BaseRule {
+public class FacebookLikeRule extends BaseFacebookRule {
 
 	@Activate
 	@Override
@@ -94,12 +93,8 @@ public class FacebookLikeRule extends BaseRule {
 		return values.get("facebookName");
 	}
 
-	protected String getFormTemplatePath() {
-		return _FORM_TEMPLATE_PATH_LIKE;
-	}
-
 	@Override
-	protected void populateContext(
+	protected void doPopulateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
 		String name = StringPool.BLANK;
@@ -109,6 +104,10 @@ public class FacebookLikeRule extends BaseRule {
 		}
 
 		context.put("facebookName", name);
+	}
+
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH_LIKE;
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH_LIKE =

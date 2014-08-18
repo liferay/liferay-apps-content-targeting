@@ -15,7 +15,6 @@
 package com.liferay.portal.contenttargeting.rule.facebook;
 
 import com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser;
-import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rule.facebook.util.FacebookUtil;
@@ -47,7 +46,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
-public class FacebookGenderRule extends BaseRule {
+public class FacebookGenderRule extends BaseFacebookRule {
 
 	@Activate
 	@Override
@@ -113,12 +112,8 @@ public class FacebookGenderRule extends BaseRule {
 		return new DefaultFacebookClient(accessToken);
 	}
 
-	protected String getFormTemplatePath() {
-		return _FORM_TEMPLATE_PATH_GENDER;
-	}
-
 	@Override
-	protected void populateContext(
+	protected void doPopulateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
 		String gender = "male";
@@ -128,6 +123,10 @@ public class FacebookGenderRule extends BaseRule {
 		}
 
 		context.put("gender", gender);
+	}
+
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH_GENDER;
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH_GENDER =

@@ -15,7 +15,6 @@
 package com.liferay.portal.contenttargeting.rule.facebook;
 
 import com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser;
-import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rule.facebook.util.FacebookUtil;
@@ -50,7 +49,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
-public class FacebookEducationRule extends BaseRule {
+public class FacebookEducationRule extends BaseFacebookRule {
 
 	@Activate
 	@Override
@@ -152,6 +151,31 @@ public class FacebookEducationRule extends BaseRule {
 		return jsonObj.toString();
 	}
 
+	@Override
+	protected void doPopulateContext(
+		RuleInstance ruleInstance, Map<String, Object> context) {
+
+		String educationLevel = StringPool.BLANK;
+		String schoolName = StringPool.BLANK;
+
+		if (ruleInstance != null) {
+			String typeSettings = ruleInstance.getTypeSettings();
+
+			try {
+				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+					typeSettings);
+
+				educationLevel = jsonObj.getString("educationLevel");
+				schoolName = jsonObj.getString("schoolName");
+			}
+			catch (JSONException jse) {
+			}
+		}
+
+		context.put("educationLevel", educationLevel);
+		context.put("schoolName", schoolName);
+	}
+
 	protected String getFormTemplatePath() {
 		return _FORM_TEMPLATE_PATH_EDUCATION;
 	}
@@ -202,31 +226,6 @@ public class FacebookEducationRule extends BaseRule {
 		}
 
 		return false;
-	}
-
-	@Override
-	protected void populateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
-
-		String educationLevel = StringPool.BLANK;
-		String schoolName = StringPool.BLANK;
-
-		if (ruleInstance != null) {
-			String typeSettings = ruleInstance.getTypeSettings();
-
-			try {
-				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
-					typeSettings);
-
-				educationLevel = jsonObj.getString("educationLevel");
-				schoolName = jsonObj.getString("schoolName");
-			}
-			catch (JSONException jse) {
-			}
-		}
-
-		context.put("educationLevel", educationLevel);
-		context.put("schoolName", schoolName);
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH_EDUCATION =

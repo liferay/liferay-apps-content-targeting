@@ -15,7 +15,6 @@
 package com.liferay.portal.contenttargeting.rule.facebook;
 
 import com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser;
-import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rule.facebook.util.FacebookUtil;
@@ -48,7 +47,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
-public class FacebookAgeRule extends BaseRule {
+public class FacebookAgeRule extends BaseFacebookRule {
 
 	@Activate
 	@Override
@@ -147,31 +146,8 @@ public class FacebookAgeRule extends BaseRule {
 		return jsonObj.toString();
 	}
 
-	protected int getAge(Date birthday) {
-		Calendar birthdayCalendar = Calendar.getInstance();
-
-		birthdayCalendar.setTime(birthday);
-
-		Calendar today = Calendar.getInstance();
-
-		int age = today.get(Calendar.YEAR) - birthdayCalendar.get(
-			Calendar.YEAR);
-
-		if (today.get(Calendar.DAY_OF_YEAR) <=
-				birthdayCalendar.get(Calendar.DAY_OF_YEAR)) {
-
-			age--;
-		}
-
-		return age;
-	}
-
-	protected String getFormTemplatePath() {
-		return _FORM_TEMPLATE_PATH_AGE;
-	}
-
 	@Override
-	protected void populateContext(
+	protected void doPopulateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
 		int youngerThan = 100;
@@ -193,6 +169,29 @@ public class FacebookAgeRule extends BaseRule {
 
 		context.put("youngerThan", youngerThan);
 		context.put("olderThan", olderThan);
+	}
+
+	protected int getAge(Date birthday) {
+		Calendar birthdayCalendar = Calendar.getInstance();
+
+		birthdayCalendar.setTime(birthday);
+
+		Calendar today = Calendar.getInstance();
+
+		int age = today.get(Calendar.YEAR) - birthdayCalendar.get(
+			Calendar.YEAR);
+
+		if (today.get(Calendar.DAY_OF_YEAR) <=
+				birthdayCalendar.get(Calendar.DAY_OF_YEAR)) {
+
+			age--;
+		}
+
+		return age;
+	}
+
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH_AGE;
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH_AGE =

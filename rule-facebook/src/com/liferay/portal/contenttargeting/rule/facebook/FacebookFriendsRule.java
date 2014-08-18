@@ -15,7 +15,6 @@
 package com.liferay.portal.contenttargeting.rule.facebook;
 
 import com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser;
-import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rule.facebook.util.FacebookUtil;
@@ -42,7 +41,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Eudaldo Alonso
  */
 @Component(immediate = true, service = Rule.class)
-public class FacebookFriendsRule extends BaseRule {
+public class FacebookFriendsRule extends BaseFacebookRule {
 
 	@Activate
 	@Override
@@ -117,12 +116,8 @@ public class FacebookFriendsRule extends BaseRule {
 		return jsonObj.toString();
 	}
 
-	protected String getFormTemplatePath() {
-		return _FORM_TEMPLATE_PATH_FRIENDS;
-	}
-
 	@Override
-	protected void populateContext(
+	protected void doPopulateContext(
 		RuleInstance ruleInstance, Map<String, Object> context) {
 
 		int numberOfFriends = 0;
@@ -146,6 +141,10 @@ public class FacebookFriendsRule extends BaseRule {
 
 		context.put("numberOfFriends", numberOfFriends);
 		context.put("selector", selector);
+	}
+
+	protected String getFormTemplatePath() {
+		return _FORM_TEMPLATE_PATH_FRIENDS;
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH_FRIENDS =
