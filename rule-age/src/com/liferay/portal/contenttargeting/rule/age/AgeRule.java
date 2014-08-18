@@ -19,24 +19,19 @@ import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rulecategories.UserAttributesRuleCategory;
+import com.liferay.portal.contenttargeting.util.ContentTargetingRuleUtil;
 import com.liferay.portal.contenttargeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.model.LayoutConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.security.permission.ActionKeys;
-import com.liferay.portal.security.permission.PermissionChecker;
-import com.liferay.portal.service.permission.PortletPermissionUtil;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -217,25 +212,13 @@ public class AgeRule extends BaseRule {
 		boolean hasPortalSettingsViewPermission = false;
 
 		if (!birthdayEnabled) {
-			PermissionChecker permissionChecker =
-				(PermissionChecker)context.get("permissionChecker");
-
-			try {
-				hasPortalSettingsViewPermission =
-					PortletPermissionUtil.contains(
-						permissionChecker, 0, LayoutConstants.DEFAULT_PLID,
-						PortletKeys.PORTAL_SETTINGS,
-						ActionKeys.ACCESS_IN_CONTROL_PANEL, true);
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
+			hasPortalSettingsViewPermission =
+				ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+					context, PortletKeys.PORTAL_SETTINGS);
 		}
 
 		context.put(
 			"hasPortalSettingsViewPermission", hasPortalSettingsViewPermission);
 	}
-
-	private static Log _log = LogFactoryUtil.getLog(AgeRule.class);
 
 }
