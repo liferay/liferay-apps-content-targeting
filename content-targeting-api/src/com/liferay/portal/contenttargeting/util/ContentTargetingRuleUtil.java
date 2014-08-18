@@ -56,7 +56,8 @@ public class ContentTargetingRuleUtil {
 				}
 			}
 
-			return portletURL.toString();
+			return HttpUtil.removeParameter(
+				portletURL.toString(), "controlPanelCategory");
 		}
 		catch (Exception e) {
 			_log.error(e);
