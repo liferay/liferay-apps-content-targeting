@@ -1,6 +1,7 @@
 Bundle-ClassPath: .,lib/util-java.jar
 Bundle-Name: Content Tracking Action
 Import-Package:\
+	com.liferay.portal.contenttargeting.analytics.util,\
 	com.liferay.portal.contenttargeting.api.model,\
 	com.liferay.portal.contenttargeting.service,\
 	com.liferay.portal.contenttargeting.service.messaging,\

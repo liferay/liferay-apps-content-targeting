@@ -5,7 +5,7 @@
 
 	<property name="plugin.name" value="com.liferay.portal.contenttargeting.trackingaction.link" />
 
-	<property name="import.shared" value="content-targeting-api" />
+	<property name="import.shared" value="analytics-api,content-targeting-api" />
 
 	<import file="../../../build-common-osgi-plugin.xml" />
 </project>

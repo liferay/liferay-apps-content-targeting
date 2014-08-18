@@ -1,6 +1,7 @@
 Bundle-ClassPath: .,lib/util-java.jar
 Bundle-Name: Visited Rule
 Import-Package:\
+	com.liferay.portal.contenttargeting.analytics.util,\
 	com.liferay.portal.contenttargeting.anonymoususers.model,\
 	com.liferay.portal.contenttargeting.anonymoususers.service,\
 	com.liferay.portal.contenttargeting.anonymoususers.service.messaging,\
