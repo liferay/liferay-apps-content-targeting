@@ -19,6 +19,8 @@ import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rulecategories.UserAttributesRuleCategory;
+import com.liferay.portal.contenttargeting.util.ContentTargetingRuleUtil;
+import com.liferay.portal.contenttargeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -134,6 +136,19 @@ public class SiteMemberRule extends BaseRule {
 		}
 
 		context.put("sites", sites);
+
+		if ((sites == null) || sites.isEmpty()) {
+			boolean hasSitesAdminViewPermission =
+				ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+					context, PortletKeys.SITES_ADMIN);
+
+			if (hasSitesAdminViewPermission) {
+				context.put(
+					"sitesAdminURL",
+					ContentTargetingRuleUtil.getControlPanelPortletURL(
+						context, PortletKeys.SITES_ADMIN, null));
+			}
+		}
 	}
 
 }
