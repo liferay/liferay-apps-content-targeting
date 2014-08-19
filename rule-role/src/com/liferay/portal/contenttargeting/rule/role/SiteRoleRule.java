@@ -19,7 +19,7 @@ import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rulecategories.UserAttributesRuleCategory;
-import com.liferay.portal.contenttargeting.util.ContentTargetingRuleUtil;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.contenttargeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -226,13 +226,13 @@ public class SiteRoleRule extends BaseRule {
 
 		if ((sites == null) || sites.isEmpty()) {
 			boolean hasSitesAdminViewPermission =
-				ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+				ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
 					context, PortletKeys.SITES_ADMIN);
 
 			if (hasSitesAdminViewPermission) {
 				context.put(
 					"sitesAdminURL",
-					ContentTargetingRuleUtil.getControlPanelPortletURL(
+					ContentTargetingContextUtil.getControlPanelPortletURL(
 						context, PortletKeys.SITES_ADMIN, null));
 			}
 		}

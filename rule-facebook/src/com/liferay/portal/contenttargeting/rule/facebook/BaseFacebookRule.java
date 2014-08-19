@@ -16,7 +16,7 @@ package com.liferay.portal.contenttargeting.rule.facebook;
 
 import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
-import com.liferay.portal.contenttargeting.util.ContentTargetingRuleUtil;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.contenttargeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.facebook.FacebookConnectUtil;
@@ -52,7 +52,7 @@ public abstract class BaseFacebookRule extends BaseRule {
 
 		if (!isFbLoginEnabled) {
 			boolean hasPortalSettingsViewPermission =
-				ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+				ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
 					context, PortletKeys.PORTAL_SETTINGS);
 
 			if (hasPortalSettingsViewPermission) {
@@ -62,7 +62,7 @@ public abstract class BaseFacebookRule extends BaseRule {
 
 				context.put(
 					"portalSettingsURL",
-					ContentTargetingRuleUtil.getControlPanelPortletURL(
+					ContentTargetingContextUtil.getControlPanelPortletURL(
 						context, PortletKeys.PORTAL_SETTINGS, params));
 			}
 		}

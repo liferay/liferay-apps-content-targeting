@@ -19,7 +19,7 @@ import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rulecategories.SessionAttributesRuleCategory;
-import com.liferay.portal.contenttargeting.util.ContentTargetingRuleUtil;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.contenttargeting.util.PortletKeys;
 import com.liferay.portal.contenttargeting.util.WebKeys;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -262,13 +262,13 @@ public class DeviceRule extends BaseRule {
 		context.put("mdrRuleGroups", mdrRuleGroups);
 
 		boolean hasMDRViewPermission =
-			ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
 				context, PortletKeys.MOBILE_DEVICE_SITE_ADMIN);
 
 		if (hasMDRViewPermission) {
 			context.put(
 				"mDRURL",
-				ContentTargetingRuleUtil.getSiteAdministrationPortletURL(
+				ContentTargetingContextUtil.getSiteAdministrationPortletURL(
 					context, PortletKeys.MOBILE_DEVICE_SITE_ADMIN, null));
 		}
 	}

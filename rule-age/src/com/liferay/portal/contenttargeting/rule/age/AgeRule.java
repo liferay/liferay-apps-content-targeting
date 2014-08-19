@@ -19,7 +19,7 @@ import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rulecategories.UserAttributesRuleCategory;
-import com.liferay.portal.contenttargeting.util.ContentTargetingRuleUtil;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.contenttargeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
@@ -212,7 +212,7 @@ public class AgeRule extends BaseRule {
 
 		if (!birthdayEnabled) {
 			boolean hasPortalSettingsViewPermission =
-				ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+				ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
 					context, PortletKeys.PORTAL_SETTINGS);
 
 			if (hasPortalSettingsViewPermission) {
@@ -222,7 +222,7 @@ public class AgeRule extends BaseRule {
 
 				context.put(
 					"portalSettingsURL",
-					ContentTargetingRuleUtil.getControlPanelPortletURL(
+					ContentTargetingContextUtil.getControlPanelPortletURL(
 						context, PortletKeys.PORTAL_SETTINGS, params));
 			}
 		}

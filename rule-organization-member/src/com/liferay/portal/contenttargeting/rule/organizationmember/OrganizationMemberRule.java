@@ -19,7 +19,7 @@ import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rulecategories.UserAttributesRuleCategory;
-import com.liferay.portal.contenttargeting.util.ContentTargetingRuleUtil;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.contenttargeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -142,13 +142,13 @@ public class OrganizationMemberRule extends BaseRule {
 
 		if ((organizations == null) || organizations.isEmpty()) {
 			boolean hasUsersAdminViewPermission =
-				ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+				ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
 					context, PortletKeys.USERS_ADMIN);
 
 			if (hasUsersAdminViewPermission) {
 				context.put(
 					"usersAdminURL",
-					ContentTargetingRuleUtil.getControlPanelPortletURL(
+					ContentTargetingContextUtil.getControlPanelPortletURL(
 						context, PortletKeys.USERS_ADMIN, null));
 			}
 		}

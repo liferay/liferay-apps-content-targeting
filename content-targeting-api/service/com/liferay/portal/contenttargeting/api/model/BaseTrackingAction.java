@@ -15,7 +15,7 @@
 package com.liferay.portal.contenttargeting.api.model;
 
 import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
-import com.liferay.portal.contenttargeting.util.ContentTargetingRuleUtil;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -149,8 +149,8 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 	protected void populateContextURLs(Map<String, Object> context) {
 		boolean hasPortalSettingsViewPermission =
-			ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
-			context, PortletKeys.PORTAL_SETTINGS);
+			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
+				context, PortletKeys.PORTAL_SETTINGS);
 
 		if (hasPortalSettingsViewPermission) {
 			Map<String, String> params = new HashMap<String, String>();
@@ -159,12 +159,12 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 			context.put(
 				"portalSettingsURL",
-				ContentTargetingRuleUtil.getControlPanelPortletURL(
+				ContentTargetingContextUtil.getControlPanelPortletURL(
 					context, PortletKeys.PORTAL_SETTINGS, params));
 		}
 
 		boolean hasSiteSettingsViewPermission =
-			ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
 				context, PortletKeys.SITE_SETTINGS);
 
 		if (hasSiteSettingsViewPermission) {
@@ -174,7 +174,7 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 			context.put(
 				"siteSettingsURL",
-				ContentTargetingRuleUtil.getSiteAdministrationPortletURL(
+				ContentTargetingContextUtil.getSiteAdministrationPortletURL(
 					context, PortletKeys.SITE_SETTINGS, params));
 		}
 	}

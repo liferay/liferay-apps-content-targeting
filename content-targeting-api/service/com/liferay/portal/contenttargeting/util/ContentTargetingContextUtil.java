@@ -33,7 +33,7 @@ import javax.portlet.PortletURL;
 /**
  * @author Julio Camarero
  */
-public class ContentTargetingRuleUtil {
+public class ContentTargetingContextUtil {
 
 	public static String getControlPanelPortletURL(
 		Map<String, Object> context, String portletId,
@@ -106,6 +106,6 @@ public class ContentTargetingRuleUtil {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		ContentTargetingRuleUtil.class);
+		ContentTargetingContextUtil.class);
 
 }

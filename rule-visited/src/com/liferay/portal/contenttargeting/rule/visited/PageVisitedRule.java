@@ -22,7 +22,7 @@ import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rulecategories.BehaviorRuleCategory;
-import com.liferay.portal.contenttargeting.util.ContentTargetingRuleUtil;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -186,8 +186,8 @@ public class PageVisitedRule extends BaseRule {
 
 		if (!trackingPageEnabled) {
 			boolean hasPortalSettingsViewPermission =
-			ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
-			context, PortletKeys.PORTAL_SETTINGS);
+			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
+				context, PortletKeys.PORTAL_SETTINGS);
 
 			if (hasPortalSettingsViewPermission) {
 				Map<String, String> params = new HashMap<String, String>();
@@ -196,12 +196,12 @@ public class PageVisitedRule extends BaseRule {
 
 				context.put(
 					"portalSettingsURL",
-					ContentTargetingRuleUtil.getControlPanelPortletURL(
+					ContentTargetingContextUtil.getControlPanelPortletURL(
 						context, PortletKeys.PORTAL_SETTINGS, params));
 			}
 
 			boolean hasSiteSettingsViewPermission =
-				ContentTargetingRuleUtil.hasControlPanelPortletViewPermission(
+				ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
 					context, PortletKeys.SITE_SETTINGS);
 
 			if (hasSiteSettingsViewPermission) {
@@ -211,7 +211,7 @@ public class PageVisitedRule extends BaseRule {
 
 				context.put(
 					"siteSettingsURL",
-					ContentTargetingRuleUtil.getSiteAdministrationPortletURL(
+					ContentTargetingContextUtil.getSiteAdministrationPortletURL(
 						context, PortletKeys.SITE_SETTINGS, params));
 			}
 		}
