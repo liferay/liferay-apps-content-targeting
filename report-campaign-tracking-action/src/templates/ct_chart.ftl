@@ -16,11 +16,24 @@
 	var campaignTrackingActionCharAxes = {
 		count:{
 			keys:["count"],
+			position:"left",
 			type:"numeric"
 		},
-		dateRange:{
+		content:{
 			keys:["content"],
+			position:"bottom",
 			type:"category"
+		}
+	};
+
+	var campaignTrackingActionCharStyles = {
+		axes:{
+			content:{
+				label:{
+					margin:{top:5},
+					rotation:-45
+				}
+			}
 		}
 	};
 
@@ -29,7 +42,8 @@
 		dataProvider: campaignTrackingActionChartDataValues,
 		horizontalGridlines: true,
 		render: "#campaignTrackingActionChart",
-		type: "bar",
+		styles: campaignTrackingActionCharStyles,
+		type: "column",
 		verticalGridlines: true
 	});
 </@>

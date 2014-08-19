@@ -16,11 +16,24 @@
 	var campaignContentCharAxes = {
 		count:{
 			keys:["count"],
+			position:"left",
 			type:"numeric"
 		},
-		dateRange:{
+		content:{
 			keys:["content"],
+			position:"bottom",
 			type:"category"
+		}
+	};
+
+	var campaignContentCharStyles = {
+		axes:{
+			content:{
+				label:{
+					margin:{top:5},
+					rotation:-45
+				}
+			}
 		}
 	};
 
@@ -29,7 +42,8 @@
 		dataProvider: campaignContentChartDataValues,
 		horizontalGridlines: true,
 		render: "#campaignContentChart",
-		type: "bar",
+		styles: campaignContentCharStyles,
+		type: "column",
 		verticalGridlines: true
 	});
 </@>

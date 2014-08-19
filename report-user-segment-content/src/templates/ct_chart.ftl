@@ -16,11 +16,24 @@
 	var userSegmentContentCharAxes = {
 		count:{
 			keys:["count"],
+			position:"left",
 			type:"numeric"
 		},
-		dateRange:{
+		content:{
 			keys:["content"],
+			position:"bottom",
 			type:"category"
+		}
+	};
+
+	var userSegmentContentCharStyles = {
+		axes:{
+			content:{
+				label:{
+					margin:{top:5},
+					rotation:-45
+				}
+			}
 		}
 	};
 
@@ -29,7 +42,8 @@
 		dataProvider: userSegmentContentChartDataValues,
 		horizontalGridlines: true,
 		render: "#userSegmentContentChart",
-		type: "bar",
+		styles: userSegmentContentCharStyles,
+		type: "column",
 		verticalGridlines: true
 	});
 </@>
