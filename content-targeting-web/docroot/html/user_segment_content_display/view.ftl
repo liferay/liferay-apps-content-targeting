@@ -18,7 +18,7 @@
 
 <#if isMatchingRule>
 	<#if portletDisplay.isShowConfigurationIcon() && userSegmentQueryRules?has_content>
-		<div class="content-preview-container">
+		<div class="lfr-meta-actions icons-container content-preview-container">
 			<#list userSegmentQueryRules as userSegmentQueryRule>
 				<#assign assetEntry = userSegmentQueryRule.getAssetEntry() />
 

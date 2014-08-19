@@ -41,15 +41,3 @@
 		font-size: 20px;
 	}
 }
-
-.controls-hidden {
-	.user-segment-content-display-portlet {
-		.content-preview {
-	    	display: none;
-		}
-
-		.full-content {
-			display: none;
-		}
-	}
-}
