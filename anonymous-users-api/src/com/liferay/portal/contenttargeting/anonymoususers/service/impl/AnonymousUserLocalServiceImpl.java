@@ -87,14 +87,21 @@ public class AnonymousUserLocalServiceImpl
 
 	@Override
 	public AnonymousUser updateAnonymousUser(
-			long userId, String lastIp, String typeSettings,
-			ServiceContext serviceContext)
+			long anonymousUserId, long userId, String lastIp,
+			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		Date now = new Date();
 
 		AnonymousUser anonymousUser = anonymousUserPersistence.findByPrimaryKey(
-			userId);
+			anonymousUserId);
+
+		User user = UserLocalServiceUtil.fetchUser(userId);
+
+		if (user != null) {
+			anonymousUser.setUserId(user.getUserId());
+			anonymousUser.setUserName(user.getFullName());
+		}
 
 		anonymousUser.setModifiedDate(serviceContext.getModifiedDate(now));
 		anonymousUser.setLastIp(lastIp);

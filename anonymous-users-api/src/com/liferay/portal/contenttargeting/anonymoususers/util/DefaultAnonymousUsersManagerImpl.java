@@ -101,6 +101,13 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 					AnonymousUserLocalServiceUtil.addAnonymousUser(
 						userId, request.getRemoteAddr(), null, serviceContext);
 			}
+			else {
+				anonymousUser =
+					AnonymousUserLocalServiceUtil.updateAnonymousUser(
+						anonymousUser.getAnonymousUserId(), userId,
+						request.getRemoteAddr(),
+						anonymousUser.getTypeSettings(), serviceContext);
+			}
 		}
 
 		return anonymousUser;
