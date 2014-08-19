@@ -136,7 +136,7 @@ public class AnonymousUserLocalServiceClpInvoker {
 		_methodName44 = "updateAnonymousUser";
 
 		_methodParameterTypes44 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
+				"long", "long", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -273,8 +273,9 @@ public class AnonymousUserLocalServiceClpInvoker {
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
 			return AnonymousUserLocalServiceUtil.updateAnonymousUser(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
-				(com.liferay.portal.service.ServiceContext)arguments[3]);
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
 		if (_methodName45.equals(name) &&

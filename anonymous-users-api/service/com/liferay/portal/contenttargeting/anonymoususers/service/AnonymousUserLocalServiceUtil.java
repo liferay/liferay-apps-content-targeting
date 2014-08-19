@@ -323,13 +323,14 @@ public class AnonymousUserLocalServiceUtil {
 	}
 
 	public static com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser updateAnonymousUser(
-		long userId, java.lang.String lastIp, java.lang.String typeSettings,
+		long anonymousUserId, long userId, java.lang.String lastIp,
+		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .updateAnonymousUser(userId, lastIp, typeSettings,
-			serviceContext);
+				   .updateAnonymousUser(anonymousUserId, userId, lastIp,
+			typeSettings, serviceContext);
 	}
 
 	public static com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser updateLastIp(

@@ -137,7 +137,7 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 		_methodName23 = "updateAnonymousUser";
 
 		_methodParameterTypes23 = new String[] {
-				"long", "java.lang.String", "java.lang.String",
+				"long", "long", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
@@ -841,7 +841,8 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 
 	@Override
 	public com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser updateAnonymousUser(
-		long userId, java.lang.String lastIp, java.lang.String typeSettings,
+		long anonymousUserId, long userId, java.lang.String lastIp,
+		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -851,7 +852,9 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName23,
 					_methodParameterTypes23,
 					new Object[] {
-						userId,
+						anonymousUserId,
+						
+					userId,
 						
 					ClpSerializer.translateInput(lastIp),
 						
