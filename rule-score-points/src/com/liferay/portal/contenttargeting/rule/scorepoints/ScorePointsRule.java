@@ -14,12 +14,14 @@
 
 package com.liferay.portal.contenttargeting.rule.scorepoints;
 
+import com.liferay.portal.contenttargeting.analytics.util.AnalyticsUtil;
 import com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser;
 import com.liferay.portal.contenttargeting.api.model.BaseRule;
 import com.liferay.portal.contenttargeting.api.model.Rule;
 import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rule.scorepoints.service.ScorePointLocalServiceUtil;
 import com.liferay.portal.contenttargeting.rulecategories.BehaviorRuleCategory;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -146,6 +148,21 @@ public class ScorePointsRule extends BaseRule {
 		}
 		else {
 			context.put("scorePoints", 0);
+		}
+
+		long groupId = (Long)context.get("scopeGroupId");
+
+		boolean trackingContentEnabled = AnalyticsUtil.isAnalyticsPageEnabled(
+			groupId);
+		boolean trackingPageEnabled = AnalyticsUtil.isAnalyticsPageEnabled(
+			groupId);
+
+		context.put("trackingContentEnabled", trackingContentEnabled);
+		context.put("trackingPageEnabled", trackingPageEnabled);
+
+		if (!trackingContentEnabled || !trackingPageEnabled) {
+			ContentTargetingContextUtil.
+				populateContextAnalyticsSettingsURLs(context);
 		}
 	}
 
