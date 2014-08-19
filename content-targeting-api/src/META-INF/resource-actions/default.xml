@@ -14,8 +14,6 @@
 			<supports>
 				<action-key>ADD_CAMPAIGN</action-key>
 				<action-key>ADD_USER_SEGMENT</action-key>
-				<action-key>DELETE_CAMPAIGN</action-key>
-				<action-key>DELETE_USER_SEGMENT</action-key>
 				<action-key>PERMISSIONS</action-key>
 			</supports>
 			<site-member-defaults />
@@ -23,8 +21,6 @@
 			<guest-unsupported>
 				<action-key>ADD_CAMPAIGN</action-key>
 				<action-key>ADD_USER_SEGMENT</action-key>
-				<action-key>DELETE_CAMPAIGN</action-key>
-				<action-key>DELETE_USER_SEGMENT</action-key>
 			</guest-unsupported>
 		</permissions>
 	</model-resource>

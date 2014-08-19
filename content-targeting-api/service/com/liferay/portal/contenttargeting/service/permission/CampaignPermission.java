@@ -57,9 +57,17 @@ public class CampaignPermission {
 			return true;
 		}
 
+		return contains(
+			permissionChecker, campaign.getGroupId(), campaign.getCampaignId(),
+			actionId);
+	}
+
+	public static boolean contains(
+		PermissionChecker permissionChecker, long groupId, long campaignId,
+		String actionId) {
+
 		return permissionChecker.hasPermission(
-			campaign.getGroupId(), Campaign.class.getName(),
-			campaign.getCampaignId(), actionId);
+			groupId, Campaign.class.getName(), campaignId, actionId);
 	}
 
 	public static boolean contains(

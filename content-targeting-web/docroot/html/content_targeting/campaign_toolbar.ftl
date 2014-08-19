@@ -31,7 +31,7 @@
 		<@aui["nav-item"] href="${addCampaignURL}" iconCssClass="icon-plus" label="add-campaign" />
 	</#if>
 
-	<#if contentTargetingPermission.contains(permissionChecker, scopeGroupId, actionKeys.DELETE_CAMPAIGN)>
+	<#if campaignPermission.contains(permissionChecker, scopeGroupId, scopeGroupId, actionKeys.DELETE)>
 		<@aui["nav-item"] cssClass="hide" id="deleteCampaigns" iconCssClass="icon-remove" label="delete" />
 	</#if>
 </@>

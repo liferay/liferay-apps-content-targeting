@@ -12,15 +12,25 @@
  * details.
  */
 
-package com.liferay.portal.contenttargeting.util;
+package com.liferay.portal.contenttargeting.portlet;
+
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portlet.BaseControlPanelEntry;
 
 /**
  * @author Julio Camarero
  */
-public class ActionKeys
-	extends com.liferay.portal.security.permission.ActionKeys {
+public class ContentTargetingApiControlPanelEntry extends
+	BaseControlPanelEntry {
 
-	public static final String ADD_CAMPAIGN = "ADD_CAMPAIGN";
+	@Override
+	protected boolean hasAccessPermissionDenied(
+			PermissionChecker permissionChecker, Group group, Portlet portlet)
+		throws Exception {
 
-	public static final String ADD_USER_SEGMENT = "ADD_USER_SEGMENT";
+		return true;
+	}
+
 }

@@ -47,6 +47,14 @@ public class UserSegmentPermission {
 	}
 
 	public static boolean contains(
+		PermissionChecker permissionChecker, long groupId, long userSegmentId,
+		String actionId) {
+
+		return permissionChecker.hasPermission(
+			groupId, UserSegment.class.getName(), userSegmentId, actionId);
+	}
+
+	public static boolean contains(
 			PermissionChecker permissionChecker, long userSegmentId,
 			String actionId)
 		throws PortalException, SystemException {
@@ -69,8 +77,8 @@ public class UserSegmentPermission {
 			return true;
 		}
 
-		return permissionChecker.hasPermission(
-			userSegment.getGroupId(), UserSegment.class.getName(),
+		return contains(
+			permissionChecker, userSegment.getGroupId(),
 			userSegment.getUserSegmentId(), actionId);
 	}
 
