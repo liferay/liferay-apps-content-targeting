@@ -30,9 +30,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -185,35 +183,8 @@ public class PageVisitedRule extends BaseRule {
 		context.put("trackingPageEnabled", trackingPageEnabled);
 
 		if (!trackingPageEnabled) {
-			boolean hasPortalSettingsViewPermission =
-			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-				context, PortletKeys.PORTAL_SETTINGS);
-
-			if (hasPortalSettingsViewPermission) {
-				Map<String, String> params = new HashMap<String, String>();
-
-				params.put("historyKey", "_130_contentTargetingAnalytics");
-
-				context.put(
-					"portalSettingsURL",
-					ContentTargetingContextUtil.getControlPanelPortletURL(
-						context, PortletKeys.PORTAL_SETTINGS, params));
-			}
-
-			boolean hasSiteSettingsViewPermission =
-				ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-					context, PortletKeys.SITE_SETTINGS);
-
-			if (hasSiteSettingsViewPermission) {
-				Map<String, String> params = new HashMap<String, String>();
-
-				params.put("historyKey", "_165_contentTargetingAnalytics");
-
-				context.put(
-					"siteSettingsURL",
-					ContentTargetingContextUtil.getSiteAdministrationPortletURL(
-						context, PortletKeys.SITE_SETTINGS, params));
-			}
+			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
+				context);
 		}
 	}
 

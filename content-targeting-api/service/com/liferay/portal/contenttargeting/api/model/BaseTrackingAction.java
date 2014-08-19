@@ -15,13 +15,11 @@
 package com.liferay.portal.contenttargeting.api.model;
 
 import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
-import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-import com.liferay.portal.util.PortletKeys;
 
 import freemarker.cache.ClassTemplateLoader;
 
@@ -29,7 +27,6 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -145,38 +142,6 @@ public abstract class BaseTrackingAction implements TrackingAction {
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
 		Map<String, Object> context) {
-	}
-
-	protected void populateContextURLs(Map<String, Object> context) {
-		boolean hasPortalSettingsViewPermission =
-			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-				context, PortletKeys.PORTAL_SETTINGS);
-
-		if (hasPortalSettingsViewPermission) {
-			Map<String, String> params = new HashMap<String, String>();
-
-			params.put("historyKey", "_130_contentTargetingAnalytics");
-
-			context.put(
-				"portalSettingsURL",
-				ContentTargetingContextUtil.getControlPanelPortletURL(
-					context, PortletKeys.PORTAL_SETTINGS, params));
-		}
-
-		boolean hasSiteSettingsViewPermission =
-			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-				context, PortletKeys.SITE_SETTINGS);
-
-		if (hasSiteSettingsViewPermission) {
-			Map<String, String> params = new HashMap<String, String>();
-
-			params.put("historyKey", "_165_contentTargetingAnalytics");
-
-			context.put(
-				"siteSettingsURL",
-				ContentTargetingContextUtil.getSiteAdministrationPortletURL(
-					context, PortletKeys.SITE_SETTINGS, params));
-		}
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH =

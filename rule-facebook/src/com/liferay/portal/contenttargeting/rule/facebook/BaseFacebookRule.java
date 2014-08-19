@@ -52,8 +52,9 @@ public abstract class BaseFacebookRule extends BaseRule {
 
 		if (!isFbLoginEnabled) {
 			boolean hasPortalSettingsViewPermission =
-				ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-					context, PortletKeys.PORTAL_SETTINGS);
+				ContentTargetingContextUtil.
+					hasControlPanelPortletViewPermission(
+						context, PortletKeys.PORTAL_SETTINGS);
 
 			if (hasPortalSettingsViewPermission) {
 				Map<String, String> params = new HashMap<String, String>();

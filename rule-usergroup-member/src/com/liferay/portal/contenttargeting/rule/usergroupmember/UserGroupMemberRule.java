@@ -138,8 +138,9 @@ public class UserGroupMemberRule extends BaseRule {
 
 		if ((userGroups == null) || userGroups.isEmpty()) {
 			boolean hasUserGroupsAdminViewPermission =
-				ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-					context, PortletKeys.USER_GROUPS_ADMIN);
+				ContentTargetingContextUtil.
+					hasControlPanelPortletViewPermission(
+						context, PortletKeys.USER_GROUPS_ADMIN);
 
 			if (hasUserGroupsAdminViewPermission) {
 				context.put(

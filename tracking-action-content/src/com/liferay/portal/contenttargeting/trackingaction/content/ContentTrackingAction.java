@@ -19,6 +19,7 @@ import com.liferay.portal.contenttargeting.api.model.BaseTrackingAction;
 import com.liferay.portal.contenttargeting.api.model.TrackingAction;
 import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
 import com.liferay.portal.contenttargeting.trackingaction.content.util.ContentTrackingActionUtil;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.contenttargeting.util.WebKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -211,8 +212,8 @@ public class ContentTrackingAction extends BaseTrackingAction {
 		context.put("trackingContentEnabled", trackingContentEnabled);
 
 		if (!trackingContentEnabled) {
-			populateContextURLs(context);
-		}
+			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
+				context); }
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};

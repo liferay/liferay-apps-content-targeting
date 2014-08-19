@@ -19,6 +19,7 @@ import com.liferay.portal.contenttargeting.analytics.util.AnalyticsUtil;
 import com.liferay.portal.contenttargeting.api.model.BaseTrackingAction;
 import com.liferay.portal.contenttargeting.api.model.TrackingAction;
 import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -161,7 +162,8 @@ public class PageTrackingAction extends BaseTrackingAction {
 		context.put("trackingPageEnabled", trackingPageEnabled);
 
 		if (!trackingPageEnabled) {
-			populateContextURLs(context);
+			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
+				context);
 		}
 	}
 

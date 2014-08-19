@@ -226,8 +226,9 @@ public class SiteRoleRule extends BaseRule {
 
 		if ((sites == null) || sites.isEmpty()) {
 			boolean hasSitesAdminViewPermission =
-				ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-					context, PortletKeys.SITES_ADMIN);
+				ContentTargetingContextUtil.
+					hasControlPanelPortletViewPermission(
+						context, PortletKeys.SITES_ADMIN);
 
 			if (hasSitesAdminViewPermission) {
 				context.put(

@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portal.util.PortletKeys;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
@@ -38,7 +37,6 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -244,35 +242,8 @@ public class ContentVisitedRule extends BaseRule {
 		context.put("trackingContentEnabled", trackingContentEnabled);
 
 		if (!trackingContentEnabled) {
-			boolean hasPortalSettingsViewPermission =
-			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-				context, PortletKeys.PORTAL_SETTINGS);
-
-			if (hasPortalSettingsViewPermission) {
-				Map<String, String> params = new HashMap<String, String>();
-
-				params.put("historyKey", "_130_contentTargetingAnalytics");
-
-				context.put(
-					"portalSettingsURL",
-					ContentTargetingContextUtil.getControlPanelPortletURL(
-						context, PortletKeys.PORTAL_SETTINGS, params));
-			}
-
-			boolean hasSiteSettingsViewPermission =
-				ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-					context, PortletKeys.SITE_SETTINGS);
-
-			if (hasSiteSettingsViewPermission) {
-				Map<String, String> params = new HashMap<String, String>();
-
-				params.put("historyKey", "_165_contentTargetingAnalytics");
-
-				context.put(
-					"siteSettingsURL",
-					ContentTargetingContextUtil.getSiteAdministrationPortletURL(
-						context, PortletKeys.SITE_SETTINGS, params));
-			}
+			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
+				context);
 		}
 
 		context.put("visitedRuleUtilClass", new VisitedRuleUtil());

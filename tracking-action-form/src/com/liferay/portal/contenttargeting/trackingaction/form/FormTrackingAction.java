@@ -18,6 +18,7 @@ import com.liferay.portal.contenttargeting.analytics.util.AnalyticsUtil;
 import com.liferay.portal.contenttargeting.api.model.BaseTrackingAction;
 import com.liferay.portal.contenttargeting.api.model.TrackingAction;
 import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -100,7 +101,8 @@ public class FormTrackingAction extends BaseTrackingAction {
 		context.put("trackingFormEnabled", trackingFormEnabled);
 
 		if (!trackingFormEnabled) {
-			populateContextURLs(context);
+			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
+				context);
 		}
 	}
 

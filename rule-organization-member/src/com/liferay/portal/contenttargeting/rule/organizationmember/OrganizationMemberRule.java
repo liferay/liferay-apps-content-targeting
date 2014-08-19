@@ -142,8 +142,9 @@ public class OrganizationMemberRule extends BaseRule {
 
 		if ((organizations == null) || organizations.isEmpty()) {
 			boolean hasUsersAdminViewPermission =
-				ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-					context, PortletKeys.USERS_ADMIN);
+				ContentTargetingContextUtil.
+					hasControlPanelPortletViewPermission(
+						context, PortletKeys.USERS_ADMIN);
 
 			if (hasUsersAdminViewPermission) {
 				context.put(

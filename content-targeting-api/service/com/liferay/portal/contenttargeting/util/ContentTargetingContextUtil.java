@@ -25,6 +25,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
@@ -103,6 +104,50 @@ public class ContentTargetingContextUtil {
 		}
 
 		return false;
+	}
+
+	public static void populateContextAnalyticsSettingsURLs(
+		Map<String, Object> context) {
+
+		Map<String, String> params = new HashMap<String, String>();
+
+		params.put("historyKey", "_130_contentTargetingAnalytics");
+
+		populateContextPortalSettingsURL(context, params);
+
+		params.put("historyKey", "_165_contentTargetingAnalytics");
+
+		populateContextSiteAdministrationURL(context, params);
+	}
+
+	public static void populateContextPortalSettingsURL(
+		Map<String, Object> context, Map<String, String> params) {
+
+		boolean hasPortalSettingsViewPermission =
+			hasControlPanelPortletViewPermission(
+				context, PortletKeys.PORTAL_SETTINGS);
+
+		if (hasPortalSettingsViewPermission) {
+			context.put(
+				"portalSettingsURL",
+				ContentTargetingContextUtil.getControlPanelPortletURL(
+					context, PortletKeys.PORTAL_SETTINGS, params));
+		}
+	}
+
+	public static void populateContextSiteAdministrationURL(
+		Map<String, Object> context, Map<String, String> params) {
+
+		boolean hasSiteSettingsViewPermission =
+			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
+				context, PortletKeys.SITE_SETTINGS);
+
+		if (hasSiteSettingsViewPermission) {
+			context.put(
+				"siteSettingsURL",
+				getSiteAdministrationPortletURL(
+					context, PortletKeys.SITE_SETTINGS, params));
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
