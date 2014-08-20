@@ -57,20 +57,20 @@ if (x > 0) {
 
 <aui:script use="liferay-dockbar">
 Liferay.Dockbar.DOCKBAR_PANELS.simulatorPanel = {
-	css: 'lfr-has-simulator',
-	id: 'simulatorPanel',
-	node: null,
-	showFn: A.bind(Liferay.Dockbar._showPanel, Liferay.Dockbar),
-	tpl: '<div class="lfr-admin-panel lfr-add-panel" id="{0}" />'
-};
+		css: 'lfr-has-simulator',
+		id: 'simulatorPanel',
+		node: null,
+		showFn: A.bind(Liferay.Dockbar._showPanel, Liferay.Dockbar),
+		tpl: '<div class="lfr-admin-panel lfr-add-panel" id="{0}" />'
+	};
 </aui:script>
 
 <style type="text/css">
-.aui .lfr-has-simulator {
-	padding-left: 350px;
-}
+	.aui .lfr-has-simulator {
+		padding-left: 350px;
+	}
 
-.aui .dockbar-split.lfr-has-simulator .nav-add-controls {
-	left: 350px;
-}
+	.aui .dockbar-split.lfr-has-simulator .nav-add-controls {
+		left: 350px;
+	}
 </style>
