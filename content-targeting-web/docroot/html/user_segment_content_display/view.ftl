@@ -18,7 +18,7 @@
 
 <#if isMatchingRule>
 	<#if portletDisplay.isShowConfigurationIcon() && userSegmentQueryRules?has_content>
-		<div class="lfr-meta-actions icons-container content-preview-container">
+		<div class="lfr-meta-actions icons-container content-preview-container" id="<@portlet["namespace"] />contentPreviewContainer">
 			<#list userSegmentQueryRules as userSegmentQueryRule>
 				<#assign assetEntry = userSegmentQueryRule.getAssetEntry() />
 
@@ -82,7 +82,7 @@
 		<@aui["script"] use="aui-base">
 			var lastSelectedIndex = ${selectedIndex};
 
-			A.one('.content-preview-container').delegate(
+			A.one('#<@portlet["namespace"] />contentPreviewContainer').delegate(
 				'hover',
 				function(event) {
 					var currentTarget = event.currentTarget;
