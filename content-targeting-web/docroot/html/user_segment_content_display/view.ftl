@@ -28,25 +28,7 @@
 					<#assign cssClass = "selected" />
 				</#if>
 
-				<#assign userSegmentQueryRuleContains = "belongs" />
-
-				<#if !userSegmentQueryRule.isContains()>
-					<#assign userSegmentQueryRuleContains = "does-not-belong" />
-				</#if>
-
-				<#assign userSegmentQueryRuleAndOperator = "all" />
-
-				<#if !userSegmentQueryRule.isAndOperator()>
-					<#assign userSegmentQueryRuleAndOperator = "any" />
-				</#if>
-
-				<#assign toolTipMessage = userSegmentQueryRule.getSummary(portletConfig, locale) />
-
-				<#if !userSegmentQueryRule_has_next>
-					<#assign toolTipMessage = languageUtil.get(locale, "default") />
-				</#if>
-
-				<span class="content-preview ${cssClass}" data-index="${userSegmentQueryRule_index}" id="<@portlet["namespace"] />PreviewContent${userSegmentQueryRule_index}" onmouseover="Liferay.Portal.ToolTip.show(this, '${toolTipMessage}');">
+				<span class="content-preview ${cssClass}" data-index="${userSegmentQueryRule_index}" id="<@portlet["namespace"] />PreviewContent${userSegmentQueryRule_index}" onmouseover="Liferay.Portal.ToolTip.show(this, '${userSegmentQueryRule.getSummary(portletConfig, locale)}');">
 					<#assign assetRenderer = assetEntry.getAssetRenderer() />
 
 					<img class="asset-image" src="${assetRenderer.getThumbnailPath(renderRequest)}" />

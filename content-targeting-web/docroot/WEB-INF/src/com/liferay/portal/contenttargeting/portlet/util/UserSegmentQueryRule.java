@@ -168,6 +168,12 @@ public class UserSegmentQueryRule {
 	public String getSummary(PortletConfig portletConfig, Locale locale)
 		throws SystemException {
 
+		String userSegmentNames = getUserSegmentNames(locale);
+
+		if (Validator.isNull(userSegmentNames)) {
+			return UnicodeLanguageUtil.get(locale, "default");
+		}
+
 		String userSegmentQueryRuleContains =
 			_contains ? "belongs" : "does-not-belong";
 
@@ -178,7 +184,7 @@ public class UserSegmentQueryRule {
 			"if-the-user-x-to-x-of-the-following-user-segments-x",
 			new Object[] {
 				userSegmentQueryRuleContains, userSegmentQueryRuleAndOperator,
-				getUserSegmentNames(locale)},
+				userSegmentNames},
 			true);
 	}
 
