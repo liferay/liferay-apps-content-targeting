@@ -20,14 +20,7 @@
 <#if assetEntries?has_content>
 	<#list assetEntries as assetEntry>
 		<div class="asset-entry">
-			<#assign assetRendererFactory = assetRendererFactoryRegistryUtilClass.getAssetRendererFactoryByClassName(assetEntry.getClassName())>
-
-			${request.setAttribute("view.jsp-assetEntry", assetEntry)}
-			${request.setAttribute("view.jsp-assetRendererFactory", assetRendererFactory)}
-			${request.setAttribute("view.jsp-assetRenderer", assetRendererFactory.getAssetRenderer(assetEntry.getClassPK()))}
-			${request.setAttribute("view.jsp-title", assetEntry.getTitle(themeDisplay.getLocale()))}
-
-			<@liferay_util["include"] page="/html/portlet/asset_publisher/display/abstracts.jsp" />
+			<@renderAssetEntry assetEntry=assetEntry displayStyle="abstracts" showEditLink=true />
 		</div>
 	</#list>
 <#else>

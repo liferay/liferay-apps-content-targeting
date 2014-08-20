@@ -60,3 +60,21 @@
 		</#if>
 	</#if>
 </#macro>
+
+<#macro renderAssetEntry
+	assetEntry=""
+	displayStyle="full_content"
+	showEditLink=false
+>
+	<#if assetEntry?has_content>
+		${request.setAttribute("view.jsp-assetEntry", assetEntry)}
+		${request.setAttribute("view.jsp-assetRendererFactory", assetEntry.getAssetRendererFactory())}
+		${request.setAttribute("view.jsp-assetRenderer", assetEntry.getAssetRenderer())}
+		${request.setAttribute("view.jsp-title", assetEntry.getTitle(themeDisplay.getLocale()))}
+	</#if>
+
+	<@liferay_util["include"] page="/html/portlet/asset_publisher/display/${displayStyle}.jsp">
+		<@liferay_util["param"] name="showEditURL" value=showEditLink?string />
+		<@liferay_util["param"] name="showExtraInfo" value="false" />
+	</@>
+</#macro>

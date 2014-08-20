@@ -39,10 +39,7 @@
 	</#if>
 
 	<div class="full-content" id="<@portlet["namespace"] />FullContent${selectedIndex}">
-		<@liferay_util["include"] page="/html/portlet/asset_publisher/display/full_content.jsp">
-			<@liferay_util["param"] name="showEditURL" value="false" />
-			<@liferay_util["param"] name="showExtraInfo" value="false" />
-		</@>
+		<@renderAssetEntry />
 	</div>
 
 	<#if portletDisplay.isShowConfigurationIcon() && userSegmentQueryRules?has_content>
@@ -51,15 +48,7 @@
 				<#assign assetEntry = userSegmentQueryRule.getAssetEntry() />
 
 	            <div class="hide full-content" id="<@portlet["namespace"] />FullContent${userSegmentQueryRule_index}">
-					${request.setAttribute("view.jsp-assetEntry", assetEntry)}
-					${request.setAttribute("view.jsp-assetRendererFactory", assetEntry.getAssetRendererFactory())}
-					${request.setAttribute("view.jsp-assetRenderer", assetEntry.getAssetRenderer())}
-					${request.setAttribute("view.jsp-title", assetEntry.getTitle(themeDisplay.getLocale()))}
-
-					<@liferay_util["include"] page="/html/portlet/asset_publisher/display/full_content.jsp">
-						<@liferay_util["param"] name="showEditURL" value="false" />
-						<@liferay_util["param"] name="showExtraInfo" value="false" />
-					</@>
+					<@renderAssetEntry assetEntry=assetEntry />
 				</div>
 			</#if>
 		</#list>

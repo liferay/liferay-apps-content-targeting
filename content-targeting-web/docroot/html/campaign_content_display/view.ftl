@@ -19,9 +19,7 @@
 
 <#if isMatchingRule>
 	<div>
-		<@liferay_util["include"] page="/html/portlet/asset_publisher/display/full_content.jsp">
-			<@liferay_util["param"] name="showExtraInfo" value="false" />
-		</@>
+		<@renderAssetEntry showEditLink=true />
 
 		<@aui["script"] position="inline">
 			Liferay.Analytics.track('view', {
