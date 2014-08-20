@@ -102,7 +102,8 @@ public class ContentVisitedRule extends BaseRule {
 					bundle.getBundleContext());
 
 			count = analyticsEventLocalService.getAnalyticsEventsCount(
-				assetEntry.getClassName(), assetEntry.getClassPK(), "view");
+				anonymousUser.getAnonymousUserId(), assetEntry.getClassName(),
+				assetEntry.getClassPK(), "view");
 		}
 		catch (Exception e) {
 		}

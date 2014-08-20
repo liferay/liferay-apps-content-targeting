@@ -82,7 +82,8 @@ public class PageVisitedRule extends BaseRule {
 					bundle.getBundleContext());
 
 			count = analyticsEventLocalService.getAnalyticsEventsCount(
-				Layout.class.getName(), plid, "view");
+				anonymousUser.getAnonymousUserId(), Layout.class.getName(),
+				plid, "view");
 		}
 		catch (Exception e) {
 		}
