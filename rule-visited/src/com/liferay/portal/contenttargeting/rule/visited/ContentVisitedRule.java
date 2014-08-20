@@ -79,34 +79,22 @@ public class ContentVisitedRule extends BaseRule {
 
 		long assetEntryId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
-		AssetEntry assetEntry = null;
-
-		try {
-			assetEntry = AssetEntryLocalServiceUtil.fetchEntry(assetEntryId);
-		}
-		catch (SystemException e) {
-		}
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			assetEntryId);
 
 		if (assetEntry == null) {
 			return false;
 		}
 
-		int count = 0;
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		try {
-			Bundle bundle = FrameworkUtil.getBundle(getClass());
+		AnalyticsEventLocalService analyticsEventLocalService =
+			ServiceTrackerUtil.getService(
+				AnalyticsEventLocalService.class, bundle.getBundleContext());
 
-			AnalyticsEventLocalService analyticsEventLocalService =
-				ServiceTrackerUtil.getService(
-					AnalyticsEventLocalService.class,
-					bundle.getBundleContext());
-
-			count = analyticsEventLocalService.getAnalyticsEventsCount(
-				anonymousUser.getAnonymousUserId(), assetEntry.getClassName(),
-				assetEntry.getClassPK(), "view");
-		}
-		catch (Exception e) {
-		}
+		int count = analyticsEventLocalService.getAnalyticsEventsCount(
+			anonymousUser.getAnonymousUserId(), assetEntry.getClassName(),
+			assetEntry.getClassPK(), "view");
 
 		if (count > 0) {
 			return true;
