@@ -21,6 +21,8 @@
 <%
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
 
+long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
+
 UnicodeProperties groupTypeSettingsProperties = themeDisplay.getScopeGroup().getParentLiveGroupTypeSettingsProperties();
 %>
 
@@ -29,6 +31,8 @@ UnicodeProperties groupTypeSettingsProperties = themeDisplay.getScopeGroup().get
 		Liferay.Analytics.track('view', {
 			className: '<%= JournalArticle.class.getName() %>',
 			classPK: '<%= articleDisplay.getResourcePrimKey() %>',
+			referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
+			referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
 		});
 	</aui:script>
 </c:if>
