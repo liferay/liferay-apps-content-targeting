@@ -161,8 +161,8 @@ public class ScorePointsRule extends BaseRule {
 		context.put("trackingPageEnabled", trackingPageEnabled);
 
 		if (!trackingContentEnabled || !trackingPageEnabled) {
-			ContentTargetingContextUtil.
-				populateContextAnalyticsSettingsURLs(context);
+			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
+				context);
 		}
 	}
 

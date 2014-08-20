@@ -22,8 +22,8 @@ import com.liferay.portlet.BaseControlPanelEntry;
 /**
  * @author Julio Camarero
  */
-public class ContentTargetingApiControlPanelEntry extends
-	BaseControlPanelEntry {
+public class ContentTargetingApiControlPanelEntry
+	extends BaseControlPanelEntry {
 
 	@Override
 	protected boolean hasAccessPermissionDenied(
