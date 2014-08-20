@@ -15,6 +15,7 @@
 -->
 
 <#include "../init.ftl" />
+<#include "../macros.ftl" />
 
 <#if isMatchingRule>
 	<#if portletDisplay.isShowConfigurationIcon() && userSegmentQueryRules?has_content>
@@ -92,19 +93,7 @@
 <#if portletDisplay.isShowConfigurationIcon()>
 	<div class="lfr-meta-actions icons-container">
 		<div class="lfr-icon-actions">
-			<@portlet["renderURL"] var="configurationURL" windowState=liferayWindowStatePopUp.toString()>
-				<@portlet["param"] name="mvcPath" value="${userSegmentContentDisplayPath.CONFIGURATION}" />
-				<@portlet["param"] name="redirect" value="${currentURL}" />
-			</@>
-
-			<@liferay_ui["icon"]
-				cssClass="lfr-icon-action lfr-icon-action-configuration"
-				image="configuration"
-				label=true
-				message="configuration"
-				useDialog=true
-				url="${configurationURL}"
-			/>
+			<@getConfigurationIconLink mvcPath=userSegmentContentDisplayPath.CONFIGURATION />
 		</div>
 	</div>
 </#if>
