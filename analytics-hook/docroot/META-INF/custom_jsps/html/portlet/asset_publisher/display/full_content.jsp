@@ -31,7 +31,6 @@ UnicodeProperties groupTypeSettingsProperties = themeDisplay.getScopeGroup().get
 		Liferay.Analytics.track('view', {
 			className: '<%= assetEntry.getClassName() %>',
 			classPK: '<%= assetEntry.getClassPK() %>',
-			groupId: '<%= assetEntry.getGroupId() %>',
 			referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
 			referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
 		});

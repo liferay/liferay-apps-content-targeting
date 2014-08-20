@@ -29,7 +29,6 @@ UnicodeProperties groupTypeSettingsProperties = themeDisplay.getScopeGroup().get
 		Liferay.Analytics.track('view', {
 			className: '<%= JournalArticle.class.getName() %>',
 			classPK: '<%= articleDisplay.getResourcePrimKey() %>',
-			groupId: '<%= articleDisplay.getGroupId() %>'
 		});
 	</aui:script>
 </c:if>
