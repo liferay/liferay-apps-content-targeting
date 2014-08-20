@@ -169,14 +169,16 @@ public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
 			portletPreferences.getValues("queryLogicIndexes", null),
-			new int[]{0});
+			new int[0]);
 
 		for (int queryRulesIndex : queryRulesIndexes) {
 			UserSegmentQueryRule userSegmentQueryRule =
 				UserSegmentQueryRuleUtil.getQueryRule(
 					portletPreferences, queryRulesIndex, locale);
 
-			userSegmentQueryRules.add(userSegmentQueryRule);
+			if (userSegmentQueryRule.getAssetEntry() != null){
+				userSegmentQueryRules.add(userSegmentQueryRule);
+			}
 		}
 
 		if (assetEntryIdDefault > 0) {
