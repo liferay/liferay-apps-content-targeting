@@ -31,3 +31,32 @@
 		url="${configurationURL}"
 	/>
 </#macro>
+
+<#macro getEditIconLink
+	assetEntry
+	cssClass
+	index
+>
+	<#assign assetRenderer = assetEntry.getAssetRenderer() />
+
+	<#if assetRenderer.hasEditPermission(permissionChecker)>
+		<#assign redirectURL = renderResponse.createRenderURL() />
+
+		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("pop_up"), redirectURL)!"" />
+
+		<#if validator.isNotNull(editPortletURL)>
+			<#assign entryTitle = htmlUtil.escape(assetRenderer.getTitle(locale)) />
+			<#assign title = languageUtil.format(locale, "edit-x", entryTitle) />
+
+			<span class="${cssClass}" id="<@portlet["namespace"] />editLink${index}">
+				<@liferay_ui["icon"]
+					cssClass="lfr-icon-action lfr-icon-action-edit"
+					image="edit"
+					label=true
+					message=title
+					url="javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "editAsset', title: '" + title + "', uri:'" + htmlUtil.escapeURL(editPortletURL.toString()) + "'});"
+				/>
+			</span>
+		</#if>
+	</#if>
+</#macro>

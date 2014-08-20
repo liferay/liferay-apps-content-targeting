@@ -40,6 +40,7 @@
 
 	<div class="full-content" id="<@portlet["namespace"] />FullContent${selectedIndex}">
 		<@liferay_util["include"] page="/html/portlet/asset_publisher/display/full_content.jsp">
+			<@liferay_util["param"] name="showEditURL" value="false" />
 			<@liferay_util["param"] name="showExtraInfo" value="false" />
 		</@>
 	</div>
@@ -56,6 +57,7 @@
 					${request.setAttribute("view.jsp-title", assetEntry.getTitle(themeDisplay.getLocale()))}
 
 					<@liferay_util["include"] page="/html/portlet/asset_publisher/display/full_content.jsp">
+						<@liferay_util["param"] name="showEditURL" value="false" />
 						<@liferay_util["param"] name="showExtraInfo" value="false" />
 					</@>
 				</div>
@@ -75,8 +77,20 @@
 					A.one('#<@portlet["namespace"] />FullContent' + lastSelectedIndex).hide();
 			        A.one('#<@portlet["namespace"] />PreviewContent' + lastSelectedIndex).removeClass('selected');
 
+					var editLink = A.one('#<@portlet["namespace"] />editLink' + lastSelectedIndex);
+
+					if (editLink) {
+						editLink.hide();
+					}
+
 					A.one('#<@portlet["namespace"] />FullContent' + index).show();
 					A.one('#<@portlet["namespace"] />PreviewContent' + index).addClass('selected');
+
+					editLink = A.one('#<@portlet["namespace"] />editLink' + index);
+
+					if (editLink) {
+						editLink.show();
+					}
 
 					lastSelectedIndex = index;
 				},
@@ -94,6 +108,20 @@
 	<div class="lfr-meta-actions icons-container">
 		<div class="lfr-icon-actions">
 			<@getConfigurationIconLink mvcPath=userSegmentContentDisplayPath.CONFIGURATION />
+
+			<#if userSegmentQueryRules?has_content>
+				<#list userSegmentQueryRules as userSegmentQueryRule>
+					<#assign assetEntry = userSegmentQueryRule.getAssetEntry() />
+
+					<#assign cssClass = "" />
+
+					<#if selectedIndex != userSegmentQueryRule_index>
+						<#assign cssClass = "hide" />
+					</#if>
+
+					<@getEditIconLink assetEntry=assetEntry cssClass=cssClass index=userSegmentQueryRule_index />
+				</#list>
+			</#if>
 		</div>
 	</div>
 </#if>
