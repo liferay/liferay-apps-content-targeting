@@ -176,7 +176,7 @@ public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 				UserSegmentQueryRuleUtil.getQueryRule(
 					portletPreferences, queryRulesIndex, locale);
 
-			if (userSegmentQueryRule.getAssetEntry() != null){
+			if (userSegmentQueryRule.getAssetEntry() != null) {
 				userSegmentQueryRules.add(userSegmentQueryRule);
 			}
 		}
