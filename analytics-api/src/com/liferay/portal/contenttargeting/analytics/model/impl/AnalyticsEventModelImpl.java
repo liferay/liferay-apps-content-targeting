@@ -99,14 +99,15 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.portal.contenttargeting.analytics.model.AnalyticsEvent"),
 			true);
-	public static long CLASSNAME_COLUMN_BITMASK = 1L;
-	public static long CLASSPK_COLUMN_BITMASK = 2L;
-	public static long COMPANYID_COLUMN_BITMASK = 4L;
-	public static long CREATEDATE_COLUMN_BITMASK = 8L;
-	public static long ELEMENTID_COLUMN_BITMASK = 16L;
-	public static long EVENTTYPE_COLUMN_BITMASK = 32L;
-	public static long REFERRERCLASSNAME_COLUMN_BITMASK = 64L;
-	public static long REFERRERCLASSPK_COLUMN_BITMASK = 128L;
+	public static long ANONYMOUSUSERID_COLUMN_BITMASK = 1L;
+	public static long CLASSNAME_COLUMN_BITMASK = 2L;
+	public static long CLASSPK_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 8L;
+	public static long CREATEDATE_COLUMN_BITMASK = 16L;
+	public static long ELEMENTID_COLUMN_BITMASK = 32L;
+	public static long EVENTTYPE_COLUMN_BITMASK = 64L;
+	public static long REFERRERCLASSNAME_COLUMN_BITMASK = 128L;
+	public static long REFERRERCLASSPK_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -383,6 +384,14 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public void setAnonymousUserId(long anonymousUserId) {
+		_columnBitmask |= ANONYMOUSUSERID_COLUMN_BITMASK;
+
+		if (!_setOriginalAnonymousUserId) {
+			_setOriginalAnonymousUserId = true;
+
+			_originalAnonymousUserId = _anonymousUserId;
+		}
+
 		_anonymousUserId = anonymousUserId;
 	}
 
@@ -395,6 +404,10 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 	@Override
 	public void setAnonymousUserUuid(String anonymousUserUuid) {
 		_anonymousUserUuid = anonymousUserUuid;
+	}
+
+	public long getOriginalAnonymousUserId() {
+		return _originalAnonymousUserId;
 	}
 
 	@JSON
@@ -752,6 +765,10 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 
 		analyticsEventModelImpl._setOriginalCompanyId = false;
 
+		analyticsEventModelImpl._originalAnonymousUserId = analyticsEventModelImpl._anonymousUserId;
+
+		analyticsEventModelImpl._setOriginalAnonymousUserId = false;
+
 		analyticsEventModelImpl._originalClassName = analyticsEventModelImpl._className;
 
 		analyticsEventModelImpl._originalClassPK = analyticsEventModelImpl._classPK;
@@ -1005,6 +1022,8 @@ public class AnalyticsEventModelImpl extends BaseModelImpl<AnalyticsEvent>
 	private String _userUuid;
 	private long _anonymousUserId;
 	private String _anonymousUserUuid;
+	private long _originalAnonymousUserId;
+	private boolean _setOriginalAnonymousUserId;
 	private String _className;
 	private String _originalClassName;
 	private long _classPK;

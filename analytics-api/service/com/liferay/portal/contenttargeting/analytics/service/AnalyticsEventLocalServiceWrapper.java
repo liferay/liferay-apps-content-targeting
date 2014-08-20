@@ -347,6 +347,16 @@ public class AnalyticsEventLocalServiceWrapper
 
 	@Override
 	public java.util.List<com.liferay.portal.contenttargeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		long anonymousUserId, java.lang.String className, long classPK,
+		java.lang.String eventType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.getAnalyticsEvents(anonymousUserId,
+			className, classPK, eventType);
+	}
+
+	@Override
+	public java.util.List<com.liferay.portal.contenttargeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String className, long classPK, java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -402,6 +412,15 @@ public class AnalyticsEventLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _analyticsEventLocalService.getAnalyticsEventsCount(companyId,
 			createDate);
+	}
+
+	@Override
+	public int getAnalyticsEventsCount(long anonymousUserId,
+		java.lang.String className, long classPK, java.lang.String eventType)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.getAnalyticsEventsCount(anonymousUserId,
+			className, classPK, eventType);
 	}
 
 	@Override
