@@ -18,7 +18,7 @@
 <#include "../macros.ftl" />
 
 <#if isMatchingRule>
-	<#if portletDisplay.isShowConfigurationIcon() && userSegmentQueryRules?has_content>
+	<#if portletDisplay.isShowConfigurationIcon() && userSegmentQueryRules?has_content && (userSegmentQueryRules?size > 1)>
 		<div class="lfr-meta-actions icons-container content-preview-container" id="<@portlet["namespace"] />contentPreviewContainer">
 			<#list userSegmentQueryRules as userSegmentQueryRule>
 				<#assign assetEntry = userSegmentQueryRule.getAssetEntry() />
@@ -42,7 +42,7 @@
 		<@renderAssetEntry />
 	</div>
 
-	<#if portletDisplay.isShowConfigurationIcon() && userSegmentQueryRules?has_content>
+	<#if portletDisplay.isShowConfigurationIcon() && userSegmentQueryRules?has_content && (userSegmentQueryRules?size > 1)>
 		<#list userSegmentQueryRules as userSegmentQueryRule>
 			<#if selectedIndex != userSegmentQueryRule_index>
 				<#assign assetEntry = userSegmentQueryRule.getAssetEntry() />
