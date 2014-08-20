@@ -155,6 +155,16 @@ public class AnalyticsEventLocalServiceImpl
 
 	@Override
 	public List<AnalyticsEvent> getAnalyticsEvents(
+			long anonymousUserId, String className, long classPK,
+			String eventType)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.findByA_C_C_E(
+			anonymousUserId, className, classPK, eventType);
+	}
+
+	@Override
+	public List<AnalyticsEvent> getAnalyticsEvents(
 			String className, long classPK, String eventType)
 		throws PortalException, SystemException {
 
@@ -207,6 +217,16 @@ public class AnalyticsEventLocalServiceImpl
 		throws PortalException, SystemException {
 
 		return analyticsEventPersistence.countByC_GtD(companyId, createDate);
+	}
+
+	@Override
+	public int getAnalyticsEventsCount(
+			long anonymousUserId, String className, long classPK,
+			String eventType)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.countByA_C_C_E(
+			anonymousUserId, className, classPK, eventType);
 	}
 
 	@Override
