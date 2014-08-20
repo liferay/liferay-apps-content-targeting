@@ -28,6 +28,10 @@
 	<#assign userSegmentsLabel = userSegmentsLabel + " <span class=\"badge badge-info\">" + userSegments?size + "</span>" />
 </#if>
 
+<@aui["button"] cssClass="close pull-right" name="closePanelSimulator" value="&times;" />
+
+<h1><@liferay_ui["message"] key="simulator" /></h1>
+
 <@liferay_ui["tabs"]
 	names="${userSegmentsLabel},${campaignsLabel}"
 	refresh=false
@@ -41,4 +45,13 @@
 	<@liferay_ui["section"]>
 		<#include "view_campaigns.ftl" />
 	</@>
+</@>
+
+<@aui["script"] use="liferay-dockbar">
+	A.one('#<@portlet["namespace"] />closePanelSimulator').on(
+		'click',
+		function(event) {
+			Liferay.Dockbar._togglePanel('simulatorPanel');
+		}
+	);
 </@>
