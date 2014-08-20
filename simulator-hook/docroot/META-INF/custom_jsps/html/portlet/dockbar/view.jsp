@@ -31,11 +31,11 @@
 	%>
 
 	<c:if test="<%= (group != null) && !group.isControlPanel() && user.isSetupComplete() %>">
-		<liferay-portlet:renderURL portletName="ctsimulator_WAR_contenttargetingweb" var="simulatorURL" windowState="<%= LiferayWindowState.POP_UP.toString() %>">
+		<liferay-portlet:renderURL portletName="ctsimulator_WAR_contenttargetingweb" var="simulatorURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 			<portlet:param name="mvcPath" value="html/ct_simulator/view.ftl" />
 		</liferay-portlet:renderURL>
 
-		<aui:nav-item anchorId="simulatorPanel" cssClass="page-edit-controls" href="<%= simulatorURL %>" iconCssClass="icon-screenshot" label="simulator" title="simulator" useDialog="<%= true %>" />
+		<aui:nav-item anchorId="simulatorPanel" cssClass="page-edit-controls" data-panelURL="<%= simulatorURL %>" href="javascript:;" iconCssClass="icon-screenshot" label="simulator" title="simulator" />
 	</c:if>
 </liferay-util:buffer>
 
@@ -54,3 +54,23 @@ if (x > 0) {
 %>
 
 <%= html %>
+
+<aui:script use="liferay-dockbar">
+Liferay.Dockbar.DOCKBAR_PANELS.simulatorPanel = {
+	css: 'lfr-has-simulator',
+	id: 'simulatorPanel',
+	node: null,
+	showFn: A.bind(Liferay.Dockbar._showPanel, Liferay.Dockbar),
+	tpl: '<div class="lfr-admin-panel lfr-add-panel" id="{0}" />'
+};
+</aui:script>
+
+<style type="text/css">
+.aui .lfr-has-simulator {
+	padding-left: 350px;
+}
+
+.aui .dockbar-split.lfr-has-simulator .nav-add-controls {
+	left: 350px;
+}
+</style>
