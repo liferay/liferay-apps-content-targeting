@@ -7,6 +7,12 @@
 		position: fixed;
 	}
 
+	.campaign {
+		.field {
+			display: none;
+		}
+	}
+
 	.category-content {
 		margin: 20px 10px;
 
