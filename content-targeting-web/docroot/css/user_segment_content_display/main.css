@@ -1,42 +1,66 @@
+@import "compass";
+
 .user-segment-content-display-portlet {
-	.content-container {
-		position: relative;
+	&:hover .content-container {
+	   overflow: visible;
+
+	 	.content-preview-container {
+	 	    @include opacity(1);
+
+	 		.content-preview .user-segment-summary {
+				width: 200px;
+				font-size: inherit;
+	 		}
+	 	}
 	}
 
-	.content-preview-container {
-		background-color: #000;
-		border-radius: 8px;
-		color: #FFF;
-		max-width: 200px;
-		padding: 1em;
-		position: absolute;
-		right: 0;
-		top: 0;
-		z-index: 10;
+	.content-container {
+		overflow: hidden;
+		position: relative;
 
-		.content-preview {
-			height: 50px;
-			margin: 0.5em 0;
-			opacity: 0.5;
+		.content-preview-container {
+			background-color: #000;
 
-			&.selected {
-				opacity: 1;
-			}
+			@include border-radius(8px);
 
-			.asset-image {
-				background-color: #FFF ;
-				background-position: 50% 50%;
-				background-repeat: no-repeat;
-				background-size: 100%;
-				border-radius: 4px;
-				display: inline-block;
-				float: left;
+			color: #FFF;
+			max-width: 200px;
+
+			@include opacity(0.5);
+
+			padding: 1em;
+			position: absolute;
+			right: 0;
+			top: 0;
+			z-index: 10;
+
+			.content-preview {
 				height: 50px;
-				margin-right: 0.5em;
-				width: 50px;
-			}
+				margin: 0.5em 0;
 
-			.user-segment-summary {
+				@include opacity(0.5);
+
+				&.selected {
+					@include opacity(1);
+				}
+
+				.asset-image {
+					background-color: #FFF ;
+					background-position: 50% 50%;
+					background-repeat: no-repeat;
+					background-size: 100%;
+					border-radius: 4px;
+					display: inline-block;
+					float: left;
+					height: 50px;
+					margin-right: 0.5em;
+					width: 50px;
+				}
+
+				.user-segment-summary {
+					width: 0px;
+					font-size: 0;
+				}
 			}
 		}
 	}
