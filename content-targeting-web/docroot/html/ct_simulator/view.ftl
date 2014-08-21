@@ -16,21 +16,13 @@
 
 <#include "../init.ftl" />
 
-<#assign campaignsLabel = languageUtil.get(locale, "campaigns") />
-
-<#if campaigns?has_content>
-	<#assign campaignsLabel = campaignsLabel + " <span class=\"badge badge-info\">" + campaigns?size + "</span>" />
-</#if>
-
-<#assign userSegmentsLabel = languageUtil.get(locale, "user-segments") />
-
-<#if userSegments?has_content>
-	<#assign userSegmentsLabel = userSegmentsLabel + " <span class=\"badge badge-info\">" + userSegments?size + "</span>" />
-</#if>
-
 <@aui["button"] cssClass="close pull-right" name="closePanelSimulator" value="&times;" />
 
 <h1><@liferay_ui["message"] key="simulator" /></h1>
+
+<#assign campaignsLabel = languageUtil.get(locale, "campaigns") />
+
+<#assign userSegmentsLabel = languageUtil.get(locale, "user-segments") />
 
 <@liferay_ui["tabs"]
 	names="${userSegmentsLabel},${campaignsLabel}"

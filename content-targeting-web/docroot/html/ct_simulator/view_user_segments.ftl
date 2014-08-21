@@ -16,68 +16,70 @@
 
 <#include "../init.ftl" />
 
-<#if isSimulatedUserSegments>
-	<h2><@liferay_ui["message"] key="simulated-user-segments" /></h2>
-
-	<ul>
-		<#list userSegments as userSegment>
-			<li>
-				${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}
-
-				<@portlet["actionURL"] name="removeSimulateUserSegment" var="removeSimulateUserSegmentURL">
-					<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()}" />
-					<@portlet["param"] name="redirect" value="${currentURL}" />
-				</@>
-
-				<@liferay_ui["icon"]
-					iconCssClass="icon-minus"
-					label=true
-					message="remove"
-					url="${removeSimulateUserSegmentURL}"
-				/>
-			</li>
-		</#list>
-	</ul>
-
-	<@portlet["actionURL"] name="stopSimulation" var="stopSimulationURL">
-		<@portlet["param"] name="redirect" value="${currentURL}" />
-	</@>
-
-	<a class="btn" href="${stopSimulationURL}"><@liferay_ui["message"] key="clear-simulated-user-segments" /></a>
-<#elseif userSegments?has_content>
-	<h2><@liferay_ui["message"] key="matched-user-segments" /></h2>
-
-	<ul>
-		<#list userSegments as userSegment>
-			<li>${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}</li>
-		</#list>
-	</ul>
-<#else>
-	<div class="alert alert-info">
-		<@liferay_ui["message"] key="the-current-user-does-not-match-any-user-segment" />
+<div id="<@portlet["namespace"] />userSegmentContainer">
+	<div class="category-header">
+		<div class="category-icon">
+			<i class="icon-check"></i>
+		</div>
+		<div class="category-info">
+			<div class="category-title">
+				<@liferay_ui["message"] key="matched" />
+			</div>
+			<div class="category-description">
+				<@liferay_ui["message"] key="user-segments" />
+			</div>
+		</div>
 	</div>
-</#if>
 
-<h2><@liferay_ui["message"] key="not-matched-user-segments" /></h2>
+	<div class="category-content">
+		<#if userSegments?has_content>
+			<#list userSegments as userSegment>
+				<@aui["input"] cssClass="user-segment" label="${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="userSegment${userSegment.getUserSegmentId()}" type="checkbox" checked=simulatedUserSegmentIds?seq_contains(userSegment.getUserSegmentId()) value=userSegment.getUserSegmentId() />
+			</#list>
+		<#else>
+			<div class="alert alert-info">
+				<@liferay_ui["message"] key="the-current-user-does-not-match-any-user-segment" />
+			</div>
+		</#if>
+	</div>
 
-<ul>
-	<#list notMatchedUserSegments as userSegment>
-		<@portlet["actionURL"] name="simulateUserSegment" var="simulateUserSegmentURL">
-			<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()}" />
-			<@portlet["param"] name="redirect" value="${currentURL}" />
-		</@>
+	<div class="category-header">
+		<div class="category-icon">
+			<i class="icon-check-empty"></i>
+		</div>
+		<div class="category-info">
+			<div class="category-title">
+				<@liferay_ui["message"] key="other" />
+			</div>
+			<div class="category-description">
+				<@liferay_ui["message"] key="user-segments" />
+			</div>
+		</div>
+	</div>
 
-		<li>
+	<div class="category-content">
+		<#list notMatchedUserSegments as userSegment>
+			<@portlet["actionURL"] name="simulateUserSegment" var="simulateUserSegmentURL">
+				<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()}" />
+				<@portlet["param"] name="redirect" value="${currentURL}" />
+			</@>
 
-		${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}
+			<@aui["input"] cssClass="user-segment" label="${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="userSegment${userSegment.getUserSegmentId()}" type="checkbox" checked=simulatedUserSegmentIds?seq_contains(userSegment.getUserSegmentId()) value=userSegment.getUserSegmentId() />
+		</#list>
+	</div>
+</div>
 
-		<@liferay_ui["icon"]
-			iconCssClass="icon-plus"
-			label=true
-			message="simulate"
-			url="${simulateUserSegmentURL}"
-		/>
+<@aui["script"] use="aui-toggler">
+	var userSegmentContainer = A.one('#<@portlet["namespace"] />userSegmentContainer');
 
-		</li>
-	</#list>
-</ul>
+	var togglerDelegate = new A.TogglerDelegate(
+		{
+			animated: true,
+			closeAllOnExpand: false,
+			container: userSegmentContainer,
+			content: '.category-content',
+			expanded: true,
+			header: '.category-header'
+		}
+	);
+</@>

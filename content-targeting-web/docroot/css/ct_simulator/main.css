@@ -1,2 +1,73 @@
 .content-targeting-simulator-portlet {
+	.button-holder {
+		bottom: 0;
+		margin-bottom: 0;
+		margin-top: 0;
+		padding: 10px 15px;
+		position: fixed;
+	}
+
+	.category-content {
+		margin: 20px 10px;
+
+		.checkbox {
+			font-size: 13px;
+			padding-left: 35px;
+
+			input[type="checkbox"] {
+				margin-left: -30px;
+			}
+		}
+	}
+
+	.category-header {
+		border-bottom: solid 1px #DDD;
+		margin-right: 20px;
+		padding: 5px 0;
+		overflow: hidden;
+		position: relative;
+
+		.category-icon {
+			background-color: #009AE5;
+			color: #FFF;
+			float: left;
+			font-size: 25px;
+			height: 25px;
+			margin-right: 10px;
+			padding: 5px;
+			text-align: center;
+			vertical-align: middle;
+			width: 25px;
+		}
+
+		.category-info {
+			line-height: 16px;
+			margin-right: 30px;
+
+			.category-title {
+				color: #009AE5;
+				font-size: 15px;
+				font-weight: 400;
+			}
+
+			.category-description {
+				color: #8D8D8D;
+				font-size: 13px;
+			}
+		}
+
+		&:after{
+			color: #009AE5;
+			content: "\f054";
+			font-family: "fontawesome-alloy";
+			font-size: 14px;
+			position: absolute;
+			right: 10px;
+			top: 0;
+		}
+
+		&.toggler-header-expanded:after {
+			content: "\f078";
+		}
+	}
 }

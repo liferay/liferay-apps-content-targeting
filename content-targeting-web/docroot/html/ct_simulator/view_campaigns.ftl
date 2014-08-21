@@ -16,24 +16,65 @@
 
 <#include "../init.ftl" />
 
-<#if campaigns?has_content>
-	<h2><@liferay_ui["message"] key="matched-campaigns" /></h2>
-
-	<ul>
-		<#list campaigns as campaign>
-			<li>${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}</li>
-		</#list>
-	</ul>
-<#else>
-	<div class="alert alert-info">
-		<@liferay_ui["message"] key="the-current-user-does-not-match-any-campaign" />
+<div class="campaign" id="<@portlet["namespace"] />campaignsContainer">
+	<div class="category-header">
+		<div class="category-icon">
+			<i class="icon-check"></i>
+		</div>
+		<div class="category-info">
+			<div class="category-title">
+				<@liferay_ui["message"] key="matched" />
+			</div>
+			<div class="category-description">
+				<@liferay_ui["message"] key="campaigns" />
+			</div>
+		</div>
 	</div>
-</#if>
 
-<h2><@liferay_ui["message"] key="not-matched-campaigns" /></h2>
+	<div class="category-content">
+		<#if campaigns?has_content>
+			<#list campaigns as campaign>
+				<@aui["input"] cssClass="user-segment" label="${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="campaign${campaign.getCampaignId()}" type="checkbox" checked=false value="" />
+			</#list>
+		<#else>
+			<div class="alert alert-info">
+				<@liferay_ui["message"] key="the-current-user-does-not-match-any-campaign" />
+			</div>
+		</#if>
+	</div>
 
-<ul>
-	<#list notMatchedCampaigns as campaign>
-		<li>${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}</li>
-	</#list>
-</ul>
+	<div class="category-header">
+		<div class="category-icon">
+			<i class="icon-check-empty"></i>
+		</div>
+		<div class="category-info">
+			<div class="category-title">
+				<@liferay_ui["message"] key="other" />
+			</div>
+			<div class="category-description">
+				<@liferay_ui["message"] key="campaigns" />
+			</div>
+		</div>
+	</div>
+
+	<div class="category-content">
+		<#list notMatchedCampaigns as campaign>
+			<@aui["input"] cssClass="user-segment" label="${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="campaign${campaign.getCampaignId()}" type="checkbox" checked=false value="" />
+		</#list>
+	</div>
+</div>
+
+<@aui["script"] use="aui-toggler">
+	var campaignsContainer = A.one('#<@portlet["namespace"] />campaignsContainer');
+
+	var togglerDelegate = new A.TogglerDelegate(
+		{
+			animated: true,
+			closeAllOnExpand: false,
+			container: campaignsContainer,
+			content: '.category-content',
+			expanded: true,
+			header: '.category-header'
+		}
+	);
+</@>
