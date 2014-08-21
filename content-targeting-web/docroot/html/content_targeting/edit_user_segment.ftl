@@ -79,7 +79,17 @@
 				</div>
 
 				<div class="diagram-builder-content-container form-builder-content-container">
-					<div class="diagram-builder-canvas form-builder-canvas">
+					<#assign cssHasRulesClass = "">
+
+					<#if userSegment?? && (addedRuleTemplates?size > 0)>
+						<#assign cssHasRulesClass = "has-rules">
+					</#if>
+
+					<div class="diagram-builder-canvas form-builder-canvas ${cssHasRulesClass}">
+						<div class="alert alert-info alert-no-rules">
+							<@liferay_ui["message"] key="drag-rules-here-to-configure-this-user-segment" />
+						</div>
+
 						<div class="diagram-builder-drop-container form-builder-drop-container">
 							<#if userSegment??>
 								<#list addedRuleTemplates as template>

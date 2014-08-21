@@ -61,7 +61,8 @@ AUI.add(
 								fieldsFilter = instance._createItemFilter();
 
 								eventHandles.push(
-									fieldsFilter.on('results', instance._onItemFilterResults, instance)
+									fieldsFilter.on('results', instance._onItemFilterResults, instance),
+									instance.on('fieldsChange', instance._onFieldsChange, instance)
 								);
 							}
 
@@ -211,6 +212,12 @@ AUI.add(
 							instance.simulateFocusField(field, event.target);
 
 							event.stopPropagation();
+						},
+
+						_onFieldsChange: function(event) {
+							var instance = this;
+
+							instance.get('canvas').toggleClass('has-rules', instance.get('fields').size());
 						},
 
 						_onItemFilterResults: function(event) {
