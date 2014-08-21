@@ -172,17 +172,19 @@ public class UserSegmentFilter implements Filter {
 	protected long[] getUserSegmentIds(
 		HttpServletRequest request, HttpServletResponse response) {
 
+		long[] userSegmentsIds = null;
+
 		if (_userSegmentSimulator == null) {
 			_initUserSegmentSimulator();
 		}
 
-		long[] userSegmentsIds = _userSegmentSimulator.getUserSegmentIds(
-			request, response);
+		long[] simulatedUserSegmentsIds =
+			_userSegmentSimulator.getUserSegmentIds(request, response);
 
-		if (userSegmentsIds != null) {
+		if (simulatedUserSegmentsIds != null) {
 			request.setAttribute(WebKeys.IS_SIMULATED_USER_SEGMENTS, true);
 
-			return userSegmentsIds;
+			userSegmentsIds = simulatedUserSegmentsIds;
 		}
 
 		if (_anonymousUsersManager == null) {
@@ -195,13 +197,21 @@ public class UserSegmentFilter implements Filter {
 
 			long[] groupIds = getGroupIds(request);
 
-			return getMatchesUserSegmentIds(request, groupIds, anonymousUser);
+			long[] originalUserSegmentIds = getMatchesUserSegmentIds(
+				request, groupIds, anonymousUser);
+
+			if (userSegmentsIds == null) {
+				userSegmentsIds = originalUserSegmentIds;
+			}
+
+			request.setAttribute(
+				WebKeys.ORIGINAL_USER_SEGMENT_IDS, originalUserSegmentIds);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		return null;
+		return userSegmentsIds;
 	}
 
 	private void _initUserSegmentSimulator() {

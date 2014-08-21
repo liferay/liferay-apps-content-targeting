@@ -25,6 +25,7 @@ import com.liferay.portal.contenttargeting.util.WebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -133,14 +134,32 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long[] userSegmentIds = (long[])portletRequest.getAttribute(
-			WebKeys.USER_SEGMENT_IDS);
+		long[] originalUserSegmentIds = (long[])portletRequest.getAttribute(
+			WebKeys.ORIGINAL_USER_SEGMENT_IDS);
 
 		long[] groupIds = ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
 			themeDisplay.getSiteGroupId());
 
+		HttpServletRequest httpServletRequest =
+			PortalUtil.getHttpServletRequest(portletRequest);
+
+		HttpServletResponse httpServletResponse =
+			PortalUtil.getHttpServletResponse(portletResponse);
+
+		long[] simulatedUserSegmentIds =
+			_userSegmentSimulator.getUserSegmentIds(
+				httpServletRequest, httpServletResponse);
+
+		if ((simulatedUserSegmentIds == null) ||
+			ArrayUtil.isEmpty(simulatedUserSegmentIds)) {
+
+			simulatedUserSegmentIds = originalUserSegmentIds;
+		}
+
+		template.put("simulatedUserSegmentIds", simulatedUserSegmentIds);
+
 		List<Campaign> campaigns = _campaignLocalService.getCampaigns(
-			groupIds, userSegmentIds);
+			groupIds, simulatedUserSegmentIds);
 
 		template.put("campaigns", campaigns);
 
@@ -157,7 +176,7 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 
 		template.put("notMatchedCampaigns", notMatchedCampaigns);
 
-		template.put("userSegmentIds", userSegmentIds);
+		template.put("originalUserSegmentIds", originalUserSegmentIds);
 
 		boolean isSimulatedUserSegments = GetterUtil.getBoolean(
 			portletRequest.getAttribute(WebKeys.IS_SIMULATED_USER_SEGMENTS));
@@ -166,8 +185,8 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 
 		List<UserSegment> userSegments = new ArrayList<UserSegment>();
 
-		if (userSegmentIds != null) {
-			for (long userSegmentId : userSegmentIds) {
+		if (originalUserSegmentIds != null) {
+			for (long userSegmentId : originalUserSegmentIds) {
 				userSegments.add(
 					_userSegmentLocalService.getUserSegment(userSegmentId));
 			}

@@ -22,6 +22,9 @@ public class WebKeys implements com.liferay.portal.kernel.util.WebKeys {
 	public static final String IS_SIMULATED_USER_SEGMENTS =
 		"isSimulatedUserSegments";
 
+	public static final String ORIGINAL_USER_SEGMENT_IDS =
+		"originalUserSegmentIds";
+
 	public static final String USER_SEGMENT_IDS = "userSegmentIds";
 
 }
