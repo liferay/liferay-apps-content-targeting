@@ -28,6 +28,7 @@ import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Organization;
 import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.ArrayList;
@@ -131,7 +132,7 @@ public class OrganizationMemberRule extends BaseRule {
 		List<Organization> organizations = new ArrayList<Organization>();
 
 		try {
-			organizations = OrganizationLocalServiceUtil.getOrganizations(
+			organizations = OrganizationServiceUtil.getOrganizations(
 				company.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
 		}

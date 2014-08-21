@@ -35,6 +35,7 @@ import com.liferay.portal.model.OrganizationConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.OrganizationServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
@@ -222,7 +223,7 @@ public class OrganizationRoleRule extends BaseRule {
 		List<Organization> organizations = new ArrayList<Organization>();
 
 		try {
-			organizations = OrganizationLocalServiceUtil.getOrganizations(
+			organizations = OrganizationServiceUtil.getOrganizations(
 				company.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
 		}

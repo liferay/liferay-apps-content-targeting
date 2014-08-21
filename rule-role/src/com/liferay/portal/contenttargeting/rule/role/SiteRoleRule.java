@@ -35,6 +35,7 @@ import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
@@ -215,11 +216,11 @@ public class SiteRoleRule extends BaseRule {
 		List<Group> sites = new ArrayList<Group>();
 
 		try {
-			sites = GroupLocalServiceUtil.getGroups(
+			sites = GroupServiceUtil.getGroups(
 				company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
 				true);
 		}
-		catch (SystemException e) {
+		catch (Exception e) {
 		}
 
 		context.put("sites", sites);

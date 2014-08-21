@@ -21,13 +21,13 @@ import com.liferay.portal.contenttargeting.model.RuleInstance;
 import com.liferay.portal.contenttargeting.rulecategories.UserAttributesRuleCategory;
 import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.contenttargeting.util.PortletKeys;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.GroupConstants;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.ArrayList;
@@ -128,11 +128,11 @@ public class SiteMemberRule extends BaseRule {
 		List<Group> sites = new ArrayList<Group>();
 
 		try {
-			sites = GroupLocalServiceUtil.getGroups(
+			sites = GroupServiceUtil.getGroups(
 				company.getCompanyId(), GroupConstants.ANY_PARENT_GROUP_ID,
 				true);
 		}
-		catch (SystemException e) {
+		catch (Exception e) {
 		}
 
 		context.put("sites", sites);
