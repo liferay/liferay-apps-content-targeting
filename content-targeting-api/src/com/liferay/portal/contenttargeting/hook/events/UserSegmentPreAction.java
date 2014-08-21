@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.portal.contenttargeting.hook.filter;
+package com.liferay.portal.contenttargeting.hook.events;
 
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser;
@@ -23,6 +23,7 @@ import com.liferay.portal.contenttargeting.model.UserSegment;
 import com.liferay.portal.contenttargeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.portal.contenttargeting.util.WebKeys;
+import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -35,17 +36,9 @@ import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.Filter;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -55,29 +48,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Eudaldo Alonso
  */
-public class UserSegmentFilter implements Filter {
-
-	public void destroy() {
-	}
-
-	@Override
-	public void doFilter(
-			ServletRequest servletRequest, ServletResponse servletResponse,
-			FilterChain filterChain)
-		throws IOException, ServletException {
-
-		HttpServletRequest request = (HttpServletRequest)servletRequest;
-
-		HttpServletResponse response = (HttpServletResponse)servletResponse;
-
-		long[] userSegmentsIds = getUserSegmentIds(request, response);
-
-		if (ArrayUtil.isNotEmpty(userSegmentsIds)) {
-			request.setAttribute(WebKeys.USER_SEGMENT_IDS, userSegmentsIds);
-		}
-
-		filterChain.doFilter(servletRequest, servletResponse);
-	}
+public class UserSegmentPreAction extends Action {
 
 	public long[] getMatchesUserSegmentIds(
 			HttpServletRequest request, long[] groupIds,
@@ -102,12 +73,6 @@ public class UserSegmentFilter implements Filter {
 		return ArrayUtil.toLongArray(userSegmentIds);
 	}
 
-	@Override
-	public void init(FilterConfig filterConfig) {
-		_intiAnonymousUserManager();
-		_intiRulesEngine();
-	}
-
 	public boolean matches(
 			HttpServletRequest request, AnonymousUser anonymousUser,
 			UserSegment userSegment)
@@ -119,6 +84,18 @@ public class UserSegmentFilter implements Filter {
 
 		return _rulesEngine.matches(
 			request, anonymousUser, userSegment.getRuleInstances());
+	}
+
+	@Override
+	public void run(HttpServletRequest request, HttpServletResponse response) {
+		_intiAnonymousUserManager();
+		_intiRulesEngine();
+
+		long[] userSegmentsIds = getUserSegmentIds(request, response);
+
+		if (ArrayUtil.isNotEmpty(userSegmentsIds)) {
+			request.setAttribute(WebKeys.USER_SEGMENT_IDS, userSegmentsIds);
+		}
 	}
 
 	protected long[] getGroupIds(HttpServletRequest request)
@@ -157,7 +134,7 @@ public class UserSegmentFilter implements Filter {
 
 		if (groupId == 0) {
 			LayoutSet layoutSet = (LayoutSet)request.getAttribute(
-					"VIRTUAL_HOST_LAYOUT_SET");
+				"VIRTUAL_HOST_LAYOUT_SET");
 
 			if (layoutSet == null) {
 				return null;
@@ -198,7 +175,7 @@ public class UserSegmentFilter implements Filter {
 			long[] groupIds = getGroupIds(request);
 
 			long[] originalUserSegmentIds = getMatchesUserSegmentIds(
-				request, groupIds, anonymousUser);
+					request, groupIds, anonymousUser);
 
 			if (userSegmentsIds == null) {
 				userSegmentsIds = originalUserSegmentIds;
@@ -235,7 +212,7 @@ public class UserSegmentFilter implements Filter {
 			RulesEngine.class, bundle.getBundleContext());
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(UserSegmentFilter.class);
+	private static Log _log = LogFactoryUtil.getLog(UserSegmentPreAction.class);
 
 	private AnonymousUsersManager _anonymousUsersManager;
 	private RulesEngine _rulesEngine;

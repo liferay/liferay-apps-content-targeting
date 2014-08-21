@@ -2,22 +2,10 @@
 <!DOCTYPE hook PUBLIC "-//Liferay//DTD Hook 6.2.0//EN" "http://www.liferay.com/dtd/liferay-hook_6_2_0.dtd">
 
 <hook>
+	<portal-properties>portal.properties</portal-properties>
 	<language-properties>content/Language.properties</language-properties>
 	<service>
 		<service-type>com.liferay.portlet.asset.service.AssetVocabularyService</service-type>
 		<service-impl>com.liferay.portal.contenttargeting.hook.CTAssetVocabularyServiceImpl</service-impl>
 	</service>
-	<servlet-filter>
-		<servlet-filter-name>User Segment Filter</servlet-filter-name>
-		<servlet-filter-impl>com.liferay.portal.contenttargeting.hook.filter.UserSegmentFilter</servlet-filter-impl>
-	</servlet-filter>
-	<servlet-filter-mapping>
-		<servlet-filter-name>User Segment Filter</servlet-filter-name>
-		<before-filter>Theme Preview Filter</before-filter>
-		<url-pattern>/group/*</url-pattern>
-		<url-pattern>/user/*</url-pattern>
-		<url-pattern>/web/*</url-pattern>
-		<dispatcher>REQUEST</dispatcher>
-		<dispatcher>FORWARD</dispatcher>
-	</servlet-filter-mapping>
 </hook>
