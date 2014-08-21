@@ -24,20 +24,22 @@
 
 <#assign userSegmentsLabel = languageUtil.get(locale, "user-segments") />
 
-<@liferay_ui["tabs"]
-	names="${userSegmentsLabel},${campaignsLabel}"
-	refresh=false
-	type="pills"
-	value="${tabs1}"
->
-	<@liferay_ui["section"]>
-		<#include "view_user_segments.ftl" />
-	</@>
+<div class="content-targeting-simulator">
+	<@liferay_ui["tabs"]
+		names="${userSegmentsLabel},${campaignsLabel}"
+		refresh=false
+		type="pills"
+		value="${tabs1}"
+	>
+		<@liferay_ui["section"]>
+			<#include "view_user_segments.ftl" />
+		</@>
 
-	<@liferay_ui["section"]>
-		<#include "view_campaigns.ftl" />
+		<@liferay_ui["section"]>
+			<#include "view_campaigns.ftl" />
+		</@>
 	</@>
-</@>
+</div>
 
 <@aui["script"] use="liferay-dockbar">
 	A.one('#<@portlet["namespace"] />closePanelSimulator').on(

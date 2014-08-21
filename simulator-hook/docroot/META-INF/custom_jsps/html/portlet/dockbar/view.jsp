@@ -56,7 +56,7 @@ if (x > 0) {
 <%= html %>
 
 <aui:script use="liferay-dockbar">
-Liferay.Dockbar.DOCKBAR_PANELS.simulatorPanel = {
+	Liferay.Dockbar.DOCKBAR_PANELS.simulatorPanel = {
 		css: 'lfr-has-simulator',
 		id: 'simulatorPanel',
 		node: null,
@@ -64,6 +64,24 @@ Liferay.Dockbar.DOCKBAR_PANELS.simulatorPanel = {
 		tpl: '<div class="lfr-admin-panel lfr-add-panel" id="{0}" />'
 	};
 </aui:script>
+
+<script type="text/javascript">
+	AUI().applyConfig(
+		{
+			modules: {
+				'liferay-simulator-search': {
+					fullpath: '/o/content-targeting-web/js/ct_simulator/search.js'
+				}
+			}
+		}
+	);
+</script>
+
+<%
+String href = HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/o/content-targeting-web/css/ct_simulator/main.css"));
+%>
+
+<link href="<%= href %>" rel="stylesheet" type="text/css">
 
 <style type="text/css">
 	.aui .lfr-has-simulator {
