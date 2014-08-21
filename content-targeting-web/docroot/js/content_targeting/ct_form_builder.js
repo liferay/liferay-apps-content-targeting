@@ -217,7 +217,7 @@ AUI.add(
 						_onFieldsChange: function(event) {
 							var instance = this;
 
-							instance.get('canvas').toggleClass('has-rules', instance.get('fields').size());
+							instance.get('canvas').toggleClass('has-items', instance.get('fields').size());
 						},
 
 						_onItemFilterResults: function(event) {

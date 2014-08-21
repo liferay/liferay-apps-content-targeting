@@ -183,13 +183,13 @@
 				background-color: #f6f6f6;
 				border: none;
 
-				&.has-rules {
-					.alert-no-rules {
+				&.has-items {
+					.alert-no-items {
 						display: none;
 					}
 				}
 
-				.alert-no-rules {
+				.alert-no-items {
 					margin-left: 20px;
 					margin-right: 20px;
 				}

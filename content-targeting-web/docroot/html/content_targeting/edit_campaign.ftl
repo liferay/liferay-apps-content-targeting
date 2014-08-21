@@ -110,7 +110,17 @@
 				</div>
 
 				<div class="diagram-builder-content-container form-builder-content-container">
-					<div class="diagram-builder-canvas form-builder-canvas">
+					<#assign cssHasItemsClass = "">
+
+					<#if userSegment?? && (addedTrackingActionTemplates?size > 0)>
+						<#assign cssHasItemsClass = "has-items">
+					</#if>
+
+					<div class="diagram-builder-canvas form-builder-canvas ${cssHasItemsClass}">
+						<div class="alert alert-info alert-no-items">
+							<@liferay_ui["message"] key="drag-actions-to-track-in-the-reports-of-this-campaign" />
+						</div>
+
 						<div class="diagram-builder-drop-container form-builder-drop-container">
 							<#if campaign??>
 								<#list addedTrackingActionTemplates as template>
