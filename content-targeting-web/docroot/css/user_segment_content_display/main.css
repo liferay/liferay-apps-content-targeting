@@ -1,18 +1,42 @@
 .user-segment-content-display-portlet {
+	.content-container {
+		position: relative;
+	}
+
 	.content-preview-container {
+		background-color: #000;
+		border-radius: 8px;
+		color: #FFF;
+		max-width: 200px;
+		padding: 1em;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 10;
+
 		.content-preview {
-			display: inline-block;
+			height: 50px;
+			margin: 0.5em 0;
 			opacity: 0.5;
 
 			&.selected {
 				opacity: 1;
 			}
 
-			img {
-				height: auto;
-				max-height: 50px;
-				max-width: 50px;
-				vertical-align: middle;
+			.asset-image {
+				background-color: #FFF ;
+				background-position: 50% 50%;
+				background-repeat: no-repeat;
+				background-size: 100%;
+				border-radius: 4px;
+				display: inline-block;
+				float: left;
+				height: 50px;
+				margin-right: 0.5em;
+				width: 50px;
+			}
+
+			.user-segment-summary {
 			}
 		}
 	}

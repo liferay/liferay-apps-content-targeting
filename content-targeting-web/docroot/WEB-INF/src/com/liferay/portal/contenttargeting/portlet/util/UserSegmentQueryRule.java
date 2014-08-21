@@ -16,7 +16,7 @@ package com.liferay.portal.contenttargeting.portlet.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.UnicodeLanguageUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -170,8 +170,8 @@ public class UserSegmentQueryRule {
 
 		String userSegmentNames = getUserSegmentNames(locale);
 
-		if (Validator.isNull(userSegmentNames)) {
-			return UnicodeLanguageUtil.get(locale, "default");
+		if (ArrayUtil.isEmpty(_userSegmentAssetCategoryIds)) {
+			return LanguageUtil.get(portletConfig, locale, "default");
 		}
 
 		String userSegmentQueryRuleContains =
@@ -179,13 +179,29 @@ public class UserSegmentQueryRule {
 
 		String userSegmentQueryRuleAndOperator = _andOperator ? "all" : "any";
 
-		return UnicodeLanguageUtil.format(
-			portletConfig, locale,
-			"if-the-user-x-to-x-of-the-following-user-segments-x",
-			new Object[] {
-				userSegmentQueryRuleContains, userSegmentQueryRuleAndOperator,
-				userSegmentNames},
-			true);
+		if (_contains) {
+			String operator = _andOperator ?
+				LanguageUtil.get(portletConfig, locale, "and") :
+				LanguageUtil.get(portletConfig, locale, "or");
+
+			return getUserSegmentNames(
+				locale,
+				StringPool.SPACE + StringUtil.toLowerCase(operator) +
+					StringPool.SPACE);
+		}
+		else {
+			String operator = _andOperator ?
+				LanguageUtil.get(portletConfig, locale, "and") :
+				LanguageUtil.get(portletConfig, locale, "or");
+
+			String notOperator = LanguageUtil.get(portletConfig, locale, "not");
+
+			return notOperator + StringPool.SPACE + getUserSegmentNames(
+				locale,
+				StringPool.SPACE + StringUtil.toLowerCase(operator) +
+					StringPool.SPACE + StringUtil.toLowerCase(notOperator) +
+					StringPool.SPACE);
+		}
 	}
 
 	public long[] getUserSegmentAssetCategoryIds() {
