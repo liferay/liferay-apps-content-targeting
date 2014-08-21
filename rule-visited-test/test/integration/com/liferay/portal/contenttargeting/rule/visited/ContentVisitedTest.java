@@ -120,9 +120,10 @@ public class ContentVisitedTest {
 			BlogsEntry.class.getName(), entry.getEntryId());
 
 		_analyticsEventLocalService.addAnalyticsEvent(
-			1, 1, BlogsEntry.class.getName(), entry.getEntryId(),
-			Layout.class.getName(), 1, null, "view", "127.0.0.1", "User Agent",
-			"ES", "http://localhost", null, serviceContext);
+			1, anonymousUser.getAnonymousUserId(), BlogsEntry.class.getName(),
+			entry.getEntryId(), Layout.class.getName(), 1, null, "view",
+			"127.0.0.1", "User Agent", "ES", "http://localhost", null,
+			serviceContext);
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
 			TestUtil.getUserId(), rule.getRuleKey(), 0,
