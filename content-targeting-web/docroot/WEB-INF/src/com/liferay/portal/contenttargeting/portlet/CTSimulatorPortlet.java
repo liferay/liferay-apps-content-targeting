@@ -26,7 +26,9 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -80,40 +82,12 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 			UserSegmentSimulator.class, bundle.getBundleContext());
 	}
 
-	public void removeSimulateUserSegment(
-			ActionRequest request, ActionResponse response)
-		throws Exception {
-
-		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
-
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(request);
-
-		HttpServletResponse httpServletResponse =
-			PortalUtil.getHttpServletResponse(response);
-
-		_userSegmentSimulator.removeUserSegmentId(
-			userSegmentId, httpServletRequest, httpServletResponse);
-	}
-
 	public void simulateUserSegment(
 			ActionRequest request, ActionResponse response)
 		throws Exception {
 
-		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
-
-		HttpServletRequest httpServletRequest =
-			PortalUtil.getHttpServletRequest(request);
-
-		HttpServletResponse httpServletResponse =
-			PortalUtil.getHttpServletResponse(response);
-
-		_userSegmentSimulator.addUserSegmentId(
-			userSegmentId, httpServletRequest, httpServletResponse);
-	}
-
-	public void stopSimulation(ActionRequest request, ActionResponse response)
-		throws Exception {
+		long[] selectedUserSegmentIds = StringUtil.split(
+			ParamUtil.getString(request, "selectedUserSegmentIds"), 0L);
 
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(request);
@@ -123,6 +97,11 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 
 		_userSegmentSimulator.removeAllUserSegmentIds(
 			httpServletRequest, httpServletResponse);
+
+		for (long selectedUserSegmentId : selectedUserSegmentIds) {
+			_userSegmentSimulator.addUserSegmentId(
+				selectedUserSegmentId, httpServletRequest, httpServletResponse);
+		}
 	}
 
 	protected void populateContext(
@@ -208,6 +187,11 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 		}
 
 		template.put("notMatchedUserSegments", notMatchedUserSegments);
+
+		String refreshURL = PortalUtil.getLayoutURL(
+			themeDisplay.getLayout(), themeDisplay);
+
+		template.put("refreshURL", HtmlUtil.escapeJS(refreshURL));
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(CTSimulatorPortlet.class);
