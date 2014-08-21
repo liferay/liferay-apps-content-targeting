@@ -307,7 +307,18 @@ public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 			int selectedIndex = userSegmentQueryRules.size() - 1;
 
 			if (queryRule != null) {
-				selectedIndex = queryRule.getIndex();
+				for (int i = 0; i < userSegmentQueryRules.size(); i++) {
+					UserSegmentQueryRule userSegmentQueryRule =
+						userSegmentQueryRules.get(i);
+
+					if (userSegmentQueryRule.getIndex() ==
+							queryRule.getIndex()) {
+
+						selectedIndex = i;
+
+						break;
+					}
+				}
 			}
 
 			template.put("selectedIndex", selectedIndex);
