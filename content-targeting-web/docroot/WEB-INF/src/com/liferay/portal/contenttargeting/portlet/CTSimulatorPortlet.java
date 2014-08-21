@@ -176,6 +176,16 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 
 		template.put("notMatchedCampaigns", notMatchedCampaigns);
 
+		boolean showCampaignsSearch = false;
+
+		if ((notMatchedCampaigns.size() + campaigns.size()) >
+				SHOW_SEARCH_LIMIT) {
+
+			showCampaignsSearch = true;
+		}
+
+		template.put("showCampaignsSearch", showCampaignsSearch);
+
 		template.put("originalUserSegmentIds", originalUserSegmentIds);
 
 		boolean isSimulatedUserSegments = GetterUtil.getBoolean(
@@ -207,11 +217,23 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 
 		template.put("notMatchedUserSegments", notMatchedUserSegments);
 
+		boolean showUserSegmentSearch = false;
+
+		if ((notMatchedUserSegments.size() + userSegments.size()) >
+				SHOW_SEARCH_LIMIT) {
+
+			showUserSegmentSearch = true;
+		}
+
+		template.put("showUserSegmentSearch", showUserSegmentSearch);
+
 		String refreshURL = PortalUtil.getLayoutURL(
 			themeDisplay.getLayout(), themeDisplay);
 
 		template.put("refreshURL", HtmlUtil.escapeJS(refreshURL));
 	}
+
+	private static final int SHOW_SEARCH_LIMIT = 10;
 
 	private static Log _log = LogFactoryUtil.getLog(CTSimulatorPortlet.class);
 

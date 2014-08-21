@@ -22,6 +22,16 @@
 	<@aui["form"] action="${simulateUserSegmentURL}" method="post" name="fm" onSubmit="event.preventDefault(); ${renderResponse.getNamespace()}saveUserSegments();">
 		<@aui["input"] name="selectedUserSegmentIds" type="hidden" />
 
+		<#if showUserSegmentSearch>
+			<div class="row-fluid search-panels">
+				<i class="search-panel-icon"></i>
+
+				<div class="search-panels-bar">
+					<@aui["input"] cssClass="search-panels-input search-query span12" label="" name="searchUserSegmentPanel" type="text" />
+				</div>
+			</div>
+		</#if>
+
 		<div class="category-header">
 			<div class="category-icon">
 				<i class="icon-check"></i>
@@ -80,7 +90,8 @@
 	</@>
 </div>
 
-<@aui["script"] use="aui-toggler,liferay-util-list-fields">
+<@aui["script"] use="aui-toggler,liferay-simulator-search,liferay-util-list-fields">
+	var inputNode = A.one('#<@portlet["namespace"] />searchUserSegmentPanel');
 	var userSegmentContainer = A.one('#<@portlet["namespace"] />userSegmentContainer');
 
 	var togglerDelegate = new A.TogglerDelegate(
@@ -91,6 +102,15 @@
 			content: '.category-content',
 			expanded: true,
 			header: '.category-header'
+		}
+	);
+
+	new Liferay.SimulatorSearch(
+		{
+			contentPanel: userSegmentContainer,
+			inputNode: inputNode,
+			namespace: '<@portlet["namespace"] />',
+			togglerDelegate: togglerDelegate
 		}
 	);
 

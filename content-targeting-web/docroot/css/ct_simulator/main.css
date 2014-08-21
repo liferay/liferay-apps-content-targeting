@@ -76,4 +76,23 @@
 			content: "\f078";
 		}
 	}
+
+	.search-panels {
+		padding: 0;
+
+		.search-panel-icon {
+			background: url(../../images/search_panel_icon.png) no-repeat 0 50%;
+			height: 18px;
+			margin-left: 5px;
+			margin-top: 6px;
+			width: 27px;
+			position: absolute;
+		}
+
+		.search-panels-input {
+			border-radius: 0;
+			margin-bottom: 0;
+			padding-left: 35px;
+		}
+	}
 }

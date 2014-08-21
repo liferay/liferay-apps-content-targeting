@@ -17,6 +17,16 @@
 <#include "../init.ftl" />
 
 <div class="campaign" id="<@portlet["namespace"] />campaignsContainer">
+	<#if showCampaignsSearch>
+		<div class="row-fluid search-panels">
+			<i class="search-panel-icon"></i>
+
+			<div class="search-panels-bar">
+				<@aui["input"] cssClass="search-panels-input search-query span12" label="" name="searchCampaignPanel" type="text" />
+			</div>
+		</div>
+	</#if>
+
 	<div class="category-header">
 		<div class="category-icon">
 			<i class="icon-check"></i>
@@ -64,7 +74,8 @@
 	</div>
 </div>
 
-<@aui["script"] use="aui-toggler">
+<@aui["script"] use="aui-toggler,liferay-simulator-search">
+	var inputNode = A.one('#<@portlet["namespace"] />searchCampaignPanel');
 	var campaignsContainer = A.one('#<@portlet["namespace"] />campaignsContainer');
 
 	var togglerDelegate = new A.TogglerDelegate(
@@ -75,6 +86,15 @@
 			content: '.category-content',
 			expanded: true,
 			header: '.category-header'
+		}
+	);
+
+	new Liferay.SimulatorSearch(
+		{
+			contentPanel: campaignsContainer,
+			inputNode: inputNode,
+			namespace: '<@portlet["namespace"] />',
+			togglerDelegate: togglerDelegate
 		}
 	);
 </@>
