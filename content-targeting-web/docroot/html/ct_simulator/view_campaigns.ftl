@@ -27,51 +27,53 @@
 		</div>
 	</#if>
 
-	<div class="category-header">
-		<div class="category-icon">
-			<i class="icon-check"></i>
-		</div>
-		<div class="category-info">
-			<div class="category-title">
-				<@liferay_ui["message"] key="matched" />
+    <div class="category-wrapper">
+		<div class="category-header">
+			<div class="category-icon">
+				<i class="icon-check"></i>
 			</div>
-			<div class="category-description">
-				<@liferay_ui["message"] key="campaigns" />
+			<div class="category-info">
+				<div class="category-title">
+					<@liferay_ui["message"] key="matched" />
+				</div>
+				<div class="category-description">
+					<@liferay_ui["message"] key="campaigns" />
+				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="category-content">
-		<#if campaigns?has_content>
-			<#list campaigns as campaign>
+		<div class="category-content">
+			<#if campaigns?has_content>
+				<#list campaigns as campaign>
+					<@aui["input"] cssClass="user-segment" label="${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="campaign${campaign.getCampaignId()}" type="checkbox" checked=false value="" />
+				</#list>
+			<#else>
+				<div class="alert alert-info">
+					<@liferay_ui["message"] key="the-current-user-does-not-match-any-campaign" />
+				</div>
+			</#if>
+		</div>
+
+		<div class="category-header">
+			<div class="category-icon">
+				<i class="icon-check-empty"></i>
+			</div>
+			<div class="category-info">
+				<div class="category-title">
+					<@liferay_ui["message"] key="other" />
+				</div>
+				<div class="category-description">
+					<@liferay_ui["message"] key="campaigns" />
+				</div>
+			</div>
+		</div>
+
+		<div class="category-content">
+			<#list notMatchedCampaigns as campaign>
 				<@aui["input"] cssClass="user-segment" label="${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="campaign${campaign.getCampaignId()}" type="checkbox" checked=false value="" />
 			</#list>
-		<#else>
-			<div class="alert alert-info">
-				<@liferay_ui["message"] key="the-current-user-does-not-match-any-campaign" />
-			</div>
-		</#if>
-	</div>
-
-	<div class="category-header">
-		<div class="category-icon">
-			<i class="icon-check-empty"></i>
 		</div>
-		<div class="category-info">
-			<div class="category-title">
-				<@liferay_ui["message"] key="other" />
-			</div>
-			<div class="category-description">
-				<@liferay_ui["message"] key="campaigns" />
-			</div>
-		</div>
-	</div>
-
-	<div class="category-content">
-		<#list notMatchedCampaigns as campaign>
-			<@aui["input"] cssClass="user-segment" label="${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="campaign${campaign.getCampaignId()}" type="checkbox" checked=false value="" />
-		</#list>
-	</div>
+    </div>
 </div>
 
 <@aui["script"] use="aui-toggler,liferay-simulator-search">
