@@ -84,7 +84,7 @@
 		</div>
 
 		<@aui["button-row"] cssClass="button-holder">
-			<@aui["button"] type="submit" />
+			<@aui["button"] type="submit" value="simulate" />
 			<@aui["button"] onClick="${renderResponse.getNamespace()}stopSimulation();" value="stop-simulation" />
 		</@>
 	</@>
