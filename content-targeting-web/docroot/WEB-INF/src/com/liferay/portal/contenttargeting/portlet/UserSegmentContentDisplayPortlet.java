@@ -135,7 +135,7 @@ public class UserSegmentContentDisplayPortlet extends CTFreeMarkerPortlet {
 				String.valueOf(queryRule.getAssetEntryId()));
 		}
 
-		portletPreferences.store();
+		super.updatePreferences(request, response, portletPreferences);
 	}
 
 	protected List<AssetRendererFactory> getSelectableAssetRendererFactories(

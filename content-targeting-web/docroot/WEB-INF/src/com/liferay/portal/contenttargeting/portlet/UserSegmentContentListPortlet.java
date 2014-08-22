@@ -79,7 +79,7 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerPortlet {
 			portletPreferences.setValues("classNameIds", classNameIds);
 		}
 
-		portletPreferences.store();
+		super.updatePreferences(request, response, portletPreferences);
 	}
 
 	protected long[] getAvailableClassNameIds(long companyId) {
