@@ -18,18 +18,24 @@
 <#include "../macros.ftl" />
 
 <#if isMatchingRule>
-	<div>
-		<@renderAssetEntry showEditLink=true />
+	<div class="content-container">
+		<div class="full-content" id="<@portlet["namespace"] />FullContent${selectedIndex}">
+			<@renderAssetEntry />
 
-		<@aui["script"] position="inline">
-			Liferay.Analytics.track('view', {
-				className: '${assetEntryClassName}',
-				classPK: '${assetEntryClassPK}',
-				groupId: '${groupId}',
-				referrerClassName: '${campaignClassName}',
-				referrerClassPK: '${campaignClassPK}'
-			});
-		</@>
+			<@aui["script"] position="inline">
+				Liferay.Analytics.track('view', {
+					className: '${assetEntryClassName}',
+					classPK: '${assetEntryClassPK}',
+					groupId: '${groupId}',
+					referrerClassName: '${campaignClassName}',
+					referrerClassPK: '${campaignClassPK}'
+				});
+			</@>
+		</div>
+
+		<#if portletDisplay.isShowConfigurationIcon()>
+			<@renderThumbnailsPreview queryRules=campaignQueryRules selectedIndex=selectedIndex />
+		</#if>
 	</div>
 <#else>
 	<div class="alert alert-info">
@@ -41,6 +47,8 @@
 	<div class="lfr-meta-actions icons-container">
 		<div class="lfr-icon-actions">
 			<@getConfigurationIconLink mvcPath=campaignContentDisplayPath.CONFIGURATION />
+
+			<@getEditIconLinks queryRules=campaignQueryRules />
 		</div>
 	</div>
 </#if>

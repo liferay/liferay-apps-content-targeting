@@ -9,7 +9,8 @@
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/campaign_content_display/main.css</header-portlet-css>
 		<header-portlet-css>/css/content_targeting/rules_panel.css</header-portlet-css>
-		<footer-portlet-javascript>/js/main.js</footer-portlet-javascript>
+		<header-portlet-css>/css/content_targeting/thumbnails_preview.css</header-portlet-css>
+		<header-portlet-javascript>/js/content_targeting/thumbnails_preview.js</header-portlet-javascript>
 		<css-class-wrapper>campaign-content-display-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
@@ -43,6 +44,8 @@
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/user_segment_content_display/main.css</header-portlet-css>
 		<header-portlet-css>/css/content_targeting/rules_panel.css</header-portlet-css>
+		<header-portlet-css>/css/content_targeting/thumbnails_preview.css</header-portlet-css>
+		<header-portlet-javascript>/js/content_targeting/thumbnails_preview.js</header-portlet-javascript>
 		<css-class-wrapper>user-segment-content-display-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>

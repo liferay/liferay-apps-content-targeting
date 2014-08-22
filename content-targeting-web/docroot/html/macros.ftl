@@ -61,6 +61,24 @@
 	</#if>
 </#macro>
 
+<#macro getEditIconLinks
+	queryRules
+>
+	<#if queryRules?has_content>
+		<#list queryRules as queryRule>
+			<#assign assetEntry = queryRule.getAssetEntry() />
+
+			<#assign cssClass = "" />
+
+			<#if selectedIndex != queryRule_index>
+				<#assign cssClass = "hide" />
+			</#if>
+
+			<@getEditIconLink assetEntry=assetEntry cssClass=cssClass index=queryRule_index />
+		</#list>
+	</#if>
+</#macro>
+
 <#macro renderAssetEntry
 	assetEntry=""
 	displayStyle="full_content"
@@ -77,4 +95,50 @@
 		<@liferay_util["param"] name="showEditURL" value=showEditLink?string />
 		<@liferay_util["param"] name="showExtraInfo" value="false" />
 	</@>
+</#macro>
+
+<#macro renderThumbnailsPreview
+	queryRules
+	selectedIndex
+>
+	<#if queryRules?has_content && (queryRules?size > 1)>
+		<#list queryRules as queryRule>
+			<#if selectedIndex != queryRule_index>
+				<#assign assetEntry = queryRule.getAssetEntry() />
+
+				<div class="hide full-content" id="<@portlet["namespace"] />FullContent${queryRule_index}">
+					<@renderAssetEntry assetEntry=assetEntry />
+				</div>
+			</#if>
+		</#list>
+
+		<div class="lfr-meta-actions content-preview-container" id="<@portlet["namespace"] />contentPreviewContainer">
+			<#list queryRules as queryRule>
+				<#assign assetEntry = queryRule.getAssetEntry() />
+
+				<#assign cssClass = "" />
+
+				<#if selectedIndex == queryRule_index>
+					<#assign cssClass = "selected" />
+				</#if>
+
+				<div class="content-preview ${cssClass}" data-index="${queryRule_index}" id="<@portlet["namespace"] />PreviewContent${queryRule_index}">
+					<#assign assetRenderer = assetEntry.getAssetRenderer() />
+
+					<div class="query-rule-image" style="background-image: url(${assetRenderer.getThumbnailPath(renderRequest)});"></div>
+
+					<div class="query-rule-summary">${queryRule.getSummary(portletConfig, locale)}</div>
+				</div>
+			</#list>
+		</div>
+
+		<@aui["script"] use="liferay-thumbnails-preview">
+			new Liferay.ThumbnailsPreview(
+				{
+					selectedIndex: ${selectedIndex},
+					namespace: '<@portlet["namespace"] />'
+				}
+			);
+		</@>
+	</#if>
 </#macro>
