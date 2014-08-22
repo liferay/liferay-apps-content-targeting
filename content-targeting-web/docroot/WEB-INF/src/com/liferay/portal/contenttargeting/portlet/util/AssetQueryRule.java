@@ -16,7 +16,10 @@ package com.liferay.portal.contenttargeting.portlet.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -26,6 +29,7 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.Locale;
 
+import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
 
 /**
@@ -130,6 +134,47 @@ public class AssetQueryRule {
 
 	public void setIndex(int index) {
 		_index = index;
+	}
+
+	protected String htmlOperator(
+		Boolean andOperator, boolean contains, PortletConfig portletConfig,
+		Locale locale) {
+
+		StringBundler sb = new StringBundler(5);
+
+		String cssClass = "query-operator";
+
+		if ((andOperator == null) && !contains) {
+			sb.append(LanguageUtil.get(portletConfig, locale, "not"));
+			sb.append(StringPool.SPACE);
+
+			cssClass += " first";
+		}
+		else {
+			sb.append(StringPool.SPACE);
+
+			sb.append(
+				andOperator ?
+					LanguageUtil.get(portletConfig, locale, "and") :
+					LanguageUtil.get(portletConfig, locale, "or"));
+
+			sb.append(StringPool.SPACE);
+
+			if (!contains) {
+				sb.append(LanguageUtil.get(portletConfig, locale, "not"));
+				sb.append(StringPool.SPACE);
+			}
+		}
+
+		StringBundler html = new StringBundler(5);
+
+		html.append("<span class=\"");
+		html.append(cssClass);
+		html.append("\">");
+		html.append(StringUtil.toLowerCase(sb.toString()));
+		html.append("</span>");
+
+		return html.toString();
 	}
 
 	private String _assetClassName = StringPool.BLANK;

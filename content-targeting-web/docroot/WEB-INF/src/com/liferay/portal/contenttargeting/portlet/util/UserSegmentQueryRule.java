@@ -101,40 +101,21 @@ public class UserSegmentQueryRule extends AssetQueryRule {
 	public String getSummary(PortletConfig portletConfig, Locale locale)
 		throws SystemException {
 
-		String userSegmentNames = getUserSegmentNames(locale);
-
 		if (ArrayUtil.isEmpty(_userSegmentAssetCategoryIds)) {
 			return LanguageUtil.get(portletConfig, locale, "default");
 		}
 
-		String userSegmentQueryRuleContains =
-			_contains ? "belongs" : "does-not-belong";
+		String summary = StringPool.BLANK;
 
-		String userSegmentQueryRuleAndOperator = _andOperator ? "all" : "any";
-
-		if (_contains) {
-			String operator = _andOperator ?
-				LanguageUtil.get(portletConfig, locale, "and") :
-				LanguageUtil.get(portletConfig, locale, "or");
-
-			return getUserSegmentNames(
-				locale,
-				StringPool.SPACE + StringUtil.toLowerCase(operator) +
-					StringPool.SPACE);
+		if (!_contains) {
+			summary = summary +
+				htmlOperator(null, _contains, portletConfig, locale);
 		}
-		else {
-			String operator = _andOperator ?
-				LanguageUtil.get(portletConfig, locale, "and") :
-				LanguageUtil.get(portletConfig, locale, "or");
 
-			String notOperator = LanguageUtil.get(portletConfig, locale, "not");
-
-			return notOperator + StringPool.SPACE + getUserSegmentNames(
+		return summary +
+			getUserSegmentNames(
 				locale,
-				StringPool.SPACE + StringUtil.toLowerCase(operator) +
-					StringPool.SPACE + StringUtil.toLowerCase(notOperator) +
-					StringPool.SPACE);
-		}
+				htmlOperator(_andOperator, _contains, portletConfig, locale));
 	}
 
 	public long[] getUserSegmentAssetCategoryIds() {
