@@ -179,7 +179,7 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 		boolean showCampaignsSearch = false;
 
 		if ((notMatchedCampaigns.size() + campaigns.size()) >
-				SHOW_SEARCH_LIMIT) {
+				_SHOW_SEARCH_LIMIT) {
 
 			showCampaignsSearch = true;
 		}
@@ -220,7 +220,7 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 		boolean showUserSegmentSearch = false;
 
 		if ((notMatchedUserSegments.size() + userSegments.size()) >
-				SHOW_SEARCH_LIMIT) {
+				_SHOW_SEARCH_LIMIT) {
 
 			showUserSegmentSearch = true;
 		}
@@ -233,7 +233,7 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 		template.put("refreshURL", HtmlUtil.escapeJS(refreshURL));
 	}
 
-	private static final int SHOW_SEARCH_LIMIT = 10;
+	private static final int _SHOW_SEARCH_LIMIT = 10;
 
 	private static Log _log = LogFactoryUtil.getLog(CTSimulatorPortlet.class);
 

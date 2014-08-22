@@ -337,7 +337,18 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 			int selectedIndex = campaignQueryRules.size() - 1;
 
 			if (queryRule != null) {
-				selectedIndex = queryRule.getIndex();
+				for (int i = 0; i < campaignQueryRules.size(); i++) {
+					CampaignQueryRule campaignQueryRule =
+						campaignQueryRules.get(i);
+
+					if (campaignQueryRule.getIndex() ==
+							queryRule.getIndex()) {
+
+						selectedIndex = i;
+
+						break;
+					}
+				}
 			}
 
 			template.put("selectedIndex", selectedIndex);

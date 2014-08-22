@@ -66,7 +66,7 @@ AUI.add(
 
 						var results = [];
 
-						instance.get('contentPanel').all('.user-segment').each(
+						instance.get('contentPanel').all('.element').each(
 							function(item, index, collection) {
 								results.push(
 									{
@@ -107,7 +107,7 @@ AUI.add(
 					_onSimulatorSearchResults: function(event) {
 						var instance = this;
 
-						instance.get('contentPanel').all('.user-segment').each(
+						instance.get('contentPanel').all('.element').each(
 							function(item, index, collection) {
 								item.ancestor('.checkbox').hide();
 							}
