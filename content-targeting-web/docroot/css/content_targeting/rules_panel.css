@@ -1,3 +1,5 @@
+@import "compass";
+
 .rules-panel {
 	background-color: #EEE;
 	margin: 10px;
@@ -16,7 +18,8 @@
 		&.active {
 			border-color: #009AE5;
 			border-width: 1px 1px 1px 4px;
-			box-shadow: 0px 5px 0px -1px #DDD;
+
+			@include box-shadow(0px 5px 0px -1px #DDD);
 
 			.row-fields .field-row {
 				border-left-color: #009AE5;

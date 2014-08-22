@@ -49,7 +49,9 @@
 					background-position: 50% 50%;
 					background-repeat: no-repeat;
 					background-size: 100%;
-					border-radius: 4px;
+
+					@include border-radius(4px);
+
 					display: inline-block;
 					float: left;
 					height: 50px;
