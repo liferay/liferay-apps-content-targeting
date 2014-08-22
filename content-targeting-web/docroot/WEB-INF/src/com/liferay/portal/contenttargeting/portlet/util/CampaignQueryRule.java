@@ -19,17 +19,12 @@ import com.liferay.portal.contenttargeting.model.Campaign;
 import com.liferay.portal.contenttargeting.service.CampaignLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.Locale;
 
-import javax.portlet.PortletRequest;
+import javax.portlet.PortletConfig;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -37,31 +32,15 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Eudaldo Alonso
  */
-public class CampaignQueryRule {
+public class CampaignQueryRule extends AssetQueryRule {
 
 	public CampaignQueryRule(
 			long assetEntryId, long campaignId, int index, Locale locale)
 		throws PortalException, SystemException {
 
-		_assetEntryId = assetEntryId;
+		super(assetEntryId, index, locale);
+
 		_campaignId = campaignId;
-		_index = index;
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
-			_assetEntryId);
-
-		if (assetEntry == null) {
-			return;
-		}
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				assetEntry.getClassName());
-
-		_assetClassName = assetEntry.getClassName();
-		_assetClassPK = assetEntry.getClassPK();
-		_assetTitle = assetEntry.getTitle(locale);
-		_assetType = assetRendererFactory.getTypeName(locale, true);
 
 		try {
 			Bundle bundle = FrameworkUtil.getBundle(getClass());
@@ -74,43 +53,6 @@ public class CampaignQueryRule {
 		}
 		catch (Exception e) {
 		}
-	}
-
-	public String getAssetClassName() {
-		return _assetClassName;
-	}
-
-	public long getAssetClassPK() {
-		return _assetClassPK;
-	}
-
-	public long getAssetEntryId() {
-		return _assetEntryId;
-	}
-
-	public String getAssetImage(PortletRequest portletRequest)
-		throws Exception {
-
-		if (!isValid()) {
-			return StringPool.BLANK;
-		}
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_assetClassName);
-
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			_assetClassPK);
-
-		return assetRenderer.getThumbnailPath(portletRequest);
-	}
-
-	public String getAssetTitle() {
-		return _assetTitle;
-	}
-
-	public String getAssetType() {
-		return _assetType;
 	}
 
 	public long getCampaignId() {
@@ -133,55 +75,29 @@ public class CampaignQueryRule {
 		return -1;
 	}
 
-	public int getIndex() {
-		return _index;
+	public String getSummary(PortletConfig portletConfig, Locale locale)
+		throws SystemException {
+
+		if (_campaignId == 0) {
+			return LanguageUtil.get(portletConfig, locale, "default");
+		}
+
+		return getCampaignName(locale);
 	}
 
 	public boolean isValid() {
-		if (Validator.isNull(_assetClassName) || (_assetClassPK <= 0) ||
-			(_campaignId <= 0)) {
-
+		if (!super.isValid()|| (_campaignId <= 0)) {
 			return false;
 		}
 
 		return true;
 	}
 
-	public void setAssetClassName(String assetClassName) {
-		_assetClassName = assetClassName;
-	}
-
-	public void setAssetClassPK(long assetClassPK) {
-		_assetClassPK = assetClassPK;
-	}
-
-	public void setAssetEntryId(long assetEntryId) {
-		_assetEntryId = assetEntryId;
-	}
-
-	public void setAssetTitle(String assetTitle) {
-		_assetTitle = assetTitle;
-	}
-
-	public void setAssetType(String assetType) {
-		_assetType = assetType;
-	}
-
 	public void setCampaignId(long campaignId) {
 		_campaignId = campaignId;
 	}
 
-	public void setIndex(int index) {
-		_index = index;
-	}
-
-	private String _assetClassName = StringPool.BLANK;
-	private long _assetClassPK;
-	private long _assetEntryId;
-	private String _assetTitle = StringPool.BLANK;
-	private String _assetType = StringPool.BLANK;
 	private Campaign _campaign;
 	private long _campaignId;
-	private int _index;
 
 }

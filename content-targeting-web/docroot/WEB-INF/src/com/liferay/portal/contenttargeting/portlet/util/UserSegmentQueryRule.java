@@ -21,50 +21,28 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetRenderer;
-import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.Locale;
 
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletRequest;
 
 /**
  * @author Eudaldo Alonso
  */
-public class UserSegmentQueryRule {
+public class UserSegmentQueryRule extends AssetQueryRule {
 
 	public UserSegmentQueryRule(
 			boolean andOperator, boolean contains, long assetEntryId,
 			long[] userSegmentAssetCategoryIds, int index, Locale locale)
 		throws PortalException, SystemException {
 
+		super(assetEntryId, index, locale);
+
 		_andOperator = andOperator;
 		_contains = contains;
-		_assetEntryId = assetEntryId;
 		_userSegmentAssetCategoryIds = userSegmentAssetCategoryIds;
-		_index = index;
-
-		_assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(_assetEntryId);
-
-		if (_assetEntry == null) {
-			return;
-		}
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_assetEntry.getClassName());
-
-		_assetClassName = _assetEntry.getClassName();
-		_assetClassPK = _assetEntry.getClassPK();
-		_assetTitle = _assetEntry.getTitle(locale);
-		_assetType = assetRendererFactory.getTypeName(locale, true);
 	}
 
 	public boolean evaluate(long[] userSegmentAssetCategoryIds) {
@@ -118,51 +96,6 @@ public class UserSegmentQueryRule {
 				return false;
 			}
 		}
-	}
-
-	public String getAssetClassName() {
-		return _assetClassName;
-	}
-
-	public long getAssetClassPK() {
-		return _assetClassPK;
-	}
-
-	public AssetEntry getAssetEntry() throws SystemException {
-		return _assetEntry;
-	}
-
-	public long getAssetEntryId() {
-		return _assetEntryId;
-	}
-
-	public String getAssetImage(PortletRequest portletRequest)
-		throws Exception {
-
-		if (!isValid()) {
-			return StringPool.BLANK;
-		}
-
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_assetClassName);
-
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			_assetClassPK);
-
-		return assetRenderer.getThumbnailPath(portletRequest);
-	}
-
-	public String getAssetTitle() {
-		return _assetTitle;
-	}
-
-	public String getAssetType() {
-		return _assetType;
-	}
-
-	public int getIndex() {
-		return _index;
 	}
 
 	public String getSummary(PortletConfig portletConfig, Locale locale)
@@ -235,11 +168,9 @@ public class UserSegmentQueryRule {
 	}
 
 	public boolean isValid() {
-		if (Validator.isNull(_assetClassName) || (_assetClassPK <= 0)) {
-			return false;
-		}
+		if (!super.isValid() ||
+			ArrayUtil.isEmpty(_userSegmentAssetCategoryIds)) {
 
-		if (ArrayUtil.isEmpty(_userSegmentAssetCategoryIds)) {
 			return false;
 		}
 
@@ -250,32 +181,8 @@ public class UserSegmentQueryRule {
 		_andOperator = andOperator;
 	}
 
-	public void setAssetClassName(String assetClassName) {
-		_assetClassName = assetClassName;
-	}
-
-	public void setAssetClassPK(long assetClassPK) {
-		_assetClassPK = assetClassPK;
-	}
-
-	public void setAssetEntryId(long assetEntryId) {
-		_assetEntryId = assetEntryId;
-	}
-
-	public void setAssetTitle(String assetTitle) {
-		_assetTitle = assetTitle;
-	}
-
-	public void setAssetType(String assetType) {
-		_assetType = assetType;
-	}
-
 	public void setContains(boolean contains) {
 		_contains = contains;
-	}
-
-	public void setIndex(int index) {
-		_index = index;
 	}
 
 	public void setUserSegmentAssetCategoryIds(
@@ -316,14 +223,7 @@ public class UserSegmentQueryRule {
 	private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
 
 	private boolean _andOperator;
-	private String _assetClassName = StringPool.BLANK;
-	private long _assetClassPK;
-	private AssetEntry _assetEntry;
-	private long _assetEntryId;
-	private String _assetTitle = StringPool.BLANK;
-	private String _assetType = StringPool.BLANK;
 	private boolean _contains = true;
-	private int _index;
 	private long[] _userSegmentAssetCategoryIds;
 
 }
