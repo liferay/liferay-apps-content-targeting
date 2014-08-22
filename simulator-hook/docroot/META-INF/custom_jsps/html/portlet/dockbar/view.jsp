@@ -31,11 +31,22 @@
 	%>
 
 	<c:if test="<%= (group != null) && !group.isControlPanel() && user.isSetupComplete() %>">
+
+		<%
+		String cssClass = "page-edit-controls";
+
+		boolean isSimulatedUserSegments = GetterUtil.getBoolean(request.getAttribute("isSimulatedUserSegments"));
+
+		if (isSimulatedUserSegments) {
+			cssClass = "page-edit-controls simulated";
+		}
+		%>
+
 		<liferay-portlet:renderURL portletName="ctsimulator_WAR_contenttargetingweb" var="simulatorURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 			<portlet:param name="mvcPath" value="html/ct_simulator/view.ftl" />
 		</liferay-portlet:renderURL>
 
-		<aui:nav-item anchorId="simulatorPanel" cssClass="page-edit-controls" data-panelURL="<%= simulatorURL %>" href="javascript:;" iconCssClass="icon-screenshot" label="simulator" title="simulator" />
+		<aui:nav-item anchorId="simulatorPanel" cssClass="<%= cssClass %>" data-panelURL="<%= simulatorURL %>" href="javascript:;" iconCssClass="icon-screenshot" label="simulator" title="simulator" />
 	</c:if>
 </liferay-util:buffer>
 
@@ -90,5 +101,13 @@ String href = HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, 
 
 	.aui .dockbar-split.lfr-has-simulator .nav-add-controls {
 		left: 350px;
+	}
+
+	.aui .dockbar-split .dockbar .navbar-inner .nav-add-controls > li.simulated > a {
+		background-color: #92F545;
+	}
+
+	.aui .dockbar-split .dockbar .navbar-inner .nav-add-controls > li.simulated > a [class^="icon-"] {
+		color: #000;
 	}
 </style>
