@@ -22,6 +22,8 @@ import com.liferay.portal.contenttargeting.service.CampaignLocalService;
 import com.liferay.portal.contenttargeting.service.CampaignService;
 import com.liferay.portal.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.portal.contenttargeting.util.WebKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -46,6 +48,7 @@ import freemarker.template.TemplateHashModel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -150,6 +153,38 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 		}
 
 		portletPreferences.store();
+	}
+
+	protected List<CampaignQueryRule> getCampaignQueryRules(
+			PortletPreferences portletPreferences, long assetEntryIdDefault,
+			Locale locale)
+		throws PortalException, SystemException {
+
+		List<CampaignQueryRule> campaignQueryRules =
+			new ArrayList<CampaignQueryRule>();
+
+		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
+			portletPreferences.getValues("queryLogicIndexes", null),
+			new int[0]);
+
+		for (int queryRulesIndex : queryRulesIndexes) {
+			CampaignQueryRule campaignQueryRule =
+				CampaignQueryRuleUtil.getQueryRule(
+					portletPreferences, queryRulesIndex, locale);
+
+			if (campaignQueryRule.getAssetEntry() != null) {
+				campaignQueryRules.add(campaignQueryRule);
+			}
+		}
+
+		if (assetEntryIdDefault > 0) {
+			CampaignQueryRule campaignQueryRule = new CampaignQueryRule(
+				assetEntryIdDefault, 0, -1, locale);
+
+			campaignQueryRules.add(campaignQueryRule);
+		}
+
+		return campaignQueryRules;
 	}
 
 	protected List<AssetRendererFactory> getSelectableAssetRendererFactories(
@@ -291,6 +326,21 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
 
 			template.put("isMatchingRule", isMatchingRule);
 			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
+
+			List<CampaignQueryRule> campaignQueryRules =
+				getCampaignQueryRules(
+					portletPreferences, assetEntryIdDefault,
+					themeDisplay.getLocale());
+
+			template.put("campaignQueryRules", campaignQueryRules);
+
+			int selectedIndex = campaignQueryRules.size() - 1;
+
+			if (queryRule != null) {
+				selectedIndex = queryRule.getIndex();
+			}
+
+			template.put("selectedIndex", selectedIndex);
 		}
 		else if (path.equals(CampaignContentDisplayPath.EDIT_QUERY_RULE) ||
 				 path.equals(CampaignContentDisplayPath.CONFIGURATION)) {
