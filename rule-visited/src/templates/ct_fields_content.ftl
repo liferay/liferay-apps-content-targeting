@@ -4,7 +4,7 @@
 
 <#if !trackingContentEnabled >
 	<div class="alert alert-error">
-		<strong><@liferay_ui["message"] key="this-tracking-action-will-not-work-properly-because-content-tracking-is-not-enabled" /></strong>
+		<strong><@liferay_ui["message"] key="this-rule-will-not-work-properly-because-content-tracking-is-not-enabled" /></strong>
 
 		<#assign enableLocationPortalLabel = languageUtil.get(locale, "portal-settings-content-targeting-analytics") />
 
