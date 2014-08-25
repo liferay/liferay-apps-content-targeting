@@ -108,8 +108,8 @@ public class UserSegmentQueryRule extends AssetQueryRule {
 		String summary = StringPool.BLANK;
 
 		if (!_contains) {
-			summary = summary +
-				htmlOperator(null, _contains, portletConfig, locale);
+			summary = summary + htmlOperator(
+				null, _contains, portletConfig, locale);
 		}
 
 		return summary +
