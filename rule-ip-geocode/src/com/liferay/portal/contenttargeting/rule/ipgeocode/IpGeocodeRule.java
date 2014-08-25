@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Country;
 import com.liferay.portal.model.Region;
 import com.liferay.portal.service.CountryServiceUtil;
@@ -70,7 +71,9 @@ public class IpGeocodeRule extends BaseRule {
 			AnonymousUser anonymousUser)
 		throws Exception {
 
-		IPInfo ipInfo = _ipGeocoder.getIPInfo(anonymousUser.getLastIp());
+		String ip = anonymousUser.getLastIp();
+
+		IPInfo ipInfo = _ipGeocoder.getIPInfo(ip);
 
 		if (ipInfo == null) {
 			return false;
@@ -99,11 +102,13 @@ public class IpGeocodeRule extends BaseRule {
 		String countryCode = ipInfo.getCountryCode();
 
 		if (countryCode.equals(country.getA2())) {
-			String regionName = ipInfo.getRegion();
+			String regionCode = ipInfo.getRegionCode();
+
+			String regionName = ipInfo.getRegionName();
 
 			if ((region == null) ||
-				(regionName.equals(region.getName()) ||
-					regionName.equals(region.getRegionCode()))) {
+				Validator.equals(regionName, region.getName()) ||
+				Validator.equals(regionCode, region.getRegionCode())) {
 
 				return true;
 			}
