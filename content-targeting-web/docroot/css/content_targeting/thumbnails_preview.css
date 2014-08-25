@@ -1,6 +1,12 @@
 @import "compass";
 
 .user-segment-content-display-portlet, .campaign-content-display-portlet {
+	&.portlet-borderless {
+    	.content-container .content-preview-container {
+    		margin-top: 23px;
+    	}
+    }
+
 	&:hover .content-container {
 	   overflow: visible;
 
@@ -88,14 +94,6 @@
 					}
 				}
 			}
-		}
-	}
-}
-
-.portlet-borderless {
-	.user-segment-content-display-portlet, .campaign-content-display-portlet {
-		.content-container .content-preview-container {
-			margin-top: 23px;
 		}
 	}
 }
