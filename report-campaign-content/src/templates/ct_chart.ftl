@@ -34,6 +34,20 @@
 					rotation:-45
 				}
 			}
+		},
+		series:{
+			count:{
+				marker:{
+					fill:{
+						color:"#45cbf5"
+					},
+					over:{
+						fill:{
+							color:"#5bbae8"
+						}
+					}
+				}
+			}
 		}
 	};
 
