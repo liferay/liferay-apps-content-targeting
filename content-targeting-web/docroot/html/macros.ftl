@@ -114,8 +114,6 @@
 
 		<div class="lfr-meta-actions content-preview-container" id="<@portlet["namespace"] />contentPreviewContainer">
 			<#list queryRules as queryRule>
-				<#assign assetEntry = queryRule.getAssetEntry() />
-
 				<#assign cssClass = "" />
 
 				<#if selectedIndex == queryRule_index>
@@ -123,9 +121,7 @@
 				</#if>
 
 				<div class="content-preview ${cssClass}" data-index="${queryRule_index}" id="<@portlet["namespace"] />PreviewContent${queryRule_index}">
-					<#assign assetRenderer = assetEntry.getAssetRenderer() />
-
-					<div class="query-rule-image" style="background-image: url(${assetRenderer.getThumbnailPath(renderRequest)});"></div>
+					<div class="query-rule-image" style="background-image: url(${queryRule.getAssetImage(renderRequest)});"></div>
 
 					<div class="query-rule-summary">${queryRule.getSummary(portletConfig, locale)}</div>
 				</div>

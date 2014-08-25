@@ -17,8 +17,14 @@
 <#include "../init.ftl" />
 <#include "../macros.ftl" />
 
-<#if isMatchingRule>
-	<div class="content-container">
+<#assign containerCssClass = "" />
+
+<#if portletDisplay.isShowConfigurationIcon()>
+	<#assign containerCssClass = "show-configuration" />
+</#if>
+
+<div class="content-container ${containerCssClass}">
+	<#if isMatchingRule>
 		<div class="full-content" id="<@portlet["namespace"] />FullContent${selectedIndex}">
 			<@renderAssetEntry />
 
@@ -32,16 +38,17 @@
 				});
 			</@>
 		</div>
+	<#else>
+		<div class="alert alert-info">
+			<@liferay_ui["message"] key="there-are-no-matching-rules" />
+		</div>
+	</#if>
 
-		<#if portletDisplay.isShowConfigurationIcon()>
-			<@renderThumbnailsPreview queryRules=campaignQueryRules selectedIndex=selectedIndex />
-		</#if>
-	</div>
-<#else>
-	<div class="alert alert-info">
-		<@liferay_ui["message"] key="there-are-no-matching-rules" />
-	</div>
-</#if>
+	<#if portletDisplay.isShowConfigurationIcon()>
+		<@renderThumbnailsPreview queryRules=campaignQueryRules selectedIndex=selectedIndex />
+	</#if>
+</div>
+
 
 <#if portletDisplay.isShowConfigurationIcon()>
 	<div class="lfr-meta-actions icons-container">

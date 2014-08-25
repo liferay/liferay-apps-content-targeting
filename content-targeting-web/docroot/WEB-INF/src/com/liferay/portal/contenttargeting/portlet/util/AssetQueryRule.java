@@ -78,7 +78,7 @@ public class AssetQueryRule {
 	public String getAssetImage(PortletRequest portletRequest)
 		throws Exception {
 
-		if (!isValid()) {
+		if (Validator.isNull(_assetClassName) || (_assetClassPK <= 0)) {
 			return StringPool.BLANK;
 		}
 
