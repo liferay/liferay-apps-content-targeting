@@ -101,7 +101,10 @@ public class IpGeocodeRule extends BaseRule {
 		if (countryCode.equals(country.getA2())) {
 			String regionName = ipInfo.getRegion();
 
-			if ((region == null) || regionName.equals(region.getName())) {
+			if ((region == null) ||
+				(regionName.equals(region.getName()) ||
+					regionName.equals(region.getRegionCode()))) {
+
 				return true;
 			}
 		}
