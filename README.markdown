@@ -21,60 +21,6 @@ plugins yourself, read below for details.
 
 ## Quick Start
 
-In the [liferay-plugins](https://github.com/liferay/liferay-plugins)
-repository, plugins are laid out in a software development kit (SDK) -- the
-Liferay Plugins SDK. All Liferay plugin types, including portlets, themes,
-layout templates, hooks, and EXT plugins, can be created and maintained in the
-SDK. [The Plugins SDK]
-(http://www.liferay.com/documentation/liferay-portal/6.2/development/-/ai/leveraging-the-plugins-sdk-liferay-portal-6-2-dev-guide-02-en)
-chapter of Liferay's [Development Guide]
-(http://www.liferay.com/documentation/liferay-portal/6.2/development)
-explains how to create, build, and deploy your plugins.
-
-There are many other options for developing new Liferay plugins using the
-Plugins SDK. Consult the [Liferay Development
-Guide](http://www.liferay.com/documentation/liferay-portal/6.2/development) for
-indispensable explanations, examples, and reference material on the Liferay
-Plugins SDK and surrounding technologies.
-
-Also, check out Liferay IDE. The [Liferay IDE
-project](http://www.liferay.com/community/liferay-projects/liferay-ide) provides
-an Eclipse-based Liferay development environment to help you build and maintain
-Liferay projects easily.
-
-Finally, consider using Maven to build Liferay Plugins. For excellent overviews
-of Maven support for Liferay, check out [Mika Koivisto's
-presentation](http://www.slideshare.net/koivimik/developing-liferay-plugins-with-maven)
-and [Getting Started with Liferay Maven
-SDK](http://www.liferay.com/web/mika.koivisto/blog/-/blogs/12322618).
-
-## Contributing
-
-Liferay welcomes any and all contributions! If you have an idea for a new plugin
-or a new feature in an existing plugin, and wish to implement it, follow the
-contribution steps outlined in the [CONTRIBUTING
-guide](CONTRIBUTING.markdown).
-It explains how to contribute to Liferay and contains links to additional useful
-resources.
-
-## Development
-
-The master branch of the Liferay Audience Targeting application is developed for
-Liferay 6.2 CE using the 6.2 version of the plugins SDK.
-
-### Extending the Audience Targeting application
-
-The Audience Targeting application is designed as a framework to be extended by
-other developers easily. See this [DEVELOPING guide](DEVELOPING.markdown)
-
-### Source Code
-
-The source code of the Audience Targeting application is located in the
-[liferay-apps-content-targeting]
-(https://github.com/liferay/liferay-apps-content-targeting) repository. This
-repository is aggregated as a submodule of the [liferay-plugins]
-(https://github.com/liferay/liferay-plugins) repository under /apps.
-
 ### Deployment
 
 In order to deploy the Audience Targeting application, you need to go through
@@ -128,6 +74,7 @@ folder of the runner to use the folder of your plugin as the working directory.
 ### Troubleshooting
 
 #### Exceptions when deploying the plugins
+
 There are some issues with the Spring context and OSGI context. They can easily
 by bypassed deploying the apps when the server is already started or also adding
 this property to portal-ext.properties:
@@ -136,9 +83,44 @@ this property to portal-ext.properties:
 	module.framework.properties.felix.fileinstall.start.level=20
 	```
 
+## User Guide
+
+Take a look to the [Liferay Portal User Guide]
+(https://www.liferay.com/documentation/liferay-portal/6.2/user-guide) for
+information about using Liferay Portal.
+
+The Audience Targeting application is built on top of Liferay Portal and follows
+the same usability patterns. For more information about how to use Audience
+Targeting, read this [User Guide](USING.markdown).
+
+## Source Code
+
+The source code of the Audience Targeting application is located in the
+[liferay-apps-content-targeting]
+(https://github.com/liferay/liferay-apps-content-targeting) repository. This
+repository is aggregated as a submodule of the [liferay-plugins]
+(https://github.com/liferay/liferay-plugins) repository under /apps.
+
+## Contributing
+
+Liferay welcomes any and all contributions! If you have an idea for a new plugin
+or a new feature in an existing plugin, and wish to implement it, follow the
+contribution steps outlined in the [CONTRIBUTING
+guide](CONTRIBUTING.markdown).
+It explains how to contribute to Liferay and contains links to additional useful
+resources.
+
+## Development
+
+The master branch of the Liferay Audience Targeting application is developed for
+Liferay 6.2 CE using the 6.2 version of the plugins SDK.
+
+The Audience Targeting application is designed as a framework to be extended by
+other developers easily. See this [DEVELOPING guide](DEVELOPING.markdown).
+
 ## More Information
 
-For more information about filing bugs, staying updated with Liferay on social
+For more information about filling bugs, staying updated with Liferay on social
 media, and other ways to participate, check out the [Liferay Community
 Homepage](http://liferay.org) and consult the [README
 file](https://github.com/liferay/liferay-portal/blob/master/README.markdown) in

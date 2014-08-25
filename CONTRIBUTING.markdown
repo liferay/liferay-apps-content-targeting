@@ -1,4 +1,4 @@
-# How to Contribute
+# How to Contribute to the Audience Targeting application (for Developers)
 
 ## Contributing to Liferay
 

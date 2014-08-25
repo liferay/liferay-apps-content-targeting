@@ -188,9 +188,9 @@ Campaign admin selects it, the piece of GUI defined by the developer
 (eg. the forums and categories selector) is added to the add/edit Campaign form
 so that the admin can set a value for that specific campaign.
 
-# Troubleshooting
+## Troubleshooting
 
-## Changes are not visible after deploy
+### Changes are not visible after deploy
 If the plugin has been successfully deployed but the changes are not visible,
 check that the generated .jar in the /dist folder of the plugins SDK actually
 contains the latest modifications.
@@ -200,3 +200,32 @@ template instead of the cache:
 ```
 freemarker.engine.resource.modification.check.interval=0
 ```
+
+## More information
+
+In the [liferay-plugins](https://github.com/liferay/liferay-plugins)
+repository, plugins are laid out in a software development kit (SDK) -- the
+Liferay Plugins SDK. All Liferay plugin types, including portlets, themes,
+layout templates, hooks, and EXT plugins, can be created and maintained in the
+SDK. [The Plugins SDK]
+(http://www.liferay.com/documentation/liferay-portal/6.2/development/-/ai/leveraging-the-plugins-sdk-liferay-portal-6-2-dev-guide-02-en)
+chapter of Liferay's [Development Guide]
+(http://www.liferay.com/documentation/liferay-portal/6.2/development)
+explains how to create, build, and deploy your plugins.
+
+There are many other options for developing new Liferay plugins using the
+Plugins SDK. Consult the [Liferay Development
+Guide](http://www.liferay.com/documentation/liferay-portal/6.2/development) for
+indispensable explanations, examples, and reference material on the Liferay
+Plugins SDK and surrounding technologies.
+
+Also, check out Liferay IDE. The [Liferay IDE
+project](http://www.liferay.com/community/liferay-projects/liferay-ide) provides
+an Eclipse-based Liferay development environment to help you build and maintain
+Liferay projects easily.
+
+Finally, consider using Maven to build Liferay Plugins. For excellent overviews
+of Maven support for Liferay, check out [Mika Koivisto's
+presentation](http://www.slideshare.net/koivimik/developing-liferay-plugins-with-maven)
+and [Getting Started with Liferay Maven
+SDK](http://www.liferay.com/web/mika.koivisto/blog/-/blogs/12322618).
