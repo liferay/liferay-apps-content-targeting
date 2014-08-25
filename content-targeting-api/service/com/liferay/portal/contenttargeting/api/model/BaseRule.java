@@ -60,8 +60,8 @@ public abstract class BaseRule implements Rule {
 
 		String description = ResourceActionsUtil.getModelResource(locale, key);
 
-		if (description.equals(key)) {
-			description = StringPool.BLANK;
+		if (description.endsWith(key)) {
+			description = getShortDescription(locale);
 		}
 
 		return description;
@@ -120,6 +120,20 @@ public abstract class BaseRule implements Rule {
 	@Override
 	public String getRuleKey() {
 		return getClass().getSimpleName();
+	}
+
+	@Override
+	public String getShortDescription(Locale locale) {
+		String key = getClass().getName().concat(".shortDescription");
+
+		String shortDescription = ResourceActionsUtil.getModelResource(
+			locale, key);
+
+		if (shortDescription.endsWith(key)) {
+			shortDescription = StringPool.BLANK;
+		}
+
+		return shortDescription;
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 AUI.add(
 	'liferay-ct-form-builder',
 	function(A) {
-		var AVAILABLE_FIELD_LABEL_TPL = '<div class="row"><div class="field-title">{name}</div><div class="field-description">{description}</div></div>',
+		var AVAILABLE_FIELD_LABEL_TPL = '<div class="row"><div class="field-title">{name}</div><div class="field-description">{shortDescription}</div></div>',
 
 			FIELD_LABEL_TPL = '{name}',
 
@@ -318,6 +318,7 @@ AUI.add(
 										key = field.attr('data-key'),
 										fieldData = /^([^_]*)(?:_(.*))?$/.exec(key),
 										name = field.one('.field-title').text(),
+										shortDescription = field.one('.field-short-description').text(),
 										unique = field.attr('data-unique') === 'true';
 
 									A.LiferayCTFormBuilder.registerField(
@@ -327,7 +328,8 @@ AUI.add(
 											icon: icon,
 											id: fieldData[2] ? key : '',
 											key: key,
-											name: name
+											name: name,
+											shortDescription: shortDescription
 										}
 									);
 
@@ -339,7 +341,8 @@ AUI.add(
 												labelTpl,
 												{
 													name: name,
-													description: description
+													description: description,
+													shortDescription: shortDescription
 												}
 											),
 											options: {
@@ -447,7 +450,8 @@ AUI.add(
 									description: field.description,
 									editor: field.editor.replace(/\{ct_field_guid\}/g, fieldId),
 									icon: field.icon,
-									name: field.name
+									name: field.name,
+									shortDescription: field.shortDescription
 								}
 							);
 						},

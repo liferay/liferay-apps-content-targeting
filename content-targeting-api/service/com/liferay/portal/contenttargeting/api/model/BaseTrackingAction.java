@@ -60,8 +60,8 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 		String description = ResourceActionsUtil.getModelResource(locale, key);
 
-		if (description.equals(key)) {
-			description = StringPool.BLANK;
+		if (description.endsWith(key)) {
+			description = getShortDescription(locale);
 		}
 
 		return description;
@@ -98,6 +98,20 @@ public abstract class BaseTrackingAction implements TrackingAction {
 	public String getName(Locale locale) {
 		return ResourceActionsUtil.getModelResource(
 			locale, getClass().getName());
+	}
+
+	@Override
+	public String getShortDescription(Locale locale) {
+		String key = getClass().getName().concat(".shortDescription");
+
+		String shortDescription = ResourceActionsUtil.getModelResource(
+			locale, key);
+
+		if (shortDescription.endsWith(key)) {
+			shortDescription = StringPool.BLANK;
+		}
+
+		return shortDescription;
 	}
 
 	@Override

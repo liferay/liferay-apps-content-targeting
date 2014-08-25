@@ -44,6 +44,8 @@ public interface TrackingAction {
 
 	public String getName(Locale locale);
 
+	public String getShortDescription(Locale locale);
+
 	public String getSummary(
 		TrackingActionInstance trackingActionInstance, Locale locale);
 

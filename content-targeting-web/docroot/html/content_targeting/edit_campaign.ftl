@@ -97,6 +97,7 @@
 												<div class="row">
 													<div class="field-title">${trackingAction.getName(locale)}</div>
 													<div class="field-description">${trackingAction.getDescription(locale)}</div>
+													<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
 												</div>
 											</div>
 										</li>

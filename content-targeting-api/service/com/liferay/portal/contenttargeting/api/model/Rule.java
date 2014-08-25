@@ -110,6 +110,14 @@ public interface Rule {
 	public String getRuleKey();
 
 	/**
+	 * Returns the rule short description.
+	 *
+	 * @param  locale the language's locale
+	 * @return the rule locale
+	 */
+	public String getShortDescription(Locale locale);
+
+	/**
 	 * Returns the rule instance's localized summary.
 	 *
 	 * @param  ruleInstance the rule instance with stored configuration
