@@ -160,9 +160,10 @@
 					.diagram-builder-field-label {
 						font-size: 12px;
 						line-height: 18px;
+						margin-top: 3px;
 
 						.field-title {
-							font-size: 13px;
+							font-size: 14px;
 							font-weight: 500;
 							overflow: hidden;
 							text-overflow: ellipsis;
