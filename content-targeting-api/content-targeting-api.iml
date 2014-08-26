@@ -63,6 +63,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="portal-impl" level="project" />
   </component>
 </module>
 
