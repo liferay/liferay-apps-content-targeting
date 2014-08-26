@@ -104,6 +104,10 @@ public class AssetQueryRule {
 		return _index;
 	}
 
+	public String getTemplate() {
+		return _template;
+	}
+
 	public boolean isValid() {
 		if (Validator.isNull(_assetClassName) || (_assetClassPK <= 0)) {
 			return false;
@@ -134,6 +138,10 @@ public class AssetQueryRule {
 
 	public void setIndex(int index) {
 		_index = index;
+	}
+
+	public void setTemplate(String template) {
+		_template = template;
 	}
 
 	protected String htmlOperator(
@@ -184,5 +192,6 @@ public class AssetQueryRule {
 	private String _assetTitle = StringPool.BLANK;
 	private String _assetType = StringPool.BLANK;
 	private int _index;
+	private String _template = null;
 
 }
