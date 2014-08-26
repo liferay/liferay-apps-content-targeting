@@ -2,10 +2,10 @@
 
 .user-segment-content-display-portlet, .campaign-content-display-portlet {
 	&.portlet-borderless {
-    	.content-container .content-preview-container {
-    		margin-top: 23px;
-    	}
-    }
+		.content-container .content-preview-container {
+			margin-top: 23px;
+		}
+	}
 
 	&:hover .content-container {
 	   overflow: visible;
@@ -47,7 +47,7 @@
 			.content-preview {
 				background-color: rgba(60, 60, 60, 0.9);
 				height: 50px;
-				overflow: scroll;
+				overflow: hidden;
 				padding: 0.5em;
 
 				&.selected {

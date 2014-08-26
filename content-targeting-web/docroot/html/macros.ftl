@@ -81,7 +81,7 @@
 
 <#macro renderAssetEntry
 	assetEntry=""
-	displayStyle="full_content"
+	displayStyle="full-content"
 	showEditLink=false
 >
 	<#if assetEntry?has_content>
@@ -91,7 +91,7 @@
 		${request.setAttribute("view.jsp-title", assetEntry.getTitle(themeDisplay.getLocale()))}
 	</#if>
 
-	<@liferay_util["include"] page="/html/portlet/asset_publisher/display/${displayStyle}.jsp">
+	<@liferay_util["include"] page="/html/portlet/asset_publisher/display/${stringUtil.replace(displayStyle, '-', '_')}.jsp">
 		<@liferay_util["param"] name="showEditURL" value=showEditLink?string />
 		<@liferay_util["param"] name="showExtraInfo" value="false" />
 	</@>
@@ -104,10 +104,8 @@
 	<#if queryRules?has_content && (queryRules?size > 1)>
 		<#list queryRules as queryRule>
 			<#if selectedIndex != queryRule_index>
-				<#assign assetEntry = queryRule.getAssetEntry() />
-
 				<div class="hide full-content" id="<@portlet["namespace"] />FullContent${queryRule_index}">
-					<@renderAssetEntry assetEntry=assetEntry />
+					<@renderAssetEntry assetEntry=queryRule.getAssetEntry() />
 				</div>
 			</#if>
 		</#list>
