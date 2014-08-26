@@ -50,7 +50,7 @@
 		<div class="category-content">
 			<#if userSegments?has_content>
 				<#list elements as element>
-					<@aui["input"] cssClass="element" label="${element.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="element${element.getPrimaryKey()}" type="checkbox" checked=simulatedElementsPKs?seq_contains(element.getPrimaryKey()) value=element.getPrimaryKey() />
+					<@aui["input"] cssClass="element matched" label="${element.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="element${element.getPrimaryKey()}" type="checkbox" checked=simulatedElementsPKs?seq_contains(element.getPrimaryKey()) value=element.getPrimaryKey() />
 				</#list>
 			<#else>
 				<div class="alert alert-info">
@@ -58,6 +58,8 @@
 				</div>
 			</#if>
 		</div>
+
+		<div id="<@portlet["namespace"] />paginator${name}MatchedContainer"></div>
 
 		<div class="category-header">
 			<div class="category-icon">
@@ -75,32 +77,19 @@
 
 		<div class="category-content">
 			<#list notMatchedElements as notMatchedElement>
-				<@aui["input"] cssClass="element" label="${notMatchedElement.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="notMatchedElement${notMatchedElement.getPrimaryKey()}" type="checkbox" checked=simulatedElementsPKs?seq_contains(notMatchedElement.getPrimaryKey()) value=notMatchedElement.getPrimaryKey() />
+				<@aui["input"] cssClass="element not-matched" label="${notMatchedElement.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" name="notMatchedElement${notMatchedElement.getPrimaryKey()}" type="checkbox" checked=simulatedElementsPKs?seq_contains(notMatchedElement.getPrimaryKey()) value=notMatchedElement.getPrimaryKey() />
 			</#list>
 		</div>
+
+		<div id="<@portlet["namespace"] />paginator${name}NotMatchedContainer"></div>
 	</div>
 
-	<@aui["script"] use="aui-toggler,liferay-simulator-search">
-		var inputNode = A.one('#<@portlet["namespace"] />search${name}Panel');
-		var elementContainer = A.one('#<@portlet["namespace"] />${containerId}');
-
-		var togglerDelegate = new A.TogglerDelegate(
+	<@aui["script"] use="liferay-simulator">
+		new Liferay.Simulator(
 			{
-				animated: true,
-				closeAllOnExpand: false,
-				container: elementContainer,
-				content: '.category-content',
-				expanded: true,
-				header: '.category-header'
-			}
-		);
-
-		new Liferay.SimulatorSearch(
-			{
-				contentPanel: elementContainer,
-				inputNode: inputNode,
-				namespace: '<@portlet["namespace"] />',
-				togglerDelegate: togglerDelegate
+				containerId: '${containerId}',
+				name: '${name}',
+				namespace: '<@portlet["namespace"] />'
 			}
 		);
 	</@>

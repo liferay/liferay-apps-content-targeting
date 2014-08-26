@@ -72,7 +72,7 @@ if (x > 0) {
 		id: 'simulatorPanel',
 		node: null,
 		showFn: A.bind(Liferay.Dockbar._showPanel, Liferay.Dockbar),
-		tpl: '<div class="lfr-admin-panel lfr-add-panel" id="{0}" />'
+		tpl: '<div class="lfr-add-panel lfr-admin-panel" id="{0}" />'
 	};
 </aui:script>
 
@@ -80,8 +80,8 @@ if (x > 0) {
 	AUI().applyConfig(
 		{
 			modules: {
-				'liferay-simulator-search': {
-					fullpath: '/o/content-targeting-web/js/ct_simulator/search.js'
+				'liferay-simulator': {
+					fullpath: '/o/content-targeting-web/js/ct_simulator/simulator.js'
 				}
 			}
 		}

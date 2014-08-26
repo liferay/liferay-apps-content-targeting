@@ -84,6 +84,18 @@
 				content: "\f078";
 			}
 		}
+
+		.pagination {
+			text-align: center;
+
+			.pagination-content {
+				float: none;
+			}
+		}
+	}
+
+	.lfr-pagination-controls {
+		display: none;
 	}
 
 	.search-panels {
