@@ -137,7 +137,9 @@ public class PageVisitedRule extends BaseRule {
 					themeDisplay.getScopeGroupId(), true, friendlyURL);
 			}
 
-			return String.valueOf(layout.getPlid());
+			if (layout != null) {
+				return String.valueOf(layout.getPlid());
+			}
 		}
 		catch (SystemException e) {
 		}
@@ -161,7 +163,9 @@ public class PageVisitedRule extends BaseRule {
 			try {
 				Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
 
-				friendlyURL = layout.getFriendlyURL();
+				if (layout != null) {
+					friendlyURL = layout.getFriendlyURL();
+				}
 			}
 			catch (SystemException e) {
 			}
