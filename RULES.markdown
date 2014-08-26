@@ -5,7 +5,7 @@ classified into the user segments they create.
 
 Basically, a rule evaluates if the current user matches or not one or several
 conditions. Rules can be configured and combined differently for each user
-segment to create an vary specific classification algorithm. A user must match
+segment to create a very specific classification algorithm. A user must match
 all rules in a user segment to be classified into it.
 
 ## Behavior Rules
