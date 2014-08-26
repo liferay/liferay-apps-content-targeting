@@ -38,6 +38,7 @@ import com.liferay.portal.contenttargeting.service.TrackingActionInstanceService
 import com.liferay.portal.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.portal.contenttargeting.service.UserSegmentService;
 import com.liferay.portal.contenttargeting.util.CampaignSearchContainerIterator;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.portal.contenttargeting.util.ReportSearchContainerIterator;
 import com.liferay.portal.contenttargeting.util.UserSegmentSearchContainerIterator;
@@ -51,6 +52,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
+import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -88,6 +90,8 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.UnavailableException;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -379,6 +383,36 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		return values;
 	}
 
+	protected String getRuleHtml(
+		Rule rule, RuleInstance ruleInstance, Template template) {
+
+		Map<String, Object> ruleContext = cloneTemplateContext(template);
+
+		HttpServletRequest request = (HttpServletRequest)ruleContext.get(
+			"request");
+
+		Map<String, List<ValidatorTag>> validatorTagsMap =
+			new HashMap<String, List<ValidatorTag>>();
+
+		request.setAttribute("aui:form:validatorTagsMap", validatorTagsMap);
+
+		String html = rule.getFormHTML(ruleInstance, ruleContext);
+
+		if (!validatorTagsMap.isEmpty()) {
+			try {
+				ruleContext.put("validatorTagsMap", validatorTagsMap);
+
+				html += ContentTargetingContextUtil.parseTemplate(
+					getClass(), "templates/ct_validators.ftl", ruleContext);
+			}
+			catch (Exception e) {
+				_log.error(e);
+			}
+		}
+
+		return html;
+	}
+
 	protected void populateContext(
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template)
@@ -629,12 +663,12 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 						RuleTemplate ruleTemplate = new RuleTemplate();
 
-						String html = rule.getFormHTML(
-							ruleInstance, cloneTemplateContext(template));
-
 						ruleTemplate.setInstanceId(
 							ruleInstance.getRuleInstanceId());
 						ruleTemplate.setRule(rule);
+
+						String html = getRuleHtml(rule, ruleInstance, template);
+
 						ruleTemplate.setTemplate(
 							HtmlUtil.escapeAttribute(html));
 
@@ -655,10 +689,10 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				for (Rule rule : rules.values()) {
 					RuleTemplate ruleTemplate = new RuleTemplate();
 
-					String html = rule.getFormHTML(
-						null, cloneTemplateContext(template));
-
 					ruleTemplate.setRule(rule);
+
+					String html = getRuleHtml(rule, null, template);
+
 					ruleTemplate.setTemplate(HtmlUtil.escapeAttribute(html));
 
 					ruleTemplates.add(ruleTemplate);

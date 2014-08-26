@@ -7,4 +7,6 @@
 	</@>
 </@>
 
-<@aui["input"] inlineField=true inlineLabel="left" label=languageUtil.format(locale, "users-that-have-x-than", selectorField) name="numberOfFriends" style="width: auto;" suffix="friends"  type="text" value=numberOfFriends />
+<@aui["input"] inlineField=true inlineLabel="left" label=languageUtil.format(locale, "users-that-have-x-than", selectorField) name="numberOfFriends" style="width: auto;" suffix="friends"  type="text" value=numberOfFriends>
+	<@aui["validator"] name="number" />
+</@>

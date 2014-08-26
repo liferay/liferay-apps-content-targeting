@@ -15,17 +15,11 @@
 package com.liferay.portal.contenttargeting.api.model;
 
 import com.liferay.portal.contenttargeting.model.TrackingActionInstance;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-
-import freemarker.cache.ClassTemplateLoader;
-
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
 
 import java.util.Locale;
 import java.util.Map;
@@ -77,7 +71,8 @@ public abstract class BaseTrackingAction implements TrackingAction {
 		try {
 			populateContext(trackingActionInstance, context);
 
-			content = parseTemplate(getClass(), _FORM_TEMPLATE_PATH, context);
+			content = ContentTargetingContextUtil.parseTemplate(
+				getClass(), _FORM_TEMPLATE_PATH, context);
 		}
 		catch (Exception e) {
 			_log.error(
@@ -131,26 +126,6 @@ public abstract class BaseTrackingAction implements TrackingAction {
 		throws Exception {
 
 		return null;
-	}
-
-	protected String parseTemplate(
-			Class clazz, String templatePath, Map<String, Object> context)
-		throws Exception {
-
-		Configuration configuration = new Configuration();
-
-		configuration.setObjectWrapper(new DefaultObjectWrapper());
-		configuration.setTemplateLoader(
-			new ClassTemplateLoader(clazz, StringPool.SLASH));
-		configuration.setTemplateUpdateDelay(Integer.MAX_VALUE);
-
-		Template template = configuration.getTemplate(templatePath);
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		template.process(context, unsyncStringWriter);
-
-		return unsyncStringWriter.toString();
 	}
 
 	protected void populateContext(

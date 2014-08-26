@@ -14,16 +14,24 @@
 
 package com.liferay.portal.contenttargeting.util;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayPortletResponse;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HttpUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.util.PortalUtil;
+
+import freemarker.cache.ClassTemplateLoader;
+
+import freemarker.template.Configuration;
+import freemarker.template.DefaultObjectWrapper;
+import freemarker.template.Template;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -104,6 +112,26 @@ public class ContentTargetingContextUtil {
 		}
 
 		return false;
+	}
+
+	public static String parseTemplate(
+			Class clazz, String templatePath, Map<String, Object> context)
+		throws Exception {
+
+		Configuration configuration = new Configuration();
+
+		configuration.setObjectWrapper(new DefaultObjectWrapper());
+		configuration.setTemplateLoader(
+			new ClassTemplateLoader(clazz, StringPool.SLASH));
+		configuration.setTemplateUpdateDelay(Integer.MAX_VALUE);
+
+		Template template = configuration.getTemplate(templatePath);
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
+
+		template.process(context, unsyncStringWriter);
+
+		return unsyncStringWriter.toString();
 	}
 
 	public static void populateContextAnalyticsSettingsURLs(

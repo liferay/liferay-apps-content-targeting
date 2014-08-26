@@ -17,18 +17,12 @@ package com.liferay.portal.contenttargeting.api.model;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.contenttargeting.model.ReportInstance;
 import com.liferay.portal.contenttargeting.service.ReportInstanceLocalService;
+import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
-
-import freemarker.cache.ClassTemplateLoader;
-
-import freemarker.template.Configuration;
-import freemarker.template.DefaultObjectWrapper;
-import freemarker.template.Template;
 
 import java.util.Date;
 import java.util.Locale;
@@ -76,7 +70,8 @@ public abstract class BaseReport implements Report {
 		try {
 			populateContext(context);
 
-			content = parseTemplate(getClass(), _FORM_TEMPLATE_PATH, context);
+			content = ContentTargetingContextUtil.parseTemplate(
+				getClass(), _FORM_TEMPLATE_PATH, context);
 		}
 		catch (Exception e) {
 			_log.error(
@@ -126,26 +121,6 @@ public abstract class BaseReport implements Report {
 	@Override
 	public String getReportKey() {
 		return getClass().getSimpleName();
-	}
-
-	protected String parseTemplate(
-			Class clazz, String templatePath, Map<String, Object> context)
-		throws Exception {
-
-		Configuration configuration = new Configuration();
-
-		configuration.setObjectWrapper(new DefaultObjectWrapper());
-		configuration.setTemplateLoader(
-			new ClassTemplateLoader(clazz, StringPool.SLASH));
-		configuration.setTemplateUpdateDelay(Integer.MAX_VALUE);
-
-		Template template = configuration.getTemplate(templatePath);
-
-		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
-
-		template.process(context, unsyncStringWriter);
-
-		return unsyncStringWriter.toString();
 	}
 
 	protected void populateContext(Map<String, Object> context) {

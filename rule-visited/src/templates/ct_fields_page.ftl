@@ -23,4 +23,6 @@
 	</div>
 </#if>
 
-<@aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" type="text" value=friendlyURL />
+<@aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" type="text" value=friendlyURL>
+	<@aui["validator"] name="required" />
+</@>
