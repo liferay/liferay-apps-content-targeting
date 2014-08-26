@@ -553,7 +553,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 							new TrackingActionTemplate();
 
 						String html = trackingAction.getFormHTML(
-							instance, _cloneTemplateContext(template));
+							instance, cloneTemplateContext(template));
 
 						trackingActionTemplate.setInstanceId(
 							instance.getTrackingActionInstanceId());
@@ -579,7 +579,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 						new TrackingActionTemplate();
 
 					String html = trackingAction.getFormHTML(
-						null, _cloneTemplateContext(template));
+						null, cloneTemplateContext(template));
 
 					trackingActionTemplate.setTrackingAction(trackingAction);
 					trackingActionTemplate.setTemplate(
@@ -628,7 +628,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 						RuleTemplate ruleTemplate = new RuleTemplate();
 
 						String html = rule.getFormHTML(
-							ruleInstance, _cloneTemplateContext(template));
+							ruleInstance, cloneTemplateContext(template));
 
 						ruleTemplate.setInstanceId(
 							ruleInstance.getRuleInstanceId());
@@ -654,7 +654,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 					RuleTemplate ruleTemplate = new RuleTemplate();
 
 					String html = rule.getFormHTML(
-						null, _cloneTemplateContext(template));
+						null, cloneTemplateContext(template));
 
 					ruleTemplate.setRule(rule);
 					ruleTemplate.setTemplate(HtmlUtil.escapeAttribute(html));
@@ -686,7 +686,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				template.put("report", report);
 				template.put(
 					"reportHtml",
-					report.getHTML(_cloneTemplateContext(template)));
+					report.getHTML(cloneTemplateContext(template)));
 			}
 
 			if (path.equals(ContentTargetingPath.VIEW_REPORTS)) {
@@ -895,16 +895,6 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			_trackingActionInstanceService.deleteTrackingActionInstance(
 					trackingActionInstance.getTrackingActionInstanceId());
 		}
-	}
-
-	private Map<String, Object> _cloneTemplateContext(Template template) {
-		Map<String, Object> context = new HashMap<String, Object>();
-
-		for (String key : template.getKeys()) {
-			context.put(key, template.get(key));
-		}
-
-		return context;
 	}
 
 	private Date _getDate(PortletRequest portletRequest, String paramPrefix) {
