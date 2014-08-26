@@ -96,7 +96,7 @@ import org.osgi.framework.FrameworkUtil;
  * @author Eduardo Garcia
  * @author Carlos Sierra Andrés
  */
-public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
+public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 	public void deleteCampaign(ActionRequest request, ActionResponse response)
 		throws Exception {
@@ -215,7 +215,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		long campaignId = ParamUtil.getLong(request, "campaignId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			request, "name");
+				request, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
@@ -291,7 +291,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		String typeSettings = report.updateReport(classPK);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			ReportInstance.class.getName(), request);
+				ReportInstance.class.getName(), request);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -313,7 +313,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-			request, "name");
+				request, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
@@ -829,7 +829,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		List<TrackingActionInstance> trackingActionInstances = ListUtil.copy(
 			_trackingActionInstanceService.getTrackingActionInstances(
-				campaignId));
+					campaignId));
 
 		for (int i = 0; i < jSONArray.length(); i++) {
 			JSONObject jSONObjectTrackingAction = jSONArray.getJSONObject(i);
@@ -877,9 +877,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				}
 				else {
 					_trackingActionInstanceService.addTrackingActionInstance(
-						themeDisplay.getUserId(), type, campaignId, alias,
-						referrerClassName, referrerClassPK, elementId,
-						eventType, typeSettings, serviceContext);
+							themeDisplay.getUserId(), type, campaignId, alias,
+							referrerClassName, referrerClassPK, elementId,
+							eventType, typeSettings, serviceContext);
 				}
 			}
 			catch (Exception e) {
@@ -893,7 +893,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				trackingActionInstances) {
 
 			_trackingActionInstanceService.deleteTrackingActionInstance(
-				trackingActionInstance.getTrackingActionInstanceId());
+					trackingActionInstance.getTrackingActionInstanceId());
 		}
 	}
 

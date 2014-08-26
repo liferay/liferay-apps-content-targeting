@@ -56,7 +56,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Julio Camarero
  */
-public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
+public class SimulatorPortlet extends FreeMarkerPortlet {
 
 	@Override
 	public void init() throws PortletException {
@@ -235,7 +235,7 @@ public class CTSimulatorPortlet extends CTFreeMarkerPortlet {
 
 	private static final int _SHOW_SEARCH_LIMIT = 10;
 
-	private static Log _log = LogFactoryUtil.getLog(CTSimulatorPortlet.class);
+	private static Log _log = LogFactoryUtil.getLog(SimulatorPortlet.class);
 
 	private CampaignLocalService _campaignLocalService;
 	private UserSegmentLocalService _userSegmentLocalService;

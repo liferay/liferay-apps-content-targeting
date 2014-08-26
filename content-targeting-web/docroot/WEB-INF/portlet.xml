@@ -74,7 +74,7 @@
 	<portlet>
 		<portlet-name>ctsimulator</portlet-name>
 		<display-name>Content Targeting Simulator</display-name>
-		<portlet-class>com.liferay.portal.contenttargeting.portlet.CTSimulatorPortlet</portlet-class>
+		<portlet-class>com.liferay.portal.contenttargeting.portlet.SimulatorPortlet</portlet-class>
 		<init-param>
 			<name>add-process-action-success-action</name>
 			<value>false</value>

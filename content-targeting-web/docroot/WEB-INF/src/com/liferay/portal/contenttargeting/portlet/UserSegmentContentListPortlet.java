@@ -59,7 +59,7 @@ import javax.portlet.PortletResponse;
 /**
  * @author Eudaldo Alonso
  */
-public class UserSegmentContentListPortlet extends CTFreeMarkerPortlet {
+public class UserSegmentContentListPortlet extends FreeMarkerPortlet {
 
 	public void updatePreferences(
 			ActionRequest request, ActionResponse response)
@@ -221,7 +221,7 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerPortlet {
 
 			if (assetEntries.isEmpty()) {
 				portletRequest.setAttribute(
-					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+						WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 			}
 		}
 		else if (path.equals(UserSegmentContentListPath.VIEW_CONTENT)) {

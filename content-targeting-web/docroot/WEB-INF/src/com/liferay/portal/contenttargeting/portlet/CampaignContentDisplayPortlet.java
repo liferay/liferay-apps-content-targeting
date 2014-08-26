@@ -64,7 +64,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Eduardo Garcia
  */
-public class CampaignContentDisplayPortlet extends CTFreeMarkerPortlet {
+public class CampaignContentDisplayPortlet extends FreeMarkerPortlet {
 
 	@Override
 	public void init() throws PortletException {

@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.util.bridges.freemarker.FreeMarkerPortlet;
 
 import freemarker.ext.servlet.HttpRequestHashModel;
 
@@ -55,7 +54,8 @@ import javax.servlet.http.HttpServletResponseWrapper;
 /**
  * @author Eudaldo Alonso
  */
-public class CTFreeMarkerPortlet extends FreeMarkerPortlet {
+public class FreeMarkerPortlet extends
+	com.liferay.util.bridges.freemarker.FreeMarkerPortlet {
 
 	@Override
 	protected void include(
@@ -171,6 +171,6 @@ public class CTFreeMarkerPortlet extends FreeMarkerPortlet {
 		portletPreferences.store();
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(CTFreeMarkerPortlet.class);
+	private static Log _log = LogFactoryUtil.getLog(FreeMarkerPortlet.class);
 
 }
