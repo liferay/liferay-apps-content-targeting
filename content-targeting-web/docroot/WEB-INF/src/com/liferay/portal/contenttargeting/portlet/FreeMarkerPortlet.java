@@ -17,7 +17,6 @@ package com.liferay.portal.contenttargeting.portlet;
 import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateConstants;
 import com.liferay.portal.kernel.template.TemplateException;
@@ -25,8 +24,6 @@ import com.liferay.portal.kernel.template.TemplateManagerUtil;
 import com.liferay.portal.kernel.template.TemplateResource;
 import com.liferay.portal.kernel.template.TemplateResourceLoaderUtil;
 import com.liferay.portal.kernel.template.TemplateTaglibSupportProvider;
-import com.liferay.portal.kernel.util.PropertiesParamUtil;
-import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.UnsyncPrintWriterPool;
 import com.liferay.portal.util.PortalUtil;
 
@@ -37,14 +34,9 @@ import freemarker.template.ObjectWrapper;
 import java.io.IOException;
 import java.io.Writer;
 
-import java.util.Map;
-
-import javax.portlet.ActionRequest;
-import javax.portlet.ActionResponse;
 import javax.portlet.MimeResponse;
 import javax.portlet.PortletContext;
 import javax.portlet.PortletException;
-import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
@@ -54,8 +46,8 @@ import javax.servlet.http.HttpServletResponseWrapper;
 /**
  * @author Eudaldo Alonso
  */
-public class FreeMarkerPortlet extends
-	com.liferay.util.bridges.freemarker.FreeMarkerPortlet {
+public class FreeMarkerPortlet
+	extends com.liferay.util.bridges.freemarker.FreeMarkerPortlet {
 
 	@Override
 	protected void include(
@@ -151,24 +143,6 @@ public class FreeMarkerPortlet extends
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template)
 		throws Exception {
-	}
-
-	protected void updatePreferences(
-			ActionRequest request, ActionResponse response,
-			PortletPreferences portletPreferences)
-		throws Exception {
-
-		UnicodeProperties properties = PropertiesParamUtil.getProperties(
-			request, DefaultConfigurationAction.PREFERENCES_PREFIX);
-
-		for (Map.Entry<String, String> entry : properties.entrySet()) {
-			String name = entry.getKey();
-			String value = entry.getValue();
-
-			portletPreferences.setValue(name, value);
-		}
-
-		portletPreferences.store();
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(FreeMarkerPortlet.class);

@@ -64,7 +64,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Eduardo Garcia
  */
-public class CampaignContentDisplayPortlet extends FreeMarkerPortlet {
+public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 	@Override
 	public void init() throws PortletException {
@@ -208,6 +208,7 @@ public class CampaignContentDisplayPortlet extends FreeMarkerPortlet {
 		return selectableAssetRendererFactories;
 	}
 
+	@Override
 	protected void populateContext(
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template)
