@@ -118,7 +118,7 @@ public class IpGeocodeRuleTest extends PowerMockito {
 		);
 
 		when(
-			_ipInfo.getRegion()
+			_ipInfo.getRegionName()
 		).thenReturn(
 			"Madrid"
 		);
