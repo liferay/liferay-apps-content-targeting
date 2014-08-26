@@ -15,6 +15,7 @@
 package com.liferay.portal.contenttargeting.rule.visited;
 
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.contenttargeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.portal.contenttargeting.analytics.util.AnalyticsUtil;
 import com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser;
@@ -139,6 +140,9 @@ public class PageVisitedRule extends BaseRule {
 
 			if (layout != null) {
 				return String.valueOf(layout.getPlid());
+			}
+			else {
+				throw new NoSuchLayoutException();
 			}
 		}
 		catch (SystemException e) {

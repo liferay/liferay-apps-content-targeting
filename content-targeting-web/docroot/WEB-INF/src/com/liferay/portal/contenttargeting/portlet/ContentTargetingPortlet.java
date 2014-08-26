@@ -346,7 +346,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());
 
-			if (e instanceof PrincipalException) {
+			if (e instanceof NoSuchModelException ||
+				e instanceof PrincipalException) {
+
 				response.setRenderParameter(
 					"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
 			}
