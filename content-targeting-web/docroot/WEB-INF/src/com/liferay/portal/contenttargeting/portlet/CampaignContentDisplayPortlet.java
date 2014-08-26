@@ -16,6 +16,7 @@ package com.liferay.portal.contenttargeting.portlet;
 
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.contenttargeting.model.Campaign;
+import com.liferay.portal.contenttargeting.portlet.util.AssetQueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.CampaignQueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.CampaignQueryRuleUtil;
 import com.liferay.portal.contenttargeting.service.CampaignLocalService;
@@ -155,13 +156,13 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 		super.updatePreferences(request, response, portletPreferences);
 	}
 
-	protected List<CampaignQueryRule> getCampaignQueryRules(
+	protected List<AssetQueryRule> getCampaignQueryRules(
 			PortletPreferences portletPreferences, long assetEntryIdDefault,
 			Locale locale)
 		throws PortalException, SystemException {
 
-		List<CampaignQueryRule> campaignQueryRules =
-			new ArrayList<CampaignQueryRule>();
+		List<AssetQueryRule> campaignQueryRules =
+			new ArrayList<AssetQueryRule>();
 
 		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
 			portletPreferences.getValues("queryLogicIndexes", null),
@@ -247,6 +248,10 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 		boolean contentDefaultValue = GetterUtil.getBoolean(
 			portletPreferences.getValue("contentDefaultValue", null));
 
+		populatePortletDisplayTemplateContext(
+			template, portletPreferences, themeDisplay.getScopeGroupId(),
+			"full-content");
+
 		if (Validator.isNull(path) ||
 			path.equals(CampaignContentDisplayPath.VIEW)) {
 
@@ -276,6 +281,8 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			}
 
 			boolean isMatchingRule = false;
+
+			List<AssetEntry> results = new ArrayList<AssetEntry>();
 
 			if ((queryRule != null) ||
 				(contentDefaultValue && (assetEntryIdDefault > 0))) {
@@ -319,6 +326,8 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 				template.put("assetEntryClassName", assetEntry.getClassName());
 				template.put("assetEntryClassPK", assetEntry.getClassPK());
+
+				results.add(assetEntry);
 			}
 			else {
 				portletRequest.setAttribute(
@@ -328,10 +337,14 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			template.put("isMatchingRule", isMatchingRule);
 			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 
-			List<CampaignQueryRule> campaignQueryRules =
+			List<AssetQueryRule> campaignQueryRules =
 				getCampaignQueryRules(
 					portletPreferences, assetEntryIdDefault,
 					themeDisplay.getLocale());
+
+			populatePortletDisplayTemplateViewContext(
+				template, portletRequest, themeDisplay, results,
+				campaignQueryRules);
 
 			template.put("campaignQueryRules", campaignQueryRules);
 
@@ -339,8 +352,8 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 			if (queryRule != null) {
 				for (int i = 0; i < campaignQueryRules.size(); i++) {
-					CampaignQueryRule campaignQueryRule =
-						campaignQueryRules.get(i);
+					AssetQueryRule campaignQueryRule = campaignQueryRules.get(
+						i);
 
 					if (campaignQueryRule.getIndex() ==
 							queryRule.getIndex()) {

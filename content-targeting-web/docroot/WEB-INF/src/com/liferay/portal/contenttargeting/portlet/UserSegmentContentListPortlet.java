@@ -184,6 +184,10 @@ public class UserSegmentContentListPortlet extends FreeMarkerDisplayPortlet {
 		long[] classNameIds = getClassNameIds(
 			portletPreferences, availableClassNameIds);
 
+		populatePortletDisplayTemplateContext(
+			template, portletPreferences, themeDisplay.getScopeGroupId(),
+			"abstracts");
+
 		if (Validator.isNull(path) ||
 			path.equals(UserSegmentContentListPath.VIEW)) {
 
@@ -221,8 +225,11 @@ public class UserSegmentContentListPortlet extends FreeMarkerDisplayPortlet {
 
 			if (assetEntries.isEmpty()) {
 				portletRequest.setAttribute(
-						WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
+					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 			}
+
+			populatePortletDisplayTemplateViewContext(
+				template, portletRequest, themeDisplay, assetEntries, null);
 		}
 		else if (path.equals(UserSegmentContentListPath.VIEW_CONTENT)) {
 			long assetEntryId = ParamUtil.getLong(

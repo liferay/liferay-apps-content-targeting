@@ -26,7 +26,11 @@
 <div class="content-container ${containerCssClass}">
 	<#if isMatchingRule>
 		<div class="full-content" id="<@portlet["namespace"] />FullContent${selectedIndex}">
-			<@renderAssetEntry />
+			<#if portletDisplayTemplateHtml??>
+				${portletDisplayTemplateHtml}
+			<#else>
+				<@renderAssetEntry />
+			</#if>
 		</div>
 	<#else>
 		<div class="alert alert-info">

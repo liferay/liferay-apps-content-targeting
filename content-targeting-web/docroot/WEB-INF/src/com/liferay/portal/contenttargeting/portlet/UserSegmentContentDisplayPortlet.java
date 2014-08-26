@@ -14,6 +14,7 @@
 
 package com.liferay.portal.contenttargeting.portlet;
 
+import com.liferay.portal.contenttargeting.portlet.util.AssetQueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.UserSegmentQueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.UserSegmentQueryRuleUtil;
 import com.liferay.portal.contenttargeting.util.ContentTargetingUtil;
@@ -159,13 +160,13 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 		return selectableAssetRendererFactories;
 	}
 
-	protected List<UserSegmentQueryRule> getUserSegmentQueryRule(
+	protected List<AssetQueryRule> getUserSegmentQueryRule(
 			PortletPreferences portletPreferences, long assetEntryIdDefault,
 			Locale locale)
 		throws PortalException, SystemException {
 
-		List<UserSegmentQueryRule> userSegmentQueryRules =
-			new ArrayList<UserSegmentQueryRule>();
+		List<AssetQueryRule> userSegmentQueryRules =
+			new ArrayList<AssetQueryRule>();
 
 		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
 			portletPreferences.getValues("queryLogicIndexes", null),
@@ -192,6 +193,7 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 		return userSegmentQueryRules;
 	}
 
+	@Override
 	protected void populateContext(
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template)
@@ -230,6 +232,10 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 		boolean contentDefaultValue = GetterUtil.getBoolean(
 			portletPreferences.getValue("contentDefaultValue", null));
 
+		populatePortletDisplayTemplateContext(
+			template, portletPreferences, themeDisplay.getScopeGroupId(),
+			"full-content");
+
 		if (Validator.isNull(path) ||
 			path.equals(UserSegmentContentDisplayPath.VIEW)) {
 
@@ -248,6 +254,8 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			}
 
 			boolean isMatchingRule = false;
+
+			List<AssetEntry> results = new ArrayList<AssetEntry>();
 
 			if ((queryRule != null) ||
 				(contentDefaultValue && (assetEntryIdDefault > 0))) {
@@ -288,6 +296,8 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 					"view.jsp-show", new Boolean(false));
 				portletRequest.setAttribute(
 					"view.jsp-print", new Boolean(false));
+
+				results.add(assetEntry);
 			}
 			else {
 				portletRequest.setAttribute(
@@ -297,10 +307,14 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			template.put("isMatchingRule", isMatchingRule);
 			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 
-			List<UserSegmentQueryRule> userSegmentQueryRules =
+			List<AssetQueryRule> userSegmentQueryRules =
 				getUserSegmentQueryRule(
 					portletPreferences, assetEntryIdDefault,
 					themeDisplay.getLocale());
+
+			populatePortletDisplayTemplateViewContext(
+				template, portletRequest, themeDisplay, results,
+				userSegmentQueryRules);
 
 			template.put("userSegmentQueryRules", userSegmentQueryRules);
 
@@ -308,7 +322,7 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 			if (queryRule != null) {
 				for (int i = 0; i < userSegmentQueryRules.size(); i++) {
-					UserSegmentQueryRule userSegmentQueryRule =
+					AssetQueryRule userSegmentQueryRule =
 						userSegmentQueryRules.get(i);
 
 					if (userSegmentQueryRule.getIndex() ==

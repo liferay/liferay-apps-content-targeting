@@ -14,22 +14,113 @@
 
 package com.liferay.portal.contenttargeting.portlet;
 
+import com.liferay.portal.contenttargeting.portlet.util.AssetQueryRule;
+import com.liferay.portal.contenttargeting.portlet.util.PortletDisplayTemplateUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
+import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.template.TemplateHandler;
+import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portlet.asset.model.AssetEntry;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletPreferences;
+import javax.portlet.PortletRequest;
 
 /**
  * @author Eduardo Garcia
  */
 public class FreeMarkerDisplayPortlet extends FreeMarkerPortlet {
+
+	protected void populatePortletDisplayTemplateContext(
+		Template template, PortletPreferences portletPreferences,
+		long defaultDisplayStyleGroupId, String defaultDisplayStyle) {
+
+		TemplateHandler templateHandler =
+			TemplateHandlerRegistryUtil.getTemplateHandler(
+				AssetEntry.class.getName());
+
+		template.put("templateHandler", templateHandler);
+
+		String displayStyle = GetterUtil.getString(
+			portletPreferences.getValue("displayStyle", defaultDisplayStyle));
+		long displayStyleGroupId =
+			GetterUtil.getLong(
+				portletPreferences.getValue("displayStyleGroupId", null),
+				defaultDisplayStyleGroupId);
+
+		template.put("displayStyle", displayStyle);
+		template.put("displayStyleGroupId", displayStyleGroupId);
+		template.put("displayStyles", ListUtil.fromString(defaultDisplayStyle));
+	}
+
+	protected void populatePortletDisplayTemplateViewContext(
+			Template template, PortletRequest portletRequest,
+			ThemeDisplay themeDisplay, List<AssetEntry> results,
+			List<AssetQueryRule> assetQueryRules)
+		throws Exception {
+
+		Map<String, Object> context = cloneTemplateContext(template);
+
+		context.put("assetLinkBehavior", StringPool.BLANK);
+		context.put("enableComments", Boolean.FALSE.toString());
+		context.put("enableFlags", Boolean.FALSE.toString());
+		context.put("enablePrint", Boolean.FALSE.toString());
+		context.put("enableRatings", Boolean.FALSE.toString());
+		context.put("enableRelatedAssets", Boolean.FALSE.toString());
+		context.put("enableSocialBookmarks", Boolean.FALSE.toString());
+		context.put("metadataFields", StringPool.BLANK);
+
+		long portletDisplayDDMTemplateId =
+			PortletDisplayTemplateUtil.getPortletDisplayTemplateDDMTemplateId(
+				(Long)template.get("displayStyleGroupId"),
+				(String)template.get("displayStyle"));
+
+		if (portletDisplayDDMTemplateId > 0) {
+			String portletDisplayTemplateHtml =
+				PortletDisplayTemplateUtil.renderDDMTemplate(
+					portletRequest, themeDisplay, portletDisplayDDMTemplateId,
+					results, context);
+
+			template.put(
+				"portletDisplayTemplateHtml", portletDisplayTemplateHtml);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			if (Validator.isNull(assetQueryRules) ||
+				!portletDisplay.isShowConfigurationIcon()) {
+
+				return;
+			}
+
+			for (AssetQueryRule assetQueryRule : assetQueryRules) {
+				List<AssetEntry> assetQueryRuleResults = Arrays.asList(
+					assetQueryRule.getAssetEntry());
+
+				String assetQueryRuleTemplateHtml =
+					PortletDisplayTemplateUtil.renderDDMTemplate(
+						portletRequest, themeDisplay,
+						portletDisplayDDMTemplateId, assetQueryRuleResults,
+						context);
+
+				assetQueryRule.setTemplate(assetQueryRuleTemplateHtml);
+			}
+		}
+	}
 
 	protected void updatePreferences(
 			ActionRequest request, ActionResponse response,

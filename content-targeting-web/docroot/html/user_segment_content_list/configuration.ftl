@@ -21,54 +21,78 @@
 </@>
 
 <@aui["form"] action="${configurationURL}" method="post" name="fm" onSubmit="event.preventDefault();">
-	<@aui["fieldset"] label="asset-entry-type">
-		<@aui["select"] label="" name="anyAssetType">
-			<@aui["option"] label="any" selected=anyAssetType value=true />
+	<@liferay_ui["tabs"]
+		names="content-selection,display-settings"
+		param="tabs2"
+		refresh=false
+	>
 
-			<#assign selectedValue = false>
+		<@liferay_ui["section"]>
+			<@aui["fieldset"] label="asset-entry-type">
+				<@aui["select"] label="" name="anyAssetType">
+					<@aui["option"] label="any" selected=anyAssetType value=true />
 
-			<#if !anyAssetType && (classNameIds?size > 1)>
-				<#assign selectedValue = true>
-			</#if>
-
-			<@aui["option"] label='${languageUtil.get(themeDisplay.getLocale(), "select-more-than-one")}...' selected=selectedValue value=false />
-
-			<optgroup label="<@liferay_ui["message"] key="asset-type" />">
-				<#assign i = 0>
-
-				<#list availableClassNameIds as classNameId>
 					<#assign selectedValue = false>
 
-					<#if (classNameIds?size == 1) && (classNameId == classNameIds[0])>
+					<#if !anyAssetType && (classNameIds?size > 1)>
 						<#assign selectedValue = true>
 					</#if>
 
-					<@aui["option"] label=modelResources[i] selected=selectedValue value=classNameId />
+					<@aui["option"] label='${languageUtil.get(themeDisplay.getLocale(), "select-more-than-one")}...' selected=selectedValue value=false />
 
-					<#assign i = i + 1>
-				</#list>
-			</optgroup>
+					<optgroup label="<@liferay_ui["message"] key="asset-type" />">
+						<#assign i = 0>
+
+						<#list availableClassNameIds as classNameId>
+							<#assign selectedValue = false>
+
+							<#if (classNameIds?size == 1) && (classNameId == classNameIds[0])>
+								<#assign selectedValue = true>
+							</#if>
+
+							<@aui["option"] label=modelResources[i] selected=selectedValue value=classNameId />
+
+							<#assign i = i + 1>
+						</#list>
+					</optgroup>
+				</@>
+
+				<@aui["input"] name="classNameIds" type="hidden" />
+
+				<#assign cssClass = "">
+
+				<#if anyAssetType>
+					<#assign cssClass = "hide">
+				</#if>
+
+				<div class="${cssClass}" id="<@portlet["namespace"] />classNamesBoxes">
+					<@liferay_ui["input-move-boxes"]
+						leftBoxName="currentClassNameIds"
+						leftList=typesLeftList
+						leftReorder="true"
+						leftTitle="selected"
+						rightBoxName="availableClassNameIds"
+						rightList=typesRightList
+						rightTitle="available"
+					/>
+				</div>
+			</@>
 		</@>
 
-		<@aui["input"] name="classNameIds" type="hidden" />
-
-		<#assign cssClass = "">
-
-		<#if anyAssetType>
-			<#assign cssClass = "hide">
-		</#if>
-
-		<div class="${cssClass}" id="<@portlet["namespace"] />classNamesBoxes">
-			<@liferay_ui["input-move-boxes"]
-				leftBoxName="currentClassNameIds"
-				leftList=typesLeftList
-				leftReorder="true"
-				leftTitle="selected"
-				rightBoxName="availableClassNameIds"
-				rightList=typesRightList
-				rightTitle="available"
-			/>
-		</div>
+		<@liferay_ui["section"]>
+			<@aui["fieldset"] label="display-settings">
+				<div class="display-template">
+					<@liferay_ui["ddm-template-selector"]
+						classNameId=portalUtil.getClassNameId(templateHandler.getClassName())
+						displayStyle=displayStyle
+						displayStyleGroupId=displayStyleGroupId
+						displayStyles=displayStyles
+						label="display-template"
+						refreshURL=configurationURL
+					/>
+				</div>
+			</@>
+		</@>
 	</@>
 
 	<@aui["button-row"]>

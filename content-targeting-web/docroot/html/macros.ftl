@@ -105,7 +105,11 @@
 		<#list queryRules as queryRule>
 			<#if selectedIndex != queryRule_index>
 				<div class="hide full-content" id="<@portlet["namespace"] />FullContent${queryRule_index}">
-					<@renderAssetEntry assetEntry=queryRule.getAssetEntry() />
+					<#if queryRule.getTemplate()??>
+						${queryRule.getTemplate()}
+					<#else>
+						<@renderAssetEntry assetEntry=queryRule.getAssetEntry() />
+					</#if>
 				</div>
 			</#if>
 		</#list>

@@ -26,7 +26,11 @@
 <div class="content-container ${containerCssClass}">
 	<#if isMatchingRule>
 		<div class="full-content" id="<@portlet["namespace"] />FullContent${selectedIndex}">
-			<@renderAssetEntry />
+			<#if portletDisplayTemplateHtml??>
+				${portletDisplayTemplateHtml}
+			<#else>
+				<@renderAssetEntry />
+			</#if>
 
 			<@aui["script"] position="inline">
 				Liferay.Analytics.track('view', {

@@ -20,106 +20,130 @@
 	<@portlet["param"] name="redirect" value="${currentURL}" />
 </@>
 
-<span class="title"><@liferay_ui["message"] key="display-the-following-content"/></span>
-
 <@aui["form"] action="${configurationURL}" method="post" name="fm">
-	<div class="rules-panel">
-		<div id="<@portlet["namespace"] />queryRules">
-			<@aui["fieldset"] label="">
-				<#assign rowClass = "first active" />
-				<#assign isFirst = true />
+	<@liferay_ui["tabs"]
+		names="content-selection,display-settings"
+		param="tabs2"
+		refresh=false
+	>
 
-				<#list queryLogicIndexes as queryLogicIndex>
-					${request.setAttribute("configuration.index", queryLogicIndex)}
-					${request.setAttribute("configuration.isFirst", isFirst)}
+		<@liferay_ui["section"]>
+			<span class="title"><@liferay_ui["message"] key="display-the-following-content"/></span>
 
-					<div class="lfr-form-row ${rowClass}">
-						<div class="row-fields">
-							<#include "edit_query_rule.ftl" />
-						</div>
-					</div>
+			<div class="rules-panel">
+				<div id="<@portlet["namespace"] />queryRules">
+					<@aui["fieldset"] label="">
+						<#assign rowClass = "first active" />
+						<#assign isFirst = true />
 
-					<#assign rowClass = "" />
-					<#assign isFirst = false />
-				</#list>
-			</@>
-		</div>
+						<#list queryLogicIndexes as queryLogicIndex>
+							${request.setAttribute("configuration.index", queryLogicIndex)}
+							${request.setAttribute("configuration.isFirst", isFirst)}
 
-		<div class="lfr-form-row last">
-			<div class="row-fields">
-				<div class="default-content">
-					<div class="full-view hide">
-						<@aui["column"] columnWidth=60>
-							<span class="otherwise-text"><@liferay_ui["message"] key="otherwise" /></span>
-						</@>
-
-						<@aui["column"] columnWidth=40>
-							<@aui["input"] checked=!contentDefaultValue label="dont-display-anything" name="contentDefaultValue" type="radio" value=false />
-
-							<@aui["input"] checked=contentDefaultValue label="display-this-content" name="contentDefaultValue" type="radio" value=true />
-
-							<div id="<@portlet["namespace"] />contentDefaultBox">
-								<div class="select-asset-selector">
-									<#assign cssClass = "">
-
-									<#if (assetEntryIdDefault <= 0)>
-										<#assign cssClass = "hide">
-									</#if>
-
-									<div class="asset-preview ${cssClass}" id="<@portlet["namespace"] />selectedContentDefault">
-										<@aui["column"]>
-											<img class="asset-image" src="${assetImageDefault}" />
-										</@>
-										<@aui["column"]>
-											<div class="asset-title" id="<@portlet["namespace"] />assetTitleInfoDefault">${assetTitleDefault}</div>
-											<div class="asset-type" id="<@portlet["namespace"] />assetTypeInfoDefault"><@liferay_ui["message"] key="type" />: ${assetTypeDefault}</div>
-										</@>
-									</div>
-
-									<@aui["input"] name="assetEntryIdDefault" type="hidden" value=assetEntryIdDefault />
-
-									<div class="lfr-meta-actions edit-controls">
-										<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" message=languageUtil.get(locale, "select-content") showWhenSingleIcon=true>
-											<#list assetRendererFactories as assetRendererFactory>
-												<@liferay_ui["icon"]
-													cssClass="asset-selector"
-													data=userSegmentContentDisplayUtilClass.getAssetSelectorIconData(request, assetRendererFactory, "Default")
-													id="groupId_${assetRendererFactory.getTypeName(locale, false)}_Default"
-													message=assetRendererFactory.getTypeName(locale, false)
-													src=assetRendererFactory.getIconPath(renderRequest)
-													url="javascript:;"
-												/>
-											</#list>
-										</@>
-									</div>
+							<div class="lfr-form-row ${rowClass}">
+								<div class="row-fields">
+									<#include "edit_query_rule.ftl" />
 								</div>
 							</div>
-						</@>
-					</div>
 
-					<div class="summary-view">
-						<@aui["column"] columnWidth=50>
-							<span class="otherwise-text"><@liferay_ui["message"] key="otherwise" /></span>
-						</@>
+							<#assign rowClass = "" />
+							<#assign isFirst = false />
+						</#list>
+					</@>
+				</div>
 
-						<@aui["column"] columnWidth=50>
-							<span class="default-content-value-text">
-								<#if (!contentDefaultValue)>
-									<@liferay_ui["message"] key="dont-display-anything" />
-								<#else>
-									<@liferay_ui["message"] key="display-this-content" />
-								</#if>
-							</span>
+				<div class="lfr-form-row last">
+					<div class="row-fields">
+						<div class="default-content">
+							<div class="full-view hide">
+								<@aui["column"] columnWidth=60>
+									<span class="otherwise-text"><@liferay_ui["message"] key="otherwise" /></span>
+								</@>
 
-							<#if (contentDefaultValue && (assetEntryIdDefault > 0))>
-								<span class="default-content-value">${assetTitleDefault} (<span class="default-content-value-type">${assetTypeDefault}</span>)</span>
-							</#if>
-						</@>
+								<@aui["column"] columnWidth=40>
+									<@aui["input"] checked=!contentDefaultValue label="dont-display-anything" name="contentDefaultValue" type="radio" value=false />
+
+									<@aui["input"] checked=contentDefaultValue label="display-this-content" name="contentDefaultValue" type="radio" value=true />
+
+									<div id="<@portlet["namespace"] />contentDefaultBox">
+										<div class="select-asset-selector">
+											<#assign cssClass = "">
+
+											<#if (assetEntryIdDefault <= 0)>
+												<#assign cssClass = "hide">
+											</#if>
+
+											<div class="asset-preview ${cssClass}" id="<@portlet["namespace"] />selectedContentDefault">
+												<@aui["column"]>
+													<img class="asset-image" src="${assetImageDefault}" />
+												</@>
+												<@aui["column"]>
+													<div class="asset-title" id="<@portlet["namespace"] />assetTitleInfoDefault">${assetTitleDefault}</div>
+													<div class="asset-type" id="<@portlet["namespace"] />assetTypeInfoDefault"><@liferay_ui["message"] key="type" />: ${assetTypeDefault}</div>
+												</@>
+											</div>
+
+											<@aui["input"] name="assetEntryIdDefault" type="hidden" value=assetEntryIdDefault />
+
+											<div class="lfr-meta-actions edit-controls">
+												<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" message=languageUtil.get(locale, "select-content") showWhenSingleIcon=true>
+													<#list assetRendererFactories as assetRendererFactory>
+														<@liferay_ui["icon"]
+															cssClass="asset-selector"
+															data=userSegmentContentDisplayUtilClass.getAssetSelectorIconData(request, assetRendererFactory, "Default")
+															id="groupId_${assetRendererFactory.getTypeName(locale, false)}_Default"
+															message=assetRendererFactory.getTypeName(locale, false)
+															src=assetRendererFactory.getIconPath(renderRequest)
+															url="javascript:;"
+														/>
+													</#list>
+												</@>
+											</div>
+										</div>
+									</div>
+								</@>
+							</div>
+
+							<div class="summary-view">
+								<@aui["column"] columnWidth=50>
+									<span class="otherwise-text"><@liferay_ui["message"] key="otherwise" /></span>
+								</@>
+
+								<@aui["column"] columnWidth=50>
+									<span class="default-content-value-text">
+										<#if (!contentDefaultValue)>
+											<@liferay_ui["message"] key="dont-display-anything" />
+										<#else>
+											<@liferay_ui["message"] key="display-this-content" />
+										</#if>
+									</span>
+
+									<#if (contentDefaultValue && (assetEntryIdDefault > 0))>
+										<span class="default-content-value">${assetTitleDefault} (<span class="default-content-value-type">${assetTypeDefault}</span>)</span>
+									</#if>
+								</@>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+		</@>
+
+		<@liferay_ui["section"]>
+			<span class="title"><@liferay_ui["message"] key="display-settings"/></span>
+
+			<div class="display-template">
+				<@liferay_ui["ddm-template-selector"]
+					classNameId=portalUtil.getClassNameId(templateHandler.getClassName())
+					displayStyle=displayStyle
+					displayStyleGroupId=displayStyleGroupId
+					displayStyles=displayStyles
+					label="display-template"
+					refreshURL=configurationURL
+				/>
+			</div>
+		</@>
+	</@>
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" value="save" />

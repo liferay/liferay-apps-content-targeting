@@ -18,11 +18,15 @@
 <#include "../macros.ftl" />
 
 <#if assetEntries?has_content>
-	<#list assetEntries as assetEntry>
-		<div class="asset-entry">
-			<@renderAssetEntry assetEntry=assetEntry displayStyle="abstracts" showEditLink=true />
-		</div>
-	</#list>
+	<#if portletDisplayTemplateHtml??>
+		${portletDisplayTemplateHtml}
+	<#else>
+		<#list assetEntries as assetEntry>
+			<div class="asset-entry">
+				<@renderAssetEntry assetEntry=assetEntry displayStyle="abstracts" showEditLink=true />
+			</div>
+		</#list>
+	</#if>
 <#else>
 	<div class="alert alert-info">
 		<@liferay_ui["message"] key="there-are-no-matching-rules" />
