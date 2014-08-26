@@ -54,9 +54,9 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 				function(item) {
 					var itemId = item.attr('id');
 
-				   if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(itemId)) {
-					   trackingForms.push(itemId);
-				   }
+					if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(itemId)) {
+						trackingForms.push(itemId);
+					}
 				}
 			);
 

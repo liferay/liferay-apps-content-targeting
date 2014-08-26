@@ -28,11 +28,14 @@ UnicodeProperties groupTypeSettingsProperties = themeDisplay.getScopeGroup().get
 
 <c:if test='<%= !layout.isTypeControlPanel() && (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), true)) && (entry != null) %>'>
 	<aui:script position="inline">
-		Liferay.Analytics.track('view', {
-			className: '<%= BlogsEntry.class.getName() %>',
-			classPK: '<%= entry.getPrimaryKey() %>',
-			referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
-			referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
-		});
+		Liferay.Analytics.track(
+			'view',
+			{
+				className: '<%= BlogsEntry.class.getName() %>',
+				classPK: '<%= entry.getPrimaryKey() %>',
+				referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
+				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
+			}
+		);
 	</aui:script>
 </c:if>

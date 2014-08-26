@@ -35,8 +35,8 @@
 	<@aui["input"] name="description" />
 
 	<@aui["field-wrapper"] label="rules">
-		<div id="formBuilderBB" class="yui3-widget component diagram-builder form-builder liferayctformbuilder">
-			<div id="formBuilderCB" class="diagram-builder-content form-builder-content">
+		<div class="component diagram-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
+			<div class="diagram-builder-content form-builder-content" id="formBuilderCB">
 				<div class="tabbable">
 					<div class="tabbable-content">
 						<ul class="nav nav-tabs">
@@ -45,7 +45,7 @@
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane">
-								<div class="panel-page-menu hide" id="formBuilderSB">
+								<div class="hide panel-page-menu" id="formBuilderSB">
 									<div class="search-panels">
 										<i class="icon-search"></i>
 
@@ -55,14 +55,14 @@
 									</div>
 								</div>
 
-								<ul class="diagram-builder-fields-container form-builder-fields-container clearfix">
+								<ul class="clearfix diagram-builder-fields-container form-builder-fields-container">
 									<#list ruleTemplates as template>
 										<#assign rule = template.getRule()>
 										<#assign templateKey = template.getTemplateKey()>
 										<#assign ruleCategory = rule.getRuleCategory()>
 
-										<li class="diagram-builder-field form-builder-field hide" data-icon="${rule.getIcon()}" data-key="${templateKey}" data-categorydescription="${ruleCategory.getDescription(locale)}" data-categoryicon="${ruleCategory.getIcon()}" data-categorykey="${ruleCategory.getCategoryKey()}" data-categoryname="${ruleCategory.getName(locale)}" data-template="${template.getTemplate()}" data-unique="${(!rule.isInstantiable())?string}">
-											<span class="icon diagram-builder-field-icon ${rule.getIcon()}"></span>
+										<li class="diagram-builder-field form-builder-field hide" data-categorydescription="${ruleCategory.getDescription(locale)}" data-categoryicon="${ruleCategory.getIcon()}" data-categorykey="${ruleCategory.getCategoryKey()}" data-categoryname="${ruleCategory.getName(locale)}" data-icon="${rule.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!rule.isInstantiable())?string}">
+											<span class="diagram-builder-field-icon icon ${rule.getIcon()}"></span>
 											<div class="diagram-builder-field-label">
 												<div class="row">
 													<div class="field-title">${rule.getName(locale)}</div>
@@ -97,12 +97,12 @@
 									<#assign rule = template.getRule()>
 									<#assign templateKey = template.getTemplateKey()>
 
-									<div class="widget component form-builder-field yui3-widget hide" data-icon="${rule.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!rule.isInstantiable())?string}">
+									<div class="component form-builder-field hide widget yui3-widget" data-icon="${rule.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!rule.isInstantiable())?string}">
 										<div>
 											<div>
 												<div class="field-header">
 													<div class="field-icon"><i class="${rule.getIcon()}"></i></div>
-													<div class="row field-info">
+													<div class="field-info row">
 														<div class="field-title">${rule.getName(locale)}</div>
 														<div class="field-description">${rule.getDescription(locale)}</div>
 													</div>

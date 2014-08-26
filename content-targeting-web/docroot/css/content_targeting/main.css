@@ -53,8 +53,8 @@
 				.category-header {
 					border-bottom: solid 1px #DDD;
 					margin-right: 20px;
-					padding: 5px 0;
 					overflow: hidden;
+					padding: 5px 0;
 					position: relative;
 
 					.category-icon {
@@ -120,7 +120,7 @@
 
 				.category-wrapper:last-child {
 					.category-content.toggler-content-expanded {
-						border-bottom: none;
+						border-bottom-width: 0;
 					}
 				}
 
@@ -136,11 +136,11 @@
 
 					&:hover {
 						background-color: transparent;
-						color: #009ae5;
+						color: #009AE5;
 					}
 
 					&.unselectable {
-						 color: #AEAEAE;
+						color: #AEAEAE;
 					}
 
 					:last-child {
@@ -148,8 +148,8 @@
 					}
 
 					.diagram-builder-field-icon {
-						font-size: 20px;
 						float: left;
+						font-size: 20px;
 						height: 20px;
 						margin-right: 15px;
 						margin-top: 5px;
@@ -184,8 +184,8 @@
 			}
 
 			.diagram-builder-canvas {
-				background-color: #f6f6f6;
-				border: none;
+				background-color: #F6F6F6;
+				border-width: 0;
 
 				&.has-items {
 					.alert-no-items {
@@ -216,9 +216,9 @@
 
 						:last-child {
 							background: transparent;
-							border: none;
+							border-width: 0;
 							box-shadow: inherit;
-							color: #ccc;
+							color: #CCC;
 							display: inline-block;
 							font-size: 16px;
 						}
@@ -230,7 +230,7 @@
 				}
 
 				.form-builder-field {
-					border: 1px solid #ccc;
+					border: 1px solid #CCC;
 					border-left-color: #999;
 					border-left-width: 2px;
 					border-radius: 0;
@@ -240,7 +240,7 @@
 					margin: 30px;
 
 					.form-builder-field-content {
-						border-left: 2px dotted #ccc;
+						border-left: 2px dotted #CCC;
 						margin: -8px;
 						padding: 8px;
 
@@ -281,10 +281,10 @@
 
 				.form-builder-field-selected {
 					border-color: rgba(0, 154, 229, 0.5);
-					border-left-color: #009ae5;
+					border-left-color: #009AE5;
 					border-left-width: 5px;
 
-					@include box-shadow(0 3px 0 #e9e9e9);
+					@include box-shadow(0 3px 0 #E9E9E9);
 
 					.form-builder-field-content {
 						border-left-color: rgba(0, 154, 229, 0.5);
@@ -292,7 +292,7 @@
 					}
 
 					.field-header, .btn-group :last-child {
-						color: #009ae5;
+						color: #009AE5;
 					}
 				}
 			}

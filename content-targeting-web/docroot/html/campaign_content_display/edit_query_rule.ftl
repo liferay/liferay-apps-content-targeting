@@ -67,7 +67,7 @@
 					</@>
 				</div>
 
-				<div class="lfr-meta-actions edit-controls">
+				<div class="edit-controls lfr-meta-actions">
 					<@aui["input"] name="assetEntryId${index}" type="hidden" value=queryRule.getAssetEntryId() />
 
 					<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" message=languageUtil.get(locale, "select-content") showWhenSingleIcon=true>

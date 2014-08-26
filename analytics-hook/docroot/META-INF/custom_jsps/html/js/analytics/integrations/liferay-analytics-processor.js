@@ -1,19 +1,20 @@
 ;(function() {
-	var ioRequest,
-		isFunction,
-		pendingFlush,
-		requestId,
-		requestInterval,
-		requestUri,
-		themeDisplayData = {},
+	var ioRequest;
+	var isFunction;
+	var pendingFlush;
+	var requestId;
+	var requestInterval;
+	var requestUri;
+	var themeDisplayData = {};
 
-		LiferayAnalyticsProcessor = Liferay.Analytics.integration('LiferayAnalyticsProcessor').readyOnInitialize();
+	var LiferayAnalyticsProcessor = Liferay.Analytics.integration('LiferayAnalyticsProcessor').readyOnInitialize();
 
 	LiferayAnalyticsProcessor.prototype._ready = true;
 
 	LiferayAnalyticsProcessor.prototype.flush = function(callback) {
-		var instance = this,
-			events = instance.getPendingEvents();
+		var instance = this;
+
+		var events = instance.getPendingEvents();
 
 		pendingFlush = false;
 
@@ -23,17 +24,17 @@
 					requestUri,
 					{
 						data: {
-							themeDisplayData: JSON.stringify(themeDisplayData),
-							events: JSON.stringify(events)
+							events: JSON.stringify(events),
+							themeDisplayData: JSON.stringify(themeDisplayData)
 						},
 						on: {
+							failure: function(err) {
+								console.error(err.type);
+							},
 							success: function() {
 								if (isFunction(callback)) {
 									callback();
 								}
-							},
-							failure: function(err) {
-								console.error(err.type);
 							}
 						}
 					}
@@ -50,8 +51,9 @@
 	};
 
 	LiferayAnalyticsProcessor.prototype.getPendingEvents = function() {
-		var instance = this,
-			storedEvents = localStorage.getItem('ct-analytics-events') || '[]';
+		var instance = this;
+
+		var storedEvents = localStorage.getItem('ct-analytics-events') || '[]';
 
 		return JSON.parse(storedEvents);
 	};
@@ -85,15 +87,17 @@
 	};
 
 	LiferayAnalyticsProcessor.prototype.store = function(events) {
-		var instance = this,
-			events = events || [];
+		var instance = this;
+
+		events = events || [];
 
 		localStorage.setItem('ct-analytics-events', JSON.stringify(events));
 	};
 
 	LiferayAnalyticsProcessor.prototype.track = function(event, properties) {
-		var instance = this,
-			events = instance.getPendingEvents();
+		var instance = this;
+
+		var events = instance.getPendingEvents();
 
 		events.push(event.obj);
 

@@ -28,8 +28,8 @@
 <@aui["input"] label="alias" name="{ct_field_guid}alias" type="text" value=alias />
 
 <div class="rules-panel" style="background-color:transparent; margin:0px;">
-	<div class="select-asset-selector control-group">
-		<div class="lfr-meta-actions edit-controls">
+	<div class="control-group select-asset-selector">
+		<div class="edit-controls lfr-meta-actions">
 			<@aui["input"] name="{ct_field_guid}assetEntryId" type="hidden" value=assetEntryId />
 
 			<label class="control-label"><@liferay_ui["message"] key="select-the-content-to-be-tracked" /></label>

@@ -164,7 +164,7 @@ boolean showImageContainer = false;
 										<div class="lfr-preview-file-image-container">
 											<img class="lfr-preview-file-image-current" id="<portlet:namespace />previewFileImage" src="<%= previewFileURL + "1" %>" />
 										</div>
-										<span class="lfr-preview-file-actions hide" id="<portlet:namespace />previewFileActions">
+										<span class="hide lfr-preview-file-actions" id="<portlet:namespace />previewFileActions">
 											<span class="lfr-preview-file-toolbar" id="<portlet:namespace />previewToolbar"></span>
 
 											<span class="lfr-preview-file-info">

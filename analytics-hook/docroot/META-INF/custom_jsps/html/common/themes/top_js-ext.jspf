@@ -43,13 +43,16 @@ UnicodeProperties groupTypeSettingsProperties = themeDisplay.getScopeGroup().get
 		long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 		%>
 
-		Liferay.Analytics.track('view', {
-			className: '<%= Layout.class.getName() %>',
-			classPK: '<%= layout.getPlid() %>',
-			groupId: '<%= layout.getGroupId() %>',
-			referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
-			referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
-		});
+		Liferay.Analytics.track(
+			'view',
+			{
+				className: '<%= Layout.class.getName() %>',
+				classPK: '<%= layout.getPlid() %>',
+				groupId: '<%= layout.getGroupId() %>',
+				referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
+				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
+			}
+		);
 	</c:if>
 
 	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.youtube.enabled"), true) %>'>

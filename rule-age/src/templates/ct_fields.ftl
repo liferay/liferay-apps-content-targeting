@@ -16,9 +16,9 @@
 	</div>
 </#if>
 
-<@aui["input"] cssClass="slider-input" inlineField=true name="olderThan" size="2" maxlength="3" value=olderThan /> <span class="slider-holder older"></span>
+<@aui["input"] cssClass="slider-input" inlineField=true maxlength="3" name="olderThan" size="2" value=olderThan /> <span class="older slider-holder"></span>
 
-<@aui["input"] cssClass="slider-input" inlineField=true name="youngerThan" size="2" maxlength="3" value=youngerThan /> <span class="slider-holder younger"></span>
+<@aui["input"] cssClass="slider-input" inlineField=true maxlength="3" name="youngerThan" size="2" value=youngerThan /> <span class="slider-holder younger"></span>
 
 <@aui["script"] use="liferay-input-slider">
 	new Liferay.InputSlider(

@@ -37,8 +37,8 @@
 		.category-header {
 			border-bottom: solid 1px #DDD;
 			margin-right: 20px;
-			padding: 5px 0;
 			overflow: hidden;
+			padding: 5px 0;
 			position: relative;
 
 			.category-icon {
@@ -106,8 +106,8 @@
 			height: 18px;
 			margin-left: 5px;
 			margin-top: 6px;
-			width: 27px;
 			position: absolute;
+			width: 27px;
 		}
 
 		.search-panels-input {

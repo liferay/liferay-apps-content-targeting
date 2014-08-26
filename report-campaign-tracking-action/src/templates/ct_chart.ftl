@@ -62,5 +62,4 @@
 	});
 </@>
 
-
 <div id="campaignTrackingActionChart"></div>

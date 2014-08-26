@@ -3,7 +3,7 @@ AUI.add(
 	function(A) {
 		var Lang = A.Lang;
 
-		var SearchImpl = A.Component.create (
+		var SearchImpl = A.Component.create(
 			{
 				AUGMENTS: [A.AutoCompleteBase],
 
@@ -24,10 +24,6 @@ AUI.add(
 
 		var AjaxSearch = A.Component.create(
 			{
-				EXTENDS: SearchImpl,
-
-				NAME: 'ajaxsearch',
-
 				ATTRS: {
 					minQueryLength: {
 						validator: Lang.isNumber,
@@ -48,18 +44,16 @@ AUI.add(
 						setter: '_setLocator',
 						value: 'search'
 					}
-				}
+				},
+
+				EXTENDS: SearchImpl,
+
+				NAME: 'ajaxsearch'
 			}
 		);
 
 		var AjaxContentSearch = A.Component.create(
 			{
-				AUGMENTS: [Liferay.PortletBase],
-
-				EXTENDS: A.Base,
-
-				NAME: 'ajaxcontentsearch',
-
 				ATTRS: {
 					contentPanel: {
 						setter: A.one
@@ -71,6 +65,12 @@ AUI.add(
 						validator: Lang.isString
 					}
 				},
+
+				AUGMENTS: [Liferay.PortletBase],
+
+				EXTENDS: A.Base,
+
+				NAME: 'ajaxcontentsearch',
 
 				prototype: {
 					initializer: function(config) {

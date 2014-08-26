@@ -32,6 +32,6 @@
 	</#if>
 
 	<#if userSegmentPermission.contains(permissionChecker, scopeGroupId, scopeGroupId, actionKeys.DELETE)>
-		<@aui["nav-item"] cssClass="hide" id="deleteUserSegments" iconCssClass="icon-remove" label="delete" />
+		<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteUserSegments" label="delete" />
 	</#if>
 </@>

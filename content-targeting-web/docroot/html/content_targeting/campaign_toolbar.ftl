@@ -32,6 +32,6 @@
 	</#if>
 
 	<#if campaignPermission.contains(permissionChecker, scopeGroupId, scopeGroupId, actionKeys.DELETE)>
-		<@aui["nav-item"] cssClass="hide" id="deleteCampaigns" iconCssClass="icon-remove" label="delete" />
+		<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteCampaigns" label="delete" />
 	</#if>
 </@>

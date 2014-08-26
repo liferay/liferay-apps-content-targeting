@@ -20,7 +20,7 @@ AUI.add(
 
 						WIN.onYouTubeIframeAPIReady = function() {
 							instance._initializePlayers();
-						}
+						};
 
 						A.Get.js(IFRAME_API_SRC);
 					},
@@ -31,14 +31,14 @@ AUI.add(
 					},
 
 					_initializePlayers: function() {
-						var instance = this,
-							players = {},
-							states = {};
+						var instance = this;
+						var players = {};
 
 						A.all('iframe[src*="youtube.com"]').each(
 							function(ytIframe) {
-								var url = ytIframe.attr('src'),
-									id = ytIframe.attr('id');
+								var url = ytIframe.attr('src');
+
+								var id = ytIframe.attr('id');
 
 								players[id] = new YT.Player(
 									id,
@@ -53,6 +53,8 @@ AUI.add(
 							}
 						);
 
+						var states = {};
+
 						states[YT.PlayerState.UNSTARTED] = 'unstarted';
 						states[YT.PlayerState.ENDED] = 'ended';
 						states[YT.PlayerState.PLAYING] = 'playing';
@@ -65,10 +67,12 @@ AUI.add(
 
 					_onPlayerError: function(event, playerId) {
 						var instance = this;
+
 					},
 
 					_onPlayerReady: function(event, playerId) {
 						var instance = this;
+
 					},
 
 					_onPlayerStateChange: function(event, playerId) {
