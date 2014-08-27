@@ -75,7 +75,7 @@ public class UserSegmentContentListPortlet extends FreeMarkerDisplayPortlet {
 		portletPreferences.setValue(
 			"anyAssetType", String.valueOf(anyAssetType));
 
-		if (ArrayUtil.isEmpty(classNameIds)) {
+		if (!ArrayUtil.isEmpty(classNameIds)) {
 			portletPreferences.setValues("classNameIds", classNameIds);
 		}
 
