@@ -37,6 +37,10 @@ public class ContentTargetingUtil {
 			return null;
 		}
 
+		if (scopeGroup.isStagingGroup()) {
+			scopeGroup = scopeGroup.getLiveGroup();
+		}
+
 		List<Group> groups = scopeGroup.getAncestors();
 
 		groups.add(scopeGroup);
