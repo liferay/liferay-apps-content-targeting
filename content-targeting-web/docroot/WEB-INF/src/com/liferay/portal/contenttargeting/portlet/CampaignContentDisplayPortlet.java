@@ -102,6 +102,11 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			request, "assetEntryIdDefault");
 		boolean contentDefaultValue = ParamUtil.getBoolean(
 			request, "contentDefaultValue");
+
+		if (!contentDefaultValue) {
+			assetEntryIdDefault = 0;
+		}
+
 		int[] queryRulesIndexes = StringUtil.split(
 			ParamUtil.getString(request, "queryLogicIndexes"), 0);
 
@@ -179,12 +184,10 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			}
 		}
 
-		if (assetEntryIdDefault > 0) {
-			CampaignQueryRule campaignQueryRule = new CampaignQueryRule(
-				assetEntryIdDefault, 0, -1, locale);
+		CampaignQueryRule campaignQueryRule = new CampaignQueryRule(
+			assetEntryIdDefault, 0, -1, locale);
 
-			campaignQueryRules.add(campaignQueryRule);
-		}
+		campaignQueryRules.add(campaignQueryRule);
 
 		return campaignQueryRules;
 	}
@@ -254,10 +257,15 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 		if (Validator.isNull(path) ||
 			path.equals(CampaignContentDisplayPath.VIEW)) {
 
+			template.put("contentDefaultValue", contentDefaultValue);
+
 			CampaignQueryRule queryRule = null;
 
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
+
+			long groupId = themeDisplay.getScopeGroupId();
+			long campaignClassPK = 0;
 
 			if (userSegmentIds != null) {
 				long[] groupIds =
@@ -273,11 +281,14 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 						campaign.getCampaignId(), portletPreferences,
 						themeDisplay.getLocale());
 
-					template.put("campaignClassName", Campaign.class.getName());
-					template.put("campaignClassPK", campaign.getCampaignId());
-					template.put("groupId", campaign.getGroupId());
+					campaignClassPK = campaign.getCampaignId();
+					groupId = campaign.getGroupId();
 				}
 			}
+
+			template.put("campaignClassName", Campaign.class.getName());
+			template.put("campaignClassPK", campaignClassPK);
+			template.put("groupId", groupId);
 
 			boolean isMatchingRule = false;
 
@@ -297,31 +308,7 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 				AssetEntry assetEntry =
 					AssetEntryLocalServiceUtil.fetchAssetEntry(assetEntryId);
 
-				AssetRendererFactory assetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(
-							assetEntry.getClassName());
-
-				AssetRenderer assetRenderer =
-					assetRendererFactory.getAssetRenderer(
-						assetEntry.getClassPK());
-
-				portletRequest.setAttribute(
-					"view.jsp-results", new ArrayList());
-				portletRequest.setAttribute(
-					"view.jsp-assetEntryIndex", new Integer(0));
-				portletRequest.setAttribute("view.jsp-assetEntry", assetEntry);
-				portletRequest.setAttribute(
-					"view.jsp-assetRendererFactory", assetRendererFactory);
-				portletRequest.setAttribute(
-					"view.jsp-assetRenderer", assetRenderer);
-				portletRequest.setAttribute(
-					"view.jsp-title",
-					assetEntry.getTitle(themeDisplay.getLocale()));
-				portletRequest.setAttribute(
-					"view.jsp-show", new Boolean(false));
-				portletRequest.setAttribute(
-					"view.jsp-print", new Boolean(false));
+				queryRule.setAssetAttributes(portletRequest);
 
 				template.put("assetEntryClassName", assetEntry.getClassName());
 				template.put("assetEntryClassPK", assetEntry.getClassPK());

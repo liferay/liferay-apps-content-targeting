@@ -72,6 +72,11 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			request, "assetEntryIdDefault");
 		boolean contentDefaultValue = ParamUtil.getBoolean(
 			request, "contentDefaultValue");
+
+		if (!contentDefaultValue) {
+			assetEntryIdDefault = 0;
+		}
+
 		int[] queryRulesIndexes = StringUtil.split(
 			ParamUtil.getString(request, "queryLogicIndexes"), 0);
 
@@ -183,13 +188,11 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			}
 		}
 
-		if (assetEntryIdDefault > 0) {
-			UserSegmentQueryRule userSegmentQueryRule =
-				new UserSegmentQueryRule(
-					true, true, assetEntryIdDefault, null, -1, locale);
+		UserSegmentQueryRule userSegmentQueryRule =
+			new UserSegmentQueryRule(
+				true, true, assetEntryIdDefault, null, -1, locale);
 
-			userSegmentQueryRules.add(userSegmentQueryRule);
-		}
+		userSegmentQueryRules.add(userSegmentQueryRule);
 
 		return userSegmentQueryRules;
 	}
@@ -238,6 +241,8 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 		if (Validator.isNull(path) ||
 			path.equals(UserSegmentContentDisplayPath.VIEW)) {
 
+			template.put("contentDefaultValue", contentDefaultValue);
+
 			UserSegmentQueryRule queryRule = null;
 
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
@@ -261,42 +266,11 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 				isMatchingRule = true;
 
-				long assetEntryId = assetEntryIdDefault;
-
 				if (queryRule != null) {
-					assetEntryId = queryRule.getAssetEntryId();
+					results.add(queryRule.getAssetEntry());
+
+					queryRule.setAssetAttributes(portletRequest);
 				}
-
-				AssetEntry assetEntry =
-					AssetEntryLocalServiceUtil.fetchAssetEntry(assetEntryId);
-
-				AssetRendererFactory assetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(
-							assetEntry.getClassName());
-
-				AssetRenderer assetRenderer =
-					assetRendererFactory.getAssetRenderer(
-						assetEntry.getClassPK());
-
-				portletRequest.setAttribute(
-					"view.jsp-results", new ArrayList());
-				portletRequest.setAttribute(
-					"view.jsp-assetEntryIndex", new Integer(0));
-				portletRequest.setAttribute("view.jsp-assetEntry", assetEntry);
-				portletRequest.setAttribute(
-					"view.jsp-assetRendererFactory", assetRendererFactory);
-				portletRequest.setAttribute(
-					"view.jsp-assetRenderer", assetRenderer);
-				portletRequest.setAttribute(
-					"view.jsp-title",
-					assetEntry.getTitle(themeDisplay.getLocale()));
-				portletRequest.setAttribute(
-					"view.jsp-show", new Boolean(false));
-				portletRequest.setAttribute(
-					"view.jsp-print", new Boolean(false));
-
-				results.add(assetEntry);
 			}
 			else {
 				portletRequest.setAttribute(

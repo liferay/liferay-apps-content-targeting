@@ -24,19 +24,19 @@
 </#if>
 
 <div class="content-container ${containerCssClass}">
-	<#if isMatchingRule>
-		<div class="full-content" id="<@portlet["namespace"] />FullContent${selectedIndex}">
+	<div class="full-content" id="<@portlet["namespace"] />FullContent${selectedIndex}">
+		<#if isMatchingRule>
 			<#if portletDisplayTemplateHtml??>
 				${portletDisplayTemplateHtml}
 			<#else>
 				<@renderAssetEntry />
 			</#if>
-		</div>
-	<#else>
-		<div class="alert alert-info">
-			<@liferay_ui["message"] key="there-are-no-matching-rules" />
-		</div>
-	</#if>
+		<#else>
+			<div class="alert alert-info">
+				<@liferay_ui["message"] key="there-are-no-matching-rules" />
+			</div>
+		</#if>
+	</div>
 
 	<#if portletDisplay.isShowConfigurationIcon()>
 		<@renderThumbnailsPreview queryRules=userSegmentQueryRules selectedIndex=selectedIndex />

@@ -14,6 +14,7 @@
 
 package com.liferay.portal.contenttargeting.portlet.util;
 
+import com.liferay.portal.contenttargeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -21,12 +22,14 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.portlet.PortletConfig;
@@ -49,14 +52,14 @@ public class AssetQueryRule {
 			return;
 		}
 
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_assetEntry.getClassName());
-
 		_assetClassName = _assetEntry.getClassName();
 		_assetClassPK = _assetEntry.getClassPK();
+		_assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_assetEntry.getClassName());
+		_assetRenderer = _assetRendererFactory.getAssetRenderer(_assetClassPK);
 		_assetTitle = _assetEntry.getTitle(locale);
-		_assetType = assetRendererFactory.getTypeName(locale, true);
+		_assetType = _assetRendererFactory.getTypeName(locale, true);
 	}
 
 	public String getAssetClassName() {
@@ -82,14 +85,7 @@ public class AssetQueryRule {
 			return StringPool.BLANK;
 		}
 
-		AssetRendererFactory assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_assetClassName);
-
-		AssetRenderer assetRenderer = assetRendererFactory.getAssetRenderer(
-			_assetClassPK);
-
-		return assetRenderer.getThumbnailPath(portletRequest);
+		return _assetRenderer.getThumbnailPath(portletRequest);
 	}
 
 	public String getAssetTitle() {
@@ -114,6 +110,22 @@ public class AssetQueryRule {
 		}
 
 		return true;
+	}
+
+	public void setAssetAttributes(PortletRequest portletRequest) {
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		portletRequest.setAttribute("view.jsp-results", new ArrayList());
+		portletRequest.setAttribute("view.jsp-assetEntryIndex", new Integer(0));
+		portletRequest.setAttribute("view.jsp-assetEntry", _assetEntry);
+		portletRequest.setAttribute(
+			"view.jsp-assetRendererFactory", _assetRendererFactory);
+		portletRequest.setAttribute("view.jsp-assetRenderer", _assetRenderer);
+		portletRequest.setAttribute(
+			"view.jsp-title", _assetEntry.getTitle(themeDisplay.getLocale()));
+		portletRequest.setAttribute("view.jsp-show", new Boolean(false));
+		portletRequest.setAttribute("view.jsp-print", new Boolean(false));
 	}
 
 	public void setAssetClassName(String assetClassName) {
@@ -189,6 +201,8 @@ public class AssetQueryRule {
 	private long _assetClassPK;
 	private AssetEntry _assetEntry;
 	private long _assetEntryId;
+	private AssetRenderer _assetRenderer;
+	private AssetRendererFactory _assetRendererFactory;
 	private String _assetTitle = StringPool.BLANK;
 	private String _assetType = StringPool.BLANK;
 	private int _index;

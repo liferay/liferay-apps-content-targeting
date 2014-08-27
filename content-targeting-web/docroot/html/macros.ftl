@@ -66,15 +66,15 @@
 >
 	<#if queryRules?has_content>
 		<#list queryRules as queryRule>
-			<#assign assetEntry = queryRule.getAssetEntry() />
+			<#if queryRule.getAssetEntry()??>
+				<#assign cssClass = "" />
 
-			<#assign cssClass = "" />
+				<#if selectedIndex != queryRule_index>
+					<#assign cssClass = "hide" />
+				</#if>
 
-			<#if selectedIndex != queryRule_index>
-				<#assign cssClass = "hide" />
+				<@getEditIconLink assetEntry=queryRule.getAssetEntry() cssClass=cssClass index=queryRule_index />
 			</#if>
-
-			<@getEditIconLink assetEntry=assetEntry cssClass=cssClass index=queryRule_index />
 		</#list>
 	</#if>
 </#macro>
@@ -103,12 +103,16 @@
 >
 	<#if queryRules?has_content && (queryRules?size > 1)>
 		<#list queryRules as queryRule>
-			<#if selectedIndex != queryRule_index>
+			<#if (selectedIndex != queryRule_index)>
 				<div class="hide full-content" id="<@portlet["namespace"] />FullContent${queryRule_index}">
-					<#if queryRule.getTemplate()??>
-						${queryRule.getTemplate()}
-					<#else>
-						<@renderAssetEntry assetEntry=queryRule.getAssetEntry() />
+					<#if (queryRule.getAssetEntryId() > 0) && (queryRule_has_next || contentDefaultValue)>
+						<#if queryRule.getTemplate()??>
+							${queryRule.getTemplate()}
+						<#else>
+							${queryRule.setAssetAttributes(renderRequest)}
+
+							<@renderAssetEntry />
+						</#if>
 					</#if>
 				</div>
 			</#if>
