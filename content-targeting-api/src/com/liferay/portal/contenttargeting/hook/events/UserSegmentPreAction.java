@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.ArrayList;
@@ -101,49 +102,11 @@ public class UserSegmentPreAction extends Action {
 	protected long[] getGroupIds(HttpServletRequest request)
 		throws PortalException, SystemException {
 
-		String pathInfo = request.getPathInfo();
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
-		int pos = pathInfo.indexOf(CharPool.SLASH, 1);
-
-		String friendlyURL = null;
-
-		if (pos != -1) {
-			friendlyURL = pathInfo.substring(0, pos);
-		}
-		else if (pathInfo.length() > 1) {
-			friendlyURL = pathInfo;
-		}
-
-		long groupId = 0;
-
-		if (!Validator.isNull(friendlyURL)) {
-			long companyId = PortalUtil.getCompanyId(request);
-
-			try {
-				Group group = GroupLocalServiceUtil.getFriendlyURLGroup(
-					companyId, friendlyURL);
-
-				groupId = group.getGroupId();
-			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e);
-				}
-			}
-		}
-
-		if (groupId == 0) {
-			LayoutSet layoutSet = (LayoutSet)request.getAttribute(
-				"VIRTUAL_HOST_LAYOUT_SET");
-
-			if (layoutSet == null) {
-				return null;
-			}
-
-			groupId = layoutSet.getGroupId();
-		}
-
-		return ContentTargetingUtil.getAncestorsAndCurrentGroupIds(groupId);
+		return ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+			themeDisplay.getScopeGroupId());
 	}
 
 	protected long[] getUserSegmentIds(
@@ -175,7 +138,7 @@ public class UserSegmentPreAction extends Action {
 			long[] groupIds = getGroupIds(request);
 
 			long[] originalUserSegmentIds = getMatchesUserSegmentIds(
-					request, groupIds, anonymousUser);
+				request, groupIds, anonymousUser);
 
 			if (userSegmentsIds == null) {
 				userSegmentsIds = originalUserSegmentIds;
