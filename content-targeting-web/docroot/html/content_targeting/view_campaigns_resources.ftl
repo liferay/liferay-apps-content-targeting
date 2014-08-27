@@ -24,7 +24,7 @@
 <@liferay_ui["search-container"]
 	emptyResultsMessage="no-campaigns-were-found"
 	iteratorURL=viewCampaignsURL
-	rowChecker=rowChecker
+	rowChecker=campaignsRowChecker
 	total=campaignSearchContainerIterator.getTotal()
 >
 	<@liferay_ui["search-container-results"]

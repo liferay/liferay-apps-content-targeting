@@ -24,7 +24,7 @@
 <@liferay_ui["search-container"]
 	emptyResultsMessage="no-user-segments-were-found"
 	iteratorURL=viewUserSegmentsURL
-	rowChecker=rowChecker
+	rowChecker=userSegmentsRowChecker
 	total=userSegmentSearchContainerIterator.getTotal()
 >
 	<@liferay_ui["search-container-results"]

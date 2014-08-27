@@ -15,6 +15,7 @@
 package com.liferay.portal.contenttargeting.portlet;
 
 import com.liferay.portal.contenttargeting.portlet.util.AssetQueryRule;
+import com.liferay.portal.contenttargeting.portlet.util.UserSegmentContentDisplayUtil;
 import com.liferay.portal.contenttargeting.portlet.util.UserSegmentQueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.UserSegmentQueryRuleUtil;
 import com.liferay.portal.contenttargeting.util.ContentTargetingUtil;
@@ -208,9 +209,7 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 		template.put(
 			"userSegmentContentDisplayPath",
-			staticModels.get(
-				"com.liferay.portal.contenttargeting.portlet." +
-					"UserSegmentContentDisplayPath"));
+			staticModels.get(UserSegmentContentDisplayPath.class.getName()));
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
@@ -387,14 +386,11 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			template.put("queryLogicIndexes", queryRulesIndexes);
 			template.put(
 				"userSegmentQueryRuleUtilClass",
-				staticModels.get(
-					"com.liferay.portal.contenttargeting.portlet.util." +
-						"UserSegmentQueryRuleUtil"));
+				staticModels.get(UserSegmentQueryRuleUtil.class.getName()));
 			template.put(
 				"userSegmentContentDisplayUtilClass",
 				staticModels.get(
-					"com.liferay.portal.contenttargeting.portlet.util." +
-						"UserSegmentContentDisplayUtil"));
+					UserSegmentContentDisplayUtil.class.getName()));
 
 			ServiceContext serviceContext = new ServiceContext();
 

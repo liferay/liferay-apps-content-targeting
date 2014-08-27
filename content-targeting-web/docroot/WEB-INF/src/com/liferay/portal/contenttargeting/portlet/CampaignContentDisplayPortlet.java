@@ -19,6 +19,7 @@ import com.liferay.portal.contenttargeting.model.Campaign;
 import com.liferay.portal.contenttargeting.portlet.util.AssetQueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.CampaignQueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.CampaignQueryRuleUtil;
+import com.liferay.portal.contenttargeting.portlet.util.UserSegmentContentDisplayUtil;
 import com.liferay.portal.contenttargeting.service.CampaignLocalService;
 import com.liferay.portal.contenttargeting.service.CampaignService;
 import com.liferay.portal.contenttargeting.util.ContentTargetingUtil;
@@ -224,9 +225,7 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 		template.put(
 			"campaignContentDisplayPath",
-			staticModels.get(
-				"com.liferay.portal.contenttargeting.portlet." +
-					"CampaignContentDisplayPath"));
+			staticModels.get(CampaignContentDisplayPath.class.getName()));
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
@@ -422,14 +421,11 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			template.put("queryLogicIndexes", queryRulesIndexes);
 			template.put(
 				"campaignQueryRuleUtilClass",
-				staticModels.get(
-					"com.liferay.portal.contenttargeting.portlet.util." +
-						"CampaignQueryRuleUtil"));
+				staticModels.get(CampaignQueryRuleUtil.class.getName()));
 			template.put(
 				"userSegmentContentDisplayUtilClass",
 				staticModels.get(
-					"com.liferay.portal.contenttargeting.portlet.util." +
-						"UserSegmentContentDisplayUtil"));
+					UserSegmentContentDisplayUtil.class.getName()));
 		}
 	}
 

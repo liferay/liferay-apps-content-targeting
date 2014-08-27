@@ -159,9 +159,7 @@ public class UserSegmentContentListPortlet extends FreeMarkerDisplayPortlet {
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 		template.put(
 			"userSegmentContentListPath",
-			staticModels.get(
-				"com.liferay.portal.contenttargeting.portlet." +
-					"UserSegmentContentListPath"));
+			staticModels.get(UserSegmentContentListPath.class.getName()));
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
@@ -220,8 +218,7 @@ public class UserSegmentContentListPortlet extends FreeMarkerDisplayPortlet {
 			template.put(
 				"assetRendererFactoryRegistryUtilClass",
 				staticModels.get(
-					"com.liferay.portlet.asset." +
-						"AssetRendererFactoryRegistryUtil"));
+					AssetRendererFactoryRegistryUtil.class.getName()));
 
 			if (assetEntries.isEmpty()) {
 				portletRequest.setAttribute(

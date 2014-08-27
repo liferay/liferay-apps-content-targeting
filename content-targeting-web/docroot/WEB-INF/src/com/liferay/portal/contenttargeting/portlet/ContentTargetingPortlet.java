@@ -37,6 +37,11 @@ import com.liferay.portal.contenttargeting.service.RuleInstanceService;
 import com.liferay.portal.contenttargeting.service.TrackingActionInstanceService;
 import com.liferay.portal.contenttargeting.service.UserSegmentLocalService;
 import com.liferay.portal.contenttargeting.service.UserSegmentService;
+import com.liferay.portal.contenttargeting.service.permission.CampaignPermission;
+import com.liferay.portal.contenttargeting.service.permission.ContentTargetingPermission;
+import com.liferay.portal.contenttargeting.service.permission.UserSegmentPermission;
+import com.liferay.portal.contenttargeting.util.ActionKeys;
+import com.liferay.portal.contenttargeting.util.CampaignConstants;
 import com.liferay.portal.contenttargeting.util.CampaignSearchContainerIterator;
 import com.liferay.portal.contenttargeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.contenttargeting.util.ContentTargetingUtil;
@@ -66,6 +71,7 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -219,7 +225,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long campaignId = ParamUtil.getLong(request, "campaignId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				request, "name");
+			request, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
@@ -295,7 +301,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		String typeSettings = report.updateReport(classPK);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				ReportInstance.class.getName(), request);
+			ReportInstance.class.getName(), request);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -317,7 +323,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
-				request, "name");
+			request, "name");
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
@@ -425,13 +431,10 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		template.put("campaignClass", Campaign.class);
 		template.put(
 			"campaignConstants",
-			staticModels.get(
-				"com.liferay.portal.contenttargeting.util.CampaignConstants"));
+			staticModels.get(CampaignConstants.class.getName()));
 		template.put(
 			"contentTargetingPath",
-			staticModels.get(
-				"com.liferay.portal.contenttargeting.portlet." +
-					"ContentTargetingPath"));
+			staticModels.get(ContentTargetingPath.class.getName()));
 		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
 		template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 		template.put("portletContext", getPortletContext());
@@ -462,27 +465,37 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			path.equals(ContentTargetingPath.VIEW_USER_SEGMENTS_RESOURCES)) {
 
 			template.put(
-				"actionKeys",
-				staticModels.get(
-					"com.liferay.portal.contenttargeting.util.ActionKeys"));
-
+				"actionKeys", staticModels.get(ActionKeys.class.getName()));
 			template.put(
 				"campaignPermission",
-				staticModels.get(
-					"com.liferay.portal.contenttargeting.service.permission." +
-						"CampaignPermission"));
+				staticModels.get(CampaignPermission.class.getName()));
 			template.put(
 				"contentTargetingPermission",
-				staticModels.get(
-					"com.liferay.portal.contenttargeting.service.permission." +
-						"ContentTargetingPermission"));
+				staticModels.get(ContentTargetingPermission.class.getName()));
 			template.put(
 				"userSegmentPermission",
-				staticModels.get(
-					"com.liferay.portal.contenttargeting.service.permission." +
-						"UserSegmentPermission"));
+				staticModels.get(UserSegmentPermission.class.getName()));
 
-			template.put("rowChecker", new RowChecker(portletResponse));
+			PermissionChecker permissionChecker =
+				(PermissionChecker)template.get("permissionChecker");
+
+			long scopeGroupId = (Long)template.get("scopeGroupId");
+
+			if (UserSegmentPermission.contains(
+					permissionChecker, scopeGroupId, scopeGroupId,
+					ActionKeys.DELETE)) {
+
+				template.put(
+					"userSegmentsRowChecker", new RowChecker(portletResponse));
+			}
+
+			if (CampaignPermission.contains(
+					permissionChecker, scopeGroupId, scopeGroupId,
+					ActionKeys.DELETE)) {
+
+				template.put(
+					"campaignsRowChecker", new RowChecker(portletResponse));
+			}
 
 			String keywords = ParamUtil.getString(portletRequest, "keywords");
 
