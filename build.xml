@@ -32,6 +32,12 @@
 		/>
 	</target>
 
+	<target name="clean-osgi-data">
+		<delete dir="${app.server.parent.dir}/data/osgi" />
+		<delete dir="${app.server.dir}/work" />
+		<delete dir="${app.server.dir}/temp" />
+	</target>
+
 	<target name="create-report">
 		<if>
 			<or>
