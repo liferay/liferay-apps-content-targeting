@@ -170,7 +170,7 @@
 							white-space: nowrap;
 						}
 
-						.field-description {
+						.field-description, .field-short-description {
 							overflow: hidden;
 							text-overflow: ellipsis;
 							white-space: nowrap;
@@ -264,7 +264,7 @@
 								margin-left: 45px;
 							}
 
-							.field-description {
+							.field-description, .field-short-description {
 								font-size: 13px;
 							}
 

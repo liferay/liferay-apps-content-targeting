@@ -105,6 +105,7 @@
 													<div class="field-info row">
 														<div class="field-title">${rule.getName(locale)}</div>
 														<div class="field-description">${rule.getDescription(locale)}</div>
+                                                        <div class="field-short-description">${rule.getShortDescription(locale)}</div>
 													</div>
 												</div>
 												<div class="field-editor">

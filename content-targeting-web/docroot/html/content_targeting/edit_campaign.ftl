@@ -136,6 +136,7 @@
 													<div class="field-info row">
 														<div class="field-title">${trackingAction.getName(locale)}</div>
 														<div class="field-description">${trackingAction.getDescription(locale)}</div>
+                                                        <div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
 													</div>
 												</div>
 												<div class="field-editor">
