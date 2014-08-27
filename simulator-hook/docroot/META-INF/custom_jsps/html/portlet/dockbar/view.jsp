@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -212,6 +212,25 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 			<aui:nav-item anchorId="editLayoutPanel" cssClass="page-edit-controls" data-panelURL="<%= editLayoutURL %>" href="javascript:;" iconCssClass="icon-edit" label="edit" />
 		</c:if>
 
+		<c:if test="<%= !group.isControlPanel() && userSetupComplete && !group.isLayoutPrototype() && !group.isLayoutSetPrototype() %>">
+
+			<%
+			String cssClass = "page-edit-controls";
+
+			boolean isSimulatedUserSegments = GetterUtil.getBoolean(request.getAttribute("isSimulatedUserSegments"));
+
+			if (isSimulatedUserSegments) {
+				cssClass = "page-edit-controls simulated";
+			}
+			%>
+
+			<liferay-portlet:renderURL portletName="ctsimulator_WAR_contenttargetingweb" var="simulatorURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+				<portlet:param name="mvcPath" value="html/ct_simulator/view.ftl" />
+			</liferay-portlet:renderURL>
+
+			<aui:nav-item anchorId="simulatorPanel" cssClass="<%= cssClass %>" data-panelURL="<%= simulatorURL %>" href="javascript:;" iconCssClass="icon-screenshot" label="simulator" title="simulator" />
+		</c:if>
+
 		<c:if test="<%= !group.isControlPanel() && userSetupComplete && (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION)) %>">
 			<aui:nav-item anchorCssClass="toggle-controls-link" cssClass="toggle-controls" iconCssClass='<%= "controls-state-icon " + (toggleControlsState.equals("visible") ? "icon-eye-open" : "icon-eye-close") %>' id="toggleControls" label="edit-controls" />
 		</c:if>
@@ -265,6 +284,54 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 		customizableColumns.get('parentNode').addClass('customizable');
 	}
 </aui:script>
+
+<c:if test="<%= !group.isControlPanel() && user.isSetupComplete() && !group.isLayoutPrototype() && !group.isLayoutSetPrototype() %>">
+	<aui:script use="liferay-dockbar">
+		Liferay.Dockbar.DOCKBAR_PANELS.simulatorPanel = {
+			css: 'lfr-has-simulator',
+			id: 'simulatorPanel',
+			node: null,
+			showFn: A.bind(Liferay.Dockbar._showPanel, Liferay.Dockbar),
+			tpl: '<div class="lfr-add-panel lfr-admin-panel" id="{0}" />'
+		};
+	</aui:script>
+
+	<script type="text/javascript">
+		AUI().applyConfig(
+			{
+				modules: {
+					'liferay-simulator': {
+						fullpath: '/o/content-targeting-web/js/ct_simulator/simulator.js'
+					}
+				}
+			}
+		);
+	</script>
+
+	<%
+	String href = HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/o/content-targeting-web/css/ct_simulator/main.css"));
+	%>
+
+	<link href="<%= href %>" rel="stylesheet" type="text/css">
+
+	<style type="text/css">
+		.aui .lfr-has-simulator {
+			padding-left: 350px;
+		}
+
+		.aui .dockbar-split.lfr-has-simulator .nav-add-controls {
+			left: 350px;
+		}
+
+		.aui .dockbar-split .dockbar .navbar-inner .nav-add-controls > li.simulated > a {
+			background-color: #92F545;
+		}
+
+		.aui .dockbar-split .dockbar .navbar-inner .nav-add-controls > li.simulated > a [class^="icon-"] {
+			color: #000;
+		}
+	</style>
+</c:if>
 
 <%!
 private boolean _hasPortlets(String category, ThemeDisplay themeDisplay) throws SystemException {
