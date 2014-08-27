@@ -38,7 +38,7 @@
 		</#if>
 	</div>
 
-	<#if portletDisplay.isShowConfigurationIcon()>
+	<#if showPreview>
 		<@renderThumbnailsPreview queryRules=userSegmentQueryRules selectedIndex=selectedIndex />
 	</#if>
 </div>

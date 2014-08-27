@@ -48,7 +48,7 @@
 		</#if>
 	</div>
 
-	<#if portletDisplay.isShowConfigurationIcon()>
+	<#if showPreview>
 		<@renderThumbnailsPreview queryRules=campaignQueryRules selectedIndex=selectedIndex />
 	</#if>
 </div>

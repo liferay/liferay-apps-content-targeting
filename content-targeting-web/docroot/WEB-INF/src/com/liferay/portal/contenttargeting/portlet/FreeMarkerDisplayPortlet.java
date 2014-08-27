@@ -16,6 +16,9 @@ package com.liferay.portal.contenttargeting.portlet;
 
 import com.liferay.portal.contenttargeting.portlet.util.AssetQueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.PortletDisplayTemplateUtil;
+import com.liferay.portal.contenttargeting.util.ActionKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
@@ -28,6 +31,10 @@ import com.liferay.portal.kernel.util.PropertiesParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.service.permission.PortletPermissionUtil;
 import com.liferay.portal.theme.PortletDisplay;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.model.AssetEntry;
@@ -120,6 +127,32 @@ public class FreeMarkerDisplayPortlet extends FreeMarkerPortlet {
 				assetQueryRule.setTemplate(assetQueryRuleTemplateHtml);
 			}
 		}
+	}
+
+	protected boolean showPreview(ThemeDisplay themeDisplay)
+		throws SystemException, PortalException {
+
+		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+		if (portletDisplay.isShowConfigurationIcon()) {
+			return true;
+		}
+
+		Group group = themeDisplay.getScopeGroup();
+		Layout layout = themeDisplay.getLayout();
+
+		if (!group.hasStagingGroup()) {
+			return false;
+		}
+
+		group = group.getStagingGroup();
+
+		layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndGroupId(
+			layout.getUuid(), group.getGroupId(), layout.isPrivateLayout());
+
+		return PortletPermissionUtil.contains(
+			themeDisplay.getPermissionChecker(), layout.getPlid(),
+			portletDisplay.getPortletName(), ActionKeys.CONFIGURATION);
 	}
 
 	protected void updatePreferences(

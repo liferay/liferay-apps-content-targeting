@@ -241,6 +241,7 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 		if (Validator.isNull(path) ||
 			path.equals(UserSegmentContentDisplayPath.VIEW)) {
 
+			template.put("showPreview", showPreview(themeDisplay));
 			template.put("contentDefaultValue", contentDefaultValue);
 
 			UserSegmentQueryRule queryRule = null;

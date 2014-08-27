@@ -257,6 +257,7 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 		if (Validator.isNull(path) ||
 			path.equals(CampaignContentDisplayPath.VIEW)) {
 
+			template.put("showPreview", showPreview(themeDisplay));
 			template.put("contentDefaultValue", contentDefaultValue);
 
 			CampaignQueryRule queryRule = null;
@@ -388,7 +389,7 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			}
 
 			List<Campaign> campaigns = _campaignService.getCampaigns(
-				themeDisplay.getScopeGroupId());
+				themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 			template.put("campaigns", campaigns);
 
