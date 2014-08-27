@@ -403,7 +403,7 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 			int[] queryRulesIndexes = GetterUtil.getIntegerValues(
 				portletPreferences.getValues("queryLogicIndexes", null),
-				new int[0]);
+				new int[] {0});
 
 			template.put("queryLogicIndexes", queryRulesIndexes);
 			template.put(
