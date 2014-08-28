@@ -52,6 +52,12 @@ else {
 	<liferay-ui:message arguments="<%= checkPortalAnalyticsLabel %>" key="check-general-content-targeting-analytics-settings-in-x" />
 </div>
 
+<c:if test="<%= liveGroup.isStaged() %>">
+	<div class="alert alert-block">
+		<liferay-ui:message key="the-selected-elements-and-actions-will-be-tracked-in-the-live-site-only" />
+	</div>
+</c:if>
+
 <aui:fieldset>
 	<aui:input disabled='<%= !PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") %>' label="pages" name="TypeSettingsProperties--content.targeting.analytics.page.enabled--" type="checkbox" value='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") && PropertiesParamUtil.getBoolean(groupTypeSettings, request, "content.targeting.analytics.page.enabled", true) %>' />
 
