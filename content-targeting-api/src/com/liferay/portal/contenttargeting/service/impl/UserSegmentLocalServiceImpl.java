@@ -100,6 +100,21 @@ public class UserSegmentLocalServiceImpl
 
 		userSegmentPersistence.update(userSegment);
 
+		Group scopeGroup = serviceContext.getScopeGroup();
+
+		if (scopeGroup.hasStagingGroup()) {
+			Group stagingGroup = scopeGroup.getStagingGroup();
+
+			ServiceContext serviceContextStaging =
+				(ServiceContext)serviceContext.clone();
+
+			serviceContextStaging.setScopeGroupId(stagingGroup.getGroupId());
+			serviceContextStaging.setUuid(assetCategory.getUuid());
+
+			addUserSegmentCategory(
+				userId, nameMap, descriptionMap, serviceContextStaging);
+		}
+
 		return userSegment;
 	}
 
@@ -124,16 +139,17 @@ public class UserSegmentLocalServiceImpl
 				ruleInstance.getRuleInstanceId());
 		}
 
-		try {
-			removeUserSegmentCategory(userSegment.getAssetCategoryId());
+		Group group = GroupLocalServiceUtil.fetchGroup(
+			userSegment.getGroupId());
+
+		AssetCategory stagingAssetCategory = getStagingAssetCategory(
+			group, userSegment.getAssetCategoryId());
+
+		if (stagingAssetCategory != null) {
+			removeUserSegmentCategory(stagingAssetCategory.getCategoryId());
 		}
-		catch (NoSuchCategoryException nsace) {
-			if (_log.isDebugEnabled()) {
-				_log.debug(
-					"Category " + userSegment.getAssetCategoryId() +
-						"could not be deleted");
-			}
-		}
+
+		removeUserSegmentCategory(userSegment.getAssetCategoryId());
 
 		return userSegment;
 	}
@@ -228,6 +244,21 @@ public class UserSegmentLocalServiceImpl
 			userSegment.getUserId(), userSegment.getAssetCategoryId(), nameMap,
 			descriptionMap, serviceContext);
 
+		AssetCategory stagingAssetCategory = getStagingAssetCategory(
+			serviceContext.getScopeGroup(), userSegment.getAssetCategoryId());
+
+		if (stagingAssetCategory != null) {
+			ServiceContext serviceContextStaging =
+				(ServiceContext)serviceContext.clone();
+
+			serviceContextStaging.setScopeGroupId(
+				stagingAssetCategory.getGroupId());
+
+			updateUserSegmentCategory(
+				userSegment.getUserId(), stagingAssetCategory.getCategoryId(),
+				nameMap, descriptionMap, serviceContext);
+		}
+
 		return userSegment;
 	}
 
@@ -267,13 +298,38 @@ public class UserSegmentLocalServiceImpl
 		return searchContext;
 	}
 
+	protected AssetCategory getStagingAssetCategory(
+			Group scopeGroup, long assetCategoryId)
+		throws SystemException {
+
+		if (!scopeGroup.hasStagingGroup()) {
+			return null;
+		}
+
+		Group stagingGroup = scopeGroup.getStagingGroup();
+
+		AssetCategory assetCategory =
+			AssetCategoryLocalServiceUtil.fetchAssetCategory(assetCategoryId);
+
+		return AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
+			assetCategory.getUuid(), stagingGroup.getGroupId());
+	}
+
 	protected void removeUserSegmentCategory(long assetCategoryId)
 		throws PortalException, SystemException {
 
 		AssetCategory assetCategory =
 			AssetCategoryLocalServiceUtil.fetchAssetCategory(assetCategoryId);
 
-		AssetCategoryLocalServiceUtil.deleteCategory(assetCategory);
+		try {
+			AssetCategoryLocalServiceUtil.deleteCategory(assetCategory);
+		}
+		catch (NoSuchCategoryException nsace) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Category " + assetCategoryId + "could not be deleted");
+			}
+		}
 
 		int categoriesCount =
 			AssetCategoryLocalServiceUtil.getVocabularyRootCategoriesCount(
