@@ -43,15 +43,17 @@
 		<c:if test="<%= trackAnalyticsForm %>">
 			var formExcludedIdsRegexStr = '<%= analyticsFormExcludedIdsRegex %>';
 
+			var defaultFormExcludedIdsRegex = /^hrefFm.*/;
+
 			<c:if test="<%= trackAnalyticsFormView %>">
 				var trackingForms = [];
 
 				A.all('form').each(
 					function(item) {
-						var itemId = item.attr('id');
+						var formId = item.attr('id');
 
-						if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(itemId)) {
-							trackingForms.push(itemId);
+						if (!defaultFormExcludedIdsRegex.test(formId) && (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId))) {
+							trackingForms.push(formId);
 						}
 					}
 				);
@@ -68,7 +70,7 @@
 					function(event) {
 						var formId = event.form.attr('id');
 
-						if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId)) {
+						if (!defaultFormExcludedIdsRegex.test(formId) && (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId))) {
 							trackElementEvent('submit', formId);
 						}
 					}
@@ -85,7 +87,7 @@
 
 						var formId = form.attr('id');
 
-						if ((!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId)) && (interactedForms.indexOf(formId) === -1)) {
+						if (!defaultFormExcludedIdsRegex.test(formId) && (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId)) && (interactedForms.indexOf(formId) === -1)) {
 							interactedForms.push(formId);
 
 							trackElementEvent('interact', formId);
