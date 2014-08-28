@@ -18,11 +18,15 @@ AUI.add(
 					initializer: function(config) {
 						var instance = this;
 
-						instance.one('#contentPreviewContainer').delegate(
-							'hover',
-							A.bind(instance._onContentPreviewHover, instance),
-							'.content-preview'
-						);
+						var contentPreviewContainer = instance.one('#contentPreviewContainer');
+
+						if (contentPreviewContainer) {
+							contentPreviewContainer.delegate(
+								'hover',
+								A.bind(instance._onContentPreviewHover, instance),
+								'.content-preview'
+							);
+						}
 					},
 
 					_onContentPreviewHover: function(event) {
