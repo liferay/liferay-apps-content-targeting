@@ -19,130 +19,134 @@
 <%
 long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 
-String modules = "aui-base";
+Group group = themeDisplay.getScopeGroup();
 
-UnicodeProperties groupTypeSettingsProperties = themeDisplay.getScopeGroup().getParentLiveGroupTypeSettingsProperties();
+UnicodeProperties groupTypeSettingsProperties = group.getParentLiveGroupTypeSettingsProperties();
+
+String modules = "aui-base";
 
 if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), true)) {
 	modules += ",youtube-iframe";
 }
 %>
 
-<aui:script position="inline" use="<%= modules %>">
-	var trackElementEvent = function(eventType, elementId) {
-		Liferay.Analytics.track(
-			eventType,
-			{
-				className: '<%= Layout.class.getName() %>',
-				classPK: '<%= plid %>',
-				elementId: elementId,
-				referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
-				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
-			}
-		);
-	};
-
-	var DOC = A.getDoc();
-
-	<c:if test='<%= (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.enabled"), true)) %>'>
-		var formExcludedIdsRegexStr = '<%= GetterUtil.getString(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.excluded.ids.regex"), PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.form.excluded.ids.regex")) %>';
-
-		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.view.enabled"), true) %>'>
-			var trackingForms = [];
-
-			A.all('form').each(
-				function(item) {
-					var itemId = item.attr('id');
-
-					if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(itemId)) {
-						trackingForms.push(itemId);
-					}
+<c:if test="<%= !group.isStagingGroup() && !group.isLayoutSetPrototype() && !group.isLayoutPrototype() && !layout.isTypeControlPanel() %>">
+	<aui:script position="inline" use="<%= modules %>">
+		var trackElementEvent = function(eventType, elementId) {
+			Liferay.Analytics.track(
+				eventType,
+				{
+					className: '<%= Layout.class.getName() %>',
+					classPK: '<%= plid %>',
+					elementId: elementId,
+					referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
+					referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
 				}
 			);
+		};
 
-			A.Array.each(
-				trackingForms,
-				A.bind(trackElementEvent, this, 'view')
-			);
-		</c:if>
+		var DOC = A.getDoc();
 
-		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.submit.enabled"), true) %>'>
-			Liferay.on(
-				'submitForm',
-				function(event) {
-					var formId = event.form.attr('id');
+		<c:if test='<%= (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.enabled"), true)) %>'>
+			var formExcludedIdsRegexStr = '<%= GetterUtil.getString(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.excluded.ids.regex"), PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.form.excluded.ids.regex")) %>';
 
-					if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId)) {
-						trackElementEvent('submit', formId);
+			<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.view.enabled"), true) %>'>
+				var trackingForms = [];
+
+				A.all('form').each(
+					function(item) {
+						var itemId = item.attr('id');
+
+						if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(itemId)) {
+							trackingForms.push(itemId);
+						}
 					}
-				}
-			);
+				);
+
+				A.Array.each(
+					trackingForms,
+					A.bind(trackElementEvent, this, 'view')
+				);
+			</c:if>
+
+			<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.submit.enabled"), true) %>'>
+				Liferay.on(
+					'submitForm',
+					function(event) {
+						var formId = event.form.attr('id');
+
+						if (!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId)) {
+							trackElementEvent('submit', formId);
+						}
+					}
+				);
+			</c:if>
+
+			<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.interact.enabled"), true) %>'>
+				var interactedForms = [];
+
+				DOC.delegate(
+					['change', 'input'],
+					function(event) {
+						var form = event.currentTarget;
+
+						var formId = form.attr('id');
+
+						if ((!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId)) && (interactedForms.indexOf(formId) === -1)) {
+							interactedForms.push(formId);
+
+							trackElementEvent('interact', formId);
+						}
+					},
+					'form'
+				);
+			</c:if>
 		</c:if>
 
-		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.interact.enabled"), true) %>'>
-			var interactedForms = [];
-
+		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.link.enabled"), true) %>'>
 			DOC.delegate(
-				['change', 'input'],
+				'click',
 				function(event) {
-					var form = event.currentTarget;
+					var linkExcludedIdsRegexStr = '<%= GetterUtil.getString(groupTypeSettingsProperties.getProperty("content.targeting.analytics.link.excluded.ids.regex"), PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.link.excluded.ids.regex")) %>';
 
-					var formId = form.attr('id');
+					var defaultLinkExcludedIdsRegex = /^yui_.*/;
 
-					if ((!formExcludedIdsRegexStr || !new RegExp(formExcludedIdsRegexStr).test(formId)) && (interactedForms.indexOf(formId) === -1)) {
-						interactedForms.push(formId);
+					var link = event.currentTarget;
 
-						trackElementEvent('interact', formId);
+					var linkId = link.attr('id');
+
+					if (!defaultLinkExcludedIdsRegex.test(linkId) && (!linkExcludedIdsRegexStr || !new RegExp(linkExcludedIdsRegexStr).test(linkId))) {
+						trackElementEvent('click', linkId);
+
+						if (link.hasClass('outbound-link')) {
+							event.preventDefault();
+
+							Liferay.Analytics.flush(
+								function() {
+									document.location = link.attr('href');
+								}
+							);
+						}
 					}
 				},
-				'form'
+				'a'
 			);
 		</c:if>
-	</c:if>
 
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.link.enabled"), true) %>'>
-		DOC.delegate(
-			'click',
-			function(event) {
-				var linkExcludedIdsRegexStr = '<%= GetterUtil.getString(groupTypeSettingsProperties.getProperty("content.targeting.analytics.link.excluded.ids.regex"), PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.link.excluded.ids.regex")) %>';
+		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.youtube.enabled"), true) %>'>
+			var yt = new Liferay.YoutubeIframe(
+				{
+					on: {
+						stateChange: function(event) {
+							trackElementEvent(event.state, event.playerId);
 
-				var defaultLinkExcludedIdsRegex = /^yui_.*/;
-
-				var link = event.currentTarget;
-
-				var linkId = link.attr('id');
-
-				if (!defaultLinkExcludedIdsRegex.test(linkId) && (!linkExcludedIdsRegexStr || !new RegExp(linkExcludedIdsRegexStr).test(linkId))) {
-					trackElementEvent('click', linkId);
-
-					if (link.hasClass('outbound-link')) {
-						event.preventDefault();
-
-						Liferay.Analytics.flush(
-							function() {
-								document.location = link.attr('href');
-							}
-						);
+							Liferay.Analytics.flush();
+						}
 					}
 				}
-			},
-			'a'
-		);
-	</c:if>
+			);
+		</c:if>
 
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.youtube.enabled"), true) %>'>
-		var yt = new Liferay.YoutubeIframe(
-			{
-				on: {
-					stateChange: function(event) {
-						trackElementEvent(event.state, event.playerId);
-
-						Liferay.Analytics.flush();
-					}
-				}
-			}
-		);
-	</c:if>
-
-	Liferay.Analytics.flush();
-</aui:script>
+		Liferay.Analytics.flush();
+	</aui:script>
+</c:if>

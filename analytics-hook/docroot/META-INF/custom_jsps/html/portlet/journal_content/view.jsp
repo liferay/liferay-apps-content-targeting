@@ -23,10 +23,12 @@ JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribu
 
 long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
 
-UnicodeProperties groupTypeSettingsProperties = themeDisplay.getScopeGroup().getParentLiveGroupTypeSettingsProperties();
+Group group = themeDisplay.getScopeGroup();
+
+UnicodeProperties groupTypeSettingsProperties = group.getParentLiveGroupTypeSettingsProperties();
 %>
 
-<c:if test='<%= (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), true)) && (articleDisplay != null) %>'>
+<c:if test='<%= !group.isStagingGroup() && !group.isLayoutSetPrototype() && !group.isLayoutPrototype() && (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), true)) && (articleDisplay != null) %>'>
 	<aui:script position="inline">
 		Liferay.Analytics.track(
 			'view',

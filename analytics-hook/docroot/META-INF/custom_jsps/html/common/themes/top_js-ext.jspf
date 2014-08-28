@@ -15,60 +15,62 @@
 --%>
 
 <%
-UnicodeProperties groupTypeSettingsProperties = themeDisplay.getScopeGroup().getParentLiveGroupTypeSettingsProperties();
+UnicodeProperties groupTypeSettingsProperties = group.getParentLiveGroupTypeSettingsProperties();
 %>
 
-<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/analytics.min.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script>
+<c:if test="<%= !group.isStagingGroup() && !group.isLayoutSetPrototype() && !group.isLayoutPrototype() && !layout.isTypeControlPanel() %>">
+	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/analytics.min.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script>
 
-<!-- <script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/analytics.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script> -->
+	<!-- <script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/analytics.js", "minifierBundleId=content.targeting.files", javaScriptLastModified)) %>" type="text/javascript"></script> -->
 
-<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/liferay-analytics-api.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
+	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/liferay-analytics-api.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
 
-<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/integrations/liferay-analytics-processor.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
+	<script src="<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/integrations/liferay-analytics-processor.js", "", javaScriptLastModified)) %>" type="text/javascript"></script>
 
-<script>
-	Liferay.Analytics.initialize(
-		{
-			'LiferayAnalyticsProcessor':
+	<script>
+		Liferay.Analytics.initialize(
 			{
-				interval: <%= PropsUtil.get("analytics.flush.interval") %>,
-				uri: '<%= PropsUtil.get("analytics.processor.uri") %>'
-			}
-		}
-	);
-
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.page.enabled"), true) %>'>
-
-		<%
-		long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
-		%>
-
-		Liferay.Analytics.track(
-			'view',
-			{
-				className: '<%= Layout.class.getName() %>',
-				classPK: '<%= layout.getPlid() %>',
-				groupId: '<%= layout.getGroupId() %>',
-				referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
-				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
-			}
-		);
-	</c:if>
-
-	<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.youtube.enabled"), true) %>'>
-		var A = AUI();
-
-		A.applyConfig(
-			{
-				modules: {
-					'youtube-iframe': {
-						fullpath: '/html/js/analytics/integrations/youtube_iframe.js',
-						requires: [
-							'aui-base'
-						]
-					}
+				'LiferayAnalyticsProcessor':
+				{
+					interval: <%= PropsUtil.get("analytics.flush.interval") %>,
+					uri: '<%= PropsUtil.get("analytics.processor.uri") %>'
 				}
 			}
-		)
-	</c:if>
-</script>
+		);
+
+		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.page.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.page.enabled"), true) %>'>
+
+			<%
+			long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
+			%>
+
+			Liferay.Analytics.track(
+				'view',
+				{
+					className: '<%= Layout.class.getName() %>',
+					classPK: '<%= layout.getPlid() %>',
+					groupId: '<%= layout.getGroupId() %>',
+					referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
+					referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
+				}
+			);
+		</c:if>
+
+		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.youtube.enabled"), true) %>'>
+			var A = AUI();
+
+			A.applyConfig(
+				{
+					modules: {
+						'youtube-iframe': {
+							fullpath: '/html/js/analytics/integrations/youtube_iframe.js',
+							requires: [
+								'aui-base'
+							]
+						}
+					}
+				}
+			)
+		</c:if>
+	</script>
+</c:if>
