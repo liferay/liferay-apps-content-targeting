@@ -25,7 +25,7 @@
 
 <div class="content-container ${containerCssClass}">
 	<div class="full-content" id="<@portlet["namespace"] />FullContent${selectedIndex}">
-		<#if isMatchingRule>
+		<#if queryRule.getAssetEntry()??>
 			<#if portletDisplayTemplateHtml??>
 				${portletDisplayTemplateHtml}
 			<#else>

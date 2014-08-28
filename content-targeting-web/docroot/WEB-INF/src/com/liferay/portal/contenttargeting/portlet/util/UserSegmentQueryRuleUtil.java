@@ -20,6 +20,8 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -76,26 +78,54 @@ public class UserSegmentQueryRuleUtil {
 			queryRulesIndex, locale);
 	}
 
-	public static UserSegmentQueryRule match(
-			long[] userSegmentAssetCategoryIds,
+	public static List<AssetQueryRule> getUserSegmentQueryRules(
 			PortletPreferences portletPreferences, Locale locale)
 		throws PortalException, SystemException {
 
+		List<AssetQueryRule> userSegmentQueryRules =
+			new ArrayList<AssetQueryRule>();
+
 		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
-			portletPreferences.getValues("queryLogicIndexes", null));
+			portletPreferences.getValues("queryLogicIndexes", null),
+			new int[0]);
 
-		for (int queryRuleIndex : queryRulesIndexes) {
-			UserSegmentQueryRule queryRule = getQueryRule(
-				portletPreferences, queryRuleIndex, locale);
+		for (int queryRulesIndex : queryRulesIndexes) {
+			UserSegmentQueryRule userSegmentQueryRule =
+				UserSegmentQueryRuleUtil.getQueryRule(
+					portletPreferences, queryRulesIndex, locale);
 
-			if (queryRule.isValid() &&
-				queryRule.evaluate(userSegmentAssetCategoryIds)) {
+			if (userSegmentQueryRule.getAssetEntry() != null) {
+				userSegmentQueryRules.add(userSegmentQueryRule);
+			}
+		}
 
+		userSegmentQueryRules.add(
+			getDefaultQueryRule(portletPreferences, locale));
+
+		return userSegmentQueryRules;
+	}
+
+	public static AssetQueryRule match(
+		long[] userSegmentAssetCategoryIds, List<AssetQueryRule> queryRules) {
+
+		for (AssetQueryRule queryRule : queryRules) {
+			if (queryRule.evaluate(userSegmentAssetCategoryIds)) {
 				return queryRule;
 			}
 		}
 
 		return null;
+	}
+
+	protected static UserSegmentQueryRule getDefaultQueryRule(
+			PortletPreferences portletPreferences, Locale locale)
+		throws PortalException, SystemException {
+
+		long assetEntryIdDefault = GetterUtil.getLong(
+			portletPreferences.getValue("assetEntryIdDefault", null));
+
+		return new UserSegmentQueryRule(
+			true, true, assetEntryIdDefault, null, -1, locale);
 	}
 
 }

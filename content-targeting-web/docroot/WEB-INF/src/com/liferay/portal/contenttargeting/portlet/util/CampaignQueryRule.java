@@ -20,6 +20,7 @@ import com.liferay.portal.contenttargeting.service.CampaignLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
@@ -55,6 +56,14 @@ public class CampaignQueryRule extends AssetQueryRule {
 		}
 	}
 
+	public boolean evaluate(long[] campaignIds) {
+		if (isDefaultRule() || ArrayUtil.contains(campaignIds, _campaignId)) {
+			return true;
+		}
+
+		return false;
+	}
+
 	public long getCampaignId() {
 		return _campaignId;
 	}
@@ -73,6 +82,14 @@ public class CampaignQueryRule extends AssetQueryRule {
 		}
 
 		return -1;
+	}
+
+	public long getGroupId(long scopeGroupId) {
+		if (_campaign != null) {
+			return _campaign.getGroupId();
+		}
+
+		return super.getGroupId(scopeGroupId);
 	}
 
 	public String getSummary(PortletConfig portletConfig, Locale locale)

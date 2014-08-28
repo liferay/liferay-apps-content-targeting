@@ -62,6 +62,10 @@ public class AssetQueryRule {
 		_assetType = _assetRendererFactory.getTypeName(locale, true);
 	}
 
+	public boolean evaluate(long[] ids) {
+		return true;
+	}
+
 	public String getAssetClassName() {
 		return _assetClassName;
 	}
@@ -96,12 +100,24 @@ public class AssetQueryRule {
 		return _assetType;
 	}
 
+	public long getGroupId(long scopeGroupId) {
+		return scopeGroupId;
+	}
+
 	public int getIndex() {
 		return _index;
 	}
 
 	public String getTemplate() {
 		return _template;
+	}
+
+	public boolean isDefaultRule() {
+		if (_index == -1) {
+			return true;
+		}
+
+		return false;
 	}
 
 	public boolean isValid() {

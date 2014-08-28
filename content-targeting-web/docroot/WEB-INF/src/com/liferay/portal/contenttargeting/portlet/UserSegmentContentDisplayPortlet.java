@@ -21,8 +21,6 @@ import com.liferay.portal.contenttargeting.portlet.util.UserSegmentQueryRuleUtil
 import com.liferay.portal.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.portal.contenttargeting.util.UserSegmentUtil;
 import com.liferay.portal.contenttargeting.util.WebKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -48,7 +46,6 @@ import freemarker.template.TemplateHashModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -93,7 +90,7 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 					request, queryRulesIndex, themeDisplay.getLocale());
 
 			if (!queryRule.isValid()) {
-				break;
+				continue;
 			}
 
 			queryRules.add(queryRule);
@@ -166,37 +163,6 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 		return selectableAssetRendererFactories;
 	}
 
-	protected List<AssetQueryRule> getUserSegmentQueryRule(
-			PortletPreferences portletPreferences, long assetEntryIdDefault,
-			Locale locale)
-		throws PortalException, SystemException {
-
-		List<AssetQueryRule> userSegmentQueryRules =
-			new ArrayList<AssetQueryRule>();
-
-		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
-			portletPreferences.getValues("queryLogicIndexes", null),
-			new int[0]);
-
-		for (int queryRulesIndex : queryRulesIndexes) {
-			UserSegmentQueryRule userSegmentQueryRule =
-				UserSegmentQueryRuleUtil.getQueryRule(
-					portletPreferences, queryRulesIndex, locale);
-
-			if (userSegmentQueryRule.getAssetEntry() != null) {
-				userSegmentQueryRules.add(userSegmentQueryRule);
-			}
-		}
-
-		UserSegmentQueryRule userSegmentQueryRule =
-			new UserSegmentQueryRule(
-				true, true, assetEntryIdDefault, null, -1, locale);
-
-		userSegmentQueryRules.add(userSegmentQueryRule);
-
-		return userSegmentQueryRules;
-	}
-
 	@Override
 	protected void populateContext(
 			String path, PortletRequest portletRequest,
@@ -244,7 +210,13 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			template.put("showPreview", showPreview(themeDisplay));
 			template.put("contentDefaultValue", contentDefaultValue);
 
-			UserSegmentQueryRule queryRule = null;
+			List<AssetQueryRule> userSegmentQueryRules =
+				UserSegmentQueryRuleUtil.getUserSegmentQueryRules(
+					portletPreferences, themeDisplay.getLocale());
+
+			template.put("userSegmentQueryRules", userSegmentQueryRules);
+
+			AssetQueryRule queryRule = null;
 
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
@@ -254,62 +226,31 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 					ContentTargetingUtil.getAssetCategoryIds(userSegmentIds);
 
 				queryRule = UserSegmentQueryRuleUtil.match(
-					userSegmentAssetCategoryIds, portletPreferences,
-					themeDisplay.getLocale());
+					userSegmentAssetCategoryIds, userSegmentQueryRules);
+
+				template.put("queryRule", queryRule);
 			}
 
-			boolean isMatchingRule = false;
+			template.put(
+				"selectedIndex", userSegmentQueryRules.indexOf(queryRule));
 
 			List<AssetEntry> results = new ArrayList<AssetEntry>();
 
-			if ((queryRule != null) ||
-				(contentDefaultValue && (assetEntryIdDefault > 0))) {
+			if ((queryRule != null) && (queryRule.getAssetEntry() != null)) {
+				results.add(queryRule.getAssetEntry());
 
-				isMatchingRule = true;
-
-				if (queryRule != null) {
-					results.add(queryRule.getAssetEntry());
-
-					queryRule.setAssetAttributes(portletRequest);
-				}
+				queryRule.setAssetAttributes(portletRequest);
 			}
 			else {
 				portletRequest.setAttribute(
 					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 			}
 
-			template.put("isMatchingRule", isMatchingRule);
 			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
-
-			List<AssetQueryRule> userSegmentQueryRules =
-				getUserSegmentQueryRule(
-					portletPreferences, assetEntryIdDefault,
-					themeDisplay.getLocale());
 
 			populatePortletDisplayTemplateViewContext(
 				template, portletRequest, themeDisplay, results,
 				userSegmentQueryRules);
-
-			template.put("userSegmentQueryRules", userSegmentQueryRules);
-
-			int selectedIndex = userSegmentQueryRules.size() - 1;
-
-			if (queryRule != null) {
-				for (int i = 0; i < userSegmentQueryRules.size(); i++) {
-					AssetQueryRule userSegmentQueryRule =
-						userSegmentQueryRules.get(i);
-
-					if (userSegmentQueryRule.getIndex() ==
-							queryRule.getIndex()) {
-
-						selectedIndex = i;
-
-						break;
-					}
-				}
-			}
-
-			template.put("selectedIndex", selectedIndex);
 		}
 		else if (path.equals(UserSegmentContentDisplayPath.EDIT_QUERY_RULE) ||
 				 path.equals(UserSegmentContentDisplayPath.CONFIGURATION)) {

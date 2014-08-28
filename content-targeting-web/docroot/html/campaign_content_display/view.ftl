@@ -25,7 +25,7 @@
 
 <div class="content-container ${containerCssClass}">
 	<div class="full-content" id="<@portlet["namespace"] />FullContent${selectedIndex}">
-		<#if isMatchingRule>
+		<#if queryRule.getAssetEntry()??>
 			<#if portletDisplayTemplateHtml??>
 				${portletDisplayTemplateHtml}
 			<#else>
@@ -34,11 +34,11 @@
 
 			<@aui["script"] position="inline">
 				Liferay.Analytics.track('view', {
-					className: '${assetEntryClassName}',
-					classPK: '${assetEntryClassPK}',
-					groupId: '${groupId}',
+					className: '${queryRule.getAssetClassName()}',
+					classPK: '${queryRule.getAssetClassPK()}',
+					groupId: '${queryRule.getGroupId(scopeGroupId)}',
 					referrerClassName: '${campaignClassName}',
-					referrerClassPK: '${campaignClassPK}'
+					referrerClassPK: '${queryRule.getCampaignId()}'
 				});
 			</@>
 		<#else>

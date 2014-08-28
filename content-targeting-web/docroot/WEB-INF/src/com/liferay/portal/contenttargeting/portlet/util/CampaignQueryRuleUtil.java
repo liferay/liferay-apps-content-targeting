@@ -19,6 +19,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.ActionRequest;
@@ -28,6 +30,32 @@ import javax.portlet.PortletPreferences;
  * @author Eudaldo Alonso
  */
 public class CampaignQueryRuleUtil {
+
+	public static List<AssetQueryRule> getCampaignQueryRules(
+			PortletPreferences portletPreferences, Locale locale)
+		throws PortalException, SystemException {
+
+		List<AssetQueryRule> campaignQueryRules =
+			new ArrayList<AssetQueryRule>();
+
+		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
+			portletPreferences.getValues("queryLogicIndexes", null),
+			new int[0]);
+
+		for (int queryRulesIndex : queryRulesIndexes) {
+			CampaignQueryRule campaignQueryRule =
+				CampaignQueryRuleUtil.getQueryRule(
+					portletPreferences, queryRulesIndex, locale);
+
+			if (campaignQueryRule.getAssetEntry() != null) {
+				campaignQueryRules.add(campaignQueryRule);
+			}
+		}
+
+		campaignQueryRules.add(getDefaultQueryRule(portletPreferences, locale));
+
+		return campaignQueryRules;
+	}
 
 	public static CampaignQueryRule getQueryRule(
 			ActionRequest request, int queryRulesIndex, Locale locale)
@@ -59,26 +87,27 @@ public class CampaignQueryRuleUtil {
 			assetEntryId, campaignId, queryRulesIndex, locale);
 	}
 
-	public static CampaignQueryRule match(
-			long campaignId, PortletPreferences portletPreferences,
-			Locale locale)
+	public static AssetQueryRule match(
+			long[] campaignIds, List<AssetQueryRule> queryRules)
 		throws PortalException, SystemException {
 
-		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
-			portletPreferences.getValues("queryLogicIndexes", null));
-
-		for (int queryRuleIndex : queryRulesIndexes) {
-			CampaignQueryRule queryRule = getQueryRule(
-				portletPreferences, queryRuleIndex, locale);
-
-			if (queryRule.isValid() &&
-				(queryRule.getCampaignId() == campaignId)) {
-
+		for (AssetQueryRule queryRule : queryRules) {
+			if (queryRule.evaluate(campaignIds)) {
 				return queryRule;
 			}
 		}
 
 		return null;
+	}
+
+	protected static CampaignQueryRule getDefaultQueryRule(
+			PortletPreferences portletPreferences, Locale locale)
+		throws PortalException, SystemException {
+
+		long assetEntryIdDefault = GetterUtil.getLong(
+			portletPreferences.getValue("assetEntryIdDefault", null));
+
+		return new CampaignQueryRule(assetEntryIdDefault, 0, -1, locale);
 	}
 
 }

@@ -46,56 +46,54 @@ public class UserSegmentQueryRule extends AssetQueryRule {
 	}
 
 	public boolean evaluate(long[] userSegmentAssetCategoryIds) {
+		if (isDefaultRule()) {
+			return true;
+		}
+
 		if (_contains) {
 			if (_andOperator) {
 				return ArrayUtil.containsAll(
 					userSegmentAssetCategoryIds, _userSegmentAssetCategoryIds);
 			}
-			else {
-				for (long userSegmentAssetCategoryId :
-						_userSegmentAssetCategoryIds) {
 
-					if (ArrayUtil.contains(
-							userSegmentAssetCategoryIds,
-							userSegmentAssetCategoryId)) {
+			for (long userSegmentAssetCategoryId :
+				_userSegmentAssetCategoryIds) {
 
-						return true;
-					}
+				if (ArrayUtil.contains(
+						userSegmentAssetCategoryIds,
+						userSegmentAssetCategoryId)) {
+
+					return true;
 				}
-
-				return false;
 			}
+
+			return false;
 		}
-		else {
-			if (_andOperator) {
-				for (long userSegmentAssetCategoryId :
-						_userSegmentAssetCategoryIds) {
 
-					if (ArrayUtil.contains(
-							userSegmentAssetCategoryIds,
-							userSegmentAssetCategoryId)) {
+		if (_andOperator) {
+			for (long userSegmentAssetCategoryId :
+					_userSegmentAssetCategoryIds) {
 
-						return false;
-					}
+				if (ArrayUtil.contains(
+						userSegmentAssetCategoryIds,
+						userSegmentAssetCategoryId)) {
+
+					return false;
 				}
+			}
+
+			return true;
+		}
+
+		for (long userSegmentAssetCategoryId : _userSegmentAssetCategoryIds) {
+			if (!ArrayUtil.contains(
+					userSegmentAssetCategoryIds, userSegmentAssetCategoryId)) {
 
 				return true;
 			}
-			else {
-				for (long userSegmentAssetCategoryId :
-						_userSegmentAssetCategoryIds) {
-
-					if (!ArrayUtil.contains(
-							userSegmentAssetCategoryIds,
-							userSegmentAssetCategoryId)) {
-
-						return true;
-					}
-				}
-
-				return false;
-			}
 		}
+
+		return false;
 	}
 
 	public String getSummary(PortletConfig portletConfig, Locale locale)

@@ -24,8 +24,6 @@ import com.liferay.portal.contenttargeting.service.CampaignLocalService;
 import com.liferay.portal.contenttargeting.service.CampaignService;
 import com.liferay.portal.contenttargeting.util.ContentTargetingUtil;
 import com.liferay.portal.contenttargeting.util.WebKeys;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -50,7 +48,6 @@ import freemarker.template.TemplateHashModel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -121,7 +118,7 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 				request, queryRulesIndex, themeDisplay.getLocale());
 
 			if (!queryRule.isValid()) {
-				break;
+				continue;
 			}
 
 			queryRules.add(queryRule);
@@ -162,34 +159,16 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 		super.updatePreferences(request, response, portletPreferences);
 	}
 
-	protected List<AssetQueryRule> getCampaignQueryRules(
-			PortletPreferences portletPreferences, long assetEntryIdDefault,
-			Locale locale)
-		throws PortalException, SystemException {
+	protected long[] getCampaignIds(List<Campaign> campaigns) {
+		long[] campaignIds = new long[campaigns.size()];
 
-		List<AssetQueryRule> campaignQueryRules =
-			new ArrayList<AssetQueryRule>();
+		for (int i = 0; i < campaigns.size(); i++) {
+			Campaign campaign = campaigns.get(i);
 
-		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
-			portletPreferences.getValues("queryLogicIndexes", null),
-			new int[0]);
-
-		for (int queryRulesIndex : queryRulesIndexes) {
-			CampaignQueryRule campaignQueryRule =
-				CampaignQueryRuleUtil.getQueryRule(
-					portletPreferences, queryRulesIndex, locale);
-
-			if (campaignQueryRule.getAssetEntry() != null) {
-				campaignQueryRules.add(campaignQueryRule);
-			}
+			campaignIds[i] = campaign.getCampaignId();
 		}
 
-		CampaignQueryRule campaignQueryRule = new CampaignQueryRule(
-			assetEntryIdDefault, 0, -1, locale);
-
-		campaignQueryRules.add(campaignQueryRule);
-
-		return campaignQueryRules;
+		return campaignIds;
 	}
 
 	protected List<AssetRendererFactory> getSelectableAssetRendererFactories(
@@ -260,99 +239,53 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			template.put("showPreview", showPreview(themeDisplay));
 			template.put("contentDefaultValue", contentDefaultValue);
 
-			CampaignQueryRule queryRule = null;
+			List<AssetQueryRule> campaignQueryRules =
+				CampaignQueryRuleUtil.getCampaignQueryRules(
+					portletPreferences, themeDisplay.getLocale());
+
+			template.put("campaignQueryRules", campaignQueryRules);
+
+			AssetQueryRule queryRule = null;
 
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
-
-			long groupId = themeDisplay.getScopeGroupId();
-			long campaignClassPK = 0;
 
 			if (userSegmentIds != null) {
 				long[] groupIds =
 					ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
 						themeDisplay.getSiteGroupId());
 
-				Campaign campaign =
-					_campaignLocalService.fetchCurrentMaxPriorityCampaign(
-						groupIds, userSegmentIds);
+				List<Campaign> campaigns = _campaignLocalService.getCampaigns(
+					groupIds, userSegmentIds);
 
-				if (campaign != null) {
-					queryRule = CampaignQueryRuleUtil.match(
-						campaign.getCampaignId(), portletPreferences,
-						themeDisplay.getLocale());
+				queryRule = CampaignQueryRuleUtil.match(
+					getCampaignIds(campaigns), campaignQueryRules);
 
-					campaignClassPK = campaign.getCampaignId();
-					groupId = campaign.getGroupId();
-				}
+				template.put("queryRule", queryRule);
 			}
 
-			template.put("campaignClassName", Campaign.class.getName());
-			template.put("campaignClassPK", campaignClassPK);
-			template.put("groupId", groupId);
+			template.put(
+				"selectedIndex", campaignQueryRules.indexOf(queryRule));
 
-			boolean isMatchingRule = false;
+			template.put("campaignClassName", Campaign.class.getName());
 
 			List<AssetEntry> results = new ArrayList<AssetEntry>();
 
-			if ((queryRule != null) ||
-				(contentDefaultValue && (assetEntryIdDefault > 0))) {
-
-				isMatchingRule = true;
-
-				long assetEntryId = assetEntryIdDefault;
-
-				if (queryRule != null) {
-					assetEntryId = queryRule.getAssetEntryId();
-				}
-
-				AssetEntry assetEntry =
-					AssetEntryLocalServiceUtil.fetchAssetEntry(assetEntryId);
+			if ((queryRule != null) && (queryRule.getAssetEntry() != null)) {
+				results.add(queryRule.getAssetEntry());
 
 				queryRule.setAssetAttributes(portletRequest);
-
-				template.put("assetEntryClassName", assetEntry.getClassName());
-				template.put("assetEntryClassPK", assetEntry.getClassPK());
-
-				results.add(assetEntry);
 			}
 			else {
 				portletRequest.setAttribute(
 					WebKeys.PORTLET_CONFIGURATOR_VISIBILITY, Boolean.TRUE);
 			}
 
-			template.put("isMatchingRule", isMatchingRule);
 			template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
-
-			List<AssetQueryRule> campaignQueryRules =
-				getCampaignQueryRules(
-					portletPreferences, assetEntryIdDefault,
-					themeDisplay.getLocale());
 
 			populatePortletDisplayTemplateViewContext(
 				template, portletRequest, themeDisplay, results,
 				campaignQueryRules);
-
-			template.put("campaignQueryRules", campaignQueryRules);
-
-			int selectedIndex = campaignQueryRules.size() - 1;
-
-			if (queryRule != null) {
-				for (int i = 0; i < campaignQueryRules.size(); i++) {
-					AssetQueryRule campaignQueryRule = campaignQueryRules.get(
-						i);
-
-					if (campaignQueryRule.getIndex() ==
-							queryRule.getIndex()) {
-
-						selectedIndex = i;
-
-						break;
-					}
-				}
-			}
-
-			template.put("selectedIndex", selectedIndex);
 		}
 		else if (path.equals(CampaignContentDisplayPath.EDIT_QUERY_RULE) ||
 				 path.equals(CampaignContentDisplayPath.CONFIGURATION)) {
