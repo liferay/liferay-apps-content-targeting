@@ -130,7 +130,7 @@ public class FreeMarkerDisplayPortlet extends FreeMarkerPortlet {
 	}
 
 	protected boolean showPreview(ThemeDisplay themeDisplay)
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
