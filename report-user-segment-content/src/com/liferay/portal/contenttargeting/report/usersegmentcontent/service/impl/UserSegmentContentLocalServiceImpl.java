@@ -189,11 +189,13 @@ public class UserSegmentContentLocalServiceImpl
 
 		DynamicQuery dynamicQuery = _analyticsEventLocalService.dynamicQuery();
 
+		Property classPKProperty = PropertyFactoryUtil.forName("classPK");
 		Property referrerClassNameProperty = PropertyFactoryUtil.forName(
 			"referrerClassName");
 		Property referrerClassPKProperty = PropertyFactoryUtil.forName(
 			"referrerClassPK");
 
+		dynamicQuery.add(classPKProperty.gt(0L));
 		dynamicQuery.add(
 			referrerClassNameProperty.eq(UserSegment.class.getName()));
 		dynamicQuery.add(referrerClassPKProperty.eq(userSegmentId));
