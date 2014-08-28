@@ -256,7 +256,7 @@ public class UserSegmentLocalServiceImpl
 
 			updateUserSegmentCategory(
 				userSegment.getUserId(), stagingAssetCategory.getCategoryId(),
-				nameMap, descriptionMap, serviceContext);
+				nameMap, descriptionMap, serviceContextStaging);
 		}
 
 		return userSegment;
