@@ -20,22 +20,11 @@
 
 <%
 WikiPage wikiPage = (WikiPage)request.getAttribute(WebKeys.WIKI_PAGE);
-
-long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
-
-UnicodeProperties groupTypeSettingsProperties = themeDisplay.getScopeGroup().getParentLiveGroupTypeSettingsProperties();
 %>
 
-<c:if test='<%= !group.isStagingGroup() && !group.isLayoutSetPrototype() && !group.isLayoutPrototype() && !layout.isTypeControlPanel() && (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), true)) && (wikiPage != null) %>'>
-	<aui:script position="inline">
-		Liferay.Analytics.track(
-			'view',
-			{
-				className: '<%= WikiPage.class.getName() %>',
-				classPK: '<%= wikiPage.getPrimaryKey() %>',
-				referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
-				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
-			}
-		);
-	</aui:script>
+<c:if test="<%= wikiPage != null %>">
+	<liferay-util:include page="/html/common/analytics/track_content.jsp">
+		<liferay-util:param name="analyticsClassName" value="<%= WikiPage.class.getName() %>" />
+		<liferay-util:param name="analyticsClassPK" value="<%= String.valueOf(wikiPage.getPrimaryKey()) %>" />
+	</liferay-util:include>
 </c:if>

@@ -20,24 +20,11 @@
 
 <%
 JournalArticleDisplay articleDisplay = (JournalArticleDisplay)request.getAttribute(WebKeys.JOURNAL_ARTICLE_DISPLAY);
-
-long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
-
-Group group = themeDisplay.getScopeGroup();
-
-UnicodeProperties groupTypeSettingsProperties = group.getParentLiveGroupTypeSettingsProperties();
 %>
 
-<c:if test='<%= !group.isStagingGroup() && !group.isLayoutSetPrototype() && !group.isLayoutPrototype() && (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), true)) && (articleDisplay != null) %>'>
-	<aui:script position="inline">
-		Liferay.Analytics.track(
-			'view',
-			{
-				className: '<%= JournalArticle.class.getName() %>',
-				classPK: '<%= articleDisplay.getResourcePrimKey() %>',
-				referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
-				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
-			}
-		);
-	</aui:script>
+<c:if test="<%= articleDisplay != null %>">
+	<liferay-util:include page="/html/common/analytics/track_content.jsp">
+		<liferay-util:param name="analyticsClassName" value="<%= JournalArticle.class.getName() %>" />
+		<liferay-util:param name="analyticsClassPK" value="<%= String.valueOf(articleDisplay.getResourcePrimKey()) %>" />
+	</liferay-util:include>
 </c:if>

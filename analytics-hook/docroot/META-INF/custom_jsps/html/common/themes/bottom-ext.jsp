@@ -14,43 +14,36 @@
  */
 --%>
 
-<%@ include file="/html/common/init.jsp" %>
+<%@ include file="/html/common/analytics/init.jsp" %>
 
-<%
-long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
+<c:if test="<%= trackAnalytics %>">
 
-Group group = themeDisplay.getScopeGroup();
+	<%
+	String modules = "aui-base";
 
-UnicodeProperties groupTypeSettingsProperties = group.getParentLiveGroupTypeSettingsProperties();
+	if (trackAnalyticsYoutube) {
+		modules += ",youtube-iframe";
+	}
+	%>
 
-String modules = "aui-base";
-
-if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), true)) {
-	modules += ",youtube-iframe";
-}
-%>
-
-<c:if test="<%= !group.isStagingGroup() && !group.isLayoutSetPrototype() && !group.isLayoutPrototype() && !layout.isTypeControlPanel() %>">
 	<aui:script position="inline" use="<%= modules %>">
 		var trackElementEvent = function(eventType, elementId) {
 			Liferay.Analytics.track(
 				eventType,
 				{
-					className: '<%= Layout.class.getName() %>',
-					classPK: '<%= plid %>',
 					elementId: elementId,
-					referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
-					referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
+					referrerClassName: '<%= analyticsReferrerClassName %>',
+					referrerClassPK: '<%= analyticsReferrerClassPK %>'
 				}
 			);
 		};
 
 		var DOC = A.getDoc();
 
-		<c:if test='<%= (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.enabled"), true)) %>'>
-			var formExcludedIdsRegexStr = '<%= GetterUtil.getString(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.excluded.ids.regex"), PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.form.excluded.ids.regex")) %>';
+		<c:if test="<%= trackAnalyticsForm %>">
+			var formExcludedIdsRegexStr = '<%= analyticsFormExcludedIdsRegex %>';
 
-			<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.view.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.view.enabled"), true) %>'>
+			<c:if test="<%= trackAnalyticsFormView %>">
 				var trackingForms = [];
 
 				A.all('form').each(
@@ -69,7 +62,7 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 				);
 			</c:if>
 
-			<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.submit.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.submit.enabled"), true) %>'>
+			<c:if test="<%= trackAnalyticsFormSubmit %>">
 				Liferay.on(
 					'submitForm',
 					function(event) {
@@ -82,7 +75,7 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 				);
 			</c:if>
 
-			<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.form.interact.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.form.interact.enabled"), true) %>'>
+			<c:if test="<%= trackAnalyticsFormInteract %>">
 				var interactedForms = [];
 
 				DOC.delegate(
@@ -103,11 +96,11 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 			</c:if>
 		</c:if>
 
-		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.link.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.link.enabled"), true) %>'>
+		<c:if test="<%= trackAnalyticsLinkClick %>">
 			DOC.delegate(
 				'click',
 				function(event) {
-					var linkExcludedIdsRegexStr = '<%= GetterUtil.getString(groupTypeSettingsProperties.getProperty("content.targeting.analytics.link.excluded.ids.regex"), PrefsPropsUtil.getString(company.getCompanyId(), "content.targeting.analytics.link.excluded.ids.regex")) %>';
+					var linkExcludedIdsRegexStr = '<%= analyticsLinkExcludedIdsRegex %>';
 
 					var defaultLinkExcludedIdsRegex = /^yui_.*/;
 
@@ -133,7 +126,7 @@ if (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analyti
 			);
 		</c:if>
 
-		<c:if test='<%= PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.youtube.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.youtube.enabled"), true) %>'>
+		<c:if test="<%= trackAnalyticsYoutube %>">
 			var yt = new Liferay.YoutubeIframe(
 				{
 					on: {

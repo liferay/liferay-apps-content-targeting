@@ -20,24 +20,11 @@
 
 <%
 AssetEntry assetEntry = (AssetEntry)request.getAttribute("view.jsp-assetEntry");
-
-long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
-
-Group group = themeDisplay.getScopeGroup();
-
-UnicodeProperties groupTypeSettingsProperties = group.getParentLiveGroupTypeSettingsProperties();
 %>
 
-<c:if test='<%= !group.isStagingGroup() && !group.isLayoutSetPrototype() && !group.isLayoutPrototype() && (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), true)) && (assetEntry != null) && Validator.isNotNull(userSegmentIds) %>'>
-	<aui:script position="inline">
-		Liferay.Analytics.track(
-			'view',
-			{
-				className: '<%= assetEntry.getClassName() %>',
-				classPK: '<%= assetEntry.getClassPK() %>',
-				referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
-				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
-			}
-		);
-	</aui:script>
+<c:if test="<%= assetEntry != null %>">
+	<liferay-util:include page="/html/common/analytics/track_content.jsp">
+		<liferay-util:param name="analyticsClassName" value="<%= assetEntry.getClassName() %>" />
+		<liferay-util:param name="analyticsClassPK" value="<%= String.valueOf(assetEntry.getClassPK()) %>" />
+	</liferay-util:include>
 </c:if>

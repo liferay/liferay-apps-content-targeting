@@ -20,24 +20,11 @@
 
 <%
 FileEntry fileEntry = (FileEntry)request.getAttribute(WebKeys.DOCUMENT_LIBRARY_FILE_ENTRY);
-
-long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
-
-Group group = themeDisplay.getScopeGroup();
-
-UnicodeProperties groupTypeSettingsProperties = group.getParentLiveGroupTypeSettingsProperties();
 %>
 
-<c:if test='<%= !group.isStagingGroup() && !group.isLayoutSetPrototype() && !group.isLayoutPrototype() && !layout.isTypeControlPanel() && (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), true)) && (fileEntry != null) %>'>
-	<aui:script position="inline">
-		Liferay.Analytics.track(
-			'view',
-			{
-				className: '<%= DLFileEntry.class.getName() %>',
-				classPK: '<%= fileEntry.getPrimaryKey() %>',
-				referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
-				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
-			}
-		);
-	</aui:script>
+<c:if test="<%= fileEntry != null %>">
+	<liferay-util:include page="/html/common/analytics/track_content.jsp">
+		<liferay-util:param name="analyticsClassName" value="<%= DLFileEntry.class.getName() %>" />
+		<liferay-util:param name="analyticsClassPK" value="<%= String.valueOf(fileEntry.getPrimaryKey()) %>" />
+	</liferay-util:include>
 </c:if>

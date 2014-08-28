@@ -20,24 +20,11 @@
 
 <%
 BlogsEntry entry = (BlogsEntry)request.getAttribute(WebKeys.BLOGS_ENTRY);
-
-long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
-
-Group group = themeDisplay.getScopeGroup();
-
-UnicodeProperties groupTypeSettingsProperties = group.getParentLiveGroupTypeSettingsProperties();
 %>
 
-<c:if test='<%= !group.isStagingGroup() && !group.isLayoutSetPrototype() && !group.isLayoutPrototype() && !layout.isTypeControlPanel() && (PrefsPropsUtil.getBoolean(company.getCompanyId(), "content.targeting.analytics.content.enabled") && GetterUtil.getBoolean(groupTypeSettingsProperties.getProperty("content.targeting.analytics.content.enabled"), true)) && (entry != null) %>'>
-	<aui:script position="inline">
-		Liferay.Analytics.track(
-			'view',
-			{
-				className: '<%= BlogsEntry.class.getName() %>',
-				classPK: '<%= entry.getPrimaryKey() %>',
-				referrerClassName: 'com.liferay.portal.contenttargeting.model.UserSegment',
-				referrerClassPK: '<%= StringUtil.merge(userSegmentIds) %>'
-			}
-		);
-	</aui:script>
+<c:if test="<%= entry != null %>">
+	<liferay-util:include page="/html/common/analytics/track_content.jsp">
+		<liferay-util:param name="analyticsClassName" value="<%= BlogsEntry.class.getName() %>" />
+		<liferay-util:param name="analyticsClassPK" value="<%= String.valueOf(entry.getPrimaryKey()) %>" />
+	</liferay-util:include>
 </c:if>

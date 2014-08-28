@@ -32,14 +32,11 @@
 				<@renderAssetEntry />
 			</#if>
 
-			<@aui["script"] position="inline">
-				Liferay.Analytics.track('view', {
-					className: '${queryRule.getAssetClassName()}',
-					classPK: '${queryRule.getAssetClassPK()}',
-					groupId: '${queryRule.getGroupId(scopeGroupId)}',
-					referrerClassName: '${campaignClassName}',
-					referrerClassPK: '${queryRule.getCampaignId()}'
-				});
+			<@liferay_util["include"] page="/html/common/analytics/track_content.jsp">
+				<@liferay_util["param"] name="analyticsClassName" value=queryRule.getAssetClassName() />
+				<@liferay_util["param"] name="analyticsClassPK" value=queryRule.getAssetClassPK()?string />
+				<@liferay_util["param"] name="analyticsReferrerClassName" value=campaignClassName />
+				<@liferay_util["param"] name="analyticsReferrerClassPK" value=queryRule.getCampaignId()?string />
 			</@>
 		<#else>
 			<div class="alert alert-info">
