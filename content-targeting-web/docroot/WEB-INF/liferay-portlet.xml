@@ -38,6 +38,7 @@
 	<portlet>
 		<portlet-name>usersegmentcontentdisplay</portlet-name>
 		<icon>/icons/user_segment_content_display.png</icon>
+		<portlet-data-handler-class>com.liferay.portal.contenttargeting.portlet.lar.UserSegmentContentDisplayPortletDataHandler</portlet-data-handler-class>
 		<instanceable>true</instanceable>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/user_segment_content_display/main.css</header-portlet-css>
