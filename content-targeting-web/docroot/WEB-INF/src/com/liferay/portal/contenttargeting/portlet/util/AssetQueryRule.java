@@ -38,7 +38,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Julio Camarero
  */
-public class AssetQueryRule {
+public abstract class AssetQueryRule implements QueryRule {
 
 	public AssetQueryRule(long assetEntryId, int index, Locale locale)
 		throws PortalException, SystemException {
@@ -62,26 +62,32 @@ public class AssetQueryRule {
 		_assetType = _assetRendererFactory.getTypeName(locale, true);
 	}
 
+	@Override
 	public boolean evaluate(long[] ids) {
 		return true;
 	}
 
+	@Override
 	public String getAssetClassName() {
 		return _assetClassName;
 	}
 
+	@Override
 	public long getAssetClassPK() {
 		return _assetClassPK;
 	}
 
+	@Override
 	public AssetEntry getAssetEntry() {
 		return _assetEntry;
 	}
 
+	@Override
 	public long getAssetEntryId() {
 		return _assetEntryId;
 	}
 
+	@Override
 	public String getAssetImage(PortletRequest portletRequest)
 		throws Exception {
 
@@ -92,26 +98,32 @@ public class AssetQueryRule {
 		return _assetRenderer.getThumbnailPath(portletRequest);
 	}
 
+	@Override
 	public String getAssetTitle() {
 		return _assetTitle;
 	}
 
+	@Override
 	public String getAssetType() {
 		return _assetType;
 	}
 
+	@Override
 	public long getGroupId(long scopeGroupId) {
 		return scopeGroupId;
 	}
 
+	@Override
 	public int getIndex() {
 		return _index;
 	}
 
+	@Override
 	public String getTemplate() {
 		return _template;
 	}
 
+	@Override
 	public boolean isDefaultRule() {
 		if (_index == -1) {
 			return true;
@@ -120,6 +132,7 @@ public class AssetQueryRule {
 		return false;
 	}
 
+	@Override
 	public boolean isValid() {
 		if (Validator.isNull(_assetClassName) || (_assetClassPK <= 0)) {
 			return false;
@@ -128,6 +141,7 @@ public class AssetQueryRule {
 		return true;
 	}
 
+	@Override
 	public void setAssetAttributes(PortletRequest portletRequest) {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -144,30 +158,37 @@ public class AssetQueryRule {
 		portletRequest.setAttribute("view.jsp-print", new Boolean(false));
 	}
 
+	@Override
 	public void setAssetClassName(String assetClassName) {
 		_assetClassName = assetClassName;
 	}
 
+	@Override
 	public void setAssetClassPK(long assetClassPK) {
 		_assetClassPK = assetClassPK;
 	}
 
+	@Override
 	public void setAssetEntryId(long assetEntryId) {
 		_assetEntryId = assetEntryId;
 	}
 
+	@Override
 	public void setAssetTitle(String assetTitle) {
 		_assetTitle = assetTitle;
 	}
 
+	@Override
 	public void setAssetType(String assetType) {
 		_assetType = assetType;
 	}
 
+	@Override
 	public void setIndex(int index) {
 		_index = index;
 	}
 
+	@Override
 	public void setTemplate(String template) {
 		_template = template;
 	}

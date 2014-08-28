@@ -14,7 +14,7 @@
 
 package com.liferay.portal.contenttargeting.portlet;
 
-import com.liferay.portal.contenttargeting.portlet.util.AssetQueryRule;
+import com.liferay.portal.contenttargeting.portlet.util.QueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.UserSegmentContentDisplayUtil;
 import com.liferay.portal.contenttargeting.portlet.util.UserSegmentQueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.UserSegmentQueryRuleUtil;
@@ -85,7 +85,7 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			new ArrayList<UserSegmentQueryRule>();
 
 		for (int queryRulesIndex : queryRulesIndexes) {
-			UserSegmentQueryRule queryRule =
+			QueryRule queryRule =
 				UserSegmentQueryRuleUtil.getQueryRule(
 					request, queryRulesIndex, themeDisplay.getLocale());
 
@@ -93,7 +93,7 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 				continue;
 			}
 
-			queryRules.add(queryRule);
+			queryRules.add((UserSegmentQueryRule)queryRule);
 		}
 
 		PortletPreferences portletPreferences = request.getPreferences();
@@ -210,13 +210,13 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			template.put("showPreview", showPreview(themeDisplay));
 			template.put("contentDefaultValue", contentDefaultValue);
 
-			List<AssetQueryRule> userSegmentQueryRules =
+			List<QueryRule> userSegmentQueryRules =
 				UserSegmentQueryRuleUtil.getUserSegmentQueryRules(
 					portletPreferences, themeDisplay.getLocale());
 
 			template.put("userSegmentQueryRules", userSegmentQueryRules);
 
-			AssetQueryRule queryRule = null;
+			QueryRule queryRule = null;
 
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);

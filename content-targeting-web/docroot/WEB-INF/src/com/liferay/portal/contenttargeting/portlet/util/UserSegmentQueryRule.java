@@ -31,7 +31,7 @@ import javax.portlet.PortletConfig;
 /**
  * @author Eudaldo Alonso
  */
-public class UserSegmentQueryRule extends AssetQueryRule {
+public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 
 	public UserSegmentQueryRule(
 			boolean andOperator, boolean contains, long assetEntryId,
@@ -57,7 +57,7 @@ public class UserSegmentQueryRule extends AssetQueryRule {
 			}
 
 			for (long userSegmentAssetCategoryId :
-				_userSegmentAssetCategoryIds) {
+					_userSegmentAssetCategoryIds) {
 
 				if (ArrayUtil.contains(
 						userSegmentAssetCategoryIds,

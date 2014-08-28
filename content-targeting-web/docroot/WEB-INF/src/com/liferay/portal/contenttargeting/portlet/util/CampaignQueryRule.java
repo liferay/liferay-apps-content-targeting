@@ -33,7 +33,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Eudaldo Alonso
  */
-public class CampaignQueryRule extends AssetQueryRule {
+public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 
 	public CampaignQueryRule(
 			long assetEntryId, long campaignId, int index, Locale locale)

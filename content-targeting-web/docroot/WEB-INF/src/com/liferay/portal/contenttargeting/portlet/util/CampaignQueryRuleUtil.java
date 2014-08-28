@@ -31,21 +31,19 @@ import javax.portlet.PortletPreferences;
  */
 public class CampaignQueryRuleUtil {
 
-	public static List<AssetQueryRule> getCampaignQueryRules(
+	public static List<QueryRule> getCampaignQueryRules(
 			PortletPreferences portletPreferences, Locale locale)
 		throws PortalException, SystemException {
 
-		List<AssetQueryRule> campaignQueryRules =
-			new ArrayList<AssetQueryRule>();
+		List<QueryRule> campaignQueryRules = new ArrayList<QueryRule>();
 
 		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
 			portletPreferences.getValues("queryLogicIndexes", null),
 			new int[0]);
 
 		for (int queryRulesIndex : queryRulesIndexes) {
-			CampaignQueryRule campaignQueryRule =
-				CampaignQueryRuleUtil.getQueryRule(
-					portletPreferences, queryRulesIndex, locale);
+			QueryRule campaignQueryRule = getQueryRule(
+				portletPreferences, queryRulesIndex, locale);
 
 			if (campaignQueryRule.getAssetEntry() != null) {
 				campaignQueryRules.add(campaignQueryRule);
@@ -57,7 +55,7 @@ public class CampaignQueryRuleUtil {
 		return campaignQueryRules;
 	}
 
-	public static CampaignQueryRule getQueryRule(
+	public static QueryRule getQueryRule(
 			ActionRequest request, int queryRulesIndex, Locale locale)
 		throws PortalException, SystemException {
 
@@ -71,7 +69,7 @@ public class CampaignQueryRuleUtil {
 			assetEntryId, campaignId, queryRulesIndex, locale);
 	}
 
-	public static CampaignQueryRule getQueryRule(
+	public static QueryRule getQueryRule(
 			PortletPreferences portletPreferences, int queryRulesIndex,
 			Locale locale)
 		throws PortalException, SystemException {
@@ -87,11 +85,11 @@ public class CampaignQueryRuleUtil {
 			assetEntryId, campaignId, queryRulesIndex, locale);
 	}
 
-	public static AssetQueryRule match(
-			long[] campaignIds, List<AssetQueryRule> queryRules)
+	public static QueryRule match(
+			long[] campaignIds, List<QueryRule> queryRules)
 		throws PortalException, SystemException {
 
-		for (AssetQueryRule queryRule : queryRules) {
+		for (QueryRule queryRule : queryRules) {
 			if (queryRule.evaluate(campaignIds)) {
 				return queryRule;
 			}

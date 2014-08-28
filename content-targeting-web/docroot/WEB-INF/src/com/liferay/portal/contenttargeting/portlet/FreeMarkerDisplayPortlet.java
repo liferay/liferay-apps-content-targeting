@@ -14,8 +14,8 @@
 
 package com.liferay.portal.contenttargeting.portlet;
 
-import com.liferay.portal.contenttargeting.portlet.util.AssetQueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.PortletDisplayTemplateUtil;
+import com.liferay.portal.contenttargeting.portlet.util.QueryRule;
 import com.liferay.portal.contenttargeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -78,7 +78,7 @@ public class FreeMarkerDisplayPortlet extends FreeMarkerPortlet {
 	protected void populatePortletDisplayTemplateViewContext(
 			Template template, PortletRequest portletRequest,
 			ThemeDisplay themeDisplay, List<AssetEntry> results,
-			List<AssetQueryRule> assetQueryRules)
+			List<QueryRule> queryRules)
 		throws Exception {
 
 		Map<String, Object> context = cloneTemplateContext(template);
@@ -108,23 +108,22 @@ public class FreeMarkerDisplayPortlet extends FreeMarkerPortlet {
 
 			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
 
-			if (Validator.isNull(assetQueryRules) ||
+			if (Validator.isNull(queryRules) ||
 				!portletDisplay.isShowConfigurationIcon()) {
 
 				return;
 			}
 
-			for (AssetQueryRule assetQueryRule : assetQueryRules) {
-				List<AssetEntry> assetQueryRuleResults = Arrays.asList(
-					assetQueryRule.getAssetEntry());
+			for (QueryRule queryRule : queryRules) {
+				List<AssetEntry> queryRuleResults = Arrays.asList(
+					queryRule.getAssetEntry());
 
-				String assetQueryRuleTemplateHtml =
+				String queryRuleTemplateHtml =
 					PortletDisplayTemplateUtil.renderDDMTemplate(
 						portletRequest, themeDisplay,
-						portletDisplayDDMTemplateId, assetQueryRuleResults,
-						context);
+						portletDisplayDDMTemplateId, queryRuleResults, context);
 
-				assetQueryRule.setTemplate(assetQueryRuleTemplateHtml);
+				queryRule.setTemplate(queryRuleTemplateHtml);
 			}
 		}
 	}

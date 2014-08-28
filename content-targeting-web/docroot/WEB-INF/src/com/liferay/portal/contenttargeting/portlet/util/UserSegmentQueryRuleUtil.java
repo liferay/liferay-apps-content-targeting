@@ -32,7 +32,7 @@ import javax.portlet.PortletPreferences;
  */
 public class UserSegmentQueryRuleUtil {
 
-	public static UserSegmentQueryRule getQueryRule(
+	public static QueryRule getQueryRule(
 			ActionRequest request, int queryRulesIndex, Locale locale)
 		throws PortalException, SystemException {
 
@@ -53,7 +53,7 @@ public class UserSegmentQueryRuleUtil {
 			queryRulesIndex, locale);
 	}
 
-	public static UserSegmentQueryRule getQueryRule(
+	public static QueryRule getQueryRule(
 			PortletPreferences portletPreferences, int queryRulesIndex,
 			Locale locale)
 		throws PortalException, SystemException {
@@ -78,19 +78,18 @@ public class UserSegmentQueryRuleUtil {
 			queryRulesIndex, locale);
 	}
 
-	public static List<AssetQueryRule> getUserSegmentQueryRules(
+	public static List<QueryRule> getUserSegmentQueryRules(
 			PortletPreferences portletPreferences, Locale locale)
 		throws PortalException, SystemException {
 
-		List<AssetQueryRule> userSegmentQueryRules =
-			new ArrayList<AssetQueryRule>();
+		List<QueryRule> userSegmentQueryRules = new ArrayList<QueryRule>();
 
 		int[] queryRulesIndexes = GetterUtil.getIntegerValues(
 			portletPreferences.getValues("queryLogicIndexes", null),
 			new int[0]);
 
 		for (int queryRulesIndex : queryRulesIndexes) {
-			UserSegmentQueryRule userSegmentQueryRule =
+			QueryRule userSegmentQueryRule =
 				UserSegmentQueryRuleUtil.getQueryRule(
 					portletPreferences, queryRulesIndex, locale);
 
@@ -105,10 +104,10 @@ public class UserSegmentQueryRuleUtil {
 		return userSegmentQueryRules;
 	}
 
-	public static AssetQueryRule match(
-		long[] userSegmentAssetCategoryIds, List<AssetQueryRule> queryRules) {
+	public static QueryRule match(
+		long[] userSegmentAssetCategoryIds, List<QueryRule> queryRules) {
 
-		for (AssetQueryRule queryRule : queryRules) {
+		for (QueryRule queryRule : queryRules) {
 			if (queryRule.evaluate(userSegmentAssetCategoryIds)) {
 				return queryRule;
 			}
@@ -117,7 +116,7 @@ public class UserSegmentQueryRuleUtil {
 		return null;
 	}
 
-	protected static UserSegmentQueryRule getDefaultQueryRule(
+	protected static QueryRule getDefaultQueryRule(
 			PortletPreferences portletPreferences, Locale locale)
 		throws PortalException, SystemException {
 

@@ -16,9 +16,9 @@ package com.liferay.portal.contenttargeting.portlet;
 
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.contenttargeting.model.Campaign;
-import com.liferay.portal.contenttargeting.portlet.util.AssetQueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.CampaignQueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.CampaignQueryRuleUtil;
+import com.liferay.portal.contenttargeting.portlet.util.QueryRule;
 import com.liferay.portal.contenttargeting.portlet.util.UserSegmentContentDisplayUtil;
 import com.liferay.portal.contenttargeting.service.CampaignLocalService;
 import com.liferay.portal.contenttargeting.service.CampaignService;
@@ -114,14 +114,14 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 		List<CampaignQueryRule> queryRules = new ArrayList<CampaignQueryRule>();
 
 		for (int queryRulesIndex : queryRulesIndexes) {
-			CampaignQueryRule queryRule = CampaignQueryRuleUtil.getQueryRule(
+			QueryRule queryRule = CampaignQueryRuleUtil.getQueryRule(
 				request, queryRulesIndex, themeDisplay.getLocale());
 
 			if (!queryRule.isValid()) {
 				continue;
 			}
 
-			queryRules.add(queryRule);
+			queryRules.add((CampaignQueryRule)queryRule);
 		}
 
 		PortletPreferences portletPreferences = request.getPreferences();
@@ -239,13 +239,13 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			template.put("showPreview", showPreview(themeDisplay));
 			template.put("contentDefaultValue", contentDefaultValue);
 
-			List<AssetQueryRule> campaignQueryRules =
+			List<QueryRule> campaignQueryRules =
 				CampaignQueryRuleUtil.getCampaignQueryRules(
 					portletPreferences, themeDisplay.getLocale());
 
 			template.put("campaignQueryRules", campaignQueryRules);
 
-			AssetQueryRule queryRule = null;
+			QueryRule queryRule = null;
 
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
