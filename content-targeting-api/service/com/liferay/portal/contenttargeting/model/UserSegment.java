@@ -31,6 +31,8 @@ public interface UserSegment extends UserSegmentModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.portal.contenttargeting.model.impl.UserSegmentImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public long getAssetCategoryId(long groupId);
+
 	public java.lang.String getNameWithGroupName(java.util.Locale locale,
 		long groupId);
 

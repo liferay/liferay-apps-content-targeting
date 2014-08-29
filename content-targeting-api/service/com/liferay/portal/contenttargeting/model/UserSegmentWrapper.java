@@ -768,6 +768,11 @@ public class UserSegmentWrapper implements UserSegment,
 	}
 
 	@Override
+	public long getAssetCategoryId(long groupId) {
+		return _userSegment.getAssetCategoryId(groupId);
+	}
+
+	@Override
 	public java.lang.String getNameWithGroupName(java.util.Locale locale,
 		long groupId) {
 		return _userSegment.getNameWithGroupName(locale, groupId);

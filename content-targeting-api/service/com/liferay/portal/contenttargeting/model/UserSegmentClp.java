@@ -698,6 +698,25 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	}
 
 	@Override
+	public long getAssetCategoryId(long groupId) {
+		try {
+			String methodName = "getAssetCategoryId";
+
+			Class<?>[] parameterTypes = new Class<?>[] { long.class };
+
+			Object[] parameterValues = new Object[] { groupId };
+
+			Long returnObj = (Long)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				UserSegment.class.getName()));
