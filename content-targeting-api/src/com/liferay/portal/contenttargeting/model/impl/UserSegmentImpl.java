@@ -24,6 +24,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -40,6 +42,34 @@ import java.util.Locale;
 public class UserSegmentImpl extends UserSegmentBaseImpl {
 
 	public UserSegmentImpl() {
+	}
+
+	public long getAssetCategoryId(long groupId) {
+		long assetCategoryId = getAssetCategoryId();
+
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+			if (group.isStagingGroup()) {
+				AssetCategory liveAssetCategory =
+					AssetCategoryLocalServiceUtil.getAssetCategory(
+						assetCategoryId);
+
+				AssetCategory stagingAssetCategory =
+					AssetCategoryLocalServiceUtil.
+						getAssetCategoryByUuidAndGroupId(
+							liveAssetCategory.getUuid(), group.getGroupId());
+
+				assetCategoryId = stagingAssetCategory.getCategoryId();
+			}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug("Category can not be found for groupId " + groupId);
+			}
+		}
+
+		return assetCategoryId;
 	}
 
 	public String getNameWithGroupName(Locale locale, long groupId) {

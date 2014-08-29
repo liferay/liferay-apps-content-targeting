@@ -200,7 +200,8 @@ public class UserSegmentContentListPortlet extends FreeMarkerDisplayPortlet {
 				AssetEntryQuery entryQuery = new AssetEntryQuery();
 
 				entryQuery.setAnyCategoryIds(
-					ContentTargetingUtil.getAssetCategoryIds(userSegmentIds));
+					ContentTargetingUtil.getAssetCategoryIds(
+						themeDisplay.getScopeGroupId(), userSegmentIds));
 				entryQuery.setClassNameIds(classNameIds);
 
 				assetEntries = AssetEntryServiceUtil.getEntries(entryQuery);

@@ -223,7 +223,9 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 			if (userSegmentIds != null) {
 				long[] userSegmentAssetCategoryIds =
-					ContentTargetingUtil.getAssetCategoryIds(userSegmentIds);
+					ContentTargetingUtil.getAssetCategoryIds(
+						themeDisplay.getSiteGroupIdOrLiveGroupId(),
+						userSegmentIds);
 
 				queryRule = UserSegmentQueryRuleUtil.match(
 					userSegmentAssetCategoryIds, userSegmentQueryRules);

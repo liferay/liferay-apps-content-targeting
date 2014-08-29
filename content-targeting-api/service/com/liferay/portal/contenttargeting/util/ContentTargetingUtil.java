@@ -61,7 +61,8 @@ public class ContentTargetingUtil {
 		return groupIds;
 	}
 
-	public static long[] getAssetCategoryIds(long[] userSegmentIds)
+	public static long[] getAssetCategoryIds(
+			long groupId, long[] userSegmentIds)
 		throws SystemException {
 
 		if (userSegmentIds == null) {
@@ -74,7 +75,7 @@ public class ContentTargetingUtil {
 			UserSegment userSegment =
 				UserSegmentLocalServiceUtil.fetchUserSegment(userSegmentIds[i]);
 
-			assetCategoryIds[i] = userSegment.getAssetCategoryId();
+			assetCategoryIds[i] = userSegment.getAssetCategoryId(groupId);
 		}
 
 		return assetCategoryIds;
