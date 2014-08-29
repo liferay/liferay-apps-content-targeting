@@ -75,9 +75,12 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 	public String getNameWithGroupName(Locale locale, long groupId) {
 		String name = getName(locale);
 
-		if (groupId != getGroupId()) {
-			try {
-				Group group = GroupLocalServiceUtil.getGroup(getGroupId());
+		try {
+			Group group = GroupLocalServiceUtil.getGroup(getGroupId());
+
+			if ((groupId != getGroupId()) &&
+				((!group.hasStagingGroup()) ||
+				 (group.getStagingGroup().getGroupId() != groupId))) {
 
 				StringBundler sb = new StringBundler(5);
 
@@ -89,11 +92,11 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 
 				name = sb.toString();
 			}
-			catch (Exception e) {
-				if (_log.isDebugEnabled()) {
-					_log.debug(
-						"Group can not be found for groupId " + getGroupId());
-				}
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Group can not be found for groupId " + getGroupId());
 			}
 		}
 
