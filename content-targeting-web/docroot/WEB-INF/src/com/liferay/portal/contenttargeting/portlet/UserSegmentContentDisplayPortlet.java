@@ -216,7 +216,7 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 			template.put("userSegmentQueryRules", userSegmentQueryRules);
 
-			QueryRule queryRule = null;
+			QueryRule queryRule = userSegmentQueryRules.get(0);
 
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
@@ -227,9 +227,9 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 				queryRule = UserSegmentQueryRuleUtil.match(
 					userSegmentAssetCategoryIds, userSegmentQueryRules);
-
-				template.put("queryRule", queryRule);
 			}
+
+			template.put("queryRule", queryRule);
 
 			template.put(
 				"selectedIndex", userSegmentQueryRules.indexOf(queryRule));
