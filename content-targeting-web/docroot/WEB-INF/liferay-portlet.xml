@@ -5,6 +5,7 @@
 	<portlet>
 		<portlet-name>campaigncontentdisplay</portlet-name>
 		<icon>/icons/campaign_content_display.png</icon>
+		<portlet-data-handler-class>com.liferay.portal.contenttargeting.portlet.lar.CampaignContentDisplayPortletDataHandler</portlet-data-handler-class>
 		<instanceable>true</instanceable>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/campaign_content_display/main.css</header-portlet-css>
