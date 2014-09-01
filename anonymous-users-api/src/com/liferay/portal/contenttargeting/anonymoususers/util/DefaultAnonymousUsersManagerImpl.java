@@ -96,7 +96,10 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 		if (anonymousUser == null) {
 			anonymousUser = getAnonymousUserFromCookie(request);
 
-			if (anonymousUser == null) {
+			if ((anonymousUser == null) ||
+				((anonymousUser.getUserId() != 0) &&
+				 (anonymousUser.getUserId() != userId))) {
+
 				anonymousUser =
 					AnonymousUserLocalServiceUtil.addAnonymousUser(
 						userId, request.getRemoteAddr(), null, serviceContext);
