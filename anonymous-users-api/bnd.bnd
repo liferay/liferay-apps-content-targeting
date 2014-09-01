@@ -1,6 +1,8 @@
 Bundle-Activator: com.liferay.portal.contenttargeting.anonymoususers.internal.osgi.AnonymousUserServiceActivator
 Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.anonymoususers.api-service.jar
 Bundle-Name: Anonymous Users API
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.anonymoususers.api
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.contenttargeting.anonymoususers,\
 	com.liferay.portal.contenttargeting.anonymoususers.model,\

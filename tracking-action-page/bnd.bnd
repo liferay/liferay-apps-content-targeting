@@ -1,5 +1,7 @@
 Bundle-ClassPath: .,lib/util-java.jar
 Bundle-Name: Page Tracking Action
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.trackingaction.page
+Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.contenttargeting.analytics.util,\
 	com.liferay.portal.contenttargeting.api.model,\

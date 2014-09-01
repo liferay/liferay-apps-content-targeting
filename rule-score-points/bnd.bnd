@@ -1,5 +1,7 @@
 Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.rule.scorepoints-service.jar
 Bundle-Name: Score Points Rule
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.rule.scorepoints
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.contenttargeting.rule.scorepoints.messaging,\
 	com.liferay.portal.contenttargeting.rule.scorepoints.messaging.config

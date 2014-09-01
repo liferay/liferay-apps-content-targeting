@@ -1,6 +1,8 @@
 Bundle-Activator: com.liferay.portal.contenttargeting.report.campaigncontent.internal.osgi.CampaignContentServiceActivator
 Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.report.campaigncontent-service.jar
 Bundle-Name: Campaign Content Report
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.report.campaigncontent
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.contenttargeting.report.campaigncontent,\
 	com.liferay.portal.contenttargeting.report.campaigncontent.model,\

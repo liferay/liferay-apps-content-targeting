@@ -1,6 +1,8 @@
 Bundle-Activator: com.liferay.portal.contenttargeting.analytics.internal.osgi.AnalyticsServiceActivator
 Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.analytics.api-service.jar
 Bundle-Name: Analytics API
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.analytics.api
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.contenttargeting.analytics,\
 	com.liferay.portal.contenttargeting.analytics.messaging,\

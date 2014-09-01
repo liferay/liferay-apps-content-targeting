@@ -1,6 +1,8 @@
 Bundle-Icon: /icons/content_targeting.png;size=16
 Bundle-Localization: WEB-INF/classes/content/Language
 Bundle-Name: Content Targeting Web
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.web-portlet
+Bundle-Version: 1.0.0
 DynamicImport-Package:\
 	org.apache.jasper.servlet,\
 	org.eclipse.jetty.servlet.listener

@@ -1,1 +1,3 @@
 Bundle-Name: Runtime Dependencies
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.runtime.dependencies
+Bundle-Version: 1.0.0

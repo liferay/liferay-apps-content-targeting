@@ -1,6 +1,8 @@
 Bundle-Activator: com.liferay.portal.contenttargeting.report.campaigntrackingaction.internal.osgi.CampaignTrackingActionServiceActivator
 Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.report.campaigntrackingaction-service.jar
 Bundle-Name: Campaign Tracking Actions Report
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.report.campaigntrackingaction
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.contenttargeting.report.campaigntrackingaction,\
 	com.liferay.portal.contenttargeting.report.campaigntrackingaction.model,\

@@ -1,6 +1,8 @@
 Bundle-Activator: com.liferay.portal.contenttargeting.internal.osgi.ContentTargetingActivator
 Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.api-service.jar
 Bundle-Name: Content Targeting API
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.api
+Bundle-Version: 1.0.0
 Export-Package:\
 	com.liferay.portal.contenttargeting,\
 	com.liferay.portal.contenttargeting.api.model,\

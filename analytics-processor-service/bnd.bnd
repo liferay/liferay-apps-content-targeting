@@ -1,5 +1,7 @@
 Bundle-ClassPath: .,lib/util-java.jar
 Bundle-Name: Analytics Processor Service
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.analytics.processor
+Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.osgi.util.service,\
 	com.liferay.portal.contenttargeting.anonymoususers.model,\

@@ -1,5 +1,7 @@
 Bundle-ClassPath: .,lib/util-java.jar
 Bundle-Name: Gender Rule
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.rule.gender
+Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.contenttargeting.anonymoususers.model,\
 	com.liferay.portal.contenttargeting.anonymoususers.service,\

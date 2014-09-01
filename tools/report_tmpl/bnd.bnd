@@ -1,5 +1,7 @@
 Bundle-ClassPath: .,lib/util-java.jar
 Bundle-Name: @report.display.name@ Report
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.report.@report.java.package.name@
+Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.contenttargeting.analytics.model,\
 	com.liferay.portal.contenttargeting.analytics.service,\

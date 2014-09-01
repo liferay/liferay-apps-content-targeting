@@ -1,5 +1,7 @@
 Bundle-ClassPath: .,lib/util-java.jar
 Bundle-Name: @tracking.action.display.name@ tracking gaction
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.trackingaction.@tracking.action.java.package.name@
+Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.contenttargeting.api.model,\
 	com.liferay.portal.contenttargeting.service,\

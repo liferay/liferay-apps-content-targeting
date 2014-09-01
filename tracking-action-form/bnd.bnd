@@ -1,5 +1,7 @@
 Bundle-ClassPath: .,lib/util-java.jar
 Bundle-Name: Form Tracking Action
+Bundle-SymbolicName: com.liferay.portal.contenttargeting.trackingaction.form
+Bundle-Version: 1.0.0
 Import-Package:\
 	com.liferay.portal.contenttargeting.api.model,\
 	com.liferay.portal.contenttargeting.service,\
