@@ -79,7 +79,7 @@ public class UserSegmentImpl extends UserSegmentBaseImpl {
 			Group group = GroupLocalServiceUtil.getGroup(getGroupId());
 
 			if ((groupId != getGroupId()) &&
-				((!group.hasStagingGroup()) ||
+				(!group.hasStagingGroup() ||
 				 (group.getStagingGroup().getGroupId() != groupId))) {
 
 				StringBundler sb = new StringBundler(5);
