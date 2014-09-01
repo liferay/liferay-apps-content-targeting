@@ -107,8 +107,8 @@ public class FacebookAgeRule extends BaseFacebookRule {
 		try {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
 
-			int youngerThan = jsonObj.getInt("youngerThan");
-			int olderThan = jsonObj.getInt("olderThan");
+			int youngerThan = jsonObj.getInt("fbYoungerThan");
+			int olderThan = jsonObj.getInt("fbOlderThan");
 
 			if ((youngerThan > 0) && (olderThan > 0)) {
 				summary = LanguageUtil.format(
@@ -135,13 +135,13 @@ public class FacebookAgeRule extends BaseFacebookRule {
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) {
 
-		int youngerThan = GetterUtil.getInteger(values.get("youngerThan"));
-		int olderThan = GetterUtil.getInteger(values.get("olderThan"));
+		int youngerThan = GetterUtil.getInteger(values.get("fbYoungerThan"));
+		int olderThan = GetterUtil.getInteger(values.get("fbOlderThan"));
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 
-		jsonObj.put("youngerThan", youngerThan);
-		jsonObj.put("olderThan", olderThan);
+		jsonObj.put("fbYoungerThan", youngerThan);
+		jsonObj.put("fbOlderThan", olderThan);
 
 		return jsonObj.toString();
 	}
@@ -160,15 +160,15 @@ public class FacebookAgeRule extends BaseFacebookRule {
 				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
 					typeSettings);
 
-				youngerThan = jsonObj.getInt("youngerThan");
-				olderThan = jsonObj.getInt("olderThan");
+				youngerThan = jsonObj.getInt("fbYoungerThan");
+				olderThan = jsonObj.getInt("fbOlderThan");
 			}
 			catch (JSONException jse) {
 			}
 		}
 
-		context.put("youngerThan", youngerThan);
-		context.put("olderThan", olderThan);
+		context.put("fbYoungerThan", youngerThan);
+		context.put("fbOlderThan", olderThan);
 	}
 
 	protected int getAge(Date birthday) {

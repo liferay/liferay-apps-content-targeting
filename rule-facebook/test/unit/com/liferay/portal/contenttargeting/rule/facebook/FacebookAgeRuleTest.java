@@ -118,8 +118,8 @@ public class FacebookAgeRuleTest extends PowerMockito {
 	private String _generateJSON(int olderThan, int youngerThan) {
 		JSONObject jsonObj = new JSONObjectImpl();
 
-		jsonObj.put("olderThan", olderThan);
-		jsonObj.put("youngerThan", youngerThan);
+		jsonObj.put("fbOlderThan", olderThan);
+		jsonObj.put("fbYoungerThan", youngerThan);
 
 		return jsonObj.toString();
 	}
