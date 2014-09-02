@@ -34,12 +34,12 @@ import javax.servlet.http.HttpServletRequest;
 public interface Rule {
 
 	/**
-	 * Called when the rule is installed.
+	 * Activates the rule when the rule is installed.
 	 */
 	public void activate();
 
 	/**
-	 * Called when the rule is uninstalled.
+	 * Deactivates the rule when the rule is uninstalled.
 	 */
 	public void deActivate();
 
@@ -136,7 +136,8 @@ public interface Rule {
 	 * Returns <code>true</code> if the rule can be used more than once with
 	 * different values for a user segment.
 	 *
-	 * @return <code>true</code> if the rule can be used more than once
+	 * @return <code>true</code> if the rule can be used more than once;
+	 *         <code>false</code> otherwise
 	 */
 	public boolean isInstantiable();
 
