@@ -26,4 +26,4 @@ Include-Resource:\
 	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar
 Private-Package: com.liferay.content.targeting.rule.user.group.member.*
 Service-Component: com.liferay.content.targeting.rule.user.group.member.*
-Web-ContextPath: /rule-usergroup-member
+Web-ContextPath: /rule-user-group-member
