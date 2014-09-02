@@ -7,7 +7,7 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<mapped-superclass class="com.liferay.portal.contenttargeting.anonymoususers.model.impl.AnonymousUserModelImpl">
+	<mapped-superclass class="com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl">
 		<attributes>
 			<id name="anonymousUserId" />
 			<basic name="uuid">
@@ -31,7 +31,7 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<entity class="com.liferay.portal.contenttargeting.anonymoususers.model.impl.AnonymousUserImpl" name="AnonymousUser">
+	<entity class="com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserImpl" name="AnonymousUser">
 		<table name="ContentTargeting_AnonymousUsers_AnonymousUser" />
 		<attributes />
 	</entity>

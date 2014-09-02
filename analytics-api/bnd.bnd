@@ -1,23 +1,23 @@
-Bundle-Activator: com.liferay.portal.contenttargeting.analytics.internal.osgi.AnalyticsServiceActivator
-Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.analytics.api-service.jar
+Bundle-Activator: com.liferay.content.targeting.analytics.internal.osgi.AnalyticsServiceActivator
+Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.content.targeting.analytics.api-service.jar
 Bundle-Name: Analytics API
-Bundle-SymbolicName: com.liferay.portal.contenttargeting.analytics.api
+Bundle-SymbolicName: com.liferay.content.targeting.analytics.api
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.portal.contenttargeting.analytics,\
-	com.liferay.portal.contenttargeting.analytics.messaging,\
-	com.liferay.portal.contenttargeting.analytics.messaging.config,\
-	com.liferay.portal.contenttargeting.analytics.model,\
-	com.liferay.portal.contenttargeting.analytics.service,\
-	com.liferay.portal.contenttargeting.analytics.service.messaging,\
-	com.liferay.portal.contenttargeting.analytics.util
+	com.liferay.content.targeting.analytics,\
+	com.liferay.content.targeting.analytics.messaging,\
+	com.liferay.content.targeting.analytics.messaging.config,\
+	com.liferay.content.targeting.analytics.model,\
+	com.liferay.content.targeting.analytics.service,\
+	com.liferay.content.targeting.analytics.service.messaging,\
+	com.liferay.content.targeting.analytics.util
 Import-Package:\
+	com.liferay.content.targeting.analytics,\
+	com.liferay.content.targeting.analytics.model,\
+	com.liferay.content.targeting.analytics.service,\
 	com.liferay.counter.service,\
 	com.liferay.osgi.util.service,\
 	com.liferay.portal,\
-	com.liferay.portal.contenttargeting.analytics,\
-	com.liferay.portal.contenttargeting.analytics.model,\
-	com.liferay.portal.contenttargeting.analytics.service,\
 	com.liferay.portal.kernel.annotation,\
 	com.liferay.portal.kernel.bean,\
 	com.liferay.portal.kernel.cache,\
@@ -67,6 +67,6 @@ Include-Resource:\
 	WEB-INF/portlet.xml=META-INF/portlet.xml,\
 	WEB-INF/sql=sql,\
 	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	lib/com.liferay.portal.contenttargeting.analytics.api-service.jar=lib/com.liferay.portal.contenttargeting.analytics.api-service.jar
-Service-Component:com.liferay.portal.contenttargeting.analytics.*
+	lib/com.liferay.content.targeting.analytics.api-service.jar=lib/com.liferay.content.targeting.analytics.api-service.jar
+Service-Component:com.liferay.content.targeting.analytics.*
 Web-ContextPath: /analytics-api

@@ -7,7 +7,7 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<mapped-superclass class="com.liferay.portal.contenttargeting.report.campaigntrackingaction.model.impl.CampaignTrackingActionModelImpl">
+	<mapped-superclass class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionModelImpl">
 		<attributes>
 			<id name="campaignTrackingActionId" />
 			<basic name="campaignId" />
@@ -28,7 +28,7 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<entity class="com.liferay.portal.contenttargeting.report.campaigntrackingaction.model.impl.CampaignTrackingActionImpl" name="CampaignTrackingAction">
+	<entity class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionImpl" name="CampaignTrackingAction">
 		<table name="ContentTargeting_CampaignTAReport_CampaignTrackingAction" />
 		<attributes />
 	</entity>

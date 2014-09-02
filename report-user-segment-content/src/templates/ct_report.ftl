@@ -29,7 +29,7 @@
 	/>
 
 	<@liferay_ui["search-container-row"]
-		className="com.liferay.portal.contenttargeting.report.usersegmentcontent.model.UserSegmentContent"
+		className="com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent"
 		modelVar="userSegmentContent"
 	>
 

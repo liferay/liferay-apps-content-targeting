@@ -5,7 +5,7 @@
 	<portlet>
 		<portlet-name>analytics-api</portlet-name>
 		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portal.contenttargeting.analytics.messaging.CheckAnalyticsEventsMessageListener</scheduler-event-listener-class>
+			<scheduler-event-listener-class>com.liferay.content.targeting.analytics.messaging.CheckAnalyticsEventsMessageListener</scheduler-event-listener-class>
 			<trigger>
 				<simple>
 					<property-key>analytics.events.check.interval</property-key>

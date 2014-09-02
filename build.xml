@@ -80,8 +80,8 @@
 		</antelope:stringutil>
 
 		<move
-			file="${report.dir}/src/com/liferay/portal/contenttargeting/report/Report.java"
-			tofile="${report.dir}/src/com/liferay/portal/contenttargeting/report/${report.java.package.name}/${report.java.class.name}Report.java"
+			file="${report.dir}/src/com/liferay/content/targeting/report/Report.java"
+			tofile="${report.dir}/src/com/liferay/content/targeting/report/${report.java.package.name}/${report.java.class.name}Report.java"
 		/>
 
 		<replace dir="${report.dir}">
@@ -134,8 +134,8 @@
 		</antelope:stringutil>
 
 		<move
-			file="${rule.dir}/src/com/liferay/portal/contenttargeting/rule/Rule.java"
-			tofile="${rule.dir}/src/com/liferay/portal/contenttargeting/rule/${rule.java.package.name}/${rule.java.class.name}Rule.java"
+			file="${rule.dir}/src/com/liferay/content/targeting/rule/Rule.java"
+			tofile="${rule.dir}/src/com/liferay/content/targeting/rule/${rule.java.package.name}/${rule.java.class.name}Rule.java"
 		/>
 
 		<replace dir="${rule.dir}">
@@ -188,8 +188,8 @@
 		</antelope:stringutil>
 
 		<move
-			file="${tracking.action.dir}/src/com/liferay/portal/contenttargeting/trackingaction/TrackingAction.java"
-			tofile="${tracking.action.dir}/src/com/liferay/portal/contenttargeting/trackingaction/${tracking.action.java.package.name}/${tracking.action.java.class.name}TrackingAction.java"
+			file="${tracking.action.dir}/src/com/liferay/content/targeting/trackingaction/TrackingAction.java"
+			tofile="${tracking.action.dir}/src/com/liferay/content/targeting/trackingaction/${tracking.action.java.package.name}/${tracking.action.java.class.name}TrackingAction.java"
 		/>
 
 		<replace dir="${tracking.action.dir}">

@@ -3,7 +3,7 @@
 <project name="analytics-processor-service" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.contenttargeting.analytics.processor.service" />
+	<property name="plugin.name" value="com.liferay.content.targeting.analytics.processor.service" />
 
 	<property name="import.shared" value="anonymous-users-api" />
 

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.portal.contenttargeting.report.campaigncontent.model.CampaignContent">
+	<model name="com.liferay.content.targeting.report.campaign.content.model.CampaignContent">
 		<field name="campaignContentId" type="long" />
 		<field name="campaignId" type="long" />
 		<field name="className" type="String" />

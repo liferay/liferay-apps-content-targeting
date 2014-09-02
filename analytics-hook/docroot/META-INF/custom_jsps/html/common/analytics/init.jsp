@@ -18,7 +18,7 @@
 
 <%
 long [] analyticsReferrerClassPKs = (long[])request.getAttribute("userSegmentIds");
-String analyticsReferrerClassName = "com.liferay.portal.contenttargeting.model.UserSegment";
+String analyticsReferrerClassName = "com.liferay.content.targeting.model.UserSegment";
 
 if (Validator.isNull(analyticsReferrerClassPKs)) {
 	analyticsReferrerClassPKs = new long[]{layout.getPlid()};
@@ -27,7 +27,7 @@ if (Validator.isNull(analyticsReferrerClassPKs)) {
 
 String analyticsReferrerClassPK = StringUtil.merge(analyticsReferrerClassPKs);
 
-// See com.liferay.portal.contenttargeting.analytics.util.AnalyticsUtil
+// See com.liferay.content.targeting.analytics.util.AnalyticsUtil
 
 String analyticsLinkExcludedIdsRegex = StringPool.BLANK;
 String analyticsFormExcludedIdsRegex = StringPool.BLANK;

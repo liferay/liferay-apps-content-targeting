@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.portal.contenttargeting.model.Campaign">
+	<model name="com.liferay.content.targeting.model.Campaign">
 		<field name="name" type="String" localized="true">
 			<validator name="required" />
 		</field>
@@ -9,22 +9,22 @@
 			<hint-collection name="TEXTAREA" />
 		</field>
 	</model>
-	<model name="com.liferay.portal.contenttargeting.model.ReportInstance">
+	<model name="com.liferay.content.targeting.model.ReportInstance">
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.portal.contenttargeting.model.RuleInstance">
+	<model name="com.liferay.content.targeting.model.RuleInstance">
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.portal.contenttargeting.model.TrackingActionInstance">
+	<model name="com.liferay.content.targeting.model.TrackingActionInstance">
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />
 		</field>
 	</model>
-	<model name="com.liferay.portal.contenttargeting.model.UserSegment">
+	<model name="com.liferay.content.targeting.model.UserSegment">
 		<field name="name" type="String" localized="true">
 			<validator name="required" />
 		</field>

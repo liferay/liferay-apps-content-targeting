@@ -5,7 +5,7 @@
 	<portlet>
 		<portlet-name>campaigncontentdisplay</portlet-name>
 		<icon>/icons/campaign_content_display.png</icon>
-		<portlet-data-handler-class>com.liferay.portal.contenttargeting.portlet.lar.CampaignContentDisplayPortletDataHandler</portlet-data-handler-class>
+		<portlet-data-handler-class>com.liferay.content.targeting.portlet.lar.CampaignContentDisplayPortletDataHandler</portlet-data-handler-class>
 		<instanceable>true</instanceable>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/campaign_content_display/main.css</header-portlet-css>
@@ -19,7 +19,7 @@
 		<icon>/icons/icon.png</icon>
 		<control-panel-entry-category>site_administration.configuration</control-panel-entry-category>
 		<control-panel-entry-weight>10.0</control-panel-entry-weight>
-		<control-panel-entry-class>com.liferay.portal.contenttargeting.portlet.ContentTargetingControlPanelEntry</control-panel-entry-class>
+		<control-panel-entry-class>com.liferay.content.targeting.portlet.ContentTargetingControlPanelEntry</control-panel-entry-class>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/content_targeting/main.css</header-portlet-css>
 		<header-portlet-css>/css/content_targeting/rules_panel.css</header-portlet-css>
@@ -39,7 +39,7 @@
 	<portlet>
 		<portlet-name>usersegmentcontentdisplay</portlet-name>
 		<icon>/icons/user_segment_content_display.png</icon>
-		<portlet-data-handler-class>com.liferay.portal.contenttargeting.portlet.lar.UserSegmentContentDisplayPortletDataHandler</portlet-data-handler-class>
+		<portlet-data-handler-class>com.liferay.content.targeting.portlet.lar.UserSegmentContentDisplayPortletDataHandler</portlet-data-handler-class>
 		<instanceable>true</instanceable>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/user_segment_content_display/main.css</header-portlet-css>

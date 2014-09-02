@@ -7,7 +7,7 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<mapped-superclass class="com.liferay.portal.contenttargeting.model.impl.CampaignModelImpl">
+	<mapped-superclass class="com.liferay.content.targeting.model.impl.CampaignModelImpl">
 		<attributes>
 			<id name="campaignId" />
 			<basic name="uuid">
@@ -45,7 +45,7 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portal.contenttargeting.model.impl.ReportInstanceModelImpl">
+	<mapped-superclass class="com.liferay.content.targeting.model.impl.ReportInstanceModelImpl">
 		<attributes>
 			<id name="reportInstanceId" />
 			<basic name="groupId" />
@@ -65,7 +65,7 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portal.contenttargeting.model.impl.RuleInstanceModelImpl">
+	<mapped-superclass class="com.liferay.content.targeting.model.impl.RuleInstanceModelImpl">
 		<attributes>
 			<id name="ruleInstanceId" />
 			<basic name="uuid">
@@ -90,7 +90,7 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portal.contenttargeting.model.impl.TrackingActionInstanceModelImpl">
+	<mapped-superclass class="com.liferay.content.targeting.model.impl.TrackingActionInstanceModelImpl">
 		<attributes>
 			<id name="trackingActionInstanceId" />
 			<basic name="uuid">
@@ -122,7 +122,7 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.portal.contenttargeting.model.impl.UserSegmentModelImpl">
+	<mapped-superclass class="com.liferay.content.targeting.model.impl.UserSegmentModelImpl">
 		<attributes>
 			<id name="userSegmentId" />
 			<basic name="uuid">
@@ -151,23 +151,23 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<entity class="com.liferay.portal.contenttargeting.model.impl.CampaignImpl" name="Campaign">
+	<entity class="com.liferay.content.targeting.model.impl.CampaignImpl" name="Campaign">
 		<table name="ContentTargeting_Campaign" />
 		<attributes />
 	</entity>
-	<entity class="com.liferay.portal.contenttargeting.model.impl.ReportInstanceImpl" name="ReportInstance">
+	<entity class="com.liferay.content.targeting.model.impl.ReportInstanceImpl" name="ReportInstance">
 		<table name="ContentTargeting_ReportInstance" />
 		<attributes />
 	</entity>
-	<entity class="com.liferay.portal.contenttargeting.model.impl.RuleInstanceImpl" name="RuleInstance">
+	<entity class="com.liferay.content.targeting.model.impl.RuleInstanceImpl" name="RuleInstance">
 		<table name="ContentTargeting_RuleInstance" />
 		<attributes />
 	</entity>
-	<entity class="com.liferay.portal.contenttargeting.model.impl.TrackingActionInstanceImpl" name="TrackingActionInstance">
+	<entity class="com.liferay.content.targeting.model.impl.TrackingActionInstanceImpl" name="TrackingActionInstance">
 		<table name="ContentTargeting_TrackingActionInstance" />
 		<attributes />
 	</entity>
-	<entity class="com.liferay.portal.contenttargeting.model.impl.UserSegmentImpl" name="UserSegment">
+	<entity class="com.liferay.content.targeting.model.impl.UserSegmentImpl" name="UserSegment">
 		<table name="ContentTargeting_UserSegment" />
 		<attributes />
 	</entity>

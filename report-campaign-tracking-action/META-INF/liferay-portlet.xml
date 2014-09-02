@@ -5,7 +5,7 @@
 	<portlet>
 		<portlet-name>report-campaign-tracking-action</portlet-name>
 		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portal.contenttargeting.report.campaigntrackingaction.messaging.CheckCampaignTrackingActionReportMessageListener</scheduler-event-listener-class>
+			<scheduler-event-listener-class>com.liferay.content.targeting.report.campaign.tracking.action.messaging.CheckCampaignTrackingActionReportMessageListener</scheduler-event-listener-class>
 			<trigger>
 				<simple>
 					<property-key>campaign.tracking.action.report.check.interval</property-key>

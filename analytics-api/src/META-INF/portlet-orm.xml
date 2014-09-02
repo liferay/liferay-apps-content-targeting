@@ -7,7 +7,7 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<mapped-superclass class="com.liferay.portal.contenttargeting.analytics.model.impl.AnalyticsEventModelImpl">
+	<mapped-superclass class="com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl">
 		<attributes>
 			<id name="analyticsEventId" />
 			<basic name="companyId" />
@@ -34,7 +34,7 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
-	<entity class="com.liferay.portal.contenttargeting.analytics.model.impl.AnalyticsEventImpl" name="AnalyticsEvent">
+	<entity class="com.liferay.content.targeting.analytics.model.impl.AnalyticsEventImpl" name="AnalyticsEvent">
 		<table name="ContentTargeting_Analytics_AnalyticsEvent" />
 		<attributes />
 	</entity>

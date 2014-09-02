@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.portal.contenttargeting.analytics.model.AnalyticsEvent">
+	<model name="com.liferay.content.targeting.analytics.model.AnalyticsEvent">
 		<field name="analyticsEventId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />

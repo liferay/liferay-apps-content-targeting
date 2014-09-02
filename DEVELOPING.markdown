@@ -20,7 +20,7 @@ types of rules such as age range, gender, location...
 
 Developers will be able to extend the set of available types of rules by
 creating and deploying their own OSGi plugins which contain a class implementing
-the [Rule Interface](https://github.com/liferay/liferay-apps-content-targeting/blob/master/content-targeting-api/service/com/liferay/portal/contenttargeting/api/model/Rule.java).
+the [Rule Interface](https://github.com/liferay/liferay-apps-content-targeting/blob/master/content-targeting-api/service/com/liferay/content/targeting/api/model/Rule.java).
 
 OSGi plugins can be quickly hot deployed and undeployed, managing their own
 dependencies and providing new services that other OSGi plugins can consume.
@@ -81,7 +81,7 @@ segments or in the context of a campaign.
 
 Developers will be able to extend the set of available reports by creating and
 deploying their own OSGi plugins which contain a class implementing the
-[Report Interface](https://github.com/liferay/liferay-apps-content-targeting/blob/master/content-targeting-api/service/com/liferay/portal/contenttargeting/api/model/Report.java).
+[Report Interface](https://github.com/liferay/liferay-apps-content-targeting/blob/master/content-targeting-api/service/com/liferay/content/targeting/api/model/Report.java).
 
 OSGi plugins can be quickly hot deployed and undeployed, managing their own
 dependencies and providing new services that other OSGi plugins can consume.
@@ -135,7 +135,7 @@ by monitoring their interaction over different elements of the portal.
 
 Developers will be able to extend the set of available tracking actions by
 creating and deploying their own OSGi plugins which contain a class implementing
-the [Tracking Action Interface](https://github.com/liferay/liferay-apps-content-targeting/blob/master/content-targeting-api/service/com/liferay/portal/contenttargeting/api/model/TrackingAction.java).
+the [Tracking Action Interface](https://github.com/liferay/liferay-apps-content-targeting/blob/master/content-targeting-api/service/com/liferay/content/targeting/api/model/TrackingAction.java).
 
 OSGi plugins can be quickly hot deployed and undeployed, managing their own
 dependencies and providing new services that other OSGi plugins can consume.

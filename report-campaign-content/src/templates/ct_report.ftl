@@ -29,7 +29,7 @@
 	/>
 
 	<@liferay_ui["search-container-row"]
-		className="com.liferay.portal.contenttargeting.report.campaigncontent.model.CampaignContent"
+		className="com.liferay.content.targeting.report.campaign.content.model.CampaignContent"
 		modelVar="campaignContent"
 	>
 

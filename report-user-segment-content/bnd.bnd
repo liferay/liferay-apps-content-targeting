@@ -1,28 +1,28 @@
-Bundle-Activator: com.liferay.portal.contenttargeting.report.usersegmentcontent.internal.osgi.UserSegmentContentServiceActivator
-Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.portal.contenttargeting.report.usersegmentcontent-service.jar
+Bundle-Activator: com.liferay.content.targeting.report.user.segment.content.internal.osgi.UserSegmentContentServiceActivator
+Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.content.targeting.report.user.segment.content-service.jar
 Bundle-Name: User Segment Content Report
-Bundle-SymbolicName: com.liferay.portal.contenttargeting.report.usersegmentcontent
+Bundle-SymbolicName: com.liferay.content.targeting.report.user.segment.content
 Bundle-Version: 1.0.0
 Export-Package:\
-	com.liferay.portal.contenttargeting.report.usersegmentcontent,\
-	com.liferay.portal.contenttargeting.report.usersegmentcontent.model,\
-	com.liferay.portal.contenttargeting.report.usersegmentcontent.service,\
-    com.liferay.portal.contenttargeting.report.usersegmentcontent.service.messaging
+	com.liferay.content.targeting.report.user.segment.content,\
+	com.liferay.content.targeting.report.user.segment.content.model,\
+	com.liferay.content.targeting.report.user.segment.content.service,\
+    com.liferay.content.targeting.report.user.segment.content.service.messaging
 Import-Package:\
-	com.liferay.portal.contenttargeting.analytics.model,\
-	com.liferay.portal.contenttargeting.analytics.service,\
-	com.liferay.portal.contenttargeting.analytics.service.messaging,\
-	com.liferay.portal.contenttargeting.anonymoususers.model,\
-	com.liferay.portal.contenttargeting.anonymoususers.service,\
-	com.liferay.portal.contenttargeting.anonymoususers.service.messaging,\
-	com.liferay.portal.contenttargeting.model,\
-	com.liferay.portal.contenttargeting.api.model,\
-	com.liferay.portal.contenttargeting.report.usersegmentcontent,\
-	com.liferay.portal.contenttargeting.report.usersegmentcontent.model,\
-	com.liferay.portal.contenttargeting.report.usersegmentcontent.service,\
-	com.liferay.portal.contenttargeting.service,\
-	com.liferay.portal.contenttargeting.service.messaging,\
-	com.liferay.portal.contenttargeting.util,\
+	com.liferay.content.targeting.analytics.model,\
+	com.liferay.content.targeting.analytics.service,\
+	com.liferay.content.targeting.analytics.service.messaging,\
+	com.liferay.content.targeting.anonymous.users.model,\
+	com.liferay.content.targeting.anonymous.users.service,\
+	com.liferay.content.targeting.anonymous.users.service.messaging,\
+	com.liferay.content.targeting.model,\
+	com.liferay.content.targeting.api.model,\
+	com.liferay.content.targeting.report.user.segment.content,\
+	com.liferay.content.targeting.report.user.segment.content.model,\
+	com.liferay.content.targeting.report.user.segment.content.service,\
+	com.liferay.content.targeting.service,\
+	com.liferay.content.targeting.service.messaging,\
+	com.liferay.content.targeting.util,\
 	com.liferay.counter.service,\
 	com.liferay.osgi.util.service,\
 	com.liferay.portal,\
@@ -75,6 +75,6 @@ Include-Resource:\
  	WEB-INF/portlet.xml=META-INF/portlet.xml,\
  	WEB-INF/sql=sql,\
  	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	lib/com.liferay.portal.contenttargeting.report.usersegmentcontent-service.jar=lib/com.liferay.portal.contenttargeting.report.usersegmentcontent-service.jar
-Service-Component: com.liferay.portal.contenttargeting.report.usersegmentcontent.*
+	lib/com.liferay.content.targeting.report.user.segment.content-service.jar=lib/com.liferay.content.targeting.report.user.segment.content-service.jar
+Service-Component: com.liferay.content.targeting.report.user.segment.content.*
 Web-ContextPath: /report-user-segment-content

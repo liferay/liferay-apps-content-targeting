@@ -3,7 +3,7 @@
 <project name="report-campaign-content-test" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.contenttargeting.report.campaigncontent.test" />
+	<property name="plugin.name" value="com.liferay.content.targeting.report.campaign.content.test" />
 
 	<property name="import.shared" value="report-campaign-content" />
 

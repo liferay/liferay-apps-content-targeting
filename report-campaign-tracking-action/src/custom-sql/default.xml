@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.persistence.CampaignTrackingActionFinder.findByAnalyticsWithClassName">
+	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionFinder.findByAnalyticsWithClassName">
 		<![CDATA[
 			SELECT
 				DISTINCT ContentTargeting_Analytics_AnalyticsEvent.referrerClassPK AS referrerClassPK, ContentTargeting_Analytics_AnalyticsEvent.className AS className, ContentTargeting_Analytics_AnalyticsEvent.classPK AS classPK, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, ContentTargeting_TrackingActionInstance.alias_ AS alias
@@ -19,7 +19,7 @@
 				ContentTargeting_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.portal.contenttargeting.report.campaigntrackingaction.service.persistence.CampaignTrackingActionFinder.findByAnalyticsWithElementId">
+	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionFinder.findByAnalyticsWithElementId">
 		<![CDATA[
 			SELECT
 				DISTINCT ContentTargeting_Analytics_AnalyticsEvent.referrerClassPK AS referrerClassPK, ContentTargeting_Analytics_AnalyticsEvent.elementId AS elementId, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, ContentTargeting_TrackingActionInstance.alias_ AS alias

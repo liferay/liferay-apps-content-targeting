@@ -7,7 +7,7 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<mapped-superclass class="com.liferay.portal.contenttargeting.report.campaigncontent.model.impl.CampaignContentModelImpl">
+	<mapped-superclass class="com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentModelImpl">
 		<attributes>
 			<id name="campaignContentId" />
 			<basic name="campaignId" />
@@ -23,7 +23,7 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<entity class="com.liferay.portal.contenttargeting.report.campaigncontent.model.impl.CampaignContentImpl" name="CampaignContent">
+	<entity class="com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentImpl" name="CampaignContent">
 		<table name="ContentTargeting_CampaignContentReport_CampaignContent" />
 		<attributes />
 	</entity>

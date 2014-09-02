@@ -3,7 +3,7 @@
 <project name="rule-organization-member" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.contenttargeting.rule.organizationmember" />
+	<property name="plugin.name" value="com.liferay.content.targeting.rule.organization.member" />
 
 	<property name="import.shared" value="anonymous-users-api,content-targeting-api" />
 

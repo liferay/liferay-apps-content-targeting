@@ -3,7 +3,7 @@
 <project name="anonymous-users-api" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.contenttargeting.anonymoususers.api" />
+	<property name="plugin.name" value="com.liferay.content.targeting.anonymous.users.api" />
 
 	<property name="service.base.dir" value="." />
 

@@ -5,7 +5,7 @@
 
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.contenttargeting.analytics.api" />
+	<property name="plugin.name" value="com.liferay.content.targeting.analytics.api" />
 
 	<property name="service.base.dir" value="." />
 

@@ -3,7 +3,7 @@
 
 <resource-action-mapping>
 	<model-resource>
-		<model-name>com.liferay.portal.contenttargeting.model</model-name>
+		<model-name>com.liferay.content.targeting.model</model-name>
 		<portlet-ref>
 			<portlet-name>ctcore</portlet-name>
 		</portlet-ref>
@@ -24,7 +24,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portal.contenttargeting.model.Campaign</model-name>
+		<model-name>com.liferay.content.targeting.model.Campaign</model-name>
 		<portlet-ref>
 			<portlet-name>ctcore</portlet-name>
 		</portlet-ref>
@@ -46,7 +46,7 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
-		<model-name>com.liferay.portal.contenttargeting.model.UserSegment</model-name>
+		<model-name>com.liferay.content.targeting.model.UserSegment</model-name>
 		<portlet-ref>
 			<portlet-name>ctcore</portlet-name>
 		</portlet-ref>

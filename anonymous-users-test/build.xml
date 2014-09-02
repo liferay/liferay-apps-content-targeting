@@ -3,7 +3,7 @@
 <project name="anonymous-users-test" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.contenttargeting.anonymoususers.test" />
+	<property name="plugin.name" value="com.liferay.content.targeting.anonymous.users.test" />
 
 	<property name="import.shared" value="anonymous-users-api" />
 

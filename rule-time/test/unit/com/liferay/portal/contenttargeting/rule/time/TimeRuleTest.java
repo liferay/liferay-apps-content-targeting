@@ -12,10 +12,10 @@
  * details.
  */
 
-package com.liferay.portal.contenttargeting.rule.time;
+package com.liferay.content.targeting.rule.time;
 
-import com.liferay.portal.contenttargeting.anonymoususers.model.AnonymousUser;
-import com.liferay.portal.contenttargeting.model.RuleInstance;
+import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
+import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.portal.json.JSONObjectImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;

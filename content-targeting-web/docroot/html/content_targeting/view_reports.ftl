@@ -38,7 +38,7 @@
 	/>
 
 	<@liferay_ui["search-container-row"]
-		className="com.liferay.portal.contenttargeting.model.api.Report"
+		className="com.liferay.content.targeting.model.api.Report"
 		keyProperty="reportKey"
 		modelVar="report"
 	>

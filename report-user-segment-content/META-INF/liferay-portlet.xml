@@ -5,7 +5,7 @@
 	<portlet>
 		<portlet-name>report-user-segment-content</portlet-name>
 		<scheduler-entry>
-			<scheduler-event-listener-class>com.liferay.portal.contenttargeting.report.usersegmentcontent.messaging.CheckUserSegmentContentReportMessageListener</scheduler-event-listener-class>
+			<scheduler-event-listener-class>com.liferay.content.targeting.report.user.segment.content.messaging.CheckUserSegmentContentReportMessageListener</scheduler-event-listener-class>
 			<trigger>
 				<simple>
 					<property-key>user.segment.content.report.check.interval</property-key>

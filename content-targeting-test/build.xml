@@ -3,7 +3,7 @@
 <project name="content-targeting-test" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.contenttargeting.test" />
+	<property name="plugin.name" value="com.liferay.content.targeting.test" />
 
 	<property name="import.shared" value="content-targeting-api" />
 

@@ -3,7 +3,7 @@
 <project name="tracking-action-page" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.portal.contenttargeting.trackingaction.page" />
+	<property name="plugin.name" value="com.liferay.content.targeting.tracking.action.page" />
 
 	<property name="import.shared" value="analytics-api,content-targeting-api" />
 

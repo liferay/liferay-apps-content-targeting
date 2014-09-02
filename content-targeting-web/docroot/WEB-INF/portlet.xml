@@ -4,7 +4,7 @@
 	<portlet>
 		<portlet-name>campaigncontentdisplay</portlet-name>
 		<display-name>Campaign Content Display</display-name>
-		<portlet-class>com.liferay.portal.contenttargeting.portlet.CampaignContentDisplayPortlet</portlet-class>
+		<portlet-class>com.liferay.content.targeting.portlet.CampaignContentDisplayPortlet</portlet-class>
 		<init-param>
 			<name>com.liferay.portal.invokerPortletName</name>
 			<value>o/content-targeting-web/1</value>
@@ -39,7 +39,7 @@
 	<portlet>
 		<portlet-name>ctadmin</portlet-name>
 		<display-name>Audience Targeting</display-name>
-		<portlet-class>com.liferay.portal.contenttargeting.portlet.ContentTargetingPortlet</portlet-class>
+		<portlet-class>com.liferay.content.targeting.portlet.ContentTargetingPortlet</portlet-class>
 		<init-param>
 			<name>com.liferay.portal.invokerPortletName</name>
 			<value>o/content-targeting-web/1</value>
@@ -74,7 +74,7 @@
 	<portlet>
 		<portlet-name>ctsimulator</portlet-name>
 		<display-name>Content Targeting Simulator</display-name>
-		<portlet-class>com.liferay.portal.contenttargeting.portlet.SimulatorPortlet</portlet-class>
+		<portlet-class>com.liferay.content.targeting.portlet.SimulatorPortlet</portlet-class>
 		<init-param>
 			<name>add-process-action-success-action</name>
 			<value>false</value>
@@ -113,7 +113,7 @@
 	<portlet>
 		<portlet-name>usersegmentcontentdisplay</portlet-name>
 		<display-name>User Segment Content Display</display-name>
-		<portlet-class>com.liferay.portal.contenttargeting.portlet.UserSegmentContentDisplayPortlet</portlet-class>
+		<portlet-class>com.liferay.content.targeting.portlet.UserSegmentContentDisplayPortlet</portlet-class>
 		<init-param>
 			<name>com.liferay.portal.invokerPortletName</name>
 			<value>o/content-targeting-web/1</value>
@@ -148,7 +148,7 @@
 	<portlet>
 		<portlet-name>usersegmentcontentlist</portlet-name>
 		<display-name>User Segment Content List</display-name>
-		<portlet-class>com.liferay.portal.contenttargeting.portlet.UserSegmentContentListPortlet</portlet-class>
+		<portlet-class>com.liferay.content.targeting.portlet.UserSegmentContentListPortlet</portlet-class>
 		<init-param>
 			<name>com.liferay.portal.invokerPortletName</name>
 			<value>o/content-targeting-web/1</value>

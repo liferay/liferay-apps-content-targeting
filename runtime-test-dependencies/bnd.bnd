@@ -1,3 +1,3 @@
 Bundle-Name: Runtime Test Dependencies
-Bundle-SymbolicName: com.liferay.portal.contenttargeting.runtime.test.dependencies
+Bundle-SymbolicName: com.liferay.content.targeting.runtime.test.dependencies
 Bundle-Version: 1.0.0
