@@ -21,9 +21,9 @@
         <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="plugin dependencies" level="application" />
     <orderEntry type="library" name="portal" level="project" />
     <orderEntry type="library" name="portal-impl" level="project" />
+    <orderEntry type="library" name="reference" level="project" />
   </component>
 </module>
 
