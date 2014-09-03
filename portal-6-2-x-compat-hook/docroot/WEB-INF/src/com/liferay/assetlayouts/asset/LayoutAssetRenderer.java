@@ -57,7 +57,7 @@ public class LayoutAssetRenderer extends BaseAssetRenderer {
 
 	@Override
 	public String getSummary(Locale locale) {
-		StringBundler sb = new StringBundler(16);
+		StringBundler sb = new StringBundler(4);
 
 		sb.append("<strong>");
 		sb.append(LanguageUtil.get(locale, "page"));
