@@ -9,20 +9,22 @@
 <@aui["script"] use="charts">
 	var campaignContentChartDataValues = [
 		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as campaignContent>
-			{content:"${campaignContent.getTitle(locale)}", count:${campaignContent.getCount()}}<#if campaignContent_has_next>,</#if>
+			{content:'${campaignContent.getTitle(locale)}', count:${campaignContent.getCount()}}<#if campaignContent_has_next>,</#if>
 		</#list>
 	];
 
 	var campaignContentCharAxes = {
 		count:{
-			keys:["count"],
-			position:"left",
-			type:"numeric"
+			keys:['count'],
+			position:'left',
+			title:'${languageUtil.get(locale, "count")}',
+			type:'numeric'
 		},
 		content:{
-			keys:["content"],
-			position:"bottom",
-			type:"category"
+			keys:['content'],
+			position:'bottom',
+			title:'${languageUtil.get(locale, "content")}',
+			type:'category'
 		}
 	};
 
@@ -39,11 +41,11 @@
 			count:{
 				marker:{
 					fill:{
-						color:"#45cbf5"
+						color:'#45cbf5'
 					},
 					over:{
 						fill:{
-							color:"#5bbae8"
+							color:'#5bbae8'
 						}
 					}
 				}
@@ -55,9 +57,9 @@
 		axes: campaignContentCharAxes,
 		dataProvider: campaignContentChartDataValues,
 		horizontalGridlines: true,
-		render: "#campaignContentChart",
+		render: '#campaignContentChart',
 		styles: campaignContentCharStyles,
-		type: "column",
+		type: 'column',
 		verticalGridlines: true
 	});
 </@>

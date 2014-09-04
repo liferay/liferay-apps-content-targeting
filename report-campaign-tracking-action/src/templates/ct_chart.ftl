@@ -9,20 +9,22 @@
 <@aui["script"] use="charts">
 	var campaignTrackingActionChartDataValues = [
 		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as campaignTrackingAction>
-			{content:"${campaignTrackingAction.getUserSegmentName(locale)}", count:${campaignTrackingAction.getCount()}}<#if campaignTrackingAction_has_next>,</#if>
+			{content:'${campaignTrackingAction.getAlias()} (${campaignTrackingAction.getUserSegmentName(locale)})', count:${campaignTrackingAction.getCount()}}<#if campaignTrackingAction_has_next>,</#if>
 		</#list>
 	];
 
 	var campaignTrackingActionCharAxes = {
 		count:{
-			keys:["count"],
-			position:"left",
-			type:"numeric"
+			keys:['count'],
+			position:'left',
+			title:'${languageUtil.get(locale, "count")}',
+			type:'numeric'
 		},
 		content:{
-			keys:["content"],
-			position:"bottom",
-			type:"category"
+			keys:['content'],
+			position:'bottom',
+			title:'${languageUtil.get(locale, "content")} (${languageUtil.get(locale, "user-segment")})}',
+			type:'category'
 		}
 	};
 
@@ -39,11 +41,11 @@
 			count:{
 				marker:{
 					fill:{
-						color:"#45cbf5"
+						color:'#45cbf5'
 					},
 					over:{
 						fill:{
-							color:"#5bbae8"
+							color:'#5bbae8'
 						}
 					}
 				}
@@ -55,9 +57,9 @@
 		axes: campaignTrackingActionCharAxes,
 		dataProvider: campaignTrackingActionChartDataValues,
 		horizontalGridlines: true,
-		render: "#campaignTrackingActionChart",
+		render: '#campaignTrackingActionChart',
 		styles: campaignTrackingActionCharStyles,
-		type: "column",
+		type: 'column',
 		verticalGridlines: true
 	});
 </@>
