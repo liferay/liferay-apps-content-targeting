@@ -70,7 +70,7 @@ public class CampaignTrackingActionLocalServiceImpl
 
 		return addCampaignTrackingAction(
 			campaignId, userSegmentId, alias, referrerClassName,
-			referrerClassPK, null, eventType, count);
+			referrerClassPK, StringPool.BLANK, eventType, count);
 	}
 
 	@Override
@@ -118,8 +118,8 @@ public class CampaignTrackingActionLocalServiceImpl
 		throws PortalException, SystemException {
 
 		return addCampaignTrackingAction(
-			campaignId, userSegmentId, alias, null, -1, elementId, eventType,
-			count);
+			campaignId, userSegmentId, alias, StringPool.BLANK, -1, elementId,
+			eventType, count);
 	}
 
 	@Override
