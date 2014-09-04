@@ -78,7 +78,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="R_C_C" return-type="ReportInstance">
+		<finder name="R_C_C" return-type="ReportInstance" unique="true">
 			<finder-column name="reportKey" />
 			<finder-column name="className" />
 			<finder-column name="classPK" />

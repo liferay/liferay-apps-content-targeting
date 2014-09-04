@@ -23,7 +23,7 @@
 
 		<!-- Finder methods -->
 
-		<finder name="C_U" return-type="ScorePoint">
+		<finder name="C_U" return-type="ScorePoint" unique="true">
 			<finder-column name="anonymousUserId" />
 			<finder-column name="userSegmentId" />
 		</finder>

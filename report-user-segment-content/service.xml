@@ -35,7 +35,7 @@
 			<finder-column name="modifiedDate" comparator="&gt;" />
 		</finder>
 
-		<finder name="C_C_C_E" return-type="UserSegmentContent">
+		<finder name="C_C_C_E" return-type="UserSegmentContent" unique="true">
 			<finder-column name="userSegmentId" />
 			<finder-column name="className" />
 			<finder-column name="classPK" />

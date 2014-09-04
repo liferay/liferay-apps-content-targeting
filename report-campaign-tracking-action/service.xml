@@ -38,7 +38,7 @@
 			<finder-column name="modifiedDate" comparator="&gt;" />
 		</finder>
 
-		<finder name="C_U_R_R_E_E" return-type="CampaignTrackingAction">
+		<finder name="C_U_R_R_E_E" return-type="CampaignTrackingAction" unique="true">
 			<finder-column name="campaignId" />
 			<finder-column name="userSegmentId" />
 			<finder-column name="referrerClassName" />
