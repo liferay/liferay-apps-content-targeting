@@ -6,7 +6,7 @@ create unique index IX_4F224EB3 on ContentTargeting_Campaign (uuid_, groupId);
 create index IX_30D0C633 on ContentTargeting_Campaigns_UserSegments (campaignId);
 create index IX_6785B5F on ContentTargeting_Campaigns_UserSegments (userSegmentId);
 
-create index IX_5108E8D5 on ContentTargeting_ReportInstance (reportKey, className, classPK);
+create unique index IX_5108E8D5 on ContentTargeting_ReportInstance (reportKey, className, classPK);
 
 create index IX_A540E04C on ContentTargeting_RuleInstance (groupId);
 create index IX_A6D6539E on ContentTargeting_RuleInstance (ruleKey, userSegmentId);

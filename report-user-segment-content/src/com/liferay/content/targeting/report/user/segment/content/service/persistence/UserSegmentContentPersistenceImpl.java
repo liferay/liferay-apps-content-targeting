@@ -1335,13 +1335,6 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 						finderArgs, list);
 				}
 				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"UserSegmentContentPersistenceImpl.fetchByC_C_C_E(long, String, long, String, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-					}
-
 					UserSegmentContent userSegmentContent = list.get(0);
 
 					result = userSegmentContent;

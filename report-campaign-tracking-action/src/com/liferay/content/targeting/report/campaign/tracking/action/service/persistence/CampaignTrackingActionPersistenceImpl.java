@@ -1376,13 +1376,6 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 						finderArgs, list);
 				}
 				else {
-					if ((list.size() > 1) && _log.isWarnEnabled()) {
-						_log.warn(
-							"CampaignTrackingActionPersistenceImpl.fetchByC_U_R_R_E_E(long, long, String, long, String, String, boolean) with parameters (" +
-							StringUtil.merge(finderArgs) +
-							") yields a result set with more than 1 result. This violates the logical unique restriction. There is no order guarantee on which result is returned by this finder.");
-					}
-
 					CampaignTrackingAction campaignTrackingAction = list.get(0);
 
 					result = campaignTrackingAction;
