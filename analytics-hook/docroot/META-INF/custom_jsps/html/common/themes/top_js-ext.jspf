@@ -56,7 +56,7 @@
 				{
 					modules: {
 						'youtube-iframe': {
-							fullpath: '/html/js/analytics/integrations/youtube_iframe.js',
+							fullpath: '<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathJavaScript() + "/analytics/integrations/youtube_iframe.js", "", javaScriptLastModified)) %>',
 							requires: [
 								'aui-base'
 							]
