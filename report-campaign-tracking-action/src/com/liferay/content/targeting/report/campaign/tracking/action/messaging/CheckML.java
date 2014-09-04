@@ -12,21 +12,21 @@
  * details.
  */
 
-package com.liferay.content.targeting.report.user.segment.content.messaging;
+package com.liferay.content.targeting.report.campaign.tracking.action.messaging;
 
-import com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentLocalServiceUtil;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionLocalServiceUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
 /**
  * @author Eduardo Garcia
  */
-public class CheckUserSegmentContentReportMessageListener
-	extends BaseMessageListener {
+public class CheckML extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		UserSegmentContentLocalServiceUtil.checkUserSegmentContentEvents();
+		CampaignTrackingActionLocalServiceUtil.
+			checkCampaignTrackingActionEvents();
 	}
 
 }

@@ -12,20 +12,20 @@
  * details.
  */
 
-package com.liferay.content.targeting.analytics.messaging;
+package com.liferay.content.targeting.report.campaign.content.messaging;
 
-import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalServiceUtil;
+import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalServiceUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
 /**
  * @author Eduardo Garcia
  */
-public class CheckAnalyticsEventsMessageListener extends BaseMessageListener {
+public class CheckML extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		AnalyticsEventLocalServiceUtil.checkAnalyticsEvents();
+		CampaignContentLocalServiceUtil.checkCampaignContentEvents();
 	}
 
 }
