@@ -321,8 +321,12 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 					themeDisplay.getLocale(), true);
 			}
 
-			List<Campaign> campaigns = _campaignService.getCampaigns(
-				themeDisplay.getSiteGroupIdOrLiveGroupId());
+			long[] groupIds =
+				ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+					themeDisplay.getScopeGroupId());
+
+			List<Campaign> campaigns = _campaignLocalService.getCampaigns(
+				groupIds);
 
 			template.put("campaigns", campaigns);
 

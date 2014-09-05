@@ -41,7 +41,7 @@
 			<div class="campaign-selector">
 				<@aui["select"] label="" name="campaignId${index}">
 					<#list campaigns as campaign>
-						<@aui["option"] label="${campaign.getName(locale)}" selected=(queryRule.getCampaignId() == campaign.getCampaignId()) value="${campaign.getCampaignId()}" />
+						<@aui["option"] label="${campaign.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" selected=(queryRule.getCampaignId() == campaign.getCampaignId()) value="${campaign.getCampaignId()}" />
 					</#list>
 				</@>
 			</div>
