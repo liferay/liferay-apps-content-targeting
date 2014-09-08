@@ -1,5 +1,4 @@
 Bundle-Activator: com.liferay.content.targeting.analytics.internal.osgi.AnalyticsServiceActivator
-Bundle-ClassPath: .,lib/util-java.jar,lib/com.liferay.content.targeting.analytics.api-service.jar
 Bundle-Name: Analytics API
 Bundle-SymbolicName: com.liferay.content.targeting.analytics.api
 Bundle-Version: 1.0.0
@@ -12,51 +11,8 @@ Export-Package:\
 	com.liferay.content.targeting.analytics.service.messaging,\
 	com.liferay.content.targeting.analytics.util
 Import-Package:\
-	com.liferay.content.targeting.analytics,\
-	com.liferay.content.targeting.analytics.model,\
-	com.liferay.content.targeting.analytics.service,\
-	com.liferay.counter.service,\
-	com.liferay.osgi.util.service,\
-	com.liferay.portal,\
-	com.liferay.portal.kernel.annotation,\
-	com.liferay.portal.kernel.bean,\
-	com.liferay.portal.kernel.cache,\
-	com.liferay.portal.kernel.dao.db,\
-	com.liferay.portal.kernel.dao.jdbc,\
-	com.liferay.portal.kernel.dao.orm,\
-	com.liferay.portal.kernel.exception,\
-	com.liferay.portal.kernel.io.unsync,\
-	com.liferay.portal.kernel.json,\
-	com.liferay.portal.kernel.language,\
 	com.liferay.portal.kernel.lar,\
-	com.liferay.portal.kernel.log,\
-	com.liferay.portal.kernel.messaging,\
-	com.liferay.portal.kernel.messaging.config,\
-	com.liferay.portal.kernel.portlet,\
-	com.liferay.portal.kernel.search,\
-	com.liferay.portal.kernel.servlet,\
-	com.liferay.portal.kernel.transaction,\
-	com.liferay.portal.kernel.util,\
-	com.liferay.portal.kernel.uuid,\
-	com.liferay.portal.kernel.xml,\
-	com.liferay.portal.model,\
-	com.liferay.portal.model.impl,\
-	com.liferay.portal.security.auth,\
-	com.liferay.portal.security.permission,\
-	com.liferay.portal.service,\
-	com.liferay.portal.service.persistence,\
-	com.liferay.portal.service.persistence.impl,\
-	com.liferay.portal.theme,\
-	com.liferay.portal.util,\
-	com.liferay.portlet.expando.model,\
-    com.liferay.portlet.expando.util,\
 	javax.portlet,\
-	javax.servlet,\
-	javax.servlet.http,\
-	javax.sql,\
-	org.apache.el,\
-	org.osgi.framework,\
-	org.springframework.*,\
 	*;resolution:="optional"
 Include-Resource:\
  	classes,\
@@ -66,7 +22,7 @@ Include-Resource:\
 	WEB-INF/liferay-portlet.xml=META-INF/liferay-portlet.xml,\
 	WEB-INF/portlet.xml=META-INF/portlet.xml,\
 	WEB-INF/sql=sql,\
-	lib/util-java.jar=${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	lib/com.liferay.content.targeting.analytics.api-service.jar=lib/com.liferay.content.targeting.analytics.api-service.jar
-Service-Component:com.liferay.content.targeting.analytics.*
+	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+	@lib/com.liferay.content.targeting.analytics.api-service.jar
+Service-Component: com.liferay.content.targeting.analytics.*
 Web-ContextPath: /analytics-api
