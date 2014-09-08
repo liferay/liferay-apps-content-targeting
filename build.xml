@@ -188,8 +188,8 @@
 		</antelope:stringutil>
 
 		<move
-			file="${tracking.action.dir}/src/com/liferay/content/targeting/trackingaction/TrackingAction.java"
-			tofile="${tracking.action.dir}/src/com/liferay/content/targeting/trackingaction/${tracking.action.java.package.name}/${tracking.action.java.class.name}TrackingAction.java"
+			file="${tracking.action.dir}/src/com/liferay/content/targeting/tracking/action/TrackingAction.java"
+			tofile="${tracking.action.dir}/src/com/liferay/content/targeting/tracking/action/${tracking.action.java.package.name}/${tracking.action.java.class.name}TrackingAction.java"
 		/>
 
 		<replace dir="${tracking.action.dir}">

@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.rule
-
-package.name@;
+package com.liferay.content.targeting.rule.@rule.java.package.name@;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseRule;

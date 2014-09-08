@@ -12,9 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.tracking.action
-
-package.name@;
+package com.liferay.content.targeting.tracking.action.@tracking.action.java.package.name@;
 
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.model.TrackingActionInstance;
