@@ -50,7 +50,7 @@ public class ServletContextTracker
 		HotDeployUtil.fireDeployEvent(
 			new HotDeployEvent(servletContext, _getClassLoader(bundle)));
 
-		return null;
+		return servletContext;
 	}
 
 	@Override
