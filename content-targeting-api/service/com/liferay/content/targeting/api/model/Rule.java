@@ -34,12 +34,12 @@ import javax.servlet.http.HttpServletRequest;
 public interface Rule {
 
 	/**
-	 * Activates the rule when the rule is installed.
+	 * Does processing when the rule is installed.
 	 */
 	public void activate();
 
 	/**
-	 * Deactivates the rule when the rule is uninstalled.
+	 * Does processing when the rule is uninstalled.
 	 */
 	public void deActivate();
 
