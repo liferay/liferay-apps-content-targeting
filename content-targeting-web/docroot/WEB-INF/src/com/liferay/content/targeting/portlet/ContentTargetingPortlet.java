@@ -74,6 +74,7 @@ import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -732,7 +733,23 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			template.put("className", className);
 			template.put("classPK", classPK);
 
+			String name = StringPool.BLANK;
+
+			if (className.equals(Campaign.class.getName())) {
+				Campaign campaign = _campaignLocalService.getCampaign(classPK);
+
+				name = campaign.getName(themeDisplay.getLocale());
+			}
+			else if (className.equals(UserSegment.class.getName())) {
+				UserSegment userSegment =
+					_userSegmentLocalService.getUserSegment(classPK);
+
+				name = userSegment.getName(themeDisplay.getLocale());
+			}
+
 			if (path.equals(ContentTargetingPath.VIEW_REPORT)) {
+				template.put("name", name);
+
 				String reportKey = ParamUtil.getString(
 					portletRequest, "reportKey");
 
@@ -749,26 +766,13 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 					(PortletConfig)portletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_CONFIG);
 
-				String title = "reports";
-
-				if (className.equals(Campaign.class.getName())) {
-					Campaign campaign = _campaignLocalService.getCampaign(
-						classPK);
-
-					title = LanguageUtil.format(
-						portletConfig, themeDisplay.getLocale(),
-						"reports-for-campaign-x",
-						campaign.getName(themeDisplay.getLocale()));
-				}
-				else if (className.equals(UserSegment.class.getName())) {
-					UserSegment userSegment =
-						_userSegmentLocalService.getUserSegment(classPK);
-
-					title = LanguageUtil.format(
-						portletConfig, themeDisplay.getLocale(),
-						"reports-for-user-segment-x",
-						userSegment.getName(themeDisplay.getLocale()), false);
-				}
+				String title = LanguageUtil.format(
+					portletConfig, themeDisplay.getLocale(),
+					"reports-for-the-x-x",
+					new Object[] {
+						ResourceActionsUtil.getModelResource(
+							themeDisplay.getLocale(), className),
+						name});
 
 				template.put("title", title);
 

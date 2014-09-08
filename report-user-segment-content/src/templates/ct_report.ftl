@@ -20,7 +20,7 @@
 </@>
 
 <@liferay_ui["search-container"]
-	emptyResultsMessage="no-reports-for-user-segment-content-were-found"
+	emptyResultsMessage=languageUtil.format(locale, "there-is-not-enough-data-to-generate-a-content-views-report-for-the-user-segment-x", name)
 	iteratorURL=portletURL
 	total=searchContainerIterator.getTotal()
 >

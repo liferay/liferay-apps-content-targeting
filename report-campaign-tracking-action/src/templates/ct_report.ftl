@@ -20,7 +20,7 @@
 </@>
 
 <@liferay_ui["search-container"]
-	emptyResultsMessage="no-reports-for-campaign-tracking-action-were-found"
+	emptyResultsMessage=languageUtil.format(locale, "there-is-not-enough-data-to-generate-a-tracking-actions-report-for-the-campaign-x", name)
 	iteratorURL=portletURL
 	total=searchContainerIterator.getTotal()
 >
