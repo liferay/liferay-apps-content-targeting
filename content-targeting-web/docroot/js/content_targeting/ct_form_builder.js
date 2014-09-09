@@ -270,7 +270,12 @@ AUI.add(
 									event.results,
 									function(result) {
 										result.raw.node.ancestor('.diagram-builder-field').removeClass('hide');
-										result.raw.node.ancestor('.category-wrapper').removeClass('hide');
+
+										var category = result.raw.node.ancestor('.category-wrapper');
+
+										if (category) {
+											category.removeClass('hide');
+										}
 									}
 								);
 
