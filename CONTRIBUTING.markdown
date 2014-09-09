@@ -43,46 +43,36 @@ repository. The source code lives in the [liferay-apps-content-targeting]
 (https://github.com/liferay/liferay-apps-content-targeting) repository. You can
 fork this repository to your GitHub account by visiting it and then click the
 "Fork" button.
-2. Clone your own forked GitHub repos. Go to a location on your computer that
-you wish to have a copy of the Audience Targeting application source stored.
-This could be a "Development" directory within your
-<plugins-sdk>/apps/content-targeting. Once in this location, issue the following
-git commands to clone your forked repositories to your computer:
+2. Obtain the latest version of the Liferay 6.2 SDK. You can clone locally the
+6.2.x branch of the [liferay-plugins]
+(https://github.com/liferay/liferay-plugins) repository.
+3. Init the Audience Targeting application submodule in the Liferay 6.2 SDK by
+running these commands:
 	```
-	git clone ssh://git@github.com/your-github-username/liferay-apps-content-targeting.git
+	git submodule init
+	git submodule update
 	```
-3. Configure the remote upstream repository for liferay-apps-content-targeting.
-Run the command below inside the content-targeting.
+4. Configure the remote upstream and origin repositories for
+liferay-apps-content-targeting by editing the file
+`.git/modules/apps/content-targeting/config`:
 	```
-	git remote add upstream git://github.com/liferay/liferay-apps-content-targeting.git
+	[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+	worktree = ../../../../apps/content-targeting
+	[remote "origin"]
+	url = <url-to-your-forked-repository>
+	fetch = +refs/heads/*:refs/remotes/origin/*
+	[remote "upstream"]
+	url = git@github.com:liferay/liferay-apps-content-targeting.git
+	fetch = +refs/heads/*:refs/remotes/upstream/*
+	[branch "master"]
+	remote = origin
+	merge = refs/heads/master
 	```
-4. Create local master branch from the upstream. Run the command below inside
-the content-targeting directory.
-	```
-	git checkout -b master "upstream/master"
-	```
-5. Sync changes from upstream. If the main repository changes, you will need to
-sync changes from upstream. You can accomplish this with the following commands:
-	* Get all the updates from upstream
-		```
-		git fetch upstream
-		```
-	* Switch to the master branch
-		```
-		git checkout master
-		```
-	* Rebase the master branch. With rebase, all local commits are stashed and applied after the fetch
-		```
-		git pull --rebase upstream master
-		```
-	* Push the updates to origin
-		```
-		git push origin master
-		```
-
-Now the local, origin, and upstream repositories are all current
-
-6.Add this line to your portal-ext.properties. (It is only needed for building the apps, but it won't have any effect during runtime, therefore it is only used when developing).
+5. Add this line to your portal-ext.properties. (It is only needed for building the apps, but it won't have any effect during runtime, therefore it is only used when developing).
 ```
 resource.actions.configs=META-INF/resource-actions/default.xml,resource-actions/default.xml
 ```
