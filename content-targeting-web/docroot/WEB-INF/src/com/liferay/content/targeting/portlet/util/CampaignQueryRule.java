@@ -56,6 +56,13 @@ public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 		}
 	}
 
+	@Override
+	public int compareTo(QueryRule queryRule) {
+		CampaignQueryRule campaignQueryRule = (CampaignQueryRule)queryRule;
+
+		return getCampaignPriority() - campaignQueryRule.getCampaignPriority();
+	}
+
 	public boolean evaluate(long[] campaignIds) {
 		if (isDefaultRule() || ArrayUtil.contains(campaignIds, _campaignId)) {
 			return true;

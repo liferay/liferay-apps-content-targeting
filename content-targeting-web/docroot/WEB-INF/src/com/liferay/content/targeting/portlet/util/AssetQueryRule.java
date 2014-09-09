@@ -63,6 +63,11 @@ public abstract class AssetQueryRule implements QueryRule {
 	}
 
 	@Override
+	public int compareTo(QueryRule queryRule) {
+		return _index - queryRule.getIndex();
+	}
+
+	@Override
 	public boolean evaluate(long[] ids) {
 		return true;
 	}

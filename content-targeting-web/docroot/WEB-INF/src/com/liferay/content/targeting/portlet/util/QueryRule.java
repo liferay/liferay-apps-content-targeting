@@ -21,7 +21,7 @@ import javax.portlet.PortletRequest;
 /**
  * @author Julio Camarero
  */
-public interface QueryRule {
+public interface QueryRule extends Comparable<QueryRule> {
 
 	boolean evaluate(long[] ids);
 

@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -49,6 +50,8 @@ public class CampaignQueryRuleUtil {
 				campaignQueryRules.add(campaignQueryRule);
 			}
 		}
+
+		Collections.sort(campaignQueryRules);
 
 		campaignQueryRules.add(getDefaultQueryRule(portletPreferences, locale));
 
