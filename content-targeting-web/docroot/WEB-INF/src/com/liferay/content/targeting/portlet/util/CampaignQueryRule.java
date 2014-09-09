@@ -102,7 +102,7 @@ public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 	public String getSummary(PortletConfig portletConfig, Locale locale)
 		throws SystemException {
 
-		if (_campaignId == 0) {
+		if (_campaign == null) {
 			return LanguageUtil.get(portletConfig, locale, "default");
 		}
 
@@ -110,7 +110,7 @@ public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 	}
 
 	public boolean isValid() {
-		if (!super.isValid()|| (_campaignId <= 0)) {
+		if (!super.isValid()|| (_campaign == null)) {
 			return false;
 		}
 

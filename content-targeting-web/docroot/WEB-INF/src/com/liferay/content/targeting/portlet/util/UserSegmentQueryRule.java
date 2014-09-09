@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
@@ -42,7 +43,8 @@ public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 
 		_andOperator = andOperator;
 		_contains = contains;
-		_userSegmentAssetCategoryIds = userSegmentAssetCategoryIds;
+		_userSegmentAssetCategoryIds = validateUserSegmentAssetCategoryIds(
+			userSegmentAssetCategoryIds);
 	}
 
 	public boolean evaluate(long[] userSegmentAssetCategoryIds) {
@@ -197,6 +199,35 @@ public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 		}
 
 		return sb.toString();
+	}
+
+	protected long[] validateUserSegmentAssetCategoryIds(
+		long[] userSegmentAssetCategoryIds) {
+
+		if (Validator.isNull(userSegmentAssetCategoryIds)) {
+			return userSegmentAssetCategoryIds;
+		}
+
+		long[] validatedUserSegmentAssetCategoryIds =
+			userSegmentAssetCategoryIds;
+
+		for (long userSegmentAssetCategoryId : userSegmentAssetCategoryIds) {
+			try {
+				AssetCategory assetCategory =
+					AssetCategoryLocalServiceUtil.fetchAssetCategory(
+						userSegmentAssetCategoryId);
+
+				if (assetCategory == null) {
+					validatedUserSegmentAssetCategoryIds = ArrayUtil.remove(
+						validatedUserSegmentAssetCategoryIds,
+						userSegmentAssetCategoryId);
+				}
+			}
+			catch (Exception e) {
+			}
+		}
+
+		return validatedUserSegmentAssetCategoryIds;
 	}
 
 	private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";

@@ -46,7 +46,7 @@ public class CampaignQueryRuleUtil {
 			QueryRule campaignQueryRule = getQueryRule(
 				portletPreferences, queryRulesIndex, locale);
 
-			if (campaignQueryRule.getAssetEntry() != null) {
+			if (campaignQueryRule.isValid()) {
 				campaignQueryRules.add(campaignQueryRule);
 			}
 		}

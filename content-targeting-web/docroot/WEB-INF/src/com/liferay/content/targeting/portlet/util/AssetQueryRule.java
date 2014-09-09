@@ -139,7 +139,7 @@ public abstract class AssetQueryRule implements QueryRule {
 
 	@Override
 	public boolean isValid() {
-		if (Validator.isNull(_assetClassName) || (_assetClassPK <= 0)) {
+		if (_assetEntry == null) {
 			return false;
 		}
 

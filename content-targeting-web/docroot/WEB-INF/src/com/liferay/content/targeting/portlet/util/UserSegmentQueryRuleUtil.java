@@ -89,11 +89,10 @@ public class UserSegmentQueryRuleUtil {
 			new int[0]);
 
 		for (int queryRulesIndex : queryRulesIndexes) {
-			QueryRule userSegmentQueryRule =
-				UserSegmentQueryRuleUtil.getQueryRule(
+			QueryRule userSegmentQueryRule = getQueryRule(
 					portletPreferences, queryRulesIndex, locale);
 
-			if (userSegmentQueryRule.getAssetEntry() != null) {
+			if (userSegmentQueryRule.isValid()) {
 				userSegmentQueryRules.add(userSegmentQueryRule);
 			}
 		}
