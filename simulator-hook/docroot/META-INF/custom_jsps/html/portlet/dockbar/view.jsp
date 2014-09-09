@@ -301,7 +301,7 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 			{
 				modules: {
 					'liferay-simulator': {
-						fullpath: '<%= HtmlUtil.escape(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/o/content-targeting-web/js/ct_simulator/simulator.js")) %>'
+						fullpath: '<%= HtmlUtil.escapeJS(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/o/content-targeting-web/js/ct_simulator/simulator.js")) %>'
 					}
 				}
 			}
