@@ -33,7 +33,8 @@ import javax.portlet.PortletPreferences;
 public class CampaignQueryRuleUtil {
 
 	public static List<QueryRule> getCampaignQueryRules(
-			PortletPreferences portletPreferences, Locale locale)
+			PortletPreferences portletPreferences, Locale locale,
+			boolean includeEmptyQueryRule)
 		throws PortalException, SystemException {
 
 		List<QueryRule> campaignQueryRules = new ArrayList<QueryRule>();
@@ -51,11 +52,21 @@ public class CampaignQueryRuleUtil {
 			}
 		}
 
+		if (campaignQueryRules.isEmpty() && includeEmptyQueryRule) {
+			campaignQueryRules.add(getNewQueryRule());
+		}
+
 		Collections.sort(campaignQueryRules);
 
 		campaignQueryRules.add(getDefaultQueryRule(portletPreferences, locale));
 
 		return campaignQueryRules;
+	}
+
+	public static CampaignQueryRule getNewQueryRule()
+		throws PortalException, SystemException {
+
+		return new CampaignQueryRule(0, 0, 0, null);
 	}
 
 	public static QueryRule getQueryRule(

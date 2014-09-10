@@ -66,7 +66,7 @@
 >
 	<#if queryRules?has_content>
 		<#list queryRules as queryRule>
-			<#if queryRule.getAssetEntry()??>
+			<#if queryRule.hasAssetEntry()>
 				<#assign cssClass = "" />
 
 				<#if selectedIndex != queryRule_index>
@@ -97,6 +97,89 @@
 	</@>
 </#macro>
 
+<#macro renderAssetEntrySelector
+	queryRule
+	index
+>
+	<#assign cssClass = "">
+
+	<#if !queryRule.hasAssetEntry()>
+		<#assign cssClass = "hide">
+	</#if>
+
+	<div class="asset-preview ${cssClass}" id="<@portlet["namespace"] />selectedContent${index}">
+		<@aui["column"]>
+			<img class="asset-image" src="${queryRule.getAssetImage(renderRequest)}" />
+		</@>
+
+		<@aui["column"]>
+			<div class="asset-title" id="<@portlet["namespace"] />assetTitleInfo${index}">${queryRule.getAssetTitle()}</div>
+			<div class="asset-type" id="<@portlet["namespace"] />assetTypeInfo${index}"><@liferay_ui["message"] key="type" />: ${queryRule.getAssetType()}</div>
+		</@>
+	</div>
+
+	<div class="edit-controls lfr-meta-actions">
+		<@aui["input"] name="assetEntryId${index}" type="hidden" value=queryRule.getAssetEntryId() />
+
+		<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" message=languageUtil.get(locale, "select-content") showWhenSingleIcon=true>
+			<#list assetRendererFactories as assetRendererFactory>
+				<@liferay_ui["icon"]
+					cssClass="asset-selector"
+					data=queryRule.getAssetSelectorIconData(request, assetRendererFactory, "${index}")
+					id="groupId_${assetRendererFactory.getTypeName(locale, false)}_${index}"
+					message=assetRendererFactory.getTypeName(locale, false)
+					src=assetRendererFactory.getIconPath(renderRequest)
+					url="javascript:;"
+				/>
+			</#list>
+		</@>
+	</div>
+</#macro>
+
+<#macro renderDefaultQueryRule
+	queryRule
+>
+	<div class="default-content">
+		<div class="full-view hide">
+			<@aui["column"] columnWidth=60>
+				<span class="otherwise-text"><@liferay_ui["message"] key="otherwise" /></span>
+			</@>
+
+			<@aui["column"] columnWidth=40>
+				<@aui["input"] checked=!queryRule.hasAssetEntry() label="dont-display-anything" name="contentDefaultValue" type="radio" value=false />
+
+				<@aui["input"] checked=queryRule.hasAssetEntry() label="display-this-content" name="contentDefaultValue" type="radio" value=true />
+
+				<div id="<@portlet["namespace"] />contentDefaultBox">
+					<div class="select-asset-selector">
+						<@renderAssetEntrySelector queryRule=queryRule index="Default" />
+					</div>
+				</div>
+			</@>
+		</div>
+
+		<div class="summary-view">
+			<@aui["column"] columnWidth=50>
+				<span class="otherwise-text"><@liferay_ui["message"] key="otherwise" /></span>
+			</@>
+
+			<@aui["column"] columnWidth=50>
+				<span class="default-content-value-text">
+					<#if queryRule.hasAssetEntry()>
+						<@liferay_ui["message"] key="display-this-content" />
+					<#else>
+						<@liferay_ui["message"] key="dont-display-anything" />
+					</#if>
+				</span>
+
+				<#if queryRule.hasAssetEntry()>
+					<span class="query-content-value">${queryRule.getAssetTitle()} (<span class="query-content-value-type">${queryRule.getAssetType()}</span>)</span>
+				</#if>
+			</@>
+		</div>
+	</div>
+</#macro>
+
 <#macro renderThumbnailsPreview
 	queryRules
 	selectedIndex
@@ -105,7 +188,7 @@
 		<#list queryRules as queryRule>
 			<#if (selectedIndex != queryRule_index)>
 				<div class="hide full-content" id="<@portlet["namespace"] />FullContent${queryRule_index}">
-					<#if (queryRule.getAssetEntryId() > 0) && (queryRule_has_next || contentDefaultValue)>
+					<#if queryRule.hasAssetEntry()>
 						<#if queryRule.getTemplate()??>
 							${queryRule.getTemplate()}
 						<#else>

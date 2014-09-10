@@ -33,7 +33,7 @@ public class CampaignContentDisplayPortletDataHandler
 		throws Exception {
 
 		return CampaignQueryRuleUtil.getCampaignQueryRules(
-			portletPreferences, LocaleUtil.getDefault());
+			portletPreferences, LocaleUtil.getDefault(), false);
 	}
 
 }

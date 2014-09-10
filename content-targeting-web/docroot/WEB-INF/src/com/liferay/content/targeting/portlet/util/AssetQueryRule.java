@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.portlet.util;
 
+import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -31,9 +32,12 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Map;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Julio Camarero
@@ -103,6 +107,15 @@ public abstract class AssetQueryRule implements QueryRule {
 		return _assetRenderer.getThumbnailPath(portletRequest);
 	}
 
+	public Map<String, Object> getAssetSelectorIconData(
+			HttpServletRequest request,
+			AssetRendererFactory assetRendererFactory, String index)
+		throws Exception {
+
+		return ContentTargetingUtil.getAssetSelectorIconData(
+			request, assetRendererFactory, index);
+	}
+
 	@Override
 	public String getAssetTitle() {
 		return _assetTitle;
@@ -111,6 +124,18 @@ public abstract class AssetQueryRule implements QueryRule {
 	@Override
 	public String getAssetType() {
 		return _assetType;
+	}
+
+	@Override
+	public String getCssClass(int position) {
+		if (position == 0) {
+			return "first active";
+		}
+		else if (_index == -1) {
+			return "last";
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -126,6 +151,11 @@ public abstract class AssetQueryRule implements QueryRule {
 	@Override
 	public String getTemplate() {
 		return _template;
+	}
+
+	@Override
+	public boolean hasAssetEntry() {
+		return _assetEntry != null;
 	}
 
 	@Override

@@ -40,7 +40,11 @@ public interface QueryRule extends Comparable<QueryRule> {
 
 	String getAssetType();
 
+	String getCssClass(int position);
+
 	long getGroupId(long scopeGroupId);
+
+	boolean hasAssetEntry();
 
 	int getIndex();
 

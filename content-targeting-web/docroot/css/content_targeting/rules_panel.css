@@ -125,11 +125,11 @@
 				padding: 10px 10px 10px 20px;
 			}
 
-			.default-content-value-text, .query-contains-text, .query-and-operator-text, .query-content-text {
+			.query-contains-text, .query-and-operator-text, .query-content-text {
 				font-weight: 400;
 			}
 
-			.default-content-value, .query-contains-value, .query-and-operator-value, .query-content-value {
+			.query-contains-value, .query-and-operator-value, .query-content-value {
 				color: #8D8D8D;
 			}
 

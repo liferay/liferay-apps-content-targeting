@@ -18,7 +18,6 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.portlet.util.CampaignQueryRule;
 import com.liferay.content.targeting.portlet.util.CampaignQueryRuleUtil;
 import com.liferay.content.targeting.portlet.util.QueryRule;
-import com.liferay.content.targeting.portlet.util.UserSegmentContentDisplayUtil;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
@@ -38,9 +37,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import freemarker.ext.beans.BeansWrapper;
 
@@ -224,11 +221,6 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
-		long assetEntryIdDefault = GetterUtil.getLong(
-			portletPreferences.getValue("assetEntryIdDefault", null));
-		boolean contentDefaultValue = GetterUtil.getBoolean(
-			portletPreferences.getValue("contentDefaultValue", null));
-
 		populatePortletDisplayTemplateContext(
 			template, portletPreferences, themeDisplay.getScopeGroupId(),
 			"full-content");
@@ -237,11 +229,10 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			path.equals(CampaignContentDisplayPath.VIEW)) {
 
 			template.put("showPreview", showPreview(themeDisplay));
-			template.put("contentDefaultValue", contentDefaultValue);
 
 			List<QueryRule> campaignQueryRules =
 				CampaignQueryRuleUtil.getCampaignQueryRules(
-					portletPreferences, themeDisplay.getLocale());
+					portletPreferences, themeDisplay.getLocale(), false);
 
 			template.put("campaignQueryRules", campaignQueryRules);
 
@@ -295,31 +286,21 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 				getSelectableAssetRendererFactories(
 					themeDisplay.getCompanyId()));
 
-			String assetImageDefault = StringPool.BLANK;
-			String assetTitleDefault = StringPool.BLANK;
-			String assetTypeDefault = StringPool.BLANK;
+			List<QueryRule> campaignQueryRules =
+				CampaignQueryRuleUtil.getCampaignQueryRules(
+					portletPreferences, themeDisplay.getLocale(), true);
 
-			if (assetEntryIdDefault > 0) {
-				AssetEntry assetEntry =
-					AssetEntryLocalServiceUtil.fetchAssetEntry(
-						assetEntryIdDefault);
+			template.put("campaignQueryRules", campaignQueryRules);
 
-				AssetRendererFactory assetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(
-							assetEntry.getClassName());
+			CampaignQueryRule campaignQueryRule =
+				(CampaignQueryRule)portletRequest.getAttribute(
+					"configuration.queryRule");
 
-				AssetRenderer assetRenderer =
-					assetRendererFactory.getAssetRenderer(
-						assetEntry.getClassPK());
-
-				assetImageDefault = assetRenderer.getThumbnailPath(
-					portletRequest);
-				assetTitleDefault = assetRenderer.getTitle(
-					themeDisplay.getLocale());
-				assetTypeDefault = assetRendererFactory.getTypeName(
-					themeDisplay.getLocale(), true);
+			if (campaignQueryRule == null) {
+				campaignQueryRule = CampaignQueryRuleUtil.getNewQueryRule();
 			}
+
+			template.put("queryRule", campaignQueryRule);
 
 			long[] groupIds =
 				ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
@@ -329,28 +310,6 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 				groupIds);
 
 			template.put("campaigns", campaigns);
-
-			template.put("assetEntryIdDefault", assetEntryIdDefault);
-			template.put("assetImageDefault", assetImageDefault);
-			template.put("assetTitleDefault", assetTitleDefault);
-			template.put("assetTypeDefault", assetTypeDefault);
-			template.put("contentDefaultValue", contentDefaultValue);
-			template.put(
-				"liferayWindowStateExclusive", LiferayWindowState.EXCLUSIVE);
-			template.put("portletPreferences", portletPreferences);
-
-			int[] queryRulesIndexes = GetterUtil.getIntegerValues(
-				portletPreferences.getValues("queryLogicIndexes", null),
-				new int[] {0});
-
-			template.put("queryLogicIndexes", queryRulesIndexes);
-			template.put(
-				"campaignQueryRuleUtilClass",
-				staticModels.get(CampaignQueryRuleUtil.class.getName()));
-			template.put(
-				"userSegmentContentDisplayUtilClass",
-				staticModels.get(
-					UserSegmentContentDisplayUtil.class.getName()));
 		}
 	}
 

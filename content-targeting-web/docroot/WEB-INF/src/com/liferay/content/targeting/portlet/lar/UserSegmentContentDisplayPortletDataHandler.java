@@ -33,7 +33,7 @@ public class UserSegmentContentDisplayPortletDataHandler
 		throws Exception {
 
 		return UserSegmentQueryRuleUtil.getUserSegmentQueryRules(
-				portletPreferences, LocaleUtil.getDefault());
+				portletPreferences, LocaleUtil.getDefault(), false);
 	}
 
 }

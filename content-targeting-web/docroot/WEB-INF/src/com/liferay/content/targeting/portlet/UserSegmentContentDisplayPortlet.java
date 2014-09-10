@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.portlet;
 
 import com.liferay.content.targeting.portlet.util.QueryRule;
-import com.liferay.content.targeting.portlet.util.UserSegmentContentDisplayUtil;
 import com.liferay.content.targeting.portlet.util.UserSegmentQueryRule;
 import com.liferay.content.targeting.portlet.util.UserSegmentQueryRuleUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
@@ -36,9 +35,7 @@ import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import freemarker.ext.beans.BeansWrapper;
 
@@ -195,11 +192,6 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 		PortletPreferences portletPreferences = portletRequest.getPreferences();
 
-		long assetEntryIdDefault = GetterUtil.getLong(
-			portletPreferences.getValue("assetEntryIdDefault", null));
-		boolean contentDefaultValue = GetterUtil.getBoolean(
-			portletPreferences.getValue("contentDefaultValue", null));
-
 		populatePortletDisplayTemplateContext(
 			template, portletPreferences, themeDisplay.getScopeGroupId(),
 			"full-content");
@@ -208,11 +200,10 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 			path.equals(UserSegmentContentDisplayPath.VIEW)) {
 
 			template.put("showPreview", showPreview(themeDisplay));
-			template.put("contentDefaultValue", contentDefaultValue);
 
 			List<QueryRule> userSegmentQueryRules =
 				UserSegmentQueryRuleUtil.getUserSegmentQueryRules(
-					portletPreferences, themeDisplay.getLocale());
+					portletPreferences, themeDisplay.getLocale(), false);
 
 			template.put("userSegmentQueryRules", userSegmentQueryRules);
 
@@ -262,53 +253,22 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 				getSelectableAssetRendererFactories(
 					themeDisplay.getCompanyId()));
 
-			String assetImageDefault = StringPool.BLANK;
-			String assetTitleDefault = StringPool.BLANK;
-			String assetTypeDefault = StringPool.BLANK;
+			List<QueryRule> userSegmentQueryRules =
+				UserSegmentQueryRuleUtil.getUserSegmentQueryRules(
+					portletPreferences, themeDisplay.getLocale(), true);
 
-			if (assetEntryIdDefault > 0) {
-				AssetEntry assetEntry =
-					AssetEntryLocalServiceUtil.fetchAssetEntry(
-						assetEntryIdDefault);
+			template.put("userSegmentQueryRules", userSegmentQueryRules);
 
-				AssetRendererFactory assetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(
-							assetEntry.getClassName());
+			UserSegmentQueryRule userSegmentQueryRule =
+				(UserSegmentQueryRule)portletRequest.getAttribute(
+					"configuration.queryRule");
 
-				AssetRenderer assetRenderer =
-					assetRendererFactory.getAssetRenderer(
-						assetEntry.getClassPK());
-
-				assetImageDefault = assetRenderer.getThumbnailPath(
-					portletRequest);
-				assetTitleDefault = assetRenderer.getTitle(
-					themeDisplay.getLocale());
-				assetTypeDefault = assetRendererFactory.getTypeName(
-					themeDisplay.getLocale(), true);
+			if (userSegmentQueryRule == null) {
+				userSegmentQueryRule =
+					UserSegmentQueryRuleUtil.getNewQueryRule();
 			}
 
-			template.put("assetEntryIdDefault", assetEntryIdDefault);
-			template.put("assetImageDefault", assetImageDefault);
-			template.put("assetTitleDefault", assetTitleDefault);
-			template.put("assetTypeDefault", assetTypeDefault);
-			template.put("contentDefaultValue", contentDefaultValue);
-			template.put(
-				"liferayWindowStateExclusive", LiferayWindowState.EXCLUSIVE);
-			template.put("portletPreferences", portletPreferences);
-
-			int[] queryRulesIndexes = GetterUtil.getIntegerValues(
-				portletPreferences.getValues("queryLogicIndexes", null),
-				new int[] {0});
-
-			template.put("queryLogicIndexes", queryRulesIndexes);
-			template.put(
-				"userSegmentQueryRuleUtilClass",
-				staticModels.get(UserSegmentQueryRuleUtil.class.getName()));
-			template.put(
-				"userSegmentContentDisplayUtilClass",
-				staticModels.get(
-					UserSegmentContentDisplayUtil.class.getName()));
+			template.put("queryRule", userSegmentQueryRule);
 
 			ServiceContext serviceContext = new ServiceContext();
 
