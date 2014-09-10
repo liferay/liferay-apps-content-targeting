@@ -21,8 +21,8 @@ import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
-import com.liferay.content.targeting.rule.visited.util.VisitedRuleUtil;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
+import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -235,7 +235,7 @@ public class ContentVisitedRule extends BaseRule {
 				context);
 		}
 
-		context.put("visitedRuleUtilClass", new VisitedRuleUtil());
+		context.put("contentTargetingUtilClass", new ContentTargetingUtil());
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH_CONTENT =

@@ -38,7 +38,7 @@
 				<#list assetRendererFactories as assetRendererFactory>
 					<@liferay_ui["icon"]
 						cssClass="asset-selector"
-						data=contentTrackingActionUtilClass.getAssetSelectorIconData(request, assetRendererFactory)
+						data=contentTargetingUtilClass.getAssetSelectorIconData(request, assetRendererFactory, '')
 						id="{ct_field_guid}groupId_${assetRendererFactory.getTypeName(locale, false)}"
 						message=assetRendererFactory.getTypeName(locale, false)
 						src=assetRendererFactory.getIconPath(renderRequest)

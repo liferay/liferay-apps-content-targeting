@@ -18,8 +18,8 @@ import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.model.TrackingActionInstance;
-import com.liferay.content.targeting.tracking.action.content.util.ContentTrackingActionUtil;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
+import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -201,8 +201,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 			"assetRendererFactories",
 			getSelectableAssetRendererFactories(company.getCompanyId()));
 
-		context.put(
-			"contentTrackingActionUtilClass", new ContentTrackingActionUtil());
+		context.put("contentTargetingUtilClass", new ContentTargetingUtil());
 
 		long groupId = (Long)context.get("scopeGroupId");
 
