@@ -157,5 +157,6 @@
 		'.lfr-form-row'
 	);
 
-	Liferay.Util.toggleSelectBox('<@portlet["namespace"] />contentDefaultValue', 'true', '<@portlet["namespace"] />contentDefaultBox');
+	Liferay.Util.toggleRadio('<@portlet["namespace"] />contentDefaultValueDo', '<@portlet["namespace"] />contentDefaultBox', '');
+	Liferay.Util.toggleRadio('<@portlet["namespace"] />contentDefaultValueDont', '', '<@portlet["namespace"] />contentDefaultBox');
 </@>

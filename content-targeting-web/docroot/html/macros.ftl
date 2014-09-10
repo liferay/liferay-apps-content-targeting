@@ -146,9 +146,9 @@
 			</@>
 
 			<@aui["column"] columnWidth=40>
-				<@aui["input"] checked=!queryRule.hasAssetEntry() label="dont-display-anything" name="contentDefaultValue" type="radio" value=false />
+				<@aui["input"] checked=!queryRule.hasAssetEntry() id="contentDefaultValueDont" label="dont-display-anything" name="contentDefaultValue" type="radio" value=false />
 
-				<@aui["input"] checked=queryRule.hasAssetEntry() label="display-this-content" name="contentDefaultValue" type="radio" value=true />
+				<@aui["input"] checked=queryRule.hasAssetEntry() id="contentDefaultValueDo" label="display-this-content" name="contentDefaultValue" type="radio" value=true />
 
 				<div id="<@portlet["namespace"] />contentDefaultBox">
 					<div class="select-asset-selector">
