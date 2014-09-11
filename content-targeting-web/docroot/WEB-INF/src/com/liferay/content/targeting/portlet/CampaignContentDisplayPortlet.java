@@ -236,7 +236,8 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 			template.put("campaignQueryRules", campaignQueryRules);
 
-			QueryRule queryRule = campaignQueryRules.get(0);
+			QueryRule queryRule = campaignQueryRules.get(
+				campaignQueryRules.size() - 1);
 
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);

@@ -44,13 +44,9 @@
 		<java
 			classname="com.liferay.content.targeting.benchmark.tools.CTSampleSQLBuilder"
 			classpathref="benchmark.classpath"
-			fork="true"
-			newenvironment="true"
 		>
 			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
 			<arg value="${basedir}/temp.properties" />
-			<jvmarg  value="-Xdebug" />
-			<jvmarg  value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005" />
 		</java>
 
 		<delete file="temp.properties" />
