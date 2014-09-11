@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.service.impl;
 
+import com.liferay.content.targeting.InvalidNameException;
 import com.liferay.content.targeting.UsedUserSegmentException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.RuleInstance;
@@ -33,7 +34,9 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -97,6 +100,8 @@ public class UserSegmentLocalServiceImpl
 		userSegment.setModifiedDate(serviceContext.getModifiedDate(now));
 		userSegment.setNameMap(nameMap);
 		userSegment.setDescriptionMap(descriptionMap);
+
+		validateUserSegment(userSegment);
 
 		userSegmentPersistence.update(userSegment);
 
@@ -237,6 +242,8 @@ public class UserSegmentLocalServiceImpl
 		userSegment.setModifiedDate(serviceContext.getModifiedDate(now));
 		userSegment.setNameMap(nameMap);
 		userSegment.setDescriptionMap(descriptionMap);
+
+		validateUserSegment(userSegment);
 
 		userSegmentPersistence.update(userSegment);
 
@@ -382,6 +389,14 @@ public class UserSegmentLocalServiceImpl
 			titleMap, descriptionMap, vocabularyId, null, serviceContext);
 
 		return assetCategory;
+	}
+
+	protected void validateUserSegment(UserSegment userSegment)
+		throws PortalException {
+
+		if (Validator.isNull(userSegment.getName(LocaleUtil.getDefault()))) {
+			throw new InvalidNameException();
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

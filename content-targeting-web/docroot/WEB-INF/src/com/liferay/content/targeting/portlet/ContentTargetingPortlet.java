@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.portlet;
 
+import com.liferay.content.targeting.InvalidDateRangeException;
+import com.liferay.content.targeting.InvalidNameException;
 import com.liferay.content.targeting.UsedUserSegmentException;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
@@ -278,6 +280,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			SessionErrors.add(request, e.getClass().getName());
 
 			if (e instanceof NoSuchModelException ||
+				e instanceof InvalidDateRangeException ||
+				e instanceof InvalidNameException ||
 				e instanceof PrincipalException) {
 
 				response.setRenderParameter(
@@ -357,6 +361,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			SessionErrors.add(request, e.getClass().getName());
 
 			if (e instanceof NoSuchModelException ||
+				e instanceof InvalidNameException ||
 				e instanceof PrincipalException) {
 
 				response.setRenderParameter(

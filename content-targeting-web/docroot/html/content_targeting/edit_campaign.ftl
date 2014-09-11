@@ -30,6 +30,8 @@
 
 	<@aui["model-context"] bean=campaign model=campaignClass />
 
+	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidNameException" message="please-enter-valid-name" />
+
 	<@aui["input"] name="name" />
 
 	<@aui["input"] name="description" />
@@ -41,6 +43,8 @@
 			<@aui["option"] label="${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" selected=(userSegmentId == userSegment.getUserSegmentId()) value="${userSegment.getUserSegmentId()}" />
 		</#list>
 	</@>
+
+	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidDateRangeException" message="please-enter-valid-date-range" />
 
 	<@aui["input"] name="startDate" value=startDate />
 

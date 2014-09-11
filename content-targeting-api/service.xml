@@ -213,5 +213,7 @@
 	</entity>
 	<exceptions>
 		<exception>UsedUserSegment</exception>
+		<exception>InvalidDateRange</exception>
+		<exception>InvalidName</exception>
 	</exceptions>
 </service-builder>

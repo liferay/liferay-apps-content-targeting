@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.impl;
 
+import com.liferay.content.targeting.InvalidDateRangeException;
+import com.liferay.content.targeting.InvalidNameException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.base.CampaignLocalServiceBaseImpl;
@@ -29,7 +31,9 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -88,6 +92,8 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		campaign.setEndDate(endDate);
 		campaign.setPriority(priority);
 		campaign.setActive(active);
+
+		validateCampaign(campaign);
 
 		campaignPersistence.update(campaign);
 
@@ -227,6 +233,8 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		campaign.setPriority(priority);
 		campaign.setActive(active);
 
+		validateCampaign(campaign);
+
 		campaignPersistence.update(campaign);
 
 		if (userSegmentIds != null) {
@@ -273,6 +281,19 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
+	}
+
+	protected void validateCampaign(Campaign campaign) throws PortalException {
+		if (Validator.isNull(campaign.getName(LocaleUtil.getDefault()))) {
+			throw new InvalidNameException();
+		}
+
+		if ((campaign.getStartDate() == null) ||
+			(campaign.getEndDate() == null) ||
+			campaign.getStartDate().after(campaign.getEndDate())) {
+
+			throw new InvalidDateRangeException();
+		}
 	}
 
 }

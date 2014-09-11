@@ -30,6 +30,8 @@
 
 	<@aui["model-context"] bean=userSegment model=userSegmentClass />
 
+	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidNameException" message="please-enter-valid-name" />
+
 	<@aui["input"] name="name" />
 
 	<@aui["input"] name="description" />
