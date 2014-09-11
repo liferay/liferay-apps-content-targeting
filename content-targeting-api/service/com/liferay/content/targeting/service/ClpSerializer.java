@@ -315,6 +315,16 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
+					"com.liferay.content.targeting.InvalidDateRangeException")) {
+			return new com.liferay.content.targeting.InvalidDateRangeException();
+		}
+
+		if (className.equals(
+					"com.liferay.content.targeting.InvalidNameException")) {
+			return new com.liferay.content.targeting.InvalidNameException();
+		}
+
+		if (className.equals(
 					"com.liferay.content.targeting.UsedUserSegmentException")) {
 			return new com.liferay.content.targeting.UsedUserSegmentException();
 		}
