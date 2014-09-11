@@ -53,7 +53,7 @@ public class CampaignQueryRuleUtil {
 		}
 
 		if (campaignQueryRules.isEmpty() && includeEmptyQueryRule) {
-			campaignQueryRules.add(getNewQueryRule());
+			campaignQueryRules.add(new CampaignQueryRule());
 		}
 
 		Collections.sort(campaignQueryRules);
@@ -61,12 +61,6 @@ public class CampaignQueryRuleUtil {
 		campaignQueryRules.add(getDefaultQueryRule(portletPreferences, locale));
 
 		return campaignQueryRules;
-	}
-
-	public static CampaignQueryRule getNewQueryRule()
-		throws PortalException, SystemException {
-
-		return new CampaignQueryRule(0, 0, 0, null);
 	}
 
 	public static QueryRule getQueryRule(

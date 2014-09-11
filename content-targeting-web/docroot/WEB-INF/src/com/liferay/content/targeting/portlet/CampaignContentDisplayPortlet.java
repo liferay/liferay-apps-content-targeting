@@ -297,7 +297,7 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 					"configuration.queryRule");
 
 			if (campaignQueryRule == null) {
-				campaignQueryRule = CampaignQueryRuleUtil.getNewQueryRule();
+				campaignQueryRule = new CampaignQueryRule();
 			}
 
 			template.put("queryRule", campaignQueryRule);

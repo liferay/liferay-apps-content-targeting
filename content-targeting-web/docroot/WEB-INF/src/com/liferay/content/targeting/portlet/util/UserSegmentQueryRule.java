@@ -34,6 +34,10 @@ import javax.portlet.PortletConfig;
  */
 public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 
+	public UserSegmentQueryRule() throws PortalException, SystemException {
+		this(true, true, 0, null, 0, null);
+	}
+
 	public UserSegmentQueryRule(
 			boolean andOperator, boolean contains, long assetEntryId,
 			long[] userSegmentAssetCategoryIds, int index, Locale locale)

@@ -264,8 +264,7 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 					"configuration.queryRule");
 
 			if (userSegmentQueryRule == null) {
-				userSegmentQueryRule =
-					UserSegmentQueryRuleUtil.getNewQueryRule();
+				userSegmentQueryRule = new UserSegmentQueryRule();
 			}
 
 			template.put("queryRule", userSegmentQueryRule);

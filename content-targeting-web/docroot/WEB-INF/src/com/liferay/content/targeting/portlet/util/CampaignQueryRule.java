@@ -35,6 +35,10 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 
+	public CampaignQueryRule() throws PortalException, SystemException {
+		this(0, 0, 0, null);
+	}
+
 	public CampaignQueryRule(
 			long assetEntryId, long campaignId, int index, Locale locale)
 		throws PortalException, SystemException {

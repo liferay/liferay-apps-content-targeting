@@ -32,12 +32,6 @@ import javax.portlet.PortletPreferences;
  */
 public class UserSegmentQueryRuleUtil {
 
-	public static UserSegmentQueryRule getNewQueryRule()
-		throws PortalException, SystemException {
-
-		return new UserSegmentQueryRule(true, true, 0, null, 0, null);
-	}
-
 	public static QueryRule getQueryRule(
 			ActionRequest request, int queryRulesIndex, Locale locale)
 		throws PortalException, SystemException {
@@ -105,7 +99,7 @@ public class UserSegmentQueryRuleUtil {
 		}
 
 		if (userSegmentQueryRules.isEmpty() && includeEmptyQueryRule) {
-			userSegmentQueryRules.add(getNewQueryRule());
+			userSegmentQueryRules.add(new UserSegmentQueryRule());
 		}
 
 		userSegmentQueryRules.add(
