@@ -207,7 +207,8 @@ public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 			template.put("userSegmentQueryRules", userSegmentQueryRules);
 
-			QueryRule queryRule = userSegmentQueryRules.get(0);
+			QueryRule queryRule = userSegmentQueryRules.get(
+				userSegmentQueryRules.size() - 1);
 
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
