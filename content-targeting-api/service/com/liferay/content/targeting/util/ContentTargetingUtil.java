@@ -16,21 +16,32 @@ package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.util.PrefsPropsUtil;
+import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.sites.util.Sites;
+import com.liferay.portlet.sites.util.SitesUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
@@ -128,6 +139,122 @@ public class ContentTargetingUtil {
 		return data;
 	}
 
+	// This method already exists in 7.0
+
+	public static long[] getSharedContentSiteGroupIds(
+			long companyId, long groupId, long userId)
+		throws PortalException, SystemException {
+
+		Set<Group> groups = new LinkedHashSet<Group>();
+
+		Group siteGroup = doGetCurrentSiteGroup(groupId);
+
+		if (siteGroup != null) {
+
+			// Current site
+
+			groups.add(siteGroup);
+
+			// Layout scopes
+
+			groups.addAll(
+				GroupLocalServiceUtil.getGroups(
+					siteGroup.getCompanyId(), Layout.class.getName(),
+					siteGroup.getGroupId()));
+		}
+
+		// Administered sites
+
+		if (PrefsPropsUtil.getBoolean(
+				companyId,
+			PropsKeys.
+				SITES_CONTENT_SHARING_THROUGH_ADMINISTRATORS_ENABLED)) {
+
+			LinkedHashMap<String, Object> groupParams =
+				new LinkedHashMap<String, Object>();
+
+			groupParams.put("site", Boolean.TRUE);
+			groupParams.put("usersGroups", userId);
+
+			groups.addAll(
+				GroupLocalServiceUtil.search(
+					companyId, null, null, groupParams, QueryUtil.ALL_POS,
+					QueryUtil.ALL_POS, null));
+		}
+
+		// Descendant sites
+
+		groups.addAll(getDescendants(siteGroup, true));
+
+		// Ancestor sites and global site
+
+		int sitesContentSharingWithChildrenEnabled = PrefsPropsUtil.getInteger(
+			companyId, PropsKeys.SITES_CONTENT_SHARING_WITH_CHILDREN_ENABLED);
+
+		if (sitesContentSharingWithChildrenEnabled !=
+				Sites.CONTENT_SHARING_WITH_CHILDREN_DISABLED) {
+
+			groups.addAll(doGetAncestorSiteGroups(groupId, true));
+		}
+
+		long[] groupIds = new long[groups.size()];
+
+		int i = 0;
+
+		for (Group group : groups) {
+			groupIds[i++] = group.getGroupId();
+		}
+
+		return groupIds;
+	}
+
+	// This method already exists in 7.0
+
+	protected static Set<Group> doGetAncestorSiteGroups(
+			long groupId, boolean checkContentSharingWithChildrenEnabled)
+		throws PortalException, SystemException {
+
+		Set<Group> groups = new LinkedHashSet<Group>();
+
+		long siteGroupId = getSiteGroupId(groupId);
+
+		Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
+
+		for (Group group : siteGroup.getAncestors()) {
+			if (checkContentSharingWithChildrenEnabled &&
+				!SitesUtil.isContentSharingWithChildrenEnabled(group)) {
+
+				continue;
+			}
+
+			groups.add(group);
+		}
+
+		if (!siteGroup.isCompany()) {
+			groups.add(
+				GroupLocalServiceUtil.getCompanyGroup(
+					siteGroup.getCompanyId()));
+		}
+
+		return groups;
+	}
+
+	// This method already exists in 7.0
+
+	protected static Group doGetCurrentSiteGroup(long groupId)
+		throws PortalException, SystemException {
+
+		long siteGroupId = getSiteGroupId(groupId);
+
+		Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
+
+		if (!siteGroup.isLayoutPrototype()) {
+			return siteGroup;
+		}
+
+		return null;
+	}
+
 	protected static PortletURL getAssetBrowserURL(
 			HttpServletRequest request, String className)
 		throws Exception {
@@ -144,13 +271,52 @@ public class ContentTargetingUtil {
 		assetBrowserURL.setParameter(
 			"groupId", String.valueOf(themeDisplay.getScopeGroupId()));
 		assetBrowserURL.setParameter(
-			"selectedGroupIds", String.valueOf(themeDisplay.getScopeGroupId()));
+			"selectedGroupIds",
+			StringUtil.merge(
+				getSharedContentSiteGroupIds(
+					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
+					themeDisplay.getUserId())));
 		assetBrowserURL.setParameter("eventName", "selectContent");
 		assetBrowserURL.setParameter("typeSelection", className);
 		assetBrowserURL.setPortletMode(PortletMode.VIEW);
 		assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
 
 		return assetBrowserURL;
+	}
+
+	// This method already exists in 7.0
+
+	protected static List<Group> getDescendants(Group group, boolean site)
+		throws SystemException {
+
+		Set<Group> descendants = new LinkedHashSet<Group>();
+
+		for (Group curGroup : group.getChildren(site)) {
+			descendants.add(curGroup);
+			descendants.addAll(getDescendants(curGroup, site));
+		}
+
+		return new ArrayList<Group>(descendants);
+	}
+
+	// This method already exists in 7.0
+
+	protected static long getSiteGroupId(long groupId)
+		throws PortalException, SystemException {
+
+		if (groupId <= 0) {
+			return 0;
+		}
+
+		Group group = GroupLocalServiceUtil.getGroup(groupId);
+
+		long siteGroupId = groupId;
+
+		if (group.isLayout()) {
+			siteGroupId = group.getParentGroupId();
+		}
+
+		return siteGroupId;
 	}
 
 }
