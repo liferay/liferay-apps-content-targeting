@@ -155,7 +155,11 @@ public abstract class AssetQueryRule implements QueryRule {
 
 	@Override
 	public boolean hasAssetEntry() {
-		return _assetEntry != null;
+		if ((_assetEntry != null) && _assetEntry.isVisible()) {
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
@@ -169,11 +173,7 @@ public abstract class AssetQueryRule implements QueryRule {
 
 	@Override
 	public boolean isValid() {
-		if ((_assetEntry == null) || !_assetEntry.isVisible()) {
-			return false;
-		}
-
-		return true;
+		return hasAssetEntry();
 	}
 
 	@Override
