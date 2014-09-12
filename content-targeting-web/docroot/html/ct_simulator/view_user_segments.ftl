@@ -22,6 +22,7 @@
 <div id="<@portlet["namespace"] />userSegmentContainer">
 	<@aui["form"] action="${simulateUserSegmentURL}" method="post" name="fm" onSubmit="event.preventDefault(); ${renderResponse.getNamespace()}saveUserSegments();">
 		<@aui["input"] name="selectedUserSegmentIds" type="hidden" />
+		<@aui["input"] name="stopSimulation" type="hidden" value="false" />
 
 		<@renderSimulatorLists
 			containerId="userSegmentContainer"
@@ -34,7 +35,7 @@
 
 		<@aui["button-row"] cssClass="button-holder">
 			<@aui["button"] type="submit" value="simulate" />
-			<@aui["button"] onClick="${renderResponse.getNamespace()}stopSimulation();" value="stop-simulation" />
+			<@aui["button"] name="stopSimulationButton" value="stop-simulation" />
 		</@>
 	</@>
 </div>
@@ -46,11 +47,16 @@
 		submitUserSegments();
 	}
 
-	<@portlet["namespace"] />stopSimulation = function() {
-		document.<@portlet["namespace"] />fm.<@portlet["namespace"] />selectedUserSegmentIds.value = '';
+	var stopSimulationButton = A.one('#<@portlet["namespace"] />stopSimulationButton');
 
-		submitUserSegments();
-	}
+	stopSimulationButton.on(
+		'click',
+		function(event) {
+			document.<@portlet["namespace"] />fm.<@portlet["namespace"] />stopSimulation.value = 'true';
+
+			submitUserSegments();
+		}
+	);
 
 	submitUserSegments = function() {
 		var loadingMask = A.getBody().plug(A.LoadingMask).loadingmask;

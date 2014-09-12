@@ -35,4 +35,8 @@ public interface UserSegmentSimulator {
 		long userSegmentId, HttpServletRequest request,
 		HttpServletResponse response);
 
+	public void setUserSegmentIds(
+		long[] userSegmentIds, HttpServletRequest request,
+		HttpServletResponse response);
+
 }

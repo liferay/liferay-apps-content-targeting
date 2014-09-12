@@ -25,7 +25,6 @@ import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
-import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -87,22 +86,27 @@ public class SimulatorPortlet extends FreeMarkerPortlet {
 			ActionRequest request, ActionResponse response)
 		throws Exception {
 
-		long[] selectedUserSegmentIds = StringUtil.split(
-			ParamUtil.getString(request, "selectedUserSegmentIds"), 0L);
-
 		HttpServletRequest httpServletRequest =
 			PortalUtil.getHttpServletRequest(request);
 
 		HttpServletResponse httpServletResponse =
 			PortalUtil.getHttpServletResponse(response);
 
-		_userSegmentSimulator.removeAllUserSegmentIds(
-			httpServletRequest, httpServletResponse);
+		boolean stopSimulation = ParamUtil.getBoolean(
+			request, "stopSimulation");
 
-		for (long selectedUserSegmentId : selectedUserSegmentIds) {
-			_userSegmentSimulator.addUserSegmentId(
-				selectedUserSegmentId, httpServletRequest, httpServletResponse);
+		if (stopSimulation) {
+			_userSegmentSimulator.removeAllUserSegmentIds(
+				httpServletRequest, httpServletResponse);
+
+			return;
 		}
+
+		long[] selectedUserSegmentIds = StringUtil.split(
+			ParamUtil.getString(request, "selectedUserSegmentIds"), 0L);
+
+		_userSegmentSimulator.setUserSegmentIds(
+			selectedUserSegmentIds, httpServletRequest, httpServletResponse);
 	}
 
 	protected void populateContext(
@@ -150,9 +154,7 @@ public class SimulatorPortlet extends FreeMarkerPortlet {
 			_userSegmentSimulator.getUserSegmentIds(
 				httpServletRequest, httpServletResponse);
 
-		if ((simulatedUserSegmentIds == null) ||
-			ArrayUtil.isEmpty(simulatedUserSegmentIds)) {
-
+		if (simulatedUserSegmentIds == null) {
 			simulatedUserSegmentIds = originalUserSegmentIds;
 		}
 

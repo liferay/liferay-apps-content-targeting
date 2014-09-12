@@ -55,6 +55,8 @@ public class PortalPreferencesUserSegmentSimulator
 		preferences.setValues(
 			"content-targeting", "simulatedUserSegmentIds",
 			simulatedUserSegmentIds);
+		preferences.setValue(
+			"content-targeting", "simulation", String.valueOf(true));
 	}
 
 	@Override
@@ -65,9 +67,16 @@ public class PortalPreferencesUserSegmentSimulator
 
 		PortalPreferences preferences = getPortalPreferences(userId);
 
+		boolean simulation = GetterUtil.getBoolean(
+			preferences.getValue("content-targeting", "simulation"));
+
+		if (!simulation) {
+			return null;
+		}
+
 		return getLongArray(
 			preferences.getValues(
-				"content-targeting", "simulatedUserSegmentIds", null));
+				"content-targeting", "simulatedUserSegmentIds", new String[0]));
 	}
 
 	@Override
@@ -80,6 +89,8 @@ public class PortalPreferencesUserSegmentSimulator
 
 		preferences.setValues(
 			"content-targeting", "simulatedUserSegmentIds", null);
+		preferences.setValue(
+			"content-targeting", "simulation", String.valueOf(false));
 	}
 
 	@Override
@@ -100,6 +111,27 @@ public class PortalPreferencesUserSegmentSimulator
 		preferences.setValues(
 			"content-targeting", "simulatedUserSegmentIds",
 			simulatedUserSegmentIds);
+
+		if (simulatedUserSegmentIds.length == 0) {
+			preferences.setValue(
+				"content-targeting", "simulation", String.valueOf(false));
+		}
+	}
+
+	@Override
+	public void setUserSegmentIds(
+		long[] userSegmentIds, HttpServletRequest request,
+		HttpServletResponse response) {
+
+		long userId = PortalUtil.getUserId(request);
+
+		PortalPreferences preferences = getPortalPreferences(userId);
+
+		preferences.setValues(
+			"content-targeting", "simulatedUserSegmentIds",
+			ArrayUtil.toStringArray(userSegmentIds));
+		preferences.setValue(
+			"content-targeting", "simulation", String.valueOf(true));
 	}
 
 	protected long[] getLongArray(String[] array) {
