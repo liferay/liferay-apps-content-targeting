@@ -36,13 +36,26 @@
 
 	<@aui["input"] name="description" />
 
-	<@aui["select"] label="user-segment" name="userSegmentId">
+	<@aui["select"] inlineField=true label="user-segment" name="userSegmentId">
 		<@aui["option"] label="" selected=(userSegmentId == -1) value="-1" />
 
 		<#list userSegments as userSegment>
 			<@aui["option"] label="${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" selected=(userSegmentId == userSegment.getUserSegmentId()) value="${userSegment.getUserSegmentId()}" />
 		</#list>
 	</@>
+
+	<@portlet["renderURL"] var="viewUserSegments">
+		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+		<@portlet["param"] name="tabs1" value="user-segments" />
+	</@>
+
+	<@liferay_ui["icon"]
+		id="manageUserSegments"
+		image="configuration"
+		label=false
+		message="manage-user-segments"
+		url=viewUserSegments
+	/>
 
 	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidDateRangeException" message="please-enter-valid-date-range" />
 
