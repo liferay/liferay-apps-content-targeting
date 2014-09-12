@@ -25,7 +25,11 @@
 
 <div class="content-container ${containerCssClass}">
 	<div class="full-content" id="<@portlet["namespace"] />FullContent${selectedIndex}">
-		<#if queryRule.hasAssetEntry()>
+		<#if isNotConfigured>
+			<div class="alert alert-info">
+				<@liferay_ui["message"] key="configure-this-app-to-display-different-content-per-campaign" />
+			</div>
+		<#elseif queryRule.hasAssetEntry()>
 			<#if portletDisplayTemplateHtml??>
 				${portletDisplayTemplateHtml}
 			<#else>

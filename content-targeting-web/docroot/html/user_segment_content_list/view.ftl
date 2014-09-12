@@ -29,7 +29,7 @@
 	</#if>
 <#else>
 	<div class="alert alert-info">
-		<@liferay_ui["message"] key="there-are-no-matching-rules" />
+		<@liferay_ui["message"] key="there-is-no-content-categorized-for-your-user-segments" />
 	</div>
 </#if>
 

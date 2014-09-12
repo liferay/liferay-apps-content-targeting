@@ -28,7 +28,11 @@
 	>
 
 		<@liferay_ui["section"]>
-			<span class="title"><@liferay_ui["message"] key="display-the-following-content"/></span>
+			<span class="title">
+				<@liferay_ui["message"] key="display-the-following-content"/>
+
+				<@liferay_ui["icon-help"] message="the-following-conditions-will-be-evaluated-by-priority" />
+			</span>
 
 			<div class="rules-panel">
 				<div id="<@portlet["namespace"] />queryRules">
