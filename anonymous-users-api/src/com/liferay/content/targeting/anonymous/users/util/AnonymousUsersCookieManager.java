@@ -26,6 +26,9 @@ public interface AnonymousUsersCookieManager {
 		HttpServletRequest request, HttpServletResponse response,
 		long anonymousUserId);
 
+	public void deleteCookie(
+		HttpServletRequest request, HttpServletResponse response);
+
 	public long getAnonymousUserId(HttpServletRequest request);
 
 }

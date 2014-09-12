@@ -17,6 +17,7 @@ package com.liferay.content.targeting.anonymous.users.util;
 import com.liferay.portal.kernel.util.CookieKeys;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -38,13 +39,38 @@ public class DefaultAnonymousUsersCookieManagerImpl
 		HttpServletRequest request, HttpServletResponse response,
 		long anonymousUserId) {
 
-		Cookie userIdCookie = new Cookie(
+		Cookie anonymousUserIdCookie = new Cookie(
 			ANONYMOUS_USER_ID, String.valueOf(anonymousUserId));
 
-		userIdCookie.setPath(StringPool.SLASH);
-		userIdCookie.setMaxAge(CookieKeys.MAX_AGE);
+		String domain = CookieKeys.getDomain(request);
 
-		CookieKeys.addCookie(request, response, userIdCookie);
+		if (Validator.isNotNull(domain)) {
+			anonymousUserIdCookie.setDomain(domain);
+		}
+
+		anonymousUserIdCookie.setMaxAge(CookieKeys.MAX_AGE);
+		anonymousUserIdCookie.setPath(StringPool.SLASH);
+
+		CookieKeys.addCookie(request, response, anonymousUserIdCookie);
+	}
+
+	@Override
+	public void deleteCookie(
+		HttpServletRequest request, HttpServletResponse response) {
+
+		Cookie anonymousUserIdCookie = new Cookie(
+			ANONYMOUS_USER_ID, StringPool.BLANK);
+
+		String domain = CookieKeys.getDomain(request);
+
+		if (Validator.isNotNull(domain)) {
+			anonymousUserIdCookie.setDomain(domain);
+		}
+
+		anonymousUserIdCookie.setMaxAge(0);
+		anonymousUserIdCookie.setPath(StringPool.SLASH);
+
+		CookieKeys.addCookie(request, response, anonymousUserIdCookie);
 	}
 
 	@Override
