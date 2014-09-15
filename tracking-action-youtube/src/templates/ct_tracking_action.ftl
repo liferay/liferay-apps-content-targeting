@@ -23,7 +23,7 @@
 	</div>
 </#if>
 
-<@aui["input"] label="alias" name="{ct_field_guid}alias" type="text" value=alias />
+<@aui["input"] helpMessage="alias-help" label="alias" name="{ct_field_guid}alias" type="text" value=alias />
 
 <@aui["input"] helpMessage="enter-the-id-of-the-youtube-video-to-be-tracked" label="youtube-video-id" name="{ct_field_guid}elementId" type="text" value=elementId />
 

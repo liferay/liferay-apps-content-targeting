@@ -25,7 +25,7 @@
 	</div>
 </#if>
 
-<@aui["input"] label="alias" name="{ct_field_guid}alias" type="text" value=alias />
+<@aui["input"] helpMessage="alias-help" label="alias" name="{ct_field_guid}alias" type="text" value=alias />
 
 <div class="rules-panel" style="background-color:transparent; margin:0px;">
 	<div class="control-group select-asset-selector">

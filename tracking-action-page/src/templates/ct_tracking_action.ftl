@@ -23,7 +23,7 @@
 	</div>
 </#if>
 
-<@aui["input"] label="alias" name="{ct_field_guid}alias" type="text" value=alias />
+<@aui["input"] helpMessage="alias-help" label="alias" name="{ct_field_guid}alias" type="text" value=alias />
 
 <@aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="{ct_field_guid}friendlyURL" type="text" value=friendlyURL />
 
