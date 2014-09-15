@@ -16,12 +16,14 @@
 
 <#include "../init.ftl" />
 
-<@portlet["renderURL"] var="backURL">
-	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
-	<@portlet["param"] name="redirect" value="${redirect}" />
-	<@portlet["param"] name="className" value="${className}" />
-	<@portlet["param"] name="classPK" value="${classPK?string}" />
-</@>
+<#if validator.isNull(backURL)>
+	<@portlet["renderURL"] var="backURL">
+		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
+		<@portlet["param"] name="redirect" value="${redirect}" />
+		<@portlet["param"] name="className" value="${className}" />
+		<@portlet["param"] name="classPK" value="${classPK?string}" />
+	</@>
+</#if>
 
 <@liferay_ui["header"]
 	backURL="${backURL}"

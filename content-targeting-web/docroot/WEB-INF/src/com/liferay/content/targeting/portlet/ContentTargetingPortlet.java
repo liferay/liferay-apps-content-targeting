@@ -433,6 +433,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 		TemplateHashModel staticModels = wrapper.getStaticModels();
 
+		template.put(
+			"backURL", ParamUtil.getString(portletRequest, "backURL"));
 		template.put("campaignClass", Campaign.class);
 		template.put(
 			"campaignConstants",

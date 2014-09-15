@@ -16,6 +16,12 @@
 
 <#include "../init.ftl" />
 
+<#if validator.isNull(redirect)>
+	<@portlet["renderURL"] var="redirect">
+		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+	</@>
+</#if>
+
 <@liferay_ui["header"]
 	backURL="${redirect}"
 	title="${title}"
@@ -23,6 +29,7 @@
 
 <@portlet["renderURL"] varImpl="viewReportsURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
+	<@portlet["param"] name="redirect" value="${redirect}" />
 	<@portlet["param"] name="className" value="${className}" />
 	<@portlet["param"] name="classPK" value="${classPK?string}" />
 </@>
@@ -45,7 +52,7 @@
 
 		<@portlet["renderURL"] varImpl="viewReportURL">
 			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORT}" />
-			<@portlet["param"] name="redirect" value="${currentURL}" />
+			<@portlet["param"] name="backURL" value="${currentURL}" />
 			<@portlet["param"] name="className" value="${className}" />
 			<@portlet["param"] name="classPK" value="${classPK}" />
 			<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
