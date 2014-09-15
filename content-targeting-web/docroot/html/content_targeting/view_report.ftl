@@ -28,18 +28,22 @@
 	title=report.getName(locale)
 />
 
-<div class="report-description">
-	${report.getDescription(locale)}
-</div>
-
 <@portlet["actionURL"] name="updateReport" var="updateReportURL">
 	<@portlet["param"] name="redirect" value="${currentURL}" />
 	<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
 	<@portlet["param"] name="classPK" value="${classPK?string}" />
 </@>
 
-<@aui["button-row"]>
-	<@aui["button"] href="${updateReportURL}" value="update-report"/>
-</@>
+<@liferay_ui["icon"]
+	cssClass="btn pull-right"
+	image="../aui/repeat"
+	label=false
+	message="update-report"
+	url=updateReportURL
+/>
+
+<div class="report-description">
+	${report.getDescription(locale)}
+</div>
 
 ${reportHtml}
