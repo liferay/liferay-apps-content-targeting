@@ -73,7 +73,7 @@
 	</portlet>
 	<portlet>
 		<portlet-name>ctsimulator</portlet-name>
-		<display-name>Content Targeting Simulator</display-name>
+		<display-name>Audience Targeting Simulator</display-name>
 		<portlet-class>com.liferay.content.targeting.portlet.SimulatorPortlet</portlet-class>
 		<init-param>
 			<name>add-process-action-success-action</name>
@@ -93,9 +93,9 @@
 		</supports>
 		<resource-bundle>content.Language</resource-bundle>
 		<portlet-info>
-			<title>Content Targeting Simulator</title>
-			<short-title>Content Targeting Simulator</short-title>
-			<keywords>Content Targeting Simulator</keywords>
+			<title>Audience Targeting Simulator</title>
+			<short-title>Audience Targeting Simulator</short-title>
+			<keywords>Audience Targeting Simulator</keywords>
 		</portlet-info>
 		<security-role-ref>
 			<role-name>administrator</role-name>

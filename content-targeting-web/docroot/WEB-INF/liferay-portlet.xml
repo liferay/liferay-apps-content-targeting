@@ -31,7 +31,10 @@
 	<portlet>
 		<portlet-name>ctsimulator</portlet-name>
 		<icon>/icons/icon.png</icon>
-		<instanceable>true</instanceable>
+		<control-panel-entry-category>site_administration.configuration</control-panel-entry-category>
+		<control-panel-entry-weight>100.0</control-panel-entry-weight>
+		<control-panel-entry-class>com.liferay.content.targeting.portlet.SimulatorControlPanelEntry</control-panel-entry-class>
+		<instanceable>false</instanceable>
 		<render-weight>1</render-weight>
 		<css-class-wrapper>content-targeting-simulator-portlet</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>

@@ -212,7 +212,11 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 			<aui:nav-item anchorId="editLayoutPanel" cssClass="page-edit-controls" data-panelURL="<%= editLayoutURL %>" href="javascript:;" iconCssClass="icon-edit" label="edit" />
 		</c:if>
 
-		<c:if test="<%= !group.isControlPanel() && userSetupComplete && !group.isLayoutPrototype() && !group.isLayoutSetPrototype() %>">
+		<%
+		String simulatorPortletName = "ctsimulator_WAR_contenttargetingweb";
+		%>
+
+		<c:if test="<%= !group.isControlPanel() && userSetupComplete && !group.isLayoutPrototype() && !group.isLayoutSetPrototype() && permissionChecker.hasPermission(scopeGroupId, simulatorPortletName, simulatorPortletName, ActionKeys.VIEW) %>">
 
 			<%
 			String cssClass = "page-edit-controls";
@@ -224,7 +228,7 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 			}
 			%>
 
-			<liferay-portlet:renderURL portletName="ctsimulator_WAR_contenttargetingweb" var="simulatorURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
+			<liferay-portlet:renderURL portletName="<%= simulatorPortletName %>" var="simulatorURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
 				<portlet:param name="mvcPath" value="html/ct_simulator/view.ftl" />
 			</liferay-portlet:renderURL>
 
