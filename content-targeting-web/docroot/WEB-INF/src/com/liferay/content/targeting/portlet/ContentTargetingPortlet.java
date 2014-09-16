@@ -29,6 +29,7 @@ import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
+import com.liferay.content.targeting.model.impl.RuleInstanceImpl;
 import com.liferay.content.targeting.portlet.util.RuleTemplate;
 import com.liferay.content.targeting.portlet.util.TrackingActionTemplate;
 import com.liferay.content.targeting.service.CampaignLocalService;
@@ -87,6 +88,7 @@ import freemarker.template.TemplateHashModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -413,7 +415,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 	}
 
 	protected String getRuleHtml(
-		Rule rule, RuleInstance ruleInstance, Template template) {
+		Rule rule, RuleInstance ruleInstance, Template template,
+		Map<String, String> values) {
 
 		Map<String, Object> ruleContext = cloneTemplateContext(template);
 
@@ -425,7 +428,11 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 		request.setAttribute("aui:form:validatorTagsMap", validatorTagsMap);
 
-		String html = rule.getFormHTML(ruleInstance, ruleContext);
+		if (values == null) {
+			values = Collections.emptyMap();
+		}
+
+		String html = rule.getFormHTML(ruleInstance, ruleContext, values);
 
 		if (!validatorTagsMap.isEmpty()) {
 			try {
@@ -701,7 +708,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 							ruleInstance.getRuleInstanceId());
 						ruleTemplate.setRule(rule);
 
-						String html = getRuleHtml(rule, ruleInstance, template);
+						String html = getRuleHtml(
+							rule, ruleInstance, template, null);
 
 						ruleTemplate.setTemplate(
 							HtmlUtil.escapeAttribute(html));
@@ -725,7 +733,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 					ruleTemplate.setRule(rule);
 
-					String html = getRuleHtml(rule, null, template);
+					String html = getRuleHtml(rule, null, template, null);
 
 					ruleTemplate.setTemplate(HtmlUtil.escapeAttribute(html));
 
