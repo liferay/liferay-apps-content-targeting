@@ -38,6 +38,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -105,6 +106,23 @@ public class UserSegmentLocalServiceImpl
 
 		userSegmentPersistence.update(userSegment);
 
+		// Resources
+
+		if (serviceContext.isAddGroupPermissions() ||
+			serviceContext.isAddGuestPermissions()) {
+
+			addUserSegmentResources(
+				userSegment, serviceContext.isAddGroupPermissions(),
+				serviceContext.isAddGuestPermissions());
+		}
+		else {
+			addUserSegmentResources(
+				userSegment, serviceContext.getGroupPermissions(),
+				serviceContext.getGuestPermissions());
+		}
+
+		// Categories
+
 		Group scopeGroup = serviceContext.getScopeGroup();
 
 		if (scopeGroup.hasStagingGroup()) {
@@ -123,6 +141,31 @@ public class UserSegmentLocalServiceImpl
 		return userSegment;
 	}
 
+	@Override
+	public void addUserSegmentResources(
+			UserSegment userSegment, boolean addGroupPermissions,
+			boolean addGuestPermissions)
+		throws PortalException, SystemException {
+
+		resourceLocalService.addResources(
+			userSegment.getCompanyId(), userSegment.getGroupId(),
+			userSegment.getUserId(), UserSegment.class.getName(),
+			userSegment.getUserSegmentId(), false, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	@Override
+	public void addUserSegmentResources(
+			UserSegment userSegment, String[] groupPermissions,
+			String[] guestPermissions)
+		throws PortalException, SystemException {
+
+		resourceLocalService.addModelResources(
+			userSegment.getCompanyId(), userSegment.getGroupId(),
+			userSegment.getUserId(), UserSegment.class.getName(),
+			userSegment.getUserSegmentId(), groupPermissions, guestPermissions);
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public UserSegment deleteUserSegment(long userSegmentId)
@@ -137,12 +180,22 @@ public class UserSegmentLocalServiceImpl
 
 		UserSegment userSegment = userSegmentPersistence.remove(userSegmentId);
 
+		// Resources
+
+		resourceLocalService.deleteResource(
+			userSegment.getCompanyId(), UserSegment.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, userSegment.getUserSegmentId());
+
+		// Rules
+
 		for (RuleInstance ruleInstance :
 				ruleInstanceLocalService.getRuleInstances(userSegmentId)) {
 
 			ruleInstanceLocalService.deleteRuleInstance(
 				ruleInstance.getRuleInstanceId());
 		}
+
+		// Categories
 
 		Group group = GroupLocalServiceUtil.fetchGroup(
 			userSegment.getGroupId());
@@ -247,6 +300,18 @@ public class UserSegmentLocalServiceImpl
 
 		userSegmentPersistence.update(userSegment);
 
+		// Resources
+
+		if ((serviceContext.getGroupPermissions() != null) ||
+			(serviceContext.getGuestPermissions() != null)) {
+
+			updateUserSegmentResources(
+				userSegment, serviceContext.getGroupPermissions(),
+				serviceContext.getGuestPermissions());
+		}
+
+		// Categories
+
 		updateUserSegmentCategory(
 			userSegment.getUserId(), userSegment.getAssetCategoryId(), nameMap,
 			descriptionMap, serviceContext);
@@ -267,6 +332,18 @@ public class UserSegmentLocalServiceImpl
 		}
 
 		return userSegment;
+	}
+
+	@Override
+	public void updateUserSegmentResources(
+			UserSegment userSegment, String[] groupPermissions,
+			String[] guestPermissions)
+		throws PortalException, SystemException {
+
+		resourceLocalService.updateResources(
+			userSegment.getCompanyId(), userSegment.getGroupId(),
+			UserSegment.class.getName(), userSegment.getUserSegmentId(),
+			groupPermissions, guestPermissions);
 	}
 
 	protected AssetCategory addUserSegmentCategory(

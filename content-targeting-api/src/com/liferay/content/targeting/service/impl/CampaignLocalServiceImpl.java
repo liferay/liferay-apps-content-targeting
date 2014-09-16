@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -97,6 +98,23 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 		campaignPersistence.update(campaign);
 
+		// Resources
+
+		if (serviceContext.isAddGroupPermissions() ||
+			serviceContext.isAddGuestPermissions()) {
+
+			addCampaignResources(
+				campaign, serviceContext.isAddGroupPermissions(),
+				serviceContext.isAddGuestPermissions());
+		}
+		else {
+			addCampaignResources(
+				campaign, serviceContext.getGroupPermissions(),
+				serviceContext.getGuestPermissions());
+		}
+
+		// User Segments
+
 		if (userSegmentIds != null) {
 			campaignPersistence.setUserSegments(
 				campaign.getCampaignId(), userSegmentIds);
@@ -105,12 +123,45 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		return campaign;
 	}
 
+	@Override
+	public void addCampaignResources(
+			Campaign campaign, boolean addGroupPermissions,
+			boolean addGuestPermissions)
+		throws PortalException, SystemException {
+
+		resourceLocalService.addResources(
+			campaign.getCompanyId(), campaign.getGroupId(),
+			campaign.getUserId(), Campaign.class.getName(),
+			campaign.getCampaignId(), false, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	@Override
+	public void addCampaignResources(
+			Campaign campaign, String[] groupPermissions,
+			String[] guestPermissions)
+		throws PortalException, SystemException {
+
+		resourceLocalService.addModelResources(
+			campaign.getCompanyId(), campaign.getGroupId(),
+			campaign.getUserId(), Campaign.class.getName(),
+			campaign.getCampaignId(), groupPermissions, guestPermissions);
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Campaign deleteCampaign(long campaignId)
 		throws PortalException, SystemException {
 
 		Campaign campaign = campaignPersistence.remove(campaignId);
+
+		// Resources
+
+		resourceLocalService.deleteResource(
+			campaign.getCompanyId(), Campaign.class.getName(),
+			ResourceConstants.SCOPE_INDIVIDUAL, campaign.getCampaignId());
+
+		// Tracking Actions
 
 		for (TrackingActionInstance trackingActionInstance :
 				trackingActionInstanceLocalService.getTrackingActionInstances(
@@ -237,11 +288,35 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 		campaignPersistence.update(campaign);
 
+		// Resources
+
+		if ((serviceContext.getGroupPermissions() != null) ||
+			(serviceContext.getGuestPermissions() != null)) {
+
+			updateCampaignResources(
+				campaign, serviceContext.getGroupPermissions(),
+				serviceContext.getGuestPermissions());
+		}
+
+		// User Segments
+
 		if (userSegmentIds != null) {
 			campaignPersistence.setUserSegments(campaignId, userSegmentIds);
 		}
 
 		return campaign;
+	}
+
+	@Override
+	public void updateCampaignResources(
+			Campaign campaign, String[] groupPermissions,
+			String[] guestPermissions)
+		throws PortalException, SystemException {
+
+		resourceLocalService.updateResources(
+			campaign.getCompanyId(), campaign.getGroupId(),
+			Campaign.class.getName(), campaign.getCampaignId(),
+			groupPermissions, guestPermissions);
 	}
 
 	protected SearchContext buildSearchContext(
