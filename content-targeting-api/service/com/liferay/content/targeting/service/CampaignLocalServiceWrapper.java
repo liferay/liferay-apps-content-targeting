@@ -526,6 +526,26 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	}
 
 	@Override
+	public void addCampaignResources(
+		com.liferay.content.targeting.model.Campaign campaign,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_campaignLocalService.addCampaignResources(campaign,
+			addGroupPermissions, addGuestPermissions);
+	}
+
+	@Override
+	public void addCampaignResources(
+		com.liferay.content.targeting.model.Campaign campaign,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_campaignLocalService.addCampaignResources(campaign, groupPermissions,
+			guestPermissions);
+	}
+
+	@Override
 	public com.liferay.content.targeting.model.Campaign fetchCurrentMaxPriorityCampaign(
 		long[] groupIds, long[] userSegmentIds)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -619,6 +639,16 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 		return _campaignLocalService.updateCampaign(campaignId, nameMap,
 			descriptionMap, startDate, endDate, priority, active,
 			userSegmentIds, serviceContext);
+	}
+
+	@Override
+	public void updateCampaignResources(
+		com.liferay.content.targeting.model.Campaign campaign,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_campaignLocalService.updateCampaignResources(campaign,
+			groupPermissions, guestPermissions);
 	}
 
 	/**

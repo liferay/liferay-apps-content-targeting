@@ -425,6 +425,18 @@ public interface CampaignLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void addCampaignResources(
+		com.liferay.content.targeting.model.Campaign campaign,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void addCampaignResources(
+		com.liferay.content.targeting.model.Campaign campaign,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.Campaign fetchCurrentMaxPriorityCampaign(
 		long[] groupIds, long[] userSegmentIds)
@@ -491,6 +503,12 @@ public interface CampaignLocalService extends BaseLocalService,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void updateCampaignResources(
+		com.liferay.content.targeting.model.Campaign campaign,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 }

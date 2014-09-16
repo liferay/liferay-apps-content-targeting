@@ -490,6 +490,26 @@ public class UserSegmentLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static void addUserSegmentResources(
+		com.liferay.content.targeting.model.UserSegment userSegment,
+		boolean addGroupPermissions, boolean addGuestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addUserSegmentResources(userSegment, addGroupPermissions,
+			addGuestPermissions);
+	}
+
+	public static void addUserSegmentResources(
+		com.liferay.content.targeting.model.UserSegment userSegment,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.addUserSegmentResources(userSegment, groupPermissions,
+			guestPermissions);
+	}
+
 	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -556,6 +576,16 @@ public class UserSegmentLocalServiceUtil {
 		return getService()
 				   .updateUserSegment(userSegmentId, nameMap, descriptionMap,
 			serviceContext);
+	}
+
+	public static void updateUserSegmentResources(
+		com.liferay.content.targeting.model.UserSegment userSegment,
+		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService()
+			.updateUserSegmentResources(userSegment, groupPermissions,
+			guestPermissions);
 	}
 
 	public static void clearService() {
