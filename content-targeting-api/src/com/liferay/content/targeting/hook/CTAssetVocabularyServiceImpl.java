@@ -18,7 +18,12 @@ import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portlet.asset.NoSuchVocabularyException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.AssetVocabularyDisplay;
@@ -28,6 +33,7 @@ import com.liferay.portlet.asset.service.AssetVocabularyServiceWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * @author Eudaldo Alonso
@@ -58,7 +64,7 @@ public class CTAssetVocabularyServiceImpl
 
 		try {
 			vocabulary = AssetVocabularyLocalServiceUtil.getGroupVocabulary(
-				groupId, UserSegmentUtil.getAssetVocabularyName());
+					groupId, UserSegmentUtil.getAssetVocabularyName());
 		}
 		catch (NoSuchVocabularyException nsve) {
 			return vocabularyDisplay;
@@ -72,6 +78,50 @@ public class CTAssetVocabularyServiceImpl
 			ListUtil.remove(vocabularies, removes));
 
 		return vocabularyDisplay;
+	}
+
+	@Override
+	public List<AssetVocabulary> getVocabularies(long[] vocabularyIds)
+		throws PortalException, SystemException {
+
+		List<AssetVocabulary> vocabularies = super.getVocabularies(
+			vocabularyIds);
+
+		if (vocabularies.size() <= 1) {
+			return vocabularies;
+		}
+
+		List<AssetVocabulary> unambiguousVocabularies =
+			new ArrayList<AssetVocabulary>();
+
+		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
+
+		for (AssetVocabulary vocabulary : vocabularies) {
+			String vocabularyTitle = vocabulary.getTitle(locale);
+
+			if (vocabularyTitle.equals(
+					UserSegmentUtil.getAssetVocabularyName())) {
+
+				Group vocabularyGroup = GroupLocalServiceUtil.getGroup(
+					vocabulary.getGroupId());
+
+				if (!vocabularyGroup.isCompany()) {
+					StringBundler sb = new StringBundler(5);
+
+					sb.append(vocabularyTitle);
+					sb.append(StringPool.SPACE);
+					sb.append(StringPool.OPEN_PARENTHESIS);
+					sb.append(vocabularyGroup.getDescriptiveName(locale));
+					sb.append(StringPool.CLOSE_PARENTHESIS);
+
+					vocabulary.setTitle(sb.toString(), locale);
+				}
+			}
+
+			unambiguousVocabularies.add(vocabulary);
+		}
+
+		return unambiguousVocabularies;
 	}
 
 }
