@@ -58,12 +58,13 @@ public abstract class BaseRule implements Rule {
 
 	@Override
 	public String getFormHTML(
-		RuleInstance ruleInstance, Map<String, Object> context) {
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
 
 		String content = StringPool.BLANK;
 
 		try {
-			populateContext(ruleInstance, context);
+			populateContext(ruleInstance, context, values);
 
 			content = ContentTargetingContextUtil.parseTemplate(
 				getClass(), getFormTemplatePath(), context);
@@ -123,7 +124,8 @@ public abstract class BaseRule implements Rule {
 	}
 
 	protected void populateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH =

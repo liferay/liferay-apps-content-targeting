@@ -120,7 +120,8 @@ public class BrowserRule extends BaseRule {
 
 	@Override
 	protected void populateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
 
 		String browser = StringPool.BLANK;
 

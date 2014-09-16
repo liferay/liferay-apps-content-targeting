@@ -74,7 +74,8 @@ public interface Rule {
 	 *         rule instance's configuration, based on the context
 	 */
 	public String getFormHTML(
-		RuleInstance ruleInstance, Map<String, Object> context);
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values);
 
 	/**
 	 * Returns the Font Awesome CSS class for the rule's icon.

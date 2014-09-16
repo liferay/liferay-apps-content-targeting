@@ -139,7 +139,8 @@ public class TimeRule extends BaseRule {
 
 	@Override
 	protected void populateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
 
 		if (ruleInstance != null) {
 			String typeSettings = ruleInstance.getTypeSettings();

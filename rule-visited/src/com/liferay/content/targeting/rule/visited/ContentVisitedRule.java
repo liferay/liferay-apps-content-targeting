@@ -171,7 +171,8 @@ public class ContentVisitedRule extends BaseRule {
 
 	@Override
 	protected void populateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
 
 		long assetEntryId = 0;
 

@@ -173,7 +173,8 @@ public class AgeRule extends BaseRule {
 
 	@Override
 	protected void populateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
 
 		int youngerThan = 100;
 		int olderThan = 0;

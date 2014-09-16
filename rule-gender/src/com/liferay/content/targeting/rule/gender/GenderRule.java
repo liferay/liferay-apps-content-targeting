@@ -108,7 +108,8 @@ public class GenderRule extends BaseRule {
 
 	@Override
 	protected void populateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
 
 		String gender = "male";
 
