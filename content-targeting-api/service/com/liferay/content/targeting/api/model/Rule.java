@@ -71,6 +71,9 @@ public interface Rule {
 	 *
 	 * @param  ruleInstance the rule instance with stored configuration
 	 * @param  context the map defining the form's evaluation context
+	 * @param  values the values configured by users for the current rule
+	 *         instance based on the form controls from the HTML. This will be
+	 *         used when there is an error and the form is reloaded.
 	 * @return the HTML code containing the form fields required to edit the
 	 *         rule instance's configuration, based on the context
 	 */
