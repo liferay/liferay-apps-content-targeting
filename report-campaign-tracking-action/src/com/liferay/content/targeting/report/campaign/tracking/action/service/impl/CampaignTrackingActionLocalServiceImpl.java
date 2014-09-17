@@ -126,21 +126,26 @@ public class CampaignTrackingActionLocalServiceImpl
 	public void checkCampaignTrackingActionEvents()
 		throws PortalException, SystemException {
 
-		List<Campaign> campaigns = _campaignLocalService.getCampaigns(
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		try {
+			List<Campaign> campaigns = _campaignLocalService.getCampaigns(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		ServiceContext serviceContext = new ServiceContext();
+			ServiceContext serviceContext = new ServiceContext();
 
-		for (Campaign campaign : campaigns) {
-			checkCampaignTrackingActionEvents(campaign.getCampaignId());
+			for (Campaign campaign : campaigns) {
+				checkCampaignTrackingActionEvents(campaign.getCampaignId());
 
-			serviceContext.setScopeGroupId(campaign.getGroupId());
+				serviceContext.setScopeGroupId(campaign.getGroupId());
 
-			_reportInstanceLocalService.addReportInstance(
-				campaign.getUserId(),
-				CampaignTrackingActionReport.class.getSimpleName(),
-				Campaign.class.getName(), campaign.getCampaignId(),
-				StringPool.BLANK, serviceContext);
+				_reportInstanceLocalService.addReportInstance(
+					campaign.getUserId(),
+					CampaignTrackingActionReport.class.getSimpleName(),
+					Campaign.class.getName(), campaign.getCampaignId(),
+					StringPool.BLANK, serviceContext);
+			}
+		}
+		catch (NullPointerException npe) {
+			_log.error("Required services are not available");
 		}
 	}
 

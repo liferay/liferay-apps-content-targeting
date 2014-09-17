@@ -100,22 +100,27 @@ public class UserSegmentContentLocalServiceImpl
 	public void checkUserSegmentContentEvents()
 		throws PortalException, SystemException {
 
-		List<UserSegment> userSegments =
-			_userSegmentLocalService.getUserSegments(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+		try {
+			List<UserSegment> userSegments =
+				_userSegmentLocalService.getUserSegments(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-		ServiceContext serviceContext = new ServiceContext();
+			ServiceContext serviceContext = new ServiceContext();
 
-		for (UserSegment userSegment : userSegments) {
-			checkUserSegmentContentEvents(userSegment.getUserSegmentId());
+			for (UserSegment userSegment : userSegments) {
+				checkUserSegmentContentEvents(userSegment.getUserSegmentId());
 
-			serviceContext.setScopeGroupId(userSegment.getGroupId());
+				serviceContext.setScopeGroupId(userSegment.getGroupId());
 
-			_reportInstanceLocalService.addReportInstance(
-				userSegment.getUserId(),
-				UserSegmentContentReport.class.getSimpleName(),
-				UserSegment.class.getName(), userSegment.getUserSegmentId(),
-				StringPool.BLANK, new ServiceContext());
+				_reportInstanceLocalService.addReportInstance(
+					userSegment.getUserId(),
+					UserSegmentContentReport.class.getSimpleName(),
+					UserSegment.class.getName(), userSegment.getUserSegmentId(),
+					StringPool.BLANK, new ServiceContext());
+			}
+		}
+		catch (NullPointerException npe) {
+			_log.error("Required services are not available");
 		}
 	}
 
