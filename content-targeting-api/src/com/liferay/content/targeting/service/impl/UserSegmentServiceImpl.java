@@ -83,14 +83,14 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 	}
 
 	@Override
-	public long getUserSegmentsCount(long groupId)
+	public int getUserSegmentsCount(long groupId)
 		throws PortalException, SystemException {
 
 		return userSegmentPersistence.filterCountByGroupId(groupId);
 	}
 
 	@Override
-	public long getUserSegmentsCount(long[] groupIds)
+	public int getUserSegmentsCount(long[] groupIds)
 		throws PortalException, SystemException {
 
 		return userSegmentPersistence.filterCountByGroupId(groupIds);

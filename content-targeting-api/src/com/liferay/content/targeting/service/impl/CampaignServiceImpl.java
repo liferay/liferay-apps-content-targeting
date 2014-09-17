@@ -90,7 +90,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 	}
 
 	@Override
-	public long getCampaignsCount(long groupId)
+	public int getCampaignsCount(long groupId)
 		throws PortalException, SystemException {
 
 		return campaignPersistence.filterCountByGroupId(groupId);
