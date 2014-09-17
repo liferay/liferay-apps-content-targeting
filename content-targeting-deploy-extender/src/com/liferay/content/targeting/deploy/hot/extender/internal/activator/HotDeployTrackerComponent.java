@@ -17,7 +17,14 @@ package com.liferay.content.targeting.deploy.hot.extender.internal.activator;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
+import com.liferay.portal.kernel.deploy.hot.HotDeployException;
+import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
+import com.liferay.portal.kernel.messaging.DestinationNames;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBus;
+import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.service.BaseLocalService;
@@ -44,9 +51,10 @@ import java.util.Map;
 public class HotDeployTrackerComponent {
 
     private ServiceTracker<ServletContext, ServletContext> _serviceTracker;
+    private MessageBus _messageBus;
 
     @Activate
-    public void activate(BundleContext bundleContext) {
+    public void activate(final BundleContext bundleContext) {
         _serviceTracker = new ServiceTracker<ServletContext, ServletContext>(
             bundleContext, ServletContext.class,
             new ServletContextTrackerCustomizer());
@@ -62,17 +70,27 @@ public class HotDeployTrackerComponent {
                 _serviceTracker.open();
             }
         });
+
+        _messageBus.registerMessageListener(DestinationNames.HOT_DEPLOY,
+            new MessageListener() {
+
+                @Override
+                public void receive(Message message)
+                    throws MessageListenerException {
+
+                    HotDeployUtil.registerListener(
+                        new ServiceRegistratorHotDeployListener(bundleContext));
+
+                    _messageBus.unregisterMessageListener(
+                        DestinationNames.HOT_DEPLOY, this);
+                }
+            });
     }
 
-    @Reference(
-        target="(original.bean=true)",
-        policy = ReferencePolicy.STATIC,
-        cardinality = ReferenceCardinality.MANDATORY,
-        service = ServletContext.class
-    )
-    public void setPortalServletContext(ServletContext portalServletContext) {
+    @Reference
+    public void setPortalServletContext(MessageBus messageBus) {
 
-        _portalServletContext = portalServletContext;
+        _messageBus = messageBus;
     }
 
     private ClassLoader _getClassLoader(Bundle bundle) {
@@ -101,39 +119,9 @@ public class HotDeployTrackerComponent {
             ServletContext servletContext = bundleContext.getService(
                 serviceReference);
 
-            HotDeployUtil.fireDeployEvent(
-                new HotDeployEvent(servletContext, _getClassLoader(bundle)));
-
-            BeanLocator beanLocator = PortletBeanLocatorUtil.getBeanLocator(
-                servletContext.getServletContextName());
-
-            Map<String,BaseService> servicesMap = beanLocator.locate(
-                BaseService.class);
-
-            for (Map.Entry<String, BaseService> serviceEntry :
-                servicesMap.entrySet()) {
-
-                BaseService value = serviceEntry.getValue();
-                Class<? extends BaseService> valueClass = value.getClass();
-                Class serviceInterface = (Class) valueClass.getInterfaces()[0];
-
-                bundleContext.registerService(
-                    serviceInterface, serviceEntry.getValue(), null);
-            }
-
-            Map<String,BaseLocalService> localServicesMap = beanLocator.locate(
-                BaseLocalService.class);
-
-            for (Map.Entry<String, BaseLocalService> localServiceEntry :
-                localServicesMap.entrySet()) {
-
-                BaseLocalService value = localServiceEntry.getValue();
-                Class<? extends BaseLocalService> valueClass = value.getClass();
-                Class serviceInterface = (Class) valueClass.getInterfaces()[0];
-
-                bundleContext.registerService(
-                    serviceInterface, localServiceEntry.getValue(), null);
-            }
+            HotDeployEvent hotDeployEvent = new OsgiBundleHotDeployEvent(
+                servletContext, _getClassLoader(bundle));
+            HotDeployUtil.fireDeployEvent(hotDeployEvent);
 
             bundleContext.ungetService(serviceReference);
 
@@ -157,11 +145,76 @@ public class HotDeployTrackerComponent {
             BundleContext bundleContext = bundle.getBundleContext();
 
             HotDeployUtil.fireUndeployEvent(
-                new HotDeployEvent(
+                new OsgiBundleHotDeployEvent(
                     servletContext, _getClassLoader(bundle))
             );
 
             bundleContext.ungetService(serviceReference);
+        }
+    }
+
+    public class ServiceRegistratorHotDeployListener
+        implements HotDeployListener {
+
+        private BundleContext _bundleContext;
+
+        public ServiceRegistratorHotDeployListener(
+            BundleContext bundleContext) {
+
+            _bundleContext = bundleContext;
+        }
+
+        @Override
+        public void invokeDeploy(HotDeployEvent event) throws HotDeployException {
+            if (!(event instanceof OsgiBundleHotDeployEvent)) {
+                return;
+            }
+
+            BeanLocator beanLocator = PortletBeanLocatorUtil.getBeanLocator(
+                event.getServletContextName());
+
+            Map<String,BaseService> servicesMap = beanLocator.locate(
+                BaseService.class);
+
+            for (Map.Entry<String, BaseService> serviceEntry :
+                servicesMap.entrySet()) {
+
+                BaseService value = serviceEntry.getValue();
+                Class<? extends BaseService> valueClass = value.getClass();
+                Class serviceInterface = (Class) valueClass.getInterfaces()[0];
+
+                _bundleContext.registerService(
+                    serviceInterface, serviceEntry.getValue(), null);
+            }
+
+            Map<String,BaseLocalService> localServicesMap = beanLocator.locate(
+                BaseLocalService.class);
+
+            for (Map.Entry<String, BaseLocalService> localServiceEntry :
+                localServicesMap.entrySet()) {
+
+                BaseLocalService value = localServiceEntry.getValue();
+                Class<? extends BaseLocalService> valueClass = value.getClass();
+                Class serviceInterface = (Class) valueClass.getInterfaces()[0];
+
+                _bundleContext.registerService(
+                    serviceInterface, localServiceEntry.getValue(), null);
+            }
+
+        }
+
+        @Override
+        public void invokeUndeploy(HotDeployEvent event)
+            throws HotDeployException {
+
+        }
+    }
+
+    public static class OsgiBundleHotDeployEvent extends HotDeployEvent {
+
+        public OsgiBundleHotDeployEvent(
+            ServletContext servletContext, ClassLoader contextClassLoader) {
+            super(servletContext, contextClassLoader);
         }
     }
 }
