@@ -14,10 +14,17 @@
 
 package com.liferay.content.targeting.rule.score.points.messaging;
 
+import com.liferay.content.targeting.rule.score.points.api.model.ScorePointsAssigner;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
+
+import javax.portlet.UnavailableException;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -35,12 +42,29 @@ public class AnalyticsMessageListener implements MessageListener {
 	}
 
 	protected void doReceive(Message message) throws Exception {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		if (bundle == null) {
+			throw new UnavailableException(
+				"Can't find a reference to the OSGi bundle") {
+
+				@Override
+				public boolean isPermanent() {
+					return true;
+				}
+			};
+		}
+
+		ScorePointsAssigner scorePointsAssigner =
+			ServiceTrackerUtil.getService(
+				ScorePointsAssigner.class, bundle.getBundleContext());
+
 		String className = message.getString("className");
 		long classPK = message.getLong("classPK");
 		long anonymousUserId = message.getLong("anonymousUserId");
 		long groupId = message.getLong("scopeGroupId");
 
-		ScorePointsAssigner.assignPoints(
+		scorePointsAssigner.assignPoints(
 			groupId, anonymousUserId, className, classPK);
 	}
 

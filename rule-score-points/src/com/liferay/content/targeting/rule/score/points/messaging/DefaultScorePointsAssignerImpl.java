@@ -15,25 +15,26 @@
 package com.liferay.content.targeting.rule.score.points.messaging;
 
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalServiceUtil;
+import com.liferay.content.targeting.rule.score.points.api.model.ScorePointsAssigner;
+import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 
 import java.util.List;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
-public class ScorePointsAssigner {
+@Component(immediate = true, service = ScorePointsAssigner.class)
+public class DefaultScorePointsAssignerImpl implements ScorePointsAssigner {
 
-	public static void assignPoints(
+	public void assignPoints(
 			long groupId, long anonymousUserId, String className, long classPK)
 		throws Exception {
 
@@ -47,18 +48,8 @@ public class ScorePointsAssigner {
 		long[] groupIds = ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
 			groupId);
 
-		Bundle bundle = FrameworkUtil.getBundle(ScorePointsAssigner.class);
-
-		if (bundle == null) {
-			return;
-		}
-
-		UserSegmentLocalService userSegmentLocalService =
-			ServiceTrackerUtil.getService(
-				UserSegmentLocalService.class, bundle.getBundleContext());
-
 		List<UserSegment> userSegments =
-			userSegmentLocalService.getUserSegments(groupIds);
+			_userSegmentLocalService.getUserSegments(groupIds);
 
 		long[] assetCategoryIds = entry.getCategoryIds();
 
@@ -75,18 +66,35 @@ public class ScorePointsAssigner {
 				long points = getScorePoints(
 					className, classPK, userSegment.getUserSegmentId());
 
-				ScorePointLocalServiceUtil.incrementPoints(
+				_scorePointLocalService.incrementPoints(
 					anonymousUserId, userSegment.getUserSegmentId(), points);
 			}
 		}
 	}
 
-	protected static long getScorePoints(
+	@Reference
+	public void setScorePointLocalService(
+		ScorePointLocalService scorePointLocalService) {
+
+		_scorePointLocalService = scorePointLocalService;
+	}
+
+	@Reference
+	public void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
+	protected long getScorePoints(
 		String className, long classPK, long userSegmentId) {
 
 		return DEFAULT_POINTS;
 	}
 
 	private static final long DEFAULT_POINTS = 1;
+
+	private ScorePointLocalService _scorePointLocalService;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }
