@@ -67,7 +67,7 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 
 	@Reference
 	public void setRulesRegistry(RulesRegistry rulesRegistry) {
-		this._rulesRegistry = rulesRegistry;
+		_rulesRegistry = rulesRegistry;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
