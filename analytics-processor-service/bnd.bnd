@@ -2,6 +2,10 @@ Bundle-Name: Analytics Processor Service
 Bundle-SymbolicName: com.liferay.content.targeting.analytics.processor
 Bundle-Version: 1.0.0
 Import-Package:\
+	com.liferay.content.targeting.anonymous.users.model,\
+	com.liferay.content.targeting.anonymous.users.service,\
+	com.liferay.content.targeting.anonymous.users.service.messaging,\
+	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
 Include-Resource:\
  	classes,\
