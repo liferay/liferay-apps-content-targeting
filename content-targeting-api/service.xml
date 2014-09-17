@@ -215,5 +215,9 @@
 		<exception>UsedUserSegment</exception>
 		<exception>InvalidDateRange</exception>
 		<exception>InvalidName</exception>
+		<exception>InvalidRule</exception>
+		<exception>InvalidRules</exception>
+		<exception>InvalidTrackingAction</exception>
+		<exception>InvalidTrackingActions</exception>
 	</exceptions>
 </service-builder>
