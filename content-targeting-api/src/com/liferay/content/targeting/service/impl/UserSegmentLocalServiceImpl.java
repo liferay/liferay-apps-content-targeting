@@ -43,6 +43,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portlet.asset.DuplicateCategoryException;
 import com.liferay.portlet.asset.NoSuchCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
@@ -357,9 +358,16 @@ public class UserSegmentLocalServiceImpl
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
 
-		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.addCategory(
-			userId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
-			descriptionMap, vocabularyId, null, serviceContext);
+		AssetCategory assetCategory = null;
+
+		try {
+			assetCategory = AssetCategoryLocalServiceUtil.addCategory(
+				userId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				titleMap, descriptionMap, vocabularyId, null, serviceContext);
+		}
+		catch (DuplicateCategoryException dce) {
+			throw new InvalidNameException();
+		}
 
 		return assetCategory;
 	}
