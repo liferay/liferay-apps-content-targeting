@@ -301,24 +301,38 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		long classPK = ParamUtil.getLong(request, "classPK");
 		String reportKey = ParamUtil.getString(request, "reportKey");
 
-		Report report = _reportsRegistry.getReport(reportKey);
+		try {
+			Report report = _reportsRegistry.getReport(reportKey);
 
-		String typeSettings = report.updateReport(classPK);
+			String typeSettings = report.updateReport(classPK);
 
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			ReportInstance.class.getName(), request);
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				ReportInstance.class.getName(), request);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
 
-		serviceContext.setScopeGroupId(
-			themeDisplay.getSiteGroupIdOrLiveGroupId());
+			serviceContext.setScopeGroupId(
+				themeDisplay.getSiteGroupIdOrLiveGroupId());
 
-		_reportInstanceService.addReportInstance(
-			themeDisplay.getUserId(), reportKey, report.getReportType(),
-			classPK, typeSettings, serviceContext);
+			_reportInstanceService.addReportInstance(
+				themeDisplay.getUserId(), reportKey, report.getReportType(),
+				classPK, typeSettings, serviceContext);
 
-		sendRedirect(request, response);
+			sendRedirect(request, response);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName());
+
+			if (e instanceof PrincipalException) {
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.VIEW_REPORT);
+			}
+			else {
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.ERROR);
+			}
+		}
 	}
 
 	public void updateUserSegment(
