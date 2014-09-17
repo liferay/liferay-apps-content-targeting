@@ -86,4 +86,19 @@ public class ReportInstanceLocalServiceImpl
 			reportKey, className, classPK);
 	}
 
+	@Override
+	public Date getReportInstanceModifiedDate(
+			String reportKey, String className, long classPK)
+		throws SystemException {
+
+		ReportInstance reportInstance = fetchReportInstance(
+			reportKey, className, classPK);
+
+		if (reportInstance != null) {
+			return reportInstance.getModifiedDate();
+		}
+
+		return null;
+	}
+
 }

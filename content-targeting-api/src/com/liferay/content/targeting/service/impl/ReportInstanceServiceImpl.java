@@ -22,6 +22,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.Date;
+
 /**
  * The implementation of the report instance remote service.
  *
@@ -60,6 +62,15 @@ public class ReportInstanceServiceImpl extends ReportInstanceServiceBaseImpl {
 		throws SystemException {
 
 		return reportInstanceLocalService.fetchReportInstance(
+			reportKey, className, classPK);
+	}
+
+	@Override
+	public Date getReportInstanceModifiedDate(
+			String reportKey, String className, long classPK)
+		throws SystemException {
+
+		return reportInstanceLocalService.getReportInstanceModifiedDate(
 			reportKey, className, classPK);
 	}
 

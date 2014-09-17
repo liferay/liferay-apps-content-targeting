@@ -14,7 +14,6 @@
 
 package com.liferay.content.targeting.api.model;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
 
@@ -32,8 +31,6 @@ public interface Report {
 	public String getHTML(Map<String, Object> context);
 
 	public String getIcon();
-
-	public Date getModifiedDate(long classPK);
 
 	public String getName(Locale locale);
 

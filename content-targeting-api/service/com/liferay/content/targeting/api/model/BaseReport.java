@@ -14,22 +14,14 @@
 
 package com.liferay.content.targeting.api.model;
 
-import com.liferay.content.targeting.model.ReportInstance;
-import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 
-import java.util.Date;
 import java.util.Locale;
 import java.util.Map;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eduardo Garcia
@@ -86,30 +78,6 @@ public abstract class BaseReport implements Report {
 	@Override
 	public String getIcon() {
 		return "icon-file";
-	}
-
-	@Override
-	public Date getModifiedDate(long classPK) {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		ReportInstanceLocalService reportInstanceLocalService =
-			ServiceTrackerUtil.getService(
-				ReportInstanceLocalService.class, bundle.getBundleContext());
-
-		try {
-			ReportInstance reportInstance =
-				reportInstanceLocalService.fetchReportInstance(
-					getReportKey(), getReportType(), classPK);
-
-			if (reportInstance != null) {
-				return reportInstance.getModifiedDate();
-			}
-		}
-		catch (SystemException se) {
-			_log.error(se);
-		}
-
-		return null;
 	}
 
 	@Override

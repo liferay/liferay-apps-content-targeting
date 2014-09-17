@@ -746,6 +746,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 			template.put("className", className);
 			template.put("classPK", classPK);
+			template.put("reportInstanceService", _reportInstanceService);
 
 			String name = StringPool.BLANK;
 

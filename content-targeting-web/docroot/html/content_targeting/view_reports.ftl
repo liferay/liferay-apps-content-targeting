@@ -73,7 +73,7 @@
 		<@liferay_ui["search-container-column-date"]
 			href=viewReportURL
 			name="last-update"
-			value=report.getModifiedDate(classPK)
+			value=reportInstanceService.getModifiedDate(report.getReportKey(), className, classPK)
 		/>
 
 		<@liferay_ui["search-container-column-text"]
