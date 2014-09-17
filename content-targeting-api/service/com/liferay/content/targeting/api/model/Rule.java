@@ -94,13 +94,6 @@ public interface Rule {
 	public String getName(Locale locale);
 
 	/**
-	 * Returns the the category of the rule.
-	 *
-	 * @return the the category
-	 */
-	public RuleCategory getRuleCategory();
-
-	/**
 	 * Returns the key that identifies the category of the rule.
 	 *
 	 * @return the key that identifies the category

@@ -61,7 +61,7 @@
 									<#list ruleTemplates as template>
 										<#assign rule = template.getRule()>
 										<#assign templateKey = template.getTemplateKey()>
-										<#assign ruleCategory = rule.getRuleCategory()>
+										<#assign ruleCategory = ruleCategoriesRegistry.getRuleCategory(rule.getRuleCategoryKey())>
 
 										<li class="diagram-builder-field form-builder-field hide" data-categorydescription="${ruleCategory.getDescription(locale)}" data-categoryicon="${ruleCategory.getIcon()}" data-categorykey="${ruleCategory.getCategoryKey()}" data-categoryname="${ruleCategory.getName(locale)}" data-icon="${rule.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!rule.isInstantiable())?string}">
 											<span class="diagram-builder-field-icon icon ${rule.getIcon()}"></span>

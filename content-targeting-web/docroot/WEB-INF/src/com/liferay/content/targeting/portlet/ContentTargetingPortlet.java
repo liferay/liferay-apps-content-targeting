@@ -20,6 +20,7 @@ import com.liferay.content.targeting.UsedUserSegmentException;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.api.model.Rule;
+import com.liferay.content.targeting.api.model.RuleCategoriesRegistry;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
@@ -208,6 +209,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			ReportInstanceService.class, bundle.getBundleContext());
 		_reportsRegistry = ServiceTrackerUtil.getService(
 			ReportsRegistry.class, bundle.getBundleContext());
+		_ruleCategoriesRegistry = ServiceTrackerUtil.getService(
+			RuleCategoriesRegistry.class, bundle.getBundleContext());
 		_ruleInstanceService = ServiceTrackerUtil.getService(
 			RuleInstanceService.class, bundle.getBundleContext());
 		_rulesRegistry = ServiceTrackerUtil.getService(
@@ -669,9 +672,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			long userSegmentId = ParamUtil.getLong(
 				portletRequest, "userSegmentId");
 
-			template.put("userSegmentId", userSegmentId);
-
+			template.put("ruleCategoriesRegistry", _ruleCategoriesRegistry);
 			template.put("rulesRegistry", _rulesRegistry);
+			template.put("userSegmentId", userSegmentId);
 
 			Map<String, Rule> rules = _rulesRegistry.getRules();
 
@@ -1012,6 +1015,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 	private CampaignService _campaignService;
 	private ReportInstanceService _reportInstanceService;
 	private ReportsRegistry _reportsRegistry;
+	private RuleCategoriesRegistry _ruleCategoriesRegistry;
 	private RuleInstanceService _ruleInstanceService;
 	private RulesRegistry _rulesRegistry;
 	private TrackingActionInstanceService _trackingActionInstanceService;
