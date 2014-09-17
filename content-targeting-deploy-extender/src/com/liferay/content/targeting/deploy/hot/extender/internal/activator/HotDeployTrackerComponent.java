@@ -17,14 +17,11 @@ package com.liferay.content.targeting.deploy.hot.extender.internal.activator;
 import com.liferay.portal.kernel.bean.BeanLocator;
 import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.deploy.hot.HotDeployEvent;
-import com.liferay.portal.kernel.deploy.hot.HotDeployException;
-import com.liferay.portal.kernel.deploy.hot.HotDeployListener;
 import com.liferay.portal.kernel.deploy.hot.HotDeployUtil;
 import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.messaging.MessageListenerException;
 import com.liferay.portal.kernel.util.PortalLifecycle;
 import com.liferay.portal.kernel.util.PortalLifecycleUtil;
 import com.liferay.portal.service.BaseLocalService;
@@ -36,13 +33,12 @@ import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.component.annotations.ReferenceCardinality;
-import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 import javax.servlet.ServletContext;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Carlos Sierra
@@ -71,20 +67,9 @@ public class HotDeployTrackerComponent {
             }
         });
 
-        _messageBus.registerMessageListener(DestinationNames.HOT_DEPLOY,
-            new MessageListener() {
-
-                @Override
-                public void receive(Message message)
-                    throws MessageListenerException {
-
-                    HotDeployUtil.registerListener(
-                        new ServiceRegistratorHotDeployListener(bundleContext));
-
-                    _messageBus.unregisterMessageListener(
-                        DestinationNames.HOT_DEPLOY, this);
-                }
-            });
+        _messageBus.registerMessageListener(
+            DestinationNames.HOT_DEPLOY,
+            new ServiceRegistratorMessageListener());
     }
 
     @Reference
@@ -119,9 +104,12 @@ public class HotDeployTrackerComponent {
             ServletContext servletContext = bundleContext.getService(
                 serviceReference);
 
-            HotDeployEvent hotDeployEvent = new OsgiBundleHotDeployEvent(
-                servletContext, _getClassLoader(bundle));
-            HotDeployUtil.fireDeployEvent(hotDeployEvent);
+            _osgiDeployContexts.putIfAbsent(
+                servletContext.getServletContextName(),
+                new OsgiDeployContext(bundleContext));
+
+            HotDeployUtil.fireDeployEvent(
+                new HotDeployEvent(servletContext, _getClassLoader(bundle)));
 
             bundleContext.ungetService(serviceReference);
 
@@ -145,33 +133,34 @@ public class HotDeployTrackerComponent {
             BundleContext bundleContext = bundle.getBundleContext();
 
             HotDeployUtil.fireUndeployEvent(
-                new OsgiBundleHotDeployEvent(
-                    servletContext, _getClassLoader(bundle))
+                new HotDeployEvent(servletContext, _getClassLoader(bundle))
             );
+
+            _osgiDeployContexts.remove(servletContext.getServletContextName());
 
             bundleContext.ungetService(serviceReference);
         }
     }
 
-    public class ServiceRegistratorHotDeployListener
-        implements HotDeployListener {
-
-        private BundleContext _bundleContext;
-
-        public ServiceRegistratorHotDeployListener(
-            BundleContext bundleContext) {
-
-            _bundleContext = bundleContext;
-        }
+    public class ServiceRegistratorMessageListener
+        implements MessageListener {
 
         @Override
-        public void invokeDeploy(HotDeployEvent event) throws HotDeployException {
-            if (!(event instanceof OsgiBundleHotDeployEvent)) {
+        public void receive(Message message) {
+            String servletContextName =
+                (String)message.get("servletContextName");
+
+            OsgiDeployContext osgiDeployContext = _osgiDeployContexts.get(
+                servletContextName);
+
+            if (osgiDeployContext == null) {
                 return;
             }
 
+            BundleContext bundleContext = osgiDeployContext.getBundleContext();
+
             BeanLocator beanLocator = PortletBeanLocatorUtil.getBeanLocator(
-                event.getServletContextName());
+                servletContextName);
 
             Map<String,BaseService> servicesMap = beanLocator.locate(
                 BaseService.class);
@@ -183,7 +172,7 @@ public class HotDeployTrackerComponent {
                 Class<? extends BaseService> valueClass = value.getClass();
                 Class serviceInterface = (Class) valueClass.getInterfaces()[0];
 
-                _bundleContext.registerService(
+                bundleContext.registerService(
                     serviceInterface, serviceEntry.getValue(), null);
             }
 
@@ -197,24 +186,29 @@ public class HotDeployTrackerComponent {
                 Class<? extends BaseLocalService> valueClass = value.getClass();
                 Class serviceInterface = (Class) valueClass.getInterfaces()[0];
 
-                _bundleContext.registerService(
+                bundleContext.registerService(
                     serviceInterface, localServiceEntry.getValue(), null);
             }
 
         }
 
-        @Override
-        public void invokeUndeploy(HotDeployEvent event)
-            throws HotDeployException {
-
-        }
     }
 
-    public static class OsgiBundleHotDeployEvent extends HotDeployEvent {
+    public static class OsgiDeployContext {
+        private BundleContext _bundleContext;
 
-        public OsgiBundleHotDeployEvent(
-            ServletContext servletContext, ClassLoader contextClassLoader) {
-            super(servletContext, contextClassLoader);
+
+        public BundleContext getBundleContext() {
+            return _bundleContext;
         }
+
+        public OsgiDeployContext(BundleContext bundleContext) {
+
+            _bundleContext = bundleContext;
+        }
+
     }
+
+    private ConcurrentHashMap<String, OsgiDeployContext> _osgiDeployContexts =
+        new ConcurrentHashMap<String, OsgiDeployContext>();
 }
