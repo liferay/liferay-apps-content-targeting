@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.content.targeting.analytics.internal.osgi.AnalyticsServiceActivator
 Bundle-Name: Analytics API
 Bundle-SymbolicName: com.liferay.content.targeting.analytics.api
 Bundle-Version: 1.0.0

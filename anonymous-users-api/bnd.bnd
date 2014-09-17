@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.content.targeting.anonymous.users.internal.osgi.AnonymousUserServiceActivator
 Bundle-Name: Anonymous Users API
 Bundle-SymbolicName: com.liferay.content.targeting.anonymous.users.api
 Bundle-Version: 1.0.0

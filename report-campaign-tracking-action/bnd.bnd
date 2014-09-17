@@ -1,4 +1,3 @@
-Bundle-Activator: com.liferay.content.targeting.report.campaign.tracking.action.internal.osgi.CampaignTrackingActionServiceActivator
 Bundle-Name: Campaign Tracking Actions Report
 Bundle-SymbolicName: com.liferay.content.targeting.report.campaign.tracking.action
 Bundle-Version: 1.0.0
