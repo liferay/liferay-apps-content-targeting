@@ -5,7 +5,7 @@
 
 	<property name="plugin.name" value="com.liferay.content.targeting.report.campaign.tracking.action.test" />
 
-	<property name="import.shared" value="report-campaign-tracking-action" />
+	<property name="import.shared" value="report-campaign-tracking-action,service-test-util" />
 
 	<property name="ivy.resolve.transitive.dependencies" value="true" />
 

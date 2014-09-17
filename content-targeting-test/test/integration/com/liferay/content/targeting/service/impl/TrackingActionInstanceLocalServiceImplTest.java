@@ -18,7 +18,7 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
-import com.liferay.content.targeting.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.util.TestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;

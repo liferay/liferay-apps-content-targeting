@@ -47,6 +47,7 @@
       <module fileurl="file://$PROJECT_DIR$/rule-visited-test/rule-visited-test.iml" filepath="$PROJECT_DIR$/rule-visited-test/rule-visited-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/runtime-dependencies/runtime-dependencies.iml" filepath="$PROJECT_DIR$/runtime-dependencies/runtime-dependencies.iml" />
       <module fileurl="file://$PROJECT_DIR$/runtime-test-dependencies/runtime-test-dependencies.iml" filepath="$PROJECT_DIR$/runtime-test-dependencies/runtime-test-dependencies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/service-test-util/service-test-util.iml" filepath="$PROJECT_DIR$/service-test-util/service-test-util.iml" />
       <module fileurl="file://$PROJECT_DIR$/simulator-hook/simulator-hook.iml" filepath="$PROJECT_DIR$/simulator-hook/simulator-hook.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../shared/system-packages-extra-shared/system-packages-extra-shared.iml" filepath="$PROJECT_DIR$/.idea/system-packages-extra-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/tools/tools.iml" filepath="$PROJECT_DIR$/tools/tools.iml" />

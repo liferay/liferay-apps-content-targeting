@@ -16,7 +16,7 @@ package com.liferay.content.targeting.analytics.service.impl;
 
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
-import com.liferay.content.targeting.analytics.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.util.TestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;

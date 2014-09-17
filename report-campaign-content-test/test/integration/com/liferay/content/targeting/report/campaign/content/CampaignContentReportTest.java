@@ -19,7 +19,7 @@ import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalService;
-import com.liferay.content.targeting.report.campaign.content.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.util.TestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.model.JournalArticle;

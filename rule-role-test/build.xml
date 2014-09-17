@@ -5,7 +5,7 @@
 
 	<property name="plugin.name" value="com.liferay.portal.rule.role.test" />
 
-	<property name="import.shared" value="rule-role" />
+	<property name="import.shared" value="rule-role,service-test-util" />
 
 	<property name="ivy.resolve.transitive.dependencies" value="true" />
 

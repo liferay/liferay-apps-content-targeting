@@ -5,7 +5,7 @@
 
 	<property name="plugin.name" value="com.liferay.portal.organization.member.test" />
 
-	<property name="import.shared" value="rule-organization-member" />
+	<property name="import.shared" value="rule-organization-member,service-test-util" />
 
 	<property name="ivy.resolve.transitive.dependencies" value="true" />
 

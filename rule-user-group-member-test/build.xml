@@ -5,7 +5,7 @@
 
 	<property name="plugin.name" value="com.liferay.content.targeting.rule.user.group.member.test" />
 
-	<property name="import.shared" value="rule-user-group-member" />
+	<property name="import.shared" value="rule-user-group-member,service-test-util" />
 
 	<property name="ivy.resolve.transitive.dependencies" value="true" />
 

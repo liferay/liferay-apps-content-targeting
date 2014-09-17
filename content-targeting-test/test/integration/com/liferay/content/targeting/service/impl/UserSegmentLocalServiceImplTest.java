@@ -16,7 +16,7 @@ package com.liferay.content.targeting.service.impl;
 
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.content.targeting.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.util.TestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;

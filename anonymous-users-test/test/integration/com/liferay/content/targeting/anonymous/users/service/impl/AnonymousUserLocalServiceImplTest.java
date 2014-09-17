@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.anonymous.users.service.impl;
 
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
-import com.liferay.content.targeting.anonymous.users.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.util.TestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;

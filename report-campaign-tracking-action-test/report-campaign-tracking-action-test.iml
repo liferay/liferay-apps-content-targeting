@@ -27,6 +27,7 @@
     <orderEntry type="module" module-name="analytics-api" />
     <orderEntry type="module" module-name="content-targeting-api" />
     <orderEntry type="module" module-name="report-campaign-tracking-action" />
+    <orderEntry type="module" module-name="service-test-util" />
     <orderEntry type="library" name="portal" level="project" />
     <orderEntry type="module-library">
       <library name="IvyIDEA">

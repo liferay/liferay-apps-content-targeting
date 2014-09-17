@@ -19,8 +19,8 @@ import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalS
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
-import com.liferay.content.targeting.rule.role.test.util.TestUtil;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
+import com.liferay.content.targeting.service.test.util.TestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
