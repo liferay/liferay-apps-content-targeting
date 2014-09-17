@@ -25,6 +25,13 @@
 		<antcall target="deploy" />
 	</target>
 
+	<target name="build-app-lang">
+		<loop-macrodef-or-target
+			module.dirs="${plugins.includes.path}"
+			target.name="build-lang"
+		/>
+	</target>
+
 	<target name="build-app-services">
 		<loop-macrodef-or-target
 			module.dirs="${app.services.path}"
@@ -209,6 +216,14 @@
 			<compile-import-shared module.dir="@{module.dir}" />
 
 			<ant dir="@{module.dir}" target="build-service" inheritAll="false" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="build-lang">
+		<attribute name="module.dir" />
+
+		<sequential>
+			<ant dir="@{module.dir}" target="build-lang" inheritAll="false" />
 		</sequential>
 	</macrodef>
 </project>
