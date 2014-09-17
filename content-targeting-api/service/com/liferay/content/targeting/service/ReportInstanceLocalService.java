@@ -260,4 +260,9 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	public com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Date getReportInstanceModifiedDate(
+		java.lang.String reportKey, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

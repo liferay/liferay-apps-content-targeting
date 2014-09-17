@@ -77,6 +77,14 @@ public class ReportInstanceServiceWrapper implements ReportInstanceService,
 			classPK);
 	}
 
+	@Override
+	public java.util.Date getReportInstanceModifiedDate(
+		java.lang.String reportKey, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _reportInstanceService.getReportInstanceModifiedDate(reportKey,
+			className, classPK);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -96,5 +96,21 @@ public class ReportInstanceServiceSoap {
 		}
 	}
 
+	public static java.util.Date getReportInstanceModifiedDate(
+		java.lang.String reportKey, java.lang.String className, long classPK)
+		throws RemoteException {
+		try {
+			java.util.Date returnValue = ReportInstanceServiceUtil.getReportInstanceModifiedDate(reportKey,
+					className, classPK);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ReportInstanceServiceSoap.class);
 }

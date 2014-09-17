@@ -97,7 +97,7 @@ public class CampaignServiceUtil {
 		return getService().getCampaigns(groupId);
 	}
 
-	public static long getCampaignsCount(long groupId)
+	public static int getCampaignsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getCampaignsCount(groupId);

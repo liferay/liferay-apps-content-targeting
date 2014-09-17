@@ -138,10 +138,9 @@ public class CampaignServiceSoap {
 		}
 	}
 
-	public static long getCampaignsCount(long groupId)
-		throws RemoteException {
+	public static int getCampaignsCount(long groupId) throws RemoteException {
 		try {
-			long returnValue = CampaignServiceUtil.getCampaignsCount(groupId);
+			int returnValue = CampaignServiceUtil.getCampaignsCount(groupId);
 
 			return returnValue;
 		}

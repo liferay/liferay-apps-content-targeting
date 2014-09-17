@@ -135,10 +135,10 @@ public class UserSegmentServiceSoap {
 		}
 	}
 
-	public static long getUserSegmentsCount(long groupId)
+	public static int getUserSegmentsCount(long groupId)
 		throws RemoteException {
 		try {
-			long returnValue = UserSegmentServiceUtil.getUserSegmentsCount(groupId);
+			int returnValue = UserSegmentServiceUtil.getUserSegmentsCount(groupId);
 
 			return returnValue;
 		}
@@ -149,10 +149,10 @@ public class UserSegmentServiceSoap {
 		}
 	}
 
-	public static long getUserSegmentsCount(long[] groupIds)
+	public static int getUserSegmentsCount(long[] groupIds)
 		throws RemoteException {
 		try {
-			long returnValue = UserSegmentServiceUtil.getUserSegmentsCount(groupIds);
+			int returnValue = UserSegmentServiceUtil.getUserSegmentsCount(groupIds);
 
 			return returnValue;
 		}

@@ -80,6 +80,13 @@ public class ReportInstanceServiceUtil {
 		return getService().fetchReportInstance(reportKey, className, classPK);
 	}
 
+	public static java.util.Date getReportInstanceModifiedDate(
+		java.lang.String reportKey, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getReportInstanceModifiedDate(reportKey, className, classPK);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

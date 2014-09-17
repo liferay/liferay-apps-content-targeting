@@ -94,7 +94,7 @@ public class CampaignServiceWrapper implements CampaignService,
 	}
 
 	@Override
-	public long getCampaignsCount(long groupId)
+	public int getCampaignsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _campaignService.getCampaignsCount(groupId);

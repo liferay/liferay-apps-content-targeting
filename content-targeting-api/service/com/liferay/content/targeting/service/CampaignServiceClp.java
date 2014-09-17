@@ -275,7 +275,7 @@ public class CampaignServiceClp implements CampaignService {
 	}
 
 	@Override
-	public long getCampaignsCount(long groupId)
+	public int getCampaignsCount(long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -304,7 +304,7 @@ public class CampaignServiceClp implements CampaignService {
 			}
 		}
 
-		return ((Long)returnObj).longValue();
+		return ((Integer)returnObj).intValue();
 	}
 
 	@Override
