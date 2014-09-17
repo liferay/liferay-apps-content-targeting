@@ -122,7 +122,10 @@ public class OrganizationMemberRule extends BaseRule {
 
 		long organizationId = 0;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			organizationId = GetterUtil.getLong(values.get("organizationId"));
+		}
+		else if (ruleInstance != null) {
 			organizationId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 		}
 

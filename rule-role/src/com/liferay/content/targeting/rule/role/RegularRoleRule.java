@@ -116,7 +116,10 @@ public class RegularRoleRule extends BaseRule {
 
 		long roleId = 0;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			roleId = GetterUtil.getLong(values.get("roleId"));
+		}
+		else if (ruleInstance != null) {
 			roleId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 		}
 

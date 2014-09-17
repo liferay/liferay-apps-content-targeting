@@ -111,9 +111,8 @@ public class OSRule extends BaseRule {
 
 	@Override
 	public String processRule(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
-		throws Exception {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
 		return values.get("os");
 	}
@@ -125,7 +124,10 @@ public class OSRule extends BaseRule {
 
 		String os = StringPool.BLANK;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			os = values.get("os");
+		}
+		else if (ruleInstance != null) {
 			os = ruleInstance.getTypeSettings();
 		}
 

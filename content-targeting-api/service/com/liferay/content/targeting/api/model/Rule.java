@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.api.model;
 
+import com.liferay.content.targeting.InvalidRuleException;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.model.RuleInstance;
 
@@ -151,6 +152,6 @@ public interface Rule {
 	public String processRule(
 			PortletRequest request, PortletResponse response, String id,
 			Map<String, String> values)
-		throws Exception;
+		throws InvalidRuleException;
 
 }

@@ -114,11 +114,15 @@ public class FacebookGenderRule extends BaseFacebookRule {
 
 	@Override
 	protected void doPopulateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
 
 		String gender = "male";
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			gender = values.get("fbGender");
+		}
+		else if (ruleInstance != null) {
 			gender = ruleInstance.getTypeSettings();
 		}
 

@@ -148,12 +148,17 @@ public class FacebookAgeRule extends BaseFacebookRule {
 
 	@Override
 	protected void doPopulateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
 
 		int youngerThan = 100;
 		int olderThan = 0;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			youngerThan = GetterUtil.getInteger(values.get("fbYoungerThan"));
+			olderThan = GetterUtil.getInteger(values.get("fbOlderThan"));
+		}
+		else if (ruleInstance != null) {
 			String typeSettings = ruleInstance.getTypeSettings();
 
 			try {

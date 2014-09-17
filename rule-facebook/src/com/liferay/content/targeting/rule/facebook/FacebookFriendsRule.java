@@ -118,12 +118,18 @@ public class FacebookFriendsRule extends BaseFacebookRule {
 
 	@Override
 	protected void doPopulateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
 
 		int numberOfFriends = 0;
 		String selector = "more";
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			numberOfFriends = GetterUtil.getInteger(
+				values.get("numberOfFriends"));
+			selector = GetterUtil.getString(values.get("selector"), "more");
+		}
+		else if (ruleInstance != null) {
 			String typeSettings = ruleInstance.getTypeSettings();
 
 			try {

@@ -112,9 +112,8 @@ public class TimeRule extends BaseRule {
 
 	@Override
 	public String processRule(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
-		throws Exception {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
 		int endTimeHour = GetterUtil.getInteger(values.get("endTimeHour"));
 		int endTimeMinute = GetterUtil.getInteger(values.get("endTimeMinute"));
@@ -142,32 +141,47 @@ public class TimeRule extends BaseRule {
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values) {
 
-		if (ruleInstance != null) {
+		int endTimeHour = 0;
+		int endTimeMinute = 0;
+		int endTimeAmPm = 0;
+
+		int startTimeHour = 0;
+		int startTimeMinute = 0;
+		int startTimeAmPm = 0;
+
+		if (!values.isEmpty()) {
+			endTimeHour = GetterUtil.getInteger(values.get("endTimeHour"));
+			endTimeMinute = GetterUtil.getInteger(values.get("endTimeMinute"));
+			endTimeAmPm = GetterUtil.getInteger(values.get("endTimeAmPm"));
+			startTimeHour = GetterUtil.getInteger(values.get("startTimeHour"));
+			startTimeMinute = GetterUtil.getInteger(
+				values.get("startTimeMinute"));
+			startTimeAmPm = GetterUtil.getInteger(values.get("startTimeAmPm"));
+		}
+		else if (ruleInstance != null) {
 			String typeSettings = ruleInstance.getTypeSettings();
 
 			try {
 				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
 					typeSettings);
 
-				context.put("endTimeHour", jsonObj.getInt("endTimeHour"));
-				context.put("endTimeMinute", jsonObj.getInt("endTimeMinute"));
-				context.put("endTimeAmPm", jsonObj.getInt("endTimeAmPm"));
-				context.put("startTimeHour", jsonObj.getInt("startTimeHour"));
-				context.put(
-					"startTimeMinute", jsonObj.getInt("startTimeMinute"));
-				context.put("startTimeAmPm", jsonObj.getInt("startTimeAmPm"));
+				endTimeHour = jsonObj.getInt("endTimeHour");
+				endTimeMinute = jsonObj.getInt("endTimeMinute");
+				endTimeAmPm = jsonObj.getInt("endTimeAmPm");
+				startTimeHour = jsonObj.getInt("startTimeHour");
+				startTimeMinute = jsonObj.getInt("startTimeMinute");
+				startTimeAmPm = jsonObj.getInt("startTimeAmPm");
 			}
 			catch (JSONException jse) {
 			}
 		}
-		else {
-			context.put("endTimeHour", 0);
-			context.put("endTimeMinute", 0);
-			context.put("endTimeAmPm", 0);
-			context.put("startTimeHour", 0);
-			context.put("startTimeMinute", 0);
-			context.put("startTimeAmPm", 0);
-		}
+
+		context.put("endTimeHour", endTimeHour);
+		context.put("endTimeMinute", endTimeMinute);
+		context.put("endTimeAmPm", endTimeAmPm);
+		context.put("startTimeHour", startTimeHour);
+		context.put("startTimeMinute", startTimeMinute);
+		context.put("startTimeAmPm", startTimeAmPm);
 
 		Calendar now = CalendarFactoryUtil.getCalendar();
 

@@ -111,9 +111,8 @@ public class BrowserRule extends BaseRule {
 
 	@Override
 	public String processRule(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
-		throws Exception {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
 		return values.get("browser");
 	}
@@ -125,7 +124,10 @@ public class BrowserRule extends BaseRule {
 
 		String browser = StringPool.BLANK;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			browser = values.get("browser");
+		}
+		else if (ruleInstance != null) {
 			browser = ruleInstance.getTypeSettings();
 		}
 

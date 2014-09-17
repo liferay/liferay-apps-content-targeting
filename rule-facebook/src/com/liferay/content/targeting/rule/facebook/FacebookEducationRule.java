@@ -153,12 +153,17 @@ public class FacebookEducationRule extends BaseFacebookRule {
 
 	@Override
 	protected void doPopulateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
 
 		String educationLevel = StringPool.BLANK;
 		String schoolName = StringPool.BLANK;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			educationLevel = GetterUtil.getString(values.get("educationLevel"));
+			schoolName = GetterUtil.getString(values.get("schoolName"));
+		}
+		else if (ruleInstance != null) {
 			String typeSettings = ruleInstance.getTypeSettings();
 
 			try {

@@ -130,9 +130,8 @@ public class ContentVisitedRule extends BaseRule {
 
 	@Override
 	public String processRule(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
-		throws Exception {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
 		return values.get("assetEntryId");
 	}
@@ -176,7 +175,10 @@ public class ContentVisitedRule extends BaseRule {
 
 		long assetEntryId = 0;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			assetEntryId = GetterUtil.getLong(values.get("assetEntryId"));
+		}
+		else if (ruleInstance != null) {
 			assetEntryId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 		}
 

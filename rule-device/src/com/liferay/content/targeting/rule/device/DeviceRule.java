@@ -175,9 +175,8 @@ public class DeviceRule extends BaseRule {
 
 	@Override
 	public String processRule(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
-		throws Exception {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
 		long mdrRuleGroupId = GetterUtil.getInteger(
 			values.get("mdrRuleGroupId"));
@@ -227,7 +226,11 @@ public class DeviceRule extends BaseRule {
 
 		long mdrRuleGroupId = 0;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			mdrRuleGroupId = GetterUtil.getInteger(
+				values.get("mdrRuleGroupId"));
+		}
+		else if (ruleInstance != null) {
 			String typeSettings = ruleInstance.getTypeSettings();
 
 			try {

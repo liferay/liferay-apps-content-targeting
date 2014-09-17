@@ -181,7 +181,11 @@ public class OrganizationRoleRule extends BaseRule {
 		long roleId = 0;
 		long organizationId = 0;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			roleId = GetterUtil.getLong(values.get("roleId"));
+			organizationId = GetterUtil.getLong(values.get("organizationId"));
+		}
+		else if (ruleInstance != null) {
 			String typeSettings = ruleInstance.getTypeSettings();
 
 			try {

@@ -117,9 +117,8 @@ public class ScorePointsRule extends BaseRule {
 
 	@Override
 	public String processRule(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
-		throws Exception {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) {
 
 		int scorePoints = GetterUtil.getInteger(values.get("scorePoints"));
 
@@ -135,21 +134,25 @@ public class ScorePointsRule extends BaseRule {
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values) {
 
-		if (ruleInstance != null) {
+		int scorePoints = 0;
+
+		if (!values.isEmpty()) {
+			scorePoints = GetterUtil.getInteger(values.get("scorePoints"));
+		}
+		else if (ruleInstance != null) {
 			String typeSettings = ruleInstance.getTypeSettings();
 
 			try {
 				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
 					typeSettings);
 
-				context.put("scorePoints", jsonObj.getInt("scorePoints"));
+				scorePoints = jsonObj.getInt("scorePoints");
 			}
 			catch (JSONException jse) {
 			}
 		}
-		else {
-			context.put("scorePoints", 0);
-		}
+
+		context.put("scorePoints", scorePoints);
 
 		long groupId = (Long)context.get("scopeGroupId");
 

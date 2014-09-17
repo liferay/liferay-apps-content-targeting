@@ -118,7 +118,10 @@ public class UserGroupMemberRule extends BaseRule {
 
 		long userGroupId = 0;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			userGroupId = GetterUtil.getLong(values.get("userGroupId"));
+		}
+		else if (ruleInstance != null) {
 			userGroupId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 		}
 

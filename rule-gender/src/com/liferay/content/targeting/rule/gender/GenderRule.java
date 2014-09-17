@@ -100,8 +100,7 @@ public class GenderRule extends BaseRule {
 	@Override
 	public String processRule(
 			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
-		throws Exception {
+			Map<String, String> values) {
 
 		return values.get("gender");
 	}
@@ -113,7 +112,10 @@ public class GenderRule extends BaseRule {
 
 		String gender = "male";
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			gender = values.get("gender");
+		}
+		else if (ruleInstance != null) {
 			gender = ruleInstance.getTypeSettings();
 		}
 

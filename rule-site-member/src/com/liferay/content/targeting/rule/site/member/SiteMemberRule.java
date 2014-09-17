@@ -118,7 +118,10 @@ public class SiteMemberRule extends BaseRule {
 
 		long siteId = 0;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			siteId = GetterUtil.getLong(values.get("siteId"));
+		}
+		else if (ruleInstance != null) {
 			siteId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 		}
 

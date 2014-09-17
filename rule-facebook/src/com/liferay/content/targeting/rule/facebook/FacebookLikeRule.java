@@ -95,11 +95,15 @@ public class FacebookLikeRule extends BaseFacebookRule {
 
 	@Override
 	protected void doPopulateContext(
-		RuleInstance ruleInstance, Map<String, Object> context) {
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values) {
 
 		String name = StringPool.BLANK;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			name = values.get("facebookName");
+		}
+		else if (ruleInstance != null) {
 			name = ruleInstance.getTypeSettings();
 		}
 

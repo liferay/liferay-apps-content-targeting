@@ -175,7 +175,11 @@ public class SiteRoleRule extends BaseRule {
 		long roleId = 0;
 		long siteId = 0;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			roleId = GetterUtil.getLong(values.get("roleId"));
+			siteId = GetterUtil.getLong(values.get("siteId"));
+		}
+		else if (ruleInstance != null) {
 			String typeSettings = ruleInstance.getTypeSettings();
 
 			try {

@@ -31,7 +31,8 @@ import java.util.Map;
 public abstract class BaseFacebookRule extends BaseRule {
 
 	protected abstract void doPopulateContext(
-		RuleInstance ruleInstance, Map<String, Object> context);
+		RuleInstance ruleInstance, Map<String, Object> context,
+		Map<String, String> values);
 
 	@Override
 	protected void populateContext(
@@ -69,7 +70,7 @@ public abstract class BaseFacebookRule extends BaseRule {
 			}
 		}
 
-		doPopulateContext(ruleInstance, context);
+		doPopulateContext(ruleInstance, context, values);
 	}
 
 }

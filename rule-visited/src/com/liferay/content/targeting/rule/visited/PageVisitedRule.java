@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.rule.visited;
 
+import com.liferay.content.targeting.InvalidRuleException;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
@@ -23,7 +24,6 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.NoSuchLayoutException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -122,7 +122,7 @@ public class PageVisitedRule extends BaseRule {
 	public String processRule(
 			PortletRequest request, PortletResponse response, String id,
 			Map<String, String> values)
-		throws Exception {
+		throws InvalidRuleException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -142,7 +142,8 @@ public class PageVisitedRule extends BaseRule {
 				return String.valueOf(layout.getPlid());
 			}
 			else {
-				throw new NoSuchLayoutException();
+				throw new InvalidRuleException(
+					"a-page-with-this-friendly-url-could-not-be-found");
 			}
 		}
 		catch (SystemException e) {
@@ -162,7 +163,10 @@ public class PageVisitedRule extends BaseRule {
 
 		String friendlyURL = StringPool.BLANK;
 
-		if (ruleInstance != null) {
+		if (!values.isEmpty()) {
+			friendlyURL = values.get("friendlyURL");
+		}
+		else if (ruleInstance != null) {
 			long plid = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
 			try {
