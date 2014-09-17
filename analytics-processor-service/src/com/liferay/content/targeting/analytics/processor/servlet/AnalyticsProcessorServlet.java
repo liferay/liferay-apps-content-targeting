@@ -16,14 +16,12 @@ package com.liferay.content.targeting.analytics.processor.servlet;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.util.AnonymousUsersManager;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
-import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.ParamUtil;
@@ -40,10 +38,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.BundleContext;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -61,16 +57,6 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		throws IOException, ServletException {
 
 		try {
-			Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-			if (_anonymousUsersManager == null) {
-				_initAnonymousUserManager(bundle.getBundleContext());
-			}
-
-			if (_messageBus == null) {
-				_initMessageBus(bundle.getBundleContext());
-			}
-
 			processEvents(request, response);
 		}
 		catch (Exception e) {
@@ -80,6 +66,13 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,
 				response);
 		}
+	}
+
+	@Reference
+	public void setAnonymousUserManager(
+		AnonymousUsersManager anonymousUsersManager) {
+
+		_anonymousUsersManager = anonymousUsersManager;
 	}
 
 	protected void copyJSONObjectData(Message message, JSONObject jsonObject) {
@@ -139,20 +132,9 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		}
 	}
 
-	private void _initAnonymousUserManager(BundleContext bundleContext) {
-		_anonymousUsersManager = ServiceTrackerUtil.getService(
-			AnonymousUsersManager.class, bundleContext);
-	}
-
-	private void _initMessageBus(BundleContext bundleContext) {
-		_messageBus = ServiceTrackerUtil.getService(
-			MessageBus.class, bundleContext);
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		AnalyticsProcessorServlet.class);
 
 	private AnonymousUsersManager _anonymousUsersManager;
-	private MessageBus _messageBus;
 
 }

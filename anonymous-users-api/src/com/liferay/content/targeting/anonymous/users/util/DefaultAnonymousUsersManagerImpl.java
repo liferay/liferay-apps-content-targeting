@@ -137,7 +137,7 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 	public void setAnonymousUsersCookieManager(
 		AnonymousUsersCookieManager anonymousUsersCookieManager) {
 
-		this._anonymousUsersCookieManager = anonymousUsersCookieManager;
+		_anonymousUsersCookieManager = anonymousUsersCookieManager;
 	}
 
 	protected AnonymousUser getAnonymousUserFromCookie(

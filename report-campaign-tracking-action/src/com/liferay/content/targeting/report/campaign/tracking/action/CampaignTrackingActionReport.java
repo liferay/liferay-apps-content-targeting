@@ -18,7 +18,7 @@ import com.liferay.content.targeting.api.model.BaseReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction;
-import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionLocalServiceUtil;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.util.comparator.CampaignTrackingActionCountComparator;
 import com.liferay.content.targeting.util.SearchContainerIterator;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +34,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -63,10 +64,19 @@ public class CampaignTrackingActionReport extends BaseReport {
 		return Campaign.class.getName();
 	}
 
+	@Reference
+	public void setCampaignTrackingActionLocalServiceUtil(
+		CampaignTrackingActionLocalService
+				campaignTrackingActionLocalService) {
+
+		_campaignTrackingActionLocalService =
+			campaignTrackingActionLocalService;
+	}
+
 	@Override
 	public String updateReport(long classPK) {
 		try {
-			CampaignTrackingActionLocalServiceUtil.
+			_campaignTrackingActionLocalService.
 				checkCampaignTrackingActionEvents(classPK);
 		}
 		catch (Exception e) {
@@ -89,7 +99,7 @@ public class CampaignTrackingActionReport extends BaseReport {
 						int start, int end)
 					throws PortalException, SystemException {
 
-					return CampaignTrackingActionLocalServiceUtil.
+					return _campaignTrackingActionLocalService.
 							getCampaignTrackingActions(
 								classPK, start, end,
 								new CampaignTrackingActionCountComparator());
@@ -97,7 +107,7 @@ public class CampaignTrackingActionReport extends BaseReport {
 
 				@Override
 				public int getTotal() throws PortalException, SystemException {
-					return CampaignTrackingActionLocalServiceUtil.
+					return _campaignTrackingActionLocalService.
 						getCampaignTrackingActionsCount(classPK);
 				}
 			}
@@ -106,5 +116,8 @@ public class CampaignTrackingActionReport extends BaseReport {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		CampaignTrackingActionReport.class);
+
+	private CampaignTrackingActionLocalService
+		_campaignTrackingActionLocalService;
 
 }

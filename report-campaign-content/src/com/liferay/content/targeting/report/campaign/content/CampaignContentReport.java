@@ -18,7 +18,7 @@ import com.liferay.content.targeting.api.model.BaseReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.report.campaign.content.model.CampaignContent;
-import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalServiceUtil;
+import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalService;
 import com.liferay.content.targeting.report.campaign.content.util.comparator.CampaignContentCountComparator;
 import com.liferay.content.targeting.util.SearchContainerIterator;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +34,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -63,10 +64,17 @@ public class CampaignContentReport extends BaseReport {
 		return Campaign.class.getName();
 	}
 
+	@Reference
+	public void setCampaignContentLocalService(
+		CampaignContentLocalService campaignContentLocalService) {
+
+		_campaignContentLocalService = campaignContentLocalService;
+	}
+
 	@Override
 	public String updateReport(long classPK) {
 		try {
-			CampaignContentLocalServiceUtil.checkCampaignContentEvents(classPK);
+			_campaignContentLocalService.checkCampaignContentEvents(classPK);
 		}
 		catch (Exception e) {
 			_log.error("Cannot update report", e);
@@ -87,7 +95,7 @@ public class CampaignContentReport extends BaseReport {
 				public List<CampaignContent> getResults(int start, int end)
 					throws PortalException, SystemException {
 
-					return CampaignContentLocalServiceUtil.getCampaignContents(
+					return _campaignContentLocalService.getCampaignContents(
 						classPK, start, end,
 						new CampaignContentCountComparator());
 				}
@@ -95,8 +103,8 @@ public class CampaignContentReport extends BaseReport {
 				@Override
 				public int getTotal() throws PortalException, SystemException {
 					return
-						CampaignContentLocalServiceUtil.
-							getCampaignContentsCount(classPK);
+						_campaignContentLocalService.getCampaignContentsCount(
+							classPK);
 				}
 			}
 		);
@@ -104,5 +112,7 @@ public class CampaignContentReport extends BaseReport {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		CampaignContentReport.class);
+
+	private CampaignContentLocalService _campaignContentLocalService;
 
 }

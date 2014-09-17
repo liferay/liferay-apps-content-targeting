@@ -18,7 +18,7 @@ import com.liferay.content.targeting.api.model.BaseReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent;
-import com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentLocalServiceUtil;
+import com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentLocalService;
 import com.liferay.content.targeting.report.user.segment.content.util.comparator.UserSegmentContentCountComparator;
 import com.liferay.content.targeting.util.SearchContainerIterator;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -34,6 +34,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -63,10 +64,17 @@ public class UserSegmentContentReport extends BaseReport {
 		return UserSegment.class.getName();
 	}
 
+	@Reference
+	public void setUserSegmentContentLocalService(
+		UserSegmentContentLocalService userSegmentContentLocalService) {
+
+		_userSegmentContentLocalService = userSegmentContentLocalService;
+	}
+
 	@Override
 	public String updateReport(long classPK) {
 		try {
-			UserSegmentContentLocalServiceUtil.checkUserSegmentContentEvents(
+			_userSegmentContentLocalService.checkUserSegmentContentEvents(
 				classPK);
 		}
 		catch (Exception e) {
@@ -88,7 +96,7 @@ public class UserSegmentContentReport extends BaseReport {
 				public List<UserSegmentContent> getResults(int start, int end)
 					throws PortalException, SystemException {
 
-					return UserSegmentContentLocalServiceUtil.
+					return _userSegmentContentLocalService.
 						getUserSegmentContents(
 							classPK, start, end,
 							new UserSegmentContentCountComparator());
@@ -96,7 +104,7 @@ public class UserSegmentContentReport extends BaseReport {
 
 				@Override
 				public int getTotal() throws PortalException, SystemException {
-					return UserSegmentContentLocalServiceUtil.
+					return _userSegmentContentLocalService.
 						getUserSegmentContentsCount(classPK);
 				}
 			}
@@ -105,5 +113,7 @@ public class UserSegmentContentReport extends BaseReport {
 
 	private static Log _log = LogFactoryUtil.getLog(
 		UserSegmentContentReport.class);
+
+	private UserSegmentContentLocalService _userSegmentContentLocalService;
 
 }
