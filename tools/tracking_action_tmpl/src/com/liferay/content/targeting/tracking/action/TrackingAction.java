@@ -70,7 +70,7 @@ public class @tracking.action.java.class.name@TrackingAction
 	@Override
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
-		Map<String, Object> context) {
+		Map<String, Object> context, Map<String, String> values) {
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};

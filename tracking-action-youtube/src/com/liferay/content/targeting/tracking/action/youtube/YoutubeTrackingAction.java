@@ -76,7 +76,7 @@ public class YoutubeTrackingAction extends BaseTrackingAction {
 	@Override
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
-		Map<String, Object> context) {
+		Map<String, Object> context, Map<String, String> values) {
 
 		String alias = StringPool.BLANK;
 		String elementId = StringPool.BLANK;

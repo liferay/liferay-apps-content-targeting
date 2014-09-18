@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.api.model;
 
+import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -64,12 +65,12 @@ public abstract class BaseTrackingAction implements TrackingAction {
 	@Override
 	public String getFormHTML(
 		TrackingActionInstance trackingActionInstance,
-		Map<String, Object> context) {
+		Map<String, Object> context, Map<String, String> values) {
 
 		String content = StringPool.BLANK;
 
 		try {
-			populateContext(trackingActionInstance, context);
+			populateContext(trackingActionInstance, context, values);
 
 			content = ContentTargetingContextUtil.parseTemplate(
 				getClass(), _FORM_TEMPLATE_PATH, context);
@@ -121,16 +122,15 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 	@Override
 	public String processTrackingAction(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
-		throws Exception {
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) throws InvalidTrackingActionException {
 
 		return null;
 	}
 
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
-		Map<String, Object> context) {
+		Map<String, Object> context, Map<String, String> values) {
 	}
 
 	protected static final String _FORM_TEMPLATE_PATH =

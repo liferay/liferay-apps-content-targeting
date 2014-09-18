@@ -14,15 +14,18 @@
 
 package com.liferay.content.targeting.tracking.action.page;
 
+import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.portal.NoSuchLayoutException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -87,7 +90,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 	public String processTrackingAction(
 			PortletRequest request, PortletResponse response, String id,
 			Map<String, String> values)
-		throws Exception {
+		throws InvalidTrackingActionException {
 
 		String friendlyURL = values.get("friendlyURL");
 
@@ -97,12 +100,19 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 			// Retrieve layout by friendly url from public or private layout set
 
-			Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-				themeDisplay.getScopeGroupId(), false, friendlyURL);
+			Layout layout = null;
 
-			if (layout == null) {
+			try {
 				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-					themeDisplay.getScopeGroupId(), true, friendlyURL);
+					themeDisplay.getScopeGroupId(), false, friendlyURL);
+
+				if (layout == null) {
+					layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+						themeDisplay.getScopeGroupId(), true, friendlyURL);
+				}
+			}
+			catch (SystemException e) {
+				_log.error(e);
 			}
 
 			if (layout != null) {
@@ -116,7 +126,8 @@ public class PageTrackingAction extends BaseTrackingAction {
 				return jsonObj.toString();
 			}
 			else {
-				throw new NoSuchLayoutException();
+				throw new InvalidTrackingActionException(
+					"a-page-with-this-friendly-url-could-not-be-found");
 			}
 		}
 
@@ -126,7 +137,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 	@Override
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
-		Map<String, Object> context) {
+		Map<String, Object> context, Map<String, String> values) {
 
 		String alias = StringPool.BLANK;
 		String eventType = StringPool.BLANK;
@@ -168,5 +179,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};
+
+	private static Log _log = LogFactoryUtil.getLog(PageTrackingAction.class);
 
 }

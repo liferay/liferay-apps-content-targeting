@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.tracking.action.content;
 
+import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
@@ -21,12 +22,15 @@ import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.WebKeys;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -93,13 +97,25 @@ public class ContentTrackingAction extends BaseTrackingAction {
 	public String processTrackingAction(
 			PortletRequest request, PortletResponse response, String id,
 			Map<String, String> values)
-		throws Exception {
+		throws InvalidTrackingActionException {
 
-		String assetEntryId = values.get("assetEntryId");
+		long assetEntryId = GetterUtil.getLong(values.get("assetEntryId"));
 
-		if (Validator.isNotNull(assetEntryId)) {
-			AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
-				Long.valueOf(assetEntryId));
+		if (assetEntryId > 0) {
+			AssetEntry assetEntry = null;
+
+			try {
+				assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
+					assetEntryId);
+			}
+			catch (SystemException e) {
+				_log.error(e);
+			}
+
+			if (assetEntry == null) {
+				throw new InvalidTrackingActionException(
+					"the-selected-content-can-not-be-found");
+			}
 
 			values.put("referrerClassName", assetEntry.getClassName());
 			values.put(
@@ -111,8 +127,10 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 			return jsonObj.toString();
 		}
-
-		return StringPool.BLANK;
+		else {
+			throw new InvalidTrackingActionException(
+				"please-select-some-content");
+		}
 	}
 
 	protected List<AssetRendererFactory> getSelectableAssetRendererFactories(
@@ -139,7 +157,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 	@Override
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
-		Map<String, Object> context) {
+		Map<String, Object> context, Map<String, String> values) {
 
 		String alias = StringPool.BLANK;
 		long assetEntryId = 0;
@@ -216,5 +234,8 @@ public class ContentTrackingAction extends BaseTrackingAction {
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ContentTrackingAction.class);
 
 }

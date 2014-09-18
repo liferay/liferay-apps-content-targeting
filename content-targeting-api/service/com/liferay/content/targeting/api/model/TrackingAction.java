@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.api.model;
 
+import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 
 import java.util.List;
@@ -38,7 +39,7 @@ public interface TrackingAction {
 
 	public String getFormHTML(
 		TrackingActionInstance trackingActionInstance,
-		Map<String, Object> context);
+		Map<String, Object> context, Map<String, String> values);
 
 	public String getIcon();
 
@@ -56,6 +57,6 @@ public interface TrackingAction {
 	public String processTrackingAction(
 			PortletRequest request, PortletResponse response, String id,
 			Map<String, String> values)
-		throws Exception;
+		throws InvalidTrackingActionException;
 
 }

@@ -29,7 +29,6 @@ import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.model.impl.RuleInstanceImpl;
 import com.liferay.content.targeting.portlet.util.RuleTemplate;
 import com.liferay.content.targeting.portlet.util.TrackingActionTemplate;
 import com.liferay.content.targeting.service.CampaignLocalService;
@@ -630,7 +629,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 							new TrackingActionTemplate();
 
 						String html = trackingAction.getFormHTML(
-							instance, cloneTemplateContext(template));
+							instance, cloneTemplateContext(template), null);
 
 						trackingActionTemplate.setInstanceId(
 							instance.getTrackingActionInstanceId());
@@ -656,7 +655,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 						new TrackingActionTemplate();
 
 					String html = trackingAction.getFormHTML(
-						null, cloneTemplateContext(template));
+						null, cloneTemplateContext(template), null);
 
 					trackingActionTemplate.setTrackingAction(trackingAction);
 					trackingActionTemplate.setTemplate(
