@@ -27,8 +27,11 @@ import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
+import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
@@ -161,6 +164,10 @@ public class PageVisitedRule extends BaseRule {
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)context.get("themeDisplay");
+
+		context.put("friendlyURLBase", _getFriendlyURLBase(themeDisplay));
+
 		String friendlyURL = StringPool.BLANK;
 
 		if (!values.isEmpty()) {
@@ -193,6 +200,27 @@ public class PageVisitedRule extends BaseRule {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);
 		}
+	}
+
+	private String _getFriendlyURLBase(ThemeDisplay themeDisplay) {
+		StringBuilder sb = new StringBuilder();
+
+		sb.append(themeDisplay.getPortalURL());
+
+		Group group = themeDisplay.getScopeGroup();
+
+		LayoutSet layoutSet = group.getPublicLayoutSet();
+
+		String virtualHostname = layoutSet.getVirtualHostname();
+
+		if (Validator.isNull(virtualHostname) ||
+			(sb.indexOf(virtualHostname) == -1)) {
+
+			sb.append(group.getPathFriendlyURL(false, themeDisplay));
+			sb.append(group.getFriendlyURL());
+		}
+
+		return sb.toString();
 	}
 
 	private static final String _FORM_TEMPLATE_PATH_PAGE =

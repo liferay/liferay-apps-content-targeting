@@ -25,7 +25,7 @@
 
 <@aui["input"] helpMessage="alias-help" label="alias" name="{ct_field_guid}alias" type="text" value=alias />
 
-<@aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="{ct_field_guid}friendlyURL" type="text" value=friendlyURL />
+<@aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="{ct_field_guid}friendlyURL" prefix=friendlyURLBase style="width: auto;" type="text" value=friendlyURL />
 
 <@aui["select"] label="tracking-action" name="{ct_field_guid}eventType">
 	<#list eventTypes as curEventType>

@@ -42,6 +42,7 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import com.liferay.portal.util.PortalUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -80,7 +81,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 		String summary = LanguageUtil.format(
 			locale, "tracking-page-x",
-			new Object[] {
+			new Object[]{
 				trackingActionInstance.getAlias(),
 			});
 
@@ -145,12 +146,12 @@ public class PageTrackingAction extends BaseTrackingAction {
 		String friendlyURL = StringPool.BLANK;
 		Layout layout = null;
 
+		long scopeGroupId = GetterUtil.getLong(context.get("scopeGroupId"));
+
 		if (!values.isEmpty()) {
 			alias = values.get("alias");
 			eventType = values.get("eventType");
 			friendlyURL = values.get("friendlyURL");
-
-			long scopeGroupId = GetterUtil.getLong(context.get("scopeGroupId"));
 
 			try {
 				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
@@ -182,16 +183,28 @@ public class PageTrackingAction extends BaseTrackingAction {
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)context.get("themeDisplay");
+
+		String friendlyURLBase = StringPool.BLANK;
+
+		try {
+			friendlyURLBase = PortalUtil.getGroupFriendlyURL(
+				themeDisplay.getScopeGroup(), false, themeDisplay);
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
+		context.put("friendlyURLBase", friendlyURLBase);
+
 		if (layout != null) {
 			friendlyURL = layout.getFriendlyURL();
 		}
 
 		context.put("friendlyURL", friendlyURL);
 
-		long groupId = (Long)context.get("scopeGroupId");
-
 		boolean trackingPageEnabled = AnalyticsUtil.isAnalyticsPageEnabled(
-			groupId);
+			scopeGroupId);
 
 		context.put("trackingPageEnabled", trackingPageEnabled);
 
