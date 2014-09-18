@@ -16,13 +16,14 @@ package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Eudaldo Alonso
  */
 public class RuleTemplate {
 
-	public long getInstanceId() {
+	public String getInstanceId() {
 		return _instanceId;
 	}
 
@@ -37,7 +38,7 @@ public class RuleTemplate {
 	public String getTemplateKey() {
 		String templateKey = _rule.getRuleKey();
 
-		if (_instanceId > 0) {
+		if (Validator.isNotNull(_instanceId)) {
 			templateKey = templateKey.concat(StringPool.UNDERLINE).concat(
 				String.valueOf(_instanceId));
 		}
@@ -45,7 +46,7 @@ public class RuleTemplate {
 		return templateKey;
 	}
 
-	public void setInstanceId(long instanceId) {
+	public void setInstanceId(String instanceId) {
 		_instanceId = instanceId;
 	}
 
@@ -57,7 +58,7 @@ public class RuleTemplate {
 		_template = template;
 	}
 
-	private long _instanceId;
+	private String _instanceId;
 	private Rule _rule;
 	private String _template;
 

@@ -878,8 +878,16 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 						TrackingActionTemplate trackingActionTemplate =
 							new TrackingActionTemplate();
 
-						trackingActionTemplate.setInstanceId(
-							instance.getTrackingActionInstanceId());
+						if (instance.getTrackingActionInstanceId() > 0) {
+							trackingActionTemplate.setInstanceId(
+								String.valueOf(
+									instance.getTrackingActionInstanceId()));
+						}
+						else {
+							trackingActionTemplate.setInstanceId(
+								instance.getTrackingActionGuid());
+						}
+
 						trackingActionTemplate.setTrackingAction(
 							trackingAction);
 
@@ -965,8 +973,16 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 						RuleTemplate ruleTemplate = new RuleTemplate();
 
-						ruleTemplate.setInstanceId(
-							ruleInstance.getRuleInstanceId());
+						if (ruleInstance.getRuleInstanceId() > 0) {
+							ruleTemplate.setInstanceId(
+								String.valueOf(
+									ruleInstance.getRuleInstanceId()));
+						}
+						else {
+							ruleTemplate.setInstanceId(
+								ruleInstance.getRuleGuid());
+						}
+
 						ruleTemplate.setRule(rule);
 
 						String html = getRuleHtml(

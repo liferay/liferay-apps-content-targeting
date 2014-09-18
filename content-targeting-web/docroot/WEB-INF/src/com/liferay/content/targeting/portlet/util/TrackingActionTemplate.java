@@ -16,13 +16,14 @@ package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 
 /**
  * @author Eduardo Garcia
  */
 public class TrackingActionTemplate {
 
-	public long getInstanceId() {
+	public String getInstanceId() {
 		return _instanceId;
 	}
 
@@ -33,7 +34,7 @@ public class TrackingActionTemplate {
 	public String getTemplateKey() {
 		String templateKey = _trackingAction.getTrackingActionKey();
 
-		if (_instanceId > 0) {
+		if (Validator.isNotNull(_instanceId)) {
 			templateKey = templateKey.concat(StringPool.UNDERLINE).concat(
 				String.valueOf(_instanceId));
 		}
@@ -45,7 +46,7 @@ public class TrackingActionTemplate {
 		return _trackingAction;
 	}
 
-	public void setInstanceId(long instanceId) {
+	public void setInstanceId(String instanceId) {
 		_instanceId = instanceId;
 	}
 
@@ -57,7 +58,7 @@ public class TrackingActionTemplate {
 		_trackingAction = trackingAction;
 	}
 
-	private long _instanceId;
+	private String _instanceId;
 	private String _template;
 	private TrackingAction _trackingAction;
 
