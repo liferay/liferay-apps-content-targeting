@@ -145,7 +145,7 @@ public class CampaignTrackingActionLocalServiceImpl
 			}
 		}
 		catch (NullPointerException npe) {
-			_log.error("Required services are not available");
+			_log.error("Content Targeting API Services are not available");
 		}
 	}
 
