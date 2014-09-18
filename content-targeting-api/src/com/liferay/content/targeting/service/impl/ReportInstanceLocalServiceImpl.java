@@ -24,6 +24,7 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * The implementation of the report instance local service.
@@ -99,6 +100,14 @@ public class ReportInstanceLocalServiceImpl
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<ReportInstance> getReportInstances(
+			String className, long classPK)
+		throws SystemException {
+
+		return reportInstancePersistence.findByC_C(className, classPK);
 	}
 
 }

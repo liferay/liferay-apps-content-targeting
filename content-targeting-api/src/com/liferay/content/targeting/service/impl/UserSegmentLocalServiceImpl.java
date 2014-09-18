@@ -17,6 +17,7 @@ package com.liferay.content.targeting.service.impl;
 import com.liferay.content.targeting.InvalidNameException;
 import com.liferay.content.targeting.UsedUserSegmentException;
 import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.base.UserSegmentLocalServiceBaseImpl;
@@ -186,6 +187,17 @@ public class UserSegmentLocalServiceImpl
 		resourceLocalService.deleteResource(
 			userSegment.getCompanyId(), UserSegment.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, userSegment.getUserSegmentId());
+
+		// Reports
+
+		for (ReportInstance reportInstance :
+				reportInstanceLocalService.getReportInstances(
+					UserSegment.class.getName(),
+					userSegment.getUserSegmentId())) {
+
+			reportInstanceLocalService.deleteReportInstance(
+				reportInstance.getReportInstanceId());
+		}
 
 		// Rules
 

@@ -17,6 +17,7 @@ package com.liferay.content.targeting.service.impl;
 import com.liferay.content.targeting.InvalidDateRangeException;
 import com.liferay.content.targeting.InvalidNameException;
 import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.base.CampaignLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
@@ -160,6 +161,16 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		resourceLocalService.deleteResource(
 			campaign.getCompanyId(), Campaign.class.getName(),
 			ResourceConstants.SCOPE_INDIVIDUAL, campaign.getCampaignId());
+
+		// Reports
+
+		for (ReportInstance reportInstance :
+				reportInstanceLocalService.getReportInstances(
+					Campaign.class.getName(), campaign.getCampaignId())) {
+
+			reportInstanceLocalService.deleteReportInstance(
+				reportInstance.getReportInstanceId());
+		}
 
 		// Tracking Actions
 

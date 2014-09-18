@@ -78,6 +78,10 @@
 
 		<!-- Finder methods -->
 
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="className" />
+			<finder-column name="classPK" />
+		</finder>
 		<finder name="R_C_C" return-type="ReportInstance" unique="true">
 			<finder-column name="reportKey" />
 			<finder-column name="className" />
