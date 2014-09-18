@@ -142,31 +142,48 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 		String alias = StringPool.BLANK;
 		String eventType = StringPool.BLANK;
-		long referrerClassPK = 0;
+		String friendlyURL = StringPool.BLANK;
+		Layout layout = null;
 
 		if (!values.isEmpty()) {
 			alias = values.get("alias");
 			eventType = values.get("eventType");
-			referrerClassPK = GetterUtil.getLong(values.get("referrerClassPK"));
+			friendlyURL = values.get("friendlyURL");
+
+			long scopeGroupId = GetterUtil.getLong(context.get("scopeGroupId"));
+
+			try {
+				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+					scopeGroupId, false, friendlyURL);
+
+				if (layout == null) {
+					layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+						scopeGroupId, true, friendlyURL);
+				}
+			}
+			catch (SystemException e) {
+				_log.error(e);
+			}
 		}
 		else if (trackingActionInstance != null) {
 			alias = trackingActionInstance.getAlias();
 			eventType = trackingActionInstance.getEventType();
-			referrerClassPK = trackingActionInstance.getReferrerClassPK();
+			long referrerClassPK = trackingActionInstance.getReferrerClassPK();
+
+			try {
+				layout = LayoutLocalServiceUtil.fetchLayout(referrerClassPK);
+			}
+			catch (SystemException e) {
+				_log.error(e);
+			}
 		}
 
 		context.put("alias", alias);
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
 
-		String friendlyURL = StringPool.BLANK;
-
-		try {
-			Layout layout = LayoutLocalServiceUtil.getLayout(referrerClassPK);
-
+		if (layout != null) {
 			friendlyURL = layout.getFriendlyURL();
-		}
-		catch (Exception e) {
 		}
 
 		context.put("friendlyURL", friendlyURL);

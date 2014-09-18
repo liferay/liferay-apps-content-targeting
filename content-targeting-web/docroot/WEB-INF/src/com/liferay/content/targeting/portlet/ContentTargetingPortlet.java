@@ -892,7 +892,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 							trackingAction);
 
 						String html = getTrackingActionHtml(
-							trackingAction, instance, template, null,
+							trackingAction, instance, template,
+							instance.getValues(),
 							itae.getExceptions(
 								instance.getTrackingActionGuid()));
 

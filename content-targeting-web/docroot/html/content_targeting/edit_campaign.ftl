@@ -133,7 +133,7 @@
 				<div class="diagram-builder-content-container form-builder-content-container">
 					<#assign cssHasItemsClass = "">
 
-					<#if userSegment?? && (addedTrackingActionTemplates?size > 0)>
+					<#if (addedTrackingActionTemplates?size > 0)>
 						<#assign cssHasItemsClass = "has-items">
 					</#if>
 
@@ -143,29 +143,27 @@
 						</div>
 
 						<div class="diagram-builder-drop-container form-builder-drop-container">
-							<#if campaign??>
-								<#list addedTrackingActionTemplates as template>
-									<#assign trackingAction = template.getTrackingAction()>
-									<#assign templateKey = template.getTemplateKey()>
+							<#list addedTrackingActionTemplates as template>
+								<#assign trackingAction = template.getTrackingAction()>
+								<#assign templateKey = template.getTemplateKey()>
 
-									<div class="component form-builder-field hide widget yui3-widget" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
+								<div class="component form-builder-field hide widget yui3-widget" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
+									<div>
 										<div>
-											<div>
-												<div class="field-header">
-													<div class="field-icon"><i class="${trackingAction.getIcon()}"></i></div>
-													<div class="field-info row">
-														<div class="field-title">${trackingAction.getName(locale)}</div>
-														<div class="field-description">${trackingAction.getDescription(locale)}</div>
-														<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
-													</div>
+											<div class="field-header">
+												<div class="field-icon"><i class="${trackingAction.getIcon()}"></i></div>
+												<div class="field-info row">
+													<div class="field-title">${trackingAction.getName(locale)}</div>
+													<div class="field-description">${trackingAction.getDescription(locale)}</div>
+													<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
 												</div>
-												<div class="field-editor">
-												</div>
+											</div>
+											<div class="field-editor">
 											</div>
 										</div>
 									</div>
-								</#list>
-							</#if>
+								</div>
+							</#list>
 						</div>
 					</div>
 				</div>
