@@ -417,10 +417,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		Rule rule, RuleInstance ruleInstance, Template template,
 		Map<String, String> values) {
 
-		Map<String, Object> ruleContext = cloneTemplateContext(template);
+		Map<String, Object> context = cloneTemplateContext(template);
 
-		HttpServletRequest request = (HttpServletRequest)ruleContext.get(
-			"request");
+		HttpServletRequest request = (HttpServletRequest)context.get("request");
 
 		Map<String, List<ValidatorTag>> validatorTagsMap =
 			new HashMap<String, List<ValidatorTag>>();
@@ -431,14 +430,50 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			values = Collections.emptyMap();
 		}
 
-		String html = rule.getFormHTML(ruleInstance, ruleContext, values);
+		String html = rule.getFormHTML(ruleInstance, context, values);
 
 		if (!validatorTagsMap.isEmpty()) {
 			try {
-				ruleContext.put("validatorTagsMap", validatorTagsMap);
+				context.put("validatorTagsMap", validatorTagsMap);
 
 				html += ContentTargetingContextUtil.parseTemplate(
-					getClass(), "templates/ct_validators.ftl", ruleContext);
+					getClass(), "templates/ct_validators.ftl", context);
+			}
+			catch (Exception e) {
+				_log.error(e);
+			}
+		}
+
+		return html;
+	}
+
+	protected String getTrackingActionHtml(
+		TrackingAction trackingAction,
+		TrackingActionInstance trackingActionInstance, Template template,
+		Map<String, String> values) {
+
+		Map<String, Object> context = cloneTemplateContext(template);
+
+		HttpServletRequest request = (HttpServletRequest)context.get("request");
+
+		Map<String, List<ValidatorTag>> validatorTagsMap =
+			new HashMap<String, List<ValidatorTag>>();
+
+		request.setAttribute("aui:form:validatorTagsMap", validatorTagsMap);
+
+		if (values == null) {
+			values = Collections.emptyMap();
+		}
+
+		String html = trackingAction.getFormHTML(
+			trackingActionInstance, context, values);
+
+		if (!validatorTagsMap.isEmpty()) {
+			try {
+				context.put("validatorTagsMap", validatorTagsMap);
+
+				html += ContentTargetingContextUtil.parseTemplate(
+					getClass(), "templates/ct_validators.ftl", context);
 			}
 			catch (Exception e) {
 				_log.error(e);
@@ -628,13 +663,14 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 						TrackingActionTemplate trackingActionTemplate =
 							new TrackingActionTemplate();
 
-						String html = trackingAction.getFormHTML(
-							instance, cloneTemplateContext(template), null);
-
 						trackingActionTemplate.setInstanceId(
 							instance.getTrackingActionInstanceId());
 						trackingActionTemplate.setTrackingAction(
 							trackingAction);
+
+						String html = getTrackingActionHtml(
+							trackingAction, instance, template, null);
+
 						trackingActionTemplate.setTemplate(
 							HtmlUtil.escapeAttribute(html));
 
@@ -654,10 +690,11 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 					TrackingActionTemplate trackingActionTemplate =
 						new TrackingActionTemplate();
 
-					String html = trackingAction.getFormHTML(
-						null, cloneTemplateContext(template), null);
-
 					trackingActionTemplate.setTrackingAction(trackingAction);
+
+					String html = getTrackingActionHtml(
+						trackingAction, null, template, null);
+
 					trackingActionTemplate.setTemplate(
 						HtmlUtil.escapeAttribute(html));
 
