@@ -4,7 +4,9 @@
     <facet type="IvyIDEA" name="IvyIDEA">
       <configuration ivyFile="$MODULE_DIR$/ivy.xml" useProjectSettings="true" useCustomIvySettings="true" ivySettingsFile="" onlyResolveSelectedConfigs="false">
         <propertiesSettings>
-          <propertiesFiles includeProjectLevelPropertiesFiles="true" />
+          <propertiesFiles includeProjectLevelPropertiesFiles="true">
+            <fileName>$MODULE_DIR$/../ivy.idea.properties</fileName>
+          </propertiesFiles>
         </propertiesSettings>
       </configuration>
     </facet>
@@ -30,14 +32,8 @@
     <orderEntry type="module-library">
       <library name="IvyIDEA">
         <CLASSES>
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-karaf-remote/jars/arquillian-container-karaf-remote-1.1.0.Final.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-osgi/jars/arquillian-container-osgi-1.1.0.Final.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api/jars/shrinkwrap-resolver-api-2.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven/jars/shrinkwrap-resolver-api-maven-2.0.0.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.metadata/jbosgi-metadata/jars/jbosgi-metadata-2.2.0.Final.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.spi/jbosgi-spi/jars/jbosgi-spi-3.2.0.Final.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.vfs/jbosgi-vfs30/jars/jbosgi-vfs30-1.2.1.Final.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.vfs/jbosgi-vfs/jars/jbosgi-vfs-1.2.1.Final.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.logging/jboss-logging/jars/jboss-logging-3.1.3.GA.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss/jboss-vfs/jars/jboss-vfs-3.1.0.Final.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.5.11.jar!/" />
@@ -77,11 +73,6 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.codehaus.plexus/plexus-classworlds/jars/plexus-classworlds-1.2-alpha-10.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/jars/junit-4.11.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/jars/hamcrest-core-1.3.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-osgi/jars/arquillian-protocol-osgi-1.1.0.Final.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/jars/arquillian-protocol-jmx-1.1.2.Final.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.testenricher/arquillian-testenricher-osgi/jars/arquillian-testenricher-osgi-1.1.0.Final.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.0-SNAPSHOT.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/jars/org.osgi.compendium-5.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/jars/org.osgi.core-5.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.junit/arquillian-junit-container/jars/arquillian-junit-container-1.1.2.Final.jar!/" />
@@ -106,16 +97,19 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-api/jars/shrinkwrap-api-1.2.2.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-spi/jars/shrinkwrap-spi-1.2.2.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-impl-base/jars/shrinkwrap-impl-base-1.2.2.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/jars/shrinkwrap-descriptors-api-base-2.0.0-alpha-3.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/jars/shrinkwrap-descriptors-spi-2.0.0-alpha-3.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-karaf-remote/jars/arquillian-container-karaf-remote-2.1.0.CR16.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-osgi/jars/arquillian-container-osgi-2.1.0.CR16.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.metadata/jbosgi-metadata/jars/jbosgi-metadata-4.0.0.CR1.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.spi/jbosgi-spi/jars/jbosgi-spi-4.0.0.Final.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.vfs/jbosgi-vfs30/jars/jbosgi-vfs30-2.0.0.Final.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.vfs/jbosgi-vfs/jars/jbosgi-vfs-2.0.0.Final.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-osgi/jars/arquillian-protocol-osgi-2.1.0.CR16.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.testenricher/arquillian-testenricher-osgi/jars/arquillian-testenricher-osgi-2.1.0.CR16.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.0.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api/javadocs/shrinkwrap-resolver-api-2.0.0-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven/javadocs/shrinkwrap-resolver-api-maven-2.0.0-javadoc.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.metadata/jbosgi-metadata/javadocs/jbosgi-metadata-2.2.0.Final-javadoc.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.spi/jbosgi-spi/javadocs/jbosgi-spi-3.2.0.Final-javadoc.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.vfs/jbosgi-vfs30/javadocs/jbosgi-vfs30-1.2.1.Final-javadoc.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.vfs/jbosgi-vfs/javadocs/jbosgi-vfs-1.2.1.Final-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.logging/jboss-logging/javadocs/jboss-logging-3.1.3.GA-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-spi/javadocs/shrinkwrap-resolver-spi-2.0.0-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-spi-maven/javadocs/shrinkwrap-resolver-spi-maven-2.0.0-javadoc.jar!/" />
@@ -149,8 +143,6 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.codehaus.plexus/plexus-classworlds/javadocs/plexus-classworlds-1.2-alpha-10-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/javadocs/junit-4.11-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/javadocs/hamcrest-core-1.3-javadoc.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/javadocs/arquillian-protocol-jmx-1.1.2.Final-javadoc.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/javadocs/org.osgi.compendium-5.0.0-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/javadocs/org.osgi.core-5.0.0-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/javadocs/org.osgi.enterprise-5.0.0-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.junit/arquillian-junit-container/javadocs/arquillian-junit-container-1.1.2.Final-javadoc.jar!/" />
@@ -172,18 +164,17 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-api/javadocs/shrinkwrap-api-1.2.2-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-spi/javadocs/shrinkwrap-spi-1.2.2-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-impl-base/javadocs/shrinkwrap-impl-base-1.2.2-javadoc.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/javadocs/shrinkwrap-descriptors-api-base-2.0.0-alpha-3-javadoc.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/javadocs/shrinkwrap-descriptors-spi-2.0.0-alpha-3-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-karaf-remote/javadocs/arquillian-container-karaf-remote-2.1.0.CR16-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-osgi/javadocs/arquillian-container-osgi-2.1.0.CR16-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.spi/jbosgi-spi/javadocs/jbosgi-spi-4.0.0.Final-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.vfs/jbosgi-vfs30/javadocs/jbosgi-vfs30-2.0.0.Final-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.vfs/jbosgi-vfs/javadocs/jbosgi-vfs-2.0.0.Final-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-osgi/javadocs/arquillian-protocol-osgi-2.1.0.CR16-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.testenricher/arquillian-testenricher-osgi/javadocs/arquillian-testenricher-osgi-2.1.0.CR16-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-karaf-remote/sources/arquillian-container-karaf-remote-1.1.0.Final-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-osgi/sources/arquillian-container-osgi-1.1.0.Final-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api/sources/shrinkwrap-resolver-api-2.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.resolver/shrinkwrap-resolver-api-maven/sources/shrinkwrap-resolver-api-maven-2.0.0-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.metadata/jbosgi-metadata/sources/jbosgi-metadata-2.2.0.Final-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.spi/jbosgi-spi/sources/jbosgi-spi-3.2.0.Final-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.vfs/jbosgi-vfs30/sources/jbosgi-vfs30-1.2.1.Final-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.vfs/jbosgi-vfs/sources/jbosgi-vfs-1.2.1.Final-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.logging/jboss-logging/sources/jboss-logging-3.1.3.GA-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss/jboss-vfs/sources/jboss-vfs-3.1.0.Final-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.slf4j/slf4j-api/sources/slf4j-api-1.5.11-sources.jar!/" />
@@ -222,11 +213,6 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.codehaus.plexus/plexus-classworlds/sources/plexus-classworlds-1.2-alpha-10-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/sources/junit-4.11-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/sources/hamcrest-core-1.3-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-osgi/sources/arquillian-protocol-osgi-1.1.0.Final-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/sources/arquillian-protocol-jmx-1.1.2.Final-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.testenricher/arquillian-testenricher-osgi/sources/arquillian-testenricher-osgi-1.1.0.Final-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.0-SNAPSHOT-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/sources/org.osgi.compendium-5.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/sources/org.osgi.core-5.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/sources/org.osgi.enterprise-5.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.junit/arquillian-junit-container/sources/arquillian-junit-container-1.1.2.Final-sources.jar!/" />
@@ -251,8 +237,15 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-api/sources/shrinkwrap-api-1.2.2-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-spi/sources/shrinkwrap-spi-1.2.2-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap/shrinkwrap-impl-base/sources/shrinkwrap-impl-base-1.2.2-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/sources/shrinkwrap-descriptors-api-base-2.0.0-alpha-3-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/sources/shrinkwrap-descriptors-spi-2.0.0-alpha-3-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-karaf-remote/sources/arquillian-container-karaf-remote-2.1.0.CR16-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.container/arquillian-container-osgi/sources/arquillian-container-osgi-2.1.0.CR16-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.metadata/jbosgi-metadata/sources/jbosgi-metadata-4.0.0.CR1-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.spi/jbosgi-spi/sources/jbosgi-spi-4.0.0.Final-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.vfs/jbosgi-vfs30/sources/jbosgi-vfs30-2.0.0.Final-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.osgi.vfs/jbosgi-vfs/sources/jbosgi-vfs-2.0.0.Final-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-osgi/sources/arquillian-protocol-osgi-2.1.0.CR16-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.testenricher/arquillian-testenricher-osgi/sources/arquillian-testenricher-osgi-2.1.0.CR16-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.0-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

@@ -35,9 +35,6 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.easymock/easymock/jars/easymock-2.4.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.felix/org.apache.felix.gogo.runtime/bundles/org.apache.felix.gogo.runtime-0.12.1.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.felix/org.apache.felix.gogo.shell/bundles/org.apache.felix.gogo.shell-0.10.0.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.felix/org.apache.felix.shell.remote/bundles/org.apache.felix.shell.remote-1.1.2.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.felix/org.apache.felix.shell/bundles/org.apache.felix.shell-1.0.0.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.felix/org.osgi.core/bundles/org.osgi.core-1.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/org.eclipse.equinox.console/jars/org.eclipse.equinox.console-1.0.0.v20120522-1841.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar!/" />
         </CLASSES>
@@ -61,7 +58,6 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.easymock/easymock/sources/easymock-2.4-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.felix/org.apache.felix.gogo.runtime/sources/org.apache.felix.gogo.runtime-0.12.1-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.felix/org.apache.felix.gogo.shell/sources/org.apache.felix.gogo.shell-0.10.0-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.felix/org.apache.felix.shell.remote/sources/org.apache.felix.shell.remote-1.1.2-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/sources/org.osgi.enterprise-5.0.0-sources.jar!/" />
         </SOURCES>
       </library>
