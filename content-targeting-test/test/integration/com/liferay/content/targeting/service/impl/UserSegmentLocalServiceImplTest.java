@@ -20,6 +20,7 @@ import com.liferay.content.targeting.service.test.util.TestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalService;
@@ -56,6 +57,8 @@ public class UserSegmentLocalServiceImplTest {
 
 		_assetCategoryLocalService = ServiceTrackerUtil.getService(
 			AssetCategoryLocalService.class, _bundle.getBundleContext());
+		_groupLocalService = ServiceTrackerUtil.getService(
+			GroupLocalService.class, _bundle.getBundleContext());
 		_userSegmentLocalService = ServiceTrackerUtil.getService(
 			UserSegmentLocalService.class, _bundle.getBundleContext());
 	}
@@ -69,7 +72,7 @@ public class UserSegmentLocalServiceImplTest {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(LocaleUtil.getDefault(), "test-category");
+		nameMap.put(LocaleUtil.getDefault(), "test-user-segment");
 
 		ServiceContext serviceContext = TestUtil.getServiceContext(
 			group.getGroupId(), TestUtil.getUserId());
@@ -95,11 +98,36 @@ public class UserSegmentLocalServiceImplTest {
 			_userSegmentLocalService.getUserSegmentsCount(group.getGroupId()));
 	}
 
+	@Test
+	public void testDeleteGroup() throws Exception {
+		Group group = TestUtil.addGroup();
+
+		int initUserSegmentsCount =
+			_userSegmentLocalService.getUserSegmentsCount(group.getGroupId());
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), "test-user-segment");
+
+		ServiceContext serviceContext = TestUtil.getServiceContext(
+			group.getGroupId(), TestUtil.getUserId());
+
+		_userSegmentLocalService.addUserSegment(
+			TestUtil.getUserId(), nameMap, null, serviceContext);
+
+		_groupLocalService.deleteGroup(group.getGroupId());
+
+		Assert.assertEquals(
+			initUserSegmentsCount,
+			_userSegmentLocalService.getUserSegmentsCount(group.getGroupId()));
+	}
+
 	private AssetCategoryLocalService _assetCategoryLocalService;
 
 	@ArquillianResource
 	private Bundle _bundle;
 
+	private GroupLocalService _groupLocalService;
 	private UserSegmentLocalService _userSegmentLocalService;
 
 }

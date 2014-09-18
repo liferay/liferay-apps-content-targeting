@@ -20,6 +20,7 @@ import com.liferay.content.targeting.service.test.util.TestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
+import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.Calendar;
@@ -56,6 +57,8 @@ public class CampaignLocalServiceImplTest {
 
 		_campaignLocalService = ServiceTrackerUtil.getService(
 			CampaignLocalService.class, _bundle.getBundleContext());
+		_groupLocalService = ServiceTrackerUtil.getService(
+			GroupLocalService.class, _bundle.getBundleContext());
 	}
 
 	@Test
@@ -84,6 +87,31 @@ public class CampaignLocalServiceImplTest {
 
 		Assert.assertEquals(
 			initCampaignsCount,
+			_campaignLocalService.getCampaignsCount(group.getGroupId()));
+	}
+
+	@Test
+	public void testDeleteGroup() throws Exception {
+		Group group = TestUtil.addGroup();
+
+		int initUserSegmentsCount = _campaignLocalService.getCampaignsCount(
+			group.getGroupId());
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), "test-campaign");
+
+		ServiceContext serviceContext = TestUtil.getServiceContext(
+			group.getGroupId(), TestUtil.getUserId());
+
+		_campaignLocalService.addCampaign(
+			TestUtil.getUserId(), nameMap, null, new Date(), new Date(), 1,
+			true, new long[]{1, 2}, serviceContext);
+
+		_groupLocalService.deleteGroup(group.getGroupId());
+
+		Assert.assertEquals(
+			initUserSegmentsCount,
 			_campaignLocalService.getCampaignsCount(group.getGroupId()));
 	}
 
@@ -139,5 +167,6 @@ public class CampaignLocalServiceImplTest {
 	private Bundle _bundle;
 
 	private CampaignLocalService _campaignLocalService;
+	private GroupLocalService _groupLocalService;
 
 }
