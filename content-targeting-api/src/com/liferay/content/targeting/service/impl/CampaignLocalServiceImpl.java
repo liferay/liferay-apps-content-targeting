@@ -186,6 +186,15 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 	}
 
 	@Override
+	public void deleteCampaigns(long groupId)
+		throws PortalException, SystemException {
+
+		for (Campaign campaign : campaignPersistence.findByGroupId(groupId)) {
+			campaignLocalService.deleteCampaign(campaign.getCampaignId());
+		}
+	}
+
+	@Override
 	public Campaign fetchCurrentMaxPriorityCampaign(
 			long[] groupIds, long[] userSegmentIds)
 		throws SystemException {

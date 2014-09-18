@@ -226,6 +226,18 @@ public class UserSegmentLocalServiceImpl
 	}
 
 	@Override
+	public void deleteUserSegments(long groupId)
+		throws PortalException, SystemException {
+
+		for (UserSegment userSegment :
+				userSegmentPersistence.findByGroupId(groupId)) {
+
+			userSegmentLocalService.deleteUserSegment(
+				userSegment.getUserSegmentId());
+		}
+	}
+
+	@Override
 	public List<UserSegment> getUserSegments(long groupId)
 		throws PortalException, SystemException {
 
