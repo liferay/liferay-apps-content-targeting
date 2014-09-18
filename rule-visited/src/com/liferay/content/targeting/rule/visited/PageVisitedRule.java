@@ -23,7 +23,6 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -48,6 +47,7 @@ import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -77,11 +77,7 @@ public class PageVisitedRule extends BaseRule {
 
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		AnalyticsEventLocalService analyticsEventLocalService =
-			ServiceTrackerUtil.getService(
-				AnalyticsEventLocalService.class, bundle.getBundleContext());
-
-		int count = analyticsEventLocalService.getAnalyticsEventsCount(
+		int count = _analyticsEventLocalService.getAnalyticsEventsCount(
 			anonymousUser.getAnonymousUserId(), Layout.class.getName(), plid,
 			"view");
 
@@ -155,6 +151,13 @@ public class PageVisitedRule extends BaseRule {
 		return StringPool.BLANK;
 	}
 
+	@Reference
+	public void setAnalyticsEventLocalService(
+		AnalyticsEventLocalService analyticsEventLocalService) {
+
+		_analyticsEventLocalService = analyticsEventLocalService;
+	}
+
 	protected String getFormTemplatePath() {
 		return _FORM_TEMPLATE_PATH_PAGE;
 	}
@@ -214,6 +217,8 @@ public class PageVisitedRule extends BaseRule {
 
 	private static final String _FORM_TEMPLATE_PATH_PAGE =
 		"templates/ct_fields_page.ftl";
+
+	private AnalyticsEventLocalService _analyticsEventLocalService;
 
 	private static Log _log = LogFactoryUtil.getLog(PageVisitedRule.class);
 
