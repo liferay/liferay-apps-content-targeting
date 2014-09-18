@@ -30,6 +30,14 @@
 	</@>
 </#macro>
 
+<#macro invalidRulesException>
+	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidRulesException" message="there-is-an-error-in-one-of-your-rules" />
+</#macro>
+
+<#macro invalidTrackingActionsException>
+	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidTrackingActionsException" message="there-is-an-error-in-one-of-your-tracking-actions" />
+</#macro>
+
 <#macro usedUserSegmentException>
 	<@liferay_ui["error"] key="com.liferay.content.targeting.UsedUserSegmentException">
 		<@liferay_ui["message"] key="this-user-segment-can-not-be-deleted-because-it-is-used-by-the-following-campaigns" />

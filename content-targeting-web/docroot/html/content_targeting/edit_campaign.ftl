@@ -22,6 +22,8 @@
 	title='${(campaign.getName(locale))!"new-campaign"}'
 />
 
+<@invalidTrackingActionsException />
+
 <@portlet["actionURL"] name="updateCampaign" var="addCampaignURL" />
 
 <@aui["form"] action="${addCampaignURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">

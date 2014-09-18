@@ -22,6 +22,8 @@
 	title='${(userSegment.getName(locale))!"new-user-segment"}'
 />
 
+<@invalidRulesException />
+
 <@portlet["actionURL"] name="updateUserSegment" var="addUserSegmentURL" />
 
 <@aui["form"] action="${addUserSegmentURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
@@ -85,7 +87,7 @@
 				<div class="diagram-builder-content-container form-builder-content-container">
 					<#assign cssHasItemsClass = "">
 
-					<#if userSegment?? && (addedRuleTemplates?size > 0)>
+					<#if (addedRuleTemplates?size > 0)>
 						<#assign cssHasItemsClass = "has-items">
 					</#if>
 
@@ -95,29 +97,27 @@
 						</div>
 
 						<div class="diagram-builder-drop-container form-builder-drop-container">
-							<#if userSegment??>
-								<#list addedRuleTemplates as template>
-									<#assign rule = template.getRule()>
-									<#assign templateKey = template.getTemplateKey()>
+							<#list addedRuleTemplates as template>
+								<#assign rule = template.getRule()>
+								<#assign templateKey = template.getTemplateKey()>
 
-									<div class="component form-builder-field hide widget yui3-widget" data-icon="${rule.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!rule.isInstantiable())?string}">
+								<div class="component form-builder-field hide widget yui3-widget" data-icon="${rule.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!rule.isInstantiable())?string}">
+									<div>
 										<div>
-											<div>
-												<div class="field-header">
-													<div class="field-icon"><i class="${rule.getIcon()}"></i></div>
-													<div class="field-info row">
-														<div class="field-title">${rule.getName(locale)}</div>
-														<div class="field-description">${rule.getDescription(locale)}</div>
-														<div class="field-short-description">${rule.getShortDescription(locale)}</div>
-													</div>
+											<div class="field-header">
+												<div class="field-icon"><i class="${rule.getIcon()}"></i></div>
+												<div class="field-info row">
+													<div class="field-title">${rule.getName(locale)}</div>
+													<div class="field-description">${rule.getDescription(locale)}</div>
+													<div class="field-short-description">${rule.getShortDescription(locale)}</div>
 												</div>
-												<div class="field-editor">
-												</div>
+											</div>
+											<div class="field-editor">
 											</div>
 										</div>
 									</div>
-								</#list>
-							</#if>
+								</div>
+							</#list>
 						</div>
 					</div>
 				</div>

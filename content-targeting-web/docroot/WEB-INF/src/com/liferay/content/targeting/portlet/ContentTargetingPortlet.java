@@ -16,6 +16,10 @@ package com.liferay.content.targeting.portlet;
 
 import com.liferay.content.targeting.InvalidDateRangeException;
 import com.liferay.content.targeting.InvalidNameException;
+import com.liferay.content.targeting.InvalidRuleException;
+import com.liferay.content.targeting.InvalidRulesException;
+import com.liferay.content.targeting.InvalidTrackingActionException;
+import com.liferay.content.targeting.InvalidTrackingActionsException;
 import com.liferay.content.targeting.UsedUserSegmentException;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
@@ -49,8 +53,8 @@ import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.ReportSearchContainerIterator;
 import com.liferay.content.targeting.util.UserSegmentSearchContainerIterator;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.NoSuchModelException;
 import com.liferay.portal.kernel.dao.search.RowChecker;
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -277,17 +281,31 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 					serviceContext);
 			}
 
-			updateTrackingActions(campaign.getCampaignId(), request, response);
+			List<InvalidTrackingActionException> trackingActionExceptions =
+				updateTrackingActions(
+					campaign.getCampaignId(), request, response);
+
+			if (!trackingActionExceptions.isEmpty()) {
+				throw new InvalidTrackingActionsException(
+					trackingActionExceptions);
+			}
 
 			sendRedirect(request, response);
 		}
 		catch (Exception e) {
+			PortalUtil.copyRequestParameters(request, response);
+
 			SessionErrors.add(request, e.getClass().getName(), e);
 
-			if (e instanceof NoSuchModelException ||
-				e instanceof InvalidDateRangeException ||
+			if (e instanceof InvalidDateRangeException ||
 				e instanceof InvalidNameException ||
+				e instanceof InvalidTrackingActionsException ||
 				e instanceof PrincipalException) {
+
+				SessionMessages.add(
+					request,
+					PortalUtil.getPortletId(request) +
+						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
 				response.setRenderParameter(
 					"mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
@@ -372,16 +390,28 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 					serviceContext);
 			}
 
-			updateRules(userSegment.getUserSegmentId(), request, response);
+			List<InvalidRuleException> ruleExceptions = updateRules(
+				userSegment.getUserSegmentId(), request, response);
+
+			if (!ruleExceptions.isEmpty()) {
+				throw new InvalidRulesException(ruleExceptions);
+			}
 
 			sendRedirect(request, response);
 		}
 		catch (Exception e) {
+			PortalUtil.copyRequestParameters(request, response);
+
 			SessionErrors.add(request, e.getClass().getName(), e);
 
-			if (e instanceof NoSuchModelException ||
-				e instanceof InvalidNameException ||
+			if (e instanceof InvalidNameException ||
+				e instanceof InvalidRulesException ||
 				e instanceof PrincipalException) {
+
+				SessionMessages.add(
+					request,
+					PortalUtil.getPortletId(request) +
+						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
 				response.setRenderParameter(
 					"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
@@ -843,15 +873,18 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 	}
 
-	protected void updateRules(
+	protected List<InvalidRuleException> updateRules(
 			long userSegmentId, ActionRequest request, ActionResponse response)
 		throws Exception {
+
+		List<InvalidRuleException> ruleExceptions =
+			new ArrayList<InvalidRuleException>();
 
 		String userSegmentRules = ParamUtil.getString(
 			request, "userSegmentRules");
 
 		if (Validator.isNull(userSegmentRules)) {
-			return;
+			return ruleExceptions;
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -891,8 +924,20 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				jSONObjectRule.getJSONArray("data"), response.getNamespace(),
 				id);
 
-			String typeSettings = rule.processRule(
-				request, response, id, ruleValues);
+			String typeSettings = null;
+
+			try {
+				typeSettings = rule.processRule(
+					request, response, id, ruleValues);
+			}
+			catch (InvalidRuleException ire) {
+				ire.setRuleGuid(id);
+
+				ruleExceptions.add(ire);
+			}
+			catch (Exception e) {
+				ruleExceptions.add(new InvalidRuleException(e.getMessage()));
+			}
 
 			try {
 				if (ruleInstanceId > 0) {
@@ -908,8 +953,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 						typeSettings, serviceContext);
 				}
 			}
-			catch (Exception e) {
-				_log.error("Cannot update rule", e);
+			catch (PortalException pe) {
+				_log.error("Cannot update rule", pe);
 			}
 		}
 
@@ -919,17 +964,22 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			_ruleInstanceService.deleteRuleInstance(
 				ruleInstance.getRuleInstanceId());
 		}
+
+		return ruleExceptions;
 	}
 
-	protected void updateTrackingActions(
+	protected List<InvalidTrackingActionException> updateTrackingActions(
 			long campaignId, ActionRequest request, ActionResponse response)
 		throws Exception {
+
+		List<InvalidTrackingActionException> trackingActionExceptions =
+			new ArrayList<InvalidTrackingActionException>();
 
 		String campaignTrackingActions = ParamUtil.getString(
 			request, "campaignTrackingActions");
 
 		if (Validator.isNull(campaignTrackingActions)) {
-			return;
+			return trackingActionExceptions;
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
@@ -971,8 +1021,21 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				jSONObjectTrackingAction.getJSONArray("data"),
 				response.getNamespace(), id);
 
-			String typeSettings = trackingAction.processTrackingAction(
-				request, response, id, trackingActionValues);
+			String typeSettings = null;
+
+			try {
+				typeSettings = trackingAction.processTrackingAction(
+					request, response, id, trackingActionValues);
+			}
+			catch (InvalidTrackingActionException itae) {
+				itae.setTrackingActionGuid(id);
+
+				trackingActionExceptions.add(itae);
+			}
+			catch (Exception e) {
+				trackingActionExceptions.add(
+					new InvalidTrackingActionException(e.getMessage()));
+			}
 
 			String alias = trackingActionValues.get("alias");
 			String referrerClassName = trackingActionValues.get(
@@ -1000,8 +1063,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 							eventType, typeSettings, serviceContext);
 				}
 			}
-			catch (Exception e) {
-				_log.error("Cannot update tracking action", e);
+			catch (PortalException pe) {
+				_log.error("Cannot update tracking action", pe);
 			}
 		}
 
@@ -1013,6 +1076,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			_trackingActionInstanceService.deleteTrackingActionInstance(
 					trackingActionInstance.getTrackingActionInstanceId());
 		}
+
+		return trackingActionExceptions;
 	}
 
 	private Date _getDate(PortletRequest portletRequest, String paramPrefix) {
