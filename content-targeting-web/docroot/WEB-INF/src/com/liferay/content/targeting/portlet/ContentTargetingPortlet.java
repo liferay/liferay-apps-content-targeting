@@ -423,6 +423,20 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 	}
 
+	protected InvalidRulesException getInvalidRulesException(
+		PortletRequest portletRequest) {
+
+		if (SessionErrors.contains(
+				portletRequest, InvalidRulesException.class.getName())) {
+
+			return (InvalidRulesException)SessionErrors.get(
+				portletRequest, InvalidRulesException.class.getName());
+		}
+		else {
+			return new InvalidRulesException();
+		}
+	}
+
 	protected Map<String, String> getJSONValues(
 		JSONArray data, String namespace, String id) {
 
@@ -445,9 +459,23 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 	protected String getRuleHtml(
 		Rule rule, RuleInstance ruleInstance, Template template,
-		Map<String, String> values) {
+		Map<String, String> values, List<InvalidRuleException> exceptions) {
 
 		Map<String, Object> context = cloneTemplateContext(template);
+
+		String html = StringPool.BLANK;
+
+		if ((exceptions != null) && !exceptions.isEmpty()) {
+			try {
+				context.put("exceptions", exceptions);
+
+				html += ContentTargetingContextUtil.parseTemplate(
+					getClass(), "templates/ct_exceptions.ftl", context);
+			}
+			catch (Exception e) {
+				_log.error(e);
+			}
+		}
 
 		HttpServletRequest request = (HttpServletRequest)context.get("request");
 
@@ -460,7 +488,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			values = Collections.emptyMap();
 		}
 
-		String html = rule.getFormHTML(ruleInstance, context, values);
+		html += rule.getFormHTML(ruleInstance, context, values);
 
 		if (!validatorTagsMap.isEmpty()) {
 			try {
@@ -480,9 +508,24 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 	protected String getTrackingActionHtml(
 		TrackingAction trackingAction,
 		TrackingActionInstance trackingActionInstance, Template template,
-		Map<String, String> values) {
+		Map<String, String> values,
+		List<InvalidTrackingActionException> exceptions) {
 
 		Map<String, Object> context = cloneTemplateContext(template);
+
+		String html = StringPool.BLANK;
+
+		if ((exceptions != null) && !exceptions.isEmpty()) {
+			try {
+				context.put("exceptions", exceptions);
+
+				html += ContentTargetingContextUtil.parseTemplate(
+					getClass(), "templates/ct_exceptions.ftl", context);
+			}
+			catch (Exception e) {
+				_log.error(e);
+			}
+		}
 
 		HttpServletRequest request = (HttpServletRequest)context.get("request");
 
@@ -495,7 +538,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			values = Collections.emptyMap();
 		}
 
-		String html = trackingAction.getFormHTML(
+		html += trackingAction.getFormHTML(
 			trackingActionInstance, context, values);
 
 		if (!validatorTagsMap.isEmpty()) {
@@ -544,6 +587,23 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
+	}
+
+	protected InvalidTrackingActionsException
+		getInvalidTrackingActionsException(
+			PortletRequest portletRequest) {
+
+		if (SessionErrors.contains(
+				portletRequest,
+			InvalidTrackingActionsException.class.getName())) {
+
+			return (InvalidTrackingActionsException)SessionErrors.get(
+				portletRequest,
+				InvalidTrackingActionsException.class.getName());
+		}
+		else {
+			return new InvalidTrackingActionsException();
+		}
 	}
 
 	protected void populateViewContext(
@@ -685,6 +745,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 					List<TrackingActionTemplate> addedTrackingActionTemplates =
 						new ArrayList<TrackingActionTemplate>();
 
+					InvalidTrackingActionsException itae =
+						getInvalidTrackingActionsException(portletRequest);
+
 					for (TrackingActionInstance instance : instances) {
 						TrackingAction trackingAction =
 							_trackingActionsRegistry.getTrackingAction(
@@ -699,7 +762,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 							trackingAction);
 
 						String html = getTrackingActionHtml(
-							trackingAction, instance, template, null);
+							trackingAction, instance, template, null,
+							itae.getExceptions(
+								instance.getTrackingActionGuid()));
 
 						trackingActionTemplate.setTemplate(
 							HtmlUtil.escapeAttribute(html));
@@ -723,7 +788,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 					trackingActionTemplate.setTrackingAction(trackingAction);
 
 					String html = getTrackingActionHtml(
-						trackingAction, null, template, null);
+						trackingAction, null, template, null, null);
 
 					trackingActionTemplate.setTemplate(
 						HtmlUtil.escapeAttribute(html));
@@ -764,6 +829,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 					List<RuleTemplate> addedRuleTemplates =
 						new ArrayList<RuleTemplate>();
 
+					InvalidRulesException ire = getInvalidRulesException(
+						portletRequest);
+
 					for (RuleInstance ruleInstance : ruleInstances) {
 						Rule rule = _rulesRegistry.getRule(
 							ruleInstance.getRuleKey());
@@ -775,7 +843,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 						ruleTemplate.setRule(rule);
 
 						String html = getRuleHtml(
-							rule, ruleInstance, template, null);
+							rule, ruleInstance, template,
+							ruleInstance.getValues(),
+							ire.getRuleExceptions(ruleInstance.getRuleGuid()));
 
 						ruleTemplate.setTemplate(
 							HtmlUtil.escapeAttribute(html));
@@ -799,7 +869,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 					ruleTemplate.setRule(rule);
 
-					String html = getRuleHtml(rule, null, template, null);
+					String html = getRuleHtml(rule, null, template, null, null);
 
 					ruleTemplate.setTemplate(HtmlUtil.escapeAttribute(html));
 
