@@ -209,8 +209,6 @@ AUI.add(
 							var instance = this,
 								field = A.Widget.getByNode(event.target);
 
-							instance.simulateFocusField(field, event.target);
-
 							event.stopPropagation();
 						},
 
@@ -402,21 +400,6 @@ AUI.add(
 							);
 
 							return JSON.stringify(fields);
-						},
-
-						simulateFocusField: function(field, target) {
-							var instance = this,
-								lastFocusedField = instance.lastFocusedField;
-
-							if (lastFocusedField && lastFocusedField !== field) {
-								lastFocusedField.blur();
-
-								instance.lastFocusedField = field.focus();
-							}
-
-							if (target.getDOMNode() !== document.activeElement) {
-								target.focus();
-							}
 						}
 					}
 				}
