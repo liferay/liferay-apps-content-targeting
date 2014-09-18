@@ -9,6 +9,7 @@ Import-Package:\
 	com.liferay.content.targeting.rule.categories,\
 	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.messaging,\
+	com.liferay.ip.geocoder,\
 	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
 Include-Resource:\
