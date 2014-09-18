@@ -640,6 +640,27 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	}
 
 	@Override
+	public java.lang.String getTrackingActionGuid() {
+		return _trackingActionInstance.getTrackingActionGuid();
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.lang.String> getValues() {
+		return _trackingActionInstance.getValues();
+	}
+
+	@Override
+	public void setTrackingActionGuid(java.lang.String trackingActionGuid) {
+		_trackingActionInstance.setTrackingActionGuid(trackingActionGuid);
+	}
+
+	@Override
+	public void setValues(
+		java.util.Map<java.lang.String, java.lang.String> values) {
+		_trackingActionInstance.setValues(values);
+	}
+
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj) {
 			return true;

@@ -325,6 +325,26 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
+					"com.liferay.content.targeting.InvalidRuleException")) {
+			return new com.liferay.content.targeting.InvalidRuleException();
+		}
+
+		if (className.equals(
+					"com.liferay.content.targeting.InvalidRulesException")) {
+			return new com.liferay.content.targeting.InvalidRulesException();
+		}
+
+		if (className.equals(
+					"com.liferay.content.targeting.InvalidTrackingActionException")) {
+			return new com.liferay.content.targeting.InvalidTrackingActionException();
+		}
+
+		if (className.equals(
+					"com.liferay.content.targeting.InvalidTrackingActionsException")) {
+			return new com.liferay.content.targeting.InvalidTrackingActionsException();
+		}
+
+		if (className.equals(
 					"com.liferay.content.targeting.UsedUserSegmentException")) {
 			return new com.liferay.content.targeting.UsedUserSegmentException();
 		}

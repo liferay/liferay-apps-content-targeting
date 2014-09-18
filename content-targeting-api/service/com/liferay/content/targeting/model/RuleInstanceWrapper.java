@@ -503,8 +503,29 @@ public class RuleInstanceWrapper implements RuleInstance,
 	}
 
 	@Override
+	public java.lang.String getRuleGuid() {
+		return _ruleInstance.getRuleGuid();
+	}
+
+	@Override
 	public java.lang.String getUserSegmentName(java.util.Locale locale) {
 		return _ruleInstance.getUserSegmentName(locale);
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.lang.String> getValues() {
+		return _ruleInstance.getValues();
+	}
+
+	@Override
+	public void setRuleGuid(java.lang.String ruleGuid) {
+		_ruleInstance.setRuleGuid(ruleGuid);
+	}
+
+	@Override
+	public void setValues(
+		java.util.Map<java.lang.String, java.lang.String> values) {
+		_ruleInstance.setValues(values);
 	}
 
 	@Override

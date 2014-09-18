@@ -32,4 +32,12 @@ public interface TrackingActionInstance extends TrackingActionInstanceModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.TrackingActionInstanceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String getTrackingActionGuid();
+
+	public java.util.Map<java.lang.String, java.lang.String> getValues();
+
+	public void setTrackingActionGuid(java.lang.String trackingActionGuid);
+
+	public void setValues(
+		java.util.Map<java.lang.String, java.lang.String> values);
 }

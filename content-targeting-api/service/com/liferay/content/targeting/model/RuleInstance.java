@@ -31,5 +31,14 @@ public interface RuleInstance extends RuleInstanceModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.RuleInstanceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String getRuleGuid();
+
 	public java.lang.String getUserSegmentName(java.util.Locale locale);
+
+	public java.util.Map<java.lang.String, java.lang.String> getValues();
+
+	public void setRuleGuid(java.lang.String ruleGuid);
+
+	public void setValues(
+		java.util.Map<java.lang.String, java.lang.String> values);
 }

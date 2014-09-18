@@ -161,11 +161,17 @@
 	</entity>
 	<entity class="com.liferay.content.targeting.model.impl.RuleInstanceImpl" name="RuleInstance">
 		<table name="ContentTargeting_RuleInstance" />
-		<attributes />
+		<attributes>
+			<transient name="ruleGuid" />
+			<transient name="values" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.content.targeting.model.impl.TrackingActionInstanceImpl" name="TrackingActionInstance">
 		<table name="ContentTargeting_TrackingActionInstance" />
-		<attributes />
+		<attributes>
+			<transient name="trackingActionGuid" />
+			<transient name="values" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.content.targeting.model.impl.UserSegmentImpl" name="UserSegment">
 		<table name="ContentTargeting_UserSegment" />

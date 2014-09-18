@@ -582,6 +582,77 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 	}
 
 	@Override
+	public void setValues(
+		java.util.Map<java.lang.String, java.lang.String> values) {
+		try {
+			String methodName = "setValues";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.util.Map.class };
+
+			Object[] parameterValues = new Object[] { values };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setTrackingActionGuid(java.lang.String trackingActionGuid) {
+		try {
+			String methodName = "setTrackingActionGuid";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { trackingActionGuid };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.lang.String getTrackingActionGuid() {
+		try {
+			String methodName = "getTrackingActionGuid";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.lang.String> getValues() {
+		try {
+			String methodName = "getValues";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.util.Map<java.lang.String, java.lang.String> returnObj = (java.util.Map<java.lang.String, java.lang.String>)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
 		return new StagedModelType(PortalUtil.getClassNameId(
 				TrackingActionInstance.class.getName()));

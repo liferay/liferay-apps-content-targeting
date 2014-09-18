@@ -424,6 +424,23 @@ public class RuleInstanceClp extends BaseModelImpl<RuleInstance>
 	}
 
 	@Override
+	public void setValues(
+		java.util.Map<java.lang.String, java.lang.String> values) {
+		try {
+			String methodName = "setValues";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.util.Map.class };
+
+			Object[] parameterValues = new Object[] { values };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public java.lang.String getUserSegmentName(java.util.Locale locale) {
 		try {
 			String methodName = "getUserSegmentName";
@@ -433,6 +450,60 @@ public class RuleInstanceClp extends BaseModelImpl<RuleInstance>
 			Object[] parameterValues = new Object[] { locale };
 
 			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.lang.String getRuleGuid() {
+		try {
+			String methodName = "getRuleGuid";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public void setRuleGuid(java.lang.String ruleGuid) {
+		try {
+			String methodName = "setRuleGuid";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { ruleGuid };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.lang.String> getValues() {
+		try {
+			String methodName = "getValues";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.util.Map<java.lang.String, java.lang.String> returnObj = (java.util.Map<java.lang.String, java.lang.String>)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
 
 			return returnObj;
