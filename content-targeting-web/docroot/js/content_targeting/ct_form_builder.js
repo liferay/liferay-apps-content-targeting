@@ -408,13 +408,13 @@ AUI.add(
 							var instance = this,
 								lastFocusedField = instance.lastFocusedField;
 
-							if (lastFocusedField) {
+							if (lastFocusedField && lastFocusedField !== field) {
 								lastFocusedField.blur();
+
+								instance.lastFocusedField = field.focus();
 							}
 
-							instance.lastFocusedField = field.focus();
-
-							if (target) {
+							if (target.getDOMNode() !== document.activeElement) {
 								target.focus();
 							}
 						}
