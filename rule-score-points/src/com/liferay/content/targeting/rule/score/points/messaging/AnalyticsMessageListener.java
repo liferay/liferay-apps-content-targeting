@@ -64,8 +64,13 @@ public class AnalyticsMessageListener implements MessageListener {
 		long anonymousUserId = message.getLong("anonymousUserId");
 		long groupId = message.getLong("scopeGroupId");
 
-		scorePointsAssigner.assignPoints(
-			groupId, anonymousUserId, className, classPK);
+		try {
+			scorePointsAssigner.assignPoints(
+				groupId, anonymousUserId, className, classPK);
+		}
+		catch (NullPointerException npe) {
+			_log.error("No score point assigners available");
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
