@@ -17,5 +17,6 @@
 		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.0" />
 		<dependency name="com.liferay.portal.http.service" org="com.liferay" rev="1.0.0" />
 		<dependency name="com.liferay.portal.log.bridge" org="com.liferay" rev="1.0.0" />
+		<dependency name="spring-tx" org="org.springframework" rev="3.0.7.RELEASE" />
 	</dependencies>
 </ivy-module>

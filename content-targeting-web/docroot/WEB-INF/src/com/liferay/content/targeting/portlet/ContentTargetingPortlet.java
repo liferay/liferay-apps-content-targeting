@@ -68,6 +68,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -84,6 +85,8 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
+import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -99,6 +102,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -112,6 +116,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
+import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Eduardo Garcia
@@ -274,28 +280,14 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		try {
-			Campaign campaign = null;
+			Callable<Campaign> campaignCallable =
+				new CampaignCallable(
+					request, response, themeDisplay.getUserId(), campaignId,
+					nameMap, descriptionMap, startDate, endDate, priority,
+					active, userSegmentIds, serviceContext);
 
-			if (campaignId > 0) {
-				campaign = _campaignService.updateCampaign(
-					campaignId, nameMap, descriptionMap, startDate, endDate,
-					priority, active, userSegmentIds, serviceContext);
-			}
-			else {
-				campaign = _campaignService.addCampaign(
-					themeDisplay.getUserId(), nameMap, descriptionMap,
-					startDate, endDate, priority, active, userSegmentIds,
-					serviceContext);
-			}
-
-			List<InvalidTrackingActionException> trackingActionExceptions =
-				updateTrackingActions(
-					campaign.getCampaignId(), request, response);
-
-			if (!trackingActionExceptions.isEmpty()) {
-				throw new InvalidTrackingActionsException(
-					trackingActionExceptions);
-			}
+			TransactionalCallableUtil.call(
+				_transactionAttribute, campaignCallable);
 
 			sendRedirect(request, response);
 		}
@@ -321,6 +313,11 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				response.setRenderParameter(
 					"mvcPath", ContentTargetingPath.ERROR);
 			}
+		}
+		catch (Throwable t) {
+			_log.error(t);
+
+			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
 		}
 	}
 
@@ -384,25 +381,14 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		serviceContext.setScopeGroupId(
 			themeDisplay.getSiteGroupIdOrLiveGroupId());
 
-		UserSegment userSegment = null;
-
 		try {
-			if (userSegmentId > 0) {
-				userSegment = _userSegmentService.updateUserSegment(
-					userSegmentId, nameMap, descriptionMap, serviceContext);
-			}
-			else {
-				userSegment = _userSegmentService.addUserSegment(
-					themeDisplay.getUserId(), nameMap, descriptionMap,
-					serviceContext);
-			}
+			Callable<UserSegment> userSegmentCallable =
+				new UserSegmentCallable(
+					request, response, themeDisplay.getUserId(), userSegmentId,
+					nameMap, descriptionMap, serviceContext);
 
-			List<InvalidRuleException> ruleExceptions = updateRules(
-				userSegment.getUserSegmentId(), request, response);
-
-			if (!ruleExceptions.isEmpty()) {
-				throw new InvalidRulesException(ruleExceptions);
-			}
+			TransactionalCallableUtil.call(
+				_transactionAttribute, userSegmentCallable);
 
 			sendRedirect(request, response);
 		}
@@ -424,9 +410,16 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 					"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
 			}
 			else {
+				_log.error(e);
+
 				response.setRenderParameter(
 					"mvcPath", ContentTargetingPath.ERROR);
 			}
+		}
+		catch (Throwable t) {
+			_log.error(t);
+
+			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
 		}
 	}
 
@@ -441,6 +434,23 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 		else {
 			return new InvalidRulesException();
+		}
+	}
+
+	protected InvalidTrackingActionsException
+		getInvalidTrackingActionsException(
+			PortletRequest portletRequest) {
+
+		if (SessionErrors.contains(
+				portletRequest,
+			InvalidTrackingActionsException.class.getName())) {
+
+			return (InvalidTrackingActionsException)SessionErrors.get(
+				portletRequest,
+				InvalidTrackingActionsException.class.getName());
+		}
+		else {
+			return new InvalidTrackingActionsException();
 		}
 	}
 
@@ -700,23 +710,6 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
-	}
-
-	protected InvalidTrackingActionsException
-		getInvalidTrackingActionsException(
-			PortletRequest portletRequest) {
-
-		if (SessionErrors.contains(
-				portletRequest,
-			InvalidTrackingActionsException.class.getName())) {
-
-			return (InvalidTrackingActionsException)SessionErrors.get(
-				portletRequest,
-				InvalidTrackingActionsException.class.getName());
-		}
-		else {
-			return new InvalidTrackingActionsException();
-		}
 	}
 
 	protected void populateViewContext(
@@ -1090,7 +1083,8 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 	}
 
 	protected List<InvalidRuleException> updateRules(
-			long userSegmentId, ActionRequest request, ActionResponse response)
+			long userSegmentId, PortletRequest request,
+			PortletResponse response)
 		throws Exception {
 
 		List<RuleInstance> requestRuleInstances = getRulesFromRequest(
@@ -1164,7 +1158,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 	}
 
 	protected List<InvalidTrackingActionException> updateTrackingActions(
-			long campaignId, ActionRequest request, ActionResponse response)
+			long campaignId, PortletRequest request, PortletResponse response)
 		throws Exception {
 
 		List<TrackingActionInstance> requestTrackingActionInstances =
@@ -1312,7 +1306,127 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		_trackingActionInstanceLocalService;
 	private TrackingActionInstanceService _trackingActionInstanceService;
 	private TrackingActionsRegistry _trackingActionsRegistry;
+	private TransactionAttribute _transactionAttribute =
+		TransactionAttributeBuilder.build(
+			Propagation.REQUIRED, new Class<?>[]{Exception.class});
 	private UserSegmentLocalService _userSegmentLocalService;
 	private UserSegmentService _userSegmentService;
+
+	private class CampaignCallable implements Callable<Campaign> {
+
+		private CampaignCallable(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			long userId, long campaignId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
+			int priority, boolean active, long[] userSegmentIds,
+			ServiceContext serviceContext) {
+
+			_portletRequest = portletRequest;
+			_portletResponse = portletResponse;
+			_userId = userId;
+			_campaignId = campaignId;
+			_nameMap = nameMap;
+			_descriptionMap = descriptionMap;
+			_startDate = startDate;
+			_endDate = endDate;
+			_priority = priority;
+			_active = active;
+			_userSegmentIds = userSegmentIds;
+			_serviceContext = serviceContext;
+		}
+
+		@Override
+		public Campaign call() throws Exception {
+			Campaign campaign = null;
+
+			if (_campaignId > 0) {
+				campaign = _campaignService.updateCampaign(
+					_campaignId, _nameMap, _descriptionMap, _startDate,
+					_endDate, _priority, _active, _userSegmentIds,
+					_serviceContext);
+			}
+			else {
+				campaign = _campaignService.addCampaign(
+					_userId, _nameMap, _descriptionMap, _startDate, _endDate,
+					_priority, _active, _userSegmentIds, _serviceContext);
+			}
+
+			List<InvalidTrackingActionException> trackingActionExceptions =
+				updateTrackingActions(
+					campaign.getCampaignId(), _portletRequest,
+					_portletResponse);
+
+			if (!trackingActionExceptions.isEmpty()) {
+				throw new InvalidTrackingActionsException(
+					trackingActionExceptions);
+			}
+
+			return campaign;
+		}
+
+		private PortletRequest _portletRequest;
+		private PortletResponse _portletResponse;
+		private long _userId;
+		private long _campaignId;
+		private Map<Locale, String> _nameMap;
+		private Map<Locale, String> _descriptionMap;
+		private Date _startDate;
+		private Date _endDate;
+		private int _priority;
+		private boolean _active;
+		private long[] _userSegmentIds;
+		private ServiceContext _serviceContext;
+
+	}
+
+	private class UserSegmentCallable implements Callable<UserSegment> {
+
+		private UserSegmentCallable(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			long userId, long userSegmentId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext) {
+
+			_portletRequest = portletRequest;
+			_portletResponse = portletResponse;
+			_userId = userId;
+			_userSegmentId = userSegmentId;
+			_nameMap = nameMap;
+			_descriptionMap = descriptionMap;
+			_serviceContext = serviceContext;
+		}
+
+		@Override
+		public UserSegment call() throws Exception {
+			UserSegment userSegment = null;
+
+			if (_userSegmentId > 0) {
+				userSegment = _userSegmentService.updateUserSegment(
+					_userSegmentId, _nameMap, _descriptionMap, _serviceContext);
+			}
+			else {
+				userSegment = _userSegmentService.addUserSegment(
+					_userId, _nameMap, _descriptionMap, _serviceContext);
+			}
+
+			List<InvalidRuleException> ruleExceptions = updateRules(
+				userSegment.getUserSegmentId(), _portletRequest,
+				_portletResponse);
+
+			if (!ruleExceptions.isEmpty()) {
+				throw new InvalidRulesException(ruleExceptions);
+			}
+
+			return userSegment;
+		}
+
+		private PortletRequest _portletRequest;
+		private PortletResponse _portletResponse;
+		private long _userId;
+		private long _userSegmentId;
+		private Map<Locale, String> _nameMap;
+		private Map<Locale, String> _descriptionMap;
+		private ServiceContext _serviceContext;
+
+	}
 
 }
