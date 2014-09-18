@@ -82,7 +82,12 @@ public class YoutubeTrackingAction extends BaseTrackingAction {
 		String elementId = StringPool.BLANK;
 		String eventType = StringPool.BLANK;
 
-		if (trackingActionInstance != null) {
+		if (!values.isEmpty()) {
+			alias = values.get("alias");
+			elementId = values.get("elementId");
+			eventType = values.get("eventType");
+		}
+		else if (trackingActionInstance != null) {
 			alias = trackingActionInstance.getAlias();
 			elementId = trackingActionInstance.getElementId();
 			eventType = trackingActionInstance.getEventType();

@@ -26,6 +26,7 @@ import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -143,7 +144,12 @@ public class PageTrackingAction extends BaseTrackingAction {
 		String eventType = StringPool.BLANK;
 		long referrerClassPK = 0;
 
-		if (trackingActionInstance != null) {
+		if (!values.isEmpty()) {
+			alias = values.get("alias");
+			eventType = values.get("eventType");
+			referrerClassPK = GetterUtil.getLong(values.get("referrerClassPK"));
+		}
+		else if (trackingActionInstance != null) {
 			alias = trackingActionInstance.getAlias();
 			eventType = trackingActionInstance.getEventType();
 			referrerClassPK = trackingActionInstance.getReferrerClassPK();

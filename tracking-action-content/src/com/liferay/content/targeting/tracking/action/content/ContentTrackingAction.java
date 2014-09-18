@@ -161,30 +161,50 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 		String alias = StringPool.BLANK;
 		long assetEntryId = 0;
+		AssetEntry assetEntry = null;
 		String assetImagePreview = StringPool.BLANK;
 		String assetTitlePreview = StringPool.BLANK;
 		String assetTypePreview = StringPool.BLANK;
 		String eventType = StringPool.BLANK;
 
-		if (trackingActionInstance != null) {
+		if (!values.isEmpty()) {
+			alias = values.get("alias");
+			assetEntryId = GetterUtil.getLong(values.get("assetEntryId"));
+			eventType = values.get("eventType");
+
+			try {
+				assetEntry = AssetEntryLocalServiceUtil.getEntry(assetEntryId);
+			}
+			catch (Exception e) {
+				_log.error(e);
+			}
+		}
+		else if (trackingActionInstance != null) {
 			alias = trackingActionInstance.getAlias();
 			eventType = trackingActionInstance.getEventType();
 
 			try {
-				AssetEntry assetEntry = AssetEntryLocalServiceUtil.getEntry(
+				assetEntry = AssetEntryLocalServiceUtil.getEntry(
 					trackingActionInstance.getReferrerClassName(),
 					trackingActionInstance.getReferrerClassPK());
 
 				assetEntryId = assetEntry.getEntryId();
+			}
+			catch (Exception e) {
+				_log.error(e);
+			}
+		}
 
-				AssetRendererFactory assetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(
-							assetEntry.getClassName());
+		if (assetEntry != null) {
+			AssetRendererFactory assetRendererFactory =
+				AssetRendererFactoryRegistryUtil.
+					getAssetRendererFactoryByClassName(
+						assetEntry.getClassName());
 
-				AssetRenderer assetRenderer =
-					assetRendererFactory.getAssetRenderer(
-						assetEntry.getClassPK());
+			AssetRenderer assetRenderer = null;
+			try {
+				assetRenderer = assetRendererFactory.getAssetRenderer(
+					assetEntry.getClassPK());
 
 				RenderRequest renderRequest = (RenderRequest)context.get(
 					"renderRequest");
@@ -202,6 +222,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 					themeDisplay.getLocale(), true);
 			}
 			catch (Exception e) {
+				_log.error(e);
 			}
 		}
 
