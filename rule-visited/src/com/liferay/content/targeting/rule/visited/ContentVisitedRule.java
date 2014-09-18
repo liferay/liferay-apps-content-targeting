@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.rule.visited;
 
+import com.liferay.content.targeting.InvalidRuleException;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
@@ -25,6 +26,8 @@ import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Company;
@@ -130,10 +133,33 @@ public class ContentVisitedRule extends BaseRule {
 
 	@Override
 	public String processRule(
-		PortletRequest request, PortletResponse response, String id,
-		Map<String, String> values) {
+			PortletRequest request, PortletResponse response, String id,
+			Map<String, String> values)
+		throws InvalidRuleException {
 
-		return values.get("assetEntryId");
+		long assetEntryId = GetterUtil.getLong(values.get("assetEntryId"));
+
+		if (assetEntryId > 0) {
+			AssetEntry assetEntry = null;
+
+			try {
+				assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
+					assetEntryId);
+			}
+			catch (SystemException e) {
+				_log.error(e);
+			}
+
+			if (assetEntry == null) {
+				throw new InvalidRuleException(
+					"the-selected-content-can-not-be-found");
+			}
+
+			return String.valueOf(assetEntryId);
+		}
+		else {
+			throw new InvalidRuleException("please-select-some-content");
+		}
 	}
 
 	@Reference
@@ -196,26 +222,30 @@ public class ContentVisitedRule extends BaseRule {
 				AssetEntry assetEntry =
 					AssetEntryLocalServiceUtil.fetchAssetEntry(assetEntryId);
 
-				AssetRendererFactory assetRendererFactory =
-					AssetRendererFactoryRegistryUtil.
-						getAssetRendererFactoryByClassName(
-							assetEntry.getClassName());
+				if (assetEntry != null) {
+					AssetRendererFactory assetRendererFactory =
+						AssetRendererFactoryRegistryUtil.
+							getAssetRendererFactoryByClassName(
+								assetEntry.getClassName());
 
-				AssetRenderer assetRenderer =
-					assetRendererFactory.getAssetRenderer(
-						assetEntry.getClassPK());
+					AssetRenderer assetRenderer =
+						assetRendererFactory.getAssetRenderer(
+							assetEntry.getClassPK());
 
-				assetImage = assetRenderer.getThumbnailPath(renderRequest);
+					assetImage = assetRenderer.getThumbnailPath(renderRequest);
 
-				ThemeDisplay themeDisplay =
-					(ThemeDisplay)renderRequest.getAttribute(
-						WebKeys.THEME_DISPLAY);
+					ThemeDisplay themeDisplay =
+						(ThemeDisplay)renderRequest.getAttribute(
+							WebKeys.THEME_DISPLAY);
 
-				assetTitle = assetRenderer.getTitle(themeDisplay.getLocale());
-				assetType = assetRendererFactory.getTypeName(
-					themeDisplay.getLocale(), true);
+					assetTitle = assetRenderer.getTitle(
+						themeDisplay.getLocale());
+					assetType = assetRendererFactory.getTypeName(
+						themeDisplay.getLocale(), true);
+				}
 			}
 			catch (Exception e) {
+				_log.error(e);
 			}
 		}
 
@@ -246,6 +276,8 @@ public class ContentVisitedRule extends BaseRule {
 
 	protected static final String _FORM_TEMPLATE_PATH_CONTENT =
 		"templates/ct_fields_content.ftl";
+
+	private static Log _log = LogFactoryUtil.getLog(ContentVisitedRule.class);
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
 
