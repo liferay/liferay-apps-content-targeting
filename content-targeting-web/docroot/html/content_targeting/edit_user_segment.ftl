@@ -15,6 +15,7 @@
 -->
 
 <#include "../init.ftl" />
+<#include "../macros_exceptions.ftl" />
 
 <@liferay_ui["header"]
 	backURL="${redirect}"
@@ -30,7 +31,7 @@
 
 	<@aui["model-context"] bean=userSegment model=userSegmentClass />
 
-	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidNameException" message="please-enter-valid-name" />
+	<@invalidNameException />
 
 	<@aui["input"] name="name" />
 

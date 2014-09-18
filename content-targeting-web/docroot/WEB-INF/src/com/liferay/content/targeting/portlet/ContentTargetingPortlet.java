@@ -135,7 +135,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			sendRedirect(request, response);
 		}
 		catch (Exception e) {
-			SessionErrors.add(request, e.getClass().getName());
+			SessionErrors.add(request, e.getClass().getName(), e);
 
 			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
 		}
@@ -281,7 +281,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			sendRedirect(request, response);
 		}
 		catch (Exception e) {
-			SessionErrors.add(request, e.getClass().getName());
+			SessionErrors.add(request, e.getClass().getName(), e);
 
 			if (e instanceof NoSuchModelException ||
 				e instanceof InvalidDateRangeException ||
@@ -325,7 +325,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			sendRedirect(request, response);
 		}
 		catch (Exception e) {
-			SessionErrors.add(request, e.getClass().getName());
+			SessionErrors.add(request, e.getClass().getName(), e);
 
 			if (e instanceof PrincipalException) {
 				response.setRenderParameter(
@@ -376,7 +376,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			sendRedirect(request, response);
 		}
 		catch (Exception e) {
-			SessionErrors.add(request, e.getClass().getName());
+			SessionErrors.add(request, e.getClass().getName(), e);
 
 			if (e instanceof NoSuchModelException ||
 				e instanceof InvalidNameException ||
@@ -531,9 +531,6 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				"userSegmentSearchContainerIterator",
 				new UserSegmentSearchContainerIterator(
 					themeDisplay.getSiteGroupIdOrLiveGroupId(), keywords));
-			template.put(
-				"usedUserSegmentExceptionClass",
-				UsedUserSegmentException.class);
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN)) {
 			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");

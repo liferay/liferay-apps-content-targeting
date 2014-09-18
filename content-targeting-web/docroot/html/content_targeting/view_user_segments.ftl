@@ -15,16 +15,9 @@
 -->
 
 <#include "../init.ftl" />
+<#include "../macros_exceptions.ftl" />
 
-<@liferay_ui["error"] exception=usedUserSegmentExceptionClass>
-	<@liferay_ui["message"] key="this-user-segment-can-not-be-deleted-because-it-is-used-by-the-following-campaigns" />
-
-	<ul>
-		<#list errorException.getCampaigns() as campaign>
-			<li>${campaign.getName(locale)}</li>
-		</#list>
-	</ul>
-</@>
+<@usedUserSegmentException />
 
 <@portlet["renderURL"] var="searchURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />

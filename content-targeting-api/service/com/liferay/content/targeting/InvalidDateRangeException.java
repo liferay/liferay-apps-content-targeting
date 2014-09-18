@@ -29,12 +29,4 @@ public class InvalidDateRangeException extends PortalException {
 		super(msg);
 	}
 
-	public InvalidDateRangeException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
-	public InvalidDateRangeException(Throwable cause) {
-		super(cause);
-	}
-
 }

@@ -15,6 +15,7 @@
 -->
 
 <#include "../init.ftl" />
+<#include "../macros_exceptions.ftl" />
 
 <@liferay_ui["header"]
 	backURL="${redirect}"
@@ -30,7 +31,7 @@
 
 	<@aui["model-context"] bean=campaign model=campaignClass />
 
-	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidNameException" message="please-enter-valid-name" />
+	<@invalidNameException />
 
 	<@aui["input"] name="name" />
 
@@ -57,7 +58,7 @@
 		url=viewUserSegments
 	/>
 
-	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidDateRangeException" message="please-enter-valid-date-range" />
+	<@invalidDateRangeException />
 
 	<@aui["input"] name="startDate" value=startDate />
 

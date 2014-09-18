@@ -360,7 +360,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 	protected void validateCampaign(Campaign campaign) throws PortalException {
 		if (Validator.isNull(campaign.getName(LocaleUtil.getDefault()))) {
-			throw new InvalidNameException();
+			throw new InvalidNameException(InvalidNameException.EMPTY);
 		}
 
 		if ((campaign.getStartDate() == null) ||

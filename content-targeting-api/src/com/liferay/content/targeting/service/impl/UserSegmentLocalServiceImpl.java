@@ -366,7 +366,7 @@ public class UserSegmentLocalServiceImpl
 				titleMap, descriptionMap, vocabularyId, null, serviceContext);
 		}
 		catch (DuplicateCategoryException dce) {
-			throw new InvalidNameException();
+			throw new InvalidNameException(InvalidNameException.DUPLICATED);
 		}
 
 		return assetCategory;
@@ -480,7 +480,7 @@ public class UserSegmentLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(userSegment.getName(LocaleUtil.getDefault()))) {
-			throw new InvalidNameException();
+			throw new InvalidNameException(InvalidNameException.EMPTY);
 		}
 	}
 
