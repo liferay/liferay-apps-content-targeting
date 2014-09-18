@@ -511,6 +511,12 @@ public class CampaignLocalServiceUtil {
 			.addCampaignResources(campaign, groupPermissions, guestPermissions);
 	}
 
+	public static void deleteCampaigns(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteCampaigns(groupId);
+	}
+
 	public static com.liferay.content.targeting.model.Campaign fetchCurrentMaxPriorityCampaign(
 		long[] groupIds, long[] userSegmentIds)
 		throws com.liferay.portal.kernel.exception.SystemException {

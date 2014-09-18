@@ -38,6 +38,154 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	 */
 
 	/**
+	* Returns all the report instances where className = &#63; and classPK = &#63;.
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @return the matching report instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.content.targeting.model.ReportInstance> findByC_C(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns a range of all the report instances where className = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param start the lower bound of the range of report instances
+	* @param end the upper bound of the range of report instances (not inclusive)
+	* @return the range of matching report instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.content.targeting.model.ReportInstance> findByC_C(
+		java.lang.String className, long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns an ordered range of all the report instances where className = &#63; and classPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param start the lower bound of the range of report instances
+	* @param end the upper bound of the range of report instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching report instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public java.util.List<com.liferay.content.targeting.model.ReportInstance> findByC_C(
+		java.lang.String className, long classPK, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first report instance in the ordered set where className = &#63; and classPK = &#63;.
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching report instance
+	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.ReportInstance findByC_C_First(
+		java.lang.String className, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.content.targeting.NoSuchReportInstanceException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the first report instance in the ordered set where className = &#63; and classPK = &#63;.
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching report instance, or <code>null</code> if a matching report instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.ReportInstance fetchByC_C_First(
+		java.lang.String className, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last report instance in the ordered set where className = &#63; and classPK = &#63;.
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching report instance
+	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.ReportInstance findByC_C_Last(
+		java.lang.String className, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.content.targeting.NoSuchReportInstanceException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the last report instance in the ordered set where className = &#63; and classPK = &#63;.
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching report instance, or <code>null</code> if a matching report instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.ReportInstance fetchByC_C_Last(
+		java.lang.String className, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the report instances before and after the current report instance in the ordered set where className = &#63; and classPK = &#63;.
+	*
+	* @param reportInstanceId the primary key of the current report instance
+	* @param className the class name
+	* @param classPK the class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next report instance
+	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.ReportInstance[] findByC_C_PrevAndNext(
+		long reportInstanceId, java.lang.String className, long classPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.content.targeting.NoSuchReportInstanceException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes all the report instances where className = &#63; and classPK = &#63; from the database.
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public void removeByC_C(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of report instances where className = &#63; and classPK = &#63;.
+	*
+	* @param className the class name
+	* @param classPK the class p k
+	* @return the number of matching report instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_C(java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the report instance where reportKey = &#63; and className = &#63; and classPK = &#63; or throws a {@link com.liferay.content.targeting.NoSuchReportInstanceException} if it could not be found.
 	*
 	* @param reportKey the report key

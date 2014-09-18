@@ -81,4 +81,9 @@ public interface ReportInstanceService extends BaseService, InvokableService {
 	public java.util.Date getReportInstanceModifiedDate(
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }

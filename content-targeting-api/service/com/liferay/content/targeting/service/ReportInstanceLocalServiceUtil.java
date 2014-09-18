@@ -299,6 +299,12 @@ public class ReportInstanceLocalServiceUtil {
 				   .getReportInstanceModifiedDate(reportKey, className, classPK);
 	}
 
+	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getReportInstances(className, classPK);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

@@ -510,6 +510,12 @@ public class UserSegmentLocalServiceUtil {
 			guestPermissions);
 	}
 
+	public static void deleteUserSegments(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteUserSegments(groupId);
+	}
+
 	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,

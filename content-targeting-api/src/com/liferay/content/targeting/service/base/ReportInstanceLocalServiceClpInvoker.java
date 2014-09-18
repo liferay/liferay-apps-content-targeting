@@ -132,6 +132,10 @@ public class ReportInstanceLocalServiceClpInvoker {
 		_methodParameterTypes68 = new String[] {
 				"java.lang.String", "java.lang.String", "long"
 			};
+
+		_methodName69 = "getReportInstances";
+
+		_methodParameterTypes69 = new String[] { "java.lang.String", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -256,6 +260,12 @@ public class ReportInstanceLocalServiceClpInvoker {
 				(java.lang.String)arguments[1], ((Long)arguments[2]).longValue());
 		}
 
+		if (_methodName69.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
+			return ReportInstanceLocalServiceUtil.getReportInstances((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -301,4 +311,6 @@ public class ReportInstanceLocalServiceClpInvoker {
 	private String[] _methodParameterTypes67;
 	private String _methodName68;
 	private String[] _methodParameterTypes68;
+	private String _methodName69;
+	private String[] _methodParameterTypes69;
 }

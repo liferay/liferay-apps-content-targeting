@@ -551,6 +551,13 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	}
 
 	@Override
+	public void deleteUserSegments(long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.deleteUserSegments(groupId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,

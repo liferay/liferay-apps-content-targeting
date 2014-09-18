@@ -112,5 +112,20 @@ public class ReportInstanceServiceSoap {
 		}
 	}
 
+	public static com.liferay.content.targeting.model.ReportInstanceSoap[] getReportInstances(
+		java.lang.String className, long classPK) throws RemoteException {
+		try {
+			java.util.List<com.liferay.content.targeting.model.ReportInstance> returnValue =
+				ReportInstanceServiceUtil.getReportInstances(className, classPK);
+
+			return com.liferay.content.targeting.model.ReportInstanceSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(ReportInstanceServiceSoap.class);
 }
