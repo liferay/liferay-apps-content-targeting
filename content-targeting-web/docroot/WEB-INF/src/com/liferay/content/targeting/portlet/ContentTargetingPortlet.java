@@ -38,7 +38,9 @@ import com.liferay.content.targeting.portlet.util.TrackingActionTemplate;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.service.ReportInstanceService;
+import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.RuleInstanceService;
+import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.UserSegmentService;
@@ -216,12 +218,17 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			ReportsRegistry.class, bundle.getBundleContext());
 		_ruleCategoriesRegistry = ServiceTrackerUtil.getService(
 			RuleCategoriesRegistry.class, bundle.getBundleContext());
+		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
+			RuleInstanceLocalService.class, bundle.getBundleContext());
 		_ruleInstanceService = ServiceTrackerUtil.getService(
 			RuleInstanceService.class, bundle.getBundleContext());
 		_rulesRegistry = ServiceTrackerUtil.getService(
 			RulesRegistry.class, bundle.getBundleContext());
 		_trackingActionInstanceService = ServiceTrackerUtil.getService(
 			TrackingActionInstanceService.class, bundle.getBundleContext());
+		_trackingActionInstanceLocalService = ServiceTrackerUtil.getService(
+			TrackingActionInstanceLocalService.class,
+			bundle.getBundleContext());
 		_trackingActionsRegistry = ServiceTrackerUtil.getService(
 			TrackingActionsRegistry.class, bundle.getBundleContext());
 		_userSegmentLocalService = ServiceTrackerUtil.getService(
@@ -505,6 +512,58 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		return html;
 	}
 
+	protected List<RuleInstance> getRulesFromRequest(
+			PortletRequest request, PortletResponse response)
+		throws Exception {
+
+		List<RuleInstance> ruleInstances = new ArrayList<RuleInstance>();
+
+		String userSegmentRules = ParamUtil.getString(
+			request, "userSegmentRules");
+
+		if (Validator.isNull(userSegmentRules)) {
+			return ruleInstances;
+		}
+
+		JSONObject jSONObject = JSONFactoryUtil.createJSONObject(
+			userSegmentRules);
+
+		String rules = jSONObject.getString("fields");
+
+		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(rules);
+
+		for (int i = 0; i < jSONArray.length(); i++) {
+			JSONObject jSONObjectRule = jSONArray.getJSONObject(i);
+
+			long ruleInstanceId = 0;
+			String type = jSONObjectRule.getString("type");
+
+			if (type.contains(StringPool.UNDERLINE)) {
+				String[] ids = type.split(StringPool.UNDERLINE);
+
+				ruleInstanceId = GetterUtil.getLong(ids[1]);
+				type = ids[0];
+			}
+
+			String id = jSONObjectRule.getString("id");
+
+			Map<String, String> ruleValues = getJSONValues(
+				jSONObjectRule.getJSONArray("data"), response.getNamespace(),
+				id);
+
+			RuleInstance ruleInstance =
+				_ruleInstanceLocalService.createRuleInstance(ruleInstanceId);
+
+			ruleInstance.setRuleKey(type);
+			ruleInstance.setValues(ruleValues);
+			ruleInstance.setRuleGuid(id);
+
+			ruleInstances.add(ruleInstance);
+		}
+
+		return ruleInstances;
+	}
+
 	protected String getTrackingActionHtml(
 		TrackingAction trackingAction,
 		TrackingActionInstance trackingActionInstance, Template template,
@@ -554,6 +613,60 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 
 		return html;
+	}
+
+	protected List<TrackingActionInstance> getTrackingActionsFromRequest(
+			PortletRequest request, PortletResponse response)
+		throws Exception {
+
+		List<TrackingActionInstance> trackingActionsInstances =
+			new ArrayList<TrackingActionInstance>();
+
+		String campaignTrackingActions = ParamUtil.getString(
+			request, "campaignTrackingActions");
+
+		if (Validator.isNull(campaignTrackingActions)) {
+			return trackingActionsInstances;
+		}
+
+		JSONObject jSONObject = JSONFactoryUtil.createJSONObject(
+			campaignTrackingActions);
+
+		String trackingActions = jSONObject.getString("fields");
+
+		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(trackingActions);
+
+		for (int i = 0; i < jSONArray.length(); i++) {
+			JSONObject jSONObjectTrackingAction = jSONArray.getJSONObject(i);
+
+			long trackingActionInstanceId = 0;
+			String type = jSONObjectTrackingAction.getString("type");
+
+			if (type.contains(StringPool.UNDERLINE)) {
+				String[] ids = type.split(StringPool.UNDERLINE);
+
+				trackingActionInstanceId = GetterUtil.getLong(ids[1]);
+				type = ids[0];
+			}
+
+			String id = jSONObjectTrackingAction.getString("id");
+
+			Map<String, String> trackingActionValues = getJSONValues(
+				jSONObjectTrackingAction.getJSONArray("data"),
+				response.getNamespace(), id);
+
+			TrackingActionInstance trackingActionInstance =
+				_trackingActionInstanceLocalService.
+					createTrackingActionInstance(trackingActionInstanceId);
+
+			trackingActionInstance.setTrackingActionKey(type);
+			trackingActionInstance.setValues(trackingActionValues);
+			trackingActionInstance.setTrackingActionGuid(id);
+
+			trackingActionsInstances.add(trackingActionInstance);
+		}
+
+		return trackingActionsInstances;
 	}
 
 	protected void populateContext(
@@ -735,20 +848,29 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 				template.put("trackingActions", trackingActions.values());
 
-				if (campaignId > 0) {
-					List<TrackingActionInstance> instances =
+				List<TrackingActionInstance> trackingActionInstances =
+					getTrackingActionsFromRequest(
+						portletRequest, portletResponse);
+
+				if (trackingActionInstances.isEmpty() && (campaignId > 0)) {
+					trackingActionInstances =
 						_trackingActionInstanceService.
 							getTrackingActionInstances(campaignId);
+				}
 
-					template.put("trackingActionInstances", instances);
+				List<TrackingActionTemplate> addedTrackingActionTemplates =
+					new ArrayList<TrackingActionTemplate>();
 
-					List<TrackingActionTemplate> addedTrackingActionTemplates =
-						new ArrayList<TrackingActionTemplate>();
+				if (!trackingActionInstances.isEmpty()) {
+					template.put(
+						"trackingActionInstances", trackingActionInstances);
 
 					InvalidTrackingActionsException itae =
 						getInvalidTrackingActionsException(portletRequest);
 
-					for (TrackingActionInstance instance : instances) {
+					for (TrackingActionInstance instance :
+							trackingActionInstances) {
+
 						TrackingAction trackingAction =
 							_trackingActionsRegistry.getTrackingAction(
 								instance.getTrackingActionKey());
@@ -772,11 +894,11 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 						addedTrackingActionTemplates.add(
 							trackingActionTemplate);
 					}
-
-					template.put(
-						"addedTrackingActionTemplates",
-						addedTrackingActionTemplates);
 				}
+
+				template.put(
+					"addedTrackingActionTemplates",
+					addedTrackingActionTemplates);
 
 				List<TrackingActionTemplate> trackingActionTemplates =
 					new ArrayList<TrackingActionTemplate>();
@@ -820,14 +942,19 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 				template.put("rules", rules.values());
 
-				if (userSegmentId > 0) {
-					List<RuleInstance> ruleInstances =
-						_ruleInstanceService.getRuleInstances(userSegmentId);
+				List<RuleInstance> ruleInstances = getRulesFromRequest(
+					portletRequest, portletResponse);
 
+				if (ruleInstances.isEmpty() && (userSegmentId > 0)) {
+					ruleInstances = _ruleInstanceService.getRuleInstances(
+						userSegmentId);
+				}
+
+				List<RuleTemplate> addedRuleTemplates =
+					new ArrayList<RuleTemplate>();
+
+				if (!ruleInstances.isEmpty()) {
 					template.put("ruleInstances", ruleInstances);
-
-					List<RuleTemplate> addedRuleTemplates =
-						new ArrayList<RuleTemplate>();
 
 					InvalidRulesException ire = getInvalidRulesException(
 						portletRequest);
@@ -852,9 +979,11 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 						addedRuleTemplates.add(ruleTemplate);
 					}
+				}
 
-					template.put("addedRuleTemplates", addedRuleTemplates);
+				template.put("addedRuleTemplates", addedRuleTemplates);
 
+				if (userSegmentId > 0) {
 					UserSegment userSegment =
 						_userSegmentLocalService.getUserSegment(userSegmentId);
 
@@ -947,13 +1076,13 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			long userSegmentId, ActionRequest request, ActionResponse response)
 		throws Exception {
 
+		List<RuleInstance> requestRuleInstances = getRulesFromRequest(
+			request, response);
+
 		List<InvalidRuleException> ruleExceptions =
 			new ArrayList<InvalidRuleException>();
 
-		String userSegmentRules = ParamUtil.getString(
-			request, "userSegmentRules");
-
-		if (Validator.isNull(userSegmentRules)) {
+		if (requestRuleInstances.isEmpty()) {
 			return ruleExceptions;
 		}
 
@@ -963,45 +1092,22 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject jSONObject = JSONFactoryUtil.createJSONObject(
-			userSegmentRules);
-
-		String rules = jSONObject.getString("fields");
-
-		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(rules);
-
 		List<RuleInstance> ruleInstances = ListUtil.copy(
 			_ruleInstanceService.getRuleInstances(userSegmentId));
 
-		for (int i = 0; i < jSONArray.length(); i++) {
-			JSONObject jSONObjectRule = jSONArray.getJSONObject(i);
-
-			long ruleInstanceId = 0;
-			String type = jSONObjectRule.getString("type");
-
-			if (type.contains(StringPool.UNDERLINE)) {
-				String[] ids = type.split(StringPool.UNDERLINE);
-
-				ruleInstanceId = GetterUtil.getLong(ids[1]);
-				type = ids[0];
-			}
-
-			Rule rule = _rulesRegistry.getRule(type);
-
-			String id = jSONObjectRule.getString("id");
-
-			Map<String, String> ruleValues = getJSONValues(
-				jSONObjectRule.getJSONArray("data"), response.getNamespace(),
-				id);
+		for (RuleInstance requestRuleInstance : requestRuleInstances) {
+			Rule rule = _rulesRegistry.getRule(
+				requestRuleInstance.getRuleKey());
 
 			String typeSettings = null;
 
 			try {
 				typeSettings = rule.processRule(
-					request, response, id, ruleValues);
+					request, response, requestRuleInstance.getRuleGuid(),
+					requestRuleInstance.getValues());
 			}
 			catch (InvalidRuleException ire) {
-				ire.setRuleGuid(id);
+				ire.setRuleGuid(requestRuleInstance.getRuleGuid());
 
 				ruleExceptions.add(ire);
 			}
@@ -1010,16 +1116,18 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			}
 
 			try {
-				if (ruleInstanceId > 0) {
+				if (requestRuleInstance.getRuleInstanceId() > 0) {
 					RuleInstance ruleInstance =
 						_ruleInstanceService.updateRuleInstance(
-							ruleInstanceId, typeSettings, serviceContext);
+							requestRuleInstance.getRuleInstanceId(),
+							typeSettings, serviceContext);
 
 					ruleInstances.remove(ruleInstance);
 				}
 				else {
 					_ruleInstanceService.addRuleInstance(
-						themeDisplay.getUserId(), type, userSegmentId,
+						themeDisplay.getUserId(),
+						requestRuleInstance.getRuleKey(), userSegmentId,
 						typeSettings, serviceContext);
 				}
 			}
@@ -1042,13 +1150,13 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			long campaignId, ActionRequest request, ActionResponse response)
 		throws Exception {
 
+		List<TrackingActionInstance> requestTrackingActionInstances =
+			getTrackingActionsFromRequest(request, response);
+
 		List<InvalidTrackingActionException> trackingActionExceptions =
 			new ArrayList<InvalidTrackingActionException>();
 
-		String campaignTrackingActions = ParamUtil.getString(
-			request, "campaignTrackingActions");
-
-		if (Validator.isNull(campaignTrackingActions)) {
+		if (requestTrackingActionInstances.isEmpty()) {
 			return trackingActionExceptions;
 		}
 
@@ -1058,47 +1166,31 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		JSONObject jSONObject = JSONFactoryUtil.createJSONObject(
-			campaignTrackingActions);
-
-		String trackingActions = jSONObject.getString("fields");
-
-		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(trackingActions);
-
 		List<TrackingActionInstance> trackingActionInstances = ListUtil.copy(
 			_trackingActionInstanceService.getTrackingActionInstances(
-					campaignId));
+				campaignId));
 
-		for (int i = 0; i < jSONArray.length(); i++) {
-			JSONObject jSONObjectTrackingAction = jSONArray.getJSONObject(i);
-
-			long trackingActionInstanceId = 0;
-			String type = jSONObjectTrackingAction.getString("type");
-
-			if (type.contains(StringPool.UNDERLINE)) {
-				String[] ids = type.split(StringPool.UNDERLINE);
-
-				trackingActionInstanceId = GetterUtil.getLong(ids[1]);
-				type = ids[0];
-			}
+		for (TrackingActionInstance requestTrackingActionInstance :
+				requestTrackingActionInstances) {
 
 			TrackingAction trackingAction =
-				_trackingActionsRegistry.getTrackingAction(type);
-
-			String id = jSONObjectTrackingAction.getString("id");
-
-			Map<String, String> trackingActionValues = getJSONValues(
-				jSONObjectTrackingAction.getJSONArray("data"),
-				response.getNamespace(), id);
+				_trackingActionsRegistry.getTrackingAction(
+					requestTrackingActionInstance.getTrackingActionKey());
 
 			String typeSettings = null;
 
+			Map<String, String> trackingActionValues =
+				requestTrackingActionInstance.getValues();
+
 			try {
 				typeSettings = trackingAction.processTrackingAction(
-					request, response, id, trackingActionValues);
+					request, response,
+					requestTrackingActionInstance.getTrackingActionGuid(),
+					trackingActionValues);
 			}
 			catch (InvalidTrackingActionException itae) {
-				itae.setTrackingActionGuid(id);
+				itae.setTrackingActionGuid(
+					requestTrackingActionInstance.getTrackingActionGuid());
 
 				trackingActionExceptions.add(itae);
 			}
@@ -1115,6 +1207,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			String elementId = trackingActionValues.get("elementId");
 			String eventType = trackingActionValues.get("eventType");
 
+			long trackingActionInstanceId =
+				requestTrackingActionInstance. getTrackingActionInstanceId();
+
 			try {
 				if (trackingActionInstanceId > 0) {
 					TrackingActionInstance trackingActionInstance =
@@ -1128,9 +1223,10 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				}
 				else {
 					_trackingActionInstanceService.addTrackingActionInstance(
-							themeDisplay.getUserId(), type, campaignId, alias,
-							referrerClassName, referrerClassPK, elementId,
-							eventType, typeSettings, serviceContext);
+						themeDisplay.getUserId(),
+						requestTrackingActionInstance.getTrackingActionKey(),
+						campaignId, alias, referrerClassName, referrerClassPK,
+						elementId, eventType, typeSettings, serviceContext);
 				}
 			}
 			catch (PortalException pe) {
@@ -1192,8 +1288,11 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 	private ReportInstanceService _reportInstanceService;
 	private ReportsRegistry _reportsRegistry;
 	private RuleCategoriesRegistry _ruleCategoriesRegistry;
+	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RuleInstanceService _ruleInstanceService;
 	private RulesRegistry _rulesRegistry;
+	private TrackingActionInstanceLocalService
+		_trackingActionInstanceLocalService;
 	private TrackingActionInstanceService _trackingActionInstanceService;
 	private TrackingActionsRegistry _trackingActionsRegistry;
 	private UserSegmentLocalService _userSegmentLocalService;
