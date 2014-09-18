@@ -25,15 +25,15 @@ import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
-import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutSet;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -166,7 +166,17 @@ public class PageVisitedRule extends BaseRule {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)context.get("themeDisplay");
 
-		context.put("friendlyURLBase", _getFriendlyURLBase(themeDisplay));
+		String friendlyURLBase = StringPool.BLANK;
+
+		try {
+			friendlyURLBase = PortalUtil.getGroupFriendlyURL(
+				themeDisplay.getScopeGroup(), false, themeDisplay);
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
+		context.put("friendlyURLBase", friendlyURLBase);
 
 		String friendlyURL = StringPool.BLANK;
 
@@ -202,28 +212,9 @@ public class PageVisitedRule extends BaseRule {
 		}
 	}
 
-	private String _getFriendlyURLBase(ThemeDisplay themeDisplay) {
-		StringBuilder sb = new StringBuilder();
-
-		sb.append(themeDisplay.getPortalURL());
-
-		Group group = themeDisplay.getScopeGroup();
-
-		LayoutSet layoutSet = group.getPublicLayoutSet();
-
-		String virtualHostname = layoutSet.getVirtualHostname();
-
-		if (Validator.isNull(virtualHostname) ||
-			(sb.indexOf(virtualHostname) == -1)) {
-
-			sb.append(group.getPathFriendlyURL(false, themeDisplay));
-			sb.append(group.getFriendlyURL());
-		}
-
-		return sb.toString();
-	}
-
 	private static final String _FORM_TEMPLATE_PATH_PAGE =
 		"templates/ct_fields_page.ftl";
+
+	private static Log _log = LogFactoryUtil.getLog(PageVisitedRule.class);
 
 }

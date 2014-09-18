@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.List;
 import java.util.Locale;
@@ -42,7 +43,6 @@ import java.util.Map;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import com.liferay.portal.util.PortalUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -81,7 +81,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 		String summary = LanguageUtil.format(
 			locale, "tracking-page-x",
-			new Object[]{
+			new Object[] {
 				trackingActionInstance.getAlias(),
 			});
 
