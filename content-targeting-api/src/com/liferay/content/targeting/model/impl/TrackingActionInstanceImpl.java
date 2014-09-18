@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import java.util.Map;
+
 /**
  * The extended model implementation for the TrackingActionInstance service. Represents a row in the &quot;ContentTargeting_TrackingActionInstance&quot; database table, with each column mapped to a property of this class.
  *
@@ -32,5 +34,24 @@ public class TrackingActionInstanceImpl extends TrackingActionInstanceBaseImpl {
 	 */
 	public TrackingActionInstanceImpl() {
 	}
+
+	public String getTrackingActionGuid() {
+		return _trackingActionGuid;
+	}
+
+	public Map<String, String> getValues() {
+		return _values;
+	}
+
+	public void setTrackingActionGuid(String trackingActionGuid) {
+		_trackingActionGuid = trackingActionGuid;
+	}
+
+	public void setValues(Map<String, String> values) {
+		this._values = values;
+	}
+
+	private String _trackingActionGuid;
+	private Map<String, String> _values;
 
 }

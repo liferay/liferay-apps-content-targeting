@@ -19,6 +19,7 @@ import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * The extended model implementation for the RuleInstance service. Represents a row in the &quot;ContentTargeting_RuleInstance&quot; database table, with each column mapped to a property of this class.
@@ -34,6 +35,10 @@ public class RuleInstanceImpl extends RuleInstanceBaseImpl {
 	public RuleInstanceImpl() {
 	}
 
+	public String getRuleGuid() {
+		return _ruleGuid;
+	}
+
 	@Override
 	public String getUserSegmentName(Locale locale) {
 		try {
@@ -47,5 +52,20 @@ public class RuleInstanceImpl extends RuleInstanceBaseImpl {
 
 		return StringPool.BLANK;
 	}
+
+	public Map<String, String> getValues() {
+		return _values;
+	}
+
+	public void setRuleGuid(String ruleGuid) {
+		_ruleGuid = ruleGuid;
+	}
+
+	public void setValues(Map<String, String> values) {
+		this._values = values;
+	}
+
+	private String _ruleGuid;
+	private Map<String, String> _values;
 
 }
