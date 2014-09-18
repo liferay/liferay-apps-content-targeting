@@ -274,7 +274,7 @@ public class ContentVisitedRule extends BaseRule {
 		context.put("contentTargetingUtilClass", new ContentTargetingUtil());
 	}
 
-	protected static final String _FORM_TEMPLATE_PATH_CONTENT =
+	private static final String _FORM_TEMPLATE_PATH_CONTENT =
 		"templates/ct_fields_content.ftl";
 
 	private static Log _log = LogFactoryUtil.getLog(ContentVisitedRule.class);

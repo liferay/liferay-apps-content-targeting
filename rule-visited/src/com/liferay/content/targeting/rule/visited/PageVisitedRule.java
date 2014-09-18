@@ -195,7 +195,7 @@ public class PageVisitedRule extends BaseRule {
 		}
 	}
 
-	protected static final String _FORM_TEMPLATE_PATH_PAGE =
+	private static final String _FORM_TEMPLATE_PATH_PAGE =
 		"templates/ct_fields_page.ftl";
 
 }
