@@ -65,9 +65,9 @@ public class CampaignTrackingActionReport extends BaseReport {
 	}
 
 	@Reference
-	public void setCampaignTrackingActionLocalServiceUtil(
+	public void setCampaignTrackingActionLocalService(
 		CampaignTrackingActionLocalService
-				campaignTrackingActionLocalService) {
+			campaignTrackingActionLocalService) {
 
 		_campaignTrackingActionLocalService =
 			campaignTrackingActionLocalService;
