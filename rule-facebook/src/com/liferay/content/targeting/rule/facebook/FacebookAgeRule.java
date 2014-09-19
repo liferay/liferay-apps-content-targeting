@@ -172,8 +172,8 @@ public class FacebookAgeRule extends BaseFacebookRule {
 			}
 		}
 
-		context.put("youngerThan", youngerThan);
-		context.put("olderThan", olderThan);
+		context.put("fbYoungerThan", youngerThan);
+		context.put("fbOlderThan", olderThan);
 	}
 
 	protected int getAge(Date birthday) {
