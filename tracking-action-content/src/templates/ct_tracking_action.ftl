@@ -3,6 +3,8 @@
 <#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
 <#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
 
+<#setting number_format="computer">
+
 <#if !trackingContentEnabled >
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-tracking-action-will-not-work-properly-because-content-tracking-is-not-enabled" /></strong>

@@ -2,6 +2,8 @@
 <#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
 <#assign liferay_util = PortletJspTagLibs["/META-INF/liferay-util.tld"] />
 
+<#setting number_format="computer">
+
 <@liferay_util["buffer"] var="infoMessage" >
 	<#assign enableLocationLabel = languageUtil.get(locale, "site-administration-mdr") />
 

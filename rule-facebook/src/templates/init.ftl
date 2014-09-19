@@ -4,6 +4,8 @@
 <#assign liferay_util = PortletJspTagLibs["/META-INF/liferay-util.tld"] />
 <#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
 
+<#setting number_format="computer">
+
 <#if !isFbLoginEnabled >
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-rule-will-not-work-properly-because-login-through-facebook-is-not-enabled" /></strong>

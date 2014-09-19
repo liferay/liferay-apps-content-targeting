@@ -2,6 +2,8 @@
 <#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
 <#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
 
+<#setting number_format="computer">
+
 <@aui["select"] label="country" name="countryId" />
 
 <@aui["select"] label="region" name="regionId" />

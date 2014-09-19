@@ -2,6 +2,8 @@
 <#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
 <#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
 
+<#setting number_format="computer">
+
 <#if !birthdayEnabled >
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-rule-will-not-work-properly-because-the-age-field-has-been-removed" /></strong>

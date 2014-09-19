@@ -1,6 +1,8 @@
 <#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
 <#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
 
+<#setting number_format="computer">
+
 <#if !trackingFormEnabled >
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-tracking-action-will-not-work-properly-because-form-tracking-is-not-enabled" /></strong>

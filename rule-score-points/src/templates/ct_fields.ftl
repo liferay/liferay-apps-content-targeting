@@ -1,6 +1,8 @@
 <#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
 <#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
 
+<#setting number_format="computer">
+
 <#if !trackingContentEnabled || !trackingPageEnabled>
 	<div class="alert alert-error">
 		<strong><@liferay_ui["message"] key="this-rule-will-not-work-properly-because-content-tracking-or-page-tracking-are-not-enabled" /></strong>
