@@ -99,7 +99,6 @@ public class CampaignTrackingActionLocalServiceImpl
 			campaignTrackingAction.setReferrerClassPK(referrerClassPK);
 			campaignTrackingAction.setElementId(elementId);
 			campaignTrackingAction.setEventType(eventType);
-			campaignTrackingAction.setCount(count);
 		}
 
 		campaignTrackingAction.setCount(
