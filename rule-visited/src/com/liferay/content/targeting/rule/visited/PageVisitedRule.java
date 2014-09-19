@@ -218,8 +218,8 @@ public class PageVisitedRule extends BaseRule {
 	private static final String _FORM_TEMPLATE_PATH_PAGE =
 		"templates/ct_fields_page.ftl";
 
-	private AnalyticsEventLocalService _analyticsEventLocalService;
-
 	private static Log _log = LogFactoryUtil.getLog(PageVisitedRule.class);
+
+	private AnalyticsEventLocalService _analyticsEventLocalService;
 
 }
