@@ -217,51 +217,5 @@ private String[] _getCategoryIdsTitles(String categoryIds, String categoryNames,
 	return new String[] {categoryIds, categoryNames};
 }
 
-private long[] getCurrentAndAncestorSiteGroupIds(long groupId)
-	throws PortalException, SystemException {
-
-	List<Group> groups = new ArrayList<Group>();
-
-	long siteGroupId = PortalUtil.getSiteGroupId(groupId);
-
-	Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
-
-	if (!siteGroup.isLayoutPrototype()) {
-		groups.add(siteGroup);
-	}
-
-	groups.addAll(doGetAncestorSiteGroupIds(groupId));
-
-	long[] groupIds = new long[groups.size()];
-
-	for (int i = 0; i < groups.size(); i++) {
-		Group group = groups.get(i);
-
-		groupIds[i] = group.getGroupId();
-	}
-
-	return groupIds;
-}
-
-protected List<Group> doGetAncestorSiteGroupIds(long groupId)
-	throws PortalException, SystemException {
-
-	List<Group> groups = new ArrayList<Group>();
-
-	long siteGroupId = PortalUtil.getSiteGroupId(groupId);
-
-	Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
-
-	groups.addAll(siteGroup.getAncestors());
-
-	if (!siteGroup.isCompany()) {
-		groups.add(
-			GroupLocalServiceUtil.getCompanyGroup(
-				siteGroup.getCompanyId()));
-	}
-
-	return groups;
-}
-
 private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
 %>
