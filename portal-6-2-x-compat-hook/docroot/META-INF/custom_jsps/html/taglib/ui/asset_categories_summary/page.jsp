@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -21,21 +21,34 @@ String className = (String)request.getAttribute("liferay-ui:asset-categories-sum
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-summary:classPK"));
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-categories-summary:portletURL");
 
-List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupsVocabularies(new long[] {themeDisplay.getSiteGroupId(), themeDisplay.getCompanyGroupId()});
+List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
+
+long[] groupIds = getCurrentAndAncestorSiteGroupIds(scopeGroupId);
+
+for (long groupId : groupIds) {
+	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(groupId, false));
+}
+
 List<AssetCategory> categories = AssetCategoryServiceUtil.getCategories(className, classPK);
 
 for (AssetVocabulary vocabulary : vocabularies) {
 	vocabulary = vocabulary.toEscapedModel();
-
-	String vocabularyTitle = vocabulary.getTitle(themeDisplay.getLocale());
 
 	List<AssetCategory> curCategories = _filterCategories(categories, vocabulary);
 %>
 
 	<c:if test="<%= !curCategories.isEmpty() %>">
 		<span class="taglib-asset-categories-summary">
-			<%= vocabularyTitle %>:
+			<%= vocabulary.getTitle(locale) %>
 
+				<c:if test="<%= vocabulary.getGroupId() != themeDisplay.getSiteGroupId() %>">
+
+					<%
+					Group vocabularyGroup = GroupLocalServiceUtil.getGroup(vocabulary.getGroupId());
+					%>
+
+					(<%= vocabularyGroup.getDescriptiveName() %>)
+				</c:if>:
 			<c:choose>
 				<c:when test="<%= portletURL != null %>">
 
