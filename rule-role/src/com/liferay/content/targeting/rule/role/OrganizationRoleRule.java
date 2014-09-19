@@ -228,7 +228,9 @@ public class OrganizationRoleRule extends BaseRule {
 		List<Organization> organizations = new ArrayList<Organization>();
 
 		try {
-			organizations = OrganizationServiceUtil.getOrganizations(
+			// See LPS-50218
+
+			organizations = OrganizationLocalServiceUtil.getOrganizations(
 				company.getCompanyId(),
 				OrganizationConstants.ANY_PARENT_ORGANIZATION_ID);
 		}
