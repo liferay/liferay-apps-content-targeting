@@ -14,18 +14,6 @@
  */
 -->
 
-<#macro getConfigurationIconLink>
-	<@liferay_ui["icon"]
-		cssClass="lfr-icon-action lfr-icon-action-configuration"
-		image="configuration"
-		label=true
-		message="configuration"
-		method="get"
-		onClick="${portletDisplay.getURLConfigurationJS()}"
-		url="${portletDisplay.getURLConfiguration()}"
-	/>
-</#macro>
-
 <#macro getEditIconLink
 	assetEntry
 	cssClass
@@ -58,18 +46,24 @@
 <#macro getEditIconLinks
 	queryRules
 >
-	<#if queryRules?has_content>
-		<#list queryRules as queryRule>
-			<#if queryRule.hasAssetEntry()>
-				<#assign cssClass = "" />
+	<#if portletDisplay.isShowConfigurationIcon()>
+		<#if queryRules?has_content>
+			<div class="icons-container lfr-meta-actions">
+				<div class="lfr-icon-actions">
+					<#list queryRules as queryRule>
+						<#if queryRule.hasAssetEntry()>
+							<#assign cssClass = "" />
 
-				<#if selectedIndex != queryRule_index>
-					<#assign cssClass = "hide" />
-				</#if>
+							<#if selectedIndex != queryRule_index>
+								<#assign cssClass = "hide" />
+							</#if>
 
-				<@getEditIconLink assetEntry=queryRule.getAssetEntry() cssClass=cssClass index=queryRule_index />
-			</#if>
-		</#list>
+							<@getEditIconLink assetEntry=queryRule.getAssetEntry() cssClass=cssClass index=queryRule_index />
+						</#if>
+					</#list>
+				</div>
+			</div>
+		</#if>
 	</#if>
 </#macro>
 

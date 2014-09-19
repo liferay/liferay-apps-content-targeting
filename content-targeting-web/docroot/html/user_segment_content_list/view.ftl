@@ -32,11 +32,3 @@
 		<@liferay_ui["message"] key="there-is-no-content-categorized-for-your-user-segments" />
 	</div>
 </#if>
-
-<#if portletDisplay.isShowConfigurationIcon()>
-	<div class="icons-container lfr-meta-actions">
-		<div class="lfr-icon-actions">
-			<@getConfigurationIconLink />
-		</div>
-	</div>
-</#if>

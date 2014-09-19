@@ -54,13 +54,4 @@
 	</#if>
 </div>
 
-
-<#if portletDisplay.isShowConfigurationIcon()>
-	<div class="icons-container lfr-meta-actions">
-		<div class="lfr-icon-actions">
-			<@getConfigurationIconLink />
-
-			<@getEditIconLinks queryRules=campaignQueryRules />
-		</div>
-	</div>
-</#if>
+<@getEditIconLinks queryRules=campaignQueryRules />
