@@ -25,7 +25,9 @@
 	</div>
 </#if>
 
-<@aui["input"] helpMessage="alias-help" label="alias" name="{ct_field_guid}alias" type="text" value=alias />
+<@aui["input"] helpMessage="alias-help" label="alias" name="{ct_field_guid}alias" type="text" value=alias>
+	<@aui["validator"] name="required" />
+</@>
 
 <div class="rules-panel" style="background-color:transparent; margin:0px;">
 	<div class="control-group select-asset-selector">
@@ -66,11 +68,18 @@
 	</div>
 </div>
 
-<@aui["select"] label="tracking-action" name="{ct_field_guid}eventType">
+<#if eventTypes?has_content && (eventTypes?size > 1)>
+	<@aui["select"] label="tracking-action" name="{ct_field_guid}eventType">
+		<#list eventTypes as curEventType>
+			<@aui["option"] label="${curEventType}" selected=(eventType == curEventType) value=curEventType />
+		</#list>
+	</@>
+<#else>
 	<#list eventTypes as curEventType>
-		<@aui["option"] label="${curEventType}" selected=(eventType == curEventType) value=curEventType />
+		<@aui["input"] disabled=true label="tracking-action" name="{ct_field_guid}eventType" type="text" value=curEventType />
 	</#list>
-</@>
+</#if>
+
 
 <@aui["script"] use="aui-base">
 	var onAssetSelectorClick = function(event) {
