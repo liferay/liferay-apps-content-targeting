@@ -10,6 +10,10 @@
 			<value>o/content-targeting-web/1</value>
 		</init-param>
 		<init-param>
+			<name>config-template</name>
+			<value>html/campaign_content_display/configuration.ftl</value>
+		</init-param>
+		<init-param>
 			<name>view-template</name>
 			<value>html/campaign_content_display/view.ftl</value>
 		</init-param>
@@ -119,6 +123,10 @@
 			<value>o/content-targeting-web/1</value>
 		</init-param>
 		<init-param>
+			<name>config-template</name>
+			<value>html/user_segment_content_display/configuration.ftl</value>
+		</init-param>
+		<init-param>
 			<name>view-template</name>
 			<value>html/user_segment_content_display/view.ftl</value>
 		</init-param>
@@ -152,6 +160,10 @@
 		<init-param>
 			<name>com.liferay.portal.invokerPortletName</name>
 			<value>o/content-targeting-web/1</value>
+		</init-param>
+		<init-param>
+			<name>config-template</name>
+			<value>html/user_segment_content_list/configuration.ftl</value>
 		</init-param>
 		<init-param>
 			<name>view-template</name>

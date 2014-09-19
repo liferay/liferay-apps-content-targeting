@@ -58,7 +58,7 @@
 <#if portletDisplay.isShowConfigurationIcon()>
 	<div class="icons-container lfr-meta-actions">
 		<div class="lfr-icon-actions">
-			<@getConfigurationIconLink mvcPath=campaignContentDisplayPath.CONFIGURATION />
+			<@getConfigurationIconLink />
 
 			<@getEditIconLinks queryRules=campaignQueryRules />
 		</div>

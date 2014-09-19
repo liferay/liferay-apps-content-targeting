@@ -14,21 +14,15 @@
  */
 -->
 
-<#macro getConfigurationIconLink
-	mvcPath
->
-	<@portlet["renderURL"] var="configurationURL" windowState=liferayWindowStatePopUp.toString()>
-		<@portlet["param"] name="mvcPath" value="${mvcPath}" />
-		<@portlet["param"] name="redirect" value="${currentURL}" />
-	</@>
-
+<#macro getConfigurationIconLink>
 	<@liferay_ui["icon"]
 		cssClass="lfr-icon-action lfr-icon-action-configuration"
 		image="configuration"
 		label=true
 		message="configuration"
-		useDialog=true
-		url="${configurationURL}"
+		method="get"
+		onClick="${portletDisplay.getURLConfigurationJS()}"
+		url="${portletDisplay.getURLConfiguration()}"
 	/>
 </#macro>
 

@@ -157,9 +157,6 @@ public class UserSegmentContentListPortlet extends FreeMarkerDisplayPortlet {
 		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
 		template.put(
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
-		template.put(
-			"userSegmentContentListPath",
-			staticModels.get(UserSegmentContentListPath.class.getName()));
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);

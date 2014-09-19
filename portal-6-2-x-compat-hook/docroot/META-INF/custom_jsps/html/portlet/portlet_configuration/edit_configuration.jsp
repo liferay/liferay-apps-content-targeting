@@ -1,6 +1,6 @@
 <%--
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -15,6 +15,9 @@
 --%>
 
 <%@ include file="/html/portlet/portlet_configuration/init.jsp" %>
+
+<%@ page import="com.liferay.portal.kernel.portlet.PortletBag" %>
+<%@ page import="com.liferay.portal.kernel.portlet.PortletBagPool" %>
 
 <%
 String redirect = ParamUtil.getString(request, "redirect");
@@ -48,5 +51,23 @@ String path = (String)request.getAttribute(WebKeys.CONFIGURATION_ACTION_PATH);
 </c:if>
 
 <c:if test="<%= Validator.isNotNull(portletResource) && Validator.isNotNull(path) %>">
-	<liferay-util:include page="<%= path %>" portletId="<%= portletResource %>" />
+	<c:choose>
+		<c:when test='<%= path.endsWith(".ftl") %>'>
+
+			<%
+			String rootPortletId = PortletConstants.getRootPortletId(portletResource);
+
+			PortletBag portletBag = PortletBagPool.get(rootPortletId);
+
+			PortletConfig selPortletConfig = PortalUtil.getPortletConfig(company.getCompanyId(), portletResource, portletBag.getServletContext());
+
+			String mvcPath = "mvcPath=" + selPortletConfig.getInitParameter("config-template");
+			%>
+
+			<liferay-portlet:runtime portletName="<%= portletResource %>" queryString="<%= mvcPath %>" />
+		</c:when>
+		<c:otherwise>
+			<liferay-util:include page="<%= path %>" portletId="<%= portletResource %>" />
+		</c:otherwise>
+	</c:choose>
 </c:if>

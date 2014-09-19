@@ -36,7 +36,7 @@
 <#if portletDisplay.isShowConfigurationIcon()>
 	<div class="icons-container lfr-meta-actions">
 		<div class="lfr-icon-actions">
-			<@getConfigurationIconLink mvcPath=userSegmentContentListPath.CONFIGURATION />
+			<@getConfigurationIconLink />
 		</div>
 	</div>
 </#if>
