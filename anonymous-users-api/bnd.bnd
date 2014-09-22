@@ -9,6 +9,7 @@ Export-Package:\
 	com.liferay.content.targeting.anonymous.users.service.messaging,\
 	com.liferay.content.targeting.anonymous.users.util
 Import-Package:\
+	com.liferay.osgi.util.service,\
 	*;resolution:="optional"
 Include-Resource:\
  	classes,\

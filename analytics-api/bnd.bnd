@@ -11,6 +11,7 @@ Export-Package:\
 	com.liferay.content.targeting.analytics.service.messaging,\
 	com.liferay.content.targeting.analytics.util
 Import-Package:\
+	com.liferay.osgi.util.service,\
 	com.liferay.portal.kernel.lar,\
 	javax.portlet,\
 	*;resolution:="optional"
