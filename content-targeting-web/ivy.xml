@@ -14,7 +14,7 @@
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.enterprise" org="org.osgi" rev="5.0.0" />
 		<dependency name="com.liferay.freemarker.osgi.bridge" org="com.liferay" rev="1.0.0" />
-		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.0" />
+		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.1" />
 		<dependency name="com.liferay.portal.http.service" org="com.liferay" rev="1.0.0" />
 		<dependency name="com.liferay.portal.log.bridge" org="com.liferay" rev="1.0.0" />
 		<dependency name="spring-tx" org="org.springframework" rev="3.0.7.RELEASE" />
