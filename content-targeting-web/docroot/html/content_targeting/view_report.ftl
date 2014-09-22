@@ -15,6 +15,9 @@
 -->
 
 <#include "../init.ftl" />
+<#include "../macros.ftl" />
+
+<@breadcrumb />
 
 <#if validator.isNull(backURL)>
 	<@portlet["renderURL"] var="backURL">

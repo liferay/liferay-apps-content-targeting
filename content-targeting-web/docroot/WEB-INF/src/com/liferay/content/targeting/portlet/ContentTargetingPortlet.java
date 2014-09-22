@@ -33,6 +33,7 @@ import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
+import com.liferay.content.targeting.portlet.util.BreadcrumbUtil;
 import com.liferay.content.targeting.portlet.util.RuleTemplate;
 import com.liferay.content.targeting.portlet.util.TrackingActionTemplate;
 import com.liferay.content.targeting.service.CampaignLocalService;
@@ -110,6 +111,7 @@ import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderResponse;
 import javax.portlet.UnavailableException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -718,6 +720,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			TemplateHashModel staticModels)
 		throws Exception {
 
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
@@ -1037,12 +1042,18 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				Campaign campaign = _campaignLocalService.getCampaign(classPK);
 
 				name = campaign.getName(themeDisplay.getLocale());
+
+				BreadcrumbUtil.addPortletBreadcrumbEntries(
+					request, (RenderResponse)portletResponse, campaign);
 			}
 			else if (className.equals(UserSegment.class.getName())) {
 				UserSegment userSegment =
 					_userSegmentLocalService.getUserSegment(classPK);
 
 				name = userSegment.getName(themeDisplay.getLocale());
+
+				BreadcrumbUtil.addPortletBreadcrumbEntries(
+					request, (RenderResponse)portletResponse, userSegment);
 			}
 
 			if (path.equals(ContentTargetingPath.VIEW_REPORT)) {
@@ -1057,6 +1068,9 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 				template.put(
 					"reportHtml",
 					report.getHTML(cloneTemplateContext(template)));
+
+				BreadcrumbUtil.addPortletBreadcrumbEntries(
+					request, (RenderResponse)portletResponse, report);
 			}
 
 			if (path.equals(ContentTargetingPath.VIEW_REPORTS)) {

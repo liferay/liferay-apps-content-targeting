@@ -15,6 +15,9 @@
 -->
 
 <#include "../init.ftl" />
+<#include "../macros.ftl" />
+
+<@breadcrumb />
 
 <#if validator.isNull(redirect)>
 	<@portlet["renderURL"] var="redirect">
