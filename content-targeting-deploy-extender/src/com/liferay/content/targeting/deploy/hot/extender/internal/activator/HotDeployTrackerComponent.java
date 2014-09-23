@@ -120,10 +120,11 @@ public class HotDeployTrackerComponent {
 
 				BaseLocalService value = localServiceEntry.getValue();
 				Class<? extends BaseLocalService> valueClass = value.getClass();
-				Class serviceInterface = (Class)valueClass.getInterfaces()[0];
+				Class<?> serviceInterface = valueClass.getInterfaces()[0];
 
 				bundleContext.registerService(
-					serviceInterface, localServiceEntry.getValue(), null);
+					(Class<Object>)serviceInterface,
+					localServiceEntry.getValue(), null);
 			}
 		}
 
