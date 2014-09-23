@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.messaging.DestinationNames;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.BaseLocalService;
 import com.liferay.portal.service.BaseService;
 
@@ -85,6 +86,11 @@ public class HotDeployTrackerComponent {
 		public void receive(Message message) {
 			String servletContextName = (String)message.get(
 				"servletContextName");
+			String command = message.getString("command");
+
+			if (Validator.isNull(command) || !command.equals("deploy")) {
+				return;
+			}
 
 			OsgiDeployContext osgiDeployContext = _osgiDeployContexts.get(
 				servletContextName);
