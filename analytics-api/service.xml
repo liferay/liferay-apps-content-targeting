@@ -7,7 +7,7 @@
 
 		<!-- PK fields -->
 
-		<column name="analyticsEventId" type="long" primary="true" />
+		<column name="analyticsEventId" type="long" primary="true" accessor="true" />
 
 		<!-- Audit fields -->
 
@@ -19,8 +19,6 @@
 		<column name="anonymousUserId" type="long" />
 		<column name="className" type="String" />
 		<column name="classPK" type="long" />
-		<column name="referrerClassName" type="String" />
-		<column name="referrerClassPK" type="long" />
 		<column name="elementId" type="String" />
 		<column name="eventType" type="String" />
 		<column name="clientIP" type="String" />
@@ -52,14 +50,20 @@
 			<finder-column name="createDate" comparator="&lt;" />
 		</finder>
 
-		<finder name="A_C_C_E" return-type="Collection">
-			<finder-column name="anonymousUserId" />
+		<finder name="C_C_E" return-type="Collection">
 			<finder-column name="className" />
 			<finder-column name="classPK" />
 			<finder-column name="eventType" />
 		</finder>
 
-		<finder name="C_C_E" return-type="Collection">
+		<finder name="E_E_GtD" return-type="Collection">
+			<finder-column name="elementId" />
+			<finder-column name="eventType" />
+			<finder-column name="createDate" comparator="&gt;" />
+		</finder>
+
+		<finder name="A_C_C_E" return-type="Collection">
+			<finder-column name="anonymousUserId" />
 			<finder-column name="className" />
 			<finder-column name="classPK" />
 			<finder-column name="eventType" />
@@ -71,28 +75,31 @@
 			<finder-column name="eventType" />
 			<finder-column name="createDate" comparator="&gt;" />
 		</finder>
+	</entity>
 
-		<finder name="E_E_GtD" return-type="Collection">
-			<finder-column name="elementId" />
-			<finder-column name="eventType" />
-			<finder-column name="createDate" comparator="&gt;" />
-		</finder>
+	<entity name="AnalyticsReferrer" local-service="true" remote-service="true">
 
-		<finder name="C_C_R_R_E_GtD" return-type="Collection">
-			<finder-column name="className" />
-			<finder-column name="classPK" />
+		<!-- PK fields -->
+
+		<column name="analyticsReferrerId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="analyticsEventId" type="long" />
+		<column name="referrerClassName" type="String" />
+		<column name="referrerClassPK" type="long" />
+
+		<!-- Finder methods -->
+
+		<finder name="R_R" return-type="AnalyticsReferrer" unique="true">
 			<finder-column name="referrerClassName" />
 			<finder-column name="referrerClassPK" />
-			<finder-column name="eventType" />
-			<finder-column name="createDate" comparator="&gt;" />
 		</finder>
 
-		<finder name="R_R_E_E_GtD" return-type="Collection">
+		<finder name="A_R_R" return-type="AnalyticsReferrer" unique="true">
+			<finder-column name="analyticsEventId" arrayable-operator="or" />
 			<finder-column name="referrerClassName" />
 			<finder-column name="referrerClassPK" />
-			<finder-column name="elementId" />
-			<finder-column name="eventType" />
-			<finder-column name="createDate" comparator="&gt;" />
 		</finder>
 	</entity>
 </service-builder>
