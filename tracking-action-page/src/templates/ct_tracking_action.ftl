@@ -41,6 +41,8 @@
 	</@>
 <#else>
 	<#list eventTypes as curEventType>
-		<@aui["input"] disabled=true label="tracking-action" name="{ct_field_guid}eventType" type="text" value=curEventType />
+		<@aui["input"] disabled=true label="tracking-action" name="{ct_field_guid}eventType" type="hidden" value=curEventType />
+
+		<@aui["input"] disabled=true label="tracking-action" name="{ct_field_guid}eventTypeTranslate" type="text" value=languageUtil.get(locale, curEventType) />
 	</#list>
 </#if>
