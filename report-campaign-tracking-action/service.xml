@@ -47,4 +47,47 @@
 			<finder-column name="eventType" />
 		</finder>
 	</entity>
+
+	<entity name="CampaignTrackingActionTotal" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="campaignTrackingActionId" type="long" primary="true" />
+
+		<!-- Other fields -->
+
+		<column name="campaignId" type="long" />
+		<column name="alias" type="String" />
+		<column name="referrerClassName" type="String" />
+		<column name="referrerClassPK" type="long" />
+		<column name="elementId" type="String" />
+		<column name="eventType" type="String" />
+		<column name="count" type="int" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CampaignId" return-type="Collection">
+			<finder-column name="campaignId" />
+		</finder>
+
+		<finder name="C_GtD" return-type="Collection">
+			<finder-column name="campaignId" />
+			<finder-column name="modifiedDate" comparator="&gt;" />
+		</finder>
+
+		<finder name="C_R_R_E_E" return-type="CampaignTrackingAction" unique="true">
+			<finder-column name="campaignId" />
+			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassPK" />
+			<finder-column name="elementId" />
+			<finder-column name="eventType" />
+		</finder>
+	</entity>
 </service-builder>
