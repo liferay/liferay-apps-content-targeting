@@ -21,6 +21,8 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -52,9 +54,8 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public AnalyticsEvent addAnalyticsEvent(
 			long userId, long anonymousUserId, String className, long classPK,
-			String referrerClassName, long referrerClassPK, String elementId,
-			String eventType, String clientIP, String userAgent,
-			String languageId, String URL, String additionalInfo,
+			String elementId, String eventType, String clientIP,
+			String userAgent, String languageId, String URL, String additionalInfo,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -76,8 +77,6 @@ public class AnalyticsEventLocalServiceImpl
 		analyticsEvent.setAnonymousUserId(anonymousUserId);
 		analyticsEvent.setClassName(className);
 		analyticsEvent.setClassPK(classPK);
-		analyticsEvent.setReferrerClassName(referrerClassName);
-		analyticsEvent.setReferrerClassPK(referrerClassPK);
 		analyticsEvent.setElementId(elementId);
 		analyticsEvent.setEventType(eventType);
 		analyticsEvent.setClientIP(clientIP);
@@ -92,7 +91,7 @@ public class AnalyticsEventLocalServiceImpl
 	}
 
 	@Override
-	public List<AnalyticsEvent> addAnalyticsEvent(
+	public AnalyticsEvent addAnalyticsEvent(
 			long userId, long anonymousUserId, String className, long classPK,
 			String referrerClassName, long[] referrerClassPKs, String elementId,
 			String eventType, String clientIP, String userAgent,
@@ -100,18 +99,18 @@ public class AnalyticsEventLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		List<AnalyticsEvent> analyticsEvents = new ArrayList<AnalyticsEvent>();
+		AnalyticsEvent analyticsEvent = addAnalyticsEvent(
+			userId, anonymousUserId, className, classPK, elementId, eventType,
+			clientIP, userAgent, languageId, URL, additionalInfo,
+			serviceContext);
 
 		for (long referrerClassPK : referrerClassPKs) {
-			AnalyticsEvent analyticsEvent = addAnalyticsEvent(
-				userId, anonymousUserId, className, classPK, referrerClassName,
-				referrerClassPK, elementId, eventType, clientIP, userAgent,
-				languageId, URL, additionalInfo, serviceContext);
-
-			analyticsEvents.add(analyticsEvent);
+			analyticsReferrerLocalService.addAnalyticsReferrer(
+				analyticsEvent.getAnalyticsEventId(), referrerClassName,
+				referrerClassPK);
 		}
 
-		return analyticsEvents;
+		return analyticsEvent;
 	}
 
 	@Override
@@ -183,28 +182,6 @@ public class AnalyticsEventLocalServiceImpl
 
 	@Override
 	public List<AnalyticsEvent> getAnalyticsEvents(
-			String className, long classPK, String referrerClassName,
-			long referrerClassPK, String eventType, Date createDate)
-		throws PortalException, SystemException {
-
-		return analyticsEventPersistence.findByC_C_R_R_E_GtD(
-			className, classPK, referrerClassName, referrerClassPK, eventType,
-			createDate);
-	}
-
-	@Override
-	public List<AnalyticsEvent> getAnalyticsEvents(
-			String referrerClassName, long referrerClassPK, String elementId,
-			String eventType, Date createDate)
-		throws PortalException, SystemException {
-
-		return analyticsEventPersistence.findByR_R_E_E_GtD(
-			referrerClassName, referrerClassPK, elementId, eventType,
-			createDate);
-	}
-
-	@Override
-	public List<AnalyticsEvent> getAnalyticsEvents(
 			String elementId, String eventType, Date createDate)
 		throws PortalException, SystemException {
 
@@ -253,9 +230,11 @@ public class AnalyticsEventLocalServiceImpl
 			long referrerClassPK, String eventType, Date createDate)
 		throws PortalException, SystemException {
 
-		return analyticsEventPersistence.countByC_C_R_R_E_GtD(
-			className, classPK, referrerClassName, referrerClassPK, eventType,
-			createDate);
+		long[] analyticsEventsIds = getAnalyticsEventsIds(
+			className, classPK, eventType, createDate);
+
+		return analyticsReferrerPersistence.countByA_R_R(
+			analyticsEventsIds, referrerClassName, referrerClassPK);
 	}
 
 	@Override
@@ -264,9 +243,11 @@ public class AnalyticsEventLocalServiceImpl
 			String eventType, Date createDate)
 		throws PortalException, SystemException {
 
-		return analyticsEventPersistence.countByR_R_E_E_GtD(
-			referrerClassName, referrerClassPK, elementId, eventType,
-			createDate);
+		long[] analyticsEventsIds = getAnalyticsEventsIds(
+			elementId, eventType, createDate);
+
+		return analyticsReferrerPersistence.countByA_R_R(
+			analyticsEventsIds, referrerClassName, referrerClassPK);
 	}
 
 	@Override
@@ -276,6 +257,30 @@ public class AnalyticsEventLocalServiceImpl
 
 		return analyticsEventPersistence.countByE_E_GtD(
 			elementId, eventType, createDate);
+	}
+
+	@Override
+	public long[] getAnalyticsEventsIds(
+			String className, long classPK, String eventType, Date createDate)
+		throws PortalException, SystemException {
+
+		List<AnalyticsEvent> analyticsEvents =
+			analyticsEventPersistence.findByC_C_E_GtD(
+				className, classPK, eventType, createDate);
+
+		return getAnalyticsEventsIds(analyticsEvents);
+	}
+
+	@Override
+	public long[] getAnalyticsEventsIds(
+			String elementId, String eventType, Date createDate)
+		throws PortalException, SystemException {
+
+		List<AnalyticsEvent> analyticsEvents =
+			analyticsEventPersistence.findByE_E_GtD(
+				elementId, eventType, createDate);
+
+		return getAnalyticsEventsIds(analyticsEvents);
 	}
 
 	@Override
@@ -289,6 +294,15 @@ public class AnalyticsEventLocalServiceImpl
 		calendar.add(Calendar.MINUTE, -maxAge);
 
 		return calendar.getTime();
+	}
+
+	protected long[] getAnalyticsEventsIds(
+		List<AnalyticsEvent> analyticsEvents) {
+
+		return StringUtil.split(
+			ListUtil.toString(
+				analyticsEvents, AnalyticsEvent.ANALYTICS_EVENT_ID_ACCESSOR),
+			0L);
 	}
 
 }

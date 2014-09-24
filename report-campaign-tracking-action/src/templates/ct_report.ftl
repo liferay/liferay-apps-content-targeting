@@ -29,34 +29,35 @@
 	/>
 
 	<@liferay_ui["search-container-row"]
-		className="com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction"
-		modelVar="campaignTrackingAction"
+		className="com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal"
+		modelVar="campaignTrackingActionTotal"
 	>
 
 		<@liferay_ui["search-container-column-text"]
 			name="alias"
-			value=campaignTrackingAction.getAlias()
+			value=campaignTrackingActionTotal.getAlias()
 		/>
 
 		<@liferay_ui["search-container-column-text"]
 			name="event"
-			value="${languageUtil.get(locale, campaignTrackingAction.getEventType())}"
-		/>
-
-		<@liferay_ui["search-container-column-text"]
-			name="user-segment"
-			value=campaignTrackingAction.getUserSegmentName(locale)
+			value="${languageUtil.get(locale, campaignTrackingActionTotal.getEventType())}"
 		/>
 
 		<@liferay_ui["search-container-column-text"]
 			name="count"
-			value=campaignTrackingAction.getCount()?string
+			value=campaignTrackingActionTotal.getCount()?string
 		/>
 
 		<@liferay_ui["search-container-column-date"]
 			name="last-update"
-			value=campaignTrackingAction.getModifiedDate()
+			value=campaignTrackingActionTotal.getModifiedDate()
 		/>
+
+		<@liferay_ui["search-container-column-text"]
+			name=""
+		>
+			<#include "user_segment_views_tooltip.ftl" />
+		</@>
 	</@>
 
 	<#if searchContainer.getResults()?has_content>
@@ -64,4 +65,20 @@
 	</#if>
 
 	<@liferay_ui["search-iterator"] />
+</@>
+
+<@aui["script"] use="aui-base">
+	A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').delegate(
+		'click',
+		function(event) {
+			var currentTarget = event.currentTarget;
+
+			var id = currentTarget.attr('data-id');
+
+			var userSegmentViews = A.one('#<@portlet["namespace"] />userSegmentViews' + id);
+
+			Liferay.Portal.ToolTip.show(this, A.one('#<@portlet["namespace"] />userSegmentViews' + id).html());
+		},
+		'.icon-info'
+	);
 </@>

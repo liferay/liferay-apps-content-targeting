@@ -8,8 +8,8 @@
 
 <@aui["script"] use="charts">
 	var campaignTrackingActionChartDataValues = [
-		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as campaignTrackingAction>
-			{content:'${campaignTrackingAction.getAlias()} (${campaignTrackingAction.getUserSegmentName(locale)})', count:${campaignTrackingAction.getCount()}}<#if campaignTrackingAction_has_next>,</#if>
+		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as campaignTrackingActionTotal>
+			{content:'${campaignTrackingActionTotal.getAlias()}', count:${campaignTrackingActionTotal.getCount()}}<#if campaignTrackingActionTotal_has_next>,</#if>
 		</#list>
 	];
 
@@ -23,7 +23,7 @@
 		content:{
 			keys:['content'],
 			position:'bottom',
-			title:'${languageUtil.get(locale, "content")} (${languageUtil.get(locale, "user-segment")})}',
+			title:'${languageUtil.get(locale, "content")}',
 			type:'category'
 		}
 	};

@@ -17,9 +17,11 @@ package com.liferay.content.targeting.report.campaign.tracking.action;
 import com.liferay.content.targeting.api.model.BaseReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.Campaign;
-import com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction;
+import com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionLocalService;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.util.comparator.CampaignTrackingActionCountComparator;
+import com.liferay.content.targeting.report.campaign.tracking.action.util.comparator.CampaignTrackingActionTotalCountComparator;
 import com.liferay.content.targeting.util.SearchContainerIterator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -73,11 +75,23 @@ public class CampaignTrackingActionReport extends BaseReport {
 			campaignTrackingActionLocalService;
 	}
 
+	@Reference
+	public void setCampaignTrackingActionTotalLocalService(
+		CampaignTrackingActionTotalLocalService
+			campaignTrackingActionTotalLocalService) {
+
+		_campaignTrackingActionTotalLocalService =
+			campaignTrackingActionTotalLocalService;
+	}
+
 	@Override
 	public String updateReport(long classPK) {
 		try {
 			_campaignTrackingActionLocalService.
 				checkCampaignTrackingActionEvents(classPK);
+
+			_campaignTrackingActionTotalLocalService.
+				checkCampaignTrackingActionTotalEvents(classPK);
 		}
 		catch (Exception e) {
 			_log.error("Cannot update report", e);
@@ -92,23 +106,23 @@ public class CampaignTrackingActionReport extends BaseReport {
 
 		context.put(
 			"searchContainerIterator",
-			new SearchContainerIterator<CampaignTrackingAction>() {
+			new SearchContainerIterator<CampaignTrackingActionTotal>() {
 
 				@Override
-				public List<CampaignTrackingAction> getResults(
+				public List<CampaignTrackingActionTotal> getResults(
 						int start, int end)
 					throws PortalException, SystemException {
 
-					return _campaignTrackingActionLocalService.
-							getCampaignTrackingActions(
-								classPK, start, end,
-								new CampaignTrackingActionCountComparator());
+					return _campaignTrackingActionTotalLocalService.
+						getCampaignTrackingActionsTotal(
+							classPK, start, end,
+							new CampaignTrackingActionTotalCountComparator());
 				}
 
 				@Override
 				public int getTotal() throws PortalException, SystemException {
-					return _campaignTrackingActionLocalService.
-						getCampaignTrackingActionsCount(classPK);
+					return _campaignTrackingActionTotalLocalService.
+						getCampaignTrackingActionsTotalCount(classPK);
 				}
 			}
 		);
@@ -119,5 +133,7 @@ public class CampaignTrackingActionReport extends BaseReport {
 
 	private CampaignTrackingActionLocalService
 		_campaignTrackingActionLocalService;
+	private CampaignTrackingActionTotalLocalService
+		_campaignTrackingActionTotalLocalService;
 
 }

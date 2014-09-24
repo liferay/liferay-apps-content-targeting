@@ -14,39 +14,39 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.util.comparator;
 
-import com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction;
+import com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
 /**
- * @author Eduardo Garcia
+ * @author Eudaldo Alonso
  */
-public class CampaignTrackingActionCountComparator extends OrderByComparator {
+public class CampaignTrackingActionTotalCountComparator extends OrderByComparator {
 
 	public static final String ORDER_BY_ASC =
-		"CampaignTrackingAction.count ASC";
+		"CampaignTrackingActionTotal.count ASC";
 
 	public static final String ORDER_BY_DESC =
-		"CampaignTrackingAction.count DESC";
+		"CampaignTrackingActionTotal.count DESC";
 
 	public static final String[] ORDER_BY_FIELDS = {"count"};
 
-	public CampaignTrackingActionCountComparator() {
+	public CampaignTrackingActionTotalCountComparator() {
 		this(false);
 	}
 
-	public CampaignTrackingActionCountComparator(boolean ascending) {
+	public CampaignTrackingActionTotalCountComparator(boolean ascending) {
 		_ascending = ascending;
 	}
 
 	@Override
 	public int compare(Object obj1, Object obj2) {
-		CampaignTrackingAction campaignTrackingAction1 =
-			(CampaignTrackingAction)obj1;
-		CampaignTrackingAction campaignTrackingAction2 =
-			(CampaignTrackingAction)obj2;
+		CampaignTrackingActionTotal campaignTrackingActionTotal1 =
+			(CampaignTrackingActionTotal)obj1;
+		CampaignTrackingActionTotal campaignTrackingActionTotal2 =
+			(CampaignTrackingActionTotal)obj2;
 
-		int count1 = campaignTrackingAction1.getCount();
-		int count2 = campaignTrackingAction2.getCount();
+		int count1 = campaignTrackingActionTotal1.getCount();
+		int count2 = campaignTrackingActionTotal2.getCount();
 
 		int value = 0;
 

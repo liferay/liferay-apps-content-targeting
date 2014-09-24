@@ -174,6 +174,17 @@
 		<finder name="CampaignId" return-type="Collection">
 			<finder-column name="campaignId" />
 		</finder>
+		<finder name="C_E_E" return-type="Collection">
+			<finder-column name="campaignId" />
+			<finder-column name="elementId" />
+			<finder-column name="eventType" />
+		</finder>
+		<finder name="C_R_R_E" return-type="Collection">
+			<finder-column name="campaignId" />
+			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassPK" />
+			<finder-column name="eventType" />
+		</finder>
 	</entity>
 	<entity name="UserSegment" uuid="true" local-service="true" remote-service="true">
 
