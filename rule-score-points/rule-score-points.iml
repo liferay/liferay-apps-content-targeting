@@ -31,7 +31,7 @@
         <CLASSES>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/jars/org.osgi.core-5.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.1.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/javadocs/org.osgi.core-5.0.0-javadoc.jar!/" />
@@ -40,7 +40,7 @@
         <SOURCES>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/sources/org.osgi.core-5.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/sources/org.osgi.enterprise-5.0.0-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

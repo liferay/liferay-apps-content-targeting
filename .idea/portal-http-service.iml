@@ -8,6 +8,19 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/../../shared/portal-http-service/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/../../shared/portal-http-service/lib" />
+        </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../../shared/portal-http-service/lib" recursive="false" />
+        <jarDirectory url="file://$MODULE_DIR$/../../shared/portal-http-service/lib" recursive="false" type="SOURCES" />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

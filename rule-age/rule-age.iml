@@ -45,7 +45,7 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4/jars/powermock-module-junit4-1.5.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4-common/jars/powermock-module-junit4-common-1.5.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.1.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/javadocs/org.osgi.core-5.0.0-javadoc.jar!/" />
@@ -64,7 +64,6 @@
         <SOURCES>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/sources/org.osgi.core-5.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/junit/junit/sources/junit-4.11-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/sources/hamcrest-core-1.3-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.mockito/mockito-all/sources/mockito-all-1.9.5-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-api-mockito/sources/powermock-api-mockito-1.5-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-api-support/sources/powermock-api-support-1.5-sources.jar!/" />
@@ -75,7 +74,7 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4/sources/powermock-module-junit4-1.5-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4-common/sources/powermock-module-junit4-common-1.5-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/sources/org.osgi.enterprise-5.0.0-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
