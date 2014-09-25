@@ -38,7 +38,7 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{analyticsEventId=");
 		sb.append(analyticsEventId);
@@ -52,10 +52,6 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		sb.append(className);
 		sb.append(", classPK=");
 		sb.append(classPK);
-		sb.append(", referrerClassName=");
-		sb.append(referrerClassName);
-		sb.append(", referrerClassPK=");
-		sb.append(referrerClassPK);
 		sb.append(", elementId=");
 		sb.append(elementId);
 		sb.append(", eventType=");
@@ -94,15 +90,6 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		}
 
 		analyticsEventImpl.setClassPK(classPK);
-
-		if (referrerClassName == null) {
-			analyticsEventImpl.setReferrerClassName(StringPool.BLANK);
-		}
-		else {
-			analyticsEventImpl.setReferrerClassName(referrerClassName);
-		}
-
-		analyticsEventImpl.setReferrerClassPK(referrerClassPK);
 
 		if (elementId == null) {
 			analyticsEventImpl.setElementId(StringPool.BLANK);
@@ -173,8 +160,6 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		anonymousUserId = objectInput.readLong();
 		className = objectInput.readUTF();
 		classPK = objectInput.readLong();
-		referrerClassName = objectInput.readUTF();
-		referrerClassPK = objectInput.readLong();
 		elementId = objectInput.readUTF();
 		eventType = objectInput.readUTF();
 		clientIP = objectInput.readUTF();
@@ -201,15 +186,6 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 		}
 
 		objectOutput.writeLong(classPK);
-
-		if (referrerClassName == null) {
-			objectOutput.writeUTF(StringPool.BLANK);
-		}
-		else {
-			objectOutput.writeUTF(referrerClassName);
-		}
-
-		objectOutput.writeLong(referrerClassPK);
 
 		if (elementId == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -269,8 +245,6 @@ public class AnalyticsEventCacheModel implements CacheModel<AnalyticsEvent>,
 	public long anonymousUserId;
 	public String className;
 	public long classPK;
-	public String referrerClassName;
-	public long referrerClassPK;
 	public String elementId;
 	public String eventType;
 	public String clientIP;

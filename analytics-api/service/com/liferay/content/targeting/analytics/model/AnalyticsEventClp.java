@@ -82,8 +82,6 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
-		attributes.put("referrerClassName", getReferrerClassName());
-		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
 		attributes.put("clientIP", getClientIP());
@@ -132,18 +130,6 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 
 		if (classPK != null) {
 			setClassPK(classPK);
-		}
-
-		String referrerClassName = (String)attributes.get("referrerClassName");
-
-		if (referrerClassName != null) {
-			setReferrerClassName(referrerClassName);
-		}
-
-		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
-
-		if (referrerClassPK != null) {
-			setReferrerClassPK(referrerClassPK);
 		}
 
 		String elementId = (String)attributes.get("elementId");
@@ -348,53 +334,6 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 				Method method = clazz.getMethod("setClassPK", long.class);
 
 				method.invoke(_analyticsEventRemoteModel, classPK);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public String getReferrerClassName() {
-		return _referrerClassName;
-	}
-
-	@Override
-	public void setReferrerClassName(String referrerClassName) {
-		_referrerClassName = referrerClassName;
-
-		if (_analyticsEventRemoteModel != null) {
-			try {
-				Class<?> clazz = _analyticsEventRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setReferrerClassName",
-						String.class);
-
-				method.invoke(_analyticsEventRemoteModel, referrerClassName);
-			}
-			catch (Exception e) {
-				throw new UnsupportedOperationException(e);
-			}
-		}
-	}
-
-	@Override
-	public long getReferrerClassPK() {
-		return _referrerClassPK;
-	}
-
-	@Override
-	public void setReferrerClassPK(long referrerClassPK) {
-		_referrerClassPK = referrerClassPK;
-
-		if (_analyticsEventRemoteModel != null) {
-			try {
-				Class<?> clazz = _analyticsEventRemoteModel.getClass();
-
-				Method method = clazz.getMethod("setReferrerClassPK", long.class);
-
-				method.invoke(_analyticsEventRemoteModel, referrerClassPK);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -664,8 +603,6 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 		clone.setAnonymousUserId(getAnonymousUserId());
 		clone.setClassName(getClassName());
 		clone.setClassPK(getClassPK());
-		clone.setReferrerClassName(getReferrerClassName());
-		clone.setReferrerClassPK(getReferrerClassPK());
 		clone.setElementId(getElementId());
 		clone.setEventType(getEventType());
 		clone.setClientIP(getClientIP());
@@ -723,7 +660,7 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(29);
 
 		sb.append("{analyticsEventId=");
 		sb.append(getAnalyticsEventId());
@@ -737,10 +674,6 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 		sb.append(getClassName());
 		sb.append(", classPK=");
 		sb.append(getClassPK());
-		sb.append(", referrerClassName=");
-		sb.append(getReferrerClassName());
-		sb.append(", referrerClassPK=");
-		sb.append(getReferrerClassPK());
 		sb.append(", elementId=");
 		sb.append(getElementId());
 		sb.append(", eventType=");
@@ -764,7 +697,7 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(46);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -794,14 +727,6 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 		sb.append(
 			"<column><column-name>classPK</column-name><column-value><![CDATA[");
 		sb.append(getClassPK());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>referrerClassName</column-name><column-value><![CDATA[");
-		sb.append(getReferrerClassName());
-		sb.append("]]></column-value></column>");
-		sb.append(
-			"<column><column-name>referrerClassPK</column-name><column-value><![CDATA[");
-		sb.append(getReferrerClassPK());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>elementId</column-name><column-value><![CDATA[");
@@ -849,8 +774,6 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 	private String _anonymousUserUuid;
 	private String _className;
 	private long _classPK;
-	private String _referrerClassName;
-	private long _referrerClassPK;
 	private String _elementId;
 	private String _eventType;
 	private String _clientIP;

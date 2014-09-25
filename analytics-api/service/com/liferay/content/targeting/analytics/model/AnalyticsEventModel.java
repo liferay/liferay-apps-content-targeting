@@ -176,35 +176,6 @@ public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
 	public void setClassPK(long classPK);
 
 	/**
-	 * Returns the referrer class name of this analytics event.
-	 *
-	 * @return the referrer class name of this analytics event
-	 */
-	@AutoEscape
-	public String getReferrerClassName();
-
-	/**
-	 * Sets the referrer class name of this analytics event.
-	 *
-	 * @param referrerClassName the referrer class name of this analytics event
-	 */
-	public void setReferrerClassName(String referrerClassName);
-
-	/**
-	 * Returns the referrer class p k of this analytics event.
-	 *
-	 * @return the referrer class p k of this analytics event
-	 */
-	public long getReferrerClassPK();
-
-	/**
-	 * Sets the referrer class p k of this analytics event.
-	 *
-	 * @param referrerClassPK the referrer class p k of this analytics event
-	 */
-	public void setReferrerClassPK(long referrerClassPK);
-
-	/**
 	 * Returns the element ID of this analytics event.
 	 *
 	 * @return the element ID of this analytics event

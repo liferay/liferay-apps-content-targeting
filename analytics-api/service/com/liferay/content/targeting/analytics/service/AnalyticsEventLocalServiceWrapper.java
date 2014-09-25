@@ -291,8 +291,7 @@ public class AnalyticsEventLocalServiceWrapper
 	@Override
 	public com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
 		long userId, long anonymousUserId, java.lang.String className,
-		long classPK, java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType,
+		long classPK, java.lang.String elementId, java.lang.String eventType,
 		java.lang.String clientIP, java.lang.String userAgent,
 		java.lang.String languageId, java.lang.String URL,
 		java.lang.String additionalInfo,
@@ -300,13 +299,12 @@ public class AnalyticsEventLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _analyticsEventLocalService.addAnalyticsEvent(userId,
-			anonymousUserId, className, classPK, referrerClassName,
-			referrerClassPK, elementId, eventType, clientIP, userAgent,
-			languageId, URL, additionalInfo, serviceContext);
+			anonymousUserId, className, classPK, elementId, eventType,
+			clientIP, userAgent, languageId, URL, additionalInfo, serviceContext);
 	}
 
 	@Override
-	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> addAnalyticsEvent(
+	public com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
 		long userId, long anonymousUserId, java.lang.String className,
 		long classPK, java.lang.String referrerClassName,
 		long[] referrerClassPKs, java.lang.String elementId,
@@ -372,28 +370,6 @@ public class AnalyticsEventLocalServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _analyticsEventLocalService.getAnalyticsEvents(className,
 			classPK, eventType, createDate);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
-		java.lang.String className, long classPK,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _analyticsEventLocalService.getAnalyticsEvents(className,
-			classPK, referrerClassName, referrerClassPK, eventType, createDate);
-	}
-
-	@Override
-	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _analyticsEventLocalService.getAnalyticsEvents(referrerClassName,
-			referrerClassPK, elementId, eventType, createDate);
 	}
 
 	@Override
@@ -467,6 +443,24 @@ public class AnalyticsEventLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _analyticsEventLocalService.getAnalyticsEventsCount(elementId,
+			eventType, createDate);
+	}
+
+	@Override
+	public long[] getAnalyticsEventsIds(java.lang.String className,
+		long classPK, java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.getAnalyticsEventsIds(className,
+			classPK, eventType, createDate);
+	}
+
+	@Override
+	public long[] getAnalyticsEventsIds(java.lang.String elementId,
+		java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.getAnalyticsEventsIds(elementId,
 			eventType, createDate);
 	}
 

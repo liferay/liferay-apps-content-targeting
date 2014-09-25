@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.analytics.model;
 
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -31,4 +32,11 @@ public interface AnalyticsEvent extends AnalyticsEventModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<AnalyticsEvent, Long> ANALYTICS_EVENT_ID_ACCESSOR =
+		new Accessor<AnalyticsEvent, Long>() {
+			@Override
+			public Long get(AnalyticsEvent analyticsEvent) {
+				return analyticsEvent.getAnalyticsEventId();
+			}
+		};
 }

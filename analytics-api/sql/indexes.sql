@@ -6,3 +6,5 @@ create index IX_466C824E on ContentTargeting_Analytics_AnalyticsEvent (companyId
 create index IX_F853CC0C on ContentTargeting_Analytics_AnalyticsEvent (companyId, createDate);
 create index IX_39D81875 on ContentTargeting_Analytics_AnalyticsEvent (elementId, eventType, createDate);
 create index IX_CDB73705 on ContentTargeting_Analytics_AnalyticsEvent (referrerClassName, referrerClassPK, elementId, eventType, createDate);
+
+create index IX_7176901E on ContentTargeting_Analytics_AnalyticsReferrer (analyticsEventId, referrerClassName, referrerClassPK);

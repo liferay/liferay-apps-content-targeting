@@ -17,6 +17,7 @@ package com.liferay.content.targeting.analytics.service.base;
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventPersistence;
+import com.liferay.content.targeting.analytics.service.persistence.AnalyticsReferrerPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
@@ -338,6 +339,63 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the analytics referrer local service.
+	 *
+	 * @return the analytics referrer local service
+	 */
+	public com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService getAnalyticsReferrerLocalService() {
+		return analyticsReferrerLocalService;
+	}
+
+	/**
+	 * Sets the analytics referrer local service.
+	 *
+	 * @param analyticsReferrerLocalService the analytics referrer local service
+	 */
+	public void setAnalyticsReferrerLocalService(
+		com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService analyticsReferrerLocalService) {
+		this.analyticsReferrerLocalService = analyticsReferrerLocalService;
+	}
+
+	/**
+	 * Returns the analytics referrer remote service.
+	 *
+	 * @return the analytics referrer remote service
+	 */
+	public com.liferay.content.targeting.analytics.service.AnalyticsReferrerService getAnalyticsReferrerService() {
+		return analyticsReferrerService;
+	}
+
+	/**
+	 * Sets the analytics referrer remote service.
+	 *
+	 * @param analyticsReferrerService the analytics referrer remote service
+	 */
+	public void setAnalyticsReferrerService(
+		com.liferay.content.targeting.analytics.service.AnalyticsReferrerService analyticsReferrerService) {
+		this.analyticsReferrerService = analyticsReferrerService;
+	}
+
+	/**
+	 * Returns the analytics referrer persistence.
+	 *
+	 * @return the analytics referrer persistence
+	 */
+	public AnalyticsReferrerPersistence getAnalyticsReferrerPersistence() {
+		return analyticsReferrerPersistence;
+	}
+
+	/**
+	 * Sets the analytics referrer persistence.
+	 *
+	 * @param analyticsReferrerPersistence the analytics referrer persistence
+	 */
+	public void setAnalyticsReferrerPersistence(
+		AnalyticsReferrerPersistence analyticsReferrerPersistence) {
+		this.analyticsReferrerPersistence = analyticsReferrerPersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -519,6 +577,12 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	protected com.liferay.content.targeting.analytics.service.AnalyticsEventService analyticsEventService;
 	@BeanReference(type = AnalyticsEventPersistence.class)
 	protected AnalyticsEventPersistence analyticsEventPersistence;
+	@BeanReference(type = com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService.class)
+	protected com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService analyticsReferrerLocalService;
+	@BeanReference(type = com.liferay.content.targeting.analytics.service.AnalyticsReferrerService.class)
+	protected com.liferay.content.targeting.analytics.service.AnalyticsReferrerService analyticsReferrerService;
+	@BeanReference(type = AnalyticsReferrerPersistence.class)
+	protected AnalyticsReferrerPersistence analyticsReferrerPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)

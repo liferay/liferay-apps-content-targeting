@@ -380,6 +380,23 @@ public class TrackingActionInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
+		long campaignId, java.lang.String elementId, java.lang.String eventType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _trackingActionInstanceLocalService.getTrackingActionInstances(campaignId,
+			elementId, eventType);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
+		long campaignId, java.lang.String className, long classPK,
+		java.lang.String eventType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _trackingActionInstanceLocalService.getTrackingActionInstances(campaignId,
+			className, classPK, eventType);
+	}
+
+	@Override
 	public int getTrackingActionInstancesCount(long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return _trackingActionInstanceLocalService.getTrackingActionInstancesCount(campaignId);

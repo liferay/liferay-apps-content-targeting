@@ -362,6 +362,22 @@ public class TrackingActionInstanceLocalServiceUtil {
 		return getService().getTrackingActionInstances(campaignId);
 	}
 
+	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
+		long campaignId, java.lang.String elementId, java.lang.String eventType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getTrackingActionInstances(campaignId, elementId, eventType);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
+		long campaignId, java.lang.String className, long classPK,
+		java.lang.String eventType)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getTrackingActionInstances(campaignId, className, classPK,
+			eventType);
+	}
+
 	public static int getTrackingActionInstancesCount(long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getTrackingActionInstancesCount(campaignId);

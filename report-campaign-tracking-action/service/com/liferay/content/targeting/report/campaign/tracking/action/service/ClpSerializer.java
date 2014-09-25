@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.report.campaign.tracking.action.service;
 
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionClp;
+import com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotalClp;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -106,6 +107,11 @@ public class ClpSerializer {
 			return translateInputCampaignTrackingAction(oldModel);
 		}
 
+		if (oldModelClassName.equals(
+					CampaignTrackingActionTotalClp.class.getName())) {
+			return translateInputCampaignTrackingActionTotal(oldModel);
+		}
+
 		return oldModel;
 	}
 
@@ -132,6 +138,17 @@ public class ClpSerializer {
 		return newModel;
 	}
 
+	public static Object translateInputCampaignTrackingActionTotal(
+		BaseModel<?> oldModel) {
+		CampaignTrackingActionTotalClp oldClpModel = (CampaignTrackingActionTotalClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getCampaignTrackingActionTotalRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
 	public static Object translateInput(Object obj) {
 		if (obj instanceof BaseModel<?>) {
 			return translateInput((BaseModel<?>)obj);
@@ -152,6 +169,11 @@ public class ClpSerializer {
 		if (oldModelClassName.equals(
 					"com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionImpl")) {
 			return translateOutputCampaignTrackingAction(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					"com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalImpl")) {
+			return translateOutputCampaignTrackingActionTotal(oldModel);
 		}
 
 		return oldModel;
@@ -239,6 +261,11 @@ public class ClpSerializer {
 			return new com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionException();
 		}
 
+		if (className.equals(
+					"com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException")) {
+			return new com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException();
+		}
+
 		return throwable;
 	}
 
@@ -249,6 +276,17 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setCampaignTrackingActionRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputCampaignTrackingActionTotal(
+		BaseModel<?> oldModel) {
+		CampaignTrackingActionTotalClp newModel = new CampaignTrackingActionTotalClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setCampaignTrackingActionTotalRemoteModel(oldModel);
 
 		return newModel;
 	}

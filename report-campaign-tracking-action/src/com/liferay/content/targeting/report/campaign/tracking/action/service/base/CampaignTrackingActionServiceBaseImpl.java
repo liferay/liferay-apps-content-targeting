@@ -18,6 +18,8 @@ import com.liferay.content.targeting.report.campaign.tracking.action.model.Campa
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionService;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionFinder;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionPersistence;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionTotalFinder;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionTotalPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
@@ -124,6 +126,82 @@ public abstract class CampaignTrackingActionServiceBaseImpl
 	public void setCampaignTrackingActionFinder(
 		CampaignTrackingActionFinder campaignTrackingActionFinder) {
 		this.campaignTrackingActionFinder = campaignTrackingActionFinder;
+	}
+
+	/**
+	 * Returns the campaign tracking action total local service.
+	 *
+	 * @return the campaign tracking action total local service
+	 */
+	public com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalLocalService getCampaignTrackingActionTotalLocalService() {
+		return campaignTrackingActionTotalLocalService;
+	}
+
+	/**
+	 * Sets the campaign tracking action total local service.
+	 *
+	 * @param campaignTrackingActionTotalLocalService the campaign tracking action total local service
+	 */
+	public void setCampaignTrackingActionTotalLocalService(
+		com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalLocalService campaignTrackingActionTotalLocalService) {
+		this.campaignTrackingActionTotalLocalService = campaignTrackingActionTotalLocalService;
+	}
+
+	/**
+	 * Returns the campaign tracking action total remote service.
+	 *
+	 * @return the campaign tracking action total remote service
+	 */
+	public com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalService getCampaignTrackingActionTotalService() {
+		return campaignTrackingActionTotalService;
+	}
+
+	/**
+	 * Sets the campaign tracking action total remote service.
+	 *
+	 * @param campaignTrackingActionTotalService the campaign tracking action total remote service
+	 */
+	public void setCampaignTrackingActionTotalService(
+		com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalService campaignTrackingActionTotalService) {
+		this.campaignTrackingActionTotalService = campaignTrackingActionTotalService;
+	}
+
+	/**
+	 * Returns the campaign tracking action total persistence.
+	 *
+	 * @return the campaign tracking action total persistence
+	 */
+	public CampaignTrackingActionTotalPersistence getCampaignTrackingActionTotalPersistence() {
+		return campaignTrackingActionTotalPersistence;
+	}
+
+	/**
+	 * Sets the campaign tracking action total persistence.
+	 *
+	 * @param campaignTrackingActionTotalPersistence the campaign tracking action total persistence
+	 */
+	public void setCampaignTrackingActionTotalPersistence(
+		CampaignTrackingActionTotalPersistence campaignTrackingActionTotalPersistence) {
+		this.campaignTrackingActionTotalPersistence = campaignTrackingActionTotalPersistence;
+	}
+
+	/**
+	 * Returns the campaign tracking action total finder.
+	 *
+	 * @return the campaign tracking action total finder
+	 */
+	public CampaignTrackingActionTotalFinder getCampaignTrackingActionTotalFinder() {
+		return campaignTrackingActionTotalFinder;
+	}
+
+	/**
+	 * Sets the campaign tracking action total finder.
+	 *
+	 * @param campaignTrackingActionTotalFinder the campaign tracking action total finder
+	 */
+	public void setCampaignTrackingActionTotalFinder(
+		CampaignTrackingActionTotalFinder campaignTrackingActionTotalFinder) {
+		this.campaignTrackingActionTotalFinder = campaignTrackingActionTotalFinder;
 	}
 
 	/**
@@ -305,6 +383,14 @@ public abstract class CampaignTrackingActionServiceBaseImpl
 	protected CampaignTrackingActionPersistence campaignTrackingActionPersistence;
 	@BeanReference(type = CampaignTrackingActionFinder.class)
 	protected CampaignTrackingActionFinder campaignTrackingActionFinder;
+	@BeanReference(type = com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalLocalService.class)
+	protected com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalLocalService campaignTrackingActionTotalLocalService;
+	@BeanReference(type = com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalService.class)
+	protected com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalService campaignTrackingActionTotalService;
+	@BeanReference(type = CampaignTrackingActionTotalPersistence.class)
+	protected CampaignTrackingActionTotalPersistence campaignTrackingActionTotalPersistence;
+	@BeanReference(type = CampaignTrackingActionTotalFinder.class)
+	protected CampaignTrackingActionTotalFinder campaignTrackingActionTotalFinder;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)

@@ -635,48 +635,6 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	}
 
 	@Override
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances() {
-		try {
-			String methodName = "getRuleInstances";
-
-			Class<?>[] parameterTypes = new Class<?>[] {  };
-
-			Object[] parameterValues = new Object[] {  };
-
-			java.util.List<com.liferay.content.targeting.model.RuleInstance> returnObj =
-				(java.util.List<com.liferay.content.targeting.model.RuleInstance>)invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public boolean isRuleEnabled(
-		com.liferay.content.targeting.api.model.Rule rule) {
-		try {
-			String methodName = "isRuleEnabled";
-
-			Class<?>[] parameterTypes = new Class<?>[] {
-					com.liferay.content.targeting.api.model.Rule.class
-				};
-
-			Object[] parameterValues = new Object[] { rule };
-
-			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public java.lang.String getNameWithGroupName(java.util.Locale locale,
 		long groupId) {
 		try {
@@ -699,6 +657,26 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances() {
+		try {
+			String methodName = "getRuleInstances";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.util.List<com.liferay.content.targeting.model.RuleInstance> returnObj =
+				(java.util.List<com.liferay.content.targeting.model.RuleInstance>)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public long getAssetCategoryId(long groupId) {
 		try {
 			String methodName = "getAssetCategoryId";
@@ -708,6 +686,28 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 			Object[] parameterValues = new Object[] { groupId };
 
 			Long returnObj = (Long)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public boolean isRuleEnabled(
+		com.liferay.content.targeting.api.model.Rule rule) {
+		try {
+			String methodName = "isRuleEnabled";
+
+			Class<?>[] parameterTypes = new Class<?>[] {
+					com.liferay.content.targeting.api.model.Rule.class
+				};
+
+			Object[] parameterValues = new Object[] { rule };
+
+			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
 
 			return returnObj;

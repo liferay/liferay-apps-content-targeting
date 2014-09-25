@@ -15,8 +15,6 @@
 			<basic name="anonymousUserId" />
 			<basic name="className" />
 			<basic name="classPK" />
-			<basic name="referrerClassName" />
-			<basic name="referrerClassPK" />
 			<basic name="elementId" />
 			<basic name="eventType" />
 			<basic name="clientIP" />
@@ -34,8 +32,23 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl">
+		<attributes>
+			<id name="analyticsReferrerId" />
+			<basic name="analyticsEventId" />
+			<basic name="referrerClassName" />
+			<basic name="referrerClassPK" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<entity class="com.liferay.content.targeting.analytics.model.impl.AnalyticsEventImpl" name="AnalyticsEvent">
 		<table name="ContentTargeting_Analytics_AnalyticsEvent" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerImpl" name="AnalyticsReferrer">
+		<table name="ContentTargeting_Analytics_AnalyticsReferrer" />
 		<attributes />
 	</entity>
 </entity-mappings>

@@ -37,8 +37,6 @@ public class AnalyticsEventSoap implements Serializable {
 		soapModel.setAnonymousUserId(model.getAnonymousUserId());
 		soapModel.setClassName(model.getClassName());
 		soapModel.setClassPK(model.getClassPK());
-		soapModel.setReferrerClassName(model.getReferrerClassName());
-		soapModel.setReferrerClassPK(model.getReferrerClassPK());
 		soapModel.setElementId(model.getElementId());
 		soapModel.setEventType(model.getEventType());
 		soapModel.setClientIP(model.getClientIP());
@@ -147,22 +145,6 @@ public class AnalyticsEventSoap implements Serializable {
 		_classPK = classPK;
 	}
 
-	public String getReferrerClassName() {
-		return _referrerClassName;
-	}
-
-	public void setReferrerClassName(String referrerClassName) {
-		_referrerClassName = referrerClassName;
-	}
-
-	public long getReferrerClassPK() {
-		return _referrerClassPK;
-	}
-
-	public void setReferrerClassPK(long referrerClassPK) {
-		_referrerClassPK = referrerClassPK;
-	}
-
 	public String getElementId() {
 		return _elementId;
 	}
@@ -233,8 +215,6 @@ public class AnalyticsEventSoap implements Serializable {
 	private long _anonymousUserId;
 	private String _className;
 	private long _classPK;
-	private String _referrerClassName;
-	private long _referrerClassPK;
 	private String _elementId;
 	private String _eventType;
 	private String _clientIP;

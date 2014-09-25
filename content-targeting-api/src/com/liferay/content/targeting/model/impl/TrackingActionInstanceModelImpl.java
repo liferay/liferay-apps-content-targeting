@@ -102,9 +102,13 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 			true);
 	public static long CAMPAIGNID_COLUMN_BITMASK = 1L;
 	public static long COMPANYID_COLUMN_BITMASK = 2L;
-	public static long GROUPID_COLUMN_BITMASK = 4L;
-	public static long UUID_COLUMN_BITMASK = 8L;
-	public static long TRACKINGACTIONKEY_COLUMN_BITMASK = 16L;
+	public static long ELEMENTID_COLUMN_BITMASK = 4L;
+	public static long EVENTTYPE_COLUMN_BITMASK = 8L;
+	public static long GROUPID_COLUMN_BITMASK = 16L;
+	public static long REFERRERCLASSNAME_COLUMN_BITMASK = 32L;
+	public static long REFERRERCLASSPK_COLUMN_BITMASK = 64L;
+	public static long UUID_COLUMN_BITMASK = 128L;
+	public static long TRACKINGACTIONKEY_COLUMN_BITMASK = 256L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -531,7 +535,17 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 
 	@Override
 	public void setReferrerClassName(String referrerClassName) {
+		_columnBitmask |= REFERRERCLASSNAME_COLUMN_BITMASK;
+
+		if (_originalReferrerClassName == null) {
+			_originalReferrerClassName = _referrerClassName;
+		}
+
 		_referrerClassName = referrerClassName;
+	}
+
+	public String getOriginalReferrerClassName() {
+		return GetterUtil.getString(_originalReferrerClassName);
 	}
 
 	@JSON
@@ -542,7 +556,19 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 
 	@Override
 	public void setReferrerClassPK(long referrerClassPK) {
+		_columnBitmask |= REFERRERCLASSPK_COLUMN_BITMASK;
+
+		if (!_setOriginalReferrerClassPK) {
+			_setOriginalReferrerClassPK = true;
+
+			_originalReferrerClassPK = _referrerClassPK;
+		}
+
 		_referrerClassPK = referrerClassPK;
+	}
+
+	public long getOriginalReferrerClassPK() {
+		return _originalReferrerClassPK;
 	}
 
 	@JSON
@@ -558,7 +584,17 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 
 	@Override
 	public void setElementId(String elementId) {
+		_columnBitmask |= ELEMENTID_COLUMN_BITMASK;
+
+		if (_originalElementId == null) {
+			_originalElementId = _elementId;
+		}
+
 		_elementId = elementId;
+	}
+
+	public String getOriginalElementId() {
+		return GetterUtil.getString(_originalElementId);
 	}
 
 	@JSON
@@ -574,7 +610,17 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 
 	@Override
 	public void setEventType(String eventType) {
+		_columnBitmask |= EVENTTYPE_COLUMN_BITMASK;
+
+		if (_originalEventType == null) {
+			_originalEventType = _eventType;
+		}
+
 		_eventType = eventType;
+	}
+
+	public String getOriginalEventType() {
+		return GetterUtil.getString(_originalEventType);
 	}
 
 	@JSON
@@ -712,6 +758,16 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		trackingActionInstanceModelImpl._originalCampaignId = trackingActionInstanceModelImpl._campaignId;
 
 		trackingActionInstanceModelImpl._setOriginalCampaignId = false;
+
+		trackingActionInstanceModelImpl._originalReferrerClassName = trackingActionInstanceModelImpl._referrerClassName;
+
+		trackingActionInstanceModelImpl._originalReferrerClassPK = trackingActionInstanceModelImpl._referrerClassPK;
+
+		trackingActionInstanceModelImpl._setOriginalReferrerClassPK = false;
+
+		trackingActionInstanceModelImpl._originalElementId = trackingActionInstanceModelImpl._elementId;
+
+		trackingActionInstanceModelImpl._originalEventType = trackingActionInstanceModelImpl._eventType;
 
 		trackingActionInstanceModelImpl._columnBitmask = 0;
 	}
@@ -960,9 +1016,14 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 	private boolean _setOriginalCampaignId;
 	private String _alias;
 	private String _referrerClassName;
+	private String _originalReferrerClassName;
 	private long _referrerClassPK;
+	private long _originalReferrerClassPK;
+	private boolean _setOriginalReferrerClassPK;
 	private String _elementId;
+	private String _originalElementId;
 	private String _eventType;
+	private String _originalEventType;
 	private String _typeSettings;
 	private long _columnBitmask;
 	private TrackingActionInstance _escapedModel;

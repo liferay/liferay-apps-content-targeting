@@ -10,3 +10,15 @@ create table ContentTargeting_CampaignTAReport_CampaignTrackingAction (
 	count INTEGER,
 	modifiedDate DATE null
 );
+
+create table ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal (
+	campaignTrackingActionId LONG not null primary key,
+	campaignId LONG,
+	alias_ VARCHAR(75) null,
+	referrerClassName VARCHAR(75) null,
+	referrerClassPK LONG,
+	elementId VARCHAR(75) null,
+	eventType VARCHAR(75) null,
+	count INTEGER,
+	modifiedDate DATE null
+);

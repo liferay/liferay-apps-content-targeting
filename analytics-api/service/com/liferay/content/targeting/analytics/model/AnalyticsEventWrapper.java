@@ -56,8 +56,6 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
-		attributes.put("referrerClassName", getReferrerClassName());
-		attributes.put("referrerClassPK", getReferrerClassPK());
 		attributes.put("elementId", getElementId());
 		attributes.put("eventType", getEventType());
 		attributes.put("clientIP", getClientIP());
@@ -106,18 +104,6 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 
 		if (classPK != null) {
 			setClassPK(classPK);
-		}
-
-		String referrerClassName = (String)attributes.get("referrerClassName");
-
-		if (referrerClassName != null) {
-			setReferrerClassName(referrerClassName);
-		}
-
-		Long referrerClassPK = (Long)attributes.get("referrerClassPK");
-
-		if (referrerClassPK != null) {
-			setReferrerClassPK(referrerClassPK);
 		}
 
 		String elementId = (String)attributes.get("elementId");
@@ -351,46 +337,6 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	@Override
 	public void setClassPK(long classPK) {
 		_analyticsEvent.setClassPK(classPK);
-	}
-
-	/**
-	* Returns the referrer class name of this analytics event.
-	*
-	* @return the referrer class name of this analytics event
-	*/
-	@Override
-	public java.lang.String getReferrerClassName() {
-		return _analyticsEvent.getReferrerClassName();
-	}
-
-	/**
-	* Sets the referrer class name of this analytics event.
-	*
-	* @param referrerClassName the referrer class name of this analytics event
-	*/
-	@Override
-	public void setReferrerClassName(java.lang.String referrerClassName) {
-		_analyticsEvent.setReferrerClassName(referrerClassName);
-	}
-
-	/**
-	* Returns the referrer class p k of this analytics event.
-	*
-	* @return the referrer class p k of this analytics event
-	*/
-	@Override
-	public long getReferrerClassPK() {
-		return _analyticsEvent.getReferrerClassPK();
-	}
-
-	/**
-	* Sets the referrer class p k of this analytics event.
-	*
-	* @param referrerClassPK the referrer class p k of this analytics event
-	*/
-	@Override
-	public void setReferrerClassPK(long referrerClassPK) {
-		_analyticsEvent.setReferrerClassPK(referrerClassPK);
 	}
 
 	/**

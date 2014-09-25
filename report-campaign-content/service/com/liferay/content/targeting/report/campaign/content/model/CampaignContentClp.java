@@ -294,9 +294,9 @@ public class CampaignContentClp extends BaseModelImpl<CampaignContent>
 	}
 
 	@Override
-	public java.lang.String getTitle(java.util.Locale locale) {
+	public java.lang.String getType(java.util.Locale locale) {
 		try {
-			String methodName = "getTitle";
+			String methodName = "getType";
 
 			Class<?>[] parameterTypes = new Class<?>[] { java.util.Locale.class };
 
@@ -313,9 +313,9 @@ public class CampaignContentClp extends BaseModelImpl<CampaignContent>
 	}
 
 	@Override
-	public java.lang.String getType(java.util.Locale locale) {
+	public java.lang.String getTitle(java.util.Locale locale) {
 		try {
-			String methodName = "getType";
+			String methodName = "getTitle";
 
 			Class<?>[] parameterTypes = new Class<?>[] { java.util.Locale.class };
 

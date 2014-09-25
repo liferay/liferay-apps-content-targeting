@@ -28,8 +28,32 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalModelImpl">
+		<attributes>
+			<id name="campaignTrackingActionId" />
+			<basic name="campaignId" />
+			<basic name="alias">
+				<column name="ALIAS_" />
+			</basic>
+			<basic name="referrerClassName" />
+			<basic name="referrerClassPK" />
+			<basic name="elementId" />
+			<basic name="eventType" />
+			<basic name="count" />
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<entity class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionImpl" name="CampaignTrackingAction">
 		<table name="ContentTargeting_CampaignTAReport_CampaignTrackingAction" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalImpl" name="CampaignTrackingActionTotal">
+		<table name="ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal" />
 		<attributes />
 	</entity>
 </entity-mappings>

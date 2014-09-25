@@ -16,6 +16,8 @@ package com.liferay.content.targeting.report.campaign.tracking.action.service.me
 
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionLocalServiceUtil;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionServiceUtil;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalLocalServiceUtil;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalServiceUtil;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.ClpSerializer;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -39,6 +41,9 @@ public class ClpMessageListener extends BaseMessageListener {
 			CampaignTrackingActionLocalServiceUtil.clearService();
 
 			CampaignTrackingActionServiceUtil.clearService();
+			CampaignTrackingActionTotalLocalServiceUtil.clearService();
+
+			CampaignTrackingActionTotalServiceUtil.clearService();
 		}
 	}
 }

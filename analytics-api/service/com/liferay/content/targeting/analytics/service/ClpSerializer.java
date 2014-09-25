@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.analytics.service;
 
 import com.liferay.content.targeting.analytics.model.AnalyticsEventClp;
+import com.liferay.content.targeting.analytics.model.AnalyticsReferrerClp;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -106,6 +107,10 @@ public class ClpSerializer {
 			return translateInputAnalyticsEvent(oldModel);
 		}
 
+		if (oldModelClassName.equals(AnalyticsReferrerClp.class.getName())) {
+			return translateInputAnalyticsReferrer(oldModel);
+		}
+
 		return oldModel;
 	}
 
@@ -125,6 +130,16 @@ public class ClpSerializer {
 		AnalyticsEventClp oldClpModel = (AnalyticsEventClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getAnalyticsEventRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputAnalyticsReferrer(BaseModel<?> oldModel) {
+		AnalyticsReferrerClp oldClpModel = (AnalyticsReferrerClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getAnalyticsReferrerRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -151,6 +166,11 @@ public class ClpSerializer {
 		if (oldModelClassName.equals(
 					"com.liferay.content.targeting.analytics.model.impl.AnalyticsEventImpl")) {
 			return translateOutputAnalyticsEvent(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					"com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerImpl")) {
+			return translateOutputAnalyticsReferrer(oldModel);
 		}
 
 		return oldModel;
@@ -238,6 +258,11 @@ public class ClpSerializer {
 			return new com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException();
 		}
 
+		if (className.equals(
+					"com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException")) {
+			return new com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException();
+		}
+
 		return throwable;
 	}
 
@@ -247,6 +272,16 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setAnalyticsEventRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputAnalyticsReferrer(BaseModel<?> oldModel) {
+		AnalyticsReferrerClp newModel = new AnalyticsReferrerClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setAnalyticsReferrerRemoteModel(oldModel);
 
 		return newModel;
 	}

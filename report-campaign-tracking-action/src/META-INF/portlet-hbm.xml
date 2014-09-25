@@ -3,6 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction" />
+	<import class="com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal" />
 	<class name="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionImpl" table="ContentTargeting_CampaignTAReport_CampaignTrackingAction">
 		<cache usage="read-write" />
 		<id name="campaignTrackingActionId" type="long">
@@ -10,6 +11,20 @@
 		</id>
 		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userSegmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="alias" type="com.liferay.portal.dao.orm.hibernate.StringType" column="alias_" />
+		<property name="referrerClassName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="referrerClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="elementId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="count" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalImpl" table="ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal">
+		<cache usage="read-write" />
+		<id name="campaignTrackingActionId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="alias" type="com.liferay.portal.dao.orm.hibernate.StringType" column="alias_" />
 		<property name="referrerClassName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="referrerClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />

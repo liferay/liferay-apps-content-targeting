@@ -143,13 +143,25 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 
 		_methodParameterTypes71 = new String[] { "long" };
 
-		_methodName72 = "getTrackingActionInstancesCount";
+		_methodName72 = "getTrackingActionInstances";
 
-		_methodParameterTypes72 = new String[] { "long" };
+		_methodParameterTypes72 = new String[] {
+				"long", "java.lang.String", "java.lang.String"
+			};
 
-		_methodName73 = "updateTrackingActionInstance";
+		_methodName73 = "getTrackingActionInstances";
 
 		_methodParameterTypes73 = new String[] {
+				"long", "java.lang.String", "long", "java.lang.String"
+			};
+
+		_methodName74 = "getTrackingActionInstancesCount";
+
+		_methodParameterTypes74 = new String[] { "long" };
+
+		_methodName75 = "updateTrackingActionInstance";
+
+		_methodParameterTypes75 = new String[] {
 				"long", "java.lang.String", "java.lang.String", "long",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
@@ -300,11 +312,24 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 
 		if (_methodName72.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes72, parameterTypes)) {
-			return TrackingActionInstanceLocalServiceUtil.getTrackingActionInstancesCount(((Long)arguments[0]).longValue());
+			return TrackingActionInstanceLocalServiceUtil.getTrackingActionInstances(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
 		if (_methodName73.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes73, parameterTypes)) {
+			return TrackingActionInstanceLocalServiceUtil.getTrackingActionInstances(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1],
+				((Long)arguments[2]).longValue(), (java.lang.String)arguments[3]);
+		}
+
+		if (_methodName74.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes74, parameterTypes)) {
+			return TrackingActionInstanceLocalServiceUtil.getTrackingActionInstancesCount(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName75.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes75, parameterTypes)) {
 			return TrackingActionInstanceLocalServiceUtil.updateTrackingActionInstance(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				((Long)arguments[3]).longValue(),
@@ -368,4 +393,8 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 	private String[] _methodParameterTypes72;
 	private String _methodName73;
 	private String[] _methodParameterTypes73;
+	private String _methodName74;
+	private String[] _methodParameterTypes74;
+	private String _methodName75;
+	private String[] _methodParameterTypes75;
 }

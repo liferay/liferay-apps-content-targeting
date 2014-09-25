@@ -17,6 +17,8 @@ create index IX_28E10C92 on ContentTargeting_RuleInstance (uuid_, companyId);
 create unique index IX_C6078F94 on ContentTargeting_RuleInstance (uuid_, groupId);
 
 create index IX_F9806E on ContentTargeting_TrackingActionInstance (campaignId);
+create index IX_7A91700B on ContentTargeting_TrackingActionInstance (campaignId, elementId, eventType);
+create index IX_DE0B7FE6 on ContentTargeting_TrackingActionInstance (campaignId, referrerClassName, referrerClassPK, eventType);
 create index IX_EE11749B on ContentTargeting_TrackingActionInstance (groupId);
 create index IX_88A171E5 on ContentTargeting_TrackingActionInstance (uuid_);
 create index IX_A220E123 on ContentTargeting_TrackingActionInstance (uuid_, companyId);

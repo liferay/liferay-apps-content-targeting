@@ -5,8 +5,6 @@ create table ContentTargeting_Analytics_AnalyticsEvent (
 	anonymousUserId LONG,
 	className VARCHAR(75) null,
 	classPK LONG,
-	referrerClassName VARCHAR(75) null,
-	referrerClassPK LONG,
 	elementId VARCHAR(75) null,
 	eventType VARCHAR(75) null,
 	clientIP VARCHAR(75) null,
@@ -15,4 +13,11 @@ create table ContentTargeting_Analytics_AnalyticsEvent (
 	URL STRING null,
 	additionalInfo TEXT null,
 	createDate DATE null
+);
+
+create table ContentTargeting_Analytics_AnalyticsReferrer (
+	analyticsReferrerId LONG not null primary key,
+	analyticsEventId LONG,
+	referrerClassName VARCHAR(75) null,
+	referrerClassPK LONG
 );

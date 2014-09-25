@@ -8,8 +8,6 @@
 		<field name="anonymousUserId" type="long" />
 		<field name="className" type="String" />
 		<field name="classPK" type="long" />
-		<field name="referrerClassName" type="String" />
-		<field name="referrerClassPK" type="long" />
 		<field name="elementId" type="String" />
 		<field name="eventType" type="String" />
 		<field name="clientIP" type="String" />
@@ -24,5 +22,11 @@
 			<hint-collection name="CLOB" />
 		</field>
 		<field name="createDate" type="Date" />
+	</model>
+	<model name="com.liferay.content.targeting.analytics.model.AnalyticsReferrer">
+		<field name="analyticsReferrerId" type="long" />
+		<field name="analyticsEventId" type="long" />
+		<field name="referrerClassName" type="String" />
+		<field name="referrerClassPK" type="long" />
 	</model>
 </model-hints>

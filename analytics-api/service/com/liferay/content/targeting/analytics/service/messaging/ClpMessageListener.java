@@ -16,6 +16,8 @@ package com.liferay.content.targeting.analytics.service.messaging;
 
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalServiceUtil;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventServiceUtil;
+import com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalServiceUtil;
+import com.liferay.content.targeting.analytics.service.AnalyticsReferrerServiceUtil;
 import com.liferay.content.targeting.analytics.service.ClpSerializer;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -39,6 +41,9 @@ public class ClpMessageListener extends BaseMessageListener {
 			AnalyticsEventLocalServiceUtil.clearService();
 
 			AnalyticsEventServiceUtil.clearService();
+			AnalyticsReferrerLocalServiceUtil.clearService();
+
+			AnalyticsReferrerServiceUtil.clearService();
 		}
 	}
 }
