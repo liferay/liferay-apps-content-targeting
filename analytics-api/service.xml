@@ -50,6 +50,11 @@
 			<finder-column name="createDate" comparator="&lt;" />
 		</finder>
 
+		<finder name="NotC_GtD" return-type="Collection">
+			<finder-column name="classPK" comparator="!=" />
+			<finder-column name="createDate" comparator="&gt;" />
+		</finder>
+
 		<finder name="C_C_E" return-type="Collection">
 			<finder-column name="className" />
 			<finder-column name="classPK" />

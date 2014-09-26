@@ -19,8 +19,6 @@ import com.liferay.content.targeting.analytics.service.base.AnalyticsReferrerLoc
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 /**
  * The implementation of the analytics referrer local service.
@@ -56,6 +54,15 @@ public class AnalyticsReferrerLocalServiceImpl
 		analyticsReferrerPersistence.update(analyticsReferrer);
 
 		return analyticsReferrer;
+	}
+
+	@Override
+	public int getAnalyticsReferrerCount(
+			long analyticsEventId, String className, long classPK)
+		throws SystemException {
+
+		return getAnalyticsReferrerCount(
+			new long[]{analyticsEventId}, className, classPK);
 	}
 
 	@Override

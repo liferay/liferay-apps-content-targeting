@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.report.campaign.content.service.impl;
 
+import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
+import com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.report.campaign.content.CampaignContentReport;
@@ -24,17 +26,11 @@ import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ProjectionFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.ProjectionList;
-import com.liferay.portal.kernel.dao.orm.Property;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
@@ -185,59 +181,24 @@ public class CampaignContentLocalServiceImpl
 	protected void addCampaignContentsFromAnalytics(long campaignId, Date date)
 		throws PortalException, SystemException {
 
-		// Retrieve analytics
-
-		DynamicQuery dynamicQuery = _analyticsEventLocalService.dynamicQuery();
-
-		Property classPKProperty = PropertyFactoryUtil.forName("classPK");
-		Property referrerClassNameProperty = PropertyFactoryUtil.forName(
-			"referrerClassName");
-		Property referrerClassPKProperty = PropertyFactoryUtil.forName(
-			"referrerClassPK");
-
-		dynamicQuery.add(classPKProperty.gt(0L));
-		dynamicQuery.add(
-			referrerClassNameProperty.eq(Campaign.class.getName()));
-		dynamicQuery.add(referrerClassPKProperty.eq(campaignId));
-
-		if (date == null) {
-			date = _analyticsEventLocalService.getMaxAge();
-		}
-
-		Property createDateProperty = PropertyFactoryUtil.forName("createDate");
-
-		dynamicQuery.add(createDateProperty.gt(date));
-
-		ProjectionList projectionList = ProjectionFactoryUtil.projectionList();
-
-		projectionList.add(ProjectionFactoryUtil.groupProperty("className"));
-		projectionList.add(ProjectionFactoryUtil.groupProperty("classPK"));
-		projectionList.add(
-			ProjectionFactoryUtil.groupProperty("referrerClassPK"));
-
-		dynamicQuery.setProjection(projectionList);
-
-		List<Object[]> results = _analyticsEventLocalService.dynamicQuery(
-			dynamicQuery);
+		List<AnalyticsEvent> analyticsEvents =
+			_analyticsEventLocalService.getAnalyticsEventsContent(date);
 
 		// Process analytics and store data
 
-		for (Object[] result : results) {
-			String className = GetterUtil.getString(result[0]);
-			long classPK = GetterUtil.getLong(result[1]);
-			long referrerClassPK = GetterUtil.getLong(result[2]);
-
+		for (AnalyticsEvent analyticsEvent : analyticsEvents) {
 			int contentViewCount =
-				_analyticsEventLocalService.getAnalyticsEventsCount(
-					className, classPK, Campaign.class.getName(),
-					referrerClassPK, "view", date);
+				_analyticsReferrerLocalService.getAnalyticsReferrerCount(
+					analyticsEvent.getAnalyticsEventId(),
+					Campaign.class.getName(), campaignId);
 
 			if (contentViewCount == 0) {
 				continue;
 			}
 
 			addCampaignContent(
-				referrerClassPK, className, classPK, "view", contentViewCount);
+				campaignId, analyticsEvent.getClassName(),
+				analyticsEvent.getClassPK(), "view", contentViewCount);
 		}
 	}
 
@@ -246,6 +207,8 @@ public class CampaignContentLocalServiceImpl
 
 		_analyticsEventLocalService = ServiceTrackerUtil.getService(
 			AnalyticsEventLocalService.class, bundle.getBundleContext());
+		_analyticsReferrerLocalService = ServiceTrackerUtil.getService(
+			AnalyticsReferrerLocalService.class, bundle.getBundleContext());
 		_campaignLocalService = ServiceTrackerUtil.getService(
 			CampaignLocalService.class, bundle.getBundleContext());
 		_reportInstanceLocalService = ServiceTrackerUtil.getService(
@@ -256,6 +219,7 @@ public class CampaignContentLocalServiceImpl
 		CampaignContentLocalServiceImpl.class);
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
+	private AnalyticsReferrerLocalService _analyticsReferrerLocalService;
 	private CampaignLocalService _campaignLocalService;
 	private ReportInstanceLocalService _reportInstanceLocalService;
 

@@ -29,7 +29,6 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.CompanyActionableDynamicQuery;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -54,9 +53,32 @@ public class AnalyticsEventLocalServiceImpl
 	@Override
 	public AnalyticsEvent addAnalyticsEvent(
 			long userId, long anonymousUserId, String className, long classPK,
-			String elementId, String eventType, String clientIP,
-			String userAgent, String languageId, String URL, String additionalInfo,
+			String referrerClassName, long[] referrerClassPKs, String elementId,
+			String eventType, String clientIP, String userAgent,
+			String languageId, String URL, String additionalInfo,
 			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		AnalyticsEvent analyticsEvent = addAnalyticsEvent(
+			userId, anonymousUserId, className, classPK, elementId, eventType,
+			clientIP, userAgent, languageId, URL, additionalInfo,
+			serviceContext);
+
+		for (long referrerClassPK : referrerClassPKs) {
+			analyticsReferrerLocalService.addAnalyticsReferrer(
+				analyticsEvent.getAnalyticsEventId(), referrerClassName,
+				referrerClassPK);
+		}
+
+		return analyticsEvent;
+	}
+
+	@Override
+	public AnalyticsEvent addAnalyticsEvent(
+			long userId, long anonymousUserId, String className, long classPK,
+			String elementId, String eventType, String clientIP,
+			String userAgent, String languageId, String URL,
+			String additionalInfo, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		long analyticsEventId = CounterLocalServiceUtil.increment();
@@ -86,29 +108,6 @@ public class AnalyticsEventLocalServiceImpl
 		analyticsEvent.setAdditionalInfo(additionalInfo);
 
 		analyticsEventPersistence.update(analyticsEvent);
-
-		return analyticsEvent;
-	}
-
-	@Override
-	public AnalyticsEvent addAnalyticsEvent(
-			long userId, long anonymousUserId, String className, long classPK,
-			String referrerClassName, long[] referrerClassPKs, String elementId,
-			String eventType, String clientIP, String userAgent,
-			String languageId, String URL, String additionalInfo,
-			ServiceContext serviceContext)
-		throws PortalException, SystemException {
-
-		AnalyticsEvent analyticsEvent = addAnalyticsEvent(
-			userId, anonymousUserId, className, classPK, elementId, eventType,
-			clientIP, userAgent, languageId, URL, additionalInfo,
-			serviceContext);
-
-		for (long referrerClassPK : referrerClassPKs) {
-			analyticsReferrerLocalService.addAnalyticsReferrer(
-				analyticsEvent.getAnalyticsEventId(), referrerClassName,
-				referrerClassPK);
-		}
 
 		return analyticsEvent;
 	}
@@ -187,6 +186,23 @@ public class AnalyticsEventLocalServiceImpl
 
 		return analyticsEventPersistence.findByE_E_GtD(
 			elementId, eventType, createDate);
+	}
+
+	@Override
+	public List<AnalyticsEvent> getAnalyticsEventsContent(Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventPersistence.findByNotC_GtD(0, createDate);
+	}
+
+	@Override
+	public long[] getAnalyticsEventsContentIds(Date createDate)
+		throws PortalException, SystemException {
+
+		List<AnalyticsEvent> analyticsEvents =
+			analyticsEventPersistence.findByNotC_GtD(0, createDate);
+
+		return getAnalyticsEventsIds(analyticsEvents);
 	}
 
 	@Override
