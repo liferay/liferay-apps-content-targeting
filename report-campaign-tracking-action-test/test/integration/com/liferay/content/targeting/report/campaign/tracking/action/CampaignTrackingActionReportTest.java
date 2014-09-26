@@ -107,14 +107,14 @@ public class CampaignTrackingActionReportTest {
 		// Add analytics
 
 		_analyticsEventLocalService.addAnalyticsEvent(
-			userId, 1, null, -1, UserSegment.class.getName(), 1, elementId,
-			eventType, "127.0.0.1", "ES", "User Agent", "http://localhost",
-			null, serviceContext);
+			userId, 1, null, -1, UserSegment.class.getName(), new long[]{1},
+			elementId, eventType, "127.0.0.1", "ES", "User Agent",
+			"http://localhost", null, serviceContext);
 
 		_analyticsEventLocalService.addAnalyticsEvent(
-			userId, 1, className, classPK, UserSegment.class.getName(), 1, null,
-			eventType, "127.0.0.1", "ES", "User Agent", "http://localhost",
-			null, serviceContext);
+			userId, 1, className, classPK, UserSegment.class.getName(),
+			new long[]{1}, null, eventType, "127.0.0.1", "ES", "User Agent",
+			"http://localhost", null, serviceContext);
 
 		// Test update report with analytics
 
