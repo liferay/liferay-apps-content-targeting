@@ -83,8 +83,9 @@ public class CampaignContentReportTest {
 
 		_analyticsEventLocalService.addAnalyticsEvent(
 			TestUtil.getUserId(), 1, JournalArticle.class.getName(), 2,
-			Campaign.class.getName(), campaignId, null, "view", "127.0.0.1",
-			"ES", "User Agent", "http://localhost", null, serviceContext);
+			Campaign.class.getName(), new long[] {campaignId}, null, "view",
+			"127.0.0.1", "ES", "User Agent", "http://localhost", null,
+			serviceContext);
 
 		// Test update report with analytics
 

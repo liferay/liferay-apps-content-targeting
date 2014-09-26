@@ -115,8 +115,8 @@ public class PageVisitedTest {
 
 		_analyticsEventLocalService.addAnalyticsEvent(
 			1, anonymousUser.getAnonymousUserId(), Layout.class.getName(),
-			layout.getPlid(), Layout.class.getName(), 1, null, "view",
-			"127.0.0.1", "User Agent", "ES", "http://localhost", null,
+			layout.getPlid(), Layout.class.getName(), new long[]{1}, null,
+			"view", "127.0.0.1", "User Agent", "ES", "http://localhost", null,
 			serviceContext);
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
