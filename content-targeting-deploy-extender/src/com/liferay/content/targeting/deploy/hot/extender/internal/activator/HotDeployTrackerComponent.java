@@ -164,7 +164,7 @@ public class HotDeployTrackerComponent {
 			BundleContext bundleContext = bundle.getBundleContext();
 
 			ServletContext servletContext = bundleContext.getService(
-					serviceReference);
+				serviceReference);
 
 			_osgiDeployContexts.putIfAbsent(
 				servletContext.getServletContextName(),
