@@ -67,6 +67,6 @@ AUI.add(
 	},
 	'',
 	{
-		requires: ['aui-base', 'liferay-portlet-base']
+		requires: ['aui-base', 'event-hover', 'liferay-portlet-base']
 	}
 );
