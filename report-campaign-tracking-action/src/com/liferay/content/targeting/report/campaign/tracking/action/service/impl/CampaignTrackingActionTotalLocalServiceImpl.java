@@ -237,7 +237,7 @@ public class CampaignTrackingActionTotalLocalServiceImpl
 				_trackingActionInstaceLocalService.getTrackingActionInstances(
 					campaignId, className, classPK, eventType);
 
-			if (!trackingActionInstances.isEmpty()) {
+			if (trackingActionInstances.isEmpty()) {
 				continue;
 			}
 
@@ -273,7 +273,7 @@ public class CampaignTrackingActionTotalLocalServiceImpl
 				_trackingActionInstaceLocalService.getTrackingActionInstances(
 					campaignId, elementId, eventType);
 
-			if (!trackingActionInstances.isEmpty()) {
+			if (trackingActionInstances.isEmpty()) {
 				continue;
 			}
 
