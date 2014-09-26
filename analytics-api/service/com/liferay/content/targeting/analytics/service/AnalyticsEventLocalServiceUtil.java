@@ -277,21 +277,6 @@ public class AnalyticsEventLocalServiceUtil {
 
 	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
 		long userId, long anonymousUserId, java.lang.String className,
-		long classPK, java.lang.String elementId, java.lang.String eventType,
-		java.lang.String clientIP, java.lang.String userAgent,
-		java.lang.String languageId, java.lang.String URL,
-		java.lang.String additionalInfo,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addAnalyticsEvent(userId, anonymousUserId, className,
-			classPK, elementId, eventType, clientIP, userAgent, languageId,
-			URL, additionalInfo, serviceContext);
-	}
-
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
-		long userId, long anonymousUserId, java.lang.String className,
 		long classPK, java.lang.String referrerClassName,
 		long[] referrerClassPKs, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String clientIP,
@@ -304,6 +289,21 @@ public class AnalyticsEventLocalServiceUtil {
 				   .addAnalyticsEvent(userId, anonymousUserId, className,
 			classPK, referrerClassName, referrerClassPKs, elementId, eventType,
 			clientIP, userAgent, languageId, URL, additionalInfo, serviceContext);
+	}
+
+	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
+		long userId, long anonymousUserId, java.lang.String className,
+		long classPK, java.lang.String elementId, java.lang.String eventType,
+		java.lang.String clientIP, java.lang.String userAgent,
+		java.lang.String languageId, java.lang.String URL,
+		java.lang.String additionalInfo,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addAnalyticsEvent(userId, anonymousUserId, className,
+			classPK, elementId, eventType, clientIP, userAgent, languageId,
+			URL, additionalInfo, serviceContext);
 	}
 
 	public static void checkAnalyticsEvents()
@@ -358,6 +358,19 @@ public class AnalyticsEventLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getAnalyticsEvents(elementId, eventType, createDate);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEventsContent(
+		java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAnalyticsEventsContent(createDate);
+	}
+
+	public static long[] getAnalyticsEventsContentIds(java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAnalyticsEventsContentIds(createDate);
 	}
 
 	public static int getAnalyticsEventsCount(long companyId,

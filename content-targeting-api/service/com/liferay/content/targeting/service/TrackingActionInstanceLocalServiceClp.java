@@ -148,13 +148,13 @@ public class TrackingActionInstanceLocalServiceClp
 		_methodName25 = "getTrackingActionInstances";
 
 		_methodParameterTypes25 = new String[] {
-				"long", "java.lang.String", "java.lang.String"
+				"long", "java.lang.String", "long", "java.lang.String"
 			};
 
 		_methodName26 = "getTrackingActionInstances";
 
 		_methodParameterTypes26 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String"
+				"long", "java.lang.String", "java.lang.String"
 			};
 
 		_methodName27 = "getTrackingActionInstancesCount";
@@ -950,7 +950,8 @@ public class TrackingActionInstanceLocalServiceClp
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
-		long campaignId, java.lang.String elementId, java.lang.String eventType)
+		long campaignId, java.lang.String className, long classPK,
+		java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -960,7 +961,9 @@ public class TrackingActionInstanceLocalServiceClp
 					new Object[] {
 						campaignId,
 						
-					ClpSerializer.translateInput(elementId),
+					ClpSerializer.translateInput(className),
+						
+					classPK,
 						
 					ClpSerializer.translateInput(eventType)
 					});
@@ -986,8 +989,7 @@ public class TrackingActionInstanceLocalServiceClp
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
-		long campaignId, java.lang.String className, long classPK,
-		java.lang.String eventType)
+		long campaignId, java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
@@ -997,9 +999,7 @@ public class TrackingActionInstanceLocalServiceClp
 					new Object[] {
 						campaignId,
 						
-					ClpSerializer.translateInput(className),
-						
-					classPK,
+					ClpSerializer.translateInput(elementId),
 						
 					ClpSerializer.translateInput(eventType)
 					});

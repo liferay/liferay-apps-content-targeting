@@ -1682,6 +1682,557 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	private static final String _FINDER_COLUMN_C_LTD_COMPANYID_2 = "analyticsEvent.companyId = ? AND ";
 	private static final String _FINDER_COLUMN_C_LTD_CREATEDATE_1 = "analyticsEvent.createDate < NULL";
 	private static final String _FINDER_COLUMN_C_LTD_CREATEDATE_2 = "analyticsEvent.createDate < ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_NOTC_GTD = new FinderPath(AnalyticsEventModelImpl.ENTITY_CACHE_ENABLED,
+			AnalyticsEventModelImpl.FINDER_CACHE_ENABLED,
+			AnalyticsEventImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByNotC_GtD",
+			new String[] {
+				Long.class.getName(), Date.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_NOTC_GTD =
+		new FinderPath(AnalyticsEventModelImpl.ENTITY_CACHE_ENABLED,
+			AnalyticsEventModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByNotC_GtD",
+			new String[] { Long.class.getName(), Date.class.getName() });
+
+	/**
+	 * Returns all the analytics events where classPK &ne; &#63; and createDate &gt; &#63;.
+	 *
+	 * @param classPK the class p k
+	 * @param createDate the create date
+	 * @return the matching analytics events
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<AnalyticsEvent> findByNotC_GtD(long classPK, Date createDate)
+		throws SystemException {
+		return findByNotC_GtD(classPK, createDate, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the analytics events where classPK &ne; &#63; and createDate &gt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classPK the class p k
+	 * @param createDate the create date
+	 * @param start the lower bound of the range of analytics events
+	 * @param end the upper bound of the range of analytics events (not inclusive)
+	 * @return the range of matching analytics events
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<AnalyticsEvent> findByNotC_GtD(long classPK, Date createDate,
+		int start, int end) throws SystemException {
+		return findByNotC_GtD(classPK, createDate, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the analytics events where classPK &ne; &#63; and createDate &gt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param classPK the class p k
+	 * @param createDate the create date
+	 * @param start the lower bound of the range of analytics events
+	 * @param end the upper bound of the range of analytics events (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching analytics events
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<AnalyticsEvent> findByNotC_GtD(long classPK, Date createDate,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_NOTC_GTD;
+		finderArgs = new Object[] {
+				classPK, createDate,
+				
+				start, end, orderByComparator
+			};
+
+		List<AnalyticsEvent> list = (List<AnalyticsEvent>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (AnalyticsEvent analyticsEvent : list) {
+				if ((classPK == analyticsEvent.getClassPK()) ||
+						(createDate.getTime() >= analyticsEvent.getCreateDate()
+																   .getTime())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
+
+			query.append(_FINDER_COLUMN_NOTC_GTD_CLASSPK_2);
+
+			boolean bindCreateDate = false;
+
+			if (createDate == null) {
+				query.append(_FINDER_COLUMN_NOTC_GTD_CREATEDATE_1);
+			}
+			else {
+				bindCreateDate = true;
+
+				query.append(_FINDER_COLUMN_NOTC_GTD_CREATEDATE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AnalyticsEventModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classPK);
+
+				if (bindCreateDate) {
+					qPos.add(CalendarUtil.getTimestamp(createDate));
+				}
+
+				if (!pagination) {
+					list = (List<AnalyticsEvent>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<AnalyticsEvent>(list);
+				}
+				else {
+					list = (List<AnalyticsEvent>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first analytics event in the ordered set where classPK &ne; &#63; and createDate &gt; &#63;.
+	 *
+	 * @param classPK the class p k
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching analytics event
+	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnalyticsEvent findByNotC_GtD_First(long classPK, Date createDate,
+		OrderByComparator orderByComparator)
+		throws NoSuchAnalyticsEventException, SystemException {
+		AnalyticsEvent analyticsEvent = fetchByNotC_GtD_First(classPK,
+				createDate, orderByComparator);
+
+		if (analyticsEvent != null) {
+			return analyticsEvent;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("classPK=");
+		msg.append(classPK);
+
+		msg.append(", createDate=");
+		msg.append(createDate);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchAnalyticsEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the first analytics event in the ordered set where classPK &ne; &#63; and createDate &gt; &#63;.
+	 *
+	 * @param classPK the class p k
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching analytics event, or <code>null</code> if a matching analytics event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnalyticsEvent fetchByNotC_GtD_First(long classPK, Date createDate,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<AnalyticsEvent> list = findByNotC_GtD(classPK, createDate, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last analytics event in the ordered set where classPK &ne; &#63; and createDate &gt; &#63;.
+	 *
+	 * @param classPK the class p k
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching analytics event
+	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnalyticsEvent findByNotC_GtD_Last(long classPK, Date createDate,
+		OrderByComparator orderByComparator)
+		throws NoSuchAnalyticsEventException, SystemException {
+		AnalyticsEvent analyticsEvent = fetchByNotC_GtD_Last(classPK,
+				createDate, orderByComparator);
+
+		if (analyticsEvent != null) {
+			return analyticsEvent;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("classPK=");
+		msg.append(classPK);
+
+		msg.append(", createDate=");
+		msg.append(createDate);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchAnalyticsEventException(msg.toString());
+	}
+
+	/**
+	 * Returns the last analytics event in the ordered set where classPK &ne; &#63; and createDate &gt; &#63;.
+	 *
+	 * @param classPK the class p k
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching analytics event, or <code>null</code> if a matching analytics event could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnalyticsEvent fetchByNotC_GtD_Last(long classPK, Date createDate,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByNotC_GtD(classPK, createDate);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AnalyticsEvent> list = findByNotC_GtD(classPK, createDate,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the analytics events before and after the current analytics event in the ordered set where classPK &ne; &#63; and createDate &gt; &#63;.
+	 *
+	 * @param analyticsEventId the primary key of the current analytics event
+	 * @param classPK the class p k
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next analytics event
+	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnalyticsEvent[] findByNotC_GtD_PrevAndNext(long analyticsEventId,
+		long classPK, Date createDate, OrderByComparator orderByComparator)
+		throws NoSuchAnalyticsEventException, SystemException {
+		AnalyticsEvent analyticsEvent = findByPrimaryKey(analyticsEventId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AnalyticsEvent[] array = new AnalyticsEventImpl[3];
+
+			array[0] = getByNotC_GtD_PrevAndNext(session, analyticsEvent,
+					classPK, createDate, orderByComparator, true);
+
+			array[1] = analyticsEvent;
+
+			array[2] = getByNotC_GtD_PrevAndNext(session, analyticsEvent,
+					classPK, createDate, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AnalyticsEvent getByNotC_GtD_PrevAndNext(Session session,
+		AnalyticsEvent analyticsEvent, long classPK, Date createDate,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
+
+		query.append(_FINDER_COLUMN_NOTC_GTD_CLASSPK_2);
+
+		boolean bindCreateDate = false;
+
+		if (createDate == null) {
+			query.append(_FINDER_COLUMN_NOTC_GTD_CREATEDATE_1);
+		}
+		else {
+			bindCreateDate = true;
+
+			query.append(_FINDER_COLUMN_NOTC_GTD_CREATEDATE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AnalyticsEventModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(classPK);
+
+		if (bindCreateDate) {
+			qPos.add(CalendarUtil.getTimestamp(createDate));
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(analyticsEvent);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AnalyticsEvent> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the analytics events where classPK &ne; &#63; and createDate &gt; &#63; from the database.
+	 *
+	 * @param classPK the class p k
+	 * @param createDate the create date
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByNotC_GtD(long classPK, Date createDate)
+		throws SystemException {
+		for (AnalyticsEvent analyticsEvent : findByNotC_GtD(classPK,
+				createDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(analyticsEvent);
+		}
+	}
+
+	/**
+	 * Returns the number of analytics events where classPK &ne; &#63; and createDate &gt; &#63;.
+	 *
+	 * @param classPK the class p k
+	 * @param createDate the create date
+	 * @return the number of matching analytics events
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByNotC_GtD(long classPK, Date createDate)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_NOTC_GTD;
+
+		Object[] finderArgs = new Object[] { classPK, createDate };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_ANALYTICSEVENT_WHERE);
+
+			query.append(_FINDER_COLUMN_NOTC_GTD_CLASSPK_2);
+
+			boolean bindCreateDate = false;
+
+			if (createDate == null) {
+				query.append(_FINDER_COLUMN_NOTC_GTD_CREATEDATE_1);
+			}
+			else {
+				bindCreateDate = true;
+
+				query.append(_FINDER_COLUMN_NOTC_GTD_CREATEDATE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(classPK);
+
+				if (bindCreateDate) {
+					qPos.add(CalendarUtil.getTimestamp(createDate));
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_NOTC_GTD_CLASSPK_2 = "analyticsEvent.classPK != ? AND ";
+	private static final String _FINDER_COLUMN_NOTC_GTD_CREATEDATE_1 = "analyticsEvent.createDate > NULL";
+	private static final String _FINDER_COLUMN_NOTC_GTD_CREATEDATE_2 = "analyticsEvent.createDate > ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C_E = new FinderPath(AnalyticsEventModelImpl.ENTITY_CACHE_ENABLED,
 			AnalyticsEventModelImpl.FINDER_CACHE_ENABLED,
 			AnalyticsEventImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,

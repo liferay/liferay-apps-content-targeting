@@ -299,6 +299,14 @@ public class AnalyticsReferrerLocalServiceWrapper
 	}
 
 	@Override
+	public int getAnalyticsReferrerCount(long analyticsEventId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsReferrerLocalService.getAnalyticsReferrerCount(analyticsEventId,
+			className, classPK);
+	}
+
+	@Override
 	public int getAnalyticsReferrerCount(long[] analyticsEventIds,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {

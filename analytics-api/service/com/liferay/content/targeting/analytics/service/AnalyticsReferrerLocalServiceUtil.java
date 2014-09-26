@@ -283,6 +283,14 @@ public class AnalyticsReferrerLocalServiceUtil {
 				   .addAnalyticsReferrer(analyticsEventId, className, classPK);
 	}
 
+	public static int getAnalyticsReferrerCount(long analyticsEventId,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getAnalyticsReferrerCount(analyticsEventId, className,
+			classPK);
+	}
+
 	public static int getAnalyticsReferrerCount(long[] analyticsEventIds,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
