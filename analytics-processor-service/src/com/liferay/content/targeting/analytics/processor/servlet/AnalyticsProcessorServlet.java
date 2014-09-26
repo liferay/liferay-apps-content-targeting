@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.util.Iterator;
 
 import javax.servlet.Servlet;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -73,6 +74,12 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		AnonymousUsersManager anonymousUsersManager) {
 
 		_anonymousUsersManager = anonymousUsersManager;
+	}
+
+	// Needed only for http service in 6.2
+
+	@Reference (target="(Web-ContextPath=/o/analytics-processor)")
+	public void setServletContext(ServletContext servletContext) {
 	}
 
 	protected void copyJSONObjectData(Message message, JSONObject jsonObject) {
