@@ -25,7 +25,7 @@
 		<antcall target="deploy" />
 	</target>
 
-	<target name="build-app-lang">
+	<target name="build-lang">
 		<loop-macrodef-or-target
 			module.dirs="${plugins.includes.path}"
 			target.name="build-lang"
