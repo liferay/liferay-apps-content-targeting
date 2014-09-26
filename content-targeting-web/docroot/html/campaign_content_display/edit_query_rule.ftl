@@ -37,7 +37,7 @@
 	<#if !queryRule.isDefaultRule()>
 		<div class="full-view ${fullViewClass}">
 			<@aui["column"] columnWidth=50>
-				<span class="query-contains-text"><@liferay_ui["message"] key="if-the-user-belongs-to-this-campaign" /></span>
+				<span class="query-contains-text"><@liferay_ui["message"] key="if-the-user-matches-this-campaign" /></span>
 
 				<div class="campaign-selector">
 					<@aui["select"] label="" name="campaignId${index}">
@@ -60,7 +60,7 @@
 		<#if queryRule.isValid()>
 			<div class="summary-view ${summaryViewClass}">
 				<@aui["column"] columnWidth=50>
-					<span class="query-content-text"><@liferay_ui["message"] key="if-the-user-belongs-to-this-campaign" /></span>
+					<span class="query-content-text"><@liferay_ui["message"] key="if-the-user-matches-this-campaign" /></span>
 					<span class="query-content-value">${queryRule.getCampaignName(locale)} (${languageUtil.get(locale, "priority")} ${queryRule.getCampaignPriority()})</span>
 				</@>
 
