@@ -20,7 +20,8 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 /**
  * @author Eudaldo Alonso
  */
-public class CampaignTrackingActionTotalCountComparator extends OrderByComparator {
+public class CampaignTrackingActionTotalCountComparator
+	extends OrderByComparator {
 
 	public static final String ORDER_BY_ASC =
 		"CampaignTrackingActionTotal.count ASC";

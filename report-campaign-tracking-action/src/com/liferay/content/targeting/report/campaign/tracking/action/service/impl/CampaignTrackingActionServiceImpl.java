@@ -33,10 +33,4 @@ import com.liferay.content.targeting.report.campaign.tracking.action.service.bas
 public class CampaignTrackingActionServiceImpl
 	extends CampaignTrackingActionServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionServiceUtil} to access the campaign tracking action remote service.
-	 */
-
 }

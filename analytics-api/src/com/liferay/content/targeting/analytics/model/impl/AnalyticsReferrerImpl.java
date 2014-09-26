@@ -24,11 +24,8 @@ package com.liferay.content.targeting.analytics.model.impl;
  * @author Brian Wing Shun Chan
  */
 public class AnalyticsReferrerImpl extends AnalyticsReferrerBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this class directly. All methods that expect a analytics referrer model instance should use the {@link com.liferay.content.targeting.analytics.model.AnalyticsReferrer} interface instead.
-	 */
+
 	public AnalyticsReferrerImpl() {
 	}
+
 }

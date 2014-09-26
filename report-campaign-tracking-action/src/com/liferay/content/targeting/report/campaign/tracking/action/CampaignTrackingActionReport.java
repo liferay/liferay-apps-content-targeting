@@ -20,7 +20,6 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalLocalService;
-import com.liferay.content.targeting.report.campaign.tracking.action.util.comparator.CampaignTrackingActionCountComparator;
 import com.liferay.content.targeting.report.campaign.tracking.action.util.comparator.CampaignTrackingActionTotalCountComparator;
 import com.liferay.content.targeting.util.SearchContainerIterator;
 import com.liferay.portal.kernel.exception.PortalException;

@@ -93,20 +93,20 @@ public class TrackingActionInstanceLocalServiceImpl
 
 	@Override
 	public List<TrackingActionInstance> getTrackingActionInstances(
-			long campaignId, String elementId, String eventType)
-		throws SystemException {
-
-		return trackingActionInstancePersistence.findByC_E_E(
-			campaignId, elementId, eventType);
-	}
-
-	@Override
-	public List<TrackingActionInstance> getTrackingActionInstances(
 			long campaignId, String className, long classPK, String eventType)
 		throws SystemException {
 
 		return trackingActionInstancePersistence.findByC_R_R_E(
 			campaignId, className, classPK, eventType);
+	}
+
+	@Override
+	public List<TrackingActionInstance> getTrackingActionInstances(
+			long campaignId, String elementId, String eventType)
+		throws SystemException {
+
+		return trackingActionInstancePersistence.findByC_E_E(
+			campaignId, elementId, eventType);
 	}
 
 	@Override

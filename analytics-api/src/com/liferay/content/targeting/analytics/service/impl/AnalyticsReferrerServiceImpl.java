@@ -32,9 +32,5 @@ import com.liferay.content.targeting.analytics.service.base.AnalyticsReferrerSer
  */
 public class AnalyticsReferrerServiceImpl
 	extends AnalyticsReferrerServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.content.targeting.analytics.service.AnalyticsReferrerServiceUtil} to access the analytics referrer remote service.
-	 */
+
 }

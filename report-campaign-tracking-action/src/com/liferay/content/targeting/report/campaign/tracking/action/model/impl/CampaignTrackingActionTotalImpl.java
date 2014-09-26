@@ -17,11 +17,11 @@ package com.liferay.content.targeting.report.campaign.tracking.action.model.impl
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionLocalService;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
@@ -42,7 +42,7 @@ public class CampaignTrackingActionTotalImpl
 
 	@Override
 	public List<CampaignTrackingAction> getViewsByUserSegment()
-		throws SystemException, PortalException {
+		throws PortalException, SystemException {
 
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
