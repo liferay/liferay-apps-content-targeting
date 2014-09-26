@@ -35,8 +35,8 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/org.eclipse.equinox.console/jars/org.eclipse.equinox.console-1.0.0.v20120522-1841.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/jars/org.osgi.enterprise-5.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.1.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.http.service/jars/com.liferay.portal.http.service-1.0.0.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.birt.runtime/org.eclipse.osgi.services/jars/org.eclipse.osgi.services-3.3.100.v20120522-1822.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.http.service/jars/com.liferay.portal.http.service-1.0.1.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/javadocs/org.osgi.core-5.0.0-javadoc.jar!/" />
@@ -57,8 +57,8 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.apache.felix/org.apache.felix.gogo.shell/sources/org.apache.felix.gogo.shell-0.10.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.enterprise/sources/org.osgi.enterprise-5.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.1-sources.jar!/" />
-          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.http.service/sources/com.liferay.portal.http.service-1.0.0-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.eclipse.birt.runtime/org.eclipse.osgi.services/sources/org.eclipse.osgi.services-3.3.100.v20120522-1822-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.http.service/sources/com.liferay.portal.http.service-1.0.1-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
