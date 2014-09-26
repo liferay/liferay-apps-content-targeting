@@ -12,7 +12,7 @@
 	<dependencies defaultconf="default">
 		<dependency name="com.liferay.freemarker.osgi.bridge" org="com.liferay" rev="1.0.0" />
 		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.1" />
-		<dependency name="com.liferay.portal.http.service" org="com.liferay" rev="1.0.0" />
+		<dependency name="com.liferay.portal.http.service" org="com.liferay" rev="1.0.1" />
 		<dependency name="com.liferay.portal.log.bridge" org="com.liferay" rev="1.0.0" />
 		<dependency name="org.apache.felix.gogo.command" org="org.apache.felix" rev="0.14.0" />
 		<dependency name="org.apache.felix.gogo.runtime" org="org.apache.felix" rev="0.12.1" />
