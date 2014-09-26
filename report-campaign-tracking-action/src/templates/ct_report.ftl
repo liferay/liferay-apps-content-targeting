@@ -45,19 +45,25 @@
 
 		<@liferay_ui["search-container-column-text"]
 			name="count"
-			value=campaignTrackingActionTotal.getCount()?string
-		/>
+		>
+
+			${campaignTrackingActionTotal.getCount()}
+
+			<div class="pull-right">
+				<i class="icon-info" data-id="${campaignTrackingActionTotal.getCampaignTrackingActionId()}" style="display: block;padding: 0 1em;"></i>
+
+				<div class="hide" id="<@portlet["namespace"] />userSegmentViews${campaignTrackingActionTotal.getCampaignTrackingActionId()}">
+					<#list campaignTrackingActionTotal.getViewsByUserSegment() as campaignTrackingAction>
+						<p>${campaignTrackingAction.getUserSegmentName(locale)} - ${campaignTrackingAction.getCount()}</p>
+					</#list>
+				</div>
+			</div>
+		</@>
 
 		<@liferay_ui["search-container-column-date"]
 			name="last-update"
 			value=campaignTrackingActionTotal.getModifiedDate()
 		/>
-
-		<@liferay_ui["search-container-column-text"]
-			name=""
-		>
-			<#include "user_segment_views_tooltip.ftl" />
-		</@>
 	</@>
 
 	<#if searchContainer.getResults()?has_content>
@@ -67,9 +73,9 @@
 	<@liferay_ui["search-iterator"] />
 </@>
 
-<@aui["script"] use="aui-base">
+<@aui["script"] use="aui-base,event-hover">
 	A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').delegate(
-		'click',
+		'hover',
 		function(event) {
 			var currentTarget = event.currentTarget;
 
@@ -77,7 +83,7 @@
 
 			var userSegmentViews = A.one('#<@portlet["namespace"] />userSegmentViews' + id);
 
-			Liferay.Portal.ToolTip.show(this, A.one('#<@portlet["namespace"] />userSegmentViews' + id).html());
+			Liferay.Portal.ToolTip.show(this, userSegmentViews.html());
 		},
 		'.icon-info'
 	);
