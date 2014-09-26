@@ -635,28 +635,6 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	}
 
 	@Override
-	public java.lang.String getNameWithGroupName(java.util.Locale locale,
-		long groupId) {
-		try {
-			String methodName = "getNameWithGroupName";
-
-			Class<?>[] parameterTypes = new Class<?>[] {
-					java.util.Locale.class, long.class
-				};
-
-			Object[] parameterValues = new Object[] { locale, groupId };
-
-			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
 	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances() {
 		try {
 			String methodName = "getRuleInstances";
@@ -667,25 +645,6 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 
 			java.util.List<com.liferay.content.targeting.model.RuleInstance> returnObj =
 				(java.util.List<com.liferay.content.targeting.model.RuleInstance>)invokeOnRemoteModel(methodName,
-					parameterTypes, parameterValues);
-
-			return returnObj;
-		}
-		catch (Exception e) {
-			throw new UnsupportedOperationException(e);
-		}
-	}
-
-	@Override
-	public long getAssetCategoryId(long groupId) {
-		try {
-			String methodName = "getAssetCategoryId";
-
-			Class<?>[] parameterTypes = new Class<?>[] { long.class };
-
-			Object[] parameterValues = new Object[] { groupId };
-
-			Long returnObj = (Long)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
 
 			return returnObj;
@@ -708,6 +667,47 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 			Object[] parameterValues = new Object[] { rule };
 
 			Boolean returnObj = (Boolean)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.lang.String getNameWithGroupName(java.util.Locale locale,
+		long groupId) {
+		try {
+			String methodName = "getNameWithGroupName";
+
+			Class<?>[] parameterTypes = new Class<?>[] {
+					java.util.Locale.class, long.class
+				};
+
+			Object[] parameterValues = new Object[] { locale, groupId };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public long getAssetCategoryId(long groupId) {
+		try {
+			String methodName = "getAssetCategoryId";
+
+			Class<?>[] parameterTypes = new Class<?>[] { long.class };
+
+			Object[] parameterValues = new Object[] { groupId };
+
+			Long returnObj = (Long)invokeOnRemoteModel(methodName,
 					parameterTypes, parameterValues);
 
 			return returnObj;
