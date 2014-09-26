@@ -237,8 +237,12 @@ public class CampaignTrackingActionTotalLocalServiceImpl
 				_trackingActionInstaceLocalService.getTrackingActionInstances(
 					campaignId, className, classPK, eventType);
 
+			if (!trackingActionInstances.isEmpty()) {
+				continue;
+			}
+
 			TrackingActionInstance trackingActionInstance =
-					trackingActionInstances.get(0);
+				trackingActionInstances.get(0);
 
 			addCampaignTrackingActionTotal(
 				campaignId, trackingActionInstance.getAlias(), className,
@@ -268,6 +272,10 @@ public class CampaignTrackingActionTotalLocalServiceImpl
 			List<TrackingActionInstance> trackingActionInstances =
 				_trackingActionInstaceLocalService.getTrackingActionInstances(
 					campaignId, elementId, eventType);
+
+			if (!trackingActionInstances.isEmpty()) {
+				continue;
+			}
 
 			TrackingActionInstance trackingActionInstance =
 				trackingActionInstances.get(0);
