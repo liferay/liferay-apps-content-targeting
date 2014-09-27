@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.tracking.action.@tracking.action.java.package.name@;
 
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
+import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -30,10 +31,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Brian Chan
  */
-@Component(
-	immediate = true,
-	service = com.liferay.content.targeting.api.model.TrackingAction.class
-)
+@Component(immediate = true, service = TrackingAction.class)
 public class @tracking.action.java.class.name@TrackingAction
 	extends BaseTrackingAction {
 

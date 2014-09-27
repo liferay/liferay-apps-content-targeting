@@ -16,6 +16,7 @@ package com.liferay.content.targeting.rule.@rule.java.package.name@;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseRule;
+import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.SampleRuleCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -36,9 +37,7 @@ import org.osgi.service.component.annotations.Deactivate;
 /**
  * @author Brian Chan
  */
-@Component(
-	immediate = true,
-	service = com.liferay.content.targeting.api.model.Rule.class)
+@Component(immediate = true, service = Rule.class)
 public class @rule.java.class.name@Rule extends BaseRule {
 
 	@Activate
