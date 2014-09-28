@@ -14,13 +14,22 @@
 
 package com.liferay.content.targeting.report.campaign.newsletter.service.impl;
 
+import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter;
 import com.liferay.content.targeting.report.campaign.newsletter.service.base.NewsletterLocalServiceBaseImpl;
+import com.liferay.content.targeting.service.CampaignLocalService;
+import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import org.omg.CORBA.SystemException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * The implementation of the newsletter local service.
@@ -70,4 +79,56 @@ public class NewsletterLocalServiceImpl extends NewsletterLocalServiceBaseImpl {
 
 		return newsletter;
 	}
+
+	protected void addCampaignNewsletterFromAnalyticsWithElementId(
+			long campaignId, Date date)
+		throws PortalException, SystemException {
+
+		if (date == null) {
+			date = _analyticsEventLocalService.getMaxAge();
+		}
+
+		List<Object[]> campaignNewsletterAnalyticsList =
+			newsletterFinder.findByAnalyticsWithElementId(campaignId, date);
+
+		for (Object[] campaignNewsletterAnalytics :
+				campaignNewsletterAnalyticsList) {
+
+			String elementId = (String)campaignNewsletterAnalytics[0];
+			String eventType = (String)campaignNewsletterAnalytics[1];
+			String alias = (String)campaignNewsletterAnalytics[2];
+
+			int count = _analyticsEventLocalService.getAnalyticsEventsCount(
+				elementId, eventType, date);
+
+			if (count == 0) {
+				continue;
+			}
+
+			addNewsletter(campaignId, alias, elementId, eventType, count);
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		NewsletterLocalServiceImpl.class);
+
+	public NewsletterLocalServiceImpl() {
+		_initServices();
+	}
+
+	private void _initServices() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_analyticsEventLocalService = ServiceTrackerUtil.getService(
+			AnalyticsEventLocalService.class, bundle.getBundleContext());
+		_campaignLocalService = ServiceTrackerUtil.getService(
+			CampaignLocalService.class, bundle.getBundleContext());
+		_reportInstanceLocalService = ServiceTrackerUtil.getService(
+			ReportInstanceLocalService.class, bundle.getBundleContext());
+	}
+
+	private AnalyticsEventLocalService _analyticsEventLocalService;
+	private CampaignLocalService _campaignLocalService;
+	private ReportInstanceLocalService _reportInstanceLocalService;
+
 }
