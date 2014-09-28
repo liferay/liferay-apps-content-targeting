@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.content.targeting.report.campaign.newsletter.service.persistence.NewsletterFinder.findByAnalyticsWithElementId">
+		<![CDATA[
+			SELECT
+				DISTINCT CT_Analytics_AnalyticsEvent.elementId AS elementId, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias
+			FROM
+				CT_Analytics_AnalyticsEvent
+			INNER JOIN
+				CT_TrackingActionInstance ON
+					(CT_TrackingActionInstance.eventType = CT_Analytics_AnalyticsEvent.eventType) AND
+					(CT_TrackingActionInstance.elementId = CT_Analytics_AnalyticsEvent.elementId)
+			WHERE
+				(CT_TrackingActionInstance.campaignId = ?) AND
+				(CT_Analytics_AnalyticsEvent.createDate >= ?)
+			ORDER BY
+				CT_Analytics_AnalyticsEvent.createDate DESC
+		]]>
+	</sql>
+</custom-sql>
