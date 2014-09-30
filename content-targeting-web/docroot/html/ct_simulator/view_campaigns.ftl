@@ -21,6 +21,7 @@
 	<@renderSimulatorLists
 		containerId="campaignsContainer"
 		elements=campaigns
+		emptyMessage=languageUtil.get(locale, "the-current-user-does-not-match-any-campaign")
 		name="campaign"
 		notMatchedElements=notMatchedCampaigns
 		showSearch=showCampaignsSearch

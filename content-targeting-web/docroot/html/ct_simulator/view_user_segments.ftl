@@ -27,6 +27,7 @@
 		<@renderSimulatorLists
 			containerId="userSegmentContainer"
 			elements=userSegments
+			emptyMessage=languageUtil.get(locale, "the-current-user-does-not-belong-to-any-user-segment")
 			name="user-segment"
 			notMatchedElements=notMatchedUserSegments
 			showSearch=showUserSegmentSearch

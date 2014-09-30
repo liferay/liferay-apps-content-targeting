@@ -17,6 +17,7 @@
 <#macro renderSimulatorLists
 	containerId
 	elements
+	emptyMessage
 	name
 	notMatchedElements
 	showSearch
@@ -54,7 +55,7 @@
 				</#list>
 			<#else>
 				<div class="alert alert-info">
-					<@liferay_ui["message"] arguments="${name}" key="the-current-user-does-not-match-any-x" />
+					${emptyMessage}
 				</div>
 			</#if>
 		</div>
