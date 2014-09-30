@@ -63,7 +63,7 @@
 
 		<!-- PK fields -->
 
-		<column name="campaignTrackingActionId" type="long" primary="true" />
+		<column name="campaignTrackingActionTotalId" type="long" primary="true" />
 
 		<!-- Other fields -->
 
