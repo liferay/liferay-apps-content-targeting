@@ -65,7 +65,7 @@
 				ContentTargeting_Analytics_AnalyticsEvent
 			WHERE
 				(ContentTargeting_Analytics_AnalyticsEvent.createDate >= ?) AND
-				(ContentTargeting_Analytics_AnalyticsEvent.elementId != 'null')
+				(ContentTargeting_Analytics_AnalyticsEvent.elementId != '')
 			GROUP BY
 				ContentTargeting_Analytics_AnalyticsEvent.elementId, ContentTargeting_Analytics_AnalyticsEvent.eventType
 			ORDER BY
