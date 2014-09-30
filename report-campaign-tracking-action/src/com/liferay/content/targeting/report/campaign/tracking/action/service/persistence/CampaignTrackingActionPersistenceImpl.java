@@ -1140,6 +1140,1218 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 	private static final String _FINDER_COLUMN_C_GTD_CAMPAIGNID_2 = "campaignTrackingAction.campaignId = ? AND ";
 	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_1 = "campaignTrackingAction.modifiedDate > NULL";
 	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_2 = "campaignTrackingAction.modifiedDate > ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_E = new FinderPath(CampaignTrackingActionModelImpl.ENTITY_CACHE_ENABLED,
+			CampaignTrackingActionModelImpl.FINDER_CACHE_ENABLED,
+			CampaignTrackingActionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_E",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_E = new FinderPath(CampaignTrackingActionModelImpl.ENTITY_CACHE_ENABLED,
+			CampaignTrackingActionModelImpl.FINDER_CACHE_ENABLED,
+			CampaignTrackingActionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_E",
+			new String[] { Long.class.getName(), String.class.getName() },
+			CampaignTrackingActionModelImpl.CAMPAIGNID_COLUMN_BITMASK |
+			CampaignTrackingActionModelImpl.ELEMENTID_COLUMN_BITMASK |
+			CampaignTrackingActionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_E = new FinderPath(CampaignTrackingActionModelImpl.ENTITY_CACHE_ENABLED,
+			CampaignTrackingActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_E",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns all the campaign tracking actions where campaignId = &#63; and elementId = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param elementId the element ID
+	 * @return the matching campaign tracking actions
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<CampaignTrackingAction> findByC_E(long campaignId,
+		String elementId) throws SystemException {
+		return findByC_E(campaignId, elementId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the campaign tracking actions where campaignId = &#63; and elementId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param campaignId the campaign ID
+	 * @param elementId the element ID
+	 * @param start the lower bound of the range of campaign tracking actions
+	 * @param end the upper bound of the range of campaign tracking actions (not inclusive)
+	 * @return the range of matching campaign tracking actions
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<CampaignTrackingAction> findByC_E(long campaignId,
+		String elementId, int start, int end) throws SystemException {
+		return findByC_E(campaignId, elementId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the campaign tracking actions where campaignId = &#63; and elementId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param campaignId the campaign ID
+	 * @param elementId the element ID
+	 * @param start the lower bound of the range of campaign tracking actions
+	 * @param end the upper bound of the range of campaign tracking actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching campaign tracking actions
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<CampaignTrackingAction> findByC_E(long campaignId,
+		String elementId, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_E;
+			finderArgs = new Object[] { campaignId, elementId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_E;
+			finderArgs = new Object[] {
+					campaignId, elementId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CampaignTrackingAction> list = (List<CampaignTrackingAction>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (CampaignTrackingAction campaignTrackingAction : list) {
+				if ((campaignId != campaignTrackingAction.getCampaignId()) ||
+						!Validator.equals(elementId,
+							campaignTrackingAction.getElementId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_CAMPAIGNTRACKINGACTION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_E_CAMPAIGNID_2);
+
+			boolean bindElementId = false;
+
+			if (elementId == null) {
+				query.append(_FINDER_COLUMN_C_E_ELEMENTID_1);
+			}
+			else if (elementId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_E_ELEMENTID_3);
+			}
+			else {
+				bindElementId = true;
+
+				query.append(_FINDER_COLUMN_C_E_ELEMENTID_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CampaignTrackingActionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(campaignId);
+
+				if (bindElementId) {
+					qPos.add(elementId);
+				}
+
+				if (!pagination) {
+					list = (List<CampaignTrackingAction>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<CampaignTrackingAction>(list);
+				}
+				else {
+					list = (List<CampaignTrackingAction>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first campaign tracking action in the ordered set where campaignId = &#63; and elementId = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param elementId the element ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching campaign tracking action
+	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionException if a matching campaign tracking action could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CampaignTrackingAction findByC_E_First(long campaignId,
+		String elementId, OrderByComparator orderByComparator)
+		throws NoSuchCampaignTrackingActionException, SystemException {
+		CampaignTrackingAction campaignTrackingAction = fetchByC_E_First(campaignId,
+				elementId, orderByComparator);
+
+		if (campaignTrackingAction != null) {
+			return campaignTrackingAction;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("campaignId=");
+		msg.append(campaignId);
+
+		msg.append(", elementId=");
+		msg.append(elementId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCampaignTrackingActionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first campaign tracking action in the ordered set where campaignId = &#63; and elementId = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param elementId the element ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching campaign tracking action, or <code>null</code> if a matching campaign tracking action could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CampaignTrackingAction fetchByC_E_First(long campaignId,
+		String elementId, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<CampaignTrackingAction> list = findByC_E(campaignId, elementId, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last campaign tracking action in the ordered set where campaignId = &#63; and elementId = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param elementId the element ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching campaign tracking action
+	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionException if a matching campaign tracking action could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CampaignTrackingAction findByC_E_Last(long campaignId,
+		String elementId, OrderByComparator orderByComparator)
+		throws NoSuchCampaignTrackingActionException, SystemException {
+		CampaignTrackingAction campaignTrackingAction = fetchByC_E_Last(campaignId,
+				elementId, orderByComparator);
+
+		if (campaignTrackingAction != null) {
+			return campaignTrackingAction;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("campaignId=");
+		msg.append(campaignId);
+
+		msg.append(", elementId=");
+		msg.append(elementId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCampaignTrackingActionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last campaign tracking action in the ordered set where campaignId = &#63; and elementId = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param elementId the element ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching campaign tracking action, or <code>null</code> if a matching campaign tracking action could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CampaignTrackingAction fetchByC_E_Last(long campaignId,
+		String elementId, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByC_E(campaignId, elementId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CampaignTrackingAction> list = findByC_E(campaignId, elementId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the campaign tracking actions before and after the current campaign tracking action in the ordered set where campaignId = &#63; and elementId = &#63;.
+	 *
+	 * @param campaignTrackingActionId the primary key of the current campaign tracking action
+	 * @param campaignId the campaign ID
+	 * @param elementId the element ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next campaign tracking action
+	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionException if a campaign tracking action with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CampaignTrackingAction[] findByC_E_PrevAndNext(
+		long campaignTrackingActionId, long campaignId, String elementId,
+		OrderByComparator orderByComparator)
+		throws NoSuchCampaignTrackingActionException, SystemException {
+		CampaignTrackingAction campaignTrackingAction = findByPrimaryKey(campaignTrackingActionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CampaignTrackingAction[] array = new CampaignTrackingActionImpl[3];
+
+			array[0] = getByC_E_PrevAndNext(session, campaignTrackingAction,
+					campaignId, elementId, orderByComparator, true);
+
+			array[1] = campaignTrackingAction;
+
+			array[2] = getByC_E_PrevAndNext(session, campaignTrackingAction,
+					campaignId, elementId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CampaignTrackingAction getByC_E_PrevAndNext(Session session,
+		CampaignTrackingAction campaignTrackingAction, long campaignId,
+		String elementId, OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CAMPAIGNTRACKINGACTION_WHERE);
+
+		query.append(_FINDER_COLUMN_C_E_CAMPAIGNID_2);
+
+		boolean bindElementId = false;
+
+		if (elementId == null) {
+			query.append(_FINDER_COLUMN_C_E_ELEMENTID_1);
+		}
+		else if (elementId.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_C_E_ELEMENTID_3);
+		}
+		else {
+			bindElementId = true;
+
+			query.append(_FINDER_COLUMN_C_E_ELEMENTID_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CampaignTrackingActionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(campaignId);
+
+		if (bindElementId) {
+			qPos.add(elementId);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(campaignTrackingAction);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CampaignTrackingAction> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the campaign tracking actions where campaignId = &#63; and elementId = &#63; from the database.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param elementId the element ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByC_E(long campaignId, String elementId)
+		throws SystemException {
+		for (CampaignTrackingAction campaignTrackingAction : findByC_E(
+				campaignId, elementId, QueryUtil.ALL_POS, QueryUtil.ALL_POS,
+				null)) {
+			remove(campaignTrackingAction);
+		}
+	}
+
+	/**
+	 * Returns the number of campaign tracking actions where campaignId = &#63; and elementId = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param elementId the element ID
+	 * @return the number of matching campaign tracking actions
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByC_E(long campaignId, String elementId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_E;
+
+		Object[] finderArgs = new Object[] { campaignId, elementId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_CAMPAIGNTRACKINGACTION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_E_CAMPAIGNID_2);
+
+			boolean bindElementId = false;
+
+			if (elementId == null) {
+				query.append(_FINDER_COLUMN_C_E_ELEMENTID_1);
+			}
+			else if (elementId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_E_ELEMENTID_3);
+			}
+			else {
+				bindElementId = true;
+
+				query.append(_FINDER_COLUMN_C_E_ELEMENTID_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(campaignId);
+
+				if (bindElementId) {
+					qPos.add(elementId);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_E_CAMPAIGNID_2 = "campaignTrackingAction.campaignId = ? AND ";
+	private static final String _FINDER_COLUMN_C_E_ELEMENTID_1 = "campaignTrackingAction.elementId IS NULL";
+	private static final String _FINDER_COLUMN_C_E_ELEMENTID_2 = "campaignTrackingAction.elementId = ?";
+	private static final String _FINDER_COLUMN_C_E_ELEMENTID_3 = "(campaignTrackingAction.elementId IS NULL OR campaignTrackingAction.elementId = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_R_R = new FinderPath(CampaignTrackingActionModelImpl.ENTITY_CACHE_ENABLED,
+			CampaignTrackingActionModelImpl.FINDER_CACHE_ENABLED,
+			CampaignTrackingActionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_R",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R = new FinderPath(CampaignTrackingActionModelImpl.ENTITY_CACHE_ENABLED,
+			CampaignTrackingActionModelImpl.FINDER_CACHE_ENABLED,
+			CampaignTrackingActionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_R",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName()
+			},
+			CampaignTrackingActionModelImpl.CAMPAIGNID_COLUMN_BITMASK |
+			CampaignTrackingActionModelImpl.REFERRERCLASSNAME_COLUMN_BITMASK |
+			CampaignTrackingActionModelImpl.REFERRERCLASSPK_COLUMN_BITMASK |
+			CampaignTrackingActionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_R_R = new FinderPath(CampaignTrackingActionModelImpl.ENTITY_CACHE_ENABLED,
+			CampaignTrackingActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_R",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				Long.class.getName()
+			});
+
+	/**
+	 * Returns all the campaign tracking actions where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @return the matching campaign tracking actions
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<CampaignTrackingAction> findByC_R_R(long campaignId,
+		String referrerClassName, long referrerClassPK)
+		throws SystemException {
+		return findByC_R_R(campaignId, referrerClassName, referrerClassPK,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the campaign tracking actions where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param campaignId the campaign ID
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param start the lower bound of the range of campaign tracking actions
+	 * @param end the upper bound of the range of campaign tracking actions (not inclusive)
+	 * @return the range of matching campaign tracking actions
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<CampaignTrackingAction> findByC_R_R(long campaignId,
+		String referrerClassName, long referrerClassPK, int start, int end)
+		throws SystemException {
+		return findByC_R_R(campaignId, referrerClassName, referrerClassPK,
+			start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the campaign tracking actions where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param campaignId the campaign ID
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param start the lower bound of the range of campaign tracking actions
+	 * @param end the upper bound of the range of campaign tracking actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching campaign tracking actions
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<CampaignTrackingAction> findByC_R_R(long campaignId,
+		String referrerClassName, long referrerClassPK, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R;
+			finderArgs = new Object[] {
+					campaignId, referrerClassName, referrerClassPK
+				};
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_R_R;
+			finderArgs = new Object[] {
+					campaignId, referrerClassName, referrerClassPK,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CampaignTrackingAction> list = (List<CampaignTrackingAction>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (CampaignTrackingAction campaignTrackingAction : list) {
+				if ((campaignId != campaignTrackingAction.getCampaignId()) ||
+						!Validator.equals(referrerClassName,
+							campaignTrackingAction.getReferrerClassName()) ||
+						(referrerClassPK != campaignTrackingAction.getReferrerClassPK())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_CAMPAIGNTRACKINGACTION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_R_R_CAMPAIGNID_2);
+
+			boolean bindReferrerClassName = false;
+
+			if (referrerClassName == null) {
+				query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_1);
+			}
+			else if (referrerClassName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_3);
+			}
+			else {
+				bindReferrerClassName = true;
+
+				query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSPK_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CampaignTrackingActionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(campaignId);
+
+				if (bindReferrerClassName) {
+					qPos.add(referrerClassName);
+				}
+
+				qPos.add(referrerClassPK);
+
+				if (!pagination) {
+					list = (List<CampaignTrackingAction>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<CampaignTrackingAction>(list);
+				}
+				else {
+					list = (List<CampaignTrackingAction>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first campaign tracking action in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching campaign tracking action
+	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionException if a matching campaign tracking action could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CampaignTrackingAction findByC_R_R_First(long campaignId,
+		String referrerClassName, long referrerClassPK,
+		OrderByComparator orderByComparator)
+		throws NoSuchCampaignTrackingActionException, SystemException {
+		CampaignTrackingAction campaignTrackingAction = fetchByC_R_R_First(campaignId,
+				referrerClassName, referrerClassPK, orderByComparator);
+
+		if (campaignTrackingAction != null) {
+			return campaignTrackingAction;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("campaignId=");
+		msg.append(campaignId);
+
+		msg.append(", referrerClassName=");
+		msg.append(referrerClassName);
+
+		msg.append(", referrerClassPK=");
+		msg.append(referrerClassPK);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCampaignTrackingActionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first campaign tracking action in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching campaign tracking action, or <code>null</code> if a matching campaign tracking action could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CampaignTrackingAction fetchByC_R_R_First(long campaignId,
+		String referrerClassName, long referrerClassPK,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<CampaignTrackingAction> list = findByC_R_R(campaignId,
+				referrerClassName, referrerClassPK, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last campaign tracking action in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching campaign tracking action
+	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionException if a matching campaign tracking action could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CampaignTrackingAction findByC_R_R_Last(long campaignId,
+		String referrerClassName, long referrerClassPK,
+		OrderByComparator orderByComparator)
+		throws NoSuchCampaignTrackingActionException, SystemException {
+		CampaignTrackingAction campaignTrackingAction = fetchByC_R_R_Last(campaignId,
+				referrerClassName, referrerClassPK, orderByComparator);
+
+		if (campaignTrackingAction != null) {
+			return campaignTrackingAction;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("campaignId=");
+		msg.append(campaignId);
+
+		msg.append(", referrerClassName=");
+		msg.append(referrerClassName);
+
+		msg.append(", referrerClassPK=");
+		msg.append(referrerClassPK);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCampaignTrackingActionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last campaign tracking action in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching campaign tracking action, or <code>null</code> if a matching campaign tracking action could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CampaignTrackingAction fetchByC_R_R_Last(long campaignId,
+		String referrerClassName, long referrerClassPK,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByC_R_R(campaignId, referrerClassName, referrerClassPK);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CampaignTrackingAction> list = findByC_R_R(campaignId,
+				referrerClassName, referrerClassPK, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the campaign tracking actions before and after the current campaign tracking action in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param campaignTrackingActionId the primary key of the current campaign tracking action
+	 * @param campaignId the campaign ID
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next campaign tracking action
+	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionException if a campaign tracking action with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CampaignTrackingAction[] findByC_R_R_PrevAndNext(
+		long campaignTrackingActionId, long campaignId,
+		String referrerClassName, long referrerClassPK,
+		OrderByComparator orderByComparator)
+		throws NoSuchCampaignTrackingActionException, SystemException {
+		CampaignTrackingAction campaignTrackingAction = findByPrimaryKey(campaignTrackingActionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CampaignTrackingAction[] array = new CampaignTrackingActionImpl[3];
+
+			array[0] = getByC_R_R_PrevAndNext(session, campaignTrackingAction,
+					campaignId, referrerClassName, referrerClassPK,
+					orderByComparator, true);
+
+			array[1] = campaignTrackingAction;
+
+			array[2] = getByC_R_R_PrevAndNext(session, campaignTrackingAction,
+					campaignId, referrerClassName, referrerClassPK,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CampaignTrackingAction getByC_R_R_PrevAndNext(Session session,
+		CampaignTrackingAction campaignTrackingAction, long campaignId,
+		String referrerClassName, long referrerClassPK,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CAMPAIGNTRACKINGACTION_WHERE);
+
+		query.append(_FINDER_COLUMN_C_R_R_CAMPAIGNID_2);
+
+		boolean bindReferrerClassName = false;
+
+		if (referrerClassName == null) {
+			query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_1);
+		}
+		else if (referrerClassName.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_3);
+		}
+		else {
+			bindReferrerClassName = true;
+
+			query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSPK_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CampaignTrackingActionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(campaignId);
+
+		if (bindReferrerClassName) {
+			qPos.add(referrerClassName);
+		}
+
+		qPos.add(referrerClassPK);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(campaignTrackingAction);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CampaignTrackingAction> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the campaign tracking actions where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; from the database.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByC_R_R(long campaignId, String referrerClassName,
+		long referrerClassPK) throws SystemException {
+		for (CampaignTrackingAction campaignTrackingAction : findByC_R_R(
+				campaignId, referrerClassName, referrerClassPK,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(campaignTrackingAction);
+		}
+	}
+
+	/**
+	 * Returns the number of campaign tracking actions where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @return the number of matching campaign tracking actions
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByC_R_R(long campaignId, String referrerClassName,
+		long referrerClassPK) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_R_R;
+
+		Object[] finderArgs = new Object[] {
+				campaignId, referrerClassName, referrerClassPK
+			};
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_CAMPAIGNTRACKINGACTION_WHERE);
+
+			query.append(_FINDER_COLUMN_C_R_R_CAMPAIGNID_2);
+
+			boolean bindReferrerClassName = false;
+
+			if (referrerClassName == null) {
+				query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_1);
+			}
+			else if (referrerClassName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_3);
+			}
+			else {
+				bindReferrerClassName = true;
+
+				query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSPK_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(campaignId);
+
+				if (bindReferrerClassName) {
+					qPos.add(referrerClassName);
+				}
+
+				qPos.add(referrerClassPK);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_R_R_CAMPAIGNID_2 = "campaignTrackingAction.campaignId = ? AND ";
+	private static final String _FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_1 = "campaignTrackingAction.referrerClassName IS NULL AND ";
+	private static final String _FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_2 = "campaignTrackingAction.referrerClassName = ? AND ";
+	private static final String _FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_3 = "(campaignTrackingAction.referrerClassName IS NULL OR campaignTrackingAction.referrerClassName = '') AND ";
+	private static final String _FINDER_COLUMN_C_R_R_REFERRERCLASSPK_2 = "campaignTrackingAction.referrerClassPK = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_U_R_R_E_E = new FinderPath(CampaignTrackingActionModelImpl.ENTITY_CACHE_ENABLED,
 			CampaignTrackingActionModelImpl.FINDER_CACHE_ENABLED,
 			CampaignTrackingActionImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -1914,6 +3126,50 @@ public class CampaignTrackingActionPersistenceImpl extends BasePersistenceImpl<C
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CAMPAIGNID,
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID,
+					args);
+			}
+
+			if ((campaignTrackingActionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_E.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						campaignTrackingActionModelImpl.getOriginalCampaignId(),
+						campaignTrackingActionModelImpl.getOriginalElementId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_E, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_E,
+					args);
+
+				args = new Object[] {
+						campaignTrackingActionModelImpl.getCampaignId(),
+						campaignTrackingActionModelImpl.getElementId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_E, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_E,
+					args);
+			}
+
+			if ((campaignTrackingActionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						campaignTrackingActionModelImpl.getOriginalCampaignId(),
+						campaignTrackingActionModelImpl.getOriginalReferrerClassName(),
+						campaignTrackingActionModelImpl.getOriginalReferrerClassPK()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R,
+					args);
+
+				args = new Object[] {
+						campaignTrackingActionModelImpl.getCampaignId(),
+						campaignTrackingActionModelImpl.getReferrerClassName(),
+						campaignTrackingActionModelImpl.getReferrerClassPK()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R,
 					args);
 			}
 		}

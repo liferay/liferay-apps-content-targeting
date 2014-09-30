@@ -1,5 +1,7 @@
 create index IX_5720E6C9 on ContentTargeting_CampaignTAReport_CampaignTrackingAction (campaignId);
+create index IX_BDE0C0BE on ContentTargeting_CampaignTAReport_CampaignTrackingAction (campaignId, elementId);
 create index IX_268FED54 on ContentTargeting_CampaignTAReport_CampaignTrackingAction (campaignId, modifiedDate);
+create index IX_B9C3FDD9 on ContentTargeting_CampaignTAReport_CampaignTrackingAction (campaignId, referrerClassName, referrerClassPK);
 create index IX_EA73A2A on ContentTargeting_CampaignTAReport_CampaignTrackingAction (campaignId, userSegmentId);
 create unique index IX_C4B66357 on ContentTargeting_CampaignTAReport_CampaignTrackingAction (campaignId, userSegmentId, referrerClassName, referrerClassPK, elementId, eventType);
 
