@@ -38,8 +38,7 @@ public class BreadcrumbUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		addPortletBreadcrumbEntries(
-			request, renderResponse, themeDisplay.translate("campaigns"));
+		addPortletBreadcrumbEntries(request, renderResponse, "campaigns");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
@@ -68,13 +67,16 @@ public class BreadcrumbUtil {
 		HttpServletRequest request, RenderResponse renderResponse,
 		String tabs1) {
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		PortletURL portletURL = renderResponse.createRenderURL();
 
 		portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
 		portletURL.setParameter("tabs1", tabs1);
 
 		PortalUtil.addPortletBreadcrumbEntry(
-			request, tabs1, portletURL.toString());
+			request, themeDisplay.translate(tabs1), portletURL.toString());
 	}
 
 	public static void addPortletBreadcrumbEntries(
@@ -84,8 +86,7 @@ public class BreadcrumbUtil {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		addPortletBreadcrumbEntries(
-			request, renderResponse, themeDisplay.translate("user-segments"));
+		addPortletBreadcrumbEntries(request, renderResponse, "user-segments");
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
