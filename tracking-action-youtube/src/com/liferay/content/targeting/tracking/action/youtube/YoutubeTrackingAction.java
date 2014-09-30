@@ -114,6 +114,6 @@ public class YoutubeTrackingAction extends BaseTrackingAction {
 	// See html/js/analytics/integrations/youtube_iframe.js in Analytics Hook
 
 	private static final String[] _EVENT_TYPES = {
-		"unstarted", "ended", "playing", "paused", "buffering", "video-cued"};
+		"unstarted", "buffering", "playing", "paused", "ended"};
 
 }
