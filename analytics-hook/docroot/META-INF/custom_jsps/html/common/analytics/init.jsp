@@ -45,7 +45,7 @@ boolean trackAnalyticsYoutube = false;
 
 Group analyticsGroup = layout.getGroup();
 
-if (!analyticsGroup.isStagingGroup() && !analyticsGroup.isLayoutSetPrototype() && !analyticsGroup.isLayoutPrototype() && !layout.isTypeControlPanel()) {
+if (!analyticsGroup.isStagingGroup() && !analyticsGroup.isLayoutSetPrototype() && !analyticsGroup.isLayoutPrototype() && !layout.isTypeControlPanel() && !GetterUtil.getBoolean(request.getAttribute("isSimulatedUserSegments"))) {
 	trackAnalytics = true;
 
 	UnicodeProperties analyticsGroupTypeSettingsProperties = analyticsGroup.getParentLiveGroupTypeSettingsProperties();
