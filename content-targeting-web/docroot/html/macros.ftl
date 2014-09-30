@@ -55,7 +55,15 @@
 	<#if portletDisplay.isShowConfigurationIcon()>
 		<#if queryRules?has_content>
 			<div class="icons-container lfr-meta-actions">
-				<div class="lfr-icon-actions">
+
+				<#assign actionsCssClass = "hide" />
+				<#assign selectedQueryRule = queryRules[selectedIndex] />
+
+				<#if selectedQueryRule.hasAssetEntry()>
+					<#assign actionsCssClass = "" />
+				</#if>
+
+				<div class="lfr-icon-actions ${actionsCssClass}">
 					<#list queryRules as queryRule>
 						<#if queryRule.hasAssetEntry()>
 							<#assign cssClass = "" />

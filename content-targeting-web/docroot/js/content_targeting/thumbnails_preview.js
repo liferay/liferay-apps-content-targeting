@@ -43,9 +43,11 @@ AUI.add(
 						instance.one('#PreviewContent' + selectedIndex).removeClass(SELECTED_CLASSNAME);
 
 						var editLink = instance.one('#editLink' + selectedIndex);
+						var iconActions = instance.one('.lfr-icon-actions');
 
 						if (editLink) {
 							editLink.hide();
+							iconActions.hide();
 						}
 
 						instance.one('#FullContent' + index).show();
@@ -55,6 +57,7 @@ AUI.add(
 
 						if (editLink) {
 							editLink.show();
+							iconActions.show();
 						}
 
 						instance.set('selectedIndex', index);
