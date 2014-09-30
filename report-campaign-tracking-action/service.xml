@@ -38,6 +38,17 @@
 			<finder-column name="modifiedDate" comparator="&gt;" />
 		</finder>
 
+		<finder name="C_E" return-type="Collection">
+			<finder-column name="campaignId" />
+			<finder-column name="elementId" />
+		</finder>
+
+		<finder name="C_R_R" return-type="Collection">
+			<finder-column name="campaignId" />
+			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassPK" />
+		</finder>
+
 		<finder name="C_U_R_R_E_E" return-type="CampaignTrackingAction" unique="true">
 			<finder-column name="campaignId" />
 			<finder-column name="userSegmentId" />

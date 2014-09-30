@@ -208,6 +208,24 @@ public class CampaignTrackingActionLocalServiceImpl
 	}
 
 	@Override
+	public List<CampaignTrackingAction> getCampaignTrackingActions(
+			long campaignId, String elementId)
+		throws PortalException, SystemException {
+
+		return campaignTrackingActionPersistence.findByC_E(
+			campaignId, elementId);
+	}
+
+	@Override
+	public List<CampaignTrackingAction> getCampaignTrackingActions(
+			long campaignId, String className, long classPK)
+		throws PortalException, SystemException {
+
+		return campaignTrackingActionPersistence.findByC_R_R(
+			campaignId, className, classPK);
+	}
+
+	@Override
 	public int getCampaignTrackingActionsCount(long campaignId)
 		throws PortalException, SystemException {
 

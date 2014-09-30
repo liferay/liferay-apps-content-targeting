@@ -51,8 +51,21 @@ public class CampaignTrackingActionTotalImpl
 				CampaignTrackingActionLocalService.class,
 				bundle.getBundleContext());
 
-		return campaignTrackingActionLocalService.getCampaignTrackingActions(
-			getCampaignId());
+		List<CampaignTrackingAction> campaignTrackingActions = null;
+
+		if (getReferrerClassPK() == 0) {
+			campaignTrackingActions =
+				campaignTrackingActionLocalService.getCampaignTrackingActions(
+					getCampaignId(), getElementId());
+		}
+		else {
+			campaignTrackingActions =
+				campaignTrackingActionLocalService.getCampaignTrackingActions(
+					getCampaignId(), getReferrerClassName(),
+					getReferrerClassPK());
+		}
+
+		return campaignTrackingActions;
 	}
 
 }
