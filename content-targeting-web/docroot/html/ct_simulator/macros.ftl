@@ -55,7 +55,7 @@
 				</#list>
 			<#else>
 				<div class="alert alert-info">
-					${emptyMessage}
+					<@liferay_ui["message"] key="${emptyMessage}" />
 				</div>
 			</#if>
 		</div>
