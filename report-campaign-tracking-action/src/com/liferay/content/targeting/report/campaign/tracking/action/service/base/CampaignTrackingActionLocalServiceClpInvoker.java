@@ -156,23 +156,23 @@ public class CampaignTrackingActionLocalServiceClpInvoker {
 
 		_methodName58 = "getCampaignTrackingActions";
 
-		_methodParameterTypes58 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes58 = new String[] { "long", "java.util.Date" };
 
 		_methodName59 = "getCampaignTrackingActions";
 
 		_methodParameterTypes59 = new String[] {
-				"long", "java.lang.String", "long"
+				"long", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
 		_methodName60 = "getCampaignTrackingActions";
 
-		_methodParameterTypes60 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes60 = new String[] { "long", "java.lang.String" };
 
 		_methodName61 = "getCampaignTrackingActions";
 
 		_methodParameterTypes61 = new String[] {
-				"long", "int", "int",
-				"com.liferay.portal.kernel.util.OrderByComparator"
+				"long", "java.lang.String", "long"
 			};
 
 		_methodName62 = "getCampaignTrackingActionsCount";
@@ -341,27 +341,27 @@ public class CampaignTrackingActionLocalServiceClpInvoker {
 		if (_methodName58.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
 			return CampaignTrackingActionLocalServiceUtil.getCampaignTrackingActions(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
+				(java.util.Date)arguments[1]);
 		}
 
 		if (_methodName59.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
 			return CampaignTrackingActionLocalServiceUtil.getCampaignTrackingActions(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1], ((Long)arguments[2]).longValue());
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue(),
+				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
 		if (_methodName60.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
 			return CampaignTrackingActionLocalServiceUtil.getCampaignTrackingActions(((Long)arguments[0]).longValue(),
-				(java.util.Date)arguments[1]);
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName61.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
 			return CampaignTrackingActionLocalServiceUtil.getCampaignTrackingActions(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				((Integer)arguments[2]).intValue(),
-				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
+				(java.lang.String)arguments[1], ((Long)arguments[2]).longValue());
 		}
 
 		if (_methodName62.equals(name) &&

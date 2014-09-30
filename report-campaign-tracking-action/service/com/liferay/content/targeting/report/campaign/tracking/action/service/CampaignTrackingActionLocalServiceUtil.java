@@ -340,21 +340,6 @@ public class CampaignTrackingActionLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction> getCampaignTrackingActions(
-		long campaignId, java.lang.String elementId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCampaignTrackingActions(campaignId, elementId);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction> getCampaignTrackingActions(
-		long campaignId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getCampaignTrackingActions(campaignId, className, classPK);
-	}
-
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction> getCampaignTrackingActions(
 		long campaignId, java.util.Date modifiedDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -369,6 +354,21 @@ public class CampaignTrackingActionLocalServiceUtil {
 		return getService()
 				   .getCampaignTrackingActions(campaignId, start, end,
 			orderByComparator);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction> getCampaignTrackingActions(
+		long campaignId, java.lang.String elementId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getCampaignTrackingActions(campaignId, elementId);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction> getCampaignTrackingActions(
+		long campaignId, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getCampaignTrackingActions(campaignId, className, classPK);
 	}
 
 	public static int getCampaignTrackingActionsCount(long campaignId)
