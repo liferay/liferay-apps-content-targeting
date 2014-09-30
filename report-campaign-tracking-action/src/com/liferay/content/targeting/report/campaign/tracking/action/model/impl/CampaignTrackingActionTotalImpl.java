@@ -14,12 +14,15 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.model.impl;
 
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionLocalService;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.osgi.framework.Bundle;
@@ -38,34 +41,65 @@ public class CampaignTrackingActionTotalImpl
 	extends CampaignTrackingActionTotalBaseImpl {
 
 	public CampaignTrackingActionTotalImpl() {
+		_initServices();
 	}
 
 	@Override
 	public List<CampaignTrackingAction> getViewsByUserSegment()
 		throws PortalException, SystemException {
 
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		CampaignTrackingActionLocalService campaignTrackingActionLocalService =
-			ServiceTrackerUtil.getService(
-				CampaignTrackingActionLocalService.class,
-				bundle.getBundleContext());
-
 		List<CampaignTrackingAction> campaignTrackingActions = null;
 
 		if (getReferrerClassPK() == 0) {
 			campaignTrackingActions =
-				campaignTrackingActionLocalService.getCampaignTrackingActions(
+				_campaignTrackingActionLocalService.getCampaignTrackingActions(
 					getCampaignId(), getElementId());
 		}
 		else {
 			campaignTrackingActions =
-				campaignTrackingActionLocalService.getCampaignTrackingActions(
+				_campaignTrackingActionLocalService.getCampaignTrackingActions(
 					getCampaignId(), getReferrerClassName(),
 					getReferrerClassPK());
 		}
 
-		return campaignTrackingActions;
+		return filterUserSegment(campaignTrackingActions);
 	}
+
+	protected List<CampaignTrackingAction> filterUserSegment(
+			List<CampaignTrackingAction> campaignTrackingActions)
+		throws PortalException, SystemException {
+
+		List<CampaignTrackingAction> filterCampaignTrackingAction =
+			new ArrayList<CampaignTrackingAction>();
+
+		for (CampaignTrackingAction campaignTrackingAction :
+			campaignTrackingActions) {
+
+			UserSegment userSegment = _userSegmentLocalService.fetchUserSegment(
+				campaignTrackingAction.getUserSegmentId());
+
+			if (userSegment == null) {
+				continue;
+			}
+
+			filterCampaignTrackingAction.add(campaignTrackingAction);
+		}
+
+		return filterCampaignTrackingAction;
+	}
+
+	private void _initServices() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_campaignTrackingActionLocalService = ServiceTrackerUtil.getService(
+			CampaignTrackingActionLocalService.class,
+			bundle.getBundleContext());
+		_userSegmentLocalService = ServiceTrackerUtil.getService(
+			UserSegmentLocalService.class, bundle.getBundleContext());
+	}
+
+	private CampaignTrackingActionLocalService
+		_campaignTrackingActionLocalService;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }
