@@ -65,8 +65,8 @@ public class UserSegmentContentListPortlet extends FreeMarkerDisplayPortlet {
 			ActionRequest request, ActionResponse response)
 		throws Exception {
 
-		boolean anyAssetType = ParamUtil.getBoolean(
-			request, "anyAssetType", true);
+		String anyAssetType = ParamUtil.getString(
+			request, "anyAssetType");
 		String[] classNameIds = StringUtil.split(
 			ParamUtil.getString(request, "classNameIds"));
 
