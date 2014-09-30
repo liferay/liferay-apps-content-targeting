@@ -11,6 +11,7 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
+
 package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.content.targeting.api.model.Report;
