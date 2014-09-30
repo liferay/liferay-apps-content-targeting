@@ -73,7 +73,7 @@ public class CampaignTrackingActionTotalImpl
 			new ArrayList<CampaignTrackingAction>();
 
 		for (CampaignTrackingAction campaignTrackingAction :
-			campaignTrackingActions) {
+				campaignTrackingActions) {
 
 			UserSegment userSegment = _userSegmentLocalService.fetchUserSegment(
 				campaignTrackingAction.getUserSegmentId());

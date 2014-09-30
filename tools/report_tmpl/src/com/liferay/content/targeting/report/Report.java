@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.report.@report.java.package.name@;
 
 import com.liferay.content.targeting.api.model.BaseReport;
-import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -29,8 +28,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Brian Chan
  */
 @Component(
-	immediate = true,
-	service = Report.class)
+	immediate = true, service = Report.class)
 public class @report.java.class.name@Report extends BaseReport {
 
 	@Activate
