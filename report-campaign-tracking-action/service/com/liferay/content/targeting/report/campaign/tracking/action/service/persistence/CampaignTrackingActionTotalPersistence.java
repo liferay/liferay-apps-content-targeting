@@ -143,7 +143,7 @@ public interface CampaignTrackingActionTotalPersistence extends BasePersistence<
 	/**
 	* Returns the campaign tracking action totals before and after the current campaign tracking action total in the ordered set where campaignId = &#63;.
 	*
-	* @param campaignTrackingActionId the primary key of the current campaign tracking action total
+	* @param campaignTrackingActionTotalId the primary key of the current campaign tracking action total
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next campaign tracking action total
@@ -151,7 +151,7 @@ public interface CampaignTrackingActionTotalPersistence extends BasePersistence<
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal[] findByCampaignId_PrevAndNext(
-		long campaignTrackingActionId, long campaignId,
+		long campaignTrackingActionTotalId, long campaignId,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -288,7 +288,7 @@ public interface CampaignTrackingActionTotalPersistence extends BasePersistence<
 	/**
 	* Returns the campaign tracking action totals before and after the current campaign tracking action total in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
 	*
-	* @param campaignTrackingActionId the primary key of the current campaign tracking action total
+	* @param campaignTrackingActionTotalId the primary key of the current campaign tracking action total
 	* @param campaignId the campaign ID
 	* @param modifiedDate the modified date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -297,7 +297,7 @@ public interface CampaignTrackingActionTotalPersistence extends BasePersistence<
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal[] findByC_GtD_PrevAndNext(
-		long campaignTrackingActionId, long campaignId,
+		long campaignTrackingActionTotalId, long campaignId,
 		java.util.Date modifiedDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException,
@@ -431,22 +431,22 @@ public interface CampaignTrackingActionTotalPersistence extends BasePersistence<
 	/**
 	* Creates a new campaign tracking action total with the primary key. Does not add the campaign tracking action total to the database.
 	*
-	* @param campaignTrackingActionId the primary key for the new campaign tracking action total
+	* @param campaignTrackingActionTotalId the primary key for the new campaign tracking action total
 	* @return the new campaign tracking action total
 	*/
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal create(
-		long campaignTrackingActionId);
+		long campaignTrackingActionTotalId);
 
 	/**
 	* Removes the campaign tracking action total with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param campaignTrackingActionId the primary key of the campaign tracking action total
+	* @param campaignTrackingActionTotalId the primary key of the campaign tracking action total
 	* @return the campaign tracking action total that was removed
 	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException if a campaign tracking action total with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal remove(
-		long campaignTrackingActionId)
+		long campaignTrackingActionTotalId)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -457,25 +457,25 @@ public interface CampaignTrackingActionTotalPersistence extends BasePersistence<
 	/**
 	* Returns the campaign tracking action total with the primary key or throws a {@link com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException} if it could not be found.
 	*
-	* @param campaignTrackingActionId the primary key of the campaign tracking action total
+	* @param campaignTrackingActionTotalId the primary key of the campaign tracking action total
 	* @return the campaign tracking action total
 	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException if a campaign tracking action total with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal findByPrimaryKey(
-		long campaignTrackingActionId)
+		long campaignTrackingActionTotalId)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
 	* Returns the campaign tracking action total with the primary key or returns <code>null</code> if it could not be found.
 	*
-	* @param campaignTrackingActionId the primary key of the campaign tracking action total
+	* @param campaignTrackingActionTotalId the primary key of the campaign tracking action total
 	* @return the campaign tracking action total, or <code>null</code> if a campaign tracking action total with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal fetchByPrimaryKey(
-		long campaignTrackingActionId)
+		long campaignTrackingActionTotalId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**

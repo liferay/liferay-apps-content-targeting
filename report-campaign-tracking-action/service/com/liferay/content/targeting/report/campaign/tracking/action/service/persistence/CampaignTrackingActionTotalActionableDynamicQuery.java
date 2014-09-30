@@ -33,6 +33,6 @@ public abstract class CampaignTrackingActionTotalActionableDynamicQuery
 
 		setClassLoader(com.liferay.content.targeting.report.campaign.tracking.action.service.ClpSerializer.class.getClassLoader());
 
-		setPrimaryKeyPropertyName("campaignTrackingActionId");
+		setPrimaryKeyPropertyName("campaignTrackingActionTotalId");
 	}
 }

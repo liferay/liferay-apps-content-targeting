@@ -48,29 +48,29 @@ public class CampaignTrackingActionTotalLocalServiceWrapper
 	/**
 	* Creates a new campaign tracking action total with the primary key. Does not add the campaign tracking action total to the database.
 	*
-	* @param campaignTrackingActionId the primary key for the new campaign tracking action total
+	* @param campaignTrackingActionTotalId the primary key for the new campaign tracking action total
 	* @return the new campaign tracking action total
 	*/
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal createCampaignTrackingActionTotal(
-		long campaignTrackingActionId) {
-		return _campaignTrackingActionTotalLocalService.createCampaignTrackingActionTotal(campaignTrackingActionId);
+		long campaignTrackingActionTotalId) {
+		return _campaignTrackingActionTotalLocalService.createCampaignTrackingActionTotal(campaignTrackingActionTotalId);
 	}
 
 	/**
 	* Deletes the campaign tracking action total with the primary key from the database. Also notifies the appropriate model listeners.
 	*
-	* @param campaignTrackingActionId the primary key of the campaign tracking action total
+	* @param campaignTrackingActionTotalId the primary key of the campaign tracking action total
 	* @return the campaign tracking action total that was removed
 	* @throws PortalException if a campaign tracking action total with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal deleteCampaignTrackingActionTotal(
-		long campaignTrackingActionId)
+		long campaignTrackingActionTotalId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignTrackingActionTotalLocalService.deleteCampaignTrackingActionTotal(campaignTrackingActionId);
+		return _campaignTrackingActionTotalLocalService.deleteCampaignTrackingActionTotal(campaignTrackingActionTotalId);
 	}
 
 	/**
@@ -187,25 +187,25 @@ public class CampaignTrackingActionTotalLocalServiceWrapper
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal fetchCampaignTrackingActionTotal(
-		long campaignTrackingActionId)
+		long campaignTrackingActionTotalId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _campaignTrackingActionTotalLocalService.fetchCampaignTrackingActionTotal(campaignTrackingActionId);
+		return _campaignTrackingActionTotalLocalService.fetchCampaignTrackingActionTotal(campaignTrackingActionTotalId);
 	}
 
 	/**
 	* Returns the campaign tracking action total with the primary key.
 	*
-	* @param campaignTrackingActionId the primary key of the campaign tracking action total
+	* @param campaignTrackingActionTotalId the primary key of the campaign tracking action total
 	* @return the campaign tracking action total
 	* @throws PortalException if a campaign tracking action total with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal getCampaignTrackingActionTotal(
-		long campaignTrackingActionId)
+		long campaignTrackingActionTotalId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _campaignTrackingActionTotalLocalService.getCampaignTrackingActionTotal(campaignTrackingActionId);
+		return _campaignTrackingActionTotalLocalService.getCampaignTrackingActionTotal(campaignTrackingActionTotalId);
 	}
 
 	@Override

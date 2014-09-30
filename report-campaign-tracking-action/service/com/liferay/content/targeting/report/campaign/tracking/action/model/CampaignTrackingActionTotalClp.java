@@ -53,17 +53,17 @@ public class CampaignTrackingActionTotalClp extends BaseModelImpl<CampaignTracki
 
 	@Override
 	public long getPrimaryKey() {
-		return _campaignTrackingActionId;
+		return _campaignTrackingActionTotalId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setCampaignTrackingActionId(primaryKey);
+		setCampaignTrackingActionTotalId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _campaignTrackingActionId;
+		return _campaignTrackingActionTotalId;
 	}
 
 	@Override
@@ -75,7 +75,8 @@ public class CampaignTrackingActionTotalClp extends BaseModelImpl<CampaignTracki
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("campaignTrackingActionId", getCampaignTrackingActionId());
+		attributes.put("campaignTrackingActionTotalId",
+			getCampaignTrackingActionTotalId());
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("alias", getAlias());
 		attributes.put("referrerClassName", getReferrerClassName());
@@ -90,11 +91,11 @@ public class CampaignTrackingActionTotalClp extends BaseModelImpl<CampaignTracki
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long campaignTrackingActionId = (Long)attributes.get(
-				"campaignTrackingActionId");
+		Long campaignTrackingActionTotalId = (Long)attributes.get(
+				"campaignTrackingActionTotalId");
 
-		if (campaignTrackingActionId != null) {
-			setCampaignTrackingActionId(campaignTrackingActionId);
+		if (campaignTrackingActionTotalId != null) {
+			setCampaignTrackingActionTotalId(campaignTrackingActionTotalId);
 		}
 
 		Long campaignId = (Long)attributes.get("campaignId");
@@ -147,23 +148,24 @@ public class CampaignTrackingActionTotalClp extends BaseModelImpl<CampaignTracki
 	}
 
 	@Override
-	public long getCampaignTrackingActionId() {
-		return _campaignTrackingActionId;
+	public long getCampaignTrackingActionTotalId() {
+		return _campaignTrackingActionTotalId;
 	}
 
 	@Override
-	public void setCampaignTrackingActionId(long campaignTrackingActionId) {
-		_campaignTrackingActionId = campaignTrackingActionId;
+	public void setCampaignTrackingActionTotalId(
+		long campaignTrackingActionTotalId) {
+		_campaignTrackingActionTotalId = campaignTrackingActionTotalId;
 
 		if (_campaignTrackingActionTotalRemoteModel != null) {
 			try {
 				Class<?> clazz = _campaignTrackingActionTotalRemoteModel.getClass();
 
-				Method method = clazz.getMethod("setCampaignTrackingActionId",
+				Method method = clazz.getMethod("setCampaignTrackingActionTotalId",
 						long.class);
 
 				method.invoke(_campaignTrackingActionTotalRemoteModel,
-					campaignTrackingActionId);
+					campaignTrackingActionTotalId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -451,7 +453,7 @@ public class CampaignTrackingActionTotalClp extends BaseModelImpl<CampaignTracki
 	public Object clone() {
 		CampaignTrackingActionTotalClp clone = new CampaignTrackingActionTotalClp();
 
-		clone.setCampaignTrackingActionId(getCampaignTrackingActionId());
+		clone.setCampaignTrackingActionTotalId(getCampaignTrackingActionTotalId());
 		clone.setCampaignId(getCampaignId());
 		clone.setAlias(getAlias());
 		clone.setReferrerClassName(getReferrerClassName());
@@ -512,8 +514,8 @@ public class CampaignTrackingActionTotalClp extends BaseModelImpl<CampaignTracki
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{campaignTrackingActionId=");
-		sb.append(getCampaignTrackingActionId());
+		sb.append("{campaignTrackingActionTotalId=");
+		sb.append(getCampaignTrackingActionTotalId());
 		sb.append(", campaignId=");
 		sb.append(getCampaignId());
 		sb.append(", alias=");
@@ -545,8 +547,8 @@ public class CampaignTrackingActionTotalClp extends BaseModelImpl<CampaignTracki
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>campaignTrackingActionId</column-name><column-value><![CDATA[");
-		sb.append(getCampaignTrackingActionId());
+			"<column><column-name>campaignTrackingActionTotalId</column-name><column-value><![CDATA[");
+		sb.append(getCampaignTrackingActionTotalId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>campaignId</column-name><column-value><![CDATA[");
@@ -586,7 +588,7 @@ public class CampaignTrackingActionTotalClp extends BaseModelImpl<CampaignTracki
 		return sb.toString();
 	}
 
-	private long _campaignTrackingActionId;
+	private long _campaignTrackingActionTotalId;
 	private long _campaignId;
 	private String _alias;
 	private String _referrerClassName;

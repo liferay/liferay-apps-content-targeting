@@ -85,19 +85,19 @@ public abstract class CampaignTrackingActionTotalLocalServiceBaseImpl
 	/**
 	 * Creates a new campaign tracking action total with the primary key. Does not add the campaign tracking action total to the database.
 	 *
-	 * @param campaignTrackingActionId the primary key for the new campaign tracking action total
+	 * @param campaignTrackingActionTotalId the primary key for the new campaign tracking action total
 	 * @return the new campaign tracking action total
 	 */
 	@Override
 	public CampaignTrackingActionTotal createCampaignTrackingActionTotal(
-		long campaignTrackingActionId) {
-		return campaignTrackingActionTotalPersistence.create(campaignTrackingActionId);
+		long campaignTrackingActionTotalId) {
+		return campaignTrackingActionTotalPersistence.create(campaignTrackingActionTotalId);
 	}
 
 	/**
 	 * Deletes the campaign tracking action total with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param campaignTrackingActionId the primary key of the campaign tracking action total
+	 * @param campaignTrackingActionTotalId the primary key of the campaign tracking action total
 	 * @return the campaign tracking action total that was removed
 	 * @throws PortalException if a campaign tracking action total with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
@@ -105,8 +105,9 @@ public abstract class CampaignTrackingActionTotalLocalServiceBaseImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public CampaignTrackingActionTotal deleteCampaignTrackingActionTotal(
-		long campaignTrackingActionId) throws PortalException, SystemException {
-		return campaignTrackingActionTotalPersistence.remove(campaignTrackingActionId);
+		long campaignTrackingActionTotalId)
+		throws PortalException, SystemException {
+		return campaignTrackingActionTotalPersistence.remove(campaignTrackingActionTotalId);
 	}
 
 	/**
@@ -219,22 +220,23 @@ public abstract class CampaignTrackingActionTotalLocalServiceBaseImpl
 
 	@Override
 	public CampaignTrackingActionTotal fetchCampaignTrackingActionTotal(
-		long campaignTrackingActionId) throws SystemException {
-		return campaignTrackingActionTotalPersistence.fetchByPrimaryKey(campaignTrackingActionId);
+		long campaignTrackingActionTotalId) throws SystemException {
+		return campaignTrackingActionTotalPersistence.fetchByPrimaryKey(campaignTrackingActionTotalId);
 	}
 
 	/**
 	 * Returns the campaign tracking action total with the primary key.
 	 *
-	 * @param campaignTrackingActionId the primary key of the campaign tracking action total
+	 * @param campaignTrackingActionTotalId the primary key of the campaign tracking action total
 	 * @return the campaign tracking action total
 	 * @throws PortalException if a campaign tracking action total with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CampaignTrackingActionTotal getCampaignTrackingActionTotal(
-		long campaignTrackingActionId) throws PortalException, SystemException {
-		return campaignTrackingActionTotalPersistence.findByPrimaryKey(campaignTrackingActionId);
+		long campaignTrackingActionTotalId)
+		throws PortalException, SystemException {
+		return campaignTrackingActionTotalPersistence.findByPrimaryKey(campaignTrackingActionTotalId);
 	}
 
 	@Override

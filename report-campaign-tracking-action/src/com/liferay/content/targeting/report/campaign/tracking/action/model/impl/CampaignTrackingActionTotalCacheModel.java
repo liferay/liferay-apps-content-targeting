@@ -40,8 +40,8 @@ public class CampaignTrackingActionTotalCacheModel implements CacheModel<Campaig
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{campaignTrackingActionId=");
-		sb.append(campaignTrackingActionId);
+		sb.append("{campaignTrackingActionTotalId=");
+		sb.append(campaignTrackingActionTotalId);
 		sb.append(", campaignId=");
 		sb.append(campaignId);
 		sb.append(", alias=");
@@ -67,7 +67,7 @@ public class CampaignTrackingActionTotalCacheModel implements CacheModel<Campaig
 	public CampaignTrackingActionTotal toEntityModel() {
 		CampaignTrackingActionTotalImpl campaignTrackingActionTotalImpl = new CampaignTrackingActionTotalImpl();
 
-		campaignTrackingActionTotalImpl.setCampaignTrackingActionId(campaignTrackingActionId);
+		campaignTrackingActionTotalImpl.setCampaignTrackingActionTotalId(campaignTrackingActionTotalId);
 		campaignTrackingActionTotalImpl.setCampaignId(campaignId);
 
 		if (alias == null) {
@@ -117,7 +117,7 @@ public class CampaignTrackingActionTotalCacheModel implements CacheModel<Campaig
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		campaignTrackingActionId = objectInput.readLong();
+		campaignTrackingActionTotalId = objectInput.readLong();
 		campaignId = objectInput.readLong();
 		alias = objectInput.readUTF();
 		referrerClassName = objectInput.readUTF();
@@ -131,7 +131,7 @@ public class CampaignTrackingActionTotalCacheModel implements CacheModel<Campaig
 	@Override
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
-		objectOutput.writeLong(campaignTrackingActionId);
+		objectOutput.writeLong(campaignTrackingActionTotalId);
 		objectOutput.writeLong(campaignId);
 
 		if (alias == null) {
@@ -168,7 +168,7 @@ public class CampaignTrackingActionTotalCacheModel implements CacheModel<Campaig
 		objectOutput.writeLong(modifiedDate);
 	}
 
-	public long campaignTrackingActionId;
+	public long campaignTrackingActionTotalId;
 	public long campaignId;
 	public String alias;
 	public String referrerClassName;

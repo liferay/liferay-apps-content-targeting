@@ -207,13 +207,13 @@ public class CampaignTrackingActionTotalLocalServiceClp
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal createCampaignTrackingActionTotal(
-		long campaignTrackingActionId) {
+		long campaignTrackingActionTotalId) {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName1,
 					_methodParameterTypes1,
-					new Object[] { campaignTrackingActionId });
+					new Object[] { campaignTrackingActionTotalId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -232,7 +232,7 @@ public class CampaignTrackingActionTotalLocalServiceClp
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal deleteCampaignTrackingActionTotal(
-		long campaignTrackingActionId)
+		long campaignTrackingActionTotalId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -240,7 +240,7 @@ public class CampaignTrackingActionTotalLocalServiceClp
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName2,
 					_methodParameterTypes2,
-					new Object[] { campaignTrackingActionId });
+					new Object[] { campaignTrackingActionTotalId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -497,14 +497,14 @@ public class CampaignTrackingActionTotalLocalServiceClp
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal fetchCampaignTrackingActionTotal(
-		long campaignTrackingActionId)
+		long campaignTrackingActionTotalId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName10,
 					_methodParameterTypes10,
-					new Object[] { campaignTrackingActionId });
+					new Object[] { campaignTrackingActionTotalId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -527,7 +527,7 @@ public class CampaignTrackingActionTotalLocalServiceClp
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal getCampaignTrackingActionTotal(
-		long campaignTrackingActionId)
+		long campaignTrackingActionTotalId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -535,7 +535,7 @@ public class CampaignTrackingActionTotalLocalServiceClp
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName11,
 					_methodParameterTypes11,
-					new Object[] { campaignTrackingActionId });
+					new Object[] { campaignTrackingActionTotalId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

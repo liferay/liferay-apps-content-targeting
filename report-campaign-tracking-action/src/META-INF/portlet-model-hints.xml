@@ -14,7 +14,7 @@
 		<field name="modifiedDate" type="Date" />
 	</model>
 	<model name="com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal">
-		<field name="campaignTrackingActionId" type="long" />
+		<field name="campaignTrackingActionTotalId" type="long" />
 		<field name="campaignId" type="long" />
 		<field name="alias" type="String" />
 		<field name="referrerClassName" type="String" />

@@ -30,7 +30,7 @@
 	</mapped-superclass>
 	<mapped-superclass class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalModelImpl">
 		<attributes>
-			<id name="campaignTrackingActionId" />
+			<id name="campaignTrackingActionTotalId" />
 			<basic name="campaignId" />
 			<basic name="alias">
 				<column name="ALIAS_" />

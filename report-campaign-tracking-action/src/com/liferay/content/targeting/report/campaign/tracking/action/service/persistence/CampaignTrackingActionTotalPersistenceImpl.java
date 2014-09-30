@@ -377,7 +377,7 @@ public class CampaignTrackingActionTotalPersistenceImpl
 	/**
 	 * Returns the campaign tracking action totals before and after the current campaign tracking action total in the ordered set where campaignId = &#63;.
 	 *
-	 * @param campaignTrackingActionId the primary key of the current campaign tracking action total
+	 * @param campaignTrackingActionTotalId the primary key of the current campaign tracking action total
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next campaign tracking action total
@@ -386,10 +386,10 @@ public class CampaignTrackingActionTotalPersistenceImpl
 	 */
 	@Override
 	public CampaignTrackingActionTotal[] findByCampaignId_PrevAndNext(
-		long campaignTrackingActionId, long campaignId,
+		long campaignTrackingActionTotalId, long campaignId,
 		OrderByComparator orderByComparator)
 		throws NoSuchCampaignTrackingActionTotalException, SystemException {
-		CampaignTrackingActionTotal campaignTrackingActionTotal = findByPrimaryKey(campaignTrackingActionId);
+		CampaignTrackingActionTotal campaignTrackingActionTotal = findByPrimaryKey(campaignTrackingActionTotalId);
 
 		Session session = null;
 
@@ -896,7 +896,7 @@ public class CampaignTrackingActionTotalPersistenceImpl
 	/**
 	 * Returns the campaign tracking action totals before and after the current campaign tracking action total in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignTrackingActionId the primary key of the current campaign tracking action total
+	 * @param campaignTrackingActionTotalId the primary key of the current campaign tracking action total
 	 * @param campaignId the campaign ID
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -906,10 +906,10 @@ public class CampaignTrackingActionTotalPersistenceImpl
 	 */
 	@Override
 	public CampaignTrackingActionTotal[] findByC_GtD_PrevAndNext(
-		long campaignTrackingActionId, long campaignId, Date modifiedDate,
+		long campaignTrackingActionTotalId, long campaignId, Date modifiedDate,
 		OrderByComparator orderByComparator)
 		throws NoSuchCampaignTrackingActionTotalException, SystemException {
-		CampaignTrackingActionTotal campaignTrackingActionTotal = findByPrimaryKey(campaignTrackingActionId);
+		CampaignTrackingActionTotal campaignTrackingActionTotal = findByPrimaryKey(campaignTrackingActionTotalId);
 
 		Session session = null;
 
@@ -1745,15 +1745,16 @@ public class CampaignTrackingActionTotalPersistenceImpl
 	/**
 	 * Creates a new campaign tracking action total with the primary key. Does not add the campaign tracking action total to the database.
 	 *
-	 * @param campaignTrackingActionId the primary key for the new campaign tracking action total
+	 * @param campaignTrackingActionTotalId the primary key for the new campaign tracking action total
 	 * @return the new campaign tracking action total
 	 */
 	@Override
-	public CampaignTrackingActionTotal create(long campaignTrackingActionId) {
+	public CampaignTrackingActionTotal create(
+		long campaignTrackingActionTotalId) {
 		CampaignTrackingActionTotal campaignTrackingActionTotal = new CampaignTrackingActionTotalImpl();
 
 		campaignTrackingActionTotal.setNew(true);
-		campaignTrackingActionTotal.setPrimaryKey(campaignTrackingActionId);
+		campaignTrackingActionTotal.setPrimaryKey(campaignTrackingActionTotalId);
 
 		return campaignTrackingActionTotal;
 	}
@@ -1761,15 +1762,16 @@ public class CampaignTrackingActionTotalPersistenceImpl
 	/**
 	 * Removes the campaign tracking action total with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
-	 * @param campaignTrackingActionId the primary key of the campaign tracking action total
+	 * @param campaignTrackingActionTotalId the primary key of the campaign tracking action total
 	 * @return the campaign tracking action total that was removed
 	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException if a campaign tracking action total with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CampaignTrackingActionTotal remove(long campaignTrackingActionId)
+	public CampaignTrackingActionTotal remove(
+		long campaignTrackingActionTotalId)
 		throws NoSuchCampaignTrackingActionTotalException, SystemException {
-		return remove((Serializable)campaignTrackingActionId);
+		return remove((Serializable)campaignTrackingActionTotalId);
 	}
 
 	/**
@@ -1931,7 +1933,7 @@ public class CampaignTrackingActionTotalPersistenceImpl
 		campaignTrackingActionTotalImpl.setNew(campaignTrackingActionTotal.isNew());
 		campaignTrackingActionTotalImpl.setPrimaryKey(campaignTrackingActionTotal.getPrimaryKey());
 
-		campaignTrackingActionTotalImpl.setCampaignTrackingActionId(campaignTrackingActionTotal.getCampaignTrackingActionId());
+		campaignTrackingActionTotalImpl.setCampaignTrackingActionTotalId(campaignTrackingActionTotal.getCampaignTrackingActionTotalId());
 		campaignTrackingActionTotalImpl.setCampaignId(campaignTrackingActionTotal.getCampaignId());
 		campaignTrackingActionTotalImpl.setAlias(campaignTrackingActionTotal.getAlias());
 		campaignTrackingActionTotalImpl.setReferrerClassName(campaignTrackingActionTotal.getReferrerClassName());
@@ -1972,16 +1974,16 @@ public class CampaignTrackingActionTotalPersistenceImpl
 	/**
 	 * Returns the campaign tracking action total with the primary key or throws a {@link com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException} if it could not be found.
 	 *
-	 * @param campaignTrackingActionId the primary key of the campaign tracking action total
+	 * @param campaignTrackingActionTotalId the primary key of the campaign tracking action total
 	 * @return the campaign tracking action total
 	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException if a campaign tracking action total with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CampaignTrackingActionTotal findByPrimaryKey(
-		long campaignTrackingActionId)
+		long campaignTrackingActionTotalId)
 		throws NoSuchCampaignTrackingActionTotalException, SystemException {
-		return findByPrimaryKey((Serializable)campaignTrackingActionId);
+		return findByPrimaryKey((Serializable)campaignTrackingActionTotalId);
 	}
 
 	/**
@@ -2036,14 +2038,14 @@ public class CampaignTrackingActionTotalPersistenceImpl
 	/**
 	 * Returns the campaign tracking action total with the primary key or returns <code>null</code> if it could not be found.
 	 *
-	 * @param campaignTrackingActionId the primary key of the campaign tracking action total
+	 * @param campaignTrackingActionTotalId the primary key of the campaign tracking action total
 	 * @return the campaign tracking action total, or <code>null</code> if a campaign tracking action total with the primary key could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public CampaignTrackingActionTotal fetchByPrimaryKey(
-		long campaignTrackingActionId) throws SystemException {
-		return fetchByPrimaryKey((Serializable)campaignTrackingActionId);
+		long campaignTrackingActionTotalId) throws SystemException {
+		return fetchByPrimaryKey((Serializable)campaignTrackingActionTotalId);
 	}
 
 	/**

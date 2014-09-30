@@ -12,7 +12,7 @@ create table ContentTargeting_CampaignTAReport_CampaignTrackingAction (
 );
 
 create table ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal (
-	campaignTrackingActionId LONG not null primary key,
+	campaignTrackingActionTotalId LONG not null primary key,
 	campaignId LONG,
 	alias_ VARCHAR(75) null,
 	referrerClassName VARCHAR(75) null,

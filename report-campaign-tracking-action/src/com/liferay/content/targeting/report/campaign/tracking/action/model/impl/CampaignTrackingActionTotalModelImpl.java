@@ -65,7 +65,7 @@ public class CampaignTrackingActionTotalModelImpl extends BaseModelImpl<Campaign
 	 */
 	public static final String TABLE_NAME = "ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal";
 	public static final Object[][] TABLE_COLUMNS = {
-			{ "campaignTrackingActionId", Types.BIGINT },
+			{ "campaignTrackingActionTotalId", Types.BIGINT },
 			{ "campaignId", Types.BIGINT },
 			{ "alias_", Types.VARCHAR },
 			{ "referrerClassName", Types.VARCHAR },
@@ -75,7 +75,7 @@ public class CampaignTrackingActionTotalModelImpl extends BaseModelImpl<Campaign
 			{ "count", Types.INTEGER },
 			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal (campaignTrackingActionId LONG not null primary key,campaignId LONG,alias_ VARCHAR(75) null,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal (campaignTrackingActionTotalId LONG not null primary key,campaignId LONG,alias_ VARCHAR(75) null,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal";
 	public static final String ORDER_BY_JPQL = " ORDER BY campaignTrackingActionTotal.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal.modifiedDate DESC";
@@ -112,7 +112,7 @@ public class CampaignTrackingActionTotalModelImpl extends BaseModelImpl<Campaign
 
 		CampaignTrackingActionTotal model = new CampaignTrackingActionTotalImpl();
 
-		model.setCampaignTrackingActionId(soapModel.getCampaignTrackingActionId());
+		model.setCampaignTrackingActionTotalId(soapModel.getCampaignTrackingActionTotalId());
 		model.setCampaignId(soapModel.getCampaignId());
 		model.setAlias(soapModel.getAlias());
 		model.setReferrerClassName(soapModel.getReferrerClassName());
@@ -154,17 +154,17 @@ public class CampaignTrackingActionTotalModelImpl extends BaseModelImpl<Campaign
 
 	@Override
 	public long getPrimaryKey() {
-		return _campaignTrackingActionId;
+		return _campaignTrackingActionTotalId;
 	}
 
 	@Override
 	public void setPrimaryKey(long primaryKey) {
-		setCampaignTrackingActionId(primaryKey);
+		setCampaignTrackingActionTotalId(primaryKey);
 	}
 
 	@Override
 	public Serializable getPrimaryKeyObj() {
-		return _campaignTrackingActionId;
+		return _campaignTrackingActionTotalId;
 	}
 
 	@Override
@@ -186,7 +186,8 @@ public class CampaignTrackingActionTotalModelImpl extends BaseModelImpl<Campaign
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("campaignTrackingActionId", getCampaignTrackingActionId());
+		attributes.put("campaignTrackingActionTotalId",
+			getCampaignTrackingActionTotalId());
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("alias", getAlias());
 		attributes.put("referrerClassName", getReferrerClassName());
@@ -201,11 +202,11 @@ public class CampaignTrackingActionTotalModelImpl extends BaseModelImpl<Campaign
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long campaignTrackingActionId = (Long)attributes.get(
-				"campaignTrackingActionId");
+		Long campaignTrackingActionTotalId = (Long)attributes.get(
+				"campaignTrackingActionTotalId");
 
-		if (campaignTrackingActionId != null) {
-			setCampaignTrackingActionId(campaignTrackingActionId);
+		if (campaignTrackingActionTotalId != null) {
+			setCampaignTrackingActionTotalId(campaignTrackingActionTotalId);
 		}
 
 		Long campaignId = (Long)attributes.get("campaignId");
@@ -259,13 +260,14 @@ public class CampaignTrackingActionTotalModelImpl extends BaseModelImpl<Campaign
 
 	@JSON
 	@Override
-	public long getCampaignTrackingActionId() {
-		return _campaignTrackingActionId;
+	public long getCampaignTrackingActionTotalId() {
+		return _campaignTrackingActionTotalId;
 	}
 
 	@Override
-	public void setCampaignTrackingActionId(long campaignTrackingActionId) {
-		_campaignTrackingActionId = campaignTrackingActionId;
+	public void setCampaignTrackingActionTotalId(
+		long campaignTrackingActionTotalId) {
+		_campaignTrackingActionTotalId = campaignTrackingActionTotalId;
 	}
 
 	@JSON
@@ -471,7 +473,7 @@ public class CampaignTrackingActionTotalModelImpl extends BaseModelImpl<Campaign
 	public Object clone() {
 		CampaignTrackingActionTotalImpl campaignTrackingActionTotalImpl = new CampaignTrackingActionTotalImpl();
 
-		campaignTrackingActionTotalImpl.setCampaignTrackingActionId(getCampaignTrackingActionId());
+		campaignTrackingActionTotalImpl.setCampaignTrackingActionTotalId(getCampaignTrackingActionTotalId());
 		campaignTrackingActionTotalImpl.setCampaignId(getCampaignId());
 		campaignTrackingActionTotalImpl.setAlias(getAlias());
 		campaignTrackingActionTotalImpl.setReferrerClassName(getReferrerClassName());
@@ -559,7 +561,7 @@ public class CampaignTrackingActionTotalModelImpl extends BaseModelImpl<Campaign
 		CampaignTrackingActionTotalCacheModel campaignTrackingActionTotalCacheModel =
 			new CampaignTrackingActionTotalCacheModel();
 
-		campaignTrackingActionTotalCacheModel.campaignTrackingActionId = getCampaignTrackingActionId();
+		campaignTrackingActionTotalCacheModel.campaignTrackingActionTotalId = getCampaignTrackingActionTotalId();
 
 		campaignTrackingActionTotalCacheModel.campaignId = getCampaignId();
 
@@ -615,8 +617,8 @@ public class CampaignTrackingActionTotalModelImpl extends BaseModelImpl<Campaign
 	public String toString() {
 		StringBundler sb = new StringBundler(19);
 
-		sb.append("{campaignTrackingActionId=");
-		sb.append(getCampaignTrackingActionId());
+		sb.append("{campaignTrackingActionTotalId=");
+		sb.append(getCampaignTrackingActionTotalId());
 		sb.append(", campaignId=");
 		sb.append(getCampaignId());
 		sb.append(", alias=");
@@ -648,8 +650,8 @@ public class CampaignTrackingActionTotalModelImpl extends BaseModelImpl<Campaign
 		sb.append("</model-name>");
 
 		sb.append(
-			"<column><column-name>campaignTrackingActionId</column-name><column-value><![CDATA[");
-		sb.append(getCampaignTrackingActionId());
+			"<column><column-name>campaignTrackingActionTotalId</column-name><column-value><![CDATA[");
+		sb.append(getCampaignTrackingActionTotalId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>campaignId</column-name><column-value><![CDATA[");
@@ -693,7 +695,7 @@ public class CampaignTrackingActionTotalModelImpl extends BaseModelImpl<Campaign
 	private static Class<?>[] _escapedModelInterfaces = new Class[] {
 			CampaignTrackingActionTotal.class
 		};
-	private long _campaignTrackingActionId;
+	private long _campaignTrackingActionTotalId;
 	private long _campaignId;
 	private long _originalCampaignId;
 	private boolean _setOriginalCampaignId;

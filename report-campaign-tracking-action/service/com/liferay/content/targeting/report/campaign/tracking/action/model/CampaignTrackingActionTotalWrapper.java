@@ -52,7 +52,8 @@ public class CampaignTrackingActionTotalWrapper
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
-		attributes.put("campaignTrackingActionId", getCampaignTrackingActionId());
+		attributes.put("campaignTrackingActionTotalId",
+			getCampaignTrackingActionTotalId());
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("alias", getAlias());
 		attributes.put("referrerClassName", getReferrerClassName());
@@ -67,11 +68,11 @@ public class CampaignTrackingActionTotalWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Long campaignTrackingActionId = (Long)attributes.get(
-				"campaignTrackingActionId");
+		Long campaignTrackingActionTotalId = (Long)attributes.get(
+				"campaignTrackingActionTotalId");
 
-		if (campaignTrackingActionId != null) {
-			setCampaignTrackingActionId(campaignTrackingActionId);
+		if (campaignTrackingActionTotalId != null) {
+			setCampaignTrackingActionTotalId(campaignTrackingActionTotalId);
 		}
 
 		Long campaignId = (Long)attributes.get("campaignId");
@@ -144,23 +145,24 @@ public class CampaignTrackingActionTotalWrapper
 	}
 
 	/**
-	* Returns the campaign tracking action ID of this campaign tracking action total.
+	* Returns the campaign tracking action total ID of this campaign tracking action total.
 	*
-	* @return the campaign tracking action ID of this campaign tracking action total
+	* @return the campaign tracking action total ID of this campaign tracking action total
 	*/
 	@Override
-	public long getCampaignTrackingActionId() {
-		return _campaignTrackingActionTotal.getCampaignTrackingActionId();
+	public long getCampaignTrackingActionTotalId() {
+		return _campaignTrackingActionTotal.getCampaignTrackingActionTotalId();
 	}
 
 	/**
-	* Sets the campaign tracking action ID of this campaign tracking action total.
+	* Sets the campaign tracking action total ID of this campaign tracking action total.
 	*
-	* @param campaignTrackingActionId the campaign tracking action ID of this campaign tracking action total
+	* @param campaignTrackingActionTotalId the campaign tracking action total ID of this campaign tracking action total
 	*/
 	@Override
-	public void setCampaignTrackingActionId(long campaignTrackingActionId) {
-		_campaignTrackingActionTotal.setCampaignTrackingActionId(campaignTrackingActionId);
+	public void setCampaignTrackingActionTotalId(
+		long campaignTrackingActionTotalId) {
+		_campaignTrackingActionTotal.setCampaignTrackingActionTotalId(campaignTrackingActionTotalId);
 	}
 
 	/**

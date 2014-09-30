@@ -32,7 +32,7 @@ public class CampaignTrackingActionTotalSoap implements Serializable {
 		CampaignTrackingActionTotal model) {
 		CampaignTrackingActionTotalSoap soapModel = new CampaignTrackingActionTotalSoap();
 
-		soapModel.setCampaignTrackingActionId(model.getCampaignTrackingActionId());
+		soapModel.setCampaignTrackingActionTotalId(model.getCampaignTrackingActionTotalId());
 		soapModel.setCampaignId(model.getCampaignId());
 		soapModel.setAlias(model.getAlias());
 		soapModel.setReferrerClassName(model.getReferrerClassName());
@@ -89,19 +89,20 @@ public class CampaignTrackingActionTotalSoap implements Serializable {
 	}
 
 	public long getPrimaryKey() {
-		return _campaignTrackingActionId;
+		return _campaignTrackingActionTotalId;
 	}
 
 	public void setPrimaryKey(long pk) {
-		setCampaignTrackingActionId(pk);
+		setCampaignTrackingActionTotalId(pk);
 	}
 
-	public long getCampaignTrackingActionId() {
-		return _campaignTrackingActionId;
+	public long getCampaignTrackingActionTotalId() {
+		return _campaignTrackingActionTotalId;
 	}
 
-	public void setCampaignTrackingActionId(long campaignTrackingActionId) {
-		_campaignTrackingActionId = campaignTrackingActionId;
+	public void setCampaignTrackingActionTotalId(
+		long campaignTrackingActionTotalId) {
+		_campaignTrackingActionTotalId = campaignTrackingActionTotalId;
 	}
 
 	public long getCampaignId() {
@@ -168,7 +169,7 @@ public class CampaignTrackingActionTotalSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
-	private long _campaignTrackingActionId;
+	private long _campaignTrackingActionTotalId;
 	private long _campaignId;
 	private String _alias;
 	private String _referrerClassName;

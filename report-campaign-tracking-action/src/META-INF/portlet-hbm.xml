@@ -21,7 +21,7 @@
 	</class>
 	<class name="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalImpl" table="ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal">
 		<cache usage="read-write" />
-		<id name="campaignTrackingActionId" type="long">
+		<id name="campaignTrackingActionTotalId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

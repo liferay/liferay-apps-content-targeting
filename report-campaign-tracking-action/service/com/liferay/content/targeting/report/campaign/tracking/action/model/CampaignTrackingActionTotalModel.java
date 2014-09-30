@@ -60,18 +60,19 @@ public interface CampaignTrackingActionTotalModel extends BaseModel<CampaignTrac
 	public void setPrimaryKey(long primaryKey);
 
 	/**
-	 * Returns the campaign tracking action ID of this campaign tracking action total.
+	 * Returns the campaign tracking action total ID of this campaign tracking action total.
 	 *
-	 * @return the campaign tracking action ID of this campaign tracking action total
+	 * @return the campaign tracking action total ID of this campaign tracking action total
 	 */
-	public long getCampaignTrackingActionId();
+	public long getCampaignTrackingActionTotalId();
 
 	/**
-	 * Sets the campaign tracking action ID of this campaign tracking action total.
+	 * Sets the campaign tracking action total ID of this campaign tracking action total.
 	 *
-	 * @param campaignTrackingActionId the campaign tracking action ID of this campaign tracking action total
+	 * @param campaignTrackingActionTotalId the campaign tracking action total ID of this campaign tracking action total
 	 */
-	public void setCampaignTrackingActionId(long campaignTrackingActionId);
+	public void setCampaignTrackingActionTotalId(
+		long campaignTrackingActionTotalId);
 
 	/**
 	 * Returns the campaign ID of this campaign tracking action total.
