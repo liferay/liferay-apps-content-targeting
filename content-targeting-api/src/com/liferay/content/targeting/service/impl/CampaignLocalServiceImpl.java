@@ -320,9 +320,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 		// User Segments
 
-		if (userSegmentIds != null) {
-			campaignPersistence.setUserSegments(campaignId, userSegmentIds);
-		}
+		campaignPersistence.setUserSegments(campaignId, userSegmentIds);
 
 		return campaign;
 	}

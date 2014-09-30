@@ -80,7 +80,7 @@ public class CampaignFinderImpl
 		throws SystemException {
 
 		if ((userSegmentIds == null) || (userSegmentIds.length == 0)) {
-			return Collections.emptyList();
+			userSegmentIds = new long[] {-1};
 		}
 
 		Session session = null;

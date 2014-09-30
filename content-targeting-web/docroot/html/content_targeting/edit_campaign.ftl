@@ -40,7 +40,7 @@
 	<@aui["input"] name="description" />
 
 	<@aui["select"] inlineField=true label="user-segment" name="userSegmentId">
-		<@aui["option"] label="" selected=(userSegmentId == -1) value="-1" />
+		<@aui["option"] label="any" selected=(userSegmentId == -1) value="-1" />
 
 		<#list userSegments as userSegment>
 			<@aui["option"] label="${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" selected=(userSegmentId == userSegment.getUserSegmentId()) value="${userSegment.getUserSegmentId()}" />

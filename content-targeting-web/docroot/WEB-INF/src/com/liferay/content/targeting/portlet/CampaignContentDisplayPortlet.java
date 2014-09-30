@@ -239,23 +239,18 @@ public class CampaignContentDisplayPortlet extends FreeMarkerDisplayPortlet {
 
 			template.put("campaignQueryRules", campaignQueryRules);
 
-			QueryRule queryRule = campaignQueryRules.get(
-				campaignQueryRules.size() - 1);
-
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
 
-			if (userSegmentIds != null) {
-				long[] groupIds =
-					ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
-						themeDisplay.getSiteGroupId());
+			long[] groupIds =
+				ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+					themeDisplay.getSiteGroupId());
 
-				List<Campaign> campaigns = _campaignLocalService.getCampaigns(
-					groupIds, userSegmentIds);
+			List<Campaign> campaigns = _campaignLocalService.getCampaigns(
+				groupIds, userSegmentIds);
 
-				queryRule = CampaignQueryRuleUtil.match(
-					getCampaignIds(campaigns), campaignQueryRules);
-			}
+			QueryRule queryRule = CampaignQueryRuleUtil.match(
+				getCampaignIds(campaigns), campaignQueryRules);
 
 			template.put("queryRule", queryRule);
 

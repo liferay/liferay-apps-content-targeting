@@ -7,11 +7,12 @@
 				ContentTargeting_Campaign.*
 			FROM
 				ContentTargeting_Campaign
-			INNER JOIN
+			LEFT JOIN
 				ContentTargeting_Campaigns_UserSegments ON
-					(ContentTargeting_Campaigns_UserSegments.campaignId = ContentTargeting_Campaign.campaignId) AND
-					(ContentTargeting_Campaigns_UserSegments.userSegmentId IN ([$USER_SEGMENT_IDS$]))
+					(ContentTargeting_Campaigns_UserSegments.campaignId = ContentTargeting_Campaign.campaignId)
 			WHERE
+			    (ContentTargeting_Campaigns_UserSegments.userSegmentId IN ([$USER_SEGMENT_IDS$]) OR
+			    	ContentTargeting_Campaigns_UserSegments.userSegmentId IS NULL) AND
 				[$GROUP_ID$]
 				(ContentTargeting_Campaign.startDate <= ? AND ContentTargeting_Campaign.endDate >= ?) AND
 				(ContentTargeting_Campaign.active_ = ?)
