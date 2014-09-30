@@ -49,15 +49,19 @@
 
 			${campaignTrackingActionTotal.getCount()}
 
-			<div class="pull-right">
-				<i class="icon-info" data-id="${campaignTrackingActionTotal.getCampaignTrackingActionId()}" style="display: block;padding: 0 1em;"></i>
+			<#assign viewsByUserSegment = campaignTrackingActionTotal.getViewsByUserSegment() />
 
-				<div class="hide" id="<@portlet["namespace"] />userSegmentViews${campaignTrackingActionTotal.getCampaignTrackingActionId()}">
-					<#list campaignTrackingActionTotal.getViewsByUserSegment() as campaignTrackingAction>
-						<p>${campaignTrackingAction.getUserSegmentName(locale)} - ${campaignTrackingAction.getCount()}</p>
-					</#list>
+			<#if viewsByUserSegment?has_content>
+				<div class="pull-right">
+					<i class="icon-info" data-id="${campaignTrackingActionTotal.getCampaignTrackingActionId()}" style="display: block;padding: 0 1em;"></i>
+
+					<div class="hide" id="<@portlet["namespace"] />userSegmentViews${campaignTrackingActionTotal.getCampaignTrackingActionId()}">
+						<#list viewsByUserSegment as campaignTrackingAction>
+							<p>${campaignTrackingAction.getUserSegmentName(locale)} - ${campaignTrackingAction.getCount()}</p>
+						</#list>
+					</div>
 				</div>
-			</div>
+			</#if>
 		</@>
 
 		<@liferay_ui["search-container-column-date"]
