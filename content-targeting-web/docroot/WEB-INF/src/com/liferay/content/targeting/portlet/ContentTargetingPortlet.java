@@ -425,17 +425,12 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 	}
 
-	protected InvalidRulesException getInvalidRulesException(
-		PortletRequest portletRequest) {
+	protected void deleteRuleInstances(List<RuleInstance> ruleInstances)
+		throws Exception {
 
-		if (SessionErrors.contains(
-				portletRequest, InvalidRulesException.class.getName())) {
-
-			return (InvalidRulesException)SessionErrors.get(
-				portletRequest, InvalidRulesException.class.getName());
-		}
-		else {
-			return new InvalidRulesException();
+		for (RuleInstance ruleInstance : ruleInstances) {
+			_ruleInstanceService.deleteRuleInstance(
+				ruleInstance.getRuleInstanceId());
 		}
 	}
 
@@ -453,6 +448,32 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		}
 		else {
 			return new InvalidTrackingActionsException();
+		}
+	}
+
+	protected void deleteTrackingActionInstances(
+			List<TrackingActionInstance> trackingActionInstances)
+		throws Exception {
+
+		for (TrackingActionInstance trackingActionInstance :
+				trackingActionInstances) {
+
+			_trackingActionInstanceService.deleteTrackingActionInstance(
+				trackingActionInstance.getTrackingActionInstanceId());
+		}
+	}
+
+	protected InvalidRulesException getInvalidRulesException(
+		PortletRequest portletRequest) {
+
+		if (SessionErrors.contains(
+				portletRequest, InvalidRulesException.class.getName())) {
+
+			return (InvalidRulesException)SessionErrors.get(
+				portletRequest, InvalidRulesException.class.getName());
+		}
+		else {
+			return new InvalidRulesException();
 		}
 	}
 
@@ -1104,10 +1125,15 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		List<RuleInstance> requestRuleInstances = getRulesFromRequest(
 			request, response);
 
+		List<RuleInstance> ruleInstances = ListUtil.copy(
+			_ruleInstanceService.getRuleInstances(userSegmentId));
+
 		List<InvalidRuleException> ruleExceptions =
 			new ArrayList<InvalidRuleException>();
 
 		if (requestRuleInstances.isEmpty()) {
+			deleteRuleInstances(ruleInstances);
+
 			return ruleExceptions;
 		}
 
@@ -1116,9 +1142,6 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		List<RuleInstance> ruleInstances = ListUtil.copy(
-			_ruleInstanceService.getRuleInstances(userSegmentId));
 
 		for (RuleInstance requestRuleInstance : requestRuleInstances) {
 			Rule rule = _rulesRegistry.getRule(
@@ -1163,10 +1186,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 		// Delete removed rules
 
-		for (RuleInstance ruleInstance : ruleInstances) {
-			_ruleInstanceService.deleteRuleInstance(
-				ruleInstance.getRuleInstanceId());
-		}
+		deleteRuleInstances(ruleInstances);
 
 		return ruleExceptions;
 	}
@@ -1178,10 +1198,16 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 		List<TrackingActionInstance> requestTrackingActionInstances =
 			getTrackingActionsFromRequest(request, response);
 
+		List<TrackingActionInstance> trackingActionInstances = ListUtil.copy(
+			_trackingActionInstanceService.getTrackingActionInstances(
+				campaignId));
+
 		List<InvalidTrackingActionException> trackingActionExceptions =
 			new ArrayList<InvalidTrackingActionException>();
 
 		if (requestTrackingActionInstances.isEmpty()) {
+			deleteTrackingActionInstances(trackingActionInstances);
+
 			return trackingActionExceptions;
 		}
 
@@ -1190,10 +1216,6 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
-
-		List<TrackingActionInstance> trackingActionInstances = ListUtil.copy(
-			_trackingActionInstanceService.getTrackingActionInstances(
-				campaignId));
 
 		for (TrackingActionInstance requestTrackingActionInstance :
 				requestTrackingActionInstances) {
@@ -1261,12 +1283,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 
 		// Delete removed Tracking Actions
 
-		for (TrackingActionInstance trackingActionInstance :
-				trackingActionInstances) {
-
-			_trackingActionInstanceService.deleteTrackingActionInstance(
-					trackingActionInstance.getTrackingActionInstanceId());
-		}
+		deleteTrackingActionInstances(trackingActionInstances);
 
 		return trackingActionExceptions;
 	}
