@@ -306,4 +306,12 @@
 	.report-description {
 		margin-bottom: 3em;
 	}
+
+	.tracking-actions-panel {
+		margin-top: 3em;
+
+		.title-text {
+			font-size: 18px;
+		}
+	}
 }
