@@ -18,6 +18,7 @@ import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.Locale;
 import java.util.Map;
 
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.theme.ThemeDisplay;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -94,6 +96,17 @@ public class NewsletterTrackingAction
 		context.put("elementId", newsletterId);
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)context.get("themeDisplay");
+
+		String trackURL = themeDisplay.getPortalURL() + "/o/tracking-action-newsletter/track";
+
+		String trackImageURL = HttpUtil.addParameter(
+			trackURL, "elementId", "elementIdToken");
+		trackImageURL = HttpUtil.addParameter(trackImageURL, "imageId", "1");
+		trackImageURL = HttpUtil.addParameter(trackImageURL, "email", "");
+
+		context.put("trackImageURL", trackImageURL);
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};
