@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.tracking.action.@tracking.action.java.package.name@;
 
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
+import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ListUtil;
