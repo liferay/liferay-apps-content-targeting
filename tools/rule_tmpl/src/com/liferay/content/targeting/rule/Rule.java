@@ -16,6 +16,7 @@ package com.liferay.content.targeting.rule.@rule.java.package.name@;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseRule;
+import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.SampleRuleCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
