@@ -20,7 +20,7 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.SessionAttributesRuleCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
-import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Locale;
 import java.util.Map;
@@ -88,6 +88,21 @@ public class WeatherRule extends BaseRule {
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values) {
+
+		String weather = "sunny";
+
+		if (!values.isEmpty()) {
+			// Values from Request
+
+			weather = values.get("weather");
+		}
+		else if (ruleInstance != null) {
+			// Values Stored
+
+			weather = ruleInstance.getTypeSettings();
+		}
+
+		context.put("weather", weather);
 	}
 
 }
