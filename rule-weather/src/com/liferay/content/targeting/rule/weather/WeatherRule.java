@@ -19,6 +19,8 @@ import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.SessionAttributesRuleCategory;
+import com.liferay.ip.geocoder.IPGeocoder;
+import com.liferay.ip.geocoder.IPInfo;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -47,6 +49,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Chan
@@ -106,6 +109,25 @@ public class WeatherRule extends BaseRule {
 		return values.get("weather");
 	}
 
+	@Reference(unbind = "unsetIPGeocoder")
+	public void setIPGeocoder(IPGeocoder ipGeocoder) {
+		_ipGeocoder = ipGeocoder;
+	}
+
+	public void unsetIPGeocoder(IPGeocoder ipGeocoder) {
+		_ipGeocoder = null;
+	}
+
+	protected String getCityFromIPAddress(String ipAddress) {
+		IPInfo ipInfo = _ipGeocoder.getIPInfo(ipAddress);
+
+		if (ipInfo == null) {
+			return null;
+		}
+
+		return ipInfo.getCity() + StringPool.COMMA + ipInfo.getCountryCode();
+	}
+
 	protected String getCityFromUserProfile(long contactId, long companyId)
 		throws PortalException, SystemException {
 
@@ -125,7 +147,9 @@ public class WeatherRule extends BaseRule {
 
 		User user = anonymousUser.getUser();
 
-		String city = getCityFromUserProfile(user.getContactId(), user.getCompanyId());
+		//String city = getCityFromUserProfile(user.getContactId(), user.getCompanyId());
+
+		String city = getCityFromIPAddress(anonymousUser.getLastIp());
 
 		Http.Options options = new Http.Options();
 
@@ -218,5 +242,7 @@ public class WeatherRule extends BaseRule {
 	private static final String API_URL = "http://api.openweathermap.org/data/2.5/weather";
 
 	private static Log _log = LogFactoryUtil.getLog(WeatherRule.class);
+
+	private static IPGeocoder _ipGeocoder;
 
 }
