@@ -18,7 +18,7 @@ import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
-import com.liferay.content.targeting.rule.categories.SampleRuleCategory;
+import com.liferay.content.targeting.rule.categories.SessionAttributesRuleCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -63,12 +63,12 @@ public class WeatherRule extends BaseRule {
 
 	@Override
 	public String getIcon() {
-		return "icon-puzzle";
+		return "icon-sun";
 	}
 
 	@Override
 	public String getRuleCategoryKey() {
-		return SampleRuleCategory.KEY;
+		return SessionAttributesRuleCategory.KEY;
 	}
 
 	@Override
