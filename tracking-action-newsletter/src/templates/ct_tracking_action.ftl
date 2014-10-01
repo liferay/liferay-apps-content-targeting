@@ -1,5 +1,6 @@
 <#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
 <#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
+<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
 
 <#setting number_format="computer">
 
@@ -22,3 +23,36 @@
 		<@aui["input"] disabled=true label="tracking-action" name="{ct_field_guid}eventType" type="text" value=curEventType />
 	</#list>
 </#if>
+
+<div class="code-info" id="<@portlet["namespace"] />{ct_field_guid}imageOptions">
+	<label for="<@portlet["namespace"] />{ct_field_guid}imageInfo"><@liferay_ui["message"] key="paste-this-code-at-the-beginning-of-your-newsletter" /></label>
+
+	<@liferay_ui["input-resource"] id="{ct_field_guid}imageInfo" url="" />
+</div>
+
+<@aui["script"] use="aui-base">
+	var infoTextArea = A.one('#<@portlet["namespace"] />{ct_field_guid}imageInfo');
+	var newsletterInput = A.one('#<@portlet["namespace"] />{ct_field_guid}elementId');
+
+	var trackImageURL = '${trackImageURL}';
+
+	var showInfo = function() {
+		if (newsletterInput.val()) {
+			var newText = '<img alt=\"\" src=\"' + trackImageURL.replace('elementIdToken', newsletterInput.val()) + '\" />';
+
+			infoTextArea.val(newText);
+		}
+	}
+
+	newsletterInput.on('change', function(event) {showInfo();});
+
+	showInfo();
+</@>
+
+<style>
+.code-info input {
+	width: 100%;
+}
+</style>
+
+
