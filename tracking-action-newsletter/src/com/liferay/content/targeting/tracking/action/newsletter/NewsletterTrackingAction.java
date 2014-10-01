@@ -54,7 +54,7 @@ public class NewsletterTrackingAction
 
 	@Override
 	public String getIcon() {
-		return "icon-puzzle";
+		return "icon-envelope-alt";
 	}
 
 	@Override
