@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import com.liferay.portal.kernel.util.StringPool;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -69,6 +70,30 @@ public class NewsletterTrackingAction
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
 		Map<String, Object> context, Map<String, String> values) {
+
+		String alias = StringPool.BLANK;
+		String newsletterId = StringPool.BLANK;
+		String eventType = StringPool.BLANK;
+
+		if (!values.isEmpty()) {
+			// Values from Request
+
+			alias = values.get("alias");
+			newsletterId = values.get("elementId");
+			eventType = values.get("eventType");
+		}
+		else if (trackingActionInstance != null) {
+			// Values from DB
+
+			alias = trackingActionInstance.getAlias();
+			newsletterId = trackingActionInstance.getElementId();
+			eventType = trackingActionInstance.getEventType();
+		}
+
+		context.put("alias", alias);
+		context.put("elementId", newsletterId);
+		context.put("eventType", eventType);
+		context.put("eventTypes", getEventTypes());
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};
