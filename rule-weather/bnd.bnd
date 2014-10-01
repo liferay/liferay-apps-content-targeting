@@ -10,6 +10,7 @@ Import-Package:\
 	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.messaging,\
 	com.liferay.osgi.util.service,\
+	com.liferay.ip.geocoder,\
 	*;resolution:="optional"
 Include-Resource:\
  	classes,\
