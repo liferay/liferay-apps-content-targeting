@@ -81,7 +81,7 @@ public class WeatherRule extends BaseRule {
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) {
 
-		return StringPool.BLANK;
+		return values.get("weather");
 	}
 
 	@Override
