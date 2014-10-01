@@ -3,7 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.content.targeting.rule.score.points.model.ScorePoint" />
-	<class name="com.liferay.content.targeting.rule.score.points.model.impl.ScorePointImpl" table="ContentTargeting_ScorePoints_ScorePoint">
+	<class name="com.liferay.content.targeting.rule.score.points.model.impl.ScorePointImpl" table="CT_ScorePoints_ScorePoint">
 		<cache usage="read-write" />
 		<id name="scorePointId" type="long">
 			<generator class="assigned" />

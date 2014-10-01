@@ -1,10 +1,9 @@
-create index IX_5720E6C9 on ContentTargeting_CampaignTAReport_CampaignTrackingAction (campaignId);
-create index IX_BDE0C0BE on ContentTargeting_CampaignTAReport_CampaignTrackingAction (campaignId, elementId);
-create index IX_268FED54 on ContentTargeting_CampaignTAReport_CampaignTrackingAction (campaignId, modifiedDate);
-create index IX_B9C3FDD9 on ContentTargeting_CampaignTAReport_CampaignTrackingAction (campaignId, referrerClassName, referrerClassPK);
-create index IX_EA73A2A on ContentTargeting_CampaignTAReport_CampaignTrackingAction (campaignId, userSegmentId);
-create unique index IX_C4B66357 on ContentTargeting_CampaignTAReport_CampaignTrackingAction (campaignId, userSegmentId, referrerClassName, referrerClassPK, elementId, eventType);
+create index IX_E39568CB on CT_CTAReport_CampaignTrackingAction (campaignId);
+create index IX_E64A497C on CT_CTAReport_CampaignTrackingAction (campaignId, elementId);
+create index IX_F7AFC3D6 on CT_CTAReport_CampaignTrackingAction (campaignId, modifiedDate);
+create index IX_7CEF26DB on CT_CTAReport_CampaignTrackingAction (campaignId, referrerClassName, referrerClassPK);
+create unique index IX_2E261395 on CT_CTAReport_CampaignTrackingAction (campaignId, userSegmentId, referrerClassName, referrerClassPK, elementId, eventType);
 
-create index IX_D44E1165 on ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal (campaignId);
-create index IX_522056F0 on ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal (campaignId, modifiedDate);
-create unique index IX_97B8AAD2 on ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal (campaignId, referrerClassName, referrerClassPK, elementId, eventType);
+create index IX_C9C480A3 on CT_CTAReport_CampaignTrackingActionTotal (campaignId);
+create index IX_674C41AE on CT_CTAReport_CampaignTrackingActionTotal (campaignId, modifiedDate);
+create unique index IX_8D7DF090 on CT_CTAReport_CampaignTrackingActionTotal (campaignId, referrerClassName, referrerClassPK, elementId, eventType);

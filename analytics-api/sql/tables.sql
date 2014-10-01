@@ -1,4 +1,4 @@
-create table ContentTargeting_Analytics_AnalyticsEvent (
+create table CT_Analytics_AnalyticsEvent (
 	analyticsEventId LONG not null primary key,
 	companyId LONG,
 	userId LONG,
@@ -15,7 +15,7 @@ create table ContentTargeting_Analytics_AnalyticsEvent (
 	createDate DATE null
 );
 
-create table ContentTargeting_Analytics_AnalyticsReferrer (
+create table CT_Analytics_AnalyticsReferrer (
 	analyticsReferrerId LONG not null primary key,
 	analyticsEventId LONG,
 	referrerClassName VARCHAR(75) null,

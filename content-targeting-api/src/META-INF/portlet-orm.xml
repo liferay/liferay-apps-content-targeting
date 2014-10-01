@@ -152,29 +152,29 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.liferay.content.targeting.model.impl.CampaignImpl" name="Campaign">
-		<table name="ContentTargeting_Campaign" />
+		<table name="CT_Campaign" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.content.targeting.model.impl.ReportInstanceImpl" name="ReportInstance">
-		<table name="ContentTargeting_ReportInstance" />
+		<table name="CT_ReportInstance" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.content.targeting.model.impl.RuleInstanceImpl" name="RuleInstance">
-		<table name="ContentTargeting_RuleInstance" />
+		<table name="CT_RuleInstance" />
 		<attributes>
 			<transient name="ruleGuid" />
 			<transient name="values" />
 		</attributes>
 	</entity>
 	<entity class="com.liferay.content.targeting.model.impl.TrackingActionInstanceImpl" name="TrackingActionInstance">
-		<table name="ContentTargeting_TrackingActionInstance" />
+		<table name="CT_TrackingActionInstance" />
 		<attributes>
 			<transient name="trackingActionGuid" />
 			<transient name="values" />
 		</attributes>
 	</entity>
 	<entity class="com.liferay.content.targeting.model.impl.UserSegmentImpl" name="UserSegment">
-		<table name="ContentTargeting_UserSegment" />
+		<table name="CT_UserSegment" />
 		<attributes />
 	</entity>
 </entity-mappings>

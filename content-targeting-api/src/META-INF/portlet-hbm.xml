@@ -7,7 +7,7 @@
 	<import class="com.liferay.content.targeting.model.RuleInstance" />
 	<import class="com.liferay.content.targeting.model.TrackingActionInstance" />
 	<import class="com.liferay.content.targeting.model.UserSegment" />
-	<class name="com.liferay.content.targeting.model.impl.CampaignImpl" table="ContentTargeting_Campaign">
+	<class name="com.liferay.content.targeting.model.impl.CampaignImpl" table="CT_Campaign">
 		<cache usage="read-write" />
 		<id name="campaignId" type="long">
 			<generator class="assigned" />
@@ -26,7 +26,7 @@
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
-	<class name="com.liferay.content.targeting.model.impl.ReportInstanceImpl" table="ContentTargeting_ReportInstance">
+	<class name="com.liferay.content.targeting.model.impl.ReportInstanceImpl" table="CT_ReportInstance">
 		<cache usage="read-write" />
 		<id name="reportInstanceId" type="long">
 			<generator class="assigned" />
@@ -41,7 +41,7 @@
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.content.targeting.model.impl.RuleInstanceImpl" table="ContentTargeting_RuleInstance">
+	<class name="com.liferay.content.targeting.model.impl.RuleInstanceImpl" table="CT_RuleInstance">
 		<cache usage="read-write" />
 		<id name="ruleInstanceId" type="long">
 			<generator class="assigned" />
@@ -57,7 +57,7 @@
 		<property name="userSegmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.content.targeting.model.impl.TrackingActionInstanceImpl" table="ContentTargeting_TrackingActionInstance">
+	<class name="com.liferay.content.targeting.model.impl.TrackingActionInstanceImpl" table="CT_TrackingActionInstance">
 		<cache usage="read-write" />
 		<id name="trackingActionInstanceId" type="long">
 			<generator class="assigned" />
@@ -78,7 +78,7 @@
 		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
-	<class name="com.liferay.content.targeting.model.impl.UserSegmentImpl" table="ContentTargeting_UserSegment">
+	<class name="com.liferay.content.targeting.model.impl.UserSegmentImpl" table="CT_UserSegment">
 		<cache usage="read-write" />
 		<id name="userSegmentId" type="long">
 			<generator class="assigned" />

@@ -1,4 +1,4 @@
-create table ContentTargeting_UserSegmentContentReport_UserSegmentContent (
+create table CT_USCReport_UserSegmentContent (
 	userSegmentContentId LONG not null primary key,
 	userSegmentId LONG,
 	className VARCHAR(75) null,

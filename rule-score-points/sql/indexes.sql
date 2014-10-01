@@ -1,2 +1,2 @@
-create unique index IX_1E282EC5 on ContentTargeting_ScorePoints_ScorePoint (anonymousUserId, userSegmentId);
-create index IX_1B34B97F on ContentTargeting_ScorePoints_ScorePoint (uuid_);
+create unique index IX_DC6100CC on CT_ScorePoints_ScorePoint (anonymousUserId, userSegmentId);
+create index IX_7C128598 on CT_ScorePoints_ScorePoint (uuid_);

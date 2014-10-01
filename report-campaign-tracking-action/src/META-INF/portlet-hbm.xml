@@ -4,7 +4,7 @@
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction" />
 	<import class="com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal" />
-	<class name="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionImpl" table="ContentTargeting_CampaignTAReport_CampaignTrackingAction">
+	<class name="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionImpl" table="CT_CTAReport_CampaignTrackingAction">
 		<cache usage="read-write" />
 		<id name="campaignTrackingActionId" type="long">
 			<generator class="assigned" />
@@ -19,7 +19,7 @@
 		<property name="count" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalImpl" table="ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal">
+	<class name="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalImpl" table="CT_CTAReport_CampaignTrackingActionTotal">
 		<cache usage="read-write" />
 		<id name="campaignTrackingActionTotalId" type="long">
 			<generator class="assigned" />

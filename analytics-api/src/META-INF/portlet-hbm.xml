@@ -4,7 +4,7 @@
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.content.targeting.analytics.model.AnalyticsEvent" />
 	<import class="com.liferay.content.targeting.analytics.model.AnalyticsReferrer" />
-	<class name="com.liferay.content.targeting.analytics.model.impl.AnalyticsEventImpl" table="ContentTargeting_Analytics_AnalyticsEvent">
+	<class name="com.liferay.content.targeting.analytics.model.impl.AnalyticsEventImpl" table="CT_Analytics_AnalyticsEvent">
 		<cache usage="read-write" />
 		<id name="analyticsEventId" type="long">
 			<generator class="assigned" />
@@ -23,7 +23,7 @@
 		<property name="additionalInfo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerImpl" table="ContentTargeting_Analytics_AnalyticsReferrer">
+	<class name="com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerImpl" table="CT_Analytics_AnalyticsReferrer">
 		<cache usage="read-write" />
 		<id name="analyticsReferrerId" type="long">
 			<generator class="assigned" />

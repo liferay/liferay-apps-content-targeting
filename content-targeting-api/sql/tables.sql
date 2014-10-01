@@ -1,4 +1,4 @@
-create table ContentTargeting_Campaign (
+create table CT_Campaign (
 	uuid_ VARCHAR(75) null,
 	campaignId LONG not null primary key,
 	groupId LONG,
@@ -15,13 +15,13 @@ create table ContentTargeting_Campaign (
 	active_ BOOLEAN
 );
 
-create table ContentTargeting_Campaigns_UserSegments (
+create table CT_Campaigns_UserSegments (
 	campaignId LONG not null,
 	userSegmentId LONG not null,
 	primary key (campaignId, userSegmentId)
 );
 
-create table ContentTargeting_ReportInstance (
+create table CT_ReportInstance (
 	reportInstanceId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
@@ -34,7 +34,7 @@ create table ContentTargeting_ReportInstance (
 	typeSettings TEXT null
 );
 
-create table ContentTargeting_RuleInstance (
+create table CT_RuleInstance (
 	uuid_ VARCHAR(75) null,
 	ruleInstanceId LONG not null primary key,
 	groupId LONG,
@@ -48,7 +48,7 @@ create table ContentTargeting_RuleInstance (
 	typeSettings TEXT null
 );
 
-create table ContentTargeting_TrackingActionInstance (
+create table CT_TrackingActionInstance (
 	uuid_ VARCHAR(75) null,
 	trackingActionInstanceId LONG not null primary key,
 	groupId LONG,
@@ -67,7 +67,7 @@ create table ContentTargeting_TrackingActionInstance (
 	typeSettings TEXT null
 );
 
-create table ContentTargeting_UserSegment (
+create table CT_UserSegment (
 	uuid_ VARCHAR(75) null,
 	userSegmentId LONG not null primary key,
 	groupId LONG,

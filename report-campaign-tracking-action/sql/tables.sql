@@ -1,4 +1,4 @@
-create table ContentTargeting_CampaignTAReport_CampaignTrackingAction (
+create table CT_CTAReport_CampaignTrackingAction (
 	campaignTrackingActionId LONG not null primary key,
 	campaignId LONG,
 	userSegmentId LONG,
@@ -11,7 +11,7 @@ create table ContentTargeting_CampaignTAReport_CampaignTrackingAction (
 	modifiedDate DATE null
 );
 
-create table ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal (
+create table CT_CTAReport_CampaignTrackingActionTotal (
 	campaignTrackingActionTotalId LONG not null primary key,
 	campaignId LONG,
 	alias_ VARCHAR(75) null,

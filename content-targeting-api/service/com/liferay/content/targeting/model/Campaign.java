@@ -17,7 +17,7 @@ package com.liferay.content.targeting.model;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the Campaign service. Represents a row in the &quot;ContentTargeting_Campaign&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the Campaign service. Represents a row in the &quot;CT_Campaign&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see CampaignModel

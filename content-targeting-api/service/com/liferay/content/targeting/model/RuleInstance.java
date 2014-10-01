@@ -17,7 +17,7 @@ package com.liferay.content.targeting.model;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the RuleInstance service. Represents a row in the &quot;ContentTargeting_RuleInstance&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the RuleInstance service. Represents a row in the &quot;CT_RuleInstance&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see RuleInstanceModel

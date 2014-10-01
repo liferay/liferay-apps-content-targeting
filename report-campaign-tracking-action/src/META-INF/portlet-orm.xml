@@ -49,11 +49,11 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionImpl" name="CampaignTrackingAction">
-		<table name="ContentTargeting_CampaignTAReport_CampaignTrackingAction" />
+		<table name="CT_CTAReport_CampaignTrackingAction" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalImpl" name="CampaignTrackingActionTotal">
-		<table name="ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal" />
+		<table name="CT_CTAReport_CampaignTrackingActionTotal" />
 		<attributes />
 	</entity>
 </entity-mappings>

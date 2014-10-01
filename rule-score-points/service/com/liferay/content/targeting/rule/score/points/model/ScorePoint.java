@@ -17,7 +17,7 @@ package com.liferay.content.targeting.rule.score.points.model;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the ScorePoint service. Represents a row in the &quot;ContentTargeting_ScorePoints_ScorePoint&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the ScorePoint service. Represents a row in the &quot;CT_ScorePoints_ScorePoint&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see ScorePointModel

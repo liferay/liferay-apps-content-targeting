@@ -24,7 +24,7 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentImpl" name="CampaignContent">
-		<table name="ContentTargeting_CampaignContentReport_CampaignContent" />
+		<table name="CT_CCReport_CampaignContent" />
 		<attributes />
 	</entity>
 </entity-mappings>

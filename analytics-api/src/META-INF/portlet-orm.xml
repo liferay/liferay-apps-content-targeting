@@ -44,11 +44,11 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.liferay.content.targeting.analytics.model.impl.AnalyticsEventImpl" name="AnalyticsEvent">
-		<table name="ContentTargeting_Analytics_AnalyticsEvent" />
+		<table name="CT_Analytics_AnalyticsEvent" />
 		<attributes />
 	</entity>
 	<entity class="com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerImpl" name="AnalyticsReferrer">
-		<table name="ContentTargeting_Analytics_AnalyticsReferrer" />
+		<table name="CT_Analytics_AnalyticsReferrer" />
 		<attributes />
 	</entity>
 </entity-mappings>

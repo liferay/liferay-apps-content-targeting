@@ -17,7 +17,7 @@ package com.liferay.content.targeting.analytics.model;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the AnalyticsReferrer service. Represents a row in the &quot;ContentTargeting_Analytics_AnalyticsReferrer&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the AnalyticsReferrer service. Represents a row in the &quot;CT_Analytics_AnalyticsReferrer&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see AnalyticsReferrerModel

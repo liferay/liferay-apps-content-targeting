@@ -17,7 +17,7 @@ package com.liferay.content.targeting.anonymous.users.model;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the AnonymousUser service. Represents a row in the &quot;ContentTargeting_AnonymousUsers_AnonymousUser&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the AnonymousUser service. Represents a row in the &quot;CT_AU_AnonymousUser&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see AnonymousUserModel

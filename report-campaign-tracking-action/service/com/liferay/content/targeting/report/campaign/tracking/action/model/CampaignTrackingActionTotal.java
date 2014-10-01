@@ -17,7 +17,7 @@ package com.liferay.content.targeting.report.campaign.tracking.action.model;
 import com.liferay.portal.model.PersistedModel;
 
 /**
- * The extended model interface for the CampaignTrackingActionTotal service. Represents a row in the &quot;ContentTargeting_CampaignTAReport_CampaignTrackingActionTotal&quot; database table, with each column mapped to a property of this class.
+ * The extended model interface for the CampaignTrackingActionTotal service. Represents a row in the &quot;CT_CTAReport_CampaignTrackingActionTotal&quot; database table, with each column mapped to a property of this class.
  *
  * @author Brian Wing Shun Chan
  * @see CampaignTrackingActionTotalModel

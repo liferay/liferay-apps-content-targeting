@@ -23,7 +23,7 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.liferay.content.targeting.rule.score.points.model.impl.ScorePointImpl" name="ScorePoint">
-		<table name="ContentTargeting_ScorePoints_ScorePoint" />
+		<table name="CT_ScorePoints_ScorePoint" />
 		<attributes />
 	</entity>
 </entity-mappings>

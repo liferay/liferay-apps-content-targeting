@@ -3716,7 +3716,7 @@ public class CampaignPersistenceImpl extends BasePersistenceImpl<Campaign>
 			throw processException(e);
 		}
 		finally {
-			FinderCacheUtil.clearCache(CampaignModelImpl.MAPPING_TABLE_CONTENTTARGETING_CAMPAIGNS_USERSEGMENTS_NAME);
+			FinderCacheUtil.clearCache(CampaignModelImpl.MAPPING_TABLE_CT_CAMPAIGNS_USERSEGMENTS_NAME);
 		}
 	}
 
@@ -3749,7 +3749,7 @@ public class CampaignPersistenceImpl extends BasePersistenceImpl<Campaign>
 			}
 		}
 
-		campaignToUserSegmentTableMapper = TableMapperFactory.getTableMapper("ContentTargeting_Campaigns_UserSegments",
+		campaignToUserSegmentTableMapper = TableMapperFactory.getTableMapper("CT_Campaigns_UserSegments",
 				"campaignId", "userSegmentId", this, userSegmentPersistence);
 	}
 
@@ -3768,16 +3768,16 @@ public class CampaignPersistenceImpl extends BasePersistenceImpl<Campaign>
 	private static final String _SQL_COUNT_CAMPAIGN = "SELECT COUNT(campaign) FROM Campaign campaign";
 	private static final String _SQL_COUNT_CAMPAIGN_WHERE = "SELECT COUNT(campaign) FROM Campaign campaign WHERE ";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "campaign.campaignId";
-	private static final String _FILTER_SQL_SELECT_CAMPAIGN_WHERE = "SELECT DISTINCT {campaign.*} FROM ContentTargeting_Campaign campaign WHERE ";
+	private static final String _FILTER_SQL_SELECT_CAMPAIGN_WHERE = "SELECT DISTINCT {campaign.*} FROM CT_Campaign campaign WHERE ";
 	private static final String _FILTER_SQL_SELECT_CAMPAIGN_NO_INLINE_DISTINCT_WHERE_1 =
-		"SELECT {ContentTargeting_Campaign.*} FROM (SELECT DISTINCT campaign.campaignId FROM ContentTargeting_Campaign campaign WHERE ";
+		"SELECT {CT_Campaign.*} FROM (SELECT DISTINCT campaign.campaignId FROM CT_Campaign campaign WHERE ";
 	private static final String _FILTER_SQL_SELECT_CAMPAIGN_NO_INLINE_DISTINCT_WHERE_2 =
-		") TEMP_TABLE INNER JOIN ContentTargeting_Campaign ON TEMP_TABLE.campaignId = ContentTargeting_Campaign.campaignId";
-	private static final String _FILTER_SQL_COUNT_CAMPAIGN_WHERE = "SELECT COUNT(DISTINCT campaign.campaignId) AS COUNT_VALUE FROM ContentTargeting_Campaign campaign WHERE ";
+		") TEMP_TABLE INNER JOIN CT_Campaign ON TEMP_TABLE.campaignId = CT_Campaign.campaignId";
+	private static final String _FILTER_SQL_COUNT_CAMPAIGN_WHERE = "SELECT COUNT(DISTINCT campaign.campaignId) AS COUNT_VALUE FROM CT_Campaign campaign WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "campaign";
-	private static final String _FILTER_ENTITY_TABLE = "ContentTargeting_Campaign";
+	private static final String _FILTER_ENTITY_TABLE = "CT_Campaign";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "campaign.";
-	private static final String _ORDER_BY_ENTITY_TABLE = "ContentTargeting_Campaign.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "CT_Campaign.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No Campaign exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No Campaign exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(

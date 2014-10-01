@@ -3721,7 +3721,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 			throw processException(e);
 		}
 		finally {
-			FinderCacheUtil.clearCache(UserSegmentModelImpl.MAPPING_TABLE_CONTENTTARGETING_CAMPAIGNS_USERSEGMENTS_NAME);
+			FinderCacheUtil.clearCache(UserSegmentModelImpl.MAPPING_TABLE_CT_CAMPAIGNS_USERSEGMENTS_NAME);
 		}
 	}
 
@@ -3754,7 +3754,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 			}
 		}
 
-		userSegmentToCampaignTableMapper = TableMapperFactory.getTableMapper("ContentTargeting_Campaigns_UserSegments",
+		userSegmentToCampaignTableMapper = TableMapperFactory.getTableMapper("CT_Campaigns_UserSegments",
 				"userSegmentId", "campaignId", this, campaignPersistence);
 	}
 
@@ -3773,16 +3773,16 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	private static final String _SQL_COUNT_USERSEGMENT = "SELECT COUNT(userSegment) FROM UserSegment userSegment";
 	private static final String _SQL_COUNT_USERSEGMENT_WHERE = "SELECT COUNT(userSegment) FROM UserSegment userSegment WHERE ";
 	private static final String _FILTER_ENTITY_TABLE_FILTER_PK_COLUMN = "userSegment.userSegmentId";
-	private static final String _FILTER_SQL_SELECT_USERSEGMENT_WHERE = "SELECT DISTINCT {userSegment.*} FROM ContentTargeting_UserSegment userSegment WHERE ";
+	private static final String _FILTER_SQL_SELECT_USERSEGMENT_WHERE = "SELECT DISTINCT {userSegment.*} FROM CT_UserSegment userSegment WHERE ";
 	private static final String _FILTER_SQL_SELECT_USERSEGMENT_NO_INLINE_DISTINCT_WHERE_1 =
-		"SELECT {ContentTargeting_UserSegment.*} FROM (SELECT DISTINCT userSegment.userSegmentId FROM ContentTargeting_UserSegment userSegment WHERE ";
+		"SELECT {CT_UserSegment.*} FROM (SELECT DISTINCT userSegment.userSegmentId FROM CT_UserSegment userSegment WHERE ";
 	private static final String _FILTER_SQL_SELECT_USERSEGMENT_NO_INLINE_DISTINCT_WHERE_2 =
-		") TEMP_TABLE INNER JOIN ContentTargeting_UserSegment ON TEMP_TABLE.userSegmentId = ContentTargeting_UserSegment.userSegmentId";
-	private static final String _FILTER_SQL_COUNT_USERSEGMENT_WHERE = "SELECT COUNT(DISTINCT userSegment.userSegmentId) AS COUNT_VALUE FROM ContentTargeting_UserSegment userSegment WHERE ";
+		") TEMP_TABLE INNER JOIN CT_UserSegment ON TEMP_TABLE.userSegmentId = CT_UserSegment.userSegmentId";
+	private static final String _FILTER_SQL_COUNT_USERSEGMENT_WHERE = "SELECT COUNT(DISTINCT userSegment.userSegmentId) AS COUNT_VALUE FROM CT_UserSegment userSegment WHERE ";
 	private static final String _FILTER_ENTITY_ALIAS = "userSegment";
-	private static final String _FILTER_ENTITY_TABLE = "ContentTargeting_UserSegment";
+	private static final String _FILTER_ENTITY_TABLE = "CT_UserSegment";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "userSegment.";
-	private static final String _ORDER_BY_ENTITY_TABLE = "ContentTargeting_UserSegment.";
+	private static final String _ORDER_BY_ENTITY_TABLE = "CT_UserSegment.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No UserSegment exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No UserSegment exists with the key {";
 	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
