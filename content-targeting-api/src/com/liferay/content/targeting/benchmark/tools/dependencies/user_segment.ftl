@@ -22,7 +22,7 @@ insert into AssetVocabulary values ('${assetVocabularyModel.uuid}', ${assetVocab
 
 	${dataFactory.setAssetCategoryToUserSegment(assetCategoryModel.categoryId, userSegmentModel_index)}
 
-	insert into ContentTargeting_UserSegment values ('${userSegmentModel.uuid}', ${userSegmentModel.userSegmentId}, ${userSegmentModel.groupId}, ${assetCategoryModel.categoryId}, ${userSegmentModel.companyId}, ${userSegmentModel.userId}, '${userSegmentModel.userName}', '${dataFactory.getDateString(userSegmentModel.createDate)}', '${dataFactory.getDateString(userSegmentModel.modifiedDate)}', '${userSegmentModel.name}', '${userSegmentModel.description}');
+	insert into CT_UserSegment values ('${userSegmentModel.uuid}', ${userSegmentModel.userSegmentId}, ${userSegmentModel.groupId}, ${assetCategoryModel.categoryId}, ${userSegmentModel.companyId}, ${userSegmentModel.userId}, '${userSegmentModel.userName}', '${dataFactory.getDateString(userSegmentModel.createDate)}', '${dataFactory.getDateString(userSegmentModel.modifiedDate)}', '${userSegmentModel.name}', '${userSegmentModel.description}');
 
 	<@insertResourcePermissions
 		_entry = userSegmentModel
@@ -31,7 +31,7 @@ insert into AssetVocabulary values ('${assetVocabularyModel.uuid}', ${assetVocab
 	<#assign ruleInstanceModels = dataFactory.newRuleInstanceModels(groupId, userSegmentModel.userSegmentId, userSegmentModel_index) />
 
 	<#list ruleInstanceModels as ruleInstanceModel>
-		insert into ContentTargeting_RuleInstance values ('${ruleInstanceModel.uuid}', ${ruleInstanceModel.ruleInstanceId}, ${ruleInstanceModel.groupId}, ${ruleInstanceModel.companyId}, ${ruleInstanceModel.userId}, '${ruleInstanceModel.userName}', '${dataFactory.getDateString(ruleInstanceModel.createDate)}', '${dataFactory.getDateString(ruleInstanceModel.modifiedDate)}', '${ruleInstanceModel.ruleKey}', ${ruleInstanceModel.userSegmentId}, '${ruleInstanceModel.typeSettings}');
+		insert into CT_RuleInstance values ('${ruleInstanceModel.uuid}', ${ruleInstanceModel.ruleInstanceId}, ${ruleInstanceModel.groupId}, ${ruleInstanceModel.companyId}, ${ruleInstanceModel.userId}, '${ruleInstanceModel.userName}', '${dataFactory.getDateString(ruleInstanceModel.createDate)}', '${dataFactory.getDateString(ruleInstanceModel.modifiedDate)}', '${ruleInstanceModel.ruleKey}', ${ruleInstanceModel.userSegmentId}, '${ruleInstanceModel.typeSettings}');
 
 		<@insertResourcePermissions
 			_entry = ruleInstanceModel

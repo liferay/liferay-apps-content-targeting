@@ -4,72 +4,72 @@
 	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionFinder.findByAnalyticsWithClassName">
 		<![CDATA[
 			SELECT
-				DISTINCT ContentTargeting_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, ContentTargeting_Analytics_AnalyticsEvent.className AS className, ContentTargeting_Analytics_AnalyticsEvent.classPK AS classPK, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, ContentTargeting_TrackingActionInstance.alias_ AS alias
+				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.className AS className, CT_Analytics_AnalyticsEvent.classPK AS classPK, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias
 			FROM
-				ContentTargeting_Analytics_AnalyticsEvent
+				CT_Analytics_AnalyticsEvent
 			INNER JOIN
-				ContentTargeting_TrackingActionInstance ON
-					(ContentTargeting_TrackingActionInstance.eventType = ContentTargeting_Analytics_AnalyticsEvent.eventType) AND
-					(ContentTargeting_TrackingActionInstance.referrerClassName = ContentTargeting_Analytics_AnalyticsEvent.className) AND
-					(ContentTargeting_TrackingActionInstance.referrerClassPK = ContentTargeting_Analytics_AnalyticsEvent.classPK)
+				CT_TrackingActionInstance ON
+					(CT_TrackingActionInstance.eventType = CT_Analytics_AnalyticsEvent.eventType) AND
+					(CT_TrackingActionInstance.referrerClassName = CT_Analytics_AnalyticsEvent.className) AND
+					(CT_TrackingActionInstance.referrerClassPK = CT_Analytics_AnalyticsEvent.classPK)
 			INNER JOIN
-				ContentTargeting_Analytics_AnalyticsReferrer ON
-					(ContentTargeting_Analytics_AnalyticsReferrer.analyticsEventId = ContentTargeting_Analytics_AnalyticsEvent.analyticsEventId)
+				CT_Analytics_AnalyticsReferrer ON
+					(CT_Analytics_AnalyticsReferrer.analyticsEventId = CT_Analytics_AnalyticsEvent.analyticsEventId)
 			WHERE
-				(ContentTargeting_TrackingActionInstance.campaignId = ?) AND
-				(ContentTargeting_Analytics_AnalyticsEvent.createDate >= ?)
+				(CT_TrackingActionInstance.campaignId = ?) AND
+				(CT_Analytics_AnalyticsEvent.createDate >= ?)
 			ORDER BY
-				ContentTargeting_Analytics_AnalyticsEvent.createDate DESC
+				CT_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionFinder.findByAnalyticsWithElementId">
 		<![CDATA[
 			SELECT
-				DISTINCT ContentTargeting_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, ContentTargeting_Analytics_AnalyticsEvent.elementId AS elementId, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, ContentTargeting_TrackingActionInstance.alias_ AS alias
+				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.elementId AS elementId, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias
 			FROM
-				ContentTargeting_Analytics_AnalyticsEvent
+				CT_Analytics_AnalyticsEvent
 			INNER JOIN
-				ContentTargeting_TrackingActionInstance ON
-					(ContentTargeting_TrackingActionInstance.eventType = ContentTargeting_Analytics_AnalyticsEvent.eventType) AND
-					(ContentTargeting_TrackingActionInstance.elementId = ContentTargeting_Analytics_AnalyticsEvent.elementId)
+				CT_TrackingActionInstance ON
+					(CT_TrackingActionInstance.eventType = CT_Analytics_AnalyticsEvent.eventType) AND
+					(CT_TrackingActionInstance.elementId = CT_Analytics_AnalyticsEvent.elementId)
 			INNER JOIN
-				ContentTargeting_Analytics_AnalyticsReferrer ON
-					(ContentTargeting_Analytics_AnalyticsReferrer.analyticsEventId = ContentTargeting_Analytics_AnalyticsEvent.analyticsEventId)
+				CT_Analytics_AnalyticsReferrer ON
+					(CT_Analytics_AnalyticsReferrer.analyticsEventId = CT_Analytics_AnalyticsEvent.analyticsEventId)
 			WHERE
-				(ContentTargeting_TrackingActionInstance.campaignId = ?) AND
-				(ContentTargeting_Analytics_AnalyticsEvent.createDate >= ?)
+				(CT_TrackingActionInstance.campaignId = ?) AND
+				(CT_Analytics_AnalyticsEvent.createDate >= ?)
 			ORDER BY
-				ContentTargeting_Analytics_AnalyticsEvent.createDate DESC
+				CT_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionTotalFinder.findByAnalyticsWithClassName">
 		<![CDATA[
 			SELECT
-				ContentTargeting_Analytics_AnalyticsEvent.className AS className, ContentTargeting_Analytics_AnalyticsEvent.classPK AS classPK, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, COUNT(*) as count
+				CT_Analytics_AnalyticsEvent.className AS className, CT_Analytics_AnalyticsEvent.classPK AS classPK, CT_Analytics_AnalyticsEvent.eventType AS eventType, COUNT(*) as count
 			FROM
-				ContentTargeting_Analytics_AnalyticsEvent
+				CT_Analytics_AnalyticsEvent
 			WHERE
-				(ContentTargeting_Analytics_AnalyticsEvent.createDate >= ?) AND
-				(ContentTargeting_Analytics_AnalyticsEvent.classPK != 0)
+				(CT_Analytics_AnalyticsEvent.createDate >= ?) AND
+				(CT_Analytics_AnalyticsEvent.classPK != 0)
 			GROUP BY
-	  			ContentTargeting_Analytics_AnalyticsEvent.className, ContentTargeting_Analytics_AnalyticsEvent.classPK, ContentTargeting_Analytics_AnalyticsEvent.eventType
+	  			CT_Analytics_AnalyticsEvent.className, CT_Analytics_AnalyticsEvent.classPK, CT_Analytics_AnalyticsEvent.eventType
 			ORDER BY
-				ContentTargeting_Analytics_AnalyticsEvent.createDate DESC
+				CT_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionTotalFinder.findByAnalyticsWithElementId">
 		<![CDATA[
 			SELECT
-				ContentTargeting_Analytics_AnalyticsEvent.elementId AS elementId, ContentTargeting_Analytics_AnalyticsEvent.eventType AS eventType, COUNT(*) as count
+				CT_Analytics_AnalyticsEvent.elementId AS elementId, CT_Analytics_AnalyticsEvent.eventType AS eventType, COUNT(*) as count
 			FROM
-				ContentTargeting_Analytics_AnalyticsEvent
+				CT_Analytics_AnalyticsEvent
 			WHERE
-				(ContentTargeting_Analytics_AnalyticsEvent.createDate >= ?) AND
-				(ContentTargeting_Analytics_AnalyticsEvent.elementId != '')
+				(CT_Analytics_AnalyticsEvent.createDate >= ?) AND
+				(CT_Analytics_AnalyticsEvent.elementId != '')
 			GROUP BY
-				ContentTargeting_Analytics_AnalyticsEvent.elementId, ContentTargeting_Analytics_AnalyticsEvent.eventType
+				CT_Analytics_AnalyticsEvent.elementId, CT_Analytics_AnalyticsEvent.eventType
 			ORDER BY
-				ContentTargeting_Analytics_AnalyticsEvent.createDate DESC
+				CT_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
 </custom-sql>

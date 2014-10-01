@@ -26,7 +26,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * The extended model implementation for the Campaign service. Represents a row in the &quot;ContentTargeting_Campaign&quot; database table, with each column mapped to a property of this class.
+ * The extended model implementation for the Campaign service. Represents a row in the &quot;CT_Campaign&quot; database table, with each column mapped to a property of this class.
  *
  * <p>
  * Helper methods and all application logic should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.content.targeting.model.Campaign} interface.
