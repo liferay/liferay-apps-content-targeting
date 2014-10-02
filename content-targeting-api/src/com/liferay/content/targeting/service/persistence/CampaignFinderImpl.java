@@ -98,8 +98,8 @@ public class CampaignFinderImpl
 
 			if (inlineSQLHelper) {
 				sql = InlineSQLHelperUtil.replacePermissionCheck(
-					sql, Campaign.class.getName(),
-					"CT_Campaign.campaignId", groupIds);
+					sql, Campaign.class.getName(), "CT_Campaign.campaignId",
+					groupIds);
 			}
 
 			SQLQuery q = session.createSQLQuery(sql);

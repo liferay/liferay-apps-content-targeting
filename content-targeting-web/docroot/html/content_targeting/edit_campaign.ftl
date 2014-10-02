@@ -167,7 +167,7 @@
 	<@aui["script"] use="liferay-ct-form-builder,liferay-input-slider">
 		new Liferay.InputSlider(
 			{
-    			inputNode: '#<@portlet["namespace"] />priority'
+				inputNode: '#<@portlet["namespace"] />priority'
 			}
 		);
 
