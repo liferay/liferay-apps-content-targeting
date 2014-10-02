@@ -19,10 +19,18 @@ import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalService;
+import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.test.util.TestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.model.JournalArticle;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -54,6 +62,8 @@ public class CampaignContentReportTest {
 			AnalyticsEventLocalService.class, _bundle.getBundleContext());
 		_campaignContentLocalService = ServiceTrackerUtil.getService(
 			CampaignContentLocalService.class, _bundle.getBundleContext());
+		_campaignLocalService = ServiceTrackerUtil.getService(
+			CampaignLocalService.class, _bundle.getBundleContext());
 		_reportsRegistry = ServiceTrackerUtil.getService(
 			ReportsRegistry.class, _bundle.getBundleContext());
 	}
@@ -62,10 +72,17 @@ public class CampaignContentReportTest {
 	public void testCampaignContentReport() throws Exception {
 		ServiceContext serviceContext = TestUtil.getServiceContext();
 
-		long campaignId = 5;
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
+
+		Campaign campaign = _campaignLocalService.addCampaign(
+			TestUtil.getUserId(), nameMap, null, new Date(), new Date(), 1,
+			true, new long[] {1, 2}, serviceContext);
 
 		int initialCampaignContentCount =
-			_campaignContentLocalService.getCampaignContentsCount(campaignId);
+			_campaignContentLocalService.getCampaignContentsCount(
+				campaign.getCampaignId());
 
 		// Obtain report from registry
 
@@ -73,27 +90,29 @@ public class CampaignContentReportTest {
 
 		// Test update report without analytics
 
-		report.updateReport(campaignId);
+		report.updateReport(campaign.getCampaignId());
 
 		Assert.assertEquals(
 			initialCampaignContentCount,
-			_campaignContentLocalService.getCampaignContentsCount(campaignId));
+			_campaignContentLocalService.getCampaignContentsCount(
+				campaign.getCampaignId()));
 
 		// Add analytics
 
 		_analyticsEventLocalService.addAnalyticsEvent(
 			TestUtil.getUserId(), 1, JournalArticle.class.getName(), 2,
-			Campaign.class.getName(), new long[] {campaignId}, null, "view",
-			"127.0.0.1", "ES", "User Agent", "http://localhost", null,
-			serviceContext);
+			Campaign.class.getName(), new long[] {campaign.getCampaignId()},
+			null, "view", "127.0.0.1", "ES", "User Agent", "http://localhost",
+			null, serviceContext);
 
 		// Test update report with analytics
 
-		report.updateReport(campaignId);
+		report.updateReport(campaign.getCampaignId());
 
 		Assert.assertEquals(
 			initialCampaignContentCount + 1,
-			_campaignContentLocalService.getCampaignContentsCount(campaignId));
+			_campaignContentLocalService.getCampaignContentsCount(
+				campaign.getCampaignId()));
 	}
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
@@ -103,6 +122,7 @@ public class CampaignContentReportTest {
 
 	private CampaignContentLocalService
 		_campaignContentLocalService;
+	private CampaignLocalService _campaignLocalService;
 	private ReportsRegistry _reportsRegistry;
 
 }

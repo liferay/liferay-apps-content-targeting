@@ -134,8 +134,7 @@ public class UserSegmentContentLocalServiceImpl
 			modifiedDate = reportInstance.getModifiedDate();
 		}
 
-		addUserSegmentContentsFromAnalytics(
-			reportInstance.getCompanyId(), userSegmentId, modifiedDate);
+		addUserSegmentContentsFromAnalytics(userSegmentId, modifiedDate);
 	}
 
 	@Override
@@ -197,7 +196,7 @@ public class UserSegmentContentLocalServiceImpl
 		// Process analytics and store data
 
 		for (Object[] analyticsEvent : analyticsEvents) {
-			String referrerClassName = (String)analyticsEvent[1];
+			String referrerClassName = (String)analyticsEvent[0];
 			long referrerClassPK = (Long)analyticsEvent[1];
 			int count = (Integer)analyticsEvent[2];
 

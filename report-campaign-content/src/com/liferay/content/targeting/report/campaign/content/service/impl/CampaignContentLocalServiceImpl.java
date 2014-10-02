@@ -190,7 +190,7 @@ public class CampaignContentLocalServiceImpl
 		// Process analytics and store data
 
 		for (Object[] analyticsEvent : analyticsEvents) {
-			String referrerClassName = (String)analyticsEvent[1];
+			String referrerClassName = (String)analyticsEvent[0];
 			long referrerClassPK = (Long)analyticsEvent[1];
 			int count = (Integer)analyticsEvent[2];
 

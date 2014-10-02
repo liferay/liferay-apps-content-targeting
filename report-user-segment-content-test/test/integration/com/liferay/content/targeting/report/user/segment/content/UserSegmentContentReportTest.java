@@ -19,10 +19,17 @@ import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentLocalService;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.test.util.TestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.journal.model.JournalArticle;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -54,6 +61,8 @@ public class UserSegmentContentReportTest {
 			AnalyticsEventLocalService.class, _bundle.getBundleContext());
 		_userSegmentContentLocalService = ServiceTrackerUtil.getService(
 			UserSegmentContentLocalService.class, _bundle.getBundleContext());
+		_userSegmentLocalService = ServiceTrackerUtil.getService(
+			UserSegmentLocalService.class, _bundle.getBundleContext());
 		_reportsRegistry = ServiceTrackerUtil.getService(
 			ReportsRegistry.class, _bundle.getBundleContext());
 	}
@@ -62,11 +71,16 @@ public class UserSegmentContentReportTest {
 	public void testUserSegmentContentReport() throws Exception {
 		ServiceContext serviceContext = TestUtil.getServiceContext();
 
-		long userSegmentId = 6;
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
+
+		UserSegment userSegment = _userSegmentLocalService.addUserSegment(
+			TestUtil.getUserId(), nameMap, null, serviceContext);
 
 		int initialUserSegmentContentCount =
 			_userSegmentContentLocalService.getUserSegmentContentsCount(
-				userSegmentId);
+				userSegment.getUserSegmentId());
 
 		// Obtain report from registry
 
@@ -74,29 +88,30 @@ public class UserSegmentContentReportTest {
 
 		// Test update report without analytics
 
-		report.updateReport(userSegmentId);
+		report.updateReport(userSegment.getUserSegmentId());
 
 		Assert.assertEquals(
 			initialUserSegmentContentCount,
 			_userSegmentContentLocalService.getUserSegmentContentsCount(
-				userSegmentId));
+				userSegment.getUserSegmentId()));
 
 		// Add analytics
 
 		_analyticsEventLocalService.addAnalyticsEvent(
 			TestUtil.getUserId(), 1, JournalArticle.class.getName(), 2,
-			UserSegment.class.getName(), new long[]{userSegmentId}, null,
-			"view", "127.0.0.1", "ES", "User Agent", "http://localhost", null,
+			UserSegment.class.getName(),
+			new long[]{userSegment.getUserSegmentId()}, null, "view",
+			"127.0.0.1", "ES", "User Agent", "http://localhost", null,
 			serviceContext);
 
 		// Test update report with analytics
 
-		report.updateReport(userSegmentId);
+		report.updateReport(userSegment.getUserSegmentId());
 
 		Assert.assertEquals(
 			initialUserSegmentContentCount + 1,
 			_userSegmentContentLocalService.getUserSegmentContentsCount(
-				userSegmentId));
+				userSegment.getUserSegmentId()));
 	}
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
@@ -107,5 +122,6 @@ public class UserSegmentContentReportTest {
 	private ReportsRegistry _reportsRegistry;
 	private UserSegmentContentLocalService
 		_userSegmentContentLocalService;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

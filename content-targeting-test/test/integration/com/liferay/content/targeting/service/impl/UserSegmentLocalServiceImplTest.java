@@ -19,6 +19,7 @@ import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.test.util.TestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
@@ -72,7 +73,7 @@ public class UserSegmentLocalServiceImplTest {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(LocaleUtil.getDefault(), "test-user-segment");
+		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
 
 		ServiceContext serviceContext = TestUtil.getServiceContext(
 			group.getGroupId(), TestUtil.getUserId());
@@ -107,7 +108,7 @@ public class UserSegmentLocalServiceImplTest {
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		nameMap.put(LocaleUtil.getDefault(), "test-user-segment");
+		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
 
 		ServiceContext serviceContext = TestUtil.getServiceContext(
 			group.getGroupId(), TestUtil.getUserId());

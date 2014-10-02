@@ -34,7 +34,7 @@ public class AnalyticsEventFinderImpl
 	implements AnalyticsEventFinder {
 
 	public static final String FIND_BY_C_GtC_R_R =
-		AnalyticsEvent.class.getName() + ".findByC_GtC_R_R";
+		AnalyticsEventFinder.class.getName() + ".findByC_GtC_R_R";
 
 	@Override
 	public List<Object[]> findByC_GtC_R_R(
