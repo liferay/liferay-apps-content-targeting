@@ -152,6 +152,16 @@ public class AnalyticsEventLocalServiceImpl
 	}
 
 	@Override
+	public List<Object[]> getAnalyticsEvents(
+			long companyId, String referrerClassName, long referrerClassPK,
+			Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventFinder.findByC_GtC_R_R(
+			companyId, referrerClassName, referrerClassPK, createDate);
+	}
+
+	@Override
 	public List<AnalyticsEvent> getAnalyticsEvents(
 			long anonymousUserId, String className, long classPK,
 			String eventType)

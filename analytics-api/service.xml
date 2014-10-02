@@ -96,6 +96,10 @@
 
 		<!-- Finder methods -->
 
+		<finder name="R_R" return-type="Collection">
+			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassPK" />
+		</finder>
 		<finder name="A_R_R" return-type="Collection">
 			<finder-column name="analyticsEventId" arrayable-operator="or" />
 			<finder-column name="referrerClassName" />

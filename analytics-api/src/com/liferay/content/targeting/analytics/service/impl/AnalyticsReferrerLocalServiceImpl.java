@@ -74,4 +74,11 @@ public class AnalyticsReferrerLocalServiceImpl
 			analyticsEventIds, className, classPK);
 	}
 
+	@Override
+	public int getAnalyticsReferrerCount(String className, long classPK)
+		throws SystemException {
+
+		return analyticsReferrerPersistence.countByR_R(className, classPK);
+	}
+
 }

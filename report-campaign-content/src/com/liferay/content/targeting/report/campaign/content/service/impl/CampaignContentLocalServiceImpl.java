@@ -14,7 +14,6 @@
 
 package com.liferay.content.targeting.report.campaign.content.service.impl;
 
-import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService;
 import com.liferay.content.targeting.model.Campaign;
@@ -181,24 +180,22 @@ public class CampaignContentLocalServiceImpl
 	protected void addCampaignContentsFromAnalytics(long campaignId, Date date)
 		throws PortalException, SystemException {
 
-		List<AnalyticsEvent> analyticsEvents =
-			_analyticsEventLocalService.getAnalyticsEventsContent(date);
+		Campaign campaign = _campaignLocalService.getCampaign(campaignId);
+
+		List<Object[]> analyticsEvents =
+			_analyticsEventLocalService.getAnalyticsEvents(
+				campaign.getCompanyId(), Campaign.class.getName(), campaignId,
+				date);
 
 		// Process analytics and store data
 
-		for (AnalyticsEvent analyticsEvent : analyticsEvents) {
-			int contentViewCount =
-				_analyticsReferrerLocalService.getAnalyticsReferrerCount(
-					analyticsEvent.getAnalyticsEventId(),
-					Campaign.class.getName(), campaignId);
-
-			if (contentViewCount == 0) {
-				continue;
-			}
+		for (Object[] analyticsEvent : analyticsEvents) {
+			String referrerClassName = (String)analyticsEvent[1];
+			long referrerClassPK = (Long)analyticsEvent[1];
+			int count = (Integer)analyticsEvent[2];
 
 			addCampaignContent(
-				campaignId, analyticsEvent.getClassName(),
-				analyticsEvent.getClassPK(), "view", contentViewCount);
+				campaignId, referrerClassName, referrerClassPK, "view", count);
 		}
 	}
 

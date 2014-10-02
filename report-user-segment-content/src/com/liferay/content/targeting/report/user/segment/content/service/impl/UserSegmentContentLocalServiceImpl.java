@@ -14,7 +14,6 @@
 
 package com.liferay.content.targeting.report.user.segment.content.service.impl;
 
-import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService;
 import com.liferay.content.targeting.model.ReportInstance;
@@ -135,7 +134,8 @@ public class UserSegmentContentLocalServiceImpl
 			modifiedDate = reportInstance.getModifiedDate();
 		}
 
-		addUserSegmentContentsFromAnalytics(userSegmentId, modifiedDate);
+		addUserSegmentContentsFromAnalytics(
+			reportInstance.getCompanyId(), userSegmentId, modifiedDate);
 	}
 
 	@Override
@@ -186,24 +186,24 @@ public class UserSegmentContentLocalServiceImpl
 			long userSegmentId, Date date)
 		throws PortalException, SystemException {
 
-		List<AnalyticsEvent> analyticsEvents =
-			_analyticsEventLocalService.getAnalyticsEventsContent(date);
+		UserSegment userSegment = _userSegmentLocalService.getUserSegment(
+			userSegmentId);
+
+		List<Object[]> analyticsEvents =
+			_analyticsEventLocalService.getAnalyticsEvents(
+				userSegment.getCompanyId(), UserSegment.class.getName(),
+				userSegmentId, date);
 
 		// Process analytics and store data
 
-		for (AnalyticsEvent analyticsEvent : analyticsEvents) {
-			int contentViewCount =
-				_analyticsReferrerLocalService.getAnalyticsReferrerCount(
-					analyticsEvent.getAnalyticsEventId(),
-					UserSegment.class.getName(), userSegmentId);
-
-			if (contentViewCount == 0) {
-				continue;
-			}
+		for (Object[] analyticsEvent : analyticsEvents) {
+			String referrerClassName = (String)analyticsEvent[1];
+			long referrerClassPK = (Long)analyticsEvent[1];
+			int count = (Integer)analyticsEvent[2];
 
 			addUserSegmentContent(
-				userSegmentId, analyticsEvent.getClassName(),
-				analyticsEvent.getClassPK(), "view", contentViewCount);
+				userSegmentId, referrerClassName, referrerClassPK, "view",
+				count);
 		}
 	}
 

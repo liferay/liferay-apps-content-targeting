@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventFinder.findByC_GtC_R_R">
+		<![CDATA[
+			SELECT
+				CT_Analytics_AnalyticsEvent.className AS className, CT_Analytics_AnalyticsEvent.classPK AS classPK, count(*) AS count
+			FROM
+				CT_Analytics_AnalyticsEvent
+			INNER JOIN
+				CT_Analytics_AnalyticsReferrer ON
+					 (CT_Analytics_AnalyticsEvent.analyticsEventId = CT_Analytics_AnalyticsReferrer.analyticsEventId)
+			WHERE
+				(CT_Analytics_AnalyticsEvent.companyId = ?) AND
+				(CT_Analytics_AnalyticsEvent.createDate >= ?) AND
+				(CT_Analytics_AnalyticsReferrer.referrerClassName = ?) AND
+				(CT_Analytics_AnalyticsReferrer.referrerClassPK = ?)
+			GROUP BY
+				CT_Analytics_AnalyticsEvent.className, CT_Analytics_AnalyticsEvent.classPK
+		]]>
+	</sql>
+</custom-sql>
