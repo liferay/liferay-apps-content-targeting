@@ -384,7 +384,8 @@ public class CTActionTotalWrapper implements CTActionTotal,
 	}
 
 	@Override
-	public int compareTo(CTActionTotal ctActionTotal) {
+	public int compareTo(
+		com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal ctActionTotal) {
 		return _ctActionTotal.compareTo(ctActionTotal);
 	}
 
@@ -394,17 +395,17 @@ public class CTActionTotalWrapper implements CTActionTotal,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<CTActionTotal> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> toCacheModel() {
 		return _ctActionTotal.toCacheModel();
 	}
 
 	@Override
-	public CTActionTotal toEscapedModel() {
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal toEscapedModel() {
 		return new CTActionTotalWrapper(_ctActionTotal.toEscapedModel());
 	}
 
 	@Override
-	public CTActionTotal toUnescapedModel() {
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal toUnescapedModel() {
 		return new CTActionTotalWrapper(_ctActionTotal.toUnescapedModel());
 	}
 
