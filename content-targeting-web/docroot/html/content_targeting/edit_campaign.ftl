@@ -66,21 +66,9 @@
 
 	<@aui["input"] name="endDate" value=endDate />
 
-	<@aui["select"] name="priority">
-		<#assign maxPriority=5>
+	<@aui["input"] cssClass="slider-input" inlineField=true name="priority" size="2" maxlength="3" type="text" value="${priority}" />
 
-		<#list 1..maxPriority as i>
-			<#assign label="${i}" />
-
-			<#if i == 1>
-				<#assign label='${label} (${languageUtil.get(locale, "maximum")})' />
-			<#elseif i == maxPriority>
-				<#assign label='${label} (${languageUtil.get(locale, "minimum")})' />
-			</#if>
-
-			<@aui["option"] label="${label}" selected=(priority == i) value="${i}"/>
-		</#list>
-	</@>
+	<span class="slider-holder"></span>
 
 	<@aui["input"] name="active" value=true />
 
@@ -176,7 +164,13 @@
 		<@aui["button"] type="submit" />
 	</@>
 
-	<@aui["script"] use="liferay-ct-form-builder">
+	<@aui["script"] use="liferay-ct-form-builder,liferay-input-slider">
+		new Liferay.InputSlider(
+			{
+    			inputNode: '#<@portlet["namespace"] />priority'
+			}
+		);
+
 		var campaignBuilder = new A.LiferayCTFormBuilder(
 			{
 				boundingBox: '#formBuilderBB',

@@ -64,7 +64,7 @@
 		width: auto;
 	}
 
-	.slider-holder  {
+	.slider-holder {
 		display: inline-block;
 		margin: 0 2em 0 .5em;
 	}

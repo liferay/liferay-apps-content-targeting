@@ -307,6 +307,15 @@
 		margin-bottom: 3em;
 	}
 
+	input.slider-input {
+		width: auto;
+	}
+
+	.slider-holder {
+		display: inline-block;
+		margin: 0 2em 0 .5em;
+	}
+
 	.tracking-actions-panel {
 		margin-top: 3em;
 
