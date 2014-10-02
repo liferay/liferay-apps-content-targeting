@@ -1255,7 +1255,7 @@ public class ContentTargetingPortlet extends FreeMarkerPortlet {
 			String eventType = trackingActionValues.get("eventType");
 
 			long trackingActionInstanceId =
-				requestTrackingActionInstance. getTrackingActionInstanceId();
+				requestTrackingActionInstance.getTrackingActionInstanceId();
 
 			try {
 				if (trackingActionInstanceId > 0) {

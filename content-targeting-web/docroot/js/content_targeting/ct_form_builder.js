@@ -421,8 +421,7 @@ AUI.add(
 						},
 
 						fieldId: {
-							readOnly: true,
-							value: field.id || A.guid()
+							value: field.id
 						}
 					},
 
@@ -430,7 +429,9 @@ AUI.add(
 						getHTML: function() {
 							var instance = this;
 
-							var fieldId = instance.get('fieldId');
+							var fieldId = instance.get('fieldId') || A.guid();
+
+							instance.set('fieldId', fieldId);
 
 							return A.Lang.sub(
 								ITEM_FIELD_TPL,
