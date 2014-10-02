@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.tracking.action.newsletter;
 
+import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.model.TrackingActionInstance;
@@ -30,6 +31,9 @@ import com.liferay.portal.theme.ThemeDisplay;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Brian Chan
@@ -69,6 +73,15 @@ public class NewsletterTrackingAction
 	}
 
 	@Override
+	public String processTrackingAction(
+			PortletRequest request, PortletResponse response, String id,
+			Map<String, String> values)
+		throws InvalidTrackingActionException {
+
+		return values.get("url");
+	}
+
+	@Override
 	protected void populateContext(
 		TrackingActionInstance trackingActionInstance,
 		Map<String, Object> context, Map<String, String> values) {
@@ -76,6 +89,7 @@ public class NewsletterTrackingAction
 		String alias = StringPool.BLANK;
 		String newsletterId = StringPool.BLANK;
 		String eventType = StringPool.BLANK;
+		String url = StringPool.BLANK;
 
 		if (!values.isEmpty()) {
 			// Values from Request
@@ -83,6 +97,7 @@ public class NewsletterTrackingAction
 			alias = values.get("alias");
 			newsletterId = values.get("elementId");
 			eventType = values.get("eventType");
+			url = values.get("url");
 		}
 		else if (trackingActionInstance != null) {
 			// Values from DB
@@ -90,25 +105,33 @@ public class NewsletterTrackingAction
 			alias = trackingActionInstance.getAlias();
 			newsletterId = trackingActionInstance.getElementId();
 			eventType = trackingActionInstance.getEventType();
+			url = trackingActionInstance.getTypeSettings();
 		}
 
 		context.put("alias", alias);
 		context.put("elementId", newsletterId);
 		context.put("eventType", eventType);
 		context.put("eventTypes", getEventTypes());
+		context.put("url", url);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)context.get("themeDisplay");
 
 		String trackURL = themeDisplay.getPortalURL() + "/o/tracking-action-newsletter/track";
 
-		String trackImageURL = HttpUtil.addParameter(
+		trackURL = HttpUtil.addParameter(
 			trackURL, "elementId", "elementIdToken");
-		trackImageURL = HttpUtil.addParameter(trackImageURL, "imageId", "1");
+		String trackImageURL = HttpUtil.addParameter(trackURL, "imageId", "1");
 		trackImageURL = HttpUtil.addParameter(trackImageURL, "email", "");
 
 		context.put("trackImageURL", trackImageURL);
+
+		String trackLinkURL = HttpUtil.addParameter(
+			trackURL, "redirect", "redirectToken");
+		trackLinkURL = HttpUtil.addParameter(trackLinkURL, "email", "");
+
+		context.put("trackLinkURL", trackLinkURL);
 	}
 
-	private static final String[] _EVENT_TYPES = {"view"};
+	private static final String[] _EVENT_TYPES = {"view", "click"};
 
 }

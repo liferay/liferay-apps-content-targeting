@@ -55,9 +55,30 @@ public class NewsletterProcessorServlet extends HttpServlet {
 		HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		trackInformation(request, response, "view", "");
+		try {
+			long imageId = ParamUtil.getLong(request, "imageId");
 
-		serveImage(request, response);
+			if (imageId > 0) {
+				trackInformation(request, response, "view", "");
+
+				serveImage(request, response);
+			}
+
+			String redirect = ParamUtil.getString(request, "redirect");
+
+			if (Validator.isNotNull(redirect)) {
+				trackInformation(request, response, "click", redirect);
+
+				response.sendRedirect(redirect);
+			}
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			PortalUtil.sendError(
+				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,
+				response);
+		}
 	}
 
 	@Reference(target ="(Web-ContextPath=/o/tracking-action-newsletter)")
