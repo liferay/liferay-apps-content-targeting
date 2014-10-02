@@ -410,7 +410,8 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 	}
 
 	@Override
-	public int compareTo(CTAction ctAction) {
+	public int compareTo(
+		com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction ctAction) {
 		return _ctAction.compareTo(ctAction);
 	}
 
@@ -420,17 +421,17 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<CTAction> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> toCacheModel() {
 		return _ctAction.toCacheModel();
 	}
 
 	@Override
-	public CTAction toEscapedModel() {
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction toEscapedModel() {
 		return new CTActionWrapper(_ctAction.toEscapedModel());
 	}
 
 	@Override
-	public CTAction toUnescapedModel() {
+	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction toUnescapedModel() {
 		return new CTActionWrapper(_ctAction.toUnescapedModel());
 	}
 

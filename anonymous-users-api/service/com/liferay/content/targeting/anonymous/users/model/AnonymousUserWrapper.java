@@ -429,7 +429,8 @@ public class AnonymousUserWrapper implements AnonymousUser,
 	}
 
 	@Override
-	public int compareTo(AnonymousUser anonymousUser) {
+	public int compareTo(
+		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser) {
 		return _anonymousUser.compareTo(anonymousUser);
 	}
 
@@ -439,17 +440,17 @@ public class AnonymousUserWrapper implements AnonymousUser,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<AnonymousUser> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> toCacheModel() {
 		return _anonymousUser.toCacheModel();
 	}
 
 	@Override
-	public AnonymousUser toEscapedModel() {
+	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser toEscapedModel() {
 		return new AnonymousUserWrapper(_anonymousUser.toEscapedModel());
 	}
 
 	@Override
-	public AnonymousUser toUnescapedModel() {
+	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser toUnescapedModel() {
 		return new AnonymousUserWrapper(_anonymousUser.toUnescapedModel());
 	}
 

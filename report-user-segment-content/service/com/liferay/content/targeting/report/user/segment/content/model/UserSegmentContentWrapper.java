@@ -330,7 +330,8 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 	}
 
 	@Override
-	public int compareTo(UserSegmentContent userSegmentContent) {
+	public int compareTo(
+		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent) {
 		return _userSegmentContent.compareTo(userSegmentContent);
 	}
 
@@ -340,17 +341,17 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<UserSegmentContent> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent> toCacheModel() {
 		return _userSegmentContent.toCacheModel();
 	}
 
 	@Override
-	public UserSegmentContent toEscapedModel() {
+	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent toEscapedModel() {
 		return new UserSegmentContentWrapper(_userSegmentContent.toEscapedModel());
 	}
 
 	@Override
-	public UserSegmentContent toUnescapedModel() {
+	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent toUnescapedModel() {
 		return new UserSegmentContentWrapper(_userSegmentContent.toUnescapedModel());
 	}
 
