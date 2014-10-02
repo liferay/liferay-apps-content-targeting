@@ -24,13 +24,24 @@
 	</#list>
 </#if>
 
-<div class="code-info" id="<@portlet["namespace"] />{ct_field_guid}imageOptions">
+<div id="<@portlet["namespace"] />{ct_field_guid}urlOptions" class="code-info">
+	<@aui["input"] helpMessage="url-help" label="url" name="{ct_field_guid}url" type="text" value=url />
+
+	<label for="<@portlet["namespace"] />{ct_field_guid}urlInfo"><@liferay_ui["message"] key="use-this-url-in-your-newsletter" /></label>
+
+	<@liferay_ui["input-resource"] id="{ct_field_guid}urlInfo" url="" />
+</div>
+
+<div id="<@portlet["namespace"] />{ct_field_guid}imageOptions" class="code-info">
 	<label for="<@portlet["namespace"] />{ct_field_guid}imageInfo"><@liferay_ui["message"] key="paste-this-code-at-the-beginning-of-your-newsletter" /></label>
 
 	<@liferay_ui["input-resource"] id="{ct_field_guid}imageInfo" url="" />
 </div>
 
 <@aui["script"] use="aui-base">
+	Liferay.Util.toggleSelectBox('<@portlet["namespace"] />{ct_field_guid}eventType', 'view', '<@portlet["namespace"] />{ct_field_guid}imageOptions');
+	Liferay.Util.toggleSelectBox('<@portlet["namespace"] />{ct_field_guid}eventType', 'click', '<@portlet["namespace"] />{ct_field_guid}urlOptions');
+
 	var infoTextArea = A.one('#<@portlet["namespace"] />{ct_field_guid}imageInfo');
 	var newsletterInput = A.one('#<@portlet["namespace"] />{ct_field_guid}elementId');
 
@@ -47,6 +58,25 @@
 	newsletterInput.on('change', function(event) {showInfo();});
 
 	showInfo();
+
+	var trackLinkURL = '${trackLinkURL}';
+
+	var urlInfoTextArea = A.one('#<@portlet["namespace"] />{ct_field_guid}urlInfo');
+	var urlInput = A.one('#<@portlet["namespace"] />{ct_field_guid}url');
+
+	var showLinkInfo = function() {
+		if (urlInput.val()) {
+			var newText = trackLinkURL.replace('elementIdToken', newsletterInput.val());
+			
+			newText = newText.replace('redirectToken', encodeURIComponent(urlInput.val()));
+
+			urlInfoTextArea.val(newText);
+		}
+	}
+
+	urlInput.on('change', function(event) {showLinkInfo();});
+
+	showLinkInfo();
 </@>
 
 <style>
