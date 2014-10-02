@@ -14,8 +14,8 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.messaging;
 
-import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionLocalServiceUtil;
-import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalLocalServiceUtil;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalServiceUtil;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalServiceUtil;
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
 import com.liferay.portal.kernel.messaging.Message;
 
@@ -26,11 +26,9 @@ public class CheckML extends BaseMessageListener {
 
 	@Override
 	protected void doReceive(Message message) throws Exception {
-		CampaignTrackingActionLocalServiceUtil.
-			checkCampaignTrackingActionEvents();
+		CTActionLocalServiceUtil.checkCTActionEvents();
 
-		CampaignTrackingActionTotalLocalServiceUtil.
-			checkCampaignTrackingActionTotalEvents();
+		CTActionTotalLocalServiceUtil.checkCTActionTotalEvents();
 	}
 
 }

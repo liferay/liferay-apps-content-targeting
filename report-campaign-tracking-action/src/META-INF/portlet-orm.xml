@@ -7,9 +7,9 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<mapped-superclass class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionModelImpl">
+	<mapped-superclass class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl">
 		<attributes>
-			<id name="campaignTrackingActionId" />
+			<id name="CTActionId" />
 			<basic name="campaignId" />
 			<basic name="userSegmentId" />
 			<basic name="alias">
@@ -28,9 +28,9 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<mapped-superclass class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalModelImpl">
+	<mapped-superclass class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl">
 		<attributes>
-			<id name="campaignTrackingActionTotalId" />
+			<id name="CTActionTotalId" />
 			<basic name="campaignId" />
 			<basic name="alias">
 				<column name="ALIAS_" />
@@ -48,12 +48,12 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<entity class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionImpl" name="CampaignTrackingAction">
-		<table name="CT_CTAReport_CampaignTrackingAction" />
+	<entity class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionImpl" name="CTAction">
+		<table name="CT_CTA_CTAction" />
 		<attributes />
 	</entity>
-	<entity class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalImpl" name="CampaignTrackingActionTotal">
-		<table name="CT_CTAReport_CampaignTrackingActionTotal" />
+	<entity class="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalImpl" name="CTActionTotal">
+		<table name="CT_CTA_CTActionTotal" />
 		<attributes />
 	</entity>
 </entity-mappings>

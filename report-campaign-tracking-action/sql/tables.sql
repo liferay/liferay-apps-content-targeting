@@ -1,5 +1,5 @@
-create table CT_CTAReport_CampaignTrackingAction (
-	campaignTrackingActionId LONG not null primary key,
+create table CT_CTA_CTAction (
+	CTActionId LONG not null primary key,
 	campaignId LONG,
 	userSegmentId LONG,
 	alias_ VARCHAR(75) null,
@@ -11,8 +11,8 @@ create table CT_CTAReport_CampaignTrackingAction (
 	modifiedDate DATE null
 );
 
-create table CT_CTAReport_CampaignTrackingActionTotal (
-	campaignTrackingActionTotalId LONG not null primary key,
+create table CT_CTA_CTActionTotal (
+	CTActionTotalId LONG not null primary key,
 	campaignId LONG,
 	alias_ VARCHAR(75) null,
 	referrerClassName VARCHAR(75) null,

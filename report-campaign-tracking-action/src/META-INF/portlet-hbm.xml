@@ -2,11 +2,11 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping default-lazy="false" auto-import="false">
-	<import class="com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction" />
-	<import class="com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal" />
-	<class name="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionImpl" table="CT_CTAReport_CampaignTrackingAction">
+	<import class="com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction" />
+	<import class="com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal" />
+	<class name="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionImpl" table="CT_CTA_CTAction">
 		<cache usage="read-write" />
-		<id name="campaignTrackingActionId" type="long">
+		<id name="CTActionId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -19,9 +19,9 @@
 		<property name="count" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
-	<class name="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalImpl" table="CT_CTAReport_CampaignTrackingActionTotal">
+	<class name="com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalImpl" table="CT_CTA_CTActionTotal">
 		<cache usage="read-write" />
-		<id name="campaignTrackingActionTotalId" type="long">
+		<id name="CTActionTotalId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

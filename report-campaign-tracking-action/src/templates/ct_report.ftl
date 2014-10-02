@@ -29,35 +29,35 @@
 	/>
 
 	<@liferay_ui["search-container-row"]
-		className="com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal"
-		modelVar="campaignTrackingActionTotal"
+		className="com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal"
+		modelVar="ctActionTotal"
 	>
 
 		<@liferay_ui["search-container-column-text"]
 			name="alias"
-			value=campaignTrackingActionTotal.getAlias()
+			value=ctActionTotal.getAlias()
 		/>
 
 		<@liferay_ui["search-container-column-text"]
 			name="event"
-			value="${languageUtil.get(locale, campaignTrackingActionTotal.getEventType())}"
+			value="${languageUtil.get(locale, ctActionTotal.getEventType())}"
 		/>
 
 		<@liferay_ui["search-container-column-text"]
 			name="count"
 		>
 
-			${campaignTrackingActionTotal.getCount()}
+			${ctActionTotal.getCount()}
 
-			<#assign viewsByUserSegment = campaignTrackingActionTotal.getViewsByUserSegment() />
+			<#assign viewsByUserSegment = ctActionTotal.getViewsByUserSegment() />
 
 			<#if viewsByUserSegment?has_content>
 				<div class="pull-right">
-					<i class="icon-info" data-id="${campaignTrackingActionTotal.getCampaignTrackingActionTotalId()}" style="display: block;padding: 0 1em;"></i>
+					<i class="icon-info" data-id="${ctActionTotal.getCTActionTotalId()}" style="display: block;padding: 0 1em;"></i>
 
-					<div class="hide" id="<@portlet["namespace"] />userSegmentViews${campaignTrackingActionTotal.getCampaignTrackingActionTotalId()}">
-						<#list viewsByUserSegment as campaignTrackingAction>
-							<p>${campaignTrackingAction.getUserSegmentName(locale)} - ${campaignTrackingAction.getCount()}</p>
+					<div class="hide" id="<@portlet["namespace"] />userSegmentViews${ctActionTotal.getCTActionTotalId()}">
+						<#list viewsByUserSegment as ctAction>
+							<p>${ctAction.getUserSegmentName(locale)} - ${ctAction.getCount()}</p>
 						</#list>
 					</div>
 				</div>
@@ -66,7 +66,7 @@
 
 		<@liferay_ui["search-container-column-date"]
 			name="last-update"
-			value=campaignTrackingActionTotal.getModifiedDate()
+			value=ctActionTotal.getModifiedDate()
 		/>
 	</@>
 

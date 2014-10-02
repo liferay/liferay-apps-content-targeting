@@ -1,5 +1,5 @@
 <style>
-	#campaignTrackingActionChart {
+	#ctActionChart {
 		height: 400px;
 		min-width: 600px;
 		width: 100%;
@@ -7,13 +7,13 @@
 </style>
 
 <@aui["script"] use="charts">
-	var campaignTrackingActionChartDataValues = [
-		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as campaignTrackingActionTotal>
-			{content:'${campaignTrackingActionTotal.getAlias()}', count:${campaignTrackingActionTotal.getCount()}}<#if campaignTrackingActionTotal_has_next>,</#if>
+	var ctActionChartDataValues = [
+		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as ctActionTotal>
+			{content:'${ctActionTotal.getAlias()}', count:${ctActionTotal.getCount()}}<#if ctActionTotal_has_next>,</#if>
 		</#list>
 	];
 
-	var campaignTrackingActionCharAxes = {
+	var ctActionCharAxes = {
 		count:{
 			keys:['count'],
 			position:'left',
@@ -28,7 +28,7 @@
 		}
 	};
 
-	var campaignTrackingActionCharStyles = {
+	var ctActionCharStyles = {
 		axes:{
 			content:{
 				label:{
@@ -53,15 +53,15 @@
 		}
 	};
 
-	var campaignTrackingActionChart = new A.Chart({
-		axes: campaignTrackingActionCharAxes,
-		dataProvider: campaignTrackingActionChartDataValues,
+	var ctActionChart = new A.Chart({
+		axes: ctActionCharAxes,
+		dataProvider: ctActionChartDataValues,
 		horizontalGridlines: true,
-		render: '#campaignTrackingActionChart',
-		styles: campaignTrackingActionCharStyles,
+		render: '#ctActionChart',
+		styles: ctActionCharStyles,
 		type: 'column',
 		verticalGridlines: true
 	});
 </@>
 
-<div id="campaignTrackingActionChart"></div>
+<div id="ctActionChart"></div>

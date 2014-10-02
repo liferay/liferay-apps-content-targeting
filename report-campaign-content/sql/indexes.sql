@@ -1,3 +1,3 @@
-create index IX_A40E9C71 on CT_CCReport_CampaignContent (campaignId);
-create unique index IX_7A5ED8E3 on CT_CCReport_CampaignContent (campaignId, className, classPK, eventType);
-create index IX_EADA9CFC on CT_CCReport_CampaignContent (campaignId, modifiedDate);
+create index IX_EF598653 on CT_CCR_CampaignContent (campaignId);
+create unique index IX_6A8F32C1 on CT_CCR_CampaignContent (campaignId, className, classPK, eventType);
+create index IX_B40D935E on CT_CCR_CampaignContent (campaignId, modifiedDate);

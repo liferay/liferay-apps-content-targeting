@@ -248,8 +248,7 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer) {
+	public int compareTo(AnalyticsReferrer analyticsReferrer) {
 		return _analyticsReferrer.compareTo(analyticsReferrer);
 	}
 
@@ -259,17 +258,17 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<AnalyticsReferrer> toCacheModel() {
 		return _analyticsReferrer.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer toEscapedModel() {
+	public AnalyticsReferrer toEscapedModel() {
 		return new AnalyticsReferrerWrapper(_analyticsReferrer.toEscapedModel());
 	}
 
 	@Override
-	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer toUnescapedModel() {
+	public AnalyticsReferrer toUnescapedModel() {
 		return new AnalyticsReferrerWrapper(_analyticsReferrer.toUnescapedModel());
 	}
 

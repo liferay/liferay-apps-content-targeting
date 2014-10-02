@@ -461,8 +461,7 @@ public class RuleInstanceWrapper implements RuleInstance,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.model.RuleInstance ruleInstance) {
+	public int compareTo(RuleInstance ruleInstance) {
 		return _ruleInstance.compareTo(ruleInstance);
 	}
 
@@ -472,17 +471,17 @@ public class RuleInstanceWrapper implements RuleInstance,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.model.RuleInstance> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<RuleInstance> toCacheModel() {
 		return _ruleInstance.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.content.targeting.model.RuleInstance toEscapedModel() {
+	public RuleInstance toEscapedModel() {
 		return new RuleInstanceWrapper(_ruleInstance.toEscapedModel());
 	}
 
 	@Override
-	public com.liferay.content.targeting.model.RuleInstance toUnescapedModel() {
+	public RuleInstance toUnescapedModel() {
 		return new RuleInstanceWrapper(_ruleInstance.toUnescapedModel());
 	}
 

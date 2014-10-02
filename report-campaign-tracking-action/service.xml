@@ -2,12 +2,12 @@
 <!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
 
 <service-builder package-path="com.liferay.content.targeting.report.campaign.tracking.action">
-	<namespace>CT_CTAReport</namespace>
-	<entity name="CampaignTrackingAction" local-service="true" remote-service="true">
+	<namespace>CT_CTA</namespace>
+	<entity name="CTAction" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="campaignTrackingActionId" type="long" primary="true" />
+		<column name="CTActionId" type="long" primary="true" />
 
 		<!-- Other fields -->
 
@@ -49,7 +49,7 @@
 			<finder-column name="referrerClassPK" />
 		</finder>
 
-		<finder name="C_U_R_R_E_E" return-type="CampaignTrackingAction" unique="true">
+		<finder name="C_U_R_R_E_E" return-type="CTAction" unique="true">
 			<finder-column name="campaignId" />
 			<finder-column name="userSegmentId" />
 			<finder-column name="referrerClassName" />
@@ -59,11 +59,11 @@
 		</finder>
 	</entity>
 
-	<entity name="CampaignTrackingActionTotal" local-service="true" remote-service="true">
+	<entity name="CTActionTotal" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="campaignTrackingActionTotalId" type="long" primary="true" />
+		<column name="CTActionTotalId" type="long" primary="true" />
 
 		<!-- Other fields -->
 
@@ -93,7 +93,7 @@
 			<finder-column name="modifiedDate" comparator="&gt;" />
 		</finder>
 
-		<finder name="C_R_R_E_E" return-type="CampaignTrackingAction" unique="true">
+		<finder name="C_R_R_E_E" return-type="CTAction" unique="true">
 			<finder-column name="campaignId" />
 			<finder-column name="referrerClassName" />
 			<finder-column name="referrerClassPK" />

@@ -14,8 +14,8 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.service;
 
-import com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionClp;
-import com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotalClp;
+import com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionClp;
+import com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotalClp;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -103,13 +103,12 @@ public class ClpSerializer {
 
 		String oldModelClassName = oldModelClass.getName();
 
-		if (oldModelClassName.equals(CampaignTrackingActionClp.class.getName())) {
-			return translateInputCampaignTrackingAction(oldModel);
+		if (oldModelClassName.equals(CTActionClp.class.getName())) {
+			return translateInputCTAction(oldModel);
 		}
 
-		if (oldModelClassName.equals(
-					CampaignTrackingActionTotalClp.class.getName())) {
-			return translateInputCampaignTrackingActionTotal(oldModel);
+		if (oldModelClassName.equals(CTActionTotalClp.class.getName())) {
+			return translateInputCTActionTotal(oldModel);
 		}
 
 		return oldModel;
@@ -127,22 +126,20 @@ public class ClpSerializer {
 		return newList;
 	}
 
-	public static Object translateInputCampaignTrackingAction(
-		BaseModel<?> oldModel) {
-		CampaignTrackingActionClp oldClpModel = (CampaignTrackingActionClp)oldModel;
+	public static Object translateInputCTAction(BaseModel<?> oldModel) {
+		CTActionClp oldClpModel = (CTActionClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getCampaignTrackingActionRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getCTActionRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
 		return newModel;
 	}
 
-	public static Object translateInputCampaignTrackingActionTotal(
-		BaseModel<?> oldModel) {
-		CampaignTrackingActionTotalClp oldClpModel = (CampaignTrackingActionTotalClp)oldModel;
+	public static Object translateInputCTActionTotal(BaseModel<?> oldModel) {
+		CTActionTotalClp oldClpModel = (CTActionTotalClp)oldModel;
 
-		BaseModel<?> newModel = oldClpModel.getCampaignTrackingActionTotalRemoteModel();
+		BaseModel<?> newModel = oldClpModel.getCTActionTotalRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -167,13 +164,13 @@ public class ClpSerializer {
 		String oldModelClassName = oldModelClass.getName();
 
 		if (oldModelClassName.equals(
-					"com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionImpl")) {
-			return translateOutputCampaignTrackingAction(oldModel);
+					"com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionImpl")) {
+			return translateOutputCTAction(oldModel);
 		}
 
 		if (oldModelClassName.equals(
-					"com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CampaignTrackingActionTotalImpl")) {
-			return translateOutputCampaignTrackingActionTotal(oldModel);
+					"com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalImpl")) {
+			return translateOutputCTActionTotal(oldModel);
 		}
 
 		return oldModel;
@@ -257,36 +254,34 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
-					"com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionException")) {
-			return new com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionException();
+					"com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException")) {
+			return new com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException();
 		}
 
 		if (className.equals(
-					"com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException")) {
-			return new com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCampaignTrackingActionTotalException();
+					"com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException")) {
+			return new com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException();
 		}
 
 		return throwable;
 	}
 
-	public static Object translateOutputCampaignTrackingAction(
-		BaseModel<?> oldModel) {
-		CampaignTrackingActionClp newModel = new CampaignTrackingActionClp();
+	public static Object translateOutputCTAction(BaseModel<?> oldModel) {
+		CTActionClp newModel = new CTActionClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-		newModel.setCampaignTrackingActionRemoteModel(oldModel);
+		newModel.setCTActionRemoteModel(oldModel);
 
 		return newModel;
 	}
 
-	public static Object translateOutputCampaignTrackingActionTotal(
-		BaseModel<?> oldModel) {
-		CampaignTrackingActionTotalClp newModel = new CampaignTrackingActionTotalClp();
+	public static Object translateOutputCTActionTotal(BaseModel<?> oldModel) {
+		CTActionTotalClp newModel = new CTActionTotalClp();
 
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-		newModel.setCampaignTrackingActionTotalRemoteModel(oldModel);
+		newModel.setCTActionTotalRemoteModel(oldModel);
 
 		return newModel;
 	}

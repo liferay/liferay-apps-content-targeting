@@ -598,8 +598,7 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance) {
+	public int compareTo(TrackingActionInstance trackingActionInstance) {
 		return _trackingActionInstance.compareTo(trackingActionInstance);
 	}
 
@@ -609,17 +608,17 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.model.TrackingActionInstance> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<TrackingActionInstance> toCacheModel() {
 		return _trackingActionInstance.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.content.targeting.model.TrackingActionInstance toEscapedModel() {
+	public TrackingActionInstance toEscapedModel() {
 		return new TrackingActionInstanceWrapper(_trackingActionInstance.toEscapedModel());
 	}
 
 	@Override
-	public com.liferay.content.targeting.model.TrackingActionInstance toUnescapedModel() {
+	public TrackingActionInstance toUnescapedModel() {
 		return new TrackingActionInstanceWrapper(_trackingActionInstance.toUnescapedModel());
 	}
 

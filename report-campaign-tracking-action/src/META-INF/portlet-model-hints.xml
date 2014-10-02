@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 
 <model-hints>
-	<model name="com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingAction">
-		<field name="campaignTrackingActionId" type="long" />
+	<model name="com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction">
+		<field name="CTActionId" type="long" />
 		<field name="campaignId" type="long" />
 		<field name="userSegmentId" type="long" />
 		<field name="alias" type="String" />
@@ -13,8 +13,8 @@
 		<field name="count" type="int" />
 		<field name="modifiedDate" type="Date" />
 	</model>
-	<model name="com.liferay.content.targeting.report.campaign.tracking.action.model.CampaignTrackingActionTotal">
-		<field name="campaignTrackingActionTotalId" type="long" />
+	<model name="com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal">
+		<field name="CTActionTotalId" type="long" />
 		<field name="campaignId" type="long" />
 		<field name="alias" type="String" />
 		<field name="referrerClassName" type="String" />

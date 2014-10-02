@@ -3,7 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.content.targeting.report.campaign.content.model.CampaignContent" />
-	<class name="com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentImpl" table="CT_CCReport_CampaignContent">
+	<class name="com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentImpl" table="CT_CCR_CampaignContent">
 		<cache usage="read-write" />
 		<id name="campaignContentId" type="long">
 			<generator class="assigned" />

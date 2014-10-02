@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <custom-sql>
-	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionFinder.findByAnalyticsWithClassName">
+	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionFinder.findByAnalyticsWithClassName">
 		<![CDATA[
 			SELECT
 				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.className AS className, CT_Analytics_AnalyticsEvent.classPK AS classPK, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias
@@ -22,7 +22,7 @@
 				CT_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionFinder.findByAnalyticsWithElementId">
+	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionFinder.findByAnalyticsWithElementId">
 		<![CDATA[
 			SELECT
 				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.elementId AS elementId, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias
@@ -42,7 +42,7 @@
 				CT_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionTotalFinder.findByAnalyticsWithClassName">
+	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionTotalFinder.findByAnalyticsWithClassName">
 		<![CDATA[
 			SELECT
 				CT_Analytics_AnalyticsEvent.className AS className, CT_Analytics_AnalyticsEvent.classPK AS classPK, CT_Analytics_AnalyticsEvent.eventType AS eventType, COUNT(*) as count
@@ -57,7 +57,7 @@
 				CT_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
-	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CampaignTrackingActionTotalFinder.findByAnalyticsWithElementId">
+	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionTotalFinder.findByAnalyticsWithElementId">
 		<![CDATA[
 			SELECT
 				CT_Analytics_AnalyticsEvent.elementId AS elementId, CT_Analytics_AnalyticsEvent.eventType AS eventType, COUNT(*) as count

@@ -296,8 +296,7 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint) {
+	public int compareTo(ScorePoint scorePoint) {
 		return _scorePoint.compareTo(scorePoint);
 	}
 
@@ -307,17 +306,17 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.rule.score.points.model.ScorePoint> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<ScorePoint> toCacheModel() {
 		return _scorePoint.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.content.targeting.rule.score.points.model.ScorePoint toEscapedModel() {
+	public ScorePoint toEscapedModel() {
 		return new ScorePointWrapper(_scorePoint.toEscapedModel());
 	}
 
 	@Override
-	public com.liferay.content.targeting.rule.score.points.model.ScorePoint toUnescapedModel() {
+	public ScorePoint toUnescapedModel() {
 		return new ScorePointWrapper(_scorePoint.toUnescapedModel());
 	}
 

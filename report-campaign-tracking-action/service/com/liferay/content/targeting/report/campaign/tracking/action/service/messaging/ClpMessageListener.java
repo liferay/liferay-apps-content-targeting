@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.report.campaign.tracking.action.service.messaging;
 
-import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionLocalServiceUtil;
-import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionServiceUtil;
-import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalLocalServiceUtil;
-import com.liferay.content.targeting.report.campaign.tracking.action.service.CampaignTrackingActionTotalServiceUtil;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalServiceUtil;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionServiceUtil;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalServiceUtil;
+import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalServiceUtil;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.ClpSerializer;
 
 import com.liferay.portal.kernel.messaging.BaseMessageListener;
@@ -38,12 +38,12 @@ public class ClpMessageListener extends BaseMessageListener {
 
 		if (command.equals("undeploy") &&
 				servletContextName.equals(getServletContextName())) {
-			CampaignTrackingActionLocalServiceUtil.clearService();
+			CTActionLocalServiceUtil.clearService();
 
-			CampaignTrackingActionServiceUtil.clearService();
-			CampaignTrackingActionTotalLocalServiceUtil.clearService();
+			CTActionServiceUtil.clearService();
+			CTActionTotalLocalServiceUtil.clearService();
 
-			CampaignTrackingActionTotalServiceUtil.clearService();
+			CTActionTotalServiceUtil.clearService();
 		}
 	}
 }

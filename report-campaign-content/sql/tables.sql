@@ -1,4 +1,4 @@
-create table CT_CCReport_CampaignContent (
+create table CT_CCR_CampaignContent (
 	campaignContentId LONG not null primary key,
 	campaignId LONG,
 	className VARCHAR(75) null,

@@ -433,8 +433,7 @@ public class ReportInstanceWrapper implements ReportInstance,
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.model.ReportInstance reportInstance) {
+	public int compareTo(ReportInstance reportInstance) {
 		return _reportInstance.compareTo(reportInstance);
 	}
 
@@ -444,17 +443,17 @@ public class ReportInstanceWrapper implements ReportInstance,
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.model.ReportInstance> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<ReportInstance> toCacheModel() {
 		return _reportInstance.toCacheModel();
 	}
 
 	@Override
-	public com.liferay.content.targeting.model.ReportInstance toEscapedModel() {
+	public ReportInstance toEscapedModel() {
 		return new ReportInstanceWrapper(_reportInstance.toEscapedModel());
 	}
 
 	@Override
-	public com.liferay.content.targeting.model.ReportInstance toUnescapedModel() {
+	public ReportInstance toUnescapedModel() {
 		return new ReportInstanceWrapper(_reportInstance.toUnescapedModel());
 	}
 
