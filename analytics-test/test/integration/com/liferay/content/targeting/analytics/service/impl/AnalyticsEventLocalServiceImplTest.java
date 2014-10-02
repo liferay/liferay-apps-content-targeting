@@ -16,6 +16,7 @@ package com.liferay.content.targeting.analytics.service.impl;
 
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
+import com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService;
 import com.liferay.content.targeting.service.test.util.TestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
@@ -52,6 +53,8 @@ public class AnalyticsEventLocalServiceImplTest {
 
 		_analyticsEventLocalService = ServiceTrackerUtil.getService(
 			AnalyticsEventLocalService.class, _bundle.getBundleContext());
+		_analyticsReferrerLocalService = ServiceTrackerUtil.getService(
+			AnalyticsReferrerLocalService.class, _bundle.getBundleContext());
 	}
 
 	@Test
@@ -80,6 +83,8 @@ public class AnalyticsEventLocalServiceImplTest {
 	public void testAddAndDeleteAnalyticsEvents() throws Exception {
 		int initAnalyticsEventsCount =
 			_analyticsEventLocalService.getAnalyticsEventsCount();
+		int initAnalyticsReferrersCount =
+			_analyticsReferrerLocalService.getAnalyticsReferrersCount();
 
 		_analyticsEventLocalService.addAnalyticsEvent(
 			1, 1, JournalArticle.class.getName(), 1, Layout.class.getName(),
@@ -88,8 +93,12 @@ public class AnalyticsEventLocalServiceImplTest {
 			TestUtil.getServiceContext());
 
 		Assert.assertEquals(
-			initAnalyticsEventsCount + 2,
+			initAnalyticsEventsCount + 1,
 			_analyticsEventLocalService.getAnalyticsEventsCount());
+
+		Assert.assertEquals(
+			initAnalyticsReferrersCount + 2,
+			_analyticsReferrerLocalService.getAnalyticsReferrersCount());
 
 		Thread.sleep(1000);
 
@@ -101,6 +110,7 @@ public class AnalyticsEventLocalServiceImplTest {
 	}
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
+	private AnalyticsReferrerLocalService _analyticsReferrerLocalService;
 
 	@ArquillianResource
 	private Bundle _bundle;
