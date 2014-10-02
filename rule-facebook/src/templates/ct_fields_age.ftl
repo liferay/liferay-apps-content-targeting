@@ -17,14 +17,3 @@
 		}
 	);
 </@>
-
-<style>
-	.aui input.slider-input {
-		width: auto;
-	}
-
-	.slider-holder  {
-		display: inline-block;
-		margin: 0 2em 0 .5em;
-	}
-</style>
