@@ -106,31 +106,35 @@ public class AnalyticsReferrerLocalServiceClpInvoker {
 				"com.liferay.content.targeting.analytics.model.AnalyticsReferrer"
 			};
 
-		_methodName40 = "getBeanIdentifier";
+		_methodName42 = "getBeanIdentifier";
 
-		_methodParameterTypes40 = new String[] {  };
+		_methodParameterTypes42 = new String[] {  };
 
-		_methodName41 = "setBeanIdentifier";
+		_methodName43 = "setBeanIdentifier";
 
-		_methodParameterTypes41 = new String[] { "java.lang.String" };
+		_methodParameterTypes43 = new String[] { "java.lang.String" };
 
-		_methodName46 = "addAnalyticsReferrer";
-
-		_methodParameterTypes46 = new String[] {
-				"long", "java.lang.String", "long"
-			};
-
-		_methodName47 = "getAnalyticsReferrerCount";
-
-		_methodParameterTypes47 = new String[] {
-				"long", "java.lang.String", "long"
-			};
-
-		_methodName48 = "getAnalyticsReferrerCount";
+		_methodName48 = "addAnalyticsReferrer";
 
 		_methodParameterTypes48 = new String[] {
+				"long", "java.lang.String", "long"
+			};
+
+		_methodName49 = "getAnalyticsReferrerCount";
+
+		_methodParameterTypes49 = new String[] {
+				"long", "java.lang.String", "long"
+			};
+
+		_methodName50 = "getAnalyticsReferrerCount";
+
+		_methodParameterTypes50 = new String[] {
 				"long[][]", "java.lang.String", "long"
 			};
+
+		_methodName51 = "getAnalyticsReferrerCount";
+
+		_methodParameterTypes51 = new String[] { "java.lang.String", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -222,34 +226,40 @@ public class AnalyticsReferrerLocalServiceClpInvoker {
 			return AnalyticsReferrerLocalServiceUtil.updateAnalyticsReferrer((com.liferay.content.targeting.analytics.model.AnalyticsReferrer)arguments[0]);
 		}
 
-		if (_methodName40.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
+		if (_methodName42.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
 			return AnalyticsReferrerLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName41.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
+		if (_methodName43.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
 			AnalyticsReferrerLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName46.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+		if (_methodName48.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
 			return AnalyticsReferrerLocalServiceUtil.addAnalyticsReferrer(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], ((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName47.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
+		if (_methodName49.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
 			return AnalyticsReferrerLocalServiceUtil.getAnalyticsReferrerCount(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], ((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName48.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
+		if (_methodName50.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
 			return AnalyticsReferrerLocalServiceUtil.getAnalyticsReferrerCount((long[])arguments[0],
 				(java.lang.String)arguments[1], ((Long)arguments[2]).longValue());
+		}
+
+		if (_methodName51.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
+			return AnalyticsReferrerLocalServiceUtil.getAnalyticsReferrerCount((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -287,14 +297,16 @@ public class AnalyticsReferrerLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName40;
-	private String[] _methodParameterTypes40;
-	private String _methodName41;
-	private String[] _methodParameterTypes41;
-	private String _methodName46;
-	private String[] _methodParameterTypes46;
-	private String _methodName47;
-	private String[] _methodParameterTypes47;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
+	private String _methodName43;
+	private String[] _methodParameterTypes43;
 	private String _methodName48;
 	private String[] _methodParameterTypes48;
+	private String _methodName49;
+	private String[] _methodParameterTypes49;
+	private String _methodName50;
+	private String[] _methodParameterTypes50;
+	private String _methodName51;
+	private String[] _methodParameterTypes51;
 }

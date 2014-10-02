@@ -149,92 +149,98 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		_methodName24 = "getAnalyticsEvents";
 
 		_methodParameterTypes24 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String"
+				"long", "java.lang.String", "long", "java.util.Date"
 			};
 
 		_methodName25 = "getAnalyticsEvents";
 
 		_methodParameterTypes25 = new String[] {
-				"java.lang.String", "long", "java.lang.String"
+				"long", "java.lang.String", "long", "java.lang.String"
 			};
 
 		_methodName26 = "getAnalyticsEvents";
 
 		_methodParameterTypes26 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+				"java.lang.String", "long", "java.lang.String"
 			};
 
 		_methodName27 = "getAnalyticsEvents";
 
 		_methodParameterTypes27 = new String[] {
+				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName28 = "getAnalyticsEvents";
+
+		_methodParameterTypes28 = new String[] {
 				"java.lang.String", "java.lang.String", "java.util.Date"
 			};
 
-		_methodName28 = "getAnalyticsEventsContent";
-
-		_methodParameterTypes28 = new String[] { "java.util.Date" };
-
-		_methodName29 = "getAnalyticsEventsContentIds";
+		_methodName29 = "getAnalyticsEventsContent";
 
 		_methodParameterTypes29 = new String[] { "java.util.Date" };
 
-		_methodName30 = "getAnalyticsEventsCount";
+		_methodName30 = "getAnalyticsEventsContentIds";
 
-		_methodParameterTypes30 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes30 = new String[] { "java.util.Date" };
 
 		_methodName31 = "getAnalyticsEventsCount";
 
-		_methodParameterTypes31 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String"
-			};
+		_methodParameterTypes31 = new String[] { "long", "java.util.Date" };
 
 		_methodName32 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes32 = new String[] {
-				"java.lang.String", "long", "java.lang.String"
+				"long", "java.lang.String", "long", "java.lang.String"
 			};
 
 		_methodName33 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes33 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+				"java.lang.String", "long", "java.lang.String"
 			};
 
 		_methodName34 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes34 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "long",
-				"java.lang.String", "java.util.Date"
+				"java.lang.String", "long", "java.lang.String", "java.util.Date"
 			};
 
 		_methodName35 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes35 = new String[] {
-				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "long", "java.lang.String", "long",
 				"java.lang.String", "java.util.Date"
 			};
 
 		_methodName36 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes36 = new String[] {
-				"java.lang.String", "java.lang.String", "java.util.Date"
+				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "java.util.Date"
 			};
 
-		_methodName37 = "getAnalyticsEventsIds";
+		_methodName37 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes37 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+				"java.lang.String", "java.lang.String", "java.util.Date"
 			};
 
 		_methodName38 = "getAnalyticsEventsIds";
 
 		_methodParameterTypes38 = new String[] {
+				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName39 = "getAnalyticsEventsIds";
+
+		_methodParameterTypes39 = new String[] {
 				"java.lang.String", "java.lang.String", "java.util.Date"
 			};
 
-		_methodName39 = "getMaxAge";
+		_methodName40 = "getMaxAge";
 
-		_methodParameterTypes39 = new String[] {  };
+		_methodParameterTypes40 = new String[] {  };
 	}
 
 	@Override
@@ -1020,6 +1026,50 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	}
 
 	@Override
+	public java.util.List<java.lang.Object[]> getAnalyticsEvents(
+		long companyId, java.lang.String referrerClassName,
+		long referrerClassPK, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
+					new Object[] {
+						companyId,
+						
+					ClpSerializer.translateInput(referrerClassName),
+						
+					referrerClassPK,
+						
+					ClpSerializer.translateInput(createDate)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<java.lang.Object[]>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		long anonymousUserId, java.lang.String className, long classPK,
 		java.lang.String eventType)
@@ -1028,8 +1078,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25,
 					new Object[] {
 						anonymousUserId,
 						
@@ -1071,8 +1121,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1113,8 +1163,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1157,8 +1207,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						ClpSerializer.translateInput(elementId),
 						
@@ -1198,8 +1248,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] { ClpSerializer.translateInput(createDate) });
 		}
 		catch (Throwable t) {
@@ -1232,8 +1282,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] { ClpSerializer.translateInput(createDate) });
 		}
 		catch (Throwable t) {
@@ -1266,8 +1316,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						companyId,
 						
@@ -1305,8 +1355,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName31,
-					_methodParameterTypes31,
+			returnObj = _invokableLocalService.invokeMethod(_methodName32,
+					_methodParameterTypes32,
 					new Object[] {
 						anonymousUserId,
 						
@@ -1348,8 +1398,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName32,
-					_methodParameterTypes32,
+			returnObj = _invokableLocalService.invokeMethod(_methodName33,
+					_methodParameterTypes33,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1389,8 +1439,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName33,
-					_methodParameterTypes33,
+			returnObj = _invokableLocalService.invokeMethod(_methodName34,
+					_methodParameterTypes34,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1433,8 +1483,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName34,
-					_methodParameterTypes34,
+			returnObj = _invokableLocalService.invokeMethod(_methodName35,
+					_methodParameterTypes35,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1481,8 +1531,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName35,
-					_methodParameterTypes35,
+			returnObj = _invokableLocalService.invokeMethod(_methodName36,
+					_methodParameterTypes36,
 					new Object[] {
 						ClpSerializer.translateInput(referrerClassName),
 						
@@ -1526,8 +1576,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36,
+			returnObj = _invokableLocalService.invokeMethod(_methodName37,
+					_methodParameterTypes37,
 					new Object[] {
 						ClpSerializer.translateInput(elementId),
 						
@@ -1567,8 +1617,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName37,
-					_methodParameterTypes37,
+			returnObj = _invokableLocalService.invokeMethod(_methodName38,
+					_methodParameterTypes38,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1610,8 +1660,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName38,
-					_methodParameterTypes38,
+			returnObj = _invokableLocalService.invokeMethod(_methodName39,
+					_methodParameterTypes39,
 					new Object[] {
 						ClpSerializer.translateInput(elementId),
 						
@@ -1650,8 +1700,8 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName39,
-					_methodParameterTypes39, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName40,
+					_methodParameterTypes40, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1755,4 +1805,6 @@ public class AnalyticsEventLocalServiceClp implements AnalyticsEventLocalService
 	private String[] _methodParameterTypes38;
 	private String _methodName39;
 	private String[] _methodParameterTypes39;
+	private String _methodName40;
+	private String[] _methodParameterTypes40;
 }

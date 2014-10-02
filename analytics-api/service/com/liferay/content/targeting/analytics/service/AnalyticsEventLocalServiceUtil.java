@@ -326,6 +326,16 @@ public class AnalyticsEventLocalServiceUtil {
 		return getService().getAnalyticsEvents(companyId, createDate);
 	}
 
+	public static java.util.List<java.lang.Object[]> getAnalyticsEvents(
+		long companyId, java.lang.String referrerClassName,
+		long referrerClassPK, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getAnalyticsEvents(companyId, referrerClassName,
+			referrerClassPK, createDate);
+	}
+
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		long anonymousUserId, java.lang.String className, long classPK,
 		java.lang.String eventType)

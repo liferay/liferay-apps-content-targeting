@@ -7,3 +7,4 @@ create index IX_977A23E5 on CT_Analytics_AnalyticsEvent (companyId, createDate);
 create index IX_ABBA8EFC on CT_Analytics_AnalyticsEvent (elementId, eventType, createDate);
 
 create index IX_9E01B1B7 on CT_Analytics_AnalyticsReferrer (analyticsEventId, referrerClassName, referrerClassPK);
+create index IX_83CCD014 on CT_Analytics_AnalyticsReferrer (referrerClassName, referrerClassPK);

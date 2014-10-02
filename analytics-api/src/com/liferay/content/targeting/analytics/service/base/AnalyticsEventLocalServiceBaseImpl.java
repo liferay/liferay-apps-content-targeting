@@ -16,6 +16,7 @@ package com.liferay.content.targeting.analytics.service.base;
 
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
+import com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventFinder;
 import com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventPersistence;
 import com.liferay.content.targeting.analytics.service.persistence.AnalyticsReferrerPersistence;
 
@@ -339,6 +340,25 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the analytics event finder.
+	 *
+	 * @return the analytics event finder
+	 */
+	public AnalyticsEventFinder getAnalyticsEventFinder() {
+		return analyticsEventFinder;
+	}
+
+	/**
+	 * Sets the analytics event finder.
+	 *
+	 * @param analyticsEventFinder the analytics event finder
+	 */
+	public void setAnalyticsEventFinder(
+		AnalyticsEventFinder analyticsEventFinder) {
+		this.analyticsEventFinder = analyticsEventFinder;
+	}
+
+	/**
 	 * Returns the analytics referrer local service.
 	 *
 	 * @return the analytics referrer local service
@@ -577,6 +597,8 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	protected com.liferay.content.targeting.analytics.service.AnalyticsEventService analyticsEventService;
 	@BeanReference(type = AnalyticsEventPersistence.class)
 	protected AnalyticsEventPersistence analyticsEventPersistence;
+	@BeanReference(type = AnalyticsEventFinder.class)
+	protected AnalyticsEventFinder analyticsEventFinder;
 	@BeanReference(type = com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService.class)
 	protected com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService analyticsReferrerLocalService;
 	@BeanReference(type = com.liferay.content.targeting.analytics.service.AnalyticsReferrerService.class)

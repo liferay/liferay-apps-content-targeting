@@ -112,6 +112,191 @@ public class AnalyticsReferrerUtil {
 	}
 
 	/**
+	* Returns all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @return the matching analytics referrers
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> findByR_R(
+		java.lang.String referrerClassName, long referrerClassPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByR_R(referrerClassName, referrerClassPK);
+	}
+
+	/**
+	* Returns a range of all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param start the lower bound of the range of analytics referrers
+	* @param end the upper bound of the range of analytics referrers (not inclusive)
+	* @return the range of matching analytics referrers
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> findByR_R(
+		java.lang.String referrerClassName, long referrerClassPK, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByR_R(referrerClassName, referrerClassPK, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param start the lower bound of the range of analytics referrers
+	* @param end the upper bound of the range of analytics referrers (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching analytics referrers
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> findByR_R(
+		java.lang.String referrerClassName, long referrerClassPK, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByR_R(referrerClassName, referrerClassPK, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching analytics referrer
+	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.analytics.model.AnalyticsReferrer findByR_R_First(
+		java.lang.String referrerClassName, long referrerClassPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByR_R_First(referrerClassName, referrerClassPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.analytics.model.AnalyticsReferrer fetchByR_R_First(
+		java.lang.String referrerClassName, long referrerClassPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByR_R_First(referrerClassName, referrerClassPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching analytics referrer
+	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.analytics.model.AnalyticsReferrer findByR_R_Last(
+		java.lang.String referrerClassName, long referrerClassPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByR_R_Last(referrerClassName, referrerClassPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.analytics.model.AnalyticsReferrer fetchByR_R_Last(
+		java.lang.String referrerClassName, long referrerClassPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByR_R_Last(referrerClassName, referrerClassPK,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the analytics referrers before and after the current analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	*
+	* @param analyticsReferrerId the primary key of the current analytics referrer
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next analytics referrer
+	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.analytics.model.AnalyticsReferrer[] findByR_R_PrevAndNext(
+		long analyticsReferrerId, java.lang.String referrerClassName,
+		long referrerClassPK,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByR_R_PrevAndNext(analyticsReferrerId,
+			referrerClassName, referrerClassPK, orderByComparator);
+	}
+
+	/**
+	* Removes all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63; from the database.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByR_R(java.lang.String referrerClassName,
+		long referrerClassPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByR_R(referrerClassName, referrerClassPK);
+	}
+
+	/**
+	* Returns the number of analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	*
+	* @param referrerClassName the referrer class name
+	* @param referrerClassPK the referrer class p k
+	* @return the number of matching analytics referrers
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByR_R(java.lang.String referrerClassName,
+		long referrerClassPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByR_R(referrerClassName, referrerClassPK);
+	}
+
+	/**
 	* Returns all the analytics referrers where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	*
 	* @param analyticsEventId the analytics event ID

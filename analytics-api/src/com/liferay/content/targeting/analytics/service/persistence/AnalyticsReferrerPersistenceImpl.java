@@ -86,6 +86,586 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
 			AnalyticsReferrerModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_R = new FinderPath(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
+			AnalyticsReferrerModelImpl.FINDER_CACHE_ENABLED,
+			AnalyticsReferrerImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_R",
+			new String[] {
+				String.class.getName(), Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R = new FinderPath(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
+			AnalyticsReferrerModelImpl.FINDER_CACHE_ENABLED,
+			AnalyticsReferrerImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_R",
+			new String[] { String.class.getName(), Long.class.getName() },
+			AnalyticsReferrerModelImpl.REFERRERCLASSNAME_COLUMN_BITMASK |
+			AnalyticsReferrerModelImpl.REFERRERCLASSPK_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_R_R = new FinderPath(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
+			AnalyticsReferrerModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R",
+			new String[] { String.class.getName(), Long.class.getName() });
+
+	/**
+	 * Returns all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @return the matching analytics referrers
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<AnalyticsReferrer> findByR_R(String referrerClassName,
+		long referrerClassPK) throws SystemException {
+		return findByR_R(referrerClassName, referrerClassPK, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param start the lower bound of the range of analytics referrers
+	 * @param end the upper bound of the range of analytics referrers (not inclusive)
+	 * @return the range of matching analytics referrers
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<AnalyticsReferrer> findByR_R(String referrerClassName,
+		long referrerClassPK, int start, int end) throws SystemException {
+		return findByR_R(referrerClassName, referrerClassPK, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param start the lower bound of the range of analytics referrers
+	 * @param end the upper bound of the range of analytics referrers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching analytics referrers
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<AnalyticsReferrer> findByR_R(String referrerClassName,
+		long referrerClassPK, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R;
+			finderArgs = new Object[] { referrerClassName, referrerClassPK };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_R_R;
+			finderArgs = new Object[] {
+					referrerClassName, referrerClassPK,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<AnalyticsReferrer> list = (List<AnalyticsReferrer>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (AnalyticsReferrer analyticsReferrer : list) {
+				if (!Validator.equals(referrerClassName,
+							analyticsReferrer.getReferrerClassName()) ||
+						(referrerClassPK != analyticsReferrer.getReferrerClassPK())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_ANALYTICSREFERRER_WHERE);
+
+			boolean bindReferrerClassName = false;
+
+			if (referrerClassName == null) {
+				query.append(_FINDER_COLUMN_R_R_REFERRERCLASSNAME_1);
+			}
+			else if (referrerClassName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_R_REFERRERCLASSNAME_3);
+			}
+			else {
+				bindReferrerClassName = true;
+
+				query.append(_FINDER_COLUMN_R_R_REFERRERCLASSNAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_R_R_REFERRERCLASSPK_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AnalyticsReferrerModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindReferrerClassName) {
+					qPos.add(referrerClassName);
+				}
+
+				qPos.add(referrerClassPK);
+
+				if (!pagination) {
+					list = (List<AnalyticsReferrer>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<AnalyticsReferrer>(list);
+				}
+				else {
+					list = (List<AnalyticsReferrer>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching analytics referrer
+	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnalyticsReferrer findByR_R_First(String referrerClassName,
+		long referrerClassPK, OrderByComparator orderByComparator)
+		throws NoSuchAnalyticsReferrerException, SystemException {
+		AnalyticsReferrer analyticsReferrer = fetchByR_R_First(referrerClassName,
+				referrerClassPK, orderByComparator);
+
+		if (analyticsReferrer != null) {
+			return analyticsReferrer;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("referrerClassName=");
+		msg.append(referrerClassName);
+
+		msg.append(", referrerClassPK=");
+		msg.append(referrerClassPK);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchAnalyticsReferrerException(msg.toString());
+	}
+
+	/**
+	 * Returns the first analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnalyticsReferrer fetchByR_R_First(String referrerClassName,
+		long referrerClassPK, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<AnalyticsReferrer> list = findByR_R(referrerClassName,
+				referrerClassPK, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching analytics referrer
+	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnalyticsReferrer findByR_R_Last(String referrerClassName,
+		long referrerClassPK, OrderByComparator orderByComparator)
+		throws NoSuchAnalyticsReferrerException, SystemException {
+		AnalyticsReferrer analyticsReferrer = fetchByR_R_Last(referrerClassName,
+				referrerClassPK, orderByComparator);
+
+		if (analyticsReferrer != null) {
+			return analyticsReferrer;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("referrerClassName=");
+		msg.append(referrerClassName);
+
+		msg.append(", referrerClassPK=");
+		msg.append(referrerClassPK);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchAnalyticsReferrerException(msg.toString());
+	}
+
+	/**
+	 * Returns the last analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnalyticsReferrer fetchByR_R_Last(String referrerClassName,
+		long referrerClassPK, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByR_R(referrerClassName, referrerClassPK);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AnalyticsReferrer> list = findByR_R(referrerClassName,
+				referrerClassPK, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the analytics referrers before and after the current analytics referrer in the ordered set where referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param analyticsReferrerId the primary key of the current analytics referrer
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next analytics referrer
+	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnalyticsReferrer[] findByR_R_PrevAndNext(long analyticsReferrerId,
+		String referrerClassName, long referrerClassPK,
+		OrderByComparator orderByComparator)
+		throws NoSuchAnalyticsReferrerException, SystemException {
+		AnalyticsReferrer analyticsReferrer = findByPrimaryKey(analyticsReferrerId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AnalyticsReferrer[] array = new AnalyticsReferrerImpl[3];
+
+			array[0] = getByR_R_PrevAndNext(session, analyticsReferrer,
+					referrerClassName, referrerClassPK, orderByComparator, true);
+
+			array[1] = analyticsReferrer;
+
+			array[2] = getByR_R_PrevAndNext(session, analyticsReferrer,
+					referrerClassName, referrerClassPK, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AnalyticsReferrer getByR_R_PrevAndNext(Session session,
+		AnalyticsReferrer analyticsReferrer, String referrerClassName,
+		long referrerClassPK, OrderByComparator orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ANALYTICSREFERRER_WHERE);
+
+		boolean bindReferrerClassName = false;
+
+		if (referrerClassName == null) {
+			query.append(_FINDER_COLUMN_R_R_REFERRERCLASSNAME_1);
+		}
+		else if (referrerClassName.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_R_R_REFERRERCLASSNAME_3);
+		}
+		else {
+			bindReferrerClassName = true;
+
+			query.append(_FINDER_COLUMN_R_R_REFERRERCLASSNAME_2);
+		}
+
+		query.append(_FINDER_COLUMN_R_R_REFERRERCLASSPK_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AnalyticsReferrerModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindReferrerClassName) {
+			qPos.add(referrerClassName);
+		}
+
+		qPos.add(referrerClassPK);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(analyticsReferrer);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AnalyticsReferrer> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63; from the database.
+	 *
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByR_R(String referrerClassName, long referrerClassPK)
+		throws SystemException {
+		for (AnalyticsReferrer analyticsReferrer : findByR_R(
+				referrerClassName, referrerClassPK, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(analyticsReferrer);
+		}
+	}
+
+	/**
+	 * Returns the number of analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @return the number of matching analytics referrers
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByR_R(String referrerClassName, long referrerClassPK)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_R;
+
+		Object[] finderArgs = new Object[] { referrerClassName, referrerClassPK };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_ANALYTICSREFERRER_WHERE);
+
+			boolean bindReferrerClassName = false;
+
+			if (referrerClassName == null) {
+				query.append(_FINDER_COLUMN_R_R_REFERRERCLASSNAME_1);
+			}
+			else if (referrerClassName.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_R_REFERRERCLASSNAME_3);
+			}
+			else {
+				bindReferrerClassName = true;
+
+				query.append(_FINDER_COLUMN_R_R_REFERRERCLASSNAME_2);
+			}
+
+			query.append(_FINDER_COLUMN_R_R_REFERRERCLASSPK_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindReferrerClassName) {
+					qPos.add(referrerClassName);
+				}
+
+				qPos.add(referrerClassPK);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_R_R_REFERRERCLASSNAME_1 = "analyticsReferrer.referrerClassName IS NULL AND ";
+	private static final String _FINDER_COLUMN_R_R_REFERRERCLASSNAME_2 = "analyticsReferrer.referrerClassName = ? AND ";
+	private static final String _FINDER_COLUMN_R_R_REFERRERCLASSNAME_3 = "(analyticsReferrer.referrerClassName IS NULL OR analyticsReferrer.referrerClassName = '') AND ";
+	private static final String _FINDER_COLUMN_R_R_REFERRERCLASSPK_2 = "analyticsReferrer.referrerClassPK = ?";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_A_R_R = new FinderPath(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
 			AnalyticsReferrerModelImpl.FINDER_CACHE_ENABLED,
 			AnalyticsReferrerImpl.class,
@@ -1293,6 +1873,27 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 		}
 
 		else {
+			if ((analyticsReferrerModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						analyticsReferrerModelImpl.getOriginalReferrerClassName(),
+						analyticsReferrerModelImpl.getOriginalReferrerClassPK()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R,
+					args);
+
+				args = new Object[] {
+						analyticsReferrerModelImpl.getReferrerClassName(),
+						analyticsReferrerModelImpl.getReferrerClassPK()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R,
+					args);
+			}
+
 			if ((analyticsReferrerModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_R_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {

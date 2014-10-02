@@ -4,6 +4,7 @@
 	<bean id="com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService" class="com.liferay.content.targeting.analytics.service.impl.AnalyticsEventLocalServiceImpl" />
 	<bean id="com.liferay.content.targeting.analytics.service.AnalyticsEventService" class="com.liferay.content.targeting.analytics.service.impl.AnalyticsEventServiceImpl" />
 	<bean id="com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventPersistence" class="com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventFinder" class="com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventFinderImpl" parent="basePersistence" />
 	<bean id="com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService" class="com.liferay.content.targeting.analytics.service.impl.AnalyticsReferrerLocalServiceImpl" />
 	<bean id="com.liferay.content.targeting.analytics.service.AnalyticsReferrerService" class="com.liferay.content.targeting.analytics.service.impl.AnalyticsReferrerServiceImpl" />
 	<bean id="com.liferay.content.targeting.analytics.service.persistence.AnalyticsReferrerPersistence" class="com.liferay.content.targeting.analytics.service.persistence.AnalyticsReferrerPersistenceImpl" parent="basePersistence" />
