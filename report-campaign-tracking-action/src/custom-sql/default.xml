@@ -4,7 +4,7 @@
 	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionFinder.findByAnalyticsWithClassName">
 		<![CDATA[
 			SELECT
-				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.className AS className, CT_Analytics_AnalyticsEvent.classPK AS classPK, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias
+				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.className AS className, CT_Analytics_AnalyticsEvent.classPK AS classPK, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias_
 			FROM
 				CT_Analytics_AnalyticsEvent
 			INNER JOIN
@@ -18,14 +18,12 @@
 			WHERE
 				(CT_TrackingActionInstance.campaignId = ?) AND
 				(CT_Analytics_AnalyticsEvent.createDate >= ?)
-			ORDER BY
-				CT_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionFinder.findByAnalyticsWithElementId">
 		<![CDATA[
 			SELECT
-				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.elementId AS elementId, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias
+				DISTINCT CT_Analytics_AnalyticsReferrer.referrerClassPK AS referrerClassPK, CT_Analytics_AnalyticsEvent.elementId AS elementId, CT_Analytics_AnalyticsEvent.eventType AS eventType, CT_TrackingActionInstance.alias_ AS alias_
 			FROM
 				CT_Analytics_AnalyticsEvent
 			INNER JOIN
@@ -38,8 +36,6 @@
 			WHERE
 				(CT_TrackingActionInstance.campaignId = ?) AND
 				(CT_Analytics_AnalyticsEvent.createDate >= ?)
-			ORDER BY
-				CT_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionTotalFinder.findByAnalyticsWithClassName">
@@ -53,8 +49,6 @@
 				(CT_Analytics_AnalyticsEvent.classPK != 0)
 			GROUP BY
 	  			CT_Analytics_AnalyticsEvent.className, CT_Analytics_AnalyticsEvent.classPK, CT_Analytics_AnalyticsEvent.eventType
-			ORDER BY
-				CT_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
 	<sql id="com.liferay.content.targeting.report.campaign.tracking.action.service.persistence.CTActionTotalFinder.findByAnalyticsWithElementId">
@@ -68,8 +62,6 @@
 				(CT_Analytics_AnalyticsEvent.elementId != '')
 			GROUP BY
 				CT_Analytics_AnalyticsEvent.elementId, CT_Analytics_AnalyticsEvent.eventType
-			ORDER BY
-				CT_Analytics_AnalyticsEvent.createDate DESC
 		]]>
 	</sql>
 </custom-sql>
