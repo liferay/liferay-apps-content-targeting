@@ -66,7 +66,7 @@
 
 	<@aui["input"] name="endDate" value=endDate />
 
-	<@aui["input"] cssClass="slider-input" inlineField=true name="priority" size="2" maxlength="3" type="text" value="${priority}" />
+	<@aui["input"] cssClass="slider-input" helpMessage="priority-help" inlineField=true name="priority" size="2" maxlength="3" type="text" value="${priority}" />
 
 	<span class="slider-holder"></span>
 
