@@ -123,7 +123,7 @@ public class UserSegmentContentLocalServiceImpl
 	public void checkUserSegmentContentEvents(long userSegmentId)
 		throws PortalException, SystemException {
 
-		Date modifiedDate = null;
+		Date modifiedDate = _analyticsEventLocalService.getMaxAge();
 
 		ReportInstance reportInstance =
 			_reportInstanceLocalService.fetchReportInstance(

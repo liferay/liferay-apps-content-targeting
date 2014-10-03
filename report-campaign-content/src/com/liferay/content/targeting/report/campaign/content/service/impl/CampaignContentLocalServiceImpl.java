@@ -122,7 +122,7 @@ public class CampaignContentLocalServiceImpl
 	public void checkCampaignContentEvents(long campaignId)
 		throws PortalException, SystemException {
 
-		Date modifiedDate = null;
+		Date modifiedDate = _analyticsEventLocalService.getMaxAge();
 
 		ReportInstance reportInstance =
 			_reportInstanceLocalService.fetchReportInstance(
