@@ -163,6 +163,10 @@ public class NewsletterLocalServiceImpl extends NewsletterLocalServiceBaseImpl {
 		return modifiedDate;
 	}
 
+	public List<Newsletter> getNewsletters (long campaignId) throws SystemException {
+		return newsletterPersistence.findByCampaignId(campaignId);
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		NewsletterLocalServiceImpl.class);
 
