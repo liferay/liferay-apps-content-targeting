@@ -26,7 +26,7 @@
 		</attributes>
 	</mapped-superclass>
 	<entity class="com.liferay.content.targeting.report.campaign.newsletter.model.impl.NewsletterImpl" name="Newsletter">
-		<table name="ContentTargeting_CampaignNewsletter_Newsletter" />
+		<table name="CT_CNReport_Newsletter" />
 		<attributes />
 	</entity>
 </entity-mappings>

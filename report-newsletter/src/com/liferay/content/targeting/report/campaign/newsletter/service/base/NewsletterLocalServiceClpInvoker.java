@@ -106,13 +106,32 @@ public class NewsletterLocalServiceClpInvoker {
 				"com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter"
 			};
 
-		_methodName34 = "getBeanIdentifier";
+		_methodName36 = "getBeanIdentifier";
 
-		_methodParameterTypes34 = new String[] {  };
+		_methodParameterTypes36 = new String[] {  };
 
-		_methodName35 = "setBeanIdentifier";
+		_methodName37 = "setBeanIdentifier";
 
-		_methodParameterTypes35 = new String[] { "java.lang.String" };
+		_methodParameterTypes37 = new String[] { "java.lang.String" };
+
+		_methodName42 = "addNewsletter";
+
+		_methodParameterTypes42 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "int"
+			};
+
+		_methodName44 = "checkNewsletters";
+
+		_methodParameterTypes44 = new String[] {  };
+
+		_methodName45 = "getLastReportDate";
+
+		_methodParameterTypes45 = new String[] { "long" };
+
+		_methodName46 = "getNewsletters";
+
+		_methodParameterTypes46 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -204,16 +223,41 @@ public class NewsletterLocalServiceClpInvoker {
 			return NewsletterLocalServiceUtil.updateNewsletter((com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter)arguments[0]);
 		}
 
-		if (_methodName34.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes34, parameterTypes)) {
+		if (_methodName36.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
 			return NewsletterLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName35.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes35, parameterTypes)) {
+		if (_methodName37.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes37, parameterTypes)) {
 			NewsletterLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
+		}
+
+		if (_methodName42.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
+			return NewsletterLocalServiceUtil.addNewsletter(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(java.lang.String)arguments[3],
+				((Integer)arguments[4]).intValue());
+		}
+
+		if (_methodName44.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
+			NewsletterLocalServiceUtil.checkNewsletters();
+
+			return null;
+		}
+
+		if (_methodName45.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
+			return NewsletterLocalServiceUtil.getLastReportDate(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName46.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+			return NewsletterLocalServiceUtil.getNewsletters(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
@@ -251,8 +295,16 @@ public class NewsletterLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName34;
-	private String[] _methodParameterTypes34;
-	private String _methodName35;
-	private String[] _methodParameterTypes35;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
+	private String _methodName44;
+	private String[] _methodParameterTypes44;
+	private String _methodName45;
+	private String[] _methodParameterTypes45;
+	private String _methodName46;
+	private String[] _methodParameterTypes46;
 }

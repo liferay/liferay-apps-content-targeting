@@ -275,6 +275,33 @@ public class NewsletterLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter addNewsletter(
+		long campaignId, java.lang.String alias, java.lang.String elementId,
+		java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addNewsletter(campaignId, alias, elementId, eventType, count);
+	}
+
+	public static void checkNewsletters()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().checkNewsletters();
+	}
+
+	public static java.util.Date getLastReportDate(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getLastReportDate(campaignId);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter> getNewsletters(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getNewsletters(campaignId);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

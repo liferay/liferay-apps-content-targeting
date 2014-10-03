@@ -16,6 +16,7 @@ package com.liferay.content.targeting.report.campaign.newsletter.service.base;
 
 import com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter;
 import com.liferay.content.targeting.report.campaign.newsletter.service.NewsletterService;
+import com.liferay.content.targeting.report.campaign.newsletter.service.persistence.NewsletterFinder;
 import com.liferay.content.targeting.report.campaign.newsletter.service.persistence.NewsletterPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
@@ -103,6 +104,24 @@ public abstract class NewsletterServiceBaseImpl extends BaseServiceImpl
 	public void setNewsletterPersistence(
 		NewsletterPersistence newsletterPersistence) {
 		this.newsletterPersistence = newsletterPersistence;
+	}
+
+	/**
+	 * Returns the newsletter finder.
+	 *
+	 * @return the newsletter finder
+	 */
+	public NewsletterFinder getNewsletterFinder() {
+		return newsletterFinder;
+	}
+
+	/**
+	 * Sets the newsletter finder.
+	 *
+	 * @param newsletterFinder the newsletter finder
+	 */
+	public void setNewsletterFinder(NewsletterFinder newsletterFinder) {
+		this.newsletterFinder = newsletterFinder;
 	}
 
 	/**
@@ -282,6 +301,8 @@ public abstract class NewsletterServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.content.targeting.report.campaign.newsletter.service.NewsletterService newsletterService;
 	@BeanReference(type = NewsletterPersistence.class)
 	protected NewsletterPersistence newsletterPersistence;
+	@BeanReference(type = NewsletterFinder.class)
+	protected NewsletterFinder newsletterFinder;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)

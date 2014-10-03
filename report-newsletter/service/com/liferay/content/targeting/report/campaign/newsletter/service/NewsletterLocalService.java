@@ -248,4 +248,24 @@ public interface NewsletterLocalService extends BaseLocalService,
 	public java.lang.Object invokeMethod(java.lang.String name,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	public com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter addNewsletter(
+		long campaignId, java.lang.String alias, java.lang.String elementId,
+		java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void checkNewsletters()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Date getLastReportDate(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter> getNewsletters(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }
