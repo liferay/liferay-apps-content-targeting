@@ -14,7 +14,13 @@
 
 package com.liferay.content.targeting.report.campaign.newsletter.service.impl;
 
+import com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter;
 import com.liferay.content.targeting.report.campaign.newsletter.service.base.NewsletterLocalServiceBaseImpl;
+import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import org.omg.CORBA.SystemException;
+
+import java.util.Date;
 
 /**
  * The implementation of the newsletter local service.
@@ -36,4 +42,32 @@ public class NewsletterLocalServiceImpl extends NewsletterLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link com.liferay.content.targeting.report.campaign.newsletter.service.NewsletterLocalServiceUtil} to access the newsletter local service.
 	 */
+
+	@Override
+	public Newsletter addNewsletter(
+			long campaignId, String alias, String elementId, String eventType, int count)
+		throws PortalException, SystemException {
+
+		Newsletter newsletter = newsletterPersistence.fetchByC_A_E_E(
+			campaignId, alias, elementId, eventType);
+
+		if (newsletter == null) {
+			long newsletterId = CounterLocalServiceUtil.increment();
+
+			newsletter = newsletterPersistence.create(newsletterId);
+
+			newsletter.setCampaignId(campaignId);
+			newsletter.setAlias(alias);
+			newsletter.setElementId(elementId);
+			newsletter.setEventType(eventType);
+		}
+
+		newsletter.setCount(
+			newsletter.getCount() + count);
+		newsletter.setModifiedDate(new Date());
+
+		newsletterPersistence.update(newsletter);
+
+		return newsletter;
+	}
 }
