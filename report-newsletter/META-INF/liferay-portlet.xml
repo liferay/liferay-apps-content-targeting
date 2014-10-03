@@ -1,8 +1,17 @@
 <?xml version="1.0"?>
-<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.1.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_1_0.dtd">
 
 <liferay-portlet-app>
 	<portlet>
 		<portlet-name>newsletter</portlet-name>
+		<scheduler-entry>
+			<scheduler-event-listener-class>com.liferay.content.targeting.report.campaign.newsletter.messaging.CheckNewsletters</scheduler-event-listener-class>
+			<trigger>
+				<simple>
+					<property-key>newsletter.report.check.interval</property-key>
+					<time-unit>hour</time-unit>
+				</simple>
+			</trigger>
+		</scheduler-entry>
 	</portlet>
 </liferay-portlet-app>

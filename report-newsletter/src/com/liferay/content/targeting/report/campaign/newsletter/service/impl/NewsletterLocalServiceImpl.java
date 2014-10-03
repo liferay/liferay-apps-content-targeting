@@ -15,16 +15,22 @@
 package com.liferay.content.targeting.report.campaign.newsletter.service.impl;
 
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
+import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter;
 import com.liferay.content.targeting.report.campaign.newsletter.service.base.NewsletterLocalServiceBaseImpl;
+import com.liferay.content.targeting.report.newsletter.NewsletterReport;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.service.ServiceContext;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
@@ -107,6 +113,54 @@ public class NewsletterLocalServiceImpl extends NewsletterLocalServiceBaseImpl {
 
 			addNewsletter(campaignId, alias, elementId, eventType, count);
 		}
+	}
+
+	@Override
+	public void checkNewsletters()
+		throws PortalException, SystemException {
+
+		try {
+			List<Campaign> campaigns = _campaignLocalService.getCampaigns(
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			for (Campaign campaign : campaigns) {
+				Date lastReportDate = getLastReportDate(campaign.getCampaignId());
+
+				addCampaignNewsletterFromAnalyticsWithElementId(
+					campaign.getCampaignId(), lastReportDate);
+
+				serviceContext.setScopeGroupId(campaign.getGroupId());
+
+				_reportInstanceLocalService.addReportInstance(
+					campaign.getUserId(),
+					NewsletterReport.class.getSimpleName(),
+					Campaign.class.getName(), campaign.getCampaignId(),
+					StringPool.BLANK, serviceContext);
+			}
+		}
+		catch (NullPointerException npe) {
+			_log.error("Content Targeting API Services are not available");
+		}
+	}
+
+	@Override
+	public Date getLastReportDate(long campaignId)
+		throws PortalException, SystemException {
+
+		Date modifiedDate = null;
+
+		ReportInstance reportInstance =
+			_reportInstanceLocalService.fetchReportInstance(
+				NewsletterReport.class.getSimpleName(),
+				Campaign.class.getName(), campaignId);
+
+		if (reportInstance != null) {
+			modifiedDate = reportInstance.getModifiedDate();
+		}
+
+		return modifiedDate;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
