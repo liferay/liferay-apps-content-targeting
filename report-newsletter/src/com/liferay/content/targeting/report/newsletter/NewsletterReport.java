@@ -17,6 +17,9 @@ package com.liferay.content.targeting.report.newsletter;
 import com.liferay.content.targeting.api.model.BaseReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.report.campaign.newsletter.service.NewsletterLocalService;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Map;
@@ -24,6 +27,7 @@ import java.util.Map;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Brian Chan
@@ -56,11 +60,30 @@ public class NewsletterReport extends BaseReport {
 
 	@Override
 	public String updateReport(long classPK) {
+		try {
+			_newsletterLocalService.checkNewsletters();
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
 		return StringPool.BLANK;
 	}
 
 	@Override
 	protected void populateContext(Map<String, Object> context) {
 	}
+
+	@Reference
+	public void setNewsletterLocalService(
+		NewsletterLocalService	newsletterLocalService) {
+
+		_newsletterLocalService = newsletterLocalService;
+	}
+
+	NewsletterLocalService _newsletterLocalService;
+
+	private static Log _log = LogFactoryUtil.getLog(
+		NewsletterReport.class);
 
 }
