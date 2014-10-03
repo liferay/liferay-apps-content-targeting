@@ -1,0 +1,2 @@
+create index IX_78CE91ED on ContentTargeting_CampaignNewsletter_Newsletter (campaignId);
+create unique index IX_7677D6CD on ContentTargeting_CampaignNewsletter_Newsletter (campaignId, alias_, elementId, eventType);

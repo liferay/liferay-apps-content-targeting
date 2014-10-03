@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.liferay.content.targeting.report.campaign.newsletter.service.NewsletterLocalService" class="com.liferay.content.targeting.report.campaign.newsletter.service.impl.NewsletterLocalServiceImpl" />
+	<bean id="com.liferay.content.targeting.report.campaign.newsletter.service.NewsletterService" class="com.liferay.content.targeting.report.campaign.newsletter.service.impl.NewsletterServiceImpl" />
+	<bean id="com.liferay.content.targeting.report.campaign.newsletter.service.persistence.NewsletterPersistence" class="com.liferay.content.targeting.report.campaign.newsletter.service.persistence.NewsletterPersistenceImpl" parent="basePersistence" />
+</beans>

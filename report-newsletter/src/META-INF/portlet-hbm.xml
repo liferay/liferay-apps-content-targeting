@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter" />
+	<class name="com.liferay.content.targeting.report.campaign.newsletter.model.impl.NewsletterImpl" table="ContentTargeting_CampaignNewsletter_Newsletter">
+		<cache usage="read-write" />
+		<id name="newsletterId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="alias" type="com.liferay.portal.dao.orm.hibernate.StringType" column="alias_" />
+		<property name="elementId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="count" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+	</class>
+</hibernate-mapping>
