@@ -17,11 +17,15 @@ package com.liferay.content.targeting.report.newsletter;
 import com.liferay.content.targeting.api.model.BaseReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter;
 import com.liferay.content.targeting.report.campaign.newsletter.service.NewsletterLocalService;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.List;
 import java.util.Map;
 
 import org.osgi.service.component.annotations.Activate;
@@ -72,6 +76,17 @@ public class NewsletterReport extends BaseReport {
 
 	@Override
 	protected void populateContext(Map<String, Object> context) {
+		long campaignId = GetterUtil.getLong(context.get("classPK"));
+
+		try {
+			List<Newsletter> newsletters = _newsletterLocalService.getNewsletters(campaignId);
+
+			context.put("newsletters", newsletters);
+		}
+		catch (SystemException e) {
+			_log.error(e);
+		}
+
 	}
 
 	@Reference
