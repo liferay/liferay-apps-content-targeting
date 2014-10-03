@@ -287,6 +287,37 @@ public class NewsletterLocalServiceWrapper implements NewsletterLocalService,
 			arguments);
 	}
 
+	@Override
+	public com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter addNewsletter(
+		long campaignId, java.lang.String alias, java.lang.String elementId,
+		java.lang.String eventType, int count)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _newsletterLocalService.addNewsletter(campaignId, alias,
+			elementId, eventType, count);
+	}
+
+	@Override
+	public void checkNewsletters()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_newsletterLocalService.checkNewsletters();
+	}
+
+	@Override
+	public java.util.Date getLastReportDate(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _newsletterLocalService.getLastReportDate(campaignId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter> getNewsletters(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _newsletterLocalService.getNewsletters(campaignId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -3,7 +3,7 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.content.targeting.report.campaign.newsletter.model.Newsletter" />
-	<class name="com.liferay.content.targeting.report.campaign.newsletter.model.impl.NewsletterImpl" table="ContentTargeting_CampaignNewsletter_Newsletter">
+	<class name="com.liferay.content.targeting.report.campaign.newsletter.model.impl.NewsletterImpl" table="CT_CNReport_Newsletter">
 		<cache usage="read-write" />
 		<id name="newsletterId" type="long">
 			<generator class="assigned" />

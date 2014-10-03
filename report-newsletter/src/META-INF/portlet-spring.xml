@@ -4,4 +4,5 @@
 	<bean id="com.liferay.content.targeting.report.campaign.newsletter.service.NewsletterLocalService" class="com.liferay.content.targeting.report.campaign.newsletter.service.impl.NewsletterLocalServiceImpl" />
 	<bean id="com.liferay.content.targeting.report.campaign.newsletter.service.NewsletterService" class="com.liferay.content.targeting.report.campaign.newsletter.service.impl.NewsletterServiceImpl" />
 	<bean id="com.liferay.content.targeting.report.campaign.newsletter.service.persistence.NewsletterPersistence" class="com.liferay.content.targeting.report.campaign.newsletter.service.persistence.NewsletterPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.content.targeting.report.campaign.newsletter.service.persistence.NewsletterFinder" class="com.liferay.content.targeting.report.campaign.newsletter.service.persistence.NewsletterFinderImpl" parent="basePersistence" />
 </beans>
