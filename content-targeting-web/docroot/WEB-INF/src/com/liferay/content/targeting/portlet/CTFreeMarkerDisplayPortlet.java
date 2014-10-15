@@ -54,7 +54,7 @@ import javax.portlet.PortletRequest;
  *
  * @author Eduardo Garcia
  */
-public class CTFreeMarkerDisplayPortlet extends FreeMarkerPortlet {
+public class CTFreeMarkerDisplayPortlet extends CTFreeMarkerPortlet {
 
 	protected void populatePortletDisplayTemplateContext(
 		Template template, PortletPreferences portletPreferences,

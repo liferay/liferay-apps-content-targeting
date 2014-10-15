@@ -125,7 +125,7 @@ import org.springframework.transaction.interceptor.TransactionAttribute;
  * @author Eduardo Garcia
  * @author Carlos Sierra Andrés
  */
-public class ContentTargetingPortlet extends FreeMarkerPortlet {
+public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 	public void deleteCampaign(ActionRequest request, ActionResponse response)
 		throws Exception {

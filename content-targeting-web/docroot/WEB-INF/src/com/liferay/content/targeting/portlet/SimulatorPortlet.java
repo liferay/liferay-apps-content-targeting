@@ -55,7 +55,7 @@ import org.osgi.framework.FrameworkUtil;
 /**
  * @author Julio Camarero
  */
-public class SimulatorPortlet extends FreeMarkerPortlet {
+public class SimulatorPortlet extends CTFreeMarkerPortlet {
 
 	@Override
 	public void init() throws PortletException {
