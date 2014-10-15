@@ -49,9 +49,12 @@ import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 
 /**
+ * This class contains specific logic for the Content Targeting FreeMarker
+ * display portlets
+ *
  * @author Eduardo Garcia
  */
-public class FreeMarkerDisplayPortlet extends FreeMarkerPortlet {
+public class CTFreeMarkerDisplayPortlet extends FreeMarkerPortlet {
 
 	protected void populatePortletDisplayTemplateContext(
 		Template template, PortletPreferences portletPreferences,
@@ -173,6 +176,6 @@ public class FreeMarkerDisplayPortlet extends FreeMarkerPortlet {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		FreeMarkerDisplayPortlet.class);
+		CTFreeMarkerDisplayPortlet.class);
 
 }

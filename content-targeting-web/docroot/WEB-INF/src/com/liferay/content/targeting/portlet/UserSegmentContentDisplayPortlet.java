@@ -53,7 +53,8 @@ import javax.portlet.PortletResponse;
 /**
  * @author Eudaldo Alonso
  */
-public class UserSegmentContentDisplayPortlet extends FreeMarkerDisplayPortlet {
+public class UserSegmentContentDisplayPortlet
+	extends CTFreeMarkerDisplayPortlet {
 
 	public void updatePreferences(
 			ActionRequest request, ActionResponse response)
