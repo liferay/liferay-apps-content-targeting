@@ -14,8 +14,10 @@
  */
 -->
 
+<#include "init.ftl" />
+
 <div class="content-targeting-error">
 	<span class="alert alert-error">
-		<@liferay.language key="an-error-occurred-while-processing-the-template" />
+		<@liferay_ui["message"] key="an-error-occurred-while-processing-the-template" />
 	</span>
 </div>
