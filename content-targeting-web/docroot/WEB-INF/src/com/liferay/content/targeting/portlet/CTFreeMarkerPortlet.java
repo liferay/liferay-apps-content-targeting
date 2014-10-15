@@ -14,15 +14,21 @@
 
 package com.liferay.content.targeting.portlet;
 
+import com.liferay.content.targeting.portlet.util.UnavailableServiceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.util.PortalUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
+import javax.portlet.RenderResponse;
+
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * This class contains specific logic for the Content Targeting FreeMarker
@@ -54,7 +60,26 @@ public class CTFreeMarkerPortlet extends FreeMarkerPortlet {
 			PortletResponse portletResponse, Template template)
 		throws Exception {
 
-		doPopulateContext(path, portletRequest, portletResponse, template);
+		if (!path.equals(ContentTargetingPath.ERROR) &&
+			!path.equals(ContentTargetingPath.WARNING_RESTART)) {
+
+			try {
+				doPopulateContext(
+					path, portletRequest, portletResponse, template);
+			}
+			catch (UnavailableServiceException use) {
+				HttpServletResponse response =
+					PortalUtil.getHttpServletResponse(portletResponse);
+
+				PortletURL portletURL =
+					((RenderResponse)portletResponse).createRenderURL();
+
+				portletURL.setParameter(
+					"mvcPath", ContentTargetingPath.WARNING_RESTART);
+
+				response.sendRedirect(portletURL.toString());
+			}
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(CTFreeMarkerPortlet.class);

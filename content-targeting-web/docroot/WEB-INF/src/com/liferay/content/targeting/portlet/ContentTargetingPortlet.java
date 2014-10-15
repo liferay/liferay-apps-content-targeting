@@ -36,6 +36,7 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.util.BreadcrumbUtil;
 import com.liferay.content.targeting.portlet.util.RuleTemplate;
 import com.liferay.content.targeting.portlet.util.TrackingActionTemplate;
+import com.liferay.content.targeting.portlet.util.UnavailableServiceException;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.service.ReportInstanceService;
@@ -469,6 +470,13 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			PortletResponse portletResponse, Template template)
 		throws Exception {
 
+		try {
+			_campaignService.getBeanIdentifier();
+		}
+		catch (NullPointerException npe) {
+			throw new UnavailableServiceException(CampaignService.class);
+		}
+
 		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
 		TemplateHashModel staticModels = wrapper.getStaticModels();
@@ -494,7 +502,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put("userSegmentClass", UserSegment.class);
 
 		populateViewContext(
-			path, portletRequest, portletResponse, template, staticModels);
+				path, portletRequest, portletResponse, template, staticModels);
 	}
 
 	protected InvalidRulesException getInvalidRulesException(

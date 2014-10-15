@@ -18,6 +18,7 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.portlet.util.CampaignQueryRule;
 import com.liferay.content.targeting.portlet.util.CampaignQueryRuleUtil;
 import com.liferay.content.targeting.portlet.util.QueryRule;
+import com.liferay.content.targeting.portlet.util.UnavailableServiceException;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
@@ -161,6 +162,13 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerDisplayPortlet {
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template)
 		throws Exception {
+
+		try {
+			_campaignLocalService.getBeanIdentifier();
+		}
+		catch (NullPointerException npe) {
+			throw new UnavailableServiceException(CampaignLocalService.class);
+		}
 
 		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
