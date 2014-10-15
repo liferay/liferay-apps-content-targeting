@@ -109,7 +109,8 @@ public class SimulatorPortlet extends CTFreeMarkerPortlet {
 			selectedUserSegmentIds, httpServletRequest, httpServletResponse);
 	}
 
-	protected void populateContext(
+	@Override
+	protected void doPopulateContext(
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template)
 		throws Exception {

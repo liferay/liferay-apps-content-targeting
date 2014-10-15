@@ -463,6 +463,40 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
+	@Override
+	protected void doPopulateContext(
+			String path, PortletRequest portletRequest,
+			PortletResponse portletResponse, Template template)
+		throws Exception {
+
+		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
+
+		TemplateHashModel staticModels = wrapper.getStaticModels();
+
+		template.put("backURL", ParamUtil.getString(portletRequest, "backURL"));
+		template.put("campaignClass", Campaign.class);
+		template.put(
+			"campaignConstants",
+			staticModels.get(CampaignConstants.class.getName()));
+		template.put(
+			"contentTargetingPath",
+			staticModels.get(ContentTargetingPath.class.getName()));
+		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
+		template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
+		template.put("portletContext", getPortletContext());
+		template.put(
+			"redirect", ParamUtil.getString(portletRequest, "redirect"));
+		template.put(
+			"tabs1",
+			ParamUtil.getString(portletRequest, "tabs1", "user-segments"));
+		template.put(
+			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
+		template.put("userSegmentClass", UserSegment.class);
+
+		populateViewContext(
+			path, portletRequest, portletResponse, template, staticModels);
+	}
+
 	protected InvalidRulesException getInvalidRulesException(
 		PortletRequest portletRequest) {
 
@@ -700,39 +734,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 
 		return trackingActionsInstances;
-	}
-
-	protected void populateContext(
-			String path, PortletRequest portletRequest,
-			PortletResponse portletResponse, Template template)
-		throws Exception {
-
-		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
-
-		TemplateHashModel staticModels = wrapper.getStaticModels();
-
-		template.put("backURL", ParamUtil.getString(portletRequest, "backURL"));
-		template.put("campaignClass", Campaign.class);
-		template.put(
-			"campaignConstants",
-			staticModels.get(CampaignConstants.class.getName()));
-		template.put(
-			"contentTargetingPath",
-			staticModels.get(ContentTargetingPath.class.getName()));
-		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
-		template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
-		template.put("portletContext", getPortletContext());
-		template.put(
-			"redirect", ParamUtil.getString(portletRequest, "redirect"));
-		template.put(
-			"tabs1",
-			ParamUtil.getString(portletRequest, "tabs1", "user-segments"));
-		template.put(
-			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
-		template.put("userSegmentClass", UserSegment.class);
-
-		populateViewContext(
-			path, portletRequest, portletResponse, template, staticModels);
 	}
 
 	protected void populateViewContext(

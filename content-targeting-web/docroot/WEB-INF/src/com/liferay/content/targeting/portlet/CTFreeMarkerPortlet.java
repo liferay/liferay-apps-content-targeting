@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.template.Template;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 /**
  * This class contains specific logic for the Content Targeting FreeMarker
  * portlets
@@ -37,6 +40,21 @@ public class CTFreeMarkerPortlet extends FreeMarkerPortlet {
 		}
 
 		return context;
+	}
+
+	protected void doPopulateContext(
+			String path, PortletRequest portletRequest,
+			PortletResponse portletResponse, Template template)
+		throws Exception {
+	}
+
+	@Override
+	protected void populateContext(
+			String path, PortletRequest portletRequest,
+			PortletResponse portletResponse, Template template)
+		throws Exception {
+
+		doPopulateContext(path, portletRequest, portletResponse, template);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(CTFreeMarkerPortlet.class);

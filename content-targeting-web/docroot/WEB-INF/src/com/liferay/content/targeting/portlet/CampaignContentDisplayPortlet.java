@@ -156,6 +156,27 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerDisplayPortlet {
 		super.updatePreferences(request, response, portletPreferences);
 	}
 
+	@Override
+	protected void doPopulateContext(
+			String path, PortletRequest portletRequest,
+			PortletResponse portletResponse, Template template)
+		throws Exception {
+
+		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
+
+		TemplateHashModel staticModels = wrapper.getStaticModels();
+
+		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
+		template.put(
+			"redirect", ParamUtil.getString(portletRequest, "redirect"));
+		template.put(
+			"campaignContentDisplayPath",
+			staticModels.get(CampaignContentDisplayPath.class.getName()));
+
+		populateViewContext(
+			path, portletRequest, portletResponse, template, staticModels);
+	}
+
 	protected long[] getCampaignIds(List<Campaign> campaigns) {
 		long[] campaignIds = new long[campaigns.size()];
 
@@ -187,27 +208,6 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerDisplayPortlet {
 		}
 
 		return selectableAssetRendererFactories;
-	}
-
-	@Override
-	protected void populateContext(
-			String path, PortletRequest portletRequest,
-			PortletResponse portletResponse, Template template)
-		throws Exception {
-
-		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
-
-		TemplateHashModel staticModels = wrapper.getStaticModels();
-
-		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
-		template.put(
-			"redirect", ParamUtil.getString(portletRequest, "redirect"));
-		template.put(
-			"campaignContentDisplayPath",
-			staticModels.get(CampaignContentDisplayPath.class.getName()));
-
-		populateViewContext(
-			path, portletRequest, portletResponse, template, staticModels);
 	}
 
 	protected void populateViewContext(

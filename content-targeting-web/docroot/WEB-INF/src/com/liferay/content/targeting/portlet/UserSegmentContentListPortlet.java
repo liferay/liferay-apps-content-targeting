@@ -81,6 +81,24 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 		super.updatePreferences(request, response, portletPreferences);
 	}
 
+	@Override
+	protected void doPopulateContext(
+			String path, PortletRequest portletRequest,
+			PortletResponse portletResponse, Template template)
+		throws Exception {
+
+		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
+
+		TemplateHashModel staticModels = wrapper.getStaticModels();
+
+		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
+		template.put(
+			"redirect", ParamUtil.getString(portletRequest, "redirect"));
+
+		populateViewContext(
+			path, portletRequest, portletResponse, template, staticModels);
+	}
+
 	protected long[] getAvailableClassNameIds(long companyId) {
 		long[] availableClassNameIds =
 			AssetRendererFactoryRegistryUtil.getClassNameIds(companyId);
@@ -142,23 +160,6 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 		}
 
 		return super.getPath(portletRequest);
-	}
-
-	protected void populateContext(
-			String path, PortletRequest portletRequest,
-			PortletResponse portletResponse, Template template)
-		throws Exception {
-
-		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
-
-		TemplateHashModel staticModels = wrapper.getStaticModels();
-
-		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
-		template.put(
-			"redirect", ParamUtil.getString(portletRequest, "redirect"));
-
-		populateViewContext(
-			path, portletRequest, portletResponse, template, staticModels);
 	}
 
 	protected void populateViewContext(
