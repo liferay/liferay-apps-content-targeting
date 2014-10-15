@@ -903,6 +903,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 							_trackingActionsRegistry.getTrackingAction(
 								instance.getTrackingActionKey());
 
+						if (trackingAction == null) {
+							continue;
+						}
+
 						TrackingActionTemplate trackingActionTemplate =
 							new TrackingActionTemplate();
 
@@ -999,6 +1003,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					for (RuleInstance ruleInstance : ruleInstances) {
 						Rule rule = _rulesRegistry.getRule(
 							ruleInstance.getRuleKey());
+
+						if (rule == null) {
+							continue;
+						}
 
 						RuleTemplate ruleTemplate = new RuleTemplate();
 
@@ -1156,6 +1164,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			Rule rule = _rulesRegistry.getRule(
 				requestRuleInstance.getRuleKey());
 
+			if (rule == null) {
+				continue;
+			}
+
 			String typeSettings = null;
 
 			try {
@@ -1232,6 +1244,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			TrackingAction trackingAction =
 				_trackingActionsRegistry.getTrackingAction(
 					requestTrackingActionInstance.getTrackingActionKey());
+
+			if (trackingAction == null) {
+				continue;
+			}
 
 			String typeSettings = null;
 
