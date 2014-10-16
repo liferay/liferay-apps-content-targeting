@@ -173,9 +173,10 @@ public class ContentTrackingAction extends BaseTrackingAction {
 			eventType = values.get("eventType");
 
 			try {
-				assetEntry = AssetEntryLocalServiceUtil.getEntry(assetEntryId);
+				assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+					assetEntryId);
 			}
-			catch (Exception e) {
+			catch (SystemException e) {
 				_log.error(e);
 			}
 		}
