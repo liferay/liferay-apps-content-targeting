@@ -16,11 +16,10 @@
 
 <#include "init.ftl" />
 
-<div class="content-targeting-warning">
-	<span class="alert alert-warning">
-		<@liferay_ui["icon"]
-			image="../aui/refresh"
-			label=true
-			message="please-restart-the-server-to-finish-the-installation-of-content-targeting" />
-	</span>
+<div class="warning-restart">
+	<div class="restart-message">
+		<h3><@liferay_ui["message"] key="the-installation-of-content-targeting-is-not-finished-yet" /></h3>
+
+		<@liferay_ui["message"] key="please-restart-the-server-to-finish-the-installation" />
+	</div>
 </div>
