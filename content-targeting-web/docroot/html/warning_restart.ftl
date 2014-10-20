@@ -18,8 +18,8 @@
 
 <div class="warning-restart">
 	<div class="restart-message">
-		<h3><@liferay_ui["message"] key="the-installation-of-content-targeting-is-not-finished-yet" /></h3>
+		<h3><@liferay_ui["message"] key="the-installation-is-almost-complete" /></h3>
 
-		<@liferay_ui["message"] key="please-restart-the-server-to-finish-the-installation" />
+		<@liferay_ui["message"] key="please-restart-the-server-to-complete-the-installation" />
 	</div>
 </div>
