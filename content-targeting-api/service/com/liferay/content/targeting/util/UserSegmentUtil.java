@@ -75,12 +75,31 @@ public class UserSegmentUtil {
 		catch (NoSuchVocabularyException nsve) {
 			Group scopeGroup = serviceContext.getScopeGroup();
 
-			String uuid = serviceContext.getUuid();
+			String categoryUuid = serviceContext.getUuid();
 
 			if (scopeGroup.isStagingGroup()) {
-				AssetVocabulary liveVocabulary =
-					AssetVocabularyLocalServiceUtil.getGroupVocabulary(
-						scopeGroup.getLiveGroupId(), getAssetVocabularyName());
+				AssetVocabulary liveVocabulary = null;
+
+				try {
+					liveVocabulary =
+						AssetVocabularyLocalServiceUtil.getGroupVocabulary(
+							scopeGroup.getLiveGroupId(),
+							getAssetVocabularyName());
+
+				}
+				catch (NoSuchVocabularyException nsve2) {
+					ServiceContext serviceContext1 =
+						(ServiceContext)serviceContext.clone();
+
+					serviceContext1.setScopeGroupId(
+						scopeGroup.getLiveGroupId());
+
+					liveVocabulary =
+						AssetVocabularyLocalServiceUtil.addVocabulary(
+							userId, null, getAssetVocabularyTitle(),
+							getAssetVocabularyDescription(), null,
+							serviceContext1);
+				}
 
 				serviceContext.setUuid(liveVocabulary.getUuid());
 			}
@@ -89,7 +108,7 @@ public class UserSegmentUtil {
 				userId, null, getAssetVocabularyTitle(),
 				getAssetVocabularyDescription(), null, serviceContext);
 
-			serviceContext.setUuid(uuid);
+			serviceContext.setUuid(categoryUuid);
 		}
 
 		return vocabulary.getVocabularyId();
