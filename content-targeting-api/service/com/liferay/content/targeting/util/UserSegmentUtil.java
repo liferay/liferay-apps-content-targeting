@@ -85,20 +85,19 @@ public class UserSegmentUtil {
 						AssetVocabularyLocalServiceUtil.getGroupVocabulary(
 							scopeGroup.getLiveGroupId(),
 							getAssetVocabularyName());
-
 				}
 				catch (NoSuchVocabularyException nsve2) {
-					ServiceContext serviceContext1 =
+					ServiceContext serviceContextLive =
 						(ServiceContext)serviceContext.clone();
 
-					serviceContext1.setScopeGroupId(
+					serviceContextLive.setScopeGroupId(
 						scopeGroup.getLiveGroupId());
 
 					liveVocabulary =
 						AssetVocabularyLocalServiceUtil.addVocabulary(
 							userId, null, getAssetVocabularyTitle(),
 							getAssetVocabularyDescription(), null,
-							serviceContext1);
+							serviceContextLive);
 				}
 
 				serviceContext.setUuid(liveVocabulary.getUuid());
