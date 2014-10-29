@@ -53,8 +53,6 @@
 		</@>
 
 		<@liferay_ui["section"]>
-			<span class="title"><@liferay_ui["message"] key="display-settings"/></span>
-
 			<div class="display-template">
 				<@liferay_ui["ddm-template-selector"]
 					classNameId=portalUtil.getClassNameId(templateHandler.getClassName())

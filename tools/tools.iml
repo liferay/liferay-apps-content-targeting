@@ -6,9 +6,15 @@
       <sourceFolder url="file://$MODULE_DIR$/rule_tmpl/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/tracking_action_tmpl/src" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/report_tmpl/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/benchmark/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/benchmark/classes" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="content-targeting-api" />
+    <orderEntry type="library" name="portal" level="project" />
+    <orderEntry type="library" name="portal-impl" level="project" />
+    <orderEntry type="library" name="reference" level="project" />
   </component>
 </module>
 

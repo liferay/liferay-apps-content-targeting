@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.benchmark.tools;
+package com.liferay.content.targeting.tools;
 
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.RuleInstanceModel;
