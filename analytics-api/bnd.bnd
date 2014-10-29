@@ -12,6 +12,7 @@ Export-Package:\
 Import-Package:\
 	com.liferay.osgi.util.service,\
 	com.liferay.portal.kernel.lar,\
+	com.liferay.util,\
 	javax.portlet,\
 	*;resolution:="optional"
 Include-Resource:\
