@@ -25,17 +25,17 @@
 		<antcall target="deploy" />
 	</target>
 
-	<target name="build-lang">
-		<loop-macrodef-or-target
-			module.dirs="${plugins.includes.path}"
-			target.name="build-lang"
-		/>
-	</target>
-
 	<target name="build-app-services">
 		<loop-macrodef-or-target
 			module.dirs="${app.services.path}"
 			target.name="build-app-service"
+		/>
+	</target>
+
+	<target name="build-lang">
+		<loop-macrodef-or-target
+			module.dirs="${plugins.includes.path}"
+			target.name="build-lang"
 		/>
 	</target>
 
