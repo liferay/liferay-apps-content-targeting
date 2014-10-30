@@ -39,6 +39,21 @@
 		/>
 	</target>
 
+	<property name="app.tests" value="*-test,runtime-test-dependencies" />
+
+	<path id="app.tests.path">
+		<dirset dir="." includes="${app.tests}" />
+	</path>
+
+	<pathconvert pathsep="," property="app.tests.path" refid="app.tests.path" targetos="unix" />
+
+	<target name="build-tests">
+		<loop-macrodef-or-target
+			module.dirs="${app.tests.path}"
+			target.name="deploy"
+		/>
+	</target>
+
 	<target name="clean-osgi-data">
 		<delete dir="${app.server.parent.dir}/data/osgi" />
 		<delete dir="${app.server.dir}/work" />
