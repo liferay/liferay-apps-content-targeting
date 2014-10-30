@@ -222,6 +222,33 @@
 		</replace>
 	</target>
 
+	<target name="release">
+		<if>
+			<not>
+				<isset property="release.version" />
+			</not>
+			<then>
+				<fail>Use ant release -Drelease.version=%release version%</fail>
+			</then>
+		</if>
+
+		<delete dir="${sdk.dir}/dist" failonerror="false" />
+		<delete file="${sdk.dir}/content-targeting-release-${release.version}.zip" failonerror="false" />
+
+		<mkdir dir="${sdk.dir}/content-targeting-dist" />
+
+		<var name="auto.deploy.dir" value="${sdk.dir}/content-targeting-dist" />
+
+		<antcall target="build-app" />
+
+		<zip
+			basedir="${auto.deploy.dir}"
+			destfile="${sdk.dir}/content-targeting-release-${release.version}.zip"
+		/>
+
+		<delete dir="${sdk.dir}/content-targeting-dist" failonerror="false" />
+	</target>
+
 	<macrodef name="build-app-service">
 		<attribute name="module.dir" />
 
