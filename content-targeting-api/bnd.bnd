@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.content.targeting.api.model,\
 	com.liferay.content.targeting.lar,\
 	com.liferay.content.targeting.model,\
+	com.liferay.content.targeting.model.impl,\
 	com.liferay.content.targeting.rule.categories,\
 	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.messaging,\
