@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.lar;
 
+import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
@@ -23,6 +25,8 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import javax.portlet.PortletPreferences;
 import javax.portlet.UnavailableException;
 
+import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.StagedModelType;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
@@ -31,6 +35,22 @@ import org.osgi.framework.FrameworkUtil;
  * @see    com.liferay.portal.kernel.lar.PortletDataHandler
  */
 public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
+
+	public static final String NAMESPACE = "content_targeting";
+
+	public ContentTargetingPortletDataHandler() {
+		setDeletionSystemEventStagedModelTypes(
+			new StagedModelType(Campaign.class),
+			new StagedModelType(UserSegment.class));
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "campaigns", true, false, null,
+				Campaign.class.getName()),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "user-segments", true, false, null,
+				UserSegment.class.getName()));
+		setImportControls(getExportControls());
+	}
 
 	@Override
 	protected PortletPreferences doDeleteData(
