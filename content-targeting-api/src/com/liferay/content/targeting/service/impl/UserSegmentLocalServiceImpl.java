@@ -92,8 +92,20 @@ public class UserSegmentLocalServiceImpl
 		userSegment.setUuid(serviceContext.getUuid());
 		userSegment.setGroupId(serviceContext.getScopeGroupId());
 
-		AssetCategory assetCategory = addUserSegmentCategory(
-			userId, nameMap, descriptionMap, serviceContext);
+		// Category
+
+		AssetCategory assetCategory = null;
+
+		long[] assetCategoryIds = serviceContext.getAssetCategoryIds();
+
+		if (Validator.isNotNull(assetCategoryIds)) {
+			assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(
+				assetCategoryIds[0]);
+		}
+		else {
+			assetCategory = addUserSegmentCategory(
+				userId, nameMap, descriptionMap, serviceContext);
+		}
 
 		userSegment.setAssetCategoryId(assetCategory.getCategoryId());
 		userSegment.setCompanyId(user.getCompanyId());
@@ -123,7 +135,7 @@ public class UserSegmentLocalServiceImpl
 				serviceContext.getGuestPermissions());
 		}
 
-		// Categories
+		// Local Live Category
 
 		Group scopeGroup = serviceContext.getScopeGroup();
 

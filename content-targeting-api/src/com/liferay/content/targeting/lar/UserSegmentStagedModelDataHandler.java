@@ -24,8 +24,15 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.model.AssetCategoryConstants;
+import com.liferay.portlet.asset.model.AssetVocabulary;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
+import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 
 import java.util.List;
 
@@ -69,11 +76,14 @@ public class UserSegmentStagedModelDataHandler
 		Element userSegmentElement = portletDataContext.getExportDataElement(
 			userSegment);
 
+		exportAssetCategory(
+			portletDataContext, userSegmentElement, userSegment);
+
+		exportRuleInstances(portletDataContext, userSegment);
+
 		portletDataContext.addClassedModel(
 			userSegmentElement, ExportImportPathUtil.getModelPath(userSegment),
 			userSegment);
-
-		exportRuleInstances(portletDataContext, userSegment);
 	}
 
 	@Override
@@ -81,10 +91,21 @@ public class UserSegmentStagedModelDataHandler
 			PortletDataContext portletDataContext, UserSegment userSegment)
 		throws Exception {
 
+		Element userSegmentElement = portletDataContext.getImportDataElement(
+			userSegment);
+
+		AssetCategory importedAssetCategory = importAssetCategory(
+			portletDataContext, userSegmentElement);
+
 		long userId = portletDataContext.getUserId(userSegment.getUserUuid());
 
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			userSegment);
+
+		if (importedAssetCategory != null) {
+			serviceContext.setAssetCategoryIds(
+				new long[]{importedAssetCategory.getCategoryId()});
+		}
 
 		serviceContext.setUserId(userId);
 
@@ -119,9 +140,61 @@ public class UserSegmentStagedModelDataHandler
 		}
 
 		importRuleInstances(
-				portletDataContext, userSegment, importedUserSegment);
+			portletDataContext, userSegment, importedUserSegment);
 
 		portletDataContext.importClassedModel(userSegment, importedUserSegment);
+	}
+
+	protected void exportAssetCategory(
+			PortletDataContext portletDataContext, Element userSegmentElement,
+			UserSegment userSegment)
+		throws Exception {
+
+		AssetCategory assetCategory =
+			AssetCategoryLocalServiceUtil.getAssetCategory(
+				userSegment.getAssetCategoryId());
+
+		exportAssetVocabulary(
+			portletDataContext, userSegmentElement, assetCategory);
+
+		String path = getAssetCategoryPath(
+			portletDataContext, assetCategory.getCategoryId());
+
+		Element assetCategoryElement = userSegmentElement.addElement(
+			"category");
+
+		assetCategoryElement.addAttribute("path", path);
+
+		assetCategory.setUserUuid(assetCategory.getUserUuid());
+
+		portletDataContext.addZipEntry(path, assetCategory);
+
+		portletDataContext.addPermissions(
+			AssetCategory.class, assetCategory.getCategoryId());
+	}
+
+	protected void exportAssetVocabulary(
+			PortletDataContext portletDataContext, Element userSegmentElement,
+			AssetCategory assetCategory)
+		throws Exception {
+
+		AssetVocabulary assetVocabulary = AssetVocabularyUtil.findByPrimaryKey(
+			assetCategory.getVocabularyId());
+
+		String path = getAssetVocabulariesPath(
+			portletDataContext, assetVocabulary.getVocabularyId());
+
+		Element assetVocabularyElement = userSegmentElement.addElement(
+			"vocabulary");
+
+		assetVocabularyElement.addAttribute("path", path);
+
+		assetVocabulary.setUserUuid(assetVocabulary.getUserUuid());
+
+		portletDataContext.addZipEntry(path, assetVocabulary);
+
+		portletDataContext.addPermissions(
+			AssetVocabulary.class, assetVocabulary.getVocabularyId());
 	}
 
 	protected void exportRuleInstances(
@@ -137,6 +210,156 @@ public class UserSegmentStagedModelDataHandler
 				portletDataContext, userSegment, ruleInstance,
 				PortletDataContext.REFERENCE_TYPE_EMBEDDED);
 		}
+	}
+
+	protected String getAssetCategoryPath(
+		PortletDataContext portletDataContext, long assetCategoryId) {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
+		sb.append("/categories/");
+		sb.append(assetCategoryId);
+		sb.append(".xml");
+
+		return sb.toString();
+	}
+
+	protected String getAssetVocabulariesPath(
+		PortletDataContext portletDataContext, long assetVocabularyId) {
+
+		StringBundler sb = new StringBundler(4);
+
+		sb.append(ExportImportPathUtil.getRootPath(portletDataContext));
+		sb.append("/vocabularies/");
+		sb.append(assetVocabularyId);
+		sb.append(".xml");
+
+		return sb.toString();
+	}
+
+	protected AssetCategory importAssetCategory(
+			PortletDataContext portletDataContext, Element userSegmentElement)
+		throws Exception {
+
+		Element assetCategoryElement = userSegmentElement.element("category");
+
+		String path = assetCategoryElement.attributeValue("path");
+
+		AssetCategory assetCategory =
+			(AssetCategory)portletDataContext.getZipEntryAsObject(path);
+
+		AssetVocabulary assetVocabulary = importAssetVocabulary(
+			portletDataContext, userSegmentElement);
+
+		long userId = portletDataContext.getUserId(assetCategory.getUserUuid());
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			assetCategory);
+
+		serviceContext.setUserId(userId);
+
+		AssetCategory importedAssetCategory = null;
+
+		if (portletDataContext.isDataStrategyMirror()) {
+			AssetCategory existingAssetCategory =
+				AssetCategoryLocalServiceUtil.
+					fetchAssetCategoryByUuidAndGroupId(
+						assetCategory.getUuid(),
+						portletDataContext.getScopeGroupId());
+
+			if (existingAssetCategory == null) {
+				serviceContext.setUuid(assetCategory.getUuid());
+
+				importedAssetCategory =
+					AssetCategoryLocalServiceUtil.addCategory(
+						userId,
+						AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+						assetCategory.getTitleMap(),
+						assetCategory.getDescriptionMap(),
+						assetVocabulary.getVocabularyId(), null,
+						serviceContext);
+			}
+			else {
+				importedAssetCategory =
+					AssetCategoryLocalServiceUtil.updateCategory(
+						userId, existingAssetCategory.getCategoryId(),
+						existingAssetCategory.getParentCategoryId(),
+						assetCategory.getTitleMap(),
+						assetCategory.getDescriptionMap(),
+						existingAssetCategory.getVocabularyId(), null,
+						serviceContext);
+			}
+		}
+		else {
+			importedAssetCategory = AssetCategoryLocalServiceUtil.addCategory(
+				userId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				assetCategory.getTitleMap(), assetCategory.getDescriptionMap(),
+				assetVocabulary.getVocabularyId(), null, serviceContext);
+		}
+
+		portletDataContext.importClassedModel(
+			assetCategory, importedAssetCategory);
+
+		return importedAssetCategory;
+	}
+
+	protected AssetVocabulary importAssetVocabulary(
+			PortletDataContext portletDataContext, Element userSegmentElement)
+		throws Exception {
+
+		Element assetVocabularyElement = userSegmentElement.element(
+			"vocabulary");
+
+		String path = assetVocabularyElement.attributeValue("path");
+
+		AssetVocabulary assetVocabulary =
+			(AssetVocabulary)portletDataContext.getZipEntryAsObject(path);
+
+		long userId = portletDataContext.getUserId(
+			assetVocabulary.getUserUuid());
+
+		ServiceContext serviceContext = portletDataContext.createServiceContext(
+			assetVocabulary);
+
+		serviceContext.setUserId(userId);
+
+		AssetVocabulary importedAssetVocabulary = null;
+
+		if (portletDataContext.isDataStrategyMirror()) {
+			AssetVocabulary existingAssetVocabulary =
+				AssetVocabularyLocalServiceUtil.
+					fetchAssetVocabularyByUuidAndGroupId(
+						assetVocabulary.getUuid(),
+						portletDataContext.getScopeGroupId());
+
+			if (existingAssetVocabulary == null) {
+				serviceContext.setUuid(assetVocabulary.getUuid());
+
+				importedAssetVocabulary =
+					AssetVocabularyLocalServiceUtil.addVocabulary(
+						userId, assetVocabulary.getTitle(),
+						assetVocabulary.getTitleMap(),
+						assetVocabulary.getDescriptionMap(),
+						assetVocabulary.getSettings(), serviceContext);
+			}
+			else {
+				importedAssetVocabulary = existingAssetVocabulary;
+			}
+		}
+		else {
+			importedAssetVocabulary =
+				AssetVocabularyLocalServiceUtil.addVocabulary(
+					userId, assetVocabulary.getTitle(),
+					assetVocabulary.getTitleMap(),
+					assetVocabulary.getDescriptionMap(),
+					assetVocabulary.getSettings(), serviceContext);
+		}
+
+		portletDataContext.importClassedModel(
+			assetVocabulary, importedAssetVocabulary);
+
+		return importedAssetVocabulary;
 	}
 
 	protected void importRuleInstances(
