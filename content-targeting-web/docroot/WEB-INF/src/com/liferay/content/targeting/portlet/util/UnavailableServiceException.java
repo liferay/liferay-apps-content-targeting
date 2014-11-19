@@ -21,6 +21,10 @@ import javax.portlet.UnavailableException;
  */
 public class UnavailableServiceException extends UnavailableException {
 
+	public UnavailableServiceException() {
+		super("Can't find a reference to some service classes", 0);
+	}
+
 	public UnavailableServiceException(Class clazz) {
 		super("Can't find a reference to " + clazz, 0);
 	}

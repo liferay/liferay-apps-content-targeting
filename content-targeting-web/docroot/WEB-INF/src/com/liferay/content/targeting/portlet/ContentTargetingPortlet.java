@@ -22,9 +22,7 @@ import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.InvalidTrackingActionsException;
 import com.liferay.content.targeting.UsedUserSegmentException;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
-import com.liferay.content.targeting.analytics.service.AnalyticsEventService;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
-import com.liferay.content.targeting.anonymous.users.service.AnonymousUserService;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.api.model.Rule;
@@ -1357,32 +1355,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		try {
 			_analyticsEventLocalService.getAnalyticsEvents(0, 1);
-		}
-		catch (BeanLocatorException ble) {
-			throw new UnavailableServiceException(AnalyticsEventService.class);
-		}
-		catch (NullPointerException npe) {
-			throw new UnavailableServiceException(AnalyticsEventService.class);
-		}
-
-		try {
 			_anonymousUserLocalService.getAnonymousUsers(0, 1);
-		}
-		catch (BeanLocatorException ble) {
-			throw new UnavailableServiceException(AnonymousUserService.class);
-		}
-		catch (NullPointerException npe) {
-			throw new UnavailableServiceException(AnonymousUserService.class);
-		}
-
-		try {
 			_campaignLocalService.getCampaigns(0, 1);
 		}
 		catch (BeanLocatorException ble) {
-			throw new UnavailableServiceException(CampaignService.class);
+			throw new UnavailableServiceException();
 		}
 		catch (NullPointerException npe) {
-			throw new UnavailableServiceException(CampaignService.class);
+			throw new UnavailableServiceException();
 		}
 	}
 

@@ -142,13 +142,17 @@ public class UserSegmentPreAction extends Action {
 			request.setAttribute(
 				WebKeys.ORIGINAL_USER_SEGMENT_IDS, originalUserSegmentIds);
 		}
-		catch (BeanLocatorException ble) {
-			_log.error(
-				"Some Audience Targeting services are not available. " +
-					"Please restart the server");
-		}
 		catch (Exception e) {
-			_log.error(e);
+			if (e instanceof BeanLocatorException ||
+				e instanceof NullPointerException) {
+
+				_log.error(
+					"Some Audience Targeting services are not available. " +
+						"Please restart the server");
+			}
+			else {
+				_log.error(e);
+			}
 		}
 
 		return userSegmentsIds;
