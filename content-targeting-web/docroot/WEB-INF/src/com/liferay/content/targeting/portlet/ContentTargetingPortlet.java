@@ -1361,6 +1361,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		catch (BeanLocatorException ble) {
 			throw new UnavailableServiceException(AnalyticsEventService.class);
 		}
+		catch (NullPointerException npe) {
+			throw new UnavailableServiceException(AnalyticsEventService.class);
+		}
 
 		try {
 			_anonymousUserLocalService.getAnonymousUsers(0, 1);
@@ -1368,11 +1371,17 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		catch (BeanLocatorException ble) {
 			throw new UnavailableServiceException(AnonymousUserService.class);
 		}
+		catch (NullPointerException npe) {
+			throw new UnavailableServiceException(AnonymousUserService.class);
+		}
 
 		try {
 			_campaignLocalService.getCampaigns(0, 1);
 		}
 		catch (BeanLocatorException ble) {
+			throw new UnavailableServiceException(CampaignService.class);
+		}
+		catch (NullPointerException npe) {
 			throw new UnavailableServiceException(CampaignService.class);
 		}
 	}

@@ -170,6 +170,9 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerDisplayPortlet {
 		catch (BeanLocatorException ble) {
 			throw new UnavailableServiceException(CampaignLocalService.class);
 		}
+		catch (NullPointerException npe) {
+			throw new UnavailableServiceException(CampaignLocalService.class);
+		}
 
 		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
