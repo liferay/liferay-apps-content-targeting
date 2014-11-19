@@ -117,7 +117,7 @@ public class UserSegmentQueryRuleUtil {
 			}
 		}
 
-		return null;
+		return queryRules.get(queryRules.size() - 1);
 	}
 
 	protected static QueryRule getDefaultQueryRule(
