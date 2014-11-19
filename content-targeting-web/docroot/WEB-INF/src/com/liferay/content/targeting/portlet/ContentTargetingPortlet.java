@@ -63,6 +63,7 @@ import com.liferay.content.targeting.util.UserSegmentSearchContainerIterator;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -1350,23 +1351,25 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return calendar.getTime();
 	}
 
-	private void checkServices() throws UnavailableServiceException {
+	private void checkServices()
+		throws SystemException, UnavailableServiceException {
+
 		try {
-			_analyticsEventLocalService.getBeanIdentifier();
+			_analyticsEventLocalService.getAnalyticsEvents(0, 1);
 		}
 		catch (NullPointerException npe) {
 			throw new UnavailableServiceException(AnalyticsEventService.class);
 		}
 
 		try {
-			_anonymousUserLocalService.getBeanIdentifier();
+			_anonymousUserLocalService.getAnonymousUsers(0, 1);
 		}
 		catch (NullPointerException npe) {
 			throw new UnavailableServiceException(AnonymousUserService.class);
 		}
 
 		try {
-			_campaignService.getBeanIdentifier();
+			_campaignLocalService.getCampaigns(0, 1);
 		}
 		catch (NullPointerException npe) {
 			throw new UnavailableServiceException(CampaignService.class);

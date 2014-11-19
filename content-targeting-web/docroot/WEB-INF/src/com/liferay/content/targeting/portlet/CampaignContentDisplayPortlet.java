@@ -164,7 +164,7 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerDisplayPortlet {
 		throws Exception {
 
 		try {
-			_campaignLocalService.getBeanIdentifier();
+			_campaignLocalService.getCampaigns(0, 1);
 		}
 		catch (NullPointerException npe) {
 			throw new UnavailableServiceException(CampaignLocalService.class);
