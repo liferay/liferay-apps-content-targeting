@@ -228,7 +228,9 @@
 				<isset property="release.version" />
 			</not>
 			<then>
-				<fail>Use ant release -Drelease.version=%release version%</fail>
+				<tstamp>
+					<format property="release.version" pattern="EEE-d-MMM-yyyy-HH-mm-ss" />
+				</tstamp>
 			</then>
 		</if>
 
