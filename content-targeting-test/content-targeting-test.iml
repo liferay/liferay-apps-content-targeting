@@ -26,6 +26,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="content-targeting-api" />
+    <orderEntry type="module" module-name="content-targeting-web" />
     <orderEntry type="module" module-name="service-test-util" />
     <orderEntry type="library" name="portal" level="project" />
     <orderEntry type="module-library">
