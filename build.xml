@@ -239,7 +239,7 @@
 
 		<mkdir dir="${sdk.dir}/content-targeting-dist" />
 
-		<var name="auto.deploy.dir.default" value="${auto.deploy.dir}"/>
+		<var name="auto.deploy.dir.default" value="${auto.deploy.dir}" />
 		<var name="auto.deploy.dir" value="${sdk.dir}/content-targeting-dist" />
 
 		<antcall target="build-app" />
@@ -250,7 +250,7 @@
 		/>
 
 		<copy todir="${auto.deploy.dir.default}">
-			<fileset dir="${auto.deploy.dir}"/>
+			<fileset dir="${auto.deploy.dir}" />
 		</copy>
 
 		<delete dir="${auto.deploy.dir}" failonerror="false" />
