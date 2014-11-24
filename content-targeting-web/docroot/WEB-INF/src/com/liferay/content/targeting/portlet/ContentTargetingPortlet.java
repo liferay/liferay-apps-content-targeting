@@ -59,7 +59,6 @@ import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.ReportSearchContainerIterator;
 import com.liferay.content.targeting.util.UserSegmentSearchContainerIterator;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -1358,10 +1357,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			_anonymousUserLocalService.getAnonymousUsers(0, 1);
 			_campaignLocalService.getCampaigns(0, 1);
 		}
-		catch (BeanLocatorException ble) {
-			throw new UnavailableServiceException();
-		}
-		catch (NullPointerException npe) {
+		catch (Exception e) {
 			throw new UnavailableServiceException();
 		}
 	}

@@ -23,7 +23,6 @@ import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -143,16 +142,9 @@ public class UserSegmentPreAction extends Action {
 				WebKeys.ORIGINAL_USER_SEGMENT_IDS, originalUserSegmentIds);
 		}
 		catch (Exception e) {
-			if (e instanceof BeanLocatorException ||
-				e instanceof NullPointerException) {
-
-				_log.error(
-					"Some Audience Targeting services are not available. " +
-						"Please restart the server");
-			}
-			else {
-				_log.error(e);
-			}
+			_log.error(
+				"Some Audience Targeting services are not available. " +
+					"Please restart the server");
 		}
 
 		return userSegmentsIds;

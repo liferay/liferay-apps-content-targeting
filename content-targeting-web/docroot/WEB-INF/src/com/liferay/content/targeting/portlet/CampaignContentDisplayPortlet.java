@@ -24,7 +24,6 @@ import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.kernel.bean.BeanLocatorException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
@@ -167,10 +166,7 @@ public class CampaignContentDisplayPortlet extends CTFreeMarkerDisplayPortlet {
 		try {
 			_campaignLocalService.getCampaigns(0, 1);
 		}
-		catch (BeanLocatorException ble) {
-			throw new UnavailableServiceException(CampaignLocalService.class);
-		}
-		catch (NullPointerException npe) {
+		catch (Exception e) {
 			throw new UnavailableServiceException(CampaignLocalService.class);
 		}
 
