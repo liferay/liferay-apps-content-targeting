@@ -47,17 +47,7 @@ public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 
 		_campaignId = campaignId;
 
-		try {
-			Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-			CampaignLocalService campaignLocalService =
-				ServiceTrackerUtil.getService(
-					CampaignLocalService.class, bundle.getBundleContext());
-
-			_campaign = campaignLocalService.getCampaign(_campaignId);
-		}
-		catch (Exception e) {
-		}
+		initCampaign();
 	}
 
 	@Override
@@ -123,6 +113,20 @@ public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 
 	public void setCampaignId(long campaignId) {
 		_campaignId = campaignId;
+	}
+
+	protected void initCampaign() {
+		try {
+			Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+			CampaignLocalService campaignLocalService =
+				ServiceTrackerUtil.getService(
+					CampaignLocalService.class, bundle.getBundleContext());
+
+			_campaign = campaignLocalService.getCampaign(_campaignId);
+		}
+		catch (Exception e) {
+		}
 	}
 
 	private Campaign _campaign;
