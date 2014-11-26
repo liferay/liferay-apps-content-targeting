@@ -307,6 +307,13 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint> getScorePoints(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _scorePointLocalService.getScorePoints(userSegmentId);
+	}
+
+	@Override
 	public long incrementPoints(long anonymousUserId, long userSegmentId,
 		long points) throws com.liferay.portal.kernel.exception.SystemException {
 		return _scorePointLocalService.incrementPoints(anonymousUserId,

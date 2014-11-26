@@ -292,6 +292,12 @@ public class ScorePointLocalServiceUtil {
 		return getService().getPoints(anonymousUserId, userSegmentId);
 	}
 
+	public static java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint> getScorePoints(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getScorePoints(userSegmentId);
+	}
+
 	public static long incrementPoints(long anonymousUserId,
 		long userSegmentId, long points)
 		throws com.liferay.portal.kernel.exception.SystemException {

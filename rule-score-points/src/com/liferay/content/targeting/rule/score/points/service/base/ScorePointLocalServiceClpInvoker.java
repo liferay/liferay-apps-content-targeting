@@ -122,13 +122,17 @@ public class ScorePointLocalServiceClpInvoker {
 
 		_methodParameterTypes41 = new String[] { "long", "long" };
 
-		_methodName42 = "incrementPoints";
+		_methodName42 = "getScorePoints";
 
-		_methodParameterTypes42 = new String[] { "long", "long", "long" };
+		_methodParameterTypes42 = new String[] { "long" };
 
-		_methodName43 = "updateScorePoints";
+		_methodName43 = "incrementPoints";
 
 		_methodParameterTypes43 = new String[] { "long", "long", "long" };
+
+		_methodName44 = "updateScorePoints";
+
+		_methodParameterTypes44 = new String[] { "long", "long", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -247,13 +251,18 @@ public class ScorePointLocalServiceClpInvoker {
 
 		if (_methodName42.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
+			return ScorePointLocalServiceUtil.getScorePoints(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName43.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
 			return ScorePointLocalServiceUtil.incrementPoints(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName43.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
+		if (_methodName44.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
 			return ScorePointLocalServiceUtil.updateScorePoints(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
@@ -306,4 +315,6 @@ public class ScorePointLocalServiceClpInvoker {
 	private String[] _methodParameterTypes42;
 	private String _methodName43;
 	private String[] _methodParameterTypes43;
+	private String _methodName44;
+	private String[] _methodParameterTypes44;
 }
