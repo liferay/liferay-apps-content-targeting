@@ -20,8 +20,11 @@ import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
+import com.liferay.content.targeting.rule.score.points.model.ScorePoint;
 import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalServiceUtil;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -29,6 +32,7 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -57,6 +61,19 @@ public class ScorePointsRule extends BaseRule {
 	@Override
 	public void deActivate() {
 		super.deActivate();
+	}
+
+	@Override
+	public void deleteData(RuleInstance ruleInstance)
+		throws PortalException, SystemException {
+
+		List<ScorePoint> scorePoints =
+			ScorePointLocalServiceUtil.getScorePoints(
+				ruleInstance.getUserSegmentId());
+
+		for (ScorePoint scorePoint : scorePoints) {
+			ScorePointLocalServiceUtil.deleteScorePoint(scorePoint);
+		}
 	}
 
 	@Override
