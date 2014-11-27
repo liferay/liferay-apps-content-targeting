@@ -18,19 +18,24 @@ import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
+import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -66,6 +71,34 @@ public class PageTrackingAction extends BaseTrackingAction {
 	}
 
 	@Override
+	public void exportData(
+			PortletDataContext portletDataContext, Element campaignElement,
+			Campaign campaign, Element trackingActionInstanceElement,
+			TrackingActionInstance trackingActionInstance)
+		throws Exception {
+
+		long plid = GetterUtil.getLong(
+			trackingActionInstance.getTypeSettings());
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayout(plid);
+
+		if (layout != null ) {
+			trackingActionInstance.setTypeSettings(layout.getUuid());
+
+			portletDataContext.addReferenceElement(
+				campaign, campaignElement, layout,
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+
+			return;
+		}
+
+		throw new PortletDataException(
+			getExportImportErrorMessage(
+				campaign, trackingActionInstance, Layout.class.getName(),
+				String.valueOf(plid), Constants.EXPORT));
+	}
+
+	@Override
 	public List<String> getEventTypes() {
 		return ListUtil.fromArray(_EVENT_TYPES);
 	}
@@ -86,6 +119,30 @@ public class PageTrackingAction extends BaseTrackingAction {
 			});
 
 		return summary;
+	}
+
+	@Override
+	public void importData(
+			PortletDataContext portletDataContext, Campaign campaign,
+			TrackingActionInstance trackingActionInstance)
+		throws Exception {
+
+		String layoutUuid = trackingActionInstance.getTypeSettings();
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByUuidAndCompanyId(
+			layoutUuid, portletDataContext.getCompanyId());
+
+		if (layout != null ) {
+			trackingActionInstance.setTypeSettings(
+				String.valueOf(layout.getPlid()));
+
+			return;
+		}
+
+		throw new PortletDataException(
+			getExportImportErrorMessage(
+				campaign, trackingActionInstance, Layout.class.getName(),
+				layoutUuid, Constants.IMPORT));
 	}
 
 	@Override
