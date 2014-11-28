@@ -317,7 +317,7 @@ public class AnalyticsEventLocalServiceImpl
 
 		int maxAge = PortletPropsValues.ANALYTICS_EVENTS_MAX_AGE;
 
-		calendar.add(Calendar.MINUTE, -maxAge);
+		calendar.add(Calendar.DAY_OF_YEAR, -maxAge);
 
 		return calendar.getTime();
 	}
