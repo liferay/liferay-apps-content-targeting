@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.NoSuchVocabularyException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -71,10 +72,42 @@ public class UserSegmentUtil {
 			vocabulary = AssetVocabularyLocalServiceUtil.getGroupVocabulary(
 				serviceContext.getScopeGroupId(), getAssetVocabularyName());
 		}
-		catch (NoSuchVocabularyException e) {
+		catch (NoSuchVocabularyException nsve) {
+			Group scopeGroup = serviceContext.getScopeGroup();
+
+			String categoryUuid = serviceContext.getUuid();
+
+			if (scopeGroup.isStagingGroup()) {
+				AssetVocabulary liveVocabulary = null;
+
+				try {
+					liveVocabulary =
+						AssetVocabularyLocalServiceUtil.getGroupVocabulary(
+							scopeGroup.getLiveGroupId(),
+							getAssetVocabularyName());
+				}
+				catch (NoSuchVocabularyException nsve2) {
+					ServiceContext serviceContextLive =
+						(ServiceContext)serviceContext.clone();
+
+					serviceContextLive.setScopeGroupId(
+						scopeGroup.getLiveGroupId());
+
+					liveVocabulary =
+						AssetVocabularyLocalServiceUtil.addVocabulary(
+							userId, null, getAssetVocabularyTitle(),
+							getAssetVocabularyDescription(), null,
+							serviceContextLive);
+				}
+
+				serviceContext.setUuid(liveVocabulary.getUuid());
+			}
+
 			vocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
 				userId, null, getAssetVocabularyTitle(),
 				getAssetVocabularyDescription(), null, serviceContext);
+
+			serviceContext.setUuid(categoryUuid);
 		}
 
 		return vocabulary.getVocabularyId();

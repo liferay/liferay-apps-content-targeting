@@ -21,6 +21,8 @@ import com.liferay.content.targeting.InvalidRulesException;
 import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.InvalidTrackingActionsException;
 import com.liferay.content.targeting.UsedUserSegmentException;
+import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
+import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.api.model.Rule;
@@ -59,6 +61,7 @@ import com.liferay.content.targeting.util.UserSegmentSearchContainerIterator;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -217,6 +220,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			};
 		}
 
+		_analyticsEventLocalService = ServiceTrackerUtil.getService(
+			AnalyticsEventLocalService.class, bundle.getBundleContext());
+		_anonymousUserLocalService = ServiceTrackerUtil.getService(
+			AnonymousUserLocalService.class, bundle.getBundleContext());
 		_campaignLocalService = ServiceTrackerUtil.getService(
 			CampaignLocalService.class, bundle.getBundleContext());
 		_campaignService = ServiceTrackerUtil.getService(
@@ -470,12 +477,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			PortletResponse portletResponse, Template template)
 		throws Exception {
 
-		try {
-			_campaignService.getBeanIdentifier();
-		}
-		catch (NullPointerException npe) {
-			throw new UnavailableServiceException(CampaignService.class);
-		}
+		checkServices();
 
 		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
@@ -1347,9 +1349,24 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return calendar.getTime();
 	}
 
+	private void checkServices()
+		throws SystemException, UnavailableServiceException {
+
+		try {
+			_analyticsEventLocalService.getAnalyticsEvents(0, 1);
+			_anonymousUserLocalService.getAnonymousUsers(0, 1);
+			_campaignLocalService.getCampaigns(0, 1);
+		}
+		catch (Exception e) {
+			throw new UnavailableServiceException();
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
+	private AnalyticsEventLocalService _analyticsEventLocalService;
+	private AnonymousUserLocalService _anonymousUserLocalService;
 	private CampaignLocalService _campaignLocalService;
 	private CampaignService _campaignService;
 	private ReportInstanceService _reportInstanceService;

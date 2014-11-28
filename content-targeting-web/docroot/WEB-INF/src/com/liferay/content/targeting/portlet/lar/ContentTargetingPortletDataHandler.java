@@ -18,6 +18,7 @@ import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
+import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 
 import javax.portlet.PortletPreferences;
@@ -26,11 +27,18 @@ import javax.portlet.UnavailableException;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
 
-/**>
+/**
  * @author Eduardo Garcia
  * @see    com.liferay.portal.kernel.lar.PortletDataHandler
  */
 public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
+
+	public ContentTargetingPortletDataHandler() {
+
+		// Prevent displaying the Content Targeting as a stageable application
+
+		setDataLevel(DataLevel.PORTLET_INSTANCE);
+	}
 
 	@Override
 	protected PortletPreferences doDeleteData(
