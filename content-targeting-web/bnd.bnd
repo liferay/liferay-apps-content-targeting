@@ -51,3 +51,4 @@ Web-ContextPath: /content-targeting-web
 	${app.server.portal.dir}/WEB-INF/lib/util-bridges.jar,\
 	${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar
+-baseline: *;version="1.0.0"

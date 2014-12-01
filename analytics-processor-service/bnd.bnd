@@ -14,3 +14,4 @@ Include-Resource:\
 Private-Package: com.liferay.content.targeting.analytics.processor.*
 Service-Component: com.liferay.content.targeting.analytics.processor.*
 Web-ContextPath: /analytics-processor
+-baseline: *;version="1.0.0"

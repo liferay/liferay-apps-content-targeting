@@ -30,3 +30,4 @@ Include-Resource:\
 	@lib/com.liferay.content.targeting.api-service.jar
 Service-Component:com.liferay.content.targeting.*
 Web-ContextPath: /content-targeting-api
+-baseline: *;version="1.0.0"
