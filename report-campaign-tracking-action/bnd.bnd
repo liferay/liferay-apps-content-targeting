@@ -38,3 +38,4 @@ Include-Resource:\
 	@lib/com.liferay.content.targeting.report.campaign.tracking.action-service.jar
 Service-Component: com.liferay.content.targeting.report.campaign.tracking.action.*
 Web-ContextPath: /report-campaign-tracking-action
+-baseline: *;version="1.0.0"

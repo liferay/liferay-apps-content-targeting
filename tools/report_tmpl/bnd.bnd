@@ -33,3 +33,4 @@ Include-Resource:\
 	@lib/com.liferay.content.targeting.report.@report.java.package.name@-service.jar
 Service-Component: com.liferay.content.targeting.report.@report.java.package.name@.*
 Web-ContextPath: /report-@report.name@
+-baseline: *;version="1.0.0"

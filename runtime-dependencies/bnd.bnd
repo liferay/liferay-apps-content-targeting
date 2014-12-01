@@ -3,3 +3,4 @@ Bundle-Name: Runtime Dependencies
 Bundle-SymbolicName: com.liferay.content.targeting.runtime.dependencies
 Bundle-Version: 1.0.0
 Include-Resource: classes
+-baseline: *;version="1.0.0"

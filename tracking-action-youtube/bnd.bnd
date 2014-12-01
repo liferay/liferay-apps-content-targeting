@@ -15,3 +15,4 @@ Include-Resource:\
 Private-Package: com.liferay.content.targeting.tracking.action.youtube.*
 Service-Component: com.liferay.content.targeting.tracking.action.youtube.*
 Web-ContextPath: /tracking-action-youtube
+-baseline: *;version="1.0.0"

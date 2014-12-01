@@ -18,3 +18,4 @@ Include-Resource:\
 Private-Package: com.liferay.content.targeting.rule.@rule.java.package.name@.*
 Service-Component: com.liferay.content.targeting.rule.@rule.java.package.name@.*
 Web-ContextPath: /rule-@rule.java.package.name@
+-baseline: *;version="1.0.0"
