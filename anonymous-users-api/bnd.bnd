@@ -21,4 +21,6 @@ Service-Component: com.liferay.content.targeting.anonymous.users.*
 Web-ContextPath: /anonymous-users-api
 Require-Capability:
 	system.packages.extra;\
+	filter:="(version=1.0.0)",\
+	content.targeting.deploy.extender;\
 	filter:="(version=1.0.0)"

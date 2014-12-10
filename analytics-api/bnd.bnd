@@ -28,4 +28,6 @@ Service-Component: com.liferay.content.targeting.analytics.*
 Web-ContextPath: /analytics-api
 Require-Capability:
 	system.packages.extra;\
+	filter:="(version=1.0.0)",\
+	content.targeting.deploy.extender;\
 	filter:="(version=1.0.0)"

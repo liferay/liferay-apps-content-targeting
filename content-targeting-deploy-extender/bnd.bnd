@@ -2,3 +2,5 @@ Bundle-Name: Content Targeting Deploy Extender
 Bundle-SymbolicName: com.liferay.content.targeting.deploy.extender
 Bundle-Version: 1.0.0
 Include-Resource: classes
+Provide-Capability: content.targeting.deploy.extender;\
+	version:Version="1.0.0"
