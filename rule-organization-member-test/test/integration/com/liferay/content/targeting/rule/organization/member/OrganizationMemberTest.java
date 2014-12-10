@@ -20,7 +20,8 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -65,26 +66,26 @@ public class OrganizationMemberTest {
 
 	@Test
 	public void testOrganizationMemberRule() throws Exception {
-		ServiceContext serviceContext = TestUtil.getServiceContext();
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
-				TestUtil.getUserId(), "127.0.0.1", StringPool.BLANK,
+				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
 		Rule rule = _rulesRegistry.getRule("OrganizationMemberRule");
 
 		Organization organization =
 			OrganizationLocalServiceUtil.addOrganization(
-				TestUtil.getUserId(),
+				TestPropsValues.getUserId(),
 				OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 				StringUtil.randomString(), false);
 
 		OrganizationLocalServiceUtil.addUserOrganization(
-			TestUtil.getUserId(), organization.getOrganizationId());
+			TestPropsValues.getUserId(), organization.getOrganizationId());
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestUtil.getUserId(), rule.getRuleKey(), 0,
+			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
 			String.valueOf(organization.getOrganizationId()), serviceContext);
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));

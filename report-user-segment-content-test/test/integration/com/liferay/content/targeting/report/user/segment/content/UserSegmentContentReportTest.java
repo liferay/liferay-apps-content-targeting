@@ -20,7 +20,8 @@ import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -69,14 +70,14 @@ public class UserSegmentContentReportTest {
 
 	@Test
 	public void testUserSegmentContentReport() throws Exception {
-		ServiceContext serviceContext = TestUtil.getServiceContext();
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
 		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
 
 		UserSegment userSegment = _userSegmentLocalService.addUserSegment(
-			TestUtil.getUserId(), nameMap, null, serviceContext);
+			TestPropsValues.getUserId(), nameMap, null, serviceContext);
 
 		int initialUserSegmentContentCount =
 			_userSegmentContentLocalService.getUserSegmentContentsCount(
@@ -98,7 +99,7 @@ public class UserSegmentContentReportTest {
 		// Add analytics
 
 		_analyticsEventLocalService.addAnalyticsEvent(
-			TestUtil.getUserId(), 1, JournalArticle.class.getName(), 2,
+			TestPropsValues.getUserId(), 1, JournalArticle.class.getName(), 2,
 			UserSegment.class.getName(),
 			new long[]{userSegment.getUserSegmentId()}, null, "view",
 			"127.0.0.1", "ES", "User Agent", "http://localhost", null,

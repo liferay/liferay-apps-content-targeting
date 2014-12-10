@@ -20,7 +20,8 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Role;
@@ -66,26 +67,27 @@ public class RegularRoleTest {
 
 	@Test
 	public void testRegularRoleRule() throws Exception {
-		ServiceContext serviceContext = TestUtil.getServiceContext();
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
-				TestUtil.getUserId(), "127.0.0.1", StringPool.BLANK,
+				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			TestUtil.getCompanyId(), new int[] {RoleConstants.TYPE_REGULAR});
+			TestPropsValues.getCompanyId(),
+			new int[] {RoleConstants.TYPE_REGULAR});
 
 		Role role = roles.get(0);
 
 		Rule rule = _rulesRegistry.getRule("RegularRoleRule");
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestUtil.getUserId(), rule.getRuleKey(), 0,
+			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
 			String.valueOf(role.getRoleId()), serviceContext);
 
 		RoleLocalServiceUtil.addUserRole(
-			TestUtil.getUserId(), role.getRoleId());
+			TestPropsValues.getUserId(), role.getRoleId());
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
 	}

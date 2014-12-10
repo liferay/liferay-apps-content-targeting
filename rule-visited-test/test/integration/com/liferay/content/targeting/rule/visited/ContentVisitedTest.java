@@ -21,7 +21,9 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.GroupTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
@@ -70,20 +72,20 @@ public class ContentVisitedTest {
 
 	@Test
 	public void testNotVisitedContentRule() throws Exception {
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext = TestUtil.getServiceContext(
-				group.getGroupId(), TestUtil.getUserId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
-				TestUtil.getUserId(), "127.0.0.1", StringPool.BLANK,
+				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
 		Rule rule = _rulesRegistry.getRule("ContentVisitedRule");
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			TestUtil.getUserId(), "title", StringPool.BLANK,
+			TestPropsValues.getUserId(), "title", StringPool.BLANK,
 			"This is a blog entry for testing purposes", 1, 1, 1965, 0, 0, true,
 			true, null, false, null, null, null, serviceContext);
 
@@ -91,7 +93,7 @@ public class ContentVisitedTest {
 			BlogsEntry.class.getName(), entry.getEntryId());
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestUtil.getUserId(), rule.getRuleKey(), 0,
+			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
 			String.valueOf(assetEntry.getEntryId()), serviceContext);
 
 		Assert.assertFalse(rule.evaluate(null, ruleInstance, anonymousUser));
@@ -99,20 +101,20 @@ public class ContentVisitedTest {
 
 	@Test
 	public void testVisitedContentRule() throws Exception {
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext = TestUtil.getServiceContext(
-			group.getGroupId(), TestUtil.getUserId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
-				TestUtil.getUserId(), "127.0.0.1", StringPool.BLANK,
+				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
 		Rule rule = _rulesRegistry.getRule("ContentVisitedRule");
 
 		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			TestUtil.getUserId(), "title", StringPool.BLANK,
+			TestPropsValues.getUserId(), "title", StringPool.BLANK,
 			"This is a blog entry for testing purposes", 1, 1, 1965, 0, 0, true,
 			true, null, false, null, null, null, serviceContext);
 
@@ -126,7 +128,7 @@ public class ContentVisitedTest {
 			serviceContext);
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestUtil.getUserId(), rule.getRuleKey(), 0,
+			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
 			String.valueOf(assetEntry.getEntryId()), serviceContext);
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
