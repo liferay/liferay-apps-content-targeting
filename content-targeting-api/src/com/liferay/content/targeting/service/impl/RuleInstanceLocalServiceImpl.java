@@ -50,7 +50,6 @@ public class RuleInstanceLocalServiceImpl
 		throws PortalException, SystemException {
 
 		User user = UserLocalServiceUtil.getUser(userId);
-		long groupId = serviceContext.getScopeGroupId();
 
 		Date now = new Date();
 
@@ -59,8 +58,8 @@ public class RuleInstanceLocalServiceImpl
 		RuleInstance ruleInstance = ruleInstancePersistence.create(
 			ruleInstanceId);
 
-		ruleInstance.setGroupId(groupId);
-
+		ruleInstance.setUuid(serviceContext.getUuid());
+		ruleInstance.setGroupId(serviceContext.getScopeGroupId());
 		ruleInstance.setCompanyId(user.getCompanyId());
 		ruleInstance.setUserId(user.getUserId());
 		ruleInstance.setUserName(user.getFullName());

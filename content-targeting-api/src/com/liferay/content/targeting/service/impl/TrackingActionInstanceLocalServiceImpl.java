@@ -52,7 +52,6 @@ public class TrackingActionInstanceLocalServiceImpl
 		throws PortalException, SystemException {
 
 		User user = UserLocalServiceUtil.getUser(userId);
-		long groupId = serviceContext.getScopeGroupId();
 
 		Date now = new Date();
 
@@ -61,8 +60,8 @@ public class TrackingActionInstanceLocalServiceImpl
 		TrackingActionInstance trackingActionInstance =
 			trackingActionInstancePersistence.create(trackingActionInstanceId);
 
-		trackingActionInstance.setGroupId(groupId);
-
+		trackingActionInstance.setUuid(serviceContext.getUuid());
+		trackingActionInstance.setGroupId(serviceContext.getScopeGroupId());
 		trackingActionInstance.setCompanyId(user.getCompanyId());
 		trackingActionInstance.setUserId(user.getUserId());
 		trackingActionInstance.setUserName(user.getFullName());

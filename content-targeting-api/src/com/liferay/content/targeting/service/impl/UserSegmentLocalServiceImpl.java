@@ -82,7 +82,6 @@ public class UserSegmentLocalServiceImpl
 		throws PortalException, SystemException {
 
 		User user = UserLocalServiceUtil.getUser(userId);
-		long groupId = serviceContext.getScopeGroupId();
 
 		Date now = new Date();
 
@@ -90,7 +89,8 @@ public class UserSegmentLocalServiceImpl
 
 		UserSegment userSegment = userSegmentPersistence.create(userSegmentId);
 
-		userSegment.setGroupId(groupId);
+		userSegment.setUuid(serviceContext.getUuid());
+		userSegment.setGroupId(serviceContext.getScopeGroupId());
 
 		AssetCategory assetCategory = addUserSegmentCategory(
 			userId, nameMap, descriptionMap, serviceContext);
@@ -137,7 +137,7 @@ public class UserSegmentLocalServiceImpl
 			serviceContextStaging.setUuid(assetCategory.getUuid());
 
 			addUserSegmentCategory(
-				userId, nameMap, descriptionMap, serviceContextStaging);
+					userId, nameMap, descriptionMap, serviceContextStaging);
 		}
 
 		return userSegment;

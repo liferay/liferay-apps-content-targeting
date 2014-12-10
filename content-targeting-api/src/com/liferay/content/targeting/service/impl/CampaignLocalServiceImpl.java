@@ -74,15 +74,14 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 		User user = UserLocalServiceUtil.getUser(userId);
 
-		long groupId = serviceContext.getScopeGroupId();
-
 		Date now = new Date();
 
 		long campaignId = CounterLocalServiceUtil.increment();
 
 		Campaign campaign = campaignPersistence.create(campaignId);
 
-		campaign.setGroupId(groupId);
+		campaign.setUuid(serviceContext.getUuid());
+		campaign.setGroupId(serviceContext.getScopeGroupId());
 		campaign.setCompanyId(user.getCompanyId());
 		campaign.setUserId(user.getUserId());
 		campaign.setUserName(user.getFullName());
