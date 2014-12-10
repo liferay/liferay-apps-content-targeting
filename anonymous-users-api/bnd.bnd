@@ -9,7 +9,6 @@ Export-Package:\
 	com.liferay.content.targeting.anonymous.users.util
 Import-Package:\
 	com.liferay.osgi.util.service,\
-	com.liferay.util,\
 	*;resolution:="optional"
 Include-Resource:\
  	classes,\
@@ -20,3 +19,6 @@ Include-Resource:\
 	@lib/com.liferay.content.targeting.anonymous.users.api-service.jar
 Service-Component: com.liferay.content.targeting.anonymous.users.*
 Web-ContextPath: /anonymous-users-api
+Require-Capability:
+	system.packages.extra;\
+	filter:="(version=1.0.0)"

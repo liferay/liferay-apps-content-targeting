@@ -12,7 +12,6 @@ Export-Package:\
 Import-Package:\
 	com.liferay.osgi.util.service,\
 	com.liferay.portal.kernel.lar,\
-	com.liferay.util,\
 	javax.portlet,\
 	*;resolution:="optional"
 Include-Resource:\
@@ -27,3 +26,6 @@ Include-Resource:\
 	@lib/com.liferay.content.targeting.analytics.api-service.jar
 Service-Component: com.liferay.content.targeting.analytics.*
 Web-ContextPath: /analytics-api
+Require-Capability:
+	system.packages.extra;\
+	filter:="(version=1.0.0)"
