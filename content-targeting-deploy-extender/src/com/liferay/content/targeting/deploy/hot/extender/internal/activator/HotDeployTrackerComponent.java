@@ -37,6 +37,7 @@ import org.osgi.framework.ServiceReference;
 import org.osgi.framework.wiring.BundleWiring;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.util.tracker.ServiceTracker;
 import org.osgi.util.tracker.ServiceTrackerCustomizer;
@@ -46,19 +47,6 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
  */
 @Component(immediate = true)
 public class HotDeployTrackerComponent {
-
-	@Activate
-	public void activate(final BundleContext bundleContext) {
-		_serviceTracker = new ServiceTracker<ServletContext, ServletContext>(
-			bundleContext, ServletContext.class,
-			new ServletContextTrackerCustomizer());
-
-		_serviceTracker.open();
-
-		_messageBus.registerMessageListener(
-			DestinationNames.HOT_DEPLOY,
-			new ServiceRegistratorMessageListener());
-	}
 
 	@Reference
 	public void setPortalServletContext(MessageBus messageBus) {
@@ -136,6 +124,28 @@ public class HotDeployTrackerComponent {
 
 	}
 
+	@Activate
+	protected void activate(final BundleContext bundleContext) {
+		_serviceTracker = new ServiceTracker<ServletContext, ServletContext>(
+			bundleContext, ServletContext.class,
+			new ServletContextTrackerCustomizer());
+
+		_serviceTracker.open();
+
+		_messageBus.registerMessageListener(
+			DestinationNames.HOT_DEPLOY, _serviceRegistratorMessageListener);
+	}
+
+	@Deactivate
+	protected void deactivate(final BundleContext bundleContext) {
+		_serviceTracker.close();
+
+		_serviceTracker = null;
+
+		_messageBus.unregisterMessageListener(
+			DestinationNames.HOT_DEPLOY, _serviceRegistratorMessageListener);
+	}
+
 	private ClassLoader _getClassLoader(Bundle bundle) {
 		BundleWiring bundleWiring = bundle.adapt(BundleWiring.class);
 
@@ -146,6 +156,8 @@ public class HotDeployTrackerComponent {
 	private ConcurrentHashMap<String, OsgiDeployContext> _osgiDeployContexts =
 		new ConcurrentHashMap<String, OsgiDeployContext>();
 	private ServletContext _portalServletContext;
+	private MessageListener _serviceRegistratorMessageListener =
+		new ServiceRegistratorMessageListener();
 	private ServiceTracker<ServletContext, ServletContext> _serviceTracker;
 
 	private class ServletContextTrackerCustomizer
