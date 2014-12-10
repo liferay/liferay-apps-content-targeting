@@ -4,3 +4,6 @@ Bundle-Version: 1.0.0
 Include-Resource: classes
 Provide-Capability: content.targeting.deploy.extender;\
 	version:Version="1.0.0"
+Require-Capability:
+	system.packages.extra;\
+	filter:="(version=1.0.0)"
