@@ -15,6 +15,7 @@
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/classes" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
@@ -99,6 +100,7 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/jars/shrinkwrap-descriptors-api-base-2.0.0-alpha-3.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/jars/shrinkwrap-descriptors-spi-2.0.0-alpha-3.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/jars/arquillian-protocol-jmx-1.1.2.Final.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.mockito/mockito-all/jars/mockito-all-1.9.5.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.junit/arquillian-junit-container/javadocs/arquillian-junit-container-1.1.2.Final-javadoc.jar!/" />
@@ -167,6 +169,7 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-api-base/javadocs/shrinkwrap-descriptors-api-base-2.0.0-alpha-3-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/javadocs/shrinkwrap-descriptors-spi-2.0.0-alpha-3-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/javadocs/arquillian-protocol-jmx-1.1.2.Final-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.mockito/mockito-all/javadocs/mockito-all-1.9.5-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.junit/arquillian-junit-container/sources/arquillian-junit-container-1.1.2.Final-sources.jar!/" />
@@ -244,9 +247,64 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/sources/shrinkwrap-descriptors-spi-2.0.0-alpha-3-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/sources/arquillian-protocol-jmx-1.1.2.Final-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/sources/hamcrest-core-1.3-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.mockito/mockito-all/sources/mockito-all-1.9.5-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/junit.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/restfb.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/javassist.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/objenesis.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/freemarker.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/mockito-all.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/hamcrest-core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.osgi.core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-reflect.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.osgi.compendium.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.osgi.enterprise.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/portal-compat-shared.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.osgi.util.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-api-mockito.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-api-support.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-module-junit4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.portal.log.bridge.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-module-junit4-common.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.api.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.api-service.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.anonymous.users.api.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.anonymous.users.api-service.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/junit.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/restfb.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/javassist.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/objenesis.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/freemarker.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/mockito-all.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/hamcrest-core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.osgi.core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-core.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-reflect.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.osgi.compendium.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/org.osgi.enterprise.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/portal-compat-shared.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.osgi.util.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-api-mockito.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-api-support.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-module-junit4.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.portal.log.bridge.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/powermock-module-junit4-common.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.api.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.api-service.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.anonymous.users.api.jar!/" />
+          <root url="jar://$MODULE_DIR$/../rule-facebook/lib/com.liferay.content.targeting.anonymous.users.api-service.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>
   </component>
 </module>
-
