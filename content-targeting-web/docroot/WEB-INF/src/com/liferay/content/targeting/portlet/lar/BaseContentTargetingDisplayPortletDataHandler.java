@@ -14,10 +14,12 @@
 
 package com.liferay.content.targeting.portlet.lar;
 
+import com.liferay.content.targeting.lar.AssetEntryReferenceStagedModel;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -93,7 +95,16 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 				key + "classUuid", assetEntry.getClassUuid());
 			portletPreferences.setValue(
 				key + "groupId", String.valueOf(assetEntry.getGroupId()));
+
+			portletDataContext.addReferenceElement(
+				portlet, rootElement,
+				new AssetEntryReferenceStagedModel(assetEntry),
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
+
+			return;
 		}
+
+		throw new PortletDataException();
 	}
 
 	protected PortletPreferences updateExportPortletPreferences(
@@ -111,6 +122,10 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 				portletDataContext, portlet, portletPreferences,
 				"assetEntryId" + queryRule.getIndex(),
 				portletDataContext.getExportDataRootElement());
+			updateExportReferrerIds(
+				portletDataContext, portlet, portletPreferences,
+				queryRule.getIndex(),
+				portletDataContext.getExportDataRootElement());
 		}
 
 		updateExportAssetEntryIds(
@@ -121,10 +136,22 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 		return portletPreferences;
 	}
 
+	protected abstract void updateExportReferrerIds(
+			PortletDataContext portletDataContext, Portlet portlet,
+			PortletPreferences portletPreferences, int index,
+			Element exportDataRootElement)
+		throws Exception;
+
 	protected void updateImportAssetEntryIds(
 			PortletDataContext portletDataContext,
 			PortletPreferences portletPreferences, String key)
 		throws Exception {
+
+		if (!key.equals("assetEntryIdDefault") &&
+			!key.matches("^assetEntryId\\d*$")) {
+
+			return;
+		}
 
 		String classUuid = portletPreferences.getValue(key + "classUuid", null);
 
@@ -174,16 +201,19 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 		while (enu.hasMoreElements()) {
 			String key = enu.nextElement();
 
-			if (key.equals("assetEntryIdDefault") ||
-				key.matches("^assetEntryId\\d*$")) {
-
-				updateImportAssetEntryIds(
-					portletDataContext, portletPreferences, key);
-			}
+			updateImportAssetEntryIds(
+				portletDataContext, portletPreferences, key);
+			updateImportReferrerIds(
+				portletDataContext, portletPreferences, key);
 		}
 
 		return portletPreferences;
 	}
+
+	protected abstract void updateImportReferrerIds(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences, String key)
+		throws Exception;
 
 	private static Log _log = LogFactoryUtil.getLog(
 		BaseContentTargetingDisplayPortletDataHandler.class);
