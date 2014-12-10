@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2000-2013 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.service.test.util;
 
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.portal.kernel.cache.Lifecycle;
 import com.liferay.portal.kernel.cache.ThreadLocalCacheManager;
 import com.liferay.portal.kernel.lar.PortletDataHandlerKeys;
@@ -30,7 +31,6 @@ import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.GroupServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.ServiceTestUtil;
 import com.liferay.portal.service.StagingLocalServiceUtil;
 
 import java.util.Locale;
