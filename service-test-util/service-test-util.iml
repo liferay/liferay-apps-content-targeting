@@ -20,6 +20,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="portal" level="project" />
+    <orderEntry type="library" name="portal-impl" level="project" />
     <orderEntry type="library" name="reference" level="project" />
     <orderEntry type="module-library">
       <library name="IvyIDEA">
@@ -101,6 +102,14 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/jars/shrinkwrap-descriptors-spi-2.0.0-alpha-3.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/jars/arquillian-protocol-jmx-1.1.2.Final.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.mockito/mockito-all/jars/mockito-all-1.9.5.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-api-mockito/jars/powermock-api-mockito-1.5.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-api-support/jars/powermock-api-support-1.5.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-core/jars/powermock-core-1.5.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-reflect/jars/powermock-reflect-1.5.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.objenesis/objenesis/jars/objenesis-1.2.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.javassist/javassist/bundles/javassist-3.17.1-GA.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4/jars/powermock-module-junit4-1.5.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4-common/jars/powermock-module-junit4-common-1.5.jar!/" />
         </CLASSES>
         <JAVADOC>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.junit/arquillian-junit-container/javadocs/arquillian-junit-container-1.1.2.Final-javadoc.jar!/" />
@@ -170,6 +179,13 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.shrinkwrap.descriptors/shrinkwrap-descriptors-spi/javadocs/shrinkwrap-descriptors-spi-2.0.0-alpha-3-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/javadocs/arquillian-protocol-jmx-1.1.2.Final-javadoc.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.mockito/mockito-all/javadocs/mockito-all-1.9.5-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-api-mockito/javadocs/powermock-api-mockito-1.5-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-api-support/javadocs/powermock-api-support-1.5-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-core/javadocs/powermock-core-1.5-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-reflect/javadocs/powermock-reflect-1.5-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.objenesis/objenesis/javadocs/objenesis-1.2-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4/javadocs/powermock-module-junit4-1.5-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4-common/javadocs/powermock-module-junit4-common-1.5-javadoc.jar!/" />
         </JAVADOC>
         <SOURCES>
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.junit/arquillian-junit-container/sources/arquillian-junit-container-1.1.2.Final-sources.jar!/" />
@@ -248,6 +264,14 @@
           <root url="jar://$USER_HOME$/.ivy2/cache/org.jboss.arquillian.protocol/arquillian-protocol-jmx/sources/arquillian-protocol-jmx-1.1.2.Final-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.hamcrest/hamcrest-core/sources/hamcrest-core-1.3-sources.jar!/" />
           <root url="jar://$USER_HOME$/.ivy2/cache/org.mockito/mockito-all/sources/mockito-all-1.9.5-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-api-mockito/sources/powermock-api-mockito-1.5-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-api-support/sources/powermock-api-support-1.5-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-core/sources/powermock-core-1.5-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-reflect/sources/powermock-reflect-1.5-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.objenesis/objenesis/sources/objenesis-1.2-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.javassist/javassist/sources/javassist-3.17.1-GA-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4/sources/powermock-module-junit4-1.5-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.powermock/powermock-module-junit4-common/sources/powermock-module-junit4-common-1.5-sources.jar!/" />
         </SOURCES>
       </library>
     </orderEntry>

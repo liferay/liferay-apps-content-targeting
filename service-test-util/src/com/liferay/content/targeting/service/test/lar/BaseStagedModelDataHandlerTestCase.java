@@ -16,6 +16,8 @@ package com.liferay.content.targeting.service.test.lar;
 
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.content.targeting.service.test.util.GroupTestUtil;
+import com.liferay.content.targeting.service.test.util.PortletExporterTestUtil;
+import com.liferay.content.targeting.service.test.util.PortletImporterTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
@@ -33,6 +35,7 @@ import com.liferay.portal.kernel.zip.ZipReader;
 import com.liferay.portal.kernel.zip.ZipReaderFactoryUtil;
 import com.liferay.portal.kernel.zip.ZipWriter;
 import com.liferay.portal.kernel.zip.ZipWriterFactoryUtil;
+import com.liferay.portal.lar.CurrentUserIdStrategy;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.service.GroupLocalServiceUtil;
@@ -232,7 +235,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 	}
 
 	protected void initImport() throws Exception {
-		PortletExporter portletExporter = new PortletExporter();
+		PortletExporterTestUtil portletExporter = new PortletExporterTestUtil();
 
 		portletExporter.exportAssetCategories(portletDataContext);
 		portletExporter.exportAssetTags(portletDataContext);
@@ -255,7 +258,7 @@ public abstract class BaseStagedModelDataHandlerTestCase {
 
 		portletDataContext.setSourceGroupId(stagingGroup.getGroupId());
 
-		PortletImporter portletImporter = new PortletImporter();
+		PortletImporterTestUtil portletImporter = new PortletImporterTestUtil();
 
 		portletImporter.readAssetCategories(portletDataContext);
 		portletImporter.readAssetTags(portletDataContext);
