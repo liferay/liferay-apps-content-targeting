@@ -45,6 +45,10 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<entity name="ReportInstance" local-service="true" remote-service="true">
 
@@ -130,6 +134,10 @@
 			<finder-column name="ruleKey" />
 			<finder-column name="userSegmentId" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<entity name="TrackingActionInstance" uuid="true" local-service="true" remote-service="true">
 
@@ -185,6 +193,10 @@
 			<finder-column name="referrerClassPK" />
 			<finder-column name="eventType" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<entity name="UserSegment" uuid="true" local-service="true" remote-service="true">
 
@@ -225,6 +237,10 @@
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<exceptions>
 		<exception>UsedUserSegment</exception>

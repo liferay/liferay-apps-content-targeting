@@ -37,9 +37,11 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -192,7 +194,25 @@ public class UserSegmentLocalServiceImpl
 			throw new UsedUserSegmentException(campaigns);
 		}
 
-		UserSegment userSegment = userSegmentPersistence.remove(userSegmentId);
+		UserSegment userSegment = userSegmentPersistence.findByPrimaryKey(
+			userSegmentId);
+
+		return deleteUserSegment(userSegment);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public UserSegment deleteUserSegment(UserSegment userSegment)
+		throws PortalException, SystemException {
+
+		userSegmentPersistence.remove(userSegment);
+
+		// System event
+
+		systemEventLocalService.addSystemEvent(
+			0, userSegment.getGroupId(), UserSegment.class.getName(),
+			userSegment.getUserSegmentId(), userSegment.getUuid(), null,
+			SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 
 		// Resources
 
@@ -214,7 +234,8 @@ public class UserSegmentLocalServiceImpl
 		// Rules
 
 		for (RuleInstance ruleInstance :
-				ruleInstanceLocalService.getRuleInstances(userSegmentId)) {
+				ruleInstanceLocalService.getRuleInstances(
+					userSegment.getUserSegmentId())) {
 
 			ruleInstanceLocalService.deleteRuleInstance(
 				ruleInstance.getRuleInstanceId());
