@@ -77,12 +77,14 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	*
 	* @param campaign the campaign
 	* @return the campaign that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.Campaign deleteCampaign(
 		com.liferay.content.targeting.model.Campaign campaign)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _campaignLocalService.deleteCampaign(campaign);
 	}
 

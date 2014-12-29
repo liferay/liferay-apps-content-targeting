@@ -83,11 +83,13 @@ public class UserSegmentLocalServiceUtil {
 	*
 	* @param userSegment the user segment
 	* @return the user segment that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.UserSegment deleteUserSegment(
 		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().deleteUserSegment(userSegment);
 	}
 
