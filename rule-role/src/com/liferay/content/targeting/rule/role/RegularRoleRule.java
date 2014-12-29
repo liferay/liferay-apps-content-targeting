@@ -67,6 +67,18 @@ public class RegularRoleRule extends BaseRule {
 
 		long roleId = GetterUtil.getLong(ruleInstance.getTypeSettings());
 
+		Role role = RoleLocalServiceUtil.fetchRole(roleId);
+
+		if (role == null) {
+			return false;
+		}
+
+		if ((anonymousUser.getUserId() == 0) &&
+			role.getName().equals(RoleConstants.GUEST)) {
+
+			return true;
+		}
+
 		return RoleLocalServiceUtil.hasUserRole(
 			anonymousUser.getUserId(), roleId);
 	}
