@@ -38,10 +38,10 @@ the following steps:
 (https://github.com/liferay/liferay-plugins) repository.
 2. Init the Audience Targeting application submodule in the Liferay 6.2 SDK by
 running these commands:
-	```
+```
 	git submodule init
 	git submodule update
-	```
+```
 3. Set this property in the build.<username>.properties of your Liferay SDK:
 	```
 	plugins.includes=*-api,*-hook,*-service,*-web,report-*,rule-*,runtime-dependencies,tracking-action-*

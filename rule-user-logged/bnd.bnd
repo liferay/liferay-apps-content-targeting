@@ -18,3 +18,4 @@ Include-Resource:\
 Private-Package: com.liferay.content.targeting.rule.user.logged.*
 Service-Component: com.liferay.content.targeting.rule.user.logged.*
 Web-ContextPath: /rule-user-logged
+-baseline: *;version="1.0.0"

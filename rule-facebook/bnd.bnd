@@ -19,3 +19,4 @@ Include-Resource:\
 Private-Package: com.liferay.content.targeting.rule.facebook.*
 Service-Component: com.liferay.content.targeting.rule.facebook.*
 Web-ContextPath: /rule-facebook
+-baseline: *;version="1.0.0"
