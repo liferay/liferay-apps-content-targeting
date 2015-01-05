@@ -73,14 +73,18 @@ public class RegularRoleRule extends BaseRule {
 			return false;
 		}
 
-		if ((anonymousUser.getUserId() == 0) &&
-			role.getName().equals(RoleConstants.GUEST)) {
+		if (anonymousUser.getUserId() != 0) {
+			return RoleLocalServiceUtil.hasUserRole(
+				anonymousUser.getUserId(), roleId);
+		}
 
+		String roleName = role.getName();
+
+		if (roleName.equals(RoleConstants.GUEST)) {
 			return true;
 		}
 
-		return RoleLocalServiceUtil.hasUserRole(
-			anonymousUser.getUserId(), roleId);
+		return false;
 	}
 
 	@Override
