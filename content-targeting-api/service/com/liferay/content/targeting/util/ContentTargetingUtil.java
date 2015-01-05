@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -112,11 +113,19 @@ public class ContentTargetingUtil {
 			AssetRendererFactory assetRendererFactory, String index)
 		throws Exception {
 
+		return getAssetSelectorIconData(request, assetRendererFactory, index, "");
+	}
+
+	public static Map<String, Object> getAssetSelectorIconData(
+			HttpServletRequest request,
+			AssetRendererFactory assetRendererFactory, String index, String guid)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL assetBrowserURL = getAssetBrowserURL(
-			request, assetRendererFactory.getClassName());
+			request, assetRendererFactory.getClassName(), guid);
 
 		String typeName = assetRendererFactory.getTypeName(
 			themeDisplay.getLocale(), false);
@@ -256,7 +265,7 @@ public class ContentTargetingUtil {
 	}
 
 	protected static PortletURL getAssetBrowserURL(
-			HttpServletRequest request, String className)
+			HttpServletRequest request, String className, String guid)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -276,7 +285,14 @@ public class ContentTargetingUtil {
 				getSharedContentSiteGroupIds(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					themeDisplay.getUserId())));
-		assetBrowserURL.setParameter("eventName", "selectContent");
+
+		String eventName = "selectContent";
+
+		if (Validator.isNotNull(guid)) {
+			eventName += guid;
+		}
+
+		assetBrowserURL.setParameter("eventName", eventName);
 		assetBrowserURL.setParameter("typeSelection", className);
 		assetBrowserURL.setPortletMode(PortletMode.VIEW);
 		assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);
