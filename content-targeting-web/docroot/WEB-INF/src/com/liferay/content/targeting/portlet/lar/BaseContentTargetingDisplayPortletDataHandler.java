@@ -85,6 +85,10 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 
 		long assetEntryId = GetterUtil.getLong(oldValue);
 
+		if (assetEntryId == 0) {
+			return;
+		}
+
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(
 			assetEntryId);
 
