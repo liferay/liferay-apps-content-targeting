@@ -20,7 +20,7 @@
 		<portlet-name>ctadmin</portlet-name>
 		<icon>/icons/icon.png</icon>
 		<portlet-data-handler-class>com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler</portlet-data-handler-class>
-		<staged-model-data-handler-class>com.liferay.content.targeting.lar.AssetEntryReferenceStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.content.targeting.lar.AssetEntryReferencedStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.content.targeting.lar.CampaignStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.content.targeting.lar.RuleInstanceStagedModelDataHandler</staged-model-data-handler-class>
 		<staged-model-data-handler-class>com.liferay.content.targeting.lar.TrackingActionInstanceStagedModelDataHandler</staged-model-data-handler-class>

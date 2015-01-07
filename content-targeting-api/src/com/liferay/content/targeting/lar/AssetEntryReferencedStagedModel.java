@@ -27,9 +27,9 @@ import java.util.Date;
 /**
  * @author Eduardo Garcia
  */
-public class AssetEntryReferenceStagedModel implements StagedModel {
+public class AssetEntryReferencedStagedModel implements StagedModel {
 
-	public AssetEntryReferenceStagedModel(AssetEntry assetEntry) {
+	public AssetEntryReferencedStagedModel(AssetEntry assetEntry) {
 		_assetEntry = assetEntry;
 	}
 
@@ -64,7 +64,7 @@ public class AssetEntryReferenceStagedModel implements StagedModel {
 
 	@Override
 	public String getModelClassName() {
-		return AssetEntryReferenceStagedModel.class.getName();
+		return AssetEntryReferencedStagedModel.class.getName();
 	}
 
 	@Override

@@ -14,7 +14,7 @@
 
 package com.liferay.content.targeting.portlet.lar;
 
-import com.liferay.content.targeting.lar.AssetEntryReferenceStagedModel;
+import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
@@ -98,7 +98,7 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 
 			portletDataContext.addReferenceElement(
 				portlet, rootElement,
-				new AssetEntryReferenceStagedModel(assetEntry),
+				new AssetEntryReferencedStagedModel(assetEntry),
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
 
 			return;

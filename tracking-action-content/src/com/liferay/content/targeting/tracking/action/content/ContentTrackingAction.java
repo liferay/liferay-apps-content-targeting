@@ -18,7 +18,7 @@ import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
-import com.liferay.content.targeting.lar.AssetEntryReferenceStagedModel;
+import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
@@ -94,7 +94,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 			portletDataContext.addReferenceElement(
 				campaign, campaignElement,
-				new AssetEntryReferenceStagedModel(assetEntry),
+				new AssetEntryReferencedStagedModel(assetEntry),
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
 			return;

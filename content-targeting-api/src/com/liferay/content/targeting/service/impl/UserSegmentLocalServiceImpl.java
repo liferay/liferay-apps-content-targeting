@@ -151,7 +151,7 @@ public class UserSegmentLocalServiceImpl
 			serviceContextStaging.setUuid(assetCategory.getUuid());
 
 			addUserSegmentCategory(
-					userId, nameMap, descriptionMap, serviceContextStaging);
+				userId, nameMap, descriptionMap, serviceContextStaging);
 		}
 
 		return userSegment;

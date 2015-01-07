@@ -20,7 +20,7 @@ import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
-import com.liferay.content.targeting.lar.AssetEntryReferenceStagedModel;
+import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
@@ -121,7 +121,7 @@ public class ContentVisitedRule extends BaseRule {
 
 			portletDataContext.addReferenceElement(
 				userSegment, userSegmentElement,
-				new AssetEntryReferenceStagedModel(assetEntry),
+				new AssetEntryReferencedStagedModel(assetEntry),
 				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 
 			return;

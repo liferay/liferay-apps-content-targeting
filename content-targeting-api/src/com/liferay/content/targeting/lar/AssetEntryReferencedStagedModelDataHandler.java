@@ -26,11 +26,11 @@ import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 /**
  * @author Eduardo Garcia
  */
-public class AssetEntryReferenceStagedModelDataHandler
-	extends BaseStagedModelDataHandler<AssetEntryReferenceStagedModel> {
+public class AssetEntryReferencedStagedModelDataHandler
+	extends BaseStagedModelDataHandler<AssetEntryReferencedStagedModel> {
 
 	public static final String[] CLASS_NAMES = {
-		AssetEntryReferenceStagedModel.class.getName()};
+		AssetEntryReferencedStagedModel.class.getName()};
 
 	@Override
 	public void deleteStagedModel(
@@ -45,13 +45,13 @@ public class AssetEntryReferenceStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(
-		AssetEntryReferenceStagedModel assetEntryReferenceClassedModel) {
+		AssetEntryReferencedStagedModel assetEntryReferencedStagedModel) {
 
-		String title = assetEntryReferenceClassedModel.getTitle();
+		String title = assetEntryReferencedStagedModel.getTitle();
 
 		String type = ResourceActionsUtil.getModelResource(
 			LocaleUtil.getDefault(),
-			assetEntryReferenceClassedModel.getClassName());
+			assetEntryReferencedStagedModel.getClassName());
 
 		return title + " - " + type;
 	}
@@ -59,14 +59,14 @@ public class AssetEntryReferenceStagedModelDataHandler
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
-			AssetEntryReferenceStagedModel stagedModel)
+			AssetEntryReferencedStagedModel stagedModel)
 		throws Exception {
 	}
 
 	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext,
-			AssetEntryReferenceStagedModel stagedModel)
+			AssetEntryReferencedStagedModel stagedModel)
 		throws Exception {
 	}
 
