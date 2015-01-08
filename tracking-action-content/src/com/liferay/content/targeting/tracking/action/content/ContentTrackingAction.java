@@ -89,7 +89,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			assetEntryId);
 
-		if ((assetEntry != null) && assetEntry.isVisible()) {
+		if (assetEntry != null) {
 			trackingActionInstance.setTypeSettings(assetEntry.getClassUuid());
 
 			portletDataContext.addReferenceElement(

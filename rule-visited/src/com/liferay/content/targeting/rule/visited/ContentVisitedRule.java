@@ -116,7 +116,7 @@ public class ContentVisitedRule extends BaseRule {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			assetEntryId);
 
-		if ((assetEntry != null) && assetEntry.isVisible()) {
+		if (assetEntry != null) {
 			ruleInstance.setTypeSettings(assetEntry.getClassUuid());
 
 			portletDataContext.addReferenceElement(
