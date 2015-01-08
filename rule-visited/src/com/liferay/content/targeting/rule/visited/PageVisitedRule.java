@@ -105,7 +105,7 @@ public class PageVisitedRule extends BaseRule {
 
 			portletDataContext.addReferenceElement(
 				userSegment, userSegmentElement, layout,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			return;
 		}

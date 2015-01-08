@@ -28,8 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -92,10 +94,34 @@ public class ContentTrackingAction extends BaseTrackingAction {
 		if (assetEntry != null) {
 			trackingActionInstance.setTypeSettings(assetEntry.getClassUuid());
 
-			portletDataContext.addReferenceElement(
-				campaign, campaignElement,
-				new AssetEntryReferencedStagedModel(assetEntry),
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+			AssetEntryReferencedStagedModel assetEntryReferencedStagedModel =
+				new AssetEntryReferencedStagedModel(assetEntry);
+
+			try {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, trackingActionInstance,
+					trackingActionInstanceElement,
+					assetEntryReferencedStagedModel,
+					AssetEntryReferencedStagedModel.class,
+					PortletDataContext.REFERENCE_TYPE_WEAK);
+			}
+			catch (Exception e) {
+				portletDataContext.addReferenceElement(
+					trackingActionInstance, trackingActionInstanceElement,
+					assetEntryReferencedStagedModel,
+					AssetEntryReferencedStagedModel.class,
+					PortletDataContext.REFERENCE_TYPE_WEAK, true);
+
+				Element assetEntryReferencedStagedModelElement =
+					portletDataContext.getExportDataElement(
+						assetEntryReferencedStagedModel);
+
+				portletDataContext.addClassedModel(
+					assetEntryReferencedStagedModelElement,
+					ExportImportPathUtil.getModelPath(
+						assetEntryReferencedStagedModel),
+					assetEntryReferencedStagedModel);
+			}
 
 			return;
 		}
@@ -134,6 +160,10 @@ public class ContentTrackingAction extends BaseTrackingAction {
 			PortletDataContext portletDataContext, Campaign campaign,
 			TrackingActionInstance trackingActionInstance)
 		throws Exception {
+
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, trackingActionInstance,
+			AssetEntryReferencedStagedModel.class);
 
 		String classUuid = trackingActionInstance.getTypeSettings();
 

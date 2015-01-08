@@ -87,7 +87,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 			portletDataContext.addReferenceElement(
 				campaign, campaignElement, layout,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			return;
 		}

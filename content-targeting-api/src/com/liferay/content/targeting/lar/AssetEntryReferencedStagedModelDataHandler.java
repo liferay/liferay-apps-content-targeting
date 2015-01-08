@@ -17,11 +17,20 @@ package com.liferay.content.targeting.lar;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.repository.model.FileEntry;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.StagedModel;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.documentlibrary.model.DLFileEntry;
+import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
+import com.liferay.portlet.journal.model.JournalArticle;
+import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
 /**
  * @author Eduardo Garcia
@@ -59,15 +68,91 @@ public class AssetEntryReferencedStagedModelDataHandler
 	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext,
-			AssetEntryReferencedStagedModel stagedModel)
+			AssetEntryReferencedStagedModel assetEntryReferencedStagedModel)
 		throws Exception {
+
+		StagedModel supportedStagedModel = getSupportedStagedModel(
+			assetEntryReferencedStagedModel.getClassName(),
+			assetEntryReferencedStagedModel.getClassPK());
+
+		if (supportedStagedModel != null) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, assetEntryReferencedStagedModel,
+				AssetEntryReferencedStagedModel.class, supportedStagedModel,
+				getSupportedStagedModelClass(
+					assetEntryReferencedStagedModel.getClassName()),
+				PortletDataContext.REFERENCE_TYPE_DEPENDENCY);
+
+			Element assetEntryReferencedStagedModelElement =
+				portletDataContext.getExportDataElement(
+					assetEntryReferencedStagedModel);
+
+			portletDataContext.addClassedModel(
+				assetEntryReferencedStagedModelElement,
+				ExportImportPathUtil.getModelPath(
+					assetEntryReferencedStagedModel),
+				assetEntryReferencedStagedModel);
+
+			return;
+		}
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext,
-			AssetEntryReferencedStagedModel stagedModel)
+			AssetEntryReferencedStagedModel assetEntryReferencedStagedModel)
 		throws Exception {
+
+		Class clazz = getSupportedStagedModelClass(
+			assetEntryReferencedStagedModel.getClassName());
+
+		if (clazz != null) {
+			StagedModelDataHandlerUtil.importReferenceStagedModels(
+				portletDataContext, assetEntryReferencedStagedModel, clazz);
+		}
+		else {
+			String stagedModelPath = ExportImportPathUtil.getModelPath(
+				portletDataContext,
+				assetEntryReferencedStagedModel.getClassName(),
+				assetEntryReferencedStagedModel.getClassPK());
+
+			StagedModel stagedModel =
+				(StagedModel)portletDataContext.getZipEntryAsObject(
+					stagedModelPath);
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, stagedModel);
+		}
+	}
+
+	protected StagedModel getSupportedStagedModel(
+			String className, long classPK)
+		throws PortalException, SystemException {
+
+		if (className.equals(JournalArticle.class.getName())) {
+			return JournalArticleLocalServiceUtil.fetchLatestIndexableArticle(
+				classPK);
+		}
+		else if (className.equals(DLFileEntry.class.getName())) {
+			return DLAppLocalServiceUtil.getFileEntry(classPK);
+		}
+
+		return null;
+	}
+
+	protected Class getSupportedStagedModelClass(String className)
+		throws PortalException, SystemException {
+
+		if (className.equals(JournalArticle.class.getName())) {
+			return JournalArticle.class;
+		}
+		else if (className.equals(DLFileEntry.class.getName())) {
+			return FileEntry.class;
+		}
+
+		return null;
 	}
 
 	@Override

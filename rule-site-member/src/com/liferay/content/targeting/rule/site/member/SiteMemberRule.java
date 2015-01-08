@@ -95,7 +95,7 @@ public class SiteMemberRule extends BaseRule {
 
 			portletDataContext.addReferenceElement(
 				userSegment, userSegmentElement, group,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			return;
 		}

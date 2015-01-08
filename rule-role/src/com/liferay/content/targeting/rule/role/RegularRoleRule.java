@@ -92,7 +92,7 @@ public class RegularRoleRule extends BaseRule {
 
 			portletDataContext.addReferenceElement(
 				userSegment, userSegmentElement, role,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			return;
 		}

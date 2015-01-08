@@ -131,7 +131,7 @@ public class DeviceRule extends BaseRule {
 
 			portletDataContext.addReferenceElement(
 				userSegment, userSegmentElement, mdrRuleGroup,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			return;
 		}

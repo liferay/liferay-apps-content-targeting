@@ -19,6 +19,7 @@ import com.liferay.content.targeting.portlet.util.CampaignQueryRuleUtil;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -69,9 +70,8 @@ public class CampaignContentDisplayPortletDataHandler
 		if (campaign != null) {
 			portletPreferences.setValue(key + "uuid", campaign.getUuid());
 
-			portletDataContext.addReferenceElement(
-				portlet, rootElement, campaign, Campaign.class,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, false);
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portlet.getRootPortletId(), campaign);
 
 			return;
 		}
@@ -90,6 +90,9 @@ public class CampaignContentDisplayPortletDataHandler
 		if (!key.matches("^campaignId\\d*$")) {
 			return;
 		}
+
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, Campaign.class);
 
 		String uuid = portletPreferences.getValue(key + "uuid", null);
 

@@ -26,6 +26,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 
@@ -73,7 +76,15 @@ public class RuleInstanceStagedModelDataHandler
 			Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
 
 			if (rule != null) {
-				rule.deleteData(ruleInstance);
+				try {
+					rule.deleteData(ruleInstance);
+				}
+				catch (Exception e) {
+					_log.error(
+						"Cannot delete rule " +
+							rule.getName(LocaleUtil.getDefault()),
+						e);
+				}
 			}
 
 			RuleInstanceLocalServiceUtil.deleteRuleInstance(ruleInstance);
@@ -83,6 +94,13 @@ public class RuleInstanceStagedModelDataHandler
 	@Override
 	public String[] getClassNames() {
 		return CLASS_NAMES;
+	}
+
+	@Override
+	public String getDisplayName(RuleInstance ruleInstance) {
+		Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
+
+		return rule.getName(LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -103,9 +121,19 @@ public class RuleInstanceStagedModelDataHandler
 			Element userSegmentElement =
 				portletDataContext.getExportDataElement(userSegment);
 
-			rule.exportData(
-				portletDataContext, userSegmentElement, userSegment,
-				ruleInstanceElement, ruleInstance);
+			try {
+				rule.exportData(
+					portletDataContext, userSegmentElement, userSegment,
+					ruleInstanceElement, ruleInstance);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Cannot export rule " +
+						rule.getName(LocaleUtil.getDefault()) +
+							" in user segment " +
+								userSegment.getName(LocaleUtil.getDefault()),
+					e);
+			}
 		}
 
 		portletDataContext.addClassedModel(
@@ -125,7 +153,16 @@ public class RuleInstanceStagedModelDataHandler
 				UserSegmentLocalServiceUtil.getUserSegment(
 					ruleInstance.getUserSegmentId());
 
-			rule.importData(portletDataContext, userSegment, ruleInstance);
+			try {
+				rule.importData(portletDataContext, userSegment, ruleInstance);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Cannot import rule " +
+						rule.getName(LocaleUtil.getDefault()) +
+							" in user segment " + userSegment.getName(),
+					e);
+			}
 		}
 
 		long userId = portletDataContext.getUserId(ruleInstance.getUserUuid());
@@ -160,6 +197,9 @@ public class RuleInstanceStagedModelDataHandler
 
 		return true;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		RuleInstanceStagedModelDataHandler.class);
 
 	private RulesRegistry _rulesRegistry;
 

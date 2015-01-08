@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -65,7 +66,7 @@ public class UserSegmentStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(UserSegment userSegment) {
-		return userSegment.getName();
+		return userSegment.getName(LocaleUtil.getDefault());
 	}
 
 	@Override

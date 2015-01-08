@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
@@ -63,7 +64,7 @@ public class CampaignStagedModelDataHandler
 
 	@Override
 	public String getDisplayName(Campaign campaign) {
-		return campaign.getName();
+		return campaign.getName(LocaleUtil.getDefault());
 	}
 
 	@Override

@@ -14,9 +14,12 @@
 
 package com.liferay.content.targeting.portlet.lar;
 
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.portlet.util.UserSegmentQueryRuleUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -76,8 +79,16 @@ public class UserSegmentContentDisplayPortletDataHandler
 			AssetCategory assetCategory =
 				AssetCategoryLocalServiceUtil.fetchAssetCategory(categoryId);
 
-			if (assetCategory != null) {
+			UserSegment userSegment =
+				UserSegmentLocalServiceUtil.fetchUserSegmentByAssetCategoryId(
+					categoryId);
+
+			if ((assetCategory != null) && (userSegment != null)) {
 				newValues[i] = assetCategory.getUuid();
+
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, portlet.getRootPortletId(),
+					userSegment);
 			}
 			else if (_log.isWarnEnabled()) {
 				_log.warn("Unable to get category with id " + categoryId);
@@ -103,6 +114,9 @@ public class UserSegmentContentDisplayPortletDataHandler
 			return;
 		}
 
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, UserSegment.class);
+
 		String[] newValues = new String[oldValues.length];
 
 		for (int i = 0; i < oldValues.length; i++) {
@@ -111,7 +125,7 @@ public class UserSegmentContentDisplayPortletDataHandler
 			AssetCategory assetCategory =
 				AssetCategoryLocalServiceUtil.
 					fetchAssetCategoryByUuidAndGroupId(
-							oldValue, portletDataContext.getScopeGroupId());
+						oldValue, portletDataContext.getScopeGroupId());
 
 			if (assetCategory != null) {
 				newValues[i] = String.valueOf(assetCategory.getCategoryId());

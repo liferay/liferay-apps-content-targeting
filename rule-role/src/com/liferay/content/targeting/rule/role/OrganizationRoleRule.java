@@ -150,11 +150,11 @@ public class OrganizationRoleRule extends BaseRule {
 
 			portletDataContext.addReferenceElement(
 				userSegment, userSegmentElement, organization,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			portletDataContext.addReferenceElement(
 				userSegment, userSegmentElement, role,
-				PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
+				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 		}
 		catch (JSONException e) {
 		}

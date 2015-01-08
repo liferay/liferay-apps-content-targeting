@@ -14,9 +14,11 @@
 
 package com.liferay.content.targeting.lar;
 
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.LocaleUtil;
-import com.liferay.portal.model.StagedModel;
+import com.liferay.portal.model.ResourcedModel;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.expando.model.ExpandoBridge;
 
@@ -27,7 +29,8 @@ import java.util.Date;
 /**
  * @author Eduardo Garcia
  */
-public class AssetEntryReferencedStagedModel implements StagedModel {
+public class AssetEntryReferencedStagedModel
+	implements StagedGroupedModel, ResourcedModel {
 
 	public AssetEntryReferencedStagedModel(AssetEntry assetEntry) {
 		_assetEntry = assetEntry;
@@ -35,11 +38,15 @@ public class AssetEntryReferencedStagedModel implements StagedModel {
 
 	@Override
 	public Object clone() {
-		throw new UnsupportedOperationException();
+		return new AssetEntryReferencedStagedModel(_assetEntry);
 	}
 
 	public String getClassName() {
 		return _assetEntry.getClassName();
+	}
+
+	public long getClassPK() {
+		return _assetEntry.getClassPK();
 	}
 
 	@Override
@@ -58,8 +65,13 @@ public class AssetEntryReferencedStagedModel implements StagedModel {
 	}
 
 	@Override
+	public long getGroupId() {
+		return _assetEntry.getGroupId();
+	}
+
+	@Override
 	public Class<?> getModelClass() {
-		throw new UnsupportedOperationException();
+		return AssetEntryReferencedStagedModel.class;
 	}
 
 	@Override
@@ -77,12 +89,33 @@ public class AssetEntryReferencedStagedModel implements StagedModel {
 	}
 
 	@Override
+	public long getResourcePrimKey() {
+		return _assetEntry.getPrimaryKey();
+	}
+
+	@Override
 	public StagedModelType getStagedModelType() {
-		throw new UnsupportedOperationException();
+		return new StagedModelType(
+			AssetEntryReferencedStagedModel.class.getName());
 	}
 
 	public String getTitle() {
 		return _assetEntry.getTitle(LocaleUtil.getDefault());
+	}
+
+	@Override
+	public long getUserId() {
+		return _assetEntry.getUserId();
+	}
+
+	@Override
+	public String getUserName() {
+		return _assetEntry.getUserName();
+	}
+
+	@Override
+	public String getUserUuid() throws SystemException {
+		return _assetEntry.getUserUuid();
 	}
 
 	@Override
@@ -91,23 +124,60 @@ public class AssetEntryReferencedStagedModel implements StagedModel {
 	}
 
 	@Override
+	public boolean isResourceMain() {
+		return false;
+	}
+
+	public void setClassName(String className) {
+		_assetEntry.setClassName(className);
+	}
+
+	public void setClassPK(long classPK) {
+		_assetEntry.setClassPK(classPK);
+	}
+
+	@Override
 	public void setCompanyId(long companyId) {
-		throw new UnsupportedOperationException();
+		_assetEntry.setCompanyId(companyId);
 	}
 
 	@Override
 	public void setCreateDate(Date date) {
-		throw new UnsupportedOperationException();
+		_assetEntry.setCreateDate(date);
+	}
+
+	@Override
+	public void setGroupId(long groupId) {
+		_assetEntry.setGroupId(groupId);
 	}
 
 	@Override
 	public void setModifiedDate(Date date) {
-		throw new UnsupportedOperationException();
+		_assetEntry.setModifiedDate(date);
 	}
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		throw new UnsupportedOperationException();
+		_assetEntry.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public void setResourcePrimKey(long resourcePrimKey) {
+		_assetEntry.setPrimaryKey(resourcePrimKey);
+	}
+
+	@Override
+	public void setUserId(long userId) {
+		_assetEntry.setUserId(userId);
+	}
+
+	public void setUserName(String userName) {
+		_assetEntry.setUserName(userName);
+	}
+
+	@Override
+	public void setUserUuid(String userUuid) {
+		_assetEntry.setUserUuid(userUuid);
 	}
 
 	@Override
