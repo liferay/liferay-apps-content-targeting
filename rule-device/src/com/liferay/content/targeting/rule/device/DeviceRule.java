@@ -125,7 +125,7 @@ public class DeviceRule extends BaseRule {
 		if (mdrRuleGroup != null) {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 
-			jsonObj.put("mdrRuleGroupId", mdrRuleGroup.getUuid());
+			jsonObj.put("mdrRuleGroupUuid", mdrRuleGroup.getUuid());
 
 			ruleInstance.setTypeSettings(jsonObj.toString());
 
@@ -204,7 +204,7 @@ public class DeviceRule extends BaseRule {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
 				ruleInstance.getTypeSettings());
 
-			mdrRuleGroupUuid = jsonObj.getString("mdrRuleGroupId");
+			mdrRuleGroupUuid = jsonObj.getString("mdrRuleGroupUuid");
 		}
 		catch (JSONException jse) {
 		}

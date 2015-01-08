@@ -140,8 +140,8 @@ public class SiteRoleRule extends BaseRule {
 
 			jsonObj = JSONFactoryUtil.createJSONObject();
 
-			jsonObj.put("roleId", role.getUuid());
-			jsonObj.put("siteId", group.getUuid());
+			jsonObj.put("roleUuid", role.getUuid());
+			jsonObj.put("siteUuid", group.getUuid());
 
 			ruleInstance.setTypeSettings(jsonObj.toString());
 
@@ -215,7 +215,7 @@ public class SiteRoleRule extends BaseRule {
 		try {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
 
-			String roleUuid = jsonObj.getString("roleId");
+			String roleUuid = jsonObj.getString("roleUuid");
 
 			Role role = RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
 				roleUuid, portletDataContext.getCompanyId());
@@ -227,7 +227,7 @@ public class SiteRoleRule extends BaseRule {
 						roleUuid, Constants.IMPORT));
 			}
 
-			String siteUuid = jsonObj.getString("siteId");
+			String siteUuid = jsonObj.getString("siteUuid");
 
 			Group group = GroupLocalServiceUtil.fetchGroupByUuidAndCompanyId(
 				siteUuid, portletDataContext.getCompanyId());

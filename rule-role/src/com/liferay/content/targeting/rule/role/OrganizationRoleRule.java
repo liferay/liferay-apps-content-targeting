@@ -143,8 +143,8 @@ public class OrganizationRoleRule extends BaseRule {
 
 			jsonObj = JSONFactoryUtil.createJSONObject();
 
-			jsonObj.put("organizationId", organization.getUuid());
-			jsonObj.put("roleId", role.getUuid());
+			jsonObj.put("organizationUuid", organization.getUuid());
+			jsonObj.put("roleUuid", role.getUuid());
 
 			ruleInstance.setTypeSettings(jsonObj.toString());
 
@@ -221,7 +221,7 @@ public class OrganizationRoleRule extends BaseRule {
 		try {
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
 
-			String organizationUuid = jsonObj.getString("organizationId");
+			String organizationUuid = jsonObj.getString("organizationUuid");
 
 			Organization organization =
 				OrganizationLocalServiceUtil.
@@ -235,7 +235,7 @@ public class OrganizationRoleRule extends BaseRule {
 						organizationUuid, Constants.IMPORT));
 			}
 
-			String roleUuid = jsonObj.getString("roleId");
+			String roleUuid = jsonObj.getString("roleUuid");
 
 			Role role = RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
 				roleUuid, portletDataContext.getCompanyId());
