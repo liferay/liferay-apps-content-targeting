@@ -49,6 +49,12 @@ public interface Rule {
 	 */
 	public void deActivate();
 
+	/**
+	 * Removes any additional data added by this rule when the rule instance is
+	 * removed.
+	 *
+	 * @param ruleInstance the rule instance with the stored configuration
+	 */
 	public void deleteData(RuleInstance ruleInstance)
 		throws PortalException, SystemException;
 
@@ -65,6 +71,16 @@ public interface Rule {
 			AnonymousUser anonymousUser)
 		throws Exception;
 
+	/**
+	 * Exports any additional data added by this rule when the rule instance is
+	 * exported.
+	 *
+	 * @param portletDataContext the context of the data export
+	 * @param userSegmentElement the element with the user segment export data
+	 * @param userSegment the user segment containing the rule instance
+	 * @param ruleInstanceElement the element with the rule instance export data
+	 * @param ruleInstance the rule instance with stored configuration
+	 */
 	public void exportData(
 			PortletDataContext portletDataContext, Element userSegmentElement,
 			UserSegment userSegment, Element ruleInstanceElement,
@@ -144,6 +160,14 @@ public interface Rule {
 	 */
 	public String getSummary(RuleInstance ruleInstance, Locale locale);
 
+	/**
+	 * Imports any additional data added by this rule when the rule instance is
+	 * imported.
+	 *
+	 * @param portletDataContext the context of the data import
+	 * @param userSegment the user segment containing the rule instance
+	 * @param ruleInstance the rule instance with stored configuration
+	 */
 	public void importData(
 			PortletDataContext portletDataContext, UserSegment userSegment,
 			RuleInstance ruleInstance)

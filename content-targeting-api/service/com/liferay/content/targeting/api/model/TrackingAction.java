@@ -47,12 +47,31 @@ public interface TrackingAction {
 	 */
 	public void deActivate();
 
+	/**
+	 * Removes any additional data added by this tracking action when the
+	 * tracking action instance is removed.
+	 *
+	 * @param trackingActionInstance the tracking action instance with the
+	 *        stored configuration
+	 */
 	public void deleteData(TrackingActionInstance trackingActionInstance)
-		throws PortalException, SystemException;;
+		throws PortalException, SystemException;
 
+	/**
+	 * Exports any additional data added by this tracking action when the
+	 * tracking action instance is exported.
+	 *
+	 * @param portletDataContext the context of the data export
+	 * @param campaignElement the element with the campaign export data
+	 * @param campaign the campaign containing the tracking action instance
+	 * @param trackingActionInstanceElement the element with the tracking action
+	 *        instance export data
+	 * @param trackingActionInstance the tracking action instance with stored
+	 *        configuration
+	 */
 	public void exportData(
 			PortletDataContext portletDataContext, Element campaignElement,
-			Campaign campaign, Element trackingInstanceElement,
+			Campaign campaign, Element trackingActionInstanceElement,
 			TrackingActionInstance trackingActionInstance)
 		throws Exception;
 
@@ -135,6 +154,15 @@ public interface TrackingAction {
 	 */
 	public String getTrackingActionKey();
 
+	/**
+	 * Imports any additional data added by this tracking action when the
+	 * tracking action instance is imported.
+	 *
+	 * @param portletDataContext the context of the data import
+	 * @param campaign the campaign containing the tracing action instance
+	 * @param trackingActionInstance the tracking action instance with stored
+	 *        configuration
+	 */
 	public void importData(
 			PortletDataContext portletDataContext, Campaign campaign,
 			TrackingActionInstance trackingActionInstance)
