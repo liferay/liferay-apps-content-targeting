@@ -146,44 +146,18 @@ public class TrackingActionInstanceStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			trackingActionInstance);
 
-		TrackingActionInstance existingTrackingActionInstance =
-			TrackingActionInstanceLocalServiceUtil.
-				fetchTrackingActionInstanceByUuidAndGroupId(
-					trackingActionInstance.getUuid(),
-					portletDataContext.getScopeGroupId());
+		serviceContext.setUuid(trackingActionInstance.getUuid());
 
-		TrackingActionInstance importedTrackingActionInstance = null;
-
-		if (existingTrackingActionInstance == null) {
-			serviceContext.setUuid(trackingActionInstance.getUuid());
-
-			importedTrackingActionInstance =
-				TrackingActionInstanceLocalServiceUtil.
-					addTrackingActionInstance(
-						userId, trackingActionInstance.getTrackingActionKey(),
-						trackingActionInstance.getCampaignId(),
-						trackingActionInstance.getAlias(),
-						trackingActionInstance.getReferrerClassName(),
-						trackingActionInstance.getReferrerClassPK(),
-						trackingActionInstance.getElementId(),
-						trackingActionInstance.getEventType(),
-						trackingActionInstance.getTypeSettings(),
-						serviceContext);
-		}
-		else {
-			importedTrackingActionInstance =
-				TrackingActionInstanceLocalServiceUtil.
-					updateTrackingActionInstance(
-						existingTrackingActionInstance.
-							getTrackingActionInstanceId(),
-						trackingActionInstance.getAlias(),
-						trackingActionInstance.getReferrerClassName(),
-						trackingActionInstance.getReferrerClassPK(),
-						trackingActionInstance.getElementId(),
-						trackingActionInstance.getEventType(),
-						trackingActionInstance.getTypeSettings(),
-						serviceContext);
-		}
+		TrackingActionInstance importedTrackingActionInstance =
+			TrackingActionInstanceLocalServiceUtil.addTrackingActionInstance(
+				userId, trackingActionInstance.getTrackingActionKey(),
+				trackingActionInstance.getCampaignId(),
+				trackingActionInstance.getAlias(),
+				trackingActionInstance.getReferrerClassName(),
+				trackingActionInstance.getReferrerClassPK(),
+				trackingActionInstance.getElementId(),
+				trackingActionInstance.getEventType(),
+				trackingActionInstance.getTypeSettings(), serviceContext);
 
 		portletDataContext.importClassedModel(
 			trackingActionInstance, importedTrackingActionInstance);

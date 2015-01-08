@@ -133,26 +133,13 @@ public class RuleInstanceStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			ruleInstance);
 
-		RuleInstance existingRuleInstance =
-			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
-				ruleInstance.getUuid(), portletDataContext.getScopeGroupId());
+		serviceContext.setUuid(ruleInstance.getUuid());
 
-		RuleInstance importedRuleInstance = null;
-
-		if (existingRuleInstance == null) {
-			serviceContext.setUuid(ruleInstance.getUuid());
-
-			importedRuleInstance = RuleInstanceLocalServiceUtil.addRuleInstance(
+		RuleInstance importedRuleInstance =
+			RuleInstanceLocalServiceUtil.addRuleInstance(
 				userId, ruleInstance.getRuleKey(),
 				ruleInstance.getUserSegmentId(), ruleInstance.getTypeSettings(),
 				serviceContext);
-		}
-		else {
-			importedRuleInstance =
-				RuleInstanceLocalServiceUtil.updateRuleInstance(
-					existingRuleInstance.getRuleInstanceId(),
-					ruleInstance.getTypeSettings(), serviceContext);
-		}
 
 		portletDataContext.importClassedModel(
 			ruleInstance, importedRuleInstance);

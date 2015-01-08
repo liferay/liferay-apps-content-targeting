@@ -185,6 +185,17 @@ public class CampaignStagedModelDataHandler
 			Campaign importedCampaign)
 		throws Exception {
 
+		// Clean up existing tracking action instances
+
+		for (TrackingActionInstance trackingActionInstance :
+				TrackingActionInstanceLocalServiceUtil.
+					getTrackingActionInstances(
+						importedCampaign.getCampaignId())) {
+
+			TrackingActionInstanceLocalServiceUtil.deleteTrackingActionInstance(
+				trackingActionInstance);
+		}
+
 		List<Element> trackingActionInstanceElements =
 			portletDataContext.getReferenceDataElements(
 					campaign, TrackingActionInstance.class);

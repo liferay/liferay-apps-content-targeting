@@ -367,6 +367,14 @@ public class UserSegmentStagedModelDataHandler
 			UserSegment importedUserSegment)
 		throws Exception {
 
+		// Clean up existing rule instances
+
+		for (RuleInstance ruleInstance :
+				importedUserSegment.getRuleInstances()) {
+
+			RuleInstanceLocalServiceUtil.deleteRuleInstance(ruleInstance);
+		}
+
 		List<Element> ruleInstanceElements =
 			portletDataContext.getReferenceDataElements(
 				userSegment, RuleInstance.class);
