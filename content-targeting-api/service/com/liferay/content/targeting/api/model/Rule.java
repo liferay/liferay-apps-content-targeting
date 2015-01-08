@@ -72,43 +72,43 @@ public interface Rule {
 		throws Exception;
 
 	/**
-	 * Returns the rule description.
+	 * Returns the rule localized description.
 	 *
-	 * @param  locale the language's locale
-	 * @return the rule locale
+	 * @param  locale the language locale
+	 * @return the rule localized description
 	 */
 	public String getDescription(Locale locale);
 
 	/**
 	 * Returns the HTML code containing the form fields required to edit the
-	 * rule instance's configuration, based on the context.
+	 * rule instance configuration, based on the context.
 	 *
 	 * @param  ruleInstance the rule instance with stored configuration
-	 * @param  context the map defining the form's evaluation context
+	 * @param  context the map defining the form evaluation context
 	 * @param  values the values configured by users for the current rule
 	 *         instance based on the form controls from the HTML. This will be
 	 *         used when there is an error and the form is reloaded.
 	 * @return the HTML code containing the form fields required to edit the
-	 *         rule instance's configuration, based on the context
+	 *         rule instance configuration, based on the context
 	 */
 	public String getFormHTML(
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values);
 
 	/**
-	 * Returns the Font Awesome CSS class for the rule's icon.
+	 * Returns the Font Awesome CSS class for the rule icon.
 	 *
-	 * @return the Font Awesome CSS class for the rule's icon
+	 * @return the Font Awesome CSS class for the rule icon
 	 * @see    <a href="http://fortawesome.github.io/Font-Awesome/3.2.1/">Font
 	 *         Awesome documentation</a>
 	 */
 	public String getIcon();
 
 	/**
-	 * Returns the rule's name.
+	 * Returns the rule localized name.
 	 *
-	 * @param  locale the language's locale
-	 * @return the rule's name
+	 * @param  locale the language locale
+	 * @return the rule localized name
 	 */
 	public String getName(Locale locale);
 
@@ -128,19 +128,19 @@ public interface Rule {
 	public String getRuleKey();
 
 	/**
-	 * Returns the rule short description.
+	 * Returns the rule localized short description.
 	 *
-	 * @param  locale the language's locale
-	 * @return the rule locale
+	 * @param  locale the language locale
+	 * @return the rule localized short description
 	 */
 	public String getShortDescription(Locale locale);
 
 	/**
-	 * Returns the rule instance's localized summary.
+	 * Returns the rule instance localized summary.
 	 *
 	 * @param  ruleInstance the rule instance with stored configuration
-	 * @param  locale the language's locale
-	 * @return the rule instance's localized summary
+	 * @param  locale the language locale
+	 * @return the rule instance localized summary
 	 */
 	public String getSummary(RuleInstance ruleInstance, Locale locale);
 
@@ -159,7 +159,7 @@ public interface Rule {
 	public boolean isInstantiable();
 
 	/**
-	 * Returns the result of evaluating the rule's form fields in the context of
+	 * Returns the result of evaluating the rule form fields in the context of
 	 * the request and response.
 	 *
 	 * @param  request the request from which to get the request parameters
@@ -168,7 +168,7 @@ public interface Rule {
 	 *         the same type of an instantiable rule
 	 * @param  values the values configured by users for the current rule
 	 *         instance based on the form controls from the HTML
-	 * @return the result of evaluating the rule's form fields in the context of
+	 * @return the result of evaluating the rule form fields in the context of
 	 *         the request and response
 	 */
 	public String processRule(
