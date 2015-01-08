@@ -103,8 +103,9 @@ public class UserSegmentStagedModelDataHandler
 			userSegment);
 
 		if (importedAssetCategory != null) {
-			serviceContext.setAssetCategoryIds(
-				new long[]{importedAssetCategory.getCategoryId()});
+			serviceContext.setAttribute(
+				"userSegmentAssetCategoryId",
+				importedAssetCategory.getCategoryId());
 		}
 
 		serviceContext.setUserId(userId);

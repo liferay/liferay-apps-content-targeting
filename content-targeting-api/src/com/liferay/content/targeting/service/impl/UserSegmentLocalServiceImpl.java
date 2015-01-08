@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
@@ -98,11 +99,12 @@ public class UserSegmentLocalServiceImpl
 
 		AssetCategory assetCategory = null;
 
-		long[] assetCategoryIds = serviceContext.getAssetCategoryIds();
+		long assetCategoryId = GetterUtil.getLong(
+			serviceContext.getAttribute("userSegmentAssetCategoryId"));
 
-		if (Validator.isNotNull(assetCategoryIds)) {
+		if (assetCategoryId > 0) {
 			assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(
-				assetCategoryIds[0]);
+				assetCategoryId);
 		}
 		else {
 			assetCategory = addUserSegmentCategory(
