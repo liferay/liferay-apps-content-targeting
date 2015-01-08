@@ -286,9 +286,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			UserSegment.class.getName(), request);
 
-		serviceContext.setScopeGroupId(
-			themeDisplay.getSiteGroupIdOrLiveGroupId());
-
 		try {
 			Callable<Campaign> campaignCallable =
 				new CampaignCallable(
@@ -387,9 +384,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			UserSegment.class.getName(), request);
-
-		serviceContext.setScopeGroupId(
-			themeDisplay.getSiteGroupIdOrLiveGroupId());
 
 		try {
 			Callable<UserSegment> userSegmentCallable =
@@ -799,12 +793,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			template.put(
 				"campaignSearchContainerIterator",
-				new CampaignSearchContainerIterator(
-					themeDisplay.getSiteGroupIdOrLiveGroupId(), keywords));
+				new CampaignSearchContainerIterator(scopeGroupId, keywords));
 			template.put(
 				"userSegmentSearchContainerIterator",
-				new UserSegmentSearchContainerIterator(
-					themeDisplay.getSiteGroupIdOrLiveGroupId(), keywords));
+				new UserSegmentSearchContainerIterator(scopeGroupId, keywords));
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN)) {
 			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");

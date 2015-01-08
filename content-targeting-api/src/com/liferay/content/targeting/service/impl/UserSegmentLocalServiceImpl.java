@@ -22,6 +22,8 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.base.UserSegmentLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
+import com.liferay.content.targeting.util.ContentTargetingUtil;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -143,7 +145,10 @@ public class UserSegmentLocalServiceImpl
 
 		Group scopeGroup = serviceContext.getScopeGroup();
 
-		if (scopeGroup.hasStagingGroup()) {
+		if (scopeGroup.hasStagingGroup() &&
+			!ContentTargetingUtil.isStaged(
+				scopeGroup.getGroupId(), PortletKeys.CT_ADMIN)) {
+
 			Group stagingGroup = scopeGroup.getStagingGroup();
 
 			ServiceContext serviceContextStaging =
