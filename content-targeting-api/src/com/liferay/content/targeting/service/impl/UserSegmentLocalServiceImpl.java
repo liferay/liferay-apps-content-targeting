@@ -278,6 +278,13 @@ public class UserSegmentLocalServiceImpl
 	}
 
 	@Override
+	public UserSegment fetchUserSegmentByAssetCategoryId(long assetCategoryId)
+		throws PortalException, SystemException {
+
+		return userSegmentPersistence.fetchByAssetCategoryId(assetCategoryId);
+	}
+
+	@Override
 	public List<UserSegment> getUserSegments(long groupId)
 		throws PortalException, SystemException {
 

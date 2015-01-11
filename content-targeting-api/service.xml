@@ -234,6 +234,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="AssetCategoryId" return-type="UserSegment">
+			<finder-column name="assetCategoryId" />
+		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" arrayable-operator="OR" />
 		</finder>
