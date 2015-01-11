@@ -560,6 +560,14 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	}
 
 	@Override
+	public com.liferay.content.targeting.model.UserSegment fetchUserSegmentByAssetCategoryId(
+		long assetCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.fetchUserSegmentByAssetCategoryId(assetCategoryId);
+	}
+
+	@Override
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,

@@ -518,6 +518,13 @@ public class UserSegmentLocalServiceUtil {
 		getService().deleteUserSegments(groupId);
 	}
 
+	public static com.liferay.content.targeting.model.UserSegment fetchUserSegmentByAssetCategoryId(
+		long assetCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchUserSegmentByAssetCategoryId(assetCategoryId);
+	}
+
 	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
