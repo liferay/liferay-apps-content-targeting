@@ -117,13 +117,14 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 *
 	 * @param trackingActionInstance the tracking action instance
 	 * @return the tracking action instance that was removed
+	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public TrackingActionInstance deleteTrackingActionInstance(
 		TrackingActionInstance trackingActionInstance)
-		throws SystemException {
+		throws PortalException, SystemException {
 		return trackingActionInstancePersistence.remove(trackingActionInstance);
 	}
 

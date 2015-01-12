@@ -115,12 +115,13 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 *
 	 * @param ruleInstance the rule instance
 	 * @return the rule instance that was removed
+	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public RuleInstance deleteRuleInstance(RuleInstance ruleInstance)
-		throws SystemException {
+		throws PortalException, SystemException {
 		return ruleInstancePersistence.remove(ruleInstance);
 	}
 

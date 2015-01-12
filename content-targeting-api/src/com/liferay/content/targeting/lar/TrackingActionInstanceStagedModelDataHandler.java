@@ -75,26 +75,8 @@ public class TrackingActionInstanceStagedModelDataHandler
 			TrackingActionInstanceLocalServiceUtil.
 				fetchTrackingActionInstanceByUuidAndGroupId(uuid, groupId);
 
-		if (trackingActionInstance != null) {
-			TrackingAction trackingAction =
-				_trackingActionsRegistry.getTrackingAction(
-					trackingActionInstance.getTrackingActionKey());
-
-			if (trackingAction != null) {
-				try {
-					trackingAction.deleteData(trackingActionInstance);
-				}
-				catch (Exception e) {
-					_log.error(
-						"Cannot delete tracking action " +
-							trackingAction.getName(LocaleUtil.getDefault()),
-						e);
-				}
-			}
-
-			TrackingActionInstanceLocalServiceUtil.deleteTrackingActionInstance(
-				trackingActionInstance);
-		}
+		TrackingActionInstanceLocalServiceUtil.deleteTrackingActionInstance(
+			trackingActionInstance);
 	}
 
 	@Override
@@ -182,18 +164,44 @@ public class TrackingActionInstanceStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			trackingActionInstance);
 
-		serviceContext.setUuid(trackingActionInstance.getUuid());
+		TrackingActionInstance existingTrackingActionInstance =
+			TrackingActionInstanceLocalServiceUtil.
+				fetchTrackingActionInstanceByUuidAndGroupId(
+					trackingActionInstance.getUuid(),
+					portletDataContext.getScopeGroupId());
 
-		TrackingActionInstance importedTrackingActionInstance =
-			TrackingActionInstanceLocalServiceUtil.addTrackingActionInstance(
-				userId, trackingActionInstance.getTrackingActionKey(),
-				trackingActionInstance.getCampaignId(),
-				trackingActionInstance.getAlias(),
-				trackingActionInstance.getReferrerClassName(),
-				trackingActionInstance.getReferrerClassPK(),
-				trackingActionInstance.getElementId(),
-				trackingActionInstance.getEventType(),
-				trackingActionInstance.getTypeSettings(), serviceContext);
+		TrackingActionInstance importedTrackingActionInstance = null;
+
+		if (existingTrackingActionInstance == null) {
+			serviceContext.setUuid(trackingActionInstance.getUuid());
+
+			importedTrackingActionInstance =
+				TrackingActionInstanceLocalServiceUtil.
+					addTrackingActionInstance(
+						userId, trackingActionInstance.getTrackingActionKey(),
+						trackingActionInstance.getCampaignId(),
+						trackingActionInstance.getAlias(),
+						trackingActionInstance.getReferrerClassName(),
+						trackingActionInstance.getReferrerClassPK(),
+						trackingActionInstance.getElementId(),
+						trackingActionInstance.getEventType(),
+						trackingActionInstance.getTypeSettings(),
+						serviceContext);
+		}
+		else {
+			importedTrackingActionInstance =
+				TrackingActionInstanceLocalServiceUtil.
+					updateTrackingActionInstance(
+						existingTrackingActionInstance.
+							getTrackingActionInstanceId(),
+						trackingActionInstance.getAlias(),
+						trackingActionInstance.getReferrerClassName(),
+						trackingActionInstance.getReferrerClassPK(),
+						trackingActionInstance.getElementId(),
+						trackingActionInstance.getEventType(),
+						trackingActionInstance.getTypeSettings(),
+						serviceContext);
+		}
 
 		portletDataContext.importClassedModel(
 			trackingActionInstance, importedTrackingActionInstance);

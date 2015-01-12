@@ -72,23 +72,7 @@ public class RuleInstanceStagedModelDataHandler
 			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
 				uuid, groupId);
 
-		if (ruleInstance != null) {
-			Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
-
-			if (rule != null) {
-				try {
-					rule.deleteData(ruleInstance);
-				}
-				catch (Exception e) {
-					_log.error(
-						"Cannot delete rule " +
-							rule.getName(LocaleUtil.getDefault()),
-						e);
-				}
-			}
-
-			RuleInstanceLocalServiceUtil.deleteRuleInstance(ruleInstance);
-		}
+		RuleInstanceLocalServiceUtil.deleteRuleInstance(ruleInstance);
 	}
 
 	@Override
@@ -170,13 +154,26 @@ public class RuleInstanceStagedModelDataHandler
 		ServiceContext serviceContext = portletDataContext.createServiceContext(
 			ruleInstance);
 
-		serviceContext.setUuid(ruleInstance.getUuid());
+		RuleInstance existingRuleInstance =
+			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
+				ruleInstance.getUuid(), portletDataContext.getScopeGroupId());
 
-		RuleInstance importedRuleInstance =
-			RuleInstanceLocalServiceUtil.addRuleInstance(
+		RuleInstance importedRuleInstance = null;
+
+		if (existingRuleInstance == null) {
+			serviceContext.setUuid(ruleInstance.getUuid());
+
+			importedRuleInstance = RuleInstanceLocalServiceUtil.addRuleInstance(
 				userId, ruleInstance.getRuleKey(),
 				ruleInstance.getUserSegmentId(), ruleInstance.getTypeSettings(),
 				serviceContext);
+		}
+		else {
+			importedRuleInstance =
+				RuleInstanceLocalServiceUtil.updateRuleInstance(
+					existingRuleInstance.getRuleInstanceId(),
+					ruleInstance.getTypeSettings(), serviceContext);
+		}
 
 		portletDataContext.importClassedModel(
 			ruleInstance, importedRuleInstance);
