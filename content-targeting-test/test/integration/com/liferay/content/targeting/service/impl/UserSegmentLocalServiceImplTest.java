@@ -16,7 +16,9 @@ package com.liferay.content.targeting.service.impl;
 
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.GroupTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -66,7 +68,7 @@ public class UserSegmentLocalServiceImplTest {
 
 	@Test
 	public void testAddAndDeleteUserSegment() throws Exception {
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		int initUserSegmentsCount =
 			_userSegmentLocalService.getUserSegmentsCount(group.getGroupId());
@@ -75,11 +77,11 @@ public class UserSegmentLocalServiceImplTest {
 
 		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
 
-		ServiceContext serviceContext = TestUtil.getServiceContext(
-			group.getGroupId(), TestUtil.getUserId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		UserSegment userSegment = _userSegmentLocalService.addUserSegment(
-			TestUtil.getUserId(), nameMap, null, serviceContext);
+			TestPropsValues.getUserId(), nameMap, null, serviceContext);
 
 		Assert.assertEquals(
 			initUserSegmentsCount + 1,
@@ -101,7 +103,7 @@ public class UserSegmentLocalServiceImplTest {
 
 	@Test
 	public void testDeleteGroup() throws Exception {
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		int initUserSegmentsCount =
 			_userSegmentLocalService.getUserSegmentsCount(group.getGroupId());
@@ -110,11 +112,11 @@ public class UserSegmentLocalServiceImplTest {
 
 		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
 
-		ServiceContext serviceContext = TestUtil.getServiceContext(
-			group.getGroupId(), TestUtil.getUserId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		_userSegmentLocalService.addUserSegment(
-			TestUtil.getUserId(), nameMap, null, serviceContext);
+			TestPropsValues.getUserId(), nameMap, null, serviceContext);
 
 		_groupLocalService.deleteGroup(group.getGroupId());
 

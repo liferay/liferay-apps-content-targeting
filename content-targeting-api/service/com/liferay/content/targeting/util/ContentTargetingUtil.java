@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -63,7 +66,10 @@ public class ContentTargetingUtil {
 			return null;
 		}
 
-		if (scopeGroup.isStagingGroup()) {
+		if (scopeGroup.isStagingGroup() &&
+			!ContentTargetingUtil.isStaged(
+				scopeGroup.getLiveGroupId(), PortletKeys.CT_ADMIN)) {
+
 			scopeGroup = scopeGroup.getLiveGroup();
 		}
 
@@ -206,6 +212,19 @@ public class ContentTargetingUtil {
 		}
 
 		return groupIds;
+	}
+
+	public static boolean isStaged(long liveGroupId, String portletId)
+		throws PortalException, SystemException {
+
+		Group liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
+
+		UnicodeProperties liveGroupTypeSettings =
+			liveGroup.getTypeSettingsProperties();
+
+		return GetterUtil.getBoolean(
+			liveGroupTypeSettings.getProperty(
+				StagingUtil.getStagedPortletId(portletId)), false);
 	}
 
 	// This method already exists in 7.0

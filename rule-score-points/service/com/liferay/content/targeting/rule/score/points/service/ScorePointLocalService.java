@@ -262,6 +262,11 @@ public interface ScorePointLocalService extends BaseLocalService,
 	public long getPoints(long anonymousUserId, long userSegmentId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint> getScorePoints(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public long incrementPoints(long anonymousUserId, long userSegmentId,
 		long points) throws com.liferay.portal.kernel.exception.SystemException;
 

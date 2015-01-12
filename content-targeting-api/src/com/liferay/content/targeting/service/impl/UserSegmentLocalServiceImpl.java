@@ -22,6 +22,8 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.base.UserSegmentLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
+import com.liferay.content.targeting.util.ContentTargetingUtil;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -35,11 +37,14 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
@@ -82,7 +87,6 @@ public class UserSegmentLocalServiceImpl
 		throws PortalException, SystemException {
 
 		User user = UserLocalServiceUtil.getUser(userId);
-		long groupId = serviceContext.getScopeGroupId();
 
 		Date now = new Date();
 
@@ -90,10 +94,24 @@ public class UserSegmentLocalServiceImpl
 
 		UserSegment userSegment = userSegmentPersistence.create(userSegmentId);
 
-		userSegment.setGroupId(groupId);
+		userSegment.setUuid(serviceContext.getUuid());
+		userSegment.setGroupId(serviceContext.getScopeGroupId());
 
-		AssetCategory assetCategory = addUserSegmentCategory(
-			userId, nameMap, descriptionMap, serviceContext);
+		// Category
+
+		AssetCategory assetCategory = null;
+
+		long assetCategoryId = GetterUtil.getLong(
+			serviceContext.getAttribute("userSegmentAssetCategoryId"));
+
+		if (assetCategoryId > 0) {
+			assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(
+				assetCategoryId);
+		}
+		else {
+			assetCategory = addUserSegmentCategory(
+				userId, nameMap, descriptionMap, serviceContext);
+		}
 
 		userSegment.setAssetCategoryId(assetCategory.getCategoryId());
 		userSegment.setCompanyId(user.getCompanyId());
@@ -123,11 +141,14 @@ public class UserSegmentLocalServiceImpl
 				serviceContext.getGuestPermissions());
 		}
 
-		// Categories
+		// Local Live Category
 
 		Group scopeGroup = serviceContext.getScopeGroup();
 
-		if (scopeGroup.hasStagingGroup()) {
+		if (scopeGroup.hasStagingGroup() &&
+			!ContentTargetingUtil.isStaged(
+				scopeGroup.getGroupId(), PortletKeys.CT_ADMIN)) {
+
 			Group stagingGroup = scopeGroup.getStagingGroup();
 
 			ServiceContext serviceContextStaging =
@@ -180,7 +201,25 @@ public class UserSegmentLocalServiceImpl
 			throw new UsedUserSegmentException(campaigns);
 		}
 
-		UserSegment userSegment = userSegmentPersistence.remove(userSegmentId);
+		UserSegment userSegment = userSegmentPersistence.findByPrimaryKey(
+			userSegmentId);
+
+		return deleteUserSegment(userSegment);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public UserSegment deleteUserSegment(UserSegment userSegment)
+		throws PortalException, SystemException {
+
+		userSegmentPersistence.remove(userSegment);
+
+		// System event
+
+		systemEventLocalService.addSystemEvent(
+			0, userSegment.getGroupId(), UserSegment.class.getName(),
+			userSegment.getUserSegmentId(), userSegment.getUuid(), null,
+			SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
 
 		// Resources
 
@@ -202,7 +241,8 @@ public class UserSegmentLocalServiceImpl
 		// Rules
 
 		for (RuleInstance ruleInstance :
-				ruleInstanceLocalService.getRuleInstances(userSegmentId)) {
+				ruleInstanceLocalService.getRuleInstances(
+					userSegment.getUserSegmentId())) {
 
 			ruleInstanceLocalService.deleteRuleInstance(
 				ruleInstance.getRuleInstanceId());
@@ -235,6 +275,13 @@ public class UserSegmentLocalServiceImpl
 			userSegmentLocalService.deleteUserSegment(
 				userSegment.getUserSegmentId());
 		}
+	}
+
+	@Override
+	public UserSegment fetchUserSegmentByAssetCategoryId(long assetCategoryId)
+		throws PortalException, SystemException {
+
+		return userSegmentPersistence.fetchByAssetCategoryId(assetCategoryId);
 	}
 
 	@Override

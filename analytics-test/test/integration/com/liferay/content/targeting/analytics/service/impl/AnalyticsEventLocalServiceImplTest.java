@@ -17,7 +17,8 @@ package com.liferay.content.targeting.analytics.service.impl;
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Layout;
@@ -66,7 +67,7 @@ public class AnalyticsEventLocalServiceImplTest {
 			_analyticsEventLocalService.addAnalyticsEvent(
 				1, 1, JournalArticle.class.getName(), 1, Layout.class.getName(),
 				new long[]{1}, null, "view", "127.0.0.1", "User Agent", "ES",
-				"http://localhost", null, TestUtil.getServiceContext());
+				"http://localhost", null, ServiceTestUtil.getServiceContext());
 
 		Assert.assertEquals(
 			initAnalyticsEventsCount + 1,
@@ -90,7 +91,7 @@ public class AnalyticsEventLocalServiceImplTest {
 			1, 1, JournalArticle.class.getName(), 1, Layout.class.getName(),
 			new long[] {1, 2}, null, "view", "127.0.0.1", "User Agent",
 			"ES", "http://localhost", StringPool.BLANK,
-			TestUtil.getServiceContext());
+			ServiceTestUtil.getServiceContext());
 
 		Assert.assertEquals(
 			initAnalyticsEventsCount + 1,
@@ -103,7 +104,7 @@ public class AnalyticsEventLocalServiceImplTest {
 		Thread.sleep(1000);
 
 		_analyticsEventLocalService.deleteAnalyticsEvents(
-			TestUtil.getCompanyId(), new Date());
+			TestPropsValues.getCompanyId(), new Date());
 
 		Assert.assertEquals(
 			0, _analyticsEventLocalService.getAnalyticsEventsCount());

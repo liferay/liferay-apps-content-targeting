@@ -19,6 +19,8 @@ import com.liferay.content.targeting.rule.score.points.service.base.ScorePointLo
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.List;
+
 /**
  * The implementation of the score point local service.
  *
@@ -69,6 +71,12 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		}
 
 		return scorePoint.getPoints();
+	}
+
+	public List<ScorePoint> getScorePoints(long userSegmentId)
+		throws SystemException {
+
+		return scorePointPersistence.findByUserSegmentId(userSegmentId);
 	}
 
 	public long incrementPoints(

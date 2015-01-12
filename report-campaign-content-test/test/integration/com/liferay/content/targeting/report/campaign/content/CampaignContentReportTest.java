@@ -20,7 +20,8 @@ import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalService;
 import com.liferay.content.targeting.service.CampaignLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -70,15 +71,15 @@ public class CampaignContentReportTest {
 
 	@Test
 	public void testCampaignContentReport() throws Exception {
-		ServiceContext serviceContext = TestUtil.getServiceContext();
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
 		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
 
 		Campaign campaign = _campaignLocalService.addCampaign(
-			TestUtil.getUserId(), nameMap, null, new Date(), new Date(), 1,
-			true, new long[] {1, 2}, serviceContext);
+			TestPropsValues.getUserId(), nameMap, null, new Date(), new Date(),
+			1, true, new long[] {1, 2}, serviceContext);
 
 		int initialCampaignContentCount =
 			_campaignContentLocalService.getCampaignContentsCount(
@@ -100,7 +101,7 @@ public class CampaignContentReportTest {
 		// Add analytics
 
 		_analyticsEventLocalService.addAnalyticsEvent(
-			TestUtil.getUserId(), 1, JournalArticle.class.getName(), 2,
+			TestPropsValues.getUserId(), 1, JournalArticle.class.getName(), 2,
 			Campaign.class.getName(), new long[] {campaign.getCampaignId()},
 			null, "view", "127.0.0.1", "ES", "User Agent", "http://localhost",
 			null, serviceContext);

@@ -24,6 +24,7 @@ create index IX_E97F3DFE on CT_TrackingActionInstance (uuid_);
 create index IX_5544BB6A on CT_TrackingActionInstance (uuid_, companyId);
 create unique index IX_D8B9146C on CT_TrackingActionInstance (uuid_, groupId);
 
+create index IX_E2256979 on CT_UserSegment (assetCategoryId);
 create index IX_34C5416A on CT_UserSegment (groupId);
 create index IX_78302674 on CT_UserSegment (uuid_);
 create index IX_42550D34 on CT_UserSegment (uuid_, companyId);

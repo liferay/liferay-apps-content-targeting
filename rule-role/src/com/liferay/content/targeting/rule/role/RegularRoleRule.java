@@ -18,10 +18,15 @@ import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.UserAttributesRuleCategory;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
@@ -88,6 +93,33 @@ public class RegularRoleRule extends BaseRule {
 	}
 
 	@Override
+	public void exportData(
+			PortletDataContext portletDataContext, Element userSegmentElement,
+			UserSegment userSegment, Element ruleInstanceElement,
+			RuleInstance ruleInstance)
+		throws Exception {
+
+		long roleId = GetterUtil.getLong(ruleInstance.getTypeSettings());
+
+		Role role = RoleLocalServiceUtil.fetchRole(roleId);
+
+		if (role != null ) {
+			ruleInstance.setTypeSettings(role.getUuid());
+
+			portletDataContext.addReferenceElement(
+				userSegment, userSegmentElement, role,
+				PortletDataContext.REFERENCE_TYPE_WEAK, true);
+
+			return;
+		}
+
+		throw new PortletDataException(
+			getExportImportErrorMessage(
+				userSegment, ruleInstance, Role.class.getName(),
+				String.valueOf(roleId), Constants.EXPORT));
+	}
+
+	@Override
 	public String getIcon() {
 		return "icon-group";
 	}
@@ -110,6 +142,29 @@ public class RegularRoleRule extends BaseRule {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public void importData(
+			PortletDataContext portletDataContext, UserSegment userSegment,
+			RuleInstance ruleInstance)
+		throws Exception {
+
+		String roleUuid = ruleInstance.getTypeSettings();
+
+		Role role = RoleLocalServiceUtil.fetchRoleByUuidAndCompanyId(
+			roleUuid, portletDataContext.getCompanyId());
+
+		if (role != null ) {
+			ruleInstance.setTypeSettings(String.valueOf(role.getRoleId()));
+
+			return;
+		}
+
+		throw new PortletDataException(
+			getExportImportErrorMessage(
+				userSegment, ruleInstance, Role.class.getName(), roleUuid,
+				Constants.IMPORT));
 	}
 
 	@Override

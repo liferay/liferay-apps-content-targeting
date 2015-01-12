@@ -83,11 +83,13 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	*
 	* @param ruleInstance the rule instance
 	* @return the rule instance that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
 		com.liferay.content.targeting.model.RuleInstance ruleInstance)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 

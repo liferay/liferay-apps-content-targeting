@@ -83,11 +83,13 @@ public class RuleInstanceLocalServiceUtil {
 	*
 	* @param ruleInstance the rule instance
 	* @return the rule instance that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
 		com.liferay.content.targeting.model.RuleInstance ruleInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return getService().deleteRuleInstance(ruleInstance);
 	}
 

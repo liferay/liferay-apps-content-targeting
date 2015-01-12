@@ -20,7 +20,8 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -75,15 +76,15 @@ public class OrganizationRoleTest {
 
 	@Test
 	public void testOrganizationRoleRule() throws Exception {
-		ServiceContext serviceContext = TestUtil.getServiceContext();
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
-				TestUtil.getUserId(), "127.0.0.1", StringPool.BLANK,
+				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			TestUtil.getCompanyId(),
+			TestPropsValues.getCompanyId(),
 			new int[]{RoleConstants.TYPE_ORGANIZATION});
 
 		Role role = roles.get(0);
@@ -91,11 +92,11 @@ public class OrganizationRoleTest {
 		Rule rule = _rulesRegistry.getRule("OrganizationRoleRule");
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestUtil.getUserId(), rule.getRuleKey(), 0,
+			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
 			getTypeSettings(role.getRoleId()), serviceContext);
 
 		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			new long[]{TestUtil.getUserId()}, _organization.getGroupId(),
+			new long[]{TestPropsValues.getUserId()}, _organization.getGroupId(),
 			role.getRoleId());
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
@@ -105,12 +106,12 @@ public class OrganizationRoleTest {
 		throws PortalException, SystemException {
 
 		_organization = OrganizationLocalServiceUtil.addOrganization(
-			TestUtil.getUserId(),
+			TestPropsValues.getUserId(),
 			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
 			StringUtil.randomString(), false);
 
 		OrganizationLocalServiceUtil.addUserOrganization(
-			TestUtil.getUserId(), _organization.getOrganizationId());
+			TestPropsValues.getUserId(), _organization.getOrganizationId());
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 

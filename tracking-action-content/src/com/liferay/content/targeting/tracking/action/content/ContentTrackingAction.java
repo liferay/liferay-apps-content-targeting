@@ -18,6 +18,8 @@ import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
+import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
+import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
@@ -26,11 +28,17 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -71,6 +79,60 @@ public class ContentTrackingAction extends BaseTrackingAction {
 	}
 
 	@Override
+	public void exportData(
+			PortletDataContext portletDataContext, Element campaignElement,
+			Campaign campaign, Element trackingActionInstanceElement,
+			TrackingActionInstance trackingActionInstance)
+		throws Exception {
+
+		long assetEntryId = GetterUtil.getLong(
+			trackingActionInstance.getTypeSettings());
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			assetEntryId);
+
+		if (assetEntry != null) {
+			trackingActionInstance.setTypeSettings(assetEntry.getClassUuid());
+
+			AssetEntryReferencedStagedModel assetEntryReferencedStagedModel =
+				new AssetEntryReferencedStagedModel(assetEntry);
+
+			try {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, trackingActionInstance,
+					trackingActionInstanceElement,
+					assetEntryReferencedStagedModel,
+					AssetEntryReferencedStagedModel.class,
+					PortletDataContext.REFERENCE_TYPE_WEAK);
+			}
+			catch (Exception e) {
+				portletDataContext.addReferenceElement(
+					trackingActionInstance, trackingActionInstanceElement,
+					assetEntryReferencedStagedModel,
+					AssetEntryReferencedStagedModel.class,
+					PortletDataContext.REFERENCE_TYPE_WEAK, true);
+
+				Element assetEntryReferencedStagedModelElement =
+					portletDataContext.getExportDataElement(
+						assetEntryReferencedStagedModel);
+
+				portletDataContext.addClassedModel(
+					assetEntryReferencedStagedModelElement,
+					ExportImportPathUtil.getModelPath(
+						assetEntryReferencedStagedModel),
+					assetEntryReferencedStagedModel);
+			}
+
+			return;
+		}
+
+		throw new PortletDataException(
+			getExportImportErrorMessage(
+				campaign, trackingActionInstance, AssetEntry.class.getName(),
+				String.valueOf(assetEntryId), Constants.EXPORT));
+	}
+
+	@Override
 	public List<String> getEventTypes() {
 		return ListUtil.fromArray(_EVENT_TYPES);
 	}
@@ -91,6 +153,34 @@ public class ContentTrackingAction extends BaseTrackingAction {
 			});
 
 		return summary;
+	}
+
+	@Override
+	public void importData(
+			PortletDataContext portletDataContext, Campaign campaign,
+			TrackingActionInstance trackingActionInstance)
+		throws Exception {
+
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, trackingActionInstance,
+			AssetEntryReferencedStagedModel.class);
+
+		String classUuid = trackingActionInstance.getTypeSettings();
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			portletDataContext.getScopeGroupId(), classUuid);
+
+		if (assetEntry != null ) {
+			trackingActionInstance.setTypeSettings(
+				String.valueOf(assetEntry.getEntryId()));
+
+			return;
+		}
+
+		throw new PortletDataException(
+			getExportImportErrorMessage(
+				campaign, trackingActionInstance, AssetEntry.class.getName(),
+				classUuid, Constants.IMPORT));
 	}
 
 	@Override

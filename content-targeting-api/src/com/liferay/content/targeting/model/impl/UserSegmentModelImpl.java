@@ -102,10 +102,11 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.content.targeting.model.UserSegment"),
 			true);
-	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long GROUPID_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
-	public static long NAME_COLUMN_BITMASK = 8L;
+	public static long ASSETCATEGORYID_COLUMN_BITMASK = 1L;
+	public static long COMPANYID_COLUMN_BITMASK = 2L;
+	public static long GROUPID_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
+	public static long NAME_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -356,7 +357,19 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 
 	@Override
 	public void setAssetCategoryId(long assetCategoryId) {
+		_columnBitmask |= ASSETCATEGORYID_COLUMN_BITMASK;
+
+		if (!_setOriginalAssetCategoryId) {
+			_setOriginalAssetCategoryId = true;
+
+			_originalAssetCategoryId = _assetCategoryId;
+		}
+
 		_assetCategoryId = assetCategoryId;
+	}
+
+	public long getOriginalAssetCategoryId() {
+		return _originalAssetCategoryId;
 	}
 
 	@JSON
@@ -824,6 +837,10 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 
 		userSegmentModelImpl._setOriginalGroupId = false;
 
+		userSegmentModelImpl._originalAssetCategoryId = userSegmentModelImpl._assetCategoryId;
+
+		userSegmentModelImpl._setOriginalAssetCategoryId = false;
+
 		userSegmentModelImpl._originalCompanyId = userSegmentModelImpl._companyId;
 
 		userSegmentModelImpl._setOriginalCompanyId = false;
@@ -998,6 +1015,8 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;
 	private long _assetCategoryId;
+	private long _originalAssetCategoryId;
+	private boolean _setOriginalAssetCategoryId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;

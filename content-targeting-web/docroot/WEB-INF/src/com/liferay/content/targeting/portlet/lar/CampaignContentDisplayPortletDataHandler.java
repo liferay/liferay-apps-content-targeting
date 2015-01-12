@@ -14,9 +14,20 @@
 
 package com.liferay.content.targeting.portlet.lar;
 
+import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.portlet.util.CampaignQueryRuleUtil;
 import com.liferay.content.targeting.portlet.util.QueryRule;
+import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Portlet;
 
 import java.util.List;
 
@@ -28,6 +39,7 @@ import javax.portlet.PortletPreferences;
 public class CampaignContentDisplayPortletDataHandler
 	extends BaseContentTargetingDisplayPortletDataHandler {
 
+	@Override
 	protected List<QueryRule> getQueryRules(
 			PortletPreferences portletPreferences)
 		throws Exception {
@@ -35,5 +47,78 @@ public class CampaignContentDisplayPortletDataHandler
 		return CampaignQueryRuleUtil.getCampaignQueryRules(
 			portletPreferences, LocaleUtil.getDefault(), false);
 	}
+
+	@Override
+	protected void updateExportReferrerIds(
+			PortletDataContext portletDataContext, Portlet portlet,
+			PortletPreferences portletPreferences, int index,
+			Element rootElement)
+		throws Exception {
+
+		String key = "campaignId" + index;
+
+		String oldValue = portletPreferences.getValue(key, null);
+
+		if ((oldValue == null) || !Validator.isNumber(oldValue)) {
+			return;
+		}
+
+		long campaignId = GetterUtil.getLong(oldValue);
+
+		Campaign campaign = CampaignLocalServiceUtil.fetchCampaign(campaignId);
+
+		if (campaign != null) {
+			portletPreferences.setValue(key + "uuid", campaign.getUuid());
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portlet.getRootPortletId(), campaign);
+
+			return;
+		}
+
+		if (_log.isWarnEnabled()) {
+			_log.warn("Unable to get campaign with id " + campaignId);
+		}
+	}
+
+	@Override
+	protected void updateImportReferrerIds(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences, String key)
+		throws Exception {
+
+		if (!key.matches("^campaignId\\d*$")) {
+			return;
+		}
+
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, Campaign.class);
+
+		String uuid = portletPreferences.getValue(key + "uuid", null);
+
+		Campaign campaign =
+			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
+				uuid, portletDataContext.getScopeGroupId());
+
+		if (campaign != null) {
+			portletPreferences.setValue(
+				key, String.valueOf(campaign.getCampaignId()));
+		}
+		else if (_log.isWarnEnabled()) {
+			StringBundler sb = new StringBundler(4);
+
+			sb.append("Unable to get campaign with UUID ");
+			sb.append(uuid);
+			sb.append(" in group ");
+			sb.append(portletDataContext.getScopeGroupId());
+
+			_log.warn(sb.toString());
+		}
+
+		portletPreferences.reset(key + "uuid");
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		CampaignContentDisplayPortletDataHandler.class);
 
 }

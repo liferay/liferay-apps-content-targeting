@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.1.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_1_0.dtd">
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
 
 <liferay-portlet-app>
 	<portlet>
@@ -19,7 +19,12 @@
 	<portlet>
 		<portlet-name>ctadmin</portlet-name>
 		<icon>/icons/icon.png</icon>
-		<portlet-data-handler-class>com.liferay.content.targeting.portlet.lar.ContentTargetingPortletDataHandler</portlet-data-handler-class>
+		<portlet-data-handler-class>com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler</portlet-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.content.targeting.lar.AssetEntryReferencedStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.content.targeting.lar.CampaignStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.content.targeting.lar.RuleInstanceStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.content.targeting.lar.TrackingActionInstanceStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.content.targeting.lar.UserSegmentStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>site_administration.configuration</control-panel-entry-category>
 		<control-panel-entry-weight>10.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.content.targeting.portlet.ContentTargetingControlPanelEntry</control-panel-entry-class>

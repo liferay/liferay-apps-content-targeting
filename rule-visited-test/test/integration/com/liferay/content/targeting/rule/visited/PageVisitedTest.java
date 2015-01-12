@@ -21,7 +21,9 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.GroupTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
@@ -68,26 +70,26 @@ public class PageVisitedTest {
 
 	@Test
 	public void testNotVisitedPageRule() throws Exception {
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext = TestUtil.getServiceContext(
-			group.getGroupId(), TestUtil.getUserId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
-				TestUtil.getUserId(), "127.0.0.1", StringPool.BLANK,
+				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
 		Rule rule = _rulesRegistry.getRule("PageVisitedRule");
 
 		Layout layout = LayoutLocalServiceUtil.addLayout(
-			TestUtil.getUserId(), group.getGroupId(), false,
+			TestPropsValues.getUserId(), group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Layout", "Layout",
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
 			StringPool.BLANK, serviceContext);
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestUtil.getUserId(), rule.getRuleKey(), 0,
+			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
 			String.valueOf(layout.getPlid()), serviceContext);
 
 		Assert.assertFalse(rule.evaluate(null, ruleInstance, anonymousUser));
@@ -95,20 +97,20 @@ public class PageVisitedTest {
 
 	@Test
 	public void testVisitedPageRule() throws Exception {
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext = TestUtil.getServiceContext(
-			group.getGroupId(), TestUtil.getUserId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
-				TestUtil.getUserId(), "127.0.0.1", StringPool.BLANK,
+				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
 		Rule rule = _rulesRegistry.getRule("PageVisitedRule");
 
 		Layout layout = LayoutLocalServiceUtil.addLayout(
-			TestUtil.getUserId(), group.getGroupId(), false,
+			TestPropsValues.getUserId(), group.getGroupId(), false,
 			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Layout", "Layout",
 			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
 			StringPool.BLANK, serviceContext);
@@ -120,7 +122,7 @@ public class PageVisitedTest {
 			serviceContext);
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestUtil.getUserId(), rule.getRuleKey(), 0,
+			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
 			String.valueOf(layout.getPlid()), serviceContext);
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
