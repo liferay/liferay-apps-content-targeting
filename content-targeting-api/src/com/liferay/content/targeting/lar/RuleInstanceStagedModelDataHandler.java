@@ -128,7 +128,7 @@ public class RuleInstanceStagedModelDataHandler
 			}
 			catch (Exception e) {
 				_log.error(
-					"Cannot export rule " +
+					"Cannot export custom data for rule " +
 						rule.getName(LocaleUtil.getDefault()) +
 							" in user segment " +
 								userSegment.getName(LocaleUtil.getDefault()),
@@ -158,7 +158,7 @@ public class RuleInstanceStagedModelDataHandler
 			}
 			catch (Exception e) {
 				_log.error(
-					"Cannot import rule " +
+					"Cannot import custom data for rule " +
 						rule.getName(LocaleUtil.getDefault()) +
 							" in user segment " + userSegment.getName(),
 					e);

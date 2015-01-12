@@ -14,17 +14,30 @@
 
 package com.liferay.content.targeting.service.impl;
 
+import com.liferay.content.targeting.api.model.Rule;
+import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.base.RuleInstanceLocalServiceBaseImpl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * The implementation of the rule instance local service.
@@ -42,6 +55,13 @@ import java.util.List;
  */
 public class RuleInstanceLocalServiceImpl
 	extends RuleInstanceLocalServiceBaseImpl {
+
+	public RuleInstanceLocalServiceImpl() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_rulesRegistry = ServiceTrackerUtil.getService(
+			RulesRegistry.class, bundle.getBundleContext());
+	}
 
 	@Override
 	public RuleInstance addRuleInstance(
@@ -70,6 +90,50 @@ public class RuleInstanceLocalServiceImpl
 		ruleInstance.setTypeSettings(typeSettings);
 
 		ruleInstancePersistence.update(ruleInstance);
+
+		return ruleInstance;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public RuleInstance deleteRuleInstance(long ruleInstanceId)
+		throws PortalException, SystemException {
+
+		RuleInstance ruleInstance = ruleInstancePersistence.findByPrimaryKey(
+				ruleInstanceId);
+
+		return deleteRuleInstance(ruleInstance);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public RuleInstance deleteRuleInstance(RuleInstance ruleInstance)
+		throws PortalException, SystemException {
+
+		ruleInstancePersistence.remove(ruleInstance);
+
+		// System event
+
+		systemEventLocalService.addSystemEvent(
+			0, ruleInstance.getGroupId(), RuleInstance.class.getName(),
+			ruleInstance.getRuleInstanceId(), ruleInstance.getUuid(), null,
+			SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+
+		// Rule data
+
+		Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
+
+		if (rule != null) {
+			try {
+				rule.deleteData(ruleInstance);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Cannot delete custom data for rule " +
+						rule.getName(LocaleUtil.getDefault()),
+					e);
+			}
+		}
 
 		return ruleInstance;
 	}
@@ -121,5 +185,10 @@ public class RuleInstanceLocalServiceImpl
 
 		return ruleInstance;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		RuleInstanceLocalServiceImpl.class);
+
+	private RulesRegistry _rulesRegistry;
 
 }

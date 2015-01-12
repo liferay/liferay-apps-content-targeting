@@ -15,6 +15,8 @@
 package com.liferay.content.targeting.lar;
 
 import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.RuleInstance;
+import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
@@ -49,7 +51,9 @@ public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 	public ContentTargetingPortletDataHandler() {
 		setDeletionSystemEventStagedModelTypes(
 			new StagedModelType(Campaign.class),
-			new StagedModelType(UserSegment.class));
+			new StagedModelType(RuleInstance.class),
+			new StagedModelType(UserSegment.class),
+			new StagedModelType(TrackingActionInstance.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "campaigns", true, false, null,

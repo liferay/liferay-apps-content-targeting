@@ -136,7 +136,7 @@ public class TrackingActionInstanceStagedModelDataHandler
 			}
 			catch (Exception e) {
 				_log.error(
-					"Cannot export tracking action " +
+					"Cannot export custom data for tracking action " +
 						trackingAction.getName(LocaleUtil.getDefault()) +
 							" in campaign" +
 								campaign.getName(LocaleUtil.getDefault()),
@@ -170,7 +170,7 @@ public class TrackingActionInstanceStagedModelDataHandler
 			}
 			catch (Exception e) {
 				_log.error(
-					"Cannot export tracking action " +
+					"Cannot import custom data for tracking action " +
 						trackingAction.getName(LocaleUtil.getDefault()) +
 							" in campaign" + campaign.getName());
 			}

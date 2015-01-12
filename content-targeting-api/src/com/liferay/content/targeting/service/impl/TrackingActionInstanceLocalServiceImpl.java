@@ -14,17 +14,30 @@
 
 package com.liferay.content.targeting.service.impl;
 
+import com.liferay.content.targeting.api.model.TrackingAction;
+import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.base.TrackingActionInstanceLocalServiceBaseImpl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * The implementation of the tracking action instance local service.
@@ -42,6 +55,13 @@ import java.util.List;
  */
 public class TrackingActionInstanceLocalServiceImpl
 	extends TrackingActionInstanceLocalServiceBaseImpl {
+
+	public TrackingActionInstanceLocalServiceImpl() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_trackingActionsRegistry = ServiceTrackerUtil.getService(
+			TrackingActionsRegistry.class, bundle.getBundleContext());
+	}
 
 	@Override
 	public TrackingActionInstance addTrackingActionInstance(
@@ -78,6 +98,57 @@ public class TrackingActionInstanceLocalServiceImpl
 		trackingActionInstance.setTypeSettings(typeSettings);
 
 		trackingActionInstancePersistence.update(trackingActionInstance);
+
+		return trackingActionInstance;
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public TrackingActionInstance deleteTrackingActionInstance(
+			long trackingActionInstanceId)
+		throws PortalException, SystemException {
+
+		TrackingActionInstance TrackingActionInstance =
+			trackingActionInstancePersistence.findByPrimaryKey(
+				trackingActionInstanceId);
+
+		return deleteTrackingActionInstance(TrackingActionInstance);
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public TrackingActionInstance deleteTrackingActionInstance(
+			TrackingActionInstance trackingActionInstance)
+		throws PortalException, SystemException {
+
+		trackingActionInstancePersistence.remove(trackingActionInstance);
+
+		// System event
+
+		systemEventLocalService.addSystemEvent(
+			0, trackingActionInstance.getGroupId(),
+			TrackingActionInstance.class.getName(),
+			trackingActionInstance.getTrackingActionInstanceId(),
+			trackingActionInstance.getUuid(), null,
+			SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+
+		// Tracking action data
+
+		TrackingAction trackingAction =
+			_trackingActionsRegistry.getTrackingAction(
+				trackingActionInstance.getTrackingActionKey());
+
+		if (trackingAction != null) {
+			try {
+				trackingAction.deleteData(trackingActionInstance);
+			}
+			catch (Exception e) {
+				_log.error(
+					"Cannot delete custom data for tracking action " +
+						trackingAction.getName(LocaleUtil.getDefault()),
+					e);
+			}
+		}
 
 		return trackingActionInstance;
 	}
@@ -142,5 +213,10 @@ public class TrackingActionInstanceLocalServiceImpl
 
 		return trackingActionInstance;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		TrackingActionInstanceLocalServiceImpl.class);
+
+	private TrackingActionsRegistry _trackingActionsRegistry;
 
 }

@@ -164,10 +164,10 @@ public abstract class BaseTrackingAction implements TrackingAction {
 		StringBundler sb = new StringBundler(9);
 
 		if (action.equals(Constants.EXPORT)) {
-			sb.append("Cannot export rule ");
+			sb.append("Cannot export tracking action ");
 		}
 		else {
-			sb.append("Cannot import rule ");
+			sb.append("Cannot import tracking action ");
 		}
 
 		sb.append(getName(LocaleUtil.getDefault()));
