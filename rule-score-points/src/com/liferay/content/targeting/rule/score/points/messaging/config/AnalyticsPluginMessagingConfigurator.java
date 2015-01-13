@@ -45,10 +45,12 @@ public class AnalyticsPluginMessagingConfigurator
 		if (!destinationNames.contains(_analyticsMessageDestination)) {
 			messageListeners.remove(_analyticsMessageDestination);
 
-			_log.warn(
-				"Cannot register analytics message listener for Score Points" +
-					" Rule because destination " +
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Cannot register analytics message listener for Score " +
+						"Points Rule because destination " +
 						_analyticsMessageDestination + " does not exist yet");
+			}
 		}
 
 		super.setMessageListeners(messageListeners);

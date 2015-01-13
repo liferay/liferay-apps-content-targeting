@@ -137,7 +137,9 @@ public class CTActionTotalLocalServiceImpl
 			}
 		}
 		catch (NullPointerException npe) {
-			_log.warn("Content Targeting API Services are not available");
+			if (_log.isWarnEnabled()) {
+				_log.warn("Content Targeting API Services are not available");
+			}
 		}
 	}
 
