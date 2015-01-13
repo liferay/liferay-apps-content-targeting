@@ -107,7 +107,7 @@ public class RegularRoleRule extends BaseRule {
 			ruleInstance.setTypeSettings(role.getUuid());
 
 			portletDataContext.addReferenceElement(
-				userSegment, userSegmentElement, role,
+				ruleInstance, ruleInstanceElement, role,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			return;

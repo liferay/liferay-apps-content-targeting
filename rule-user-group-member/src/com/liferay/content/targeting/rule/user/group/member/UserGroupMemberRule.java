@@ -93,7 +93,7 @@ public class UserGroupMemberRule extends BaseRule {
 			ruleInstance.setTypeSettings(userGroup.getUuid());
 
 			portletDataContext.addReferenceElement(
-				userSegment, userSegmentElement, userGroup,
+				ruleInstance, ruleInstanceElement, userGroup,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			return;

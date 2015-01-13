@@ -149,11 +149,11 @@ public class OrganizationRoleRule extends BaseRule {
 			ruleInstance.setTypeSettings(jsonObj.toString());
 
 			portletDataContext.addReferenceElement(
-				userSegment, userSegmentElement, organization,
+				ruleInstance, ruleInstanceElement, organization,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			portletDataContext.addReferenceElement(
-				userSegment, userSegmentElement, role,
+				ruleInstance, ruleInstanceElement, role,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 		}
 		catch (JSONException e) {

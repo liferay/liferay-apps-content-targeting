@@ -94,7 +94,7 @@ public class SiteMemberRule extends BaseRule {
 			ruleInstance.setTypeSettings(group.getUuid());
 
 			portletDataContext.addReferenceElement(
-				userSegment, userSegmentElement, group,
+				ruleInstance, ruleInstanceElement, group,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			return;

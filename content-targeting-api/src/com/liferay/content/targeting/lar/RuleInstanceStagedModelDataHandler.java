@@ -144,7 +144,8 @@ public class RuleInstanceStagedModelDataHandler
 				_log.error(
 					"Cannot import custom data for rule " +
 						rule.getName(LocaleUtil.getDefault()) +
-							" in user segment " + userSegment.getName(),
+							" in user segment " +
+								userSegment.getName(LocaleUtil.getDefault()),
 					e);
 			}
 		}

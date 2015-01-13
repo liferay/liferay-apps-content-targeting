@@ -146,11 +146,11 @@ public class SiteRoleRule extends BaseRule {
 			ruleInstance.setTypeSettings(jsonObj.toString());
 
 			portletDataContext.addReferenceElement(
-				userSegment, userSegmentElement, role,
+				ruleInstance, ruleInstanceElement, role,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			portletDataContext.addReferenceElement(
-				userSegment, userSegmentElement, group,
+				ruleInstance, ruleInstanceElement, group,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 		}
 		catch (JSONException e) {

@@ -154,7 +154,8 @@ public class TrackingActionInstanceStagedModelDataHandler
 				_log.error(
 					"Cannot import custom data for tracking action " +
 						trackingAction.getName(LocaleUtil.getDefault()) +
-							" in campaign" + campaign.getName());
+							" in campaign" +
+								campaign.getName(LocaleUtil.getDefault()));
 			}
 		}
 

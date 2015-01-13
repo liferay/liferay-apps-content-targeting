@@ -130,7 +130,7 @@ public class DeviceRule extends BaseRule {
 			ruleInstance.setTypeSettings(jsonObj.toString());
 
 			portletDataContext.addReferenceElement(
-				userSegment, userSegmentElement, mdrRuleGroup,
+				ruleInstance, ruleInstanceElement, mdrRuleGroup,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			return;

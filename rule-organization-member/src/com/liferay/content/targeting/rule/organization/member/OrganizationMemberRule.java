@@ -97,7 +97,7 @@ public class OrganizationMemberRule extends BaseRule {
 			ruleInstance.setTypeSettings(organization.getUuid());
 
 			portletDataContext.addReferenceElement(
-				userSegment, userSegmentElement, organization,
+				ruleInstance, ruleInstanceElement, organization,
 				PortletDataContext.REFERENCE_TYPE_WEAK, true);
 
 			return;
