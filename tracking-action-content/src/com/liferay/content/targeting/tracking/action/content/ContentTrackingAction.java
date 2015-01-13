@@ -85,8 +85,11 @@ public class ContentTrackingAction extends BaseTrackingAction {
 			TrackingActionInstance trackingActionInstance)
 		throws Exception {
 
-		long assetEntryId = GetterUtil.getLong(
-			trackingActionInstance.getTypeSettings());
+		String typeSettings = trackingActionInstance.getTypeSettings();
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
+
+		long assetEntryId = jsonObj.getLong("assetEntryId");
 
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			assetEntryId);
@@ -171,8 +174,11 @@ public class ContentTrackingAction extends BaseTrackingAction {
 			portletDataContext.getScopeGroupId(), classUuid);
 
 		if (assetEntry != null ) {
-			trackingActionInstance.setTypeSettings(
-				String.valueOf(assetEntry.getEntryId()));
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+			jsonObj.put("assetEntryId", assetEntry.getEntryId());
+
+			trackingActionInstance.setTypeSettings(jsonObj.toString());
 
 			return;
 		}
