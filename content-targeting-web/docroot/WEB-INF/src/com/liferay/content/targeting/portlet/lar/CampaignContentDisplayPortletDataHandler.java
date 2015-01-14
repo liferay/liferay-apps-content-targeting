@@ -91,8 +91,12 @@ public class CampaignContentDisplayPortletDataHandler
 			return;
 		}
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, Campaign.class);
+		try {
+			StagedModelDataHandlerUtil.importReferenceStagedModels(
+				portletDataContext, Campaign.class);
+		}
+		catch (Exception e) {
+		}
 
 		String uuid = portletPreferences.getValue(key + "uuid", null);
 

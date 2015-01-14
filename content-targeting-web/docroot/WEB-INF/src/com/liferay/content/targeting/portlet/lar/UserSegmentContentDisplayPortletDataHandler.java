@@ -114,8 +114,12 @@ public class UserSegmentContentDisplayPortletDataHandler
 			return;
 		}
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, UserSegment.class);
+		try {
+			StagedModelDataHandlerUtil.importReferenceStagedModels(
+				portletDataContext, UserSegment.class);
+		}
+		catch (Exception e) {
+		}
 
 		String[] newValues = new String[oldValues.length];
 
