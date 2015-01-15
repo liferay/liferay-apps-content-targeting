@@ -18,6 +18,7 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
@@ -338,24 +339,16 @@ public class UserSegmentStagedModelDataHandler
 			if (existingAssetVocabulary == null) {
 				serviceContext.setUuid(assetVocabulary.getUuid());
 
-				importedAssetVocabulary =
-					AssetVocabularyLocalServiceUtil.addVocabulary(
-						userId, assetVocabulary.getTitle(),
-						assetVocabulary.getTitleMap(),
-						assetVocabulary.getDescriptionMap(),
-						assetVocabulary.getSettings(), serviceContext);
+				importedAssetVocabulary = UserSegmentUtil.addAssetVocabulary(
+					userId, serviceContext);
 			}
 			else {
 				importedAssetVocabulary = existingAssetVocabulary;
 			}
 		}
 		else {
-			importedAssetVocabulary =
-				AssetVocabularyLocalServiceUtil.addVocabulary(
-					userId, assetVocabulary.getTitle(),
-					assetVocabulary.getTitleMap(),
-					assetVocabulary.getDescriptionMap(),
-					assetVocabulary.getSettings(), serviceContext);
+			importedAssetVocabulary = UserSegmentUtil.addAssetVocabulary(
+				userId, serviceContext);
 		}
 
 		portletDataContext.importClassedModel(
