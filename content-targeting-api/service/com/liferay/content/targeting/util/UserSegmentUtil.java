@@ -47,6 +47,18 @@ public class UserSegmentUtil {
 	public static final String[] SELECTED_FIELD_NAMES =
 		{Field.COMPANY_ID, Field.GROUP_ID, Field.UID, "userSegmentId"};
 
+	public static AssetVocabulary addAssetVocabulary(
+			long userId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		return AssetVocabularyLocalServiceUtil.addVocabulary(
+			userId, null, getAssetVocabularyTitle(),
+			getAssetVocabularyDescription(), null, serviceContext);
+	}
+
 	public static Map<Locale, String> getAssetVocabularyDescription() {
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 
@@ -93,19 +105,14 @@ public class UserSegmentUtil {
 					serviceContextLive.setScopeGroupId(
 						scopeGroup.getLiveGroupId());
 
-					liveVocabulary =
-						AssetVocabularyLocalServiceUtil.addVocabulary(
-							userId, null, getAssetVocabularyTitle(),
-							getAssetVocabularyDescription(), null,
-							serviceContextLive);
+					liveVocabulary = addAssetVocabulary(
+						userId, serviceContextLive);
 				}
 
 				serviceContext.setUuid(liveVocabulary.getUuid());
 			}
 
-			vocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
-				userId, null, getAssetVocabularyTitle(),
-				getAssetVocabularyDescription(), null, serviceContext);
+			vocabulary = addAssetVocabulary(userId, serviceContext);
 
 			serviceContext.setUuid(categoryUuid);
 		}
