@@ -42,7 +42,7 @@
 				<#list assetRendererFactories as assetRendererFactory>
 					<@liferay_ui["icon"]
 						cssClass="asset-selector"
-						data=contentTargetingUtilClass.getAssetSelectorIconData(request, assetRendererFactory, '', '{ct_field_guid}')
+						data=contentTargetingUtilClass.getAssetSelectorIconData(request, assetRendererFactory, '', true)
 						id="{ct_field_guid}groupId_${assetRendererFactory.getTypeName(locale, false)}"
 						message=assetRendererFactory.getTypeName(locale, false)
 						src=assetRendererFactory.getIconPath(renderRequest)
@@ -95,7 +95,7 @@
 					constrain: true,
 					modal: true
 				},
-				eventName: 'selectContent{ct_field_guid}',
+				eventName: '{ct_field_guid}selectContent',
 				id: 'selectContent' + currentTarget.attr('id'),
 				title: currentTarget.attr('data-title'),
 				uri: currentTarget.attr('data-href')

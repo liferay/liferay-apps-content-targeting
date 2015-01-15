@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
-import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -54,6 +53,8 @@ import javax.servlet.http.HttpServletRequest;
  * @author Eudaldo Alonso
  */
 public class ContentTargetingUtil {
+
+	public static final String GUID_REPLACEMENT = "{ct_field_guid}";
 
 	public static long[] getAncestorsAndCurrentGroupIds(long groupId)
 		throws PortalException, SystemException {
@@ -113,19 +114,21 @@ public class ContentTargetingUtil {
 			AssetRendererFactory assetRendererFactory, String index)
 		throws Exception {
 
-		return getAssetSelectorIconData(request, assetRendererFactory, index, "");
+		return getAssetSelectorIconData(
+			request, assetRendererFactory, index, false);
 	}
 
 	public static Map<String, Object> getAssetSelectorIconData(
 			HttpServletRequest request,
-			AssetRendererFactory assetRendererFactory, String index, String guid)
+			AssetRendererFactory assetRendererFactory, String index,
+			boolean instantiable)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL assetBrowserURL = getAssetBrowserURL(
-			request, assetRendererFactory.getClassName(), guid);
+			request, assetRendererFactory.getClassName(), instantiable);
 
 		String typeName = assetRendererFactory.getTypeName(
 			themeDisplay.getLocale(), false);
@@ -265,7 +268,7 @@ public class ContentTargetingUtil {
 	}
 
 	protected static PortletURL getAssetBrowserURL(
-			HttpServletRequest request, String className, String guid)
+			HttpServletRequest request, String className, boolean instantiable)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -288,8 +291,8 @@ public class ContentTargetingUtil {
 
 		String eventName = "selectContent";
 
-		if (Validator.isNotNull(guid)) {
-			eventName += guid;
+		if (instantiable) {
+			eventName = GUID_REPLACEMENT + eventName;
 		}
 
 		assetBrowserURL.setParameter("eventName", eventName);
