@@ -452,6 +452,10 @@ public class UserSegmentContentClp extends BaseModelImpl<UserSegmentContent>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -531,4 +535,5 @@ public class UserSegmentContentClp extends BaseModelImpl<UserSegmentContent>
 	private int _count;
 	private Date _modifiedDate;
 	private BaseModel<?> _userSegmentContentRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.report.user.segment.content.service.ClpSerializer.class;
 }

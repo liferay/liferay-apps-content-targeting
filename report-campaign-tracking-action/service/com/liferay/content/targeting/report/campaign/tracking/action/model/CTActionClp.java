@@ -521,6 +521,10 @@ public class CTActionClp extends BaseModelImpl<CTAction> implements CTAction {
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -621,4 +625,5 @@ public class CTActionClp extends BaseModelImpl<CTAction> implements CTAction {
 	private int _count;
 	private Date _modifiedDate;
 	private BaseModel<?> _ctActionRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.report.campaign.tracking.action.service.ClpSerializer.class;
 }

@@ -16,6 +16,7 @@ package com.liferay.content.targeting.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @return the rule instance that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.RuleInstance addRuleInstance(
 		com.liferay.content.targeting.model.RuleInstance ruleInstance)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @throws PortalException if a rule instance with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
 		long ruleInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -86,6 +89,7 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
 		com.liferay.content.targeting.model.RuleInstance ruleInstance)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -284,6 +288,7 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @return the rule instance that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
 		com.liferay.content.targeting.model.RuleInstance ruleInstance)
 		throws com.liferay.portal.kernel.exception.SystemException;

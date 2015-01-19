@@ -16,6 +16,7 @@ package com.liferay.content.targeting.report.user.segment.content.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface UserSegmentContentLocalService extends BaseLocalService,
 	* @return the user segment content that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent addUserSegmentContent(
 		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface UserSegmentContentLocalService extends BaseLocalService,
 	* @throws PortalException if a user segment content with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent deleteUserSegmentContent(
 		long userSegmentContentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface UserSegmentContentLocalService extends BaseLocalService,
 	* @return the user segment content that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent deleteUserSegmentContent(
 		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface UserSegmentContentLocalService extends BaseLocalService,
 	* @return the user segment content that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent updateUserSegmentContent(
 		com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent userSegmentContent)
 		throws com.liferay.portal.kernel.exception.SystemException;

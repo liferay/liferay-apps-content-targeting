@@ -653,6 +653,10 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -783,4 +787,5 @@ public class AnalyticsEventClp extends BaseModelImpl<AnalyticsEvent>
 	private String _additionalInfo;
 	private Date _createDate;
 	private BaseModel<?> _analyticsEventRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.analytics.service.ClpSerializer.class;
 }

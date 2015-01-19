@@ -365,6 +365,10 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -431,4 +435,5 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 	private long _userSegmentId;
 	private long _points;
 	private BaseModel<?> _scorePointRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.rule.score.points.service.ClpSerializer.class;
 }

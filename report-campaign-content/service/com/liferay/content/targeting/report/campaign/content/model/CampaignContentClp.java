@@ -451,6 +451,10 @@ public class CampaignContentClp extends BaseModelImpl<CampaignContent>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -530,4 +534,5 @@ public class CampaignContentClp extends BaseModelImpl<CampaignContent>
 	private int _count;
 	private Date _modifiedDate;
 	private BaseModel<?> _campaignContentRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.report.campaign.content.service.ClpSerializer.class;
 }

@@ -787,6 +787,10 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -929,4 +933,5 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 	private String _eventType;
 	private String _typeSettings;
 	private BaseModel<?> _trackingActionInstanceRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.service.ClpSerializer.class;
 }

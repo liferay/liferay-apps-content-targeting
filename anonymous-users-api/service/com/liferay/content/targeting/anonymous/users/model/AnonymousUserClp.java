@@ -527,6 +527,10 @@ public class AnonymousUserClp extends BaseModelImpl<AnonymousUser>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -622,4 +626,5 @@ public class AnonymousUserClp extends BaseModelImpl<AnonymousUser>
 	private String _lastIp;
 	private String _typeSettings;
 	private BaseModel<?> _anonymousUserRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.anonymous.users.service.ClpSerializer.class;
 }

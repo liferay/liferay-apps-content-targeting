@@ -1339,6 +1339,8 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 				query.append(WHERE_AND);
 			}
 
+			boolean bindReferrerClassName = false;
+
 			if (referrerClassName == null) {
 				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_4);
 			}
@@ -1346,6 +1348,8 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_6);
 			}
 			else {
+				bindReferrerClassName = true;
+
 				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_5);
 			}
 
@@ -1383,7 +1387,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 					qPos.add(analyticsEventIds);
 				}
 
-				if (referrerClassName != null) {
+				if (bindReferrerClassName) {
 					qPos.add(referrerClassName);
 				}
 
@@ -1570,6 +1574,8 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 				query.append(WHERE_AND);
 			}
 
+			boolean bindReferrerClassName = false;
+
 			if (referrerClassName == null) {
 				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_4);
 			}
@@ -1577,6 +1583,8 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_6);
 			}
 			else {
+				bindReferrerClassName = true;
+
 				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_5);
 			}
 
@@ -1605,7 +1613,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 					qPos.add(analyticsEventIds);
 				}
 
-				if (referrerClassName != null) {
+				if (bindReferrerClassName) {
 					qPos.add(referrerClassName);
 				}
 

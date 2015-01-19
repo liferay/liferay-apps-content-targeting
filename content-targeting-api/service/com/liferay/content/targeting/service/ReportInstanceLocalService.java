@@ -16,6 +16,7 @@ package com.liferay.content.targeting.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	* @return the report instance that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.ReportInstance addReportInstance(
 		com.liferay.content.targeting.model.ReportInstance reportInstance)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	* @throws PortalException if a report instance with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.ReportInstance deleteReportInstance(
 		long reportInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	* @return the report instance that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.ReportInstance deleteReportInstance(
 		com.liferay.content.targeting.model.ReportInstance reportInstance)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	* @return the report instance that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.ReportInstance updateReportInstance(
 		com.liferay.content.targeting.model.ReportInstance reportInstance)
 		throws com.liferay.portal.kernel.exception.SystemException;

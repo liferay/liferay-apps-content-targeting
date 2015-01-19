@@ -16,6 +16,7 @@ package com.liferay.content.targeting.report.campaign.content.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface CampaignContentLocalService extends BaseLocalService,
 	* @return the campaign content that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent addCampaignContent(
 		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface CampaignContentLocalService extends BaseLocalService,
 	* @throws PortalException if a campaign content with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent deleteCampaignContent(
 		long campaignContentId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface CampaignContentLocalService extends BaseLocalService,
 	* @return the campaign content that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent deleteCampaignContent(
 		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface CampaignContentLocalService extends BaseLocalService,
 	* @return the campaign content that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent updateCampaignContent(
 		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent)
 		throws com.liferay.portal.kernel.exception.SystemException;
