@@ -515,6 +515,10 @@ public class ReportInstanceClp extends BaseModelImpl<ReportInstance>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -615,4 +619,5 @@ public class ReportInstanceClp extends BaseModelImpl<ReportInstance>
 	private long _classPK;
 	private String _typeSettings;
 	private BaseModel<?> _reportInstanceRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.service.ClpSerializer.class;
 }

@@ -16,6 +16,7 @@ package com.liferay.content.targeting.analytics.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	* @return the analytics referrer that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer addAnalyticsReferrer(
 		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	* @throws PortalException if a analytics referrer with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer deleteAnalyticsReferrer(
 		long analyticsReferrerId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	* @return the analytics referrer that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer deleteAnalyticsReferrer(
 		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	* @return the analytics referrer that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer updateAnalyticsReferrer(
 		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer)
 		throws com.liferay.portal.kernel.exception.SystemException;

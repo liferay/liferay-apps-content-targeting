@@ -16,6 +16,7 @@ package com.liferay.content.targeting.rule.score.points.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface ScorePointLocalService extends BaseLocalService,
 	* @return the score point that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint addScorePoint(
 		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface ScorePointLocalService extends BaseLocalService,
 	* @throws PortalException if a score point with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint deleteScorePoint(
 		long scorePointId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface ScorePointLocalService extends BaseLocalService,
 	* @return the score point that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint deleteScorePoint(
 		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface ScorePointLocalService extends BaseLocalService,
 	* @return the score point that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint updateScorePoint(
 		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint)
 		throws com.liferay.portal.kernel.exception.SystemException;

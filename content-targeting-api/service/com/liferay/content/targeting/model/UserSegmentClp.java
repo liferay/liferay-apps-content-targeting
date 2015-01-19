@@ -819,7 +819,9 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 			return StringPool.BLANK;
 		}
 
-		return LocalizationUtil.getDefaultLanguageId(xml);
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
 	}
 
 	@Override
@@ -831,7 +833,7 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
 
@@ -915,6 +917,10 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 		else {
 			return false;
 		}
+	}
+
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
 	}
 
 	@Override
@@ -1026,4 +1032,5 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	private String _description;
 	private String _descriptionCurrentLanguageId;
 	private BaseModel<?> _userSegmentRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.service.ClpSerializer.class;
 }

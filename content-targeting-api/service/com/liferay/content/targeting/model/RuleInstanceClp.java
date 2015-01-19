@@ -640,6 +640,10 @@ public class RuleInstanceClp extends BaseModelImpl<RuleInstance>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -747,4 +751,5 @@ public class RuleInstanceClp extends BaseModelImpl<RuleInstance>
 	private long _userSegmentId;
 	private String _typeSettings;
 	private BaseModel<?> _ruleInstanceRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.service.ClpSerializer.class;
 }

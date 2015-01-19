@@ -16,6 +16,7 @@ package com.liferay.content.targeting.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @return the campaign that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.Campaign addCampaign(
 		com.liferay.content.targeting.model.Campaign campaign)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @throws PortalException if a campaign with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.Campaign deleteCampaign(
 		long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -86,6 +89,7 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.Campaign deleteCampaign(
 		com.liferay.content.targeting.model.Campaign campaign)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -284,6 +288,7 @@ public interface CampaignLocalService extends BaseLocalService,
 	* @return the campaign that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.Campaign updateCampaign(
 		com.liferay.content.targeting.model.Campaign campaign)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -418,6 +423,7 @@ public interface CampaignLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.Campaign addCampaign(
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -502,6 +508,7 @@ public interface CampaignLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.Campaign updateCampaign(
 		long campaignId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

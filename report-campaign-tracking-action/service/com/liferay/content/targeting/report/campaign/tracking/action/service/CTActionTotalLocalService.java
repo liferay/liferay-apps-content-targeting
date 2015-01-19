@@ -16,6 +16,7 @@ package com.liferay.content.targeting.report.campaign.tracking.action.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface CTActionTotalLocalService extends BaseLocalService,
 	* @return the c t action total that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
 		com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal ctActionTotal)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface CTActionTotalLocalService extends BaseLocalService,
 	* @throws PortalException if a c t action total with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal deleteCTActionTotal(
 		long CTActionTotalId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface CTActionTotalLocalService extends BaseLocalService,
 	* @return the c t action total that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal deleteCTActionTotal(
 		com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal ctActionTotal)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -226,6 +230,7 @@ public interface CTActionTotalLocalService extends BaseLocalService,
 	* @return the c t action total that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal updateCTActionTotal(
 		com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal ctActionTotal)
 		throws com.liferay.portal.kernel.exception.SystemException;

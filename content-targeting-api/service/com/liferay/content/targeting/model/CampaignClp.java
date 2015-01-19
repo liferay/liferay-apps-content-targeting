@@ -871,7 +871,9 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 			return StringPool.BLANK;
 		}
 
-		return LocalizationUtil.getDefaultLanguageId(xml);
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
+
+		return LocalizationUtil.getDefaultLanguageId(xml, defaultLocale);
 	}
 
 	@Override
@@ -883,7 +885,7 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 	@SuppressWarnings("unused")
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException {
-		Locale defaultLocale = LocaleUtil.getDefault();
+		Locale defaultLocale = LocaleUtil.getSiteDefault();
 
 		String modelDefaultLanguageId = getDefaultLanguageId();
 
@@ -976,6 +978,10 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 		else {
 			return false;
 		}
+	}
+
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
 	}
 
 	@Override
@@ -1108,4 +1114,5 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 	private int _priority;
 	private boolean _active;
 	private BaseModel<?> _campaignRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.service.ClpSerializer.class;
 }

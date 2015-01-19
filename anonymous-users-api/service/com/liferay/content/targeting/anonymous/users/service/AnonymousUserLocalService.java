@@ -16,6 +16,7 @@ package com.liferay.content.targeting.anonymous.users.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -52,6 +53,7 @@ public interface AnonymousUserLocalService extends BaseLocalService,
 	* @return the anonymous user that was added
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser addAnonymousUser(
 		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -73,6 +75,7 @@ public interface AnonymousUserLocalService extends BaseLocalService,
 	* @throws PortalException if a anonymous user with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser deleteAnonymousUser(
 		long anonymousUserId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -85,6 +88,7 @@ public interface AnonymousUserLocalService extends BaseLocalService,
 	* @return the anonymous user that was removed
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser deleteAnonymousUser(
 		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser)
 		throws com.liferay.portal.kernel.exception.SystemException;
@@ -254,6 +258,7 @@ public interface AnonymousUserLocalService extends BaseLocalService,
 	* @return the anonymous user that was updated
 	* @throws SystemException if a system exception occurred
 	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser updateAnonymousUser(
 		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser)
 		throws com.liferay.portal.kernel.exception.SystemException;

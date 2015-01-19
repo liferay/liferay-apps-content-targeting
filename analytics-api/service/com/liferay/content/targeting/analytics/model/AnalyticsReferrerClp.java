@@ -319,6 +319,10 @@ public class AnalyticsReferrerClp extends BaseModelImpl<AnalyticsReferrer>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -377,4 +381,5 @@ public class AnalyticsReferrerClp extends BaseModelImpl<AnalyticsReferrer>
 	private String _referrerClassName;
 	private long _referrerClassPK;
 	private BaseModel<?> _analyticsReferrerRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.analytics.service.ClpSerializer.class;
 }
