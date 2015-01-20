@@ -18,7 +18,10 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.portlet.util.CampaignQueryRuleUtil;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
+import com.liferay.portal.kernel.lar.DataLevel;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -39,6 +42,17 @@ import javax.portlet.PortletPreferences;
 public class CampaignContentDisplayPortletDataHandler
 	extends BaseContentTargetingDisplayPortletDataHandler {
 
+	public static final String NAMESPACE = "campaign_content_display";
+
+	public CampaignContentDisplayPortletDataHandler() {
+		setDataLevel(DataLevel.PORTLET_INSTANCE);
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "referenced-campaigns", true, false),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "referenced-content", true, false));
+	}
+
 	@Override
 	protected List<QueryRule> getQueryRules(
 			PortletPreferences portletPreferences)
@@ -46,6 +60,14 @@ public class CampaignContentDisplayPortletDataHandler
 
 		return CampaignQueryRuleUtil.getCampaignQueryRules(
 			portletPreferences, LocaleUtil.getDefault(), false);
+	}
+
+	@Override
+	protected boolean isExportReferencedContent(
+		PortletDataContext portletDataContext) {
+
+		return portletDataContext.getBooleanParameter(
+			NAMESPACE, "referenced-content");
 	}
 
 	@Override
@@ -67,17 +89,33 @@ public class CampaignContentDisplayPortletDataHandler
 
 		Campaign campaign = CampaignLocalServiceUtil.fetchCampaign(campaignId);
 
-		if (campaign != null) {
-			portletPreferences.setValue(key + "uuid", campaign.getUuid());
-
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portlet.getRootPortletId(), campaign);
+		if (campaign == null) {
+			if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get campaign with id " + campaignId);
+			}
 
 			return;
 		}
 
-		if (_log.isWarnEnabled()) {
-			_log.warn("Unable to get campaign with id " + campaignId);
+		portletPreferences.setValue(key + "uuid", campaign.getUuid());
+
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "referenced-campaigns")) {
+
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, portlet.getRootPortletId(), campaign);
+		}
+		else {
+			portletDataContext.addReferenceElement(
+				portlet, rootElement, campaign, Campaign.class,
+				PortletDataContext.REFERENCE_TYPE_WEAK, true);
+
+			Element campaignElement = portletDataContext.getExportDataElement(
+				campaign);
+
+			portletDataContext.addClassedModel(
+				campaignElement, ExportImportPathUtil.getModelPath(campaign),
+				campaign);
 		}
 	}
 

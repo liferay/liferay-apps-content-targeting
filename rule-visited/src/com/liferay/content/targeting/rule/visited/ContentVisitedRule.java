@@ -21,6 +21,7 @@ import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
+import com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
@@ -118,11 +119,21 @@ public class ContentVisitedRule extends BaseRule {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			assetEntryId);
 
-		if (assetEntry != null) {
-			ruleInstance.setTypeSettings(assetEntry.getClassUuid());
+		if (assetEntry == null) {
+			throw new PortletDataException(
+				getExportImportErrorMessage(
+					userSegment, ruleInstance, AssetEntry.class.getName(),
+					String.valueOf(assetEntryId), Constants.EXPORT));
+		}
 
-			AssetEntryReferencedStagedModel assetEntryReferencedStagedModel =
-				new AssetEntryReferencedStagedModel(assetEntry);
+		ruleInstance.setTypeSettings(assetEntry.getClassUuid());
+
+		AssetEntryReferencedStagedModel assetEntryReferencedStagedModel =
+			new AssetEntryReferencedStagedModel(assetEntry);
+
+		if (portletDataContext.getBooleanParameter(
+				ContentTargetingPortletDataHandler.NAMESPACE,
+				"referenced-content")) {
 
 			try {
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -130,32 +141,33 @@ public class ContentVisitedRule extends BaseRule {
 					assetEntryReferencedStagedModel,
 					AssetEntryReferencedStagedModel.class,
 					PortletDataContext.REFERENCE_TYPE_WEAK);
+
+				return;
 			}
 			catch (Exception e) {
-				portletDataContext.addReferenceElement(
-					ruleInstance, ruleInstanceElement,
-					assetEntryReferencedStagedModel,
-					AssetEntryReferencedStagedModel.class,
-					PortletDataContext.REFERENCE_TYPE_WEAK, true);
-
-				Element assetEntryReferencedStagedModelElement =
-					portletDataContext.getExportDataElement(
-						assetEntryReferencedStagedModel);
-
-				portletDataContext.addClassedModel(
-					assetEntryReferencedStagedModelElement,
-					ExportImportPathUtil.getModelPath(
-						assetEntryReferencedStagedModel),
-					assetEntryReferencedStagedModel);
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Cannot export referenced content for rule " +
+							"instance with id " +
+								ruleInstance.getRuleInstanceId());
+				}
 			}
-
-			return;
 		}
 
-		throw new PortletDataException(
-			getExportImportErrorMessage(
-				userSegment, ruleInstance, AssetEntry.class.getName(),
-				String.valueOf(assetEntryId), Constants.EXPORT));
+		portletDataContext.addReferenceElement(
+			ruleInstance, ruleInstanceElement, assetEntryReferencedStagedModel,
+			AssetEntryReferencedStagedModel.class,
+			PortletDataContext.REFERENCE_TYPE_WEAK, true);
+
+		Element assetEntryReferencedStagedModelElement =
+			portletDataContext.getExportDataElement(
+				assetEntryReferencedStagedModel);
+
+		portletDataContext.addClassedModel(
+			assetEntryReferencedStagedModelElement,
+			ExportImportPathUtil.getModelPath(
+				assetEntryReferencedStagedModel),
+				assetEntryReferencedStagedModel);
 	}
 
 	@Override
@@ -193,9 +205,14 @@ public class ContentVisitedRule extends BaseRule {
 			RuleInstance ruleInstance)
 		throws Exception {
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, ruleInstance,
-			AssetEntryReferencedStagedModel.class);
+		if (portletDataContext.getBooleanParameter(
+				ContentTargetingPortletDataHandler.NAMESPACE,
+				"referenced-content")) {
+
+			StagedModelDataHandlerUtil.importReferenceStagedModels(
+				portletDataContext, ruleInstance,
+				AssetEntryReferencedStagedModel.class);
+		}
 
 		String classUuid = ruleInstance.getTypeSettings();
 
