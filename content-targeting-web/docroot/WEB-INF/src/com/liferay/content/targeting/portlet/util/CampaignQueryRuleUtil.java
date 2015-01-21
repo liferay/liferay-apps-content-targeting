@@ -103,7 +103,7 @@ public class CampaignQueryRuleUtil {
 			}
 		}
 
-		return null;
+		return queryRules.get(queryRules.size() - 1);
 	}
 
 	protected static CampaignQueryRule getDefaultQueryRule(

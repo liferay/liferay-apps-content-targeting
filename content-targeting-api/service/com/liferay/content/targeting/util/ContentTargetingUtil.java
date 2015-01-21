@@ -21,9 +21,12 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
+import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Layout;
@@ -54,6 +57,8 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ContentTargetingUtil {
 
+	public static final String GUID_REPLACEMENT = "{ct_field_guid}";
+
 	public static long[] getAncestorsAndCurrentGroupIds(long groupId)
 		throws PortalException, SystemException {
 
@@ -63,7 +68,10 @@ public class ContentTargetingUtil {
 			return null;
 		}
 
-		if (scopeGroup.isStagingGroup()) {
+		if (scopeGroup.isStagingGroup() &&
+			!ContentTargetingUtil.isStaged(
+				scopeGroup.getLiveGroupId(), PortletKeys.CT_ADMIN)) {
+
 			scopeGroup = scopeGroup.getLiveGroup();
 		}
 
@@ -112,11 +120,21 @@ public class ContentTargetingUtil {
 			AssetRendererFactory assetRendererFactory, String index)
 		throws Exception {
 
+		return getAssetSelectorIconData(
+			request, assetRendererFactory, index, false);
+	}
+
+	public static Map<String, Object> getAssetSelectorIconData(
+			HttpServletRequest request,
+			AssetRendererFactory assetRendererFactory, String index,
+			boolean instantiable)
+		throws Exception {
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		PortletURL assetBrowserURL = getAssetBrowserURL(
-			request, assetRendererFactory.getClassName());
+			request, assetRendererFactory.getClassName(), instantiable);
 
 		String typeName = assetRendererFactory.getTypeName(
 			themeDisplay.getLocale(), false);
@@ -208,6 +226,19 @@ public class ContentTargetingUtil {
 		return groupIds;
 	}
 
+	public static boolean isStaged(long liveGroupId, String portletId)
+		throws PortalException, SystemException {
+
+		Group liveGroup = GroupLocalServiceUtil.getGroup(liveGroupId);
+
+		UnicodeProperties liveGroupTypeSettings =
+			liveGroup.getTypeSettingsProperties();
+
+		return GetterUtil.getBoolean(
+			liveGroupTypeSettings.getProperty(
+				StagingUtil.getStagedPortletId(portletId)), false);
+	}
+
 	// This method already exists in 7.0
 
 	protected static Set<Group> doGetAncestorSiteGroups(
@@ -256,7 +287,7 @@ public class ContentTargetingUtil {
 	}
 
 	protected static PortletURL getAssetBrowserURL(
-			HttpServletRequest request, String className)
+			HttpServletRequest request, String className, boolean instantiable)
 		throws Exception {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -276,7 +307,14 @@ public class ContentTargetingUtil {
 				getSharedContentSiteGroupIds(
 					themeDisplay.getCompanyId(), themeDisplay.getScopeGroupId(),
 					themeDisplay.getUserId())));
-		assetBrowserURL.setParameter("eventName", "selectContent");
+
+		String eventName = "selectContent";
+
+		if (instantiable) {
+			eventName = GUID_REPLACEMENT + eventName;
+		}
+
+		assetBrowserURL.setParameter("eventName", eventName);
 		assetBrowserURL.setParameter("typeSelection", className);
 		assetBrowserURL.setPortletMode(PortletMode.VIEW);
 		assetBrowserURL.setWindowState(LiferayWindowState.POP_UP);

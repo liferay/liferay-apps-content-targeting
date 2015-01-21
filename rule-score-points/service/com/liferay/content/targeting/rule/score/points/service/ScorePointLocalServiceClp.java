@@ -123,13 +123,17 @@ public class ScorePointLocalServiceClp implements ScorePointLocalService {
 
 		_methodParameterTypes20 = new String[] { "long", "long" };
 
-		_methodName21 = "incrementPoints";
+		_methodName21 = "getScorePoints";
 
-		_methodParameterTypes21 = new String[] { "long", "long", "long" };
+		_methodParameterTypes21 = new String[] { "long" };
 
-		_methodName22 = "updateScorePoints";
+		_methodName22 = "incrementPoints";
 
 		_methodParameterTypes22 = new String[] { "long", "long", "long" };
+
+		_methodName23 = "updateScorePoints";
+
+		_methodParameterTypes23 = new String[] { "long", "long", "long" };
 	}
 
 	@Override
@@ -742,13 +746,42 @@ public class ScorePointLocalServiceClp implements ScorePointLocalService {
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint> getScorePoints(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName21,
+					_methodParameterTypes21, new Object[] { userSegmentId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public long incrementPoints(long anonymousUserId, long userSegmentId,
 		long points) throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName21,
-					_methodParameterTypes21,
+			returnObj = _invokableLocalService.invokeMethod(_methodName22,
+					_methodParameterTypes22,
 					new Object[] { anonymousUserId, userSegmentId, points });
 		}
 		catch (Throwable t) {
@@ -777,8 +810,8 @@ public class ScorePointLocalServiceClp implements ScorePointLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
+			returnObj = _invokableLocalService.invokeMethod(_methodName23,
+					_methodParameterTypes23,
 					new Object[] { anonymousUserId, userSegmentId, points });
 		}
 		catch (Throwable t) {
@@ -845,4 +878,6 @@ public class ScorePointLocalServiceClp implements ScorePointLocalService {
 	private String[] _methodParameterTypes21;
 	private String _methodName22;
 	private String[] _methodParameterTypes22;
+	private String _methodName23;
+	private String[] _methodParameterTypes23;
 }

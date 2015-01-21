@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.1.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_1_0.dtd">
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
 
 <liferay-portlet-app>
 	<portlet>
@@ -12,19 +12,26 @@
 		<header-portlet-css>/css/campaign_content_display/main.css</header-portlet-css>
 		<header-portlet-css>/css/content_targeting/rules_panel.css</header-portlet-css>
 		<header-portlet-css>/css/content_targeting/thumbnails_preview.css</header-portlet-css>
+		<header-portlet-css>/css/content_targeting/warning_restart.css</header-portlet-css>
 		<header-portlet-javascript>/js/content_targeting/thumbnails_preview.js</header-portlet-javascript>
 		<css-class-wrapper>campaign-content-display-portlet</css-class-wrapper>
 	</portlet>
 	<portlet>
 		<portlet-name>ctadmin</portlet-name>
 		<icon>/icons/icon.png</icon>
-		<portlet-data-handler-class>com.liferay.content.targeting.portlet.lar.ContentTargetingPortletDataHandler</portlet-data-handler-class>
+		<portlet-data-handler-class>com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler</portlet-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.content.targeting.lar.AssetEntryReferencedStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.content.targeting.lar.CampaignStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.content.targeting.lar.RuleInstanceStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.content.targeting.lar.TrackingActionInstanceStagedModelDataHandler</staged-model-data-handler-class>
+		<staged-model-data-handler-class>com.liferay.content.targeting.lar.UserSegmentStagedModelDataHandler</staged-model-data-handler-class>
 		<control-panel-entry-category>site_administration.configuration</control-panel-entry-category>
 		<control-panel-entry-weight>10.0</control-panel-entry-weight>
 		<control-panel-entry-class>com.liferay.content.targeting.portlet.ContentTargetingControlPanelEntry</control-panel-entry-class>
 		<render-weight>1</render-weight>
 		<header-portlet-css>/css/content_targeting/main.css</header-portlet-css>
 		<header-portlet-css>/css/content_targeting/rules_panel.css</header-portlet-css>
+		<header-portlet-css>/css/content_targeting/warning_restart.css</header-portlet-css>
 		<header-portlet-javascript>/js/content_targeting/input_slider.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/content_targeting/search.js</header-portlet-javascript>
 		<header-portlet-javascript>/js/content_targeting/ct_form_builder.js</header-portlet-javascript>
@@ -38,6 +45,7 @@
 		<control-panel-entry-class>com.liferay.content.targeting.portlet.SimulatorControlPanelEntry</control-panel-entry-class>
 		<instanceable>false</instanceable>
 		<render-weight>1</render-weight>
+		<header-portlet-css>/css/content_targeting/warning_restart.css</header-portlet-css>
 		<css-class-wrapper>content-targeting-simulator-portlet</css-class-wrapper>
 		<add-default-resource>true</add-default-resource>
 	</portlet>
@@ -48,9 +56,10 @@
 		<portlet-data-handler-class>com.liferay.content.targeting.portlet.lar.UserSegmentContentDisplayPortletDataHandler</portlet-data-handler-class>
 		<instanceable>true</instanceable>
 		<render-weight>1</render-weight>
-		<header-portlet-css>/css/user_segment_content_display/main.css</header-portlet-css>
 		<header-portlet-css>/css/content_targeting/rules_panel.css</header-portlet-css>
 		<header-portlet-css>/css/content_targeting/thumbnails_preview.css</header-portlet-css>
+		<header-portlet-css>/css/content_targeting/warning_restart.css</header-portlet-css>
+		<header-portlet-css>/css/user_segment_content_display/main.css</header-portlet-css>
 		<header-portlet-javascript>/js/content_targeting/thumbnails_preview.js</header-portlet-javascript>
 		<css-class-wrapper>user-segment-content-display-portlet</css-class-wrapper>
 	</portlet>
@@ -60,6 +69,7 @@
 		<configuration-action-class>com.liferay.portal.kernel.portlet.DefaultConfigurationAction</configuration-action-class>
 		<instanceable>true</instanceable>
 		<render-weight>1</render-weight>
+		<header-portlet-css>/css/content_targeting/warning_restart.css</header-portlet-css>
 		<header-portlet-css>/css/user_segment_content_list/main.css</header-portlet-css>
 		<css-class-wrapper>user-segment-content-list-portlet</css-class-wrapper>
 	</portlet>

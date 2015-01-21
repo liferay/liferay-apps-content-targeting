@@ -20,10 +20,10 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.GroupTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringPool;
@@ -73,38 +73,37 @@ public class SiteRoleTest {
 
 	@Test
 	public void testSiteRoleRule() throws Exception {
-		ServiceContext serviceContext = TestUtil.getServiceContext();
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
-				TestUtil.getUserId(), "127.0.0.1", StringPool.BLANK,
+				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			TestUtil.getCompanyId(), new int[]{RoleConstants.TYPE_SITE});
+			TestPropsValues.getCompanyId(), new int[]{RoleConstants.TYPE_SITE});
 
 		Role role = roles.get(0);
 
 		Rule rule = _rulesRegistry.getRule("SiteRoleRule");
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestUtil.getUserId(), rule.getRuleKey(), 0,
+			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
 			getTypeSettings(role.getRoleId()), serviceContext);
 
 		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			new long[]{TestUtil.getUserId()}, _group.getGroupId(),
+			new long[]{TestPropsValues.getUserId()}, _group.getGroupId(),
 			role.getRoleId());
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
 	}
 
-	protected String getTypeSettings(long roleId)
-		throws PortalException, SystemException {
+	protected String getTypeSettings(long roleId) throws Exception {
 
-		_group = TestUtil.addGroup();
+		_group = GroupTestUtil.addGroup();
 
 		GroupLocalServiceUtil.addUserGroup(
-			TestUtil.getUserId(), _group.getGroupId());
+			TestPropsValues.getUserId(), _group.getGroupId());
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 

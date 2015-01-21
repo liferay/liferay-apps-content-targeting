@@ -38,3 +38,4 @@ Include-Resource:\
 	@lib/com.liferay.content.targeting.report.user.segment.content-service.jar
 Service-Component: com.liferay.content.targeting.report.user.segment.content.*
 Web-ContextPath: /report-user-segment-content
+-baseline: *;version="1.0.0"

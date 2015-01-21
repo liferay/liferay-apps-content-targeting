@@ -12,6 +12,7 @@
       <module fileurl="file://$PROJECT_DIR$/content-targeting-deploy-extender/content-targeting-deploy-extender.iml" filepath="$PROJECT_DIR$/content-targeting-deploy-extender/content-targeting-deploy-extender.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-test/content-targeting-test.iml" filepath="$PROJECT_DIR$/content-targeting-test/content-targeting-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-web/content-targeting-web.iml" filepath="$PROJECT_DIR$/content-targeting-web/content-targeting-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../shared/osgi-util-shared/osgi-util-shared.iml" filepath="$PROJECT_DIR$/../../shared/osgi-util-shared/osgi-util-shared.iml" />
       <module fileurl="file://$PROJECT_DIR$/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" filepath="$PROJECT_DIR$/portal-6-2-x-compat-hook/portal-6-2-x-compat-hook.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/portal-http-service.iml" filepath="$PROJECT_DIR$/.idea/portal-http-service.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-campaign-content/report-campaign-content.iml" filepath="$PROJECT_DIR$/report-campaign-content/report-campaign-content.iml" />
@@ -57,4 +58,3 @@
     </modules>
   </component>
 </project>
-

@@ -20,16 +20,24 @@ import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
+import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
 import com.liferay.content.targeting.model.RuleInstance;
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.BehaviorRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
@@ -49,8 +57,6 @@ import javax.portlet.RenderRequest;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -89,8 +95,6 @@ public class ContentVisitedRule extends BaseRule {
 			return false;
 		}
 
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
 		int count = _analyticsEventLocalService.getAnalyticsEventsCount(
 			anonymousUser.getAnonymousUserId(), assetEntry.getClassName(),
 			assetEntry.getClassPK(), "view");
@@ -100,6 +104,58 @@ public class ContentVisitedRule extends BaseRule {
 		}
 
 		return false;
+	}
+
+	@Override
+	public void exportData(
+			PortletDataContext portletDataContext, Element userSegmentElement,
+			UserSegment userSegment, Element ruleInstanceElement,
+			RuleInstance ruleInstance)
+		throws Exception {
+
+		long assetEntryId = GetterUtil.getLong(ruleInstance.getTypeSettings());
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			assetEntryId);
+
+		if (assetEntry != null) {
+			ruleInstance.setTypeSettings(assetEntry.getClassUuid());
+
+			AssetEntryReferencedStagedModel assetEntryReferencedStagedModel =
+				new AssetEntryReferencedStagedModel(assetEntry);
+
+			try {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, ruleInstance, ruleInstanceElement,
+					assetEntryReferencedStagedModel,
+					AssetEntryReferencedStagedModel.class,
+					PortletDataContext.REFERENCE_TYPE_WEAK);
+			}
+			catch (Exception e) {
+				portletDataContext.addReferenceElement(
+					ruleInstance, ruleInstanceElement,
+					assetEntryReferencedStagedModel,
+					AssetEntryReferencedStagedModel.class,
+					PortletDataContext.REFERENCE_TYPE_WEAK, true);
+
+				Element assetEntryReferencedStagedModelElement =
+					portletDataContext.getExportDataElement(
+						assetEntryReferencedStagedModel);
+
+				portletDataContext.addClassedModel(
+					assetEntryReferencedStagedModelElement,
+					ExportImportPathUtil.getModelPath(
+						assetEntryReferencedStagedModel),
+					assetEntryReferencedStagedModel);
+			}
+
+			return;
+		}
+
+		throw new PortletDataException(
+			getExportImportErrorMessage(
+				userSegment, ruleInstance, AssetEntry.class.getName(),
+				String.valueOf(assetEntryId), Constants.EXPORT));
 	}
 
 	@Override
@@ -129,6 +185,34 @@ public class ContentVisitedRule extends BaseRule {
 		}
 
 		return StringPool.BLANK;
+	}
+
+	@Override
+	public void importData(
+			PortletDataContext portletDataContext, UserSegment userSegment,
+			RuleInstance ruleInstance)
+		throws Exception {
+
+		StagedModelDataHandlerUtil.importReferenceStagedModels(
+			portletDataContext, ruleInstance,
+			AssetEntryReferencedStagedModel.class);
+
+		String classUuid = ruleInstance.getTypeSettings();
+
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			portletDataContext.getScopeGroupId(), classUuid);
+
+		if (assetEntry != null ) {
+			ruleInstance.setTypeSettings(
+				String.valueOf(assetEntry.getEntryId()));
+
+			return;
+		}
+
+		throw new PortletDataException(
+			getExportImportErrorMessage(
+				userSegment, ruleInstance, AssetEntry.class.getName(),
+				classUuid, Constants.IMPORT));
 	}
 
 	@Override

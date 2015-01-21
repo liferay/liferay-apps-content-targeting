@@ -15,10 +15,18 @@
 package com.liferay.content.targeting.api.model;
 
 import com.liferay.content.targeting.model.RuleInstance;
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Constants;
+import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 
 import java.util.Locale;
@@ -41,6 +49,19 @@ public abstract class BaseRule implements Rule {
 		if (_log.isDebugEnabled()) {
 			_log.debug("Rule deactivate: " + getClass().getSimpleName());
 		}
+	}
+
+	@Override
+	public void deleteData(RuleInstance ruleInstance)
+		throws PortalException, SystemException {
+	}
+
+	@Override
+	public void exportData(
+			PortletDataContext portletDataContext, Element userSegmentElement,
+			UserSegment userSegment, Element ruleInstanceElement,
+			RuleInstance ruleInstance)
+		throws Exception {
 	}
 
 	@Override
@@ -115,8 +136,43 @@ public abstract class BaseRule implements Rule {
 	}
 
 	@Override
+	public void importData(
+			PortletDataContext portletDataContext, UserSegment userSegment,
+			RuleInstance ruleInstance)
+		throws Exception {
+	}
+
+	@Override
 	public boolean isInstantiable() {
 		return false;
+	}
+
+	protected String getExportImportErrorMessage(
+		UserSegment userSegment, RuleInstance ruleInstance,
+		String missingReferenceClassName, String missingReferenceId,
+		String action) {
+
+		StringBundler sb = new StringBundler(9);
+
+		if (action.equals(Constants.EXPORT)) {
+			sb.append("Cannot export rule ");
+		}
+		else {
+			sb.append("Cannot import rule ");
+		}
+
+		sb.append(getName(LocaleUtil.getDefault()));
+		sb.append(" from user segment ");
+		sb.append(userSegment.getName(LocaleUtil.getDefault()));
+		sb.append(" because it refers to a missing ");
+		sb.append(
+			ResourceActionsUtil.getModelResource(
+				LocaleUtil.getDefault(), missingReferenceClassName));
+		sb.append(" with id ");
+		sb.append(missingReferenceId);
+		sb.append(".");
+
+		return sb.toString();
 	}
 
 	protected String getFormTemplatePath() {

@@ -80,18 +80,16 @@
 		</@>
 
 		<@liferay_ui["section"]>
-			<@aui["fieldset"] label="display-settings">
-				<div class="display-template">
-					<@liferay_ui["ddm-template-selector"]
-						classNameId=portalUtil.getClassNameId(templateHandler.getClassName())
-						displayStyle=displayStyle
-						displayStyleGroupId=displayStyleGroupId
-						displayStyles=displayStyles
-						label="display-template"
-						refreshURL=configurationURL
-					/>
-				</div>
-			</@>
+			<div class="display-template">
+				<@liferay_ui["ddm-template-selector"]
+					classNameId=portalUtil.getClassNameId(templateHandler.getClassName())
+					displayStyle=displayStyle
+					displayStyleGroupId=displayStyleGroupId
+					displayStyles=displayStyles
+					label="display-template"
+					refreshURL=configurationURL
+				/>
+			</div>
 		</@>
 	</@>
 

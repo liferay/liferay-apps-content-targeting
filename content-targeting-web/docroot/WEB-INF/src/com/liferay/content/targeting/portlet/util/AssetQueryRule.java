@@ -50,20 +50,7 @@ public abstract class AssetQueryRule implements QueryRule {
 		_assetEntryId = assetEntryId;
 		_index = index;
 
-		_assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(_assetEntryId);
-
-		if (_assetEntry == null) {
-			return;
-		}
-
-		_assetClassName = _assetEntry.getClassName();
-		_assetClassPK = _assetEntry.getClassPK();
-		_assetRendererFactory =
-			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
-				_assetEntry.getClassName());
-		_assetRenderer = _assetRendererFactory.getAssetRenderer(_assetClassPK);
-		_assetTitle = _assetEntry.getTitle(locale);
-		_assetType = _assetRendererFactory.getTypeName(locale, true);
+		initAssetEntry(locale);
 	}
 
 	@Override
@@ -267,6 +254,25 @@ public abstract class AssetQueryRule implements QueryRule {
 		html.append("</span>");
 
 		return html.toString();
+	}
+
+	protected void initAssetEntry(Locale locale)
+		throws PortalException, SystemException {
+
+		_assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(_assetEntryId);
+
+		if (_assetEntry == null) {
+			return;
+		}
+
+		_assetClassName = _assetEntry.getClassName();
+		_assetClassPK = _assetEntry.getClassPK();
+		_assetRendererFactory =
+			AssetRendererFactoryRegistryUtil.getAssetRendererFactoryByClassName(
+				_assetEntry.getClassName());
+		_assetRenderer = _assetRendererFactory.getAssetRenderer(_assetClassPK);
+		_assetTitle = _assetEntry.getTitle(locale);
+		_assetType = _assetRendererFactory.getTypeName(locale, true);
 	}
 
 	private String _assetClassName = StringPool.BLANK;

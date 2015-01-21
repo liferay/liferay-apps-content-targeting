@@ -15,6 +15,8 @@ Import-Package:\
 	com.liferay.content.targeting.anonymous.users.service.messaging,\
 	com.liferay.content.targeting.anonymous.users.util,\
 	com.liferay.content.targeting.api.model,\
+	com.liferay.content.targeting.lar,\
+	com.liferay.content.targeting.model.impl,\
 	com.liferay.content.targeting.rule.categories,\
 	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.messaging,\
@@ -51,3 +53,4 @@ Web-ContextPath: /content-targeting-web
 	${app.server.portal.dir}/WEB-INF/lib/util-bridges.jar,\
 	${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	${app.server.portal.dir}/WEB-INF/lib/util-taglib.jar
+-baseline: *;version="1.0.0"

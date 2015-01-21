@@ -83,11 +83,13 @@ public interface TrackingActionInstanceLocalService extends BaseLocalService,
 	*
 	* @param trackingActionInstance the tracking action instance
 	* @return the tracking action instance that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	public com.liferay.content.targeting.model.TrackingActionInstance deleteTrackingActionInstance(
 		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 

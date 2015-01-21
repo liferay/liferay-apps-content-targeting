@@ -18,10 +18,10 @@ import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.GroupTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
@@ -49,7 +49,7 @@ import org.osgi.framework.BundleException;
 public class ReportInstanceLocalServiceImplTest {
 
 	@Before
-	public void setUp() throws PortalException, SystemException {
+	public void setUp() throws Exception {
 		try {
 			_bundle.start();
 		}
@@ -64,17 +64,17 @@ public class ReportInstanceLocalServiceImplTest {
 		_userSegmentLocalService = ServiceTrackerUtil.getService(
 			UserSegmentLocalService.class, _bundle.getBundleContext());
 
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		_serviceContext = TestUtil.getServiceContext(
-			group.getGroupId(), TestUtil.getUserId());
+		_serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
 		nameMap.put(LocaleUtil.getDefault(), "test-category");
 
 		_userSegment = _userSegmentLocalService.addUserSegment(
-			TestUtil.getUserId(), nameMap, null, _serviceContext);
+			TestPropsValues.getUserId(), nameMap, null, _serviceContext);
 	}
 
 	@Test
@@ -84,9 +84,9 @@ public class ReportInstanceLocalServiceImplTest {
 
 		ReportInstance reportInstance =
 			_reportInstanceLocalService.addReportInstance(
-				TestUtil.getUserId(), "report-key", UserSegment.class.getName(),
-				_userSegment.getUserSegmentId(), "type-settings",
-				_serviceContext);
+				TestPropsValues.getUserId(), "report-key",
+				UserSegment.class.getName(), _userSegment.getUserSegmentId(),
+				"type-settings", _serviceContext);
 
 		Assert.assertEquals(
 			initReportInstancesCount + 1,
@@ -106,8 +106,9 @@ public class ReportInstanceLocalServiceImplTest {
 			_reportInstanceLocalService.getReportInstancesCount();
 
 		_reportInstanceLocalService.addReportInstance(
-			TestUtil.getUserId(), "report-key", UserSegment.class.getName(),
-			_userSegment.getUserSegmentId(), "type-settings", _serviceContext);
+			TestPropsValues.getUserId(), "report-key",
+			UserSegment.class.getName(), _userSegment.getUserSegmentId(),
+			"type-settings", _serviceContext);
 
 		_userSegmentLocalService.deleteUserSegment(
 			_userSegment.getUserSegmentId());

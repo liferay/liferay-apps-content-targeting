@@ -19,6 +19,8 @@ package com.liferay.content.targeting.util;
  */
 public class PortletKeys extends com.liferay.portal.util.PortletKeys {
 
+	public static final String CT_ADMIN = "ctadmin_WAR_contenttargetingweb";
+
 	public static final String CT_CORE = "ctcore";
 
 }

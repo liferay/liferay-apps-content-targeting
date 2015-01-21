@@ -21,7 +21,9 @@ import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.rule.device.test.util.MockiPhoneDevice;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.GroupTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -83,14 +85,14 @@ public class DeviceRuleTest {
 
 	@Test
 	public void testMatchingDeviceRule() throws Exception {
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext = TestUtil.getServiceContext(
-			group.getGroupId(), TestUtil.getUserId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
-				TestUtil.getUserId(), "127.0.0.1", StringPool.BLANK,
+				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
 		// This rule is valid for any device
@@ -100,7 +102,7 @@ public class DeviceRuleTest {
 		Rule rule = _rulesRegistry.getRule("DeviceRule");
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestUtil.getUserId(), rule.getRuleKey(), 0,
+			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
 			getTypeSettings(mdrRuleGroupId), serviceContext);
 
 		Assert.assertTrue(
@@ -109,14 +111,14 @@ public class DeviceRuleTest {
 
 	@Test
 	public void testNotMatchingDeviceRule() throws Exception {
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext = TestUtil.getServiceContext(
-			group.getGroupId(), TestUtil.getUserId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
-				TestUtil.getUserId(), "127.0.0.1", StringPool.BLANK,
+				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
 		// This rule is valid for Android devices only.
@@ -126,7 +128,7 @@ public class DeviceRuleTest {
 		Rule rule = _rulesRegistry.getRule("DeviceRule");
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestUtil.getUserId(), rule.getRuleKey(), 0,
+			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
 			getTypeSettings(mdrRuleGroupId), serviceContext);
 
 		Assert.assertFalse(

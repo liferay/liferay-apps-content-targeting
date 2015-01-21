@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.NoSuchVocabularyException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
@@ -45,6 +46,18 @@ public class UserSegmentUtil {
 
 	public static final String[] SELECTED_FIELD_NAMES =
 		{Field.COMPANY_ID, Field.GROUP_ID, Field.UID, "userSegmentId"};
+
+	public static AssetVocabulary addAssetVocabulary(
+			long userId, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		serviceContext.setAddGroupPermissions(true);
+		serviceContext.setAddGuestPermissions(true);
+
+		return AssetVocabularyLocalServiceUtil.addVocabulary(
+			userId, null, getAssetVocabularyTitle(),
+			getAssetVocabularyDescription(), null, serviceContext);
+	}
 
 	public static Map<Locale, String> getAssetVocabularyDescription() {
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
@@ -71,10 +84,37 @@ public class UserSegmentUtil {
 			vocabulary = AssetVocabularyLocalServiceUtil.getGroupVocabulary(
 				serviceContext.getScopeGroupId(), getAssetVocabularyName());
 		}
-		catch (NoSuchVocabularyException e) {
-			vocabulary = AssetVocabularyLocalServiceUtil.addVocabulary(
-				userId, null, getAssetVocabularyTitle(),
-				getAssetVocabularyDescription(), null, serviceContext);
+		catch (NoSuchVocabularyException nsve) {
+			Group scopeGroup = serviceContext.getScopeGroup();
+
+			String categoryUuid = serviceContext.getUuid();
+
+			if (scopeGroup.isStagingGroup()) {
+				AssetVocabulary liveVocabulary = null;
+
+				try {
+					liveVocabulary =
+						AssetVocabularyLocalServiceUtil.getGroupVocabulary(
+							scopeGroup.getLiveGroupId(),
+							getAssetVocabularyName());
+				}
+				catch (NoSuchVocabularyException nsve2) {
+					ServiceContext serviceContextLive =
+						(ServiceContext)serviceContext.clone();
+
+					serviceContextLive.setScopeGroupId(
+						scopeGroup.getLiveGroupId());
+
+					liveVocabulary = addAssetVocabulary(
+						userId, serviceContextLive);
+				}
+
+				serviceContext.setUuid(liveVocabulary.getUuid());
+			}
+
+			vocabulary = addAssetVocabulary(userId, serviceContext);
+
+			serviceContext.setUuid(categoryUuid);
 		}
 
 		return vocabulary.getVocabularyId();

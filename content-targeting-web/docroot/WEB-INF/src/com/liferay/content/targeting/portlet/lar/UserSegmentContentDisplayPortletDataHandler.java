@@ -14,9 +14,23 @@
 
 package com.liferay.content.targeting.portlet.lar;
 
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.portlet.util.UserSegmentQueryRuleUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
 import java.util.List;
 
@@ -35,5 +49,109 @@ public class UserSegmentContentDisplayPortletDataHandler
 		return UserSegmentQueryRuleUtil.getUserSegmentQueryRules(
 				portletPreferences, LocaleUtil.getDefault(), false);
 	}
+
+	@Override
+	protected void updateExportReferrerIds(
+			PortletDataContext portletDataContext, Portlet portlet,
+			PortletPreferences portletPreferences, int index,
+			Element rootElement)
+		throws Exception {
+
+		String key = "userSegmentAssetCategoryIds" + index;
+
+		String[] oldValues = portletPreferences.getValues(key, null);
+
+		if (ArrayUtil.isEmpty(oldValues)) {
+			return;
+		}
+
+		String[] newValues = new String[oldValues.length];
+
+		for (int i = 0; i < oldValues.length; i++) {
+			String oldValue = oldValues[i];
+
+			if (!Validator.isNumber(oldValue)) {
+				continue;
+			}
+
+			long categoryId = GetterUtil.getLong(oldValue);
+
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(categoryId);
+
+			UserSegment userSegment =
+				UserSegmentLocalServiceUtil.fetchUserSegmentByAssetCategoryId(
+					categoryId);
+
+			if ((assetCategory != null) && (userSegment != null)) {
+				newValues[i] = assetCategory.getUuid();
+
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, portlet.getRootPortletId(),
+					userSegment);
+			}
+			else if (_log.isWarnEnabled()) {
+				_log.warn("Unable to get category with id " + categoryId);
+			}
+		}
+
+		portletPreferences.setValues(key + "uuid", newValues);
+	}
+
+	@Override
+	protected void updateImportReferrerIds(
+			PortletDataContext portletDataContext,
+			PortletPreferences portletPreferences, String key)
+		throws Exception {
+
+		if (!key.matches("^userSegmentAssetCategoryIds\\d*$")) {
+			return;
+		}
+
+		String[] oldValues = portletPreferences.getValues(key + "uuid", null);
+
+		if (ArrayUtil.isEmpty(oldValues)) {
+			return;
+		}
+
+		try {
+			StagedModelDataHandlerUtil.importReferenceStagedModels(
+				portletDataContext, UserSegment.class);
+		}
+		catch (Exception e) {
+		}
+
+		String[] newValues = new String[oldValues.length];
+
+		for (int i = 0; i < oldValues.length; i++) {
+			String oldValue = oldValues[i];
+
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.
+					fetchAssetCategoryByUuidAndGroupId(
+						oldValue, portletDataContext.getScopeGroupId());
+
+			if (assetCategory != null) {
+				newValues[i] = String.valueOf(assetCategory.getCategoryId());
+			}
+			else if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(4);
+
+				sb.append("Unable to get category with UUID ");
+				sb.append(oldValue);
+				sb.append(" in group ");
+				sb.append(portletDataContext.getScopeGroupId());
+
+				_log.warn(sb.toString());
+			}
+		}
+
+		portletPreferences.setValues(key, newValues);
+
+		portletPreferences.reset(key + "uuid");
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		UserSegmentContentDisplayPortletDataHandler.class);
 
 }

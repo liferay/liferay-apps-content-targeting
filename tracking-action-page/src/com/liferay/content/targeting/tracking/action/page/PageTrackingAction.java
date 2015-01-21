@@ -18,19 +18,24 @@ import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
+import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.LayoutLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -66,6 +71,36 @@ public class PageTrackingAction extends BaseTrackingAction {
 	}
 
 	@Override
+	public void exportData(
+			PortletDataContext portletDataContext, Element campaignElement,
+			Campaign campaign, Element trackingActionInstanceElement,
+			TrackingActionInstance trackingActionInstance)
+		throws Exception {
+
+		String typeSettings = trackingActionInstance.getTypeSettings();
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
+
+		String friendlyURL = jsonObj.getString("friendlyURL");
+
+		Layout layout = _getLayout(
+			portletDataContext.getScopeGroupId(), friendlyURL);
+
+		if (layout != null ) {
+			portletDataContext.addReferenceElement(
+				trackingActionInstance, trackingActionInstanceElement, layout,
+				PortletDataContext.REFERENCE_TYPE_WEAK, true);
+
+			return;
+		}
+
+		throw new PortletDataException(
+			getExportImportErrorMessage(
+				campaign, trackingActionInstance, Layout.class.getName(),
+				friendlyURL, Constants.EXPORT));
+	}
+
+	@Override
 	public List<String> getEventTypes() {
 		return ListUtil.fromArray(_EVENT_TYPES);
 	}
@@ -89,6 +124,31 @@ public class PageTrackingAction extends BaseTrackingAction {
 	}
 
 	@Override
+	public void importData(
+			PortletDataContext portletDataContext, Campaign campaign,
+			TrackingActionInstance trackingActionInstance)
+		throws Exception {
+
+		String typeSettings = trackingActionInstance.getTypeSettings();
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
+
+		String friendlyURL = jsonObj.getString("friendlyURL");
+
+		Layout layout = _getLayout(
+			portletDataContext.getScopeGroupId(), friendlyURL);
+
+		if (layout != null ) {
+			return;
+		}
+
+		throw new PortletDataException(
+			getExportImportErrorMessage(
+				campaign, trackingActionInstance, Layout.class.getName(),
+				friendlyURL, Constants.IMPORT));
+	}
+
+	@Override
 	public String processTrackingAction(
 			PortletRequest request, PortletResponse response, String id,
 			Map<String, String> values)
@@ -100,22 +160,8 @@ public class PageTrackingAction extends BaseTrackingAction {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			// Retrieve layout by friendly url from public or private layout set
-
-			Layout layout = null;
-
-			try {
-				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-					themeDisplay.getScopeGroupId(), false, friendlyURL);
-
-				if (layout == null) {
-					layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-						themeDisplay.getScopeGroupId(), true, friendlyURL);
-				}
-			}
-			catch (SystemException e) {
-				_log.error(e);
-			}
+			Layout layout = _getLayout(
+				themeDisplay.getScopeGroupId(), friendlyURL);
 
 			if (layout != null) {
 				values.put("referrerClassName", Layout.class.getName());
@@ -153,18 +199,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 			eventType = values.get("eventType");
 			friendlyURL = values.get("friendlyURL");
 
-			try {
-				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-					scopeGroupId, false, friendlyURL);
-
-				if (layout == null) {
-					layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-						scopeGroupId, true, friendlyURL);
-				}
-			}
-			catch (SystemException e) {
-				_log.error(e);
-			}
+			layout = _getLayout(scopeGroupId, friendlyURL);
 		}
 		else if (trackingActionInstance != null) {
 			alias = trackingActionInstance.getAlias();
@@ -212,6 +247,27 @@ public class PageTrackingAction extends BaseTrackingAction {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);
 		}
+	}
+
+	private Layout _getLayout(long groupId, String friendlyURL) {
+		Layout layout = null;
+
+		// Retrieve layout by friendly url from public or private layout set
+
+		try {
+			layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+				groupId, false, friendlyURL);
+
+			if (layout == null) {
+				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+					groupId, true, friendlyURL);
+			}
+		}
+		catch (SystemException e) {
+			_log.error(e);
+		}
+
+		return layout;
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};

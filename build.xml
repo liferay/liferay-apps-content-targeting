@@ -25,6 +25,13 @@
 		<antcall target="deploy" />
 	</target>
 
+	<target name="build-app-services">
+		<loop-macrodef-or-target
+			module.dirs="${app.services.path}"
+			target.name="build-app-service"
+		/>
+	</target>
+
 	<target name="build-lang">
 		<loop-macrodef-or-target
 			module.dirs="${plugins.includes.path}"
@@ -32,10 +39,18 @@
 		/>
 	</target>
 
-	<target name="build-app-services">
+	<property name="app.tests" value="*-test,runtime-test-dependencies" />
+
+	<path id="app.tests.path">
+		<dirset dir="." includes="${app.tests}" />
+	</path>
+
+	<pathconvert pathsep="," property="app.tests.path" refid="app.tests.path" targetos="unix" />
+
+	<target name="build-tests">
 		<loop-macrodef-or-target
-			module.dirs="${app.services.path}"
-			target.name="build-app-service"
+			module.dirs="${app.tests.path}"
+			target.name="deploy"
 		/>
 	</target>
 
@@ -205,6 +220,40 @@
 			<replacefilter token="@tracking.action.java.package.name@" value="${tracking.action.java.package.name}" />
 			<replacefilter token="@tracking.action.name@" value="${tracking.action.name}" />
 		</replace>
+	</target>
+
+	<target name="release">
+		<if>
+			<not>
+				<isset property="release.version" />
+			</not>
+			<then>
+				<tstamp>
+					<format property="release.version" pattern="EEE-d-MMM-yyyy-HH-mm-ss" />
+				</tstamp>
+			</then>
+		</if>
+
+		<delete dir="${sdk.dir}/dist" failonerror="false" />
+		<delete file="${sdk.dir}/content-targeting-release-${release.version}.zip" failonerror="false" />
+
+		<mkdir dir="${sdk.dir}/content-targeting-dist" />
+
+		<var name="auto.deploy.dir.default" value="${auto.deploy.dir}" />
+		<var name="auto.deploy.dir" value="${sdk.dir}/content-targeting-dist" />
+
+		<antcall target="build-app" />
+
+		<zip
+			basedir="${auto.deploy.dir}"
+			destfile="${sdk.dir}/content-targeting-release-${release.version}.zip"
+		/>
+
+		<copy todir="${auto.deploy.dir.default}">
+			<fileset dir="${auto.deploy.dir}" />
+		</copy>
+
+		<delete dir="${auto.deploy.dir}" failonerror="false" />
 	</target>
 
 	<macrodef name="build-app-service">

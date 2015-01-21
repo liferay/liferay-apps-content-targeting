@@ -18,6 +18,7 @@ import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.categories.SessionAttributesRuleCategory;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.PortletKeys;
@@ -28,13 +29,17 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.mobile.device.rulegroup.RuleGroupProcessorUtil;
 import com.liferay.portal.kernel.mobile.device.rulegroup.rule.RuleHandler;
+import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portlet.mobiledevicerules.model.MDRRule;
 import com.liferay.portlet.mobiledevicerules.model.MDRRuleGroup;
@@ -81,16 +86,7 @@ public class DeviceRule extends BaseRule {
 			AnonymousUser anonymousUser)
 		throws Exception {
 
-		long mdrRuleGroupId = 0;
-
-		try {
-			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
-				ruleInstance.getTypeSettings());
-
-			mdrRuleGroupId = jsonObj.getLong("mdrRuleGroupId");
-		}
-		catch (JSONException jse) {
-		}
+		long mdrRuleGroupId = getMDRRuleGroupId(ruleInstance);
 
 		if (mdrRuleGroupId <= 0) {
 			return false;
@@ -115,6 +111,38 @@ public class DeviceRule extends BaseRule {
 	}
 
 	@Override
+	public void exportData(
+			PortletDataContext portletDataContext, Element userSegmentElement,
+			UserSegment userSegment, Element ruleInstanceElement,
+			RuleInstance ruleInstance)
+		throws Exception {
+
+		long mdrRuleGroupId = getMDRRuleGroupId(ruleInstance);
+
+		MDRRuleGroup mdrRuleGroup =
+			MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroup(mdrRuleGroupId);
+
+		if (mdrRuleGroup != null) {
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+			jsonObj.put("mdrRuleGroupUuid", mdrRuleGroup.getUuid());
+
+			ruleInstance.setTypeSettings(jsonObj.toString());
+
+			portletDataContext.addReferenceElement(
+				ruleInstance, ruleInstanceElement, mdrRuleGroup,
+				PortletDataContext.REFERENCE_TYPE_WEAK, true);
+
+			return;
+		}
+
+		throw new PortletDataException(
+			getExportImportErrorMessage(
+				userSegment, ruleInstance, MDRRuleGroup.class.getName(),
+				String.valueOf(mdrRuleGroupId), Constants.EXPORT));
+	}
+
+	@Override
 	public String getIcon() {
 		return "icon-tablet";
 	}
@@ -126,16 +154,7 @@ public class DeviceRule extends BaseRule {
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
-		long mdrRuleGroupId = 0;
-
-		try {
-			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
-				ruleInstance.getTypeSettings());
-
-			mdrRuleGroupId = jsonObj.getLong("mdrRuleGroupId");
-		}
-		catch (JSONException jse) {
-		}
+		long mdrRuleGroupId = getMDRRuleGroupId(ruleInstance);
 
 		if (mdrRuleGroupId <= 0) {
 			return StringPool.BLANK;
@@ -171,6 +190,43 @@ public class DeviceRule extends BaseRule {
 		}
 
 		return sb.toString();
+	}
+
+	@Override
+	public void importData(
+			PortletDataContext portletDataContext, UserSegment userSegment,
+			RuleInstance ruleInstance)
+		throws Exception {
+
+		String mdrRuleGroupUuid = StringPool.BLANK;
+
+		try {
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+				ruleInstance.getTypeSettings());
+
+			mdrRuleGroupUuid = jsonObj.getString("mdrRuleGroupUuid");
+		}
+		catch (JSONException jse) {
+		}
+
+		MDRRuleGroup mdrRuleGroup =
+			MDRRuleGroupLocalServiceUtil.fetchMDRRuleGroupByUuidAndGroupId(
+				mdrRuleGroupUuid, portletDataContext.getScopeGroupId());
+
+		if (mdrRuleGroup != null ) {
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+			jsonObj.put("mdrRuleGroupId", mdrRuleGroup.getRuleGroupId());
+
+			ruleInstance.setTypeSettings(jsonObj.toString());
+
+			return;
+		}
+
+		throw new PortletDataException(
+			getExportImportErrorMessage(
+				userSegment, ruleInstance, MDRRuleGroup.class.getName(),
+				mdrRuleGroupUuid, Constants.IMPORT));
 	}
 
 	@Override
@@ -217,6 +273,21 @@ public class DeviceRule extends BaseRule {
 		}
 
 		return true;
+	}
+
+	protected long getMDRRuleGroupId(RuleInstance ruleInstance) {
+		long mdrRuleGroupId = 0;
+
+		try {
+			JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+				ruleInstance.getTypeSettings());
+
+			mdrRuleGroupId = jsonObj.getLong("mdrRuleGroupId");
+		}
+		catch (JSONException jse) {
+		}
+
+		return mdrRuleGroupId;
 	}
 
 	@Override

@@ -1,10 +1,12 @@
 Bundle-Name: Content Targeting API
 Bundle-SymbolicName: com.liferay.content.targeting.api
-Bundle-Version: 1.0.0
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.content.targeting,\
 	com.liferay.content.targeting.api.model,\
+	com.liferay.content.targeting.lar,\
 	com.liferay.content.targeting.model,\
+	com.liferay.content.targeting.model.impl,\
 	com.liferay.content.targeting.rule.categories,\
 	com.liferay.content.targeting.service,\
 	com.liferay.content.targeting.service.messaging,\
@@ -30,3 +32,4 @@ Include-Resource:\
 	@lib/com.liferay.content.targeting.api-service.jar
 Service-Component:com.liferay.content.targeting.*
 Web-ContextPath: /content-targeting-api
+-baseline: *;version="2.0.0"

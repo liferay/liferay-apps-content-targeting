@@ -410,6 +410,10 @@ public class NewsletterClp extends BaseModelImpl<Newsletter>
 		}
 	}
 
+	public Class<?> getClpSerializerClass() {
+		return _clpSerializerClass;
+	}
+
 	@Override
 	public int hashCode() {
 		return (int)getPrimaryKey();
@@ -489,4 +493,5 @@ public class NewsletterClp extends BaseModelImpl<Newsletter>
 	private int _count;
 	private Date _modifiedDate;
 	private BaseModel<?> _newsletterRemoteModel;
+	private Class<?> _clpSerializerClass = com.liferay.content.targeting.report.campaign.newsletter.service.ClpSerializer.class;
 }

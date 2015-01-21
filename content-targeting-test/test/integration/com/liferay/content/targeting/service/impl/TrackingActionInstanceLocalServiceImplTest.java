@@ -18,10 +18,10 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.GroupTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
@@ -51,7 +51,7 @@ import org.osgi.framework.BundleException;
 public class TrackingActionInstanceLocalServiceImplTest {
 
 	@Before
-	public void setUp() throws PortalException, SystemException {
+	public void setUp() throws Exception {
 		try {
 			_bundle.start();
 		}
@@ -67,18 +67,18 @@ public class TrackingActionInstanceLocalServiceImplTest {
 		_campaignLocalService = ServiceTrackerUtil.getService(
 			CampaignLocalService.class, _bundle.getBundleContext());
 
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-		_serviceContext = TestUtil.getServiceContext(
-			group.getGroupId(), TestUtil.getUserId());
+		_serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
 		nameMap.put(LocaleUtil.getDefault(), "test-campaign");
 
 		_campaign = _campaignLocalService.addCampaign(
-			TestUtil.getUserId(), nameMap, null, new Date(), new Date(), 1,
-			true, new long[] {1, 2}, _serviceContext);
+			TestPropsValues.getUserId(), nameMap, null, new Date(), new Date(),
+			1, true, new long[] {1, 2}, _serviceContext);
 	}
 
 	@Test
@@ -89,9 +89,9 @@ public class TrackingActionInstanceLocalServiceImplTest {
 
 		TrackingActionInstance trackingActionInstance =
 			_trackingActionInstanceLocalService.addTrackingActionInstance(
-					TestUtil.getUserId(), "tracking-action-key",
-					_campaign.getCampaignId(), StringPool.BLANK, null, 1, null,
-					null, null, _serviceContext);
+				TestPropsValues.getUserId(), "tracking-action-key",
+				_campaign.getCampaignId(), StringPool.BLANK, null, 1, null,
+				null, null, _serviceContext);
 
 		Assert.assertEquals(
 			initTrackingActionInstancesCount + 1,
@@ -114,7 +114,7 @@ public class TrackingActionInstanceLocalServiceImplTest {
 				getTrackingActionInstancesCount();
 
 		_trackingActionInstanceLocalService.addTrackingActionInstance(
-			TestUtil.getUserId(), "tracking-action-key",
+			TestPropsValues.getUserId(), "tracking-action-key",
 			_campaign.getCampaignId(), StringPool.BLANK, null, 1, null, null,
 			null, _serviceContext);
 

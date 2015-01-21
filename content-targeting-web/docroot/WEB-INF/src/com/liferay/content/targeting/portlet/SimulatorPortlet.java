@@ -117,9 +117,9 @@ public class SimulatorPortlet extends CTFreeMarkerPortlet {
 		throws Exception {
 
 		try {
-			_campaignLocalService.getBeanIdentifier();
+			_campaignLocalService.getCampaigns(0, 1);
 		}
-		catch (NullPointerException npe) {
+		catch (Exception e) {
 			throw new UnavailableServiceException(CampaignLocalService.class);
 		}
 

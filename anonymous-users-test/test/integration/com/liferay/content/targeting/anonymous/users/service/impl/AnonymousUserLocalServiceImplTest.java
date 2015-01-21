@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.anonymous.users.service.impl;
 
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.service.ServiceContext;
@@ -55,7 +55,7 @@ public class AnonymousUserLocalServiceImplTest {
 		int initAnonymousUsersCount =
 			_anonymousUserLocalService.getAnonymousUsersCount();
 
-		ServiceContext serviceContext = TestUtil.getServiceContext();
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		_anonymousUserLocalService.addAnonymousUser(
 			1, "127.0.0.1", StringPool.BLANK, serviceContext);

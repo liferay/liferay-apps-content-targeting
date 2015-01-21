@@ -77,12 +77,14 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	*
 	* @param userSegment the user segment
 	* @return the user segment that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
 		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _userSegmentLocalService.deleteUserSegment(userSegment);
 	}
 
@@ -555,6 +557,14 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		_userSegmentLocalService.deleteUserSegments(groupId);
+	}
+
+	@Override
+	public com.liferay.content.targeting.model.UserSegment fetchUserSegmentByAssetCategoryId(
+		long assetCategoryId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.fetchUserSegmentByAssetCategoryId(assetCategoryId);
 	}
 
 	@Override

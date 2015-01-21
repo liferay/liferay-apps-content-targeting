@@ -23,6 +23,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="UserSegmentId" return-type="Collection">
+			<finder-column name="userSegmentId" />
+		</finder>
 		<finder name="C_U" return-type="ScorePoint" unique="true">
 			<finder-column name="anonymousUserId" />
 			<finder-column name="userSegmentId" />

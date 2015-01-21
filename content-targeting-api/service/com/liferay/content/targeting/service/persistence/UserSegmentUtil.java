@@ -519,6 +519,75 @@ public class UserSegmentUtil {
 	}
 
 	/**
+	* Returns the user segment where assetCategoryId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchUserSegmentException} if it could not be found.
+	*
+	* @param assetCategoryId the asset category ID
+	* @return the matching user segment
+	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.model.UserSegment findByAssetCategoryId(
+		long assetCategoryId)
+		throws com.liferay.content.targeting.NoSuchUserSegmentException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByAssetCategoryId(assetCategoryId);
+	}
+
+	/**
+	* Returns the user segment where assetCategoryId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param assetCategoryId the asset category ID
+	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.model.UserSegment fetchByAssetCategoryId(
+		long assetCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().fetchByAssetCategoryId(assetCategoryId);
+	}
+
+	/**
+	* Returns the user segment where assetCategoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param assetCategoryId the asset category ID
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.model.UserSegment fetchByAssetCategoryId(
+		long assetCategoryId, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByAssetCategoryId(assetCategoryId, retrieveFromCache);
+	}
+
+	/**
+	* Removes the user segment where assetCategoryId = &#63; from the database.
+	*
+	* @param assetCategoryId the asset category ID
+	* @return the user segment that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.model.UserSegment removeByAssetCategoryId(
+		long assetCategoryId)
+		throws com.liferay.content.targeting.NoSuchUserSegmentException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().removeByAssetCategoryId(assetCategoryId);
+	}
+
+	/**
+	* Returns the number of user segments where assetCategoryId = &#63;.
+	*
+	* @param assetCategoryId the asset category ID
+	* @return the number of matching user segments
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByAssetCategoryId(long assetCategoryId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByAssetCategoryId(assetCategoryId);
+	}
+
+	/**
 	* Returns all the user segments where groupId = &#63;.
 	*
 	* @param groupId the group ID

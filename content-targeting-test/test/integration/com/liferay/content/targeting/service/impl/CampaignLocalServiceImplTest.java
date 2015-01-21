@@ -16,7 +16,9 @@ package com.liferay.content.targeting.service.impl;
 
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.service.CampaignLocalService;
-import com.liferay.content.targeting.service.test.util.TestUtil;
+import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.GroupTestUtil;
+import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.Group;
@@ -63,7 +65,7 @@ public class CampaignLocalServiceImplTest {
 
 	@Test
 	public void testAddAndDeleteCampaign() throws Exception {
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		int initCampaignsCount = _campaignLocalService.getCampaignsCount(
 			group.getGroupId());
@@ -72,12 +74,12 @@ public class CampaignLocalServiceImplTest {
 
 		nameMap.put(LocaleUtil.getDefault(), "test-campaign");
 
-		ServiceContext serviceContext = TestUtil.getServiceContext(
-			group.getGroupId(), TestUtil.getUserId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		Campaign campaign = _campaignLocalService.addCampaign(
-			TestUtil.getUserId(), nameMap, null, new Date(), new Date(), 1,
-			true, new long[] {1, 2}, serviceContext);
+			TestPropsValues.getUserId(), nameMap, null, new Date(), new Date(),
+			1, true, new long[] {1, 2}, serviceContext);
 
 		Assert.assertEquals(
 			initCampaignsCount + 1,
@@ -92,7 +94,7 @@ public class CampaignLocalServiceImplTest {
 
 	@Test
 	public void testDeleteGroup() throws Exception {
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		int initUserSegmentsCount = _campaignLocalService.getCampaignsCount(
 			group.getGroupId());
@@ -101,12 +103,12 @@ public class CampaignLocalServiceImplTest {
 
 		nameMap.put(LocaleUtil.getDefault(), "test-campaign");
 
-		ServiceContext serviceContext = TestUtil.getServiceContext(
-			group.getGroupId(), TestUtil.getUserId());
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
 		_campaignLocalService.addCampaign(
-			TestUtil.getUserId(), nameMap, null, new Date(), new Date(), 1,
-			true, new long[]{1, 2}, serviceContext);
+			TestPropsValues.getUserId(), nameMap, null, new Date(), new Date(),
+			1, true, new long[]{1, 2}, serviceContext);
 
 		_groupLocalService.deleteGroup(group.getGroupId());
 
@@ -117,11 +119,11 @@ public class CampaignLocalServiceImplTest {
 
 	@Test
 	public void testFetchCurrentMaxPriorityCampaign() throws Exception {
-		Group group = TestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
 		ServiceContext serviceContext =
-			TestUtil.getServiceContext(
-				group.getGroupId(), TestUtil.getUserId());
+			ServiceTestUtil.getServiceContext(
+				group.getGroupId(), TestPropsValues.getUserId());
 
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
@@ -132,16 +134,16 @@ public class CampaignLocalServiceImplTest {
 		long[] userSegmentIds = new long[] {1, 2};
 
 		Campaign campaign1 = _campaignLocalService.addCampaign(
-			TestUtil.getUserId(), nameMap, null, getDate(now, -1),
+			TestPropsValues.getUserId(), nameMap, null, getDate(now, -1),
 			getDate(now, 1), 1, true, userSegmentIds, serviceContext);
 		Campaign campaign2 = _campaignLocalService.addCampaign(
-			TestUtil.getUserId(), nameMap, null, getDate(now, -1),
+			TestPropsValues.getUserId(), nameMap, null, getDate(now, -1),
 			getDate(now, 1), 2, true, userSegmentIds, serviceContext);
 		Campaign campaign3 = _campaignLocalService.addCampaign(
-			TestUtil.getUserId(), nameMap, null, getDate(now, -1),
+			TestPropsValues.getUserId(), nameMap, null, getDate(now, -1),
 			getDate(now, 1), 1, false, userSegmentIds, serviceContext);
 		Campaign campaign4 = _campaignLocalService.addCampaign(
-			TestUtil.getUserId(), nameMap, null, getDate(now, -2),
+			TestPropsValues.getUserId(), nameMap, null, getDate(now, -2),
 			getDate(now, -1), 1, true, userSegmentIds, serviceContext);
 
 		Campaign currentMaxPriorityCampaign =

@@ -211,21 +211,15 @@ public class UserSegmentContentDisplayPortlet
 
 			template.put("userSegmentQueryRules", userSegmentQueryRules);
 
-			QueryRule queryRule = userSegmentQueryRules.get(
-				userSegmentQueryRules.size() - 1);
-
 			long[] userSegmentIds = (long[])portletRequest.getAttribute(
 				WebKeys.USER_SEGMENT_IDS);
 
-			if (userSegmentIds != null) {
-				long[] userSegmentAssetCategoryIds =
-					ContentTargetingUtil.getAssetCategoryIds(
-						themeDisplay.getSiteGroupIdOrLiveGroupId(),
-						userSegmentIds);
+			long[] userSegmentAssetCategoryIds =
+				ContentTargetingUtil.getAssetCategoryIds(
+					themeDisplay.getSiteGroupIdOrLiveGroupId(), userSegmentIds);
 
-				queryRule = UserSegmentQueryRuleUtil.match(
-					userSegmentAssetCategoryIds, userSegmentQueryRules);
-			}
+			QueryRule queryRule = UserSegmentQueryRuleUtil.match(
+				userSegmentAssetCategoryIds, userSegmentQueryRules);
 
 			template.put("queryRule", queryRule);
 
