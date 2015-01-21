@@ -19,6 +19,7 @@ import com.liferay.content.targeting.analytics.util.AnalyticsUtil;
 import com.liferay.content.targeting.api.model.BaseTrackingAction;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
+import com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
@@ -94,11 +95,22 @@ public class ContentTrackingAction extends BaseTrackingAction {
 		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
 			assetEntryId);
 
-		if (assetEntry != null) {
-			trackingActionInstance.setTypeSettings(assetEntry.getClassUuid());
+		if (assetEntry == null) {
+			throw new PortletDataException(
+				getExportImportErrorMessage(
+					campaign, trackingActionInstance,
+					AssetEntry.class.getName(), String.valueOf(assetEntryId),
+					Constants.EXPORT));
+		}
 
-			AssetEntryReferencedStagedModel assetEntryReferencedStagedModel =
-				new AssetEntryReferencedStagedModel(assetEntry);
+		trackingActionInstance.setTypeSettings(assetEntry.getClassUuid());
+
+		AssetEntryReferencedStagedModel assetEntryReferencedStagedModel =
+			new AssetEntryReferencedStagedModel(assetEntry);
+
+		if (portletDataContext.getBooleanParameter(
+				ContentTargetingPortletDataHandler.NAMESPACE,
+				"referenced-content")) {
 
 			try {
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -107,32 +119,35 @@ public class ContentTrackingAction extends BaseTrackingAction {
 					assetEntryReferencedStagedModel,
 					AssetEntryReferencedStagedModel.class,
 					PortletDataContext.REFERENCE_TYPE_WEAK);
+
+				return;
 			}
 			catch (Exception e) {
-				portletDataContext.addReferenceElement(
-					trackingActionInstance, trackingActionInstanceElement,
-					assetEntryReferencedStagedModel,
-					AssetEntryReferencedStagedModel.class,
-					PortletDataContext.REFERENCE_TYPE_WEAK, true);
-
-				Element assetEntryReferencedStagedModelElement =
-					portletDataContext.getExportDataElement(
-						assetEntryReferencedStagedModel);
-
-				portletDataContext.addClassedModel(
-					assetEntryReferencedStagedModelElement,
-					ExportImportPathUtil.getModelPath(
-						assetEntryReferencedStagedModel),
-					assetEntryReferencedStagedModel);
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Cannot export referenced content for tracking " +
+							"action instance with id " +
+								trackingActionInstance.
+									getTrackingActionInstanceId());
+				}
 			}
-
-			return;
 		}
 
-		throw new PortletDataException(
-			getExportImportErrorMessage(
-				campaign, trackingActionInstance, AssetEntry.class.getName(),
-				String.valueOf(assetEntryId), Constants.EXPORT));
+		portletDataContext.addReferenceElement(
+			trackingActionInstance, trackingActionInstanceElement,
+			assetEntryReferencedStagedModel,
+			AssetEntryReferencedStagedModel.class,
+			PortletDataContext.REFERENCE_TYPE_WEAK, true);
+
+		Element assetEntryReferencedStagedModelElement =
+			portletDataContext.getExportDataElement(
+				assetEntryReferencedStagedModel);
+
+		portletDataContext.addClassedModel(
+			assetEntryReferencedStagedModelElement,
+			ExportImportPathUtil.getModelPath(
+				assetEntryReferencedStagedModel),
+			assetEntryReferencedStagedModel);
 	}
 
 	@Override
@@ -164,9 +179,14 @@ public class ContentTrackingAction extends BaseTrackingAction {
 			TrackingActionInstance trackingActionInstance)
 		throws Exception {
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, trackingActionInstance,
-			AssetEntryReferencedStagedModel.class);
+		if (portletDataContext.getBooleanParameter(
+				ContentTargetingPortletDataHandler.NAMESPACE,
+				"referenced-content")) {
+
+			StagedModelDataHandlerUtil.importReferenceStagedModels(
+				portletDataContext, trackingActionInstance,
+				AssetEntryReferencedStagedModel.class);
+		}
 
 		String classUuid = trackingActionInstance.getTypeSettings();
 

@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.lar.BasePortletDataHandler;
 import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
+import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
@@ -56,10 +57,18 @@ public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 			new StagedModelType(TrackingActionInstance.class));
 		setExportControls(
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "campaigns", true, false, null,
+				NAMESPACE, "campaigns", true, false,
+				new PortletDataHandlerControl[] {
+					new PortletDataHandlerBoolean(
+						NAMESPACE, "referenced-content")
+				},
 				Campaign.class.getName()),
 			new PortletDataHandlerBoolean(
-				NAMESPACE, "user-segments", true, false, null,
+				NAMESPACE, "user-segments", true, false,
+				new PortletDataHandlerControl[] {
+					new PortletDataHandlerBoolean(
+						NAMESPACE, "referenced-content")
+				},
 				UserSegment.class.getName()));
 		setImportControls(getExportControls());
 	}

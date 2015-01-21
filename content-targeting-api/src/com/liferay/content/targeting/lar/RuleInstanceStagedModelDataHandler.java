@@ -97,27 +97,32 @@ public class RuleInstanceStagedModelDataHandler
 
 		Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
 
-		if (rule != null) {
-			UserSegment userSegment =
-				UserSegmentLocalServiceUtil.getUserSegment(
-					ruleInstance.getUserSegmentId());
+		if (rule == null) {
+			_log.error(
+				"Cannot find rule with key " + ruleInstance.getRuleKey());
 
-			Element userSegmentElement =
-				portletDataContext.getExportDataElement(userSegment);
+			return;
+		}
 
-			try {
-				rule.exportData(
-					portletDataContext, userSegmentElement, userSegment,
-					ruleInstanceElement, ruleInstance);
-			}
-			catch (Exception e) {
-				_log.error(
-					"Cannot export custom data for rule " +
-						rule.getName(LocaleUtil.getDefault()) +
-							" in user segment " +
-								userSegment.getName(LocaleUtil.getDefault()),
-					e);
-			}
+		UserSegment userSegment =
+			UserSegmentLocalServiceUtil.getUserSegment(
+				ruleInstance.getUserSegmentId());
+
+		Element userSegmentElement = portletDataContext.getExportDataElement(
+			userSegment);
+
+		try {
+			rule.exportData(
+				portletDataContext, userSegmentElement, userSegment,
+				ruleInstanceElement, ruleInstance);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Cannot export custom data for rule " +
+					rule.getName(LocaleUtil.getDefault()) +
+						" in user segment " +
+							userSegment.getName(LocaleUtil.getDefault()),
+				e);
 		}
 
 		portletDataContext.addClassedModel(
@@ -132,22 +137,27 @@ public class RuleInstanceStagedModelDataHandler
 
 		Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
 
-		if (rule != null) {
-			UserSegment userSegment =
-				UserSegmentLocalServiceUtil.getUserSegment(
-					ruleInstance.getUserSegmentId());
+		if (rule == null) {
+			_log.error(
+				"Cannot find rule with key " + ruleInstance.getRuleKey());
 
-			try {
-				rule.importData(portletDataContext, userSegment, ruleInstance);
-			}
-			catch (Exception e) {
-				_log.error(
-					"Cannot import custom data for rule " +
-						rule.getName(LocaleUtil.getDefault()) +
-							" in user segment " +
-								userSegment.getName(LocaleUtil.getDefault()),
-					e);
-			}
+			return;
+		}
+
+		UserSegment userSegment =
+			UserSegmentLocalServiceUtil.getUserSegment(
+				ruleInstance.getUserSegmentId());
+
+		try {
+			rule.importData(portletDataContext, userSegment, ruleInstance);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Cannot import custom data for rule " +
+					rule.getName(LocaleUtil.getDefault()) +
+						" in user segment " +
+							userSegment.getName(LocaleUtil.getDefault()),
+				e);
 		}
 
 		long userId = portletDataContext.getUserId(ruleInstance.getUserUuid());

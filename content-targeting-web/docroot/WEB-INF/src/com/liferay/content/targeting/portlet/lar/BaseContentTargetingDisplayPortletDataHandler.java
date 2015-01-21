@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.portlet.lar;
 
 import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
+import com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
@@ -49,6 +50,11 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 	}
 
 	@Override
+	public boolean isDisplayPortlet() {
+		return true;
+	}
+
+	@Override
 	protected PortletPreferences doProcessExportPortletPreferences(
 			PortletDataContext portletDataContext, String portletId,
 			PortletPreferences portletPreferences)
@@ -71,6 +77,9 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 	protected abstract List<QueryRule> getQueryRules(
 			PortletPreferences portletPreferences)
 		throws Exception;
+
+	protected abstract boolean isExportReferencedContent(
+		PortletDataContext portletDataContext);
 
 	protected void updateExportAssetEntryIds(
 			PortletDataContext portletDataContext, Portlet portlet,
@@ -107,27 +116,36 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 		AssetEntryReferencedStagedModel assetEntryReferencedStagedModel =
 			new AssetEntryReferencedStagedModel(assetEntry);
 
-		try {
-			StagedModelDataHandlerUtil.exportReferenceStagedModel(
-				portletDataContext, portlet.getRootPortletId(),
-				assetEntryReferencedStagedModel);
-		}
-		catch (Exception e) {
-			portletDataContext.addReferenceElement(
-				portlet, rootElement, assetEntryReferencedStagedModel,
-				AssetEntryReferencedStagedModel.class,
-				PortletDataContext.REFERENCE_TYPE_WEAK, true);
-
-			Element assetEntryReferencedStagedModelElement =
-				portletDataContext.getExportDataElement(
+		if (isExportReferencedContent(portletDataContext)) {
+			try {
+				StagedModelDataHandlerUtil.exportReferenceStagedModel(
+					portletDataContext, portlet.getRootPortletId(),
 					assetEntryReferencedStagedModel);
 
-			portletDataContext.addClassedModel(
-				assetEntryReferencedStagedModelElement,
-				ExportImportPathUtil.getModelPath(
-					assetEntryReferencedStagedModel),
-				assetEntryReferencedStagedModel);
+				return;
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(
+						"Cannot export referenced content for portlet " +
+							portlet.getPortletName());
+				}
+			}
 		}
+
+		portletDataContext.addReferenceElement(
+			portlet, rootElement, assetEntryReferencedStagedModel,
+			AssetEntryReferencedStagedModel.class,
+			PortletDataContext.REFERENCE_TYPE_WEAK, true);
+
+		Element assetEntryReferencedStagedModelElement =
+			portletDataContext.getExportDataElement(
+				assetEntryReferencedStagedModel);
+
+		portletDataContext.addClassedModel(
+			assetEntryReferencedStagedModelElement,
+			ExportImportPathUtil.getModelPath(assetEntryReferencedStagedModel),
+			assetEntryReferencedStagedModel);
 	}
 
 	protected PortletPreferences updateExportPortletPreferences(
@@ -176,8 +194,13 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 			return;
 		}
 
-		StagedModelDataHandlerUtil.importReferenceStagedModels(
-			portletDataContext, AssetEntryReferencedStagedModel.class);
+		if (portletDataContext.getBooleanParameter(
+				ContentTargetingPortletDataHandler.NAMESPACE,
+				"referenced-content")) {
+
+			StagedModelDataHandlerUtil.importReferenceStagedModels(
+				portletDataContext, AssetEntryReferencedStagedModel.class);
+		}
 
 		String classUuid = portletPreferences.getValue(key + "classUuid", null);
 

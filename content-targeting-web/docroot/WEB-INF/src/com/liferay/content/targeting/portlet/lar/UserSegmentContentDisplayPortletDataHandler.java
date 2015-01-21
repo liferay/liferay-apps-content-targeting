@@ -18,7 +18,10 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.portlet.util.UserSegmentQueryRuleUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.portal.kernel.lar.DataLevel;
+import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -42,12 +45,31 @@ import javax.portlet.PortletPreferences;
 public class UserSegmentContentDisplayPortletDataHandler
 	extends BaseContentTargetingDisplayPortletDataHandler {
 
+	public static final String NAMESPACE = "user_segment_content_display";
+
+	public UserSegmentContentDisplayPortletDataHandler() {
+		setDataLevel(DataLevel.PORTLET_INSTANCE);
+		setExportControls(
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "referenced-user-segments", true, false),
+			new PortletDataHandlerBoolean(
+				NAMESPACE, "referenced-content", true, false));
+	}
+
 	protected List<QueryRule> getQueryRules(
 			PortletPreferences portletPreferences)
 		throws Exception {
 
 		return UserSegmentQueryRuleUtil.getUserSegmentQueryRules(
 				portletPreferences, LocaleUtil.getDefault(), false);
+	}
+
+	@Override
+	protected boolean isExportReferencedContent(
+		PortletDataContext portletDataContext) {
+
+		return portletDataContext.getBooleanParameter(
+			NAMESPACE, "referenced-content");
 	}
 
 	@Override
@@ -83,19 +105,37 @@ public class UserSegmentContentDisplayPortletDataHandler
 				UserSegmentLocalServiceUtil.fetchUserSegmentByAssetCategoryId(
 					categoryId);
 
-			if ((assetCategory != null) && (userSegment != null)) {
-				newValues[i] = assetCategory.getUuid();
+			if ((assetCategory == null) || (userSegment != null)) {
+				if (_log.isWarnEnabled()) {
+					_log.warn("Unable to get category with id " + categoryId);
+				}
+
+				continue;
+			}
+
+			newValues[i] = assetCategory.getUuid();
+
+			if (portletDataContext.getBooleanParameter(
+					NAMESPACE, "referenced-user-segments")) {
 
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
 					portletDataContext, portlet.getRootPortletId(),
 					userSegment);
 			}
-			else if (_log.isWarnEnabled()) {
-				_log.warn("Unable to get category with id " + categoryId);
+			else {
+				portletDataContext.addReferenceElement(
+					portlet, rootElement, userSegment, UserSegment.class,
+					PortletDataContext.REFERENCE_TYPE_WEAK, true);
+
+				Element campaignElement =
+					portletDataContext.getExportDataElement(userSegment);
+
+				portletDataContext.addClassedModel(
+					campaignElement,
+					ExportImportPathUtil.getModelPath(userSegment),
+					userSegment);
 			}
 		}
-
-		portletPreferences.setValues(key + "uuid", newValues);
 	}
 
 	@Override
