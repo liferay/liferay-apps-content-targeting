@@ -104,26 +104,32 @@ public class TrackingActionInstanceStagedModelDataHandler
 			_trackingActionsRegistry.getTrackingAction(
 				trackingActionInstance.getTrackingActionKey());
 
-		if (trackingAction != null) {
-			Campaign campaign = CampaignLocalServiceUtil.getCampaign(
-				trackingActionInstance.getCampaignId());
+		if (trackingAction == null) {
+			_log.error(
+				"Cannot find tracking action with key " +
+					trackingActionInstance.getTrackingActionKey());
 
-			Element campaignElement = portletDataContext.getExportDataElement(
-				campaign);
+			return;
+		}
 
-			try {
-				trackingAction.exportData(
-					portletDataContext, campaignElement, campaign,
-					trackingActionInstanceElement, trackingActionInstance);
-			}
-			catch (Exception e) {
-				_log.error(
-					"Cannot export custom data for tracking action " +
-						trackingAction.getName(LocaleUtil.getDefault()) +
-							" in campaign" +
-								campaign.getName(LocaleUtil.getDefault()),
-					e);
-			}
+		Campaign campaign = CampaignLocalServiceUtil.getCampaign(
+			trackingActionInstance.getCampaignId());
+
+		Element campaignElement = portletDataContext.getExportDataElement(
+			campaign);
+
+		try {
+			trackingAction.exportData(
+				portletDataContext, campaignElement, campaign,
+				trackingActionInstanceElement, trackingActionInstance);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Cannot export custom data for tracking action " +
+					trackingAction.getName(LocaleUtil.getDefault()) +
+						" in campaign" +
+							campaign.getName(LocaleUtil.getDefault()),
+				e);
 		}
 
 		portletDataContext.addClassedModel(
@@ -142,21 +148,27 @@ public class TrackingActionInstanceStagedModelDataHandler
 			_trackingActionsRegistry.getTrackingAction(
 				trackingActionInstance.getTrackingActionKey());
 
-		if (trackingAction != null) {
-			Campaign campaign = CampaignLocalServiceUtil.getCampaign(
-				trackingActionInstance.getCampaignId());
+		if (trackingAction == null) {
+			_log.error(
+				"Cannot find tracking action with key " +
+					trackingActionInstance.getTrackingActionKey());
 
-			try {
-				trackingAction.importData(
-					portletDataContext, campaign, trackingActionInstance);
-			}
-			catch (Exception e) {
-				_log.error(
-					"Cannot import custom data for tracking action " +
-						trackingAction.getName(LocaleUtil.getDefault()) +
-							" in campaign" +
-								campaign.getName(LocaleUtil.getDefault()));
-			}
+			return;
+		}
+
+		Campaign campaign = CampaignLocalServiceUtil.getCampaign(
+			trackingActionInstance.getCampaignId());
+
+		try {
+			trackingAction.importData(
+				portletDataContext, campaign, trackingActionInstance);
+		}
+		catch (Exception e) {
+			_log.error(
+				"Cannot import custom data for tracking action " +
+					trackingAction.getName(LocaleUtil.getDefault()) +
+						" in campaign" +
+							campaign.getName(LocaleUtil.getDefault()));
 		}
 
 		long userId = portletDataContext.getUserId(
