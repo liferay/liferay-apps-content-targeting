@@ -28,7 +28,10 @@
 	<#assign assetRenderer = assetEntry.getAssetRenderer() />
 
 	<#if assetRenderer.hasEditPermission(permissionChecker)>
-		<#assign redirectURL = renderResponse.createRenderURL() />
+		<@portlet["renderURL"] varImpl="redirectURL" windowState=windowStateFactory.getWindowState("pop_up").toString()>
+			<@portlet["param"] name="mvcPath" value="html/add_asset_redirect.ftl" />
+			<@portlet["param"] name="redirect" value="${currentURL}" />
+		</@>
 
 		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("pop_up"), redirectURL)!"" />
 
