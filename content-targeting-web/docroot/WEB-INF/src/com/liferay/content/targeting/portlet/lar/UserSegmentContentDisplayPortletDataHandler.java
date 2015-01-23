@@ -105,7 +105,7 @@ public class UserSegmentContentDisplayPortletDataHandler
 				UserSegmentLocalServiceUtil.fetchUserSegmentByAssetCategoryId(
 					categoryId);
 
-			if ((assetCategory == null) || (userSegment != null)) {
+			if ((assetCategory == null) || (userSegment == null)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Unable to get category with id " + categoryId);
 				}
@@ -114,6 +114,8 @@ public class UserSegmentContentDisplayPortletDataHandler
 			}
 
 			newValues[i] = assetCategory.getUuid();
+
+			portletPreferences.setValues(key + "uuid", newValues);
 
 			if (portletDataContext.getBooleanParameter(
 					NAMESPACE, "referenced-user-segments")) {
