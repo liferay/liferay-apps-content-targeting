@@ -97,7 +97,7 @@
 		</antelope:stringutil>
 
 		<antelope:stringutil string="${report.name}" property="report.java.package.name">
-			<antelope:replace regex="-" replacement="" />
+			<antelope:replace regex="-" replacement="." />
 			<antelope:trim />
 		</antelope:stringutil>
 
@@ -151,7 +151,7 @@
 		</antelope:stringutil>
 
 		<antelope:stringutil string="${rule.name}" property="rule.java.package.name">
-			<antelope:replace regex="-" replacement="" />
+			<antelope:replace regex="-" replacement="." />
 			<antelope:trim />
 		</antelope:stringutil>
 
@@ -205,7 +205,7 @@
 		</antelope:stringutil>
 
 		<antelope:stringutil string="${tracking.action.name}" property="tracking.action.java.package.name">
-			<antelope:replace regex="-" replacement="" />
+			<antelope:replace regex="-" replacement="." />
 			<antelope:trim />
 		</antelope:stringutil>
 
