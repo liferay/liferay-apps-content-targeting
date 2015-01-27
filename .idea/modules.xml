@@ -24,6 +24,7 @@
       <module fileurl="file://$PROJECT_DIR$/rule-age/rule-age.iml" filepath="$PROJECT_DIR$/rule-age/rule-age.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-browser/rule-browser.iml" filepath="$PROJECT_DIR$/rule-browser/rule-browser.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-custom-field/rule-custom-field.iml" filepath="$PROJECT_DIR$/rule-custom-field/rule-custom-field.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule-custom-field-test/rule-custom-field-test.iml" filepath="$PROJECT_DIR$/rule-custom-field-test/rule-custom-field-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-device/rule-device.iml" filepath="$PROJECT_DIR$/rule-device/rule-device.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-device-test/rule-device-test.iml" filepath="$PROJECT_DIR$/rule-device-test/rule-device-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-facebook/rule-facebook.iml" filepath="$PROJECT_DIR$/rule-facebook/rule-facebook.iml" />
