@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.rule.user.logged;
+package com.liferay.content.targeting.rule.site.member;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
@@ -44,7 +44,7 @@ import org.osgi.framework.BundleException;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
-public class UserLoggedTest {
+public class SiteMemberRuleTest {
 
 	@Before
 	public void setUp() {
@@ -64,7 +64,7 @@ public class UserLoggedTest {
 	}
 
 	@Test
-	public void testUserLoggedMemberRule() throws Exception {
+	public void testSiteMemberRule() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		AnonymousUser anonymousUser =
@@ -77,35 +77,13 @@ public class UserLoggedTest {
 		GroupLocalServiceUtil.addUserGroup(
 			TestPropsValues.getUserId(), group.getGroupId());
 
-		Rule rule = _rulesRegistry.getRule("UserLoggedRule");
+		Rule rule = _rulesRegistry.getRule("SiteMemberRule");
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
 			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
 			String.valueOf(group.getGroupId()), serviceContext);
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
-	}
-
-	@Test
-	public void testUserNotLoggedMemberRule() throws Exception {
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
-
-		AnonymousUser anonymousUser =
-			_anonymousUserLocalService.addAnonymousUser(
-				0, "127.0.0.1", StringPool.BLANK, serviceContext);
-
-		Group group = GroupTestUtil.addGroup();
-
-		GroupLocalServiceUtil.addUserGroup(
-			TestPropsValues.getUserId(), group.getGroupId());
-
-		Rule rule = _rulesRegistry.getRule("UserLoggedRule");
-
-		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
-			String.valueOf(group.getGroupId()), serviceContext);
-
-		Assert.assertFalse(rule.evaluate(null, ruleInstance, anonymousUser));
 	}
 
 	private AnonymousUserLocalService _anonymousUserLocalService;
