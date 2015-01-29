@@ -4,28 +4,46 @@
 <project xmlns:antelope="antlib:ise.antelope.tasks">
 	<import file="../../build-common-plugins.xml" />
 
-	<property name="app.services" value="analytics-api,anonymous-users-api,content-targeting-api,report-campaign-content,report-campaign-tracking-action,report-user-segment-content,rule-score-points" />
-
-	<path id="app.services.path">
-		<dirset dir="." includes="${app.services}" />
-	</path>
-
-	<pathconvert pathsep="," property="app.services.path" refid="app.services.path" targetos="unix" />
-
 	<target name="build-app">
 		<antcall target="clean" />
 
 		<antcall target="build-app-services" />
 
+		<if>
+			<not>
+				<isset property="app.plugins.includes" />
+			</not>
+			<then>
+				<property name="app.plugins.includes" value="${plugins.includes}" />
+			</then>
+		</if>
+
+		<path id="app.plugins.includes.path">
+			<dirset dir="${sdk.dir}/apps/content-targeting" includes="${app.plugins.includes}" />
+		</path>
+
+		<pathconvert pathsep="," property="app.plugins.includes.path" refid="app.plugins.includes.path" targetos="unix" />
+
 		<loop-macrodef-or-target
-			module.dirs="${plugins.includes.path}"
+			module.dirs="${app.plugins.includes.path}"
 			target.name="compile-import-shared"
 		/>
 
-		<antcall target="deploy" />
+		<loop-macrodef-or-target
+			module.dirs="${app.plugins.includes.path}"
+			target.name="deploy"
+		/>
 	</target>
 
 	<target name="build-app-services">
+		<property name="app.services" value="analytics-api,anonymous-users-api,content-targeting-api,report-campaign-content,report-campaign-tracking-action,report-user-segment-content,rule-score-points" />
+
+		<path id="app.services.path">
+			<dirset dir="." includes="${app.services}" />
+		</path>
+
+		<pathconvert pathsep="," property="app.services.path" refid="app.services.path" targetos="unix" />
+
 		<loop-macrodef-or-target
 			module.dirs="${app.services.path}"
 			target.name="build-app-service"
@@ -241,6 +259,15 @@
 
 		<var name="auto.deploy.dir.default" value="${auto.deploy.dir}" />
 		<var name="auto.deploy.dir" value="${sdk.dir}/content-targeting-dist" />
+
+		<!-- Release builds only this set of plugins -->
+
+		<property name="app.core" value="*-api,*-hook,*-service,*-web,runtime-dependencies" />
+		<property name="app.reports" value="report-campaign-content,report-campaign-tracking-action,report-user-segment-content" />
+		<property name="app.rules" value="rule-age,rule-browser,rule-device,rule-facebook,rule-gender,rule-ip-geocode,rule-organization-member,rule-os,rule-role,rule-score-points,rule-site-member,rule-time,rule-user-group-member,rule-user-logged,rule-visited" />
+		<property name="app.tracking.actions" value="tracking-action-content,tracking-action-form,tracking-action-link,tracking-action-page,tracking-action-youtube" />
+
+		<property name="app.plugins.includes" value="${app.core},${app.reports},${app.rules},${app.tracking.actions}" />
 
 		<antcall target="build-app" />
 
