@@ -21,5 +21,6 @@
 		<dependency name="powermock-module-junit4" org="org.powermock" rev="1.5" />
 		<dependency name="powermock-module-junit4-common" org="org.powermock" rev="1.5" />
 		<dependency name="powermock-reflect" org="org.powermock" rev="1.5" />
+		<dependency name="spring-test" org="org.springframework" rev="2.5" />
 	</dependencies>
 </ivy-module>
