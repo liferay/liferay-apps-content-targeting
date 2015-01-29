@@ -28,6 +28,7 @@
       <module fileurl="file://$PROJECT_DIR$/rule-facebook/rule-facebook.iml" filepath="$PROJECT_DIR$/rule-facebook/rule-facebook.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-gender/rule-gender.iml" filepath="$PROJECT_DIR$/rule-gender/rule-gender.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-ip-geocode/rule-ip-geocode.iml" filepath="$PROJECT_DIR$/rule-ip-geocode/rule-ip-geocode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule-ip-range/rule-ip-range.iml" filepath="$PROJECT_DIR$/rule-ip-range/rule-ip-range.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-language/rule-language.iml" filepath="$PROJECT_DIR$/rule-language/rule-language.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-organization-member/rule-organization-member.iml" filepath="$PROJECT_DIR$/rule-organization-member/rule-organization-member.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-organization-member-test/rule-organization-member-test.iml" filepath="$PROJECT_DIR$/rule-organization-member-test/rule-organization-member-test.iml" />
