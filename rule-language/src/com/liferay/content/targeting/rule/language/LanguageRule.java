@@ -18,9 +18,13 @@ import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.api.model.BaseRule;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.model.RuleInstance;
-import com.liferay.content.targeting.rule.categories.SampleRuleCategory;
+import com.liferay.content.targeting.rule.categories.SessionAttributesRuleCategory;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.theme.ThemeDisplay;
 
 import java.util.Locale;
 import java.util.Map;
@@ -35,7 +39,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Brian Chan
+ * @author Eduardo Garcia
  */
 @Component(immediate = true, service = Rule.class)
 public class LanguageRule extends BaseRule {
@@ -58,22 +62,38 @@ public class LanguageRule extends BaseRule {
 			AnonymousUser anonymousUser)
 		throws Exception {
 
+		String languageId = ruleInstance.getTypeSettings();
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		if (languageId.equals(themeDisplay.getLanguageId())) {
+			return true;
+		}
+
 		return false;
 	}
 
 	@Override
 	public String getIcon() {
-		return "icon-puzzle";
+		return "icon-flag";
 	}
 
 	@Override
 	public String getRuleCategoryKey() {
-		return SampleRuleCategory.KEY;
+		return SessionAttributesRuleCategory.KEY;
 	}
 
 	@Override
 	public String getSummary(RuleInstance ruleInstance, Locale locale) {
-		return LanguageUtil.get(locale, ruleInstance.getTypeSettings());
+		Locale ruleLocale = LocaleUtil.fromLanguageId(
+			ruleInstance.getTypeSettings());
+
+		if (ruleLocale != null) {
+			return ruleLocale.getDisplayName(locale);
+		}
+
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -81,13 +101,28 @@ public class LanguageRule extends BaseRule {
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) {
 
-		return StringPool.BLANK;
+		return values.get("languageId");
 	}
 
 	@Override
 	protected void populateContext(
 		RuleInstance ruleInstance, Map<String, Object> context,
 		Map<String, String> values) {
+
+		long groupId = GetterUtil.getLong(context.get("scopeGroupId"));
+
+		context.put("locales", LanguageUtil.getAvailableLocales(groupId));
+
+		String languageId = StringPool.BLANK;
+
+		if (!values.isEmpty()) {
+			languageId = values.get("languageId");
+		}
+		else if (ruleInstance != null) {
+			languageId = ruleInstance.getTypeSettings();
+		}
+
+		context.put("languageId", languageId);
 	}
 
 }

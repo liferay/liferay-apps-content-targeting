@@ -3,4 +3,8 @@
 
 <#setting number_format="computer">
 
-This is the <b>Language</b> rule.
+<@aui["select"] label="language" name="languageId">
+	<#list locales as curLocale>
+		<@aui["option"] label="${curLocale.getDisplayName(locale)}" selected=(languageId?? && (languageId == localeUtil.toLanguageId(curLocale))) value="${localeUtil.toLanguageId(curLocale)}" />
+	</#list>
+</@>
