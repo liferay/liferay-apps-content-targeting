@@ -30,84 +30,96 @@
 	title="${title}"
 />
 
-<@portlet["renderURL"] varImpl="viewReportsURL">
-	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
-	<@portlet["param"] name="redirect" value="${redirect}" />
-	<@portlet["param"] name="className" value="${className}" />
-	<@portlet["param"] name="classPK" value="${classPK?string}" />
-</@>
+<#if scopeGroup.isStagingGroup()>
+	<div class="alert alert-warning">
+		<@liferay_ui["message"] key="the-staging-environment-is-activated-reports-data-refer-to-the-live-environment" />
 
-<@liferay_ui["search-container"]
-	emptyResultsMessage="no-reports-were-found"
-	iteratorURL=viewReportsURL
-	rowChecker=rowChecker
-	total=reportSearchContainerIterator.getTotal()
->
-	<@liferay_ui["search-container-results"]
-		results=reportSearchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd())
-	/>
+		<#if classPK <= 0>
+			<strong><@liferay_ui["message"] key="you-must-publish-to-live-before-you-can-view-any-reports" /></strong>
+		</#if>
+	</div>
+</#if>
 
-	<@liferay_ui["search-container-row"]
-		className="com.liferay.content.targeting.model.api.Report"
-		keyProperty="reportKey"
-		modelVar="report"
-	>
-
-		<@portlet["renderURL"] varImpl="viewReportURL">
-			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORT}" />
-			<@portlet["param"] name="backURL" value="${currentURL}" />
-			<@portlet["param"] name="className" value="${className}" />
-			<@portlet["param"] name="classPK" value="${classPK}" />
-			<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
-		</@>
-
-		<@liferay_ui["search-container-column-text"]
-			href=viewReportURL
-			name="name"
-			value=report.getName(locale)
-		/>
-
-		<@liferay_ui["search-container-column-text"]
-			href=viewReportURL
-			name="description"
-			value=report.getDescription(locale)
-		/>
-
-		<@liferay_ui["search-container-column-date"]
-			href=viewReportURL
-			name="last-update"
-			value=reportInstanceService.getReportInstanceModifiedDate(report.getReportKey(), className, classPK)
-		/>
-
-		<@liferay_ui["search-container-column-text"]
-			align="right"
-			name=""
-		>
-			<@liferay_ui["icon-menu"]>
-				<@liferay_ui["icon"]
-					image="view"
-					label=true
-					message="view-report"
-					method="get"
-					url="${viewReportURL}"
-				/>
-
-				<@portlet["actionURL"] name="updateReport" var="updateReportURL">
-					<@portlet["param"] name="redirect" value="${currentURL}" />
-					<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
-					<@portlet["param"] name="classPK" value="${classPK?string}" />
-				</@>
-
-				<@liferay_ui["icon"]
-					image="undo"
-					label=true
-					message="update-report"
-					method="post"
-					url="${updateReportURL}"
-				/>
-			</@>
-		</@>
+<#if (classPK > 0)>
+	<@portlet["renderURL"] varImpl="viewReportsURL">
+		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
+		<@portlet["param"] name="redirect" value="${redirect}" />
+		<@portlet["param"] name="className" value="${className}" />
+		<@portlet["param"] name="classPK" value="${classPK?string}" />
 	</@>
 
-	<@liferay_ui["search-iterator"] />
-</@>
+	<@liferay_ui["search-container"]
+		emptyResultsMessage="no-reports-were-found"
+		iteratorURL=viewReportsURL
+		rowChecker=rowChecker
+		total=reportSearchContainerIterator.getTotal()
+	>
+		<@liferay_ui["search-container-results"]
+			results=reportSearchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd())
+		/>
+
+		<@liferay_ui["search-container-row"]
+			className="com.liferay.content.targeting.model.api.Report"
+			keyProperty="reportKey"
+			modelVar="report"
+		>
+
+			<@portlet["renderURL"] varImpl="viewReportURL">
+				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORT}" />
+				<@portlet["param"] name="backURL" value="${currentURL}" />
+				<@portlet["param"] name="className" value="${className}" />
+				<@portlet["param"] name="classPK" value="${classPK?string}" />
+				<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
+			</@>
+
+			<@liferay_ui["search-container-column-text"]
+				href=viewReportURL
+				name="name"
+				value=report.getName(locale)
+			/>
+
+			<@liferay_ui["search-container-column-text"]
+				href=viewReportURL
+				name="description"
+				value=report.getDescription(locale)
+			/>
+
+			<@liferay_ui["search-container-column-date"]
+				href=viewReportURL
+				name="last-update"
+				value=reportInstanceService.getReportInstanceModifiedDate(report.getReportKey(), className, classPK)
+			/>
+
+			<@liferay_ui["search-container-column-text"]
+				align="right"
+				name=""
+			>
+				<@liferay_ui["icon-menu"]>
+					<@liferay_ui["icon"]
+						image="view"
+						label=true
+						message="view-report"
+						method="get"
+						url="${viewReportURL}"
+					/>
+
+					<@portlet["actionURL"] name="updateReport" var="updateReportURL">
+						<@portlet["param"] name="redirect" value="${currentURL}" />
+						<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
+						<@portlet["param"] name="classPK" value="${classPK?string}" />
+					</@>
+
+					<@liferay_ui["icon"]
+						image="undo"
+						label=true
+						message="update-report"
+						method="post"
+						url="${updateReportURL}"
+					/>
+				</@>
+			</@>
+		</@>
+
+		<@liferay_ui["search-iterator"] />
+	</@>
+</#if>

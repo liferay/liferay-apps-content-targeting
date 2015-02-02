@@ -136,7 +136,7 @@ AUI.add(
 													return {
 														node: field.labelNode,
 														searchData: field.labelNode.one('.field-title').text()
-													}
+													};
 												}
 											);
 										}()),
