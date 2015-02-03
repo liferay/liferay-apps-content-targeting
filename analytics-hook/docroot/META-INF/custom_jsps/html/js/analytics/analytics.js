@@ -6799,7 +6799,7 @@ this.page = function() {
 };
 
 /**
- * Wrap the track method to call other ecommerce methods if
+ * Wrap the track method to call other ecommerce methods if
  * available depending on the `track.event()`.
  *
  * @api private
