@@ -376,7 +376,7 @@ AUI.add(
 								function(item) {
 									var field = {
 										id: item.get('fieldId'),
-										data: [],
+										data: [],
 										type: item.get('type')
 									};
 
