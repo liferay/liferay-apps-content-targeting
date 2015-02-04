@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 
@@ -83,6 +84,13 @@ public class RuleInstanceStagedModelDataHandler
 	@Override
 	public String getDisplayName(RuleInstance ruleInstance) {
 		Rule rule = _rulesRegistry.getRule(ruleInstance.getRuleKey());
+
+		if (rule == null) {
+			_log.error(
+				"Cannot find rule with key " + ruleInstance.getRuleKey());
+
+			return StringPool.BLANK;
+		}
 
 		return rule.getName(LocaleUtil.getDefault());
 	}
