@@ -129,11 +129,11 @@ public class CampaignContentDisplayPortletDataHandler
 			return;
 		}
 
-		try {
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "referenced-campaigns")) {
+
 			StagedModelDataHandlerUtil.importReferenceStagedModels(
 				portletDataContext, Campaign.class);
-		}
-		catch (Exception e) {
 		}
 
 		String uuid = portletPreferences.getValue(key + "uuid", null);
