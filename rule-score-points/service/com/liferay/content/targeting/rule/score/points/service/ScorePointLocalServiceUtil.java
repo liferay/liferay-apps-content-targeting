@@ -275,11 +275,6 @@ public class ScorePointLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this interface directly. Always use {@link com.liferay.content.targeting.rule.score.points.service.ScorePointLocalServiceUtil} to access the score point local service.
-	*/
 	public static com.liferay.content.targeting.rule.score.points.model.ScorePoint addScorePoints(
 		long anonymousUserId, long userSegmentId, long points)
 		throws com.liferay.portal.kernel.exception.SystemException {

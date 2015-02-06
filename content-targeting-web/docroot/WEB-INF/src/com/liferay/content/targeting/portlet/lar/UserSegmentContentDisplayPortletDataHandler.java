@@ -156,11 +156,11 @@ public class UserSegmentContentDisplayPortletDataHandler
 			return;
 		}
 
-		try {
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "referenced-user-segments")) {
+
 			StagedModelDataHandlerUtil.importReferenceStagedModels(
 				portletDataContext, UserSegment.class);
-		}
-		catch (Exception e) {
 		}
 
 		String[] newValues = new String[oldValues.length];

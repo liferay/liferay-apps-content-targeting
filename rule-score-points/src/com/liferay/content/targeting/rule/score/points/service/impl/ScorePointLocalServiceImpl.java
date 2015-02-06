@@ -37,12 +37,7 @@ import java.util.List;
  */
 public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.content.targeting.rule.score.points.service.ScorePointLocalServiceUtil} to access the score point local service.
-	 */
-
+	@Override
 	public ScorePoint addScorePoints(
 			long anonymousUserId, long userSegmentId, long points)
 		throws SystemException {
@@ -60,6 +55,7 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return scorePoint;
 	}
 
+	@Override
 	public long getPoints(long anonymousUserId, long userSegmentId)
 		throws SystemException {
 
@@ -73,13 +69,15 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return scorePoint.getPoints();
 	}
 
+	@Override
 	public List<ScorePoint> getScorePoints(long userSegmentId)
 		throws SystemException {
 
 		return scorePointPersistence.findByUserSegmentId(userSegmentId);
 	}
 
-	public long incrementPoints(
+	@Override
+	public synchronized long incrementPoints(
 			long anonymousUserId, long userSegmentId, long points)
 		throws SystemException {
 
@@ -102,6 +100,7 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return total;
 	}
 
+	@Override
 	public ScorePoint updateScorePoints(
 			long anonymousUserId, long userSegmentId, long points)
 		throws SystemException {

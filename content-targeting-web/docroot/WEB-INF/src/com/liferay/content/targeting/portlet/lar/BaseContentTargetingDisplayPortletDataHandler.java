@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.portlet.lar;
 
 import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
-import com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
@@ -194,10 +193,7 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 			return;
 		}
 
-		if (portletDataContext.getBooleanParameter(
-				ContentTargetingPortletDataHandler.NAMESPACE,
-				"referenced-content")) {
-
+		if (isExportReferencedContent(portletDataContext)) {
 			StagedModelDataHandlerUtil.importReferenceStagedModels(
 				portletDataContext, AssetEntryReferencedStagedModel.class);
 		}

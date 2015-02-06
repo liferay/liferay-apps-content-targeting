@@ -110,7 +110,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 		if (portletDataContext.getBooleanParameter(
 				ContentTargetingPortletDataHandler.NAMESPACE,
-				"referenced-content")) {
+				"campaign-referenced-content")) {
 
 			try {
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -181,7 +181,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 		if (portletDataContext.getBooleanParameter(
 				ContentTargetingPortletDataHandler.NAMESPACE,
-				"referenced-content")) {
+				"campaign-referenced-content")) {
 
 			StagedModelDataHandlerUtil.importReferenceStagedModels(
 				portletDataContext, trackingActionInstance,
