@@ -77,7 +77,7 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 	}
 
 	@Override
-	public long incrementPoints(
+	public synchronized long incrementPoints(
 			long anonymousUserId, long userSegmentId, long points)
 		throws SystemException {
 
