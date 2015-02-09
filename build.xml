@@ -1,8 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 
-<project xmlns:antelope="antlib:ise.antelope.tasks">
+<project xmlns:antelope="antlib:ise.antelope.tasks"
+	xmlns:sonar="antlib:org.sonar.ant">
 	<import file="../../build-common-plugins.xml" />
+
+	<property file="sonar.${user.name}.properties" />
+	<property file="sonar.${env.COMPUTERNAME}.properties" />
+	<property file="sonar.${env.HOST}.properties" />
+	<property file="sonar.${env.HOSTNAME}.properties" />
+	<property file="sonar.properties" />
 
 	<property name="app.core" value="*-api,*-hook,*-service,*-web,runtime-dependencies" />
 	<property name="app.reports" value="report-campaign-content,report-campaign-tracking-action,report-user-segment-content" />
@@ -286,6 +293,14 @@
 		</copy>
 
 		<delete dir="${auto.deploy.dir}" failonerror="false" />
+	</target>
+
+	<target name="sonar">
+		<taskdef resource="org/sonar/ant/antlib.xml" uri="antlib:org.sonar.ant">
+			<classpath path="${sdk.dir}/lib/sonar-ant-task.jar" />
+		</taskdef>
+
+		<sonar:sonar />
 	</target>
 
 	<macrodef name="build-app-service">
