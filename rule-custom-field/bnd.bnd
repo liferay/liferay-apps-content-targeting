@@ -17,5 +17,5 @@ Include-Resource:\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar
 Private-Package: com.liferay.content.targeting.rule.custom.field.*
 Service-Component: com.liferay.content.targeting.rule.custom.field.*
-Web-ContextPath: /rule-custom.field
+Web-ContextPath: /rule-custom-field
 -baseline: *;version="1.0.0"
