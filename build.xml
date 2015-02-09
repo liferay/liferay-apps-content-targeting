@@ -89,6 +89,19 @@
 		<delete dir="${app.server.dir}/temp" />
 	</target>
 
+	<target name="consolidate-tests">
+		<path id="app.core.path">
+			<dirset dir="${sdk.dir}/apps/content-targeting" excludes="*-test" includes="*" />
+		</path>
+
+		<pathconvert pathsep="," property="app.core.path" refid="app.core.path" targetos="unix" />
+
+		<loop-macrodef-or-target
+			module.dirs="${app.core.path}"
+			target.name="consolidate-test"
+		/>
+	</target>
+
 	<target name="create-report">
 		<if>
 			<or>
@@ -320,6 +333,17 @@
 
 		<sequential>
 			<ant dir="@{module.dir}" target="build-lang" inheritAll="false" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="consolidate-test">
+		<attribute name="module.dir" />
+
+		<sequential>
+			<copy todir="@{module.dir}/test-results" failonerror="false">
+				<fileset dir="@{module.dir}/test-results/integration" />
+				<fileset dir="@{module.dir}/test-results/unit" />
+			</copy>
 		</sequential>
 	</macrodef>
 </project>
