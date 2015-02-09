@@ -21,3 +21,5 @@ sonar.*.properties
 .idea/workspace.xml
 .idea/rebel_project.xml
 .idea/dataSources.*
+
+.sonar
