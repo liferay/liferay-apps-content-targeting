@@ -1,8 +1,15 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 
-<project xmlns:antelope="antlib:ise.antelope.tasks">
+<project xmlns:antelope="antlib:ise.antelope.tasks"
+	xmlns:sonar="antlib:org.sonar.ant">
 	<import file="../../build-common-plugins.xml" />
+
+	<property file="sonar.${user.name}.properties" />
+	<property file="sonar.${env.COMPUTERNAME}.properties" />
+	<property file="sonar.${env.HOST}.properties" />
+	<property file="sonar.${env.HOSTNAME}.properties" />
+	<property file="sonar.properties" />
 
 	<property name="app.core" value="*-api,*-hook,*-service,*-web,runtime-dependencies" />
 	<property name="app.reports" value="report-campaign-content,report-campaign-tracking-action,report-user-segment-content" />
@@ -80,6 +87,19 @@
 		<delete dir="${app.server.parent.dir}/data/osgi" />
 		<delete dir="${app.server.dir}/work" />
 		<delete dir="${app.server.dir}/temp" />
+	</target>
+
+	<target name="consolidate-tests">
+		<path id="app.core.path">
+			<dirset dir="${sdk.dir}/apps/content-targeting" excludes="*-test" includes="*" />
+		</path>
+
+		<pathconvert pathsep="," property="app.core.path" refid="app.core.path" targetos="unix" />
+
+		<loop-macrodef-or-target
+			module.dirs="${app.core.path}"
+			target.name="consolidate-test"
+		/>
 	</target>
 
 	<target name="create-report">
@@ -288,6 +308,14 @@
 		<delete dir="${auto.deploy.dir}" failonerror="false" />
 	</target>
 
+	<target name="sonar">
+		<taskdef resource="org/sonar/ant/antlib.xml" uri="antlib:org.sonar.ant">
+			<classpath path="${sdk.dir}/lib/sonar-ant-task.jar" />
+		</taskdef>
+
+		<sonar:sonar />
+	</target>
+
 	<macrodef name="build-app-service">
 		<attribute name="module.dir" />
 
@@ -305,6 +333,17 @@
 
 		<sequential>
 			<ant dir="@{module.dir}" target="build-lang" inheritAll="false" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="consolidate-test">
+		<attribute name="module.dir" />
+
+		<sequential>
+			<copy todir="@{module.dir}/test-results" failonerror="false">
+				<fileset dir="@{module.dir}/test-results/integration" />
+				<fileset dir="@{module.dir}/test-results/unit" />
+			</copy>
 		</sequential>
 	</macrodef>
 </project>
