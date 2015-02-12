@@ -39,12 +39,12 @@ the following steps:
 2. Init the Audience Targeting application submodule in the Liferay 6.2 SDK by
 running these commands:
 
-	git submodule init
-	git submodule update
+		git submodule init
+		git submodule update
 
 3. Set this property in the `build.<username>.properties` of your Liferay SDK:
 
-	plugins.includes=*-api,*-hook,*-service,*-web,report-*,rule-*,runtime-dependencies,tracking-action-*
+		plugins.includes=*-api,*-hook,*-service,*-web,report-*,rule-*,runtime-dependencies,tracking-action-*
 
 4. Go to apps/content-targeting and run `ant build-app`
 
@@ -70,7 +70,7 @@ following steps:
 1. Append the test modules to the `plugins.includes` property of your
 `build.<username>.properties` file:
 
-	plugins.includes=<all other audience targeting application modules>,*-test,runtime-test-dependencies
+		plugins.includes=<all other audience targeting application modules>,*-test,runtime-test-dependencies
 
 2. Make sure you have deployed all the Audience Targeting application plugins
 and that your server is running.
