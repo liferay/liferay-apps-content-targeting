@@ -344,6 +344,10 @@
 				<fileset dir="@{module.dir}/test-results/integration" />
 				<fileset dir="@{module.dir}/test-results/unit" />
 			</copy>
+
+			<merge-coverage
+				module.dir="@{module.dir}"
+			/>
 		</sequential>
 	</macrodef>
 </project>
