@@ -1,9 +1,9 @@
 # Liferay Audience Targeting application
 
-"Audience Targeting” is a new App for Liferay 6.2 that will put the engagement
- experience of your portal at a whole new level. This app allows you to segment
- your audience, target specific content to different user segments, create 
- campaigns for them and measure quickly the effectivity.
+"Audience Targeting" is a new App for Liferay 6.2 that will put the engagement
+experience of your portal at a whole new level. This app allows you to segment
+your audience, target specific content to different user segments, create 
+campaigns for them, and measure the campaigns' effectivness quickly.
 
 ![Audience Targeting App](https://raw.githubusercontent.com/liferay/liferay-apps-content-targeting/master/audience_targeting_icon.png) 
 
@@ -18,7 +18,7 @@ development project in 2000 and was open sourced in 2001.
 To get started, check out the project's community homepage at
 [http://liferay.org](http://liferay.org)!
 
-The Audience Targeting application are a subset of plugins related to the Web
+The Audience Targeting application is a subset of plugins related to the Web
 Content Management Experience that enhance Liferay WCM capabilities.
 
 Most of the plugins found in the liferay-plugins repository can be easily
@@ -38,14 +38,14 @@ the following steps:
 (https://github.com/liferay/liferay-plugins) repository.
 2. Init the Audience Targeting application submodule in the Liferay 6.2 SDK by
 running these commands:
-```
+
 	git submodule init
 	git submodule update
-```
-3. Set this property in the build.<username>.properties of your Liferay SDK:
-	```
+
+3. Set this property in the `build.<username>.properties` of your Liferay SDK:
+
 	plugins.includes=*-api,*-hook,*-service,*-web,report-*,rule-*,runtime-dependencies,tracking-action-*
-	```
+
 4. Go to apps/content-targeting and run `ant build-app`
 
 ### OSGI Console
@@ -64,14 +64,14 @@ Some useful commands:
 
 ### Testing
 
-In order to execute the Integration tests locally you have to go through the
+In order to execute the Integration tests locally, you have to go through the
 following steps:
 
 1. Append the test modules to the `plugins.includes` property of your
-build.<username>.properties file:
-	```
+`build.<username>.properties` file:
+
 	plugins.includes=<all other audience targeting application modules>,*-test,runtime-test-dependencies
-	```
+
 2. Make sure you have deployed all the Audience Targeting application plugins
 and that your server is running.
 3. Go to apps/content-targeting and run `ant test`. In order to run the tests
@@ -83,16 +83,14 @@ folder of the runner to use the folder of your plugin as the working directory.
 #### Exceptions when deploying the plugins
 
 There are some issues with the Spring context and OSGI context. They can easily
-by bypassed deploying the apps when the server is already started or also adding
-this property to portal-ext.properties:
+be bypassed by deploying the apps when the server is already started, or by
+adding the following property to `portal-ext.properties`:
 
-	```
 	module.framework.properties.felix.fileinstall.start.level=20
-	```
 
 ## User Guide
 
-Take a look to the [Liferay Portal User Guide]
+Take a look at the [Liferay Portal User Guide]
 (https://www.liferay.com/documentation/liferay-portal/6.2/user-guide) for
 information about using Liferay Portal.
 
@@ -127,7 +125,7 @@ other developers easily. See this [DEVELOPING guide](DEVELOPING.markdown).
 
 ## More Information
 
-For more information about filling bugs, staying updated with Liferay on social
+For more information about filing bugs, staying updated with Liferay on social
 media, and other ways to participate, check out the [Liferay Community
 Homepage](http://liferay.org) and consult the [README
 file](https://github.com/liferay/liferay-portal/blob/master/README.markdown) in
