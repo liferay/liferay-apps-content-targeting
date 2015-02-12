@@ -77,7 +77,7 @@ AUI.add(
 
 				var panelNode = null;
 
-				var panel = Liferay.Dockbar.DOCKBAR_PANELS[panelId];
+				var panel = DOCKBAR_PANELS[panelId];
 
 				if (panel) {
 					panelNode = panel.node;
@@ -106,6 +106,12 @@ AUI.add(
 				return panelNode;
 			},
 
+			togglePreviewPanel: function() {
+				var instance = this;
+
+				Dockbar._togglePanel(STR_PREVIEW_PANEL);
+			},
+
 			toggleAddPanel: function() {
 				var instance = this;
 
@@ -118,19 +124,13 @@ AUI.add(
 				Dockbar._togglePanel(STR_EDIT_LAYOUT_PANEL);
 			},
 
-			togglePreviewPanel: function() {
-				var instance = this;
-
-				Dockbar._togglePanel(STR_PREVIEW_PANEL);
-			},
-
 			_registerPanels: function() {
 				var instance = this;
 
 				var namespace = instance._namespace;
 
 				AObject.each(
-					Liferay.Dockbar.DOCKBAR_PANELS,
+					DOCKBAR_PANELS,
 					function(item, index, collection) {
 						var panelId = item.id;
 
@@ -178,11 +178,15 @@ AUI.add(
 
 					var navAccountControls = A.one('#' + namespace + 'navAccountControls');
 
-					navAccountControls.toggleClass('nav-account-controls-notice', force);
+					if (navAccountControls) {
+						navAccountControls.toggleClass('nav-account-controls-notice', force);
+					}
 
 					var navAddControls = A.one('#' + namespace + 'navAddControls');
 
-					navAddControls.toggleClass('nav-add-controls-notice', force);
+					if (navAddControls) {
+						navAddControls.toggleClass('nav-add-controls-notice', force);
+					}
 				}
 			},
 
@@ -190,7 +194,7 @@ AUI.add(
 				var instance = this;
 
 				AObject.each(
-					Liferay.Dockbar.DOCKBAR_PANELS,
+					DOCKBAR_PANELS,
 					function(item, index, collection) {
 						if (item.id !== panelId) {
 							BODY.removeClass(item.css);
@@ -204,7 +208,7 @@ AUI.add(
 					}
 				);
 
-				var panel = Liferay.Dockbar.DOCKBAR_PANELS[panelId];
+				var panel = DOCKBAR_PANELS[panelId];
 
 				if (panel) {
 					var panelNode = panel.node;
@@ -457,8 +461,6 @@ AUI.add(
 		};
 
 		Liferay.Dockbar = Dockbar;
-
-		Liferay.Dockbar.DOCKBAR_PANELS = DOCKBAR_PANELS;
 
 		Liferay.Dockbar.ADD_PANEL = STR_ADD_PANEL;
 
