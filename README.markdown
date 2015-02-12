@@ -1,6 +1,6 @@
 # Liferay Audience Targeting application
 
-"Audience Targeting" is a new App for Liferay 6.2 that will put the engagement
+*Audience Targeting* is a new App for Liferay 6.2 that will put the engagement
 experience of your portal at a whole new level. This app allows you to segment
 your audience, target specific content to different user segments, create 
 campaigns for them, and measure the campaigns' effectivness quickly.
@@ -90,13 +90,13 @@ adding the following property to `portal-ext.properties`:
 
 ## User Guide
 
-Take a look at the [Liferay Portal User Guide]
-(https://www.liferay.com/documentation/liferay-portal/6.2/user-guide) for
-information about using Liferay Portal.
+Take a look at the [Liferay Portal User Guide](https://dev.liferay.com/discover/portal)
+for information about using Liferay Portal.
 
 The Audience Targeting application is built on top of Liferay Portal and follows
 the same usability patterns. For more information about how to use Audience
-Targeting, read this [User Guide](USING.markdown).
+Targeting, read the [Targeting Content to Your Audience](https://dev.liferay.com/discover/portal/-/knowledge_base/6-2/targeting-content-to-your-audience)
+section.
 
 ## Source Code
 
@@ -121,7 +121,8 @@ The master branch of the Liferay Audience Targeting application is developed for
 Liferay 6.2 CE using the 6.2 version of the plugins SDK.
 
 The Audience Targeting application is designed as a framework to be extended by
-other developers easily. See this [DEVELOPING guide](DEVELOPING.markdown).
+other developers easily. See the Audience Targeting
+[tutorials](https://dev.liferay.com/develop/tutorials/-/knowledge_base/6-2/audience-targeting).
 
 ## More Information
 
