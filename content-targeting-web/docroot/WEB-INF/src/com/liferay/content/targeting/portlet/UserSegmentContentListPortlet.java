@@ -200,6 +200,7 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 					ContentTargetingUtil.getAssetCategoryIds(
 						themeDisplay.getScopeGroupId(), userSegmentIds));
 				entryQuery.setClassNameIds(classNameIds);
+				entryQuery.setEnablePermissions(true);
 
 				assetEntries = AssetEntryServiceUtil.getEntries(entryQuery);
 
