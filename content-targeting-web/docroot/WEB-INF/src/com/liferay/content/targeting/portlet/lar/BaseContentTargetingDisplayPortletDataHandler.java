@@ -221,15 +221,19 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 			portletPreferences.setValue(
 				key, String.valueOf(assetEntry.getEntryId()));
 		}
-		else if (_log.isWarnEnabled()) {
-			StringBundler sb = new StringBundler(4);
+		else {
+			portletPreferences.reset(key);
 
-			sb.append("Unable to get asset entry for with classUUID ");
-			sb.append(classUuid);
-			sb.append(" in group ");
-			sb.append(groupId);
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(4);
 
-			_log.warn(sb.toString());
+				sb.append("Unable to get asset entry for with classUUID ");
+				sb.append(classUuid);
+				sb.append(" in group ");
+				sb.append(groupId);
+
+				_log.warn(sb.toString());
+			}
 		}
 
 		portletPreferences.reset(key + "classUuid");
