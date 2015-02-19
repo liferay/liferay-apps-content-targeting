@@ -466,6 +466,21 @@ AUI.add(
 		};
 
 		A.LiferayCTFormBuilder = LiferayCTFormBuilder;
+
+		// AUI-1850
+
+		A.mix(
+			A.AvailableField.prototype,
+			{
+				_uiSetLabel: function(val) {
+					var instance = this;
+
+					instance.get('node').attr('title', val);
+					instance.labelNode.setContent(val);
+				}
+			},
+			true
+		);
 	},
 	'',
 	{
