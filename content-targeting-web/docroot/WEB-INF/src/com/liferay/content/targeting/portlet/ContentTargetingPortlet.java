@@ -285,7 +285,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			UserSegment.class.getName(), request);
+			Campaign.class.getName(), request);
 
 		try {
 			Callable<Campaign> campaignCallable =
@@ -384,7 +384,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			UserSegment.class.getName(), request);
+			request);
 
 		try {
 			Callable<UserSegment> userSegmentCallable =
@@ -1158,7 +1158,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			RuleInstance.class.getName(), request);
+			request);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
