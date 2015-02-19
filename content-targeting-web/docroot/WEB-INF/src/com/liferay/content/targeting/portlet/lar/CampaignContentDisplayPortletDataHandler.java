@@ -146,15 +146,19 @@ public class CampaignContentDisplayPortletDataHandler
 			portletPreferences.setValue(
 				key, String.valueOf(campaign.getCampaignId()));
 		}
-		else if (_log.isWarnEnabled()) {
-			StringBundler sb = new StringBundler(4);
+		else {
+			portletPreferences.reset(key);
 
-			sb.append("Unable to get campaign with UUID ");
-			sb.append(uuid);
-			sb.append(" in group ");
-			sb.append(portletDataContext.getScopeGroupId());
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(4);
 
-			_log.warn(sb.toString());
+				sb.append("Unable to get campaign with UUID ");
+				sb.append(uuid);
+				sb.append(" in group ");
+				sb.append(portletDataContext.getScopeGroupId());
+
+				_log.warn(sb.toString());
+			}
 		}
 
 		portletPreferences.reset(key + "uuid");

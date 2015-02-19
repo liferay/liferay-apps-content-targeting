@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Portlet;
@@ -176,15 +177,19 @@ public class UserSegmentContentDisplayPortletDataHandler
 			if (assetCategory != null) {
 				newValues[i] = String.valueOf(assetCategory.getCategoryId());
 			}
-			else if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(4);
+			else {
+				newValues[i] = StringPool.BLANK;
 
-				sb.append("Unable to get category with UUID ");
-				sb.append(oldValue);
-				sb.append(" in group ");
-				sb.append(portletDataContext.getScopeGroupId());
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(4);
 
-				_log.warn(sb.toString());
+					sb.append("Unable to get category with UUID ");
+					sb.append(oldValue);
+					sb.append(" in group ");
+					sb.append(portletDataContext.getScopeGroupId());
+
+					_log.warn(sb.toString());
+				}
 			}
 		}
 
