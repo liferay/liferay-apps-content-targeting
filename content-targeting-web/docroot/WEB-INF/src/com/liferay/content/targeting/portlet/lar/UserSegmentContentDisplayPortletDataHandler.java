@@ -174,6 +174,13 @@ public class UserSegmentContentDisplayPortletDataHandler
 					fetchAssetCategoryByUuidAndGroupId(
 						oldValue, portletDataContext.getScopeGroupId());
 
+			if (assetCategory == null) {
+				assetCategory =
+					AssetCategoryLocalServiceUtil.
+						fetchAssetCategoryByUuidAndGroupId(
+							oldValue, portletDataContext.getCompanyGroupId());
+			}
+
 			if (assetCategory != null) {
 				newValues[i] = String.valueOf(assetCategory.getCategoryId());
 			}

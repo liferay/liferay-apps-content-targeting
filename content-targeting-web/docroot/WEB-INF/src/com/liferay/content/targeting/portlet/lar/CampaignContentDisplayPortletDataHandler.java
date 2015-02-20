@@ -142,6 +142,11 @@ public class CampaignContentDisplayPortletDataHandler
 			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
 				uuid, portletDataContext.getScopeGroupId());
 
+		if (campaign == null) {
+			campaign = CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+		}
+
 		if (campaign != null) {
 			portletPreferences.setValue(
 				key, String.valueOf(campaign.getCampaignId()));
