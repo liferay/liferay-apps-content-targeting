@@ -33,6 +33,8 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.Map;
+
 import javax.portlet.UnavailableException;
 
 import org.osgi.framework.Bundle;
@@ -136,6 +138,24 @@ public class RuleInstanceStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			ruleInstanceElement,
 			ExportImportPathUtil.getModelPath(ruleInstance), ruleInstance);
+	}
+
+	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid,
+			long ruleInstanceId)
+		throws Exception {
+
+		RuleInstance existingRuleInstance =
+			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> ruleInstanceIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				RuleInstance.class);
+
+		ruleInstanceIds.put(
+			ruleInstanceId, existingRuleInstance.getRuleInstanceId());
 	}
 
 	@Override

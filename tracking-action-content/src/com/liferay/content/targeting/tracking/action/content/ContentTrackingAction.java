@@ -194,6 +194,8 @@ public class ContentTrackingAction extends BaseTrackingAction {
 			portletDataContext.getScopeGroupId(), classUuid);
 
 		if (assetEntry != null ) {
+			trackingActionInstance.setReferrerClassPK(assetEntry.getClassPK());
+
 			JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 
 			jsonObj.put("assetEntryId", assetEntry.getEntryId());
@@ -202,6 +204,8 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 			return;
 		}
+
+		trackingActionInstance.setReferrerClassPK(0);
 
 		throw new PortletDataException(
 			getExportImportErrorMessage(
