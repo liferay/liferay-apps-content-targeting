@@ -105,7 +105,7 @@ public class UserSegmentContentDisplayPortletDataHandler
 				UserSegmentLocalServiceUtil.fetchUserSegmentByAssetCategoryId(
 					categoryId);
 
-			if ((assetCategory == null) || (userSegment != null)) {
+			if ((assetCategory == null) || (userSegment == null)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Unable to get category with id " + categoryId);
 				}
@@ -114,6 +114,8 @@ public class UserSegmentContentDisplayPortletDataHandler
 			}
 
 			newValues[i] = assetCategory.getUuid();
+
+			portletPreferences.setValues(key + "uuid", newValues);
 
 			if (portletDataContext.getBooleanParameter(
 					NAMESPACE, "referenced-user-segments")) {
@@ -149,6 +151,7 @@ public class UserSegmentContentDisplayPortletDataHandler
 		}
 
 		String[] oldValues = portletPreferences.getValues(key + "uuid", null);
+		String[] originalValues = portletPreferences.getValues(key, null);
 
 		if (ArrayUtil.isEmpty(oldValues)) {
 			return;
@@ -165,6 +168,7 @@ public class UserSegmentContentDisplayPortletDataHandler
 
 		for (int i = 0; i < oldValues.length; i++) {
 			String oldValue = oldValues[i];
+			String originalValue = originalValues[i];
 
 			AssetCategory assetCategory =
 				AssetCategoryLocalServiceUtil.
@@ -174,15 +178,21 @@ public class UserSegmentContentDisplayPortletDataHandler
 			if (assetCategory != null) {
 				newValues[i] = String.valueOf(assetCategory.getCategoryId());
 			}
-			else if (_log.isWarnEnabled()) {
+			else {
+			    newValues[i] = originalValue;
+			    if (_log.isWarnEnabled()) {
 				StringBundler sb = new StringBundler(4);
 
 				sb.append("Unable to get category with UUID ");
 				sb.append(oldValue);
 				sb.append(" in group ");
 				sb.append(portletDataContext.getScopeGroupId());
+				sb.append(" adding ");
+				sb.append(originalValues);
+				sb.append(" instead");
 
 				_log.warn(sb.toString());
+			    }
 			}
 		}
 
