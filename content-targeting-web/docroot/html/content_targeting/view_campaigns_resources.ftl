@@ -154,7 +154,7 @@
 	deleteCampaigns.on(
 		'click',
 		function(event) {
-			if (confirm('${languageUtil.get(locale, "are-you-sure-you-want-to-delete-this")}')) {
+			if (confirm('<@liferay_ui["message"] key="are-you-sure-you-want-to-delete-this" />')) {
 				document.<@portlet["namespace"] />fmCampaigns.<@portlet["namespace"] />campaignsIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmCampaigns, '<@portlet["namespace"] />allRowIds');
 
 				<@portlet["renderURL"] var="redirectURL">

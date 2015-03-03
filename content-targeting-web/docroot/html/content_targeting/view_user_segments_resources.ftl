@@ -131,7 +131,7 @@
 	deleteUserSegments.on(
 		'click',
 		function(event) {
-			if (confirm('${languageUtil.get(locale, "are-you-sure-you-want-to-delete-this")}')) {
+			if (confirm('<@liferay_ui["message"] key="are-you-sure-you-want-to-delete-this" />')) {
 				document.<@portlet["namespace"] />fmUserSegment.<@portlet["namespace"] />userSegmentIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmUserSegment, '<@portlet["namespace"] />allRowIds');
 
 				<@portlet["renderURL"] var="redirectURL">
