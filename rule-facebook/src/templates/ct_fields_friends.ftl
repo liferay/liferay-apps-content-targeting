@@ -7,6 +7,8 @@
 	</@>
 </@>
 
-<@aui["input"] inlineField=true inlineLabel="left" label=languageUtil.format(locale, "users-that-have-x-than", selectorField) name="numberOfFriends" style="width: auto;" suffix="friends"  type="text" value=numberOfFriends>
+<@liferay_ui["message"] arguments=selectorField key="users-that-have-x-than" />
+
+<@aui["input"] inlineField=true label="" name="numberOfFriends" style="margin-bottom: 0; width: auto;" suffix="friends" title="number-of-friends" type="text" value=numberOfFriends>
 	<@aui["validator"] name="number" />
 </@>

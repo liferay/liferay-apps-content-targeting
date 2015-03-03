@@ -33,6 +33,12 @@
 	title=report.getName(locale)
 />
 
+<#if scopeGroup.isStagingGroup()>
+	<div class="alert alert-warning">
+		<@liferay_ui["message"] key="the-staging-environment-is-activated-reports-data-refer-to-the-live-environment" />
+	</div>
+</#if>
+
 <@portlet["actionURL"] name="updateReport" var="updateReportURL">
 	<@portlet["param"] name="redirect" value="${currentURL}" />
 	<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />

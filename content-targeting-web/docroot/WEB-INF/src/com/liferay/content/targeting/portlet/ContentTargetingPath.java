@@ -19,6 +19,9 @@ package com.liferay.content.targeting.portlet;
  */
 public class ContentTargetingPath {
 
+	public static final String ADD_ASSET_REDIRECT =
+		"html/add_asset_redirect.ftl";
+
 	public static final String EDIT_CAMPAIGN =
 		"html/content_targeting/edit_campaign.ftl";
 

@@ -32,6 +32,8 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.Map;
+
 import javax.portlet.UnavailableException;
 
 import org.osgi.framework.Bundle;
@@ -136,6 +138,26 @@ public class TrackingActionInstanceStagedModelDataHandler
 			trackingActionInstanceElement,
 			ExportImportPathUtil.getModelPath(trackingActionInstance),
 			trackingActionInstance);
+	}
+
+	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid,
+			long trackingActionInstanceId)
+		throws Exception {
+
+		TrackingActionInstance existingTrackingActionInstance =
+			TrackingActionInstanceLocalServiceUtil.
+				fetchTrackingActionInstanceByUuidAndGroupId(
+					uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> trackingActionInstanceIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				TrackingActionInstance.class);
+
+		trackingActionInstanceIds.put(
+			trackingActionInstanceId,
+			existingTrackingActionInstance.getTrackingActionInstanceId());
 	}
 
 	@Override

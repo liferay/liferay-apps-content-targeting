@@ -139,8 +139,12 @@ public class PageTrackingAction extends BaseTrackingAction {
 			portletDataContext.getScopeGroupId(), friendlyURL);
 
 		if (layout != null ) {
+			trackingActionInstance.setReferrerClassPK(layout.getPlid());
+
 			return;
 		}
+
+		trackingActionInstance.setReferrerClassPK(0);
 
 		throw new PortletDataException(
 			getExportImportErrorMessage(

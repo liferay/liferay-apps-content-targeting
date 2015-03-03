@@ -85,6 +85,22 @@ public class CampaignStagedModelDataHandler
 	}
 
 	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid, long campaignId)
+		throws Exception {
+
+		Campaign existingCampaign =
+			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> campaignIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Campaign.class);
+
+		campaignIds.put(campaignId, existingCampaign.getCampaignId());
+	}
+
+	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, Campaign campaign)
 		throws Exception {

@@ -60,14 +60,16 @@ public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "campaigns", true, false,
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(
-						NAMESPACE, "referenced-content")
+						NAMESPACE, "campaign-referenced-content",
+						"referenced-content", true, false, null, null, null)
 				},
 				Campaign.class.getName()),
 			new PortletDataHandlerBoolean(
 				NAMESPACE, "user-segments", true, false,
 				new PortletDataHandlerControl[] {
 					new PortletDataHandlerBoolean(
-						NAMESPACE, "referenced-content")
+						NAMESPACE, "user-segment-referenced-content",
+						"referenced-content", true, false, null, null, null)
 				},
 				UserSegment.class.getName()));
 		setImportControls(getExportControls());

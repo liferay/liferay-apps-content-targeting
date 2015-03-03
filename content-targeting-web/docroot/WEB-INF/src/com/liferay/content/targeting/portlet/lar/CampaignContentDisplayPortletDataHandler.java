@@ -129,11 +129,11 @@ public class CampaignContentDisplayPortletDataHandler
 			return;
 		}
 
-		try {
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "referenced-campaigns")) {
+
 			StagedModelDataHandlerUtil.importReferenceStagedModels(
 				portletDataContext, Campaign.class);
-		}
-		catch (Exception e) {
 		}
 
 		String uuid = portletPreferences.getValue(key + "uuid", null);
@@ -142,19 +142,28 @@ public class CampaignContentDisplayPortletDataHandler
 			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
 				uuid, portletDataContext.getScopeGroupId());
 
+		if (campaign == null) {
+			campaign = CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+		}
+
 		if (campaign != null) {
 			portletPreferences.setValue(
 				key, String.valueOf(campaign.getCampaignId()));
 		}
-		else if (_log.isWarnEnabled()) {
-			StringBundler sb = new StringBundler(4);
+		else {
+			portletPreferences.reset(key);
 
-			sb.append("Unable to get campaign with UUID ");
-			sb.append(uuid);
-			sb.append(" in group ");
-			sb.append(portletDataContext.getScopeGroupId());
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(4);
 
-			_log.warn(sb.toString());
+				sb.append("Unable to get campaign with UUID ");
+				sb.append(uuid);
+				sb.append(" in group ");
+				sb.append(portletDataContext.getScopeGroupId());
+
+				_log.warn(sb.toString());
+			}
 		}
 
 		portletPreferences.reset(key + "uuid");

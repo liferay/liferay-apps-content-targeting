@@ -32,6 +32,8 @@ import com.liferay.portlet.documentlibrary.service.DLAppLocalServiceUtil;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 
+import java.util.Map;
+
 /**
  * @author Eduardo Garcia
  */
@@ -97,6 +99,27 @@ public class AssetEntryReferencedStagedModelDataHandler
 		}
 
 		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid, long classPK)
+		throws Exception {
+
+		AssetEntry existingAssetEntry =
+			AssetEntryLocalServiceUtil.fetchEntry(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		if (existingAssetEntry == null) {
+			return;
+		}
+
+		Map<Long, Long> assetEntryReferencedStagedModelIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				AssetEntryReferencedStagedModel.class);
+
+		assetEntryReferencedStagedModelIds.put(
+			classPK, existingAssetEntry.getClassPK());
 	}
 
 	@Override

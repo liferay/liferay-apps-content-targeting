@@ -1,31 +1,60 @@
 <?xml version="1.0"?>
 <!DOCTYPE project>
 
-<project xmlns:antelope="antlib:ise.antelope.tasks">
+<project xmlns:antelope="antlib:ise.antelope.tasks"
+	xmlns:sonar="antlib:org.sonar.ant">
 	<import file="../../build-common-plugins.xml" />
 
+	<property file="sonar.${user.name}.properties" />
+	<property file="sonar.${env.COMPUTERNAME}.properties" />
+	<property file="sonar.${env.HOST}.properties" />
+	<property file="sonar.${env.HOSTNAME}.properties" />
+	<property file="sonar.properties" />
+
+	<property name="app.core" value="*-api,*-hook,*-service,*-web,runtime-dependencies" />
+	<property name="app.reports" value="report-campaign-content,report-campaign-tracking-action,report-user-segment-content" />
+	<property name="app.rules" value="rule-age,rule-browser,rule-device,rule-facebook,rule-gender,rule-ip-geocode,rule-organization-member,rule-os,rule-role,rule-score-points,rule-site-member,rule-time,rule-user-group-member,rule-user-logged,rule-visited" />
 	<property name="app.services" value="analytics-api,anonymous-users-api,content-targeting-api,report-campaign-content,report-campaign-tracking-action,report-user-segment-content,rule-score-points" />
-
-	<path id="app.services.path">
-		<dirset dir="." includes="${app.services}" />
-	</path>
-
-	<pathconvert pathsep="," property="app.services.path" refid="app.services.path" targetos="unix" />
+	<property name="app.tracking.actions" value="tracking-action-content,tracking-action-form,tracking-action-link,tracking-action-page,tracking-action-youtube" />
 
 	<target name="build-app">
 		<antcall target="clean" />
 
 		<antcall target="build-app-services" />
 
+		<if>
+			<not>
+				<isset property="app.plugins.includes" />
+			</not>
+			<then>
+				<property name="app.plugins.includes" value="${app.core},report-*,rule-*,tracking-action-*" />
+			</then>
+		</if>
+
+		<path id="app.plugins.includes.path">
+			<dirset dir="${sdk.dir}/apps/content-targeting" includes="${app.plugins.includes}" />
+		</path>
+
+		<pathconvert pathsep="," property="app.plugins.includes.path" refid="app.plugins.includes.path" targetos="unix" />
+
 		<loop-macrodef-or-target
-			module.dirs="${plugins.includes.path}"
+			module.dirs="${app.plugins.includes.path}"
 			target.name="compile-import-shared"
 		/>
 
-		<antcall target="deploy" />
+		<loop-macrodef-or-target
+			module.dirs="${app.plugins.includes.path}"
+			target.name="deploy"
+		/>
 	</target>
 
 	<target name="build-app-services">
+		<path id="app.services.path">
+			<dirset dir="." includes="${app.services}" />
+		</path>
+
+		<pathconvert pathsep="," property="app.services.path" refid="app.services.path" targetos="unix" />
+
 		<loop-macrodef-or-target
 			module.dirs="${app.services.path}"
 			target.name="build-app-service"
@@ -58,6 +87,19 @@
 		<delete dir="${app.server.parent.dir}/data/osgi" />
 		<delete dir="${app.server.dir}/work" />
 		<delete dir="${app.server.dir}/temp" />
+	</target>
+
+	<target name="consolidate-tests">
+		<path id="app.core.path">
+			<dirset dir="${sdk.dir}/apps/content-targeting" excludes="*-test" includes="*" />
+		</path>
+
+		<pathconvert pathsep="," property="app.core.path" refid="app.core.path" targetos="unix" />
+
+		<loop-macrodef-or-target
+			module.dirs="${app.core.path}"
+			target.name="consolidate-test"
+		/>
 	</target>
 
 	<target name="create-report">
@@ -97,7 +139,7 @@
 		</antelope:stringutil>
 
 		<antelope:stringutil string="${report.name}" property="report.java.package.name">
-			<antelope:replace regex="-" replacement="" />
+			<antelope:replace regex="-" replacement="." />
 			<antelope:trim />
 		</antelope:stringutil>
 
@@ -151,7 +193,7 @@
 		</antelope:stringutil>
 
 		<antelope:stringutil string="${rule.name}" property="rule.java.package.name">
-			<antelope:replace regex="-" replacement="" />
+			<antelope:replace regex="-" replacement="." />
 			<antelope:trim />
 		</antelope:stringutil>
 
@@ -205,7 +247,7 @@
 		</antelope:stringutil>
 
 		<antelope:stringutil string="${tracking.action.name}" property="tracking.action.java.package.name">
-			<antelope:replace regex="-" replacement="" />
+			<antelope:replace regex="-" replacement="." />
 			<antelope:trim />
 		</antelope:stringutil>
 
@@ -223,6 +265,16 @@
 	</target>
 
 	<target name="release">
+		<if>
+			<and>
+				<isset property="release.all" />
+				<equals arg1="${release.all}" arg2="true" />
+			</and>
+			<else>
+				<property name="app.plugins.includes" value="${app.core},${app.reports},${app.rules},${app.tracking.actions}" />
+			</else>
+		</if>
+
 		<if>
 			<not>
 				<isset property="release.version" />
@@ -256,6 +308,14 @@
 		<delete dir="${auto.deploy.dir}" failonerror="false" />
 	</target>
 
+	<target name="sonar">
+		<taskdef resource="org/sonar/ant/antlib.xml" uri="antlib:org.sonar.ant">
+			<classpath path="${sdk.dir}/lib/sonar-ant-task.jar" />
+		</taskdef>
+
+		<sonar:sonar />
+	</target>
+
 	<macrodef name="build-app-service">
 		<attribute name="module.dir" />
 
@@ -273,6 +333,17 @@
 
 		<sequential>
 			<ant dir="@{module.dir}" target="build-lang" inheritAll="false" />
+		</sequential>
+	</macrodef>
+
+	<macrodef name="consolidate-test">
+		<attribute name="module.dir" />
+
+		<sequential>
+			<copy todir="@{module.dir}/test-results" failonerror="false">
+				<fileset dir="@{module.dir}/test-results/integration" />
+				<fileset dir="@{module.dir}/test-results/unit" />
+			</copy>
 		</sequential>
 	</macrodef>
 </project>

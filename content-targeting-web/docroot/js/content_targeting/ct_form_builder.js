@@ -136,7 +136,7 @@ AUI.add(
 													return {
 														node: field.labelNode,
 														searchData: field.labelNode.one('.field-title').text()
-													}
+													};
 												}
 											);
 										}()),
@@ -208,6 +208,8 @@ AUI.add(
 						_onClickField: function(event) {
 							var instance = this,
 								field = A.Widget.getByNode(event.target);
+
+							instance.simulateFocusField(field, event.target);
 
 							event.stopPropagation();
 						},
@@ -376,7 +378,7 @@ AUI.add(
 								function(item) {
 									var field = {
 										id: item.get('fieldId'),
-										data: [],
+										data: [],
 										type: item.get('type')
 									};
 
@@ -400,7 +402,22 @@ AUI.add(
 							);
 
 							return JSON.stringify(fields);
-						}
+						},
+
+						simulateFocusField: function(field, target) {
+							var instance = this,
+								lastFocusedField = instance.lastFocusedField;
+
+							if (field !== lastFocusedField) {
+								if (lastFocusedField) lastFocusedField.blur();
+
+								instance.lastFocusedField = field.focus();
+							}
+
+							if (target.getDOMNode() !== document.activeElement) {
+								target.focus();
+							}
+ 						}
 					}
 				}
 			);
@@ -466,6 +483,21 @@ AUI.add(
 		};
 
 		A.LiferayCTFormBuilder = LiferayCTFormBuilder;
+
+		// AUI-1850
+
+		A.mix(
+			A.AvailableField.prototype,
+			{
+				_uiSetLabel: function(val) {
+					var instance = this;
+
+					instance.get('node').attr('title', val);
+					instance.labelNode.setContent(val);
+				}
+			},
+			true
+		);
 	},
 	'',
 	{

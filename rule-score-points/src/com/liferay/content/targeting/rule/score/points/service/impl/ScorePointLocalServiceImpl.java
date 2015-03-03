@@ -18,6 +18,8 @@ import com.liferay.content.targeting.rule.score.points.model.ScorePoint;
 import com.liferay.content.targeting.rule.score.points.service.base.ScorePointLocalServiceBaseImpl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
 
@@ -37,12 +39,7 @@ import java.util.List;
  */
 public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.content.targeting.rule.score.points.service.ScorePointLocalServiceUtil} to access the score point local service.
-	 */
-
+	@Override
 	public ScorePoint addScorePoints(
 			long anonymousUserId, long userSegmentId, long points)
 		throws SystemException {
@@ -60,11 +57,12 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return scorePoint;
 	}
 
+	@Override
 	public long getPoints(long anonymousUserId, long userSegmentId)
 		throws SystemException {
 
 		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
-				anonymousUserId, userSegmentId);
+			anonymousUserId, userSegmentId);
 
 		if (scorePoint == null) {
 			return 0;
@@ -73,12 +71,14 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return scorePoint.getPoints();
 	}
 
+	@Override
 	public List<ScorePoint> getScorePoints(long userSegmentId)
 		throws SystemException {
 
 		return scorePointPersistence.findByUserSegmentId(userSegmentId);
 	}
 
+	@Override
 	public long incrementPoints(
 			long anonymousUserId, long userSegmentId, long points)
 		throws SystemException {
@@ -87,8 +87,15 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 			anonymousUserId, userSegmentId);
 
 		if (scorePoint == null) {
-			scorePointLocalService.addScorePoints(
-				anonymousUserId, userSegmentId, points);
+			try {
+				scorePointLocalService.addScorePoints(
+					anonymousUserId, userSegmentId, points);
+			}
+			catch (Exception e) {
+				if (_log.isDebugEnabled()) {
+					_log.debug(e);
+				}
+			}
 
 			return points;
 		}
@@ -102,6 +109,7 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return total;
 	}
 
+	@Override
 	public ScorePoint updateScorePoints(
 			long anonymousUserId, long userSegmentId, long points)
 		throws SystemException {
@@ -115,5 +123,8 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 
 		return scorePoint;
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(
+		ScorePointLocalServiceImpl.class);
 
 }

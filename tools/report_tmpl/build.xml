@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="report-@report.java.package.name@" basedir="." default="compile">
+<project name="report-@report.name@" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
 	<property name="plugin.name" value="com.liferay.content.targeting.report.@report.java.package.name@" />
