@@ -18,6 +18,12 @@ import com.liferay.content.targeting.portlet.util.UnavailableServiceException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Portlet;
+import com.liferay.portal.service.PortletLocalServiceUtil;
+import com.liferay.portal.theme.PortletDisplay;
+import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
 import java.util.HashMap;
@@ -60,8 +66,22 @@ public class CTFreeMarkerPortlet extends FreeMarkerPortlet {
 			PortletResponse portletResponse, Template template)
 		throws Exception {
 
-		if (!path.equals(ContentTargetingPath.ERROR) &&
-			!path.equals(ContentTargetingPath.WARNING_RESTART)) {
+		if (path.equals(ContentTargetingPath.ADD_ASSET_REDIRECT)) {
+			ThemeDisplay themeDisplay =
+				(ThemeDisplay)portletRequest.getAttribute(
+					WebKeys.THEME_DISPLAY);
+
+			PortletDisplay portletDisplay = themeDisplay.getPortletDisplay();
+
+			Portlet selPortlet = PortletLocalServiceUtil.getPortletById(
+				themeDisplay.getCompanyId(), portletDisplay.getId());
+
+			template.put("selPortlet", selPortlet);
+			template.put(
+				"redirect", ParamUtil.getString(portletRequest, "redirect"));
+		}
+		else if (!path.equals(ContentTargetingPath.ERROR) &&
+				 !path.equals(ContentTargetingPath.WARNING_RESTART)) {
 
 			try {
 				doPopulateContext(

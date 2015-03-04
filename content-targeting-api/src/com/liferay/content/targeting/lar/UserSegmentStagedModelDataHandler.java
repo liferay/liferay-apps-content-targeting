@@ -37,6 +37,7 @@ import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eduardo Garcia
@@ -86,6 +87,24 @@ public class UserSegmentStagedModelDataHandler
 		portletDataContext.addClassedModel(
 			userSegmentElement, ExportImportPathUtil.getModelPath(userSegment),
 			userSegment);
+	}
+
+	@Override
+	protected void doImportCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid,
+			long userSegmentId)
+		throws Exception {
+
+		UserSegment existingUserSegment =
+			UserSegmentLocalServiceUtil.fetchUserSegmentByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> userSegmentIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				UserSegment.class);
+
+		userSegmentIds.put(
+			userSegmentId, existingUserSegment.getUserSegmentId());
 	}
 
 	@Override

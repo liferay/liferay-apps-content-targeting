@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Portlet;
@@ -105,7 +106,7 @@ public class UserSegmentContentDisplayPortletDataHandler
 				UserSegmentLocalServiceUtil.fetchUserSegmentByAssetCategoryId(
 					categoryId);
 
-			if ((assetCategory == null) || (userSegment != null)) {
+			if ((assetCategory == null) || (userSegment == null)) {
 				if (_log.isWarnEnabled()) {
 					_log.warn("Unable to get category with id " + categoryId);
 				}
@@ -114,6 +115,8 @@ public class UserSegmentContentDisplayPortletDataHandler
 			}
 
 			newValues[i] = assetCategory.getUuid();
+
+			portletPreferences.setValues(key + "uuid", newValues);
 
 			if (portletDataContext.getBooleanParameter(
 					NAMESPACE, "referenced-user-segments")) {
@@ -154,11 +157,11 @@ public class UserSegmentContentDisplayPortletDataHandler
 			return;
 		}
 
-		try {
+		if (portletDataContext.getBooleanParameter(
+				NAMESPACE, "referenced-user-segments")) {
+
 			StagedModelDataHandlerUtil.importReferenceStagedModels(
 				portletDataContext, UserSegment.class);
-		}
-		catch (Exception e) {
 		}
 
 		String[] newValues = new String[oldValues.length];
@@ -171,18 +174,29 @@ public class UserSegmentContentDisplayPortletDataHandler
 					fetchAssetCategoryByUuidAndGroupId(
 						oldValue, portletDataContext.getScopeGroupId());
 
+			if (assetCategory == null) {
+				assetCategory =
+					AssetCategoryLocalServiceUtil.
+						fetchAssetCategoryByUuidAndGroupId(
+							oldValue, portletDataContext.getCompanyGroupId());
+			}
+
 			if (assetCategory != null) {
 				newValues[i] = String.valueOf(assetCategory.getCategoryId());
 			}
-			else if (_log.isWarnEnabled()) {
-				StringBundler sb = new StringBundler(4);
+			else {
+				newValues[i] = StringPool.BLANK;
 
-				sb.append("Unable to get category with UUID ");
-				sb.append(oldValue);
-				sb.append(" in group ");
-				sb.append(portletDataContext.getScopeGroupId());
+				if (_log.isWarnEnabled()) {
+					StringBundler sb = new StringBundler(4);
 
-				_log.warn(sb.toString());
+					sb.append("Unable to get category with UUID ");
+					sb.append(oldValue);
+					sb.append(" in group ");
+					sb.append(portletDataContext.getScopeGroupId());
+
+					_log.warn(sb.toString());
+				}
 			}
 		}
 

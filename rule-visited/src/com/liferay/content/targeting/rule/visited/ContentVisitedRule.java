@@ -133,7 +133,7 @@ public class ContentVisitedRule extends BaseRule {
 
 		if (portletDataContext.getBooleanParameter(
 				ContentTargetingPortletDataHandler.NAMESPACE,
-				"referenced-content")) {
+				"user-segment-referenced-content")) {
 
 			try {
 				StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -207,7 +207,7 @@ public class ContentVisitedRule extends BaseRule {
 
 		if (portletDataContext.getBooleanParameter(
 				ContentTargetingPortletDataHandler.NAMESPACE,
-				"referenced-content")) {
+				"user-segment-referenced-content")) {
 
 			StagedModelDataHandlerUtil.importReferenceStagedModels(
 				portletDataContext, ruleInstance,

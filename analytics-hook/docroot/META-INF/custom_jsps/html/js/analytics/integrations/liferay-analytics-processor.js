@@ -53,7 +53,7 @@
 	LiferayAnalyticsProcessor.prototype.getPendingEvents = function() {
 		var instance = this;
 
-		var storedEvents = localStorage.getItem('ct-analytics-events') || '[]';
+		var storedEvents = localStorage.getItem('ct-analytics-events') || '[]';
 
 		return JSON.parse(storedEvents);
 	};

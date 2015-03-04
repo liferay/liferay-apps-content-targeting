@@ -19,6 +19,8 @@ import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
@@ -28,7 +30,7 @@ import com.liferay.portlet.asset.AssetRendererFactoryRegistryUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.model.AssetRenderer;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.asset.service.AssetEntryServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -259,9 +261,14 @@ public abstract class AssetQueryRule implements QueryRule {
 	protected void initAssetEntry(Locale locale)
 		throws PortalException, SystemException {
 
-		_assetEntry = AssetEntryLocalServiceUtil.fetchAssetEntry(_assetEntryId);
+		try {
+			_assetEntry = AssetEntryServiceUtil.getEntry(_assetEntryId);
+		}
+		catch (Exception e) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(e);
+			}
 
-		if (_assetEntry == null) {
 			return;
 		}
 
@@ -274,6 +281,8 @@ public abstract class AssetQueryRule implements QueryRule {
 		_assetTitle = _assetEntry.getTitle(locale);
 		_assetType = _assetRendererFactory.getTypeName(locale, true);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(AssetQueryRule.class);
 
 	private String _assetClassName = StringPool.BLANK;
 	private long _assetClassPK;

@@ -254,11 +254,6 @@ public interface ScorePointLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this interface directly. Always use {@link com.liferay.content.targeting.rule.score.points.service.ScorePointLocalServiceUtil} to access the score point local service.
-	*/
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint addScorePoints(
 		long anonymousUserId, long userSegmentId, long points)
 		throws com.liferay.portal.kernel.exception.SystemException;

@@ -28,7 +28,10 @@
 	<#assign assetRenderer = assetEntry.getAssetRenderer() />
 
 	<#if assetRenderer.hasEditPermission(permissionChecker)>
-		<#assign redirectURL = renderResponse.createRenderURL() />
+		<@portlet["renderURL"] varImpl="redirectURL" windowState=windowStateFactory.getWindowState("pop_up").toString()>
+			<@portlet["param"] name="mvcPath" value="html/add_asset_redirect.ftl" />
+			<@portlet["param"] name="redirect" value="${currentURL}" />
+		</@>
 
 		<#assign editPortletURL = assetRenderer.getURLEdit(renderRequest, renderResponse, windowStateFactory.getWindowState("pop_up"), redirectURL)!"" />
 
@@ -42,7 +45,7 @@
 					image="edit"
 					label=true
 					message=title
-					url="javascript:Liferay.Util.openWindow({dialog: {width: 960}, id:'" + renderResponse.getNamespace() + "editAsset', title: '" + title + "', uri:'" + htmlUtil.escapeURL(editPortletURL.toString()) + "'});"
+					url="javascript:Liferay.Util.openWindow({id:'" + renderResponse.getNamespace() + "editAsset', title: '" + title + "', uri:'" + htmlUtil.escapeURL(editPortletURL.toString()) + "'});"
 				/>
 			</span>
 		</#if>

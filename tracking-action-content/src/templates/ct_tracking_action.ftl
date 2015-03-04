@@ -38,7 +38,7 @@
 
 			<label class="control-label"><@liferay_ui["message"] key="select-the-content-to-be-tracked" /></label>
 
-			<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" message=languageUtil.get(locale, "select-content") showWhenSingleIcon=true>
+			<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" id="{ct_field_guid}assetSelector" message=languageUtil.get(locale, "select-content") showWhenSingleIcon=true>
 				<#list assetRendererFactories as assetRendererFactory>
 					<@liferay_ui["icon"]
 						cssClass="asset-selector"

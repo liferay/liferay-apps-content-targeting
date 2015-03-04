@@ -106,6 +106,12 @@ AUI.add(
 				return panelNode;
 			},
 
+			togglePreviewPanel: function() {
+				var instance = this;
+
+				Dockbar._togglePanel(STR_PREVIEW_PANEL);
+			},
+
 			toggleAddPanel: function() {
 				var instance = this;
 
@@ -116,12 +122,6 @@ AUI.add(
 				var instance = this;
 
 				Dockbar._togglePanel(STR_EDIT_LAYOUT_PANEL);
-			},
-
-			togglePreviewPanel: function() {
-				var instance = this;
-
-				Dockbar._togglePanel(STR_PREVIEW_PANEL);
 			},
 
 			_registerPanels: function() {
@@ -178,11 +178,15 @@ AUI.add(
 
 					var navAccountControls = A.one('#' + namespace + 'navAccountControls');
 
-					navAccountControls.toggleClass('nav-account-controls-notice', force);
+					if (navAccountControls) {
+						navAccountControls.toggleClass('nav-account-controls-notice', force);
+					}
 
 					var navAddControls = A.one('#' + namespace + 'navAddControls');
 
-					navAddControls.toggleClass('nav-add-controls-notice', force);
+					if (navAddControls) {
+						navAddControls.toggleClass('nav-add-controls-notice', force);
+					}
 				}
 			},
 

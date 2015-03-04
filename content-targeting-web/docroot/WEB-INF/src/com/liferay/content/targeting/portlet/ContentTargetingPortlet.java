@@ -85,6 +85,7 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.util.WebKeys;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
@@ -284,7 +285,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			UserSegment.class.getName(), request);
+			Campaign.class.getName(), request);
 
 		try {
 			Callable<Campaign> campaignCallable =
@@ -383,7 +384,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			UserSegment.class.getName(), request);
+			request);
 
 		try {
 			Callable<UserSegment> userSegmentCallable =
@@ -471,7 +472,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			PortletResponse portletResponse, Template template)
 		throws Exception {
 
-		checkServices();
+		_checkServices();
 
 		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
@@ -1064,8 +1065,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			String className = ParamUtil.getString(portletRequest, "className");
 			long classPK = ParamUtil.getLong(portletRequest, "classPK");
 
+			Group scopeGroup = themeDisplay.getScopeGroup();
+
 			template.put("className", className);
-			template.put("classPK", classPK);
+			template.put("scopeGroup", scopeGroup);
 			template.put("reportInstanceService", _reportInstanceService);
 
 			String name = StringPool.BLANK;
@@ -1077,6 +1080,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				BreadcrumbUtil.addPortletBreadcrumbEntries(
 					request, (RenderResponse)portletResponse, campaign);
+
+				classPK = _getCampaignClassPK(campaign, scopeGroup);
 			}
 			else if (className.equals(UserSegment.class.getName())) {
 				UserSegment userSegment =
@@ -1086,7 +1091,11 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				BreadcrumbUtil.addPortletBreadcrumbEntries(
 					request, (RenderResponse)portletResponse, userSegment);
+
+				classPK = _getUserSegmentClassPK(userSegment, scopeGroup);
 			}
+
+			template.put("classPK", classPK);
 
 			if (path.equals(ContentTargetingPath.VIEW_REPORT)) {
 				template.put("name", name);
@@ -1149,7 +1158,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			RuleInstance.class.getName(), request);
+			request);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -1307,6 +1316,38 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return trackingActionExceptions;
 	}
 
+	private void _checkServices()
+		throws SystemException, UnavailableServiceException {
+
+		try {
+			_analyticsEventLocalService.getAnalyticsEvents(0, 1);
+			_anonymousUserLocalService.getAnonymousUsers(0, 1);
+			_campaignLocalService.getCampaigns(0, 1);
+		}
+		catch (Exception e) {
+			throw new UnavailableServiceException();
+		}
+	}
+
+	private long _getCampaignClassPK(Campaign campaign, Group scopeGroup)
+		throws Exception {
+
+		if (!scopeGroup.isStagingGroup()) {
+			return campaign.getCampaignId();
+		}
+
+		Campaign liveCampaign =
+			_campaignLocalService.fetchCampaignByUuidAndGroupId(
+				campaign.getUuid(), scopeGroup.getLiveGroupId());
+
+		if (liveCampaign != null) {
+			return liveCampaign.getCampaignId();
+		}
+		else {
+			return 0;
+		}
+	}
+
 	private Date _getDate(PortletRequest portletRequest, String paramPrefix) {
 		int dateMonth = ParamUtil.getInteger(
 			portletRequest, paramPrefix + "Month");
@@ -1341,16 +1382,23 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return calendar.getTime();
 	}
 
-	private void checkServices()
-		throws SystemException, UnavailableServiceException {
+	private long _getUserSegmentClassPK(
+			UserSegment userSegment, Group scopeGroup)
+		throws Exception {
 
-		try {
-			_analyticsEventLocalService.getAnalyticsEvents(0, 1);
-			_anonymousUserLocalService.getAnonymousUsers(0, 1);
-			_campaignLocalService.getCampaigns(0, 1);
+		if (!scopeGroup.isStagingGroup()) {
+			return userSegment.getUserSegmentId();
 		}
-		catch (Exception e) {
-			throw new UnavailableServiceException();
+
+		UserSegment liveUserSegment =
+			_userSegmentLocalService.fetchUserSegmentByUuidAndGroupId(
+				userSegment.getUuid(), scopeGroup.getLiveGroupId());
+
+		if (liveUserSegment != null) {
+			return liveUserSegment.getUserSegmentId();
+		}
+		else {
+			return 0;
 		}
 	}
 

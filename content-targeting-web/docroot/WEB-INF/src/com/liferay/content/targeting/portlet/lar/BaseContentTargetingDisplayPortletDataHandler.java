@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.portlet.lar;
 
 import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
-import com.liferay.content.targeting.lar.ContentTargetingPortletDataHandler;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
@@ -194,10 +193,7 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 			return;
 		}
 
-		if (portletDataContext.getBooleanParameter(
-				ContentTargetingPortletDataHandler.NAMESPACE,
-				"referenced-content")) {
-
+		if (isExportReferencedContent(portletDataContext)) {
 			StagedModelDataHandlerUtil.importReferenceStagedModels(
 				portletDataContext, AssetEntryReferencedStagedModel.class);
 		}
@@ -225,15 +221,19 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 			portletPreferences.setValue(
 				key, String.valueOf(assetEntry.getEntryId()));
 		}
-		else if (_log.isWarnEnabled()) {
-			StringBundler sb = new StringBundler(4);
+		else {
+			portletPreferences.reset(key);
 
-			sb.append("Unable to get asset entry for with classUUID ");
-			sb.append(classUuid);
-			sb.append(" in group ");
-			sb.append(groupId);
+			if (_log.isWarnEnabled()) {
+				StringBundler sb = new StringBundler(4);
 
-			_log.warn(sb.toString());
+				sb.append("Unable to get asset entry for with classUUID ");
+				sb.append(classUuid);
+				sb.append(" in group ");
+				sb.append(groupId);
+
+				_log.warn(sb.toString());
+			}
 		}
 
 		portletPreferences.reset(key + "classUuid");

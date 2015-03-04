@@ -136,7 +136,7 @@ AUI.add(
 													return {
 														node: field.labelNode,
 														searchData: field.labelNode.one('.field-title').text()
-													}
+													};
 												}
 											);
 										}()),
@@ -376,7 +376,7 @@ AUI.add(
 								function(item) {
 									var field = {
 										id: item.get('fieldId'),
-										data: [],
+										data: [],
 										type: item.get('type')
 									};
 
@@ -466,6 +466,21 @@ AUI.add(
 		};
 
 		A.LiferayCTFormBuilder = LiferayCTFormBuilder;
+
+		// AUI-1850
+
+		A.mix(
+			A.AvailableField.prototype,
+			{
+				_uiSetLabel: function(val) {
+					var instance = this;
+
+					instance.get('node').attr('title', val);
+					instance.labelNode.setContent(val);
+				}
+			},
+			true
+		);
 	},
 	'',
 	{

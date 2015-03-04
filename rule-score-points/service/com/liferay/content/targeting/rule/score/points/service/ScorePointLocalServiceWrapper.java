@@ -287,11 +287,6 @@ public class ScorePointLocalServiceWrapper implements ScorePointLocalService,
 			arguments);
 	}
 
-	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this interface directly. Always use {@link com.liferay.content.targeting.rule.score.points.service.ScorePointLocalServiceUtil} to access the score point local service.
-	*/
 	@Override
 	public com.liferay.content.targeting.rule.score.points.model.ScorePoint addScorePoints(
 		long anonymousUserId, long userSegmentId, long points)
