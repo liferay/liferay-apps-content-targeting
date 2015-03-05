@@ -310,7 +310,7 @@
 
 	<target name="sonar">
 		<taskdef resource="org/sonar/ant/antlib.xml" uri="antlib:org.sonar.ant">
-			<classpath path="${sdk.dir}/lib/sonar-ant-task.jar" />
+			<classpath path="${sdk.dir}/dependencies/org.sonar.ant/lib/sonar-ant-task.jar" />
 		</taskdef>
 
 		<sonar:sonar />
@@ -344,6 +344,10 @@
 				<fileset dir="@{module.dir}/test-results/integration" />
 				<fileset dir="@{module.dir}/test-results/unit" />
 			</copy>
+
+			<merge-coverage
+				module.dir="@{module.dir}"
+			/>
 		</sequential>
 	</macrodef>
 </project>
