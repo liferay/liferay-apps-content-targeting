@@ -18,7 +18,7 @@
 <#else>
 	<@aui["select"] label="" name="userGroupId">
 		<#list userGroups as userGroup>
-			<@aui["option"] label="${userGroup.getName()}" selected=(userGroup.getUserGroupId() == userGroupId) value=userGroup.getUserGroupId() />
+			<@aui["option"] label="${userGroup.getName()} - ${userGroup.getDescription()}" selected=(userGroup.getUserGroupId() == userGroupId) value=userGroup.getUserGroupId() />
 		</#list>
 	</@>
 </#if>
