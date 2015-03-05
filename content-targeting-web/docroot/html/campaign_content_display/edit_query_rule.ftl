@@ -61,7 +61,7 @@
 			<div class="summary-view ${summaryViewClass}">
 				<@aui["column"] columnWidth=50>
 					<span class="query-content-text"><@liferay_ui["message"] key="if-the-user-matches-this-campaign" /></span>
-					<span class="query-content-value">${queryRule.getCampaignName(locale)} (${languageUtil.get(locale, "priority")} ${queryRule.getCampaignPriority()})</span>
+					<span class="query-content-value">${queryRule.getCampaignName(locale)} (<@liferay_ui["message"] key="priority" /> ${queryRule.getCampaignPriority()})</span>
 				</@>
 
 				<@aui["column"] columnWidth=50>
