@@ -23,15 +23,11 @@
       <module fileurl="file://$PROJECT_DIR$/report-user-segment-content-test/report-user-segment-content-test.iml" filepath="$PROJECT_DIR$/report-user-segment-content-test/report-user-segment-content-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-age/rule-age.iml" filepath="$PROJECT_DIR$/rule-age/rule-age.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-browser/rule-browser.iml" filepath="$PROJECT_DIR$/rule-browser/rule-browser.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-custom-field/rule-custom-field.iml" filepath="$PROJECT_DIR$/rule-custom-field/rule-custom-field.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-custom-field-test/rule-custom-field-test.iml" filepath="$PROJECT_DIR$/rule-custom-field-test/rule-custom-field-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-device/rule-device.iml" filepath="$PROJECT_DIR$/rule-device/rule-device.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-device-test/rule-device-test.iml" filepath="$PROJECT_DIR$/rule-device-test/rule-device-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-facebook/rule-facebook.iml" filepath="$PROJECT_DIR$/rule-facebook/rule-facebook.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-gender/rule-gender.iml" filepath="$PROJECT_DIR$/rule-gender/rule-gender.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-ip-geocode/rule-ip-geocode.iml" filepath="$PROJECT_DIR$/rule-ip-geocode/rule-ip-geocode.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-ip-range/rule-ip-range.iml" filepath="$PROJECT_DIR$/rule-ip-range/rule-ip-range.iml" />
-      <module fileurl="file://$PROJECT_DIR$/rule-language/rule-language.iml" filepath="$PROJECT_DIR$/rule-language/rule-language.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-organization-member/rule-organization-member.iml" filepath="$PROJECT_DIR$/rule-organization-member/rule-organization-member.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-organization-member-test/rule-organization-member-test.iml" filepath="$PROJECT_DIR$/rule-organization-member-test/rule-organization-member-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-os/rule-os.iml" filepath="$PROJECT_DIR$/rule-os/rule-os.iml" />
