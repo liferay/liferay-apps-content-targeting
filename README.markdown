@@ -119,6 +119,11 @@ resources.
 
 ## Development
 
+The *master* branch of this repository will always contain the latest release
+available of the app.
+
+The latest work can be found in the branch *develop*.
+
 The master branch of the Liferay Audience Targeting application is developed for
 Liferay 6.2 CE using the 6.2 version of the plugins SDK.
 
