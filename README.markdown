@@ -21,10 +21,9 @@ To get started, check out the project's community homepage at
 The Audience Targeting application are a subset of plugins related to the Web
 Content Management Experience that enhance Liferay WCM capabilities.
 
-Most of the plugins found in the liferay-plugins repository can be easily
-installed on Liferay Portal via [Liferay
-Marketplace](http://liferay.com/marketplace). To build one or more of the
-plugins yourself, read below for details.
+The Audience Targeting App can be easily installed on Liferay Portal via
+[Liferay Marketplace](http://liferay.com/marketplace).
+To build the app yourself, read below for details.
 
 ## Quick Start
 
@@ -37,30 +36,72 @@ the following steps:
 6.2.x branch of the [liferay-plugins]
 (https://github.com/liferay/liferay-plugins) repository.
 2. Init the Audience Targeting application submodule in the Liferay 6.2 SDK by
-running these commands:
+running these commands inside the directory apps/content-targeting:
 ```
 	git submodule init
 	git submodule update
 ```
-3. Set this property in the build.<username>.properties of your Liferay SDK:
+3. Set these properties in the build.<username>.properties of your Liferay SDK:
 	```
 	plugins.includes=*-api,*-hook,*-service,*-web,report-*,rule-*,runtime-dependencies,tracking-action-*
+	plugin.excludes=*-test
 	```
 4. Go to apps/content-targeting and run `ant build-app`
 
-### OSGI Console
+### Documentation
 
-The OSGi bundle console gives information about the bundles that are currently
- available in the container and allows some operations over them. In order to
- start the console just run `telnet localhost 6666` once the Audience Targeting
- application plugins have been deployed.
+Take a look to the [Liferay Portal User Guide]
+(https://www.liferay.com/documentation/liferay-portal/6.2/user-guide) for
+information about using Liferay Portal.
 
-Some useful commands:
+The Audience Targeting application is built on top of Liferay Portal and follows
+the same usability patterns. For more information about how to use Audience
+Targeting, read the chapter [Targeting Content to your Audience]
+(https://dev.liferay.com/discover/portal/-/knowledge_base/6-2/targeting-content-to-your-audience).
 
-* bundles: list bundles and status
-* start [bundle id]: starts a bundle
-* stop [bundle id]: stops a bundle
-* uninstall [bundle id]: uninstalls a bundle
+There are also available several [Tutorials in the Liferay Developer Network]
+(https://dev.liferay.com/develop/tutorials/-/knowledge_base/6-2/audience-targeting)
+to guide you through all the available extensions to the Audience Targeting App.
+
+
+## Development
+
+The *master* branch of this repository will always contain the latest release
+available of the app.
+
+The latest work can be found in the branch *develop*.
+
+Please, send any pull request to the user @liferay and the branch *develop* and
+we will start a discussion there about your changes.
+
+The master branch of the Liferay Audience Targeting application is developed for
+Liferay 6.2 CE using the 6.2 version of the plugins SDK.
+
+The Audience Targeting application is designed as a framework to be extended by
+other developers easily. See this [DEVELOPING guide](DEVELOPING.markdown).
+
+### Source Code
+
+The source code of the Audience Targeting application is located in the
+[liferay-apps-content-targeting]
+(https://github.com/liferay/liferay-apps-content-targeting) repository. This
+repository is aggregated as a submodule of the [liferay-plugins]
+(https://github.com/liferay/liferay-plugins) repository under /apps.
+
+Execute `git tag` to see the tags of the different released versions of the app.
+
+### Contributing
+
+We welcome any and all contributions! If you have an idea for a new plugin
+or a new feature in an existing plugin, and wish to implement it, just send a
+pull request to the user @liferay and to the branch *develop* and
+we will start a discussion there around your changes.
+
+You can contact us in the [forums]
+(https://www.liferay.com/es/community/forums/-/message_boards/category/43900641)
+ and create bugs or feature requests in our [issue tracker]
+ (http://issues.liferay.com/browse/WCM).
+
 
 ### Testing
 
@@ -78,59 +119,34 @@ and that your server is running.
 from the IDE (e.g. IntelliJ), you should update the
 folder of the runner to use the folder of your plugin as the working directory.
 
-### Troubleshooting
 
-#### Exceptions when deploying the plugins
+### OSGI Console
 
-There are some issues with the Spring context and OSGI context. They can easily
-by bypassed deploying the apps when the server is already started or also adding
-this property to portal-ext.properties:
+The OSGi bundle console gives information about the bundles that are currently
+ available in the container and allows some operations over them. In order to
+ start the console you need to add this line to your portal-ext.properties
 
-	```
-	module.framework.properties.felix.fileinstall.start.level=20
-	```
+```
+module.framework.properties.osgi.console=11311
+```
 
-## User Guide
+ Then you can just run `telnet localhost 11311` once the Audience Targeting
+ application plugins have been deployed.
 
-Take a look to the [Liferay Portal User Guide]
-(https://www.liferay.com/documentation/liferay-portal/6.2/user-guide) for
-information about using Liferay Portal.
+Some useful commands:
 
-The Audience Targeting application is built on top of Liferay Portal and follows
-the same usability patterns. For more information about how to use Audience
-Targeting, read this [User Guide](USING.markdown).
-
-## Source Code
-
-The source code of the Audience Targeting application is located in the
-[liferay-apps-content-targeting]
-(https://github.com/liferay/liferay-apps-content-targeting) repository. This
-repository is aggregated as a submodule of the [liferay-plugins]
-(https://github.com/liferay/liferay-plugins) repository under /apps.
-
-## Contributing
-
-Liferay welcomes any and all contributions! If you have an idea for a new plugin
-or a new feature in an existing plugin, and wish to implement it, follow the
-contribution steps outlined in the [CONTRIBUTING
-guide](CONTRIBUTING.markdown).
-It explains how to contribute to Liferay and contains links to additional useful
-resources.
-
-## Development
-
-The *master* branch of this repository will always contain the latest release
-available of the app.
-
-The latest work can be found in the branch *develop*.
-
-The master branch of the Liferay Audience Targeting application is developed for
-Liferay 6.2 CE using the 6.2 version of the plugins SDK.
-
-The Audience Targeting application is designed as a framework to be extended by
-other developers easily. See this [DEVELOPING guide](DEVELOPING.markdown).
+* bundles: list bundles and status
+* start [bundle id]: starts a bundle
+* stop [bundle id]: stops a bundle
+* uninstall [bundle id]: uninstalls a bundle
 
 ## More Information
+
+Bugs and Feature Requests for the project can be found in our [issue tracker]
+(http://issues.liferay.com/browse/WCM).
+
+Feel free to ask us anything in our [forums]
+(https://www.liferay.com/es/community/forums/-/message_boards/category/43900641).
 
 For more information about filling bugs, staying updated with Liferay on social
 media, and other ways to participate, check out the [Liferay Community
