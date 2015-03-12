@@ -1,9 +1,9 @@
 # Liferay Audience Targeting application
 
-"Audience Targeting” is a new App for Liferay 6.2 that will put the engagement
+*Audience Targeting* is a new App for Liferay 6.2 that will put the engagement
  experience of your portal at a whole new level. This app allows you to segment
  your audience, target specific content to different user segments, create 
- campaigns for them and measure quickly the effectivity.
+ campaigns for them and measure the campaigns' effectivness quickly.
 
 ![Audience Targeting App](https://raw.githubusercontent.com/liferay/liferay-apps-content-targeting/master/audience_targeting_icon.png) 
 
@@ -18,7 +18,7 @@ development project in 2000 and was open sourced in 2001.
 To get started, check out the project's community homepage at
 [http://liferay.org](http://liferay.org)!
 
-The Audience Targeting application are a subset of plugins related to the Web
+The Audience Targeting application is a subset of plugins related to the Web
 Content Management Experience that enhance Liferay WCM capabilities.
 
 The Audience Targeting App can be easily installed on Liferay Portal via
@@ -37,27 +37,27 @@ the following steps:
 (https://github.com/liferay/liferay-plugins) repository.
 2. Init the Audience Targeting application submodule in the Liferay 6.2 SDK by
 running these commands inside the directory apps/content-targeting:
-```
-	git submodule init
-	git submodule update
-```
-3. Set these properties in the build.<username>.properties of your Liferay SDK:
-	```
-	plugins.includes=*-api,*-hook,*-service,*-web,report-*,rule-*,runtime-dependencies,tracking-action-*
-	plugin.excludes=*-test
-	```
+
+		git submodule init
+		git submodule update
+
+3. Set these properties in the `build.<username>.properties` of your Liferay SDK:
+
+		plugins.includes=*-api,*-hook,*-service,*-web,report-*,rule-*,runtime-dependencies,tracking-action-*
+		plugin.excludes=*-test
+
 4. Go to apps/content-targeting and run `ant build-app`
 
 ### Documentation
 
-Take a look to the [Liferay Portal User Guide]
-(https://www.liferay.com/documentation/liferay-portal/6.2/user-guide) for
-information about using Liferay Portal.
+Take a look at the [Liferay Portal User Guide](https://dev.liferay.com/discover/portal)
+for information about using Liferay Portal.
 
 The Audience Targeting application is built on top of Liferay Portal and follows
 the same usability patterns. For more information about how to use Audience
-Targeting, read the chapter [Targeting Content to your Audience]
-(https://dev.liferay.com/discover/portal/-/knowledge_base/6-2/targeting-content-to-your-audience).
+Targeting, read the [Targeting Content to your Audience]
+(https://dev.liferay.com/discover/portal/-/knowledge_base/6-2/targeting-content-to-your-audience)
+section.
 
 There are also available several [Tutorials in the Liferay Developer Network]
 (https://dev.liferay.com/develop/tutorials/-/knowledge_base/6-2/audience-targeting)
@@ -78,7 +78,7 @@ The master branch of the Liferay Audience Targeting application is developed for
 Liferay 6.2 CE using the 6.2 version of the plugins SDK.
 
 The Audience Targeting application is designed as a framework to be extended by
-other developers easily. See this [DEVELOPING guide](DEVELOPING.markdown).
+other developers easily. See the Audience Targeting [tutorials](https://dev.liferay.com/develop/tutorials/-/knowledge_base/6-2/audience-targeting).
 
 ### Source Code
 
@@ -105,14 +105,14 @@ You can contact us in the [forums]
 
 ### Testing
 
-In order to execute the Integration tests locally you have to go through the
+In order to execute the Integration tests locally, you have to go through the
 following steps:
 
 1. Append the test modules to the `plugins.includes` property of your
-build.<username>.properties file:
-	```
-	plugins.includes=<all other audience targeting application modules>,*-test,runtime-test-dependencies
-	```
+`build.<username>.properties` file:
+
+		plugins.includes=<all other audience targeting application modules>,*-test,runtime-test-dependencies
+
 2. Make sure you have deployed all the Audience Targeting application plugins
 and that your server is running.
 3. Go to apps/content-targeting and run `ant test`. In order to run the tests
@@ -148,7 +148,7 @@ Bugs and Feature Requests for the project can be found in our [issue tracker]
 Feel free to ask us anything in our [forums]
 (https://www.liferay.com/es/community/forums/-/message_boards/category/43900641).
 
-For more information about filling bugs, staying updated with Liferay on social
+For more information about filing bugs, staying updated with Liferay on social
 media, and other ways to participate, check out the [Liferay Community
 Homepage](http://liferay.org) and consult the [README
 file](https://github.com/liferay/liferay-portal/blob/master/README.markdown) in
