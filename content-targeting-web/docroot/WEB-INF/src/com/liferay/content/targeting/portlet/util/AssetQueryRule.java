@@ -272,6 +272,10 @@ public abstract class AssetQueryRule implements QueryRule {
 			return;
 		}
 
+		if (!_assetEntry.isVisible()) {
+			return;
+		}
+
 		_assetClassName = _assetEntry.getClassName();
 		_assetClassPK = _assetEntry.getClassPK();
 		_assetRendererFactory =
