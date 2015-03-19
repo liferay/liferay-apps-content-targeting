@@ -97,7 +97,13 @@ public class UserSegmentStagedModelDataHandler
 
 		UserSegment existingUserSegment =
 			UserSegmentLocalServiceUtil.fetchUserSegmentByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
+				uuid, portletDataContext.getScopeGroupId());
+
+		if (existingUserSegment == null) {
+			existingUserSegment = 
+				UserSegmentLocalServiceUtil.fetchUserSegmentByUuidAndGroupId(
+					uuid, portletDataContext.getCompanyGroupId());
+		}
 
 		Map<Long, Long> userSegmentIds =
 			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
