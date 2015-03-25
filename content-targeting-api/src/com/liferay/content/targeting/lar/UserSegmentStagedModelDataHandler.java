@@ -100,7 +100,7 @@ public class UserSegmentStagedModelDataHandler
 				uuid, portletDataContext.getScopeGroupId());
 
 		if (existingUserSegment == null) {
-			existingUserSegment = 
+			existingUserSegment =
 				UserSegmentLocalServiceUtil.fetchUserSegmentByUuidAndGroupId(
 					uuid, portletDataContext.getCompanyGroupId());
 		}
