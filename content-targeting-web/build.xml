@@ -7,7 +7,7 @@
 
 	<property name="plugin.name" value="com.liferay.content.targeting.web-portlet" />
 
-	<property name="import.shared" value="analytics-api,anonymous-user-api,content-targeting-api" />
+	<property name="import.shared" value="analytics-api,anonymous-users-api,content-targeting-api" />
 
 	<import file="../../../build-common-osgi-plugin.xml" />
 
