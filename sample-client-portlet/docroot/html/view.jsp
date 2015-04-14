@@ -15,3 +15,22 @@
 --%>
 
 <%@ include file="init.jsp" %>
+
+<h2>User Segments</h2>
+
+<ul>
+
+<%
+List<UserSegment> userSegments = (List<UserSegment>)request.getAttribute("userSegments");
+
+for (UserSegment userSegment : userSegments) {
+
+%>
+
+	<li><%= userSegment.getName(locale) %></li>
+
+<%
+}
+%>
+
+</ul>
