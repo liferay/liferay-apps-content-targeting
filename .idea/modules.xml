@@ -19,6 +19,7 @@
       <module fileurl="file://$PROJECT_DIR$/report-campaign-content-test/report-campaign-content-test.iml" filepath="$PROJECT_DIR$/report-campaign-content-test/report-campaign-content-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-campaign-tracking-action/report-campaign-tracking-action.iml" filepath="$PROJECT_DIR$/report-campaign-tracking-action/report-campaign-tracking-action.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-campaign-tracking-action-test/report-campaign-tracking-action-test.iml" filepath="$PROJECT_DIR$/report-campaign-tracking-action-test/report-campaign-tracking-action-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/report-newsletter/report-newsletter.iml" filepath="$PROJECT_DIR$/report-newsletter/report-newsletter.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-user-segment-content/report-user-segment-content.iml" filepath="$PROJECT_DIR$/report-user-segment-content/report-user-segment-content.iml" />
       <module fileurl="file://$PROJECT_DIR$/report-user-segment-content-test/report-user-segment-content-test.iml" filepath="$PROJECT_DIR$/report-user-segment-content-test/report-user-segment-content-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-age/rule-age.iml" filepath="$PROJECT_DIR$/rule-age/rule-age.iml" />
@@ -47,8 +48,10 @@
       <module fileurl="file://$PROJECT_DIR$/rule-user-logged-test/rule-user-logged-test.iml" filepath="$PROJECT_DIR$/rule-user-logged-test/rule-user-logged-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-visited/rule-visited.iml" filepath="$PROJECT_DIR$/rule-visited/rule-visited.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-visited-test/rule-visited-test.iml" filepath="$PROJECT_DIR$/rule-visited-test/rule-visited-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule-weather/rule-weather.iml" filepath="$PROJECT_DIR$/rule-weather/rule-weather.iml" />
       <module fileurl="file://$PROJECT_DIR$/runtime-dependencies/runtime-dependencies.iml" filepath="$PROJECT_DIR$/runtime-dependencies/runtime-dependencies.iml" />
       <module fileurl="file://$PROJECT_DIR$/runtime-test-dependencies/runtime-test-dependencies.iml" filepath="$PROJECT_DIR$/runtime-test-dependencies/runtime-test-dependencies.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sample-client-portlet/sample-client-portlet.iml" filepath="$PROJECT_DIR$/sample-client-portlet/sample-client-portlet.iml" />
       <module fileurl="file://$PROJECT_DIR$/service-test-util/service-test-util.iml" filepath="$PROJECT_DIR$/service-test-util/service-test-util.iml" />
       <module fileurl="file://$PROJECT_DIR$/simulator-hook/simulator-hook.iml" filepath="$PROJECT_DIR$/simulator-hook/simulator-hook.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/system-packages-extra-shared.iml" filepath="$PROJECT_DIR$/.idea/system-packages-extra-shared.iml" />
@@ -56,6 +59,7 @@
       <module fileurl="file://$PROJECT_DIR$/tracking-action-content/tracking-action-content.iml" filepath="$PROJECT_DIR$/tracking-action-content/tracking-action-content.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" filepath="$PROJECT_DIR$/tracking-action-form/tracking-action-form.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-link/tracking-action-link.iml" filepath="$PROJECT_DIR$/tracking-action-link/tracking-action-link.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tracking-action-newsletter/tracking-action-newsletter.iml" filepath="$PROJECT_DIR$/tracking-action-newsletter/tracking-action-newsletter.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-page/tracking-action-page.iml" filepath="$PROJECT_DIR$/tracking-action-page/tracking-action-page.iml" />
       <module fileurl="file://$PROJECT_DIR$/tracking-action-youtube/tracking-action-youtube.iml" filepath="$PROJECT_DIR$/tracking-action-youtube/tracking-action-youtube.iml" />
       <module fileurl="file://$PROJECT_DIR$/trunk.iml" filepath="$PROJECT_DIR$/trunk.iml" />
