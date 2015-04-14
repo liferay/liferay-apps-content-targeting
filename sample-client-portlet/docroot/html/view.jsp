@@ -34,3 +34,26 @@ for (UserSegment userSegment : userSegments) {
 %>
 
 </ul>
+
+<h2>Campaigns</h2>
+
+<ul id="<portlet:namespace/>campaigns">
+</ul>
+
+<aui:script use="aui-base">
+	var campaignsList = A.one('#<portlet:namespace/>campaigns');
+
+	Liferay.Service(
+		'content-targeting-api.campaign/get-campaigns',
+		{
+	    	groupId: '<%= scopeGroupId %>'
+		},
+		function(response) {
+			if (response.length) {
+				A.Array.each(response, function(item) {
+					campaignsList.append('<li>' + item.name + '</li>');
+				});
+			}
+		}
+	);
+</aui:script>
