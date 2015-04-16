@@ -417,7 +417,7 @@ AUI.add(
 							if (target.getDOMNode() !== document.activeElement) {
 								target.focus();
 							}
- 						}
+						}
 					}
 				}
 			);
