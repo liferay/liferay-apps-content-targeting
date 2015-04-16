@@ -1,10 +1,13 @@
 /*/bin
 /*/build.gradle
 /*/classes
+/*/coverage-reports
 /*/ivy.xml.MD5
 /*/javadoc
 /*/lib
+/*/pmd-reports
 /*/test-classes
+/*/test-coverage
 /*/test-results
 
 /*/docroot/css/*/.sass-cache
@@ -14,8 +17,12 @@
 
 /ivy.idea.properties
 
+sonar.*.properties
+
 .gh.json
 
 .idea/workspace.xml
 .idea/rebel_project.xml
 .idea/dataSources.*
+
+.sonar

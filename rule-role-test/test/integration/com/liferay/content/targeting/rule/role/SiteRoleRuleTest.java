@@ -21,13 +21,19 @@ import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
+import com.liferay.content.targeting.service.test.util.GroupTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.Role;
 import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
 
 import java.util.List;
 
@@ -46,7 +52,7 @@ import org.osgi.framework.BundleException;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
-public class RegularRoleTest {
+public class SiteRoleRuleTest {
 
 	@Before
 	public void setUp() {
@@ -66,7 +72,7 @@ public class RegularRoleTest {
 	}
 
 	@Test
-	public void testRegularRoleRule() throws Exception {
+	public void testSiteRoleRule() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		AnonymousUser anonymousUser =
@@ -75,21 +81,36 @@ public class RegularRoleTest {
 				serviceContext);
 
 		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			TestPropsValues.getCompanyId(),
-			new int[] {RoleConstants.TYPE_REGULAR});
+			TestPropsValues.getCompanyId(), new int[]{RoleConstants.TYPE_SITE});
 
 		Role role = roles.get(0);
 
-		Rule rule = _rulesRegistry.getRule("RegularRoleRule");
+		Rule rule = _rulesRegistry.getRule("SiteRoleRule");
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
 			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
-			String.valueOf(role.getRoleId()), serviceContext);
+			getTypeSettings(role.getRoleId()), serviceContext);
 
-		RoleLocalServiceUtil.addUserRole(
-			TestPropsValues.getUserId(), role.getRoleId());
+		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+			new long[]{TestPropsValues.getUserId()}, _group.getGroupId(),
+			role.getRoleId());
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
+	}
+
+	protected String getTypeSettings(long roleId) throws Exception {
+
+		_group = GroupTestUtil.addGroup();
+
+		GroupLocalServiceUtil.addUserGroup(
+			TestPropsValues.getUserId(), _group.getGroupId());
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+		jsonObj.put("siteId", _group.getGroupId());
+		jsonObj.put("roleId", roleId);
+
+		return jsonObj.toString();
 	}
 
 	private AnonymousUserLocalService _anonymousUserLocalService;
@@ -97,6 +118,7 @@ public class RegularRoleTest {
 	@ArquillianResource
 	private Bundle _bundle;
 
+	private Group _group;
 	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RulesRegistry _rulesRegistry;
 

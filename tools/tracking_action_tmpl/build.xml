@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="tracking-action-@tracking.action.java.package.name@" basedir="." default="compile">
+<project name="tracking-action-@tracking.action.name@" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
 	<property name="plugin.name" value="com.liferay.content.targeting.tracking.action.@tracking.action.java.package.name@" />

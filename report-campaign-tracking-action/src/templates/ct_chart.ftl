@@ -17,13 +17,13 @@
 		count:{
 			keys:['count'],
 			position:'left',
-			title:'${languageUtil.get(locale, "count")}',
+			title:'<@liferay_ui["message"] key="count" />',
 			type:'numeric'
 		},
 		content:{
 			keys:['content'],
 			position:'bottom',
-			title:'${languageUtil.get(locale, "content")}',
+			title:'<@liferay_ui["message"] key="content" />',
 			type:'category'
 		}
 	};

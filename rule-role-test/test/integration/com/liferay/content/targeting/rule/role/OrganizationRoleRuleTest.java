@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.content.targeting.rule.visited;
+package com.liferay.content.targeting.rule.role;
 
-import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.content.targeting.api.model.Rule;
@@ -22,15 +21,24 @@ import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
-import com.liferay.content.targeting.service.test.util.GroupTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
-import com.liferay.portal.model.LayoutConstants;
-import com.liferay.portal.service.LayoutLocalServiceUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.Organization;
+import com.liferay.portal.model.OrganizationConstants;
+import com.liferay.portal.model.Role;
+import com.liferay.portal.model.RoleConstants;
+import com.liferay.portal.service.OrganizationLocalServiceUtil;
+import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
+
+import java.util.List;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -47,7 +55,7 @@ import org.osgi.framework.BundleException;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
-public class PageVisitedTest {
+public class OrganizationRoleRuleTest {
 
 	@Before
 	public void setUp() {
@@ -58,8 +66,6 @@ public class PageVisitedTest {
 			e.printStackTrace();
 		}
 
-		_analyticsEventLocalService = ServiceTrackerUtil.getService(
-			AnalyticsEventLocalService.class, _bundle.getBundleContext());
 		_anonymousUserLocalService = ServiceTrackerUtil.getService(
 			AnonymousUserLocalService.class, _bundle.getBundleContext());
 		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
@@ -69,71 +75,58 @@ public class PageVisitedTest {
 	}
 
 	@Test
-	public void testNotVisitedPageRule() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId(), TestPropsValues.getUserId());
+	public void testOrganizationRoleRule() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
 				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
-		Rule rule = _rulesRegistry.getRule("PageVisitedRule");
+		List<Role> roles = RoleLocalServiceUtil.getRoles(
+			TestPropsValues.getCompanyId(),
+			new int[]{RoleConstants.TYPE_ORGANIZATION});
 
-		Layout layout = LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Layout", "Layout",
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
-			StringPool.BLANK, serviceContext);
+		Role role = roles.get(0);
 
-		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
-			String.valueOf(layout.getPlid()), serviceContext);
-
-		Assert.assertFalse(rule.evaluate(null, ruleInstance, anonymousUser));
-	}
-
-	@Test
-	public void testVisitedPageRule() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId(), TestPropsValues.getUserId());
-
-		AnonymousUser anonymousUser =
-			_anonymousUserLocalService.addAnonymousUser(
-				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
-				serviceContext);
-
-		Rule rule = _rulesRegistry.getRule("PageVisitedRule");
-
-		Layout layout = LayoutLocalServiceUtil.addLayout(
-			TestPropsValues.getUserId(), group.getGroupId(), false,
-			LayoutConstants.DEFAULT_PARENT_LAYOUT_ID, "Layout", "Layout",
-			StringPool.BLANK, LayoutConstants.TYPE_PORTLET, false,
-			StringPool.BLANK, serviceContext);
-
-		_analyticsEventLocalService.addAnalyticsEvent(
-			1, anonymousUser.getAnonymousUserId(), Layout.class.getName(),
-			layout.getPlid(), Layout.class.getName(), new long[]{1}, null,
-			"view", "127.0.0.1", "User Agent", "ES", "http://localhost", null,
-			serviceContext);
+		Rule rule = _rulesRegistry.getRule("OrganizationRoleRule");
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
 			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
-			String.valueOf(layout.getPlid()), serviceContext);
+			getTypeSettings(role.getRoleId()), serviceContext);
+
+		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
+			new long[]{TestPropsValues.getUserId()}, _organization.getGroupId(),
+			role.getRoleId());
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
 	}
 
-	private AnalyticsEventLocalService _analyticsEventLocalService;
+	protected String getTypeSettings(long roleId)
+		throws PortalException, SystemException {
+
+		_organization = OrganizationLocalServiceUtil.addOrganization(
+			TestPropsValues.getUserId(),
+			OrganizationConstants.DEFAULT_PARENT_ORGANIZATION_ID,
+			StringUtil.randomString(), false);
+
+		OrganizationLocalServiceUtil.addUserOrganization(
+			TestPropsValues.getUserId(), _organization.getOrganizationId());
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+		jsonObj.put("organizationId", _organization.getOrganizationId());
+		jsonObj.put("roleId", roleId);
+
+		return jsonObj.toString();
+	}
+
 	private AnonymousUserLocalService _anonymousUserLocalService;
 
 	@ArquillianResource
 	private Bundle _bundle;
 
+	private Organization _organization;
 	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RulesRegistry _rulesRegistry;
 

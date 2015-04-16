@@ -14,6 +14,13 @@
 
 package com.liferay.content.targeting.rule.score.points.service.http;
 
+import com.liferay.content.targeting.rule.score.points.service.ScorePointServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
  * {@link com.liferay.content.targeting.rule.score.points.service.ScorePointServiceUtil} service utility. The
@@ -55,4 +62,67 @@ package com.liferay.content.targeting.rule.score.points.service.http;
  * @generated
  */
 public class ScorePointServiceSoap {
+	public static long getPoints(long anonymousUserId, long userSegmentId)
+		throws RemoteException {
+		try {
+			long returnValue = ScorePointServiceUtil.getPoints(anonymousUserId,
+					userSegmentId);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.content.targeting.rule.score.points.model.ScorePointSoap[] getScorePoints(
+		long userSegmentId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint> returnValue =
+				ScorePointServiceUtil.getScorePoints(userSegmentId);
+
+			return com.liferay.content.targeting.rule.score.points.model.ScorePointSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static long incrementPoints(long anonymousUserId,
+		long userSegmentId, long points) throws RemoteException {
+		try {
+			long returnValue = ScorePointServiceUtil.incrementPoints(anonymousUserId,
+					userSegmentId, points);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.content.targeting.rule.score.points.model.ScorePointSoap updateScorePoints(
+		long anonymousUserId, long userSegmentId, long points)
+		throws RemoteException {
+		try {
+			com.liferay.content.targeting.rule.score.points.model.ScorePoint returnValue =
+				ScorePointServiceUtil.updateScorePoints(anonymousUserId,
+					userSegmentId, points);
+
+			return com.liferay.content.targeting.rule.score.points.model.ScorePointSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(ScorePointServiceSoap.class);
 }
