@@ -63,6 +63,35 @@ public class ScorePointServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static long getPoints(long anonymousUserId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getPoints(anonymousUserId, userSegmentId);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint> getScorePoints(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getScorePoints(userSegmentId);
+	}
+
+	public static long incrementPoints(long anonymousUserId,
+		long userSegmentId, long points)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .incrementPoints(anonymousUserId, userSegmentId, points);
+	}
+
+	public static com.liferay.content.targeting.rule.score.points.model.ScorePoint updateScorePoints(
+		long anonymousUserId, long userSegmentId, long points)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateScorePoints(anonymousUserId, userSegmentId, points);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}
