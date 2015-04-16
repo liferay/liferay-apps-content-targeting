@@ -118,33 +118,35 @@
 <@aui["script"] use="liferay-util-list-fields">
 	var deleteUserSegments = A.one('#<@portlet["namespace"] />deleteUserSegments');
 
-	A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').on(
-		'click',
-		function() {
-			var hide = (Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmUserSegment, '<@portlet["namespace"] />allRowIds').length == 0);
+	if (deleteUserSegments) {
+		A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').on(
+			'click',
+			function() {
+				var hide = (Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmUserSegment, '<@portlet["namespace"] />allRowIds').length == 0);
 
-			deleteUserSegments.toggle(!hide);
-		},
-		'input[type=checkbox]'
-	);
+				deleteUserSegments.toggle(!hide);
+			},
+			'input[type=checkbox]'
+		);
 
-	deleteUserSegments.on(
-		'click',
-		function(event) {
-			if (confirm('<@liferay_ui["message"] key="are-you-sure-you-want-to-delete-this" />')) {
-				document.<@portlet["namespace"] />fmUserSegment.<@portlet["namespace"] />userSegmentIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmUserSegment, '<@portlet["namespace"] />allRowIds');
+		deleteUserSegments.on(
+			'click',
+			function(event) {
+				if (confirm('<@liferay_ui["message"] key="are-you-sure-you-want-to-delete-this" />')) {
+					document.<@portlet["namespace"] />fmUserSegment.<@portlet["namespace"] />userSegmentIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmUserSegment, '<@portlet["namespace"] />allRowIds');
 
-				<@portlet["renderURL"] var="redirectURL">
-					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
-					<@portlet["param"] name="tabs1" value="user-segments" />
-				</@>
+					<@portlet["renderURL"] var="redirectURL">
+						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+						<@portlet["param"] name="tabs1" value="user-segments" />
+					</@>
 
-				<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
-					<@portlet["param"] name="redirect" value="${redirectURL}" />
-				</@>
+					<@portlet["actionURL"] name="deleteUserSegment" var="deleteUserSegmentURL">
+						<@portlet["param"] name="redirect" value="${redirectURL}" />
+					</@>
 
-				submitForm(document.<@portlet["namespace"] />fmUserSegment, '${deleteUserSegmentURL}');
+					submitForm(document.<@portlet["namespace"] />fmUserSegment, '${deleteUserSegmentURL}');
+				}
 			}
-		}
-	);
+		);
+	}
 </@>
