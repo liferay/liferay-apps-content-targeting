@@ -141,33 +141,35 @@
 <@aui["script"] use="liferay-util-list-fields">
 	var deleteCampaigns = A.one('#<@portlet["namespace"] />deleteCampaigns');
 
-	A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').on(
-		'click',
-		function() {
-			var hide = (Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmCampaigns, '<@portlet["namespace"] />allRowIds').length == 0);
+	if (deleteCampaigns) {
+		A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').on(
+			'click',
+			function() {
+				var hide = (Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmCampaigns, '<@portlet["namespace"] />allRowIds').length == 0);
 
-			deleteCampaigns.toggle(!hide);
-		},
-		'input[type=checkbox]'
-	);
+				deleteCampaigns.toggle(!hide);
+			},
+			'input[type=checkbox]'
+		);
 
-	deleteCampaigns.on(
-		'click',
-		function(event) {
-			if (confirm('<@liferay_ui["message"] key="are-you-sure-you-want-to-delete-this" />')) {
-				document.<@portlet["namespace"] />fmCampaigns.<@portlet["namespace"] />campaignsIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmCampaigns, '<@portlet["namespace"] />allRowIds');
+		deleteCampaigns.on(
+			'click',
+			function(event) {
+				if (confirm('<@liferay_ui["message"] key="are-you-sure-you-want-to-delete-this" />')) {
+					document.<@portlet["namespace"] />fmCampaigns.<@portlet["namespace"] />campaignsIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmCampaigns, '<@portlet["namespace"] />allRowIds');
 
-				<@portlet["renderURL"] var="redirectURL">
-					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
-					<@portlet["param"] name="tabs1" value="campaigns" />
-				</@>
+					<@portlet["renderURL"] var="redirectURL">
+						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+						<@portlet["param"] name="tabs1" value="campaigns" />
+					</@>
 
-				<@portlet["actionURL"] name="deleteCampaign" var="deleteCampaignsURL">
-					<@portlet["param"] name="redirect" value="${redirectURL}" />
-				</@>
+					<@portlet["actionURL"] name="deleteCampaign" var="deleteCampaignsURL">
+						<@portlet["param"] name="redirect" value="${redirectURL}" />
+					</@>
 
-				submitForm(document.<@portlet["namespace"] />fmCampaigns, '${deleteCampaignsURL}');
+					submitForm(document.<@portlet["namespace"] />fmCampaigns, '${deleteCampaignsURL}');
+				}
 			}
-		}
-	);
+		);
+	}
 </@>
