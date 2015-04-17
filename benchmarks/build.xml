@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+
+<project name="ct-benchmarks" basedir="." default="compile">
+	<property name="osgi.auto.update.xml" value="false" />
+
+	<property name="import.shared" value="content-targeting-api" />
+
+	<property name="service.base.dir" value="." />
+
+	<import file="../../../build-common-osgi-plugin.xml" />
+
+	<path id="benchmarks.classpath">
+		<path refid="portal.classpath" />
+		<fileset dir="lib" includes="*.jar" />
+		<pathelement location="classes" />
+	</path>
+
+	<target name="deploy" />
+
+	<target name="compile">
+		<compile-import-shared
+			module.dir="${basedir}"
+		/>
+
+		<copy todir="classes">
+			<fileset dir="src" excludes="**/*.java" />
+		</copy>
+
+		<compile-java
+			javac.classpathref="benchmarks.classpath"
+			javac.destdir="classes"
+			javac.srcdir="src"
+		/>
+	</target>
+
+	<target name="build-sample-sql" depends="compile">
+		<property name="sample.sql.properties.file" value="${basedir}/ct-benchmarks.properties" />
+		<property name="sql.dir" value="${basedir}/../content-targeting-api/sql" />
+
+		<copy file="${sample.sql.properties.file}" tofile="temp.properties" overwrite="true" />
+
+		<concat destfile="temp.properties" append="true">
+			sql.dir=${sql.dir}
+		</concat>
+
+		<java
+			classname="com.liferay.content.targeting.tools.CTSampleSQLBuilder"
+			classpathref="benchmarks.classpath"
+		>
+			<sysproperty key="external-properties" value="com/liferay/portal/tools/dependencies/portal-tools.properties" />
+			<arg value="${basedir}/temp.properties" />
+		</java>
+
+		<delete file="temp.properties" />
+	</target>
+</project>
