@@ -17,6 +17,10 @@
 	<property name="app.services" value="analytics-api,anonymous-users-api,content-targeting-api,report-campaign-content,report-campaign-tracking-action,report-user-segment-content,rule-score-points" />
 	<property name="app.tracking.actions" value="tracking-action-content,tracking-action-form,tracking-action-link,tracking-action-page,tracking-action-youtube" />
 
+	<target name="all">
+		<antcall target="release" />
+	</target>
+
 	<target name="build-app">
 		<antcall target="clean" />
 
