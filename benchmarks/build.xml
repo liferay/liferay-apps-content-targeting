@@ -3,11 +3,11 @@
 <project name="ct-benchmarks" basedir="." default="compile">
 	<property name="osgi.auto.update.xml" value="false" />
 
-	<property name="import.shared" value="../content-targeting-api" />
+	<property name="import.shared" value="content-targeting-api" />
 
 	<property name="service.base.dir" value="." />
 
-	<import file="../../../../build-common-osgi-plugin.xml" />
+	<import file="../../../build-common-osgi-plugin.xml" />
 
 	<path id="benchmarks.classpath">
 		<path refid="portal.classpath" />
@@ -35,7 +35,7 @@
 
 	<target name="build-sample-sql" depends="compile">
 		<property name="sample.sql.properties.file" value="${basedir}/ct-benchmarks.properties" />
-		<property name="sql.dir" value="../../content-targeting-api/sql" />
+		<property name="sql.dir" value="../content-targeting-api/sql" />
 
 		<copy file="${sample.sql.properties.file}" tofile="temp.properties" overwrite="true" />
 
