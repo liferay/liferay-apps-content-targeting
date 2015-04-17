@@ -35,7 +35,7 @@
 
 	<target name="build-sample-sql" depends="compile">
 		<property name="sample.sql.properties.file" value="${basedir}/ct-benchmarks.properties" />
-		<property name="sql.dir" value="../content-targeting-api/sql" />
+		<property name="sql.dir" value="${basedir}/../content-targeting-api/sql" />
 
 		<copy file="${sample.sql.properties.file}" tofile="temp.properties" overwrite="true" />
 
