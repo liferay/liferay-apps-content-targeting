@@ -85,7 +85,7 @@ public class CTSampleSQLBuilder {
 		output.mkdirs();
 
 		properties.put("sample.sql.output.dir", output.getPath());
-		properties.put("sample.sql.output.csv.file.names", "ct");
+		properties.put("sample.sql.output.csv.file.names", "ct,layout");
 		properties.put(
 			"sample.sql.script",
 			"com/liferay/content/targeting/tools/dependencies/ct.ftl");
