@@ -9,6 +9,8 @@
 		_layoutModel = layoutModel
 	/>
 
+	${layoutCSVWriter.write(layoutModel.friendlyURL + "\n")}
+
 	<#assign portletPreferencesModel = dataFactory.newUserSegmentContentDisplayPortletPreferenceModels(groupId, layoutModel.plid, portletId)>
 
 	<@insertPortletPreferences
