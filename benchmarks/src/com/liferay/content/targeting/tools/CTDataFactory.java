@@ -61,6 +61,10 @@ public class CTDataFactory extends DataFactory {
 			properties.getProperty(
 				"sample.sql.max.user.segment.content.display.page.count"));
 
+		_maxUserSegmentContentListPageCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.user.segment.content.list.page.count"));
+
 		_maxUserSegmentCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.user.segment.count"));
 
@@ -69,8 +73,16 @@ public class CTDataFactory extends DataFactory {
 				"sample.sql.max.user.segment.rule.instance.count"));
 	}
 
+	public List<AssetEntryModel> getAssetEntryModels() {
+		return _assetEntryModels;
+	}
+
 	public int getMaxUserSegmentContentDisplayPageCount() {
 		return _maxUserSegmentContentDisplayPageCount;
+	}
+
+	public int getMaxUserSegmentContentListPageCount() {
+		return _maxUserSegmentContentListPageCount;
 	}
 
 	@Override
@@ -347,6 +359,7 @@ public class CTDataFactory extends DataFactory {
 		new ArrayList<AssetEntryModel>();
 	private long _lastRightCategoryId = 2;
 	private int _maxUserSegmentContentDisplayPageCount;
+	private int _maxUserSegmentContentListPageCount;
 	private int _maxUserSegmentCount;
 	private int _maxUserSegmentRuleInstanceCount;
 	private List<RuleInstanceModel> _ruleInstanceModels =

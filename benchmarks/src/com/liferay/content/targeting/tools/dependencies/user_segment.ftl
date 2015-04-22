@@ -6,6 +6,7 @@ insert into AssetVocabulary values ('${assetVocabularyModel.uuid}', ${assetVocab
 	_entry = assetVocabularyModel
 />
 
+<#assign assetEntryModels = dataFactory.getAssetEntryModels() />
 <#assign userSegmentModels = dataFactory.newUserSegmentModels(groupId) />
 
 <#list userSegmentModels as userSegmentModel>
@@ -16,6 +17,10 @@ insert into AssetVocabulary values ('${assetVocabularyModel.uuid}', ${assetVocab
 	<@insertResourcePermissions
 		_entry = assetCategoryModel
 	/>
+
+	<#list assetEntryModels as assetEntryModel>
+	insert into AssetEntries_AssetCategories values (${assetCategoryModel.categoryId}, ${assetEntryModel.entryId});
+	</#list>
 
 	${dataFactory.setAssetCategoryToUserSegment(assetCategoryModel.categoryId, userSegmentModel_index)}
 

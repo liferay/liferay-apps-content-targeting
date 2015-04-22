@@ -8,6 +8,8 @@
 	<#include "user_segment.ftl">
 
 	<#include "user_segment_content_display.ftl">
+
+	<#include "user_segment_content_list.ftl">
 </#list>
 
 <#include "counters.ftl">
