@@ -15,9 +15,10 @@
 /*/docroot/WEB-INF/lib
 /*/docroot/WEB-INF/liferay-hook.xml.processed
 
+/benchmarks/output
+
 /tools/*/classes
 /tools/*/lib
-/tools/*/output
 
 /ivy.idea.properties
 
