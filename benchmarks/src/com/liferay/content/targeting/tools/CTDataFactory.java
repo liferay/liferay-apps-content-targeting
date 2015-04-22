@@ -76,18 +76,6 @@ public class CTDataFactory extends DataFactory {
 	}
 
 	@Override
-	public List<BlogsEntryModel> newBlogsEntryModels(long groupId) {
-		List<BlogsEntryModel> blogEntryModels = super.newBlogsEntryModels(
-			groupId);
-
-		blogEntryModels.add(newBlogsEntryModel(groupId, 0));
-		blogEntryModels.add(newBlogsEntryModel(groupId, 1));
-		blogEntryModels.add(newBlogsEntryModel(groupId, 2));
-
-		return blogEntryModels;
-	}
-
-	@Override
 	public List<LayoutModel> newPublicLayoutModels(long groupId) {
 		List<LayoutModel> layoutModels = super.newPublicLayoutModels(groupId);
 
@@ -184,7 +172,9 @@ public class CTDataFactory extends DataFactory {
 		for (int i = 0; i < _userSegmentModels.size(); i++) {
 			UserSegmentModel userSegmentModel = _userSegmentModels.get(i);
 
-			AssetEntryModel assetEntryModel = _assetEntryModels.get(i);
+			int pos = RandomUtil.nextInt(_assetEntryModels.size());
+
+			AssetEntryModel assetEntryModel = _assetEntryModels.get(pos);
 
 			jxPortletPreferences.setValue(
 				"assetEntryId" + i,
