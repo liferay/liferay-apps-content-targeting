@@ -14,10 +14,12 @@
 
 package com.liferay.content.targeting.tools;
 
+import com.liferay.content.targeting.model.CampaignModel;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.RuleInstanceModel;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.model.UserSegmentModel;
+import com.liferay.content.targeting.model.impl.CampaignModelImpl;
 import com.liferay.content.targeting.model.impl.RuleInstanceModelImpl;
 import com.liferay.content.targeting.model.impl.UserSegmentModelImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
@@ -43,6 +45,7 @@ import com.liferay.portlet.asset.model.AssetVocabularyModel;
 import com.liferay.portlet.blogs.model.BlogsEntryModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -56,6 +59,13 @@ public class CTDataFactory extends DataFactory {
 
 	public CTDataFactory(Properties properties) throws Exception {
 		super(properties);
+
+		_maxCampaignContentDisplayPageCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.campaign.content.display.page.count"));
+
+		_maxCampaignCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.campaign.count"));
 
 		_maxUserSegmentContentDisplayPageCount = GetterUtil.getInteger(
 			properties.getProperty(
@@ -77,6 +87,20 @@ public class CTDataFactory extends DataFactory {
 		return _assetEntryModels;
 	}
 
+	public long getCampaignUserSegmentId(int index) {
+		if (index >= _userSegmentModels.size()) {
+			return -1;
+		}
+
+		UserSegmentModel userSegmentModel = _userSegmentModels.get(index);
+
+		return userSegmentModel.getUserSegmentId();
+	}
+
+	public int getMaxCampaignContentDisplayPageCount() {
+		return _maxCampaignContentDisplayPageCount;
+	}
+
 	public int getMaxUserSegmentContentDisplayPageCount() {
 		return _maxUserSegmentContentDisplayPageCount;
 	}
@@ -95,6 +119,49 @@ public class CTDataFactory extends DataFactory {
 		return assetEntryModel;
 	}
 
+	public PortletPreferencesModel
+		newCampaignContentDisplayPortletPreferenceModels(
+			long groupId, long plid, String portletId)
+		throws Exception {
+
+		PortletPreferences jxPortletPreferences = new PortletPreferencesImpl();
+
+		for (int i = 0; i < _campaignModels.size(); i++) {
+			CampaignModel campaignModel = _campaignModels.get(i);
+
+			jxPortletPreferences.setValue(
+				"assetEntryId" + i, String.valueOf(getAssetEntryId()));
+			jxPortletPreferences.setValue(
+				"campaignId" + i,
+				String.valueOf(campaignModel.getCampaignId()));
+		}
+
+		jxPortletPreferences.setValue("showAssetTitle", "false");
+		jxPortletPreferences.setValues(
+			"queryLogicIndexes", new String[]{"0", "1", "2"});
+		jxPortletPreferences.setValue("contentDefaultValue", "false");
+		jxPortletPreferences.setValue("enableSocialBookmarks", "false");
+		jxPortletPreferences.setValue(
+			"displayStyleGroupId", String.valueOf(groupId));
+		jxPortletPreferences.setValue("displayStyle", "full-content");
+
+		return newPortletPreferencesModel(
+			plid, portletId,
+			_portletPreferencesFactory.toXML(jxPortletPreferences));
+	}
+
+	public List<CampaignModel> newCampaignModels(long groupId)
+		throws Exception {
+
+		_campaignModels = new ArrayList<CampaignModel>(_maxCampaignCount);
+
+		for (int i = 0; i < _maxCampaignCount; i++) {
+			_campaignModels.add(newCampaignModel(groupId, i));
+		}
+
+		return _campaignModels;
+	}
+
 	@Override
 	public List<LayoutModel> newPublicLayoutModels(long groupId) {
 		List<LayoutModel> layoutModels = super.newPublicLayoutModels(groupId);
@@ -105,6 +172,14 @@ public class CTDataFactory extends DataFactory {
 		layoutModels.add(_visitedLayoutModel);
 
 		return layoutModels;
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CampaignModel campaignModel) {
+
+		return newResourcePermissionModels(
+			RuleInstance.class.getName(),
+			String.valueOf(campaignModel.getCampaignId()), getUserId());
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -168,13 +243,8 @@ public class CTDataFactory extends DataFactory {
 		for (int i = 0; i < _userSegmentModels.size(); i++) {
 			UserSegmentModel userSegmentModel = _userSegmentModels.get(i);
 
-			int pos = RandomUtil.nextInt(_assetEntryModels.size());
-
-			AssetEntryModel assetEntryModel = _assetEntryModels.get(pos);
-
 			jxPortletPreferences.setValue(
-				"assetEntryId" + i,
-				String.valueOf(assetEntryModel.getEntryId()));
+				"assetEntryId" + i, String.valueOf(getAssetEntryId()));
 			jxPortletPreferences.setValue("enablequeryContains" + i, "true");
 			jxPortletPreferences.setValue("queryAndOperator" + i, "false");
 			jxPortletPreferences.setValue(
@@ -215,6 +285,14 @@ public class CTDataFactory extends DataFactory {
 		UserSegmentModel userSegmentModel = _userSegmentModels.get(index);
 
 		userSegmentModel.setAssetCategoryId(assetCategoryId);
+	}
+
+	protected long getAssetEntryId() {
+		int pos = RandomUtil.nextInt(_assetEntryModels.size());
+
+		AssetEntryModel assetEntryModel = _assetEntryModels.get(pos);
+
+		return assetEntryModel.getEntryId();
 	}
 
 	protected long getCompanyId() {
@@ -271,6 +349,56 @@ public class CTDataFactory extends DataFactory {
 
 		_ruleInstanceModels.add(
 			newRuleInstanceModel("UserLogged", StringPool.BLANK));
+	}
+
+	protected CampaignModel newCampaignModel(long groupId, int index) {
+		setClassLoader();
+
+		CampaignModel campaignModel = new CampaignModelImpl();
+
+		campaignModel.setUuid(SequentialUUID.generate());
+		campaignModel.setCampaignId(getCounterNext());
+		campaignModel.setGroupId(groupId);
+		campaignModel.setCompanyId(getCompanyId());
+		campaignModel.setUserId(getUserId());
+		campaignModel.setUserName(getUserName());
+
+		campaignModel.setCreateDate(new Date());
+		campaignModel.setModifiedDate(new Date());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Name language-id=\"en_US\">Campaign ");
+		sb.append(index);
+		sb.append("</Name></root>");
+
+		campaignModel.setName(sb.toString());
+
+		sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Description language-id=\"en_US\">Campaign ");
+		sb.append(index);
+		sb.append("</Description></root>");
+
+		campaignModel.setDescription(sb.toString());
+
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+
+		startDate.add(Calendar.YEAR, -1);
+		endDate.add(Calendar.YEAR, 1);
+
+		campaignModel.setStartDate(startDate.getTime());
+		campaignModel.setEndDate(endDate.getTime());
+
+		campaignModel.setPriority(RandomUtil.nextInt(5));
+		campaignModel.setActive(true);
+
+		return campaignModel;
 	}
 
 	protected RuleInstanceModel newRuleInstanceModel(
@@ -357,7 +485,11 @@ public class CTDataFactory extends DataFactory {
 
 	private List<AssetEntryModel> _assetEntryModels =
 		new ArrayList<AssetEntryModel>();
+	private List<CampaignModel> _campaignModels =
+		new ArrayList<CampaignModel>();
 	private long _lastRightCategoryId = 2;
+	private int _maxCampaignContentDisplayPageCount;
+	private int _maxCampaignCount;
 	private int _maxUserSegmentContentDisplayPageCount;
 	private int _maxUserSegmentContentListPageCount;
 	private int _maxUserSegmentCount;

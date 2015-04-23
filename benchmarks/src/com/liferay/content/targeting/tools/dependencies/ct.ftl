@@ -10,6 +10,10 @@
 	<#include "user_segment_content_display.ftl">
 
 	<#include "user_segment_content_list.ftl">
+
+	<#include "campaign.ftl">
+
+	<#include "campaign_content_display.ftl">
 </#list>
 
 <#include "counters.ftl">
