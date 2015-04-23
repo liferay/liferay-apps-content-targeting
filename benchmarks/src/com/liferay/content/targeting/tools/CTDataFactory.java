@@ -254,6 +254,11 @@ public class CTDataFactory extends DataFactory {
 
 		_ruleInstanceModels.add(
 			newRuleInstanceModel("SiteMemberRule", String.valueOf(groupId)));
+
+		// User Logged Rule
+
+		_ruleInstanceModels.add(
+			newRuleInstanceModel("UserLogged", StringPool.BLANK));
 	}
 
 	protected RuleInstanceModel newRuleInstanceModel(
