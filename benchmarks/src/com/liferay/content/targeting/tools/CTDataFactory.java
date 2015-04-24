@@ -42,7 +42,7 @@ import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.AssetCategoryModel;
 import com.liferay.portlet.asset.model.AssetEntryModel;
 import com.liferay.portlet.asset.model.AssetVocabularyModel;
-import com.liferay.portlet.blogs.model.BlogsEntryModel;
+import com.liferay.portlet.journal.model.JournalArticleModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -110,9 +110,11 @@ public class CTDataFactory extends DataFactory {
 	}
 
 	@Override
-	public AssetEntryModel newAssetEntryModel(BlogsEntryModel blogsEntryModel) {
+	public AssetEntryModel newAssetEntryModel(
+		JournalArticleModel journalArticleModel) {
+
 		AssetEntryModel assetEntryModel = super.newAssetEntryModel(
-			blogsEntryModel);
+			journalArticleModel);
 
 		_assetEntryModels.add(assetEntryModel);
 
@@ -288,6 +290,10 @@ public class CTDataFactory extends DataFactory {
 	}
 
 	protected long getAssetEntryId() {
+		if (_assetEntryModels.isEmpty()) {
+			return -1;
+		}
+
 		int pos = RandomUtil.nextInt(_assetEntryModels.size());
 
 		AssetEntryModel assetEntryModel = _assetEntryModels.get(pos);
