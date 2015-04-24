@@ -14,15 +14,18 @@
 
 package com.liferay.content.targeting.tools;
 
+import com.liferay.content.targeting.model.CampaignModel;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.RuleInstanceModel;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.model.UserSegmentModel;
+import com.liferay.content.targeting.model.impl.CampaignModelImpl;
 import com.liferay.content.targeting.model.impl.RuleInstanceModelImpl;
 import com.liferay.content.targeting.model.impl.UserSegmentModelImpl;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import com.liferay.portal.kernel.security.RandomUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
@@ -39,9 +42,10 @@ import com.liferay.portlet.PortletPreferencesImpl;
 import com.liferay.portlet.asset.model.AssetCategoryModel;
 import com.liferay.portlet.asset.model.AssetEntryModel;
 import com.liferay.portlet.asset.model.AssetVocabularyModel;
-import com.liferay.portlet.blogs.model.BlogsEntryModel;
+import com.liferay.portlet.journal.model.JournalArticleModel;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Properties;
@@ -56,35 +60,108 @@ public class CTDataFactory extends DataFactory {
 	public CTDataFactory(Properties properties) throws Exception {
 		super(properties);
 
+		_maxCampaignContentDisplayPageCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.campaign.content.display.page.count"));
+
+		_maxCampaignCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.campaign.count"));
+
 		_maxUserSegmentContentDisplayPageCount = GetterUtil.getInteger(
 			properties.getProperty(
 				"sample.sql.max.user.segment.content.display.page.count"));
+
+		_maxUserSegmentContentListPageCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.user.segment.content.list.page.count"));
+
+		_maxUserSegmentCount = GetterUtil.getInteger(
+			properties.getProperty("sample.sql.max.user.segment.count"));
+
+		_maxUserSegmentRuleInstanceCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.user.segment.rule.instance.count"));
+	}
+
+	public List<AssetEntryModel> getAssetEntryModels() {
+		return _assetEntryModels;
+	}
+
+	public long getCampaignUserSegmentId(int index) {
+		if (index >= _userSegmentModels.size()) {
+			return -1;
+		}
+
+		UserSegmentModel userSegmentModel = _userSegmentModels.get(index);
+
+		return userSegmentModel.getUserSegmentId();
+	}
+
+	public int getMaxCampaignContentDisplayPageCount() {
+		return _maxCampaignContentDisplayPageCount;
 	}
 
 	public int getMaxUserSegmentContentDisplayPageCount() {
 		return _maxUserSegmentContentDisplayPageCount;
 	}
 
+	public int getMaxUserSegmentContentListPageCount() {
+		return _maxUserSegmentContentListPageCount;
+	}
+
 	@Override
-	public AssetEntryModel newAssetEntryModel(BlogsEntryModel blogsEntryModel) {
+	public AssetEntryModel newAssetEntryModel(
+		JournalArticleModel journalArticleModel) {
+
 		AssetEntryModel assetEntryModel = super.newAssetEntryModel(
-			blogsEntryModel);
+			journalArticleModel);
 
 		_assetEntryModels.add(assetEntryModel);
 
 		return assetEntryModel;
 	}
 
-	@Override
-	public List<BlogsEntryModel> newBlogsEntryModels(long groupId) {
-		List<BlogsEntryModel> blogEntryModels = super.newBlogsEntryModels(
-			groupId);
+	public PortletPreferencesModel
+		newCampaignContentDisplayPortletPreferenceModels(
+			long groupId, long plid, String portletId)
+		throws Exception {
 
-		blogEntryModels.add(newBlogsEntryModel(groupId, 0));
-		blogEntryModels.add(newBlogsEntryModel(groupId, 1));
-		blogEntryModels.add(newBlogsEntryModel(groupId, 2));
+		PortletPreferences jxPortletPreferences = new PortletPreferencesImpl();
 
-		return blogEntryModels;
+		for (int i = 0; i < _campaignModels.size(); i++) {
+			CampaignModel campaignModel = _campaignModels.get(i);
+
+			jxPortletPreferences.setValue(
+				"assetEntryId" + i, String.valueOf(getAssetEntryId()));
+			jxPortletPreferences.setValue(
+				"campaignId" + i,
+				String.valueOf(campaignModel.getCampaignId()));
+		}
+
+		jxPortletPreferences.setValue("showAssetTitle", "false");
+		jxPortletPreferences.setValues(
+			"queryLogicIndexes", new String[]{"0", "1", "2"});
+		jxPortletPreferences.setValue("contentDefaultValue", "false");
+		jxPortletPreferences.setValue("enableSocialBookmarks", "false");
+		jxPortletPreferences.setValue(
+			"displayStyleGroupId", String.valueOf(groupId));
+		jxPortletPreferences.setValue("displayStyle", "full-content");
+
+		return newPortletPreferencesModel(
+			plid, portletId,
+			_portletPreferencesFactory.toXML(jxPortletPreferences));
+	}
+
+	public List<CampaignModel> newCampaignModels(long groupId)
+		throws Exception {
+
+		_campaignModels = new ArrayList<CampaignModel>(_maxCampaignCount);
+
+		for (int i = 0; i < _maxCampaignCount; i++) {
+			_campaignModels.add(newCampaignModel(groupId, i));
+		}
+
+		return _campaignModels;
 	}
 
 	@Override
@@ -97,6 +174,14 @@ public class CTDataFactory extends DataFactory {
 		layoutModels.add(_visitedLayoutModel);
 
 		return layoutModels;
+	}
+
+	public List<ResourcePermissionModel> newResourcePermissionModels(
+		CampaignModel campaignModel) {
+
+		return newResourcePermissionModels(
+			RuleInstance.class.getName(),
+			String.valueOf(campaignModel.getCampaignId()), getUserId());
 	}
 
 	public List<ResourcePermissionModel> newResourcePermissionModels(
@@ -116,51 +201,27 @@ public class CTDataFactory extends DataFactory {
 	}
 
 	public List<RuleInstanceModel> newRuleInstanceModels(
-			long groupId, long userSegmentId, int index)
+			long groupId, long userSegmentId)
 		throws Exception {
 
 		List<RuleInstanceModel> ruleInstanceModels =
-			new ArrayList<RuleInstanceModel>();
+			new ArrayList<RuleInstanceModel>(_maxUserSegmentRuleInstanceCount);
 
-		if (index == 0) {
+		for (int i = 0; i < _maxUserSegmentRuleInstanceCount; i++) {
 			ruleInstanceModels.add(
-				newRuleInstanceModel(
-					groupId, "GenderRule", userSegmentId, "male"));
-
-			JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
-
-			jsonObj.put("youngerThan", 100);
-			jsonObj.put("olderThan", 30);
-
-			ruleInstanceModels.add(
-				newRuleInstanceModel(
-					groupId, "AgeRule", userSegmentId, jsonObj.toString()));
-
-			ruleInstanceModels.add(
-				newRuleInstanceModel(
-					groupId, "SiteMemberRule", userSegmentId,
-					String.valueOf(groupId)));
-		}
-		else if (index == 1) {
-			ruleInstanceModels.add(
-				newRuleInstanceModel(
-					groupId, "PageVisitedRule", userSegmentId,
-					String.valueOf(_visitedLayoutModel.getPlid())));
-		}
-		else if (index == 2) {
-			ruleInstanceModels.add(
-				newRuleInstanceModel(
-					groupId, "BrowserRule", userSegmentId, "Firefox"));
+				newRuleInstanceModel(groupId, userSegmentId));
 		}
 
 		return ruleInstanceModels;
 	}
 
 	public AssetCategoryModel newUserSegmentAssetCategoryModel(
-		long groupId, long assetVocabularyId, String name) {
+		long groupId, long assetVocabularyId,
+		UserSegmentModel userSegmentModel) {
 
 		AssetCategoryModel assetCategoryModel = newAssetCategoryModel(
-			groupId, _lastRightCategoryId, name, assetVocabularyId);
+			groupId, _lastRightCategoryId, userSegmentModel.getName("en_US"),
+			assetVocabularyId);
 
 		_lastRightCategoryId += 2;
 
@@ -184,11 +245,8 @@ public class CTDataFactory extends DataFactory {
 		for (int i = 0; i < _userSegmentModels.size(); i++) {
 			UserSegmentModel userSegmentModel = _userSegmentModels.get(i);
 
-			AssetEntryModel assetEntryModel = _assetEntryModels.get(i);
-
 			jxPortletPreferences.setValue(
-				"assetEntryId" + i,
-				String.valueOf(assetEntryModel.getEntryId()));
+				"assetEntryId" + i, String.valueOf(getAssetEntryId()));
 			jxPortletPreferences.setValue("enablequeryContains" + i, "true");
 			jxPortletPreferences.setValue("queryAndOperator" + i, "false");
 			jxPortletPreferences.setValue(
@@ -210,15 +268,16 @@ public class CTDataFactory extends DataFactory {
 			_portletPreferencesFactory.toXML(jxPortletPreferences));
 	}
 
-	public List<UserSegmentModel> newUserSegmentModels(
-			long groupId, String[] names, String[] descriptions)
+	public List<UserSegmentModel> newUserSegmentModels(long groupId)
 		throws Exception {
 
-		_userSegmentModels = new ArrayList<UserSegmentModel>();
+		initRuleInstanceModels(groupId);
 
-		for (int i = 0; i < names.length; i++) {
-			_userSegmentModels.add(
-				newUserSegmentModel(groupId, names[i], descriptions[i]));
+		_userSegmentModels = new ArrayList<UserSegmentModel>(
+			_maxUserSegmentCount);
+
+		for (int i = 0; i < _maxUserSegmentCount; i++) {
+			_userSegmentModels.add(newUserSegmentModel(groupId, i));
 		}
 
 		return _userSegmentModels;
@@ -228,6 +287,18 @@ public class CTDataFactory extends DataFactory {
 		UserSegmentModel userSegmentModel = _userSegmentModels.get(index);
 
 		userSegmentModel.setAssetCategoryId(assetCategoryId);
+	}
+
+	protected long getAssetEntryId() {
+		if (_assetEntryModels.isEmpty()) {
+			return -1;
+		}
+
+		int pos = RandomUtil.nextInt(_assetEntryModels.size());
+
+		AssetEntryModel assetEntryModel = _assetEntryModels.get(pos);
+
+		return assetEntryModel.getEntryId();
 	}
 
 	protected long getCompanyId() {
@@ -248,31 +319,129 @@ public class CTDataFactory extends DataFactory {
 		return userModel.getFirstName();
 	}
 
+	protected void initRuleInstanceModels(long groupId) {
+
+		// Age Rule
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+		jsonObj.put("youngerThan", 100);
+		jsonObj.put("olderThan", 30);
+
+		_ruleInstanceModels.add(
+			newRuleInstanceModel("AgeRule", jsonObj.toString()));
+
+		// Browser Rule
+
+		_ruleInstanceModels.add(newRuleInstanceModel("BrowserRule", "Firefox"));
+
+		// Gender Rule
+
+		_ruleInstanceModels.add(newRuleInstanceModel("GenderRule", "male"));
+
+		// Page Visited Rule
+
+		_ruleInstanceModels.add(
+			newRuleInstanceModel(
+				"PageVisitedRule",
+				String.valueOf(_visitedLayoutModel.getPlid())));
+
+		// Site Member Rule
+
+		_ruleInstanceModels.add(
+			newRuleInstanceModel("SiteMemberRule", String.valueOf(groupId)));
+
+		// User Logged Rule
+
+		_ruleInstanceModels.add(
+			newRuleInstanceModel("UserLogged", StringPool.BLANK));
+	}
+
+	protected CampaignModel newCampaignModel(long groupId, int index) {
+		setClassLoader();
+
+		CampaignModel campaignModel = new CampaignModelImpl();
+
+		campaignModel.setUuid(SequentialUUID.generate());
+		campaignModel.setCampaignId(getCounterNext());
+		campaignModel.setGroupId(groupId);
+		campaignModel.setCompanyId(getCompanyId());
+		campaignModel.setUserId(getUserId());
+		campaignModel.setUserName(getUserName());
+
+		campaignModel.setCreateDate(new Date());
+		campaignModel.setModifiedDate(new Date());
+
+		StringBundler sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Name language-id=\"en_US\">Campaign ");
+		sb.append(index);
+		sb.append("</Name></root>");
+
+		campaignModel.setName(sb.toString());
+
+		sb = new StringBundler(5);
+
+		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
+		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
+		sb.append("<Description language-id=\"en_US\">Campaign ");
+		sb.append(index);
+		sb.append("</Description></root>");
+
+		campaignModel.setDescription(sb.toString());
+
+		Calendar startDate = Calendar.getInstance();
+		Calendar endDate = Calendar.getInstance();
+
+		startDate.add(Calendar.YEAR, -1);
+		endDate.add(Calendar.YEAR, 1);
+
+		campaignModel.setStartDate(startDate.getTime());
+		campaignModel.setEndDate(endDate.getTime());
+
+		campaignModel.setPriority(RandomUtil.nextInt(5));
+		campaignModel.setActive(true);
+
+		return campaignModel;
+	}
+
 	protected RuleInstanceModel newRuleInstanceModel(
-		long groupId, String ruleKey, long userSegmentId, String typeSettings) {
+		long groupId, long userSegmentId) {
+
+		int pos = RandomUtil.nextInt(_ruleInstanceModels.size());
+
+		RuleInstanceModel ruleInstanceModel =
+			(RuleInstanceModel)_ruleInstanceModels.get(pos).clone();
+
+		ruleInstanceModel.setUuid(SequentialUUID.generate());
+		ruleInstanceModel.setRuleInstanceId(getCounterNext());
+		ruleInstanceModel.setGroupId(groupId);
+		ruleInstanceModel.setUserSegmentId(userSegmentId);
+
+		return ruleInstanceModel;
+	}
+
+	protected RuleInstanceModel newRuleInstanceModel(
+		String ruleKey, String typeSettings) {
 
 		setClassLoader();
 
 		RuleInstanceModel ruleInstanceModel = new RuleInstanceModelImpl();
 
-		ruleInstanceModel.setUuid(SequentialUUID.generate());
-		ruleInstanceModel.setRuleInstanceId(getCounterNext());
-		ruleInstanceModel.setGroupId(groupId);
 		ruleInstanceModel.setCompanyId(getCompanyId());
 		ruleInstanceModel.setUserId(getUserId());
 		ruleInstanceModel.setUserName(getUserName());
 		ruleInstanceModel.setCreateDate(new Date());
 		ruleInstanceModel.setModifiedDate(new Date());
 		ruleInstanceModel.setRuleKey(ruleKey);
-		ruleInstanceModel.setUserSegmentId(userSegmentId);
 		ruleInstanceModel.setTypeSettings(typeSettings);
 
 		return ruleInstanceModel;
 	}
 
-	protected UserSegmentModel newUserSegmentModel(
-		long groupId, String name, String description) {
-
+	protected UserSegmentModel newUserSegmentModel(long groupId, int index) {
 		setClassLoader();
 
 		UserSegmentModel userSegmentModel = new UserSegmentModelImpl();
@@ -291,8 +460,8 @@ public class CTDataFactory extends DataFactory {
 
 		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
 		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
-		sb.append("<Name language-id=\"en_US\">");
-		sb.append(name);
+		sb.append("<Name language-id=\"en_US\">User Segment ");
+		sb.append(index);
 		sb.append("</Name></root>");
 
 		userSegmentModel.setName(sb.toString());
@@ -301,8 +470,8 @@ public class CTDataFactory extends DataFactory {
 
 		sb.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><root ");
 		sb.append("available-locales=\"en_US\" default-locale=\"en_US\">");
-		sb.append("<Description language-id=\"en_US\">");
-		sb.append(description);
+		sb.append("<Description language-id=\"en_US\">User Segment ");
+		sb.append(index);
 		sb.append("</Description></root>");
 
 		userSegmentModel.setDescription(sb.toString());
@@ -322,8 +491,17 @@ public class CTDataFactory extends DataFactory {
 
 	private List<AssetEntryModel> _assetEntryModels =
 		new ArrayList<AssetEntryModel>();
+	private List<CampaignModel> _campaignModels =
+		new ArrayList<CampaignModel>();
 	private long _lastRightCategoryId = 2;
+	private int _maxCampaignContentDisplayPageCount;
+	private int _maxCampaignCount;
 	private int _maxUserSegmentContentDisplayPageCount;
+	private int _maxUserSegmentContentListPageCount;
+	private int _maxUserSegmentCount;
+	private int _maxUserSegmentRuleInstanceCount;
+	private List<RuleInstanceModel> _ruleInstanceModels =
+		new ArrayList<RuleInstanceModel>();
 	private List<UserSegmentModel> _userSegmentModels =
 		new ArrayList<UserSegmentModel>();
 	private LayoutModel _visitedLayoutModel;
