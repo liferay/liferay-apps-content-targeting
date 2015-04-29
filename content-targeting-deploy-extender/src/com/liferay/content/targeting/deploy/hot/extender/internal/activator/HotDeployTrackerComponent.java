@@ -126,9 +126,11 @@ public class HotDeployTrackerComponent {
 
 	@Activate
 	protected void activate(final BundleContext bundleContext) {
+		ServiceTrackerCustomizer servletContextTracker =
+			new ServletContextTrackerCustomizer(bundleContext);
+
 		_serviceTracker = new ServiceTracker<ServletContext, ServletContext>(
-			bundleContext, ServletContext.class,
-			new ServletContextTrackerCustomizer());
+			bundleContext, ServletContext.class, servletContextTracker);
 
 		_serviceTracker.open();
 
@@ -162,6 +164,10 @@ public class HotDeployTrackerComponent {
 
 	private class ServletContextTrackerCustomizer
 		implements ServiceTrackerCustomizer<ServletContext, ServletContext> {
+
+		public ServletContextTrackerCustomizer(BundleContext context) {
+			_context = context;
+		}
 
 		@Override
 		public ServletContext addingService(
@@ -213,6 +219,8 @@ public class HotDeployTrackerComponent {
 
 			bundleContext.ungetService(serviceReference);
 		}
+
+		BundleContext _context;
 	}
 
 }
