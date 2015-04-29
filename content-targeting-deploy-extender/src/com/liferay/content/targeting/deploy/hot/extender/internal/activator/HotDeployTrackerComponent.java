@@ -181,7 +181,7 @@ public class HotDeployTrackerComponent {
 
 			BundleContext bundleContext = bundle.getBundleContext();
 
-			ServletContext servletContext = bundleContext.getService(
+			ServletContext servletContext = _context.getService(
 				serviceReference);
 
 			_osgiDeployContexts.putIfAbsent(
@@ -207,15 +207,13 @@ public class HotDeployTrackerComponent {
 
 			Bundle bundle = serviceReference.getBundle();
 
-			BundleContext bundleContext = bundle.getBundleContext();
-
 			HotDeployUtil.fireUndeployEvent(
 				new HotDeployEvent(servletContext, _getClassLoader(bundle))
 			);
 
 			_osgiDeployContexts.remove(servletContext.getServletContextName());
 
-			bundleContext.ungetService(serviceReference);
+			_context.ungetService(serviceReference);
 		}
 
 		BundleContext _context;
