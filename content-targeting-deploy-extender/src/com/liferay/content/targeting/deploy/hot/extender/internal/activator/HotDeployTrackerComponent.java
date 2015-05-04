@@ -160,7 +160,6 @@ public class HotDeployTrackerComponent {
 	private MessageBus _messageBus;
 	private ConcurrentHashMap<String, OsgiDeployContext> _osgiDeployContexts =
 		new ConcurrentHashMap<String, OsgiDeployContext>();
-	private ServletContext _portalServletContext;
 	private MessageListener _serviceRegistratorMessageListener =
 		new ServiceRegistratorMessageListener();
 	private ServiceTracker<ServletContext, ServletContext> _serviceTracker;
