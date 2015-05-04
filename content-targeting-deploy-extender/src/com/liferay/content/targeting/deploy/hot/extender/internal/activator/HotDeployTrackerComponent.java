@@ -44,6 +44,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Carlos Sierra
+ * @author Norbert Kocsis
+ * @author Tibor Lipusz
  */
 @Component(immediate = true)
 public class HotDeployTrackerComponent {
@@ -126,11 +128,11 @@ public class HotDeployTrackerComponent {
 
 	@Activate
 	protected void activate(final BundleContext bundleContext) {
-		ServiceTrackerCustomizer servletContextTracker =
-			new ServletContextTrackerCustomizer(bundleContext);
+		_bundleContext = bundleContext;
 
 		_serviceTracker = new ServiceTracker<ServletContext, ServletContext>(
-			bundleContext, ServletContext.class, servletContextTracker);
+			_bundleContext, ServletContext.class,
+			new ServletContextTrackerCustomizer());
 
 		_serviceTracker.open();
 
@@ -154,6 +156,7 @@ public class HotDeployTrackerComponent {
 		return bundleWiring.getClassLoader();
 	}
 
+	private BundleContext _bundleContext;
 	private MessageBus _messageBus;
 	private ConcurrentHashMap<String, OsgiDeployContext> _osgiDeployContexts =
 		new ConcurrentHashMap<String, OsgiDeployContext>();
@@ -164,10 +167,6 @@ public class HotDeployTrackerComponent {
 
 	private class ServletContextTrackerCustomizer
 		implements ServiceTrackerCustomizer<ServletContext, ServletContext> {
-
-		public ServletContextTrackerCustomizer(BundleContext context) {
-			_context = context;
-		}
 
 		@Override
 		public ServletContext addingService(
@@ -181,7 +180,7 @@ public class HotDeployTrackerComponent {
 
 			BundleContext bundleContext = bundle.getBundleContext();
 
-			ServletContext servletContext = _context.getService(
+			ServletContext servletContext = _bundleContext.getService(
 				serviceReference);
 
 			_osgiDeployContexts.putIfAbsent(
@@ -213,10 +212,9 @@ public class HotDeployTrackerComponent {
 
 			_osgiDeployContexts.remove(servletContext.getServletContextName());
 
-			_context.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 		}
 
-		BundleContext _context;
 	}
 
 }
