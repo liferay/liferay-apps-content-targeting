@@ -128,6 +128,9 @@ public class CTDataFactory extends DataFactory {
 
 		PortletPreferences jxPortletPreferences = new PortletPreferencesImpl();
 
+		List<String> queryRuleIndexes = new ArrayList<String>(
+			_userSegmentModels.size());
+
 		for (int i = 0; i < _campaignModels.size(); i++) {
 			CampaignModel campaignModel = _campaignModels.get(i);
 
@@ -136,11 +139,17 @@ public class CTDataFactory extends DataFactory {
 			jxPortletPreferences.setValue(
 				"campaignId" + i,
 				String.valueOf(campaignModel.getCampaignId()));
+
+			queryRuleIndexes.add(String.valueOf(i));
 		}
 
+		jxPortletPreferences.setValue(
+			"assetEntryIdDefault", String.valueOf(getAssetEntryId()));
+		jxPortletPreferences.setValue("contentDefaultValue", "true");
 		jxPortletPreferences.setValue("showAssetTitle", "false");
 		jxPortletPreferences.setValues(
-			"queryLogicIndexes", new String[]{"0", "1", "2"});
+			"queryLogicIndexes",
+			queryRuleIndexes.toArray(new String[queryRuleIndexes.size()]));
 		jxPortletPreferences.setValue("contentDefaultValue", "false");
 		jxPortletPreferences.setValue("enableSocialBookmarks", "false");
 		jxPortletPreferences.setValue(
@@ -242,6 +251,9 @@ public class CTDataFactory extends DataFactory {
 
 		PortletPreferences jxPortletPreferences = new PortletPreferencesImpl();
 
+		List<String> queryRuleIndexes = new ArrayList<String>(
+			_userSegmentModels.size());
+
 		for (int i = 0; i < _userSegmentModels.size(); i++) {
 			UserSegmentModel userSegmentModel = _userSegmentModels.get(i);
 
@@ -252,11 +264,17 @@ public class CTDataFactory extends DataFactory {
 			jxPortletPreferences.setValue(
 				"userSegmentAssetCategoryIds" + i,
 				String.valueOf(userSegmentModel.getAssetCategoryId()));
+
+			queryRuleIndexes.add(String.valueOf(i));
 		}
 
+		jxPortletPreferences.setValue(
+			"assetEntryIdDefault", String.valueOf(getAssetEntryId()));
+		jxPortletPreferences.setValue("contentDefaultValue", "true");
 		jxPortletPreferences.setValue("showAssetTitle", "false");
 		jxPortletPreferences.setValues(
-			"queryLogicIndexes", new String[]{"0", "1", "2"});
+			"queryLogicIndexes",
+			queryRuleIndexes.toArray(new String[queryRuleIndexes.size()]));
 		jxPortletPreferences.setValue("contentDefaultValue", "false");
 		jxPortletPreferences.setValue("enableSocialBookmarks", "false");
 		jxPortletPreferences.setValue(
