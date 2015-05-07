@@ -44,6 +44,8 @@ import org.osgi.util.tracker.ServiceTrackerCustomizer;
 
 /**
  * @author Carlos Sierra
+ * @author Norbert Kocsis
+ * @author Tibor Lipusz
  */
 @Component(immediate = true)
 public class HotDeployTrackerComponent {
@@ -126,8 +128,10 @@ public class HotDeployTrackerComponent {
 
 	@Activate
 	protected void activate(final BundleContext bundleContext) {
+		_bundleContext = bundleContext;
+
 		_serviceTracker = new ServiceTracker<ServletContext, ServletContext>(
-			bundleContext, ServletContext.class,
+			_bundleContext, ServletContext.class,
 			new ServletContextTrackerCustomizer());
 
 		_serviceTracker.open();
@@ -152,10 +156,10 @@ public class HotDeployTrackerComponent {
 		return bundleWiring.getClassLoader();
 	}
 
+	private BundleContext _bundleContext;
 	private MessageBus _messageBus;
 	private ConcurrentHashMap<String, OsgiDeployContext> _osgiDeployContexts =
 		new ConcurrentHashMap<String, OsgiDeployContext>();
-	private ServletContext _portalServletContext;
 	private MessageListener _serviceRegistratorMessageListener =
 		new ServiceRegistratorMessageListener();
 	private ServiceTracker<ServletContext, ServletContext> _serviceTracker;
@@ -175,7 +179,7 @@ public class HotDeployTrackerComponent {
 
 			BundleContext bundleContext = bundle.getBundleContext();
 
-			ServletContext servletContext = bundleContext.getService(
+			ServletContext servletContext = _bundleContext.getService(
 				serviceReference);
 
 			_osgiDeployContexts.putIfAbsent(
@@ -184,8 +188,6 @@ public class HotDeployTrackerComponent {
 
 			HotDeployUtil.fireDeployEvent(
 				new HotDeployEvent(servletContext, _getClassLoader(bundle)));
-
-			bundleContext.ungetService(serviceReference);
 
 			return servletContext;
 		}
@@ -203,16 +205,15 @@ public class HotDeployTrackerComponent {
 
 			Bundle bundle = serviceReference.getBundle();
 
-			BundleContext bundleContext = bundle.getBundleContext();
-
 			HotDeployUtil.fireUndeployEvent(
 				new HotDeployEvent(servletContext, _getClassLoader(bundle))
 			);
 
 			_osgiDeployContexts.remove(servletContext.getServletContextName());
 
-			bundleContext.ungetService(serviceReference);
+			_bundleContext.ungetService(serviceReference);
 		}
+
 	}
 
 }
