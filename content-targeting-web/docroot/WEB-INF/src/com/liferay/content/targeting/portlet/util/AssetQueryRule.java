@@ -262,6 +262,9 @@ public abstract class AssetQueryRule implements QueryRule {
 		throws PortalException, SystemException {
 
 		try {
+
+			// See LPS-55480
+
 			_assetEntry = AssetEntryServiceUtil.getEntry(_assetEntryId);
 		}
 		catch (Exception e) {
