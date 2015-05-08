@@ -29,6 +29,10 @@ public class InvalidTrackingActionException extends PortalException {
 		super(msg);
 	}
 
+	public InvalidTrackingActionException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
 	public String getTrackingActionGuid() {
 		return _trackingActionGuid;
 	}
