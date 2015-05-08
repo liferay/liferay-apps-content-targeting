@@ -31,6 +31,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CompanyModel;
 import com.liferay.portal.model.LayoutModel;
+import com.liferay.portal.model.PortletConstants;
 import com.liferay.portal.model.PortletPreferencesModel;
 import com.liferay.portal.model.ResourcePermissionModel;
 import com.liferay.portal.model.UserModel;
@@ -64,6 +65,14 @@ public class CTDataFactory extends DataFactory {
 			properties.getProperty(
 				"sample.sql.max.campaign.content.display.page.count"));
 
+		_maxCampaignContentDisplayPortletCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.campaign.content.display.portlet.count"));
+
+		_maxCampaignContentDisplayQueryRuleCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.campaign.content.display.query.rule.count"));
+
 		_maxCampaignCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.campaign.count"));
 
@@ -71,9 +80,22 @@ public class CTDataFactory extends DataFactory {
 			properties.getProperty(
 				"sample.sql.max.user.segment.content.display.page.count"));
 
+		_maxUserSegmentContentDisplayPortletCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.user.segment.content.display.portlet.count"));
+
+		_maxUserSegmentContentDisplayQueryRuleCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.user.segment.content.display.query.rule." +
+					"count"));
+
 		_maxUserSegmentContentListPageCount = GetterUtil.getInteger(
 			properties.getProperty(
 				"sample.sql.max.user.segment.content.list.page.count"));
+
+		_maxUserSegmentContentListPortletCount = GetterUtil.getInteger(
+			properties.getProperty(
+				"sample.sql.max.user.segment.content.list.portlet.count"));
 
 		_maxUserSegmentCount = GetterUtil.getInteger(
 			properties.getProperty("sample.sql.max.user.segment.count"));
@@ -101,12 +123,36 @@ public class CTDataFactory extends DataFactory {
 		return _maxCampaignContentDisplayPageCount;
 	}
 
+	public int getMaxCampaignContentDisplayPortletCount() {
+		return _maxCampaignContentDisplayPortletCount;
+	}
+
 	public int getMaxUserSegmentContentDisplayPageCount() {
 		return _maxUserSegmentContentDisplayPageCount;
 	}
 
+	public int getMaxUserSegmentContentDisplayPortletCount() {
+		return _maxUserSegmentContentDisplayPortletCount;
+	}
+
 	public int getMaxUserSegmentContentListPageCount() {
 		return _maxUserSegmentContentListPageCount;
+	}
+
+	public int getMaxUserSegmentContentListPortletCount() {
+		return _maxUserSegmentContentListPortletCount;
+	}
+
+	public String getPortletLayoutColumn(String portletIdPrefix, int count) {
+		StringBundler sb = new StringBundler(3 * count);
+
+		for (int i = 1; i <= count; i++) {
+			sb.append(portletIdPrefix);
+			sb.append(i);
+			sb.append(StringPool.COMMA);
+		}
+
+		return sb.toString();
 	}
 
 	@Override
@@ -128,33 +174,39 @@ public class CTDataFactory extends DataFactory {
 
 		PortletPreferences jxPortletPreferences = new PortletPreferencesImpl();
 
-		List<String> queryRuleIndexes = new ArrayList<String>(
-			_userSegmentModels.size());
-
-		for (int i = 0; i < _campaignModels.size(); i++) {
-			CampaignModel campaignModel = _campaignModels.get(i);
-
-			jxPortletPreferences.setValue(
-				"assetEntryId" + i, String.valueOf(getAssetEntryId()));
-			jxPortletPreferences.setValue(
-				"campaignId" + i,
-				String.valueOf(campaignModel.getCampaignId()));
-
-			queryRuleIndexes.add(String.valueOf(i));
-		}
-
 		jxPortletPreferences.setValue(
 			"assetEntryIdDefault", String.valueOf(getAssetEntryId()));
 		jxPortletPreferences.setValue("contentDefaultValue", "true");
 		jxPortletPreferences.setValue("showAssetTitle", "false");
-		jxPortletPreferences.setValues(
-			"queryLogicIndexes",
-			queryRuleIndexes.toArray(new String[queryRuleIndexes.size()]));
 		jxPortletPreferences.setValue("contentDefaultValue", "false");
 		jxPortletPreferences.setValue("enableSocialBookmarks", "false");
 		jxPortletPreferences.setValue(
 			"displayStyleGroupId", String.valueOf(groupId));
 		jxPortletPreferences.setValue("displayStyle", "full-content");
+
+		List<String> queryRuleIndexes = new ArrayList<String>(
+			_maxCampaignContentDisplayQueryRuleCount);
+
+		if (!_campaignModels.isEmpty()) {
+			for (int i = 0; i < _maxCampaignContentDisplayQueryRuleCount; i++) {
+				jxPortletPreferences.setValue(
+					"assetEntryId" + i, String.valueOf(getAssetEntryId()));
+
+				int pos = RandomUtil.nextInt(_campaignModels.size());
+
+				CampaignModel campaignModel = _campaignModels.get(pos);
+
+				jxPortletPreferences.setValue(
+					"campaignId" + i,
+					String.valueOf(campaignModel.getCampaignId()));
+
+				queryRuleIndexes.add(String.valueOf(i));
+			}
+		}
+
+		jxPortletPreferences.setValues(
+			"queryLogicIndexes",
+			queryRuleIndexes.toArray(new String[queryRuleIndexes.size()]));
 
 		return newPortletPreferencesModel(
 			plid, portletId,
@@ -251,39 +303,55 @@ public class CTDataFactory extends DataFactory {
 
 		PortletPreferences jxPortletPreferences = new PortletPreferencesImpl();
 
-		List<String> queryRuleIndexes = new ArrayList<String>(
-			_userSegmentModels.size());
-
-		for (int i = 0; i < _userSegmentModels.size(); i++) {
-			UserSegmentModel userSegmentModel = _userSegmentModels.get(i);
-
-			jxPortletPreferences.setValue(
-				"assetEntryId" + i, String.valueOf(getAssetEntryId()));
-			jxPortletPreferences.setValue("enablequeryContains" + i, "true");
-			jxPortletPreferences.setValue("queryAndOperator" + i, "false");
-			jxPortletPreferences.setValue(
-				"userSegmentAssetCategoryIds" + i,
-				String.valueOf(userSegmentModel.getAssetCategoryId()));
-
-			queryRuleIndexes.add(String.valueOf(i));
-		}
-
 		jxPortletPreferences.setValue(
 			"assetEntryIdDefault", String.valueOf(getAssetEntryId()));
 		jxPortletPreferences.setValue("contentDefaultValue", "true");
 		jxPortletPreferences.setValue("showAssetTitle", "false");
-		jxPortletPreferences.setValues(
-			"queryLogicIndexes",
-			queryRuleIndexes.toArray(new String[queryRuleIndexes.size()]));
 		jxPortletPreferences.setValue("contentDefaultValue", "false");
 		jxPortletPreferences.setValue("enableSocialBookmarks", "false");
 		jxPortletPreferences.setValue(
 			"displayStyleGroupId", String.valueOf(groupId));
 		jxPortletPreferences.setValue("displayStyle", "full-content");
 
+		List<String> queryRuleIndexes = new ArrayList<String>(
+			_maxUserSegmentContentDisplayQueryRuleCount);
+
+		if (!_userSegmentModels.isEmpty()) {
+			for (int i = 0; i < _maxUserSegmentContentDisplayQueryRuleCount;
+				i++) {
+
+				int pos = RandomUtil.nextInt(_userSegmentModels.size());
+
+				UserSegmentModel userSegmentModel = _userSegmentModels.get(pos);
+
+				jxPortletPreferences.setValue(
+					"assetEntryId" + i, String.valueOf(getAssetEntryId()));
+				jxPortletPreferences.setValue("queryContains" + i, "true");
+				jxPortletPreferences.setValue("queryAndOperator" + i, "false");
+				jxPortletPreferences.setValue(
+					"userSegmentAssetCategoryIds" + i,
+					String.valueOf(userSegmentModel.getAssetCategoryId()));
+
+				queryRuleIndexes.add(String.valueOf(i));
+			}
+		}
+
+		jxPortletPreferences.setValues(
+			"queryLogicIndexes",
+			queryRuleIndexes.toArray(new String[queryRuleIndexes.size()]));
+
 		return newPortletPreferencesModel(
 			plid, portletId,
 			_portletPreferencesFactory.toXML(jxPortletPreferences));
+	}
+
+	public PortletPreferencesModel
+		newUserSegmentContentListPortletPreferenceModels(
+			long plid, String portletId)
+		throws Exception {
+
+		return newPortletPreferencesModel(
+			plid, portletId, PortletConstants.DEFAULT_PREFERENCES);
 	}
 
 	public List<UserSegmentModel> newUserSegmentModels(long groupId)
@@ -513,9 +581,14 @@ public class CTDataFactory extends DataFactory {
 		new ArrayList<CampaignModel>();
 	private long _lastRightCategoryId = 2;
 	private int _maxCampaignContentDisplayPageCount;
+	private int _maxCampaignContentDisplayPortletCount;
+	private int _maxCampaignContentDisplayQueryRuleCount;
 	private int _maxCampaignCount;
 	private int _maxUserSegmentContentDisplayPageCount;
+	private int _maxUserSegmentContentDisplayPortletCount;
+	private int _maxUserSegmentContentDisplayQueryRuleCount;
 	private int _maxUserSegmentContentListPageCount;
+	private int _maxUserSegmentContentListPortletCount;
 	private int _maxUserSegmentCount;
 	private int _maxUserSegmentRuleInstanceCount;
 	private List<RuleInstanceModel> _ruleInstanceModels =
