@@ -58,14 +58,22 @@ public class HotDeployTrackerComponent {
 	public static class OsgiDeployContext {
 
 		private BundleContext _bundleContext;
+		private ClassLoader _classLoader;
+
 
 		public BundleContext getBundleContext() {
 			return _bundleContext;
 		}
 
-		public OsgiDeployContext(BundleContext bundleContext) {
+		public ClassLoader getClassLoader() {
+			return _classLoader;
+		}
+
+		public OsgiDeployContext(
+			BundleContext bundleContext, ClassLoader classLoader) {
 
 			_bundleContext = bundleContext;
+			_classLoader = classLoader;
 		}
 
 	}
@@ -184,12 +192,14 @@ public class HotDeployTrackerComponent {
 			ServletContext servletContext = _bundleContext.getService(
 				serviceReference);
 
+			ClassLoader classLoader = _getClassLoader(bundle);
+
 			_osgiDeployContexts.putIfAbsent(
 				servletContext.getServletContextName(),
-				new OsgiDeployContext(bundleContext));
+				new OsgiDeployContext(bundleContext, classLoader));
 
 			HotDeployUtil.fireDeployEvent(
-				new HotDeployEvent(servletContext, _getClassLoader(bundle)));
+				new HotDeployEvent(servletContext, classLoader));
 
 			return servletContext;
 		}
@@ -205,13 +215,15 @@ public class HotDeployTrackerComponent {
 			ServiceReference<ServletContext> serviceReference,
 			ServletContext servletContext) {
 
-			Bundle bundle = serviceReference.getBundle();
+			OsgiDeployContext osgiDeployContext = _osgiDeployContexts.remove(
+				servletContext.getServletContextName());
 
-			HotDeployUtil.fireUndeployEvent(
-				new HotDeployEvent(servletContext, _getClassLoader(bundle))
-			);
-
-			_osgiDeployContexts.remove(servletContext.getServletContextName());
+			if (osgiDeployContext != null) {
+				HotDeployUtil.fireUndeployEvent(
+					new HotDeployEvent(
+						servletContext, osgiDeployContext.getClassLoader())
+				);
+			}
 
 			_bundleContext.ungetService(serviceReference);
 		}
