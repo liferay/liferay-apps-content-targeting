@@ -148,6 +148,8 @@ public class HotDeployTrackerComponent {
 
 		_messageBus.unregisterMessageListener(
 			DestinationNames.HOT_DEPLOY, _serviceRegistratorMessageListener);
+
+		_bundleContext = null;
 	}
 
 	private ClassLoader _getClassLoader(Bundle bundle) {
