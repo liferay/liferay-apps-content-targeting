@@ -103,9 +103,11 @@
 	<#if displayStyle == "full-content">
 		<#assign path = assetRenderer.render(renderRequest, renderResponse, "full_content") />
 
-		<@liferay_util["include"] page=path>
-			<@liferay_util["param"] name="showHeader" value="false" />
-		</@>
+		<div class="asset-content">
+			<@liferay_util["include"] page=path>
+				<@liferay_util["param"] name="showHeader" value="false" />
+			</@>
+		</div>
 	<#else>
 		<@liferay_util["include"] page="/html/portlet/asset_publisher/display/${stringUtil.replace(displayStyle, '-', '_')}.jsp">
 			<@liferay_util["param"] name="showEditURL" value=showEditLink?string />
