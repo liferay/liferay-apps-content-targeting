@@ -26,6 +26,8 @@ import com.liferay.portal.kernel.json.JSONException;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -76,6 +78,12 @@ public class IpGeocodeRule extends BaseRule {
 		IPInfo ipInfo = _ipGeocoder.getIPInfo(ip);
 
 		if (ipInfo == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Couldn't get ipInfo from " +
+						ip + ", evaluation failed.");
+			}
+
 			return false;
 		}
 
@@ -88,6 +96,12 @@ public class IpGeocodeRule extends BaseRule {
 		Country country = CountryServiceUtil.fetchCountry(countryId);
 
 		if (country == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Couldn't get country from " +
+						countryId +", evaluation failed.");
+			}
+
 			return false;
 		}
 
@@ -100,6 +114,16 @@ public class IpGeocodeRule extends BaseRule {
 		}
 
 		String countryCode = ipInfo.getCountryCode();
+
+		if (countryCode == null) {
+			if (_log.isDebugEnabled()) {
+				_log.debug(
+					"Couldn't get countryCode from " +
+						ip +", evaluation failed.");
+			}
+
+			return false;
+		}
 
 		if (countryCode.equals(country.getA2())) {
 			String regionCode = ipInfo.getRegionCode();
@@ -222,6 +246,8 @@ public class IpGeocodeRule extends BaseRule {
 		context.put("countryId", countryId);
 		context.put("regionId", regionId);
 	}
+
+	private static Log _log = LogFactoryUtil.getLog(IpGeocodeRule.class);
 
 	private static IPGeocoder _ipGeocoder;
 
