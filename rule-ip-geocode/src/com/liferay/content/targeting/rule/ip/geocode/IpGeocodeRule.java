@@ -99,7 +99,7 @@ public class IpGeocodeRule extends BaseRule {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Couldn't get country from " +
-						countryId +", evaluation failed.");
+						countryId + ", evaluation failed.");
 			}
 
 			return false;
@@ -119,7 +119,7 @@ public class IpGeocodeRule extends BaseRule {
 			if (_log.isDebugEnabled()) {
 				_log.debug(
 					"Couldn't get countryCode from " +
-						ip +", evaluation failed.");
+						ip + ", evaluation failed.");
 			}
 
 			return false;
