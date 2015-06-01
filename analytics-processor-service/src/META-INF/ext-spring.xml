@@ -10,9 +10,11 @@
 
 	<!-- Destinations -->
 
-	<bean id="destination.analytics" class="com.liferay.portal.kernel.messaging.ParallelDestination">
-		<property name="name" value="liferay/analytics" />
-	</bean>
+        <bean id="destination.analytics" class="com.liferay.portal.kernel.messaging.ParallelDestination">
+                <constructor-arg name="name" value="liferay/analytics" />
+                <constructor-arg name="workersCoreSize" value="25" />
+                <constructor-arg name="workersMaxSize" value="50" />
+        </bean>
 
 	<!-- Configurator -->
 
