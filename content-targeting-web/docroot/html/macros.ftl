@@ -105,6 +105,8 @@
 
 		<div class="asset-content">
 			<@liferay_util["include"] page=path>
+				<@liferay_util["param"] name="showEditURL" value=showEditLink?string />
+				<@liferay_util["param"] name="showExtraInfo" value="false" />
 				<@liferay_util["param"] name="showHeader" value="false" />
 			</@>
 		</div>
