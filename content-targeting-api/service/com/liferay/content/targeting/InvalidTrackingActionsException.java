@@ -30,14 +30,6 @@ public class InvalidTrackingActionsException extends PortalException {
 		super();
 	}
 
-	public InvalidTrackingActionsException(String msg) {
-		super(msg);
-	}
-
-	public InvalidTrackingActionsException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
 	public InvalidTrackingActionsException(
 		List<InvalidTrackingActionException> exceptions) {
 
@@ -48,6 +40,14 @@ public class InvalidTrackingActionsException extends PortalException {
 
 			_exceptionsMap.put(exception.getTrackingActionGuid(), exceptions);
 		}
+	}
+
+	public InvalidTrackingActionsException(String msg) {
+		super(msg);
+	}
+
+	public InvalidTrackingActionsException(String msg, Throwable cause) {
+		super(msg, cause);
 	}
 
 	public void add(InvalidTrackingActionException exception) {

@@ -60,7 +60,6 @@ public class HotDeployTrackerComponent {
 		private BundleContext _bundleContext;
 		private ClassLoader _classLoader;
 
-
 		public BundleContext getBundleContext() {
 			return _bundleContext;
 		}

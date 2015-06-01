@@ -30,14 +30,6 @@ public class InvalidRulesException extends PortalException {
 		super();
 	}
 
-	public InvalidRulesException(String msg) {
-		super(msg);
-	}
-
-	public InvalidRulesException(String msg, Throwable cause) {
-		super(msg, cause);
-	}
-
 	public InvalidRulesException(List<InvalidRuleException> exceptions) {
 		super();
 
@@ -46,6 +38,14 @@ public class InvalidRulesException extends PortalException {
 
 			_exceptionsMap.put(exception.getRuleGuid(), exceptions);
 		}
+	}
+
+	public InvalidRulesException(String msg) {
+		super(msg);
+	}
+
+	public InvalidRulesException(String msg, Throwable cause) {
+		super(msg, cause);
 	}
 
 	public void add(InvalidRuleException exception) {

@@ -34,7 +34,7 @@ String simulatorPortletName = "ctsimulator_WAR_contenttargetingweb";
 
 boolean hasViewSimulatorPermission = false;
 
-ResourceAction resourceAction =	ResourceActionLocalServiceUtil.fetchResourceAction(simulatorPortletName, ActionKeys.VIEW);
+ResourceAction resourceAction = ResourceActionLocalServiceUtil.fetchResourceAction(simulatorPortletName, ActionKeys.VIEW);
 
 if (resourceAction != null) {
 	hasViewSimulatorPermission = permissionChecker.hasPermission(scopeGroupId, simulatorPortletName, simulatorPortletName, ActionKeys.VIEW);
