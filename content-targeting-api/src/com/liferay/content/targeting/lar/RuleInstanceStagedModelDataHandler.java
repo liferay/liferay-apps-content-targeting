@@ -180,12 +180,14 @@ public class RuleInstanceStagedModelDataHandler
 			rule.importData(portletDataContext, userSegment, ruleInstance);
 		}
 		catch (Exception e) {
-			_log.error(
-				"Cannot import custom data for rule " +
-					rule.getName(LocaleUtil.getDefault()) +
-						" in user segment " +
-							userSegment.getName(LocaleUtil.getDefault()),
-				e);
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Cannot import custom data for rule " +
+						rule.getName(LocaleUtil.getDefault()) +
+							" in user segment " +
+								userSegment.getName(LocaleUtil.getDefault()),
+					e);
+			}
 		}
 
 		long userId = portletDataContext.getUserId(ruleInstance.getUserUuid());
