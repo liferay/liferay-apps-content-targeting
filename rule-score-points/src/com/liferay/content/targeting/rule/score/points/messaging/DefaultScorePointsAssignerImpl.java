@@ -71,7 +71,8 @@ public class DefaultScorePointsAssignerImpl implements ScorePointsAssigner {
 
 				try {
 					_scorePointLocalService.incrementPoints(
-						anonymousUserId, userSegment.getUserSegmentId(), points);
+						anonymousUserId, userSegment.getUserSegmentId(),
+						points);
 				}
 				catch (SystemException se) {
 					if (_log.isWarnEnabled()) {
