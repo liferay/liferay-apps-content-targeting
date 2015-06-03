@@ -153,6 +153,8 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 			return null;
 		}
 
+		// See http://tools.ietf.org/html/rfc7239
+
 		if (request.getHeader(HttpHeaders.X_FORWARDED_FOR) != null) {
 			String ip = StringUtil.split(
 				request.getHeader(HttpHeaders.X_FORWARDED_FOR))[0];
