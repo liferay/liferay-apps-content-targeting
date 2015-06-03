@@ -18,7 +18,6 @@ import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.servlet.HttpHeaders;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
@@ -155,9 +154,9 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
 		// See http://tools.ietf.org/html/rfc7239
 
-		if (request.getHeader(HttpHeaders.X_FORWARDED_FOR) != null) {
+		if (request.getHeader(_X_FORWARDED_FOR) != null) {
 			String ip = StringUtil.split(
-				request.getHeader(HttpHeaders.X_FORWARDED_FOR))[0];
+				request.getHeader(_X_FORWARDED_FOR))[0];
 
 			if (ip != null) {
 				return ip;
@@ -198,6 +197,8 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 	}
 
 	private static final String _FORWARDED = "Forwarded";
+
+	private static final String _X_FORWARDED_FOR = "X-Forwarded-For";
 
 	private AnonymousUsersCookieManager _anonymousUsersCookieManager;
 	private final Pattern _pattern = Pattern.compile(
