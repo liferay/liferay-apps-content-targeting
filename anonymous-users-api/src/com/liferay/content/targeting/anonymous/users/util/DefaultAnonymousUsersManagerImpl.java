@@ -21,6 +21,9 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
@@ -36,6 +39,36 @@ import org.osgi.service.component.annotations.Reference;
 @Component
 public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
+	public String getAddressFromRequest(HttpServletRequest request) {
+
+		if (request == null) {
+			return null;
+		}
+
+		String ip = null;
+
+		ip = request.getHeader(_X_FORWARDED_FOR) != null ?
+				request.getHeader(_X_FORWARDED_FOR).split(",")[0] :
+				null;
+
+		if ((ip == null) && (request.getHeader(_FORWARDED) != null)) {
+			String value = request.getHeader(_FORWARDED);
+
+			Matcher matcher = Pattern.compile(
+				"for=[\"\\[]*([^\\],;]+)[\"\\]]*").matcher(value);
+
+			if (matcher.find()) {
+				ip = matcher.group(1);
+			}
+		}
+
+		if (ip == null) {
+			ip = request.getRemoteAddr();
+		}
+
+		return ip;
+	}
+
 	@Override
 	public AnonymousUser getAnonymousUser(
 			HttpServletRequest request, HttpServletResponse response)
@@ -50,13 +83,14 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
 		AnonymousUser anonymousUser = null;
 
+		String userIp = getAddressFromRequest(request);
+
 		if (userId > 0) {
 			anonymousUser = getAnonymousUser(request, userId);
 
-			if (!anonymousUser.getLastIp().equals(request.getRemoteAddr())) {
+			if (!anonymousUser.getLastIp().equals(userIp)) {
 				AnonymousUserLocalServiceUtil.updateLastIp(
-					anonymousUser.getAnonymousUserId(),
-					request.getRemoteAddr());
+					anonymousUser.getAnonymousUserId(), userIp);
 			}
 
 			return anonymousUser;
@@ -66,14 +100,14 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
 		if (anonymousUser == null) {
 			anonymousUser = AnonymousUserLocalServiceUtil.addAnonymousUser(
-				0, request.getRemoteAddr(), null, serviceContext);
+				0, userIp, null, serviceContext);
 
 			_anonymousUsersCookieManager.addCookie(
 				request, response, anonymousUser.getAnonymousUserId());
 		}
-		else if (!anonymousUser.getLastIp().equals(request.getRemoteAddr())) {
+		else if (!anonymousUser.getLastIp().equals(userIp)) {
 			AnonymousUserLocalServiceUtil.updateLastIp(
-				anonymousUser.getAnonymousUserId(), request.getRemoteAddr());
+				anonymousUser.getAnonymousUserId(), userIp);
 		}
 
 		return anonymousUser;
@@ -90,6 +124,8 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
 		serviceContext.setCompanyId(companyId);
 
+		String userIp = getAddressFromRequest(request);
+
 		AnonymousUser anonymousUser =
 			AnonymousUserLocalServiceUtil.fetchAnonymousUserByUserId(userId);
 
@@ -102,13 +138,12 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
 				anonymousUser =
 					AnonymousUserLocalServiceUtil.addAnonymousUser(
-						userId, request.getRemoteAddr(), null, serviceContext);
+						userId, userIp, null, serviceContext);
 			}
 			else {
 				anonymousUser =
 					AnonymousUserLocalServiceUtil.updateAnonymousUser(
-						anonymousUser.getAnonymousUserId(), userId,
-						request.getRemoteAddr(),
+						anonymousUser.getAnonymousUserId(), userId, userIp,
 						anonymousUser.getTypeSettings(), serviceContext);
 			}
 		}
@@ -157,6 +192,10 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
 		return anonymousUser;
 	}
+
+	private static final String _FORWARDED = "Forwarded";
+
+	private static final String _X_FORWARDED_FOR = "X-Forwarded-For";
 
 	private AnonymousUsersCookieManager _anonymousUsersCookieManager;
 

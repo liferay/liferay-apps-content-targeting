@@ -14,5 +14,12 @@
 		<dependency name="com.liferay.portal.log.bridge" org="com.liferay" rev="1.0.0" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.enterprise" org="org.osgi" rev="5.0.0" />
+		<dependency name="powermock-api-mockito" org="org.powermock" rev="1.5" />
+		<dependency name="powermock-api-support" org="org.powermock" rev="1.5" />
+		<dependency name="powermock-core" org="org.powermock" rev="1.5" />
+		<dependency name="powermock-module-junit4" org="org.powermock" rev="1.5" />
+		<dependency name="powermock-module-junit4-common" org="org.powermock" rev="1.5" />
+		<dependency name="powermock-reflect" org="org.powermock" rev="1.5" />
+		<dependency name="spring-test" org="org.springframework" rev="2.5" />
 	</dependencies>
 </ivy-module>
