@@ -61,7 +61,7 @@ public class DefaultAnonymousUsersManagerImplTest extends PowerMockito {
 		requestSingle.setAttribute(WebKeys.COMPANY_ID, "1");
 		requestSingle.setAttribute(WebKeys.USER_ID, "1");
 		requestSingle.setRemoteAddr("127.0.0.1");
-		requestSingle.addHeader("Forwarded", "for=127.0.0.2");
+		requestSingle.addHeader("Forwarded", "for=127.0.0.2;proto=http");
 
 		String singleIp = _anonymousUsersManager.getAddressFromRequest(
 				requestSingle);
@@ -76,7 +76,7 @@ public class DefaultAnonymousUsersManagerImplTest extends PowerMockito {
 		requestChain.setAttribute(WebKeys.USER_ID, "1");
 		requestChain.setRemoteAddr("127.0.0.1");
 		requestChain.addHeader(
-				"Forwarded", "for=127.0.0.3, for=proxy1, for=proxy2");
+				"Forwarded", "for=127.0.0.3, for=proxy1;by=127.0.0.1");
 
 		String userChainIp = _anonymousUsersManager.getAddressFromRequest(
 				requestChain);
@@ -90,7 +90,8 @@ public class DefaultAnonymousUsersManagerImplTest extends PowerMockito {
 		requestV6.setAttribute(WebKeys.COMPANY_ID, "1");
 		requestV6.setAttribute(WebKeys.USER_ID, "1");
 		requestV6.setRemoteAddr("127.0.0.1");
-		requestV6.addHeader("Forwarded", "for=\"[2001:db8:cafe::17]\"");
+		requestV6.addHeader(
+				"Forwarded", "for=\"[2001:db8:cafe::17]\";proto=https");
 
 		String userV6ip = _anonymousUsersManager.getAddressFromRequest(
 				requestV6);

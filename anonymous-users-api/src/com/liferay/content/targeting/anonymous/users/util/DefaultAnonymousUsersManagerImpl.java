@@ -21,7 +21,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
-import java.util.Enumeration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -52,13 +51,11 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 				request.getHeader(_X_FORWARDED_FOR).split(",")[0] :
 				null;
 
-		Enumeration<String> values = request.getHeaders(_FORWARDED);
-
-		if ((ip == null) && values.hasMoreElements()) {
-			String value = values.nextElement();
+		if ((ip == null) && (request.getHeader(_FORWARDED) != null)) {
+			String value = request.getHeader(_FORWARDED);
 
 			Matcher matcher = Pattern.compile(
-				"for=[\"\\[]*([^\\]\\,]+)[\"\\]]*").matcher(value);
+				"for=[\"\\[]*([^\\],;]+)[\"\\]]*").matcher(value);
 
 			if (matcher.find()) {
 				ip = matcher.group(1);
