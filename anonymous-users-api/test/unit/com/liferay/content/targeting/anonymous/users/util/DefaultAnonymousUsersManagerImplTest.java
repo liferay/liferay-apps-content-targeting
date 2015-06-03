@@ -34,14 +34,13 @@ public class DefaultAnonymousUsersManagerImplTest extends PowerMockito {
 
 	@Before
 	public void setUp() {
-
 		_anonymousUsersManager = new DefaultAnonymousUsersManagerImpl();
 	}
 
 	@Test
-	public void testWithoutProxy() throws Exception {
-
+	public void testGetAddressFromRequestWithoutProxy() throws Exception {
 		MockHttpServletRequest request = new MockHttpServletRequest();
+
 		request.setAttribute(WebKeys.COMPANY_ID, "1");
 		request.setAttribute(WebKeys.USER_ID, "1");
 		request.setRemoteAddr("127.0.0.1");
@@ -52,9 +51,9 @@ public class DefaultAnonymousUsersManagerImplTest extends PowerMockito {
 	}
 
 	@Test
-	public void testWithProxyRFC7239() throws Exception {
+	public void testGetAddressFromRequestWithProxyRFC7239() throws Exception {
 
-		/* single proxy */
+		// single proxy
 
 		MockHttpServletRequest requestSingle = new MockHttpServletRequest();
 
@@ -64,11 +63,11 @@ public class DefaultAnonymousUsersManagerImplTest extends PowerMockito {
 		requestSingle.addHeader("Forwarded", "for=127.0.0.2");
 
 		String singleIp = _anonymousUsersManager.getAddressFromRequest(
-				requestSingle);
+			requestSingle);
 
 		Assert.assertEquals("127.0.0.2", singleIp);
 
-		/* proxy chain */
+		// proxy chain
 
 		MockHttpServletRequest requestChain = new MockHttpServletRequest();
 
@@ -79,11 +78,11 @@ public class DefaultAnonymousUsersManagerImplTest extends PowerMockito {
 				"Forwarded", "for=127.0.0.3, for=proxy1, for=proxy2");
 
 		String userChainIp = _anonymousUsersManager.getAddressFromRequest(
-				requestChain);
+			requestChain);
 
 		Assert.assertEquals("127.0.0.3", userChainIp);
 
-		/* IPv6 test */
+		// IPv6 test
 
 		MockHttpServletRequest requestV6 = new MockHttpServletRequest();
 
@@ -93,15 +92,16 @@ public class DefaultAnonymousUsersManagerImplTest extends PowerMockito {
 		requestV6.addHeader("Forwarded", "for=\"[2001:db8:cafe::17]\"");
 
 		String userV6ip = _anonymousUsersManager.getAddressFromRequest(
-				requestV6);
+			requestV6);
 
 		Assert.assertEquals("2001:db8:cafe::17", userV6ip);
 	}
 
 	@Test
-	public void testWithProxyXForwarded() throws Exception {
+	public void testGetAddressFromRequestWithProxyXForwarded()
+		throws Exception {
 
-		/* single proxy */
+		// single proxy
 
 		MockHttpServletRequest requestSingle = new MockHttpServletRequest();
 
@@ -111,11 +111,11 @@ public class DefaultAnonymousUsersManagerImplTest extends PowerMockito {
 		requestSingle.addHeader("X-Forwarded-For", "127.0.0.2");
 
 		String userSingleIp = _anonymousUsersManager.getAddressFromRequest(
-				requestSingle);
+			requestSingle);
 
 		Assert.assertEquals("127.0.0.2", userSingleIp);
 
-		/* proxy chain */
+		// proxy chain
 
 		MockHttpServletRequest requestChain = new MockHttpServletRequest();
 
@@ -125,7 +125,7 @@ public class DefaultAnonymousUsersManagerImplTest extends PowerMockito {
 		requestChain.addHeader("X-Forwarded-For", "127.0.0.3, proxy1, proxy2");
 
 		String userChainIp = _anonymousUsersManager.getAddressFromRequest(
-				requestChain);
+			requestChain);
 
 		Assert.assertEquals("127.0.0.3", userChainIp);
 	}
