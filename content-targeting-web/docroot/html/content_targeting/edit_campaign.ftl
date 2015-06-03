@@ -52,12 +52,26 @@
 		<@portlet["param"] name="tabs1" value="user-segments" />
 	</@>
 
+	<script>
+
+		function confirmToSegments() {
+
+            if (confirm('${htmlUtil.escapeJS(languageUtil.get(themeDisplay.getLocale(), "editing-segments-will-delete-unsaved-campaign"))}')) {
+                window.location.href = "${viewUserSegments}";
+            } else {
+				return false;
+			}
+
+		}
+
+	</script>
+
 	<@liferay_ui["icon"]
 		id="manageUserSegments"
 		image="configuration"
 		label=false
 		message="manage-user-segments"
-		url=viewUserSegments
+		url="javascript:confirmToSegments();"
 	/>
 
 	<@invalidDateRangeException />
