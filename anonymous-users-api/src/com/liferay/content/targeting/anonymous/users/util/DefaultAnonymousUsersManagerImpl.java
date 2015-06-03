@@ -40,38 +40,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component
 public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
-	public String getAddressFromRequest(HttpServletRequest request) {
-
-		if (request == null) {
-			return null;
-		}
-
-		String ip = null;
-
-		ip = request.getHeader(_X_FORWARDED_FOR) != null ?
-				request.getHeader(_X_FORWARDED_FOR).split(",")[0] :
-				null;
-
-		Enumeration<String> values = request.getHeaders(_FORWARDED);
-
-		if ((ip == null) && values.hasMoreElements()) {
-			String value = values.nextElement();
-
-			Matcher matcher = Pattern.compile(
-				"for=[\"\\[]*([^\\]\\,]+)[\"\\]]*").matcher(value);
-
-			if (matcher.find()) {
-				ip = matcher.group(1);
-			}
-		}
-
-		if (ip == null) {
-			ip = request.getRemoteAddr();
-		}
-
-		return ip;
-	}
-
 	@Override
 	public AnonymousUser getAnonymousUser(
 			HttpServletRequest request, HttpServletResponse response)
@@ -176,6 +144,38 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 		AnonymousUsersCookieManager anonymousUsersCookieManager) {
 
 		_anonymousUsersCookieManager = anonymousUsersCookieManager;
+	}
+
+	protected String getAddressFromRequest(HttpServletRequest request) {
+
+		if (request == null) {
+			return null;
+		}
+
+		String ip = null;
+
+		ip = request.getHeader(_X_FORWARDED_FOR) != null ?
+				request.getHeader(_X_FORWARDED_FOR).split(",")[0] :
+				null;
+
+		Enumeration<String> values = request.getHeaders(_FORWARDED);
+
+		if ((ip == null) && values.hasMoreElements()) {
+			String value = values.nextElement();
+
+			Matcher matcher = Pattern.compile(
+				"for=[\"\\[]*([^\\]\\,]+)[\"\\]]*").matcher(value);
+
+			if (matcher.find()) {
+				ip = matcher.group(1);
+			}
+		}
+
+		if (ip == null) {
+			ip = request.getRemoteAddr();
+		}
+
+		return ip;
 	}
 
 	protected AnonymousUser getAnonymousUserFromCookie(
