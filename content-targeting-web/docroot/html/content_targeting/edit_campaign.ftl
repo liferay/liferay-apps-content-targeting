@@ -52,26 +52,12 @@
 		<@portlet["param"] name="tabs1" value="user-segments" />
 	</@>
 
-	<script>
-
-		function confirmToSegments() {
-
-            if (confirm('${htmlUtil.escapeJS(languageUtil.get(themeDisplay.getLocale(), "editing-segments-will-delete-unsaved-campaign"))}')) {
-                window.location.href = "${viewUserSegments}";
-            } else {
-				return false;
-			}
-
-		}
-
-	</script>
-
 	<@liferay_ui["icon"]
 		id="manageUserSegments"
 		image="configuration"
 		label=false
 		message="manage-user-segments"
-		url="javascript:confirmToSegments();"
+		url="javascript:viewUserSegments();"
 	/>
 
 	<@invalidDateRangeException />
@@ -176,6 +162,14 @@
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
+	</@>
+
+	<@aui["script"]>
+		function viewUserSegments() {
+			if (confirm('<@liferay_ui["message"] key="editing-user-segments-deletes-all-unsaved-campaign-data" />')) {
+				window.location.href = "${viewUserSegments}";
+			}
+		}
 	</@>
 
 	<@aui["script"] use="liferay-ct-form-builder,liferay-input-slider">
