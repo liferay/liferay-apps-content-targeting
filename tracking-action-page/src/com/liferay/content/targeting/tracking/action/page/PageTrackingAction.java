@@ -83,8 +83,11 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 		String friendlyURL = jsonObj.getString("friendlyURL");
 
+		boolean isPrivate = Boolean.parseBoolean(
+				jsonObj.getString("isPrivate"));
+
 		Layout layout = _getLayout(
-			portletDataContext.getScopeGroupId(), friendlyURL);
+			portletDataContext.getScopeGroupId(), friendlyURL, isPrivate);
 
 		if (layout != null ) {
 			portletDataContext.addReferenceElement(
@@ -135,8 +138,11 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 		String friendlyURL = jsonObj.getString("friendlyURL");
 
+		boolean isPrivate = Boolean.parseBoolean(
+				jsonObj.getString("isPrivate"));
+
 		Layout layout = _getLayout(
-			portletDataContext.getScopeGroupId(), friendlyURL);
+			portletDataContext.getScopeGroupId(), friendlyURL, isPrivate);
 
 		if (layout != null ) {
 			trackingActionInstance.setReferrerClassPK(layout.getPlid());
@@ -160,12 +166,27 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 		String friendlyURL = values.get("friendlyURL");
 
+		boolean isPrivate = Boolean.parseBoolean(values.get("isPrivate"));
+
 		if (Validator.isNotNull(friendlyURL)) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
+			String friendlyURLPrivateBase = StringPool.BLANK;
+			String friendlyURLPublicBase = StringPool.BLANK;
+
+			try {
+				friendlyURLPublicBase = PortalUtil.getGroupFriendlyURL(
+						themeDisplay.getScopeGroup(), false, themeDisplay);
+				friendlyURLPrivateBase = PortalUtil.getGroupFriendlyURL(
+						themeDisplay.getScopeGroup(), true, themeDisplay);
+			}
+			catch (Exception e) {
+				_log.error(e);
+			}
+
 			Layout layout = _getLayout(
-				themeDisplay.getScopeGroupId(), friendlyURL);
+				themeDisplay.getScopeGroupId(), friendlyURL, isPrivate);
 
 			if (layout != null) {
 				values.put("referrerClassName", Layout.class.getName());
@@ -174,6 +195,14 @@ public class PageTrackingAction extends BaseTrackingAction {
 				JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 
 				jsonObj.put("friendlyURL", friendlyURL);
+				jsonObj.put("isPrivate", isPrivate);
+
+				if (isPrivate) {
+					jsonObj.put("friendlyURLBase", friendlyURLPrivateBase);
+				}
+				else {
+					jsonObj.put("friendlyURLBase", friendlyURLPublicBase);
+				}
 
 				return jsonObj.toString();
 			}
@@ -191,6 +220,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 		TrackingActionInstance trackingActionInstance,
 		Map<String, Object> context, Map<String, String> values) {
 
+		boolean isPrivate = false;
 		String alias = StringPool.BLANK;
 		String eventType = StringPool.BLANK;
 		String friendlyURL = StringPool.BLANK;
@@ -202,8 +232,9 @@ public class PageTrackingAction extends BaseTrackingAction {
 			alias = values.get("alias");
 			eventType = values.get("eventType");
 			friendlyURL = values.get("friendlyURL");
+			isPrivate = Boolean.parseBoolean(values.get("isPrivate"));
 
-			layout = _getLayout(scopeGroupId, friendlyURL);
+			layout = _getLayout(scopeGroupId, friendlyURL, isPrivate);
 		}
 		else if (trackingActionInstance != null) {
 			alias = trackingActionInstance.getAlias();
@@ -224,23 +255,36 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)context.get("themeDisplay");
 
-		String friendlyURLBase = StringPool.BLANK;
+		String friendlyURLPrivateBase = StringPool.BLANK;
+		String friendlyURLPublicBase = StringPool.BLANK;
 
 		try {
-			friendlyURLBase = PortalUtil.getGroupFriendlyURL(
+			friendlyURLPublicBase = PortalUtil.getGroupFriendlyURL(
 				themeDisplay.getScopeGroup(), false, themeDisplay);
+			friendlyURLPrivateBase = PortalUtil.getGroupFriendlyURL(
+					themeDisplay.getScopeGroup(), true, themeDisplay);
 		}
 		catch (Exception e) {
 			_log.error(e);
 		}
 
-		context.put("friendlyURLBase", friendlyURLBase);
-
 		if (layout != null) {
 			friendlyURL = layout.getFriendlyURL();
+			isPrivate = !layout.isPublicLayout();
 		}
 
 		context.put("friendlyURL", friendlyURL);
+		context.put("isPrivate", isPrivate);
+
+		if (isPrivate) {
+			context.put("friendlyURLBase", friendlyURLPrivateBase);
+		}
+		else {
+			context.put("friendlyURLBase", friendlyURLPublicBase);
+		}
+
+		context.put("friendlyURLPrivateBase", friendlyURLPrivateBase);
+		context.put("friendlyURLPublicBase", friendlyURLPublicBase);
 
 		boolean trackingPageEnabled = AnalyticsUtil.isAnalyticsPageEnabled(
 			scopeGroupId);
@@ -253,19 +297,16 @@ public class PageTrackingAction extends BaseTrackingAction {
 		}
 	}
 
-	private Layout _getLayout(long groupId, String friendlyURL) {
+	private Layout _getLayout(
+		long groupId, String friendlyURL, boolean isPrivate) {
+
 		Layout layout = null;
 
 		// Retrieve layout by friendly url from public or private layout set
 
 		try {
 			layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-				groupId, false, friendlyURL);
-
-			if (layout == null) {
-				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-					groupId, true, friendlyURL);
-			}
+				groupId, isPrivate, friendlyURL);
 		}
 		catch (SystemException e) {
 			_log.error(e);
