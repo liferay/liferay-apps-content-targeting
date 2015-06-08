@@ -28,35 +28,18 @@
 	</div>
 </#if>
 
-<@aui["script"]>
+<@aui["input"] inlineField=true checked=!privateLayout label="public-pages" name="privateLayout" onChange="if (this.checked) {${renderResponse.getNamespace()}updateFriendlyURL('${htmlUtil.escape(friendlyURLPublicBase)}');}" type="radio" value=false />
 
-function changeFriendlyURL(elementId) {
-
-	var A = AUI();
-
-	switch (elementId) {
-		case '<@portlet["namespace"] />privatePagesSelected':
-			A.one('#<@portlet["namespace"] />friendlyURL').previous().setHTML('${htmlUtil.escape(friendlyURLPrivateBase)}');
-			break;
-
-		case '<@portlet["namespace"] />publicPagesSelected':
-			A.one('#<@portlet["namespace"] />friendlyURL').previous().setHTML('${htmlUtil.escape(friendlyURLPublicBase)}');
-			break;
-	}
-
-}
-
-</@>
-
-<#if isPrivate>
-	<#assign friendlyURLBase = friendlyURLPrivateBase />
-<#else>
-	<#assign friendlyURLBase = friendlyURLPublicBase />
-</#if>
-
-<@aui["input"] inlineField=true checked=!isPrivate id="publicPagesSelected" label="public-pages" name="isPrivate" type="radio" value=false onClick='changeFriendlyURL(this.id);'/>
-<@aui["input"] inlineField=true checked=isPrivate id="privatePagesSelected" label="private-pages" name="isPrivate" type="radio" value=true onClick='changeFriendlyURL(this.id);'/>
+<@aui["input"] inlineField=true checked=privateLayout label="private-pages" name="privateLayout" onChange="if (this.checked) {${renderResponse.getNamespace()}updateFriendlyURL('${htmlUtil.escape(friendlyURLPrivateBase)}');}" type="radio" value=true />
 
 <@aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" prefix=friendlyURLBase style="width: auto;" type="text" value=friendlyURL>
 	<@aui["validator"] name="required" />
+</@>
+
+<@aui["script"]>
+	function <@portlet["namespace"] />updateFriendlyURL(value) {
+		var A = AUI();
+
+		A.one('#<@portlet["namespace"] />friendlyURL').previous().setHTML(value);
+	}
 </@>

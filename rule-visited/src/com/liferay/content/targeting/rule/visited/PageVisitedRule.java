@@ -178,11 +178,12 @@ public class PageVisitedRule extends BaseRule {
 			WebKeys.THEME_DISPLAY);
 
 		String friendlyURL = values.get("friendlyURL");
-		boolean isPrivate = Boolean.parseBoolean(values.get("isPrivate"));
+		boolean privateLayout = GetterUtil.getBoolean(
+			values.get("privateLayout"), false);
 
 		try {
 			Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-				themeDisplay.getScopeGroupId(), isPrivate, friendlyURL);
+				themeDisplay.getScopeGroupId(), privateLayout, friendlyURL);
 
 			if (layout != null) {
 				return String.valueOf(layout.getPlid());
@@ -221,23 +222,21 @@ public class PageVisitedRule extends BaseRule {
 
 		try {
 			friendlyURLPublicBase = PortalUtil.getGroupFriendlyURL(
-					themeDisplay.getScopeGroup(), false, themeDisplay);
+				themeDisplay.getScopeGroup(), false, themeDisplay);
 			friendlyURLPrivateBase = PortalUtil.getGroupFriendlyURL(
-					themeDisplay.getScopeGroup(), true, themeDisplay);
+				themeDisplay.getScopeGroup(), true, themeDisplay);
 		}
 		catch (Exception e) {
 			_log.error(e);
 		}
 
-		context.put("friendlyURLPublicBase", friendlyURLPublicBase);
-		context.put("friendlyURLPrivateBase", friendlyURLPrivateBase);
-
 		String friendlyURL = StringPool.BLANK;
-		boolean isPrivate = false;
+		boolean privateLayout = false;
 
 		if (!values.isEmpty()) {
 			friendlyURL = values.get("friendlyURL");
-			isPrivate = Boolean.parseBoolean(values.get("isPrivate"));
+			privateLayout = GetterUtil.getBoolean(
+				values.get("privateLayout"), false);
 		}
 		else if (ruleInstance != null) {
 			long plid = GetterUtil.getLong(ruleInstance.getTypeSettings());
@@ -247,7 +246,7 @@ public class PageVisitedRule extends BaseRule {
 
 				if (layout != null) {
 					friendlyURL = layout.getFriendlyURL();
-					isPrivate = !layout.isPublicLayout();
+					privateLayout = layout.isPrivateLayout();
 				}
 			}
 			catch (SystemException e) {
@@ -255,7 +254,17 @@ public class PageVisitedRule extends BaseRule {
 		}
 
 		context.put("friendlyURL", friendlyURL);
-		context.put("isPrivate", isPrivate);
+		context.put("privateLayout", privateLayout);
+
+		if (privateLayout) {
+			context.put("friendlyURLBase", friendlyURLPrivateBase);
+		}
+		else {
+			context.put("friendlyURLBase", friendlyURLPublicBase);
+		}
+
+		context.put("friendlyURLPublicBase", friendlyURLPublicBase);
+		context.put("friendlyURLPrivateBase", friendlyURLPrivateBase);
 
 		long groupId = (Long)context.get("scopeGroupId");
 

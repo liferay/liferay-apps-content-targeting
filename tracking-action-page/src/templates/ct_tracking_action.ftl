@@ -32,31 +32,12 @@
 	<@aui["validator"] name="required" />
 </@>
 
-<@aui["input"] inlineField=true checked=!isPrivate id="{ct_field_guid}publicPagesSelected" label="public-pages" name="{ct_field_guid}isPrivate" type="radio" value=false onClick='{ct_field_guid}changeFriendlyURL(this.id);'/>
-<@aui["input"] inlineField=true checked=isPrivate id="{ct_field_guid}privatePagesSelected" label="private-pages" name="{ct_field_guid}isPrivate" type="radio" value=true onClick='{ct_field_guid}changeFriendlyURL(this.id);'/>
+<@aui["input"] inlineField=true checked=!privateLayout label="public-pages" name="privateLayout" onChange="if (this.checked) {${renderResponse.getNamespace()}updateFriendlyURL('${htmlUtil.escape(friendlyURLPublicBase)}');}" type="radio" value=false />
 
-<@aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" id="{ct_field_guid}friendlyURL" name="{ct_field_guid}friendlyURL" prefix=friendlyURLBase style="width: auto;" type="text" value=friendlyURL>
+<@aui["input"] inlineField=true checked=privateLayout label="private-pages" name="privateLayout" onChange="if (this.checked) {${renderResponse.getNamespace()}updateFriendlyURL('${htmlUtil.escape(friendlyURLPrivateBase)}');}" type="radio" value=true />
+
+<@aui["input"] helpMessage="enter-the-friendly-url-of-the-page-to-be-tracked" label="friendly-url" name="friendlyURL" prefix=friendlyURLBase style="width: auto;" type="text" value=friendlyURL>
 	<@aui["validator"] name="required" />
-</@>
-
-<@aui["script"]>
-
-	function {ct_field_guid}changeFriendlyURL(elementId) {
-
-		var A = AUI();
-
-		switch (elementId) {
-			case '<@portlet["namespace"] />{ct_field_guid}privatePagesSelected':
-				A.one('#<@portlet["namespace"] />{ct_field_guid}friendlyURL').previous().setHTML('${htmlUtil.escape(friendlyURLPrivateBase)}');
-				break;
-
-			case '<@portlet["namespace"] />{ct_field_guid}publicPagesSelected':
-				A.one('#<@portlet["namespace"] />{ct_field_guid}friendlyURL').previous().setHTML('${htmlUtil.escape(friendlyURLPublicBase)}');
-				break;
-		}
-
-	}
-
 </@>
 
 <#if eventTypes?has_content && (eventTypes?size > 1)>
@@ -72,3 +53,11 @@
 		<@aui["input"] disabled=true label="tracking-action" name="{ct_field_guid}eventTypeTranslate" type="text" value=languageUtil.get(locale, curEventType) />
 	</#list>
 </#if>
+
+<@aui["script"]>
+	function <@portlet["namespace"] />updateFriendlyURL(value) {
+		var A = AUI();
+
+		A.one('#<@portlet["namespace"] />friendlyURL').previous().setHTML(value);
+	}
+</@>
