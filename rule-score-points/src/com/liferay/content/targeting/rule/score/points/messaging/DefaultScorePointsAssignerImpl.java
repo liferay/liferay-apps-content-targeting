@@ -19,6 +19,9 @@ import com.liferay.content.targeting.rule.score.points.api.model.ScorePointsAssi
 import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
@@ -66,8 +69,20 @@ public class DefaultScorePointsAssignerImpl implements ScorePointsAssigner {
 				long points = getScorePoints(
 					className, classPK, userSegment.getUserSegmentId());
 
-				_scorePointLocalService.incrementPoints(
-					anonymousUserId, userSegment.getUserSegmentId(), points);
+				try {
+					_scorePointLocalService.incrementPoints(
+						anonymousUserId, userSegment.getUserSegmentId(),
+						points);
+				}
+				catch (SystemException se) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Not possible to increment " + points +
+								" points for anonymousUserId " +
+								anonymousUserId + " and userSegmentId " +
+								userSegment.getUserSegmentId(), se);
+					}
+				}
 			}
 		}
 	}
@@ -93,6 +108,9 @@ public class DefaultScorePointsAssignerImpl implements ScorePointsAssigner {
 	}
 
 	private static final long DEFAULT_POINTS = 1;
+
+	private static Log _log = LogFactoryUtil.getLog(
+		DefaultScorePointsAssignerImpl.class);
 
 	private ScorePointLocalService _scorePointLocalService;
 	private UserSegmentLocalService _userSegmentLocalService;

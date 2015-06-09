@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.rule.role;
+package com.liferay.content.targeting.rule.user.group.member;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
@@ -21,21 +21,13 @@ import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
-import com.liferay.content.targeting.service.test.util.GroupTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Role;
-import com.liferay.portal.model.RoleConstants;
-import com.liferay.portal.service.GroupLocalServiceUtil;
-import com.liferay.portal.service.RoleLocalServiceUtil;
+import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.model.UserGroup;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserGroupRoleLocalServiceUtil;
-
-import java.util.List;
+import com.liferay.portal.service.UserGroupLocalServiceUtil;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -52,7 +44,7 @@ import org.osgi.framework.BundleException;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
-public class SiteRoleTest {
+public class UserGroupMemberRuleTest {
 
 	@Before
 	public void setUp() {
@@ -72,7 +64,7 @@ public class SiteRoleTest {
 	}
 
 	@Test
-	public void testSiteRoleRule() throws Exception {
+	public void testUserGroupMemberRule() throws Exception {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		AnonymousUser anonymousUser =
@@ -80,37 +72,22 @@ public class SiteRoleTest {
 				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
-		List<Role> roles = RoleLocalServiceUtil.getRoles(
-			TestPropsValues.getCompanyId(), new int[]{RoleConstants.TYPE_SITE});
+		Rule rule = _rulesRegistry.getRule("UserGroupMemberRule");
 
-		Role role = roles.get(0);
+		UserGroup userGroup =
+			UserGroupLocalServiceUtil.addUserGroup(
+				TestPropsValues.getUserId(), TestPropsValues.getCompanyId(),
+				StringUtil.randomString(), StringUtil.randomString(),
+				new ServiceContext());
 
-		Rule rule = _rulesRegistry.getRule("SiteRoleRule");
+		UserGroupLocalServiceUtil.addUserUserGroup(
+			TestPropsValues.getUserId(), userGroup.getUserGroupId());
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
 			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
-			getTypeSettings(role.getRoleId()), serviceContext);
-
-		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			new long[]{TestPropsValues.getUserId()}, _group.getGroupId(),
-			role.getRoleId());
+			String.valueOf(userGroup.getUserGroupId()), serviceContext);
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
-	}
-
-	protected String getTypeSettings(long roleId) throws Exception {
-
-		_group = GroupTestUtil.addGroup();
-
-		GroupLocalServiceUtil.addUserGroup(
-			TestPropsValues.getUserId(), _group.getGroupId());
-
-		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
-
-		jsonObj.put("siteId", _group.getGroupId());
-		jsonObj.put("roleId", roleId);
-
-		return jsonObj.toString();
 	}
 
 	private AnonymousUserLocalService _anonymousUserLocalService;
@@ -118,7 +95,6 @@ public class SiteRoleTest {
 	@ArquillianResource
 	private Bundle _bundle;
 
-	private Group _group;
 	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RulesRegistry _rulesRegistry;
 

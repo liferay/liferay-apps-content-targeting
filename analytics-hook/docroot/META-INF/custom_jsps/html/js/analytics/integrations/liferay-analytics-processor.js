@@ -104,7 +104,7 @@
 		instance.store(events);
 
 		if (!requestId) {
-			requestId = setTimeout(instance.flush, requestInterval);
+			requestId = setTimeout(instance.flush.bind(instance), requestInterval);
 		}
 	};
 

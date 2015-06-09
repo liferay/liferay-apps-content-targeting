@@ -39,6 +39,10 @@ public class InvalidNameException extends PortalException {
 		super(msg);
 	}
 
+	public InvalidNameException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
 	public int getType() {
 		return _type;
 	}

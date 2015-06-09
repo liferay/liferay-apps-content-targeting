@@ -326,6 +326,9 @@ public class DeviceRule extends BaseRule {
 		List<MDRRuleGroup> mdrRuleGroups = new ArrayList<MDRRuleGroup>();
 
 		try {
+
+			// See LPS-55480
+
 			mdrRuleGroups = MDRRuleGroupLocalServiceUtil.searchByKeywords(
 				groupId, null, params, false, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);

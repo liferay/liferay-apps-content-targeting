@@ -14,7 +14,14 @@
 
 package com.liferay.content.targeting.rule.score.points.service.impl;
 
+import com.liferay.content.targeting.rule.score.points.model.ScorePoint;
 import com.liferay.content.targeting.rule.score.points.service.base.ScorePointServiceBaseImpl;
+import com.liferay.content.targeting.service.permission.UserSegmentPermission;
+import com.liferay.content.targeting.util.ActionKeys;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+
+import java.util.List;
 
 /**
  * The implementation of the score point remote service.
@@ -26,16 +33,50 @@ import com.liferay.content.targeting.rule.score.points.service.base.ScorePointSe
  * This is a remote service. Methods of this service are expected to have security checks based on the propagated JAAS credentials because this service can be accessed remotely.
  * </p>
  *
- * @author Brian Wing Shun Chan
+ * @author Julio Camarero
  * @see com.liferay.content.targeting.rule.score.points.service.base.ScorePointServiceBaseImpl
  * @see com.liferay.content.targeting.rule.score.points.service.ScorePointServiceUtil
  */
 public class ScorePointServiceImpl extends ScorePointServiceBaseImpl {
 
-	/**
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.content.targeting.rule.score.points.service.ScorePointServiceUtil} to access the score point remote service.
-	 */
+	public long getPoints(long anonymousUserId, long userSegmentId)
+		throws PortalException, SystemException {
+
+		UserSegmentPermission.check(
+			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
+
+		return scorePointLocalService.getPoints(anonymousUserId, userSegmentId);
+	}
+
+	public List<ScorePoint> getScorePoints(long userSegmentId)
+		throws PortalException, SystemException {
+
+		UserSegmentPermission.check(
+			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
+
+		return scorePointLocalService.getScorePoints(userSegmentId);
+	}
+
+	public long incrementPoints(
+			long anonymousUserId, long userSegmentId, long points)
+		throws PortalException, SystemException {
+
+		UserSegmentPermission.check(
+			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
+
+		return scorePointLocalService.incrementPoints(
+			anonymousUserId, userSegmentId, points);
+	}
+
+	public ScorePoint updateScorePoints(
+			long anonymousUserId, long userSegmentId, long points)
+		throws PortalException, SystemException {
+
+		UserSegmentPermission.check(
+			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
+
+		return scorePointLocalService.updateScorePoints(
+			anonymousUserId, userSegmentId, points);
+	}
 
 }

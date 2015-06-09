@@ -83,8 +83,10 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 		String friendlyURL = jsonObj.getString("friendlyURL");
 
-		Layout layout = _getLayout(
-			portletDataContext.getScopeGroupId(), friendlyURL);
+		boolean privateLayout = jsonObj.getBoolean("privateLayout", false);
+
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+			portletDataContext.getScopeGroupId(), privateLayout, friendlyURL);
 
 		if (layout != null ) {
 			portletDataContext.addReferenceElement(
@@ -134,9 +136,10 @@ public class PageTrackingAction extends BaseTrackingAction {
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject(typeSettings);
 
 		String friendlyURL = jsonObj.getString("friendlyURL");
+		boolean privateLayout = jsonObj.getBoolean("privateLayout", false);
 
-		Layout layout = _getLayout(
-			portletDataContext.getScopeGroupId(), friendlyURL);
+		Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+			portletDataContext.getScopeGroupId(), privateLayout, friendlyURL);
 
 		if (layout != null ) {
 			trackingActionInstance.setReferrerClassPK(layout.getPlid());
@@ -159,13 +162,29 @@ public class PageTrackingAction extends BaseTrackingAction {
 		throws InvalidTrackingActionException {
 
 		String friendlyURL = values.get("friendlyURL");
+		boolean privateLayout = GetterUtil.getBoolean(
+			values.get("privateLayout"), false);
 
 		if (Validator.isNotNull(friendlyURL)) {
 			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 				WebKeys.THEME_DISPLAY);
 
-			Layout layout = _getLayout(
-				themeDisplay.getScopeGroupId(), friendlyURL);
+			String friendlyURLPrivateBase = StringPool.BLANK;
+			String friendlyURLPublicBase = StringPool.BLANK;
+			Layout layout = null;
+
+			try {
+				friendlyURLPublicBase = PortalUtil.getGroupFriendlyURL(
+					themeDisplay.getScopeGroup(), false, themeDisplay);
+				friendlyURLPrivateBase = PortalUtil.getGroupFriendlyURL(
+					themeDisplay.getScopeGroup(), true, themeDisplay);
+
+				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+					themeDisplay.getScopeGroupId(), privateLayout, friendlyURL);
+			}
+			catch (Exception e) {
+				_log.error(e);
+			}
 
 			if (layout != null) {
 				values.put("referrerClassName", Layout.class.getName());
@@ -174,6 +193,14 @@ public class PageTrackingAction extends BaseTrackingAction {
 				JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
 
 				jsonObj.put("friendlyURL", friendlyURL);
+				jsonObj.put("privateLayout", privateLayout);
+
+				if (privateLayout) {
+					jsonObj.put("friendlyURLBase", friendlyURLPrivateBase);
+				}
+				else {
+					jsonObj.put("friendlyURLBase", friendlyURLPublicBase);
+				}
 
 				return jsonObj.toString();
 			}
@@ -195,6 +222,7 @@ public class PageTrackingAction extends BaseTrackingAction {
 		String eventType = StringPool.BLANK;
 		String friendlyURL = StringPool.BLANK;
 		Layout layout = null;
+		boolean privateLayout = false;
 
 		long scopeGroupId = GetterUtil.getLong(context.get("scopeGroupId"));
 
@@ -202,8 +230,16 @@ public class PageTrackingAction extends BaseTrackingAction {
 			alias = values.get("alias");
 			eventType = values.get("eventType");
 			friendlyURL = values.get("friendlyURL");
+			privateLayout = GetterUtil.getBoolean(
+				values.get("privateLayout"), false);
 
-			layout = _getLayout(scopeGroupId, friendlyURL);
+			try {
+				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
+					scopeGroupId, privateLayout, friendlyURL);
+			}
+			catch (SystemException e) {
+				_log.error(e);
+			}
 		}
 		else if (trackingActionInstance != null) {
 			alias = trackingActionInstance.getAlias();
@@ -224,23 +260,36 @@ public class PageTrackingAction extends BaseTrackingAction {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)context.get("themeDisplay");
 
-		String friendlyURLBase = StringPool.BLANK;
+		String friendlyURLPrivateBase = StringPool.BLANK;
+		String friendlyURLPublicBase = StringPool.BLANK;
 
 		try {
-			friendlyURLBase = PortalUtil.getGroupFriendlyURL(
+			friendlyURLPublicBase = PortalUtil.getGroupFriendlyURL(
 				themeDisplay.getScopeGroup(), false, themeDisplay);
+			friendlyURLPrivateBase = PortalUtil.getGroupFriendlyURL(
+					themeDisplay.getScopeGroup(), true, themeDisplay);
 		}
 		catch (Exception e) {
 			_log.error(e);
 		}
 
-		context.put("friendlyURLBase", friendlyURLBase);
-
 		if (layout != null) {
 			friendlyURL = layout.getFriendlyURL();
+			privateLayout = layout.isPrivateLayout();
 		}
 
 		context.put("friendlyURL", friendlyURL);
+		context.put("privateLayout", privateLayout);
+
+		if (privateLayout) {
+			context.put("friendlyURLBase", friendlyURLPrivateBase);
+		}
+		else {
+			context.put("friendlyURLBase", friendlyURLPublicBase);
+		}
+
+		context.put("friendlyURLPrivateBase", friendlyURLPrivateBase);
+		context.put("friendlyURLPublicBase", friendlyURLPublicBase);
 
 		boolean trackingPageEnabled = AnalyticsUtil.isAnalyticsPageEnabled(
 			scopeGroupId);
@@ -251,27 +300,6 @@ public class PageTrackingAction extends BaseTrackingAction {
 			ContentTargetingContextUtil.populateContextAnalyticsSettingsURLs(
 				context);
 		}
-	}
-
-	private Layout _getLayout(long groupId, String friendlyURL) {
-		Layout layout = null;
-
-		// Retrieve layout by friendly url from public or private layout set
-
-		try {
-			layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-				groupId, false, friendlyURL);
-
-			if (layout == null) {
-				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-					groupId, true, friendlyURL);
-			}
-		}
-		catch (SystemException e) {
-			_log.error(e);
-		}
-
-		return layout;
 	}
 
 	private static final String[] _EVENT_TYPES = {"view"};

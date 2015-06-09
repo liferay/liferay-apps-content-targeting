@@ -6,19 +6,21 @@ insert into AssetVocabulary values ('${assetVocabularyModel.uuid}', ${assetVocab
 	_entry = assetVocabularyModel
 />
 
-<#assign userSegmentNames = ["User Segment 0", "User Segment 1", "User Segment 2"] />
-<#assign userSegmentDescriptions = ["Men older than 30 and administrator", "Page visited", "Browser Firefox"] />
-
-<#assign userSegmentModels = dataFactory.newUserSegmentModels(groupId, userSegmentNames, userSegmentDescriptions) />
+<#assign assetEntryModels = dataFactory.getAssetEntryModels() />
+<#assign userSegmentModels = dataFactory.newUserSegmentModels(groupId) />
 
 <#list userSegmentModels as userSegmentModel>
-	<#assign assetCategoryModel = dataFactory.newUserSegmentAssetCategoryModel(groupId, assetVocabularyModel.vocabularyId, '${userSegmentNames[userSegmentModel_index]}') />
+	<#assign assetCategoryModel = dataFactory.newUserSegmentAssetCategoryModel(groupId, assetVocabularyModel.vocabularyId, userSegmentModel) />
 
 	insert into AssetCategory values ('${assetCategoryModel.uuid}', ${assetCategoryModel.categoryId}, ${assetCategoryModel.groupId}, ${assetCategoryModel.companyId}, ${assetCategoryModel.userId}, '${assetCategoryModel.userName}', '${dataFactory.getDateString(assetCategoryModel.createDate)}', '${dataFactory.getDateString(assetCategoryModel.modifiedDate)}', ${assetCategoryModel.parentCategoryId}, ${assetCategoryModel.leftCategoryId}, ${assetCategoryModel.rightCategoryId}, '${assetCategoryModel.name}', '${assetCategoryModel.title}', '${assetCategoryModel.description}', ${assetCategoryModel.vocabularyId});
 
 	<@insertResourcePermissions
 		_entry = assetCategoryModel
 	/>
+
+	<#list assetEntryModels as assetEntryModel>
+	insert into AssetEntries_AssetCategories values (${assetCategoryModel.categoryId}, ${assetEntryModel.entryId});
+	</#list>
 
 	${dataFactory.setAssetCategoryToUserSegment(assetCategoryModel.categoryId, userSegmentModel_index)}
 
@@ -28,7 +30,7 @@ insert into AssetVocabulary values ('${assetVocabularyModel.uuid}', ${assetVocab
 		_entry = userSegmentModel
 	/>
 
-	<#assign ruleInstanceModels = dataFactory.newRuleInstanceModels(groupId, userSegmentModel.userSegmentId, userSegmentModel_index) />
+	<#assign ruleInstanceModels = dataFactory.newRuleInstanceModels(groupId, userSegmentModel.userSegmentId) />
 
 	<#list ruleInstanceModels as ruleInstanceModel>
 		insert into CT_RuleInstance values ('${ruleInstanceModel.uuid}', ${ruleInstanceModel.ruleInstanceId}, ${ruleInstanceModel.groupId}, ${ruleInstanceModel.companyId}, ${ruleInstanceModel.userId}, '${ruleInstanceModel.userName}', '${dataFactory.getDateString(ruleInstanceModel.createDate)}', '${dataFactory.getDateString(ruleInstanceModel.modifiedDate)}', '${ruleInstanceModel.ruleKey}', ${ruleInstanceModel.userSegmentId}, '${ruleInstanceModel.typeSettings}');

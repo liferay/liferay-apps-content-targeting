@@ -219,7 +219,7 @@ AUI.add(
 						var pagination = new Liferay.Pagination(
 							{
 								boundingBox: boundingBox,
-								circular: false,
+								circular: true,
 								itemsPerPage: itemsPerPage,
 								namespace: instance.NS,
 								page: 1,

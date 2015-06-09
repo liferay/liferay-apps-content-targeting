@@ -8,6 +8,7 @@
       <module fileurl="file://$PROJECT_DIR$/analytics-test/analytics-test.iml" filepath="$PROJECT_DIR$/analytics-test/analytics-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/anonymous-users-api/anonymous-users-api.iml" filepath="$PROJECT_DIR$/anonymous-users-api/anonymous-users-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/anonymous-users-test/anonymous-users-test.iml" filepath="$PROJECT_DIR$/anonymous-users-test/anonymous-users-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/benchmarks/benchmarks.iml" filepath="$PROJECT_DIR$/benchmarks/benchmarks.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-api/content-targeting-api.iml" filepath="$PROJECT_DIR$/content-targeting-api/content-targeting-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-deploy-extender/content-targeting-deploy-extender.iml" filepath="$PROJECT_DIR$/content-targeting-deploy-extender/content-targeting-deploy-extender.iml" />
       <module fileurl="file://$PROJECT_DIR$/content-targeting-test/content-targeting-test.iml" filepath="$PROJECT_DIR$/content-targeting-test/content-targeting-test.iml" />

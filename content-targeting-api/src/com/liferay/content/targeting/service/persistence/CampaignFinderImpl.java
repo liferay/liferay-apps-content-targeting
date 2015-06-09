@@ -16,6 +16,9 @@ package com.liferay.content.targeting.service.persistence;
 
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.impl.CampaignImpl;
+import com.liferay.content.targeting.model.impl.CampaignModelImpl;
+import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
@@ -27,6 +30,7 @@ import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -39,14 +43,18 @@ public class CampaignFinderImpl
 	public static final String FIND_BY_G_D_A_U =
 		CampaignFinder.class.getName() + ".findByG_D_A_U";
 
-	@Override
-	public Campaign fetchByG_D_A_U_First(
-			long[] groupIds, Date date, boolean active, long[] userSegmentIds)
-		throws SystemException {
-
-		return doFetchByG_D_A_U_First(
-			groupIds, date, active, userSegmentIds, false);
-	}
+	public static final FinderPath FINDER_PATH_FIND_BY_G_D_A_U =
+		new FinderPath(
+			CampaignModelImpl.ENTITY_CACHE_ENABLED,
+			CampaignModelImpl.FINDER_CACHE_ENABLED, CampaignImpl.class,
+			CampaignPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByG_D_A_U",
+			new String[] {
+				Long.class.getName(), Date.class.getName(),
+				Boolean.class.getName(), Long.class.getName(),
+				Boolean.class.getName()
+			}
+		);
 
 	@Override
 	public List<Campaign> filterFindByG_D_A_U(
@@ -65,12 +73,12 @@ public class CampaignFinderImpl
 	}
 
 	@Override
-	public Campaign filterFetchByG_D_A_U_First(
+	public Campaign fetchByG_D_A_U_First(
 			long[] groupIds, Date date, boolean active, long[] userSegmentIds)
 		throws SystemException {
 
 		return doFetchByG_D_A_U_First(
-			groupIds, date, active, userSegmentIds, true);
+			groupIds, date, active, userSegmentIds, false);
 	}
 
 	protected List<Campaign> doFetchByG_D_A_U(
@@ -80,6 +88,26 @@ public class CampaignFinderImpl
 
 		if ((userSegmentIds == null) || (userSegmentIds.length == 0)) {
 			userSegmentIds = new long[] {-1};
+		}
+
+		// Ignore second and millisecond to cache campaigns
+
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(date);
+		calendar.set(Calendar.SECOND, 0);
+		calendar.set(Calendar.MILLISECOND, 0);
+
+		Object[] finderArgs = {
+			StringUtil.merge(groupIds), calendar.getTime(), active,
+			StringUtil.merge(userSegmentIds), inlineSQLHelper
+		};
+
+		List<Campaign> list = (List<Campaign>)FinderCacheUtil.getResult(
+			FINDER_PATH_FIND_BY_G_D_A_U, finderArgs, this);
+
+		if (list != null) {
+			return list;
 		}
 
 		Session session = null;
@@ -113,14 +141,25 @@ public class CampaignFinderImpl
 			qPos.add(date);
 			qPos.add(active);
 
-			return q.list();
+			list = q.list();
 		}
 		catch (Exception e) {
 			throw new SystemException(e);
 		}
 		finally {
+			if (list == null) {
+				FinderCacheUtil.removeResult(
+					FINDER_PATH_FIND_BY_G_D_A_U, finderArgs);
+			}
+			else {
+				FinderCacheUtil.putResult(
+					FINDER_PATH_FIND_BY_G_D_A_U, finderArgs, list);
+			}
+
 			closeSession(session);
 		}
+
+		return list;
 	}
 
 	protected Campaign doFetchByG_D_A_U_First(
@@ -158,6 +197,15 @@ public class CampaignFinderImpl
 		sb.append(") AND");
 
 		return sb.toString();
+	}
+
+	@Override
+	public Campaign filterFetchByG_D_A_U_First(
+			long[] groupIds, Date date, boolean active, long[] userSegmentIds)
+		throws SystemException {
+
+		return doFetchByG_D_A_U_First(
+			groupIds, date, active, userSegmentIds, true);
 	}
 
 }

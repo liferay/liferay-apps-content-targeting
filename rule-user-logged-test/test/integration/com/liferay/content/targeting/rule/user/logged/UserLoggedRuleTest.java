@@ -12,9 +12,8 @@
  * details.
  */
 
-package com.liferay.content.targeting.rule.visited;
+package com.liferay.content.targeting.rule.user.logged;
 
-import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.content.targeting.api.model.Rule;
@@ -27,12 +26,8 @@ import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
-import com.liferay.portal.model.Layout;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.asset.model.AssetEntry;
-import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
-import com.liferay.portlet.blogs.model.BlogsEntry;
-import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -49,7 +44,7 @@ import org.osgi.framework.BundleException;
  * @author Eudaldo Alonso
  */
 @RunWith(Arquillian.class)
-public class ContentVisitedTest {
+public class UserLoggedRuleTest {
 
 	@Before
 	public void setUp() {
@@ -60,8 +55,6 @@ public class ContentVisitedTest {
 			e.printStackTrace();
 		}
 
-		_analyticsEventLocalService = ServiceTrackerUtil.getService(
-			AnalyticsEventLocalService.class, _bundle.getBundleContext());
 		_anonymousUserLocalService = ServiceTrackerUtil.getService(
 			AnonymousUserLocalService.class, _bundle.getBundleContext());
 		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
@@ -71,70 +64,50 @@ public class ContentVisitedTest {
 	}
 
 	@Test
-	public void testNotVisitedContentRule() throws Exception {
-		Group group = GroupTestUtil.addGroup();
-
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-				group.getGroupId(), TestPropsValues.getUserId());
+	public void testUserLoggedMemberRule() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.addAnonymousUser(
 				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
 				serviceContext);
 
-		Rule rule = _rulesRegistry.getRule("ContentVisitedRule");
-
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), "title", StringPool.BLANK,
-			"This is a blog entry for testing purposes", 1, 1, 1965, 0, 0, true,
-			true, null, false, null, null, null, serviceContext);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			BlogsEntry.class.getName(), entry.getEntryId());
-
-		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
-			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
-			String.valueOf(assetEntry.getEntryId()), serviceContext);
-
-		Assert.assertFalse(rule.evaluate(null, ruleInstance, anonymousUser));
-	}
-
-	@Test
-	public void testVisitedContentRule() throws Exception {
 		Group group = GroupTestUtil.addGroup();
 
-		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-			group.getGroupId(), TestPropsValues.getUserId());
+		GroupLocalServiceUtil.addUserGroup(
+			TestPropsValues.getUserId(), group.getGroupId());
 
-		AnonymousUser anonymousUser =
-			_anonymousUserLocalService.addAnonymousUser(
-				TestPropsValues.getUserId(), "127.0.0.1", StringPool.BLANK,
-				serviceContext);
-
-		Rule rule = _rulesRegistry.getRule("ContentVisitedRule");
-
-		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-			TestPropsValues.getUserId(), "title", StringPool.BLANK,
-			"This is a blog entry for testing purposes", 1, 1, 1965, 0, 0, true,
-			true, null, false, null, null, null, serviceContext);
-
-		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-			BlogsEntry.class.getName(), entry.getEntryId());
-
-		_analyticsEventLocalService.addAnalyticsEvent(
-			1, anonymousUser.getAnonymousUserId(), BlogsEntry.class.getName(),
-			entry.getEntryId(), Layout.class.getName(), new long[]{1}, null,
-			"view", "127.0.0.1", "User Agent", "ES", "http://localhost", null,
-			serviceContext);
+		Rule rule = _rulesRegistry.getRule("UserLoggedRule");
 
 		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
 			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
-			String.valueOf(assetEntry.getEntryId()), serviceContext);
+			String.valueOf(group.getGroupId()), serviceContext);
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
 	}
 
-	private AnalyticsEventLocalService _analyticsEventLocalService;
+	@Test
+	public void testUserNotLoggedMemberRule() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		AnonymousUser anonymousUser =
+			_anonymousUserLocalService.addAnonymousUser(
+				0, "127.0.0.1", StringPool.BLANK, serviceContext);
+
+		Group group = GroupTestUtil.addGroup();
+
+		GroupLocalServiceUtil.addUserGroup(
+			TestPropsValues.getUserId(), group.getGroupId());
+
+		Rule rule = _rulesRegistry.getRule("UserLoggedRule");
+
+		RuleInstance ruleInstance = _ruleInstanceLocalService.addRuleInstance(
+			TestPropsValues.getUserId(), rule.getRuleKey(), 0,
+			String.valueOf(group.getGroupId()), serviceContext);
+
+		Assert.assertFalse(rule.evaluate(null, ruleInstance, anonymousUser));
+	}
+
 	private AnonymousUserLocalService _anonymousUserLocalService;
 
 	@ArquillianResource

@@ -186,11 +186,13 @@ public class TrackingActionInstanceStagedModelDataHandler
 				portletDataContext, campaign, trackingActionInstance);
 		}
 		catch (Exception e) {
-			_log.error(
-				"Cannot import custom data for tracking action " +
-					trackingAction.getName(LocaleUtil.getDefault()) +
-						" in campaign" +
-							campaign.getName(LocaleUtil.getDefault()));
+			if (_log.isWarnEnabled()) {
+				_log.warn(
+					"Cannot import custom data for tracking action " +
+						trackingAction.getName(LocaleUtil.getDefault()) +
+							" in campaign" +
+								campaign.getName(LocaleUtil.getDefault()));
+				}
 		}
 
 		long userId = portletDataContext.getUserId(
