@@ -405,6 +405,116 @@ public interface UserSegmentLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addTacticUserSegment(long tacticId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addTacticUserSegment(long tacticId,
+		com.liferay.content.targeting.model.UserSegment userSegment)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addTacticUserSegments(long tacticId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void addTacticUserSegments(long tacticId,
+		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void clearTacticUserSegments(long tacticId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteTacticUserSegment(long tacticId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteTacticUserSegment(long tacticId,
+		com.liferay.content.targeting.model.UserSegment userSegment)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteTacticUserSegments(long tacticId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void deleteTacticUserSegments(long tacticId,
+		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
+		long tacticId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
+		long tacticId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
+		long tacticId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTacticUserSegmentsCount(long tacticId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasTacticUserSegment(long tacticId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasTacticUserSegments(long tacticId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	public void setTacticUserSegments(long tacticId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean
