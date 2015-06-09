@@ -14,6 +14,15 @@
 
 package com.liferay.content.targeting.portlet;
 
+import com.liferay.content.targeting.InvalidChannelException;
+import com.liferay.content.targeting.InvalidChannelsException;
+import com.liferay.content.targeting.InvalidDateRangeException;
+import com.liferay.content.targeting.InvalidNameException;
+import com.liferay.content.targeting.InvalidRuleException;
+import com.liferay.content.targeting.InvalidRulesException;
+import com.liferay.content.targeting.InvalidTrackingActionException;
+import com.liferay.content.targeting.InvalidTrackingActionsException;
+import com.liferay.content.targeting.UsedUserSegmentException;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.content.targeting.api.model.Channel;

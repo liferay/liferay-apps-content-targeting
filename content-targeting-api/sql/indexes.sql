@@ -6,6 +6,13 @@ create unique index IX_EAB996FA on CT_Campaign (uuid_, groupId);
 create index IX_195BA1BA on CT_Campaigns_UserSegments (campaignId);
 create index IX_3D78FE78 on CT_Campaigns_UserSegments (userSegmentId);
 
+create index IX_D1C60A0F on CT_ChannelInstance (campaignId);
+create index IX_8295369A on CT_ChannelInstance (groupId);
+create index IX_413DB2B7 on CT_ChannelInstance (tacticId);
+create index IX_C2DBA7A4 on CT_ChannelInstance (uuid_);
+create index IX_246DEE04 on CT_ChannelInstance (uuid_, companyId);
+create unique index IX_4DE22586 on CT_ChannelInstance (uuid_, groupId);
+
 create index IX_3E22574D on CT_ReportInstance (className, classPK);
 create unique index IX_956562EE on CT_ReportInstance (reportKey, className, classPK);
 
@@ -15,6 +22,15 @@ create index IX_29BE548E on CT_RuleInstance (userSegmentId);
 create index IX_74DA7D2F on CT_RuleInstance (uuid_);
 create index IX_E3BCC399 on CT_RuleInstance (uuid_, companyId);
 create unique index IX_B8A35C5B on CT_RuleInstance (uuid_, groupId);
+
+create index IX_8AD0D32B on CT_Tactic (campaignId);
+create index IX_52D862FE on CT_Tactic (groupId);
+create index IX_B2069D08 on CT_Tactic (uuid_);
+create index IX_FBAC7220 on CT_Tactic (uuid_, companyId);
+create unique index IX_83EB00A2 on CT_Tactic (uuid_, groupId);
+
+create index IX_80BC7ACA on CT_Tactics_UserSegments (tacticId);
+create index IX_D2685D0 on CT_Tactics_UserSegments (userSegmentId);
 
 create index IX_E9845BF5 on CT_TrackingActionInstance (campaignId);
 create index IX_8DDDDC52 on CT_TrackingActionInstance (campaignId, elementId, eventType);

@@ -18,8 +18,10 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.persistence.CampaignFinder;
 import com.liferay.content.targeting.service.persistence.CampaignPersistence;
+import com.liferay.content.targeting.service.persistence.ChannelInstancePersistence;
 import com.liferay.content.targeting.service.persistence.ReportInstancePersistence;
 import com.liferay.content.targeting.service.persistence.RuleInstancePersistence;
+import com.liferay.content.targeting.service.persistence.TacticPersistence;
 import com.liferay.content.targeting.service.persistence.TrackingActionInstancePersistence;
 import com.liferay.content.targeting.service.persistence.UserSegmentPersistence;
 
@@ -492,6 +494,151 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	}
 
 	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addTacticUserSegment(long tacticId, long userSegmentId)
+		throws SystemException {
+		tacticPersistence.addUserSegment(tacticId, userSegmentId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addTacticUserSegment(long tacticId, UserSegment userSegment)
+		throws SystemException {
+		tacticPersistence.addUserSegment(tacticId, userSegment);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addTacticUserSegments(long tacticId, long[] userSegmentIds)
+		throws SystemException {
+		tacticPersistence.addUserSegments(tacticId, userSegmentIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addTacticUserSegments(long tacticId,
+		List<UserSegment> UserSegments) throws SystemException {
+		tacticPersistence.addUserSegments(tacticId, UserSegments);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void clearTacticUserSegments(long tacticId)
+		throws SystemException {
+		tacticPersistence.clearUserSegments(tacticId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void deleteTacticUserSegment(long tacticId, long userSegmentId)
+		throws SystemException {
+		tacticPersistence.removeUserSegment(tacticId, userSegmentId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void deleteTacticUserSegment(long tacticId, UserSegment userSegment)
+		throws SystemException {
+		tacticPersistence.removeUserSegment(tacticId, userSegment);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void deleteTacticUserSegments(long tacticId, long[] userSegmentIds)
+		throws SystemException {
+		tacticPersistence.removeUserSegments(tacticId, userSegmentIds);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void deleteTacticUserSegments(long tacticId,
+		List<UserSegment> UserSegments) throws SystemException {
+		tacticPersistence.removeUserSegments(tacticId, UserSegments);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<UserSegment> getTacticUserSegments(long tacticId)
+		throws SystemException {
+		return tacticPersistence.getUserSegments(tacticId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<UserSegment> getTacticUserSegments(long tacticId, int start,
+		int end) throws SystemException {
+		return tacticPersistence.getUserSegments(tacticId, start, end);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<UserSegment> getTacticUserSegments(long tacticId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		return tacticPersistence.getUserSegments(tacticId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int getTacticUserSegmentsCount(long tacticId)
+		throws SystemException {
+		return tacticPersistence.getUserSegmentsSize(tacticId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public boolean hasTacticUserSegment(long tacticId, long userSegmentId)
+		throws SystemException {
+		return tacticPersistence.containsUserSegment(tacticId, userSegmentId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public boolean hasTacticUserSegments(long tacticId)
+		throws SystemException {
+		return tacticPersistence.containsUserSegments(tacticId);
+	}
+
+	/**
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void setTacticUserSegments(long tacticId, long[] userSegmentIds)
+		throws SystemException {
+		tacticPersistence.setUserSegments(tacticId, userSegmentIds);
+	}
+
+	/**
 	 * Returns the campaign local service.
 	 *
 	 * @return the campaign local service
@@ -563,6 +710,63 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 */
 	public void setCampaignFinder(CampaignFinder campaignFinder) {
 		this.campaignFinder = campaignFinder;
+	}
+
+	/**
+	 * Returns the channel instance local service.
+	 *
+	 * @return the channel instance local service
+	 */
+	public com.liferay.content.targeting.service.ChannelInstanceLocalService getChannelInstanceLocalService() {
+		return channelInstanceLocalService;
+	}
+
+	/**
+	 * Sets the channel instance local service.
+	 *
+	 * @param channelInstanceLocalService the channel instance local service
+	 */
+	public void setChannelInstanceLocalService(
+		com.liferay.content.targeting.service.ChannelInstanceLocalService channelInstanceLocalService) {
+		this.channelInstanceLocalService = channelInstanceLocalService;
+	}
+
+	/**
+	 * Returns the channel instance remote service.
+	 *
+	 * @return the channel instance remote service
+	 */
+	public com.liferay.content.targeting.service.ChannelInstanceService getChannelInstanceService() {
+		return channelInstanceService;
+	}
+
+	/**
+	 * Sets the channel instance remote service.
+	 *
+	 * @param channelInstanceService the channel instance remote service
+	 */
+	public void setChannelInstanceService(
+		com.liferay.content.targeting.service.ChannelInstanceService channelInstanceService) {
+		this.channelInstanceService = channelInstanceService;
+	}
+
+	/**
+	 * Returns the channel instance persistence.
+	 *
+	 * @return the channel instance persistence
+	 */
+	public ChannelInstancePersistence getChannelInstancePersistence() {
+		return channelInstancePersistence;
+	}
+
+	/**
+	 * Sets the channel instance persistence.
+	 *
+	 * @param channelInstancePersistence the channel instance persistence
+	 */
+	public void setChannelInstancePersistence(
+		ChannelInstancePersistence channelInstancePersistence) {
+		this.channelInstancePersistence = channelInstancePersistence;
 	}
 
 	/**
@@ -677,6 +881,62 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	public void setRuleInstancePersistence(
 		RuleInstancePersistence ruleInstancePersistence) {
 		this.ruleInstancePersistence = ruleInstancePersistence;
+	}
+
+	/**
+	 * Returns the tactic local service.
+	 *
+	 * @return the tactic local service
+	 */
+	public com.liferay.content.targeting.service.TacticLocalService getTacticLocalService() {
+		return tacticLocalService;
+	}
+
+	/**
+	 * Sets the tactic local service.
+	 *
+	 * @param tacticLocalService the tactic local service
+	 */
+	public void setTacticLocalService(
+		com.liferay.content.targeting.service.TacticLocalService tacticLocalService) {
+		this.tacticLocalService = tacticLocalService;
+	}
+
+	/**
+	 * Returns the tactic remote service.
+	 *
+	 * @return the tactic remote service
+	 */
+	public com.liferay.content.targeting.service.TacticService getTacticService() {
+		return tacticService;
+	}
+
+	/**
+	 * Sets the tactic remote service.
+	 *
+	 * @param tacticService the tactic remote service
+	 */
+	public void setTacticService(
+		com.liferay.content.targeting.service.TacticService tacticService) {
+		this.tacticService = tacticService;
+	}
+
+	/**
+	 * Returns the tactic persistence.
+	 *
+	 * @return the tactic persistence
+	 */
+	public TacticPersistence getTacticPersistence() {
+		return tacticPersistence;
+	}
+
+	/**
+	 * Sets the tactic persistence.
+	 *
+	 * @param tacticPersistence the tactic persistence
+	 */
+	public void setTacticPersistence(TacticPersistence tacticPersistence) {
+		this.tacticPersistence = tacticPersistence;
 	}
 
 	/**
@@ -1015,6 +1275,12 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	protected CampaignPersistence campaignPersistence;
 	@BeanReference(type = CampaignFinder.class)
 	protected CampaignFinder campaignFinder;
+	@BeanReference(type = com.liferay.content.targeting.service.ChannelInstanceLocalService.class)
+	protected com.liferay.content.targeting.service.ChannelInstanceLocalService channelInstanceLocalService;
+	@BeanReference(type = com.liferay.content.targeting.service.ChannelInstanceService.class)
+	protected com.liferay.content.targeting.service.ChannelInstanceService channelInstanceService;
+	@BeanReference(type = ChannelInstancePersistence.class)
+	protected ChannelInstancePersistence channelInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.ReportInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.ReportInstanceLocalService reportInstanceLocalService;
 	@BeanReference(type = com.liferay.content.targeting.service.ReportInstanceService.class)
@@ -1027,6 +1293,12 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	protected com.liferay.content.targeting.service.RuleInstanceService ruleInstanceService;
 	@BeanReference(type = RuleInstancePersistence.class)
 	protected RuleInstancePersistence ruleInstancePersistence;
+	@BeanReference(type = com.liferay.content.targeting.service.TacticLocalService.class)
+	protected com.liferay.content.targeting.service.TacticLocalService tacticLocalService;
+	@BeanReference(type = com.liferay.content.targeting.service.TacticService.class)
+	protected com.liferay.content.targeting.service.TacticService tacticService;
+	@BeanReference(type = TacticPersistence.class)
+	protected TacticPersistence tacticPersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.TrackingActionInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.TrackingActionInstanceLocalService trackingActionInstanceLocalService;
 	@BeanReference(type = com.liferay.content.targeting.service.TrackingActionInstanceService.class)
