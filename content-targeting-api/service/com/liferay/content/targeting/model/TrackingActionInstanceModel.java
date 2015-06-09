@@ -362,19 +362,20 @@ public interface TrackingActionInstanceModel extends BaseModel<TrackingActionIns
 	public Object clone();
 
 	@Override
-	public int compareTo(TrackingActionInstance trackingActionInstance);
+	public int compareTo(
+		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<TrackingActionInstance> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.TrackingActionInstance> toCacheModel();
 
 	@Override
-	public TrackingActionInstance toEscapedModel();
+	public com.liferay.content.targeting.model.TrackingActionInstance toEscapedModel();
 
 	@Override
-	public TrackingActionInstance toUnescapedModel();
+	public com.liferay.content.targeting.model.TrackingActionInstance toUnescapedModel();
 
 	@Override
 	public String toString();

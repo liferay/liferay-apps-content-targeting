@@ -21,6 +21,22 @@ create table CT_Campaigns_UserSegments (
 	primary key (campaignId, userSegmentId)
 );
 
+create table CT_ChannelInstance (
+	uuid_ VARCHAR(75) null,
+	channelInstanceId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	channelKey VARCHAR(75) null,
+	campaignId LONG,
+	tacticId LONG,
+	alias_ VARCHAR(75) null,
+	typeSettings TEXT null
+);
+
 create table CT_ReportInstance (
 	reportInstanceId LONG not null primary key,
 	groupId LONG,
@@ -46,6 +62,26 @@ create table CT_RuleInstance (
 	ruleKey VARCHAR(75) null,
 	userSegmentId LONG,
 	typeSettings TEXT null
+);
+
+create table CT_Tactic (
+	uuid_ VARCHAR(75) null,
+	tacticId LONG not null primary key,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null,
+	campaignId LONG,
+	name STRING null,
+	description STRING null
+);
+
+create table CT_Tactics_UserSegments (
+	tacticId LONG not null,
+	userSegmentId LONG not null,
+	primary key (tacticId, userSegmentId)
 );
 
 create table CT_TrackingActionInstance (
