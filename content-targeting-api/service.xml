@@ -50,6 +50,54 @@
 
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
+	<entity name="ChannelInstance" uuid="true" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="channelInstanceId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="channelKey" type="String" />
+		<column name="campaignId" type="long" />
+		<column name="tacticId" type="long" />
+		<column name="alias" type="String" />
+		<column name="typeSettings" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="channelKey" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CampaignId" return-type="Collection">
+			<finder-column name="campaignId" />
+		</finder>
+		<finder name="TacticId" return-type="Collection">
+			<finder-column name="tacticId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+	</entity>
 	<entity name="ReportInstance" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
@@ -133,6 +181,47 @@
 		<finder name="R_U" return-type="Collection">
 			<finder-column name="ruleKey" />
 			<finder-column name="userSegmentId" />
+		</finder>
+
+		<!-- References -->
+
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+	</entity>
+	<entity name="Tactic" uuid="true" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="tacticId" type="long" primary="true" />
+
+		<!-- Group instance -->
+
+		<column name="groupId" type="long" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="campaignId" type="long" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
+
+		<!-- Relationships -->
+
+		<column name="userSegments" type="Collection" entity="UserSegment" mapping-table="Tactics_UserSegments" />
+
+		<!-- Finder methods -->
+
+		<finder name="GroupId" return-type="Collection">
+			<finder-column name="groupId" />
+		</finder>
+		<finder name="CampaignId" return-type="Collection">
+			<finder-column name="campaignId" />
 		</finder>
 
 		<!-- References -->
@@ -225,6 +314,7 @@
 		<!-- Relationships -->
 
 		<column name="campaigns" type="Collection" entity="Campaign" mapping-table="Campaigns_UserSegments" />
+		<column name="tactics" type="Collection" entity="Tactic" mapping-table="Tactics_UserSegments" />
 
 		<!-- Order -->
 
@@ -247,6 +337,8 @@
 	</entity>
 	<exceptions>
 		<exception>UsedUserSegment</exception>
+		<exception>InvalidChannel</exception>
+		<exception>InvalidChannels</exception>
 		<exception>InvalidDateRange</exception>
 		<exception>InvalidName</exception>
 		<exception>InvalidRule</exception>
