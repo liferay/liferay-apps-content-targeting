@@ -49,11 +49,11 @@ public class TacticServiceImpl extends TacticServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		CampaignPermission.check(
-				getPermissionChecker(), campaignId, ActionKeys.UPDATE);
+			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
 
 		return tacticLocalService.addTactic(
-				userId, campaignId, nameMap, descriptionMap, userSegmentsIds,
-				serviceContext);
+			userId, campaignId, nameMap, descriptionMap, userSegmentsIds,
+			serviceContext);
 	}
 
 	@Override
@@ -64,11 +64,11 @@ public class TacticServiceImpl extends TacticServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		CampaignPermission.check(
-				getPermissionChecker(), campaignId, ActionKeys.UPDATE);
+			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
 
 		return tacticLocalService.updateTactic(
-				tacticId, campaignId, nameMap, descriptionMap, userSegmentsIds,
-				serviceContext);
+			tacticId, campaignId, nameMap, descriptionMap, userSegmentsIds,
+			serviceContext);
 	}
 
 }

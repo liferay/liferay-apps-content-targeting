@@ -65,7 +65,7 @@ public class ChannelInstanceLocalServiceImpl
 		long channelInstanceId = CounterLocalServiceUtil.increment();
 
 		ChannelInstance channelInstance = channelInstancePersistence.create(
-				channelInstanceId);
+			channelInstanceId);
 
 		channelInstance.setUuid(serviceContext.getUuid());
 		channelInstance.setGroupId(serviceContext.getScopeGroupId());
@@ -92,15 +92,17 @@ public class ChannelInstanceLocalServiceImpl
 
 		channelInstancePersistence.remove(channelInstance);
 
+		// System event
+
 		systemEventLocalService.addSystemEvent(
-				0, channelInstance.getGroupId(),
-				ChannelInstance.class.getName(),
-				channelInstance.getChannelInstanceId(),
-				channelInstance.getUuid(), null,
-				SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+			0, channelInstance.getGroupId(), ChannelInstance.class.getName(),
+			channelInstance.getChannelInstanceId(), channelInstance.getUuid(),
+			null, SystemEventConstants.TYPE_DELETE, StringPool.BLANK);
+
+		// Channel instance data
 
 		Channel channel = _channelsRegistry.getChannel(
-				channelInstance.getChannelKey());
+			channelInstance.getChannelKey());
 
 		if (channel != null) {
 			try {
@@ -108,9 +110,9 @@ public class ChannelInstanceLocalServiceImpl
 			}
 			catch (Exception e) {
 				_log.error(
-						"Cannot delete custom data for channel " +
-								channel.getName(LocaleUtil.getDefault()),
-						e);
+					"Cannot delete custom data for channel " +
+						channel.getName(LocaleUtil.getDefault()),
+					e);
 			}
 		}
 
@@ -123,7 +125,7 @@ public class ChannelInstanceLocalServiceImpl
 		throws PortalException, SystemException {
 
 		ChannelInstance channelInstance =
-				channelInstancePersistence.findByPrimaryKey(channelInstanceId);
+			channelInstancePersistence.findByPrimaryKey(channelInstanceId);
 
 		return deleteChannelInstance(channelInstance);
 	}
@@ -144,7 +146,7 @@ public class ChannelInstanceLocalServiceImpl
 		Date now = new Date();
 
 		ChannelInstance channelInstance =
-				channelInstancePersistence.findByPrimaryKey(channelInstanceId);
+			channelInstancePersistence.findByPrimaryKey(channelInstanceId);
 
 		channelInstance.setModifiedDate(serviceContext.getModifiedDate(now));
 		channelInstance.setAlias(alias);
@@ -156,7 +158,7 @@ public class ChannelInstanceLocalServiceImpl
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-ChannelInstanceLocalServiceImpl.class);
+		ChannelInstanceLocalServiceImpl.class);
 
 	private ChannelsRegistry _channelsRegistry;
 

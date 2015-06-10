@@ -23,8 +23,7 @@ package com.liferay.content.targeting.model.impl;
  *
  * @author Brian Wing Shun Chan
  */
-public class TacticImpl
-		extends TacticBaseImpl {
+public class TacticImpl extends TacticBaseImpl {
 
 	public TacticImpl() {
 	}

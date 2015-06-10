@@ -47,9 +47,10 @@
 			name="description"
 			value=tactic.getDescription(locale)
 		/>
+
 		<@liferay_ui["search-container-column-text"]
-		align="right"
-		name=""
+			align="right"
+			name=""
 		>
 			<@liferay_ui["icon-menu"]>
 				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
@@ -61,9 +62,9 @@
 					</@>
 
 					<@liferay_ui["icon"]
-					image="edit"
-					method="get"
-					url="${editTacticURL}"
+						image="edit"
+						method="get"
+						url="${editTacticURL}"
 					/>
 
 					<@portlet["actionURL"] name="deleteTactic" var="deleteTacticURL">
@@ -72,7 +73,7 @@
 					</@>
 
 					<@liferay_ui["icon-delete"]
-					url="${deleteTacticURL}"
+						url="${deleteTacticURL}"
 					/>
 				</#if>
 			</@>

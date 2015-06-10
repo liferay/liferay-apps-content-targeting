@@ -24,7 +24,10 @@ import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.service.ServiceContext;
 
-import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -53,52 +56,50 @@ public class TacticLocalServiceImplTest {
 		}
 
 		_campaignLocalService = ServiceTrackerUtil.getService(
-				CampaignLocalService.class, _bundle.getBundleContext());
+			CampaignLocalService.class, _bundle.getBundleContext());
 		_tacticLocalService = ServiceTrackerUtil.getService(
-				TacticLocalService.class, _bundle.getBundleContext());
+			TacticLocalService.class, _bundle.getBundleContext());
 	}
 
 	@Test
 	public void testAddAndDeleteTactic() throws Exception {
-
 		Map<Locale, String> campaignNameMap = new HashMap<Locale, String>();
 
 		campaignNameMap.put(LocaleUtil.getDefault(), "test-campaign");
 
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
-				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
 		Campaign campaign = _campaignLocalService.addCampaign(
-				TestPropsValues.getUserId(), campaignNameMap, null, new Date(),
-				new Date(), 1, true, new long[] {1, 2},
-				serviceContext);
+			TestPropsValues.getUserId(), campaignNameMap, null, new Date(),
+			new Date(), 1, true, new long[] {1, 2},
+			serviceContext);
 
 		int initTacticsCount = _tacticLocalService.getTotal(
-				campaign.getCampaignId());
+			campaign.getCampaignId());
 
 		Map<Locale, String> tacticNameMap = new HashMap<Locale, String>();
 
 		tacticNameMap.put(LocaleUtil.getDefault(), "test-tactic");
 
 		Tactic tactic = _tacticLocalService.addTactic(
-				TestPropsValues.getUserId(), campaign.getCampaignId(),
-				tacticNameMap, null, new long[] {1, 2, 3}, serviceContext);
+			TestPropsValues.getUserId(), campaign.getCampaignId(),
+			tacticNameMap, null, new long[] {1, 2, 3}, serviceContext);
 
 		Assert.assertEquals(
-				initTacticsCount + 1, _tacticLocalService.getTacticsCount());
+			initTacticsCount + 1, _tacticLocalService.getTacticsCount());
 
 		_tacticLocalService.deleteTactic(tactic.getTacticId());
 
 		Assert.assertEquals(
-				initTacticsCount,
-				_tacticLocalService.getTotal(campaign.getCampaignId()));
+			initTacticsCount,
+			_tacticLocalService.getTotal(campaign.getCampaignId()));
 
 		_campaignLocalService.deleteCampaign(campaign.getCampaignId());
 	}
 
 	@Test
 	public void testDeleteCampaign() throws Exception {
-
 		Map<Locale, String> campaignNameMap = new HashMap<Locale, String>();
 
 		campaignNameMap.put(LocaleUtil.getDefault(), "test-campaign");
@@ -107,36 +108,25 @@ public class TacticLocalServiceImplTest {
 				TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
 		Campaign campaign = _campaignLocalService.addCampaign(
-				TestPropsValues.getUserId(), campaignNameMap, null, new Date(),
-				new Date(), 1, true, new long[] {1, 2},
-				serviceContext);
+			TestPropsValues.getUserId(), campaignNameMap, null, new Date(),
+			new Date(), 1, true, new long[] {1, 2}, serviceContext);
 
 		int initTacticsCount = _tacticLocalService.getTotal(
-				campaign.getCampaignId());
+			campaign.getCampaignId());
 
 		Map<Locale, String> tacticNameMap = new HashMap<Locale, String>();
 
 		tacticNameMap.put(LocaleUtil.getDefault(), "test-tactic");
 
-		Tactic tactic = _tacticLocalService.addTactic(
-				TestPropsValues.getUserId(), campaign.getCampaignId(),
-				tacticNameMap, null, new long[] {1, 2, 3}, serviceContext);
+		_tacticLocalService.addTactic(
+			TestPropsValues.getUserId(), campaign.getCampaignId(),
+			tacticNameMap, null, new long[] {1, 2, 3}, serviceContext);
 
 		_campaignLocalService.deleteCampaign(campaign.getCampaignId());
 
 		Assert.assertEquals(
-				initTacticsCount,
-				_tacticLocalService.getTotal(campaign.getCampaignId()));
-	}
-
-	protected Date getDate(Date date, int amount) {
-		Calendar calendar = Calendar.getInstance();
-
-		calendar.setTime(date);
-
-		calendar.add(Calendar.HOUR, amount);
-
-		return calendar.getTime();
+			initTacticsCount,
+			_tacticLocalService.getTotal(campaign.getCampaignId()));
 	}
 
 	@ArquillianResource

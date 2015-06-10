@@ -27,8 +27,8 @@
 </#if>
 
 <@liferay_ui["header"]
-backURL="${redirect}"
-title="${title}"
+	backURL="${redirect}"
+	title="${title}"
 />
 
 <@portlet["renderURL"] var="searchURL">

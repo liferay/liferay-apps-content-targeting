@@ -76,18 +76,18 @@
 		>
 			<@liferay_ui["icon-menu"]>
 				<@portlet["renderURL"] var="viewCampaignReportsURL">
-				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
-				<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
-				<@portlet["param"] name="className" value="${campaignClass.getName()}" />
-				<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
-			</@>
+					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
+					<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
+					<@portlet["param"] name="className" value="${campaignClass.getName()}" />
+					<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
+				</@>
 
 				<@liferay_ui["icon"]
-				image="view"
-				label=true
-				message="reports"
-				method="get"
-				url="${viewCampaignReportsURL}"
+					image="view"
+					label=true
+					message="reports"
+					method="get"
+					url="${viewCampaignReportsURL}"
 				/>
 
 				<@portlet["renderURL"] var="viewCampaignTacticsURL">
@@ -99,11 +99,11 @@
 				</@>
 
 				<@liferay_ui["icon"]
-				image="sitemap"
-				label=true
-				message="tactics"
-				method="get"
-				url="${viewCampaignTacticsURL}"
+					image="sitemap"
+					label=true
+					message="tactics"
+					method="get"
+					url="${viewCampaignTacticsURL}"
 				/>
 
 				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>

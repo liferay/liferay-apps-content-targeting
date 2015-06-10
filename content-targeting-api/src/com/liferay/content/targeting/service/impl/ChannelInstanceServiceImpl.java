@@ -47,11 +47,11 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		CampaignPermission.check(
-				getPermissionChecker(), campaignId, ActionKeys.UPDATE);
+			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
 
 		return channelInstanceLocalService.addChannelInstance(
-				userId, tacticId, channelKey, campaignId, alias, typeSettings,
-				serviceContext);
+			userId, tacticId, channelKey, campaignId, alias, typeSettings,
+			serviceContext);
 	}
 
 	@Override
@@ -59,15 +59,14 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		ChannelInstance channelInstance =
-				channelInstanceLocalService.getChannelInstance(
-						channelInstanceId);
+			channelInstanceLocalService.getChannelInstance(channelInstanceId);
 
 		CampaignPermission.check(
-				getPermissionChecker(), channelInstance.getCampaignId(),
-				ActionKeys.UPDATE);
+			getPermissionChecker(), channelInstance.getCampaignId(),
+			ActionKeys.UPDATE);
 
 		return channelInstanceLocalService.deleteChannelInstance(
-				channelInstanceId);
+			channelInstanceId);
 	}
 
 	@Override
@@ -76,7 +75,7 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		CampaignPermission.check(
-				getPermissionChecker(), campaignId, ActionKeys.VIEW);
+			getPermissionChecker(), campaignId, ActionKeys.VIEW);
 
 		return channelInstanceLocalService.getChannelInstances(tacticId);
 	}
@@ -88,15 +87,14 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		ChannelInstance channelInstance =
-				channelInstanceLocalService.getChannelInstance(
-						channelInstanceId);
+			channelInstanceLocalService.getChannelInstance(channelInstanceId);
 
 		CampaignPermission.check(
-				getPermissionChecker(), channelInstance.getCampaignId(),
-				ActionKeys.UPDATE);
+			getPermissionChecker(), channelInstance.getCampaignId(),
+			ActionKeys.UPDATE);
 
 		return channelInstanceLocalService.updateChannelInstance(
-				channelInstanceId, alias, typeSettings, serviceContext);
+			channelInstanceId, alias, typeSettings, serviceContext);
 	}
 
 }
