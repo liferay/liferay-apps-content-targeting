@@ -494,6 +494,162 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	}
 
 	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void addTacticUserSegment(long tacticId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.addTacticUserSegment(tacticId, userSegmentId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void addTacticUserSegment(long tacticId,
+		com.liferay.content.targeting.model.UserSegment userSegment)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.addTacticUserSegment(tacticId, userSegment);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void addTacticUserSegments(long tacticId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.addTacticUserSegments(tacticId, userSegmentIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void addTacticUserSegments(long tacticId,
+		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.addTacticUserSegments(tacticId, UserSegments);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void clearTacticUserSegments(long tacticId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.clearTacticUserSegments(tacticId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void deleteTacticUserSegment(long tacticId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.deleteTacticUserSegment(tacticId, userSegmentId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void deleteTacticUserSegment(long tacticId,
+		com.liferay.content.targeting.model.UserSegment userSegment)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.deleteTacticUserSegment(tacticId, userSegment);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void deleteTacticUserSegments(long tacticId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.deleteTacticUserSegments(tacticId,
+			userSegmentIds);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void deleteTacticUserSegments(long tacticId,
+		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.deleteTacticUserSegments(tacticId, UserSegments);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
+		long tacticId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.getTacticUserSegments(tacticId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
+		long tacticId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.getTacticUserSegments(tacticId, start,
+			end);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
+		long tacticId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.getTacticUserSegments(tacticId, start,
+			end, orderByComparator);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public int getTacticUserSegmentsCount(long tacticId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.getTacticUserSegmentsCount(tacticId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public boolean hasTacticUserSegment(long tacticId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.hasTacticUserSegment(tacticId,
+			userSegmentId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public boolean hasTacticUserSegments(long tacticId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _userSegmentLocalService.hasTacticUserSegments(tacticId);
+	}
+
+	/**
+	* @throws SystemException if a system exception occurred
+	*/
+	@Override
+	public void setTacticUserSegments(long tacticId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		_userSegmentLocalService.setTacticUserSegments(tacticId, userSegmentIds);
+	}
+
+	/**
 	* Returns the Spring bean ID for this bean.
 	*
 	* @return the Spring bean ID for this bean

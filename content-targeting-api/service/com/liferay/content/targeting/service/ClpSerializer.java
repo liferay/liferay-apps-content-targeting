@@ -15,8 +15,10 @@
 package com.liferay.content.targeting.service;
 
 import com.liferay.content.targeting.model.CampaignClp;
+import com.liferay.content.targeting.model.ChannelInstanceClp;
 import com.liferay.content.targeting.model.ReportInstanceClp;
 import com.liferay.content.targeting.model.RuleInstanceClp;
+import com.liferay.content.targeting.model.TacticClp;
 import com.liferay.content.targeting.model.TrackingActionInstanceClp;
 import com.liferay.content.targeting.model.UserSegmentClp;
 
@@ -110,12 +112,20 @@ public class ClpSerializer {
 			return translateInputCampaign(oldModel);
 		}
 
+		if (oldModelClassName.equals(ChannelInstanceClp.class.getName())) {
+			return translateInputChannelInstance(oldModel);
+		}
+
 		if (oldModelClassName.equals(ReportInstanceClp.class.getName())) {
 			return translateInputReportInstance(oldModel);
 		}
 
 		if (oldModelClassName.equals(RuleInstanceClp.class.getName())) {
 			return translateInputRuleInstance(oldModel);
+		}
+
+		if (oldModelClassName.equals(TacticClp.class.getName())) {
+			return translateInputTactic(oldModel);
 		}
 
 		if (oldModelClassName.equals(TrackingActionInstanceClp.class.getName())) {
@@ -151,6 +161,16 @@ public class ClpSerializer {
 		return newModel;
 	}
 
+	public static Object translateInputChannelInstance(BaseModel<?> oldModel) {
+		ChannelInstanceClp oldClpModel = (ChannelInstanceClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getChannelInstanceRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
 	public static Object translateInputReportInstance(BaseModel<?> oldModel) {
 		ReportInstanceClp oldClpModel = (ReportInstanceClp)oldModel;
 
@@ -165,6 +185,16 @@ public class ClpSerializer {
 		RuleInstanceClp oldClpModel = (RuleInstanceClp)oldModel;
 
 		BaseModel<?> newModel = oldClpModel.getRuleInstanceRemoteModel();
+
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
+
+		return newModel;
+	}
+
+	public static Object translateInputTactic(BaseModel<?> oldModel) {
+		TacticClp oldClpModel = (TacticClp)oldModel;
+
+		BaseModel<?> newModel = oldClpModel.getTacticRemoteModel();
 
 		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
@@ -247,6 +277,43 @@ public class ClpSerializer {
 		}
 
 		if (oldModelClassName.equals(
+					"com.liferay.content.targeting.model.impl.ChannelInstanceImpl")) {
+			return translateOutputChannelInstance(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
 					"com.liferay.content.targeting.model.impl.ReportInstanceImpl")) {
 			return translateOutputReportInstance(oldModel);
 		}
@@ -286,6 +353,43 @@ public class ClpSerializer {
 		if (oldModelClassName.equals(
 					"com.liferay.content.targeting.model.impl.RuleInstanceImpl")) {
 			return translateOutputRuleInstance(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
+
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
+
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
+
+				Class<?> oldModelModelClass = oldModel.getModelClass();
+
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
+
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
+
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
+
+		if (oldModelClassName.equals(
+					"com.liferay.content.targeting.model.impl.TacticImpl")) {
+			return translateOutputTactic(oldModel);
 		}
 		else if (oldModelClassName.endsWith("Clp")) {
 			try {
@@ -475,6 +579,16 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
+					"com.liferay.content.targeting.InvalidChannelException")) {
+			return new com.liferay.content.targeting.InvalidChannelException();
+		}
+
+		if (className.equals(
+					"com.liferay.content.targeting.InvalidChannelsException")) {
+			return new com.liferay.content.targeting.InvalidChannelsException();
+		}
+
+		if (className.equals(
 					"com.liferay.content.targeting.InvalidDateRangeException")) {
 			return new com.liferay.content.targeting.InvalidDateRangeException();
 		}
@@ -515,6 +629,11 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
+					"com.liferay.content.targeting.NoSuchChannelInstanceException")) {
+			return new com.liferay.content.targeting.NoSuchChannelInstanceException();
+		}
+
+		if (className.equals(
 					"com.liferay.content.targeting.NoSuchReportInstanceException")) {
 			return new com.liferay.content.targeting.NoSuchReportInstanceException();
 		}
@@ -522,6 +641,11 @@ public class ClpSerializer {
 		if (className.equals(
 					"com.liferay.content.targeting.NoSuchRuleInstanceException")) {
 			return new com.liferay.content.targeting.NoSuchRuleInstanceException();
+		}
+
+		if (className.equals(
+					"com.liferay.content.targeting.NoSuchTacticException")) {
+			return new com.liferay.content.targeting.NoSuchTacticException();
 		}
 
 		if (className.equals(
@@ -547,6 +671,16 @@ public class ClpSerializer {
 		return newModel;
 	}
 
+	public static Object translateOutputChannelInstance(BaseModel<?> oldModel) {
+		ChannelInstanceClp newModel = new ChannelInstanceClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setChannelInstanceRemoteModel(oldModel);
+
+		return newModel;
+	}
+
 	public static Object translateOutputReportInstance(BaseModel<?> oldModel) {
 		ReportInstanceClp newModel = new ReportInstanceClp();
 
@@ -563,6 +697,16 @@ public class ClpSerializer {
 		newModel.setModelAttributes(oldModel.getModelAttributes());
 
 		newModel.setRuleInstanceRemoteModel(oldModel);
+
+		return newModel;
+	}
+
+	public static Object translateOutputTactic(BaseModel<?> oldModel) {
+		TacticClp newModel = new TacticClp();
+
+		newModel.setModelAttributes(oldModel.getModelAttributes());
+
+		newModel.setTacticRemoteModel(oldModel);
 
 		return newModel;
 	}
