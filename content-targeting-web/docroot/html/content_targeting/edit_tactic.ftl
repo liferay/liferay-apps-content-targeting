@@ -121,7 +121,7 @@
 
 					<div class="diagram-builder-canvas form-builder-canvas ${cssHasItemsClass}">
 						<div class="alert alert-info alert-no-items">
-							<@liferay_ui["message"] key="drag-channels-to-use-in-the-reports-of-this-tactic" />
+							<@liferay_ui["message"] key="drag-and-drop-the-different-channels-you-want-to-use-for-this-tactic" />
 						</div>
 
 						<div class="diagram-builder-drop-container form-builder-drop-container">
