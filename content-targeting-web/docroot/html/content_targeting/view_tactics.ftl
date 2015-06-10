@@ -52,7 +52,7 @@ title="${title}"
 	</@>
 
 	<div id="<@portlet["namespace"] />tacticsPanel">
-		<#include "view_tactic_resources.ftl" />
+		<#include "view_tactics_resources.ftl" />
 	</div>
 </@>
 
