@@ -26,9 +26,14 @@
 	</@>
 </#if>
 
+<#assign titleHelp>
+    <@liferay_ui["icon-help"] message="tactics-help" />
+</#assign>
+
 <@liferay_ui["header"]
 backURL="${redirect}"
-title="${title}"
+escapeXml=false
+title="${title}${titleHelp}"
 />
 
 <@portlet["renderURL"] var="searchURL">
