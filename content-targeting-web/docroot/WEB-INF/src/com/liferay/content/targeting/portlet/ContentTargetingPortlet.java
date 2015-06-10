@@ -14,6 +14,15 @@
 
 package com.liferay.content.targeting.portlet;
 
+import com.liferay.content.targeting.InvalidChannelException;
+import com.liferay.content.targeting.InvalidChannelsException;
+import com.liferay.content.targeting.InvalidDateRangeException;
+import com.liferay.content.targeting.InvalidNameException;
+import com.liferay.content.targeting.InvalidRuleException;
+import com.liferay.content.targeting.InvalidRulesException;
+import com.liferay.content.targeting.InvalidTrackingActionException;
+import com.liferay.content.targeting.InvalidTrackingActionsException;
+import com.liferay.content.targeting.UsedUserSegmentException;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.content.targeting.api.model.Channel;
@@ -52,7 +61,6 @@ import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.UserSegmentService;
 import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
-import com.liferay.content.targeting.service.permission.TacticPermission;
 import com.liferay.content.targeting.service.permission.UserSegmentPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.content.targeting.util.CampaignConstants;
@@ -982,9 +990,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					staticModels.get(
 							ContentTargetingPermission.class.getName()));
 			template.put(
-					"tacticPermission",
-					staticModels.get(TacticPermission.class.getName()));
-			template.put(
 					"actionKeys", staticModels.get(ActionKeys.class.getName()));
 
 			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");
@@ -1183,7 +1188,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			long scopeGroupId = (Long)template.get("scopeGroupId");
 
-			if (TacticPermission.contains(
+			if (CampaignPermission.contains(
 					permissionChecker, scopeGroupId, scopeGroupId,
 					ActionKeys.DELETE)) {
 
@@ -1199,6 +1204,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			if (path.equals(ContentTargetingPath.VIEW_TACTICS) ||
 				path.equals(ContentTargetingPath.VIEW_TACTICS_RESOURCES)) {
+
+				template.put(
+					"campaignPermission",
+					staticModels.get(CampaignPermission.class.getName()));
 
 				String className = ParamUtil.getString(
 						portletRequest, "className");

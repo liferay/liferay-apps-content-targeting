@@ -52,22 +52,7 @@
 		name=""
 		>
 			<@liferay_ui["icon-menu"]>
-				<@portlet["renderURL"] var="viewTacticReportsURL">
-					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
-					<@portlet["param"] name="redirect" value="${viewTacticsURL}" />
-					<@portlet["param"] name="className" value="${tacticClass.getName()}" />
-					<@portlet["param"] name="classPK" value="${tactic.getTacticId()?string}" />
-				</@>
-
-				<@liferay_ui["icon"]
-				image="view"
-				label=true
-				message="reports"
-				method="get"
-				url="${viewTacticReportsURL}"
-				/>
-
-				<#if tacticPermission.contains(permissionChecker, tactic, actionKeys.UPDATE)>
+				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
 					<@portlet["renderURL"] var="editTacticURL">
 						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_TACTIC}" />
 						<@portlet["param"] name="redirect" value="${viewTacticsURL}" />
@@ -80,9 +65,7 @@
 					method="get"
 					url="${editTacticURL}"
 					/>
-				</#if>
 
-				<#if tacticPermission.contains(permissionChecker, tactic, actionKeys.DELETE)>
 					<@portlet["actionURL"] name="deleteTactic" var="deleteTacticURL">
 						<@portlet["param"] name="redirect" value="${viewTacticsURL}" />
 						<@portlet["param"] name="tacticId" value="${tactic.getTacticId()?string}" />

@@ -22,8 +22,6 @@ public class ActionKeys
 
 	public static final String ADD_CAMPAIGN = "ADD_CAMPAIGN";
 
-	public static final String ADD_TACTIC = "ADD_TACTIC";
-
 	public static final String ADD_USER_SEGMENT = "ADD_USER_SEGMENT";
 
 }
