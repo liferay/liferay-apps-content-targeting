@@ -25,6 +25,9 @@ public class ContentTargetingPath {
 	public static final String EDIT_CAMPAIGN =
 		"html/content_targeting/edit_campaign.ftl";
 
+	public static final String EDIT_TACTIC =
+		"html/content_targeting/edit_tactic.ftl";
+
 	public static final String EDIT_USER_SEGMENT =
 		"html/content_targeting/edit_user_segment.ftl";
 
@@ -40,6 +43,12 @@ public class ContentTargetingPath {
 
 	public static final String VIEW_REPORTS =
 		"html/content_targeting/view_reports.ftl";
+
+	public static final String VIEW_TACTICS =
+			"html/content_targeting/edit_campaign_tactics.ftl";
+
+	public static final String VIEW_TACTICS_RESOURCES =
+		"html/content_targeting/view_tactic_resources.ftl";
 
 	public static final String VIEW_USER_SEGMENTS_RESOURCES =
 		"html/content_targeting/view_user_segments_resources.ftl";
