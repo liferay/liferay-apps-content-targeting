@@ -506,6 +506,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+<<<<<<< HEAD
 	* Returns all the tactics that the user has permission to view where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -569,6 +570,8 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 			com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+=======
+>>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 	* Removes all the tactics where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
@@ -588,6 +591,7 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+<<<<<<< HEAD
 	* Returns the number of tactics that the user has permission to view where groupId = &#63;.
 	*
 	* @param groupId the group ID
@@ -598,6 +602,8 @@ public interface TacticPersistence extends BasePersistence<Tactic> {
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+=======
+>>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 	* Returns all the tactics where campaignId = &#63;.
 	*
 	* @param campaignId the campaign ID

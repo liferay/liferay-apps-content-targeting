@@ -70,6 +70,7 @@ public class ChannelInstanceServiceWrapper implements ChannelInstanceService,
 	}
 
 	@Override
+<<<<<<< HEAD
 	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
 		long campaignId, long tacticId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -83,6 +84,21 @@ public class ChannelInstanceServiceWrapper implements ChannelInstanceService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _channelInstanceService.deleteChannelInstance(channelInstanceId);
+=======
+	public com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
+		long channelInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _channelInstanceService.deleteChannelInstance(channelInstanceId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
+		long campaignId, long tacticId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _channelInstanceService.getChannelInstances(campaignId, tacticId);
+>>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 	}
 
 	@Override

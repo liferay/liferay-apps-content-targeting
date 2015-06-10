@@ -55,8 +55,7 @@ public class TacticSearchContainerIterator
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =
-				_tacticLocalService.searchTactics(
-						groupId, keywords, start, end);
+			_tacticLocalService.searchTactics(groupId, keywords, start, end);
 
 		return searchResults.getBaseModels();
 	}
@@ -69,8 +68,7 @@ public class TacticSearchContainerIterator
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =
-				_tacticLocalService.searchTactics(
-						groupId, keywords, start, end);
+			_tacticLocalService.searchTactics(groupId, keywords, start, end);
 
 		return searchResults.getBaseModels();
 	}
@@ -96,9 +94,9 @@ public class TacticSearchContainerIterator
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =
-				_tacticLocalService.searchTactics(
-						campaignId, groupId, keywords, QueryUtil.ALL_POS,
-						QueryUtil.ALL_POS);
+			_tacticLocalService.searchTactics(
+				campaignId, groupId, keywords, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		return searchResults.getLength();
 	}

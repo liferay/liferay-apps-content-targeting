@@ -219,13 +219,13 @@ public class TacticLocalServiceClpInvoker {
 		_methodName105 = "searchTactics";
 
 		_methodParameterTypes105 = new String[] {
-				"long", "java.lang.String", "int", "int"
+				"long", "long", "java.lang.String", "int", "int"
 			};
 
 		_methodName106 = "searchTactics";
 
 		_methodParameterTypes106 = new String[] {
-				"long", "long", "java.lang.String", "int", "int"
+				"long", "java.lang.String", "int", "int"
 			};
 
 		_methodName107 = "updateTactic";
@@ -501,18 +501,18 @@ public class TacticLocalServiceClpInvoker {
 		if (_methodName105.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes105, parameterTypes)) {
 			return TacticLocalServiceUtil.searchTactics(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1],
-				((Integer)arguments[2]).intValue(),
-				((Integer)arguments[3]).intValue());
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2],
+				((Integer)arguments[3]).intValue(),
+				((Integer)arguments[4]).intValue());
 		}
 
 		if (_methodName106.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
 			return TacticLocalServiceUtil.searchTactics(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2],
-				((Integer)arguments[3]).intValue(),
-				((Integer)arguments[4]).intValue());
+				(java.lang.String)arguments[1],
+				((Integer)arguments[2]).intValue(),
+				((Integer)arguments[3]).intValue());
 		}
 
 		if (_methodName107.equals(name) &&

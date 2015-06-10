@@ -18,7 +18,7 @@
 
 <@aui["nav"]>
 
-	<#if contentTargetingPermission.contains(permissionChecker, scopeGroupId, actionKeys.ADD_TACTIC)>
+	<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
 		<@portlet["renderURL"] var="redirectURL">
 			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_TACTICS}" />
 			<@portlet["param"] name="campaignId" value="${campaignId}" />
@@ -33,9 +33,7 @@
 		</@>
 
 		<@aui["nav-item"] href="${addTacticURL}" iconCssClass="icon-plus" label="add-tactic" />
-	</#if>
 
-	<#if tacticPermission.contains(permissionChecker, scopeGroupId, scopeGroupId, actionKeys.DELETE)>
 		<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteTactics" label="delete" />
 	</#if>
 </@>

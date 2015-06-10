@@ -440,14 +440,23 @@ public interface TacticLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
+<<<<<<< HEAD
 		long groupId, java.lang.String keywords, int start, int end)
+=======
+		long campaignId, long groupId, java.lang.String keywords, int start,
+		int end)
+>>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
+<<<<<<< HEAD
 		long campaignId, long groupId, java.lang.String keywords, int start,
 		int end)
+=======
+		long groupId, java.lang.String keywords, int start, int end)
+>>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

@@ -74,6 +74,7 @@ public class ChannelInstanceServiceUtil {
 			campaignId, alias, typeSettings, serviceContext);
 	}
 
+<<<<<<< HEAD
 	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
 		long campaignId, long tacticId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -86,6 +87,20 @@ public class ChannelInstanceServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().deleteChannelInstance(channelInstanceId);
+=======
+	public static com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
+		long channelInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteChannelInstance(channelInstanceId);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
+		long campaignId, long tacticId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getChannelInstances(campaignId, tacticId);
+>>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 	}
 
 	public static com.liferay.content.targeting.model.ChannelInstance updateChannelInstance(

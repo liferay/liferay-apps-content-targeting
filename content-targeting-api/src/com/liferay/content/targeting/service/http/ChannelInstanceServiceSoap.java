@@ -81,14 +81,12 @@ public class ChannelInstanceServiceSoap {
 		}
 	}
 
-	public static com.liferay.content.targeting.model.ChannelInstanceSoap[] getChannelInstances(
-		long campaignId, long tacticId) throws RemoteException {
+	public static com.liferay.content.targeting.model.ChannelInstanceSoap deleteChannelInstance(
+		long channelInstanceId) throws RemoteException {
 		try {
-			java.util.List<com.liferay.content.targeting.model.ChannelInstance> returnValue =
-				ChannelInstanceServiceUtil.getChannelInstances(campaignId,
-					tacticId);
+			com.liferay.content.targeting.model.ChannelInstance returnValue = ChannelInstanceServiceUtil.deleteChannelInstance(channelInstanceId);
 
-			return com.liferay.content.targeting.model.ChannelInstanceSoap.toSoapModels(returnValue);
+			return com.liferay.content.targeting.model.ChannelInstanceSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -97,12 +95,14 @@ public class ChannelInstanceServiceSoap {
 		}
 	}
 
-	public static com.liferay.content.targeting.model.ChannelInstanceSoap deleteChannelInstance(
-		long channelInstanceId) throws RemoteException {
+	public static com.liferay.content.targeting.model.ChannelInstanceSoap[] getChannelInstances(
+		long campaignId, long tacticId) throws RemoteException {
 		try {
-			com.liferay.content.targeting.model.ChannelInstance returnValue = ChannelInstanceServiceUtil.deleteChannelInstance(channelInstanceId);
+			java.util.List<com.liferay.content.targeting.model.ChannelInstance> returnValue =
+				ChannelInstanceServiceUtil.getChannelInstances(campaignId,
+					tacticId);
 
-			return com.liferay.content.targeting.model.ChannelInstanceSoap.toSoapModel(returnValue);
+			return com.liferay.content.targeting.model.ChannelInstanceSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

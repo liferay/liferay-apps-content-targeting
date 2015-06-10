@@ -39,13 +39,13 @@ public class ChannelInstanceServiceClpInvoker {
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName67 = "getChannelInstances";
+		_methodName67 = "deleteChannelInstance";
 
-		_methodParameterTypes67 = new String[] { "long", "long" };
+		_methodParameterTypes67 = new String[] { "long" };
 
-		_methodName68 = "deleteChannelInstance";
+		_methodName68 = "getChannelInstances";
 
-		_methodParameterTypes68 = new String[] { "long" };
+		_methodParameterTypes68 = new String[] { "long", "long" };
 
 		_methodName69 = "updateChannelInstance";
 
@@ -81,13 +81,13 @@ public class ChannelInstanceServiceClpInvoker {
 
 		if (_methodName67.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
-			return ChannelInstanceServiceUtil.getChannelInstances(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+			return ChannelInstanceServiceUtil.deleteChannelInstance(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName68.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
-			return ChannelInstanceServiceUtil.deleteChannelInstance(((Long)arguments[0]).longValue());
+			return ChannelInstanceServiceUtil.getChannelInstances(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName69.equals(name) &&

@@ -16,10 +16,13 @@ package com.liferay.content.targeting;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Eduardo Garcia
  */
 public class InvalidChannelsException extends PortalException {
 
@@ -29,6 +32,12 @@ public class InvalidChannelsException extends PortalException {
 
 	public InvalidChannelsException(List<InvalidChannelException> exceptions) {
 		super();
+
+		if ((exceptions != null) && !exceptions.isEmpty()) {
+			InvalidChannelException exception = exceptions.get(0);
+
+			_exceptionsMap.put(exception.getChannelGuid(), exceptions);
+		}
 	}
 
 	public InvalidChannelsException(String msg) {
@@ -39,8 +48,24 @@ public class InvalidChannelsException extends PortalException {
 		super(msg, cause);
 	}
 
-	public InvalidChannelsException(Throwable cause) {
-		super(cause);
+	public void add(InvalidChannelException exception) {
+		List<InvalidChannelException> exceptions = _exceptionsMap.get(
+			exception.getChannelGuid());
+
+		if (exceptions == null) {
+			exceptions = new ArrayList<InvalidChannelException>();
+		}
+
+		exceptions.add(exception);
+
+		_exceptionsMap.put(exception.getChannelGuid(), exceptions);
 	}
+
+	public List<InvalidChannelException> getExceptions(String channelId) {
+		return _exceptionsMap.get(channelId);
+	}
+
+	private Map<String, List<InvalidChannelException>> _exceptionsMap =
+		new HashMap<String, List<InvalidChannelException>>();
 
 }

@@ -45,10 +45,10 @@ public class ContentTargetingPath {
 		"html/content_targeting/view_reports.ftl";
 
 	public static final String VIEW_TACTICS =
-			"html/content_targeting/edit_campaign_tactics.ftl";
+		"html/content_targeting/view_tactics.ftl";
 
 	public static final String VIEW_TACTICS_RESOURCES =
-		"html/content_targeting/view_tactic_resources.ftl";
+		"html/content_targeting/view_tactics_resources.ftl";
 
 	public static final String VIEW_USER_SEGMENTS_RESOURCES =
 		"html/content_targeting/view_user_segments_resources.ftl";

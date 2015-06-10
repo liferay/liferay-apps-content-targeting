@@ -219,13 +219,21 @@ public class TacticLocalServiceClp implements TacticLocalService {
 		_methodName42 = "searchTactics";
 
 		_methodParameterTypes42 = new String[] {
+<<<<<<< HEAD
 				"long", "java.lang.String", "int", "int"
+=======
+				"long", "long", "java.lang.String", "int", "int"
+>>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 			};
 
 		_methodName43 = "searchTactics";
 
 		_methodParameterTypes43 = new String[] {
+<<<<<<< HEAD
 				"long", "long", "java.lang.String", "int", "int"
+=======
+				"long", "java.lang.String", "int", "int"
+>>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 			};
 
 		_methodName44 = "updateTactic";
@@ -1493,7 +1501,12 @@ public class TacticLocalServiceClp implements TacticLocalService {
 
 	@Override
 	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
+<<<<<<< HEAD
 		long groupId, java.lang.String keywords, int start, int end)
+=======
+		long campaignId, long groupId, java.lang.String keywords, int start,
+		int end)
+>>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1502,7 +1515,13 @@ public class TacticLocalServiceClp implements TacticLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName42,
 					_methodParameterTypes42,
 					new Object[] {
+<<<<<<< HEAD
 						groupId,
+=======
+						campaignId,
+						
+					groupId,
+>>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 						
 					ClpSerializer.translateInput(keywords),
 						
@@ -1536,8 +1555,12 @@ public class TacticLocalServiceClp implements TacticLocalService {
 
 	@Override
 	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
+<<<<<<< HEAD
 		long campaignId, long groupId, java.lang.String keywords, int start,
 		int end)
+=======
+		long groupId, java.lang.String keywords, int start, int end)
+>>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1546,9 +1569,13 @@ public class TacticLocalServiceClp implements TacticLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName43,
 					_methodParameterTypes43,
 					new Object[] {
+<<<<<<< HEAD
 						campaignId,
 						
 					groupId,
+=======
+						groupId,
+>>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 						
 					ClpSerializer.translateInput(keywords),
 						

@@ -21,13 +21,12 @@ import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
 import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.GetterUtil;
-
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +47,7 @@ public class TacticUtil {
 				PropertyFactoryUtil.forName("campaignId").eq(campaignId));
 
 		int count = new Long(
-				TacticLocalServiceUtil.dynamicQueryCount(query)).intValue();
+			TacticLocalServiceUtil.dynamicQueryCount(query)).intValue();
 
 		return count;
 	}
@@ -72,10 +71,10 @@ public class TacticUtil {
 					tactics = null;
 
 					Indexer indexer = IndexerRegistryUtil.getIndexer(
-							Tactic.class);
+						Tactic.class);
 
 					long companyId = GetterUtil.getLong(
-							document.get(Field.COMPANY_ID));
+						document.get(Field.COMPANY_ID));
 
 					indexer.delete(companyId, document.getUID());
 				}
@@ -95,11 +94,11 @@ public class TacticUtil {
 		throws PortalException, SystemException {
 
 		DynamicQuery query =
-				DynamicQueryFactoryUtil.forClass(Tactic.class).add(
-					PropertyFactoryUtil.forName("campaignId").eq(campaignId));
+			DynamicQueryFactoryUtil.forClass(Tactic.class).add(
+				PropertyFactoryUtil.forName("campaignId").eq(campaignId));
 
 		List<Tactic> list = TacticLocalServiceUtil.dynamicQuery(
-				query, start, end);
+			query, start, end);
 
 		return list;
 	}

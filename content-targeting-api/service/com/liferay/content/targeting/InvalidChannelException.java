@@ -17,7 +17,7 @@ package com.liferay.content.targeting;
 import com.liferay.portal.kernel.exception.PortalException;
 
 /**
- * @author Brian Wing Shun Chan
+ * @author Eduardo Garcia
  */
 public class InvalidChannelException extends PortalException {
 
@@ -33,8 +33,14 @@ public class InvalidChannelException extends PortalException {
 		super(msg, cause);
 	}
 
-	public InvalidChannelException(Throwable cause) {
-		super(cause);
+	public String getChannelGuid() {
+		return _channelGuid;
 	}
+
+	public void setChannelGuid(String channelGuid) {
+		_channelGuid = channelGuid;
+	}
+
+	private String _channelGuid;
 
 }
