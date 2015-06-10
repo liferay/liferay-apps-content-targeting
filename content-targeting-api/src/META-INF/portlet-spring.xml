@@ -5,12 +5,18 @@
 	<bean id="com.liferay.content.targeting.service.CampaignService" class="com.liferay.content.targeting.service.impl.CampaignServiceImpl" />
 	<bean id="com.liferay.content.targeting.service.persistence.CampaignPersistence" class="com.liferay.content.targeting.service.persistence.CampaignPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.content.targeting.service.persistence.CampaignFinder" class="com.liferay.content.targeting.service.persistence.CampaignFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.content.targeting.service.ChannelInstanceLocalService" class="com.liferay.content.targeting.service.impl.ChannelInstanceLocalServiceImpl" />
+	<bean id="com.liferay.content.targeting.service.ChannelInstanceService" class="com.liferay.content.targeting.service.impl.ChannelInstanceServiceImpl" />
+	<bean id="com.liferay.content.targeting.service.persistence.ChannelInstancePersistence" class="com.liferay.content.targeting.service.persistence.ChannelInstancePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.content.targeting.service.ReportInstanceLocalService" class="com.liferay.content.targeting.service.impl.ReportInstanceLocalServiceImpl" />
 	<bean id="com.liferay.content.targeting.service.ReportInstanceService" class="com.liferay.content.targeting.service.impl.ReportInstanceServiceImpl" />
 	<bean id="com.liferay.content.targeting.service.persistence.ReportInstancePersistence" class="com.liferay.content.targeting.service.persistence.ReportInstancePersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.content.targeting.service.RuleInstanceLocalService" class="com.liferay.content.targeting.service.impl.RuleInstanceLocalServiceImpl" />
 	<bean id="com.liferay.content.targeting.service.RuleInstanceService" class="com.liferay.content.targeting.service.impl.RuleInstanceServiceImpl" />
 	<bean id="com.liferay.content.targeting.service.persistence.RuleInstancePersistence" class="com.liferay.content.targeting.service.persistence.RuleInstancePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.content.targeting.service.TacticLocalService" class="com.liferay.content.targeting.service.impl.TacticLocalServiceImpl" />
+	<bean id="com.liferay.content.targeting.service.TacticService" class="com.liferay.content.targeting.service.impl.TacticServiceImpl" />
+	<bean id="com.liferay.content.targeting.service.persistence.TacticPersistence" class="com.liferay.content.targeting.service.persistence.TacticPersistenceImpl" parent="basePersistence" />
 	<bean id="com.liferay.content.targeting.service.TrackingActionInstanceLocalService" class="com.liferay.content.targeting.service.impl.TrackingActionInstanceLocalServiceImpl" />
 	<bean id="com.liferay.content.targeting.service.TrackingActionInstanceService" class="com.liferay.content.targeting.service.impl.TrackingActionInstanceServiceImpl" />
 	<bean id="com.liferay.content.targeting.service.persistence.TrackingActionInstancePersistence" class="com.liferay.content.targeting.service.persistence.TrackingActionInstancePersistenceImpl" parent="basePersistence" />

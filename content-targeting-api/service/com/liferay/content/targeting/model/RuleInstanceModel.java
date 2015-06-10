@@ -288,19 +288,20 @@ public interface RuleInstanceModel extends BaseModel<RuleInstance>,
 	public Object clone();
 
 	@Override
-	public int compareTo(RuleInstance ruleInstance);
+	public int compareTo(
+		com.liferay.content.targeting.model.RuleInstance ruleInstance);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<RuleInstance> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.RuleInstance> toCacheModel();
 
 	@Override
-	public RuleInstance toEscapedModel();
+	public com.liferay.content.targeting.model.RuleInstance toEscapedModel();
 
 	@Override
-	public RuleInstance toUnescapedModel();
+	public com.liferay.content.targeting.model.RuleInstance toUnescapedModel();
 
 	@Override
 	public String toString();

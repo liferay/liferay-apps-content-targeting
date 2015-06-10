@@ -3257,6 +3257,8 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 
 		userSegmentToCampaignTableMapper.deleteLeftPrimaryKeyTableMappings(userSegment.getPrimaryKey());
 
+		userSegmentToTacticTableMapper.deleteLeftPrimaryKeyTableMappings(userSegment.getPrimaryKey());
+
 		Session session = null;
 
 		try {
@@ -3982,6 +3984,291 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 		}
 	}
 
+	/**
+	 * Returns all the tactics associated with the user segment.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @return the tactics associated with the user segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<com.liferay.content.targeting.model.Tactic> getTactics(long pk)
+		throws SystemException {
+		return getTactics(pk, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+	}
+
+	/**
+	 * Returns a range of all the tactics associated with the user segment.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param start the lower bound of the range of user segments
+	 * @param end the upper bound of the range of user segments (not inclusive)
+	 * @return the range of tactics associated with the user segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long pk, int start, int end) throws SystemException {
+		return getTactics(pk, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the tactics associated with the user segment.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param start the lower bound of the range of user segments
+	 * @param end the upper bound of the range of user segments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of tactics associated with the user segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long pk, int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		return userSegmentToTacticTableMapper.getRightBaseModels(pk, start,
+			end, orderByComparator);
+	}
+
+	/**
+	 * Returns the number of tactics associated with the user segment.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @return the number of tactics associated with the user segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int getTacticsSize(long pk) throws SystemException {
+		long[] pks = userSegmentToTacticTableMapper.getRightPrimaryKeys(pk);
+
+		return pks.length;
+	}
+
+	/**
+	 * Returns <code>true</code> if the tactic is associated with the user segment.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param tacticPK the primary key of the tactic
+	 * @return <code>true</code> if the tactic is associated with the user segment; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public boolean containsTactic(long pk, long tacticPK)
+		throws SystemException {
+		return userSegmentToTacticTableMapper.containsTableMapping(pk, tacticPK);
+	}
+
+	/**
+	 * Returns <code>true</code> if the user segment has any tactics associated with it.
+	 *
+	 * @param pk the primary key of the user segment to check for associations with tactics
+	 * @return <code>true</code> if the user segment has any tactics associated with it; <code>false</code> otherwise
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public boolean containsTactics(long pk) throws SystemException {
+		if (getTacticsSize(pk) > 0) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	/**
+	 * Adds an association between the user segment and the tactic. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param tacticPK the primary key of the tactic
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addTactic(long pk, long tacticPK) throws SystemException {
+		userSegmentToTacticTableMapper.addTableMapping(pk, tacticPK);
+	}
+
+	/**
+	 * Adds an association between the user segment and the tactic. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param tactic the tactic
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addTactic(long pk,
+		com.liferay.content.targeting.model.Tactic tactic)
+		throws SystemException {
+		userSegmentToTacticTableMapper.addTableMapping(pk,
+			tactic.getPrimaryKey());
+	}
+
+	/**
+	 * Adds an association between the user segment and the tactics. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param tacticPKs the primary keys of the tactics
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addTactics(long pk, long[] tacticPKs) throws SystemException {
+		for (long tacticPK : tacticPKs) {
+			userSegmentToTacticTableMapper.addTableMapping(pk, tacticPK);
+		}
+	}
+
+	/**
+	 * Adds an association between the user segment and the tactics. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param tactics the tactics
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void addTactics(long pk,
+		List<com.liferay.content.targeting.model.Tactic> tactics)
+		throws SystemException {
+		for (com.liferay.content.targeting.model.Tactic tactic : tactics) {
+			userSegmentToTacticTableMapper.addTableMapping(pk,
+				tactic.getPrimaryKey());
+		}
+	}
+
+	/**
+	 * Clears all associations between the user segment and its tactics. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment to clear the associated tactics from
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void clearTactics(long pk) throws SystemException {
+		userSegmentToTacticTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
+	}
+
+	/**
+	 * Removes the association between the user segment and the tactic. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param tacticPK the primary key of the tactic
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeTactic(long pk, long tacticPK) throws SystemException {
+		userSegmentToTacticTableMapper.deleteTableMapping(pk, tacticPK);
+	}
+
+	/**
+	 * Removes the association between the user segment and the tactic. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param tactic the tactic
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeTactic(long pk,
+		com.liferay.content.targeting.model.Tactic tactic)
+		throws SystemException {
+		userSegmentToTacticTableMapper.deleteTableMapping(pk,
+			tactic.getPrimaryKey());
+	}
+
+	/**
+	 * Removes the association between the user segment and the tactics. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param tacticPKs the primary keys of the tactics
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeTactics(long pk, long[] tacticPKs)
+		throws SystemException {
+		for (long tacticPK : tacticPKs) {
+			userSegmentToTacticTableMapper.deleteTableMapping(pk, tacticPK);
+		}
+	}
+
+	/**
+	 * Removes the association between the user segment and the tactics. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param tactics the tactics
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeTactics(long pk,
+		List<com.liferay.content.targeting.model.Tactic> tactics)
+		throws SystemException {
+		for (com.liferay.content.targeting.model.Tactic tactic : tactics) {
+			userSegmentToTacticTableMapper.deleteTableMapping(pk,
+				tactic.getPrimaryKey());
+		}
+	}
+
+	/**
+	 * Sets the tactics associated with the user segment, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param tacticPKs the primary keys of the tactics to be associated with the user segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void setTactics(long pk, long[] tacticPKs) throws SystemException {
+		Set<Long> newTacticPKsSet = SetUtil.fromArray(tacticPKs);
+		Set<Long> oldTacticPKsSet = SetUtil.fromArray(userSegmentToTacticTableMapper.getRightPrimaryKeys(
+					pk));
+
+		Set<Long> removeTacticPKsSet = new HashSet<Long>(oldTacticPKsSet);
+
+		removeTacticPKsSet.removeAll(newTacticPKsSet);
+
+		for (long removeTacticPK : removeTacticPKsSet) {
+			userSegmentToTacticTableMapper.deleteTableMapping(pk, removeTacticPK);
+		}
+
+		newTacticPKsSet.removeAll(oldTacticPKsSet);
+
+		for (long newTacticPK : newTacticPKsSet) {
+			userSegmentToTacticTableMapper.addTableMapping(pk, newTacticPK);
+		}
+	}
+
+	/**
+	 * Sets the tactics associated with the user segment, removing and adding associations as necessary. Also notifies the appropriate model listeners and clears the mapping table finder cache.
+	 *
+	 * @param pk the primary key of the user segment
+	 * @param tactics the tactics to be associated with the user segment
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void setTactics(long pk,
+		List<com.liferay.content.targeting.model.Tactic> tactics)
+		throws SystemException {
+		try {
+			long[] tacticPKs = new long[tactics.size()];
+
+			for (int i = 0; i < tactics.size(); i++) {
+				com.liferay.content.targeting.model.Tactic tactic = tactics.get(i);
+
+				tacticPKs[i] = tactic.getPrimaryKey();
+			}
+
+			setTactics(pk, tacticPKs);
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			FinderCacheUtil.clearCache(UserSegmentModelImpl.MAPPING_TABLE_CT_TACTICS_USERSEGMENTS_NAME);
+		}
+	}
+
 	@Override
 	protected Set<String> getBadColumnNames() {
 		return _badColumnNames;
@@ -4013,6 +4300,9 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 
 		userSegmentToCampaignTableMapper = TableMapperFactory.getTableMapper("CT_Campaigns_UserSegments",
 				"userSegmentId", "campaignId", this, campaignPersistence);
+
+		userSegmentToTacticTableMapper = TableMapperFactory.getTableMapper("CT_Tactics_UserSegments",
+				"userSegmentId", "tacticId", this, tacticPersistence);
 	}
 
 	public void destroy() {
@@ -4025,6 +4315,9 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	@BeanReference(type = CampaignPersistence.class)
 	protected CampaignPersistence campaignPersistence;
 	protected TableMapper<UserSegment, com.liferay.content.targeting.model.Campaign> userSegmentToCampaignTableMapper;
+	@BeanReference(type = TacticPersistence.class)
+	protected TacticPersistence tacticPersistence;
+	protected TableMapper<UserSegment, com.liferay.content.targeting.model.Tactic> userSegmentToTacticTableMapper;
 	private static final String _SQL_SELECT_USERSEGMENT = "SELECT userSegment FROM UserSegment userSegment";
 	private static final String _SQL_SELECT_USERSEGMENT_WHERE = "SELECT userSegment FROM UserSegment userSegment WHERE ";
 	private static final String _SQL_COUNT_USERSEGMENT = "SELECT COUNT(userSegment) FROM UserSegment userSegment";
