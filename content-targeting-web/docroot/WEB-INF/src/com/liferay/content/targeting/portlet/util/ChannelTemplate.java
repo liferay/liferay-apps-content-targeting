@@ -46,16 +46,16 @@ public class ChannelTemplate {
 		return templateKey;
 	}
 
+	public void setChannel(Channel channel) {
+		_channel = channel;
+	}
+
 	public void setInstanceId(String instanceId) {
 		_instanceId = instanceId;
 	}
 
 	public void setTemplate(String template) {
 		_template = template;
-	}
-
-	public void setTrackingAction(Channel channel) {
-		_channel = channel;
 	}
 
 	private Channel _channel;
