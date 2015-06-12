@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.tactics.channel.@channel.java.package.name@;
+package com.liferay.content.targeting.channel.@channel.java.package.name@;
 
 import com.liferay.content.targeting.api.model.BaseChannel;
 import com.liferay.content.targeting.api.model.Channel;

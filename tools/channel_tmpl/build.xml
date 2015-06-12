@@ -3,7 +3,7 @@
 <project name="channel-@channel.name@" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
-	<property name="plugin.name" value="com.liferay.content.targeting.tactics.channel.@channel.java.package.name@" />
+	<property name="plugin.name" value="com.liferay.content.targeting.channel.@channel.java.package.name@" />
 
 	<property name="import.shared" value="content-targeting-api" />
 

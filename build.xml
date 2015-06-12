@@ -284,8 +284,8 @@
 		</antelope:stringutil>
 
 		<move
-			file="${channel.dir}/src/com/liferay/content/targeting/tactics/channel/Channel.java"
-			tofile="${channel.dir}/src/com/liferay/content/targeting/tactics/channel/${channel.java.package.name}/${channel.java.class.name}Channel.java"
+			file="${channel.dir}/src/com/liferay/content/targeting/channel/Channel.java"
+			tofile="${channel.dir}/src/com/liferay/content/targeting/channel/${channel.java.package.name}/${channel.java.class.name}Channel.java"
 			/>
 
 		<replace dir="${channel.dir}">
