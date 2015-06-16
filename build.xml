@@ -263,7 +263,7 @@
 		<if>
 			<available file="${channel.dir}" />
 			<then>
-				<fail>${tracking.action.dir} already exists.</fail>
+				<fail>${channel.dir} already exists.</fail>
 			</then>
 		</if>
 
