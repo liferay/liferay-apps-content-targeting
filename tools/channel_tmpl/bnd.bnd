@@ -1,0 +1,18 @@
+Bundle-Name: @channel.display.name@ channel
+Bundle-SymbolicName: com.liferay.content.targeting.channel.@channel.java.package.name@
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.content.targeting.analytics.util,\
+	com.liferay.content.targeting.api.model,\
+	com.liferay.content.targeting.service,\
+	com.liferay.content.targeting.service.messaging,\
+	com.liferay.osgi.util.service,\
+	*;resolution:="optional"
+Include-Resource:\
+ 	classes,\
+	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
+	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar
+Private-Package: com.liferay.content.targeting.channel.@channel.java.package.name@.*
+Service-Component: com.liferay.content.targeting.channel.@channel.java.package.name@.*
+Web-ContextPath: /channel-@channel.name@
+-baseline: *;version="1.0.0"

@@ -19,6 +19,7 @@ import com.liferay.content.targeting.api.model.ChannelsRegistry;
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.service.base.ChannelInstanceLocalServiceBaseImpl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -34,6 +35,9 @@ import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * The implementation of the channel instance local service.
@@ -51,6 +55,13 @@ import java.util.List;
  */
 public class ChannelInstanceLocalServiceImpl
 	extends ChannelInstanceLocalServiceBaseImpl {
+
+	public ChannelInstanceLocalServiceImpl() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_channelsRegistry = ServiceTrackerUtil.getService(
+			ChannelsRegistry.class, bundle.getBundleContext());
+	}
 
 	@Override
 	public ChannelInstance addChannelInstance(
@@ -76,6 +87,7 @@ public class ChannelInstanceLocalServiceImpl
 		channelInstance.setModifiedDate(serviceContext.getModifiedDate(now));
 		channelInstance.setChannelKey(channelKey);
 		channelInstance.setCampaignId(campaignId);
+		channelInstance.setTacticId(tacticId);
 		channelInstance.setAlias(alias);
 		channelInstance.setTypeSettings(typeSettings);
 
