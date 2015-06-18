@@ -105,8 +105,8 @@ public interface Channel {
 	 *         channel instance configuration, based on the context
 	 */
 	public String getFormHTML(
-			ChannelInstance channelInstance, Map<String, Object> context,
-			Map<String, String> values);
+		ChannelInstance channelInstance, Map<String, Object> context,
+		Map<String, String> values);
 
 	/**
 	 * Returns the Font Awesome CSS class for the channel icon.
@@ -183,5 +183,13 @@ public interface Channel {
 			PortletRequest request, PortletResponse response,
 			Map<String, String> values)
 		throws InvalidChannelException;
+
+	/**
+	 * Associates current channel with id of channel instance
+	 *
+	 * @param typeSettings processed settings for the channel
+	 * @param channelInstanceId id of channel instance to associate
+	 */
+	public void updateChannel(String typeSettings, long channelInstanceId);
 
 }

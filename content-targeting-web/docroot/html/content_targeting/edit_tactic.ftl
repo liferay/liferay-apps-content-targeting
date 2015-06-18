@@ -40,26 +40,46 @@
 
 	<@aui["input"] name="description" />
 
-	<@aui["select"] inlineField=true label="user-segment" name="userSegmentId" multiple=true>
-		<@aui["option"] label="any" selected=(userSegmentId == -1) value="-1" />
-
-		<#list userSegments as userSegment>
-			<@aui["option"] label="${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" selected=(userSegmentId == userSegment.getUserSegmentId()) value="${userSegment.getUserSegmentId()}" />
-		</#list>
-	</@>
-
 	<@portlet["renderURL"] var="viewUserSegments">
 		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
 		<@portlet["param"] name="tabs1" value="user-segments" />
 	</@>
 
 	<@liferay_ui["icon"]
-		id="manageUserSegments"
-		image="configuration"
-		label=false
-		message="manage-user-segments"
-		url=viewUserSegments
-	/>
+	id="manageUserSegments"
+	image="configuration"
+	label=false
+	message="manage-user-segments"
+	url=viewUserSegments />
+
+	<div class="user-segment-selector">
+		<span class="query-and-operator-text"><@liferay_ui["message"] key="user-segments" /></span>
+
+		<div class="lfr-tags-selector-content" id="<@portlet["namespace"] />assetCategoriesSelector">
+			<@aui["input"] name="userSegmentAssetCategoryIds" type="hidden" value="${userSegmentAssetCategoryIdsAsString}" />
+		</div>
+
+		<@aui["script"] use="liferay-asset-categories-selector">
+			var assetCategoriesSelector = new Liferay.AssetCategoriesSelector(
+				{
+					contentBox: '#<@portlet["namespace"] />assetCategoriesSelector',
+					curEntries: '${userSegmentAssetCategoryNames}',
+					curEntryIds: '${userSegmentAssetCategoryIdsAsString}',
+					filterIds: '${campaignUserSegmentsIds}',
+					hiddenInput: '#<@portlet["namespace"] />userSegmentAssetCategoryIds',
+					instanceVar: '<@portlet["namespace"] />',
+					vocabularyGroupIds: '${vocabularyGroupIds}',
+					vocabularyIds: '${vocabularyIds}',
+					title: '<@liferay_ui["message"] key="select-user-segments" />'
+				}).render();
+
+			var changeTitle = function() {
+				assetCategoriesSelector._popup.titleNode.html(assetCategoriesSelector.get('title'));
+			};
+
+			A.Do.after(changeTitle, assetCategoriesSelector, '_showSelectPopup');
+		</@>
+	</div>
 
 	<span class="slider-holder"></span>
 

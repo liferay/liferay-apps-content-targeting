@@ -154,6 +154,10 @@ public abstract class BaseChannel implements Channel {
 		return null;
 	}
 
+	@Override
+	public void updateChannel(String typeSettings, long channelInstanceId) {
+	}
+
 	protected String getExportImportErrorMessage(
 		Tactic tactic, ChannelInstance channelInstance,
 		String missingReferenceClassName, String missingReferenceId,

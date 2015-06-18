@@ -27,7 +27,7 @@
 </#if>
 
 <#assign titleHelp>
-    <@liferay_ui["icon-help"] message="tactics-help" />
+	<@liferay_ui["icon-help"] message="tactics-help" />
 </#assign>
 
 <@liferay_ui["header"]
