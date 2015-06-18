@@ -39,6 +39,7 @@ import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -292,27 +293,34 @@ public class ContentTrackingAction extends BaseTrackingAction {
 			assetEntryId = GetterUtil.getLong(values.get("assetEntryId"));
 			eventType = values.get("eventType");
 
-			try {
-				assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-					assetEntryId);
-			}
-			catch (SystemException e) {
-				_log.error(e);
+			if (assetEntryId > 0) {
+				try {
+					assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+						assetEntryId);
+				}
+				catch (SystemException e) {
+					_log.error(e);
+				}
 			}
 		}
 		else if (trackingActionInstance != null) {
 			alias = trackingActionInstance.getAlias();
 			eventType = trackingActionInstance.getEventType();
 
-			try {
-				assetEntry = AssetEntryLocalServiceUtil.getEntry(
-					trackingActionInstance.getReferrerClassName(),
-					trackingActionInstance.getReferrerClassPK());
+			if (Validator.isNotNull(
+					trackingActionInstance.getReferrerClassName()) &&
+				trackingActionInstance.getReferrerClassPK() > 0) {
 
-				assetEntryId = assetEntry.getEntryId();
-			}
-			catch (Exception e) {
-				_log.error(e);
+				try {
+					assetEntry = AssetEntryLocalServiceUtil.getEntry(
+						trackingActionInstance.getReferrerClassName(),
+						trackingActionInstance.getReferrerClassPK());
+
+					assetEntryId = assetEntry.getEntryId();
+				}
+				catch (Exception e) {
+					_log.error(e);
+				}
 			}
 		}
 
