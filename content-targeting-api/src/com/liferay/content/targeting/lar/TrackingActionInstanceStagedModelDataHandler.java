@@ -191,8 +191,9 @@ public class TrackingActionInstanceStagedModelDataHandler
 					"Cannot import custom data for tracking action " +
 						trackingAction.getName(LocaleUtil.getDefault()) +
 							" in campaign" +
-								campaign.getName(LocaleUtil.getDefault()));
-				}
+								campaign.getName(LocaleUtil.getDefault()),
+					e);
+			}
 		}
 
 		long userId = portletDataContext.getUserId(
