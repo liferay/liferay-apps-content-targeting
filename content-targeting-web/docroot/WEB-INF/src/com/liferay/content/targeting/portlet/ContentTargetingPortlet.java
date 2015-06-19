@@ -111,9 +111,9 @@ import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+
 import freemarker.ext.beans.BeansWrapper;
 
 import freemarker.template.TemplateHashModel;
@@ -329,22 +329,22 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		boolean active = ParamUtil.getBoolean(request, "active");
 
 		long[] userSegmentIds = null;
-		long[] userSegmentAssetCategoryIds =
-            ParamUtil.getLongValues(request, "userSegmentAssetCategoryIds");
+		long[] userSegmentAssetCategoryIds = ParamUtil.getLongValues(
+			request, "userSegmentAssetCategoryIds");
 
-        if (!ArrayUtil.isEmpty(userSegmentAssetCategoryIds)) {
-            userSegmentIds = new long[userSegmentAssetCategoryIds.length];
-            int userSegmentCount = 0;
+		if (!ArrayUtil.isEmpty(userSegmentAssetCategoryIds)) {
+			userSegmentIds = new long[userSegmentAssetCategoryIds.length];
+			int userSegmentCount = 0;
 
-            for (long userSegmentAssetCategoryId
-                : userSegmentAssetCategoryIds) {
+			for (long userSegmentAssetCategoryId
+				: userSegmentAssetCategoryIds) {
 
-                userSegmentIds[userSegmentCount++] =
-                    UserSegmentLocalServiceUtil
-                        .fetchUserSegmentByAssetCategoryId(
-                            userSegmentAssetCategoryId).getUserSegmentId();
-            }
-        }
+				userSegmentIds[userSegmentCount++] =
+					UserSegmentLocalServiceUtil.
+						fetchUserSegmentByAssetCategoryId(
+							userSegmentAssetCategoryId).getUserSegmentId();
+			}
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -446,23 +446,23 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
-        long[] userSegmentIds = null;
-        long[] userSegmentAssetCategoryIds =
-            ParamUtil.getLongValues(request, "userSegmentAssetCategoryIds");
+		long[] userSegmentIds = null;
+		long[] userSegmentAssetCategoryIds = ParamUtil.getLongValues(
+			request, "userSegmentAssetCategoryIds");
 
-        if (!ArrayUtil.isEmpty(userSegmentAssetCategoryIds)) {
-            userSegmentIds = new long[userSegmentAssetCategoryIds.length];
-            int userSegmentCount = 0;
+		if (!ArrayUtil.isEmpty(userSegmentAssetCategoryIds)) {
+			userSegmentIds = new long[userSegmentAssetCategoryIds.length];
+			int userSegmentCount = 0;
 
-            for (long userSegmentAssetCategoryId
-                : userSegmentAssetCategoryIds) {
+			for (long userSegmentAssetCategoryId
+				: userSegmentAssetCategoryIds) {
 
-                userSegmentIds[userSegmentCount++] =
-                    UserSegmentLocalServiceUtil
-                        .fetchUserSegmentByAssetCategoryId(
-                            userSegmentAssetCategoryId).getUserSegmentId();
-            }
-        }
+				userSegmentIds[userSegmentCount++] =
+					UserSegmentLocalServiceUtil.
+						fetchUserSegmentByAssetCategoryId(
+							userSegmentAssetCategoryId).getUserSegmentId();
+			}
+		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -1009,43 +1009,43 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return trackingActionsInstances;
 	}
 
-    protected String getUserSegmentAssetCategoryNames(
-        long[] userSegmentAssetCategoryIds, Locale locale)
-        throws SystemException {
+	protected String getUserSegmentAssetCategoryNames(
+			long[] userSegmentAssetCategoryIds, Locale locale)
+		throws SystemException {
 
-        return getUserSegmentNames(
-            userSegmentAssetCategoryIds, locale, _CATEGORY_SEPARATOR);
-    }
+		return getUserSegmentNames(
+			userSegmentAssetCategoryIds, locale, _CATEGORY_SEPARATOR);
+	}
 
-    protected String getUserSegmentNames(
-        long[] userSegmentAssetCategoryIds, Locale locale, String separator)
-        throws SystemException {
+	protected String getUserSegmentNames(
+			long[] userSegmentAssetCategoryIds, Locale locale, String separator)
+		throws SystemException {
 
-        if (ArrayUtil.isEmpty(userSegmentAssetCategoryIds)) {
-            return StringPool.BLANK;
-        }
+		if (ArrayUtil.isEmpty(userSegmentAssetCategoryIds)) {
+			return StringPool.BLANK;
+		}
 
-        StringBundler sb = new StringBundler(
-            (userSegmentAssetCategoryIds.length * 2) - 1);
+		StringBundler sb = new StringBundler(
+			(userSegmentAssetCategoryIds.length * 2) - 1);
 
-        for (int i = 0; i < userSegmentAssetCategoryIds.length; i++) {
-            AssetCategory assetCategory =
-                AssetCategoryLocalServiceUtil.fetchAssetCategory(
-                    userSegmentAssetCategoryIds[i]);
+		for (int i = 0; i < userSegmentAssetCategoryIds.length; i++) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					userSegmentAssetCategoryIds[i]);
 
-            if (assetCategory == null) {
-                continue;
-            }
+			if (assetCategory == null) {
+				continue;
+			}
 
-            sb.append(assetCategory.getTitle(locale));
+			sb.append(assetCategory.getTitle(locale));
 
-            if (i != (userSegmentAssetCategoryIds.length - 1)) {
-                sb.append(separator);
-            }
-        }
+			if (i != (userSegmentAssetCategoryIds.length - 1)) {
+				sb.append(separator);
+			}
+		}
 
-        return sb.toString();
-    }
+		return sb.toString();
+	}
 
 	protected void populateViewContext(
 			String path, PortletRequest portletRequest,
@@ -1142,45 +1142,46 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					_userSegmentLocalService.getCampaignUserSegments(
 						campaignId);
 
-                StringBuffer userSegmentAssetCategoryIdsAsString =
-                    new StringBuffer("");
+				StringBuffer userSegmentAssetCategoryIdsAsString =
+					new StringBuffer("");
 
-                long[] userSegmentAssetCategoryIds =
-                    new long[campaignUserSegments.size()];
-                int userSegmentCount = 0;
+				long[] userSegmentAssetCategoryIds =
+					new long[campaignUserSegments.size()];
+				int userSegmentCount = 0;
 
-                for (UserSegment userSegment : campaignUserSegments) {
-                    if (userSegmentAssetCategoryIdsAsString.length() > 0) {
-                        userSegmentAssetCategoryIdsAsString.append(",");
-                    }
-                    userSegmentAssetCategoryIds[userSegmentCount++] =
-                        userSegment.getAssetCategoryId();
+				for (UserSegment userSegment : campaignUserSegments) {
+					if (userSegmentAssetCategoryIdsAsString.length() > 0) {
+						userSegmentAssetCategoryIdsAsString.append(",");
+					}
 
-                    userSegmentAssetCategoryIdsAsString.append(
-                        userSegment.getAssetCategoryId());
-                }
+					userSegmentAssetCategoryIds[userSegmentCount++] =
+						userSegment.getAssetCategoryId();
+
+					userSegmentAssetCategoryIdsAsString.append(
+						userSegment.getAssetCategoryId());
+				}
 
 				endDate.setTime(campaign.getEndDate());
 				startDate.setTime(campaign.getStartDate());
 
-                if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN)) {
-                    template.put(
-                        "userSegmentAssetCategoryIdsAsString",
-                        userSegmentAssetCategoryIdsAsString.toString());
-                    template.put(
-                        "userSegmentAssetCategoryNames",
-                        getUserSegmentAssetCategoryNames(
-                            userSegmentAssetCategoryIds,
-                            themeDisplay.getLocale()));
-                }
-                else {
-                    template.put("userSegmentAssetCategoryIdsAsString","");
-                    template.put("userSegmentAssetCategoryNames","");
-                }
+				if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN)) {
+					template.put(
+						"userSegmentAssetCategoryIdsAsString",
+						userSegmentAssetCategoryIdsAsString.toString());
+					template.put(
+						"userSegmentAssetCategoryNames",
+						getUserSegmentAssetCategoryNames(
+							userSegmentAssetCategoryIds,
+							themeDisplay.getLocale()));
+				}
+				else {
+					template.put("userSegmentAssetCategoryIdsAsString","");
+					template.put("userSegmentAssetCategoryNames","");
+				}
 
-                template.put(
-                    "campaignUserSegmentsIds",
-                    userSegmentAssetCategoryIdsAsString.toString());
+				template.put(
+					"campaignUserSegmentsIds",
+					userSegmentAssetCategoryIdsAsString.toString());
 			}
 			else {
 				Date now = new Date();
@@ -1190,9 +1191,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				startDate.setTime(now);
 
-                template.put("userSegmentAssetCategoryIdsAsString", "");
-                template.put("userSegmentAssetCategoryNames", "");
-
+				template.put("userSegmentAssetCategoryIdsAsString", "");
+				template.put("userSegmentAssetCategoryNames", "");
 			}
 
 			if (tacticId > 0) {
@@ -1200,34 +1200,35 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				template.put("tactic", tactic);
 
-                StringBuffer userSegmentAssetCategoryIdsAsString =
-                    new StringBuffer("");
+				StringBuffer userSegmentAssetCategoryIdsAsString =
+					new StringBuffer("");
 
-                List<UserSegment> tacticUserSegments =
-                    _userSegmentLocalService.getTacticUserSegments(tacticId);
+				List<UserSegment> tacticUserSegments =
+					_userSegmentLocalService.getTacticUserSegments(tacticId);
 
-                long[] userSegmentAssetCategoryIds =
-                    new long[tacticUserSegments.size()];
-                int userSegmentCount = 0;
+				long[] userSegmentAssetCategoryIds =
+					new long[tacticUserSegments.size()];
+				int userSegmentCount = 0;
 
-                for (UserSegment userSegment : tacticUserSegments) {
-                    if (userSegmentAssetCategoryIdsAsString.length() > 0) {
-                        userSegmentAssetCategoryIdsAsString.append(",");
-                    }
-                    userSegmentAssetCategoryIds[userSegmentCount++] =
-                        userSegment.getAssetCategoryId();
+				for (UserSegment userSegment : tacticUserSegments) {
+					if (userSegmentAssetCategoryIdsAsString.length() > 0) {
+						userSegmentAssetCategoryIdsAsString.append(",");
+					}
 
-                    userSegmentAssetCategoryIdsAsString.append(
-                        userSegment.getAssetCategoryId());
-                }
+					userSegmentAssetCategoryIds[userSegmentCount++] =
+						userSegment.getAssetCategoryId();
 
-                template.put(
-                    "userSegmentAssetCategoryIdsAsString",
-                    userSegmentAssetCategoryIdsAsString.toString());
-                template.put(
-                    "userSegmentAssetCategoryNames",
-                    getUserSegmentAssetCategoryNames(
-                        userSegmentAssetCategoryIds, themeDisplay.getLocale()));
+					userSegmentAssetCategoryIdsAsString.append(
+						userSegment.getAssetCategoryId());
+				}
+
+				template.put(
+					"userSegmentAssetCategoryIdsAsString",
+					userSegmentAssetCategoryIdsAsString.toString());
+				template.put(
+					"userSegmentAssetCategoryNames",
+					getUserSegmentAssetCategoryNames(
+						userSegmentAssetCategoryIds, themeDisplay.getLocale()));
 			}
 
 			template.put("endDate", endDate);
@@ -1505,34 +1506,33 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				template.put("title", title);
 			}
 
-            ServiceContext serviceContext = new ServiceContext();
+			ServiceContext serviceContext = new ServiceContext();
 
-            serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
+			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
 
-            long[] vocabularyGroupIds = new long[1];
-            long[] vocabularyIds = new long[1];
+			long[] vocabularyGroupIds = new long[1];
+			long[] vocabularyIds = new long[1];
 
-            if (themeDisplay.getScopeGroupId() ==
-                themeDisplay.getCompanyGroupId()) {
+			if (themeDisplay.getScopeGroupId() ==
+					themeDisplay.getCompanyGroupId()) {
 
-                vocabularyGroupIds[0] = themeDisplay.getCompanyGroupId();
+				vocabularyGroupIds[0] = themeDisplay.getCompanyGroupId();
 
-                vocabularyIds[0] = UserSegmentUtil.getAssetVocabularyId(
-                    themeDisplay.getUserId(), serviceContext);
-            }
-            else {
-                vocabularyGroupIds =
-                    ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
-                        themeDisplay.getSiteGroupId());
-                vocabularyIds = UserSegmentUtil.getAssetVocabularyIds(
-                    vocabularyGroupIds);
-            }
+				vocabularyIds[0] = UserSegmentUtil.getAssetVocabularyId(
+					themeDisplay.getUserId(), serviceContext);
+			}
+			else {
+				vocabularyGroupIds =
+					ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+						themeDisplay.getSiteGroupId());
+				vocabularyIds = UserSegmentUtil.getAssetVocabularyIds(
+					vocabularyGroupIds);
+			}
 
-            template.put(
-                "vocabularyGroupIds", StringUtil.merge(vocabularyGroupIds));
+			template.put(
+				"vocabularyGroupIds", StringUtil.merge(vocabularyGroupIds));
 
-            template.put("vocabularyIds", StringUtil.merge(vocabularyIds));
-
+			template.put("vocabularyIds", StringUtil.merge(vocabularyIds));
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
 			long userSegmentId = ParamUtil.getLong(
@@ -1796,7 +1796,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 	}
 
 	protected List<InvalidRuleException> updateRules(
-			long userSegmentId, PortletRequest request, PortletResponse response)
+			long userSegmentId, PortletRequest request,
+			PortletResponse response)
 		throws Exception {
 
 		List<RuleInstance> requestRuleInstances = getRulesFromRequest(
@@ -2059,7 +2060,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
-    private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
+	private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);

@@ -7,7 +7,7 @@ AUI.add(
 
 		var AObject = A.Object;
 
-        var AArray = A.Array;
+		var AArray = A.Array;
 
 		var BOUNDING_BOX = 'boundingBox';
 
@@ -67,7 +67,7 @@ AUI.add(
 		 * vocabularyGroupIds (string): The groupIds of the vocabularies.
 		 *
 		 * Optional
-         * filterIds {String}: The ids to filter search results
+		 * filterIds {String}: The ids to filter search results
 		 * maxEntries {Number}: The maximum number of entries that will be loaded. The default value is -1, which will load all categories.
 		 * moreResultsLabel {String}: The localized label for link "Load more results".
 		 * portalModelResource {boolean}: Whether the asset model is on the portal level.
@@ -258,11 +258,11 @@ AUI.add(
 								var checked = false;
 								var treeId = 'category' + item.categoryId;
 
-                                var filterIds = instance.get("filterIds");
+								var filterIds = instance.get("filterIds");
 
-                                if (filterIds.length > 0 && AArray.indexOf(filterIds, item.categoryId.toString()) == -1) {
-                                    return;
-                                }
+								if (filterIds.length > 0 && AArray.indexOf(filterIds, item.categoryId.toString()) == -1) {
+									return;
+								}
 
 								if (instance.entries.findIndexBy('categoryId', item.categoryId) > -1) {
 									checked = true;
@@ -552,11 +552,11 @@ AUI.add(
 								results,
 								function(item, index, collection) {
 
-                                    var filterIds = instance.get("filterIds");
+									var filterIds = instance.get("filterIds");
 
-                                    if (filterIds.length > 0 && AArray.indexOf(filterIds, item.categoryId.toString()) == -1) {
-                                        return;
-                                    }
+									if (filterIds.length > 0 && AArray.indexOf(filterIds, item.categoryId.toString()) == -1) {
+										return;
+									}
 
 									item.checked = instance.entries.findIndexBy('categoryId', item.categoryId) > -1 ? TPL_CHECKED : '';
 
