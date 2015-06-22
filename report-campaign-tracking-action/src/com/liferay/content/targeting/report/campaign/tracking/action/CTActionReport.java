@@ -17,6 +17,7 @@ package com.liferay.content.targeting.report.campaign.tracking.action;
 import com.liferay.content.targeting.api.model.BaseReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService;
@@ -42,6 +43,25 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component(immediate = true, service = Report.class)
 public class CTActionReport extends BaseReport {
+
+	public static int trackingActionIndexByAlias(
+		List<TrackingActionInstance> trackingActionInstances, String alias) {
+
+		int pointer = -1;
+
+		for (int k = 0; k < trackingActionInstances.size(); k++) {
+			TrackingActionInstance trackingActionInstance =
+				trackingActionInstances.get(k);
+
+			if (trackingActionInstance.getAlias().equals(alias)) {
+				pointer = k;
+
+				break;
+			}
+		}
+
+		return pointer;
+	}
 
 	@Activate
 	@Override

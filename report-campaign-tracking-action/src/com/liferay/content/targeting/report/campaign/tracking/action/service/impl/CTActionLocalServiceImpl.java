@@ -17,12 +17,14 @@ package com.liferay.content.targeting.report.campaign.tracking.action.service.im
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
+import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.report.campaign.tracking.action.CTActionReport;
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.base.CTActionLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
+import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -157,6 +159,21 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 			modifiedDate = reportInstance.getModifiedDate();
 		}
 
+		List<TrackingActionInstance> trackingActionInstances =
+			_trackingActionInstaceLocalService.getTrackingActionInstances(
+				campaignId);
+
+		List<CTAction> ctActions = ctActionPersistence.findByCampaignId(
+			campaignId);
+
+		for (CTAction ctAction : ctActions) {
+			if (CTActionReport.trackingActionIndexByAlias(
+					trackingActionInstances, ctAction.getAlias()) == -1) {
+
+				ctActionPersistence.remove(ctAction.getCTActionId());
+			}
+		}
+
 		addCTActionsFromAnalyticsWithElementId(campaignId, modifiedDate);
 		addCTActionsFromAnalyticsWithClassName(campaignId, modifiedDate);
 	}
@@ -285,6 +302,9 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 			CampaignLocalService.class, bundle.getBundleContext());
 		_reportInstanceLocalService = ServiceTrackerUtil.getService(
 			ReportInstanceLocalService.class, bundle.getBundleContext());
+		_trackingActionInstaceLocalService = ServiceTrackerUtil.getService(
+			TrackingActionInstanceLocalService.class,
+			bundle.getBundleContext());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -293,5 +313,7 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 	private AnalyticsEventLocalService _analyticsEventLocalService;
 	private CampaignLocalService _campaignLocalService;
 	private ReportInstanceLocalService _reportInstanceLocalService;
+	private TrackingActionInstanceLocalService
+		_trackingActionInstaceLocalService;
 
 }
