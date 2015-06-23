@@ -45,13 +45,14 @@
 	<@portlet["param"] name="classPK" value="${classPK?string}" />
 </@>
 
-<@aui["a"] href="${updateReportURL}">
-    <@liferay_ui["icon"]
-	    cssClass="btn pull-right"
-	    image="../aui/repeat"
-        label=false
-	    message="update-report" />
-</@>
+<@liferay_ui["icon"]
+	cssClass="pull-right"
+	image="../aui/repeat"
+	label=false
+	linkCssClass="btn"
+	message="update-report"
+	url=updateReportURL
+/>
 
 <div class="report-description">
 	${report.getDescription(locale)}
