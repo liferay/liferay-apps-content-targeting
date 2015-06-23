@@ -309,7 +309,7 @@ public class ContentTrackingAction extends BaseTrackingAction {
 
 			if (Validator.isNotNull(
 					trackingActionInstance.getReferrerClassName()) &&
-				trackingActionInstance.getReferrerClassPK() > 0) {
+				(trackingActionInstance.getReferrerClassPK() > 0)) {
 
 				try {
 					assetEntry = AssetEntryLocalServiceUtil.getEntry(

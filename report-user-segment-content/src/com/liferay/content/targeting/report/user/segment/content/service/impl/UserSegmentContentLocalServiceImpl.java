@@ -203,10 +203,10 @@ public class UserSegmentContentLocalServiceImpl
 			long classPK = (Long)analyticsEvent[1];
 			int count = (Integer)analyticsEvent[2];
 
-            if (Validator.isNotNull(className) || (classPK > 0)) {
-                addUserSegmentContent(
-                    userSegmentId, className, classPK, "view", count);
-            }
+			if (Validator.isNotNull(className) && (classPK > 0)) {
+				addUserSegmentContent(
+					userSegmentId, className, classPK, "view", count);
+			}
 		}
 	}
 
