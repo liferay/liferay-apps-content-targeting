@@ -46,9 +46,10 @@
 </@>
 
 <@liferay_ui["icon"]
-	cssClass="btn pull-right"
+	cssClass="pull-right"
 	image="../aui/repeat"
 	label=false
+	linkCssClass="btn"
 	message="update-report"
 	url=updateReportURL
 />
