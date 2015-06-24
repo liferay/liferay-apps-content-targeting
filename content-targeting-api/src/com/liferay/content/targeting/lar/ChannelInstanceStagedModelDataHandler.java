@@ -205,19 +205,18 @@ public class ChannelInstanceStagedModelDataHandler
 
 			importedChannelInstance =
 				ChannelInstanceLocalServiceUtil.addChannelInstance(
-						userId, channelInstance.getTacticId(),
-						channelInstance.getChannelKey(),
-						channelInstance.getCampaignId(),
-						channelInstance.getAlias(),
-						channelInstance.getTypeSettings(), serviceContext);
+					userId, channelInstance.getTacticId(),
+					channelInstance.getChannelKey(),
+					channelInstance.getCampaignId(), channelInstance.getAlias(),
+					channelInstance.getTypeSettings(), serviceContext);
 		}
 		else {
 			importedChannelInstance =
 				ChannelInstanceLocalServiceUtil.updateChannelInstance(
-						existingChannelInstance.
-							getChannelInstanceId(),
-						channelInstance.getAlias(),
-						channelInstance.getTypeSettings(), serviceContext);
+					existingChannelInstance.
+						getChannelInstanceId(),
+					channelInstance.getAlias(),
+					channelInstance.getTypeSettings(), serviceContext);
 		}
 
 		portletDataContext.importClassedModel(

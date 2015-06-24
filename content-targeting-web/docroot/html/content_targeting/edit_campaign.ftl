@@ -17,12 +17,16 @@
 <#include "../init.ftl" />
 <#include "../macros_exceptions.ftl" />
 
+<@liferay_ui["header"]
+	backURL="${redirect}"
+	title='${(campaign.getName(locale))!"new-campaign"}'
+/>
+
 <@invalidTrackingActionsException />
 
 <@portlet["actionURL"] name="updateCampaign" var="addCampaignURL" />
 
-<@aui["form"] action="${addCampaignURL}" method="post" name="fmGeneral" onSubmit="event.preventDefault(); saveFields();">
-
+<@aui["form"] action="${addCampaignURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
 	<@aui["input"] name="campaignId" type="hidden" value=campaignId />
 	<@aui["input"] name="campaignTrackingActions" type="hidden" />
@@ -40,34 +44,20 @@
 		<@portlet["param"] name="tabs1" value="user-segments" />
 	</@>
 
-    <script>
-
-        function confirmToSegments() {
-
-            if (confirm('${htmlUtil.escapeJS(languageUtil.get(themeDisplay.getLocale(), "editing-segments-will-delete-unsaved-campaign"))}')) {
-                window.location.href = "${viewUserSegments}";
-            } else {
-                return false;
-            }
-
-        }
-
-    </script>
-
 	<div class="user-segment-selector">
 		<span class="query-and-operator-text"><@liferay_ui["message"] key="user-segments" /></span>
 
-        <@liferay_ui["icon"]
-        id="manageUserSegments"
-        image="configuration"
-        label=false
-        message="manage-user-segments"
-        url="javascript:confirmToSegments();" />
+		<@liferay_ui["icon"]
+			id="manageUserSegments"
+			image="configuration"
+			label=false
+			message="manage-user-segments"
+			url="javascript:viewUserSegments();"
+		/>
 
 		<div class="lfr-tags-selector-content" id="<@portlet["namespace"] />assetCategoriesSelector">
 			<@aui["input"] name="userSegmentAssetCategoryIds" type="hidden" value="${userSegmentAssetCategoryIdsAsString}" />
 		</div>
-
 
 		<@aui["script"] use="liferay-asset-categories-selector">
 			var assetCategoriesSelector = new Liferay.AssetCategoriesSelector(
@@ -80,7 +70,8 @@
 					vocabularyGroupIds: '${vocabularyGroupIds}',
 					vocabularyIds: '${vocabularyIds}',
 					title: '<@liferay_ui["message"] key="select-user-segments" />'
-				}).render();
+				}
+			).render();
 
 			var changeTitle = function() {
 				assetCategoriesSelector._popup.titleNode.html(assetCategoriesSelector.get('title'));
@@ -99,136 +90,129 @@
 
 	<@aui["input"] cssClass="slider-input" helpMessage="priority-help" inlineField=true name="priority" size="2" maxlength="3" type="text" value="${priority}" />
 
-<span class="slider-holder"></span>
+	<span class="slider-holder"></span>
 
 	<@aui["input"] name="active" value=true />
 
 	<@liferay_ui["panel"] cssClass="tracking-actions-panel" collapsible=true defaultState="open" extended=false id="trackingActionPanel" helpMessage="tracking-actions-help" persistState=true title="tracking-actions">
-	<div class="component diagram-builder form-builder liferayctformbuilder yui3-widget"
-		 id="formBuilderBB">
-		<div class="diagram-builder-content form-builder-content"
-			 id="formBuilderCB">
-			<div class="tabbable">
-				<div class="tabbable-content">
-					<ul class="nav nav-tabs">
-						<li class="active"><a href="javascript:;">Add node</a>
-						</li>
-						<li><a href="javascript:;">Settings</a></li>
-					</ul>
+		<div class="component diagram-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
+			<div class="diagram-builder-content form-builder-content" id="formBuilderCB">
+				<div class="tabbable">
+					<div class="tabbable-content">
+						<ul class="nav nav-tabs">
+							<li class="active"><a href="javascript:;">Add node</a></li>
+							<li><a href="javascript:;">Settings</a></li>
+						</ul>
 
-					<div class="tab-content">
-						<div class="tab-pane">
-							<div class="hide panel-page-menu"
-								 id="formBuilderSB">
-								<div class="search-panels">
-									<i class="icon-search"></i>
+						<div class="tab-content">
+							<div class="tab-pane">
+								<div class="hide panel-page-menu" id="formBuilderSB">
+									<div class="search-panels">
+										<i class="icon-search"></i>
 
-									<div class="search-panels-bar">
-										<@aui["input"] cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
+										<div class="search-panels-bar">
+											<@aui["input"] cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
+										</div>
 									</div>
 								</div>
+
+								<ul class="clearfix diagram-builder-fields-container form-builder-fields-container">
+									<#list trackingActionTemplates as template>
+										<#assign trackingAction = template.getTrackingAction()>
+										<#assign templateKey = template.getTemplateKey()>
+
+										<li class="diagram-builder-field form-builder-field hide" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
+											<span class="diagram-builder-field-icon icon ${trackingAction.getIcon()}"></span>
+											<div class="diagram-builder-field-label">
+												<div class="row">
+													<div class="field-title">${trackingAction.getName(locale)}</div>
+													<div class="field-description">${trackingAction.getDescription(locale)}</div>
+													<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
+												</div>
+											</div>
+										</li>
+									</#list>
+								</ul>
 							</div>
 
-							<ul class="clearfix diagram-builder-fields-container form-builder-fields-container">
-								<#list trackingActionTemplates as template>
-									<#assign trackingAction = template.getTrackingAction()>
-									<#assign templateKey = template.getTemplateKey()>
+							<div class="tab-pane"></div>
+						</div>
+					</div>
+				</div>
 
-									<li class="diagram-builder-field form-builder-field hide"
-										data-icon="${trackingAction.getIcon()}"
-										data-key="${templateKey}"
-										data-template="${template.getTemplate()}"
-										data-unique="${(!trackingAction.isInstantiable())?string}">
-										<span class="diagram-builder-field-icon icon ${trackingAction.getIcon()}"></span>
+				<div class="diagram-builder-content-container form-builder-content-container">
+					<#assign cssHasItemsClass = "">
 
-										<div class="diagram-builder-field-label">
-											<div class="row">
-												<div class="field-title">${trackingAction.getName(locale)}</div>
-												<div class="field-description">${trackingAction.getDescription(locale)}</div>
-												<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
-											</div>
-										</div>
-									</li>
-								</#list>
-							</ul>
+					<#if (addedTrackingActionTemplates?size > 0)>
+						<#assign cssHasItemsClass = "has-items">
+					</#if>
+
+					<div class="diagram-builder-canvas form-builder-canvas ${cssHasItemsClass}">
+						<div class="alert alert-info alert-no-items">
+							<@liferay_ui["message"] key="drag-actions-to-track-in-the-reports-of-this-campaign" />
 						</div>
 
-						<div class="tab-pane"></div>
-					</div>
-				</div>
-			</div>
+						<div class="diagram-builder-drop-container form-builder-drop-container">
+							<#list addedTrackingActionTemplates as template>
+								<#assign trackingAction = template.getTrackingAction()>
+								<#assign templateKey = template.getTemplateKey()>
 
-			<div class="diagram-builder-content-container form-builder-content-container">
-				<#assign cssHasItemsClass = "">
-
-				<#if (addedTrackingActionTemplates?size > 0)>
-					<#assign cssHasItemsClass = "has-items">
-				</#if>
-
-				<div class="diagram-builder-canvas form-builder-canvas ${cssHasItemsClass}">
-					<div class="alert alert-info alert-no-items">
-						<@liferay_ui["message"] key="drag-actions-to-track-in-the-reports-of-this-campaign" />
-					</div>
-
-					<div class="diagram-builder-drop-container form-builder-drop-container">
-						<#list addedTrackingActionTemplates as template>
-							<#assign trackingAction = template.getTrackingAction()>
-							<#assign templateKey = template.getTemplateKey()>
-
-							<div class="component form-builder-field hide widget yui3-widget"
-								 data-icon="${trackingAction.getIcon()}"
-								 data-key="${templateKey}"
-								 data-template="${template.getTemplate()}"
-								 data-unique="${(!trackingAction.isInstantiable())?string}">
-								<div>
+								<div class="component form-builder-field hide widget yui3-widget" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
 									<div>
-										<div class="field-header">
-											<div class="field-icon"><i
-													class="${trackingAction.getIcon()}"></i>
+										<div>
+											<div class="field-header">
+												<div class="field-icon"><i class="${trackingAction.getIcon()}"></i></div>
+												<div class="field-info row">
+													<div class="field-title">${trackingAction.getName(locale)}</div>
+													<div class="field-description">${trackingAction.getDescription(locale)}</div>
+													<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
+												</div>
 											</div>
-											<div class="field-info row">
-												<div class="field-title">${trackingAction.getName(locale)}</div>
-												<div class="field-description">${trackingAction.getDescription(locale)}</div>
-												<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
+											<div class="field-editor">
 											</div>
-										</div>
-										<div class="field-editor">
 										</div>
 									</div>
 								</div>
-							</div>
-						</#list>
+							</#list>
+						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
-	</div>
 	</@>
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
 	</@>
 
+	<@aui["script"]>
+		function viewUserSegments() {
+			if (confirm('<@liferay_ui["message"] key="editing-user-segments-deletes-all-unsaved-campaign-data" />')) {
+				window.location.href = "${viewUserSegments}";
+			}
+		}
+	</@>
+
 	<@aui["script"] use="liferay-ct-form-builder,liferay-input-slider">
+		new Liferay.InputSlider(
+			{
+				inputNode: '#<@portlet["namespace"] />priority'
+			}
+		);
 
-	new Liferay.InputSlider(
-		{
-			inputNode: '#<@portlet["namespace"] />priority'
-		}
-	);
+		var campaignBuilder = new A.LiferayCTFormBuilder(
+			{
+				boundingBox: '#formBuilderBB',
+				contentBox: '#formBuilderCB',
+				searchBox: '#formBuilderSB'
+			}
+		).render();
 
-	var campaignBuilder = new A.LiferayCTFormBuilder(
-		{
-			boundingBox: '#formBuilderBB',
-			contentBox: '#formBuilderCB',
-			searchBox: '#formBuilderSB'
-		}
-	).render();
+		saveFields = function() {
+			document.<@portlet["namespace"] />fm.<@portlet["namespace"] />campaignTrackingActions.value = campaignBuilder.exportAsJSON();
 
-	saveFields = function() {
-		document.<@portlet["namespace"] />fmGeneral.<@portlet["namespace"] />campaignTrackingActions.value = campaignBuilder.exportAsJSON();
-
-		submitForm(document.<@portlet["namespace"] />fmGeneral);
-	};
+			submitForm(document.<@portlet["namespace"] />fm);
+		};
 	</@>
 </@>

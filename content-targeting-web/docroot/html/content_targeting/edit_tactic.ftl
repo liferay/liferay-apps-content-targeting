@@ -26,7 +26,7 @@
 
 <@portlet["actionURL"] name="updateTactic" var="addTacticURL" />
 
-<@aui["form"] action="${addTacticURL}" method="post" name="fmTactic" onSubmit="event.preventDefault(); saveFields();">
+<@aui["form"] action="${addTacticURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
 	<@aui["input"] name="campaignId" type="hidden" value="${campaignId}" />
 	<@aui["input"] name="tacticId" type="hidden" value="${tacticId}" />
@@ -46,11 +46,12 @@
 	</@>
 
 	<@liferay_ui["icon"]
-	id="manageUserSegments"
-	image="configuration"
-	label=false
-	message="manage-user-segments"
-	url=viewUserSegments />
+		id="manageUserSegments"
+		image="configuration"
+		label=false
+		message="manage-user-segments"
+		url=viewUserSegments
+	/>
 
 	<div class="user-segment-selector">
 		<span class="query-and-operator-text"><@liferay_ui["message"] key="user-segments" /></span>
@@ -71,7 +72,8 @@
 					vocabularyGroupIds: '${vocabularyGroupIds}',
 					vocabularyIds: '${vocabularyIds}',
 					title: '<@liferay_ui["message"] key="select-user-segments" />'
-				}).render();
+				}
+			).render();
 
 			var changeTitle = function() {
 				assetCategoriesSelector._popup.titleNode.html(assetCategoriesSelector.get('title'));
@@ -83,21 +85,19 @@
 
 	<span class="slider-holder"></span>
 
-	<@liferay_ui["panel"] cssClass="channel-panel" collapsible=true defaultState="open" extended=false id="channelPanel" helpMessage="channels-help" persistState=true title="channels">
+	<@liferay_ui["panel"] cssClass="channel-panel" collapsible=true defaultState="open" extended=false id="channelPanel" persistState=true title="channels">
 		<div class="component diagram-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
 			<div class="diagram-builder-content form-builder-content" id="formBuilderCB">
 				<div class="tabbable">
 					<div class="tabbable-content">
 						<ul class="nav nav-tabs">
-							<li class="active"><a href="javascript:;">Add node</a>
-							</li>
+							<li class="active"><a href="javascript:;">Add node</a></li>
 							<li><a href="javascript:;">Settings</a></li>
 						</ul>
 
 						<div class="tab-content">
 							<div class="tab-pane">
-								<div class="hide panel-page-menu"
-									 id="formBuilderSB">
+								<div class="hide panel-page-menu" id="formBuilderSB">
 									<div class="search-panels">
 										<i class="icon-search"></i>
 
@@ -180,7 +180,6 @@
 	</@>
 
 	<@aui["script"] use="liferay-ct-form-builder">
-
 		var tacticBuilder = new A.LiferayCTFormBuilder(
 			{
 				boundingBox: '#formBuilderBB',
@@ -190,10 +189,9 @@
 		).render();
 
 		saveFields = function() {
-			document.<@portlet["namespace"] />fmTactic.<@portlet["namespace"] />tacticChannels.value = tacticBuilder.exportAsJSON();
+			document.<@portlet["namespace"] />fm.<@portlet["namespace"] />tacticChannels.value = tacticBuilder.exportAsJSON();
 
-			submitForm(document.<@portlet["namespace"] />fmTactic);
+			submitForm(document.<@portlet["namespace"] />fm);
 		};
-
 	</@>
 </@>

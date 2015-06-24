@@ -36,7 +36,7 @@
 	<@portlet["param"] name="campaignId" value="${campaignId}" />
 </@>
 
-<@aui["form"] action="${searchURL}" method="post" name="fmTactics">
+<@aui["form"] action="${searchURL}" method="post" name="fm">
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
 	<@aui["input"] name="campaignId" type="hidden" value="${campaignId}" />
 	<@aui["input"] name="tacticsIds" type="hidden" />
