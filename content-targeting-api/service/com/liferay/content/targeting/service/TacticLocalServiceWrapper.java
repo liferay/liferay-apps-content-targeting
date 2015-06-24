@@ -530,36 +530,20 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 
 	@Override
 	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
-<<<<<<< HEAD
-		long groupId, java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _tacticLocalService.searchTactics(groupId, keywords, start, end);
-=======
 		long campaignId, long groupId, java.lang.String keywords, int start,
 		int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _tacticLocalService.searchTactics(campaignId, groupId, keywords,
 			start, end);
->>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 	}
 
 	@Override
 	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
-<<<<<<< HEAD
-		long campaignId, long groupId, java.lang.String keywords, int start,
-		int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _tacticLocalService.searchTactics(campaignId, groupId, keywords,
-			start, end);
-=======
 		long groupId, java.lang.String keywords, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _tacticLocalService.searchTactics(groupId, keywords, start, end);
->>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 	}
 
 	@Override

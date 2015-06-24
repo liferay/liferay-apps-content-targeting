@@ -72,16 +72,6 @@ public interface ChannelInstanceService extends BaseService, InvokableService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-<<<<<<< HEAD
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
-		long campaignId, long tacticId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	public com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
-		long channelInstanceId)
-=======
 	public com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
 		long channelInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -90,7 +80,6 @@ public interface ChannelInstanceService extends BaseService, InvokableService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
 		long campaignId, long tacticId)
->>>>>>> a3af77e1cacd78f710b8780cb6c131e90577574c
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
