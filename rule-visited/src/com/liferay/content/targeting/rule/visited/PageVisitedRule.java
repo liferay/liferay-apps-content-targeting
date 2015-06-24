@@ -178,15 +178,11 @@ public class PageVisitedRule extends BaseRule {
 			WebKeys.THEME_DISPLAY);
 
 		String friendlyURL = values.get("friendlyURL");
+		boolean isPrivate = Boolean.parseBoolean(values.get("isPrivate"));
 
 		try {
 			Layout layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-				themeDisplay.getScopeGroupId(), false, friendlyURL);
-
-			if (layout == null) {
-				layout = LayoutLocalServiceUtil.fetchLayoutByFriendlyURL(
-					themeDisplay.getScopeGroupId(), true, friendlyURL);
-			}
+				themeDisplay.getScopeGroupId(), isPrivate, friendlyURL);
 
 			if (layout != null) {
 				return String.valueOf(layout.getPlid());
@@ -220,22 +216,28 @@ public class PageVisitedRule extends BaseRule {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)context.get("themeDisplay");
 
-		String friendlyURLBase = StringPool.BLANK;
+		String friendlyURLPrivateBase = StringPool.BLANK;
+		String friendlyURLPublicBase = StringPool.BLANK;
 
 		try {
-			friendlyURLBase = PortalUtil.getGroupFriendlyURL(
-				themeDisplay.getScopeGroup(), false, themeDisplay);
+			friendlyURLPublicBase = PortalUtil.getGroupFriendlyURL(
+					themeDisplay.getScopeGroup(), false, themeDisplay);
+			friendlyURLPrivateBase = PortalUtil.getGroupFriendlyURL(
+					themeDisplay.getScopeGroup(), true, themeDisplay);
 		}
 		catch (Exception e) {
 			_log.error(e);
 		}
 
-		context.put("friendlyURLBase", friendlyURLBase);
+		context.put("friendlyURLPublicBase", friendlyURLPublicBase);
+		context.put("friendlyURLPrivateBase", friendlyURLPrivateBase);
 
 		String friendlyURL = StringPool.BLANK;
+		boolean isPrivate = false;
 
 		if (!values.isEmpty()) {
 			friendlyURL = values.get("friendlyURL");
+			isPrivate = Boolean.parseBoolean(values.get("isPrivate"));
 		}
 		else if (ruleInstance != null) {
 			long plid = GetterUtil.getLong(ruleInstance.getTypeSettings());
@@ -245,6 +247,7 @@ public class PageVisitedRule extends BaseRule {
 
 				if (layout != null) {
 					friendlyURL = layout.getFriendlyURL();
+					isPrivate = !layout.isPublicLayout();
 				}
 			}
 			catch (SystemException e) {
@@ -252,6 +255,7 @@ public class PageVisitedRule extends BaseRule {
 		}
 
 		context.put("friendlyURL", friendlyURL);
+		context.put("isPrivate", isPrivate);
 
 		long groupId = (Long)context.get("scopeGroupId");
 
