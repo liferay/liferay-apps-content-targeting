@@ -119,7 +119,7 @@ public class ChannelInstanceStagedModelDataHandler
 				channelInstanceElement, channelInstance);
 		}
 		catch (Exception e) {
-            e.printStackTrace();
+			e.printStackTrace();
 			_log.error(
 				"Cannot export custom data for channel " +
 					channel.getName(LocaleUtil.getDefault()) +
@@ -204,8 +204,7 @@ public class ChannelInstanceStagedModelDataHandler
 			serviceContext.setUuid(channelInstance.getUuid());
 
 			importedChannelInstance =
-				ChannelInstanceLocalServiceUtil.
-					addChannelInstance(
+				ChannelInstanceLocalServiceUtil.addChannelInstance(
 						userId, channelInstance.getTacticId(),
 						channelInstance.getChannelKey(),
 						channelInstance.getCampaignId(),
@@ -214,8 +213,7 @@ public class ChannelInstanceStagedModelDataHandler
 		}
 		else {
 			importedChannelInstance =
-				ChannelInstanceLocalServiceUtil.
-					updateChannelInstance(
+				ChannelInstanceLocalServiceUtil.updateChannelInstance(
 						existingChannelInstance.
 							getChannelInstanceId(),
 						channelInstance.getAlias(),

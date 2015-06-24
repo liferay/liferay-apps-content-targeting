@@ -85,7 +85,7 @@ public class CampaignStagedModelDataHandler
 
 		exportTrackingActionInstances(portletDataContext, campaign);
 
-        exportTactics(portletDataContext, campaignElement, campaign);
+		exportTactics(portletDataContext, campaignElement, campaign);
 	}
 
 	@Override
@@ -117,7 +117,7 @@ public class CampaignStagedModelDataHandler
 		serviceContext.setUserId(userId);
 
 		long[] userSegmentIds = importUserSegments(
-            portletDataContext, campaign);
+			portletDataContext, campaign);
 
 		Campaign importedCampaign = null;
 
@@ -155,26 +155,26 @@ public class CampaignStagedModelDataHandler
 		importTrackingActionInstances(
 			portletDataContext, campaign, importedCampaign);
 
-        importTactics(portletDataContext, campaign, importedCampaign);
+		importTactics(portletDataContext, campaign, importedCampaign);
 
 		portletDataContext.importClassedModel(campaign, importedCampaign);
 	}
 
-    protected void exportTactics(
-            PortletDataContext portletDataContext, Element campaignElement,
-            Campaign campaign)
-        throws Exception {
+	protected void exportTactics(
+			PortletDataContext portletDataContext, Element campaignElement,
+			Campaign campaign)
+		throws Exception {
 
-        List<Tactic> campaignTactics = TacticLocalServiceUtil.getResults(
-            campaign.getCampaignId(), 0,
-            TacticLocalServiceUtil.getTotal(campaign.getCampaignId()));
+		List<Tactic> campaignTactics = TacticLocalServiceUtil.getResults(
+			campaign.getCampaignId(), 0,
+			TacticLocalServiceUtil.getTotal(campaign.getCampaignId()));
 
-        for (Tactic tactic : campaignTactics) {
-            StagedModelDataHandlerUtil.exportReferenceStagedModel(
-                portletDataContext, campaign, tactic,
-                PortletDataContext.REFERENCE_TYPE_EMBEDDED);
-        }
-    }
+		for (Tactic tactic : campaignTactics) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, campaign, tactic,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED);
+		}
+	}
 
 	protected void exportTrackingActionInstances(
 			PortletDataContext portletDataContext, Campaign campaign)
@@ -219,32 +219,26 @@ public class CampaignStagedModelDataHandler
 		}
 	}
 
-    protected void importTactics(
-            PortletDataContext portletDataContext, Campaign campaign,
-            Campaign importedCampaign)
-        throws Exception {
+	protected void importTactics(
+			PortletDataContext portletDataContext, Campaign campaign,
+			Campaign importedCampaign)
+		throws Exception {
 
-        List<Element> tacticElements =
-            portletDataContext.getReferenceDataElements(
-                campaign, Tactic.class);
+		List<Element> tacticElements =
+			portletDataContext.getReferenceDataElements(campaign, Tactic.class);
 
-        for (Element tacticElement :
-            tacticElements) {
+		for (Element tacticElement : tacticElements) {
+			String tacticPath = tacticElement.attributeValue("path");
 
-            String tacticPath =
-                tacticElement.attributeValue("path");
+			Tactic tactic = (Tactic)portletDataContext.getZipEntryAsObject(
+				tacticPath);
 
-            Tactic tactic =
-                (Tactic)portletDataContext.getZipEntryAsObject(
-                    tacticPath);
+			tactic.setCampaignId(importedCampaign.getCampaignId());
 
-            tactic.setCampaignId(
-                importedCampaign.getCampaignId());
-
-            StagedModelDataHandlerUtil.importStagedModel(
-                portletDataContext, tactic);
-        }
-    }
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, tactic);
+		}
+	}
 
 	protected void importTrackingActionInstances(
 			PortletDataContext portletDataContext, Campaign campaign,
