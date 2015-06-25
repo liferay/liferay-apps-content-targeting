@@ -171,20 +171,7 @@ public class ChannelInstanceStagedModelDataHandler
 		}
 
 		Tactic tactic = TacticLocalServiceUtil.getTactic(
-			channelInstance.getTacticId());
-
-		try {
-			channel.importData(portletDataContext, tactic, channelInstance);
-		}
-		catch (Exception e) {
-			if (_log.isWarnEnabled()) {
-				_log.warn(
-					"Cannot import custom data for channel " +
-						channel.getName(LocaleUtil.getDefault()) +
-							" in tactic" +
-								tactic.getName(LocaleUtil.getDefault()));
-				}
-		}
+            channelInstance.getTacticId());
 
 		long userId = portletDataContext.getUserId(
 			channelInstance.getUserUuid());
@@ -221,6 +208,19 @@ public class ChannelInstanceStagedModelDataHandler
 
 		portletDataContext.importClassedModel(
 			channelInstance, importedChannelInstance);
+
+        try {
+            channel.importData(portletDataContext, tactic, channelInstance);
+        }
+        catch (Exception e) {
+            if (_log.isWarnEnabled()) {
+                _log.warn(
+                    "Cannot import custom data for channel " +
+                        channel.getName(LocaleUtil.getDefault()) +
+                            " in tactic" +
+                                tactic.getName(LocaleUtil.getDefault()));
+            }
+        }
 	}
 
 	@Override
