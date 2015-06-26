@@ -208,29 +208,39 @@ public class TacticLocalServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName103 = "getResults";
+		_methodName103 = "deleteTactic";
 
-		_methodParameterTypes103 = new String[] { "long", "int", "int" };
+		_methodParameterTypes103 = new String[] { "long" };
 
-		_methodName104 = "getTotal";
+		_methodName104 = "deleteTactic";
 
-		_methodParameterTypes104 = new String[] { "long" };
+		_methodParameterTypes104 = new String[] {
+				"com.liferay.content.targeting.model.Tactic"
+			};
 
-		_methodName105 = "searchTactics";
+		_methodName105 = "getResults";
 
-		_methodParameterTypes105 = new String[] {
+		_methodParameterTypes105 = new String[] { "long", "int", "int" };
+
+		_methodName106 = "getTotal";
+
+		_methodParameterTypes106 = new String[] { "long" };
+
+		_methodName107 = "searchTactics";
+
+		_methodParameterTypes107 = new String[] {
 				"long", "long", "java.lang.String", "int", "int"
 			};
 
-		_methodName106 = "searchTactics";
+		_methodName108 = "searchTactics";
 
-		_methodParameterTypes106 = new String[] {
+		_methodParameterTypes108 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName107 = "updateTactic";
+		_methodName109 = "updateTactic";
 
-		_methodParameterTypes107 = new String[] {
+		_methodParameterTypes109 = new String[] {
 				"long", "long", "java.util.Map", "java.util.Map", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -488,18 +498,28 @@ public class TacticLocalServiceClpInvoker {
 
 		if (_methodName103.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
+			return TacticLocalServiceUtil.deleteTactic(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName104.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes104, parameterTypes)) {
+			return TacticLocalServiceUtil.deleteTactic((com.liferay.content.targeting.model.Tactic)arguments[0]);
+		}
+
+		if (_methodName105.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes105, parameterTypes)) {
 			return TacticLocalServiceUtil.getResults(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName104.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes104, parameterTypes)) {
+		if (_methodName106.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
 			return TacticLocalServiceUtil.getTotal(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName105.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes105, parameterTypes)) {
+		if (_methodName107.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes107, parameterTypes)) {
 			return TacticLocalServiceUtil.searchTactics(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2],
@@ -507,16 +527,16 @@ public class TacticLocalServiceClpInvoker {
 				((Integer)arguments[4]).intValue());
 		}
 
-		if (_methodName106.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
+		if (_methodName108.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
 			return TacticLocalServiceUtil.searchTactics(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName107.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes107, parameterTypes)) {
+		if (_methodName109.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
 			return TacticLocalServiceUtil.updateTactic(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -616,4 +636,8 @@ public class TacticLocalServiceClpInvoker {
 	private String[] _methodParameterTypes106;
 	private String _methodName107;
 	private String[] _methodParameterTypes107;
+	private String _methodName108;
+	private String[] _methodParameterTypes108;
+	private String _methodName109;
+	private String[] _methodParameterTypes109;
 }

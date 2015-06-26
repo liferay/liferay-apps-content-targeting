@@ -87,15 +87,14 @@ public class TacticLocalServiceImplTest {
 			tacticNameMap, null, new long[] {1, 2, 3}, serviceContext);
 
 		Assert.assertEquals(
-			initTacticsCount + 1, _tacticLocalService.getTacticsCount());
+			initTacticsCount + 1,
+			_tacticLocalService.getTotal(campaign.getCampaignId()));
 
 		_tacticLocalService.deleteTactic(tactic.getTacticId());
 
 		Assert.assertEquals(
 			initTacticsCount,
 			_tacticLocalService.getTotal(campaign.getCampaignId()));
-
-		_campaignLocalService.deleteCampaign(campaign.getCampaignId());
 	}
 
 	@Test

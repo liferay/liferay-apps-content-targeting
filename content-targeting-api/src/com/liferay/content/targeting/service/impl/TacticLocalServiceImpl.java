@@ -24,6 +24,8 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -91,26 +93,28 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 		return tactic;
 	}
 
-    @Override
-    public Tactic deleteTactic(long tacticId)
-        throws PortalException, SystemException {
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public Tactic deleteTactic(long tacticId)
+		throws PortalException, SystemException {
 
-        for (ChannelInstance channelInstance
-            : ChannelInstanceLocalServiceUtil.getChannelInstances(tacticId)) {
+		for (ChannelInstance channelInstance
+			: ChannelInstanceLocalServiceUtil.getChannelInstances(tacticId)) {
 
-            ChannelInstanceLocalServiceUtil.deleteChannelInstance(
-                channelInstance.getChannelInstanceId());
-        }
+			ChannelInstanceLocalServiceUtil.deleteChannelInstance(
+				channelInstance.getChannelInstanceId());
+		}
 
-        return super.deleteTactic(tacticId);
-    }
+		return super.deleteTactic(tacticId);
+	}
 
-    @Override
-    public Tactic deleteTactic(Tactic tactic)
-        throws PortalException, SystemException {
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public Tactic deleteTactic(Tactic tactic)
+		throws PortalException, SystemException {
 
-        return deleteTactic(tactic.getTacticId());
-    }
+		return deleteTactic(tactic.getTacticId());
+	}
 
 	public List<Tactic> getResults(long campaignId, int start, int end)
 		throws PortalException, SystemException {
