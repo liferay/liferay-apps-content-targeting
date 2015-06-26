@@ -14,7 +14,9 @@
 
 package com.liferay.content.targeting.service.impl;
 
+import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
+import com.liferay.content.targeting.service.ChannelInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.base.TacticLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.content.targeting.util.TacticUtil;
@@ -88,6 +90,27 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 		return tactic;
 	}
+
+    @Override
+    public Tactic deleteTactic(long tacticId)
+        throws PortalException, SystemException {
+
+        for (ChannelInstance channelInstance
+            : ChannelInstanceLocalServiceUtil.getChannelInstances(tacticId)) {
+
+            ChannelInstanceLocalServiceUtil.deleteChannelInstance(
+                channelInstance.getChannelInstanceId());
+        }
+
+        return super.deleteTactic(tacticId);
+    }
+
+    @Override
+    public Tactic deleteTactic(Tactic tactic)
+        throws PortalException, SystemException {
+
+        return deleteTactic(tactic.getTacticId());
+    }
 
 	public List<Tactic> getResults(long campaignId, int start, int end)
 		throws PortalException, SystemException {
