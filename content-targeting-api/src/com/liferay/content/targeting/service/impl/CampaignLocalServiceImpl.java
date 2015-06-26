@@ -192,15 +192,15 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 				trackingActionInstance.getTrackingActionInstanceId());
 		}
 
-        // Tactics
+		// Tactics
 
-        List<Tactic> tactics = TacticLocalServiceUtil.getResults(
-            campaign.getCampaignId(), 0, TacticLocalServiceUtil.getTotal(
-                campaign.getCampaignId()));
+		List<Tactic> tactics = TacticLocalServiceUtil.getResults(
+			campaign.getCampaignId(), 0, TacticLocalServiceUtil.getTotal(
+				campaign.getCampaignId()));
 
-        for (Tactic tactic : tactics) {
-            TacticLocalServiceUtil.deleteTactic(tactic.getTacticId());
-        }
+		for (Tactic tactic : tactics) {
+			TacticLocalServiceUtil.deleteTactic(tactic.getTacticId());
+		}
 
 		return campaign;
 	}

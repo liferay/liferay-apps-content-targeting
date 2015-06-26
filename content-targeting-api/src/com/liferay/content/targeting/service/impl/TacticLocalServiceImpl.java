@@ -91,26 +91,26 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 		return tactic;
 	}
 
-    @Override
-    public Tactic deleteTactic(long tacticId)
-        throws PortalException, SystemException {
+	@Override
+	public Tactic deleteTactic(long tacticId)
+		throws PortalException, SystemException {
 
-        for (ChannelInstance channelInstance
-            : ChannelInstanceLocalServiceUtil.getChannelInstances(tacticId)) {
+		for (ChannelInstance channelInstance
+			: ChannelInstanceLocalServiceUtil.getChannelInstances(tacticId)) {
 
-            ChannelInstanceLocalServiceUtil.deleteChannelInstance(
-                channelInstance.getChannelInstanceId());
-        }
+			ChannelInstanceLocalServiceUtil.deleteChannelInstance(
+				channelInstance.getChannelInstanceId());
+		}
 
-        return super.deleteTactic(tacticId);
-    }
+		return super.deleteTactic(tacticId);
+	}
 
-    @Override
-    public Tactic deleteTactic(Tactic tactic)
-        throws PortalException, SystemException {
+	@Override
+	public Tactic deleteTactic(Tactic tactic)
+		throws PortalException, SystemException {
 
-        return deleteTactic(tactic.getTacticId());
-    }
+		return deleteTactic(tactic.getTacticId());
+	}
 
 	public List<Tactic> getResults(long campaignId, int start, int end)
 		throws PortalException, SystemException {
