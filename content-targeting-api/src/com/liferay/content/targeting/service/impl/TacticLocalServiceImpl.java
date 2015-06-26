@@ -24,6 +24,8 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -91,6 +93,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 		return tactic;
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Tactic deleteTactic(long tacticId)
 		throws PortalException, SystemException {
@@ -105,6 +108,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 		return super.deleteTactic(tacticId);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public Tactic deleteTactic(Tactic tactic)
 		throws PortalException, SystemException {
