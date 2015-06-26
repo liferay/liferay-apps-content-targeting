@@ -1749,6 +1749,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			Map<String, String> channelValues =
 				requestChannelInstance.getValues();
+			channelValues.put("tacticId", String.valueOf(tacticId));
 
 			try {
 				typeSettings = channel.processChannel(
@@ -1782,8 +1783,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						requestChannelInstance.getChannelKey(), campaignId,
 						alias, typeSettings, serviceContext);
 				}
-
-				channel.updateChannel(typeSettings, tacticId);
 			}
 			catch (PortalException pe) {
 				_log.error("Cannot update channel", pe);
