@@ -115,11 +115,13 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param tactic the tactic
 	 * @return the tactic that was removed
+	 * @throws PortalException
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Tactic deleteTactic(Tactic tactic) throws SystemException {
+	public Tactic deleteTactic(Tactic tactic)
+		throws PortalException, SystemException {
 		return tacticPersistence.remove(tactic);
 	}
 

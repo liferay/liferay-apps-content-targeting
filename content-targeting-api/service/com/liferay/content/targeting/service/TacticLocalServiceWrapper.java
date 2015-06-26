@@ -76,12 +76,14 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 	*
 	* @param tactic the tactic
 	* @return the tactic that was removed
+	* @throws PortalException
 	* @throws SystemException if a system exception occurred
 	*/
 	@Override
 	public com.liferay.content.targeting.model.Tactic deleteTactic(
 		com.liferay.content.targeting.model.Tactic tactic)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 		return _tacticLocalService.deleteTactic(tactic);
 	}
 
