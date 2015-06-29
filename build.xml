@@ -17,6 +17,8 @@
 	<property name="app.services" value="analytics-api,anonymous-users-api,content-targeting-api,report-campaign-content,report-campaign-tracking-action,report-user-segment-content,rule-score-points" />
 	<property name="app.tracking.actions" value="tracking-action-content,tracking-action-form,tracking-action-link,tracking-action-page,tracking-action-youtube" />
 
+	<property name="build.app.services" value="true" />
+
 	<target name="all">
 		<antcall target="release" />
 	</target>
@@ -25,9 +27,7 @@
 		<antcall target="clean" />
 
 		<if>
-			<not>
-				<isset property="skip.build.app.services" />
-			</not>
+			<equals arg1="${build.app.services}" arg2="true" />
 			<then>
 				<antcall target="build-app-services" />
 			</then>
@@ -304,8 +304,6 @@
 
 		<var name="auto.deploy.dir.default" value="${auto.deploy.dir}" />
 		<var name="auto.deploy.dir" value="${sdk.dir}/content-targeting-dist" />
-
-		<property name="skip.build.app.services" value="true" />
 
 		<antcall target="build-app" />
 
