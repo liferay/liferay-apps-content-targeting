@@ -24,7 +24,14 @@
 	<target name="build-app">
 		<antcall target="clean" />
 
-		<antcall target="build-app-services" />
+		<if>
+			<not>
+				<isset property="skip.build.app.services" />
+			</not>
+			<then>
+				<antcall target="build-app-services" />
+			</then>
+		</if>
 
 		<if>
 			<not>
@@ -297,6 +304,8 @@
 
 		<var name="auto.deploy.dir.default" value="${auto.deploy.dir}" />
 		<var name="auto.deploy.dir" value="${sdk.dir}/content-targeting-dist" />
+
+		<property name="skip.build.app.services" value="true" />
 
 		<antcall target="build-app" />
 
