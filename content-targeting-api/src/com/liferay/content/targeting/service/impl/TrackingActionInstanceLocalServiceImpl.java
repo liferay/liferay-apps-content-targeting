@@ -154,6 +154,14 @@ public class TrackingActionInstanceLocalServiceImpl
 	}
 
 	@Override
+	public TrackingActionInstance fetchTrackingActionInstance(
+			long campaignId, String alias)
+		throws SystemException {
+
+		return trackingActionInstancePersistence.fetchByC_A(campaignId, alias);
+	}
+
+	@Override
 	public List<TrackingActionInstance> getTrackingActionInstances(
 			long campaignId)
 		throws SystemException {
