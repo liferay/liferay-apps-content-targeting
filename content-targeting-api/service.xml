@@ -182,6 +182,10 @@
 		<finder name="CampaignId" return-type="Collection">
 			<finder-column name="campaignId" />
 		</finder>
+		<finder name="C_A" return-type="TrackingAction" unique="true">
+			<finder-column name="campaignId" />
+			<finder-column name="alias" />
+		</finder>
 		<finder name="C_E_E" return-type="Collection">
 			<finder-column name="campaignId" />
 			<finder-column name="elementId" />

@@ -141,29 +141,33 @@ public class TrackingActionInstanceLocalServiceClp
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName24 = "getTrackingActionInstances";
+		_methodName24 = "fetchTrackingActionInstance";
 
-		_methodParameterTypes24 = new String[] { "long" };
+		_methodParameterTypes24 = new String[] { "long", "java.lang.String" };
 
 		_methodName25 = "getTrackingActionInstances";
 
-		_methodParameterTypes25 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String"
-			};
+		_methodParameterTypes25 = new String[] { "long" };
 
 		_methodName26 = "getTrackingActionInstances";
 
 		_methodParameterTypes26 = new String[] {
+				"long", "java.lang.String", "long", "java.lang.String"
+			};
+
+		_methodName27 = "getTrackingActionInstances";
+
+		_methodParameterTypes27 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName27 = "getTrackingActionInstancesCount";
+		_methodName28 = "getTrackingActionInstancesCount";
 
-		_methodParameterTypes27 = new String[] { "long" };
+		_methodParameterTypes28 = new String[] { "long" };
 
-		_methodName28 = "updateTrackingActionInstance";
+		_methodName29 = "updateTrackingActionInstance";
 
-		_methodParameterTypes28 = new String[] {
+		_methodParameterTypes29 = new String[] {
 				"long", "java.lang.String", "java.lang.String", "long",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
@@ -925,14 +929,45 @@ public class TrackingActionInstanceLocalServiceClp
 	}
 
 	@Override
+	public com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstance(
+		long campaignId, java.lang.String alias)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
+					new Object[] { campaignId, ClpSerializer.translateInput(
+							alias) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.content.targeting.model.TrackingActionInstance)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
 		long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24, new Object[] { campaignId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -961,8 +996,8 @@ public class TrackingActionInstanceLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						campaignId,
 						
@@ -999,8 +1034,8 @@ public class TrackingActionInstanceLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						campaignId,
 						
@@ -1034,8 +1069,8 @@ public class TrackingActionInstanceLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27, new Object[] { campaignId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1068,8 +1103,8 @@ public class TrackingActionInstanceLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] {
 						trackingActionInstanceId,
 						
@@ -1168,4 +1203,6 @@ public class TrackingActionInstanceLocalServiceClp
 	private String[] _methodParameterTypes27;
 	private String _methodName28;
 	private String[] _methodParameterTypes28;
+	private String _methodName29;
+	private String[] _methodParameterTypes29;
 }

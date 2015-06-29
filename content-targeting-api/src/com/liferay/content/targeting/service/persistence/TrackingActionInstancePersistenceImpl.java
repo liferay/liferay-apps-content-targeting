@@ -2461,6 +2461,272 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	private static final String _FINDER_COLUMN_CAMPAIGNID_CAMPAIGNID_2 = "trackingActionInstance.campaignId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_C_A = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
+			TrackingActionInstanceImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByC_A",
+			new String[] { Long.class.getName(), String.class.getName() },
+			TrackingActionInstanceModelImpl.CAMPAIGNID_COLUMN_BITMASK |
+			TrackingActionInstanceModelImpl.ALIAS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_A = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_A",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the tracking action instance where campaignId = &#63; and alias = &#63; or throws a {@link com.liferay.content.targeting.NoSuchTrackingActionInstanceException} if it could not be found.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param alias the alias
+	 * @return the matching tracking action instance
+	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TrackingActionInstance findByC_A(long campaignId, String alias)
+		throws NoSuchTrackingActionInstanceException, SystemException {
+		TrackingActionInstance trackingActionInstance = fetchByC_A(campaignId,
+				alias);
+
+		if (trackingActionInstance == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("campaignId=");
+			msg.append(campaignId);
+
+			msg.append(", alias=");
+			msg.append(alias);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchTrackingActionInstanceException(msg.toString());
+		}
+
+		return trackingActionInstance;
+	}
+
+	/**
+	 * Returns the tracking action instance where campaignId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param alias the alias
+	 * @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TrackingActionInstance fetchByC_A(long campaignId, String alias)
+		throws SystemException {
+		return fetchByC_A(campaignId, alias, true);
+	}
+
+	/**
+	 * Returns the tracking action instance where campaignId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param alias the alias
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TrackingActionInstance fetchByC_A(long campaignId, String alias,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { campaignId, alias };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_A,
+					finderArgs, this);
+		}
+
+		if (result instanceof TrackingActionInstance) {
+			TrackingActionInstance trackingActionInstance = (TrackingActionInstance)result;
+
+			if ((campaignId != trackingActionInstance.getCampaignId()) ||
+					!Validator.equals(alias, trackingActionInstance.getAlias())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_C_A_CAMPAIGNID_2);
+
+			boolean bindAlias = false;
+
+			if (alias == null) {
+				query.append(_FINDER_COLUMN_C_A_ALIAS_1);
+			}
+			else if (alias.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_A_ALIAS_3);
+			}
+			else {
+				bindAlias = true;
+
+				query.append(_FINDER_COLUMN_C_A_ALIAS_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(campaignId);
+
+				if (bindAlias) {
+					qPos.add(alias);
+				}
+
+				List<TrackingActionInstance> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_A,
+						finderArgs, list);
+				}
+				else {
+					TrackingActionInstance trackingActionInstance = list.get(0);
+
+					result = trackingActionInstance;
+
+					cacheResult(trackingActionInstance);
+
+					if ((trackingActionInstance.getCampaignId() != campaignId) ||
+							(trackingActionInstance.getAlias() == null) ||
+							!trackingActionInstance.getAlias().equals(alias)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_A,
+							finderArgs, trackingActionInstance);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_A,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (TrackingActionInstance)result;
+		}
+	}
+
+	/**
+	 * Removes the tracking action instance where campaignId = &#63; and alias = &#63; from the database.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param alias the alias
+	 * @return the tracking action instance that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public TrackingActionInstance removeByC_A(long campaignId, String alias)
+		throws NoSuchTrackingActionInstanceException, SystemException {
+		TrackingActionInstance trackingActionInstance = findByC_A(campaignId,
+				alias);
+
+		return remove(trackingActionInstance);
+	}
+
+	/**
+	 * Returns the number of tracking action instances where campaignId = &#63; and alias = &#63;.
+	 *
+	 * @param campaignId the campaign ID
+	 * @param alias the alias
+	 * @return the number of matching tracking action instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByC_A(long campaignId, String alias)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_A;
+
+		Object[] finderArgs = new Object[] { campaignId, alias };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_TRACKINGACTIONINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_C_A_CAMPAIGNID_2);
+
+			boolean bindAlias = false;
+
+			if (alias == null) {
+				query.append(_FINDER_COLUMN_C_A_ALIAS_1);
+			}
+			else if (alias.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_C_A_ALIAS_3);
+			}
+			else {
+				bindAlias = true;
+
+				query.append(_FINDER_COLUMN_C_A_ALIAS_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(campaignId);
+
+				if (bindAlias) {
+					qPos.add(alias);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_A_CAMPAIGNID_2 = "trackingActionInstance.campaignId = ? AND ";
+	private static final String _FINDER_COLUMN_C_A_ALIAS_1 = "trackingActionInstance.alias IS NULL";
+	private static final String _FINDER_COLUMN_C_A_ALIAS_2 = "trackingActionInstance.alias = ?";
+	private static final String _FINDER_COLUMN_C_A_ALIAS_3 = "(trackingActionInstance.alias IS NULL OR trackingActionInstance.alias = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_E_E = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
 			TrackingActionInstanceImpl.class,
@@ -3860,6 +4126,12 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 				trackingActionInstance.getGroupId()
 			}, trackingActionInstance);
 
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_A,
+			new Object[] {
+				trackingActionInstance.getCampaignId(),
+				trackingActionInstance.getAlias()
+			}, trackingActionInstance);
+
 		trackingActionInstance.resetOriginalValues();
 	}
 
@@ -3949,6 +4221,16 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				trackingActionInstance);
+
+			args = new Object[] {
+					trackingActionInstance.getCampaignId(),
+					trackingActionInstance.getAlias()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_A, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_A, args,
+				trackingActionInstance);
 		}
 		else {
 			TrackingActionInstanceModelImpl trackingActionInstanceModelImpl = (TrackingActionInstanceModelImpl)trackingActionInstance;
@@ -3963,6 +4245,19 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+					trackingActionInstance);
+			}
+
+			if ((trackingActionInstanceModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_C_A.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						trackingActionInstance.getCampaignId(),
+						trackingActionInstance.getAlias()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_A, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_A, args,
 					trackingActionInstance);
 			}
 		}
@@ -3989,6 +4284,25 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		args = new Object[] {
+				trackingActionInstance.getCampaignId(),
+				trackingActionInstance.getAlias()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_A, args);
+
+		if ((trackingActionInstanceModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_C_A.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					trackingActionInstanceModelImpl.getOriginalCampaignId(),
+					trackingActionInstanceModelImpl.getOriginalAlias()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_A, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_A, args);
 		}
 	}
 

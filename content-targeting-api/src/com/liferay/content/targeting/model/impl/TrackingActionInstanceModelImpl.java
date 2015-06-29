@@ -100,15 +100,16 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.content.targeting.model.TrackingActionInstance"),
 			true);
-	public static long CAMPAIGNID_COLUMN_BITMASK = 1L;
-	public static long COMPANYID_COLUMN_BITMASK = 2L;
-	public static long ELEMENTID_COLUMN_BITMASK = 4L;
-	public static long EVENTTYPE_COLUMN_BITMASK = 8L;
-	public static long GROUPID_COLUMN_BITMASK = 16L;
-	public static long REFERRERCLASSNAME_COLUMN_BITMASK = 32L;
-	public static long REFERRERCLASSPK_COLUMN_BITMASK = 64L;
-	public static long UUID_COLUMN_BITMASK = 128L;
-	public static long TRACKINGACTIONKEY_COLUMN_BITMASK = 256L;
+	public static long ALIAS_COLUMN_BITMASK = 1L;
+	public static long CAMPAIGNID_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
+	public static long ELEMENTID_COLUMN_BITMASK = 8L;
+	public static long EVENTTYPE_COLUMN_BITMASK = 16L;
+	public static long GROUPID_COLUMN_BITMASK = 32L;
+	public static long REFERRERCLASSNAME_COLUMN_BITMASK = 64L;
+	public static long REFERRERCLASSPK_COLUMN_BITMASK = 128L;
+	public static long UUID_COLUMN_BITMASK = 256L;
+	public static long TRACKINGACTIONKEY_COLUMN_BITMASK = 512L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -519,7 +520,17 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 
 	@Override
 	public void setAlias(String alias) {
+		_columnBitmask |= ALIAS_COLUMN_BITMASK;
+
+		if (_originalAlias == null) {
+			_originalAlias = _alias;
+		}
+
 		_alias = alias;
+	}
+
+	public String getOriginalAlias() {
+		return GetterUtil.getString(_originalAlias);
 	}
 
 	@JSON
@@ -758,6 +769,8 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 		trackingActionInstanceModelImpl._originalCampaignId = trackingActionInstanceModelImpl._campaignId;
 
 		trackingActionInstanceModelImpl._setOriginalCampaignId = false;
+
+		trackingActionInstanceModelImpl._originalAlias = trackingActionInstanceModelImpl._alias;
 
 		trackingActionInstanceModelImpl._originalReferrerClassName = trackingActionInstanceModelImpl._referrerClassName;
 
@@ -1015,6 +1028,7 @@ public class TrackingActionInstanceModelImpl extends BaseModelImpl<TrackingActio
 	private long _originalCampaignId;
 	private boolean _setOriginalCampaignId;
 	private String _alias;
+	private String _originalAlias;
 	private String _referrerClassName;
 	private String _originalReferrerClassName;
 	private long _referrerClassPK;
