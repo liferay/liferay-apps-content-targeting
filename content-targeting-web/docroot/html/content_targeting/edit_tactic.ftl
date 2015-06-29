@@ -45,16 +45,16 @@
 		<@portlet["param"] name="tabs1" value="user-segments" />
 	</@>
 
-	<@liferay_ui["icon"]
-		id="manageUserSegments"
-		image="configuration"
-		label=false
-		message="manage-user-segments"
-		url=viewUserSegments
-	/>
-
 	<div class="user-segment-selector">
 		<span class="query-and-operator-text"><@liferay_ui["message"] key="user-segments" /></span>
+
+		<@liferay_ui["icon"]
+			id="manageUserSegments"
+			image="configuration"
+			label=false
+			message="manage-user-segments"
+			url="javascript:viewUserSegments();"
+		/>
 
 		<div class="lfr-tags-selector-content" id="<@portlet["namespace"] />assetCategoriesSelector">
 			<@aui["input"] name="userSegmentAssetCategoryIds" type="hidden" value="${userSegmentAssetCategoryIdsAsString}" />
@@ -177,6 +177,14 @@
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
+	</@>
+
+	<@aui["script"]>
+		function viewUserSegments() {
+			if (confirm('<@liferay_ui["message"] key="editing-user-segments-deletes-all-unsaved-campaign-data" />')) {
+				window.location.href = "${viewUserSegments}";
+			}
+		}
 	</@>
 
 	<@aui["script"] use="liferay-ct-form-builder">
