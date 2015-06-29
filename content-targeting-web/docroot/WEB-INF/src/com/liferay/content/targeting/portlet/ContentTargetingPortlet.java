@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.portlet;
 
+import com.liferay.content.targeting.DuplicateTrackingActionInstanceException;
 import com.liferay.content.targeting.InvalidDateRangeException;
 import com.liferay.content.targeting.InvalidNameException;
 import com.liferay.content.targeting.InvalidRuleException;
@@ -1303,6 +1304,16 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						campaignId, alias, referrerClassName, referrerClassPK,
 						elementId, eventType, typeSettings, serviceContext);
 				}
+			}
+			catch (DuplicateTrackingActionInstanceException dtaie) {
+				InvalidTrackingActionException itae =
+					new InvalidTrackingActionException(
+						"please-use-a-unique-alias");
+
+				itae.setTrackingActionGuid(
+					requestTrackingActionInstance.getTrackingActionGuid());
+
+				trackingActionExceptions.add(itae);
 			}
 			catch (PortalException pe) {
 				_log.error("Cannot update tracking action", pe);
