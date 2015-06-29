@@ -86,6 +86,10 @@ public interface TrackingActionInstanceService extends BaseService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstance(
+		long campaignId, java.lang.String alias) throws java.lang.Exception;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
 		long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException;

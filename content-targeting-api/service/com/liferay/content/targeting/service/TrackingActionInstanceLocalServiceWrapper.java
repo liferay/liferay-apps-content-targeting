@@ -375,6 +375,14 @@ public class TrackingActionInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstance(
+		long campaignId, java.lang.String alias)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _trackingActionInstanceLocalService.fetchTrackingActionInstance(campaignId,
+			alias);
+	}
+
+	@Override
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
 		long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException {
