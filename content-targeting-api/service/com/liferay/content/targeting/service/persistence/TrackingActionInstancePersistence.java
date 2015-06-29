@@ -663,6 +663,69 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the tracking action instance where campaignId = &#63; and alias = &#63; or throws a {@link com.liferay.content.targeting.NoSuchTrackingActionInstanceException} if it could not be found.
+	*
+	* @param campaignId the campaign ID
+	* @param alias the alias
+	* @return the matching tracking action instance
+	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.TrackingActionInstance findByC_A(
+		long campaignId, java.lang.String alias)
+		throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the tracking action instance where campaignId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param campaignId the campaign ID
+	* @param alias the alias
+	* @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.TrackingActionInstance fetchByC_A(
+		long campaignId, java.lang.String alias)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the tracking action instance where campaignId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param campaignId the campaign ID
+	* @param alias the alias
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.TrackingActionInstance fetchByC_A(
+		long campaignId, java.lang.String alias, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the tracking action instance where campaignId = &#63; and alias = &#63; from the database.
+	*
+	* @param campaignId the campaign ID
+	* @param alias the alias
+	* @return the tracking action instance that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.TrackingActionInstance removeByC_A(
+		long campaignId, java.lang.String alias)
+		throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of tracking action instances where campaignId = &#63; and alias = &#63;.
+	*
+	* @param campaignId the campaign ID
+	* @param alias the alias
+	* @return the number of matching tracking action instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByC_A(long campaignId, java.lang.String alias)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns all the tracking action instances where campaignId = &#63; and elementId = &#63; and eventType = &#63;.
 	*
 	* @param campaignId the campaign ID

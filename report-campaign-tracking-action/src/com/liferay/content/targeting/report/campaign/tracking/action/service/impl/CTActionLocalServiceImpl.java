@@ -23,6 +23,7 @@ import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAct
 import com.liferay.content.targeting.report.campaign.tracking.action.service.base.CTActionLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
+import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
@@ -157,6 +158,17 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 			modifiedDate = reportInstance.getModifiedDate();
 		}
 
+		List<CTAction> ctActions = ctActionPersistence.findByCampaignId(
+			campaignId);
+
+		for (CTAction ctAction : ctActions) {
+			if (_trackingActionInstaceLocalService.fetchTrackingActionInstance(
+					campaignId, ctAction.getAlias()) == null) {
+
+				ctActionPersistence.remove(ctAction.getCTActionId());
+			}
+		}
+
 		addCTActionsFromAnalyticsWithElementId(campaignId, modifiedDate);
 		addCTActionsFromAnalyticsWithClassName(campaignId, modifiedDate);
 	}
@@ -285,6 +297,9 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 			CampaignLocalService.class, bundle.getBundleContext());
 		_reportInstanceLocalService = ServiceTrackerUtil.getService(
 			ReportInstanceLocalService.class, bundle.getBundleContext());
+		_trackingActionInstaceLocalService = ServiceTrackerUtil.getService(
+			TrackingActionInstanceLocalService.class,
+			bundle.getBundleContext());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -293,5 +308,7 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 	private AnalyticsEventLocalService _analyticsEventLocalService;
 	private CampaignLocalService _campaignLocalService;
 	private ReportInstanceLocalService _reportInstanceLocalService;
+	private TrackingActionInstanceLocalService
+		_trackingActionInstaceLocalService;
 
 }

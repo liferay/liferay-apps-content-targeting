@@ -158,6 +158,18 @@ public class CTActionTotalLocalServiceImpl
 			modifiedDate = reportInstance.getModifiedDate();
 		}
 
+		List<CTActionTotal> ctActionTotals =
+			ctActionTotalPersistence.findByCampaignId(campaignId);
+
+		for (CTActionTotal ctActionTotal : ctActionTotals) {
+			if (_trackingActionInstaceLocalService.fetchTrackingActionInstance(
+					campaignId, ctActionTotal.getAlias()) == null) {
+
+				ctActionTotalPersistence.remove(
+					ctActionTotal.getCTActionTotalId());
+			}
+		}
+
 		addCTActionsTotalFromAnalyticsWithElementId(campaignId, modifiedDate);
 		addCTActionsTotalFromAnalyticsWithClassName(campaignId, modifiedDate);
 	}

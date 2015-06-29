@@ -149,29 +149,33 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 				"com.liferay.content.targeting.model.TrackingActionInstance"
 			};
 
-		_methodName78 = "getTrackingActionInstances";
+		_methodName78 = "fetchTrackingActionInstance";
 
-		_methodParameterTypes78 = new String[] { "long" };
+		_methodParameterTypes78 = new String[] { "long", "java.lang.String" };
 
 		_methodName79 = "getTrackingActionInstances";
 
-		_methodParameterTypes79 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String"
-			};
+		_methodParameterTypes79 = new String[] { "long" };
 
 		_methodName80 = "getTrackingActionInstances";
 
 		_methodParameterTypes80 = new String[] {
+				"long", "java.lang.String", "long", "java.lang.String"
+			};
+
+		_methodName81 = "getTrackingActionInstances";
+
+		_methodParameterTypes81 = new String[] {
 				"long", "java.lang.String", "java.lang.String"
 			};
 
-		_methodName81 = "getTrackingActionInstancesCount";
+		_methodName82 = "getTrackingActionInstancesCount";
 
-		_methodParameterTypes81 = new String[] { "long" };
+		_methodParameterTypes82 = new String[] { "long" };
 
-		_methodName82 = "updateTrackingActionInstance";
+		_methodName83 = "updateTrackingActionInstance";
 
-		_methodParameterTypes82 = new String[] {
+		_methodParameterTypes83 = new String[] {
 				"long", "java.lang.String", "java.lang.String", "long",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
@@ -327,29 +331,35 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 
 		if (_methodName78.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes78, parameterTypes)) {
-			return TrackingActionInstanceLocalServiceUtil.getTrackingActionInstances(((Long)arguments[0]).longValue());
+			return TrackingActionInstanceLocalServiceUtil.fetchTrackingActionInstance(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName79.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes79, parameterTypes)) {
-			return TrackingActionInstanceLocalServiceUtil.getTrackingActionInstances(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1],
-				((Long)arguments[2]).longValue(), (java.lang.String)arguments[3]);
+			return TrackingActionInstanceLocalServiceUtil.getTrackingActionInstances(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName80.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes80, parameterTypes)) {
 			return TrackingActionInstanceLocalServiceUtil.getTrackingActionInstances(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
+				(java.lang.String)arguments[1],
+				((Long)arguments[2]).longValue(), (java.lang.String)arguments[3]);
 		}
 
 		if (_methodName81.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes81, parameterTypes)) {
-			return TrackingActionInstanceLocalServiceUtil.getTrackingActionInstancesCount(((Long)arguments[0]).longValue());
+			return TrackingActionInstanceLocalServiceUtil.getTrackingActionInstances(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2]);
 		}
 
 		if (_methodName82.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes82, parameterTypes)) {
+			return TrackingActionInstanceLocalServiceUtil.getTrackingActionInstancesCount(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName83.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes83, parameterTypes)) {
 			return TrackingActionInstanceLocalServiceUtil.updateTrackingActionInstance(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				((Long)arguments[3]).longValue(),
@@ -421,4 +431,6 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 	private String[] _methodParameterTypes81;
 	private String _methodName82;
 	private String[] _methodParameterTypes82;
+	private String _methodName83;
+	private String[] _methodParameterTypes83;
 }
