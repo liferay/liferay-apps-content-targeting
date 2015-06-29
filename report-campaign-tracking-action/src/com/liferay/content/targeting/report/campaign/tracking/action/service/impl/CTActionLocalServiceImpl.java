@@ -17,7 +17,6 @@ package com.liferay.content.targeting.report.campaign.tracking.action.service.im
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
-import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.report.campaign.tracking.action.CTActionReport;
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction;
@@ -159,16 +158,12 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 			modifiedDate = reportInstance.getModifiedDate();
 		}
 
-		List<TrackingActionInstance> trackingActionInstances =
-			_trackingActionInstaceLocalService.getTrackingActionInstances(
-				campaignId);
-
 		List<CTAction> ctActions = ctActionPersistence.findByCampaignId(
 			campaignId);
 
 		for (CTAction ctAction : ctActions) {
-			if (CTActionReport.trackingActionIndexByAlias(
-					trackingActionInstances, ctAction.getAlias()) == -1) {
+			if (_trackingActionInstaceLocalService.fetchTrackingActionInstance(
+					campaignId, ctAction.getAlias()) == null) {
 
 				ctActionPersistence.remove(ctAction.getCTActionId());
 			}
