@@ -80,7 +80,6 @@
 			A.Do.after(changeTitle, assetCategoriesSelector, '_showSelectPopup');
 		</@>
 	</div>
-	<br/>
 
 	<@invalidDateRangeException />
 
