@@ -470,19 +470,20 @@ public interface UserSegmentModel extends BaseModel<UserSegment>,
 	public Object clone();
 
 	@Override
-	public int compareTo(UserSegment userSegment);
+	public int compareTo(
+		com.liferay.content.targeting.model.UserSegment userSegment);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<UserSegment> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.UserSegment> toCacheModel();
 
 	@Override
-	public UserSegment toEscapedModel();
+	public com.liferay.content.targeting.model.UserSegment toEscapedModel();
 
 	@Override
-	public UserSegment toUnescapedModel();
+	public com.liferay.content.targeting.model.UserSegment toUnescapedModel();
 
 	@Override
 	public String toString();

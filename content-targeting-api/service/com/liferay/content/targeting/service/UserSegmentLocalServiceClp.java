@@ -194,95 +194,166 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 
 		_methodParameterTypes35 = new String[] { "long", "long[][]" };
 
-		_methodName36 = "getBeanIdentifier";
+		_methodName36 = "addTacticUserSegment";
 
-		_methodParameterTypes36 = new String[] {  };
+		_methodParameterTypes36 = new String[] { "long", "long" };
 
-		_methodName37 = "setBeanIdentifier";
+		_methodName37 = "addTacticUserSegment";
 
-		_methodParameterTypes37 = new String[] { "java.lang.String" };
-
-		_methodName39 = "addUserSegment";
-
-		_methodParameterTypes39 = new String[] {
-				"long", "java.util.Map", "java.util.Map",
-				"com.liferay.portal.service.ServiceContext"
+		_methodParameterTypes37 = new String[] {
+				"long", "com.liferay.content.targeting.model.UserSegment"
 			};
 
-		_methodName40 = "addUserSegmentResources";
+		_methodName38 = "addTacticUserSegments";
 
-		_methodParameterTypes40 = new String[] {
-				"com.liferay.content.targeting.model.UserSegment", "boolean",
-				"boolean"
+		_methodParameterTypes38 = new String[] { "long", "long[][]" };
+
+		_methodName39 = "addTacticUserSegments";
+
+		_methodParameterTypes39 = new String[] { "long", "java.util.List" };
+
+		_methodName40 = "clearTacticUserSegments";
+
+		_methodParameterTypes40 = new String[] { "long" };
+
+		_methodName41 = "deleteTacticUserSegment";
+
+		_methodParameterTypes41 = new String[] { "long", "long" };
+
+		_methodName42 = "deleteTacticUserSegment";
+
+		_methodParameterTypes42 = new String[] {
+				"long", "com.liferay.content.targeting.model.UserSegment"
 			};
 
-		_methodName41 = "addUserSegmentResources";
+		_methodName43 = "deleteTacticUserSegments";
 
-		_methodParameterTypes41 = new String[] {
-				"com.liferay.content.targeting.model.UserSegment",
-				"java.lang.String[][]", "java.lang.String[][]"
-			};
+		_methodParameterTypes43 = new String[] { "long", "long[][]" };
 
-		_methodName42 = "deleteUserSegments";
+		_methodName44 = "deleteTacticUserSegments";
 
-		_methodParameterTypes42 = new String[] { "long" };
+		_methodParameterTypes44 = new String[] { "long", "java.util.List" };
 
-		_methodName43 = "fetchUserSegmentByAssetCategoryId";
+		_methodName45 = "getTacticUserSegments";
 
-		_methodParameterTypes43 = new String[] { "long" };
+		_methodParameterTypes45 = new String[] { "long" };
 
-		_methodName44 = "getUserSegments";
+		_methodName46 = "getTacticUserSegments";
 
-		_methodParameterTypes44 = new String[] { "long" };
+		_methodParameterTypes46 = new String[] { "long", "int", "int" };
 
-		_methodName45 = "getUserSegments";
+		_methodName47 = "getTacticUserSegments";
 
-		_methodParameterTypes45 = new String[] {
+		_methodParameterTypes47 = new String[] {
 				"long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName46 = "getUserSegments";
-
-		_methodParameterTypes46 = new String[] { "long[][]" };
-
-		_methodName47 = "getUserSegments";
-
-		_methodParameterTypes47 = new String[] {
-				"long[][]", "int", "int",
-				"com.liferay.portal.kernel.util.OrderByComparator"
-			};
-
-		_methodName48 = "getUserSegmentsCount";
+		_methodName48 = "getTacticUserSegmentsCount";
 
 		_methodParameterTypes48 = new String[] { "long" };
 
-		_methodName49 = "getUserSegmentsCount";
+		_methodName49 = "hasTacticUserSegment";
 
-		_methodParameterTypes49 = new String[] { "long[][]" };
+		_methodParameterTypes49 = new String[] { "long", "long" };
 
-		_methodName50 = "search";
+		_methodName50 = "hasTacticUserSegments";
 
-		_methodParameterTypes50 = new String[] {
-				"long", "java.lang.String", "int", "int"
-			};
+		_methodParameterTypes50 = new String[] { "long" };
 
-		_methodName51 = "searchUserSegments";
+		_methodName51 = "setTacticUserSegments";
 
-		_methodParameterTypes51 = new String[] {
-				"long", "java.lang.String", "int", "int"
-			};
+		_methodParameterTypes51 = new String[] { "long", "long[][]" };
 
-		_methodName52 = "updateUserSegment";
+		_methodName52 = "getBeanIdentifier";
 
-		_methodParameterTypes52 = new String[] {
+		_methodParameterTypes52 = new String[] {  };
+
+		_methodName53 = "setBeanIdentifier";
+
+		_methodParameterTypes53 = new String[] { "java.lang.String" };
+
+		_methodName55 = "addUserSegment";
+
+		_methodParameterTypes55 = new String[] {
 				"long", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName53 = "updateUserSegmentResources";
+		_methodName56 = "addUserSegmentResources";
 
-		_methodParameterTypes53 = new String[] {
+		_methodParameterTypes56 = new String[] {
+				"com.liferay.content.targeting.model.UserSegment", "boolean",
+				"boolean"
+			};
+
+		_methodName57 = "addUserSegmentResources";
+
+		_methodParameterTypes57 = new String[] {
+				"com.liferay.content.targeting.model.UserSegment",
+				"java.lang.String[][]", "java.lang.String[][]"
+			};
+
+		_methodName58 = "deleteUserSegments";
+
+		_methodParameterTypes58 = new String[] { "long" };
+
+		_methodName59 = "fetchUserSegmentByAssetCategoryId";
+
+		_methodParameterTypes59 = new String[] { "long" };
+
+		_methodName60 = "getUserSegments";
+
+		_methodParameterTypes60 = new String[] { "long" };
+
+		_methodName61 = "getUserSegments";
+
+		_methodParameterTypes61 = new String[] {
+				"long", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			};
+
+		_methodName62 = "getUserSegments";
+
+		_methodParameterTypes62 = new String[] { "long[][]" };
+
+		_methodName63 = "getUserSegments";
+
+		_methodParameterTypes63 = new String[] {
+				"long[][]", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			};
+
+		_methodName64 = "getUserSegmentsCount";
+
+		_methodParameterTypes64 = new String[] { "long" };
+
+		_methodName65 = "getUserSegmentsCount";
+
+		_methodParameterTypes65 = new String[] { "long[][]" };
+
+		_methodName66 = "search";
+
+		_methodParameterTypes66 = new String[] {
+				"long", "java.lang.String", "int", "int"
+			};
+
+		_methodName67 = "searchUserSegments";
+
+		_methodParameterTypes67 = new String[] {
+				"long", "java.lang.String", "int", "int"
+			};
+
+		_methodName68 = "updateUserSegment";
+
+		_methodParameterTypes68 = new String[] {
+				"long", "java.util.Map", "java.util.Map",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName69 = "updateUserSegmentResources";
+
+		_methodParameterTypes69 = new String[] {
 				"com.liferay.content.targeting.model.UserSegment",
 				"java.lang.String[][]", "java.lang.String[][]"
 			};
@@ -1389,12 +1460,470 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	}
 
 	@Override
+	public void addTacticUserSegment(long tacticId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName36,
+				_methodParameterTypes36,
+				new Object[] { tacticId, userSegmentId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void addTacticUserSegment(long tacticId,
+		com.liferay.content.targeting.model.UserSegment userSegment)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName37,
+				_methodParameterTypes37,
+				new Object[] { tacticId, ClpSerializer.translateInput(
+						userSegment) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void addTacticUserSegments(long tacticId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName38,
+				_methodParameterTypes38,
+				new Object[] {
+					tacticId,
+					
+				ClpSerializer.translateInput(userSegmentIds)
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void addTacticUserSegments(long tacticId,
+		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName39,
+				_methodParameterTypes39,
+				new Object[] {
+					tacticId,
+					
+				ClpSerializer.translateInput(UserSegments)
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void clearTacticUserSegments(long tacticId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName40,
+				_methodParameterTypes40, new Object[] { tacticId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void deleteTacticUserSegment(long tacticId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName41,
+				_methodParameterTypes41,
+				new Object[] { tacticId, userSegmentId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void deleteTacticUserSegment(long tacticId,
+		com.liferay.content.targeting.model.UserSegment userSegment)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName42,
+				_methodParameterTypes42,
+				new Object[] { tacticId, ClpSerializer.translateInput(
+						userSegment) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void deleteTacticUserSegments(long tacticId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName43,
+				_methodParameterTypes43,
+				new Object[] {
+					tacticId,
+					
+				ClpSerializer.translateInput(userSegmentIds)
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void deleteTacticUserSegments(long tacticId,
+		java.util.List<com.liferay.content.targeting.model.UserSegment> UserSegments)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName44,
+				_methodParameterTypes44,
+				new Object[] {
+					tacticId,
+					
+				ClpSerializer.translateInput(UserSegments)
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
+		long tacticId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName45,
+					_methodParameterTypes45, new Object[] { tacticId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.content.targeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
+		long tacticId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName46,
+					_methodParameterTypes46,
+					new Object[] { tacticId, start, end });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.content.targeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getTacticUserSegments(
+		long tacticId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName47,
+					_methodParameterTypes47,
+					new Object[] {
+						tacticId,
+						
+					start,
+						
+					end,
+						
+					ClpSerializer.translateInput(orderByComparator)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.content.targeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int getTacticUserSegmentsCount(long tacticId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName48,
+					_methodParameterTypes48, new Object[] { tacticId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public boolean hasTacticUserSegment(long tacticId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName49,
+					_methodParameterTypes49,
+					new Object[] { tacticId, userSegmentId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Boolean)returnObj).booleanValue();
+	}
+
+	@Override
+	public boolean hasTacticUserSegments(long tacticId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName50,
+					_methodParameterTypes50, new Object[] { tacticId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Boolean)returnObj).booleanValue();
+	}
+
+	@Override
+	public void setTacticUserSegments(long tacticId, long[] userSegmentIds)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName51,
+				_methodParameterTypes51,
+				new Object[] {
+					tacticId,
+					
+				ClpSerializer.translateInput(userSegmentIds)
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
 	public java.lang.String getBeanIdentifier() {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName36,
-					_methodParameterTypes36, new Object[] {  });
+			returnObj = _invokableLocalService.invokeMethod(_methodName52,
+					_methodParameterTypes52, new Object[] {  });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1414,8 +1943,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	@Override
 	public void setBeanIdentifier(java.lang.String beanIdentifier) {
 		try {
-			_invokableLocalService.invokeMethod(_methodName37,
-				_methodParameterTypes37,
+			_invokableLocalService.invokeMethod(_methodName53,
+				_methodParameterTypes53,
 				new Object[] { ClpSerializer.translateInput(beanIdentifier) });
 		}
 		catch (Throwable t) {
@@ -1448,8 +1977,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName39,
-					_methodParameterTypes39,
+			returnObj = _invokableLocalService.invokeMethod(_methodName55,
+					_methodParameterTypes55,
 					new Object[] {
 						userId,
 						
@@ -1490,8 +2019,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName40,
-				_methodParameterTypes40,
+			_invokableLocalService.invokeMethod(_methodName56,
+				_methodParameterTypes56,
 				new Object[] {
 					ClpSerializer.translateInput(userSegment),
 					
@@ -1528,8 +2057,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName41,
-				_methodParameterTypes41,
+			_invokableLocalService.invokeMethod(_methodName57,
+				_methodParameterTypes57,
 				new Object[] {
 					ClpSerializer.translateInput(userSegment),
 					
@@ -1564,8 +2093,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName42,
-				_methodParameterTypes42, new Object[] { groupId });
+			_invokableLocalService.invokeMethod(_methodName58,
+				_methodParameterTypes58, new Object[] { groupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1596,8 +2125,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName43,
-					_methodParameterTypes43, new Object[] { assetCategoryId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName59,
+					_methodParameterTypes59, new Object[] { assetCategoryId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1630,8 +2159,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName44,
-					_methodParameterTypes44, new Object[] { groupId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName60,
+					_methodParameterTypes60, new Object[] { groupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1665,8 +2194,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName45,
-					_methodParameterTypes45,
+			returnObj = _invokableLocalService.invokeMethod(_methodName61,
+					_methodParameterTypes61,
 					new Object[] {
 						groupId,
 						
@@ -1708,8 +2237,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName46,
-					_methodParameterTypes46,
+			returnObj = _invokableLocalService.invokeMethod(_methodName62,
+					_methodParameterTypes62,
 					new Object[] { ClpSerializer.translateInput(groupIds) });
 		}
 		catch (Throwable t) {
@@ -1744,8 +2273,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName47,
-					_methodParameterTypes47,
+			returnObj = _invokableLocalService.invokeMethod(_methodName63,
+					_methodParameterTypes63,
 					new Object[] {
 						ClpSerializer.translateInput(groupIds),
 						
@@ -1786,8 +2315,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName48,
-					_methodParameterTypes48, new Object[] { groupId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName64,
+					_methodParameterTypes64, new Object[] { groupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1819,8 +2348,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName49,
-					_methodParameterTypes49,
+			returnObj = _invokableLocalService.invokeMethod(_methodName65,
+					_methodParameterTypes65,
 					new Object[] { ClpSerializer.translateInput(groupIds) });
 		}
 		catch (Throwable t) {
@@ -1854,8 +2383,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName50,
-					_methodParameterTypes50,
+			returnObj = _invokableLocalService.invokeMethod(_methodName66,
+					_methodParameterTypes66,
 					new Object[] {
 						groupId,
 						
@@ -1897,8 +2426,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName51,
-					_methodParameterTypes51,
+			returnObj = _invokableLocalService.invokeMethod(_methodName67,
+					_methodParameterTypes67,
 					new Object[] {
 						groupId,
 						
@@ -1943,8 +2472,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName52,
-					_methodParameterTypes52,
+			returnObj = _invokableLocalService.invokeMethod(_methodName68,
+					_methodParameterTypes68,
 					new Object[] {
 						userSegmentId,
 						
@@ -1985,8 +2514,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName53,
-				_methodParameterTypes53,
+			_invokableLocalService.invokeMethod(_methodName69,
+				_methodParameterTypes69,
 				new Object[] {
 					ClpSerializer.translateInput(userSegment),
 					
@@ -2093,6 +2622,8 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	private String[] _methodParameterTypes36;
 	private String _methodName37;
 	private String[] _methodParameterTypes37;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
 	private String _methodName39;
 	private String[] _methodParameterTypes39;
 	private String _methodName40;
@@ -2123,4 +2654,34 @@ public class UserSegmentLocalServiceClp implements UserSegmentLocalService {
 	private String[] _methodParameterTypes52;
 	private String _methodName53;
 	private String[] _methodParameterTypes53;
+	private String _methodName55;
+	private String[] _methodParameterTypes55;
+	private String _methodName56;
+	private String[] _methodParameterTypes56;
+	private String _methodName57;
+	private String[] _methodParameterTypes57;
+	private String _methodName58;
+	private String[] _methodParameterTypes58;
+	private String _methodName59;
+	private String[] _methodParameterTypes59;
+	private String _methodName60;
+	private String[] _methodParameterTypes60;
+	private String _methodName61;
+	private String[] _methodParameterTypes61;
+	private String _methodName62;
+	private String[] _methodParameterTypes62;
+	private String _methodName63;
+	private String[] _methodParameterTypes63;
+	private String _methodName64;
+	private String[] _methodParameterTypes64;
+	private String _methodName65;
+	private String[] _methodParameterTypes65;
+	private String _methodName66;
+	private String[] _methodParameterTypes66;
+	private String _methodName67;
+	private String[] _methodParameterTypes67;
+	private String _methodName68;
+	private String[] _methodParameterTypes68;
+	private String _methodName69;
+	private String[] _methodParameterTypes69;
 }

@@ -15,9 +15,11 @@
 package com.liferay.content.targeting.lar;
 
 import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
+import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -82,6 +84,8 @@ public class CampaignStagedModelDataHandler
 			campaign);
 
 		exportTrackingActionInstances(portletDataContext, campaign);
+
+		exportTactics(portletDataContext, campaignElement, campaign);
 	}
 
 	@Override
@@ -151,7 +155,25 @@ public class CampaignStagedModelDataHandler
 		importTrackingActionInstances(
 			portletDataContext, campaign, importedCampaign);
 
+		importTactics(portletDataContext, campaign, importedCampaign);
+
 		portletDataContext.importClassedModel(campaign, importedCampaign);
+	}
+
+	protected void exportTactics(
+			PortletDataContext portletDataContext, Element campaignElement,
+			Campaign campaign)
+		throws Exception {
+
+		List<Tactic> campaignTactics = TacticLocalServiceUtil.getResults(
+			campaign.getCampaignId(), 0,
+			TacticLocalServiceUtil.getTotal(campaign.getCampaignId()));
+
+		for (Tactic tactic : campaignTactics) {
+			StagedModelDataHandlerUtil.exportReferenceStagedModel(
+				portletDataContext, campaign, tactic,
+				PortletDataContext.REFERENCE_TYPE_EMBEDDED);
+		}
 	}
 
 	protected void exportTrackingActionInstances(
@@ -194,6 +216,27 @@ public class CampaignStagedModelDataHandler
 					campaign, campaignElement, userSegment,
 					PortletDataContext.REFERENCE_TYPE_DEPENDENCY, true);
 			}
+		}
+	}
+
+	protected void importTactics(
+			PortletDataContext portletDataContext, Campaign campaign,
+			Campaign importedCampaign)
+		throws Exception {
+
+		List<Element> tacticElements =
+			portletDataContext.getReferenceDataElements(campaign, Tactic.class);
+
+		for (Element tacticElement : tacticElements) {
+			String tacticPath = tacticElement.attributeValue("path");
+
+			Tactic tactic = (Tactic)portletDataContext.getZipEntryAsObject(
+				tacticPath);
+
+			tactic.setCampaignId(importedCampaign.getCampaignId());
+
+			StagedModelDataHandlerUtil.importStagedModel(
+				portletDataContext, tactic);
 		}
 	}
 

@@ -151,19 +151,20 @@ public interface AnalyticsReferrerModel extends BaseModel<AnalyticsReferrer> {
 	public Object clone();
 
 	@Override
-	public int compareTo(AnalyticsReferrer analyticsReferrer);
+	public int compareTo(
+		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AnalyticsReferrer> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> toCacheModel();
 
 	@Override
-	public AnalyticsReferrer toEscapedModel();
+	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer toEscapedModel();
 
 	@Override
-	public AnalyticsReferrer toUnescapedModel();
+	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer toUnescapedModel();
 
 	@Override
 	public String toString();

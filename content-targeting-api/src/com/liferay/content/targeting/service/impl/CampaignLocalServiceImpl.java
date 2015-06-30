@@ -18,7 +18,9 @@ import com.liferay.content.targeting.InvalidDateRangeException;
 import com.liferay.content.targeting.InvalidNameException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
+import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.TrackingActionInstance;
+import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.content.targeting.service.base.CampaignLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.content.targeting.util.CampaignUtil;
@@ -188,6 +190,16 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 			trackingActionInstanceLocalService.deleteTrackingActionInstance(
 				trackingActionInstance.getTrackingActionInstanceId());
+		}
+
+		// Tactics
+
+		List<Tactic> tactics = TacticLocalServiceUtil.getResults(
+			campaign.getCampaignId(), 0, TacticLocalServiceUtil.getTotal(
+				campaign.getCampaignId()));
+
+		for (Tactic tactic : tactics) {
+			TacticLocalServiceUtil.deleteTactic(tactic.getTacticId());
 		}
 
 		return campaign;

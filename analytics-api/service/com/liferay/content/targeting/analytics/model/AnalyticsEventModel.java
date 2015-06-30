@@ -331,19 +331,20 @@ public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
 	public Object clone();
 
 	@Override
-	public int compareTo(AnalyticsEvent analyticsEvent);
+	public int compareTo(
+		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AnalyticsEvent> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.analytics.model.AnalyticsEvent> toCacheModel();
 
 	@Override
-	public AnalyticsEvent toEscapedModel();
+	public com.liferay.content.targeting.analytics.model.AnalyticsEvent toEscapedModel();
 
 	@Override
-	public AnalyticsEvent toUnescapedModel();
+	public com.liferay.content.targeting.analytics.model.AnalyticsEvent toUnescapedModel();
 
 	@Override
 	public String toString();

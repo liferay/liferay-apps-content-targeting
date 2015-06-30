@@ -167,6 +167,16 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 	public static final boolean FINDER_CACHE_ENABLED_CT_CAMPAIGNS_USERSEGMENTS = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.finder.cache.enabled.CT_Campaigns_UserSegments"),
 			true);
+	public static final String MAPPING_TABLE_CT_TACTICS_USERSEGMENTS_NAME = "CT_Tactics_UserSegments";
+	public static final Object[][] MAPPING_TABLE_CT_TACTICS_USERSEGMENTS_COLUMNS =
+		{
+			{ "tacticId", Types.BIGINT },
+			{ "userSegmentId", Types.BIGINT }
+		};
+	public static final String MAPPING_TABLE_CT_TACTICS_USERSEGMENTS_SQL_CREATE = "create table CT_Tactics_UserSegments (tacticId LONG not null,userSegmentId LONG not null,primary key (tacticId, userSegmentId))";
+	public static final boolean FINDER_CACHE_ENABLED_CT_TACTICS_USERSEGMENTS = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
+				"value.object.finder.cache.enabled.CT_Tactics_UserSegments"),
+			true);
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(com.liferay.util.service.ServiceProps.get(
 				"lock.expiration.time.com.liferay.content.targeting.model.UserSegment"));
 

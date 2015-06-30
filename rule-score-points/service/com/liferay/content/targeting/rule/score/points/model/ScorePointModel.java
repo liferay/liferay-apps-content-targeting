@@ -181,19 +181,20 @@ public interface ScorePointModel extends BaseModel<ScorePoint> {
 	public Object clone();
 
 	@Override
-	public int compareTo(ScorePoint scorePoint);
+	public int compareTo(
+		com.liferay.content.targeting.rule.score.points.model.ScorePoint scorePoint);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ScorePoint> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.rule.score.points.model.ScorePoint> toCacheModel();
 
 	@Override
-	public ScorePoint toEscapedModel();
+	public com.liferay.content.targeting.rule.score.points.model.ScorePoint toEscapedModel();
 
 	@Override
-	public ScorePoint toUnescapedModel();
+	public com.liferay.content.targeting.rule.score.points.model.ScorePoint toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -16,11 +16,15 @@ package com.liferay.content.targeting.service.messaging;
 
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.CampaignServiceUtil;
+import com.liferay.content.targeting.service.ChannelInstanceLocalServiceUtil;
+import com.liferay.content.targeting.service.ChannelInstanceServiceUtil;
 import com.liferay.content.targeting.service.ClpSerializer;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.ReportInstanceServiceUtil;
 import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.RuleInstanceServiceUtil;
+import com.liferay.content.targeting.service.TacticLocalServiceUtil;
+import com.liferay.content.targeting.service.TacticServiceUtil;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.TrackingActionInstanceServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
@@ -47,12 +51,18 @@ public class ClpMessageListener extends BaseMessageListener {
 			CampaignLocalServiceUtil.clearService();
 
 			CampaignServiceUtil.clearService();
+			ChannelInstanceLocalServiceUtil.clearService();
+
+			ChannelInstanceServiceUtil.clearService();
 			ReportInstanceLocalServiceUtil.clearService();
 
 			ReportInstanceServiceUtil.clearService();
 			RuleInstanceLocalServiceUtil.clearService();
 
 			RuleInstanceServiceUtil.clearService();
+			TacticLocalServiceUtil.clearService();
+
+			TacticServiceUtil.clearService();
 			TrackingActionInstanceLocalServiceUtil.clearService();
 
 			TrackingActionInstanceServiceUtil.clearService();
