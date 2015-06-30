@@ -7,8 +7,6 @@ AUI.add(
 
 		var AObject = A.Object;
 
-		var AArray = A.Array;
-
 		var BOUNDING_BOX = 'boundingBox';
 
 		var CSS_TAGS_LIST = 'lfr-categories-selector-list';
@@ -67,7 +65,6 @@ AUI.add(
 		 * vocabularyGroupIds (string): The groupIds of the vocabularies.
 		 *
 		 * Optional
-		 * filterIds {String}: The ids to filter search results
 		 * maxEntries {Number}: The maximum number of entries that will be loaded. The default value is -1, which will load all categories.
 		 * moreResultsLabel {String}: The localized label for link "Load more results".
 		 * portalModelResource {boolean}: Whether the asset model is on the portal level.
@@ -99,18 +96,6 @@ AUI.add(
 							return value;
 						},
 						value: ''
-					},
-					filterIds: {
-						setter: function(value) {
-							var instance = this;
-
-							if (Lang.isString(value) && value) {
-								value = value.split(',');
-							}
-
-							return value;
-						},
-						value: []
 					},
 					labelNode: {
 						setter: function(value) {
@@ -257,12 +242,6 @@ AUI.add(
 							function(item, index, collection) {
 								var checked = false;
 								var treeId = 'category' + item.categoryId;
-
-								var filterIds = instance.get("filterIds");
-
-								if (filterIds.length > 0 && AArray.indexOf(filterIds, item.categoryId.toString()) == -1) {
-									return;
-								}
 
 								if (instance.entries.findIndexBy('categoryId', item.categoryId) > -1) {
 									checked = true;
@@ -551,13 +530,6 @@ AUI.add(
 							A.each(
 								results,
 								function(item, index, collection) {
-
-									var filterIds = instance.get("filterIds");
-
-									if (filterIds.length > 0 && AArray.indexOf(filterIds, item.categoryId.toString()) == -1) {
-										return;
-									}
-
 									item.checked = instance.entries.findIndexBy('categoryId', item.categoryId) > -1 ? TPL_CHECKED : '';
 
 									item.inputName = inputName;
