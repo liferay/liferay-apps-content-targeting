@@ -40,14 +40,14 @@
 
 	<@aui["input"] name="description" />
 
-    <@userSegmentSelector
-        assetCategoryIds="${userSegmentAssetCategoryIdsAsString}"
-        assetCategoryNames="${userSegmentAssetCategoryNames}"
-        hiddenInput="userSegmentAssetCategoryIds"
-        vocabularyGroupIds="${vocabularyGroupIds}"
-        vocabularyIds="${vocabularyIds}"
-        warningMessage="editing-user-segments-deletes-all-unsaved-campaign-data"
-    />
+	<@userSegmentSelector
+		assetCategoryIds="${userSegmentAssetCategoryIdsAsString}"
+		assetCategoryNames="${userSegmentAssetCategoryNames}"
+		hiddenInput="userSegmentAssetCategoryIds"
+		vocabularyGroupIds="${vocabularyGroupIds}"
+		vocabularyIds="${vocabularyIds}"
+		warningMessage="editing-user-segments-deletes-all-unsaved-campaign-data"
+	/>
 
 	<@invalidDateRangeException />
 

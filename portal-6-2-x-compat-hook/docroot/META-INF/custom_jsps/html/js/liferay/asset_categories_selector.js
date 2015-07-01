@@ -1,4 +1,4 @@
-asset_categories_selector.jsAUI.add(
+AUI.add(
 	'liferay-asset-categories-selector',
 	function(A) {
 		var Lang = A.Lang;

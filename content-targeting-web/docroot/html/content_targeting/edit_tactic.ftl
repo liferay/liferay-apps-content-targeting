@@ -41,15 +41,15 @@
 
 	<@aui["input"] name="description" />
 
-    <@userSegmentSelector
-        assetCategoryIds="${userSegmentAssetCategoryIdsAsString}"
-        assetCategoryNames="${userSegmentAssetCategoryNames}"
-        filterIds="${campaignUserSegmentsIds}"
-        hiddenInput="userSegmentAssetCategoryIds"
-        vocabularyGroupIds="${vocabularyGroupIds}"
-        vocabularyIds="${vocabularyIds}"
-        warningMessage="editing-user-segments-deletes-all-unsaved-tactic-data"
-    />
+	<@userSegmentSelector
+		assetCategoryIds="${userSegmentAssetCategoryIdsAsString}"
+		assetCategoryNames="${userSegmentAssetCategoryNames}"
+		filterIds="${campaignUserSegmentsIds}"
+		hiddenInput="userSegmentAssetCategoryIds"
+		vocabularyGroupIds="${vocabularyGroupIds}"
+		vocabularyIds="${vocabularyIds}"
+		warningMessage="editing-user-segments-deletes-all-unsaved-tactic-data"
+	/>
 
 	<span class="slider-holder"></span>
 
