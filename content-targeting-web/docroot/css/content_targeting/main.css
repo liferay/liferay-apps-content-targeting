@@ -323,4 +323,8 @@
 			font-size: 18px;
 		}
 	}
+
+	.user-segment-selector {
+		margin-bottom: 35px;
+	}
 }

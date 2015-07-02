@@ -263,7 +263,7 @@
 		<@portlet["param"] name="tabs1" value="user-segments" />
 	</@>
 
-	<div class="user-segment-selector margin-bottom-5">
+	<div class="user-segment-selector">
 		<span class="query-and-operator-text"><@liferay_ui["message"] key="user-segments" /></span>
 
 		<@liferay_ui["icon"]
@@ -271,7 +271,7 @@
 			image="configuration"
 			label=false
 			message="manage-user-segments"
-			url="javascript:viewUserSegments();"
+			url="javascript:;"
 		/>
 
 		<div class="lfr-tags-selector-content" id="<@portlet["namespace"] />assetCategorySelector">
@@ -279,6 +279,17 @@
 		</div>
 
 		<@aui["script"] use="liferay-asset-categories-selector">
+			var manageUserSegmentsLink = A.one('#<@portlet["namespace"] />manageUserSegments');
+
+			manageUserSegmentsLink.on(
+				'click',
+				function() {
+					if (confirm('<@liferay_ui["message"] key="${warningMessage}" />')) {
+						window.location.href = "${viewUserSegments}";
+					}
+				}
+			);
+
 			var assetCategoriesSelector = new Liferay.AssetCategoriesSelector(
 				{
 					contentBox: '#<@portlet["namespace"] />assetCategorySelector',
@@ -302,16 +313,4 @@
 			A.Do.after(changeTitle, assetCategoriesSelector, '_showSelectPopup');
 		</@>
 	</div>
-
-	<@aui["script"]>
-		function viewUserSegments() {
-			if (confirm('<@liferay_ui["message"] key="${warningMessage}" />')) {
-				window.location.href = "${viewUserSegments}";
-			}
-		}
-	</@>
-
-	<style>
-		.margin-bottom-35 {margin-bottom: 35px;}
-	</style>
 </#macro>
