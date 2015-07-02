@@ -3,8 +3,10 @@
 
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.content.targeting.model.Campaign" />
+	<import class="com.liferay.content.targeting.model.ChannelInstance" />
 	<import class="com.liferay.content.targeting.model.ReportInstance" />
 	<import class="com.liferay.content.targeting.model.RuleInstance" />
+	<import class="com.liferay.content.targeting.model.Tactic" />
 	<import class="com.liferay.content.targeting.model.TrackingActionInstance" />
 	<import class="com.liferay.content.targeting.model.UserSegment" />
 	<class name="com.liferay.content.targeting.model.impl.CampaignImpl" table="CT_Campaign">
@@ -25,6 +27,24 @@
 		<property name="endDate" type="org.hibernate.type.TimestampType" />
 		<property name="priority" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
+	</class>
+	<class name="com.liferay.content.targeting.model.impl.ChannelInstanceImpl" table="CT_ChannelInstance">
+		<cache usage="read-write" />
+		<id name="channelInstanceId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="channelKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="tacticId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="alias" type="com.liferay.portal.dao.orm.hibernate.StringType" column="alias_" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.content.targeting.model.impl.ReportInstanceImpl" table="CT_ReportInstance">
 		<cache usage="read-write" />
@@ -56,6 +76,22 @@
 		<property name="ruleKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="userSegmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="com.liferay.content.targeting.model.impl.TacticImpl" table="CT_Tactic">
+		<cache usage="read-write" />
+		<id name="tacticId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.content.targeting.model.impl.TrackingActionInstanceImpl" table="CT_TrackingActionInstance">
 		<cache usage="read-write" />

@@ -15,6 +15,7 @@
 -->
 
 <#include "../init.ftl" />
+<#include "../macros.ftl" />
 <#include "../macros_exceptions.ftl" />
 
 <@liferay_ui["header"]
@@ -39,25 +40,13 @@
 
 	<@aui["input"] name="description" />
 
-	<@aui["select"] inlineField=true label="user-segment" name="userSegmentId">
-		<@aui["option"] label="any" selected=(userSegmentId == -1) value="-1" />
-
-		<#list userSegments as userSegment>
-			<@aui["option"] label="${userSegment.getNameWithGroupName(locale, themeDisplay.getScopeGroupId())}" selected=(userSegmentId == userSegment.getUserSegmentId()) value="${userSegment.getUserSegmentId()}" />
-		</#list>
-	</@>
-
-	<@portlet["renderURL"] var="viewUserSegments">
-		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
-		<@portlet["param"] name="tabs1" value="user-segments" />
-	</@>
-
-	<@liferay_ui["icon"]
-		id="manageUserSegments"
-		image="configuration"
-		label=false
-		message="manage-user-segments"
-		url="javascript:viewUserSegments();"
+	<@userSegmentSelector
+		assetCategoryIds="${userSegmentAssetCategoryIdsAsString}"
+		assetCategoryNames="${userSegmentAssetCategoryNames}"
+		hiddenInput="userSegmentAssetCategoryIds"
+		vocabularyGroupIds="${vocabularyGroupIds}"
+		vocabularyIds="${vocabularyIds}"
+		warningMessage="editing-user-segments-deletes-all-unsaved-campaign-data"
 	/>
 
 	<@invalidDateRangeException />
@@ -162,14 +151,6 @@
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
-	</@>
-
-	<@aui["script"]>
-		function viewUserSegments() {
-			if (confirm('<@liferay_ui["message"] key="editing-user-segments-deletes-all-unsaved-campaign-data" />')) {
-				window.location.href = "${viewUserSegments}";
-			}
-		}
 	</@>
 
 	<@aui["script"] use="liferay-ct-form-builder,liferay-input-slider">

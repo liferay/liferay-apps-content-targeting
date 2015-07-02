@@ -273,19 +273,20 @@ public interface AnonymousUserModel extends BaseModel<AnonymousUser>,
 	public Object clone();
 
 	@Override
-	public int compareTo(AnonymousUser anonymousUser);
+	public int compareTo(
+		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AnonymousUser> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> toCacheModel();
 
 	@Override
-	public AnonymousUser toEscapedModel();
+	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser toEscapedModel();
 
 	@Override
-	public AnonymousUser toUnescapedModel();
+	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser toUnescapedModel();
 
 	@Override
 	public String toString();

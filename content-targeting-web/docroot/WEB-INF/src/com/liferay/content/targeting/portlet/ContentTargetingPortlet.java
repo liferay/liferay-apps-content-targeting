@@ -15,6 +15,8 @@
 package com.liferay.content.targeting.portlet;
 
 import com.liferay.content.targeting.DuplicateTrackingActionInstanceException;
+import com.liferay.content.targeting.InvalidChannelException;
+import com.liferay.content.targeting.InvalidChannelsException;
 import com.liferay.content.targeting.InvalidDateRangeException;
 import com.liferay.content.targeting.InvalidNameException;
 import com.liferay.content.targeting.InvalidRuleException;
@@ -24,6 +26,8 @@ import com.liferay.content.targeting.InvalidTrackingActionsException;
 import com.liferay.content.targeting.UsedUserSegmentException;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
+import com.liferay.content.targeting.api.model.Channel;
+import com.liferay.content.targeting.api.model.ChannelsRegistry;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.api.model.Rule;
@@ -32,22 +36,30 @@ import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
 import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.RuleInstance;
+import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.util.BreadcrumbUtil;
+import com.liferay.content.targeting.portlet.util.ChannelTemplate;
 import com.liferay.content.targeting.portlet.util.RuleTemplate;
 import com.liferay.content.targeting.portlet.util.TrackingActionTemplate;
 import com.liferay.content.targeting.portlet.util.UnavailableServiceException;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.CampaignService;
+import com.liferay.content.targeting.service.ChannelInstanceLocalService;
+import com.liferay.content.targeting.service.ChannelInstanceService;
 import com.liferay.content.targeting.service.ReportInstanceService;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.RuleInstanceService;
+import com.liferay.content.targeting.service.TacticLocalService;
+import com.liferay.content.targeting.service.TacticService;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
+import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentService;
 import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
@@ -58,7 +70,9 @@ import com.liferay.content.targeting.util.CampaignSearchContainerIterator;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.ReportSearchContainerIterator;
+import com.liferay.content.targeting.util.TacticSearchContainerIterator;
 import com.liferay.content.targeting.util.UserSegmentSearchContainerIterator;
+import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -75,6 +89,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
@@ -82,6 +97,7 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -96,6 +112,8 @@ import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
 import freemarker.ext.beans.BeansWrapper;
 
@@ -142,7 +160,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			long campaignId = ParamUtil.getLong(request, "campaignId");
 
 			if (campaignId > 0) {
-				deleteCampaignsIds = new long[] {campaignId};
+				deleteCampaignsIds = new long[]{campaignId};
 			}
 			else {
 				deleteCampaignsIds = StringUtil.split(
@@ -151,6 +169,35 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			for (long deleteCampaignId : deleteCampaignsIds) {
 				_campaignService.deleteCampaign(deleteCampaignId);
+			}
+
+			sendRedirect(request, response);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName(), e);
+
+			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
+		}
+	}
+
+	public void deleteTactic(ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		try {
+			long tacticId = ParamUtil.getLong(request, "tacticId");
+
+			long[] deleteTacticsIds = null;
+
+			if (tacticId > 0) {
+				deleteTacticsIds = new long[]{tacticId};
+			}
+			else {
+				deleteTacticsIds = StringUtil.split(
+					ParamUtil.getString(request, "tacticsIds"), 0L);
+			}
+
+			for (long deleteTacticId : deleteTacticsIds) {
+				_tacticLocalService.deleteTactic(deleteTacticId);
 			}
 
 			sendRedirect(request, response);
@@ -172,7 +219,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
 			if (userSegmentId > 0) {
-				deleteUserSegmentIds = new long[] {userSegmentId};
+				deleteUserSegmentIds = new long[]{userSegmentId};
 			}
 			else {
 				deleteUserSegmentIds = StringUtil.split(
@@ -230,6 +277,12 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			CampaignLocalService.class, bundle.getBundleContext());
 		_campaignService = ServiceTrackerUtil.getService(
 			CampaignService.class, bundle.getBundleContext());
+		_channelInstanceService = ServiceTrackerUtil.getService(
+			ChannelInstanceService.class, bundle.getBundleContext());
+		_channelInstanceLocalService = ServiceTrackerUtil.getService(
+			ChannelInstanceLocalService.class, bundle.getBundleContext());
+		_channelsRegistry = ServiceTrackerUtil.getService(
+			ChannelsRegistry.class, bundle.getBundleContext());
 		_reportInstanceService = ServiceTrackerUtil.getService(
 			ReportInstanceService.class, bundle.getBundleContext());
 		_reportsRegistry = ServiceTrackerUtil.getService(
@@ -242,6 +295,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			RuleInstanceService.class, bundle.getBundleContext());
 		_rulesRegistry = ServiceTrackerUtil.getService(
 			RulesRegistry.class, bundle.getBundleContext());
+		_tacticService = ServiceTrackerUtil.getService(
+			TacticService.class, bundle.getBundleContext());
+		_tacticLocalService = ServiceTrackerUtil.getService(
+			TacticLocalService.class, bundle.getBundleContext());
 		_trackingActionInstanceService = ServiceTrackerUtil.getService(
 			TrackingActionInstanceService.class, bundle.getBundleContext());
 		_trackingActionInstanceLocalService = ServiceTrackerUtil.getService(
@@ -272,14 +329,26 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		boolean active = ParamUtil.getBoolean(request, "active");
 
-		// Initially, only one user segment per campaign is supported
-
 		long[] userSegmentIds = null;
+		long[] userSegmentAssetCategoryIds = ParamUtil.getLongValues(
+			request, "userSegmentAssetCategoryIds");
 
-		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
+		if (!ArrayUtil.isEmpty(userSegmentAssetCategoryIds)) {
+			userSegmentIds = new long[userSegmentAssetCategoryIds.length];
 
-		if (userSegmentId > 0) {
-			userSegmentIds = new long[] {userSegmentId};
+			int userSegmentCount = 0;
+
+			for (long userSegmentAssetCategoryId
+				: userSegmentAssetCategoryIds) {
+
+				UserSegment userSegment =
+					UserSegmentLocalServiceUtil.
+						fetchUserSegmentByAssetCategoryId(
+							userSegmentAssetCategoryId);
+
+				userSegmentIds[userSegmentCount++] =
+					userSegment.getUserSegmentId();
+			}
 		}
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
@@ -370,6 +439,87 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
+	public void updateTactic(ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		long campaignId = ParamUtil.getLong(request, "campaignId");
+
+		long tacticId = ParamUtil.getLong(request, "tacticId");
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			request, "name");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(request, "description");
+
+		long[] userSegmentIds = null;
+		long[] userSegmentAssetCategoryIds = ParamUtil.getLongValues(
+			request, "userSegmentAssetCategoryIds");
+
+		if (!ArrayUtil.isEmpty(userSegmentAssetCategoryIds)) {
+			userSegmentIds = new long[userSegmentAssetCategoryIds.length];
+			int userSegmentCount = 0;
+
+			for (long userSegmentAssetCategoryId
+					: userSegmentAssetCategoryIds) {
+
+				UserSegment userSegment =
+					UserSegmentLocalServiceUtil.
+						fetchUserSegmentByAssetCategoryId(
+							userSegmentAssetCategoryId);
+
+				userSegmentIds[userSegmentCount++] =
+					userSegment.getUserSegmentId();
+			}
+		}
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			Campaign.class.getName(), request);
+
+		try {
+			Callable<Tactic> tacticCallable =
+				new TacticCallable(
+					request, response, themeDisplay.getUserId(), tacticId,
+					campaignId, nameMap, descriptionMap, userSegmentIds,
+					serviceContext);
+
+			TransactionalCallableUtil.call(
+				_transactionAttribute, tacticCallable);
+
+			sendRedirect(request, response);
+		}
+		catch (Exception e) {
+			PortalUtil.copyRequestParameters(request, response);
+
+			SessionErrors.add(request, e.getClass().getName(), e);
+
+			if (e instanceof InvalidDateRangeException ||
+				e instanceof InvalidNameException ||
+				e instanceof InvalidChannelsException ||
+				e instanceof PrincipalException) {
+
+				SessionMessages.add(
+					request,
+					PortalUtil.getPortletId(request) +
+						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.EDIT_TACTIC);
+			}
+			else {
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.ERROR);
+			}
+		}
+		catch (Throwable t) {
+			_log.error(t);
+
+			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
+		}
+	}
+
 	public void updateUserSegment(
 			ActionRequest request, ActionResponse response)
 		throws Exception {
@@ -429,12 +579,34 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
+	protected void deleteChannelInstances(
+			List<ChannelInstance> channelInstances)
+		throws Exception {
+
+		for (ChannelInstance channelInstance : channelInstances) {
+			_channelInstanceService.deleteChannelInstance(
+				channelInstance.getChannelInstanceId());
+		}
+	}
+
 	protected void deleteRuleInstances(List<RuleInstance> ruleInstances)
 		throws Exception {
 
 		for (RuleInstance ruleInstance : ruleInstances) {
 			_ruleInstanceService.deleteRuleInstance(
 				ruleInstance.getRuleInstanceId());
+		}
+	}
+
+	protected void deleteTrackingActionInstances(
+			List<TrackingActionInstance> trackingActionInstances)
+		throws Exception {
+
+		for (TrackingActionInstance
+			trackingActionInstance : trackingActionInstances) {
+
+			_trackingActionInstanceService.deleteTrackingActionInstance(
+				trackingActionInstance.getTrackingActionInstanceId());
 		}
 	}
 
@@ -452,18 +624,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 		else {
 			return new InvalidTrackingActionsException();
-		}
-	}
-
-	protected void deleteTrackingActionInstances(
-			List<TrackingActionInstance> trackingActionInstances)
-		throws Exception {
-
-		for (TrackingActionInstance trackingActionInstance :
-				trackingActionInstances) {
-
-			_trackingActionInstanceService.deleteTrackingActionInstance(
-				trackingActionInstance.getTrackingActionInstanceId());
 		}
 	}
 
@@ -495,12 +655,127 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put(
 			"tabs1",
 			ParamUtil.getString(portletRequest, "tabs1", "user-segments"));
+		template.put("tacticClass", Tactic.class);
 		template.put(
 			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
 		template.put("userSegmentClass", UserSegment.class);
 
 		populateViewContext(
-				path, portletRequest, portletResponse, template, staticModels);
+			path, portletRequest, portletResponse, template, staticModels);
+	}
+
+	protected String getChannelHtml(
+		Channel channel, ChannelInstance channelInstance, Template template,
+		Map<String, String> values, List<InvalidChannelException> exceptions) {
+
+		Map<String, Object> context = cloneTemplateContext(template);
+
+		String html = StringPool.BLANK;
+
+		if ((exceptions != null) && !exceptions.isEmpty()) {
+			try {
+				context.put("exceptions", exceptions);
+
+				html += ContentTargetingContextUtil.parseTemplate(
+					getClass(), "templates/ct_exceptions.ftl", context);
+			}
+			catch (Exception e) {
+				_log.error(e);
+			}
+		}
+
+		HttpServletRequest request = (HttpServletRequest)context.get("request");
+
+		Map<String, List<ValidatorTag>> validatorTagsMap =
+			new HashMap<String, List<ValidatorTag>>();
+
+		request.setAttribute("aui:form:validatorTagsMap", validatorTagsMap);
+
+		if (values == null) {
+			values = Collections.emptyMap();
+		}
+
+		html += channel.getFormHTML(channelInstance, context, values);
+
+		if (!validatorTagsMap.isEmpty()) {
+			try {
+				context.put("validatorTagsMap", validatorTagsMap);
+
+				html += ContentTargetingContextUtil.parseTemplate(
+					getClass(), "templates/ct_validators.ftl", context);
+			}
+			catch (Exception e) {
+				_log.error(e);
+			}
+		}
+
+		return html;
+	}
+
+	protected List<ChannelInstance> getChannelsFromRequest(
+			PortletRequest request, PortletResponse response)
+		throws Exception {
+
+		List<ChannelInstance> channelInstances =
+			new ArrayList<ChannelInstance>();
+
+		String tacticChannels = ParamUtil.getString(request, "tacticChannels");
+
+		if (Validator.isNull(tacticChannels)) {
+			return channelInstances;
+		}
+
+		JSONObject jSONObject = JSONFactoryUtil.createJSONObject(
+			tacticChannels);
+
+		String channels = jSONObject.getString("fields");
+
+		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(channels);
+
+		for (int i = 0; i < jSONArray.length(); i++) {
+			JSONObject jSONObjectChannel = jSONArray.getJSONObject(i);
+
+			long channelInstanceId = 0;
+			String type = jSONObjectChannel.getString("type");
+
+			if (type.contains(StringPool.UNDERLINE)) {
+				String[] ids = type.split(StringPool.UNDERLINE);
+
+				channelInstanceId = GetterUtil.getLong(ids[1]);
+				type = ids[0];
+			}
+
+			String id = jSONObjectChannel.getString("id");
+
+			Map<String, String> channelValues = getJSONValues(
+				jSONObjectChannel.getJSONArray("data"), response.getNamespace(),
+				id);
+
+			ChannelInstance channelInstance =
+				_channelInstanceLocalService.createChannelInstance(
+					channelInstanceId);
+
+			channelInstance.setChannelKey(type);
+			channelInstance.setValues(channelValues);
+
+			channelInstances.add(channelInstance);
+		}
+
+		return channelInstances;
+	}
+
+	protected InvalidChannelsException getInvalidChannelsException(
+		PortletRequest portletRequest) {
+
+		if (SessionErrors.contains(
+				portletRequest, InvalidChannelsException.class.getName())) {
+
+			return (InvalidChannelsException)SessionErrors.get(
+				portletRequest, InvalidChannelsException.class.getName());
+		}
+		else {
+			return new InvalidChannelsException();
+		}
 	}
 
 	protected InvalidRulesException getInvalidRulesException(
@@ -528,8 +803,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			String name = jsonObject.getString("name");
 
 			name = StringUtil.replace(
-				name, new String[] {namespace, id},
-				new String[] {StringPool.BLANK, StringPool.BLANK});
+				name, new String[]{namespace, id},
+				new String[]{StringPool.BLANK, StringPool.BLANK});
 
 			values.put(name, jsonObject.getString("value"));
 		}
@@ -742,6 +1017,44 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return trackingActionsInstances;
 	}
 
+	protected String getUserSegmentAssetCategoryNames(
+			long[] userSegmentAssetCategoryIds, Locale locale)
+		throws SystemException {
+
+		return getUserSegmentNames(
+			userSegmentAssetCategoryIds, locale, _CATEGORY_SEPARATOR);
+	}
+
+	protected String getUserSegmentNames(
+			long[] userSegmentAssetCategoryIds, Locale locale, String separator)
+		throws SystemException {
+
+		if (ArrayUtil.isEmpty(userSegmentAssetCategoryIds)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler(
+			(userSegmentAssetCategoryIds.length * 2) - 1);
+
+		for (int i = 0; i < userSegmentAssetCategoryIds.length; i++) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+					userSegmentAssetCategoryIds[i]);
+
+			if (assetCategory == null) {
+				continue;
+			}
+
+			sb.append(assetCategory.getTitle(locale));
+
+			if (i != (userSegmentAssetCategoryIds.length - 1)) {
+				sb.append(separator);
+			}
+		}
+
+		return sb.toString();
+	}
+
 	protected void populateViewContext(
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template,
@@ -771,13 +1084,13 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				staticModels.get(UserSegmentPermission.class.getName()));
 
 			PermissionChecker permissionChecker =
-				(PermissionChecker)template.get("permissionChecker");
+				(PermissionChecker) template.get("permissionChecker");
 
-			long scopeGroupId = (Long)template.get("scopeGroupId");
+			long scopeGroupId = (Long) template.get("scopeGroupId");
 
 			if (UserSegmentPermission.contains(
 					permissionChecker, scopeGroupId, scopeGroupId,
-					ActionKeys.DELETE)) {
+				ActionKeys.DELETE)) {
 
 				template.put(
 					"userSegmentsRowChecker", new RowChecker(portletResponse));
@@ -785,13 +1098,15 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			if (CampaignPermission.contains(
 					permissionChecker, scopeGroupId, scopeGroupId,
-					ActionKeys.DELETE)) {
+				ActionKeys.DELETE)) {
 
 				template.put(
 					"campaignsRowChecker", new RowChecker(portletResponse));
 			}
 
 			String keywords = ParamUtil.getString(portletRequest, "keywords");
+
+			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");
 
 			template.put(
 				"campaignSearchContainerIterator",
@@ -800,10 +1115,22 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				"userSegmentSearchContainerIterator",
 				new UserSegmentSearchContainerIterator(scopeGroupId, keywords));
 		}
-		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN)) {
+		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN) ||
+				 path.equals(ContentTargetingPath.EDIT_TACTIC) ||
+				 path.equals(ContentTargetingPath.VIEW_TACTICS) ||
+				 path.equals(ContentTargetingPath.VIEW_TACTICS_RESOURCES)) {
+
+			template.put(
+				"contentTargetingPermission",
+				staticModels.get(ContentTargetingPermission.class.getName()));
+			template.put(
+				"actionKeys", staticModels.get(ActionKeys.class.getName()));
+
 			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");
+			long tacticId = ParamUtil.getLong(portletRequest, "tacticId");
 
 			template.put("campaignId", campaignId);
+			template.put("tacticId", tacticId);
 
 			int priority = 1;
 			long userSegmentId = -1;
@@ -811,31 +1138,58 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			Calendar endDate = Calendar.getInstance();
 			Calendar startDate = Calendar.getInstance();
 
+			List<UserSegment> campaignUserSegments = null;
+
 			if (campaignId > 0) {
 				Campaign campaign = _campaignLocalService.getCampaign(
 					campaignId);
 
 				template.put("campaign", campaign);
 
-				List<UserSegment> campaignUserSegments =
+				campaignUserSegments =
 					_userSegmentLocalService.getCampaignUserSegments(
 						campaignId);
 
-				priority = campaign.getPriority();
+				StringBuffer userSegmentAssetCategoryIdsAsString =
+					new StringBuffer("");
 
-				// Initially, only one user segment per campaign is supported
+				long[] userSegmentAssetCategoryIds =
+					new long[campaignUserSegments.size()];
+				int userSegmentCount = 0;
 
-				if ((campaignUserSegments != null) &&
-					!campaignUserSegments.isEmpty()) {
+				for (UserSegment userSegment : campaignUserSegments) {
+					if (userSegmentAssetCategoryIdsAsString.length() > 0) {
+						userSegmentAssetCategoryIdsAsString.append(",");
+					}
 
-					UserSegment campaignUserSegment = campaignUserSegments.get(
-						0);
+					userSegmentAssetCategoryIds[userSegmentCount++] =
+						userSegment.getAssetCategoryId();
 
-					userSegmentId = campaignUserSegment.getUserSegmentId();
+					userSegmentAssetCategoryIdsAsString.append(
+						userSegment.getAssetCategoryId());
 				}
 
 				endDate.setTime(campaign.getEndDate());
 				startDate.setTime(campaign.getStartDate());
+
+				if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN)) {
+					template.put(
+						"userSegmentAssetCategoryIdsAsString",
+						userSegmentAssetCategoryIdsAsString.toString());
+					template.put(
+						"userSegmentAssetCategoryNames",
+						getUserSegmentAssetCategoryNames(
+							userSegmentAssetCategoryIds,
+							themeDisplay.getLocale()));
+				}
+				else {
+					template.put("userSegmentAssetCategoryIdsAsString","");
+					template.put("userSegmentAssetCategoryNames","");
+				}
+
+				template.put(
+					"campaignUserSegmentsIds",
+					userSegmentAssetCategoryIdsAsString.toString());
 			}
 			else {
 				Date now = new Date();
@@ -844,6 +1198,45 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				endDate.add(Calendar.DATE, 1);
 
 				startDate.setTime(now);
+
+				template.put("userSegmentAssetCategoryIdsAsString", "");
+				template.put("userSegmentAssetCategoryNames", "");
+			}
+
+			if (tacticId > 0) {
+				Tactic tactic = _tacticLocalService.getTactic(tacticId);
+
+				template.put("tactic", tactic);
+
+				StringBuffer userSegmentAssetCategoryIdsAsString =
+					new StringBuffer("");
+
+				List<UserSegment> tacticUserSegments =
+					_userSegmentLocalService.getTacticUserSegments(tacticId);
+
+				long[] userSegmentAssetCategoryIds =
+					new long[tacticUserSegments.size()];
+				int userSegmentCount = 0;
+
+				for (UserSegment userSegment : tacticUserSegments) {
+					if (userSegmentAssetCategoryIdsAsString.length() > 0) {
+						userSegmentAssetCategoryIdsAsString.append(",");
+					}
+
+					userSegmentAssetCategoryIds[userSegmentCount++] =
+						userSegment.getAssetCategoryId();
+
+					userSegmentAssetCategoryIdsAsString.append(
+						userSegment.getAssetCategoryId());
+				}
+
+				template.put(
+					"userSegmentAssetCategoryIdsAsString",
+					userSegmentAssetCategoryIdsAsString.toString());
+				template.put(
+					"userSegmentAssetCategoryNames",
+					getUserSegmentAssetCategoryNames(
+						userSegmentAssetCategoryIds, themeDisplay.getLocale()));
 			}
 
 			template.put("endDate", endDate);
@@ -892,8 +1285,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					InvalidTrackingActionsException itae =
 						getInvalidTrackingActionsException(portletRequest);
 
-					for (TrackingActionInstance instance :
-							trackingActionInstances) {
+					for (TrackingActionInstance instance
+						: trackingActionInstances) {
 
 						TrackingAction trackingAction =
 							_trackingActionsRegistry.getTrackingAction(
@@ -961,6 +1354,193 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			finally {
 				themeDisplay.setIsolated(isolated);
 			}
+
+			if (path.equals(ContentTargetingPath.EDIT_TACTIC)) {
+				isolated = themeDisplay.isIsolated();
+
+				try {
+					themeDisplay.setIsolated(true);
+
+					List<ChannelTemplate> channelsTemplates =
+						new ArrayList<ChannelTemplate>();
+					List<ChannelTemplate> addedChannelsTemplates =
+						new ArrayList<ChannelTemplate>();
+
+					Map<String, Channel> channels =
+						_channelsRegistry.getChannels();
+
+					template.put("channels", channels.values());
+
+					List<ChannelInstance> channelInstances =
+						getChannelsFromRequest(portletRequest, portletResponse);
+
+					if (channelInstances.isEmpty() && (tacticId > 0)) {
+						channelInstances =
+							_channelInstanceLocalService.getChannelInstances(
+								tacticId);
+					}
+
+					if (!channelInstances.isEmpty()) {
+						template.put("channelInstances", channelInstances);
+
+						InvalidChannelsException ice =
+							getInvalidChannelsException(portletRequest);
+
+						for (ChannelInstance instance : channelInstances) {
+							Channel channel =
+								_channelsRegistry.getChannel(
+									instance.getChannelKey());
+
+							if (channel == null) {
+								continue;
+							}
+
+							ChannelTemplate channelTemplate =
+								new ChannelTemplate();
+
+							if (instance.getChannelInstanceId() > 0) {
+								channelTemplate.setInstanceId(
+									String.valueOf(
+										instance.getChannelInstanceId()));
+							}
+
+							channelTemplate.setChannel(channel);
+
+							String html = getChannelHtml(
+								channel, instance, template,
+								instance.getValues(), ice.getExceptions(
+									instance.getUuid()
+								));
+
+							channelTemplate.setTemplate(
+								HtmlUtil.escapeAttribute(html));
+
+							addedChannelsTemplates.add(channelTemplate);
+						}
+					}
+
+					for (Channel channel : channels.values()) {
+						ChannelTemplate channelTemplate = new ChannelTemplate();
+
+						channelTemplate.setChannel(channel);
+
+						String html = getChannelHtml(
+							channel, null, template, null, null);
+
+						channelTemplate.setTemplate(
+							HtmlUtil.escapeAttribute(html));
+
+						channelsTemplates.add(channelTemplate);
+					}
+
+					template.put("channelsTemplates", channelsTemplates);
+					template.put(
+						"addedChannelsTemplates", addedChannelsTemplates);
+				}
+				finally {
+					themeDisplay.setIsolated(isolated);
+				}
+
+				if (campaignUserSegments != null) {
+					template.put("userSegments", campaignUserSegments);
+				}
+
+				template.put("channelsRegistry", _channelsRegistry);
+			}
+
+			PermissionChecker permissionChecker =
+				(PermissionChecker) template.get("permissionChecker");
+
+			long scopeGroupId = (Long) template.get("scopeGroupId");
+
+			if (CampaignPermission.contains(
+					permissionChecker, scopeGroupId, scopeGroupId,
+				ActionKeys.DELETE)) {
+
+				template.put(
+					"tacticsRowChecker", new RowChecker(portletResponse));
+			}
+
+			String keywords = ParamUtil.getString(portletRequest, "keywords");
+
+			template.put(
+				"tacticSearchContainerIterator",
+				new TacticSearchContainerIterator(scopeGroupId, keywords));
+
+			if (path.equals(ContentTargetingPath.VIEW_TACTICS) ||
+				path.equals(ContentTargetingPath.VIEW_TACTICS_RESOURCES)) {
+
+				template.put(
+					"campaignPermission",
+					staticModels.get(CampaignPermission.class.getName()));
+
+				String className = ParamUtil.getString(
+					portletRequest, "className");
+				long classPK = ParamUtil.getLong(portletRequest, "classPK");
+
+				Group scopeGroup = themeDisplay.getScopeGroup();
+
+				template.put("className", className);
+				template.put("scopeGroup", scopeGroup);
+
+				String name = StringPool.BLANK;
+
+				if (className.equals(Campaign.class.getName())) {
+					Campaign campaign = _campaignLocalService.getCampaign(
+						classPK);
+
+					name = campaign.getName(themeDisplay.getLocale());
+
+					BreadcrumbUtil.addPortletBreadcrumbEntries(
+						request, (RenderResponse)portletResponse, campaign);
+
+					classPK = _getCampaignClassPK(campaign, scopeGroup);
+
+					template.put("classPK", classPK);
+				}
+
+				PortletConfig portletConfig =
+					(PortletConfig)portletRequest.getAttribute(
+						JavaConstants.JAVAX_PORTLET_CONFIG);
+
+				Object[] titleObject = new Object[] {
+					ResourceActionsUtil.getModelResource(
+						themeDisplay.getLocale(), className), name};
+
+				String title = LanguageUtil.format(
+					portletConfig, themeDisplay.getLocale(),
+					"tactics-for-the-x-x", titleObject);
+
+				template.put("title", title);
+			}
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
+
+			long[] vocabularyGroupIds = new long[1];
+			long[] vocabularyIds = new long[1];
+
+			if (themeDisplay.getScopeGroupId() ==
+					themeDisplay.getCompanyGroupId()) {
+
+				vocabularyGroupIds[0] = themeDisplay.getCompanyGroupId();
+
+				vocabularyIds[0] = UserSegmentUtil.getAssetVocabularyId(
+					themeDisplay.getUserId(), serviceContext);
+			}
+			else {
+				vocabularyGroupIds =
+					ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+						themeDisplay.getSiteGroupId());
+				vocabularyIds = UserSegmentUtil.getAssetVocabularyIds(
+					vocabularyGroupIds);
+			}
+
+			template.put(
+				"vocabularyGroupIds", StringUtil.merge(vocabularyGroupIds));
+
+			template.put("vocabularyIds", StringUtil.merge(vocabularyIds));
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
 			long userSegmentId = ParamUtil.getLong(
@@ -1138,6 +1718,90 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
+	protected List<InvalidChannelException> updateChannels(
+			long tacticId, long campaignId, PortletRequest request,
+			PortletResponse response)
+		throws Exception {
+
+		List<ChannelInstance> requestChannelInstances = getChannelsFromRequest(
+			request, response);
+
+		List<ChannelInstance> channelInstances = ListUtil.copy(
+			_channelInstanceService.getChannelInstances(campaignId, tacticId));
+
+		List<InvalidChannelException> channelExceptions =
+			new ArrayList<InvalidChannelException>();
+
+		if (requestChannelInstances.isEmpty()) {
+			deleteChannelInstances(channelInstances);
+
+			return channelExceptions;
+		}
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			ChannelInstance.class.getName(), request);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		for (ChannelInstance requestChannelInstance : requestChannelInstances) {
+			Channel channel =
+				_channelsRegistry.getChannel(
+					requestChannelInstance.getChannelKey());
+
+			if (channel == null) {
+				continue;
+			}
+
+			String typeSettings = null;
+
+			Map<String, String> channelValues =
+				requestChannelInstance.getValues();
+			channelValues.put("tacticId", String.valueOf(tacticId));
+
+			try {
+				typeSettings = channel.processChannel(
+					request, response, channelValues);
+			}
+			catch (InvalidChannelException ice) {
+				channelExceptions.add(ice);
+			}
+			catch (Exception e) {
+				channelExceptions.add(
+					new InvalidChannelException(e.getMessage()));
+			}
+
+			String alias = channelValues.get("alias");
+
+			long channelInstanceId =
+				requestChannelInstance.getChannelInstanceId();
+
+			try {
+				if (channelInstanceId > 0) {
+					ChannelInstance channelInstance =
+						_channelInstanceService.updateChannelInstance(
+							channelInstanceId, alias, typeSettings,
+							serviceContext);
+
+					channelInstances.remove(channelInstance);
+				}
+				else {
+					_channelInstanceService.addChannelInstance(
+						themeDisplay.getUserId(), tacticId,
+						requestChannelInstance.getChannelKey(), campaignId,
+						alias, typeSettings, serviceContext);
+				}
+			}
+			catch (PortalException pe) {
+				_log.error("Cannot update channel", pe);
+			}
+		}
+
+		deleteChannelInstances(channelInstances);
+
+		return channelExceptions;
+	}
+
 	protected List<InvalidRuleException> updateRules(
 			long userSegmentId, PortletRequest request,
 			PortletResponse response)
@@ -1242,8 +1906,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		for (TrackingActionInstance requestTrackingActionInstance :
-				requestTrackingActionInstances) {
+		for (TrackingActionInstance requestTrackingActionInstance
+			: requestTrackingActionInstances) {
 
 			TrackingAction trackingAction =
 				_trackingActionsRegistry.getTrackingAction(
@@ -1413,6 +2077,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
+	private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
@@ -1420,12 +2086,17 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 	private AnonymousUserLocalService _anonymousUserLocalService;
 	private CampaignLocalService _campaignLocalService;
 	private CampaignService _campaignService;
+	private ChannelInstanceLocalService _channelInstanceLocalService;
+	private ChannelInstanceService _channelInstanceService;
+	private ChannelsRegistry _channelsRegistry;
 	private ReportInstanceService _reportInstanceService;
 	private ReportsRegistry _reportsRegistry;
 	private RuleCategoriesRegistry _ruleCategoriesRegistry;
 	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RuleInstanceService _ruleInstanceService;
 	private RulesRegistry _rulesRegistry;
+	private TacticLocalService _tacticLocalService;
+	private TacticService _tacticService;
 	private TrackingActionInstanceLocalService
 		_trackingActionInstanceLocalService;
 	private TrackingActionInstanceService _trackingActionInstanceService;
@@ -1498,6 +2169,64 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		private Date _endDate;
 		private int _priority;
 		private boolean _active;
+		private long[] _userSegmentIds;
+		private ServiceContext _serviceContext;
+
+	}
+
+	private class TacticCallable implements Callable<Tactic> {
+
+		private TacticCallable(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			long userId, long tacticId, long campaignId,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			long[] userSegmentIds, ServiceContext serviceContext) {
+
+			_portletRequest = portletRequest;
+			_portletResponse = portletResponse;
+			_userId = userId;
+			_campaignId = campaignId;
+			_tacticId = tacticId;
+			_nameMap = nameMap;
+			_descriptionMap = descriptionMap;
+			_userSegmentIds = userSegmentIds;
+			_serviceContext = serviceContext;
+		}
+
+		@Override
+		public Tactic call() throws Exception {
+			Tactic tactic = null;
+
+			if (_tacticId > 0) {
+				tactic = _tacticService.updateTactic(
+					_tacticId, _campaignId, _nameMap, _descriptionMap,
+					_userSegmentIds, _serviceContext);
+			}
+			else {
+				tactic = _tacticService.addTactic(
+					_userId, _campaignId, _nameMap, _descriptionMap,
+					_userSegmentIds, _serviceContext);
+			}
+
+			List<InvalidChannelException> channelExceptions =
+				updateChannels(
+					tactic.getTacticId(), _campaignId, _portletRequest,
+					_portletResponse);
+
+			if (!channelExceptions.isEmpty()) {
+				throw new InvalidChannelsException(channelExceptions);
+			}
+
+			return tactic;
+		}
+
+		private PortletRequest _portletRequest;
+		private PortletResponse _portletResponse;
+		private long _userId;
+		private long _campaignId;
+		private long _tacticId;
+		private Map<Locale, String> _nameMap;
+		private Map<Locale, String> _descriptionMap;
 		private long[] _userSegmentIds;
 		private ServiceContext _serviceContext;
 

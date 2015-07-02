@@ -21,6 +21,23 @@
 		<field name="priority" type="int" />
 		<field name="active" type="boolean" />
 	</model>
+	<model name="com.liferay.content.targeting.model.ChannelInstance">
+		<field name="uuid" type="String" />
+		<field name="channelInstanceId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="channelKey" type="String" />
+		<field name="campaignId" type="long" />
+		<field name="tacticId" type="long" />
+		<field name="alias" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
+	</model>
 	<model name="com.liferay.content.targeting.model.ReportInstance">
 		<field name="reportInstanceId" type="long" />
 		<field name="groupId" type="long" />
@@ -48,6 +65,23 @@
 		<field name="userSegmentId" type="long" />
 		<field name="typeSettings" type="String">
 			<hint-collection name="CLOB" />
+		</field>
+	</model>
+	<model name="com.liferay.content.targeting.model.Tactic">
+		<field name="uuid" type="String" />
+		<field name="tacticId" type="long" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+		<field name="campaignId" type="long" />
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
 		</field>
 	</model>
 	<model name="com.liferay.content.targeting.model.TrackingActionInstance">

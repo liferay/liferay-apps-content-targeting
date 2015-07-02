@@ -248,3 +248,69 @@
 		</@>
 	</#if>
 </#macro>
+
+<#macro userSegmentSelector
+	assetCategoryIds
+	assetCategoryNames
+	hiddenInput
+	vocabularyGroupIds
+	vocabularyIds
+	warningMessage
+	filterIds=""
+>
+	<@portlet["renderURL"] var="viewUserSegments">
+		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+		<@portlet["param"] name="tabs1" value="user-segments" />
+	</@>
+
+	<div class="user-segment-selector">
+		<span class="query-and-operator-text"><@liferay_ui["message"] key="user-segments" /></span>
+
+		<@liferay_ui["icon"]
+			id="manageUserSegments"
+			image="configuration"
+			label=false
+			message="manage-user-segments"
+			url="javascript:;"
+		/>
+
+		<div class="lfr-tags-selector-content" id="<@portlet["namespace"] />assetCategorySelector">
+			<@aui["input"] name="${hiddenInput}" type="hidden" value="${assetCategoryIds}" />
+		</div>
+
+		<@aui["script"] use="liferay-asset-categories-selector">
+			var manageUserSegmentsLink = A.one('#<@portlet["namespace"] />manageUserSegments');
+
+			manageUserSegmentsLink.on(
+				'click',
+				function() {
+					if (confirm('<@liferay_ui["message"] key="${warningMessage}" />')) {
+						window.location.href = "${viewUserSegments}";
+					}
+				}
+			);
+
+			var assetCategoriesSelector = new Liferay.AssetCategoriesSelector(
+				{
+					contentBox: '#<@portlet["namespace"] />assetCategorySelector',
+					curEntries: '${assetCategoryNames}',
+					curEntryIds: '${assetCategoryIds}',
+					<#if (filterIds?has_content)>
+						filterIds: '${filterIds}',
+					</#if>
+					hiddenInput: '#<@portlet["namespace"] />${hiddenInput}',
+					instanceVar: '<@portlet["namespace"] />',
+					vocabularyGroupIds: '${vocabularyGroupIds}',
+					vocabularyIds: '${vocabularyIds}',
+					title: '<@liferay_ui["message"] key="select-user-segments" />'
+				}
+			).render();
+
+			var changeTitle = function() {
+				assetCategoriesSelector._popup.titleNode.html(assetCategoriesSelector.get('title'));
+			};
+
+			A.Do.after(changeTitle, assetCategoriesSelector, '_showSelectPopup');
+		</@>
+	</div>
+</#macro>
