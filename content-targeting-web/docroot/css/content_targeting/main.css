@@ -303,7 +303,7 @@
 		float: none;
 	}
 
-	.search-panels {
+	.form-builder-search-panels {
 		padding: 0 10px 14px;
 		position: relative;
 
@@ -335,7 +335,7 @@
 			position: relative;
 
 			&:after {
-				background: url(../images/custom/search_panel_icon.png) no-repeat 0 50%;
+				background: url(../../images/search_panel_icon.png) no-repeat 0 50%;
 				color: #D4D4D4;
 				content: '';
 				display: block;
@@ -362,12 +362,12 @@
 			}
 
 			input {
-				padding-left: 28px;
+				padding-left: 40px;
 			}
 		}
 	}
 
-	.search-panel-active .search-panels .cancel-search {
+	.search-panel-active .form-builder-search-panels .cancel-search {
 		display: inline-block;
 	}
 
