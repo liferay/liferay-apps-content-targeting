@@ -75,61 +75,65 @@
 			name=""
 		>
 			<@liferay_ui["icon-menu"]>
-				<@portlet["renderURL"] var="viewCampaignReportsURL">
-				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
-				<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
-				<@portlet["param"] name="className" value="${campaignClass.getName()}" />
-				<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
-			</@>
+                <#if (reportsCount > 0)>
+                    <@portlet["renderURL"] var="viewCampaignReportsURL">
+                        <@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
+                        <@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
+                        <@portlet["param"] name="className" value="${campaignClass.getName()}" />
+                        <@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
+                    </@>
 
-			<@liferay_ui["icon"]
-				image="view"
-				label=true
-				message="reports"
-				method="get"
-				url="${viewCampaignReportsURL}"
-			/>
 
-			<@portlet["renderURL"] var="viewCampaignTacticsURL">
-				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_TACTICS}" />
-				<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
-				<@portlet["param"] name="className" value="${campaignClass.getName()}" />
-				<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
-				<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
-			</@>
+                    <@liferay_ui["icon"]
+                        image="view"
+                        label=true
+                        message="reports"
+                        method="get"
+                        url="${viewCampaignReportsURL}"
+                    />
+                </#if>
 
-			<@liferay_ui["icon"]
-				image="sitemap"
-				label=true
-				message="tactics"
-				method="get"
-				url="${viewCampaignTacticsURL}"
-			/>
+                <#if (channelsCount > 0)>
+                    <@portlet["renderURL"] var="viewCampaignTacticsURL">
+                        <@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_TACTICS}" />
+                        <@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
+                        <@portlet["param"] name="className" value="${campaignClass.getName()}" />
+                        <@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
+                        <@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
+                    </@>
+                    <@liferay_ui["icon"]
+                        image="sitemap"
+                        label=true
+                        message="tactics"
+                        method="get"
+                        url="${viewCampaignTacticsURL}"
+                    />
+                </#if>
 
-				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
-					<@portlet["renderURL"] var="editCampaignURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-						<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
-						<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
-					</@>
+                <#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
+                    <@portlet["renderURL"] var="editCampaignURL">
+                        <@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
+                        <@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
+                        <@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
+                    </@>
 
-					<@liferay_ui["icon"]
-						image="edit"
-						method="get"
-						url="${editCampaignURL}"
-					/>
-				</#if>
+                    <@liferay_ui["icon"]
+                        image="edit"
+                        method="get"
+                        url="${editCampaignURL}"
+                    />
+                </#if>
 
-				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.DELETE)>
-					<@portlet["actionURL"] name="deleteCampaign" var="deleteCampaignURL">
-						<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
-						<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
-					</@>
+                <#if campaignPermission.contains(permissionChecker, campaign, actionKeys.DELETE)>
+                    <@portlet["actionURL"] name="deleteCampaign" var="deleteCampaignURL">
+                        <@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
+                        <@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
+                    </@>
 
-					<@liferay_ui["icon-delete"]
-						url="${deleteCampaignURL}"
-					/>
-				</#if>
+                    <@liferay_ui["icon-delete"]
+                        url="${deleteCampaignURL}"
+                    />
+                </#if>
 
 				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.PERMISSIONS)>
 					<@liferay_security["permissionsURL"]

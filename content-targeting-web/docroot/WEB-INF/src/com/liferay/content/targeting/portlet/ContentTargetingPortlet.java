@@ -660,6 +660,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
 		template.put("userSegmentClass", UserSegment.class);
 
+        template.put("channelsCount", _channelsRegistry.getChannels().size());
+        template.put("reportsCount", _reportsRegistry.getReports().size());
+
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
 	}
