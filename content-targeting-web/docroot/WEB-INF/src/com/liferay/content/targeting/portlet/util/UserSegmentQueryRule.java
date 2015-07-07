@@ -14,11 +14,11 @@
 
 package com.liferay.content.targeting.portlet.util;
 
+import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -117,8 +117,8 @@ public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 		}
 
 		return summary +
-			getUserSegmentNames(
-				locale,
+			ContentTargetingUtil.getAssetCategoryNames(
+				_userSegmentAssetCategoryIds, locale,
 				htmlOperator(_andOperator, _contains, portletConfig, locale));
 	}
 
@@ -137,11 +137,13 @@ public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 	public String getUserSegmentAssetCategoryNames(Locale locale)
 		throws SystemException {
 
-		return getUserSegmentNames(locale, _CATEGORY_SEPARATOR);
+		return ContentTargetingUtil.getAssetCategoryNames(
+			_userSegmentAssetCategoryIds, locale);
 	}
 
 	public String getUserSegmentNames(Locale locale) throws SystemException {
-		return getUserSegmentNames(locale, StringPool.COMMA_AND_SPACE);
+		return ContentTargetingUtil.getAssetCategoryNames(
+			_userSegmentAssetCategoryIds, locale, StringPool.COMMA_AND_SPACE);
 	}
 
 	public boolean isAndOperator() {
@@ -176,35 +178,6 @@ public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 		_userSegmentAssetCategoryIds = userSegmentAssetCategoryIds;
 	}
 
-	protected String getUserSegmentNames(Locale locale, String separator)
-		throws SystemException {
-
-		if (ArrayUtil.isEmpty(_userSegmentAssetCategoryIds)) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(
-			(_userSegmentAssetCategoryIds.length * 2) - 1);
-
-		for (int i = 0; i < _userSegmentAssetCategoryIds.length; i++) {
-			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.fetchAssetCategory(
-					_userSegmentAssetCategoryIds[i]);
-
-			if (assetCategory == null) {
-				continue;
-			}
-
-			sb.append(assetCategory.getTitle(locale));
-
-			if (i != (_userSegmentAssetCategoryIds.length - 1)) {
-				sb.append(separator);
-			}
-		}
-
-		return sb.toString();
-	}
-
 	protected long[] validateUserSegmentAssetCategoryIds(
 		long[] userSegmentAssetCategoryIds) {
 
@@ -233,8 +206,6 @@ public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 
 		return validatedUserSegmentAssetCategoryIds;
 	}
-
-	private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
 
 	private boolean _andOperator;
 	private boolean _contains = true;

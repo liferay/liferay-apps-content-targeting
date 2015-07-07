@@ -22,9 +22,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.portlet.LiferayWindowState;
 import com.liferay.portal.kernel.staging.StagingUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.PrefsPropsUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.StringBundler;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.UnicodeProperties;
 import com.liferay.portal.kernel.util.Validator;
@@ -34,7 +37,9 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 import com.liferay.portlet.PortletURLFactoryUtil;
+import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetRendererFactory;
+import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.sites.util.Sites;
 import com.liferay.portlet.sites.util.SitesUtil;
 
@@ -43,6 +48,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
@@ -95,6 +101,18 @@ public class ContentTargetingUtil {
 		return groupIds;
 	}
 
+	public static long[] getAssetCategoryIds(List<UserSegment> userSegments) {
+		long[] assetCategoryIds = new long[userSegments.size()];
+
+		for (int i = 0; i < assetCategoryIds.length; i++) {
+			UserSegment userSegment = userSegments.get(i);
+
+			assetCategoryIds[i] = userSegment.getAssetCategoryId();
+		}
+
+		return assetCategoryIds;
+	}
+
 	public static long[] getAssetCategoryIds(
 			long groupId, long[] userSegmentIds)
 		throws SystemException {
@@ -113,6 +131,43 @@ public class ContentTargetingUtil {
 		}
 
 		return assetCategoryIds;
+	}
+
+	public static String getAssetCategoryNames(
+			long[] assetCategoryIds, Locale locale)
+		throws SystemException {
+
+		return getAssetCategoryNames(
+			assetCategoryIds, locale, _CATEGORY_SEPARATOR);
+	}
+
+	public static String getAssetCategoryNames(
+			long[] assetCategoryIds, Locale locale, String separator)
+		throws SystemException {
+
+		if (ArrayUtil.isEmpty(assetCategoryIds)) {
+			return StringPool.BLANK;
+		}
+
+		StringBundler sb = new StringBundler((assetCategoryIds.length * 2) - 1);
+
+		for (int i = 0; i < assetCategoryIds.length; i++) {
+			AssetCategory assetCategory =
+				AssetCategoryLocalServiceUtil.fetchAssetCategory(
+						assetCategoryIds[i]);
+
+			if (assetCategory == null) {
+				continue;
+			}
+
+			sb.append(assetCategory.getTitle(locale));
+
+			if (i != (assetCategoryIds.length - 1)) {
+				sb.append(separator);
+			}
+		}
+
+		return sb.toString();
 	}
 
 	public static Map<String, Object> getAssetSelectorIconData(
@@ -356,5 +411,7 @@ public class ContentTargetingUtil {
 
 		return siteGroupId;
 	}
+
+	private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
 
 }

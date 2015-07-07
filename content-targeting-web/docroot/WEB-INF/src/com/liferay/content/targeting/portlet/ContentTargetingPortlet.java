@@ -97,7 +97,6 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -112,8 +111,6 @@ import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
-import com.liferay.portlet.asset.model.AssetCategory;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 
 import freemarker.ext.beans.BeansWrapper;
 
@@ -1017,44 +1014,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return trackingActionsInstances;
 	}
 
-	protected String getUserSegmentAssetCategoryNames(
-			long[] userSegmentAssetCategoryIds, Locale locale)
-		throws SystemException {
-
-		return getUserSegmentNames(
-			userSegmentAssetCategoryIds, locale, _CATEGORY_SEPARATOR);
-	}
-
-	protected String getUserSegmentNames(
-			long[] userSegmentAssetCategoryIds, Locale locale, String separator)
-		throws SystemException {
-
-		if (ArrayUtil.isEmpty(userSegmentAssetCategoryIds)) {
-			return StringPool.BLANK;
-		}
-
-		StringBundler sb = new StringBundler(
-			(userSegmentAssetCategoryIds.length * 2) - 1);
-
-		for (int i = 0; i < userSegmentAssetCategoryIds.length; i++) {
-			AssetCategory assetCategory =
-				AssetCategoryLocalServiceUtil.fetchAssetCategory(
-					userSegmentAssetCategoryIds[i]);
-
-			if (assetCategory == null) {
-				continue;
-			}
-
-			sb.append(assetCategory.getTitle(locale));
-
-			if (i != (userSegmentAssetCategoryIds.length - 1)) {
-				sb.append(separator);
-			}
-		}
-
-		return sb.toString();
-	}
-
 	protected void populateViewContext(
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template,
@@ -1106,14 +1065,18 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			String keywords = ParamUtil.getString(portletRequest, "keywords");
 
-			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");
-
 			template.put(
 				"campaignSearchContainerIterator",
 				new CampaignSearchContainerIterator(scopeGroupId, keywords));
 			template.put(
 				"userSegmentSearchContainerIterator",
 				new UserSegmentSearchContainerIterator(scopeGroupId, keywords));
+
+			Map<String, Channel> channels = _channelsRegistry.getChannels();
+			Map<String, Report> reports = _reportsRegistry.getReports();
+
+			template.put("channelsCount", channels.size());
+			template.put("reportsCount", reports.size());
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN) ||
 				 path.equals(ContentTargetingPath.EDIT_TACTIC) ||
@@ -1146,50 +1109,41 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				template.put("campaign", campaign);
 
+				endDate.setTime(campaign.getEndDate());
+				startDate.setTime(campaign.getStartDate());
+
 				campaignUserSegments =
 					_userSegmentLocalService.getCampaignUserSegments(
 						campaignId);
 
-				StringBuffer userSegmentAssetCategoryIdsAsString =
-					new StringBuffer("");
-
 				long[] userSegmentAssetCategoryIds =
-					new long[campaignUserSegments.size()];
-				int userSegmentCount = 0;
+					ContentTargetingUtil.getAssetCategoryIds(
+						campaignUserSegments);
 
-				for (UserSegment userSegment : campaignUserSegments) {
-					if (userSegmentAssetCategoryIdsAsString.length() > 0) {
-						userSegmentAssetCategoryIdsAsString.append(",");
-					}
-
-					userSegmentAssetCategoryIds[userSegmentCount++] =
-						userSegment.getAssetCategoryId();
-
-					userSegmentAssetCategoryIdsAsString.append(
-						userSegment.getAssetCategoryId());
-				}
-
-				endDate.setTime(campaign.getEndDate());
-				startDate.setTime(campaign.getStartDate());
+				String userSegmentAssetCategoryIdsAsString = StringUtil.merge(
+					userSegmentAssetCategoryIds);
 
 				if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN)) {
 					template.put(
 						"userSegmentAssetCategoryIdsAsString",
-						userSegmentAssetCategoryIdsAsString.toString());
+						userSegmentAssetCategoryIdsAsString);
 					template.put(
 						"userSegmentAssetCategoryNames",
-						getUserSegmentAssetCategoryNames(
+						ContentTargetingUtil.getAssetCategoryNames(
 							userSegmentAssetCategoryIds,
 							themeDisplay.getLocale()));
 				}
 				else {
-					template.put("userSegmentAssetCategoryIdsAsString","");
-					template.put("userSegmentAssetCategoryNames","");
+					template.put(
+						"userSegmentAssetCategoryIdsAsString",
+						StringPool.BLANK);
+					template.put(
+						"userSegmentAssetCategoryNames", StringPool.BLANK);
 				}
 
 				template.put(
 					"campaignUserSegmentsIds",
-					userSegmentAssetCategoryIdsAsString.toString());
+					userSegmentAssetCategoryIdsAsString);
 			}
 			else {
 				Date now = new Date();
@@ -1208,34 +1162,19 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				template.put("tactic", tactic);
 
-				StringBuffer userSegmentAssetCategoryIdsAsString =
-					new StringBuffer("");
-
 				List<UserSegment> tacticUserSegments =
 					_userSegmentLocalService.getTacticUserSegments(tacticId);
 
 				long[] userSegmentAssetCategoryIds =
-					new long[tacticUserSegments.size()];
-				int userSegmentCount = 0;
-
-				for (UserSegment userSegment : tacticUserSegments) {
-					if (userSegmentAssetCategoryIdsAsString.length() > 0) {
-						userSegmentAssetCategoryIdsAsString.append(",");
-					}
-
-					userSegmentAssetCategoryIds[userSegmentCount++] =
-						userSegment.getAssetCategoryId();
-
-					userSegmentAssetCategoryIdsAsString.append(
-						userSegment.getAssetCategoryId());
-				}
+					ContentTargetingUtil.getAssetCategoryIds(
+						tacticUserSegments);
 
 				template.put(
 					"userSegmentAssetCategoryIdsAsString",
-					userSegmentAssetCategoryIdsAsString.toString());
+					StringUtil.merge(userSegmentAssetCategoryIds));
 				template.put(
 					"userSegmentAssetCategoryNames",
-					getUserSegmentAssetCategoryNames(
+					ContentTargetingUtil.getAssetCategoryNames(
 						userSegmentAssetCategoryIds, themeDisplay.getLocale()));
 			}
 
@@ -2076,8 +2015,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			return 0;
 		}
 	}
-
-	private static final String _CATEGORY_SEPARATOR = "_CATEGORY_";
 
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
