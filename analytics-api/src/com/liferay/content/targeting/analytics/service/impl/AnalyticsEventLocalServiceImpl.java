@@ -15,6 +15,8 @@
 package com.liferay.content.targeting.analytics.service.impl;
 
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
+import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
+import com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalServiceUtil;
 import com.liferay.content.targeting.analytics.service.base.AnalyticsEventLocalServiceBaseImpl;
 import com.liferay.content.targeting.analytics.util.PortletPropsValues;
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -140,6 +142,16 @@ public class AnalyticsEventLocalServiceImpl
 
 		for (AnalyticsEvent analyticsEvent : analyticsEvents) {
 			deleteAnalyticsEvent(analyticsEvent);
+
+			List<AnalyticsReferrer> analyticsReferrers =
+				AnalyticsReferrerLocalServiceUtil.
+					getAnalyticsReferrersByEventId(
+						analyticsEvent.getAnalyticsEventId());
+
+			for (AnalyticsReferrer analyticsReferrer : analyticsReferrers) {
+				AnalyticsReferrerLocalServiceUtil.deleteAnalyticsReferrer(
+					analyticsReferrer);
+			}
 		}
 	}
 
