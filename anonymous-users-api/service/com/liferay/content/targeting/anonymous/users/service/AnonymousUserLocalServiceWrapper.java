@@ -333,11 +333,32 @@ public class AnonymousUserLocalServiceWrapper
 	}
 
 	@Override
+	public void checkAnonymousUsers()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_anonymousUserLocalService.checkAnonymousUsers();
+	}
+
+	@Override
+	public void deleteAnonymousUsers(long companyId, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		_anonymousUserLocalService.deleteAnonymousUsers(companyId, createDate);
+	}
+
+	@Override
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUserByUserId(
 		long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _anonymousUserLocalService.fetchAnonymousUserByUserId(userId);
+	}
+
+	@Override
+	public java.util.Date getMaxAge()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _anonymousUserLocalService.getMaxAge();
 	}
 
 	@Override

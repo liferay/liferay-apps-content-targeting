@@ -94,9 +94,10 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 				"value.object.column.bitmask.enabled.com.liferay.content.targeting.anonymous.users.model.AnonymousUser"),
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long USERID_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
-	public static long ANONYMOUSUSERID_COLUMN_BITMASK = 8L;
+	public static long CREATEDATE_COLUMN_BITMASK = 2L;
+	public static long USERID_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
+	public static long ANONYMOUSUSERID_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -382,7 +383,17 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 
 	@Override
 	public void setCreateDate(Date createDate) {
+		_columnBitmask |= CREATEDATE_COLUMN_BITMASK;
+
+		if (_originalCreateDate == null) {
+			_originalCreateDate = _createDate;
+		}
+
 		_createDate = createDate;
+	}
+
+	public Date getOriginalCreateDate() {
+		return _originalCreateDate;
 	}
 
 	@JSON
@@ -543,6 +554,8 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 		anonymousUserModelImpl._originalUserId = anonymousUserModelImpl._userId;
 
 		anonymousUserModelImpl._setOriginalUserId = false;
+
+		anonymousUserModelImpl._originalCreateDate = anonymousUserModelImpl._createDate;
 
 		anonymousUserModelImpl._columnBitmask = 0;
 	}
@@ -705,6 +718,7 @@ public class AnonymousUserModelImpl extends BaseModelImpl<AnonymousUser>
 	private boolean _setOriginalUserId;
 	private String _userName;
 	private Date _createDate;
+	private Date _originalCreateDate;
 	private Date _modifiedDate;
 	private String _lastIp;
 	private String _typeSettings;
