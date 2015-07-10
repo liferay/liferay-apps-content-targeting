@@ -35,6 +35,7 @@
       <module fileurl="file://$PROJECT_DIR$/rule-role/rule-role.iml" filepath="$PROJECT_DIR$/rule-role/rule-role.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-role-test/rule-role-test.iml" filepath="$PROJECT_DIR$/rule-role-test/rule-role-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-score-points/rule-score-points.iml" filepath="$PROJECT_DIR$/rule-score-points/rule-score-points.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rule-score-points-test/rule-score-points-test.iml" filepath="$PROJECT_DIR$/rule-score-points-test/rule-score-points-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-site-member/rule-site-member.iml" filepath="$PROJECT_DIR$/rule-site-member/rule-site-member.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-site-member-test/rule-site-member-test.iml" filepath="$PROJECT_DIR$/rule-site-member-test/rule-site-member-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/rule-time/rule-time.iml" filepath="$PROJECT_DIR$/rule-time/rule-time.iml" />

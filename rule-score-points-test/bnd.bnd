@@ -1,0 +1,5 @@
+Bundle-Name: Score Points Rule Test
+Bundle-SymbolicName: com.liferay.content.targeting.rule.score.points.test
+Bundle-Version: 1.0.0
+Include-Resource: classes
+-baseline: *;version="1.0.0"

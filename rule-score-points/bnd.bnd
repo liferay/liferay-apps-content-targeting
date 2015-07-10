@@ -2,8 +2,11 @@ Bundle-Name: Score Points Rule
 Bundle-SymbolicName: com.liferay.content.targeting.rule.score.points
 Bundle-Version: 1.0.0
 Export-Package:\
+    com.liferay.content.targeting.rule.score.points.api.model,\
 	com.liferay.content.targeting.rule.score.points.messaging,\
-	com.liferay.content.targeting.rule.score.points.messaging.config
+	com.liferay.content.targeting.rule.score.points.messaging.config,\
+	com.liferay.content.targeting.rule.score.points.service,\
+	com.liferay.content.targeting.rule.score.points.service.messaging
 Import-Package:\
 	com.liferay.content.targeting.anonymous.users.model,\
 	com.liferay.content.targeting.anonymous.users.service,\
