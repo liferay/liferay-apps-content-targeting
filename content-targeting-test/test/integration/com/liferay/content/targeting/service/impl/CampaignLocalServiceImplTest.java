@@ -21,6 +21,7 @@ import com.liferay.content.targeting.service.test.util.GroupTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalService;
 import com.liferay.portal.service.ServiceContext;
@@ -153,6 +154,41 @@ public class CampaignLocalServiceImplTest {
 		Assert.assertEquals(
 			campaign1.getCampaignId(),
 			currentMaxPriorityCampaign.getCampaignId());
+	}
+
+	@Test
+	public void testGetNameWithGroupName() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+		Group anotherGroup = GroupTestUtil.addGroup();
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
+
+		Date now = new Date();
+
+		long[] userSegmentIds = new long[] {1, 2};
+
+		Campaign campaign = _campaignLocalService.addCampaign(
+			TestPropsValues.getUserId(), nameMap, null, getDate(now, -1),
+			getDate(now, 1), 1, true, userSegmentIds, serviceContext);
+
+		String nameWithGroupName = campaign.getNameWithGroupName(
+			serviceContext.getLocale(), anotherGroup.getGroupId());
+
+		Assert.assertTrue(
+			nameWithGroupName.contains(
+				campaign.getName(LocaleUtil.getDefault())));
+
+		Assert.assertTrue(
+			nameWithGroupName.contains(
+				group.getDescriptiveName(LocaleUtil.getDefault())));
+
+		_groupLocalService.deleteGroup(group.getGroupId());
+		_groupLocalService.deleteGroup(anotherGroup.getGroupId());
 	}
 
 	protected Date getDate(Date date, int amount) {

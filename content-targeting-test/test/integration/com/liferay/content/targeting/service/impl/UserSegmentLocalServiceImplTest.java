@@ -99,6 +99,11 @@ public class UserSegmentLocalServiceImplTest {
 		Assert.assertEquals(
 			initUserSegmentsCount,
 			_userSegmentLocalService.getUserSegmentsCount(group.getGroupId()));
+
+		assetCategory = _assetCategoryLocalService.fetchAssetCategory(
+			userSegment.getAssetCategoryId());
+
+		Assert.assertNull(assetCategory);
 	}
 
 	@Test
@@ -123,6 +128,36 @@ public class UserSegmentLocalServiceImplTest {
 		Assert.assertEquals(
 			initUserSegmentsCount,
 			_userSegmentLocalService.getUserSegmentsCount(group.getGroupId()));
+	}
+
+	@Test
+	public void testGetNameWithGroup() throws Exception {
+		Group group = GroupTestUtil.addGroup();
+		Group anotherGroup = GroupTestUtil.addGroup();
+
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
+
+		UserSegment userSegment = _userSegmentLocalService.addUserSegment(
+			TestPropsValues.getUserId(), nameMap, null, serviceContext);
+
+		String nameWithGroupName = userSegment.getNameWithGroupName(
+			serviceContext.getLocale(), anotherGroup.getGroupId());
+
+		Assert.assertTrue(
+			nameWithGroupName.contains(
+				userSegment.getName(LocaleUtil.getDefault())));
+
+		Assert.assertTrue(
+			nameWithGroupName.contains(
+				group.getDescriptiveName(LocaleUtil.getDefault())));
+
+		_groupLocalService.deleteGroup(group.getGroupId());
+		_groupLocalService.deleteGroup(anotherGroup.getGroupId());
 	}
 
 	private AssetCategoryLocalService _assetCategoryLocalService;

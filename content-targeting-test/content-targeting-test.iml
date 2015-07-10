@@ -258,5 +258,7 @@
         </SOURCES>
       </library>
     </orderEntry>
+    <orderEntry type="library" name="reference" level="project" />
+    <orderEntry type="module" module-name="anonymous-users-api" scope="TEST" />
   </component>
 </module>

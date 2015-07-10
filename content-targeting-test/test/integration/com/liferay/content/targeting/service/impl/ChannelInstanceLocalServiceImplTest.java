@@ -67,25 +67,10 @@ public class ChannelInstanceLocalServiceImplTest {
 
 	@Test
 	public void testAddAndDeleteChannelInstance() throws Exception {
-		Map<Locale, String> campaignNameMap = new HashMap<Locale, String>();
-
-		campaignNameMap.put(LocaleUtil.getDefault(), "test-campaign");
-
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
 
-		Campaign campaign = _campaignLocalService.addCampaign(
-			TestPropsValues.getUserId(), campaignNameMap, null, new Date(),
-			new Date(), 1, true, new long[] {1, 2},
-			serviceContext);
-
-		Map<Locale, String> tacticNameMap = new HashMap<Locale, String>();
-
-		tacticNameMap.put(LocaleUtil.getDefault(), "test-tactic");
-
-		Tactic tactic = _tacticLocalService.addTactic(
-			TestPropsValues.getUserId(), campaign.getCampaignId(),
-			tacticNameMap, null, new long[] {1, 2, 3}, serviceContext);
+		Tactic tactic = createTactic();
 
 		int initChannelInstanceCount =
 			_channelInstanceLocalService.getChannelInstances(
@@ -94,7 +79,7 @@ public class ChannelInstanceLocalServiceImplTest {
 		ChannelInstance channelInstance =
 			_channelInstanceLocalService.addChannelInstance(
 			TestPropsValues.getUserId(), tactic.getTacticId(), "test-channel",
-			campaign.getCampaignId(), "test-channel", "{}",
+			tactic.getCampaignId(), "test-channel", "{}",
 			serviceContext);
 
 		Assert.assertEquals(
@@ -111,11 +96,40 @@ public class ChannelInstanceLocalServiceImplTest {
 				tactic.getTacticId()).size());
 
 		_tacticLocalService.deleteTactic(tactic.getTacticId());
-		_campaignLocalService.deleteCampaign(campaign.getCampaignId());
+		_campaignLocalService.deleteCampaign(tactic.getCampaignId());
 	}
 
 	@Test
 	public void testDeleteTactic() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
+			TestPropsValues.getGroupId(), TestPropsValues.getUserId());
+
+		Tactic tactic = createTactic();
+
+		int initChannelInstanceCount =
+			_channelInstanceLocalService.getChannelInstances(
+				tactic.getTacticId()).size();
+
+		_channelInstanceLocalService.addChannelInstance(
+			TestPropsValues.getUserId(), tactic.getTacticId(), "test-channel",
+			tactic.getCampaignId(), "test-channel", "{}",
+			serviceContext);
+
+		Assert.assertEquals(
+			initChannelInstanceCount + 1,
+			_channelInstanceLocalService.getChannelInstances(
+				tactic.getTacticId()).size());
+
+		_tacticLocalService.deleteTactic(tactic.getTacticId());
+		_campaignLocalService.deleteCampaign(tactic.getCampaignId());
+
+		Assert.assertEquals(
+			initChannelInstanceCount,
+			_channelInstanceLocalService.getChannelInstances(
+				tactic.getTacticId()).size());
+	}
+
+	protected Tactic createTactic() throws Exception {
 		Map<Locale, String> campaignNameMap = new HashMap<Locale, String>();
 
 		campaignNameMap.put(LocaleUtil.getDefault(), "test-campaign");
@@ -136,27 +150,7 @@ public class ChannelInstanceLocalServiceImplTest {
 			TestPropsValues.getUserId(), campaign.getCampaignId(),
 			tacticNameMap, null, new long[] {1, 2, 3}, serviceContext);
 
-		int initChannelInstanceCount =
-			_channelInstanceLocalService.getChannelInstances(
-				tactic.getTacticId()).size();
-
-		_channelInstanceLocalService.addChannelInstance(
-			TestPropsValues.getUserId(), tactic.getTacticId(), "test-channel",
-			campaign.getCampaignId(), "test-channel", "{}",
-			serviceContext);
-
-		Assert.assertEquals(
-			initChannelInstanceCount + 1,
-			_channelInstanceLocalService.getChannelInstances(
-				tactic.getTacticId()).size());
-
-		_tacticLocalService.deleteTactic(tactic.getTacticId());
-		_campaignLocalService.deleteCampaign(campaign.getCampaignId());
-
-		Assert.assertEquals(
-			initChannelInstanceCount,
-			_channelInstanceLocalService.getChannelInstances(
-				tactic.getTacticId()).size());
+		return tactic;
 	}
 
 	@ArquillianResource
