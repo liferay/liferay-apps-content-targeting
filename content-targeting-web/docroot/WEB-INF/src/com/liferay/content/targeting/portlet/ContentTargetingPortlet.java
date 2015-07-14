@@ -124,6 +124,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
@@ -319,8 +320,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
-		Date startDate = _getDate(request, "startDate");
-		Date endDate = _getDate(request, "endDate");
+		String timeZoneId = ParamUtil.getString(request, "timeZoneId");
+
+		Date startDate = _getDate(request, "startDate", timeZoneId);
+		Date endDate = _getDate(request, "endDate", timeZoneId);
 
 		int priority = ParamUtil.getInteger(request, "priority");
 
@@ -358,8 +361,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			Callable<Campaign> campaignCallable =
 				new CampaignCallable(
 					request, response, themeDisplay.getUserId(), campaignId,
-					nameMap, descriptionMap, startDate, endDate, priority,
-					active, userSegmentIds, serviceContext);
+					nameMap, descriptionMap, startDate, endDate, timeZoneId,
+					priority, active, userSegmentIds, serviceContext);
 
 			TransactionalCallableUtil.call(
 				_transactionAttribute, campaignCallable);
@@ -1109,8 +1112,21 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				template.put("campaign", campaign);
 
+				startDate = Calendar.getInstance(
+					TimeZone.getTimeZone(campaign.getTimeZoneId()));
+				endDate = Calendar.getInstance(
+					TimeZone.getTimeZone(campaign.getTimeZoneId()));
+
 				endDate.setTime(campaign.getEndDate());
 				startDate.setTime(campaign.getStartDate());
+
+				String timeZoneId = campaign.getTimeZoneId();
+
+				if (Validator.isBlank(timeZoneId)) {
+					timeZoneId = themeDisplay.getTimeZone().getID();
+				}
+
+				template.put("timeZoneId", timeZoneId);
 
 				campaignUserSegments =
 					_userSegmentLocalService.getCampaignUserSegments(
@@ -1155,7 +1171,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				template.put("userSegmentAssetCategoryIdsAsString", "");
 				template.put("userSegmentAssetCategoryNames", "");
+
+				template.put("timeZoneId", themeDisplay.getTimeZone().getID());
 			}
+
+			String dateDaylight = String.valueOf(
+				themeDisplay.getTimeZone().inDaylightTime(startDate.getTime()));
+
+			template.put("dateDaylight", dateDaylight);
 
 			if (tacticId > 0) {
 				Tactic tactic = _tacticLocalService.getTactic(tacticId);
@@ -1962,7 +1985,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
-	private Date _getDate(PortletRequest portletRequest, String paramPrefix) {
+	private Date _getDate(
+		PortletRequest portletRequest, String paramPrefix, String timeZoneId) {
+
 		int dateMonth = ParamUtil.getInteger(
 			portletRequest, paramPrefix + "Month");
 		int dateDay = ParamUtil.getInteger(portletRequest, paramPrefix + "Day");
@@ -1983,7 +2008,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			WebKeys.THEME_DISPLAY);
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar(
-			themeDisplay.getTimeZone(), themeDisplay.getLocale());
+			TimeZone.getTimeZone(timeZoneId), themeDisplay.getLocale());
 
 		calendar.set(Calendar.MONTH, dateMonth);
 		calendar.set(Calendar.DATE, dateDay);
@@ -2050,8 +2075,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			PortletRequest portletRequest, PortletResponse portletResponse,
 			long userId, long campaignId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
-			int priority, boolean active, long[] userSegmentIds,
-			ServiceContext serviceContext) {
+			String timeZoneId, int priority, boolean active,
+			long[] userSegmentIds, ServiceContext serviceContext) {
 
 			_portletRequest = portletRequest;
 			_portletResponse = portletResponse;
@@ -2061,6 +2086,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			_descriptionMap = descriptionMap;
 			_startDate = startDate;
 			_endDate = endDate;
+			_timeZoneId = timeZoneId;
 			_priority = priority;
 			_active = active;
 			_userSegmentIds = userSegmentIds;
@@ -2074,13 +2100,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			if (_campaignId > 0) {
 				campaign = _campaignService.updateCampaign(
 					_campaignId, _nameMap, _descriptionMap, _startDate,
-					_endDate, _priority, _active, _userSegmentIds,
+					_endDate, _timeZoneId, _priority, _active, _userSegmentIds,
 					_serviceContext);
 			}
 			else {
 				campaign = _campaignService.addCampaign(
 					_userId, _nameMap, _descriptionMap, _startDate, _endDate,
-					_priority, _active, _userSegmentIds, _serviceContext);
+					_timeZoneId, _priority, _active, _userSegmentIds,
+					_serviceContext);
 			}
 
 			List<InvalidTrackingActionException> trackingActionExceptions =
@@ -2104,6 +2131,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		private Map<Locale, String> _descriptionMap;
 		private Date _startDate;
 		private Date _endDate;
+		private String _timeZoneId;
 		private int _priority;
 		private boolean _active;
 		private long[] _userSegmentIds;

@@ -76,9 +76,27 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		return addCampaign(
+			userId, nameMap, descriptionMap, startDate, endDate, null, priority,
+			active, userSegmentIds, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public Campaign addCampaign(
+			long userId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
+			String timeZoneId, int priority, boolean active,
+			long[] userSegmentIds, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
 		User user = UserLocalServiceUtil.getUser(userId);
 
 		Date now = new Date();
+
+		if (timeZoneId == null) {
+			timeZoneId = serviceContext.getTimeZone().getID();
+		}
 
 		long campaignId = CounterLocalServiceUtil.increment();
 
@@ -95,6 +113,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		campaign.setDescriptionMap(descriptionMap);
 		campaign.setStartDate(startDate);
 		campaign.setEndDate(endDate);
+		campaign.setTimeZoneId(timeZoneId);
 		campaign.setPriority(priority);
 		campaign.setActive(active);
 
@@ -322,7 +341,25 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
+		return updateCampaign(
+			campaignId, nameMap, descriptionMap, startDate, endDate, null,
+			priority, active, userSegmentIds, serviceContext);
+	}
+
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public Campaign updateCampaign(
+			long campaignId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
+			String timeZoneId, int priority, boolean active,
+			long[] userSegmentIds, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
 		Date now = new Date();
+
+		if (timeZoneId == null) {
+			timeZoneId = serviceContext.getTimeZone().getID();
+		}
 
 		Campaign campaign = campaignPersistence.findByPrimaryKey(campaignId);
 
@@ -331,6 +368,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		campaign.setDescriptionMap(descriptionMap);
 		campaign.setStartDate(startDate);
 		campaign.setEndDate(endDate);
+		campaign.setTimeZoneId(timeZoneId);
 		campaign.setPriority(priority);
 		campaign.setActive(active);
 

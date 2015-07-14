@@ -132,24 +132,25 @@ public class CampaignStagedModelDataHandler
 				importedCampaign = CampaignLocalServiceUtil.addCampaign(
 					userId, campaign.getNameMap(), campaign.getDescriptionMap(),
 					campaign.getStartDate(), campaign.getEndDate(),
-					campaign.getPriority(), campaign.getActive(),
-					userSegmentIds, serviceContext);
+					campaign.getTimeZoneId(), campaign.getPriority(),
+					campaign.getActive(), userSegmentIds, serviceContext);
 			}
 			else {
 				importedCampaign =
 					CampaignLocalServiceUtil.updateCampaign(
 						existingCampaign.getCampaignId(), campaign.getNameMap(),
 						campaign.getDescriptionMap(), campaign.getStartDate(),
-						campaign.getEndDate(), campaign.getPriority(),
-						campaign.getActive(), userSegmentIds, serviceContext);
+						campaign.getEndDate(), campaign.getTimeZoneId(),
+						campaign.getPriority(), campaign.getActive(),
+						userSegmentIds, serviceContext);
 			}
 		}
 		else {
 			importedCampaign = CampaignLocalServiceUtil.addCampaign(
 				userId, campaign.getNameMap(), campaign.getDescriptionMap(),
 				campaign.getStartDate(), campaign.getEndDate(),
-				campaign.getPriority(), campaign.getActive(), userSegmentIds,
-				serviceContext);
+				campaign.getTimeZoneId(), campaign.getPriority(),
+				campaign.getActive(), userSegmentIds, serviceContext);
 		}
 
 		importTrackingActionInstances(

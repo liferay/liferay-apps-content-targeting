@@ -57,8 +57,25 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 			ActionKeys.ADD_CAMPAIGN);
 
 		return campaignLocalService.addCampaign(
-			userId, nameMap, descriptionMap, startDate, endDate, priority,
+			userId, nameMap, descriptionMap, startDate, endDate, null, priority,
 			active, userSegmentIds, serviceContext);
+	}
+
+	@Override
+	public Campaign addCampaign(
+			long userId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
+			String timeZoneId, int priority, boolean active,
+			long[] userSegmentIds, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		ContentTargetingPermission.check(
+			getPermissionChecker(), serviceContext.getScopeGroupId(),
+			ActionKeys.ADD_CAMPAIGN);
+
+		return campaignLocalService.addCampaign(
+			userId, nameMap, descriptionMap, startDate, endDate, timeZoneId,
+			priority, active, userSegmentIds, serviceContext);
 	}
 
 	@Override
@@ -108,8 +125,24 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
 
 		return campaignLocalService.updateCampaign(
-			campaignId, nameMap, descriptionMap, startDate, endDate, priority,
-			active, userSegmentIds, serviceContext);
+			campaignId, nameMap, descriptionMap, startDate, endDate, null,
+			priority, active, userSegmentIds, serviceContext);
+	}
+
+	@Override
+	public Campaign updateCampaign(
+			long campaignId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, Date startDate, Date endDate,
+			String timeZoneId, int priority, boolean active,
+			long[] userSegmentIds, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		CampaignPermission.check(
+			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
+
+		return campaignLocalService.updateCampaign(
+			campaignId, nameMap, descriptionMap, startDate, endDate, timeZoneId,
+			priority, active, userSegmentIds, serviceContext);
 	}
 
 }
