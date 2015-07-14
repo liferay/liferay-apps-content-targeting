@@ -62,6 +62,7 @@ public class CampaignWrapper implements Campaign, ModelWrapper<Campaign> {
 		attributes.put("description", getDescription());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
+		attributes.put("timeZoneId", getTimeZoneId());
 		attributes.put("priority", getPriority());
 		attributes.put("active", getActive());
 
@@ -140,6 +141,12 @@ public class CampaignWrapper implements Campaign, ModelWrapper<Campaign> {
 
 		if (endDate != null) {
 			setEndDate(endDate);
+		}
+
+		String timeZoneId = (String)attributes.get("timeZoneId");
+
+		if (timeZoneId != null) {
+			setTimeZoneId(timeZoneId);
 		}
 
 		Integer priority = (Integer)attributes.get("priority");
@@ -677,6 +684,26 @@ public class CampaignWrapper implements Campaign, ModelWrapper<Campaign> {
 	@Override
 	public void setEndDate(java.util.Date endDate) {
 		_campaign.setEndDate(endDate);
+	}
+
+	/**
+	* Returns the time zone ID of this campaign.
+	*
+	* @return the time zone ID of this campaign
+	*/
+	@Override
+	public java.lang.String getTimeZoneId() {
+		return _campaign.getTimeZoneId();
+	}
+
+	/**
+	* Sets the time zone ID of this campaign.
+	*
+	* @param timeZoneId the time zone ID of this campaign
+	*/
+	@Override
+	public void setTimeZoneId(java.lang.String timeZoneId) {
+		_campaign.setTimeZoneId(timeZoneId);
 	}
 
 	/**

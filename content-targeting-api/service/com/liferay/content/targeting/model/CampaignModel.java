@@ -438,6 +438,21 @@ public interface CampaignModel extends BaseModel<Campaign>, StagedGroupedModel {
 	public void setEndDate(Date endDate);
 
 	/**
+	 * Returns the time zone ID of this campaign.
+	 *
+	 * @return the time zone ID of this campaign
+	 */
+	@AutoEscape
+	public String getTimeZoneId();
+
+	/**
+	 * Sets the time zone ID of this campaign.
+	 *
+	 * @param timeZoneId the time zone ID of this campaign
+	 */
+	public void setTimeZoneId(String timeZoneId);
+
+	/**
 	 * Returns the priority of this campaign.
 	 *
 	 * @return the priority of this campaign

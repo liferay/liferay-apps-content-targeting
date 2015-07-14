@@ -3150,6 +3150,7 @@ public class CampaignPersistenceImpl extends BasePersistenceImpl<Campaign>
 		campaignImpl.setDescription(campaign.getDescription());
 		campaignImpl.setStartDate(campaign.getStartDate());
 		campaignImpl.setEndDate(campaign.getEndDate());
+		campaignImpl.setTimeZoneId(campaign.getTimeZoneId());
 		campaignImpl.setPriority(campaign.getPriority());
 		campaignImpl.setActive(campaign.isActive());
 

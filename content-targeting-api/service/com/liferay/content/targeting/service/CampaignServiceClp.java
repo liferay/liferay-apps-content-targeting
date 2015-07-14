@@ -40,28 +40,44 @@ public class CampaignServiceClp implements CampaignService {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName4 = "deleteCampaign";
+		_methodName4 = "addCampaign";
 
-		_methodParameterTypes4 = new String[] { "long" };
+		_methodParameterTypes4 = new String[] {
+				"long", "java.util.Map", "java.util.Map", "java.util.Date",
+				"java.util.Date", "java.lang.String", "int", "boolean",
+				"long[][]", "com.liferay.portal.service.ServiceContext"
+			};
 
-		_methodName5 = "fetchCurrentMaxPriorityCampaign";
+		_methodName5 = "deleteCampaign";
 
-		_methodParameterTypes5 = new String[] { "long[][]", "long[][]" };
+		_methodParameterTypes5 = new String[] { "long" };
 
-		_methodName6 = "getCampaigns";
+		_methodName6 = "fetchCurrentMaxPriorityCampaign";
 
-		_methodParameterTypes6 = new String[] { "long" };
+		_methodParameterTypes6 = new String[] { "long[][]", "long[][]" };
 
-		_methodName7 = "getCampaignsCount";
+		_methodName7 = "getCampaigns";
 
 		_methodParameterTypes7 = new String[] { "long" };
 
-		_methodName8 = "updateCampaign";
+		_methodName8 = "getCampaignsCount";
 
-		_methodParameterTypes8 = new String[] {
+		_methodParameterTypes8 = new String[] { "long" };
+
+		_methodName9 = "updateCampaign";
+
+		_methodParameterTypes9 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
 				"java.util.Date", "int", "boolean", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName10 = "updateCampaign";
+
+		_methodParameterTypes10 = new String[] {
+				"long", "java.util.Map", "java.util.Map", "java.util.Date",
+				"java.util.Date", "java.lang.String", "int", "boolean",
+				"long[][]", "com.liferay.portal.service.ServiceContext"
 			};
 	}
 
@@ -173,6 +189,66 @@ public class CampaignServiceClp implements CampaignService {
 	}
 
 	@Override
+	public com.liferay.content.targeting.model.Campaign addCampaign(
+		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String timeZoneId, int priority, boolean active,
+		long[] userSegmentIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName4,
+					_methodParameterTypes4,
+					new Object[] {
+						userId,
+						
+					ClpSerializer.translateInput(nameMap),
+						
+					ClpSerializer.translateInput(descriptionMap),
+						
+					ClpSerializer.translateInput(startDate),
+						
+					ClpSerializer.translateInput(endDate),
+						
+					ClpSerializer.translateInput(timeZoneId),
+						
+					priority,
+						
+					active,
+						
+					ClpSerializer.translateInput(userSegmentIds),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.content.targeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public com.liferay.content.targeting.model.Campaign deleteCampaign(
 		long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -180,8 +256,8 @@ public class CampaignServiceClp implements CampaignService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName4,
-					_methodParameterTypes4, new Object[] { campaignId });
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -213,8 +289,8 @@ public class CampaignServiceClp implements CampaignService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName5,
-					_methodParameterTypes5,
+			returnObj = _invokableService.invokeMethod(_methodName6,
+					_methodParameterTypes6,
 					new Object[] {
 						ClpSerializer.translateInput(groupIds),
 						
@@ -248,8 +324,8 @@ public class CampaignServiceClp implements CampaignService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName6,
-					_methodParameterTypes6, new Object[] { groupId });
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7, new Object[] { groupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -281,8 +357,8 @@ public class CampaignServiceClp implements CampaignService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName7,
-					_methodParameterTypes7, new Object[] { groupId });
+			returnObj = _invokableService.invokeMethod(_methodName8,
+					_methodParameterTypes8, new Object[] { groupId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -320,8 +396,8 @@ public class CampaignServiceClp implements CampaignService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName8,
-					_methodParameterTypes8,
+			returnObj = _invokableService.invokeMethod(_methodName9,
+					_methodParameterTypes9,
 					new Object[] {
 						campaignId,
 						
@@ -332,6 +408,67 @@ public class CampaignServiceClp implements CampaignService {
 					ClpSerializer.translateInput(startDate),
 						
 					ClpSerializer.translateInput(endDate),
+						
+					priority,
+						
+					active,
+						
+					ClpSerializer.translateInput(userSegmentIds),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.content.targeting.model.Campaign)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.content.targeting.model.Campaign updateCampaign(
+		long campaignId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String timeZoneId, int priority, boolean active,
+		long[] userSegmentIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName10,
+					_methodParameterTypes10,
+					new Object[] {
+						campaignId,
+						
+					ClpSerializer.translateInput(nameMap),
+						
+					ClpSerializer.translateInput(descriptionMap),
+						
+					ClpSerializer.translateInput(startDate),
+						
+					ClpSerializer.translateInput(endDate),
+						
+					ClpSerializer.translateInput(timeZoneId),
 						
 					priority,
 						
@@ -382,4 +519,8 @@ public class CampaignServiceClp implements CampaignService {
 	private String[] _methodParameterTypes7;
 	private String _methodName8;
 	private String[] _methodParameterTypes8;
+	private String _methodName9;
+	private String[] _methodParameterTypes9;
+	private String _methodName10;
+	private String[] _methodParameterTypes10;
 }

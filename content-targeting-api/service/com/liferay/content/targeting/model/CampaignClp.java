@@ -96,6 +96,7 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 		attributes.put("description", getDescription());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
+		attributes.put("timeZoneId", getTimeZoneId());
 		attributes.put("priority", getPriority());
 		attributes.put("active", getActive());
 
@@ -174,6 +175,12 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 
 		if (endDate != null) {
 			setEndDate(endDate);
+		}
+
+		String timeZoneId = (String)attributes.get("timeZoneId");
+
+		if (timeZoneId != null) {
+			setTimeZoneId(timeZoneId);
 		}
 
 		Integer priority = (Integer)attributes.get("priority");
@@ -678,6 +685,29 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 	}
 
 	@Override
+	public String getTimeZoneId() {
+		return _timeZoneId;
+	}
+
+	@Override
+	public void setTimeZoneId(String timeZoneId) {
+		_timeZoneId = timeZoneId;
+
+		if (_campaignRemoteModel != null) {
+			try {
+				Class<?> clazz = _campaignRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setTimeZoneId", String.class);
+
+				method.invoke(_campaignRemoteModel, timeZoneId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
 	public int getPriority() {
 		return _priority;
 	}
@@ -931,6 +961,7 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 		clone.setDescription(getDescription());
 		clone.setStartDate(getStartDate());
 		clone.setEndDate(getEndDate());
+		clone.setTimeZoneId(getTimeZoneId());
 		clone.setPriority(getPriority());
 		clone.setActive(getActive());
 
@@ -991,7 +1022,7 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1017,6 +1048,8 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 		sb.append(getStartDate());
 		sb.append(", endDate=");
 		sb.append(getEndDate());
+		sb.append(", timeZoneId=");
+		sb.append(getTimeZoneId());
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append(", active=");
@@ -1028,7 +1061,7 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.content.targeting.model.Campaign");
@@ -1083,6 +1116,10 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 		sb.append(getEndDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>timeZoneId</column-name><column-value><![CDATA[");
+		sb.append(getTimeZoneId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
@@ -1111,6 +1148,7 @@ public class CampaignClp extends BaseModelImpl<Campaign> implements Campaign {
 	private String _descriptionCurrentLanguageId;
 	private Date _startDate;
 	private Date _endDate;
+	private String _timeZoneId;
 	private int _priority;
 	private boolean _active;
 	private BaseModel<?> _campaignRemoteModel;

@@ -11,6 +11,7 @@ create table CT_Campaign (
 	description STRING null,
 	startDate DATE null,
 	endDate DATE null,
+	timeZoneId VARCHAR(75) null,
 	priority INTEGER,
 	active_ BOOLEAN
 );

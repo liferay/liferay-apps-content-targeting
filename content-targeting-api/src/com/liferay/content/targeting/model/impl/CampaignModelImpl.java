@@ -86,10 +86,11 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 			{ "description", Types.VARCHAR },
 			{ "startDate", Types.TIMESTAMP },
 			{ "endDate", Types.TIMESTAMP },
+			{ "timeZoneId", Types.VARCHAR },
 			{ "priority", Types.INTEGER },
 			{ "active_", Types.BOOLEAN }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_Campaign (uuid_ VARCHAR(75) null,campaignId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,startDate DATE null,endDate DATE null,priority INTEGER,active_ BOOLEAN)";
+	public static final String TABLE_SQL_CREATE = "create table CT_Campaign (uuid_ VARCHAR(75) null,campaignId LONG not null primary key,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null,startDate DATE null,endDate DATE null,timeZoneId VARCHAR(75) null,priority INTEGER,active_ BOOLEAN)";
 	public static final String TABLE_SQL_DROP = "drop table CT_Campaign";
 	public static final String ORDER_BY_JPQL = " ORDER BY campaign.priority ASC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_Campaign.priority ASC";
@@ -135,6 +136,7 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 		model.setDescription(soapModel.getDescription());
 		model.setStartDate(soapModel.getStartDate());
 		model.setEndDate(soapModel.getEndDate());
+		model.setTimeZoneId(soapModel.getTimeZoneId());
 		model.setPriority(soapModel.getPriority());
 		model.setActive(soapModel.getActive());
 
@@ -224,6 +226,7 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 		attributes.put("description", getDescription());
 		attributes.put("startDate", getStartDate());
 		attributes.put("endDate", getEndDate());
+		attributes.put("timeZoneId", getTimeZoneId());
 		attributes.put("priority", getPriority());
 		attributes.put("active", getActive());
 
@@ -302,6 +305,12 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 
 		if (endDate != null) {
 			setEndDate(endDate);
+		}
+
+		String timeZoneId = (String)attributes.get("timeZoneId");
+
+		if (timeZoneId != null) {
+			setTimeZoneId(timeZoneId);
 		}
 
 		Integer priority = (Integer)attributes.get("priority");
@@ -683,6 +692,22 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 
 	@JSON
 	@Override
+	public String getTimeZoneId() {
+		if (_timeZoneId == null) {
+			return StringPool.BLANK;
+		}
+		else {
+			return _timeZoneId;
+		}
+	}
+
+	@Override
+	public void setTimeZoneId(String timeZoneId) {
+		_timeZoneId = timeZoneId;
+	}
+
+	@JSON
+	@Override
 	public int getPriority() {
 		return _priority;
 	}
@@ -834,6 +859,7 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 		campaignImpl.setDescription(getDescription());
 		campaignImpl.setStartDate(getStartDate());
 		campaignImpl.setEndDate(getEndDate());
+		campaignImpl.setTimeZoneId(getTimeZoneId());
 		campaignImpl.setPriority(getPriority());
 		campaignImpl.setActive(getActive());
 
@@ -987,6 +1013,14 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 			campaignCacheModel.endDate = Long.MIN_VALUE;
 		}
 
+		campaignCacheModel.timeZoneId = getTimeZoneId();
+
+		String timeZoneId = campaignCacheModel.timeZoneId;
+
+		if ((timeZoneId != null) && (timeZoneId.length() == 0)) {
+			campaignCacheModel.timeZoneId = null;
+		}
+
 		campaignCacheModel.priority = getPriority();
 
 		campaignCacheModel.active = getActive();
@@ -996,7 +1030,7 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -1022,6 +1056,8 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 		sb.append(getStartDate());
 		sb.append(", endDate=");
 		sb.append(getEndDate());
+		sb.append(", timeZoneId=");
+		sb.append(getTimeZoneId());
 		sb.append(", priority=");
 		sb.append(getPriority());
 		sb.append(", active=");
@@ -1033,7 +1069,7 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(46);
+		StringBundler sb = new StringBundler(49);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.content.targeting.model.Campaign");
@@ -1088,6 +1124,10 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 		sb.append(getEndDate());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>timeZoneId</column-name><column-value><![CDATA[");
+		sb.append(getTimeZoneId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>priority</column-name><column-value><![CDATA[");
 		sb.append(getPriority());
 		sb.append("]]></column-value></column>");
@@ -1125,6 +1165,7 @@ public class CampaignModelImpl extends BaseModelImpl<Campaign>
 	private String _descriptionCurrentLanguageId;
 	private Date _startDate;
 	private Date _endDate;
+	private String _timeZoneId;
 	private int _priority;
 	private boolean _active;
 	private long _columnBitmask;

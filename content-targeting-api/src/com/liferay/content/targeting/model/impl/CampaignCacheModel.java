@@ -37,7 +37,7 @@ import java.util.Date;
 public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(29);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -63,6 +63,8 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 		sb.append(startDate);
 		sb.append(", endDate=");
 		sb.append(endDate);
+		sb.append(", timeZoneId=");
+		sb.append(timeZoneId);
 		sb.append(", priority=");
 		sb.append(priority);
 		sb.append(", active=");
@@ -137,6 +139,13 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 			campaignImpl.setEndDate(new Date(endDate));
 		}
 
+		if (timeZoneId == null) {
+			campaignImpl.setTimeZoneId(StringPool.BLANK);
+		}
+		else {
+			campaignImpl.setTimeZoneId(timeZoneId);
+		}
+
 		campaignImpl.setPriority(priority);
 		campaignImpl.setActive(active);
 
@@ -159,6 +168,7 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 		description = objectInput.readUTF();
 		startDate = objectInput.readLong();
 		endDate = objectInput.readLong();
+		timeZoneId = objectInput.readUTF();
 		priority = objectInput.readInt();
 		active = objectInput.readBoolean();
 	}
@@ -204,6 +214,14 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 
 		objectOutput.writeLong(startDate);
 		objectOutput.writeLong(endDate);
+
+		if (timeZoneId == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(timeZoneId);
+		}
+
 		objectOutput.writeInt(priority);
 		objectOutput.writeBoolean(active);
 	}
@@ -220,6 +238,7 @@ public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable 
 	public String description;
 	public long startDate;
 	public long endDate;
+	public String timeZoneId;
 	public int priority;
 	public boolean active;
 }
