@@ -51,9 +51,11 @@
 
 	<@invalidDateRangeException />
 
-	<@aui["input"] name="startDate" value=startDate />
+    <@aui["input"] name="startDate" value=startDate />
 
-	<@aui["input"] name="endDate" value=endDate />
+    <@aui["input"] name="endDate" value=endDate />
+
+    <@aui["input"] type="timeZone" name="timeZoneId" label="date-time-zone" helpMessage="date-time-zone-help" value=timeZoneId daylight="${dateDaylight}" />
 
 	<@aui["input"] cssClass="slider-input" helpMessage="priority-help" inlineField=true name="priority" size="2" maxlength="3" type="text" value="${priority}" />
 
