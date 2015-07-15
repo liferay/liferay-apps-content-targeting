@@ -37,15 +37,37 @@
 		modelVar="campaign"
 	>
 
-		<@liferay_ui["search-container-column-text"]
-			name="name"
-			value=campaign.getName(locale)
-		/>
+        <@portlet["renderURL"] var="editCampaignURL">
+            <@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
+            <@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
+            <@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
+        </@>
 
-		<@liferay_ui["search-container-column-text"]
-			name="description"
-			value=campaign.getDescription(locale)
-		/>
+        <#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
+            <@liferay_ui["search-container-column-text"]
+                href=editCampaignURL
+                name="name"
+                value=campaign.getName(locale)
+            />
+        <#else>
+            <@liferay_ui["search-container-column-text"]
+                name="name"
+                value=campaign.getName(locale)
+            />
+        </#if>
+
+        <#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
+            <@liferay_ui["search-container-column-text"]
+                href=editCampaignURL
+                name="description"
+                value=campaign.getDescription(locale)
+            />
+        <#else>
+            <@liferay_ui["search-container-column-text"]
+                name="description"
+                value=campaign.getDescription(locale)
+            />
+        </#if>
 
 		<@liferay_ui["search-container-column-date"]
 			name="start-date"
@@ -111,12 +133,6 @@
 				</#if>
 
 				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
-					<@portlet["renderURL"] var="editCampaignURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-						<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
-						<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
-					</@>
-
 					<@liferay_ui["icon"]
 						image="edit"
 						method="get"
