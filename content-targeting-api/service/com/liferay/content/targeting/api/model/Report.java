@@ -85,6 +85,15 @@ public interface Report {
 	public String getReportType();
 
 	/**
+	 * Returns visibility of the report for specific element
+	 *
+	 * @param classPK the id of the element with the report type to check
+	 *                visivility
+	 * @return
+	 */
+	public boolean isVisible(long classPK);
+
+	/**
 	 * Returns the result of updating the report.
 	 *
 	 * @param  classPK the id of the element with the report type to be updated

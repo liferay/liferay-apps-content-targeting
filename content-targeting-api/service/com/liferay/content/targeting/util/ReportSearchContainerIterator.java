@@ -21,7 +21,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.portlet.PortletException;
 
@@ -35,12 +37,13 @@ public class ReportSearchContainerIterator
 	extends SearchContainerIterator<Report> {
 
 	public ReportSearchContainerIterator(
-			long groupId, String keywords, String className)
+			long groupId, String keywords, String className, long classPK)
 		throws PortletException {
 
 		super(groupId, keywords);
 
 		_className = className;
+		_classPK = classPK;
 
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
@@ -60,11 +63,23 @@ public class ReportSearchContainerIterator
 		return getResults().size();
 	}
 
-	protected List<Report> getResults() {
-		return ListUtil.fromMapValues(_reportsRegistry.getReports(_className));
+	protected List<Report> getResults()
+		throws PortalException, SystemException {
+
+		Map<String, Report> reportMap = _reportsRegistry.getReports(_className);
+		List<Report> reports = new ArrayList<Report>();
+
+		for (Report report : reportMap.values()) {
+			if (report.isVisible(_classPK)) {
+				reports.add(report);
+			}
+		}
+
+		return reports;
 	}
 
 	private String _className;
+	private long _classPK;
 	private ReportsRegistry _reportsRegistry;
 
 }

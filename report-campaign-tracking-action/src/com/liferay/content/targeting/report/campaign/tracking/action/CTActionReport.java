@@ -21,6 +21,7 @@ import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAct
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.util.comparator.CTActionTotalCountComparator;
+import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
 import com.liferay.content.targeting.util.SearchContainerIterator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -63,6 +64,25 @@ public class CTActionReport extends BaseReport {
 	@Override
 	public String getReportType() {
 		return Campaign.class.getName();
+	}
+
+	@Override
+	public boolean isVisible(long classPK) {
+		Campaign campaign = null;
+		try {
+			int trackingActionInstanceCount =
+				TrackingActionInstanceLocalServiceUtil.
+					getTrackingActionInstancesCount(classPK);
+
+			if (trackingActionInstanceCount > 0) {
+				return true;
+			}
+		}
+		catch (Exception e) {
+			_log.error(e);
+		}
+
+		return false;
 	}
 
 	@Reference
