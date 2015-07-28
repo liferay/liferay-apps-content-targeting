@@ -90,20 +90,12 @@ public class SiteMemberRule extends BaseRule {
 
 		Group group = GroupLocalServiceUtil.fetchGroup(groupId);
 
-		if (group != null ) {
-			ruleInstance.setTypeSettings(group.getUuid());
-
-			portletDataContext.addReferenceElement(
-				ruleInstance, ruleInstanceElement, group,
-				PortletDataContext.REFERENCE_TYPE_WEAK, true);
-
-			return;
+		if (group == null ) {
+			throw new PortletDataException(
+				getExportImportErrorMessage(
+					userSegment, ruleInstance, Group.class.getName(),
+					String.valueOf(groupId), Constants.EXPORT));
 		}
-
-		throw new PortletDataException(
-			getExportImportErrorMessage(
-				userSegment, ruleInstance, Group.class.getName(),
-				String.valueOf(groupId), Constants.EXPORT));
 	}
 
 	@Override
