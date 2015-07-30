@@ -190,6 +190,9 @@ public class UserGroupMemberRule extends BaseRule {
 		List<UserGroup> userGroups = new ArrayList<UserGroup>();
 
 		try {
+
+			// See LPS-55480
+
 			userGroups = UserGroupLocalServiceUtil.getUserGroups(
 				company.getCompanyId());
 		}

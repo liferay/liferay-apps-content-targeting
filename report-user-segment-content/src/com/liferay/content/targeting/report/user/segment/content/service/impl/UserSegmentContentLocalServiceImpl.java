@@ -32,6 +32,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.Date;
@@ -198,13 +199,14 @@ public class UserSegmentContentLocalServiceImpl
 		// Process analytics and store data
 
 		for (Object[] analyticsEvent : analyticsEvents) {
-			String referrerClassName = (String)analyticsEvent[0];
-			long referrerClassPK = (Long)analyticsEvent[1];
+			String className = (String)analyticsEvent[0];
+			long classPK = (Long)analyticsEvent[1];
 			int count = (Integer)analyticsEvent[2];
 
-			addUserSegmentContent(
-				userSegmentId, referrerClassName, referrerClassPK, "view",
-				count);
+			if (Validator.isNotNull(className) && (classPK > 0)) {
+				addUserSegmentContent(
+					userSegmentId, className, classPK, "view", count);
+			}
 		}
 	}
 

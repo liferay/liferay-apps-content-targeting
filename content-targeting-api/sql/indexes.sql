@@ -17,6 +17,7 @@ create index IX_E3BCC399 on CT_RuleInstance (uuid_, companyId);
 create unique index IX_B8A35C5B on CT_RuleInstance (uuid_, groupId);
 
 create index IX_E9845BF5 on CT_TrackingActionInstance (campaignId);
+create unique index IX_FE48A6B8 on CT_TrackingActionInstance (campaignId, alias_);
 create index IX_8DDDDC52 on CT_TrackingActionInstance (campaignId, elementId, eventType);
 create index IX_A96A17F on CT_TrackingActionInstance (campaignId, referrerClassName, referrerClassPK, eventType);
 create index IX_8EAC9E74 on CT_TrackingActionInstance (groupId);

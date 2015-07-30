@@ -105,6 +105,22 @@ public class TrackingActionInstanceServiceSoap {
 		}
 	}
 
+	public static com.liferay.content.targeting.model.TrackingActionInstanceSoap fetchTrackingActionInstance(
+		long campaignId, java.lang.String alias) throws RemoteException {
+		try {
+			com.liferay.content.targeting.model.TrackingActionInstance returnValue =
+				TrackingActionInstanceServiceUtil.fetchTrackingActionInstance(campaignId,
+					alias);
+
+			return com.liferay.content.targeting.model.TrackingActionInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.content.targeting.model.TrackingActionInstanceSoap[] getTrackingActionInstances(
 		long campaignId) throws RemoteException {
 		try {

@@ -32,7 +32,18 @@ String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "li
 
 String simulatorPortletName = "ctsimulator_WAR_contenttargetingweb";
 
-boolean showSimulatorControls = !group.isLayoutPrototype() && !group.isLayoutSetPrototype() && permissionChecker.hasPermission(scopeGroupId, simulatorPortletName, simulatorPortletName, ActionKeys.VIEW);
+boolean hasViewSimulatorPermission = false;
+
+ResourceAction resourceAction = ResourceActionLocalServiceUtil.fetchResourceAction(simulatorPortletName, ActionKeys.VIEW);
+
+if (resourceAction != null) {
+	hasViewSimulatorPermission = permissionChecker.hasPermission(scopeGroupId, simulatorPortletName, simulatorPortletName, ActionKeys.VIEW);
+}
+else if (_log.isWarnEnabled()) {
+	_log.warn("Audience Targeting is not fully installed yet. Please restart the server to complete the installation");
+}
+
+boolean showSimulatorControls = !group.isLayoutPrototype() && !group.isLayoutSetPrototype() && hasViewSimulatorPermission;
 %>
 
 <aui:nav-bar cssClass="navbar-static-top dockbar" data-namespace="<%= renderResponse.getNamespace() %>" id="dockbar">
@@ -350,4 +361,6 @@ private boolean _hasPortlets(String category, ThemeDisplay themeDisplay) throws 
 
 	return true;
 }
+
+private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.dockbar.view_jsp");
 %>

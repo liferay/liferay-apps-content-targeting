@@ -40,6 +40,14 @@ public class InvalidRulesException extends PortalException {
 		}
 	}
 
+	public InvalidRulesException(String msg) {
+		super(msg);
+	}
+
+	public InvalidRulesException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
 	public void add(InvalidRuleException exception) {
 		List<InvalidRuleException> exceptions = _exceptionsMap.get(
 			exception.getRuleGuid());

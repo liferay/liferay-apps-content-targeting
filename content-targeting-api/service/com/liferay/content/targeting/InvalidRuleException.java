@@ -29,6 +29,10 @@ public class InvalidRuleException extends PortalException {
 		super(msg);
 	}
 
+	public InvalidRuleException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
 	public String getRuleGuid() {
 		return _ruleGuid;
 	}

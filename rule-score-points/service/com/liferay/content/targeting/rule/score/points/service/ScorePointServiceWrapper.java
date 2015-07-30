@@ -56,6 +56,39 @@ public class ScorePointServiceWrapper implements ScorePointService,
 		return _scorePointService.invokeMethod(name, parameterTypes, arguments);
 	}
 
+	@Override
+	public long getPoints(long anonymousUserId, long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _scorePointService.getPoints(anonymousUserId, userSegmentId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.rule.score.points.model.ScorePoint> getScorePoints(
+		long userSegmentId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _scorePointService.getScorePoints(userSegmentId);
+	}
+
+	@Override
+	public long incrementPoints(long anonymousUserId, long userSegmentId,
+		long points)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _scorePointService.incrementPoints(anonymousUserId,
+			userSegmentId, points);
+	}
+
+	@Override
+	public com.liferay.content.targeting.rule.score.points.model.ScorePoint updateScorePoints(
+		long anonymousUserId, long userSegmentId, long points)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _scorePointService.updateScorePoints(anonymousUserId,
+			userSegmentId, points);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<project name="rule-@rule.java.package.name@" basedir="." default="compile">
+<project name="rule-@rule.name@" basedir="." default="compile">
 	<property name="plugin.version" value="1" />
 
 	<property name="plugin.name" value="com.liferay.content.targeting.rule.@rule.java.package.name@" />

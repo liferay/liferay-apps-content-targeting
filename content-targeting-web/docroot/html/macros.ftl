@@ -90,16 +90,32 @@
 	showEditLink=false
 >
 	<#if assetEntry?has_content>
+		<#assign assetRenderer = assetEntry.getAssetRenderer() />
+
 		${request.setAttribute("view.jsp-assetEntry", assetEntry)}
 		${request.setAttribute("view.jsp-assetRendererFactory", assetEntry.getAssetRendererFactory())}
-		${request.setAttribute("view.jsp-assetRenderer", assetEntry.getAssetRenderer())}
+		${request.setAttribute("view.jsp-assetRenderer", assetRenderer)}
 		${request.setAttribute("view.jsp-title", assetEntry.getTitle(themeDisplay.getLocale()))}
+	<#else>
+		<#assign assetRenderer = request.getAttribute("view.jsp-assetRenderer") />
 	</#if>
 
-	<@liferay_util["include"] page="/html/portlet/asset_publisher/display/${stringUtil.replace(displayStyle, '-', '_')}.jsp">
-		<@liferay_util["param"] name="showEditURL" value=showEditLink?string />
-		<@liferay_util["param"] name="showExtraInfo" value="false" />
-	</@>
+	<#if displayStyle == "full-content">
+		<#assign path = assetRenderer.render(renderRequest, renderResponse, "full_content") />
+
+		<div class="asset-content">
+			<@liferay_util["include"] page=path>
+				<@liferay_util["param"] name="showEditURL" value=showEditLink?string />
+				<@liferay_util["param"] name="showExtraInfo" value="false" />
+				<@liferay_util["param"] name="showHeader" value="false" />
+			</@>
+		</div>
+	<#else>
+		<@liferay_util["include"] page="/html/portlet/asset_publisher/display/${stringUtil.replace(displayStyle, '-', '_')}.jsp">
+			<@liferay_util["param"] name="showEditURL" value=showEditLink?string />
+			<@liferay_util["param"] name="showExtraInfo" value="false" />
+		</@>
+	</#if>
 </#macro>
 
 <#macro renderAssetEntrySelector

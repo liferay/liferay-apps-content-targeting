@@ -44,13 +44,21 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 			long anonymousUserId, long userSegmentId, long points)
 		throws SystemException {
 
-		long scorePointId = CounterLocalServiceUtil.increment();
+		ScorePoint scorePoint = scorePointPersistence.fetchByC_U(
+			anonymousUserId, userSegmentId);
 
-		ScorePoint scorePoint = scorePointPersistence.create(scorePointId);
+		if (scorePoint == null) {
+			long scorePointId = CounterLocalServiceUtil.increment();
 
-		scorePoint.setAnonymousUserId(anonymousUserId);
-		scorePoint.setUserSegmentId(userSegmentId);
-		scorePoint.setPoints(points);
+			scorePoint = scorePointPersistence.create(scorePointId);
+
+			scorePoint.setAnonymousUserId(anonymousUserId);
+			scorePoint.setUserSegmentId(userSegmentId);
+			scorePoint.setPoints(points);
+		}
+		else {
+			scorePoint.setPoints(scorePoint.getPoints() + points);
+		}
 
 		scorePointPersistence.update(scorePoint);
 

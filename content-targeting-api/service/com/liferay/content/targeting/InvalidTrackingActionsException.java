@@ -42,6 +42,14 @@ public class InvalidTrackingActionsException extends PortalException {
 		}
 	}
 
+	public InvalidTrackingActionsException(String msg) {
+		super(msg);
+	}
+
+	public InvalidTrackingActionsException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
 	public void add(InvalidTrackingActionException exception) {
 		List<InvalidTrackingActionException> exceptions = _exceptionsMap.get(
 			exception.getTrackingActionGuid());

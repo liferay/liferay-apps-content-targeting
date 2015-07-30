@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.benchmark.tools;
+package com.liferay.content.targeting.tools;
 
 import com.liferay.portal.kernel.dao.db.DB;
 import com.liferay.portal.kernel.dao.db.DBFactoryUtil;
@@ -85,11 +85,10 @@ public class CTSampleSQLBuilder {
 		output.mkdirs();
 
 		properties.put("sample.sql.output.dir", output.getPath());
-		properties.put("sample.sql.output.csv.file.names", "ct");
+		properties.put("sample.sql.output.csv.file.names", "ct,layout");
 		properties.put(
 			"sample.sql.script",
-			"com/liferay/content/targeting/benchmark/tools/dependencies/" +
-				"ct.ftl");
+			"com/liferay/content/targeting/tools/dependencies/ct.ftl");
 
 		new SampleSQLBuilder(properties, dataFactory);
 

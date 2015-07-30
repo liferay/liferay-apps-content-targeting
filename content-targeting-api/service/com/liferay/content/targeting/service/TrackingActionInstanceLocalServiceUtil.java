@@ -358,6 +358,12 @@ public class TrackingActionInstanceLocalServiceUtil {
 			eventType, typeSettings, serviceContext);
 	}
 
+	public static com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstance(
+		long campaignId, java.lang.String alias)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchTrackingActionInstance(campaignId, alias);
+	}
+
 	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
 		long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException {

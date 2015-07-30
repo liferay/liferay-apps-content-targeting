@@ -38,6 +38,10 @@ public class UsedUserSegmentException extends PortalException {
 		super(msg);
 	}
 
+	public UsedUserSegmentException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
 	public List<Campaign> getCampaigns() {
 		return _campaigns;
 	}

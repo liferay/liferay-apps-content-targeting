@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.service.impl;
 
+import com.liferay.content.targeting.DuplicateTrackingActionInstanceException;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
 import com.liferay.content.targeting.model.TrackingActionInstance;
@@ -70,6 +71,8 @@ public class TrackingActionInstanceLocalServiceImpl
 			String elementId, String eventType, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		validate(0, campaignId, alias);
 
 		User user = UserLocalServiceUtil.getUser(userId);
 
@@ -154,6 +157,14 @@ public class TrackingActionInstanceLocalServiceImpl
 	}
 
 	@Override
+	public TrackingActionInstance fetchTrackingActionInstance(
+			long campaignId, String alias)
+		throws SystemException {
+
+		return trackingActionInstancePersistence.fetchByC_A(campaignId, alias);
+	}
+
+	@Override
 	public List<TrackingActionInstance> getTrackingActionInstances(
 			long campaignId)
 		throws SystemException {
@@ -173,7 +184,7 @@ public class TrackingActionInstanceLocalServiceImpl
 	@Override
 	public List<TrackingActionInstance> getTrackingActionInstances(
 			long campaignId, String elementId, String eventType)
-		throws SystemException {
+	throws SystemException {
 
 		return trackingActionInstancePersistence.findByC_E_E(
 			campaignId, elementId, eventType);
@@ -200,6 +211,10 @@ public class TrackingActionInstanceLocalServiceImpl
 			trackingActionInstancePersistence.findByPrimaryKey(
 				trackingActionInstanceId);
 
+		validate(
+			trackingActionInstanceId, trackingActionInstance.getCampaignId(),
+			alias);
+
 		trackingActionInstance.setModifiedDate(
 			serviceContext.getModifiedDate(now));
 		trackingActionInstance.setAlias(alias);
@@ -212,6 +227,23 @@ public class TrackingActionInstanceLocalServiceImpl
 		trackingActionInstancePersistence.update(trackingActionInstance);
 
 		return trackingActionInstance;
+	}
+
+	protected void validate(
+			long trackingInstanceId, long campaignId, String alias)
+		throws PortalException, SystemException {
+
+		TrackingActionInstance trackingActionInstance =
+			trackingActionInstancePersistence.fetchByC_A(campaignId, alias);
+
+		if ((trackingActionInstance != null) &&
+			(trackingActionInstance.getTrackingActionInstanceId() !=
+				trackingInstanceId)) {
+
+			throw new DuplicateTrackingActionInstanceException(
+				"A tracking action instance with the alias " + alias +
+					" already exists in campaign " + campaignId);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -57,7 +57,7 @@
 		image="configuration"
 		label=false
 		message="manage-user-segments"
-		url=viewUserSegments
+		url="javascript:viewUserSegments();"
 	/>
 
 	<@invalidDateRangeException />
@@ -85,7 +85,7 @@
 						<div class="tab-content">
 							<div class="tab-pane">
 								<div class="hide panel-page-menu" id="formBuilderSB">
-									<div class="search-panels">
+									<div class="form-builder-search-panels">
 										<i class="icon-search"></i>
 
 										<div class="search-panels-bar">
@@ -162,6 +162,14 @@
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
+	</@>
+
+	<@aui["script"]>
+		function viewUserSegments() {
+			if (confirm('<@liferay_ui["message"] key="editing-user-segments-deletes-all-unsaved-campaign-data" />')) {
+				window.location.href = "${viewUserSegments}";
+			}
+		}
 	</@>
 
 	<@aui["script"] use="liferay-ct-form-builder,liferay-input-slider">

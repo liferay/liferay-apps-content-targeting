@@ -305,6 +305,9 @@ public class SiteRoleRule extends BaseRule {
 		List<Role> roles = new ArrayList<Role>();
 
 		try {
+
+			// See LPS-55480
+
 			roles = RoleLocalServiceUtil.getRoles(
 				company.getCompanyId(), new int[] {RoleConstants.TYPE_SITE});
 
