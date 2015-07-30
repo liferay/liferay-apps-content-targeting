@@ -17,6 +17,8 @@
 	<property name="app.services" value="analytics-api,anonymous-users-api,content-targeting-api,report-campaign-content,report-campaign-tracking-action,report-user-segment-content,rule-score-points" />
 	<property name="app.tracking.actions" value="tracking-action-content,tracking-action-form,tracking-action-link,tracking-action-page,tracking-action-youtube" />
 
+	<property name="build.app.services" value="true" />
+
 	<target name="all">
 		<antcall target="release" />
 	</target>
@@ -24,7 +26,12 @@
 	<target name="build-app">
 		<antcall target="clean" />
 
-		<antcall target="build-app-services" />
+		<if>
+			<equals arg1="${build.app.services}" arg2="true" />
+			<then>
+				<antcall target="build-app-services" />
+			</then>
+		</if>
 
 		<if>
 			<not>
