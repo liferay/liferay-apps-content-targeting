@@ -323,10 +323,10 @@ public class AnalyticsReferrerLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrersByEventId(
+	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
 		long analyticsEventId)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return _analyticsReferrerLocalService.getAnalyticsReferrersByEventId(analyticsEventId);
+		return _analyticsReferrerLocalService.getAnalyticsReferrers(analyticsEventId);
 	}
 
 	/**
