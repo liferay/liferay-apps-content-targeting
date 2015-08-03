@@ -84,11 +84,11 @@ public class AnalyticsReferrerLocalServiceImpl
 	}
 
 	@Override
-	public List<AnalyticsReferrer> getAnalyticsReferrersByEventId(
-			long analyticsEventId)
-        throws SystemException {
+	public List<AnalyticsReferrer> getAnalyticsReferrers(long analyticsEventId)
+		throws SystemException {
 
-		return analyticsReferrerPersistence.findByA(analyticsEventId);
+		return analyticsReferrerPersistence.findByAnalyticsEventId(
+			analyticsEventId);
 	}
 
 }
