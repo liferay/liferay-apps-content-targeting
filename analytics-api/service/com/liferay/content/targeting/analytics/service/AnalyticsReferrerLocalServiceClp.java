@@ -138,7 +138,7 @@ public class AnalyticsReferrerLocalServiceClp
 
 		_methodParameterTypes22 = new String[] { "java.lang.String", "long" };
 
-		_methodName23 = "getAnalyticsReferrersByEventId";
+		_methodName23 = "getAnalyticsReferrers";
 
 		_methodParameterTypes23 = new String[] { "long" };
 	}
@@ -846,7 +846,7 @@ public class AnalyticsReferrerLocalServiceClp
 	}
 
 	@Override
-	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrersByEventId(
+	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
 		long analyticsEventId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

@@ -136,7 +136,7 @@ public class AnalyticsReferrerLocalServiceClpInvoker {
 
 		_methodParameterTypes51 = new String[] { "java.lang.String", "long" };
 
-		_methodName52 = "getAnalyticsReferrersByEventId";
+		_methodName52 = "getAnalyticsReferrers";
 
 		_methodParameterTypes52 = new String[] { "long" };
 	}
@@ -268,7 +268,7 @@ public class AnalyticsReferrerLocalServiceClpInvoker {
 
 		if (_methodName52.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
-			return AnalyticsReferrerLocalServiceUtil.getAnalyticsReferrersByEventId(((Long)arguments[0]).longValue());
+			return AnalyticsReferrerLocalServiceUtil.getAnalyticsReferrers(((Long)arguments[0]).longValue());
 		}
 
 		throw new UnsupportedOperationException();
