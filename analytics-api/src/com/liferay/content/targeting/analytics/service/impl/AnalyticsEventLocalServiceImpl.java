@@ -15,12 +15,15 @@
 package com.liferay.content.targeting.analytics.service.impl;
 
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
+import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 import com.liferay.content.targeting.analytics.service.base.AnalyticsEventLocalServiceBaseImpl;
 import com.liferay.content.targeting.analytics.util.PortletPropsValues;
 import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Company;
@@ -129,6 +132,26 @@ public class AnalyticsEventLocalServiceImpl
 			};
 
 		actionableDynamicQuery.performActions();
+	}
+
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public AnalyticsEvent deleteAnalyticsEvent(AnalyticsEvent analyticsEvent)
+		throws SystemException {
+
+		analyticsEventPersistence.remove(analyticsEvent);
+
+		// Analytic referrers
+
+		for (AnalyticsReferrer analyticsReferrer :
+				analyticsReferrerLocalService.getAnalyticsReferrers(
+					analyticsEvent.getAnalyticsEventId())) {
+
+			analyticsReferrerLocalService.deleteAnalyticsReferrer(
+				analyticsReferrer);
+		}
+
+		return analyticsEvent;
 	}
 
 	@Override

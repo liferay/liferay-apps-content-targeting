@@ -62,6 +62,8 @@ public class AnalyticsEventLocalServiceImplTest {
 	public void testAddAndDeleteAnalyticsEvent() throws Exception {
 		int initAnalyticsEventsCount =
 			_analyticsEventLocalService.getAnalyticsEventsCount();
+		int initAnalyticsReferrersCount =
+			_analyticsReferrerLocalService.getAnalyticsReferrersCount();
 
 		AnalyticsEvent analyticsEvent =
 			_analyticsEventLocalService.addAnalyticsEvent(
@@ -73,11 +75,19 @@ public class AnalyticsEventLocalServiceImplTest {
 			initAnalyticsEventsCount + 1,
 			_analyticsEventLocalService.getAnalyticsEventsCount());
 
+		Assert.assertEquals(
+			initAnalyticsReferrersCount + 1,
+			_analyticsReferrerLocalService.getAnalyticsReferrersCount());
+
 		_analyticsEventLocalService.deleteAnalyticsEvent(analyticsEvent);
 
 		Assert.assertEquals(
 			initAnalyticsEventsCount,
 			_analyticsEventLocalService.getAnalyticsEventsCount());
+
+		Assert.assertEquals(
+			initAnalyticsReferrersCount,
+			_analyticsReferrerLocalService.getAnalyticsReferrersCount());
 	}
 
 	@Test
@@ -108,6 +118,9 @@ public class AnalyticsEventLocalServiceImplTest {
 
 		Assert.assertEquals(
 			0, _analyticsEventLocalService.getAnalyticsEventsCount());
+
+		Assert.assertEquals(
+			0, _analyticsReferrerLocalService.getAnalyticsReferrersCount());
 	}
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;

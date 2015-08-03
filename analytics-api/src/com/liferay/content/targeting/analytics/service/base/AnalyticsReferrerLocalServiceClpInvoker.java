@@ -135,6 +135,10 @@ public class AnalyticsReferrerLocalServiceClpInvoker {
 		_methodName51 = "getAnalyticsReferrerCount";
 
 		_methodParameterTypes51 = new String[] { "java.lang.String", "long" };
+
+		_methodName52 = "getAnalyticsReferrers";
+
+		_methodParameterTypes52 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -262,6 +266,11 @@ public class AnalyticsReferrerLocalServiceClpInvoker {
 				((Long)arguments[1]).longValue());
 		}
 
+		if (_methodName52.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
+			return AnalyticsReferrerLocalServiceUtil.getAnalyticsReferrers(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -309,4 +318,6 @@ public class AnalyticsReferrerLocalServiceClpInvoker {
 	private String[] _methodParameterTypes50;
 	private String _methodName51;
 	private String[] _methodParameterTypes51;
+	private String _methodName52;
+	private String[] _methodParameterTypes52;
 }

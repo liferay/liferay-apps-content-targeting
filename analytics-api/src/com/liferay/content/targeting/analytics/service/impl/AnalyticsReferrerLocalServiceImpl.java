@@ -20,6 +20,8 @@ import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.List;
+
 /**
  * The implementation of the analytics referrer local service.
  *
@@ -79,6 +81,14 @@ public class AnalyticsReferrerLocalServiceImpl
 		throws SystemException {
 
 		return analyticsReferrerPersistence.countByR_R(className, classPK);
+	}
+
+	@Override
+	public List<AnalyticsReferrer> getAnalyticsReferrers(long analyticsEventId)
+		throws SystemException {
+
+		return analyticsReferrerPersistence.findByAnalyticsEventId(
+			analyticsEventId);
 	}
 
 }

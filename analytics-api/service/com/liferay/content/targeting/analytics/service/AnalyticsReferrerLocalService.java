@@ -273,4 +273,9 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	public int getAnalyticsReferrerCount(java.lang.String className,
 		long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
+		long analyticsEventId)
+		throws com.liferay.portal.kernel.exception.SystemException;
 }
