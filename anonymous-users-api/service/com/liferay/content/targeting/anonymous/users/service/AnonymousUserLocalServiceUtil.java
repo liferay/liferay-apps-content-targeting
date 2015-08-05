@@ -315,11 +315,30 @@ public class AnonymousUserLocalServiceUtil {
 			serviceContext);
 	}
 
+	public static void checkAnonymousUsers()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().checkAnonymousUsers();
+	}
+
+	public static void deleteAnonymousUsers(long companyId,
+		java.util.Date createDate, boolean includeUsers)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		getService().deleteAnonymousUsers(companyId, createDate, includeUsers);
+	}
+
 	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUserByUserId(
 		long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchAnonymousUserByUserId(userId);
+	}
+
+	public static java.util.Date getMaxAge()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getMaxAge();
 	}
 
 	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser updateAnonymousUser(

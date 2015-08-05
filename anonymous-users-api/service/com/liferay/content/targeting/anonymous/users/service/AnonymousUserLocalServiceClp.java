@@ -130,20 +130,34 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName22 = "fetchAnonymousUserByUserId";
+		_methodName22 = "checkAnonymousUsers";
 
-		_methodParameterTypes22 = new String[] { "long" };
+		_methodParameterTypes22 = new String[] {  };
 
-		_methodName23 = "updateAnonymousUser";
+		_methodName23 = "deleteAnonymousUsers";
 
 		_methodParameterTypes23 = new String[] {
+				"long", "java.util.Date", "boolean"
+			};
+
+		_methodName24 = "fetchAnonymousUserByUserId";
+
+		_methodParameterTypes24 = new String[] { "long" };
+
+		_methodName25 = "getMaxAge";
+
+		_methodParameterTypes25 = new String[] {  };
+
+		_methodName26 = "updateAnonymousUser";
+
+		_methodParameterTypes26 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName24 = "updateLastIp";
+		_methodName27 = "updateLastIp";
 
-		_methodParameterTypes24 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes27 = new String[] { "long", "java.lang.String" };
 	}
 
 	@Override
@@ -806,6 +820,72 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 	}
 
 	@Override
+	public void checkAnonymousUsers()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName22,
+				_methodParameterTypes22, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
+	public void deleteAnonymousUsers(long companyId, java.util.Date createDate,
+		boolean includeUsers)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		try {
+			_invokableLocalService.invokeMethod(_methodName23,
+				_methodParameterTypes23,
+				new Object[] {
+					companyId,
+					
+				ClpSerializer.translateInput(createDate),
+					
+				includeUsers
+				});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+	}
+
+	@Override
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUserByUserId(
 		long userId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -813,8 +893,8 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22, new Object[] { userId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24, new Object[] { userId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -840,6 +920,39 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 	}
 
 	@Override
+	public java.util.Date getMaxAge()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName25,
+					_methodParameterTypes25, new Object[] {  });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.Date)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser updateAnonymousUser(
 		long anonymousUserId, long userId, java.lang.String lastIp,
 		java.lang.String typeSettings,
@@ -849,8 +962,8 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23,
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
 					new Object[] {
 						anonymousUserId,
 						
@@ -894,8 +1007,8 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27,
 					new Object[] {
 						anonymousUserId,
 						
@@ -974,4 +1087,10 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
+	private String _methodName25;
+	private String[] _methodParameterTypes25;
+	private String _methodName26;
+	private String[] _methodParameterTypes26;
+	private String _methodName27;
+	private String[] _methodParameterTypes27;
 }

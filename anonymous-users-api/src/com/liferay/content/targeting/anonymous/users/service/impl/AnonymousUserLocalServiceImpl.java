@@ -16,14 +16,20 @@ package com.liferay.content.targeting.anonymous.users.service.impl;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.base.AnonymousUserLocalServiceBaseImpl;
+import com.liferay.content.targeting.anonymous.users.util.PortletPropsValues;
 import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
+import com.liferay.portal.service.persistence.CompanyActionableDynamicQuery;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * The implementation of the anonymous user local service.
@@ -75,6 +81,41 @@ public class AnonymousUserLocalServiceImpl
 	}
 
 	@Override
+	public void checkAnonymousUsers() throws PortalException, SystemException {
+		ActionableDynamicQuery actionableDynamicQuery =
+			new CompanyActionableDynamicQuery() {
+
+				@Override
+				protected void performAction(Object object)
+					throws PortalException, SystemException {
+
+					Company company = (Company)object;
+
+					deleteAnonymousUsers(
+						company.getCompanyId(), getMaxAge(), false);
+				}
+
+			};
+
+		actionableDynamicQuery.performActions();
+	}
+
+	@Override
+	public void deleteAnonymousUsers(
+			long companyId, Date createDate, boolean includeUsers)
+		throws PortalException, SystemException {
+
+		List<AnonymousUser> anonymousUsers =
+			anonymousUserPersistence.findByC_LtD(companyId, createDate);
+
+		for (AnonymousUser anonymousUser : anonymousUsers) {
+			if (includeUsers || (anonymousUser.getUserId() <= 0)) {
+				deleteAnonymousUser(anonymousUser);
+			}
+		}
+	}
+
+	@Override
 	public AnonymousUser fetchAnonymousUserByUserId(long userId)
 		throws PortalException, SystemException {
 
@@ -83,6 +124,19 @@ public class AnonymousUserLocalServiceImpl
 		}
 
 		return anonymousUserPersistence.fetchByUserId_First(userId, null);
+	}
+
+	@Override
+	public Date getMaxAge() throws PortalException, SystemException {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTime(new Date());
+
+		int maxAge = PortletPropsValues.ANONYMOUS_USERS_MAX_AGE;
+
+		calendar.add(Calendar.DAY_OF_YEAR, -maxAge);
+
+		return calendar.getTime();
 	}
 
 	@Override

@@ -288,9 +288,23 @@ public interface AnonymousUserLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	public void checkAnonymousUsers()
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public void deleteAnonymousUsers(long companyId, java.util.Date createDate,
+		boolean includeUsers)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUserByUserId(
 		long userId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.Date getMaxAge()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

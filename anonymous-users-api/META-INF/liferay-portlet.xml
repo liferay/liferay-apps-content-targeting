@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE liferay-portlet-app PUBLIC "-//Liferay//DTD Portlet Application 6.2.0//EN" "http://www.liferay.com/dtd/liferay-portlet-app_6_2_0.dtd">
+
+<liferay-portlet-app>
+	<portlet>
+		<portlet-name>anonysmous-user-api</portlet-name>
+		<scheduler-entry>
+			<scheduler-event-listener-class>com.liferay.content.targeting.anonymous.users.messaging.CheckAnonymousUsersMessageListener</scheduler-event-listener-class>
+			<trigger>
+				<simple>
+					<property-key>anonymous.users.check.interval</property-key>
+					<time-unit>day</time-unit>
+				</simple>
+			</trigger>
+		</scheduler-entry>
+	</portlet>
+</liferay-portlet-app>
