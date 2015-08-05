@@ -340,10 +340,12 @@ public class AnonymousUserLocalServiceWrapper
 	}
 
 	@Override
-	public void deleteAnonymousUsers(long companyId, java.util.Date createDate)
+	public void deleteAnonymousUsers(long companyId, java.util.Date createDate,
+		boolean includeUsers)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_anonymousUserLocalService.deleteAnonymousUsers(companyId, createDate);
+		_anonymousUserLocalService.deleteAnonymousUsers(companyId, createDate,
+			includeUsers);
 	}
 
 	@Override

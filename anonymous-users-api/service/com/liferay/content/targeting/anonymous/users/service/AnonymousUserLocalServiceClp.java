@@ -136,7 +136,9 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 
 		_methodName23 = "deleteAnonymousUsers";
 
-		_methodParameterTypes23 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes23 = new String[] {
+				"long", "java.util.Date", "boolean"
+			};
 
 		_methodName24 = "fetchAnonymousUserByUserId";
 
@@ -847,14 +849,20 @@ public class AnonymousUserLocalServiceClp implements AnonymousUserLocalService {
 	}
 
 	@Override
-	public void deleteAnonymousUsers(long companyId, java.util.Date createDate)
+	public void deleteAnonymousUsers(long companyId, java.util.Date createDate,
+		boolean includeUsers)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName23,
 				_methodParameterTypes23,
-				new Object[] { companyId, ClpSerializer.translateInput(
-						createDate) });
+				new Object[] {
+					companyId,
+					
+				ClpSerializer.translateInput(createDate),
+					
+				includeUsers
+				});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
