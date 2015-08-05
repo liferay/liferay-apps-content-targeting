@@ -18,9 +18,12 @@ import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
+import com.liferay.content.targeting.service.test.util.UserTestUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.UserLocalService;
 
 import java.util.Date;
 
@@ -52,6 +55,8 @@ public class AnonymousUserLocalServiceImplTest {
 
 		_anonymousUserLocalService = ServiceTrackerUtil.getService(
 			AnonymousUserLocalService.class, _bundle.getBundleContext());
+		_userLocalService = ServiceTrackerUtil.getService(
+			UserLocalService.class, _bundle.getBundleContext());
 	}
 
 	@Test
@@ -114,9 +119,34 @@ public class AnonymousUserLocalServiceImplTest {
 			0, _anonymousUserLocalService.getAnonymousUsersCount());
 	}
 
+	@Test
+	public void testDeleteUser() throws Exception {
+		int initAnonymousUsersCount =
+			_anonymousUserLocalService.getAnonymousUsersCount();
+
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+
+		User user = UserTestUtil.addUser();
+
+		_anonymousUserLocalService.addAnonymousUser(
+			user.getUserId(), "127.0.0.1", StringPool.BLANK, serviceContext);
+
+		Assert.assertEquals(
+			initAnonymousUsersCount + 1,
+			_anonymousUserLocalService.getAnonymousUsersCount());
+
+		_userLocalService.deleteUser(user);
+
+		Assert.assertEquals(
+			initAnonymousUsersCount,
+			_anonymousUserLocalService.getAnonymousUsersCount());
+	}
+
 	private AnonymousUserLocalService _anonymousUserLocalService;
 
 	@ArquillianResource
 	private Bundle _bundle;
+
+	private UserLocalService _userLocalService;
 
 }
