@@ -322,10 +322,10 @@ public class AnonymousUserLocalServiceUtil {
 	}
 
 	public static void deleteAnonymousUsers(long companyId,
-		java.util.Date createDate)
+		java.util.Date createDate, boolean includeUsers)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().deleteAnonymousUsers(companyId, createDate);
+		getService().deleteAnonymousUsers(companyId, createDate, includeUsers);
 	}
 
 	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUserByUserId(

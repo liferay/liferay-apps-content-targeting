@@ -292,7 +292,8 @@ public interface AnonymousUserLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
-	public void deleteAnonymousUsers(long companyId, java.util.Date createDate)
+	public void deleteAnonymousUsers(long companyId, java.util.Date createDate,
+		boolean includeUsers)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 

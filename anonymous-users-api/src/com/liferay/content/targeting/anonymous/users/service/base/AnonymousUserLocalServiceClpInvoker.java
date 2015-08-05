@@ -135,7 +135,9 @@ public class AnonymousUserLocalServiceClpInvoker {
 
 		_methodName44 = "deleteAnonymousUsers";
 
-		_methodParameterTypes44 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes44 = new String[] {
+				"long", "java.util.Date", "boolean"
+			};
 
 		_methodName45 = "fetchAnonymousUserByUserId";
 
@@ -287,7 +289,8 @@ public class AnonymousUserLocalServiceClpInvoker {
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
 			AnonymousUserLocalServiceUtil.deleteAnonymousUsers(((Long)arguments[0]).longValue(),
-				(java.util.Date)arguments[1]);
+				(java.util.Date)arguments[1],
+				((Boolean)arguments[2]).booleanValue());
 
 			return null;
 		}
