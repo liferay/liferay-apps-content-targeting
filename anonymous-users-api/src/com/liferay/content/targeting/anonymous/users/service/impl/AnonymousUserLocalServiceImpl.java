@@ -91,7 +91,8 @@ public class AnonymousUserLocalServiceImpl
 
 					Company company = (Company)object;
 
-					deleteAnonymousUsers(company.getCompanyId(), getMaxAge());
+					deleteAnonymousUsers(
+						company.getCompanyId(), getMaxAge(), false);
 				}
 
 			};
@@ -100,14 +101,17 @@ public class AnonymousUserLocalServiceImpl
 	}
 
 	@Override
-	public void deleteAnonymousUsers(long companyId, Date createDate)
+	public void deleteAnonymousUsers(
+			long companyId, Date createDate, boolean includeUsers)
 		throws PortalException, SystemException {
 
 		List<AnonymousUser> anonymousUsers =
 			anonymousUserPersistence.findByC_LtD(companyId, createDate);
 
 		for (AnonymousUser anonymousUser : anonymousUsers) {
-			deleteAnonymousUser(anonymousUser);
+			if (includeUsers || (anonymousUser.getUserId() <= 0)) {
+				deleteAnonymousUser(anonymousUser);
+			}
 		}
 	}
 
