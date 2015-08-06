@@ -21,6 +21,7 @@ import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAct
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.util.comparator.CTActionTotalCountComparator;
+import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.util.SearchContainerIterator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -65,6 +66,22 @@ public class CTActionReport extends BaseReport {
 		return Campaign.class.getName();
 	}
 
+	@Override
+	public boolean isVisible(long classPK) {
+		try {
+			if (_trackingActionInstanceLocalService.
+					getTrackingActionInstancesCount(classPK) > 0) {
+
+				return true;
+			}
+		}
+		catch (SystemException se) {
+			_log.error(se);
+		}
+
+		return false;
+	}
+
 	@Reference
 	public void setCTActionLocalService(
 		CTActionLocalService ctActionLocalService) {
@@ -77,6 +94,14 @@ public class CTActionReport extends BaseReport {
 		CTActionTotalLocalService ctActionTotalLocalService) {
 
 		_ctActionTotalLocalService = ctActionTotalLocalService;
+	}
+
+	@Reference
+	public void setTrackingActionInstanceLocalService(
+		TrackingActionInstanceLocalService trackingActionInstanceLocalService) {
+
+		_trackingActionInstanceLocalService =
+			trackingActionInstanceLocalService;
 	}
 
 	@Override
@@ -123,5 +148,7 @@ public class CTActionReport extends BaseReport {
 
 	private CTActionLocalService _ctActionLocalService;
 	private CTActionTotalLocalService _ctActionTotalLocalService;
+	private TrackingActionInstanceLocalService
+		_trackingActionInstanceLocalService;
 
 }

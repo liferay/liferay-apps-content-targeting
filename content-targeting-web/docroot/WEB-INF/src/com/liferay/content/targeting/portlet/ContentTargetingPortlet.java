@@ -1652,7 +1652,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				template.put(
 					"reportSearchContainerIterator",
 					new ReportSearchContainerIterator(
-						themeDisplay.getScopeGroupId(), null, className));
+						themeDisplay.getScopeGroupId(), null, className,
+						classPK));
 			}
 		}
 	}
