@@ -36,31 +36,36 @@
 	<@liferay_ui["search-container-row"]
 		className="com.liferay.content.targeting.model.Tactic"
 		keyProperty="tacticId"
-		modelVar="tactic">
+		modelVar="tactic"
+	>
+
+		<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
+			<@portlet["renderURL"] var="editTacticURL">
+				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_TACTIC}" />
+				<@portlet["param"] name="redirect" value="${viewTacticsURL}" />
+				<@portlet["param"] name="tacticId" value="${tactic.getTacticId()?string}" />
+				<@portlet["param"] name="campaignId" value="${tactic.getCampaignId()}" />
+			</@>
+		</#if>
 
 		<@liferay_ui["search-container-column-text"]
+			href=editTacticURL
 			name="name"
 			value=tactic.getName(locale)
 		/>
 
 		<@liferay_ui["search-container-column-text"]
+			href=editTacticURL
 			name="description"
 			value=tactic.getDescription(locale)
 		/>
 
-		<@liferay_ui["search-container-column-text"]
-			align="right"
-			name=""
-		>
-			<@liferay_ui["icon-menu"]>
-				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
-					<@portlet["renderURL"] var="editTacticURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_TACTIC}" />
-						<@portlet["param"] name="redirect" value="${viewTacticsURL}" />
-						<@portlet["param"] name="tacticId" value="${tactic.getTacticId()?string}" />
-						<@portlet["param"] name="campaignId" value="${tactic.getCampaignId()}" />
-					</@>
-
+		<#if editTacticURL??>
+			<@liferay_ui["search-container-column-text"]
+				align="right"
+				name=""
+			>
+				<@liferay_ui["icon-menu"]>
 					<@liferay_ui["icon"]
 						image="edit"
 						method="get"
@@ -75,9 +80,9 @@
 					<@liferay_ui["icon-delete"]
 						url="${deleteTacticURL}"
 					/>
-				</#if>
+				</@>
 			</@>
-		</@>
+		</#if>
 	</@>
 
 	<@liferay_ui["search-iterator"] />

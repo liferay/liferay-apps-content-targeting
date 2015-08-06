@@ -37,12 +37,22 @@
 		modelVar="userSegment"
 	>
 
-	<@liferay_ui["search-container-column-text"]
-		name="name"
-		value=userSegment.getName(locale)
-	/>
+		<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.UPDATE)>
+			<@portlet["renderURL"] var="editUserSegmentURL">
+				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
+				<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
+				<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+			</@>
+		</#if>
 
 		<@liferay_ui["search-container-column-text"]
+			href=editUserSegmentURL
+			name="name"
+			value=userSegment.getName(locale)
+		/>
+
+		<@liferay_ui["search-container-column-text"]
+			href=editUserSegmentURL
 			name="description"
 			value=userSegment.getDescription(locale)
 		/>
@@ -69,13 +79,7 @@
 					/>
 				</#if>
 
-				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.UPDATE)>
-					<@portlet["renderURL"] var="editUserSegmentURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
-						<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
-						<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-					</@>
-
+				<#if editUserSegmentURL??>
 					<@liferay_ui["icon"]
 						image="edit"
 						method="get"

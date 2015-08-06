@@ -37,12 +37,22 @@
 		modelVar="campaign"
 	>
 
+		<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
+			<@portlet["renderURL"] var="editCampaignURL">
+				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
+				<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
+				<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
+			</@>
+		</#if>
+
 		<@liferay_ui["search-container-column-text"]
+			href=editCampaignURL
 			name="name"
 			value=campaign.getName(locale)
 		/>
 
 		<@liferay_ui["search-container-column-text"]
+			href=editCampaignURL
 			name="description"
 			value=campaign.getDescription(locale)
 		/>
@@ -83,7 +93,6 @@
 						<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
 					</@>
 
-
 					<@liferay_ui["icon"]
 						image="view"
 						label=true
@@ -101,6 +110,7 @@
 						<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
 						<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
 					</@>
+
 					<@liferay_ui["icon"]
 						image="sitemap"
 						label=true
@@ -110,13 +120,7 @@
 					/>
 				</#if>
 
-				<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
-					<@portlet["renderURL"] var="editCampaignURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-						<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
-						<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
-					</@>
-
+				<#if editCampaignURL??>
 					<@liferay_ui["icon"]
 						image="edit"
 						method="get"
