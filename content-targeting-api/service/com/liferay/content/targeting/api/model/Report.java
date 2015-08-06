@@ -85,10 +85,10 @@ public interface Report {
 	public String getReportType();
 
 	/**
-	 * Returns visibility of the report for specific element
+	 * Returns visibility of the report for an specific element.
 	 *
 	 * @param classPK the id of the element with the report type to check
-	 *                visivility
+	 *        visibility
 	 * @return
 	 */
 	public boolean isVisible(long classPK);

@@ -92,7 +92,9 @@ public abstract class BaseReport implements Report {
 	}
 
 	@Override
-	public boolean isVisible(long classPK) { return true; }
+	public boolean isVisible(long classPK) {
+		return true;
+	}
 
 	protected void populateContext(Map<String, Object> context) {
 	}
