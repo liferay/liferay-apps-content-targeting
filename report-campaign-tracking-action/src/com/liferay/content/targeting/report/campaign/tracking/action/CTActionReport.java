@@ -21,7 +21,7 @@ import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAct
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionTotalLocalService;
 import com.liferay.content.targeting.report.campaign.tracking.action.util.comparator.CTActionTotalCountComparator;
-import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
+import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.util.SearchContainerIterator;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -68,18 +68,15 @@ public class CTActionReport extends BaseReport {
 
 	@Override
 	public boolean isVisible(long classPK) {
-		Campaign campaign = null;
 		try {
-			int trackingActionInstanceCount =
-				TrackingActionInstanceLocalServiceUtil.
-					getTrackingActionInstancesCount(classPK);
+			if (_trackingActionInstanceLocalService.
+					getTrackingActionInstancesCount(classPK) > 0) {
 
-			if (trackingActionInstanceCount > 0) {
 				return true;
 			}
 		}
-		catch (Exception e) {
-			_log.error(e);
+		catch (SystemException se) {
+			_log.error(se);
 		}
 
 		return false;
@@ -97,6 +94,14 @@ public class CTActionReport extends BaseReport {
 		CTActionTotalLocalService ctActionTotalLocalService) {
 
 		_ctActionTotalLocalService = ctActionTotalLocalService;
+	}
+
+	@Reference
+	public void setTrackingActionInstanceLocalService(
+		TrackingActionInstanceLocalService trackingActionInstanceLocalService) {
+
+		_trackingActionInstanceLocalService =
+			trackingActionInstanceLocalService;
 	}
 
 	@Override
@@ -143,5 +148,7 @@ public class CTActionReport extends BaseReport {
 
 	private CTActionLocalService _ctActionLocalService;
 	private CTActionTotalLocalService _ctActionTotalLocalService;
+	private TrackingActionInstanceLocalService
+		_trackingActionInstanceLocalService;
 
 }
