@@ -36,6 +36,17 @@ import org.osgi.framework.FrameworkUtil;
 public class ReportSearchContainerIterator
 	extends SearchContainerIterator<Report> {
 
+	/**
+	 * @deprecated As of Audience Targeting 2.0, replaced by {@link
+	 *             #ReportSearchContainerIterator(long, String, String, long)}
+	 */
+	public ReportSearchContainerIterator(
+			long groupId, String keywords, String className)
+		throws PortletException {
+
+		this(groupId, keywords, className, 0);
+	}
+
 	public ReportSearchContainerIterator(
 			long groupId, String keywords, String className, long classPK)
 		throws PortletException {
@@ -63,14 +74,13 @@ public class ReportSearchContainerIterator
 		return getResults().size();
 	}
 
-	protected List<Report> getResults()
-		throws PortalException, SystemException {
-
+	protected List<Report> getResults() {
 		Map<String, Report> reportMap = _reportsRegistry.getReports(_className);
+
 		List<Report> reports = new ArrayList<Report>();
 
 		for (Report report : reportMap.values()) {
-			if (report.isVisible(_classPK)) {
+			if ((_classPK <= 0) || report.isVisible(_classPK)) {
 				reports.add(report);
 			}
 		}
