@@ -30,6 +30,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 
@@ -40,10 +44,6 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Pavel Savinov
@@ -66,57 +66,55 @@ public class ScorePointLocalServiceImplTest {
 			RuleInstanceLocalService.class, _bundle.getBundleContext());
 		_rulesRegistry = ServiceTrackerUtil.getService(
 			RulesRegistry.class, _bundle.getBundleContext());
-        _scorePointLocalService = ServiceTrackerUtil.getService(
-            ScorePointLocalService.class, _bundle.getBundleContext());
-        _userSegmentLocalService = ServiceTrackerUtil.getService(
-            UserSegmentLocalService.class, _bundle.getBundleContext());
+		_scorePointLocalService = ServiceTrackerUtil.getService(
+			ScorePointLocalService.class, _bundle.getBundleContext());
+		_userSegmentLocalService = ServiceTrackerUtil.getService(
+			UserSegmentLocalService.class, _bundle.getBundleContext());
 
-        Group group = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-        _serviceContext = ServiceTestUtil.getServiceContext(
-            group.getGroupId(), TestPropsValues.getUserId());
+		_serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
-        Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-        nameMap.put(LocaleUtil.getDefault(), "test-category");
+		nameMap.put(LocaleUtil.getDefault(), "test-category");
 
-        _userSegment = _userSegmentLocalService.addUserSegment(
-            TestPropsValues.getUserId(), nameMap, null, _serviceContext);
+		_userSegment = _userSegmentLocalService.addUserSegment(
+			TestPropsValues.getUserId(), nameMap, null, _serviceContext);
 	}
 
+	@Test
+	public void testIncrementPoints() throws Exception {
+		ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
 
-    @Test
-    public void testIncrementPoints() throws Exception {
-        ServiceContext serviceContext = ServiceTestUtil.getServiceContext();
+		int scorePoints = 10;
 
-        int scorePoints = 10;
+		AnonymousUser anonymousUser =
+			_anonymousUserLocalService.addAnonymousUser(
+				1, "127.0.0.1", StringPool.BLANK, serviceContext);
 
-        AnonymousUser anonymousUser =
-            _anonymousUserLocalService.addAnonymousUser(
-                1, "127.0.0.1", StringPool.BLANK, serviceContext);
+		int initialScorePointsCount =
+			_scorePointLocalService.getScorePointsCount();
 
-        int initialScorePointsCount =
-            _scorePointLocalService.getScorePointsCount();
+		long initialScorePoints = _scorePointLocalService.getPoints(
+			anonymousUser.getAnonymousUserId(),
+			_userSegment.getUserSegmentId());
 
-        long initialScorePoints = _scorePointLocalService.getPoints(
-            anonymousUser.getAnonymousUserId(),
-            _userSegment.getUserSegmentId());
+		_scorePointLocalService.incrementPoints(
+			anonymousUser.getAnonymousUserId(), _userSegment.getUserSegmentId(),
+			scorePoints);
 
-        _scorePointLocalService.incrementPoints(
-            anonymousUser.getAnonymousUserId(), _userSegment.getUserSegmentId(),
-            scorePoints);
+		Assert.assertEquals(
+			initialScorePoints + scorePoints,
+			_scorePointLocalService.getPoints(
+				anonymousUser.getAnonymousUserId(),
+				_userSegment.getUserSegmentId()));
 
-        long incrementedScorePoints = _scorePointLocalService.getPoints(
-            anonymousUser.getAnonymousUserId(),
-            _userSegment.getUserSegmentId());
-
-        Assert.assertEquals(
-            initialScorePoints + scorePoints, incrementedScorePoints);
-
-        Assert.assertEquals(
-            initialScorePointsCount + 1,
-            _scorePointLocalService.getScorePointsCount());
-    }
+		Assert.assertEquals(
+			initialScorePointsCount + 1,
+			_scorePointLocalService.getScorePointsCount());
+	}
 
 	private AnonymousUserLocalService _anonymousUserLocalService;
 
@@ -125,8 +123,9 @@ public class ScorePointLocalServiceImplTest {
 
 	private RuleInstanceLocalService _ruleInstanceLocalService;
 	private RulesRegistry _rulesRegistry;
-    private ScorePointLocalService _scorePointLocalService;
-    private ServiceContext _serviceContext;
-    private UserSegment _userSegment;
-    private UserSegmentLocalService _userSegmentLocalService;
+	private ScorePointLocalService _scorePointLocalService;
+	private ServiceContext _serviceContext;
+	private UserSegment _userSegment;
+	private UserSegmentLocalService _userSegmentLocalService;
+
 }

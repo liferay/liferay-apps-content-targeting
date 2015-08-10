@@ -16,11 +16,9 @@ package com.liferay.content.targeting.rule.score.points.messaging;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
-import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.score.points.api.model.ScorePointsAssigner;
 import com.liferay.content.targeting.rule.score.points.service.ScorePointLocalService;
-import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.content.targeting.service.test.util.GroupTestUtil;
@@ -30,12 +28,16 @@ import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
-
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
 import com.liferay.portlet.blogs.model.BlogsEntry;
 import com.liferay.portlet.blogs.service.BlogsEntryLocalServiceUtil;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 
@@ -46,10 +48,6 @@ import org.junit.runner.RunWith;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleException;
-
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
 
 /**
  * @author Pavel Savinov
@@ -68,75 +66,65 @@ public class DefaultScorePointsAssignerImplTest {
 
 		_anonymousUserLocalService = ServiceTrackerUtil.getService(
 			AnonymousUserLocalService.class, _bundle.getBundleContext());
-        _scorePointsAssigner = ServiceTrackerUtil.getService(
-            ScorePointsAssigner.class, _bundle.getBundleContext());
-        _scorePointLocalService = ServiceTrackerUtil.getService(
-            ScorePointLocalService.class, _bundle.getBundleContext());
-        _userSegmentLocalService = ServiceTrackerUtil.getService(
-            UserSegmentLocalService.class, _bundle.getBundleContext());
+		_scorePointsAssigner = ServiceTrackerUtil.getService(
+			ScorePointsAssigner.class, _bundle.getBundleContext());
+		_scorePointLocalService = ServiceTrackerUtil.getService(
+			ScorePointLocalService.class, _bundle.getBundleContext());
+		_userSegmentLocalService = ServiceTrackerUtil.getService(
+			UserSegmentLocalService.class, _bundle.getBundleContext());
 
-        Group group = GroupTestUtil.addGroup();
+		Group group = GroupTestUtil.addGroup();
 
-        _serviceContext = ServiceTestUtil.getServiceContext(
-            group.getGroupId(), TestPropsValues.getUserId());
+		_serviceContext = ServiceTestUtil.getServiceContext(
+			group.getGroupId(), TestPropsValues.getUserId());
 
-        Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-        nameMap.put(LocaleUtil.getDefault(), "test-category");
+		nameMap.put(LocaleUtil.getDefault(), "test-category");
 
-        _userSegment = _userSegmentLocalService.addUserSegment(
-            TestPropsValues.getUserId(), nameMap, null, _serviceContext);
+		_userSegment = _userSegmentLocalService.addUserSegment(
+			TestPropsValues.getUserId(), nameMap, null, _serviceContext);
 	}
 
+	@Test
+	public void testAssignPoints() throws Exception {
+		int initialScorePointsCount =
+			_scorePointLocalService.getScorePointsCount();
 
-    @Test
-    public void testAssignPoints() throws Exception {
+		BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
+			TestPropsValues.getUserId(), "title", StringPool.BLANK,
+			"This is a blog entry for testing purposes", 1, 1, 1965, 0, 0, true,
+			true, null, false, null, null, null, _serviceContext);
 
-        long groupId = TestPropsValues.getGroupId();
+		AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
+			BlogsEntry.class.getName(), entry.getEntryId());
 
-        int initialScorePointsCount =
-            _scorePointLocalService.getScorePointsCount();
+		AssetCategoryLocalServiceUtil.addAssetEntryAssetCategory(
+			assetEntry.getEntryId(), _userSegment.getAssetCategoryId());
 
-        BlogsEntry entry = BlogsEntryLocalServiceUtil.addEntry(
-            TestPropsValues.getUserId(), "title", StringPool.BLANK,
-            "This is a blog entry for testing purposes", 1, 1, 1965, 0,
-            0, true,
-            true, null, false, null, null, null, _serviceContext);
+		AnonymousUser anonymousUser =
+			_anonymousUserLocalService.addAnonymousUser(
+				1, "127.0.0.1", StringPool.BLANK, _serviceContext);
 
-        AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(
-            BlogsEntry.class.getName(), entry.getEntryId());
+		_scorePointsAssigner.assignPoints(
+			_serviceContext.getScopeGroupId(),
+			anonymousUser.getAnonymousUserId(), assetEntry.getClassName(),
+			assetEntry.getClassPK());
 
-        AssetCategoryLocalServiceUtil.addAssetEntryAssetCategory(
-            assetEntry.getEntryId(), _userSegment.getAssetCategoryId());
-
-        String className = assetEntry.getClassName();
-        long classPK = assetEntry.getClassPK();
-
-        AnonymousUser anonymousUser =
-            _anonymousUserLocalService.addAnonymousUser(
-                1, "127.0.0.1", StringPool.BLANK, _serviceContext);
-
-        _scorePointsAssigner.assignPoints(
-            _serviceContext.getScopeGroupId(),
-            anonymousUser.getAnonymousUserId(), className, classPK);
-
-        Assert.assertEquals(
-            initialScorePointsCount + 1,
-            _scorePointLocalService.getScorePointsCount());
-
-        BlogsEntryLocalServiceUtil.deleteBlogsEntry(entry);
-    }
+		Assert.assertEquals(
+			initialScorePointsCount + 1,
+			_scorePointLocalService.getScorePointsCount());
+	}
 
 	private AnonymousUserLocalService _anonymousUserLocalService;
 
 	@ArquillianResource
 	private Bundle _bundle;
 
-	private RuleInstanceLocalService _ruleInstanceLocalService;
-	private RulesRegistry _rulesRegistry;
-    private ScorePointsAssigner _scorePointsAssigner;
-    private ScorePointLocalService _scorePointLocalService;
-    private ServiceContext _serviceContext;
-    private UserSegment _userSegment;
-    private UserSegmentLocalService _userSegmentLocalService;
+	private ScorePointLocalService _scorePointLocalService;
+	private ScorePointsAssigner _scorePointsAssigner;
+	private ServiceContext _serviceContext;
+	private UserSegment _userSegment;
+	private UserSegmentLocalService _userSegmentLocalService;
+
 }
