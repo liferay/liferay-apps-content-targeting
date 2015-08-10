@@ -1175,11 +1175,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				template.put("timeZoneId", themeDisplay.getTimeZone().getID());
 			}
 
-			String dateDaylight = String.valueOf(
-				themeDisplay.getTimeZone().inDaylightTime(startDate.getTime()));
-
-			template.put("dateDaylight", dateDaylight);
-
 			if (tacticId > 0) {
 				Tactic tactic = _tacticLocalService.getTactic(tacticId);
 

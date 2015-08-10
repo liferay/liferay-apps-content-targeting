@@ -55,7 +55,7 @@
 
 	<@aui["input"] name="endDate" value=endDate />
 
-	<@aui["input"] daylight="${dateDaylight}" helpMessage="time-zone-help" label="time-zone" name="timeZoneId" type="timeZone" value=timeZoneId />
+	<@aui["input"] helpMessage="time-zone-help" label="time-zone" name="timeZoneId" type="timeZone" value=timeZoneId />
 
 	<@aui["input"] cssClass="slider-input" helpMessage="priority-help" inlineField=true name="priority" size="2" maxlength="3" type="text" value="${priority}" />
 
