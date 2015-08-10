@@ -96,8 +96,8 @@ public class OrganizationRoleRuleTest {
 			getTypeSettings(role.getRoleId()), serviceContext);
 
 		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			new long[]{TestPropsValues.getUserId()}, _organization.getGroupId(),
-			role.getRoleId());
+			new long[] {TestPropsValues.getUserId()},
+			_organization.getGroupId(), role.getRoleId());
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));
 	}

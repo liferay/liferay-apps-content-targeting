@@ -110,7 +110,7 @@ public class CTActionReportTest {
 
 		_analyticsEventLocalService.addAnalyticsEvent(
 			userId, 1, className, classPK, UserSegment.class.getName(),
-			new long[]{1}, null, eventType, "127.0.0.1", "ES", "User Agent",
+			new long[] {1}, null, eventType, "127.0.0.1", "ES", "User Agent",
 			"http://localhost", null, serviceContext);
 
 		// Test update report with analytics

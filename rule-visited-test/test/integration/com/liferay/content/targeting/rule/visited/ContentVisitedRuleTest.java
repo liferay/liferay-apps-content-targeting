@@ -123,7 +123,7 @@ public class ContentVisitedRuleTest {
 
 		_analyticsEventLocalService.addAnalyticsEvent(
 			1, anonymousUser.getAnonymousUserId(), BlogsEntry.class.getName(),
-			entry.getEntryId(), Layout.class.getName(), new long[]{1}, null,
+			entry.getEntryId(), Layout.class.getName(), new long[] {1}, null,
 			"view", "127.0.0.1", "User Agent", "ES", "http://localhost", null,
 			serviceContext);
 

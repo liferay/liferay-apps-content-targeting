@@ -101,7 +101,7 @@ public class UserSegmentContentReportTest {
 		_analyticsEventLocalService.addAnalyticsEvent(
 			TestPropsValues.getUserId(), 1, JournalArticle.class.getName(), 2,
 			UserSegment.class.getName(),
-			new long[]{userSegment.getUserSegmentId()}, null, "view",
+			new long[] {userSegment.getUserSegmentId()}, null, "view",
 			"127.0.0.1", "ES", "User Agent", "http://localhost", null,
 			serviceContext);
 
