@@ -95,7 +95,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 		Date now = new Date();
 
 		if (timeZoneId == null) {
-			timeZoneId = serviceContext.getTimeZone().getID();
+			timeZoneId = user.getTimeZone().getID();
 		}
 
 		long campaignId = CounterLocalServiceUtil.increment();
