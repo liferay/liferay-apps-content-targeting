@@ -528,6 +528,21 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 	}
 
 	@Override
+	public com.liferay.content.targeting.model.Campaign addCampaign(
+		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String timeZoneId, int priority, boolean active,
+		long[] userSegmentIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _campaignLocalService.addCampaign(userId, nameMap,
+			descriptionMap, startDate, endDate, timeZoneId, priority, active,
+			userSegmentIds, serviceContext);
+	}
+
+	@Override
 	public void addCampaignResources(
 		com.liferay.content.targeting.model.Campaign campaign,
 		boolean addGroupPermissions, boolean addGuestPermissions)
@@ -647,6 +662,22 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _campaignLocalService.updateCampaign(campaignId, nameMap,
 			descriptionMap, startDate, endDate, priority, active,
+			userSegmentIds, serviceContext);
+	}
+
+	@Override
+	public com.liferay.content.targeting.model.Campaign updateCampaign(
+		long campaignId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Date startDate, java.util.Date endDate,
+		java.lang.String timeZoneId, int priority, boolean active,
+		long[] userSegmentIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _campaignLocalService.updateCampaign(campaignId, nameMap,
+			descriptionMap, startDate, endDate, timeZoneId, priority, active,
 			userSegmentIds, serviceContext);
 	}
 

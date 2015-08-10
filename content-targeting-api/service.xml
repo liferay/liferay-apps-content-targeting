@@ -27,6 +27,7 @@
 		<column name="description" type="String" localized="true" />
 		<column name="startDate" type="Date" />
 		<column name="endDate" type="Date" />
+		<column name="timeZoneId" type="String" />
 		<column name="priority" type="int" />
 		<column name="active" type="boolean" />
 

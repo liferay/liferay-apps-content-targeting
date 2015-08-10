@@ -94,6 +94,34 @@ public class CampaignServiceSoap {
 		}
 	}
 
+	public static com.liferay.content.targeting.model.CampaignSoap addCampaign(
+		long userId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.util.Date startDate,
+		java.util.Date endDate, java.lang.String timeZoneId, int priority,
+		boolean active, long[] userSegmentIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.content.targeting.model.Campaign returnValue = CampaignServiceUtil.addCampaign(userId,
+					nameMap, descriptionMap, startDate, endDate, timeZoneId,
+					priority, active, userSegmentIds, serviceContext);
+
+			return com.liferay.content.targeting.model.CampaignSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.content.targeting.model.CampaignSoap deleteCampaign(
 		long campaignId) throws RemoteException {
 		try {
@@ -169,6 +197,34 @@ public class CampaignServiceSoap {
 			com.liferay.content.targeting.model.Campaign returnValue = CampaignServiceUtil.updateCampaign(campaignId,
 					nameMap, descriptionMap, startDate, endDate, priority,
 					active, userSegmentIds, serviceContext);
+
+			return com.liferay.content.targeting.model.CampaignSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.content.targeting.model.CampaignSoap updateCampaign(
+		long campaignId, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.util.Date startDate,
+		java.util.Date endDate, java.lang.String timeZoneId, int priority,
+		boolean active, long[] userSegmentIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.content.targeting.model.Campaign returnValue = CampaignServiceUtil.updateCampaign(campaignId,
+					nameMap, descriptionMap, startDate, endDate, timeZoneId,
+					priority, active, userSegmentIds, serviceContext);
 
 			return com.liferay.content.targeting.model.CampaignSoap.toSoapModel(returnValue);
 		}

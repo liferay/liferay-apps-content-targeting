@@ -43,6 +43,7 @@ public class CampaignSoap implements Serializable {
 		soapModel.setDescription(model.getDescription());
 		soapModel.setStartDate(model.getStartDate());
 		soapModel.setEndDate(model.getEndDate());
+		soapModel.setTimeZoneId(model.getTimeZoneId());
 		soapModel.setPriority(model.getPriority());
 		soapModel.setActive(model.getActive());
 
@@ -193,6 +194,14 @@ public class CampaignSoap implements Serializable {
 		_endDate = endDate;
 	}
 
+	public String getTimeZoneId() {
+		return _timeZoneId;
+	}
+
+	public void setTimeZoneId(String timeZoneId) {
+		_timeZoneId = timeZoneId;
+	}
+
 	public int getPriority() {
 		return _priority;
 	}
@@ -225,6 +234,7 @@ public class CampaignSoap implements Serializable {
 	private String _description;
 	private Date _startDate;
 	private Date _endDate;
+	private String _timeZoneId;
 	private int _priority;
 	private boolean _active;
 }

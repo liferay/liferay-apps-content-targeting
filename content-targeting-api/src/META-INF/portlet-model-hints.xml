@@ -18,6 +18,7 @@
 		</field>
 		<field name="startDate" type="Date" />
 		<field name="endDate" type="Date" />
+		<field name="timeZoneId" type="String" />
 		<field name="priority" type="int" />
 		<field name="active" type="boolean" />
 	</model>
