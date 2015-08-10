@@ -155,9 +155,6 @@ public class UserSegmentLocalServiceImplTest {
 		Assert.assertTrue(
 			nameWithGroupName.contains(
 				group.getDescriptiveName(LocaleUtil.getDefault())));
-
-		_groupLocalService.deleteGroup(group.getGroupId());
-		_groupLocalService.deleteGroup(anotherGroup.getGroupId());
 	}
 
 	private AssetCategoryLocalService _assetCategoryLocalService;

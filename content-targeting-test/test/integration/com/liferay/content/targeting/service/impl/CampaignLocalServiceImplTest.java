@@ -109,7 +109,7 @@ public class CampaignLocalServiceImplTest {
 
 		_campaignLocalService.addCampaign(
 			TestPropsValues.getUserId(), nameMap, null, new Date(), new Date(),
-			1, true, new long[]{1, 2}, serviceContext);
+			1, true, new long[] {1, 2}, serviceContext);
 
 		_groupLocalService.deleteGroup(group.getGroupId());
 
@@ -168,13 +168,9 @@ public class CampaignLocalServiceImplTest {
 		ServiceContext serviceContext = ServiceTestUtil.getServiceContext(
 			group.getGroupId(), TestPropsValues.getUserId());
 
-		Date now = new Date();
-
-		long[] userSegmentIds = new long[] {1, 2};
-
 		Campaign campaign = _campaignLocalService.addCampaign(
-			TestPropsValues.getUserId(), nameMap, null, getDate(now, -1),
-			getDate(now, 1), 1, true, userSegmentIds, serviceContext);
+			TestPropsValues.getUserId(), nameMap, null, new Date(), new Date(),
+			1, true, new long[] {1, 2}, serviceContext);
 
 		String nameWithGroupName = campaign.getNameWithGroupName(
 			serviceContext.getLocale(), anotherGroup.getGroupId());
@@ -186,9 +182,6 @@ public class CampaignLocalServiceImplTest {
 		Assert.assertTrue(
 			nameWithGroupName.contains(
 				group.getDescriptiveName(LocaleUtil.getDefault())));
-
-		_groupLocalService.deleteGroup(group.getGroupId());
-		_groupLocalService.deleteGroup(anotherGroup.getGroupId());
 	}
 
 	protected Date getDate(Date date, int amount) {

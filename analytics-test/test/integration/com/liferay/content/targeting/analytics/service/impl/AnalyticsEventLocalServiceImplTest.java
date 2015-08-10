@@ -68,7 +68,7 @@ public class AnalyticsEventLocalServiceImplTest {
 		AnalyticsEvent analyticsEvent =
 			_analyticsEventLocalService.addAnalyticsEvent(
 				1, 1, JournalArticle.class.getName(), 1, Layout.class.getName(),
-				new long[]{1}, null, "view", "127.0.0.1", "User Agent", "ES",
+				new long[] {1}, null, "view", "127.0.0.1", "User Agent", "ES",
 				"http://localhost", null, ServiceTestUtil.getServiceContext());
 
 		Assert.assertEquals(

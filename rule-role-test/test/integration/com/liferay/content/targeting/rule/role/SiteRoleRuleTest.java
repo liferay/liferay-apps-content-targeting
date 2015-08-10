@@ -92,7 +92,7 @@ public class SiteRoleRuleTest {
 			getTypeSettings(role.getRoleId()), serviceContext);
 
 		UserGroupRoleLocalServiceUtil.addUserGroupRoles(
-			new long[]{TestPropsValues.getUserId()}, _group.getGroupId(),
+			new long[] {TestPropsValues.getUserId()}, _group.getGroupId(),
 			role.getRoleId());
 
 		Assert.assertTrue(rule.evaluate(null, ruleInstance, anonymousUser));

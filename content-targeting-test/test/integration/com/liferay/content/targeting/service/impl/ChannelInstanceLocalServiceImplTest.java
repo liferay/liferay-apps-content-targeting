@@ -96,7 +96,6 @@ public class ChannelInstanceLocalServiceImplTest {
 				tactic.getTacticId()).size());
 
 		_tacticLocalService.deleteTactic(tactic.getTacticId());
-		_campaignLocalService.deleteCampaign(tactic.getCampaignId());
 	}
 
 	@Test
@@ -121,7 +120,6 @@ public class ChannelInstanceLocalServiceImplTest {
 				tactic.getTacticId()).size());
 
 		_tacticLocalService.deleteTactic(tactic.getTacticId());
-		_campaignLocalService.deleteCampaign(tactic.getCampaignId());
 
 		Assert.assertEquals(
 			initChannelInstanceCount,
