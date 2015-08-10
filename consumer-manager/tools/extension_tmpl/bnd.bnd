@@ -1,0 +1,17 @@
+Bundle-Name: @extension.display.name@ extension
+Bundle-SymbolicName: com.liferay.consumer.manager.extension.@extension.java.package.name@
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.consumer.manager.api.model,\
+	com.liferay.consumer.manager.service,\
+	com.liferay.consumer.manager.service.messaging,\
+	com.liferay.osgi.util.service,\
+	*;resolution:="optional"
+Include-Resource:\
+ 	classes,\
+	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
+	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar
+Private-Package: com.liferay.consumer.manager.extension.@extension.java.package.name@.*
+Service-Component: com.liferay.consumer.manager.extension.@extension.java.package.name@.*
+Web-ContextPath: /extension-@extension.name@
+-baseline: *;version="1.0.0"
