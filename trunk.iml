@@ -3,6 +3,8 @@
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
     <content url="file://$MODULE_DIR$">
+      <excludeFolder url="file://$MODULE_DIR$/.idea" />
+      <excludeFolder url="file://$MODULE_DIR$/consumer-manager" />
       <excludeFolder url="file://$MODULE_DIR$/dist" />
       <excludeFolder url="file://$MODULE_DIR$/ext" />
       <excludeFolder url="file://$MODULE_DIR$/layouttpl" />
@@ -14,4 +16,3 @@
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
-

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<project name="consumer-manager-api" basedir="." default="compile">
+	<property name="osgi.auto.update.xml" value="false" />
+
+	<property name="plugin.version" value="1" />
+
+	<property name="plugin.name" value="com.liferay.consumer.manager.api" />
+
+	<property name="service.base.dir" value="." />
+
+	<import file="../../../../build-common-osgi-plugin.xml" />
+</project>

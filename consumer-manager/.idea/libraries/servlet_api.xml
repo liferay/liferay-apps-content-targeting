@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="servlet-api">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../../../portal/lib/development/servlet-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../portal/lib/development/spring-test.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../portal/lib/global/portlet.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../portal/lib/portal/spring-beans.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../portal/lib/portal/spring-context.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../portal/lib/portal/spring-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../../../portal/lib/portal/spring-transaction.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

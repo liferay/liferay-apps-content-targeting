@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+
+<project name="consumer-manager-web" basedir="." default="compile" xmlns:antelope="antlib:ise.antelope.tasks">
+	<property name="osgi.auto.update.xml" value="false" />
+
+	<property name="plugin.version" value="1" />
+
+	<property name="plugin.name" value="com.liferay.consumer.manager.web-portlet" />
+
+	<property name="import.shared" value="consumer-manager-api" />
+
+	<import file="../../../../build-common-osgi-plugin.xml" />
+
+	<target name="jar">
+		<build-css
+			module.dir="@{module.dir}"
+		/>
+
+		<jar-macro
+			module.dir="${basedir}"
+		/>
+	</target>
+</project>

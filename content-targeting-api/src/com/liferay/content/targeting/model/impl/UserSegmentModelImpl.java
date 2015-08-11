@@ -23,6 +23,7 @@ import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
@@ -88,8 +89,8 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 		};
 	public static final String TABLE_SQL_CREATE = "create table CT_UserSegment (uuid_ VARCHAR(75) null,userSegmentId LONG not null primary key,groupId LONG,assetCategoryId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,name STRING null,description STRING null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_UserSegment";
-	public static final String ORDER_BY_JPQL = " ORDER BY userSegment.name DESC";
-	public static final String ORDER_BY_SQL = " ORDER BY CT_UserSegment.name DESC";
+	public static final String ORDER_BY_JPQL = " ORDER BY userSegment.modifiedDate DESC";
+	public static final String ORDER_BY_SQL = " ORDER BY CT_UserSegment.modifiedDate DESC";
 	public static final String DATA_SOURCE = "liferayDataSource";
 	public static final String SESSION_FACTORY = "liferaySessionFactory";
 	public static final String TX_MANAGER = "liferayTransactionManager";
@@ -106,7 +107,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 	public static long COMPANYID_COLUMN_BITMASK = 2L;
 	public static long GROUPID_COLUMN_BITMASK = 4L;
 	public static long UUID_COLUMN_BITMASK = 8L;
-	public static long NAME_COLUMN_BITMASK = 16L;
+	public static long MODIFIEDDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -461,6 +462,8 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
+		_columnBitmask = -1L;
+
 		_modifiedDate = modifiedDate;
 	}
 
@@ -520,8 +523,6 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 
 	@Override
 	public void setName(String name) {
-		_columnBitmask = -1L;
-
 		_name = name;
 	}
 
@@ -801,7 +802,8 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 	public int compareTo(UserSegment userSegment) {
 		int value = 0;
 
-		value = getName().compareTo(userSegment.getName());
+		value = DateUtil.compareTo(getModifiedDate(),
+				userSegment.getModifiedDate());
 
 		value = value * -1;
 

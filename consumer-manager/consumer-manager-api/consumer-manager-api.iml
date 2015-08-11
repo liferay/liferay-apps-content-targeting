@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="IvyIDEA" name="IvyIDEA">
+      <configuration ivyFile="$MODULE_DIR$/ivy.xml" useProjectSettings="false" useCustomIvySettings="true" ivySettingsFile="$MODULE_DIR$/../../../../ivy-settings.xml" onlyResolveSelectedConfigs="false">
+        <propertiesSettings>
+          <propertiesFiles includeProjectLevelPropertiesFiles="true">
+            <fileName>$MODULE_DIR$/../ivy.idea.properties</fileName>
+          </propertiesFiles>
+        </propertiesSettings>
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/service" isTestSource="false" />
+      <excludeFolder url="file://$MODULE_DIR$/classes" />
+    </content>
+    <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="portal" level="project" />
+    <orderEntry type="library" name="reference" level="project" />
+    <orderEntry type="module-library">
+      <library name="IvyIDEA">
+        <CLASSES>
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/jars/com.liferay.osgi.util-1.0.1.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/jars/org.osgi.core-5.0.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.log.bridge/jars/com.liferay.portal.log.bridge-1.0.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/jars/org.osgi.compendium-5.0.0.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.freemarker/freemarker/jars/freemarker-2.3.17.jar!/" />
+        </CLASSES>
+        <JAVADOC>
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/javadocs/org.osgi.core-5.0.0-javadoc.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/javadocs/org.osgi.compendium-5.0.0-javadoc.jar!/" />
+        </JAVADOC>
+        <SOURCES>
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.osgi.util/sources/com.liferay.osgi.util-1.0.1-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.core/sources/org.osgi.core-5.0.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/com.liferay/com.liferay.portal.log.bridge/sources/com.liferay.portal.log.bridge-1.0.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.osgi/org.osgi.compendium/sources/org.osgi.compendium-5.0.0-sources.jar!/" />
+          <root url="jar://$USER_HOME$/.ivy2/cache/org.freemarker/freemarker/sources/freemarker-2.3.17-sources.jar!/" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+  </component>
+</module>

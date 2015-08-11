@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<project name="extension-@extension.name@" basedir="." default="compile">
+	<property name="plugin.version" value="1" />
+
+	<property name="plugin.name" value="com.liferay.consumer.manager.extension.@extension.java.package.name@" />
+
+	<property name="import.shared" value="consumer-manager-api" />
+
+	<import file="../../../../build-common-osgi-plugin.xml" />
+</project>

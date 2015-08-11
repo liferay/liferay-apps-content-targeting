@@ -1,0 +1,30 @@
+Bundle-Name: Consumer Manager API
+Bundle-SymbolicName: com.liferay.consumer.manager.api
+Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.consumer.manager,\
+	com.liferay.consumer.manager.api.model,\
+	com.liferay.consumer.manager.model,\
+	com.liferay.consumer.manager.model.impl,\
+	com.liferay.consumer.manager.service,\
+	com.liferay.consumer.manager.service.messaging,\
+	com.liferay.consumer.manager.service.permission,\
+	com.liferay.consumer.manager.util
+Import-Package:\
+	com.liferay.portal.kernel.lar,\
+	com.liferay.osgi.util.service,\
+	*;resolution:="optional"
+Include-Resource:\
+ 	classes,\
+	WEB-INF/classes/META-INF=classes/META-INF/,\
+	WEB-INF/liferay-display.xml=META-INF/liferay-display.xml,\
+	WEB-INF/liferay-plugin-package.properties=META-INF/liferay-plugin-package.properties,\
+	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
+	WEB-INF/liferay-portlet.xml=META-INF/liferay-portlet.xml,\
+	WEB-INF/portlet.xml=META-INF/portlet.xml,\
+	WEB-INF/sql=sql,\
+	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
+	@lib/com.liferay.consumer.manager.api-service.jar
+Service-Component:com.liferay.consumer.manager.*
+Web-ContextPath: /consumer-manager-api
+-baseline: *;version="1.0.0"

@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.liferay.consumer.manager">
+	<namespace>CM</namespace>
+	<entity name="Consumer" uuid="true" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="consumerId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="consumerKey" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+
+		<finder name="C_C" return-type="Consumer" unique="true">
+			<finder-column name="companyId" />
+			<finder-column name="consumerKey" />
+		</finder>
+	</entity>
+	<entity name="ConsumerExtensionInstance" uuid="true" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="consumerExtensionInstanceId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="consumerExtensionKey" type="String" />
+		<column name="consumerId" type="long" />
+		<column name="typeSettings" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="consumerExtensionKey" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CompanyId" return-type="Collection">
+			<finder-column name="companyId" />
+		</finder>
+		<finder name="ConsumerId" return-type="Collection">
+			<finder-column name="consumerId" />
+		</finder>
+		<finder name="C_C" return-type="ConsumerExtension">
+			<finder-column name="consumerExtensionKey" />
+			<finder-column name="consumerId" />
+		</finder>
+	</entity>
+	<exceptions>
+		<exception>InvalidConsumerExtension</exception>
+		<exception>InvalidName</exception>
+	</exceptions>
+</service-builder>

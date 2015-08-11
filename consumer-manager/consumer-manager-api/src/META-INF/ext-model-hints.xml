@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<model-hints>
+	<model name="com.liferay.consumer.manager.model.Consumer">
+		<field name="name" type="String" localized="false">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
+	</model>
+</model-hints>
