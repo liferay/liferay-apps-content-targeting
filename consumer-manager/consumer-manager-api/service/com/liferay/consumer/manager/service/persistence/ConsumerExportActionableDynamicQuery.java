@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.consumer.manager.service.persistence;
 
 import com.liferay.consumer.manager.model.Consumer;
@@ -17,53 +31,53 @@ import com.liferay.portal.util.PortalUtil;
  * @generated
  */
 public class ConsumerExportActionableDynamicQuery
-    extends ConsumerActionableDynamicQuery {
-    private PortletDataContext _portletDataContext;
+	extends ConsumerActionableDynamicQuery {
+	public ConsumerExportActionableDynamicQuery(
+		PortletDataContext portletDataContext) throws SystemException {
+		_portletDataContext = portletDataContext;
 
-    public ConsumerExportActionableDynamicQuery(
-        PortletDataContext portletDataContext) throws SystemException {
-        _portletDataContext = portletDataContext;
+		setCompanyId(_portletDataContext.getCompanyId());
+	}
 
-        setCompanyId(_portletDataContext.getCompanyId());
-    }
+	@Override
+	public long performCount() throws PortalException, SystemException {
+		ManifestSummary manifestSummary = _portletDataContext.getManifestSummary();
 
-    @Override
-    public long performCount() throws PortalException, SystemException {
-        ManifestSummary manifestSummary = _portletDataContext.getManifestSummary();
+		StagedModelType stagedModelType = getStagedModelType();
 
-        StagedModelType stagedModelType = getStagedModelType();
+		long modelAdditionCount = super.performCount();
 
-        long modelAdditionCount = super.performCount();
+		manifestSummary.addModelAdditionCount(stagedModelType.toString(),
+			modelAdditionCount);
 
-        manifestSummary.addModelAdditionCount(stagedModelType.toString(),
-            modelAdditionCount);
+		long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(_portletDataContext,
+				stagedModelType);
 
-        long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(_portletDataContext,
-                stagedModelType);
+		manifestSummary.addModelDeletionCount(stagedModelType.toString(),
+			modelDeletionCount);
 
-        manifestSummary.addModelDeletionCount(stagedModelType.toString(),
-            modelDeletionCount);
+		return modelAdditionCount;
+	}
 
-        return modelAdditionCount;
-    }
+	@Override
+	protected void addCriteria(DynamicQuery dynamicQuery) {
+		_portletDataContext.addDateRangeCriteria(dynamicQuery, "modifiedDate");
+	}
 
-    @Override
-    protected void addCriteria(DynamicQuery dynamicQuery) {
-        _portletDataContext.addDateRangeCriteria(dynamicQuery, "modifiedDate");
-    }
+	protected StagedModelType getStagedModelType() {
+		return new StagedModelType(PortalUtil.getClassNameId(
+				Consumer.class.getName()));
+	}
 
-    protected StagedModelType getStagedModelType() {
-        return new StagedModelType(PortalUtil.getClassNameId(
-                Consumer.class.getName()));
-    }
+	@Override
+	@SuppressWarnings("unused")
+	protected void performAction(Object object)
+		throws PortalException, SystemException {
+		Consumer stagedModel = (Consumer)object;
 
-    @Override
-    @SuppressWarnings("unused")
-    protected void performAction(Object object)
-        throws PortalException, SystemException {
-        Consumer stagedModel = (Consumer) object;
+		StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,
+			stagedModel);
+	}
 
-        StagedModelDataHandlerUtil.exportStagedModel(_portletDataContext,
-            stagedModel);
-    }
+	private PortletDataContext _portletDataContext;
 }

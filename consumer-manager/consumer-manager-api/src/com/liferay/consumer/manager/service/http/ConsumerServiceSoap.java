@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.consumer.manager.service.http;
 
 import com.liferay.consumer.manager.service.ConsumerServiceUtil;
@@ -52,111 +66,117 @@ import java.util.Map;
  * @generated
  */
 public class ConsumerServiceSoap {
-    private static Log _log = LogFactoryUtil.getLog(ConsumerServiceSoap.class);
+	public static com.liferay.consumer.manager.model.ConsumerSoap addConsumer(
+		java.lang.String consumerKey,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
 
-    public static com.liferay.consumer.manager.model.ConsumerSoap addConsumer(
-        java.lang.String consumerKey,
-        java.lang.String[] descriptionMapLanguageIds,
-        java.lang.String[] descriptionMapValues,
-        java.lang.String[] nameMapLanguageIds,
-        java.lang.String[] nameMapValues,
-        com.liferay.portal.service.ServiceContext serviceContext)
-        throws RemoteException {
-        try {
-            Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
-                    descriptionMapValues);
-            Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
-                    nameMapValues);
+			com.liferay.consumer.manager.model.Consumer returnValue = ConsumerServiceUtil.addConsumer(consumerKey,
+					descriptionMap, nameMap, serviceContext);
 
-            com.liferay.consumer.manager.model.Consumer returnValue = ConsumerServiceUtil.addConsumer(consumerKey,
-                    descriptionMap, nameMap, serviceContext);
+			return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 
-            return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModel(returnValue);
-        } catch (Exception e) {
-            _log.error(e, e);
+			throw new RemoteException(e.getMessage());
+		}
+	}
 
-            throw new RemoteException(e.getMessage());
-        }
-    }
+	public static com.liferay.consumer.manager.model.ConsumerSoap deleteConsumer(
+		long consumerId) throws RemoteException {
+		try {
+			com.liferay.consumer.manager.model.Consumer returnValue = ConsumerServiceUtil.deleteConsumer(consumerId);
 
-    public static com.liferay.consumer.manager.model.ConsumerSoap deleteConsumer(
-        long consumerId) throws RemoteException {
-        try {
-            com.liferay.consumer.manager.model.Consumer returnValue = ConsumerServiceUtil.deleteConsumer(consumerId);
+			return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 
-            return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModel(returnValue);
-        } catch (Exception e) {
-            _log.error(e, e);
+			throw new RemoteException(e.getMessage());
+		}
+	}
 
-            throw new RemoteException(e.getMessage());
-        }
-    }
+	public static com.liferay.consumer.manager.model.ConsumerSoap getConsumer(
+		long companyId, java.lang.String consumerKey) throws RemoteException {
+		try {
+			com.liferay.consumer.manager.model.Consumer returnValue = ConsumerServiceUtil.getConsumer(companyId,
+					consumerKey);
 
-    public static com.liferay.consumer.manager.model.ConsumerSoap getConsumer(
-        long companyId, java.lang.String consumerKey) throws RemoteException {
-        try {
-            com.liferay.consumer.manager.model.Consumer returnValue = ConsumerServiceUtil.getConsumer(companyId,
-                    consumerKey);
+			return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 
-            return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModel(returnValue);
-        } catch (Exception e) {
-            _log.error(e, e);
+			throw new RemoteException(e.getMessage());
+		}
+	}
 
-            throw new RemoteException(e.getMessage());
-        }
-    }
+	public static com.liferay.consumer.manager.model.ConsumerSoap[] getConsumers()
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.consumer.manager.model.Consumer> returnValue =
+				ConsumerServiceUtil.getConsumers();
 
-    public static com.liferay.consumer.manager.model.ConsumerSoap[] getConsumers()
-        throws RemoteException {
-        try {
-            java.util.List<com.liferay.consumer.manager.model.Consumer> returnValue =
-                ConsumerServiceUtil.getConsumers();
+			return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 
-            return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModels(returnValue);
-        } catch (Exception e) {
-            _log.error(e, e);
+			throw new RemoteException(e.getMessage());
+		}
+	}
 
-            throw new RemoteException(e.getMessage());
-        }
-    }
+	public static com.liferay.consumer.manager.model.ConsumerSoap[] getConsumers(
+		long companyId, com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			java.util.List<com.liferay.consumer.manager.model.Consumer> returnValue =
+				ConsumerServiceUtil.getConsumers(companyId, serviceContext);
 
-    public static com.liferay.consumer.manager.model.ConsumerSoap[] getConsumers(
-        long companyId, com.liferay.portal.service.ServiceContext serviceContext)
-        throws RemoteException {
-        try {
-            java.util.List<com.liferay.consumer.manager.model.Consumer> returnValue =
-                ConsumerServiceUtil.getConsumers(companyId, serviceContext);
+			return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 
-            return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModels(returnValue);
-        } catch (Exception e) {
-            _log.error(e, e);
+			throw new RemoteException(e.getMessage());
+		}
+	}
 
-            throw new RemoteException(e.getMessage());
-        }
-    }
+	public static com.liferay.consumer.manager.model.ConsumerSoap updateConsumer(
+		long consumerId, java.lang.String consumerKey,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
 
-    public static com.liferay.consumer.manager.model.ConsumerSoap updateConsumer(
-        long consumerId, java.lang.String consumerKey,
-        java.lang.String[] descriptionMapLanguageIds,
-        java.lang.String[] descriptionMapValues,
-        java.lang.String[] nameMapLanguageIds,
-        java.lang.String[] nameMapValues,
-        com.liferay.portal.service.ServiceContext serviceContext)
-        throws RemoteException {
-        try {
-            Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
-                    descriptionMapValues);
-            Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
-                    nameMapValues);
+			com.liferay.consumer.manager.model.Consumer returnValue = ConsumerServiceUtil.updateConsumer(consumerId,
+					consumerKey, descriptionMap, nameMap, serviceContext);
 
-            com.liferay.consumer.manager.model.Consumer returnValue = ConsumerServiceUtil.updateConsumer(consumerId,
-                    consumerKey, descriptionMap, nameMap, serviceContext);
+			return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
 
-            return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModel(returnValue);
-        } catch (Exception e) {
-            _log.error(e, e);
+			throw new RemoteException(e.getMessage());
+		}
+	}
 
-            throw new RemoteException(e.getMessage());
-        }
-    }
+	private static Log _log = LogFactoryUtil.getLog(ConsumerServiceSoap.class);
 }

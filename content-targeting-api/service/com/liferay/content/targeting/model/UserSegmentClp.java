@@ -21,6 +21,7 @@ import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.lar.StagedModelType;
+import com.liferay.portal.kernel.util.DateUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.LocalizationUtil;
 import com.liferay.portal.kernel.util.PortalClassLoaderUtil;
@@ -886,7 +887,8 @@ public class UserSegmentClp extends BaseModelImpl<UserSegment>
 	public int compareTo(UserSegment userSegment) {
 		int value = 0;
 
-		value = getName().compareTo(userSegment.getName());
+		value = DateUtil.compareTo(getModifiedDate(),
+				userSegment.getModifiedDate());
 
 		value = value * -1;
 

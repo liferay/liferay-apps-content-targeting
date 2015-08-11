@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.consumer.manager.service;
 
 import com.liferay.consumer.manager.model.ConsumerClp;
@@ -22,320 +36,334 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * @author Brian Wing Shun Chan
+ */
 public class ClpSerializer {
-    private static Log _log = LogFactoryUtil.getLog(ClpSerializer.class);
-    private static String _servletContextName;
-    private static boolean _useReflectionToTranslateThrowable = true;
+	public static String getServletContextName() {
+		if (Validator.isNotNull(_servletContextName)) {
+			return _servletContextName;
+		}
 
-    public static String getServletContextName() {
-        if (Validator.isNotNull(_servletContextName)) {
-            return _servletContextName;
-        }
+		synchronized (ClpSerializer.class) {
+			if (Validator.isNotNull(_servletContextName)) {
+				return _servletContextName;
+			}
 
-        synchronized (ClpSerializer.class) {
-            if (Validator.isNotNull(_servletContextName)) {
-                return _servletContextName;
-            }
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
 
-            try {
-                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+				Class<?> portletPropsClass = classLoader.loadClass(
+						"com.liferay.util.portlet.PortletProps");
+
+				Method getMethod = portletPropsClass.getMethod("get",
+						new Class<?>[] { String.class });
+
+				String portletPropsServletContextName = (String)getMethod.invoke(null,
+						"com.liferay.consumer.manager.api-deployment-context");
+
+				if (Validator.isNotNull(portletPropsServletContextName)) {
+					_servletContextName = portletPropsServletContextName;
+				}
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info(
+						"Unable to locate deployment context from portlet properties");
+				}
+			}
+
+			if (Validator.isNull(_servletContextName)) {
+				try {
+					String propsUtilServletContextName = PropsUtil.get(
+							"com.liferay.consumer.manager.api-deployment-context");
+
+					if (Validator.isNotNull(propsUtilServletContextName)) {
+						_servletContextName = propsUtilServletContextName;
+					}
+				}
+				catch (Throwable t) {
+					if (_log.isInfoEnabled()) {
+						_log.info(
+							"Unable to locate deployment context from portal properties");
+					}
+				}
+			}
 
-                Class<?> portletPropsClass = classLoader.loadClass(
-                        "com.liferay.util.portlet.PortletProps");
-
-                Method getMethod = portletPropsClass.getMethod("get",
-                        new Class<?>[] { String.class });
-
-                String portletPropsServletContextName = (String) getMethod.invoke(null,
-                        "com.liferay.consumer.manager.api-deployment-context");
+			if (Validator.isNull(_servletContextName)) {
+				_servletContextName = "com.liferay.consumer.manager.api";
+			}
 
-                if (Validator.isNotNull(portletPropsServletContextName)) {
-                    _servletContextName = portletPropsServletContextName;
-                }
-            } catch (Throwable t) {
-                if (_log.isInfoEnabled()) {
-                    _log.info(
-                        "Unable to locate deployment context from portlet properties");
-                }
-            }
+			return _servletContextName;
+		}
+	}
 
-            if (Validator.isNull(_servletContextName)) {
-                try {
-                    String propsUtilServletContextName = PropsUtil.get(
-                            "com.liferay.consumer.manager.api-deployment-context");
+	public static Object translateInput(BaseModel<?> oldModel) {
+		Class<?> oldModelClass = oldModel.getClass();
 
-                    if (Validator.isNotNull(propsUtilServletContextName)) {
-                        _servletContextName = propsUtilServletContextName;
-                    }
-                } catch (Throwable t) {
-                    if (_log.isInfoEnabled()) {
-                        _log.info(
-                            "Unable to locate deployment context from portal properties");
-                    }
-                }
-            }
+		String oldModelClassName = oldModelClass.getName();
 
-            if (Validator.isNull(_servletContextName)) {
-                _servletContextName = "com.liferay.consumer.manager.api";
-            }
+		if (oldModelClassName.equals(ConsumerClp.class.getName())) {
+			return translateInputConsumer(oldModel);
+		}
+
+		if (oldModelClassName.equals(
+					ConsumerExtensionInstanceClp.class.getName())) {
+			return translateInputConsumerExtensionInstance(oldModel);
+		}
+
+		return oldModel;
+	}
+
+	public static Object translateInput(List<Object> oldList) {
+		List<Object> newList = new ArrayList<Object>(oldList.size());
 
-            return _servletContextName;
-        }
-    }
+		for (int i = 0; i < oldList.size(); i++) {
+			Object curObj = oldList.get(i);
 
-    public static Object translateInput(BaseModel<?> oldModel) {
-        Class<?> oldModelClass = oldModel.getClass();
+			newList.add(translateInput(curObj));
+		}
 
-        String oldModelClassName = oldModelClass.getName();
+		return newList;
+	}
 
-        if (oldModelClassName.equals(ConsumerClp.class.getName())) {
-            return translateInputConsumer(oldModel);
-        }
+	public static Object translateInputConsumer(BaseModel<?> oldModel) {
+		ConsumerClp oldClpModel = (ConsumerClp)oldModel;
 
-        if (oldModelClassName.equals(
-                    ConsumerExtensionInstanceClp.class.getName())) {
-            return translateInputConsumerExtensionInstance(oldModel);
-        }
+		BaseModel<?> newModel = oldClpModel.getConsumerRemoteModel();
 
-        return oldModel;
-    }
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
-    public static Object translateInput(List<Object> oldList) {
-        List<Object> newList = new ArrayList<Object>(oldList.size());
+		return newModel;
+	}
 
-        for (int i = 0; i < oldList.size(); i++) {
-            Object curObj = oldList.get(i);
+	public static Object translateInputConsumerExtensionInstance(
+		BaseModel<?> oldModel) {
+		ConsumerExtensionInstanceClp oldClpModel = (ConsumerExtensionInstanceClp)oldModel;
 
-            newList.add(translateInput(curObj));
-        }
+		BaseModel<?> newModel = oldClpModel.getConsumerExtensionInstanceRemoteModel();
 
-        return newList;
-    }
+		newModel.setModelAttributes(oldClpModel.getModelAttributes());
 
-    public static Object translateInputConsumer(BaseModel<?> oldModel) {
-        ConsumerClp oldClpModel = (ConsumerClp) oldModel;
+		return newModel;
+	}
 
-        BaseModel<?> newModel = oldClpModel.getConsumerRemoteModel();
+	public static Object translateInput(Object obj) {
+		if (obj instanceof BaseModel<?>) {
+			return translateInput((BaseModel<?>)obj);
+		}
+		else if (obj instanceof List<?>) {
+			return translateInput((List<Object>)obj);
+		}
+		else {
+			return obj;
+		}
+	}
 
-        newModel.setModelAttributes(oldClpModel.getModelAttributes());
+	public static Object translateOutput(BaseModel<?> oldModel) {
+		Class<?> oldModelClass = oldModel.getClass();
 
-        return newModel;
-    }
+		String oldModelClassName = oldModelClass.getName();
 
-    public static Object translateInputConsumerExtensionInstance(
-        BaseModel<?> oldModel) {
-        ConsumerExtensionInstanceClp oldClpModel = (ConsumerExtensionInstanceClp) oldModel;
+		if (oldModelClassName.equals(
+					"com.liferay.consumer.manager.model.impl.ConsumerImpl")) {
+			return translateOutputConsumer(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
 
-        BaseModel<?> newModel = oldClpModel.getConsumerExtensionInstanceRemoteModel();
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
 
-        newModel.setModelAttributes(oldClpModel.getModelAttributes());
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
 
-        return newModel;
-    }
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
 
-    public static Object translateInput(Object obj) {
-        if (obj instanceof BaseModel<?>) {
-            return translateInput((BaseModel<?>) obj);
-        } else if (obj instanceof List<?>) {
-            return translateInput((List<Object>) obj);
-        } else {
-            return obj;
-        }
-    }
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
 
-    public static Object translateOutput(BaseModel<?> oldModel) {
-        Class<?> oldModelClass = oldModel.getClass();
+				Class<?> oldModelModelClass = oldModel.getModelClass();
 
-        String oldModelClassName = oldModelClass.getName();
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
 
-        if (oldModelClassName.equals(
-                    "com.liferay.consumer.manager.model.impl.ConsumerImpl")) {
-            return translateOutputConsumer(oldModel);
-        } else if (oldModelClassName.endsWith("Clp")) {
-            try {
-                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
 
-                Method getClpSerializerClassMethod = oldModelClass.getMethod(
-                        "getClpSerializerClass");
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
 
-                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
 
-                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+		if (oldModelClassName.equals(
+					"com.liferay.consumer.manager.model.impl.ConsumerExtensionInstanceImpl")) {
+			return translateOutputConsumerExtensionInstance(oldModel);
+		}
+		else if (oldModelClassName.endsWith("Clp")) {
+			try {
+				ClassLoader classLoader = ClpSerializer.class.getClassLoader();
 
-                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-                        BaseModel.class);
+				Method getClpSerializerClassMethod = oldModelClass.getMethod(
+						"getClpSerializerClass");
 
-                Class<?> oldModelModelClass = oldModel.getModelClass();
+				Class<?> oldClpSerializerClass = (Class<?>)getClpSerializerClassMethod.invoke(oldModel);
 
-                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-                        oldModelModelClass.getSimpleName() + "RemoteModel");
+				Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
 
-                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+				Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
+						BaseModel.class);
 
-                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
-                        oldRemoteModel);
+				Class<?> oldModelModelClass = oldModel.getModelClass();
 
-                return newModel;
-            } catch (Throwable t) {
-                if (_log.isInfoEnabled()) {
-                    _log.info("Unable to translate " + oldModelClassName, t);
-                }
-            }
-        }
+				Method getRemoteModelMethod = oldModelClass.getMethod("get" +
+						oldModelModelClass.getSimpleName() + "RemoteModel");
 
-        if (oldModelClassName.equals(
-                    "com.liferay.consumer.manager.model.impl.ConsumerExtensionInstanceImpl")) {
-            return translateOutputConsumerExtensionInstance(oldModel);
-        } else if (oldModelClassName.endsWith("Clp")) {
-            try {
-                ClassLoader classLoader = ClpSerializer.class.getClassLoader();
+				Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
 
-                Method getClpSerializerClassMethod = oldModelClass.getMethod(
-                        "getClpSerializerClass");
+				BaseModel<?> newModel = (BaseModel<?>)translateOutputMethod.invoke(null,
+						oldRemoteModel);
 
-                Class<?> oldClpSerializerClass = (Class<?>) getClpSerializerClassMethod.invoke(oldModel);
+				return newModel;
+			}
+			catch (Throwable t) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Unable to translate " + oldModelClassName, t);
+				}
+			}
+		}
 
-                Class<?> newClpSerializerClass = classLoader.loadClass(oldClpSerializerClass.getName());
+		return oldModel;
+	}
 
-                Method translateOutputMethod = newClpSerializerClass.getMethod("translateOutput",
-                        BaseModel.class);
+	public static Object translateOutput(List<Object> oldList) {
+		List<Object> newList = new ArrayList<Object>(oldList.size());
 
-                Class<?> oldModelModelClass = oldModel.getModelClass();
+		for (int i = 0; i < oldList.size(); i++) {
+			Object curObj = oldList.get(i);
 
-                Method getRemoteModelMethod = oldModelClass.getMethod("get" +
-                        oldModelModelClass.getSimpleName() + "RemoteModel");
+			newList.add(translateOutput(curObj));
+		}
 
-                Object oldRemoteModel = getRemoteModelMethod.invoke(oldModel);
+		return newList;
+	}
 
-                BaseModel<?> newModel = (BaseModel<?>) translateOutputMethod.invoke(null,
-                        oldRemoteModel);
+	public static Object translateOutput(Object obj) {
+		if (obj instanceof BaseModel<?>) {
+			return translateOutput((BaseModel<?>)obj);
+		}
+		else if (obj instanceof List<?>) {
+			return translateOutput((List<Object>)obj);
+		}
+		else {
+			return obj;
+		}
+	}
 
-                return newModel;
-            } catch (Throwable t) {
-                if (_log.isInfoEnabled()) {
-                    _log.info("Unable to translate " + oldModelClassName, t);
-                }
-            }
-        }
+	public static Throwable translateThrowable(Throwable throwable) {
+		if (_useReflectionToTranslateThrowable) {
+			try {
+				UnsyncByteArrayOutputStream unsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
+				ObjectOutputStream objectOutputStream = new ObjectOutputStream(unsyncByteArrayOutputStream);
 
-        return oldModel;
-    }
+				objectOutputStream.writeObject(throwable);
 
-    public static Object translateOutput(List<Object> oldList) {
-        List<Object> newList = new ArrayList<Object>(oldList.size());
+				objectOutputStream.flush();
+				objectOutputStream.close();
 
-        for (int i = 0; i < oldList.size(); i++) {
-            Object curObj = oldList.get(i);
+				UnsyncByteArrayInputStream unsyncByteArrayInputStream = new UnsyncByteArrayInputStream(unsyncByteArrayOutputStream.unsafeGetByteArray(),
+						0, unsyncByteArrayOutputStream.size());
 
-            newList.add(translateOutput(curObj));
-        }
+				Thread currentThread = Thread.currentThread();
 
-        return newList;
-    }
+				ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-    public static Object translateOutput(Object obj) {
-        if (obj instanceof BaseModel<?>) {
-            return translateOutput((BaseModel<?>) obj);
-        } else if (obj instanceof List<?>) {
-            return translateOutput((List<Object>) obj);
-        } else {
-            return obj;
-        }
-    }
+				ObjectInputStream objectInputStream = new ClassLoaderObjectInputStream(unsyncByteArrayInputStream,
+						contextClassLoader);
 
-    public static Throwable translateThrowable(Throwable throwable) {
-        if (_useReflectionToTranslateThrowable) {
-            try {
-                UnsyncByteArrayOutputStream unsyncByteArrayOutputStream = new UnsyncByteArrayOutputStream();
-                ObjectOutputStream objectOutputStream = new ObjectOutputStream(unsyncByteArrayOutputStream);
+				throwable = (Throwable)objectInputStream.readObject();
 
-                objectOutputStream.writeObject(throwable);
+				objectInputStream.close();
 
-                objectOutputStream.flush();
-                objectOutputStream.close();
+				return throwable;
+			}
+			catch (SecurityException se) {
+				if (_log.isInfoEnabled()) {
+					_log.info("Do not use reflection to translate throwable");
+				}
 
-                UnsyncByteArrayInputStream unsyncByteArrayInputStream = new UnsyncByteArrayInputStream(unsyncByteArrayOutputStream.unsafeGetByteArray(),
-                        0, unsyncByteArrayOutputStream.size());
+				_useReflectionToTranslateThrowable = false;
+			}
+			catch (Throwable throwable2) {
+				_log.error(throwable2, throwable2);
 
-                Thread currentThread = Thread.currentThread();
+				return throwable2;
+			}
+		}
 
-                ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		Class<?> clazz = throwable.getClass();
 
-                ObjectInputStream objectInputStream = new ClassLoaderObjectInputStream(unsyncByteArrayInputStream,
-                        contextClassLoader);
+		String className = clazz.getName();
 
-                throwable = (Throwable) objectInputStream.readObject();
+		if (className.equals(PortalException.class.getName())) {
+			return new PortalException();
+		}
 
-                objectInputStream.close();
+		if (className.equals(SystemException.class.getName())) {
+			return new SystemException();
+		}
 
-                return throwable;
-            } catch (SecurityException se) {
-                if (_log.isInfoEnabled()) {
-                    _log.info("Do not use reflection to translate throwable");
-                }
+		if (className.equals(
+					"com.liferay.consumer.manager.InvalidConsumerExtensionException")) {
+			return new com.liferay.consumer.manager.InvalidConsumerExtensionException();
+		}
 
-                _useReflectionToTranslateThrowable = false;
-            } catch (Throwable throwable2) {
-                _log.error(throwable2, throwable2);
+		if (className.equals(
+					"com.liferay.consumer.manager.InvalidNameException")) {
+			return new com.liferay.consumer.manager.InvalidNameException();
+		}
 
-                return throwable2;
-            }
-        }
+		if (className.equals(
+					"com.liferay.consumer.manager.NoSuchConsumerException")) {
+			return new com.liferay.consumer.manager.NoSuchConsumerException();
+		}
 
-        Class<?> clazz = throwable.getClass();
+		if (className.equals(
+					"com.liferay.consumer.manager.NoSuchConsumerExtensionInstanceException")) {
+			return new com.liferay.consumer.manager.NoSuchConsumerExtensionInstanceException();
+		}
 
-        String className = clazz.getName();
+		return throwable;
+	}
 
-        if (className.equals(PortalException.class.getName())) {
-            return new PortalException();
-        }
+	public static Object translateOutputConsumer(BaseModel<?> oldModel) {
+		ConsumerClp newModel = new ConsumerClp();
 
-        if (className.equals(SystemException.class.getName())) {
-            return new SystemException();
-        }
+		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-        if (className.equals(
-                    "com.liferay.consumer.manager.InvalidConsumerExtensionException")) {
-            return new com.liferay.consumer.manager.InvalidConsumerExtensionException();
-        }
+		newModel.setConsumerRemoteModel(oldModel);
 
-        if (className.equals(
-                    "com.liferay.consumer.manager.InvalidNameException")) {
-            return new com.liferay.consumer.manager.InvalidNameException();
-        }
+		return newModel;
+	}
 
-        if (className.equals(
-                    "com.liferay.consumer.manager.NoSuchConsumerException")) {
-            return new com.liferay.consumer.manager.NoSuchConsumerException();
-        }
+	public static Object translateOutputConsumerExtensionInstance(
+		BaseModel<?> oldModel) {
+		ConsumerExtensionInstanceClp newModel = new ConsumerExtensionInstanceClp();
 
-        if (className.equals(
-                    "com.liferay.consumer.manager.NoSuchConsumerExtensionInstanceException")) {
-            return new com.liferay.consumer.manager.NoSuchConsumerExtensionInstanceException();
-        }
+		newModel.setModelAttributes(oldModel.getModelAttributes());
 
-        return throwable;
-    }
+		newModel.setConsumerExtensionInstanceRemoteModel(oldModel);
 
-    public static Object translateOutputConsumer(BaseModel<?> oldModel) {
-        ConsumerClp newModel = new ConsumerClp();
+		return newModel;
+	}
 
-        newModel.setModelAttributes(oldModel.getModelAttributes());
-
-        newModel.setConsumerRemoteModel(oldModel);
-
-        return newModel;
-    }
-
-    public static Object translateOutputConsumerExtensionInstance(
-        BaseModel<?> oldModel) {
-        ConsumerExtensionInstanceClp newModel = new ConsumerExtensionInstanceClp();
-
-        newModel.setModelAttributes(oldModel.getModelAttributes());
-
-        newModel.setConsumerExtensionInstanceRemoteModel(oldModel);
-
-        return newModel;
-    }
+	private static Log _log = LogFactoryUtil.getLog(ClpSerializer.class);
+	private static String _servletContextName;
+	private static boolean _useReflectionToTranslateThrowable = true;
 }

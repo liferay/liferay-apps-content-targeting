@@ -1,3 +1,17 @@
+/**
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
+ *
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
+ *
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
+ */
+
 package com.liferay.consumer.manager.service.base;
 
 import com.liferay.consumer.manager.model.ConsumerExtensionInstance;
@@ -41,579 +55,581 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class ConsumerExtensionInstanceLocalServiceBaseImpl
-    extends BaseLocalServiceImpl
-    implements ConsumerExtensionInstanceLocalService, IdentifiableBean {
-    @BeanReference(type = com.liferay.consumer.manager.service.ConsumerLocalService.class)
-    protected com.liferay.consumer.manager.service.ConsumerLocalService consumerLocalService;
-    @BeanReference(type = com.liferay.consumer.manager.service.ConsumerService.class)
-    protected com.liferay.consumer.manager.service.ConsumerService consumerService;
-    @BeanReference(type = ConsumerPersistence.class)
-    protected ConsumerPersistence consumerPersistence;
-    @BeanReference(type = com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalService.class)
-    protected com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalService consumerExtensionInstanceLocalService;
-    @BeanReference(type = com.liferay.consumer.manager.service.ConsumerExtensionInstanceService.class)
-    protected com.liferay.consumer.manager.service.ConsumerExtensionInstanceService consumerExtensionInstanceService;
-    @BeanReference(type = ConsumerExtensionInstancePersistence.class)
-    protected ConsumerExtensionInstancePersistence consumerExtensionInstancePersistence;
-    @BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
-    protected com.liferay.counter.service.CounterLocalService counterLocalService;
-    @BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
-    protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-    @BeanReference(type = com.liferay.portal.service.UserLocalService.class)
-    protected com.liferay.portal.service.UserLocalService userLocalService;
-    @BeanReference(type = com.liferay.portal.service.UserService.class)
-    protected com.liferay.portal.service.UserService userService;
-    @BeanReference(type = UserPersistence.class)
-    protected UserPersistence userPersistence;
-    private String _beanIdentifier;
-    private ClassLoader _classLoader;
-    private ConsumerExtensionInstanceLocalServiceClpInvoker _clpInvoker = new ConsumerExtensionInstanceLocalServiceClpInvoker();
+	extends BaseLocalServiceImpl
+	implements ConsumerExtensionInstanceLocalService, IdentifiableBean {
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never modify or reference this class directly. Always use {@link com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalServiceUtil} to access the consumer extension instance local service.
+	 */
 
-    /*
-     * NOTE FOR DEVELOPERS:
-     *
-     * Never modify or reference this class directly. Always use {@link com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalServiceUtil} to access the consumer extension instance local service.
-     */
+	/**
+	 * Adds the consumer extension instance to the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param consumerExtensionInstance the consumer extension instance
+	 * @return the consumer extension instance that was added
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ConsumerExtensionInstance addConsumerExtensionInstance(
+		ConsumerExtensionInstance consumerExtensionInstance)
+		throws SystemException {
+		consumerExtensionInstance.setNew(true);
 
-    /**
-     * Adds the consumer extension instance to the database. Also notifies the appropriate model listeners.
-     *
-     * @param consumerExtensionInstance the consumer extension instance
-     * @return the consumer extension instance that was added
-     * @throws SystemException if a system exception occurred
-     */
-    @Indexable(type = IndexableType.REINDEX)
-    @Override
-    public ConsumerExtensionInstance addConsumerExtensionInstance(
-        ConsumerExtensionInstance consumerExtensionInstance)
-        throws SystemException {
-        consumerExtensionInstance.setNew(true);
+		return consumerExtensionInstancePersistence.update(consumerExtensionInstance);
+	}
 
-        return consumerExtensionInstancePersistence.update(consumerExtensionInstance);
-    }
+	/**
+	 * Creates a new consumer extension instance with the primary key. Does not add the consumer extension instance to the database.
+	 *
+	 * @param consumerExtensionInstanceId the primary key for the new consumer extension instance
+	 * @return the new consumer extension instance
+	 */
+	@Override
+	public ConsumerExtensionInstance createConsumerExtensionInstance(
+		long consumerExtensionInstanceId) {
+		return consumerExtensionInstancePersistence.create(consumerExtensionInstanceId);
+	}
 
-    /**
-     * Creates a new consumer extension instance with the primary key. Does not add the consumer extension instance to the database.
-     *
-     * @param consumerExtensionInstanceId the primary key for the new consumer extension instance
-     * @return the new consumer extension instance
-     */
-    @Override
-    public ConsumerExtensionInstance createConsumerExtensionInstance(
-        long consumerExtensionInstanceId) {
-        return consumerExtensionInstancePersistence.create(consumerExtensionInstanceId);
-    }
+	/**
+	 * Deletes the consumer extension instance with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param consumerExtensionInstanceId the primary key of the consumer extension instance
+	 * @return the consumer extension instance that was removed
+	 * @throws PortalException if a consumer extension instance with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public ConsumerExtensionInstance deleteConsumerExtensionInstance(
+		long consumerExtensionInstanceId)
+		throws PortalException, SystemException {
+		return consumerExtensionInstancePersistence.remove(consumerExtensionInstanceId);
+	}
 
-    /**
-     * Deletes the consumer extension instance with the primary key from the database. Also notifies the appropriate model listeners.
-     *
-     * @param consumerExtensionInstanceId the primary key of the consumer extension instance
-     * @return the consumer extension instance that was removed
-     * @throws PortalException if a consumer extension instance with the primary key could not be found
-     * @throws SystemException if a system exception occurred
-     */
-    @Indexable(type = IndexableType.DELETE)
-    @Override
-    public ConsumerExtensionInstance deleteConsumerExtensionInstance(
-        long consumerExtensionInstanceId)
-        throws PortalException, SystemException {
-        return consumerExtensionInstancePersistence.remove(consumerExtensionInstanceId);
-    }
+	/**
+	 * Deletes the consumer extension instance from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param consumerExtensionInstance the consumer extension instance
+	 * @return the consumer extension instance that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Indexable(type = IndexableType.DELETE)
+	@Override
+	public ConsumerExtensionInstance deleteConsumerExtensionInstance(
+		ConsumerExtensionInstance consumerExtensionInstance)
+		throws SystemException {
+		return consumerExtensionInstancePersistence.remove(consumerExtensionInstance);
+	}
 
-    /**
-     * Deletes the consumer extension instance from the database. Also notifies the appropriate model listeners.
-     *
-     * @param consumerExtensionInstance the consumer extension instance
-     * @return the consumer extension instance that was removed
-     * @throws SystemException if a system exception occurred
-     */
-    @Indexable(type = IndexableType.DELETE)
-    @Override
-    public ConsumerExtensionInstance deleteConsumerExtensionInstance(
-        ConsumerExtensionInstance consumerExtensionInstance)
-        throws SystemException {
-        return consumerExtensionInstancePersistence.remove(consumerExtensionInstance);
-    }
+	@Override
+	public DynamicQuery dynamicQuery() {
+		Class<?> clazz = getClass();
 
-    @Override
-    public DynamicQuery dynamicQuery() {
-        Class<?> clazz = getClass();
+		return DynamicQueryFactoryUtil.forClass(ConsumerExtensionInstance.class,
+			clazz.getClassLoader());
+	}
 
-        return DynamicQueryFactoryUtil.forClass(ConsumerExtensionInstance.class,
-            clazz.getClassLoader());
-    }
+	/**
+	 * Performs a dynamic query on the database and returns the matching rows.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return consumerExtensionInstancePersistence.findWithDynamicQuery(dynamicQuery);
+	}
 
-    /**
-     * Performs a dynamic query on the database and returns the matching rows.
-     *
-     * @param dynamicQuery the dynamic query
-     * @return the matching rows
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    @SuppressWarnings("rawtypes")
-    public List dynamicQuery(DynamicQuery dynamicQuery)
-        throws SystemException {
-        return consumerExtensionInstancePersistence.findWithDynamicQuery(dynamicQuery);
-    }
+	/**
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerExtensionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @return the range of matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
+		throws SystemException {
+		return consumerExtensionInstancePersistence.findWithDynamicQuery(dynamicQuery,
+			start, end);
+	}
 
-    /**
-     * Performs a dynamic query on the database and returns a range of the matching rows.
-     *
-     * <p>
-     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerExtensionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-     * </p>
-     *
-     * @param dynamicQuery the dynamic query
-     * @param start the lower bound of the range of model instances
-     * @param end the upper bound of the range of model instances (not inclusive)
-     * @return the range of matching rows
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    @SuppressWarnings("rawtypes")
-    public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-        throws SystemException {
-        return consumerExtensionInstancePersistence.findWithDynamicQuery(dynamicQuery,
-            start, end);
-    }
+	/**
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerExtensionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching rows
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	@SuppressWarnings("rawtypes")
+	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
+		return consumerExtensionInstancePersistence.findWithDynamicQuery(dynamicQuery,
+			start, end, orderByComparator);
+	}
 
-    /**
-     * Performs a dynamic query on the database and returns an ordered range of the matching rows.
-     *
-     * <p>
-     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerExtensionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-     * </p>
-     *
-     * @param dynamicQuery the dynamic query
-     * @param start the lower bound of the range of model instances
-     * @param end the upper bound of the range of model instances (not inclusive)
-     * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-     * @return the ordered range of matching rows
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    @SuppressWarnings("rawtypes")
-    public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-        OrderByComparator orderByComparator) throws SystemException {
-        return consumerExtensionInstancePersistence.findWithDynamicQuery(dynamicQuery,
-            start, end, orderByComparator);
-    }
+	/**
+	 * Returns the number of rows that match the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @return the number of rows that match the dynamic query
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public long dynamicQueryCount(DynamicQuery dynamicQuery)
+		throws SystemException {
+		return consumerExtensionInstancePersistence.countWithDynamicQuery(dynamicQuery);
+	}
 
-    /**
-     * Returns the number of rows that match the dynamic query.
-     *
-     * @param dynamicQuery the dynamic query
-     * @return the number of rows that match the dynamic query
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public long dynamicQueryCount(DynamicQuery dynamicQuery)
-        throws SystemException {
-        return consumerExtensionInstancePersistence.countWithDynamicQuery(dynamicQuery);
-    }
+	/**
+	 * Returns the number of rows that match the dynamic query.
+	 *
+	 * @param dynamicQuery the dynamic query
+	 * @param projection the projection to apply to the query
+	 * @return the number of rows that match the dynamic query
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public long dynamicQueryCount(DynamicQuery dynamicQuery,
+		Projection projection) throws SystemException {
+		return consumerExtensionInstancePersistence.countWithDynamicQuery(dynamicQuery,
+			projection);
+	}
 
-    /**
-     * Returns the number of rows that match the dynamic query.
-     *
-     * @param dynamicQuery the dynamic query
-     * @param projection the projection to apply to the query
-     * @return the number of rows that match the dynamic query
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public long dynamicQueryCount(DynamicQuery dynamicQuery,
-        Projection projection) throws SystemException {
-        return consumerExtensionInstancePersistence.countWithDynamicQuery(dynamicQuery,
-            projection);
-    }
+	@Override
+	public ConsumerExtensionInstance fetchConsumerExtensionInstance(
+		long consumerExtensionInstanceId) throws SystemException {
+		return consumerExtensionInstancePersistence.fetchByPrimaryKey(consumerExtensionInstanceId);
+	}
 
-    @Override
-    public ConsumerExtensionInstance fetchConsumerExtensionInstance(
-        long consumerExtensionInstanceId) throws SystemException {
-        return consumerExtensionInstancePersistence.fetchByPrimaryKey(consumerExtensionInstanceId);
-    }
+	/**
+	 * Returns the consumer extension instance with the matching UUID and company.
+	 *
+	 * @param uuid the consumer extension instance's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching consumer extension instance, or <code>null</code> if a matching consumer extension instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ConsumerExtensionInstance fetchConsumerExtensionInstanceByUuidAndCompanyId(
+		String uuid, long companyId) throws SystemException {
+		return consumerExtensionInstancePersistence.fetchByUuid_C_First(uuid,
+			companyId, null);
+	}
 
-    /**
-     * Returns the consumer extension instance with the matching UUID and company.
-     *
-     * @param uuid the consumer extension instance's UUID
-     * @param  companyId the primary key of the company
-     * @return the matching consumer extension instance, or <code>null</code> if a matching consumer extension instance could not be found
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public ConsumerExtensionInstance fetchConsumerExtensionInstanceByUuidAndCompanyId(
-        String uuid, long companyId) throws SystemException {
-        return consumerExtensionInstancePersistence.fetchByUuid_C_First(uuid,
-            companyId, null);
-    }
+	/**
+	 * Returns the consumer extension instance with the primary key.
+	 *
+	 * @param consumerExtensionInstanceId the primary key of the consumer extension instance
+	 * @return the consumer extension instance
+	 * @throws PortalException if a consumer extension instance with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ConsumerExtensionInstance getConsumerExtensionInstance(
+		long consumerExtensionInstanceId)
+		throws PortalException, SystemException {
+		return consumerExtensionInstancePersistence.findByPrimaryKey(consumerExtensionInstanceId);
+	}
 
-    /**
-     * Returns the consumer extension instance with the primary key.
-     *
-     * @param consumerExtensionInstanceId the primary key of the consumer extension instance
-     * @return the consumer extension instance
-     * @throws PortalException if a consumer extension instance with the primary key could not be found
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public ConsumerExtensionInstance getConsumerExtensionInstance(
-        long consumerExtensionInstanceId)
-        throws PortalException, SystemException {
-        return consumerExtensionInstancePersistence.findByPrimaryKey(consumerExtensionInstanceId);
-    }
+	@Override
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException, SystemException {
+		return consumerExtensionInstancePersistence.findByPrimaryKey(primaryKeyObj);
+	}
 
-    @Override
-    public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-        throws PortalException, SystemException {
-        return consumerExtensionInstancePersistence.findByPrimaryKey(primaryKeyObj);
-    }
+	/**
+	 * Returns the consumer extension instance with the matching UUID and company.
+	 *
+	 * @param uuid the consumer extension instance's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching consumer extension instance
+	 * @throws PortalException if a matching consumer extension instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ConsumerExtensionInstance getConsumerExtensionInstanceByUuidAndCompanyId(
+		String uuid, long companyId) throws PortalException, SystemException {
+		return consumerExtensionInstancePersistence.findByUuid_C_First(uuid,
+			companyId, null);
+	}
 
-    /**
-     * Returns the consumer extension instance with the matching UUID and company.
-     *
-     * @param uuid the consumer extension instance's UUID
-     * @param  companyId the primary key of the company
-     * @return the matching consumer extension instance
-     * @throws PortalException if a matching consumer extension instance could not be found
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public ConsumerExtensionInstance getConsumerExtensionInstanceByUuidAndCompanyId(
-        String uuid, long companyId) throws PortalException, SystemException {
-        return consumerExtensionInstancePersistence.findByUuid_C_First(uuid,
-            companyId, null);
-    }
+	/**
+	 * Returns a range of all the consumer extension instances.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerExtensionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of consumer extension instances
+	 * @param end the upper bound of the range of consumer extension instances (not inclusive)
+	 * @return the range of consumer extension instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ConsumerExtensionInstance> getConsumerExtensionInstances(
+		int start, int end) throws SystemException {
+		return consumerExtensionInstancePersistence.findAll(start, end);
+	}
 
-    /**
-     * Returns a range of all the consumer extension instances.
-     *
-     * <p>
-     * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerExtensionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-     * </p>
-     *
-     * @param start the lower bound of the range of consumer extension instances
-     * @param end the upper bound of the range of consumer extension instances (not inclusive)
-     * @return the range of consumer extension instances
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public List<ConsumerExtensionInstance> getConsumerExtensionInstances(
-        int start, int end) throws SystemException {
-        return consumerExtensionInstancePersistence.findAll(start, end);
-    }
+	/**
+	 * Returns the number of consumer extension instances.
+	 *
+	 * @return the number of consumer extension instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int getConsumerExtensionInstancesCount() throws SystemException {
+		return consumerExtensionInstancePersistence.countAll();
+	}
 
-    /**
-     * Returns the number of consumer extension instances.
-     *
-     * @return the number of consumer extension instances
-     * @throws SystemException if a system exception occurred
-     */
-    @Override
-    public int getConsumerExtensionInstancesCount() throws SystemException {
-        return consumerExtensionInstancePersistence.countAll();
-    }
+	/**
+	 * Updates the consumer extension instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 *
+	 * @param consumerExtensionInstance the consumer extension instance
+	 * @return the consumer extension instance that was updated
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Indexable(type = IndexableType.REINDEX)
+	@Override
+	public ConsumerExtensionInstance updateConsumerExtensionInstance(
+		ConsumerExtensionInstance consumerExtensionInstance)
+		throws SystemException {
+		return consumerExtensionInstancePersistence.update(consumerExtensionInstance);
+	}
 
-    /**
-     * Updates the consumer extension instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-     *
-     * @param consumerExtensionInstance the consumer extension instance
-     * @return the consumer extension instance that was updated
-     * @throws SystemException if a system exception occurred
-     */
-    @Indexable(type = IndexableType.REINDEX)
-    @Override
-    public ConsumerExtensionInstance updateConsumerExtensionInstance(
-        ConsumerExtensionInstance consumerExtensionInstance)
-        throws SystemException {
-        return consumerExtensionInstancePersistence.update(consumerExtensionInstance);
-    }
+	/**
+	 * Returns the consumer local service.
+	 *
+	 * @return the consumer local service
+	 */
+	public com.liferay.consumer.manager.service.ConsumerLocalService getConsumerLocalService() {
+		return consumerLocalService;
+	}
 
-    /**
-     * Returns the consumer local service.
-     *
-     * @return the consumer local service
-     */
-    public com.liferay.consumer.manager.service.ConsumerLocalService getConsumerLocalService() {
-        return consumerLocalService;
-    }
+	/**
+	 * Sets the consumer local service.
+	 *
+	 * @param consumerLocalService the consumer local service
+	 */
+	public void setConsumerLocalService(
+		com.liferay.consumer.manager.service.ConsumerLocalService consumerLocalService) {
+		this.consumerLocalService = consumerLocalService;
+	}
 
-    /**
-     * Sets the consumer local service.
-     *
-     * @param consumerLocalService the consumer local service
-     */
-    public void setConsumerLocalService(
-        com.liferay.consumer.manager.service.ConsumerLocalService consumerLocalService) {
-        this.consumerLocalService = consumerLocalService;
-    }
+	/**
+	 * Returns the consumer remote service.
+	 *
+	 * @return the consumer remote service
+	 */
+	public com.liferay.consumer.manager.service.ConsumerService getConsumerService() {
+		return consumerService;
+	}
 
-    /**
-     * Returns the consumer remote service.
-     *
-     * @return the consumer remote service
-     */
-    public com.liferay.consumer.manager.service.ConsumerService getConsumerService() {
-        return consumerService;
-    }
+	/**
+	 * Sets the consumer remote service.
+	 *
+	 * @param consumerService the consumer remote service
+	 */
+	public void setConsumerService(
+		com.liferay.consumer.manager.service.ConsumerService consumerService) {
+		this.consumerService = consumerService;
+	}
 
-    /**
-     * Sets the consumer remote service.
-     *
-     * @param consumerService the consumer remote service
-     */
-    public void setConsumerService(
-        com.liferay.consumer.manager.service.ConsumerService consumerService) {
-        this.consumerService = consumerService;
-    }
+	/**
+	 * Returns the consumer persistence.
+	 *
+	 * @return the consumer persistence
+	 */
+	public ConsumerPersistence getConsumerPersistence() {
+		return consumerPersistence;
+	}
 
-    /**
-     * Returns the consumer persistence.
-     *
-     * @return the consumer persistence
-     */
-    public ConsumerPersistence getConsumerPersistence() {
-        return consumerPersistence;
-    }
+	/**
+	 * Sets the consumer persistence.
+	 *
+	 * @param consumerPersistence the consumer persistence
+	 */
+	public void setConsumerPersistence(ConsumerPersistence consumerPersistence) {
+		this.consumerPersistence = consumerPersistence;
+	}
 
-    /**
-     * Sets the consumer persistence.
-     *
-     * @param consumerPersistence the consumer persistence
-     */
-    public void setConsumerPersistence(ConsumerPersistence consumerPersistence) {
-        this.consumerPersistence = consumerPersistence;
-    }
+	/**
+	 * Returns the consumer extension instance local service.
+	 *
+	 * @return the consumer extension instance local service
+	 */
+	public com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalService getConsumerExtensionInstanceLocalService() {
+		return consumerExtensionInstanceLocalService;
+	}
 
-    /**
-     * Returns the consumer extension instance local service.
-     *
-     * @return the consumer extension instance local service
-     */
-    public com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalService getConsumerExtensionInstanceLocalService() {
-        return consumerExtensionInstanceLocalService;
-    }
+	/**
+	 * Sets the consumer extension instance local service.
+	 *
+	 * @param consumerExtensionInstanceLocalService the consumer extension instance local service
+	 */
+	public void setConsumerExtensionInstanceLocalService(
+		com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalService consumerExtensionInstanceLocalService) {
+		this.consumerExtensionInstanceLocalService = consumerExtensionInstanceLocalService;
+	}
 
-    /**
-     * Sets the consumer extension instance local service.
-     *
-     * @param consumerExtensionInstanceLocalService the consumer extension instance local service
-     */
-    public void setConsumerExtensionInstanceLocalService(
-        com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalService consumerExtensionInstanceLocalService) {
-        this.consumerExtensionInstanceLocalService = consumerExtensionInstanceLocalService;
-    }
+	/**
+	 * Returns the consumer extension instance remote service.
+	 *
+	 * @return the consumer extension instance remote service
+	 */
+	public com.liferay.consumer.manager.service.ConsumerExtensionInstanceService getConsumerExtensionInstanceService() {
+		return consumerExtensionInstanceService;
+	}
 
-    /**
-     * Returns the consumer extension instance remote service.
-     *
-     * @return the consumer extension instance remote service
-     */
-    public com.liferay.consumer.manager.service.ConsumerExtensionInstanceService getConsumerExtensionInstanceService() {
-        return consumerExtensionInstanceService;
-    }
+	/**
+	 * Sets the consumer extension instance remote service.
+	 *
+	 * @param consumerExtensionInstanceService the consumer extension instance remote service
+	 */
+	public void setConsumerExtensionInstanceService(
+		com.liferay.consumer.manager.service.ConsumerExtensionInstanceService consumerExtensionInstanceService) {
+		this.consumerExtensionInstanceService = consumerExtensionInstanceService;
+	}
 
-    /**
-     * Sets the consumer extension instance remote service.
-     *
-     * @param consumerExtensionInstanceService the consumer extension instance remote service
-     */
-    public void setConsumerExtensionInstanceService(
-        com.liferay.consumer.manager.service.ConsumerExtensionInstanceService consumerExtensionInstanceService) {
-        this.consumerExtensionInstanceService = consumerExtensionInstanceService;
-    }
+	/**
+	 * Returns the consumer extension instance persistence.
+	 *
+	 * @return the consumer extension instance persistence
+	 */
+	public ConsumerExtensionInstancePersistence getConsumerExtensionInstancePersistence() {
+		return consumerExtensionInstancePersistence;
+	}
 
-    /**
-     * Returns the consumer extension instance persistence.
-     *
-     * @return the consumer extension instance persistence
-     */
-    public ConsumerExtensionInstancePersistence getConsumerExtensionInstancePersistence() {
-        return consumerExtensionInstancePersistence;
-    }
+	/**
+	 * Sets the consumer extension instance persistence.
+	 *
+	 * @param consumerExtensionInstancePersistence the consumer extension instance persistence
+	 */
+	public void setConsumerExtensionInstancePersistence(
+		ConsumerExtensionInstancePersistence consumerExtensionInstancePersistence) {
+		this.consumerExtensionInstancePersistence = consumerExtensionInstancePersistence;
+	}
 
-    /**
-     * Sets the consumer extension instance persistence.
-     *
-     * @param consumerExtensionInstancePersistence the consumer extension instance persistence
-     */
-    public void setConsumerExtensionInstancePersistence(
-        ConsumerExtensionInstancePersistence consumerExtensionInstancePersistence) {
-        this.consumerExtensionInstancePersistence = consumerExtensionInstancePersistence;
-    }
+	/**
+	 * Returns the counter local service.
+	 *
+	 * @return the counter local service
+	 */
+	public com.liferay.counter.service.CounterLocalService getCounterLocalService() {
+		return counterLocalService;
+	}
 
-    /**
-     * Returns the counter local service.
-     *
-     * @return the counter local service
-     */
-    public com.liferay.counter.service.CounterLocalService getCounterLocalService() {
-        return counterLocalService;
-    }
+	/**
+	 * Sets the counter local service.
+	 *
+	 * @param counterLocalService the counter local service
+	 */
+	public void setCounterLocalService(
+		com.liferay.counter.service.CounterLocalService counterLocalService) {
+		this.counterLocalService = counterLocalService;
+	}
 
-    /**
-     * Sets the counter local service.
-     *
-     * @param counterLocalService the counter local service
-     */
-    public void setCounterLocalService(
-        com.liferay.counter.service.CounterLocalService counterLocalService) {
-        this.counterLocalService = counterLocalService;
-    }
+	/**
+	 * Returns the resource local service.
+	 *
+	 * @return the resource local service
+	 */
+	public com.liferay.portal.service.ResourceLocalService getResourceLocalService() {
+		return resourceLocalService;
+	}
 
-    /**
-     * Returns the resource local service.
-     *
-     * @return the resource local service
-     */
-    public com.liferay.portal.service.ResourceLocalService getResourceLocalService() {
-        return resourceLocalService;
-    }
+	/**
+	 * Sets the resource local service.
+	 *
+	 * @param resourceLocalService the resource local service
+	 */
+	public void setResourceLocalService(
+		com.liferay.portal.service.ResourceLocalService resourceLocalService) {
+		this.resourceLocalService = resourceLocalService;
+	}
 
-    /**
-     * Sets the resource local service.
-     *
-     * @param resourceLocalService the resource local service
-     */
-    public void setResourceLocalService(
-        com.liferay.portal.service.ResourceLocalService resourceLocalService) {
-        this.resourceLocalService = resourceLocalService;
-    }
+	/**
+	 * Returns the user local service.
+	 *
+	 * @return the user local service
+	 */
+	public com.liferay.portal.service.UserLocalService getUserLocalService() {
+		return userLocalService;
+	}
 
-    /**
-     * Returns the user local service.
-     *
-     * @return the user local service
-     */
-    public com.liferay.portal.service.UserLocalService getUserLocalService() {
-        return userLocalService;
-    }
+	/**
+	 * Sets the user local service.
+	 *
+	 * @param userLocalService the user local service
+	 */
+	public void setUserLocalService(
+		com.liferay.portal.service.UserLocalService userLocalService) {
+		this.userLocalService = userLocalService;
+	}
 
-    /**
-     * Sets the user local service.
-     *
-     * @param userLocalService the user local service
-     */
-    public void setUserLocalService(
-        com.liferay.portal.service.UserLocalService userLocalService) {
-        this.userLocalService = userLocalService;
-    }
+	/**
+	 * Returns the user remote service.
+	 *
+	 * @return the user remote service
+	 */
+	public com.liferay.portal.service.UserService getUserService() {
+		return userService;
+	}
 
-    /**
-     * Returns the user remote service.
-     *
-     * @return the user remote service
-     */
-    public com.liferay.portal.service.UserService getUserService() {
-        return userService;
-    }
+	/**
+	 * Sets the user remote service.
+	 *
+	 * @param userService the user remote service
+	 */
+	public void setUserService(
+		com.liferay.portal.service.UserService userService) {
+		this.userService = userService;
+	}
 
-    /**
-     * Sets the user remote service.
-     *
-     * @param userService the user remote service
-     */
-    public void setUserService(
-        com.liferay.portal.service.UserService userService) {
-        this.userService = userService;
-    }
+	/**
+	 * Returns the user persistence.
+	 *
+	 * @return the user persistence
+	 */
+	public UserPersistence getUserPersistence() {
+		return userPersistence;
+	}
 
-    /**
-     * Returns the user persistence.
-     *
-     * @return the user persistence
-     */
-    public UserPersistence getUserPersistence() {
-        return userPersistence;
-    }
+	/**
+	 * Sets the user persistence.
+	 *
+	 * @param userPersistence the user persistence
+	 */
+	public void setUserPersistence(UserPersistence userPersistence) {
+		this.userPersistence = userPersistence;
+	}
 
-    /**
-     * Sets the user persistence.
-     *
-     * @param userPersistence the user persistence
-     */
-    public void setUserPersistence(UserPersistence userPersistence) {
-        this.userPersistence = userPersistence;
-    }
+	public void afterPropertiesSet() {
+		Class<?> clazz = getClass();
 
-    public void afterPropertiesSet() {
-        Class<?> clazz = getClass();
+		_classLoader = clazz.getClassLoader();
 
-        _classLoader = clazz.getClassLoader();
+		PersistedModelLocalServiceRegistryUtil.register("com.liferay.consumer.manager.model.ConsumerExtensionInstance",
+			consumerExtensionInstanceLocalService);
+	}
 
-        PersistedModelLocalServiceRegistryUtil.register("com.liferay.consumer.manager.model.ConsumerExtensionInstance",
-            consumerExtensionInstanceLocalService);
-    }
+	public void destroy() {
+		PersistedModelLocalServiceRegistryUtil.unregister(
+			"com.liferay.consumer.manager.model.ConsumerExtensionInstance");
+	}
 
-    public void destroy() {
-        PersistedModelLocalServiceRegistryUtil.unregister(
-            "com.liferay.consumer.manager.model.ConsumerExtensionInstance");
-    }
+	/**
+	 * Returns the Spring bean ID for this bean.
+	 *
+	 * @return the Spring bean ID for this bean
+	 */
+	@Override
+	public String getBeanIdentifier() {
+		return _beanIdentifier;
+	}
 
-    /**
-     * Returns the Spring bean ID for this bean.
-     *
-     * @return the Spring bean ID for this bean
-     */
-    @Override
-    public String getBeanIdentifier() {
-        return _beanIdentifier;
-    }
+	/**
+	 * Sets the Spring bean ID for this bean.
+	 *
+	 * @param beanIdentifier the Spring bean ID for this bean
+	 */
+	@Override
+	public void setBeanIdentifier(String beanIdentifier) {
+		_beanIdentifier = beanIdentifier;
+	}
 
-    /**
-     * Sets the Spring bean ID for this bean.
-     *
-     * @param beanIdentifier the Spring bean ID for this bean
-     */
-    @Override
-    public void setBeanIdentifier(String beanIdentifier) {
-        _beanIdentifier = beanIdentifier;
-    }
+	@Override
+	public Object invokeMethod(String name, String[] parameterTypes,
+		Object[] arguments) throws Throwable {
+		Thread currentThread = Thread.currentThread();
 
-    @Override
-    public Object invokeMethod(String name, String[] parameterTypes,
-        Object[] arguments) throws Throwable {
-        Thread currentThread = Thread.currentThread();
+		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
 
-        ClassLoader contextClassLoader = currentThread.getContextClassLoader();
+		if (contextClassLoader != _classLoader) {
+			currentThread.setContextClassLoader(_classLoader);
+		}
 
-        if (contextClassLoader != _classLoader) {
-            currentThread.setContextClassLoader(_classLoader);
-        }
+		try {
+			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
+		}
+		finally {
+			if (contextClassLoader != _classLoader) {
+				currentThread.setContextClassLoader(contextClassLoader);
+			}
+		}
+	}
 
-        try {
-            return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-        } finally {
-            if (contextClassLoader != _classLoader) {
-                currentThread.setContextClassLoader(contextClassLoader);
-            }
-        }
-    }
+	protected Class<?> getModelClass() {
+		return ConsumerExtensionInstance.class;
+	}
 
-    protected Class<?> getModelClass() {
-        return ConsumerExtensionInstance.class;
-    }
+	protected String getModelClassName() {
+		return ConsumerExtensionInstance.class.getName();
+	}
 
-    protected String getModelClassName() {
-        return ConsumerExtensionInstance.class.getName();
-    }
+	/**
+	 * Performs an SQL query.
+	 *
+	 * @param sql the sql query
+	 */
+	protected void runSQL(String sql) throws SystemException {
+		try {
+			DataSource dataSource = consumerExtensionInstancePersistence.getDataSource();
 
-    /**
-     * Performs an SQL query.
-     *
-     * @param sql the sql query
-     */
-    protected void runSQL(String sql) throws SystemException {
-        try {
-            DataSource dataSource = consumerExtensionInstancePersistence.getDataSource();
+			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
+					sql, new int[0]);
 
-            SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
-                    sql, new int[0]);
+			sqlUpdate.update();
+		}
+		catch (Exception e) {
+			throw new SystemException(e);
+		}
+	}
 
-            sqlUpdate.update();
-        } catch (Exception e) {
-            throw new SystemException(e);
-        }
-    }
+	@BeanReference(type = com.liferay.consumer.manager.service.ConsumerLocalService.class)
+	protected com.liferay.consumer.manager.service.ConsumerLocalService consumerLocalService;
+	@BeanReference(type = com.liferay.consumer.manager.service.ConsumerService.class)
+	protected com.liferay.consumer.manager.service.ConsumerService consumerService;
+	@BeanReference(type = ConsumerPersistence.class)
+	protected ConsumerPersistence consumerPersistence;
+	@BeanReference(type = com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalService.class)
+	protected com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalService consumerExtensionInstanceLocalService;
+	@BeanReference(type = com.liferay.consumer.manager.service.ConsumerExtensionInstanceService.class)
+	protected com.liferay.consumer.manager.service.ConsumerExtensionInstanceService consumerExtensionInstanceService;
+	@BeanReference(type = ConsumerExtensionInstancePersistence.class)
+	protected ConsumerExtensionInstancePersistence consumerExtensionInstancePersistence;
+	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	protected com.liferay.counter.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
+	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
+	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	protected com.liferay.portal.service.UserLocalService userLocalService;
+	@BeanReference(type = com.liferay.portal.service.UserService.class)
+	protected com.liferay.portal.service.UserService userService;
+	@BeanReference(type = UserPersistence.class)
+	protected UserPersistence userPersistence;
+	private String _beanIdentifier;
+	private ClassLoader _classLoader;
+	private ConsumerExtensionInstanceLocalServiceClpInvoker _clpInvoker = new ConsumerExtensionInstanceLocalServiceClpInvoker();
 }
