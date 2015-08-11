@@ -20,14 +20,14 @@ package com.liferay.consumer.manager.portlet;
 public class ConsumerManagerPath {
 
 	public static final String EDIT_CONSUMER =
-		"html/consumer/edit_consumer.ftl";
+		"html/consumer_manager/edit_consumer.ftl";
 
 	public static final String ERROR = "html/error.ftl";
 
 	public static final String VIEW_CONSUMERS =
-		"html/consumer/view_consumers.ftl";
+		"html/consumer_manager/view_consumers.ftl";
 
 	public static final String VIEW_CONSUMERS_RESOURCES =
-		"html/consumer/view_consumers_resources.ftl";
+		"html/consumer_manager/view_consumers_resources.ftl";
 
 }

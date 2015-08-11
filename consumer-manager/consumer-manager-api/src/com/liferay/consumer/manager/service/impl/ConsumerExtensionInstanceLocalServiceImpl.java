@@ -51,7 +51,7 @@ public class ConsumerExtensionInstanceLocalServiceImpl
 		throws PortalException, SystemException {
 
 		ConsumerExtensionInstance checkConsumerExtensionInstance =
-			consumerExtensionInstancePersistence.fetchByK_C(
+			consumerExtensionInstancePersistence.fetchByC_C(
 				consumerExtensionKey, consumerId);
 
 		if (checkConsumerExtensionInstance != null) {
@@ -100,7 +100,7 @@ public class ConsumerExtensionInstanceLocalServiceImpl
 			long consumerId, String consumerExtensionKey)
 		throws SystemException {
 
-		return consumerExtensionInstancePersistence.fetchByK_C(
+		return consumerExtensionInstancePersistence.fetchByC_C(
 			consumerExtensionKey, consumerId);
 	}
 
@@ -120,7 +120,7 @@ public class ConsumerExtensionInstanceLocalServiceImpl
 		throws PortalException, SystemException {
 
 		ConsumerExtensionInstance checkConsumerExtensionInstance =
-			consumerExtensionInstancePersistence.fetchByK_C(
+			consumerExtensionInstancePersistence.fetchByC_C(
 				consumerExtensionKey, consumerId);
 
 		if ((checkConsumerExtensionInstance != null) &&

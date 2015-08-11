@@ -243,7 +243,7 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 		if ((exceptions != null) && !exceptions.isEmpty()) {
 			try {
 				context.put("exceptions", exceptions);
-                context.put("portletClass", getClass());
+				context.put("portletClass", getClass());
 
 				html += ConsumerManagerContextUtil.parseTemplate(
 					getClass(), "templates/ct_exceptions.ftl", context);
@@ -398,16 +398,14 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			"consumerPermission",
 			staticModels.get(ConsumerPermission.class.getName()));
 		template.put("consumersRowChecker", new RowChecker(portletResponse));
-        template.put(
-            "portalUtil",
-            staticModels.get(PortalUtil.class.getName()));
-        template.put(
-            "resourceActionsUtil",
-            staticModels.get(ResourceActionsUtil.class.getName()));
-        template.put(
-            "unicodeFormatter",
-            staticModels.get(UnicodeFormatter.class.getName()));
-
+		template.put(
+			"portalUtil", staticModels.get(PortalUtil.class.getName()));
+		template.put(
+			"resourceActionsUtil",
+			staticModels.get(ResourceActionsUtil.class.getName()));
+		template.put(
+			"unicodeFormatter",
+			staticModels.get(UnicodeFormatter.class.getName()));
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -603,8 +601,8 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			Map<String, String> consumerExtensionValues =
 				requestConsumerExtensionInstance.getValues();
 
-            consumerExtensionValues.put(
-                "consumerId", String.valueOf(consumerId));
+			consumerExtensionValues.put(
+				"consumerId", String.valueOf(consumerId));
 
 			try {
 				typeSettings = consumerExtension.processConsumerExtension(

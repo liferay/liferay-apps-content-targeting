@@ -112,8 +112,7 @@ public class ConsumerLocalServiceImpl extends ConsumerLocalServiceBaseImpl {
 	public Consumer getConsumer(long companyId, String consumerKey)
 		throws SystemException {
 
-		return consumerPersistence.fetchByCompanyIdAndConsumerKey(
-			companyId, consumerKey);
+		return consumerPersistence.fetchByC_C(companyId, consumerKey);
 	}
 
 	@Override

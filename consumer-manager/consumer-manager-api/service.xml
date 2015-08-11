@@ -19,14 +19,14 @@
 
 		<!-- Other fields -->
 
-		<column name="consumerKey" type="String" localized="false" />
+		<column name="consumerKey" type="String" />
 		<column name="name" type="String" localized="true" />
 		<column name="description" type="String" localized="true" />
 
 		<!-- Order -->
 
 		<order by="desc">
-			<order-column name="name" />
+			<order-column name="modifiedDate" />
 		</order>
 
 		<!-- Finder methods -->
@@ -35,7 +35,7 @@
 			<finder-column name="companyId" />
 		</finder>
 
-		<finder name="CompanyIdAndConsumerKey" return-type="Consumer" unique="true">
+		<finder name="C_C" return-type="Consumer" unique="true">
 			<finder-column name="companyId" />
 			<finder-column name="consumerKey" />
 		</finder>
@@ -74,7 +74,7 @@
 		<finder name="ConsumerId" return-type="Collection">
 			<finder-column name="consumerId" />
 		</finder>
-		<finder name="K_C" return-type="ConsumerExtension">
+		<finder name="C_C" return-type="ConsumerExtension">
 			<finder-column name="consumerExtensionKey" />
 			<finder-column name="consumerId" />
 		</finder>

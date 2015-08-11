@@ -34,7 +34,6 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.portlet.PortletRequest;

@@ -16,13 +16,13 @@ Import-Package:\
 	*;resolution:="optional"
 Include-Resource:\
  	classes,\
-	WEB-INF/liferay-display.xml=META-INF/liferay-display.xml,\
 	WEB-INF/classes/META-INF=classes/META-INF/,\
+	WEB-INF/liferay-display.xml=META-INF/liferay-display.xml,\
 	WEB-INF/liferay-plugin-package.properties=META-INF/liferay-plugin-package.properties,\
-	WEB-INF/sql=sql,\
 	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
 	WEB-INF/liferay-portlet.xml=META-INF/liferay-portlet.xml,\
 	WEB-INF/portlet.xml=META-INF/portlet.xml,\
+	WEB-INF/sql=sql,\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
 	@lib/com.liferay.consumer.manager.api-service.jar
 Service-Component:com.liferay.consumer.manager.*

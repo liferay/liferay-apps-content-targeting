@@ -11,7 +11,7 @@
 		</init-param>
 		<init-param>
 			<name>view-template</name>
-			<value>html/consumer/view_consumers.ftl</value>
+			<value>html/consumer_manager/view_consumers.ftl</value>
 		</init-param>
 		<expiration-cache>0</expiration-cache>
 		<supports>
