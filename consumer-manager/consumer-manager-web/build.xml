@@ -9,7 +9,7 @@
 
 	<property name="import.shared" value="consumer-manager-api" />
 
-	<import file="../../../build-common-osgi-plugin.xml" />
+	<import file="../../../../build-common-osgi-plugin.xml" />
 
 	<target name="jar">
 		<build-css

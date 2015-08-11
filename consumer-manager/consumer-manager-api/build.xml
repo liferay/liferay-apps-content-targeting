@@ -7,10 +7,7 @@
 
 	<property name="plugin.name" value="com.liferay.consumer.manager.api" />
 
-	<property name="import.shared" value="anonymous-users-api" />
-
 	<property name="service.base.dir" value="." />
 
-	<import file="../../../build-common-osgi-plugin.xml" />
-
+	<import file="../../../../build-common-osgi-plugin.xml" />
 </project>

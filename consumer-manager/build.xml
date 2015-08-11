@@ -2,7 +2,7 @@
 <!DOCTYPE project>
 
 <project xmlns:antelope="antlib:ise.antelope.tasks" xmlns:sonar="antlib:org.sonar.ant">
-	<import file="../../build-common-plugins.xml" />
+	<import file="../../../build-common-plugins.xml" />
 
 	<property file="sonar.${user.name}.properties" />
 	<property file="sonar.${env.COMPUTERNAME}.properties" />
@@ -10,9 +10,11 @@
 	<property file="sonar.${env.HOSTNAME}.properties" />
 	<property file="sonar.properties" />
 
-	<property name="app.core" value="*-api,*-service,*-web,runtime-dependencies" />
+	<property name="app.core" value="consumer-manager-api,consumer-manager-web" />
     <property name="app.extensions" value="consumer-extension-*" />
-	<property name="app.services" value="consumer-manager-api,consumer-extension-screens" />
+	<property name="app.services" value="consumer-manager-api" />
+
+	<property name="build.app.services" value="true" />
 
 	<target name="all">
 		<antcall target="release" />
@@ -21,19 +23,24 @@
 	<target name="build-app">
 		<antcall target="clean" />
 
-		<antcall target="build-app-services" />
+		<if>
+			<equals arg1="${build.app.services}" arg2="true" />
+			<then>
+				<antcall target="build-app-services" />
+			</then>
+		</if>
 
 		<if>
 			<not>
 				<isset property="app.plugins.includes" />
 			</not>
 			<then>
-				<property name="app.plugins.includes" value="${app.core},${app.services}" />
+				<property name="app.plugins.includes" value="${app.core},consumer-extension-*" />
 			</then>
 		</if>
 
 		<path id="app.plugins.includes.path">
-			<dirset dir="${sdk.dir}/apps/consumer-manager" includes="${app.plugins.includes}" />
+			<dirset dir="${sdk.dir}/apps/content-targeting/consumer-manager" includes="${app.plugins.includes}" />
 		</path>
 
 		<pathconvert pathsep="," property="app.plugins.includes.path" refid="app.plugins.includes.path" targetos="unix" />
@@ -41,6 +48,8 @@
 		<loop-macrodef-or-target module.dirs="${app.plugins.includes.path}" target.name="compile-import-shared" />
 
 		<loop-macrodef-or-target module.dirs="${app.plugins.includes.path}" target.name="deploy" />
+
+		<ant dir="../runtime-dependencies" target="deploy" inheritAll="false" />
 	</target>
 
 	<target name="build-app-services">
@@ -57,7 +66,7 @@
 		<loop-macrodef-or-target module.dirs="${plugins.includes.path}" target.name="build-lang" />
 	</target>
 
-	<property name="app.tests" value="*-test,runtime-test-dependencies" />
+	<property name="app.tests" value="*-test" />
 
 	<path id="app.tests.path">
 		<dirset dir="." includes="${app.tests}" />
@@ -67,6 +76,8 @@
 
 	<target name="build-tests">
 		<loop-macrodef-or-target module.dirs="${app.tests.path}" target.name="deploy" />
+
+		<ant dir="../runtime-test-dependencies" target="deploy" inheritAll="false" />
 	</target>
 
 	<target name="clean-osgi-data">
