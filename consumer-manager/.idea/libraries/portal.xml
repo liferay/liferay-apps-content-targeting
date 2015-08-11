@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="portal">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../../portal/portal-service/classes" />
+      <root url="file://$PROJECT_DIR$/../../../../portal/util-bridges/classes" />
+      <root url="file://$PROJECT_DIR$/../../../../portal/util-java/classes" />
+      <root url="file://$PROJECT_DIR$/../../../../portal/util-taglib/classes" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../../../portal/portal-service/src" />
+      <root url="file://$PROJECT_DIR$/../../../../portal/util-bridges/src" />
+      <root url="file://$PROJECT_DIR$/../../../../portal/util-java/src" />
+      <root url="file://$PROJECT_DIR$/../../../../portal/util-taglib/src" />
+    </SOURCES>
+  </library>
+</component>

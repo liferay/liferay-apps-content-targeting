@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="portal-impl">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../../../../portal/portal-impl" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../../../../portal/portal-impl/src" />
+    </SOURCES>
+  </library>
+</component>

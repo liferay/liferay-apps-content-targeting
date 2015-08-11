@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/consumer-manager.iml" filepath="$PROJECT_DIR$/.idea/consumer-manager.iml" />
+      <module fileurl="file://$PROJECT_DIR$/consumer-manager-api/consumer-manager-api.iml" filepath="$PROJECT_DIR$/consumer-manager-api/consumer-manager-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/consumer-manager-web/consumer-manager-web.iml" filepath="$PROJECT_DIR$/consumer-manager-web/consumer-manager-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/tools/tools.iml" filepath="$PROJECT_DIR$/tools/tools.iml" />
+    </modules>
+  </component>
+</project>
