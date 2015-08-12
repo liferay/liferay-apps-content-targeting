@@ -150,7 +150,6 @@
 		</replace>
 	</target>
 
-
 	<target name="release">
 		<if>
 			<and>
