@@ -33,7 +33,7 @@
 
 	<@invalidNameException />
 
-	<@aui["input"] name="consumerKey" />
+	<@aui["input"] helpMessage="consumer-key-help" name="consumerKey" />
 
 	<@aui["input"] name="name" />
 
