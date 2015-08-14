@@ -15,7 +15,7 @@
 package com.liferay.content.targeting.anonymous.users.util;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
-import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil;
+import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
@@ -57,30 +57,24 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
 		AnonymousUser anonymousUser = null;
 
-		String userIp = getAddressFromRequest(request);
-
 		if (userId > 0) {
 			anonymousUser = getAnonymousUser(request, userId);
-
-			if (!anonymousUser.getLastIp().equals(userIp)) {
-				AnonymousUserLocalServiceUtil.updateLastIp(
-					anonymousUser.getAnonymousUserId(), userIp);
-			}
-
-			return anonymousUser;
+		}
+		else {
+			anonymousUser = getAnonymousUserFromCookie(request);
 		}
 
-		anonymousUser = getAnonymousUserFromCookie(request);
+		String userIp = getAddressFromRequest(request);
 
 		if (anonymousUser == null) {
-			anonymousUser = AnonymousUserLocalServiceUtil.addAnonymousUser(
+			anonymousUser = _anonymousUserLocalService.addAnonymousUser(
 				0, userIp, null, serviceContext);
 
 			_anonymousUsersCookieManager.addCookie(
 				request, response, anonymousUser.getAnonymousUserId());
 		}
 		else if (!anonymousUser.getLastIp().equals(userIp)) {
-			AnonymousUserLocalServiceUtil.updateLastIp(
+			_anonymousUserLocalService.updateLastIp(
 				anonymousUser.getAnonymousUserId(), userIp);
 		}
 
@@ -101,7 +95,7 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 		String userIp = getAddressFromRequest(request);
 
 		AnonymousUser anonymousUser =
-			AnonymousUserLocalServiceUtil.fetchAnonymousUserByUserId(userId);
+			_anonymousUserLocalService.fetchAnonymousUserByUserId(userId);
 
 		if (anonymousUser == null) {
 			anonymousUser = getAnonymousUserFromCookie(request);
@@ -110,15 +104,13 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 				((anonymousUser.getUserId() != 0) &&
 				 (anonymousUser.getUserId() != userId))) {
 
-				anonymousUser =
-					AnonymousUserLocalServiceUtil.addAnonymousUser(
-						userId, userIp, null, serviceContext);
+				anonymousUser = _anonymousUserLocalService.addAnonymousUser(
+					userId, userIp, null, serviceContext);
 			}
 			else {
-				anonymousUser =
-					AnonymousUserLocalServiceUtil.updateAnonymousUser(
-						anonymousUser.getAnonymousUserId(), userId, userIp,
-						anonymousUser.getTypeSettings(), serviceContext);
+				anonymousUser = _anonymousUserLocalService.updateAnonymousUser(
+					anonymousUser.getAnonymousUserId(), userId, userIp,
+					anonymousUser.getTypeSettings(), serviceContext);
 			}
 		}
 
@@ -140,6 +132,13 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
 	public AnonymousUsersCookieManager getAnonymousUsersCookieManager() {
 		return _anonymousUsersCookieManager;
+	}
+
+	@Reference
+	public void setAnonymousUserLocalService(
+		AnonymousUserLocalService anonymousUserLocalService) {
+
+		_anonymousUserLocalService = anonymousUserLocalService;
 	}
 
 	@Reference
@@ -187,9 +186,8 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 			request);
 
 		if (anonymousUserId > 0) {
-			anonymousUser =
-				AnonymousUserLocalServiceUtil.fetchAnonymousUser(
-					anonymousUserId);
+			anonymousUser = _anonymousUserLocalService.fetchAnonymousUser(
+				anonymousUserId);
 		}
 
 		return anonymousUser;
@@ -199,6 +197,7 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
 	private static final String _X_FORWARDED_FOR = "X-Forwarded-For";
 
+	private AnonymousUserLocalService _anonymousUserLocalService;
 	private AnonymousUsersCookieManager _anonymousUsersCookieManager;
 	private final Pattern _pattern = Pattern.compile(
 		"for=[\"\\[]*([^\\]\\,]+)[\"\\]]*");
