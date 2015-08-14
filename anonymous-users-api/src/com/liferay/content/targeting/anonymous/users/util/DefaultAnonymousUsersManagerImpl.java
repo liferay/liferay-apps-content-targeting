@@ -18,7 +18,9 @@ import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.util.PortalUtil;
 
@@ -149,18 +151,15 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 
 	protected String getAddressFromRequest(HttpServletRequest request) {
 		if (request == null) {
-			return null;
+			return StringPool.BLANK;
 		}
 
 		// See http://tools.ietf.org/html/rfc7239
 
-		if (request.getHeader(_X_FORWARDED_FOR) != null) {
-			String ip = StringUtil.split(
-				request.getHeader(_X_FORWARDED_FOR))[0];
+		String ips = request.getHeader(_X_FORWARDED_FOR);
 
-			if (ip != null) {
-				return ip;
-			}
+		if (Validator.isNotNull(ips)) {
+			return StringUtil.split(ips)[0];
 		}
 
 		Enumeration<String> values = request.getHeaders(_FORWARDED);
