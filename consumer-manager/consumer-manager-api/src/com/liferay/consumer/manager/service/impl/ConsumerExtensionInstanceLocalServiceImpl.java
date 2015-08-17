@@ -14,7 +14,6 @@
 
 package com.liferay.consumer.manager.service.impl;
 
-import com.liferay.consumer.manager.DuplicateConsumerExtensionInstanceException;
 import com.liferay.consumer.manager.model.ConsumerExtensionInstance;
 import com.liferay.consumer.manager.service.base.ConsumerExtensionInstanceLocalServiceBaseImpl;
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -24,6 +23,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -49,14 +49,6 @@ public class ConsumerExtensionInstanceLocalServiceImpl
 			String consumerExtensionKey, long consumerId, String typeSettings,
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
-
-		ConsumerExtensionInstance checkConsumerExtensionInstance =
-			consumerExtensionInstancePersistence.fetchByC_C(
-				consumerExtensionKey, consumerId);
-
-		if (checkConsumerExtensionInstance != null) {
-			throw new DuplicateConsumerExtensionInstanceException();
-		}
 
 		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
 
@@ -114,21 +106,33 @@ public class ConsumerExtensionInstanceLocalServiceImpl
 	}
 
 	@Override
+	public List<Long> getConsumerIdsWithExtension(String extensionKey)
+		throws PortalException, SystemException {
+
+		List<Long> consumers = new ArrayList<Long>();
+
+		List<ConsumerExtensionInstance> consumerExtensionInstances =
+			consumerExtensionInstancePersistence.findByConsumerExtensionKey(
+				extensionKey);
+
+		for (ConsumerExtensionInstance consumerExtensionInstance :
+				consumerExtensionInstances) {
+
+			if (!consumers.contains(
+					consumerExtensionInstance.getConsumerId())) {
+
+				consumers.add(consumerExtensionInstance.getConsumerId());
+			}
+		}
+
+		return consumers;
+	}
+
+	@Override
 	public ConsumerExtensionInstance updateConsumerExtensionInstance(
 			long consumerExtensionInstanceId, String consumerExtensionKey,
 			long consumerId, String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
-
-		ConsumerExtensionInstance checkConsumerExtensionInstance =
-			consumerExtensionInstancePersistence.fetchByC_C(
-				consumerExtensionKey, consumerId);
-
-		if ((checkConsumerExtensionInstance != null) &&
-			(checkConsumerExtensionInstance.getConsumerExtensionInstanceId() !=
-				consumerExtensionInstanceId)) {
-
-			throw new DuplicateConsumerExtensionInstanceException();
-		}
 
 		Date now = new Date();
 

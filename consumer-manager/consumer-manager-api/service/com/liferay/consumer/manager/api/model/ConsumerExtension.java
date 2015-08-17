@@ -113,6 +113,15 @@ public interface ConsumerExtension {
 		ConsumerExtensionInstance consumerExtensionInstance, Locale locale);
 
 	/**
+	 * Returns <code>true</code> if the extension can be used more than
+	 * once with different values for a consumer.
+	 *
+	 * @return <code>true</code> if the extension can be used more than once;
+	 *         <code>false</code> otherwise
+	 */
+	public boolean isInstantiable();
+
+	/**
 	 * Returns the result of evaluating the consumer extension form
 	 * fields in the context of the request and response.
 	 *

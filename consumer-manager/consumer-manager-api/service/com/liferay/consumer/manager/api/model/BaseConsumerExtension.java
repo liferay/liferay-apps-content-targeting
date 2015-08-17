@@ -123,6 +123,11 @@ public class BaseConsumerExtension implements ConsumerExtension {
 	}
 
 	@Override
+	public boolean isInstantiable() {
+		return false;
+	}
+
+	@Override
 	public String processConsumerExtension(
 		PortletRequest request, PortletResponse response,
 		Map<String, String> values) throws InvalidConsumerExtensionException {

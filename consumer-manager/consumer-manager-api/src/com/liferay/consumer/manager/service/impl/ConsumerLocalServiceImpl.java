@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.User;
@@ -140,6 +141,18 @@ public class ConsumerLocalServiceImpl extends ConsumerLocalServiceBaseImpl {
 	@Override
 	public int getConsumersCount(long companyId) throws SystemException {
 		return consumerPersistence.countByCompanyId(companyId);
+	}
+
+	@Override
+	public List<Consumer> getConsumersWithExtension(String extensionKey)
+		throws PortalException, SystemException {
+
+		List<Long> consumerIds =
+			consumerExtensionInstanceLocalService.getConsumerIdsWithExtension(
+				extensionKey);
+
+		return consumerPersistence.findByConsumerIds(
+			ArrayUtil.toLongArray(consumerIds));
 	}
 
 	@Override
