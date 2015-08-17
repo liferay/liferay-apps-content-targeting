@@ -7,24 +7,24 @@ AUI.add(
 
 			ITEM_FIELD_TPL = '<div>' +
 				'<div class="field-header">' +
-					'<div class="field-icon">' +
-						'<i class="{icon}"></i>' +
-					'</div>' +
-					'<div class="row field-info">' +
-						'<div class="field-title">{name}</div>' +
-						'<div class="field-description">{description}</div>' +
-					'</div>' +
+				'<div class="field-icon">' +
+				'<i class="{icon}"></i>' +
+				'</div>' +
+				'<div class="row field-info">' +
+				'<div class="field-title">{name}</div>' +
+				'<div class="field-description">{description}</div>' +
+				'</div>' +
 				'</div>' +
 				'<div class="field-editor">{editor}</div>' +
-			'</div>',
+				'</div>',
 
 			ITEM_CATEGORY_HEADER_TPL = '<div class="category-header toggler-header toggler-header-collapsed">' +
 				'<span class="category-icon icon {icon}"></span>' +
 				'<div class="category-info"> ' +
-					'<div class="category-title">{name}</div>' +
-					'<div class="category-description">{description}</div>' +
+				'<div class="category-title">{name}</div>' +
+				'<div class="category-description">{description}</div>' +
 				'</div>' +
-			'</div>',
+				'</div>',
 
 			ITEM_CATEGORY_CONTENT_TPL = '<div class="category-content toggler-content toggler-content-collapsed"></div>',
 
@@ -454,7 +454,7 @@ AUI.add(
 								ITEM_FIELD_TPL,
 								{
 									description: field.description,
-									editor: field.editor.replace(/\{ct_field_guid\}/g, fieldId).replace(/%7Bct_field_guid%7D/g, fieldId).replace(/&#x25;7Bct_field_guid&#x25;7D/g, fieldId),
+									editor: field.editor.replace(/(_7b_|[\{%7B&#x25;]+)ct_+field_+guid(_7d_|[\}%7D&#x25;]+)/ig, fieldId),
 									icon: field.icon,
 									name: field.name,
 									shortDescription: field.shortDescription

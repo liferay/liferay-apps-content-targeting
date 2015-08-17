@@ -66,7 +66,7 @@
 										<#assign consumerExtension = template.getConsumerExtension()>
 										<#assign templateKey = template.getTemplateKey()>
 
-										<li class="diagram-builder-field form-builder-field hide" data-icon="${consumerExtension.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="true">
+										<li class="diagram-builder-field form-builder-field hide" data-icon="${consumerExtension.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!consumerExtension.isInstantiable())?string}">
 											<span class="diagram-builder-field-icon icon ${consumerExtension.getIcon()}"></span>
 											<div class="diagram-builder-field-label">
 												<div class="row">
@@ -102,7 +102,7 @@
 								<#assign consumerExtension = template.getConsumerExtension()>
 								<#assign templateKey = template.getTemplateKey()>
 
-								<div class="component form-builder-field hide widget yui3-widget" data-icon="${consumerExtension.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="true">
+								<div class="component form-builder-field hide widget yui3-widget" data-icon="${consumerExtension.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!consumerExtension.isInstantiable())?string}">
 									<div>
 										<div>
 											<div class="field-header">
