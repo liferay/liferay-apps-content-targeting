@@ -351,14 +351,6 @@ public class ConsumerExtensionInstanceLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getConsumerIdsWithExtension(
-		java.lang.String extensionKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _consumerExtensionInstanceLocalService.getConsumerIdsWithExtension(extensionKey);
-	}
-
-	@Override
 	public com.liferay.consumer.manager.model.ConsumerExtensionInstance updateConsumerExtensionInstance(
 		long consumerExtensionInstanceId,
 		java.lang.String consumerExtensionKey, long consumerId,

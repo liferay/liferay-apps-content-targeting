@@ -158,13 +158,13 @@ public class ConsumerLocalServiceClpInvoker {
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName55 = "getConsumersCount";
+		_methodName55 = "getConsumersByConsumerExtensionKey";
 
-		_methodParameterTypes55 = new String[] { "long" };
+		_methodParameterTypes55 = new String[] { "java.lang.String" };
 
-		_methodName56 = "getConsumersWithExtension";
+		_methodName56 = "getConsumersCount";
 
-		_methodParameterTypes56 = new String[] { "java.lang.String" };
+		_methodParameterTypes56 = new String[] { "long" };
 
 		_methodName57 = "search";
 
@@ -343,12 +343,12 @@ public class ConsumerLocalServiceClpInvoker {
 
 		if (_methodName55.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
-			return ConsumerLocalServiceUtil.getConsumersCount(((Long)arguments[0]).longValue());
+			return ConsumerLocalServiceUtil.getConsumersByConsumerExtensionKey((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName56.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
-			return ConsumerLocalServiceUtil.getConsumersWithExtension((java.lang.String)arguments[0]);
+			return ConsumerLocalServiceUtil.getConsumersCount(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName57.equals(name) &&

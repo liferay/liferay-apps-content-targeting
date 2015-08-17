@@ -152,11 +152,11 @@ public class ConsumerServiceSoap {
 		}
 	}
 
-	public static com.liferay.consumer.manager.model.ConsumerSoap[] getConsumersWithExtension(
-		java.lang.String extensionKey) throws RemoteException {
+	public static com.liferay.consumer.manager.model.ConsumerSoap[] getConsumersByConsumerExtensionKey(
+		java.lang.String consumerExtensionKey) throws RemoteException {
 		try {
 			java.util.List<com.liferay.consumer.manager.model.Consumer> returnValue =
-				ConsumerServiceUtil.getConsumersWithExtension(extensionKey);
+				ConsumerServiceUtil.getConsumersByConsumerExtensionKey(consumerExtensionKey);
 
 			return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModels(returnValue);
 		}

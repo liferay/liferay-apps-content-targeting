@@ -57,7 +57,7 @@ public class ConsumerServiceClpInvoker {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName35 = "getConsumersWithExtension";
+		_methodName35 = "getConsumersByConsumerExtensionKey";
 
 		_methodParameterTypes35 = new String[] { "java.lang.String" };
 
@@ -115,7 +115,7 @@ public class ConsumerServiceClpInvoker {
 
 		if (_methodName35.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes35, parameterTypes)) {
-			return ConsumerServiceUtil.getConsumersWithExtension((java.lang.String)arguments[0]);
+			return ConsumerServiceUtil.getConsumersByConsumerExtensionKey((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName36.equals(name) &&

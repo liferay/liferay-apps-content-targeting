@@ -366,17 +366,17 @@ public class ConsumerLocalServiceWrapper implements ConsumerLocalService,
 	}
 
 	@Override
-	public int getConsumersCount(long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _consumerLocalService.getConsumersCount(companyId);
+	public java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersByConsumerExtensionKey(
+		java.lang.String consumerExtensionKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _consumerLocalService.getConsumersByConsumerExtensionKey(consumerExtensionKey);
 	}
 
 	@Override
-	public java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersWithExtension(
-		java.lang.String extensionKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _consumerLocalService.getConsumersWithExtension(extensionKey);
+	public int getConsumersCount(long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _consumerLocalService.getConsumersCount(companyId);
 	}
 
 	@Override

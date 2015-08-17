@@ -139,13 +139,9 @@ public class ConsumerExtensionInstanceLocalServiceClp
 
 		_methodParameterTypes23 = new String[] { "long" };
 
-		_methodName24 = "getConsumerIdsWithExtension";
+		_methodName24 = "updateConsumerExtensionInstance";
 
-		_methodParameterTypes24 = new String[] { "java.lang.String" };
-
-		_methodName25 = "updateConsumerExtensionInstance";
-
-		_methodParameterTypes25 = new String[] {
+		_methodParameterTypes24 = new String[] {
 				"long", "java.lang.String", "long", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -885,41 +881,6 @@ public class ConsumerExtensionInstanceLocalServiceClp
 	}
 
 	@Override
-	public java.util.List<java.lang.Long> getConsumerIdsWithExtension(
-		java.lang.String extensionKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		Object returnObj = null;
-
-		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName24,
-					_methodParameterTypes24,
-					new Object[] { ClpSerializer.translateInput(extensionKey) });
-		}
-		catch (Throwable t) {
-			t = ClpSerializer.translateThrowable(t);
-
-			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
-				throw (com.liferay.portal.kernel.exception.PortalException)t;
-			}
-
-			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
-				throw (com.liferay.portal.kernel.exception.SystemException)t;
-			}
-
-			if (t instanceof RuntimeException) {
-				throw (RuntimeException)t;
-			}
-			else {
-				throw new RuntimeException(t.getClass().getName() +
-					" is not a valid exception");
-			}
-		}
-
-		return (java.util.List<java.lang.Long>)ClpSerializer.translateOutput(returnObj);
-	}
-
-	@Override
 	public com.liferay.consumer.manager.model.ConsumerExtensionInstance updateConsumerExtensionInstance(
 		long consumerExtensionInstanceId,
 		java.lang.String consumerExtensionKey, long consumerId,
@@ -930,8 +891,8 @@ public class ConsumerExtensionInstanceLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25,
+			returnObj = _invokableLocalService.invokeMethod(_methodName24,
+					_methodParameterTypes24,
 					new Object[] {
 						consumerExtensionInstanceId,
 						
@@ -1016,6 +977,4 @@ public class ConsumerExtensionInstanceLocalServiceClp
 	private String[] _methodParameterTypes23;
 	private String _methodName24;
 	private String[] _methodParameterTypes24;
-	private String _methodName25;
-	private String[] _methodParameterTypes25;
 }

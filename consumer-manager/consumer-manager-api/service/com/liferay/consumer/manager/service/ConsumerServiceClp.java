@@ -57,7 +57,7 @@ public class ConsumerServiceClp implements ConsumerService {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName8 = "getConsumersWithExtension";
+		_methodName8 = "getConsumersByConsumerExtensionKey";
 
 		_methodParameterTypes8 = new String[] { "java.lang.String" };
 
@@ -306,8 +306,8 @@ public class ConsumerServiceClp implements ConsumerService {
 	}
 
 	@Override
-	public java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersWithExtension(
-		java.lang.String extensionKey)
+	public java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersByConsumerExtensionKey(
+		java.lang.String consumerExtensionKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -315,7 +315,9 @@ public class ConsumerServiceClp implements ConsumerService {
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName8,
 					_methodParameterTypes8,
-					new Object[] { ClpSerializer.translateInput(extensionKey) });
+					new Object[] {
+						ClpSerializer.translateInput(consumerExtensionKey)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

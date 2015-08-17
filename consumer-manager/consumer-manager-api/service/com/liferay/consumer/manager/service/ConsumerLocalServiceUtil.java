@@ -346,16 +346,17 @@ public class ConsumerLocalServiceUtil {
 		return getService().getConsumers(companyId, start, end, obc);
 	}
 
+	public static java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersByConsumerExtensionKey(
+		java.lang.String consumerExtensionKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getConsumersByConsumerExtensionKey(consumerExtensionKey);
+	}
+
 	public static int getConsumersCount(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getConsumersCount(companyId);
-	}
-
-	public static java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersWithExtension(
-		java.lang.String extensionKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getConsumersWithExtension(extensionKey);
 	}
 
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
