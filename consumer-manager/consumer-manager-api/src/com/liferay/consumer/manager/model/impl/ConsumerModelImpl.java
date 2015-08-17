@@ -103,9 +103,10 @@ public class ConsumerModelImpl extends BaseModelImpl<Consumer>
 				"value.object.column.bitmask.enabled.com.liferay.consumer.manager.model.Consumer"),
 			true);
 	public static long COMPANYID_COLUMN_BITMASK = 1L;
-	public static long CONSUMERKEY_COLUMN_BITMASK = 2L;
-	public static long UUID_COLUMN_BITMASK = 4L;
-	public static long MODIFIEDDATE_COLUMN_BITMASK = 8L;
+	public static long CONSUMERID_COLUMN_BITMASK = 2L;
+	public static long CONSUMERKEY_COLUMN_BITMASK = 4L;
+	public static long UUID_COLUMN_BITMASK = 8L;
+	public static long MODIFIEDDATE_COLUMN_BITMASK = 16L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -303,7 +304,19 @@ public class ConsumerModelImpl extends BaseModelImpl<Consumer>
 
 	@Override
 	public void setConsumerId(long consumerId) {
+		_columnBitmask |= CONSUMERID_COLUMN_BITMASK;
+
+		if (!_setOriginalConsumerId) {
+			_setOriginalConsumerId = true;
+
+			_originalConsumerId = _consumerId;
+		}
+
 		_consumerId = consumerId;
+	}
+
+	public long getOriginalConsumerId() {
+		return _originalConsumerId;
 	}
 
 	@JSON
@@ -794,6 +807,10 @@ public class ConsumerModelImpl extends BaseModelImpl<Consumer>
 
 		consumerModelImpl._originalUuid = consumerModelImpl._uuid;
 
+		consumerModelImpl._originalConsumerId = consumerModelImpl._consumerId;
+
+		consumerModelImpl._setOriginalConsumerId = false;
+
 		consumerModelImpl._originalCompanyId = consumerModelImpl._companyId;
 
 		consumerModelImpl._setOriginalCompanyId = false;
@@ -964,6 +981,8 @@ public class ConsumerModelImpl extends BaseModelImpl<Consumer>
 	private String _uuid;
 	private String _originalUuid;
 	private long _consumerId;
+	private long _originalConsumerId;
+	private boolean _setOriginalConsumerId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;

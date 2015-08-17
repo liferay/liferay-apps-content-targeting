@@ -15,6 +15,7 @@
 package com.liferay.consumer.manager.service.impl;
 
 import com.liferay.consumer.manager.model.Consumer;
+import com.liferay.consumer.manager.model.ConsumerExtensionInstance;
 import com.liferay.consumer.manager.service.base.ConsumerLocalServiceBaseImpl;
 import com.liferay.consumer.manager.util.BaseModelSearchResult;
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -29,6 +30,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.User;
@@ -135,6 +137,31 @@ public class ConsumerLocalServiceImpl extends ConsumerLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		return consumerPersistence.findByCompanyId(companyId, start, end, obc);
+	}
+
+	@Override
+	public List<Consumer> getConsumersByConsumerExtensionKey(
+			String consumerExtensionKey)
+		throws PortalException, SystemException {
+
+		List<Long> consumerIds = new ArrayList<Long>();
+
+		List<ConsumerExtensionInstance> consumerExtensionInstances =
+			consumerExtensionInstancePersistence.findByConsumerExtensionKey(
+				consumerExtensionKey);
+
+		for (ConsumerExtensionInstance consumerExtensionInstance :
+				consumerExtensionInstances) {
+
+			if (!consumerIds.contains(
+					consumerExtensionInstance.getConsumerId())) {
+
+				consumerIds.add(consumerExtensionInstance.getConsumerId());
+			}
+		}
+
+		return consumerPersistence.findByConsumerIds(
+			ArrayUtil.toLongArray(consumerIds));
 	}
 
 	@Override

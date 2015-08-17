@@ -148,25 +148,29 @@ public class ConsumerLocalServiceClp implements ConsumerLocalService {
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName26 = "getConsumersCount";
+		_methodName26 = "getConsumersByConsumerExtensionKey";
 
-		_methodParameterTypes26 = new String[] { "long" };
+		_methodParameterTypes26 = new String[] { "java.lang.String" };
 
-		_methodName27 = "search";
+		_methodName27 = "getConsumersCount";
 
-		_methodParameterTypes27 = new String[] {
-				"long", "java.lang.String", "int", "int"
-			};
+		_methodParameterTypes27 = new String[] { "long" };
 
-		_methodName28 = "searchConsumers";
+		_methodName28 = "search";
 
 		_methodParameterTypes28 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName29 = "updateConsumer";
+		_methodName29 = "searchConsumers";
 
 		_methodParameterTypes29 = new String[] {
+				"long", "java.lang.String", "int", "int"
+			};
+
+		_methodName30 = "updateConsumer";
+
+		_methodParameterTypes30 = new String[] {
 				"long", "java.lang.String", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -984,13 +988,50 @@ public class ConsumerLocalServiceClp implements ConsumerLocalService {
 	}
 
 	@Override
+	public java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersByConsumerExtensionKey(
+		java.lang.String consumerExtensionKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName26,
+					_methodParameterTypes26,
+					new Object[] {
+						ClpSerializer.translateInput(consumerExtensionKey)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.consumer.manager.model.Consumer>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public int getConsumersCount(long companyId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName26,
-					_methodParameterTypes26, new Object[] { companyId });
+			returnObj = _invokableLocalService.invokeMethod(_methodName27,
+					_methodParameterTypes27, new Object[] { companyId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1019,8 +1060,8 @@ public class ConsumerLocalServiceClp implements ConsumerLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName27,
-					_methodParameterTypes27,
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						companyId,
 						
@@ -1062,8 +1103,8 @@ public class ConsumerLocalServiceClp implements ConsumerLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] {
 						companyId,
 						
@@ -1108,8 +1149,8 @@ public class ConsumerLocalServiceClp implements ConsumerLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] {
 						consumerId,
 						
@@ -1204,4 +1245,6 @@ public class ConsumerLocalServiceClp implements ConsumerLocalService {
 	private String[] _methodParameterTypes28;
 	private String _methodName29;
 	private String[] _methodParameterTypes29;
+	private String _methodName30;
+	private String[] _methodParameterTypes30;
 }

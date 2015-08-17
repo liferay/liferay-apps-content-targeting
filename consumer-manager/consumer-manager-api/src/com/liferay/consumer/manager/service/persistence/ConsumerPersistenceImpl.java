@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -1942,6 +1943,606 @@ public class ConsumerPersistenceImpl extends BasePersistenceImpl<Consumer>
 	private static final String _FINDER_COLUMN_C_C_CONSUMERKEY_1 = "consumer.consumerKey IS NULL";
 	private static final String _FINDER_COLUMN_C_C_CONSUMERKEY_2 = "consumer.consumerKey = ?";
 	private static final String _FINDER_COLUMN_C_C_CONSUMERKEY_3 = "(consumer.consumerKey IS NULL OR consumer.consumerKey = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CONSUMERIDS =
+		new FinderPath(ConsumerModelImpl.ENTITY_CACHE_ENABLED,
+			ConsumerModelImpl.FINDER_CACHE_ENABLED, ConsumerImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByConsumerIds",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSUMERIDS =
+		new FinderPath(ConsumerModelImpl.ENTITY_CACHE_ENABLED,
+			ConsumerModelImpl.FINDER_CACHE_ENABLED, ConsumerImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByConsumerIds",
+			new String[] { Long.class.getName() },
+			ConsumerModelImpl.CONSUMERID_COLUMN_BITMASK |
+			ConsumerModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CONSUMERIDS = new FinderPath(ConsumerModelImpl.ENTITY_CACHE_ENABLED,
+			ConsumerModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByConsumerIds",
+			new String[] { Long.class.getName() });
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_CONSUMERIDS =
+		new FinderPath(ConsumerModelImpl.ENTITY_CACHE_ENABLED,
+			ConsumerModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByConsumerIds",
+			new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the consumers where consumerId = &#63;.
+	 *
+	 * @param consumerId the consumer ID
+	 * @return the matching consumers
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Consumer> findByConsumerIds(long consumerId)
+		throws SystemException {
+		return findByConsumerIds(consumerId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the consumers where consumerId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param consumerId the consumer ID
+	 * @param start the lower bound of the range of consumers
+	 * @param end the upper bound of the range of consumers (not inclusive)
+	 * @return the range of matching consumers
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Consumer> findByConsumerIds(long consumerId, int start, int end)
+		throws SystemException {
+		return findByConsumerIds(consumerId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the consumers where consumerId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param consumerId the consumer ID
+	 * @param start the lower bound of the range of consumers
+	 * @param end the upper bound of the range of consumers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching consumers
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Consumer> findByConsumerIds(long consumerId, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSUMERIDS;
+			finderArgs = new Object[] { consumerId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CONSUMERIDS;
+			finderArgs = new Object[] { consumerId, start, end, orderByComparator };
+		}
+
+		List<Consumer> list = (List<Consumer>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Consumer consumer : list) {
+				if ((consumerId != consumer.getConsumerId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CONSUMER_WHERE);
+
+			query.append(_FINDER_COLUMN_CONSUMERIDS_CONSUMERID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(ConsumerModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(consumerId);
+
+				if (!pagination) {
+					list = (List<Consumer>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Consumer>(list);
+				}
+				else {
+					list = (List<Consumer>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first consumer in the ordered set where consumerId = &#63;.
+	 *
+	 * @param consumerId the consumer ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching consumer
+	 * @throws com.liferay.consumer.manager.NoSuchConsumerException if a matching consumer could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Consumer findByConsumerIds_First(long consumerId,
+		OrderByComparator orderByComparator)
+		throws NoSuchConsumerException, SystemException {
+		Consumer consumer = fetchByConsumerIds_First(consumerId,
+				orderByComparator);
+
+		if (consumer != null) {
+			return consumer;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("consumerId=");
+		msg.append(consumerId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchConsumerException(msg.toString());
+	}
+
+	/**
+	 * Returns the first consumer in the ordered set where consumerId = &#63;.
+	 *
+	 * @param consumerId the consumer ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching consumer, or <code>null</code> if a matching consumer could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Consumer fetchByConsumerIds_First(long consumerId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<Consumer> list = findByConsumerIds(consumerId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last consumer in the ordered set where consumerId = &#63;.
+	 *
+	 * @param consumerId the consumer ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching consumer
+	 * @throws com.liferay.consumer.manager.NoSuchConsumerException if a matching consumer could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Consumer findByConsumerIds_Last(long consumerId,
+		OrderByComparator orderByComparator)
+		throws NoSuchConsumerException, SystemException {
+		Consumer consumer = fetchByConsumerIds_Last(consumerId,
+				orderByComparator);
+
+		if (consumer != null) {
+			return consumer;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("consumerId=");
+		msg.append(consumerId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchConsumerException(msg.toString());
+	}
+
+	/**
+	 * Returns the last consumer in the ordered set where consumerId = &#63;.
+	 *
+	 * @param consumerId the consumer ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching consumer, or <code>null</code> if a matching consumer could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public Consumer fetchByConsumerIds_Last(long consumerId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByConsumerIds(consumerId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Consumer> list = findByConsumerIds(consumerId, count - 1, count,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns all the consumers where consumerId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param consumerIds the consumer IDs
+	 * @return the matching consumers
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Consumer> findByConsumerIds(long[] consumerIds)
+		throws SystemException {
+		return findByConsumerIds(consumerIds, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the consumers where consumerId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param consumerIds the consumer IDs
+	 * @param start the lower bound of the range of consumers
+	 * @param end the upper bound of the range of consumers (not inclusive)
+	 * @return the range of matching consumers
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Consumer> findByConsumerIds(long[] consumerIds, int start,
+		int end) throws SystemException {
+		return findByConsumerIds(consumerIds, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the consumers where consumerId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param consumerIds the consumer IDs
+	 * @param start the lower bound of the range of consumers
+	 * @param end the upper bound of the range of consumers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching consumers
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<Consumer> findByConsumerIds(long[] consumerIds, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		if ((consumerIds != null) && (consumerIds.length == 1)) {
+			return findByConsumerIds(consumerIds[0], start, end,
+				orderByComparator);
+		}
+
+		boolean pagination = true;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderArgs = new Object[] { StringUtil.merge(consumerIds) };
+		}
+		else {
+			finderArgs = new Object[] {
+					StringUtil.merge(consumerIds),
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<Consumer> list = (List<Consumer>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CONSUMERIDS,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Consumer consumer : list) {
+				if (!ArrayUtil.contains(consumerIds, consumer.getConsumerId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_CONSUMER_WHERE);
+
+			boolean conjunctionable = false;
+
+			if ((consumerIds == null) || (consumerIds.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < consumerIds.length; i++) {
+					query.append(_FINDER_COLUMN_CONSUMERIDS_CONSUMERID_5);
+
+					if ((i + 1) < consumerIds.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(ConsumerModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (consumerIds != null) {
+					qPos.add(consumerIds);
+				}
+
+				if (!pagination) {
+					list = (List<Consumer>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<Consumer>(list);
+				}
+				else {
+					list = (List<Consumer>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CONSUMERIDS,
+					finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_CONSUMERIDS,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Removes all the consumers where consumerId = &#63; from the database.
+	 *
+	 * @param consumerId the consumer ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByConsumerIds(long consumerId) throws SystemException {
+		for (Consumer consumer : findByConsumerIds(consumerId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(consumer);
+		}
+	}
+
+	/**
+	 * Returns the number of consumers where consumerId = &#63;.
+	 *
+	 * @param consumerId the consumer ID
+	 * @return the number of matching consumers
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByConsumerIds(long consumerId) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CONSUMERIDS;
+
+		Object[] finderArgs = new Object[] { consumerId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CONSUMER_WHERE);
+
+			query.append(_FINDER_COLUMN_CONSUMERIDS_CONSUMERID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(consumerId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of consumers where consumerId = any &#63;.
+	 *
+	 * @param consumerIds the consumer IDs
+	 * @return the number of matching consumers
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByConsumerIds(long[] consumerIds) throws SystemException {
+		Object[] finderArgs = new Object[] { StringUtil.merge(consumerIds) };
+
+		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CONSUMERIDS,
+				finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_CONSUMER_WHERE);
+
+			boolean conjunctionable = false;
+
+			if ((consumerIds == null) || (consumerIds.length > 0)) {
+				if (conjunctionable) {
+					query.append(WHERE_AND);
+				}
+
+				query.append(StringPool.OPEN_PARENTHESIS);
+
+				for (int i = 0; i < consumerIds.length; i++) {
+					query.append(_FINDER_COLUMN_CONSUMERIDS_CONSUMERID_5);
+
+					if ((i + 1) < consumerIds.length) {
+						query.append(WHERE_OR);
+					}
+				}
+
+				query.append(StringPool.CLOSE_PARENTHESIS);
+
+				conjunctionable = true;
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (consumerIds != null) {
+					qPos.add(consumerIds);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CONSUMERIDS,
+					finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_CONSUMERIDS,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CONSUMERIDS_CONSUMERID_2 = "consumer.consumerId = ?";
+	private static final String _FINDER_COLUMN_CONSUMERIDS_CONSUMERID_5 = "(" +
+		removeConjunction(_FINDER_COLUMN_CONSUMERIDS_CONSUMERID_2) + ")";
 
 	public ConsumerPersistenceImpl() {
 		setModelClass(Consumer.class);
@@ -2286,6 +2887,25 @@ public class ConsumerPersistenceImpl extends BasePersistenceImpl<Consumer>
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_COMPANYID,
 					args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_COMPANYID,
+					args);
+			}
+
+			if ((consumerModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSUMERIDS.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						consumerModelImpl.getOriginalConsumerId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CONSUMERIDS,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSUMERIDS,
+					args);
+
+				args = new Object[] { consumerModelImpl.getConsumerId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CONSUMERIDS,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSUMERIDS,
 					args);
 			}
 		}

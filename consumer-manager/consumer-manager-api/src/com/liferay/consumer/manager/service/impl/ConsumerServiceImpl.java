@@ -90,6 +90,15 @@ public class ConsumerServiceImpl extends ConsumerServiceBaseImpl {
 	}
 
 	@Override
+	public List<Consumer> getConsumersByConsumerExtensionKey(
+			String consumerExtensionKey)
+		throws PortalException, SystemException {
+
+		return consumerLocalService.getConsumersByConsumerExtensionKey(
+			consumerExtensionKey);
+	}
+
+	@Override
 	public Consumer updateConsumer(
 			long consumerId, String consumerKey,
 			Map<Locale, String> descriptionMap, Map<Locale, String> nameMap,

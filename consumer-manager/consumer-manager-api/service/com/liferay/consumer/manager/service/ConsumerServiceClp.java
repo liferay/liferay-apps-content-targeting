@@ -57,9 +57,13 @@ public class ConsumerServiceClp implements ConsumerService {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName8 = "updateConsumer";
+		_methodName8 = "getConsumersByConsumerExtensionKey";
 
-		_methodParameterTypes8 = new String[] {
+		_methodParameterTypes8 = new String[] { "java.lang.String" };
+
+		_methodName9 = "updateConsumer";
+
+		_methodParameterTypes9 = new String[] {
 				"long", "java.lang.String", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -302,6 +306,43 @@ public class ConsumerServiceClp implements ConsumerService {
 	}
 
 	@Override
+	public java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersByConsumerExtensionKey(
+		java.lang.String consumerExtensionKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName8,
+					_methodParameterTypes8,
+					new Object[] {
+						ClpSerializer.translateInput(consumerExtensionKey)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.consumer.manager.model.Consumer>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public com.liferay.consumer.manager.model.Consumer updateConsumer(
 		long consumerId, java.lang.String consumerKey,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
@@ -312,8 +353,8 @@ public class ConsumerServiceClp implements ConsumerService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName8,
-					_methodParameterTypes8,
+			returnObj = _invokableService.invokeMethod(_methodName9,
+					_methodParameterTypes9,
 					new Object[] {
 						consumerId,
 						
@@ -366,4 +407,6 @@ public class ConsumerServiceClp implements ConsumerService {
 	private String[] _methodParameterTypes7;
 	private String _methodName8;
 	private String[] _methodParameterTypes8;
+	private String _methodName9;
+	private String[] _methodParameterTypes9;
 }

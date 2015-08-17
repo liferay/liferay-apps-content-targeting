@@ -39,6 +39,10 @@
 			<finder-column name="companyId" />
 			<finder-column name="consumerKey" />
 		</finder>
+
+		<finder name="ConsumerIds" return-type="Collection">
+			<finder-column name="consumerId" arrayable-operator="or" />
+		</finder>
 	</entity>
 	<entity name="ConsumerExtensionInstance" uuid="true" local-service="true" remote-service="true">
 
@@ -73,6 +77,9 @@
 		</finder>
 		<finder name="ConsumerId" return-type="Collection">
 			<finder-column name="consumerId" />
+		</finder>
+		<finder name="ConsumerExtensionKey" return-type="Collection">
+			<finder-column name="consumerExtensionKey" />
 		</finder>
 		<finder name="C_C" return-type="ConsumerExtension">
 			<finder-column name="consumerExtensionKey" />
