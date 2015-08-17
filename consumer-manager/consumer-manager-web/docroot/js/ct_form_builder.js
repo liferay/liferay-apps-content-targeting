@@ -7,24 +7,24 @@ AUI.add(
 
 			ITEM_FIELD_TPL = '<div>' +
 				'<div class="field-header">' +
-				'<div class="field-icon">' +
-				'<i class="{icon}"></i>' +
-				'</div>' +
-				'<div class="row field-info">' +
-				'<div class="field-title">{name}</div>' +
-				'<div class="field-description">{description}</div>' +
-				'</div>' +
+					'<div class="field-icon">' +
+						'<i class="{icon}"></i>' +
+					'</div>' +
+					'<div class="row field-info">' +
+						'<div class="field-title">{name}</div>' +
+						'<div class="field-description">{description}</div>' +
+					'</div>' +
 				'</div>' +
 				'<div class="field-editor">{editor}</div>' +
-				'</div>',
+			'</div>',
 
 			ITEM_CATEGORY_HEADER_TPL = '<div class="category-header toggler-header toggler-header-collapsed">' +
 				'<span class="category-icon icon {icon}"></span>' +
 				'<div class="category-info"> ' +
-				'<div class="category-title">{name}</div>' +
-				'<div class="category-description">{description}</div>' +
+					'<div class="category-title">{name}</div>' +
+					'<div class="category-description">{description}</div>' +
 				'</div>' +
-				'</div>',
+			'</div>',
 
 			ITEM_CATEGORY_CONTENT_TPL = '<div class="category-content toggler-content toggler-content-collapsed"></div>',
 

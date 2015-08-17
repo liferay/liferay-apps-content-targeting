@@ -736,6 +736,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			JSONObject jSONObjectChannel = jSONArray.getJSONObject(i);
 
 			long channelInstanceId = 0;
+
 			String type = jSONObjectChannel.getString("type");
 
 			if (type.contains(StringPool.UNDERLINE)) {
@@ -884,6 +885,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			JSONObject jSONObjectRule = jSONArray.getJSONObject(i);
 
 			long ruleInstanceId = 0;
+
 			String type = jSONObjectRule.getString("type");
 
 			if (type.contains(StringPool.UNDERLINE)) {
@@ -988,6 +990,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			JSONObject jSONObjectTrackingAction = jSONArray.getJSONObject(i);
 
 			long trackingActionInstanceId = 0;
+
 			String type = jSONObjectTrackingAction.getString("type");
 
 			if (type.contains(StringPool.UNDERLINE)) {

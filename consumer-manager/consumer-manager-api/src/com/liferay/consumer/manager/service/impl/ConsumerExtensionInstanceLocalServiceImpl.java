@@ -23,7 +23,6 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.UserLocalServiceUtil;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -103,29 +102,6 @@ public class ConsumerExtensionInstanceLocalServiceImpl
 
 		return consumerExtensionInstancePersistence.findByConsumerId(
 			consumerId);
-	}
-
-	@Override
-	public List<Long> getConsumerIdsWithExtension(String extensionKey)
-		throws PortalException, SystemException {
-
-		List<Long> consumers = new ArrayList<Long>();
-
-		List<ConsumerExtensionInstance> consumerExtensionInstances =
-			consumerExtensionInstancePersistence.findByConsumerExtensionKey(
-				extensionKey);
-
-		for (ConsumerExtensionInstance consumerExtensionInstance :
-				consumerExtensionInstances) {
-
-			if (!consumers.contains(
-					consumerExtensionInstance.getConsumerId())) {
-
-				consumers.add(consumerExtensionInstance.getConsumerId());
-			}
-		}
-
-		return consumers;
 	}
 
 	@Override

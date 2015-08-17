@@ -27,6 +27,7 @@ import com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalServic
 import com.liferay.consumer.manager.service.ConsumerExtensionInstanceService;
 import com.liferay.consumer.manager.service.ConsumerLocalService;
 import com.liferay.consumer.manager.service.ConsumerLocalServiceUtil;
+import com.liferay.consumer.manager.service.ConsumerService;
 import com.liferay.consumer.manager.service.permission.ConsumerManagerPermission;
 import com.liferay.consumer.manager.service.permission.ConsumerPermission;
 import com.liferay.consumer.manager.util.ActionKeys;
@@ -107,7 +108,7 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			}
 
 			for (long deleteConsumerId : deleteConsumersIds) {
-				_consumerLocalService.deleteConsumer(deleteConsumerId);
+				_consumerService.deleteConsumer(deleteConsumerId);
 			}
 
 			sendRedirect(request, response);
@@ -145,6 +146,8 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			ConsumerExtensionsRegistry.class, bundle.getBundleContext());
 		_consumerLocalService = ServiceTrackerUtil.getService(
 			ConsumerLocalService.class, bundle.getBundleContext());
+		_consumerService = ServiceTrackerUtil.getService(
+			ConsumerService.class, bundle.getBundleContext());
 	}
 
 	public void updateConsumer(ActionRequest request, ActionResponse response)
@@ -160,9 +163,6 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 		Map<Locale, String> descriptionMap =
 			LocalizationUtil.getLocalizationMap(request, "description");
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			Consumer.class.getName(), request);
 
@@ -170,11 +170,11 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			Consumer consumer = null;
 
 			if (consumerId == 0) {
-				consumer = _consumerLocalService.addConsumer(
+				consumer = _consumerService.addConsumer(
 					consumerKey, descriptionMap, nameMap, serviceContext);
 			}
 			else {
-				consumer = _consumerLocalService.updateConsumer(
+				consumer = _consumerService.updateConsumer(
 					consumerId, consumerKey, descriptionMap, nameMap,
 					serviceContext);
 			}
@@ -308,6 +308,7 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			JSONObject jSONObjectConsumerExtension = jSONArray.getJSONObject(i);
 
 			long consumerExtensionInstanceId = 0;
+
 			String type = jSONObjectConsumerExtension.getString("type");
 
 			if (type.contains(StringPool.UNDERLINE)) {
@@ -412,8 +413,6 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 
 		String keywords = ParamUtil.getString(portletRequest, "keywords");
 
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
 		template.put(
 			"consumerSearchContainerIterator",
 			new ConsumerSearchContainerIterator(
@@ -433,9 +432,6 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			PortletResponse portletResponse, Template template,
 			TemplateHashModel staticModels)
 		throws Exception {
-
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -582,9 +578,6 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 		ServiceContext serviceContext = ServiceContextFactory.getInstance(
 			ConsumerExtensionInstance.class.getName(), request);
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		for (ConsumerExtensionInstance requestConsumerExtensionInstance
 			: requestConsumerExtensionInstances) {
 
@@ -608,12 +601,12 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 				typeSettings = consumerExtension.processConsumerExtension(
 					request, response, consumerExtensionValues);
 			}
-			catch (InvalidConsumerExtensionException itae) {
-				itae.setConsumerExtensionGuid(
+			catch (InvalidConsumerExtensionException icee) {
+				icee.setConsumerExtensionGuid(
 					requestConsumerExtensionInstance.
 						getConsumerExtensionGuid());
 
-				consumerExtensionExceptions.add(itae);
+				consumerExtensionExceptions.add(icee);
 			}
 			catch (Exception e) {
 				consumerExtensionExceptions.add(
@@ -644,16 +637,16 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 							key, consumerId, typeSettings, serviceContext);
 				}
 			}
-			catch (DuplicateConsumerExtensionInstanceException dtaie) {
-				InvalidConsumerExtensionException itae =
+			catch (DuplicateConsumerExtensionInstanceException dceie) {
+				InvalidConsumerExtensionException icee =
 					new InvalidConsumerExtensionException(
 						"please-use-a-unique-key");
 
-				itae.setConsumerExtensionGuid(
+				icee.setConsumerExtensionGuid(
 					requestConsumerExtensionInstance.
 						getConsumerExtensionGuid());
 
-				consumerExtensionExceptions.add(itae);
+				consumerExtensionExceptions.add(icee);
 			}
 			catch (PortalException pe) {
 				_log.error("Cannot update consumer extension", pe);
@@ -674,5 +667,6 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 		_consumerExtensionInstanceService;
 	private ConsumerExtensionsRegistry _consumerExtensionsRegistry;
 	private ConsumerLocalService _consumerLocalService;
+	private ConsumerService _consumerService;
 
 }

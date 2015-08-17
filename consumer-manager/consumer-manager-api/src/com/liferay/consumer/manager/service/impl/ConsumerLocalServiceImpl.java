@@ -15,6 +15,7 @@
 package com.liferay.consumer.manager.service.impl;
 
 import com.liferay.consumer.manager.model.Consumer;
+import com.liferay.consumer.manager.model.ConsumerExtensionInstance;
 import com.liferay.consumer.manager.service.base.ConsumerLocalServiceBaseImpl;
 import com.liferay.consumer.manager.util.BaseModelSearchResult;
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -139,20 +140,33 @@ public class ConsumerLocalServiceImpl extends ConsumerLocalServiceBaseImpl {
 	}
 
 	@Override
-	public int getConsumersCount(long companyId) throws SystemException {
-		return consumerPersistence.countByCompanyId(companyId);
-	}
-
-	@Override
-	public List<Consumer> getConsumersWithExtension(String extensionKey)
+	public List<Consumer> getConsumersByConsumerExtensionKey(
+			String consumerExtensionKey)
 		throws PortalException, SystemException {
 
-		List<Long> consumerIds =
-			consumerExtensionInstanceLocalService.getConsumerIdsWithExtension(
-				extensionKey);
+		List<Long> consumerIds = new ArrayList<Long>();
+
+		List<ConsumerExtensionInstance> consumerExtensionInstances =
+			consumerExtensionInstancePersistence.findByConsumerExtensionKey(
+				consumerExtensionKey);
+
+		for (ConsumerExtensionInstance consumerExtensionInstance :
+				consumerExtensionInstances) {
+
+			if (!consumerIds.contains(
+					consumerExtensionInstance.getConsumerId())) {
+
+				consumerIds.add(consumerExtensionInstance.getConsumerId());
+			}
+		}
 
 		return consumerPersistence.findByConsumerIds(
 			ArrayUtil.toLongArray(consumerIds));
+	}
+
+	@Override
+	public int getConsumersCount(long companyId) throws SystemException {
+		return consumerPersistence.countByCompanyId(companyId);
 	}
 
 	@Override
