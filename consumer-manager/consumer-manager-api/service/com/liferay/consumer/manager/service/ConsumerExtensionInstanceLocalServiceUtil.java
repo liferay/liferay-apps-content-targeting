@@ -341,6 +341,13 @@ public class ConsumerExtensionInstanceLocalServiceUtil {
 		return getService().getConsumerExtensionInstances(consumerId);
 	}
 
+	public static java.util.List<java.lang.Long> getConsumerIdsWithExtension(
+		java.lang.String extensionKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getConsumerIdsWithExtension(extensionKey);
+	}
+
 	public static com.liferay.consumer.manager.model.ConsumerExtensionInstance updateConsumerExtensionInstance(
 		long consumerExtensionInstanceId,
 		java.lang.String consumerExtensionKey, long consumerId,

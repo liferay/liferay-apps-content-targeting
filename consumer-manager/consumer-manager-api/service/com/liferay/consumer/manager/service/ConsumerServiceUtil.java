@@ -101,6 +101,13 @@ public class ConsumerServiceUtil {
 		return getService().getConsumers(companyId, serviceContext);
 	}
 
+	public static java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersWithExtension(
+		java.lang.String extensionKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getConsumersWithExtension(extensionKey);
+	}
+
 	public static com.liferay.consumer.manager.model.Consumer updateConsumer(
 		long consumerId, java.lang.String consumerKey,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,

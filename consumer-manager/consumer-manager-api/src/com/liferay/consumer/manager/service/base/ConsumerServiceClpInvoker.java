@@ -57,9 +57,13 @@ public class ConsumerServiceClpInvoker {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName35 = "updateConsumer";
+		_methodName35 = "getConsumersWithExtension";
 
-		_methodParameterTypes35 = new String[] {
+		_methodParameterTypes35 = new String[] { "java.lang.String" };
+
+		_methodName36 = "updateConsumer";
+
+		_methodParameterTypes36 = new String[] {
 				"long", "java.lang.String", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -111,6 +115,11 @@ public class ConsumerServiceClpInvoker {
 
 		if (_methodName35.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes35, parameterTypes)) {
+			return ConsumerServiceUtil.getConsumersWithExtension((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName36.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
 			return ConsumerServiceUtil.updateConsumer(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -137,4 +146,6 @@ public class ConsumerServiceClpInvoker {
 	private String[] _methodParameterTypes34;
 	private String _methodName35;
 	private String[] _methodParameterTypes35;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
 }

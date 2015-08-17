@@ -454,19 +454,19 @@ public interface ConsumerModel extends BaseModel<Consumer>, StagedAuditedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(Consumer consumer);
+	public int compareTo(com.liferay.consumer.manager.model.Consumer consumer);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Consumer> toCacheModel();
+	public CacheModel<com.liferay.consumer.manager.model.Consumer> toCacheModel();
 
 	@Override
-	public Consumer toEscapedModel();
+	public com.liferay.consumer.manager.model.Consumer toEscapedModel();
 
 	@Override
-	public Consumer toUnescapedModel();
+	public com.liferay.consumer.manager.model.Consumer toUnescapedModel();
 
 	@Override
 	public String toString();

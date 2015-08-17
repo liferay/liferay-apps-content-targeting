@@ -162,21 +162,25 @@ public class ConsumerLocalServiceClpInvoker {
 
 		_methodParameterTypes55 = new String[] { "long" };
 
-		_methodName56 = "search";
+		_methodName56 = "getConsumersWithExtension";
 
-		_methodParameterTypes56 = new String[] {
-				"long", "java.lang.String", "int", "int"
-			};
+		_methodParameterTypes56 = new String[] { "java.lang.String" };
 
-		_methodName57 = "searchConsumers";
+		_methodName57 = "search";
 
 		_methodParameterTypes57 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName58 = "updateConsumer";
+		_methodName58 = "searchConsumers";
 
 		_methodParameterTypes58 = new String[] {
+				"long", "java.lang.String", "int", "int"
+			};
+
+		_methodName59 = "updateConsumer";
+
+		_methodParameterTypes59 = new String[] {
 				"long", "java.lang.String", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -344,15 +348,12 @@ public class ConsumerLocalServiceClpInvoker {
 
 		if (_methodName56.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
-			return ConsumerLocalServiceUtil.search(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1],
-				((Integer)arguments[2]).intValue(),
-				((Integer)arguments[3]).intValue());
+			return ConsumerLocalServiceUtil.getConsumersWithExtension((java.lang.String)arguments[0]);
 		}
 
 		if (_methodName57.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
-			return ConsumerLocalServiceUtil.searchConsumers(((Long)arguments[0]).longValue(),
+			return ConsumerLocalServiceUtil.search(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
@@ -360,6 +361,14 @@ public class ConsumerLocalServiceClpInvoker {
 
 		if (_methodName58.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
+			return ConsumerLocalServiceUtil.searchConsumers(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1],
+				((Integer)arguments[2]).intValue(),
+				((Integer)arguments[3]).intValue());
+		}
+
+		if (_methodName59.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
 			return ConsumerLocalServiceUtil.updateConsumer(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -432,4 +441,6 @@ public class ConsumerLocalServiceClpInvoker {
 	private String[] _methodParameterTypes57;
 	private String _methodName58;
 	private String[] _methodParameterTypes58;
+	private String _methodName59;
+	private String[] _methodParameterTypes59;
 }

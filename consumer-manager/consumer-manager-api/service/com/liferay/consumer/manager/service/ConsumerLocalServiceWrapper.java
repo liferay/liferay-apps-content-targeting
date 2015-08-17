@@ -372,6 +372,14 @@ public class ConsumerLocalServiceWrapper implements ConsumerLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersWithExtension(
+		java.lang.String extensionKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _consumerLocalService.getConsumersWithExtension(extensionKey);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.search.Hits search(long companyId,
 		java.lang.String keywords, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,

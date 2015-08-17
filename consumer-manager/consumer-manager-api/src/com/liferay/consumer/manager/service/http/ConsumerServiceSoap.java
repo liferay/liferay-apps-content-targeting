@@ -152,6 +152,21 @@ public class ConsumerServiceSoap {
 		}
 	}
 
+	public static com.liferay.consumer.manager.model.ConsumerSoap[] getConsumersWithExtension(
+		java.lang.String extensionKey) throws RemoteException {
+		try {
+			java.util.List<com.liferay.consumer.manager.model.Consumer> returnValue =
+				ConsumerServiceUtil.getConsumersWithExtension(extensionKey);
+
+			return com.liferay.consumer.manager.model.ConsumerSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.consumer.manager.model.ConsumerSoap updateConsumer(
 		long consumerId, java.lang.String consumerKey,
 		java.lang.String[] descriptionMapLanguageIds,

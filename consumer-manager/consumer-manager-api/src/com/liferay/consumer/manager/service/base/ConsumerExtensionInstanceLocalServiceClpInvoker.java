@@ -141,9 +141,13 @@ public class ConsumerExtensionInstanceLocalServiceClpInvoker {
 
 		_methodParameterTypes51 = new String[] { "long" };
 
-		_methodName52 = "updateConsumerExtensionInstance";
+		_methodName52 = "getConsumerIdsWithExtension";
 
-		_methodParameterTypes52 = new String[] {
+		_methodParameterTypes52 = new String[] { "java.lang.String" };
+
+		_methodName53 = "updateConsumerExtensionInstance";
+
+		_methodParameterTypes53 = new String[] {
 				"long", "java.lang.String", "long", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -288,6 +292,11 @@ public class ConsumerExtensionInstanceLocalServiceClpInvoker {
 
 		if (_methodName52.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
+			return ConsumerExtensionInstanceLocalServiceUtil.getConsumerIdsWithExtension((java.lang.String)arguments[0]);
+		}
+
+		if (_methodName53.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
 			return ConsumerExtensionInstanceLocalServiceUtil.updateConsumerExtensionInstance(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -348,4 +357,6 @@ public class ConsumerExtensionInstanceLocalServiceClpInvoker {
 	private String[] _methodParameterTypes51;
 	private String _methodName52;
 	private String[] _methodParameterTypes52;
+	private String _methodName53;
+	private String[] _methodParameterTypes53;
 }

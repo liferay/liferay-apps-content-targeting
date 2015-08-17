@@ -351,6 +351,13 @@ public class ConsumerLocalServiceUtil {
 		return getService().getConsumersCount(companyId);
 	}
 
+	public static java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersWithExtension(
+		java.lang.String extensionKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getConsumersWithExtension(extensionKey);
+	}
+
 	public static com.liferay.portal.kernel.search.Hits search(long companyId,
 		java.lang.String keywords, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException,

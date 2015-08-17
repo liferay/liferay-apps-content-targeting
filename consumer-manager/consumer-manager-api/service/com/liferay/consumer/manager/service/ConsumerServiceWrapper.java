@@ -99,6 +99,14 @@ public class ConsumerServiceWrapper implements ConsumerService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersWithExtension(
+		java.lang.String extensionKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _consumerService.getConsumersWithExtension(extensionKey);
+	}
+
+	@Override
 	public com.liferay.consumer.manager.model.Consumer updateConsumer(
 		long consumerId, java.lang.String consumerKey,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,

@@ -272,19 +272,20 @@ public interface ConsumerExtensionInstanceModel extends BaseModel<ConsumerExtens
 	public Object clone();
 
 	@Override
-	public int compareTo(ConsumerExtensionInstance consumerExtensionInstance);
+	public int compareTo(
+		com.liferay.consumer.manager.model.ConsumerExtensionInstance consumerExtensionInstance);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ConsumerExtensionInstance> toCacheModel();
+	public CacheModel<com.liferay.consumer.manager.model.ConsumerExtensionInstance> toCacheModel();
 
 	@Override
-	public ConsumerExtensionInstance toEscapedModel();
+	public com.liferay.consumer.manager.model.ConsumerExtensionInstance toEscapedModel();
 
 	@Override
-	public ConsumerExtensionInstance toUnescapedModel();
+	public com.liferay.consumer.manager.model.ConsumerExtensionInstance toUnescapedModel();
 
 	@Override
 	public String toString();
