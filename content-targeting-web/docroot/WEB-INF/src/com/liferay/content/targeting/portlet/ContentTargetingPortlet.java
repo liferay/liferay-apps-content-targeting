@@ -1168,7 +1168,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				Date now = new Date();
 
 				endDate.setTime(now);
-				endDate.add(Calendar.DATE, 1);
+				endDate.add(Calendar.YEAR, 1);
 
 				startDate.setTime(now);
 
