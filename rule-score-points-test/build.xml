@@ -12,4 +12,6 @@
 	<import file="../../../build-common-osgi-plugin.xml" />
 
 	<target name="deploy" />
+
+	<target name="test" />
 </project>
