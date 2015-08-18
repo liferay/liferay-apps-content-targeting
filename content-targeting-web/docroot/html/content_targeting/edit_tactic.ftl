@@ -66,7 +66,7 @@
 						<div class="tab-content">
 							<div class="tab-pane">
 								<div class="hide panel-page-menu" id="formBuilderSB">
-									<div class="search-panels">
+									<div class="form-builder-search-panels">
 										<i class="icon-search"></i>
 
 										<div class="search-panels-bar">

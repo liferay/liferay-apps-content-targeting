@@ -384,7 +384,7 @@
 		margin: 0 2em 0 .5em;
 	}
 
-	.tracking-actions-panel {
+	.channels-panel, .tracking-actions-panel {
 		margin-top: 3em;
 
 		.title-text {
