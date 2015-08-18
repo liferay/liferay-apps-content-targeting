@@ -34,17 +34,28 @@
 		modelVar="consumer"
 	>
 
+		<#if consumerPermission.contains(permissionChecker, consumer, actionKeys.UPDATE)>
+			<@portlet["renderURL"] var="editConsumerURL">
+				<@portlet["param"] name="mvcPath" value="${consumerManagerPath.EDIT_CONSUMER}" />
+				<@portlet["param"] name="redirect" value="${viewConsumersURL}" />
+				<@portlet["param"] name="consumerId" value="${consumer.getConsumerId()?string}" />
+			</@>
+		</#if>
+
 		<@liferay_ui["search-container-column-text"]
+			href=editConsumerURL
 			name="consumer-key"
 			value=consumer.getConsumerKey()
 		/>
 
 		<@liferay_ui["search-container-column-text"]
+			href=editConsumerURL
 			name="name"
 			value=consumer.getName()
 		/>
 
 		<@liferay_ui["search-container-column-text"]
+			href=editConsumerURL
 			name="description"
 			value=consumer.getDescription(locale)
 		/>
@@ -54,13 +65,7 @@
 			name=""
 		>
 			<@liferay_ui["icon-menu"]>
-				<#if consumerPermission.contains(permissionChecker, consumer, actionKeys.UPDATE)>
-					<@portlet["renderURL"] var="editConsumerURL">
-						<@portlet["param"] name="mvcPath" value="${consumerManagerPath.EDIT_CONSUMER}" />
-						<@portlet["param"] name="redirect" value="${viewConsumersURL}" />
-						<@portlet["param"] name="consumerId" value="${consumer.getConsumerId()?string}" />
-					</@>
-
+				<#if editConsumerURL??>
 					<@liferay_ui["icon"]
 						image="edit"
 						method="get"
