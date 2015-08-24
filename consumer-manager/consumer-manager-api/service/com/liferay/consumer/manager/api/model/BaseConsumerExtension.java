@@ -129,7 +129,7 @@ public class BaseConsumerExtension implements ConsumerExtension {
 
 	@Override
 	public String processConsumerExtension(
-		PortletRequest request, PortletResponse response,
+		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) throws InvalidConsumerExtensionException {
 
 		return null;

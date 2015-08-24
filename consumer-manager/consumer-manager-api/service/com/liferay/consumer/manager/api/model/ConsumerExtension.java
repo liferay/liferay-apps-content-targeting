@@ -127,13 +127,15 @@ public interface ConsumerExtension {
 	 *
 	 * @param  request the request from which to get the request parameters
 	 * @param  response the response to receive the render parameters
+	 * @param  id the identifier that differentiates between consumer extension
+	 *         instances of the same type of an instantiable consumer extension
 	 * @param  values the values configured by users for the current channel
 	 *         instance based on the form controls from the HTML
 	 * @return the result of evaluating the channel form fields in the
 	 * 		   context of the request and response
 	 */
 	public String processConsumerExtension(
-			PortletRequest request, PortletResponse response,
+			PortletRequest request, PortletResponse response, String id,
 			Map<String, String> values)
 		throws InvalidConsumerExtensionException;
 

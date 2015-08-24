@@ -599,7 +599,9 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 
 			try {
 				typeSettings = consumerExtension.processConsumerExtension(
-					request, response, consumerExtensionValues);
+					request, response,
+					requestConsumerExtensionInstance.getConsumerExtensionGuid(),
+					consumerExtensionValues);
 			}
 			catch (InvalidConsumerExtensionException icee) {
 				icee.setConsumerExtensionGuid(
