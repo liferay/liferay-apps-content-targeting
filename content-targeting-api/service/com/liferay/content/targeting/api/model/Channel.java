@@ -180,7 +180,7 @@ public interface Channel {
 	 * 		   context of the request and response
 	 */
 	public String processChannel(
-			PortletRequest request, PortletResponse response,
+			PortletRequest request, PortletResponse response, String id,
 			Map<String, String> values)
 		throws InvalidChannelException;
 

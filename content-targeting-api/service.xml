@@ -94,6 +94,10 @@
 		<finder name="TacticId" return-type="Collection">
 			<finder-column name="tacticId" />
 		</finder>
+		<finder name="T_A" return-type="ChannelInstance" unique="true">
+			<finder-column name="tacticId" />
+			<finder-column name="alias" />
+		</finder>
 
 		<!-- References -->
 

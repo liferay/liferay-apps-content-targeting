@@ -31,14 +31,23 @@ public class ChannelInstanceImpl
 	public ChannelInstanceImpl() {
 	}
 
+	public String getChannelGuid() {
+		return _channelGuid;
+	}
+
 	public Map<String, String> getValues() {
 		return _values;
+	}
+
+	public void setChannelGuid(String channelGuid) {
+		_channelGuid = channelGuid;
 	}
 
 	public void setValues(Map<String, String> values) {
 		this._values = values;
 	}
 
+	private String _channelGuid;
 	private Map<String, String> _values;
 
 }

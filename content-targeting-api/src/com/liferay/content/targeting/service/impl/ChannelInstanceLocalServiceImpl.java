@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.service.impl;
 
+import com.liferay.content.targeting.DuplicateChannelInstanceException;
 import com.liferay.content.targeting.api.model.Channel;
 import com.liferay.content.targeting.api.model.ChannelsRegistry;
 import com.liferay.content.targeting.model.ChannelInstance;
@@ -68,6 +69,8 @@ public class ChannelInstanceLocalServiceImpl
 			long userId, long tacticId, String channelKey, long campaignId,
 			String alias, String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		validate(0, tacticId, alias);
 
 		User user = UserLocalServiceUtil.getUser(userId);
 
@@ -155,10 +158,12 @@ public class ChannelInstanceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		Date now = new Date();
-
 		ChannelInstance channelInstance =
 			channelInstancePersistence.findByPrimaryKey(channelInstanceId);
+
+		validate(channelInstanceId, channelInstance.getTacticId(), alias);
+
+		Date now = new Date();
 
 		channelInstance.setModifiedDate(serviceContext.getModifiedDate(now));
 		channelInstance.setAlias(alias);
@@ -167,6 +172,22 @@ public class ChannelInstanceLocalServiceImpl
 		channelInstancePersistence.update(channelInstance);
 
 		return channelInstance;
+	}
+
+	protected void validate(long channelInstanceId, long tacticId, String alias)
+		throws PortalException, SystemException {
+
+		ChannelInstance channelInstance = channelInstancePersistence.fetchByT_A(
+			tacticId, alias);
+
+		if ((channelInstance != null) &&
+			(channelInstance.getChannelInstanceId() !=
+				channelInstanceId)) {
+
+			throw new DuplicateChannelInstanceException(
+				"A channel instance with the alias " + alias + " already " +
+					"exists in tactic " + tacticId);
+		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

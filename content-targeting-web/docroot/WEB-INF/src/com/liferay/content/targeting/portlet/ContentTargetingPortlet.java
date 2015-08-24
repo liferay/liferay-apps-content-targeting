@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.portlet;
 
+import com.liferay.content.targeting.DuplicateChannelInstanceException;
 import com.liferay.content.targeting.DuplicateTrackingActionInstanceException;
 import com.liferay.content.targeting.InvalidChannelException;
 import com.liferay.content.targeting.InvalidChannelsException;
@@ -756,6 +757,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				_channelInstanceLocalService.createChannelInstance(
 					channelInstanceId);
 
+			channelInstance.setChannelGuid(id);
 			channelInstance.setChannelKey(type);
 			channelInstance.setValues(channelValues);
 
@@ -904,9 +906,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			RuleInstance ruleInstance =
 				_ruleInstanceLocalService.createRuleInstance(ruleInstanceId);
 
+			ruleInstance.setRuleGuid(id);
 			ruleInstance.setRuleKey(type);
 			ruleInstance.setValues(ruleValues);
-			ruleInstance.setRuleGuid(id);
 
 			ruleInstances.add(ruleInstance);
 		}
@@ -1010,9 +1012,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				_trackingActionInstanceLocalService.
 					createTrackingActionInstance(trackingActionInstanceId);
 
+			trackingActionInstance.setTrackingActionGuid(id);
 			trackingActionInstance.setTrackingActionKey(type);
 			trackingActionInstance.setValues(trackingActionValues);
-			trackingActionInstance.setTrackingActionGuid(id);
 
 			trackingActionsInstances.add(trackingActionInstance);
 		}
@@ -1346,10 +1348,12 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						InvalidChannelsException ice =
 							getInvalidChannelsException(portletRequest);
 
-						for (ChannelInstance instance : channelInstances) {
+						for (ChannelInstance channelInstance :
+								channelInstances) {
+
 							Channel channel =
 								_channelsRegistry.getChannel(
-									instance.getChannelKey());
+									channelInstance.getChannelKey());
 
 							if (channel == null) {
 								continue;
@@ -1358,19 +1362,24 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 							ChannelTemplate channelTemplate =
 								new ChannelTemplate();
 
-							if (instance.getChannelInstanceId() > 0) {
+							if (channelInstance.getChannelInstanceId() > 0) {
 								channelTemplate.setInstanceId(
 									String.valueOf(
-										instance.getChannelInstanceId()));
+										channelInstance.
+											getChannelInstanceId()));
+							}
+							else {
+								channelTemplate.setInstanceId(
+									channelInstance.getChannelGuid());
 							}
 
 							channelTemplate.setChannel(channel);
 
 							String html = getChannelHtml(
-								channel, instance, template,
-								instance.getValues(), ice.getExceptions(
-									instance.getUuid()
-								));
+								channel, channelInstance, template,
+								channelInstance.getValues(),
+								ice.getExceptions(
+									channelInstance.getChannelGuid()));
 
 							channelTemplate.setTemplate(
 								HtmlUtil.escapeAttribute(html));
@@ -1722,7 +1731,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			try {
 				typeSettings = channel.processChannel(
-					request, response, channelValues);
+					request, response, requestChannelInstance.getChannelGuid(),
+					channelValues);
 			}
 			catch (InvalidChannelException ice) {
 				channelExceptions.add(ice);
@@ -1752,6 +1762,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						requestChannelInstance.getChannelKey(), campaignId,
 						alias, typeSettings, serviceContext);
 				}
+			}
+			catch (DuplicateChannelInstanceException dcie) {
+				InvalidChannelException ice = new InvalidChannelException(
+					"please-use-a-unique-alias");
+
+				ice.setChannelGuid(requestChannelInstance.getChannelGuid());
+
+				channelExceptions.add(ice);
 			}
 			catch (PortalException pe) {
 				_log.error("Cannot update channel", pe);
