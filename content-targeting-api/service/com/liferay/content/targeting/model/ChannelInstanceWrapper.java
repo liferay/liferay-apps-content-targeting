@@ -557,8 +557,18 @@ public class ChannelInstanceWrapper implements ChannelInstance,
 	}
 
 	@Override
+	public java.lang.String getChannelGuid() {
+		return _channelInstance.getChannelGuid();
+	}
+
+	@Override
 	public java.util.Map<java.lang.String, java.lang.String> getValues() {
 		return _channelInstance.getValues();
+	}
+
+	@Override
+	public void setChannelGuid(java.lang.String channelGuid) {
+		_channelInstance.setChannelGuid(channelGuid);
 	}
 
 	@Override

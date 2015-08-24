@@ -2947,6 +2947,269 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	}
 
 	private static final String _FINDER_COLUMN_TACTICID_TACTICID_2 = "channelInstance.tacticId = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_T_A = new FinderPath(ChannelInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			ChannelInstanceModelImpl.FINDER_CACHE_ENABLED,
+			ChannelInstanceImpl.class, FINDER_CLASS_NAME_ENTITY, "fetchByT_A",
+			new String[] { Long.class.getName(), String.class.getName() },
+			ChannelInstanceModelImpl.TACTICID_COLUMN_BITMASK |
+			ChannelInstanceModelImpl.ALIAS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_T_A = new FinderPath(ChannelInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			ChannelInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_A",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the channel instance where tacticId = &#63; and alias = &#63; or throws a {@link com.liferay.content.targeting.NoSuchChannelInstanceException} if it could not be found.
+	 *
+	 * @param tacticId the tactic ID
+	 * @param alias the alias
+	 * @return the matching channel instance
+	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance findByT_A(long tacticId, String alias)
+		throws NoSuchChannelInstanceException, SystemException {
+		ChannelInstance channelInstance = fetchByT_A(tacticId, alias);
+
+		if (channelInstance == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("tacticId=");
+			msg.append(tacticId);
+
+			msg.append(", alias=");
+			msg.append(alias);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchChannelInstanceException(msg.toString());
+		}
+
+		return channelInstance;
+	}
+
+	/**
+	 * Returns the channel instance where tacticId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param tacticId the tactic ID
+	 * @param alias the alias
+	 * @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance fetchByT_A(long tacticId, String alias)
+		throws SystemException {
+		return fetchByT_A(tacticId, alias, true);
+	}
+
+	/**
+	 * Returns the channel instance where tacticId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param tacticId the tactic ID
+	 * @param alias the alias
+	 * @param retrieveFromCache whether to use the finder cache
+	 * @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance fetchByT_A(long tacticId, String alias,
+		boolean retrieveFromCache) throws SystemException {
+		Object[] finderArgs = new Object[] { tacticId, alias };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_T_A,
+					finderArgs, this);
+		}
+
+		if (result instanceof ChannelInstance) {
+			ChannelInstance channelInstance = (ChannelInstance)result;
+
+			if ((tacticId != channelInstance.getTacticId()) ||
+					!Validator.equals(alias, channelInstance.getAlias())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_CHANNELINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_T_A_TACTICID_2);
+
+			boolean bindAlias = false;
+
+			if (alias == null) {
+				query.append(_FINDER_COLUMN_T_A_ALIAS_1);
+			}
+			else if (alias.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_T_A_ALIAS_3);
+			}
+			else {
+				bindAlias = true;
+
+				query.append(_FINDER_COLUMN_T_A_ALIAS_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(tacticId);
+
+				if (bindAlias) {
+					qPos.add(alias);
+				}
+
+				List<ChannelInstance> list = q.list();
+
+				if (list.isEmpty()) {
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_A,
+						finderArgs, list);
+				}
+				else {
+					ChannelInstance channelInstance = list.get(0);
+
+					result = channelInstance;
+
+					cacheResult(channelInstance);
+
+					if ((channelInstance.getTacticId() != tacticId) ||
+							(channelInstance.getAlias() == null) ||
+							!channelInstance.getAlias().equals(alias)) {
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_A,
+							finderArgs, channelInstance);
+					}
+				}
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_A,
+					finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (ChannelInstance)result;
+		}
+	}
+
+	/**
+	 * Removes the channel instance where tacticId = &#63; and alias = &#63; from the database.
+	 *
+	 * @param tacticId the tactic ID
+	 * @param alias the alias
+	 * @return the channel instance that was removed
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance removeByT_A(long tacticId, String alias)
+		throws NoSuchChannelInstanceException, SystemException {
+		ChannelInstance channelInstance = findByT_A(tacticId, alias);
+
+		return remove(channelInstance);
+	}
+
+	/**
+	 * Returns the number of channel instances where tacticId = &#63; and alias = &#63;.
+	 *
+	 * @param tacticId the tactic ID
+	 * @param alias the alias
+	 * @return the number of matching channel instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByT_A(long tacticId, String alias)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_T_A;
+
+		Object[] finderArgs = new Object[] { tacticId, alias };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_CHANNELINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_T_A_TACTICID_2);
+
+			boolean bindAlias = false;
+
+			if (alias == null) {
+				query.append(_FINDER_COLUMN_T_A_ALIAS_1);
+			}
+			else if (alias.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_T_A_ALIAS_3);
+			}
+			else {
+				bindAlias = true;
+
+				query.append(_FINDER_COLUMN_T_A_ALIAS_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(tacticId);
+
+				if (bindAlias) {
+					qPos.add(alias);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_T_A_TACTICID_2 = "channelInstance.tacticId = ? AND ";
+	private static final String _FINDER_COLUMN_T_A_ALIAS_1 = "channelInstance.alias IS NULL";
+	private static final String _FINDER_COLUMN_T_A_ALIAS_2 = "channelInstance.alias = ?";
+	private static final String _FINDER_COLUMN_T_A_ALIAS_3 = "(channelInstance.alias IS NULL OR channelInstance.alias = '')";
 
 	public ChannelInstancePersistenceImpl() {
 		setModelClass(ChannelInstance.class);
@@ -2966,6 +3229,11 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G,
 			new Object[] { channelInstance.getUuid(), channelInstance.getGroupId() },
 			channelInstance);
+
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_A,
+			new Object[] {
+				channelInstance.getTacticId(), channelInstance.getAlias()
+			}, channelInstance);
 
 		channelInstance.resetOriginalValues();
 	}
@@ -3051,6 +3319,15 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 				Long.valueOf(1));
 			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
 				channelInstance);
+
+			args = new Object[] {
+					channelInstance.getTacticId(), channelInstance.getAlias()
+				};
+
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_A, args,
+				Long.valueOf(1));
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_A, args,
+				channelInstance);
 		}
 		else {
 			ChannelInstanceModelImpl channelInstanceModelImpl = (ChannelInstanceModelImpl)channelInstance;
@@ -3064,6 +3341,19 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_UUID_G, args,
 					Long.valueOf(1));
 				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_UUID_G, args,
+					channelInstance);
+			}
+
+			if ((channelInstanceModelImpl.getColumnBitmask() &
+					FINDER_PATH_FETCH_BY_T_A.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						channelInstance.getTacticId(),
+						channelInstance.getAlias()
+					};
+
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_T_A, args,
+					Long.valueOf(1));
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_T_A, args,
 					channelInstance);
 			}
 		}
@@ -3088,6 +3378,24 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 
 			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_G, args);
 			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_UUID_G, args);
+		}
+
+		args = new Object[] {
+				channelInstance.getTacticId(), channelInstance.getAlias()
+			};
+
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_A, args);
+
+		if ((channelInstanceModelImpl.getColumnBitmask() &
+				FINDER_PATH_FETCH_BY_T_A.getColumnBitmask()) != 0) {
+			args = new Object[] {
+					channelInstanceModelImpl.getOriginalTacticId(),
+					channelInstanceModelImpl.getOriginalAlias()
+				};
+
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_A, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_T_A, args);
 		}
 	}
 

@@ -31,7 +31,11 @@ public interface ChannelInstance extends ChannelInstanceModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.ChannelInstanceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String getChannelGuid();
+
 	public java.util.Map<java.lang.String, java.lang.String> getValues();
+
+	public void setChannelGuid(java.lang.String channelGuid);
 
 	public void setValues(
 		java.util.Map<java.lang.String, java.lang.String> values);

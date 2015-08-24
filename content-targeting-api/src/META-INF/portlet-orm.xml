@@ -217,6 +217,7 @@
 	<entity class="com.liferay.content.targeting.model.impl.ChannelInstanceImpl" name="ChannelInstance">
 		<table name="CT_ChannelInstance" />
 		<attributes>
+			<transient name="channelGuid" />
 			<transient name="values" />
 		</attributes>
 	</entity>

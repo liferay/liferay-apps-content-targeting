@@ -801,6 +801,69 @@ public interface ChannelInstancePersistence extends BasePersistence<ChannelInsta
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the channel instance where tacticId = &#63; and alias = &#63; or throws a {@link com.liferay.content.targeting.NoSuchChannelInstanceException} if it could not be found.
+	*
+	* @param tacticId the tactic ID
+	* @param alias the alias
+	* @return the matching channel instance
+	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.ChannelInstance findByT_A(
+		long tacticId, java.lang.String alias)
+		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the channel instance where tacticId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param tacticId the tactic ID
+	* @param alias the alias
+	* @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.ChannelInstance fetchByT_A(
+		long tacticId, java.lang.String alias)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the channel instance where tacticId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param tacticId the tactic ID
+	* @param alias the alias
+	* @param retrieveFromCache whether to use the finder cache
+	* @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.ChannelInstance fetchByT_A(
+		long tacticId, java.lang.String alias, boolean retrieveFromCache)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Removes the channel instance where tacticId = &#63; and alias = &#63; from the database.
+	*
+	* @param tacticId the tactic ID
+	* @param alias the alias
+	* @return the channel instance that was removed
+	* @throws SystemException if a system exception occurred
+	*/
+	public com.liferay.content.targeting.model.ChannelInstance removeByT_A(
+		long tacticId, java.lang.String alias)
+		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the number of channel instances where tacticId = &#63; and alias = &#63;.
+	*
+	* @param tacticId the tactic ID
+	* @param alias the alias
+	* @return the number of matching channel instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public int countByT_A(long tacticId, java.lang.String alias)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Caches the channel instance in the entity cache if it is enabled.
 	*
 	* @param channelInstance the channel instance

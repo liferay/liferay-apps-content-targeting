@@ -9,6 +9,7 @@ create index IX_3D78FE78 on CT_Campaigns_UserSegments (userSegmentId);
 create index IX_D1C60A0F on CT_ChannelInstance (campaignId);
 create index IX_8295369A on CT_ChannelInstance (groupId);
 create index IX_413DB2B7 on CT_ChannelInstance (tacticId);
+create unique index IX_E6281B7A on CT_ChannelInstance (tacticId, alias_);
 create index IX_C2DBA7A4 on CT_ChannelInstance (uuid_);
 create index IX_246DEE04 on CT_ChannelInstance (uuid_, companyId);
 create unique index IX_4DE22586 on CT_ChannelInstance (uuid_, groupId);

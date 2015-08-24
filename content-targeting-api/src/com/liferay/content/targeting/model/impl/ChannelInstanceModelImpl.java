@@ -97,12 +97,13 @@ public class ChannelInstanceModelImpl extends BaseModelImpl<ChannelInstance>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.content.targeting.model.ChannelInstance"),
 			true);
-	public static long CAMPAIGNID_COLUMN_BITMASK = 1L;
-	public static long COMPANYID_COLUMN_BITMASK = 2L;
-	public static long GROUPID_COLUMN_BITMASK = 4L;
-	public static long TACTICID_COLUMN_BITMASK = 8L;
-	public static long UUID_COLUMN_BITMASK = 16L;
-	public static long CHANNELKEY_COLUMN_BITMASK = 32L;
+	public static long ALIAS_COLUMN_BITMASK = 1L;
+	public static long CAMPAIGNID_COLUMN_BITMASK = 2L;
+	public static long COMPANYID_COLUMN_BITMASK = 4L;
+	public static long GROUPID_COLUMN_BITMASK = 8L;
+	public static long TACTICID_COLUMN_BITMASK = 16L;
+	public static long UUID_COLUMN_BITMASK = 32L;
+	public static long CHANNELKEY_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -510,7 +511,17 @@ public class ChannelInstanceModelImpl extends BaseModelImpl<ChannelInstance>
 
 	@Override
 	public void setAlias(String alias) {
+		_columnBitmask |= ALIAS_COLUMN_BITMASK;
+
+		if (_originalAlias == null) {
+			_originalAlias = _alias;
+		}
+
 		_alias = alias;
+	}
+
+	public String getOriginalAlias() {
+		return GetterUtil.getString(_originalAlias);
 	}
 
 	@JSON
@@ -648,6 +659,8 @@ public class ChannelInstanceModelImpl extends BaseModelImpl<ChannelInstance>
 		channelInstanceModelImpl._originalTacticId = channelInstanceModelImpl._tacticId;
 
 		channelInstanceModelImpl._setOriginalTacticId = false;
+
+		channelInstanceModelImpl._originalAlias = channelInstanceModelImpl._alias;
 
 		channelInstanceModelImpl._columnBitmask = 0;
 	}
@@ -856,6 +869,7 @@ public class ChannelInstanceModelImpl extends BaseModelImpl<ChannelInstance>
 	private long _originalTacticId;
 	private boolean _setOriginalTacticId;
 	private String _alias;
+	private String _originalAlias;
 	private String _typeSettings;
 	private long _columnBitmask;
 	private ChannelInstance _escapedModel;

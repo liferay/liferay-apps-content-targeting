@@ -502,6 +502,41 @@ public class ChannelInstanceClp extends BaseModelImpl<ChannelInstance>
 	}
 
 	@Override
+	public void setChannelGuid(java.lang.String channelGuid) {
+		try {
+			String methodName = "setChannelGuid";
+
+			Class<?>[] parameterTypes = new Class<?>[] { java.lang.String.class };
+
+			Object[] parameterValues = new Object[] { channelGuid };
+
+			invokeOnRemoteModel(methodName, parameterTypes, parameterValues);
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
+	public java.lang.String getChannelGuid() {
+		try {
+			String methodName = "getChannelGuid";
+
+			Class<?>[] parameterTypes = new Class<?>[] {  };
+
+			Object[] parameterValues = new Object[] {  };
+
+			java.lang.String returnObj = (java.lang.String)invokeOnRemoteModel(methodName,
+					parameterTypes, parameterValues);
+
+			return returnObj;
+		}
+		catch (Exception e) {
+			throw new UnsupportedOperationException(e);
+		}
+	}
+
+	@Override
 	public java.util.Map<java.lang.String, java.lang.String> getValues() {
 		try {
 			String methodName = "getValues";
