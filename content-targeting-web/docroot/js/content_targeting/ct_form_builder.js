@@ -63,8 +63,8 @@ AUI.add(
 								eventHandles.push(
 									fieldsFilter.on('results', instance._onItemFilterResults, instance),
 									instance.on('fieldsChange', instance._onFieldsChange, instance),
-                                    A.Do.after('_onInsertField', instance, 'insertField', instance),
-                                    A.Do.after('_onRemoveField', instance, 'removeField', instance)
+									A.Do.after('_onInsertField', instance, 'insertField', instance),
+									A.Do.after('_onRemoveField', instance, 'removeField', instance)
 								);
 							}
 
@@ -222,11 +222,11 @@ AUI.add(
 							instance.get('canvas').toggleClass('has-items', instance.get('fields').size());
 						},
 
-                        _onInsertField: function(field) {
-                            var instance = this;
+						_onInsertField: function(field) {
+							var instance = this;
 
-                            instance.simulateFocusField(field, field.get('boundingBox'));
-                        },
+							instance.simulateFocusField(field, field.get('boundingBox'));
+						},
 
 						_onItemFilterResults: function(event) {
 							var instance = this,
@@ -333,15 +333,15 @@ AUI.add(
 										name = field.one('.field-title').text(),
 										shortDescription = field.one('.field-short-description').text(),
 										unique = field.attr('data-unique') === 'true',
-                                        cssCollapseClass = 'collapsed';
+										cssCollapseClass = 'collapsed';
 
-                                    if (checkCollapsed && fields.length == 0) {
-                                        cssCollapseClass = 'expanded';
-                                    }
+									if (checkCollapsed && fields.length == 0) {
+										cssCollapseClass = 'expanded';
+									}
 
 									A.LiferayCTFormBuilder.registerField(
 										{
-                                            cssCollapseClass: cssCollapseClass,
+											cssCollapseClass: cssCollapseClass,
 											description: description,
 											editor: editor,
 											icon: icon,
@@ -418,70 +418,70 @@ AUI.add(
 							return JSON.stringify(fields);
 						},
 
-                        _onRemoveField: function(field) {
-                            var instance = this;
+						_onRemoveField: function(field) {
+							var instance = this;
 
-                            var fields = instance.get('fields');
+							var fields = instance.get('fields');
 
-                            if (fields.size() > 0) {
-                                var firstField = fields.item(0);
-                                instance.simulateFocusField(firstField, firstField.get('boundingBox'));
-                            }
-                        },
+							if (fields.size() > 0) {
+								var firstField = fields.item(0);
+								instance.simulateFocusField(firstField, firstField.get('boundingBox'));
+							}
+						},
 
 						simulateFocusField: function(field, target, onClick) {
 							var instance = this,
 								lastFocusedField = instance.lastFocusedField;
 
-                            var fieldBox = field.get('contentBox');
-                            var fieldEditor = fieldBox.one('.field-editor');
-                            var fieldHeader = fieldBox.one('.field-info');
+							var fieldBox = field.get('contentBox');
+							var fieldEditor = fieldBox.one('.field-editor');
+							var fieldHeader = fieldBox.one('.field-info');
 
-                            if (!fieldEditor || !fieldHeader) {
-                                return;
-                            }
+							if (!fieldEditor || !fieldHeader) {
+								return;
+							}
 
-                            var addedFieldsContainer = A.one('.form-builder-content-container');
+							var addedFieldsContainer = A.one('.form-builder-content-container');
 
-                            addedFieldsContainer.all('.field-info').each(
-                                function(fieldElement) {
-                                    fieldElement.addClass('toggler-header-collapsed');
-                                }
-                            );
+							addedFieldsContainer.all('.field-info').each(
+								function(fieldElement) {
+									fieldElement.addClass('toggler-header-collapsed');
+								}
+							);
 
-                            addedFieldsContainer.all('.field-editor').each(
-                                function(fieldElement) {
-                                    fieldElement.addClass('toggler-content-collapsed');
-                                }
-                            );
+							addedFieldsContainer.all('.field-editor').each(
+								function(fieldElement) {
+									fieldElement.addClass('toggler-content-collapsed');
+								}
+							);
 
-                            fieldHeader.toggleClass('toggler-header-collapsed');
-                            fieldEditor.toggleClass('toggler-content-collapsed');
+							fieldHeader.toggleClass('toggler-header-collapsed');
+							fieldEditor.toggleClass('toggler-content-collapsed');
 
-                            if (onClick && field !== lastFocusedField) {
-                                if (lastFocusedField) lastFocusedField.blur();
+							if (onClick && field !== lastFocusedField) {
+								if (lastFocusedField) lastFocusedField.blur();
 
-                                instance.lastFocusedField = field.focus();
-                            }
-                            else if (!onClick) {
-                                var element = fieldEditor.one('input, select, textarea, button');
+								instance.lastFocusedField = field.focus();
+							}
+							else if (!onClick) {
+								var element = fieldEditor.one('input, select, textarea, button');
 
-                                if (element !== lastFocusedField) {
-                                    if (element) {
-                                        element.blur();
+								if (element !== lastFocusedField) {
+									if (element) {
+										element.blur();
 
-                                        instance.lastFocusedField = element.focus();
-                                    }
-                                }
-                            }
+										instance.lastFocusedField = element.focus();
+									}
+								}
+							}
 
-                            if (target.getDOMNode() !== document.activeElement) {
-                                target.focus();
-                            }
-                        }
-                    }
-                }
-            );
+							if (target.getDOMNode() !== document.activeElement) {
+								target.focus();
+							}
+						}
+					}
+				}
+			);
 
 		LiferayCTFormBuilder.registerField = function(field) {
 			var fieldName = 'ct-' + field.key + '-field-field';
@@ -514,7 +514,7 @@ AUI.add(
 							return A.Lang.sub(
 								ITEM_FIELD_TPL,
 								{
-                                    cssCollapseClass: field.cssCollapseClass,
+									cssCollapseClass: field.cssCollapseClass,
 									description: field.description,
 									editor: field.editor.replace(/(_7b_|[\{%7B&#x25;]+)ct_+field_+guid(_7d_|[\}%7D&#x25;]+)/ig, fieldId),
 									icon: field.icon,

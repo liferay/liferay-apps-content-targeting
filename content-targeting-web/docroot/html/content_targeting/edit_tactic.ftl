@@ -170,19 +170,19 @@
 			submitForm(document.<@portlet["namespace"] />fm);
 		};
 
-        new A.TogglerDelegate(
-            {
-                animated: true,
-                closeAllOnExpand: true,
-                container: A.one('.diagram-builder-drop-container'),
-                content: '.field-editor',
-                expanded: false,
-                header: '.field-header',
-                transition: {
-                    duration: 0.2,
-                    easing: 'cubic-bezier(0, 0.1, 0, 1)'
-                }
-            }
-        );
+		new A.TogglerDelegate(
+			{
+				animated: true,
+				closeAllOnExpand: true,
+				container: A.one('.diagram-builder-drop-container'),
+				content: '.field-editor',
+				expanded: false,
+				header: '.field-header',
+				transition: {
+					duration: 0.2,
+					easing: 'cubic-bezier(0, 0.1, 0, 1)'
+				}
+			}
+		);
 	</@>
 </@>
