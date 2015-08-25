@@ -155,7 +155,7 @@
 		<@aui["button"] type="submit" />
 	</@>
 
-	<@aui["script"] use="liferay-ct-form-builder,liferay-input-slider">
+	<@aui["script"] use="aui-toggler,liferay-ct-form-builder,liferay-input-slider">
 		new Liferay.InputSlider(
 			{
 				inputNode: '#<@portlet["namespace"] />priority'
@@ -175,5 +175,20 @@
 
 			submitForm(document.<@portlet["namespace"] />fm);
 		};
+
+        new A.TogglerDelegate(
+            {
+                animated: true,
+                closeAllOnExpand: true,
+                container: A.one('.diagram-builder-drop-container'),
+                content: '.field-editor',
+                expanded: false,
+                header: '.field-header',
+                transition: {
+                    duration: 0.2,
+                    easing: 'cubic-bezier(0, 0.1, 0, 1)'
+                }
+            }
+        );
 	</@>
 </@>
