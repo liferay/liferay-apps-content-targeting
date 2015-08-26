@@ -35,6 +35,7 @@ Web-ContextPath: /consumer-manager-web
 	css=docroot/css,\
 	html=docroot/html,\
 	icons=docroot/icons,\
+	images=docroot/images,\
 	js=docroot/js,\
 	WEB-INF/classes=docroot/WEB-INF/classes,\
 	WEB-INF/liferay-display.xml=docroot/WEB-INF/liferay-display.xml,\
