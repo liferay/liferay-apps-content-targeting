@@ -131,34 +131,34 @@
 		<@aui["button"] type="submit" />
 	</@>
 
-    <@aui["script"] use="aui-toggler,liferay-ct-form-builder">
-        var extensionsBuilder = new A.LiferayCTFormBuilder(
-            {
-                boundingBox: '#formBuilderBB',
-                contentBox: '#formBuilderCB',
-                searchBox: '#formBuilderSB'
-            }
-        ).render();
+	<@aui["script"] use="aui-toggler,liferay-ct-form-builder">
+		var extensionsBuilder = new A.LiferayCTFormBuilder(
+			{
+				boundingBox: '#formBuilderBB',
+				contentBox: '#formBuilderCB',
+				searchBox: '#formBuilderSB'
+			}
+		).render();
 
-        saveFields = function() {
-            document.<@portlet["namespace"] />fm.<@portlet["namespace"] />consumerExtensions.value = extensionsBuilder.exportAsJSON();
+		saveFields = function() {
+			document.<@portlet["namespace"] />fm.<@portlet["namespace"] />consumerExtensions.value = extensionsBuilder.exportAsJSON();
 
-            submitForm(document.<@portlet["namespace"] />fm);
-        };
+			submitForm(document.<@portlet["namespace"] />fm);
+		};
 
-        new A.TogglerDelegate(
-            {
-                animated: true,
-                closeAllOnExpand: true,
-                container: A.one('.diagram-builder-drop-container'),
-                content: '.field-editor',
-                expanded: false,
-                header: '.field-header',
-                transition: {
-                    duration: 0.2,
-                    easing: 'cubic-bezier(0, 0.1, 0, 1)'
-                }
-            }
-        );
-    </@>
+		new A.TogglerDelegate(
+			{
+				animated: true,
+				closeAllOnExpand: true,
+				container: A.one('.diagram-builder-drop-container'),
+				content: '.field-editor',
+				expanded: false,
+				header: '.field-header',
+				transition: {
+					duration: 0.2,
+					easing: 'cubic-bezier(0, 0.1, 0, 1)'
+				}
+			}
+		);
+	</@>
 </@>
