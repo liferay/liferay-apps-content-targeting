@@ -6,7 +6,7 @@ AUI.add(
 			FIELD_LABEL_TPL = '{name}',
 
 			ITEM_FIELD_TPL = '<div>' +
-				'<div class="field-header">' +
+				'<div class="field-header toggler-header-{cssCollapseClass}">' +
 					'<div class="field-icon">' +
 						'<i class="{icon}"></i>' +
 					'</div>' +
@@ -15,7 +15,7 @@ AUI.add(
 						'<div class="field-description">{description}</div>' +
 					'</div>' +
 				'</div>' +
-				'<div class="field-editor">{editor}</div>' +
+				'<div class="field-editor toggler-content-{cssCollapseClass}">{editor}</div>' +
 			'</div>',
 
 			ITEM_CATEGORY_HEADER_TPL = '<div class="category-header toggler-header toggler-header-collapsed">' +
@@ -62,7 +62,9 @@ AUI.add(
 
 								eventHandles.push(
 									fieldsFilter.on('results', instance._onItemFilterResults, instance),
-									instance.on('fieldsChange', instance._onFieldsChange, instance)
+									instance.on('fieldsChange', instance._onFieldsChange, instance),
+									A.Do.after('_onInsertField', instance, 'insertField', instance),
+									A.Do.after('_onRemoveField', instance, 'removeField', instance)
 								);
 							}
 
@@ -209,7 +211,7 @@ AUI.add(
 							var instance = this,
 								field = A.Widget.getByNode(event.target);
 
-							instance.simulateFocusField(field, event.target);
+							instance.simulateFocusField(field, event.target, true);
 
 							event.stopPropagation();
 						},
@@ -218,6 +220,12 @@ AUI.add(
 							var instance = this;
 
 							instance.get('canvas').toggleClass('has-items', instance.get('fields').size());
+						},
+
+						_onInsertField: function(field) {
+							var instance = this;
+
+							instance.simulateFocusField(field, field.get('boundingBox'));
 						},
 
 						_onItemFilterResults: function(event) {
@@ -296,18 +304,18 @@ AUI.add(
 								fields = [];
 
 							if (availableFieldsContainer) {
-								availableFields = instance._parseFieldContainer(availableFieldsContainer, AVAILABLE_FIELD_LABEL_TPL);
+								availableFields = instance._parseFieldContainer(availableFieldsContainer, AVAILABLE_FIELD_LABEL_TPL, false);
 							}
 
 							if (fieldsContainer) {
-								fields = instance._parseFieldContainer(fieldsContainer, FIELD_LABEL_TPL);
+								fields = instance._parseFieldContainer(fieldsContainer, FIELD_LABEL_TPL, true);
 							}
 
 							instance.set('availableFields', availableFields);
 							instance.set('fields', fields);
 						},
 
-						_parseFieldContainer: function(fieldsContainer, labelTpl) {
+						_parseFieldContainer: function(fieldsContainer, labelTpl, checkCollapsed) {
 							var instance = this,
 								fields = [];
 
@@ -324,10 +332,16 @@ AUI.add(
 										fieldData = /^([^_]*)(?:_(.*))?$/.exec(key),
 										name = field.one('.field-title').text(),
 										shortDescription = field.one('.field-short-description').text(),
-										unique = field.attr('data-unique') === 'true';
+										unique = field.attr('data-unique') === 'true',
+										cssCollapseClass = 'collapsed';
+
+									if (checkCollapsed && fields.length == 0) {
+										cssCollapseClass = 'expanded';
+									}
 
 									A.LiferayCTFormBuilder.registerField(
 										{
+											cssCollapseClass: cssCollapseClass,
 											description: description,
 											editor: editor,
 											icon: icon,
@@ -404,14 +418,61 @@ AUI.add(
 							return JSON.stringify(fields);
 						},
 
-						simulateFocusField: function(field, target) {
+						_onRemoveField: function(field) {
+							var instance = this;
+
+							var fields = instance.get('fields');
+
+							if (fields.size() > 0) {
+								var firstField = fields.item(0);
+								instance.simulateFocusField(firstField, firstField.get('boundingBox'));
+							}
+						},
+
+						simulateFocusField: function(field, target, onClick) {
 							var instance = this,
 								lastFocusedField = instance.lastFocusedField;
 
-							if (field !== lastFocusedField) {
+							var fieldBox = field.get('contentBox');
+							var fieldEditor = fieldBox.one('.field-editor');
+							var fieldHeader = fieldBox.one('.field-info');
+
+							if (!fieldEditor || !fieldHeader) {
+								return;
+							}
+
+							var addedFieldsContainer = A.one('.form-builder-content-container');
+
+							addedFieldsContainer.all('.field-info').each(
+								function(fieldElement) {
+									fieldElement.addClass('toggler-header-collapsed');
+								}
+							);
+
+							addedFieldsContainer.all('.field-editor').each(
+								function(fieldElement) {
+									fieldElement.addClass('toggler-content-collapsed');
+								}
+							);
+
+							fieldHeader.toggleClass('toggler-header-collapsed');
+							fieldEditor.toggleClass('toggler-content-collapsed');
+
+							if (onClick && field !== lastFocusedField) {
 								if (lastFocusedField) lastFocusedField.blur();
 
 								instance.lastFocusedField = field.focus();
+							}
+							else if (!onClick) {
+								var element = fieldEditor.one('input, select, textarea, button');
+
+								if (element !== lastFocusedField) {
+									if (element) {
+										element.blur();
+
+										instance.lastFocusedField = element.focus();
+									}
+								}
 							}
 
 							if (target.getDOMNode() !== document.activeElement) {
@@ -453,6 +514,7 @@ AUI.add(
 							return A.Lang.sub(
 								ITEM_FIELD_TPL,
 								{
+									cssCollapseClass: field.cssCollapseClass,
 									description: field.description,
 									editor: field.editor.replace(/(_7b_|[\{%7B&#x25;]+)ct_+field_+guid(_7d_|[\}%7D&#x25;]+)/ig, fieldId),
 									icon: field.icon,

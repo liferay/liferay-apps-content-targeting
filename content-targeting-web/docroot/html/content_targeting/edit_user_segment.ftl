@@ -132,7 +132,7 @@
 	</@>
 </@>
 
-<@aui["script"] use="liferay-ct-form-builder">
+<@aui["script"] use="aui-toggler,liferay-ct-form-builder">
 	var userSegmentBuilder = new A.LiferayCTFormBuilder(
 		{
 			boundingBox: '#formBuilderBB',
@@ -146,4 +146,19 @@
 
 		submitForm(document.<@portlet["namespace"] />fm);
 	};
+
+	new A.TogglerDelegate(
+		{
+			animated: true,
+			closeAllOnExpand: true,
+			container: A.one('.diagram-builder-drop-container'),
+			content: '.field-editor',
+			expanded: false,
+			header: '.field-header',
+			transition: {
+				duration: 0.2,
+				easing: 'cubic-bezier(0, 0.1, 0, 1)'
+			}
+		}
+	);
 </@>
