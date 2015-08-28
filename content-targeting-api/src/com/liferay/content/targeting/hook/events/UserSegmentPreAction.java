@@ -74,7 +74,7 @@ public class UserSegmentPreAction extends Action {
 		throws Exception {
 
 		if (_rulesEngine == null) {
-			_inRulesEngine();
+			_initRulesEngine();
 		}
 
 		return _rulesEngine.matches(
