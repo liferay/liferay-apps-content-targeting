@@ -48,7 +48,7 @@ public class AnonymousUsersLoginAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		_intiAnonymousUserManager();
+		_initAnonymousUserManager();
 
 		_anonymousUsersCookieManager.deleteCookie(request, response);
 
@@ -57,7 +57,7 @@ public class AnonymousUsersLoginAction extends Action {
 		}
 	}
 
-	private void _intiAnonymousUserManager() {
+	private void _initAnonymousUserManager() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		_anonymousUsersCookieManager = ServiceTrackerUtil.getService(

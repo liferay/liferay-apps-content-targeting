@@ -74,7 +74,7 @@ public class UserSegmentPreAction extends Action {
 		throws Exception {
 
 		if (_rulesEngine == null) {
-			_intiRulesEngine();
+			_inRulesEngine();
 		}
 
 		return _rulesEngine.matches(
@@ -83,8 +83,8 @@ public class UserSegmentPreAction extends Action {
 
 	@Override
 	public void run(HttpServletRequest request, HttpServletResponse response) {
-		_intiAnonymousUserManager();
-		_intiRulesEngine();
+		_initAnonymousUserManager();
+		_initRulesEngine();
 
 		long[] userSegmentsIds = getUserSegmentIds(request, response);
 
@@ -122,7 +122,7 @@ public class UserSegmentPreAction extends Action {
 		}
 
 		if (_anonymousUsersManager == null) {
-			_intiAnonymousUserManager();
+			_initAnonymousUserManager();
 		}
 
 		try {
@@ -150,25 +150,25 @@ public class UserSegmentPreAction extends Action {
 		return userSegmentsIds;
 	}
 
-	private void _initUserSegmentSimulator() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_userSegmentSimulator = ServiceTrackerUtil.getService(
-			UserSegmentSimulator.class, bundle.getBundleContext());
-	}
-
-	private void _intiAnonymousUserManager() {
+	private void _initAnonymousUserManager() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		_anonymousUsersManager = ServiceTrackerUtil.getService(
 			AnonymousUsersManager.class, bundle.getBundleContext());
 	}
 
-	private void _intiRulesEngine() {
+	private void _initRulesEngine() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
 		_rulesEngine = ServiceTrackerUtil.getService(
 			RulesEngine.class, bundle.getBundleContext());
+	}
+
+	private void _initUserSegmentSimulator() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_userSegmentSimulator = ServiceTrackerUtil.getService(
+			UserSegmentSimulator.class, bundle.getBundleContext());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(UserSegmentPreAction.class);
