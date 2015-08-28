@@ -22,15 +22,8 @@ Import-Package:\
 	*;resolution:="optional"
 Include-Resource:\
 	classes,\
-	WEB-INF/classes/META-INF=classes/META-INF/,\
-	WEB-INF/liferay-display.xml=META-INF/liferay-display.xml,\
-	WEB-INF/liferay-plugin-package.properties=META-INF/liferay-plugin-package.properties,\
-	WEB-INF/liferay-portlet.xml=META-INF/liferay-portlet.xml,\
 	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
-	WEB-INF/portlet.xml=META-INF/portlet.xml,\
-	WEB-INF/sql=sql,\
-	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar,\
-	@lib/com.liferay.content.targeting.report.@report.java.package.name@-service.jar
+	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar
 Service-Component: com.liferay.content.targeting.report.@report.java.package.name@.*
 Web-ContextPath: /report-@report.name@
 -baseline: *;version="1.0.0"
