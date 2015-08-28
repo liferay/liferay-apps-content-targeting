@@ -522,6 +522,10 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 				for (ConsumerExtension consumerExtension
 					: consumerExtensions.values()) {
 
+					if (!consumerExtension.isVisible()) {
+						continue;
+					}
+
 					ConsumerExtensionTemplate consumerExtensionTemplate =
 						new ConsumerExtensionTemplate();
 

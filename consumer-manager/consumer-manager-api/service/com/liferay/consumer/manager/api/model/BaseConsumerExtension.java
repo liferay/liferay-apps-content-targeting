@@ -128,6 +128,11 @@ public class BaseConsumerExtension implements ConsumerExtension {
 	}
 
 	@Override
+	public boolean isVisible() {
+		return true;
+	}
+
+	@Override
 	public String processConsumerExtension(
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) throws InvalidConsumerExtensionException {

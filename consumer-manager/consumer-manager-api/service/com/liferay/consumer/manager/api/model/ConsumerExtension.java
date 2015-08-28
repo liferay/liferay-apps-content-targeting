@@ -122,6 +122,14 @@ public interface ConsumerExtension {
 	public boolean isInstantiable();
 
 	/**
+	 * Returns <code>true</code> if the consumer extension is visible.
+	 *
+	 * @return <code>true</code> if the consumer extension is visible;
+	 *         <code>false</code> otherwise
+	 */
+	public boolean isVisible();
+
+	/**
 	 * Returns the result of evaluating the consumer extension form
 	 * fields in the context of the request and response.
 	 *

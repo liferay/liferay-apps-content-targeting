@@ -76,7 +76,7 @@
 								</div>
 
 								<ul class="clearfix diagram-builder-fields-container form-builder-fields-container">
-									<#list channelsTemplates as template>
+									<#list channelTemplates as template>
 										<#assign channel = template.getChannel()>
 										<#assign templateKey = template.getTemplateKey()>
 
@@ -103,7 +103,7 @@
 				<div class="diagram-builder-content-container form-builder-content-container">
 					<#assign cssHasItemsClass = "">
 
-					<#if (addedChannelsTemplates?size > 0)>
+					<#if (addedChannelTemplates?size > 0)>
 						<#assign cssHasItemsClass = "has-items">
 					</#if>
 
@@ -113,7 +113,7 @@
 						</div>
 
 						<div class="diagram-builder-drop-container form-builder-drop-container">
-							<#list addedChannelsTemplates as template>
+							<#list addedChannelTemplates as template>
 								<#assign channel = template.getChannel()>
 								<#assign templateKey = template.getTemplateKey()>
 

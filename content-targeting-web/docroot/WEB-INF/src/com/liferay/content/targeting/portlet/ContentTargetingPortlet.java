@@ -1296,6 +1296,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					new ArrayList<TrackingActionTemplate>();
 
 				for (TrackingAction trackingAction : trackingActions.values()) {
+					if (!trackingAction.isVisible()) {
+						continue;
+					}
+
 					TrackingActionTemplate trackingActionTemplate =
 						new TrackingActionTemplate();
 
@@ -1323,11 +1327,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				try {
 					themeDisplay.setIsolated(true);
 
-					List<ChannelTemplate> channelsTemplates =
-						new ArrayList<ChannelTemplate>();
-					List<ChannelTemplate> addedChannelsTemplates =
-						new ArrayList<ChannelTemplate>();
-
 					Map<String, Channel> channels =
 						_channelsRegistry.getChannels();
 
@@ -1341,6 +1340,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 							_channelInstanceLocalService.getChannelInstances(
 								tacticId);
 					}
+
+					List<ChannelTemplate> addedChannelTemplates =
+						new ArrayList<ChannelTemplate>();
 
 					if (!channelInstances.isEmpty()) {
 						template.put("channelInstances", channelInstances);
@@ -1384,11 +1386,21 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 							channelTemplate.setTemplate(
 								HtmlUtil.escapeAttribute(html));
 
-							addedChannelsTemplates.add(channelTemplate);
+							addedChannelTemplates.add(channelTemplate);
 						}
 					}
 
+					template.put(
+						"addedChannelTemplates", addedChannelTemplates);
+
+					List<ChannelTemplate> channelTemplates =
+						new ArrayList<ChannelTemplate>();
+
 					for (Channel channel : channels.values()) {
+						if (!channel.isVisible()) {
+							continue;
+						}
+
 						ChannelTemplate channelTemplate = new ChannelTemplate();
 
 						channelTemplate.setChannel(channel);
@@ -1399,12 +1411,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						channelTemplate.setTemplate(
 							HtmlUtil.escapeAttribute(html));
 
-						channelsTemplates.add(channelTemplate);
+						channelTemplates.add(channelTemplate);
 					}
 
-					template.put("channelsTemplates", channelsTemplates);
-					template.put(
-						"addedChannelsTemplates", addedChannelsTemplates);
+					template.put("channelTemplates", channelTemplates);
 				}
 				finally {
 					themeDisplay.setIsolated(isolated);
@@ -1592,6 +1602,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					new ArrayList<RuleTemplate>();
 
 				for (Rule rule : rules.values()) {
+					if (!rule.isVisible()) {
+						continue;
+					}
+
 					RuleTemplate ruleTemplate = new RuleTemplate();
 
 					ruleTemplate.setRule(rule);

@@ -167,6 +167,14 @@ public interface Channel {
 	public boolean isInstantiable();
 
 	/**
+	 * Returns <code>true</code> if the channel is visible.
+	 *
+	 * @return <code>true</code> if the channel is visible; <code>false</code>
+	 *         otherwise
+	 */
+	public boolean isVisible();
+
+	/**
 	 * Returns the result of evaluating the channel form fields in the
 	 * context of the request and response.
 	 *

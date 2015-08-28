@@ -149,6 +149,11 @@ public abstract class BaseTrackingAction implements TrackingAction {
 	}
 
 	@Override
+	public boolean isVisible() {
+		return true;
+	}
+
+	@Override
 	public String processTrackingAction(
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) throws InvalidTrackingActionException {

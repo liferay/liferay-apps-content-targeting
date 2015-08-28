@@ -147,6 +147,11 @@ public abstract class BaseRule implements Rule {
 		return false;
 	}
 
+	@Override
+	public boolean isVisible() {
+		return true;
+	}
+
 	protected String getExportImportErrorMessage(
 		UserSegment userSegment, RuleInstance ruleInstance,
 		String missingReferenceClassName, String missingReferenceId,
