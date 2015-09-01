@@ -132,6 +132,7 @@ import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.RenderResponse;
@@ -365,10 +366,28 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					nameMap, descriptionMap, startDate, endDate, timeZoneId,
 					priority, active, userSegmentIds, serviceContext);
 
-			TransactionalCallableUtil.call(
+			Campaign campaign = TransactionalCallableUtil.call(
 				_transactionAttribute, campaignCallable);
 
-			sendRedirect(request, response);
+			boolean saveAndContinue = ParamUtil.get(
+				request, "saveAndContinue", false);
+
+			if (saveAndContinue) {
+				String redirect = ParamUtil.get(request, "redirect", "");
+
+				response.setRenderParameter(
+					"campaignId", String.valueOf(campaign.getCampaignId()));
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
+				response.setRenderParameter(
+					"p_p_mode", PortletMode.VIEW.toString());
+				response.setRenderParameter("redirect", redirect);
+
+				addSuccessMessage(request, response);
+			}
+			else {
+				sendRedirect(request, response);
+			}
 		}
 		catch (Exception e) {
 			PortalUtil.copyRequestParameters(request, response);
@@ -486,10 +505,30 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					campaignId, nameMap, descriptionMap, userSegmentIds,
 					serviceContext);
 
-			TransactionalCallableUtil.call(
+			Tactic tactic = TransactionalCallableUtil.call(
 				_transactionAttribute, tacticCallable);
 
-			sendRedirect(request, response);
+			boolean saveAndContinue = ParamUtil.get(
+				request, "saveAndContinue", false);
+
+			if (saveAndContinue) {
+				String redirect = ParamUtil.get(request, "redirect", "");
+
+				response.setRenderParameter(
+					"campaignId", String.valueOf(campaignId));
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.EDIT_TACTIC);
+				response.setRenderParameter("redirect", redirect);
+				response.setRenderParameter(
+					"p_p_mode", PortletMode.VIEW.toString());
+				response.setRenderParameter(
+					"tacticId", String.valueOf(tactic.getTacticId()));
+
+				addSuccessMessage(request, response);
+			}
+			else {
+				sendRedirect(request, response);
+			}
 		}
 		catch (Exception e) {
 			PortalUtil.copyRequestParameters(request, response);
@@ -544,10 +583,29 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					request, response, themeDisplay.getUserId(), userSegmentId,
 					nameMap, descriptionMap, serviceContext);
 
-			TransactionalCallableUtil.call(
+			UserSegment userSegment = TransactionalCallableUtil.call(
 				_transactionAttribute, userSegmentCallable);
 
-			sendRedirect(request, response);
+			boolean saveAndContinue = ParamUtil.get(
+				request, "saveAndContinue", false);
+
+			if (saveAndContinue) {
+				String redirect = ParamUtil.get(request, "redirect", "");
+
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
+				response.setRenderParameter("redirect", redirect);
+				response.setRenderParameter(
+					"p_p_mode", PortletMode.VIEW.toString());
+				response.setRenderParameter(
+					"userSegmentId",
+					String.valueOf(userSegment.getUserSegmentId()));
+
+				addSuccessMessage(request, response);
+			}
+			else {
+				sendRedirect(request, response);
+			}
 		}
 		catch (Exception e) {
 			PortalUtil.copyRequestParameters(request, response);

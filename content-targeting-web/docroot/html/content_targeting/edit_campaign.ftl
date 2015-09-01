@@ -31,6 +31,7 @@
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
 	<@aui["input"] name="campaignId" type="hidden" value=campaignId />
 	<@aui["input"] name="campaignTrackingActions" type="hidden" />
+	<@aui["input"] name="saveAndContinue" type="hidden" />
 
 	<@aui["model-context"] bean=campaign model=campaignClass />
 
@@ -153,6 +154,10 @@
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
+
+		<@aui["button"] type="button" value="save-and-continue" onClick="saveAndContinue();" />
+
+		<@aui["button"] href="${redirect}" type="cancel" />
 	</@>
 
 	<@aui["script"] use="aui-toggler,liferay-ct-form-builder,liferay-input-slider">
@@ -170,8 +175,18 @@
 			}
 		).render();
 
+		saveAndContinue = function() {
+			document.<@portlet["namespace"] />fm.<@portlet["namespace"] />campaignTrackingActions.value = campaignBuilder.exportAsJSON();
+
+			A.one('#<@portlet["namespace"] />saveAndContinue').val('true');
+
+			submitForm(document.<@portlet["namespace"] />fm);
+		};
+
 		saveFields = function() {
 			document.<@portlet["namespace"] />fm.<@portlet["namespace"] />campaignTrackingActions.value = campaignBuilder.exportAsJSON();
+
+			A.one('#<@portlet["namespace"] />saveAndContinue').val('false');
 
 			submitForm(document.<@portlet["namespace"] />fm);
 		};
