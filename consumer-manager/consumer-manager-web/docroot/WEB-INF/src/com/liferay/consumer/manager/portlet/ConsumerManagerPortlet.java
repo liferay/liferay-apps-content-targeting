@@ -76,6 +76,7 @@ import java.util.Map;
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
 import javax.portlet.PortletException;
+import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.UnavailableException;
@@ -188,7 +189,25 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 					consumerExtensionExceptions);
 			}
 
-			sendRedirect(request, response);
+			boolean saveAndContinue = ParamUtil.get(
+				request, "saveAndContinue", false);
+
+			if (saveAndContinue) {
+				String redirect = ParamUtil.get(request, "redirect", "");
+
+				response.setRenderParameter(
+					"consumerId", String.valueOf(consumer.getConsumerId()));
+				response.setRenderParameter(
+					"mvcPath", ConsumerManagerPath.EDIT_CONSUMER);
+				response.setRenderParameter(
+					"p_p_mode", PortletMode.VIEW.toString());
+				response.setRenderParameter("redirect", redirect);
+
+				addSuccessMessage(request, response);
+			}
+			else {
+				sendRedirect(request, response);
+			}
 		}
 		catch (Exception e) {
 			PortalUtil.copyRequestParameters(request, response);
