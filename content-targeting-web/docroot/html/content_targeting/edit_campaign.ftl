@@ -63,7 +63,7 @@
 
 	<@aui["input"] name="active" value=true />
 
-	<@liferay_ui["panel"] cssClass="tracking-actions-panel" collapsible=true defaultState="open" extended=false id="trackingActionPanel" helpMessage="tracking-actions-help" persistState=true title="tracking-actions">
+	<@liferay_ui["panel"] cssClass="tracking-actions-panel" collapsible=true defaultState="closed" extended=false id="trackingActionPanel" helpMessage="tracking-actions-help" persistState=true title="tracking-actions">
 		<div class="component diagram-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
 			<div class="diagram-builder-content form-builder-content" id="formBuilderCB">
 				<div class="tabbable">
