@@ -30,6 +30,7 @@
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
 	<@aui["input"] name="userSegmentId" type="hidden" value=userSegmentId />
 	<@aui["input"] name="userSegmentRules" type="hidden" />
+	<@aui["input"] name="saveAndContinue" type="hidden" />
 
 	<@aui["model-context"] bean=userSegment model=userSegmentClass />
 
@@ -128,6 +129,9 @@
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
+
+		<@aui["button"] type="button" value="save-and-continue" onClick="saveAndContinue();" />
+
 		<@aui["button"] href="${redirect}" type="cancel" />
 	</@>
 </@>
@@ -141,8 +145,18 @@
 		}
 	).render();
 
+	saveAndContinue = function() {
+		document.<@portlet["namespace"] />fm.<@portlet["namespace"] />userSegmentRules.value = userSegmentBuilder.exportAsJSON();
+
+		A.one('#<@portlet["namespace"] />saveAndContinue').val('true');
+
+		submitForm(document.<@portlet["namespace"] />fm);
+	};
+
 	saveFields = function() {
 		document.<@portlet["namespace"] />fm.<@portlet["namespace"] />userSegmentRules.value = userSegmentBuilder.exportAsJSON();
+
+		A.one('#<@portlet["namespace"] />saveAndContinue').val('false');
 
 		submitForm(document.<@portlet["namespace"] />fm);
 	};

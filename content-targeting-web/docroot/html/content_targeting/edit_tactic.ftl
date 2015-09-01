@@ -30,8 +30,12 @@
 <@aui["form"] action="${addTacticURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
 	<@aui["input"] name="campaignId" type="hidden" value="${campaignId}" />
+	<@aui["input"] name="campaignUserSegmentsIds" type="hidden" value="${campaignUserSegmentsIds}" />
+	<@aui["input"] name="vocabularyGroupIds" type="hidden" value="${vocabularyGroupIds}" />
+	<@aui["input"] name="vocabularyIds" type="hidden" value="${vocabularyIds}" />
 	<@aui["input"] name="tacticId" type="hidden" value="${tacticId}" />
 	<@aui["input"] name="tacticChannels" type="hidden" />
+	<@aui["input"] name="saveAndContinue" type="hidden" />
 
 	<@aui["model-context"] bean=tactic model=tacticClass />
 
@@ -145,6 +149,10 @@
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
+
+		<@aui["button"] type="button" value="save-and-continue" onClick="saveAndContinue();" />
+
+		<@aui["button"] href="${redirect}" type="cancel" />
 	</@>
 
 	<@aui["script"]>
@@ -164,8 +172,18 @@
 			}
 		).render();
 
+		saveAndContinue = function() {
+			document.<@portlet["namespace"] />fm.<@portlet["namespace"] />tacticChannels.value = tacticBuilder.exportAsJSON();
+
+			A.one('#<@portlet["namespace"] />saveAndContinue').val('true');
+
+			submitForm(document.<@portlet["namespace"] />fm);
+		};
+
 		saveFields = function() {
 			document.<@portlet["namespace"] />fm.<@portlet["namespace"] />tacticChannels.value = tacticBuilder.exportAsJSON();
+
+			A.one('#<@portlet["namespace"] />saveAndContinue').val('false');
 
 			submitForm(document.<@portlet["namespace"] />fm);
 		};
