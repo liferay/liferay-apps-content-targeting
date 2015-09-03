@@ -63,15 +63,15 @@ AUI.add(
 								eventHandles.push(
 									fieldsFilter.on('results', instance._onItemFilterResults, instance),
 									instance.on('fieldsChange', instance._onFieldsChange, instance),
-                                    instance.on({
-                                        'drag:start': function() {
-                                            Liferay.fire('fieldDragStart');
-                                        },
-                                        'drag:end': function() {
-                                            Liferay.fire('fieldDragEnd');
-                                        }
-                                    }),
-                                    A.Do.before('_beforeInsertField', instance, 'insertField', instance),
+									instance.on({
+										'drag:start': function() {
+											Liferay.fire('fieldDragStart');
+										},
+										'drag:end': function() {
+											Liferay.fire('fieldDragEnd');
+										}
+									}),
+									A.Do.before('_beforeInsertField', instance, 'insertField', instance),
 									A.Do.after('_onInsertField', instance, 'insertField', instance),
 									A.Do.after('_onRemoveField', instance, 'removeField', instance)
 								);
@@ -79,49 +79,49 @@ AUI.add(
 
 							instance.after(instance._afterUiSetAvailableFields, instance, '_uiSetAvailableFields');
 
-                            var togglerDelegate = new A.TogglerDelegate(
-                                {
-                                    animated: true,
-                                    closeAllOnExpand: true,
-                                    container: A.one('.diagram-builder-drop-container'),
-                                    content: '.field-editor',
-                                    expanded: false,
-                                    header: '.field-header',
-                                    transition: {
-                                        duration: 0.2,
-                                        easing: 'cubic-bezier(0, 0.1, 0, 1)'
-                                    }
-                                }
-                            );
+							var togglerDelegate = new A.TogglerDelegate(
+								{
+									animated: true,
+									closeAllOnExpand: true,
+									container: A.one('.diagram-builder-drop-container'),
+									content: '.field-editor',
+									expanded: false,
+									header: '.field-header',
+									transition: {
+										duration: 0.2,
+										easing: 'cubic-bezier(0, 0.1, 0, 1)'
+									}
+								}
+							);
 
-                            A.Do.before(
-                                function(header) {
-                                    Liferay.fire(
-                                        'beforeTogglerCreate',
-                                        {
-                                            header: header
-                                        }
-                                    )
-                                },
-                                togglerDelegate,
-                                '_create'
-                            );
+							A.Do.before(
+								function(header) {
+									Liferay.fire(
+										'beforeTogglerCreate',
+										{
+											header: header
+										}
+									)
+								},
+								togglerDelegate,
+								'_create'
+							);
 
-                            A.Do.after(
-                                function(header) {
-                                    Liferay.fire(
-                                        'afterTogglerCreate',
-                                        {
-                                            toggler: A.Do.originalRetVal,
-                                            header: header
-                                        }
-                                    )
-                                },
-                                togglerDelegate,
-                                '_create'
-                            );
+							A.Do.after(
+								function(header) {
+									Liferay.fire(
+										'afterTogglerCreate',
+										{
+											toggler: A.Do.originalRetVal,
+											header: header
+										}
+									)
+								},
+								togglerDelegate,
+								'_create'
+							);
 
-                            instance.set('fieldsTogglerDelegate', togglerDelegate);
+							instance.set('fieldsTogglerDelegate', togglerDelegate);
 
 							instance._eventHandles = eventHandles;
 						},
@@ -175,9 +175,9 @@ AUI.add(
 							instance._groupFields(categories, fieldsContainer);
 						},
 
-                        _beforeInsertField: function(field) {
-                            Liferay.fire('beforeInsertField');
-                        },
+						_beforeInsertField: function(field) {
+							Liferay.fire('beforeInsertField');
+						},
 
 						_createItemFilter: function() {
 							var instance = this,
@@ -282,21 +282,21 @@ AUI.add(
 						_onInsertField: function(field) {
 							var instance = this;
 
-                            var togglerDelegate = instance.get('fieldsTogglerDelegate');
+							var togglerDelegate = instance.get('fieldsTogglerDelegate');
 
-                            var fieldBox = field.get('contentBox');
-                            var fieldEditor = fieldBox.one('.field-editor');
-                            var fieldHeader = fieldBox.one('.field-header');
+							var fieldBox = field.get('contentBox');
+							var fieldEditor = fieldBox.one('.field-editor');
+							var fieldHeader = fieldBox.one('.field-header');
 
-                            if (!fieldEditor || !fieldHeader) {
-                                return;
-                            }
+							if (!fieldEditor || !fieldHeader) {
+								return;
+							}
 
-                            togglerDelegate.collapseAll();
+							togglerDelegate.collapseAll();
 
-                            var toggler = fieldHeader.getData().toggler;
+							var toggler = fieldHeader.getData().toggler;
 
-                            toggler.expand();
+							toggler.expand();
 
 							instance.simulateFocusField(field, field.get('boundingBox'));
 						},
@@ -506,7 +506,7 @@ AUI.add(
 							var instance = this,
 								lastFocusedField = instance.lastFocusedField;
 
-                            var togglerDelegate = instance.get('fieldsTogglerDelegate');
+							var togglerDelegate = instance.get('fieldsTogglerDelegate');
 
 							var fieldBox = field.get('contentBox');
 							var fieldEditor = fieldBox.one('.field-editor');
