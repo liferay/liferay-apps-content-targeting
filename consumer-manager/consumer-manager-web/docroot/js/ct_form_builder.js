@@ -6,7 +6,7 @@ AUI.add(
 			FIELD_LABEL_TPL = '{name}',
 
 			ITEM_FIELD_TPL = '<div>' +
-				'<div class="field-header toggler-header-{cssCollapseClass}">' +
+				'<div class="field-header toggler-header-collapsed">' +
 					'<div class="field-icon">' +
 						'<i class="{icon}"></i>' +
 					'</div>' +
@@ -15,7 +15,7 @@ AUI.add(
 						'<div class="field-description">{description}</div>' +
 					'</div>' +
 				'</div>' +
-				'<div class="field-editor toggler-content-{cssCollapseClass}">{editor}</div>' +
+				'<div class="field-editor toggler-content-collapsed">{editor}</div>' +
 			'</div>',
 
 			ITEM_CATEGORY_HEADER_TPL = '<div class="category-header toggler-header toggler-header-collapsed">' +
@@ -63,12 +63,65 @@ AUI.add(
 								eventHandles.push(
 									fieldsFilter.on('results', instance._onItemFilterResults, instance),
 									instance.on('fieldsChange', instance._onFieldsChange, instance),
+                                    instance.on({
+                                        'drag:start': function() {
+                                            Liferay.fire('fieldDragStart');
+                                        },
+                                        'drag:end': function() {
+                                            Liferay.fire('fieldDragEnd');
+                                        }
+                                    }),
+                                    A.Do.before('_beforeInsertField', instance, 'insertField', instance),
 									A.Do.after('_onInsertField', instance, 'insertField', instance),
 									A.Do.after('_onRemoveField', instance, 'removeField', instance)
 								);
 							}
 
 							instance.after(instance._afterUiSetAvailableFields, instance, '_uiSetAvailableFields');
+
+                            var togglerDelegate = new A.TogglerDelegate(
+                                {
+                                    animated: true,
+                                    closeAllOnExpand: true,
+                                    container: A.one('.diagram-builder-drop-container'),
+                                    content: '.field-editor',
+                                    expanded: false,
+                                    header: '.field-header',
+                                    transition: {
+                                        duration: 0.2,
+                                        easing: 'cubic-bezier(0, 0.1, 0, 1)'
+                                    }
+                                }
+                            );
+
+                            A.Do.before(
+                                function(header) {
+                                    Liferay.fire(
+                                        'beforeTogglerCreate',
+                                        {
+                                            header: header
+                                        }
+                                    )
+                                },
+                                togglerDelegate,
+                                '_create'
+                            );
+
+                            A.Do.after(
+                                function(header) {
+                                    Liferay.fire(
+                                        'afterTogglerCreate',
+                                        {
+                                            toggler: A.Do.originalRetVal,
+                                            header: header
+                                        }
+                                    )
+                                },
+                                togglerDelegate,
+                                '_create'
+                            );
+
+                            instance.set('fieldsTogglerDelegate', togglerDelegate);
 
 							instance._eventHandles = eventHandles;
 						},
@@ -121,6 +174,10 @@ AUI.add(
 
 							instance._groupFields(categories, fieldsContainer);
 						},
+
+                        _beforeInsertField: function(field) {
+                            Liferay.fire('beforeInsertField');
+                        },
 
 						_createItemFilter: function() {
 							var instance = this,
@@ -224,6 +281,22 @@ AUI.add(
 
 						_onInsertField: function(field) {
 							var instance = this;
+
+                            var togglerDelegate = instance.get('fieldsTogglerDelegate');
+
+                            var fieldBox = field.get('contentBox');
+                            var fieldEditor = fieldBox.one('.field-editor');
+                            var fieldHeader = fieldBox.one('.field-header');
+
+                            if (!fieldEditor || !fieldHeader) {
+                                return;
+                            }
+
+                            togglerDelegate.collapseAll();
+
+                            var toggler = fieldHeader.getData().toggler;
+
+                            toggler.expand();
 
 							instance.simulateFocusField(field, field.get('boundingBox'));
 						},
@@ -433,30 +506,15 @@ AUI.add(
 							var instance = this,
 								lastFocusedField = instance.lastFocusedField;
 
+                            var togglerDelegate = instance.get('fieldsTogglerDelegate');
+
 							var fieldBox = field.get('contentBox');
 							var fieldEditor = fieldBox.one('.field-editor');
-							var fieldHeader = fieldBox.one('.field-info');
+							var fieldHeader = fieldBox.one('.field-header');
 
 							if (!fieldEditor || !fieldHeader) {
 								return;
 							}
-
-							var addedFieldsContainer = A.one('.form-builder-content-container');
-
-							addedFieldsContainer.all('.field-info').each(
-								function(fieldElement) {
-									fieldElement.addClass('toggler-header-collapsed');
-								}
-							);
-
-							addedFieldsContainer.all('.field-editor').each(
-								function(fieldElement) {
-									fieldElement.addClass('toggler-content-collapsed');
-								}
-							);
-
-							fieldHeader.toggleClass('toggler-header-collapsed');
-							fieldEditor.toggleClass('toggler-content-collapsed');
 
 							if (onClick && field !== lastFocusedField) {
 								if (lastFocusedField) lastFocusedField.blur();
