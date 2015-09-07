@@ -24,8 +24,8 @@
 					requestUri,
 					{
 						data: {
-							events: JSON.stringify(events),
-							themeDisplayData: JSON.stringify(themeDisplayData)
+							context: JSON.stringify(themeDisplayData),
+							events: JSON.stringify(events)
 						},
 						on: {
 							failure: function(err) {

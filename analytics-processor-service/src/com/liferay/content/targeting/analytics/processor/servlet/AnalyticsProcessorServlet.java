@@ -24,13 +24,19 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.ServletResponseUtil;
+import com.liferay.portal.kernel.util.ContentTypes;
+import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.IOException;
 
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -85,47 +91,84 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 	protected void copyJSONObjectData(Message message, JSONObject jsonObject) {
 		Iterator<String> keys = jsonObject.keys();
 
-		while (keys.hasNext() ) {
+		while (keys.hasNext()) {
 			String key = keys.next();
 
-			message.put(key, jsonObject.getString(key));
+			if (key.equals("referrers")) {
+				JSONArray referrersJSONArray = jsonObject.getJSONArray(key);
+
+				message.put("referrers", getReferrersMap(referrersJSONArray));
+			}
+			else {
+				message.put(key, jsonObject.getString(key));
+			}
 		}
+	}
+
+	protected Map<String, long[]> getReferrersMap(
+		JSONArray referrersJSONArray) {
+
+		Map<String, long[]> referrersMap = new HashMap<String, long[]>();
+
+		if (referrersJSONArray == null) {
+			return referrersMap;
+		}
+
+		for (int i = 0; i < referrersJSONArray.length(); ++i) {
+			JSONObject referrerJSONObject = referrersJSONArray.getJSONObject(i);
+
+			String referrerClassName = referrerJSONObject.getString(
+				"referrerClassName");
+
+			String[] values = StringUtil.split(
+				referrerJSONObject.getString(("referrerClassPKs")));
+
+			long[] referrerClassPKs = GetterUtil.getLongValues(values);
+
+			referrersMap.put(referrerClassName, referrerClassPKs);
+		}
+
+		return referrersMap;
 	}
 
 	protected void processEvents(
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		String themeDisplayDataJSON = ParamUtil.getString(
-			request, "themeDisplayData");
-
-		if (Validator.isNull(themeDisplayDataJSON)) {
-			return;
-		}
-
-		JSONObject themeDisplayDataJSONObject =
-			JSONFactoryUtil.createJSONObject(themeDisplayDataJSON);
-
 		String eventsJSON = ParamUtil.getString(request, "events", "[]");
 
 		JSONArray eventsJSONArray = JSONFactoryUtil.createJSONArray(eventsJSON);
 
 		if (eventsJSONArray.length() == 0) {
-			return;
+			throw new IllegalArgumentException();
 		}
 
-		AnonymousUser anonymousUser = _anonymousUsersManager.getAnonymousUser(
-			request, response);
+		String contextJSON = ParamUtil.getString(request, "context");
+
+		if (Validator.isNull(contextJSON) || contextJSON.isEmpty()) {
+			throw new IllegalArgumentException();
+		}
+
+		JSONObject contextJSONObject = JSONFactoryUtil.createJSONObject(
+			contextJSON);
+
+		long companyId = contextJSONObject.getLong("companyId", 0);
+
+		if (companyId == 0) {
+			throw new IllegalArgumentException();
+		}
+
+		long anonymousUserId = contextJSONObject.getLong("anonymousUserId", 0);
+
+		if (anonymousUserId == 0) {
+			AnonymousUser anonymousUser =
+				_anonymousUsersManager.getAnonymousUser(request, response);
+
+			anonymousUserId = anonymousUser.getAnonymousUserId();
+		}
 
 		for (int i = 0; i < eventsJSONArray.length(); ++i) {
 			Message message = new Message();
-
-			message.put("clientIP", request.getRemoteAddr());
-			message.put("userAgent", request.getHeader(HttpHeaders.USER_AGENT));
-
-			copyJSONObjectData(message, themeDisplayDataJSONObject);
-
-			message.put("anonymousUserId", anonymousUser.getAnonymousUserId());
 
 			JSONObject eventJSONObject = eventsJSONArray.getJSONObject(i);
 
@@ -135,8 +178,24 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 			copyJSONObjectData(
 				message, eventJSONObject.getJSONObject("properties"));
 
+			copyJSONObjectData(message, contextJSONObject);
+
+			message.put("anonymousUserId", anonymousUserId);
+			message.put("companyId", companyId);
+			message.put("clientIP", request.getRemoteAddr());
+			message.put("userAgent", request.getHeader(HttpHeaders.USER_AGENT));
+
 			MessageBusUtil.sendMessage("liferay/analytics", message);
 		}
+
+		response.setContentType(ContentTypes.APPLICATION_JSON);
+		response.setStatus(HttpServletResponse.SC_OK);
+
+		JSONObject responseJSONObject = JSONFactoryUtil.createJSONObject();
+
+		responseJSONObject.put("anonymousUserId", anonymousUserId);
+
+		ServletResponseUtil.write(response, responseJSONObject.toString());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

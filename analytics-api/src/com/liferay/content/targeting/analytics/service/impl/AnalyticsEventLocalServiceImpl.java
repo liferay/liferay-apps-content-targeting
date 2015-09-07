@@ -35,6 +35,7 @@ import com.liferay.portal.service.persistence.CompanyActionableDynamicQuery;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The implementation of the analytics event local service.
@@ -52,6 +53,32 @@ import java.util.List;
  */
 public class AnalyticsEventLocalServiceImpl
 	extends AnalyticsEventLocalServiceBaseImpl {
+
+	@Override
+	public AnalyticsEvent addAnalyticsEvent(
+			long userId, long anonymousUserId, String className, long classPK,
+			Map<String, long[]> referrers, String elementId, String eventType,
+			String clientIP, String userAgent, String languageId, String URL,
+			String additionalInfo, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		AnalyticsEvent analyticsEvent = addAnalyticsEvent(
+			userId, anonymousUserId, className, classPK, elementId, eventType,
+			clientIP, userAgent, languageId, URL, additionalInfo,
+			serviceContext);
+
+		for (Map.Entry<String, long[]> entry : referrers.entrySet()) {
+			String referrerClassName = entry.getKey();
+
+			for (long referrerClassPK : entry.getValue()) {
+				analyticsReferrerLocalService.addAnalyticsReferrer(
+					analyticsEvent.getAnalyticsEventId(), referrerClassName,
+					referrerClassPK);
+			}
+		}
+
+		return analyticsEvent;
+	}
 
 	@Override
 	public AnalyticsEvent addAnalyticsEvent(
