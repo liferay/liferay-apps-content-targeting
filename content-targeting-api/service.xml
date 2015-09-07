@@ -3,6 +3,54 @@
 
 <service-builder package-path="com.liferay.content.targeting">
 	<namespace>CT</namespace>
+	<entity name="AnonymousUserUserSegment" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="anonymousUserUserSegmentId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="anonymousUserId" type="long" />
+		<column name="userSegmentId" type="long" />
+		<column name="manual" type="boolean" />
+		<column name="active" type="boolean" />
+
+		<order by="desc">
+			<order-column name="modifiedDate" />
+			<order-column name="active" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="AnonymousUserId" return-type="Collection">
+			<finder-column name="anonymousUserId" />
+			<finder-column name="active" />
+		</finder>
+
+		<finder name="A_U" return-type="Collection">
+			<finder-column name="anonymousUserId" />
+			<finder-column name="userSegmentId" />
+		</finder>
+
+		<finder name="C_LtD_M" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="modifiedDate" comparator="&lt;" />
+			<finder-column name="manual" />
+		</finder>
+
+		<finder name="UserSegmentIds" return-type="Collection">
+			<finder-column name="userSegmentId" arrayable-operator="OR" />
+			<finder-column name="active" />
+		</finder>
+
+		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+	</entity>
 	<entity name="Campaign" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
