@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.messaging;
 
+import com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.service.AnonymousUserUserSegmentServiceUtil;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.CampaignServiceUtil;
 import com.liferay.content.targeting.service.ChannelInstanceLocalServiceUtil;
@@ -48,6 +50,9 @@ public class ClpMessageListener extends BaseMessageListener {
 
 		if (command.equals("undeploy") &&
 				servletContextName.equals(getServletContextName())) {
+			AnonymousUserUserSegmentLocalServiceUtil.clearService();
+
+			AnonymousUserUserSegmentServiceUtil.clearService();
 			CampaignLocalServiceUtil.clearService();
 
 			CampaignServiceUtil.clearService();

@@ -7,6 +7,25 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
+	<mapped-superclass class="com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl">
+		<attributes>
+			<id name="anonymousUserUserSegmentId" />
+			<basic name="companyId" />
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="anonymousUserId" />
+			<basic name="userSegmentId" />
+			<basic name="manual" />
+			<basic name="active">
+				<column name="ACTIVE_" />
+			</basic>
+			<transient name="anonymousUserUuid" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
 	<mapped-superclass class="com.liferay.content.targeting.model.impl.CampaignModelImpl">
 		<attributes>
 			<id name="campaignId" />
@@ -210,6 +229,10 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<entity class="com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentImpl" name="AnonymousUserUserSegment">
+		<table name="CT_AnonymousUserUserSegment" />
+		<attributes />
+	</entity>
 	<entity class="com.liferay.content.targeting.model.impl.CampaignImpl" name="Campaign">
 		<table name="CT_Campaign" />
 		<attributes />

@@ -317,19 +317,20 @@ public interface ChannelInstanceModel extends BaseModel<ChannelInstance>,
 	public Object clone();
 
 	@Override
-	public int compareTo(ChannelInstance channelInstance);
+	public int compareTo(
+		com.liferay.content.targeting.model.ChannelInstance channelInstance);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ChannelInstance> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.ChannelInstance> toCacheModel();
 
 	@Override
-	public ChannelInstance toEscapedModel();
+	public com.liferay.content.targeting.model.ChannelInstance toEscapedModel();
 
 	@Override
-	public ChannelInstance toUnescapedModel();
+	public com.liferay.content.targeting.model.ChannelInstance toUnescapedModel();
 
 	@Override
 	public String toString();

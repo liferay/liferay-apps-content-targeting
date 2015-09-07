@@ -1,3 +1,14 @@
+create index IX_C36CE59F on CT_AnonymousUserUserSegment (anonymousUserId);
+create index IX_C9016C4A on CT_AnonymousUserUserSegment (anonymousUserId, active_);
+create index IX_6D0EF494 on CT_AnonymousUserUserSegment (anonymousUserId, userSegmentId);
+create index IX_A41860F5 on CT_AnonymousUserUserSegment (anonymousUserId, userSegmentId, active_);
+create index IX_5370A08F on CT_AnonymousUserUserSegment (companyId, modifiedDate);
+create index IX_BD1F5349 on CT_AnonymousUserUserSegment (companyId, modifiedDate, manual);
+create index IX_5CDDC72F on CT_AnonymousUserUserSegment (userSegmentId);
+create index IX_C34D4CBA on CT_AnonymousUserUserSegment (userSegmentId, active_);
+create index IX_BE4320D0 on CT_AnonymousUserUserSegment (uuid_);
+create index IX_1C594158 on CT_AnonymousUserUserSegment (uuid_, companyId);
+
 create index IX_80FBFA6 on CT_Campaign (groupId);
 create index IX_DB3D03B0 on CT_Campaign (uuid_);
 create index IX_E92ED278 on CT_Campaign (uuid_, companyId);

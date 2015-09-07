@@ -193,54 +193,54 @@ public class TacticLocalServiceClpInvoker {
 
 		_methodParameterTypes35 = new String[] { "long", "long[][]" };
 
-		_methodName96 = "getBeanIdentifier";
+		_methodName102 = "getBeanIdentifier";
 
-		_methodParameterTypes96 = new String[] {  };
+		_methodParameterTypes102 = new String[] {  };
 
-		_methodName97 = "setBeanIdentifier";
+		_methodName103 = "setBeanIdentifier";
 
-		_methodParameterTypes97 = new String[] { "java.lang.String" };
+		_methodParameterTypes103 = new String[] { "java.lang.String" };
 
-		_methodName102 = "addTactic";
+		_methodName108 = "addTactic";
 
-		_methodParameterTypes102 = new String[] {
+		_methodParameterTypes108 = new String[] {
 				"long", "long", "java.util.Map", "java.util.Map", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName103 = "deleteTactic";
+		_methodName109 = "deleteTactic";
 
-		_methodParameterTypes103 = new String[] { "long" };
+		_methodParameterTypes109 = new String[] { "long" };
 
-		_methodName104 = "deleteTactic";
+		_methodName110 = "deleteTactic";
 
-		_methodParameterTypes104 = new String[] {
+		_methodParameterTypes110 = new String[] {
 				"com.liferay.content.targeting.model.Tactic"
 			};
 
-		_methodName105 = "getResults";
+		_methodName111 = "getResults";
 
-		_methodParameterTypes105 = new String[] { "long", "int", "int" };
+		_methodParameterTypes111 = new String[] { "long", "int", "int" };
 
-		_methodName106 = "getTotal";
+		_methodName112 = "getTotal";
 
-		_methodParameterTypes106 = new String[] { "long" };
+		_methodParameterTypes112 = new String[] { "long" };
 
-		_methodName107 = "searchTactics";
+		_methodName113 = "searchTactics";
 
-		_methodParameterTypes107 = new String[] {
+		_methodParameterTypes113 = new String[] {
 				"long", "long", "java.lang.String", "int", "int"
 			};
 
-		_methodName108 = "searchTactics";
+		_methodName114 = "searchTactics";
 
-		_methodParameterTypes108 = new String[] {
+		_methodParameterTypes114 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName109 = "updateTactic";
+		_methodName115 = "updateTactic";
 
-		_methodParameterTypes109 = new String[] {
+		_methodParameterTypes115 = new String[] {
 				"long", "long", "java.util.Map", "java.util.Map", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -474,20 +474,20 @@ public class TacticLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName96.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes96, parameterTypes)) {
+		if (_methodName102.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
 			return TacticLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName97.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes97, parameterTypes)) {
+		if (_methodName103.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
 			TacticLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName102.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
+		if (_methodName108.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
 			return TacticLocalServiceUtil.addTactic(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -496,30 +496,30 @@ public class TacticLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[5]);
 		}
 
-		if (_methodName103.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
+		if (_methodName109.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
 			return TacticLocalServiceUtil.deleteTactic(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName104.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes104, parameterTypes)) {
+		if (_methodName110.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
 			return TacticLocalServiceUtil.deleteTactic((com.liferay.content.targeting.model.Tactic)arguments[0]);
 		}
 
-		if (_methodName105.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes105, parameterTypes)) {
+		if (_methodName111.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
 			return TacticLocalServiceUtil.getResults(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
-		if (_methodName106.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes106, parameterTypes)) {
+		if (_methodName112.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
 			return TacticLocalServiceUtil.getTotal(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName107.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes107, parameterTypes)) {
+		if (_methodName113.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
 			return TacticLocalServiceUtil.searchTactics(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2],
@@ -527,16 +527,16 @@ public class TacticLocalServiceClpInvoker {
 				((Integer)arguments[4]).intValue());
 		}
 
-		if (_methodName108.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
+		if (_methodName114.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
 			return TacticLocalServiceUtil.searchTactics(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName109.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
+		if (_methodName115.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
 			return TacticLocalServiceUtil.updateTactic(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -620,24 +620,24 @@ public class TacticLocalServiceClpInvoker {
 	private String[] _methodParameterTypes34;
 	private String _methodName35;
 	private String[] _methodParameterTypes35;
-	private String _methodName96;
-	private String[] _methodParameterTypes96;
-	private String _methodName97;
-	private String[] _methodParameterTypes97;
 	private String _methodName102;
 	private String[] _methodParameterTypes102;
 	private String _methodName103;
 	private String[] _methodParameterTypes103;
-	private String _methodName104;
-	private String[] _methodParameterTypes104;
-	private String _methodName105;
-	private String[] _methodParameterTypes105;
-	private String _methodName106;
-	private String[] _methodParameterTypes106;
-	private String _methodName107;
-	private String[] _methodParameterTypes107;
 	private String _methodName108;
 	private String[] _methodParameterTypes108;
 	private String _methodName109;
 	private String[] _methodParameterTypes109;
+	private String _methodName110;
+	private String[] _methodParameterTypes110;
+	private String _methodName111;
+	private String[] _methodParameterTypes111;
+	private String _methodName112;
+	private String[] _methodParameterTypes112;
+	private String _methodName113;
+	private String[] _methodParameterTypes113;
+	private String _methodName114;
+	private String[] _methodParameterTypes114;
+	private String _methodName115;
+	private String[] _methodParameterTypes115;
 }
