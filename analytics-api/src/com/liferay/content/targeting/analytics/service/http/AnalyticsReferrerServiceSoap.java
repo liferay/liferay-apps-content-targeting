@@ -14,6 +14,13 @@
 
 package com.liferay.content.targeting.analytics.service.http;
 
+import com.liferay.content.targeting.analytics.service.AnalyticsReferrerServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
  * {@link com.liferay.content.targeting.analytics.service.AnalyticsReferrerServiceUtil} service utility. The
@@ -55,4 +62,20 @@ package com.liferay.content.targeting.analytics.service.http;
  * @generated
  */
 public class AnalyticsReferrerServiceSoap {
+	public static com.liferay.content.targeting.analytics.model.AnalyticsReferrerSoap[] getAnalyticsReferrers(
+		long analyticsEventId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> returnValue =
+				AnalyticsReferrerServiceUtil.getAnalyticsReferrers(analyticsEventId);
+
+			return com.liferay.content.targeting.analytics.model.AnalyticsReferrerSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(AnalyticsReferrerServiceSoap.class);
 }

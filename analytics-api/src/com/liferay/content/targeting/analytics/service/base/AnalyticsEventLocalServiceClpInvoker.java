@@ -117,6 +117,15 @@ public class AnalyticsEventLocalServiceClpInvoker {
 		_methodName48 = "addAnalyticsEvent";
 
 		_methodParameterTypes48 = new String[] {
+				"long", "long", "java.lang.String", "long", "java.util.Map",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"java.lang.String", "com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName49 = "addAnalyticsEvent";
+
+		_methodParameterTypes49 = new String[] {
 				"long", "long", "java.lang.String", "long", "java.lang.String",
 				"long[][]", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
@@ -124,128 +133,128 @@ public class AnalyticsEventLocalServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName49 = "addAnalyticsEvent";
+		_methodName50 = "addAnalyticsEvent";
 
-		_methodParameterTypes49 = new String[] {
+		_methodParameterTypes50 = new String[] {
 				"long", "long", "java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName50 = "checkAnalyticsEvents";
+		_methodName51 = "checkAnalyticsEvents";
 
-		_methodParameterTypes50 = new String[] {  };
+		_methodParameterTypes51 = new String[] {  };
 
-		_methodName51 = "deleteAnalyticsEvent";
+		_methodName52 = "deleteAnalyticsEvent";
 
-		_methodParameterTypes51 = new String[] {
+		_methodParameterTypes52 = new String[] {
 				"com.liferay.content.targeting.analytics.model.AnalyticsEvent"
 			};
 
-		_methodName52 = "deleteAnalyticsEvents";
-
-		_methodParameterTypes52 = new String[] { "long", "java.util.Date" };
-
-		_methodName53 = "getAnalyticsEvents";
+		_methodName53 = "deleteAnalyticsEvents";
 
 		_methodParameterTypes53 = new String[] { "long", "java.util.Date" };
 
 		_methodName54 = "getAnalyticsEvents";
 
-		_methodParameterTypes54 = new String[] {
-				"long", "java.lang.String", "long", "java.util.Date"
-			};
+		_methodParameterTypes54 = new String[] { "long", "java.util.Date" };
 
 		_methodName55 = "getAnalyticsEvents";
 
 		_methodParameterTypes55 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String"
+				"long", "java.lang.String", "long", "java.util.Date"
 			};
 
 		_methodName56 = "getAnalyticsEvents";
 
 		_methodParameterTypes56 = new String[] {
-				"java.lang.String", "long", "java.lang.String"
+				"long", "java.lang.String", "long", "java.lang.String"
 			};
 
 		_methodName57 = "getAnalyticsEvents";
 
 		_methodParameterTypes57 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+				"java.lang.String", "long", "java.lang.String"
 			};
 
 		_methodName58 = "getAnalyticsEvents";
 
 		_methodParameterTypes58 = new String[] {
+				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName59 = "getAnalyticsEvents";
+
+		_methodParameterTypes59 = new String[] {
 				"java.lang.String", "java.lang.String", "java.util.Date"
 			};
 
-		_methodName59 = "getAnalyticsEventsContent";
-
-		_methodParameterTypes59 = new String[] { "java.util.Date" };
-
-		_methodName60 = "getAnalyticsEventsContentIds";
+		_methodName60 = "getAnalyticsEventsContent";
 
 		_methodParameterTypes60 = new String[] { "java.util.Date" };
 
-		_methodName61 = "getAnalyticsEventsCount";
+		_methodName61 = "getAnalyticsEventsContentIds";
 
-		_methodParameterTypes61 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes61 = new String[] { "java.util.Date" };
 
 		_methodName62 = "getAnalyticsEventsCount";
 
-		_methodParameterTypes62 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String"
-			};
+		_methodParameterTypes62 = new String[] { "long", "java.util.Date" };
 
 		_methodName63 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes63 = new String[] {
-				"java.lang.String", "long", "java.lang.String"
+				"long", "java.lang.String", "long", "java.lang.String"
 			};
 
 		_methodName64 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes64 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+				"java.lang.String", "long", "java.lang.String"
 			};
 
 		_methodName65 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes65 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "long",
-				"java.lang.String", "java.util.Date"
+				"java.lang.String", "long", "java.lang.String", "java.util.Date"
 			};
 
 		_methodName66 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes66 = new String[] {
-				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "long", "java.lang.String", "long",
 				"java.lang.String", "java.util.Date"
 			};
 
 		_methodName67 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes67 = new String[] {
-				"java.lang.String", "java.lang.String", "java.util.Date"
+				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "java.util.Date"
 			};
 
-		_methodName68 = "getAnalyticsEventsIds";
+		_methodName68 = "getAnalyticsEventsCount";
 
 		_methodParameterTypes68 = new String[] {
-				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+				"java.lang.String", "java.lang.String", "java.util.Date"
 			};
 
 		_methodName69 = "getAnalyticsEventsIds";
 
 		_methodParameterTypes69 = new String[] {
+				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName70 = "getAnalyticsEventsIds";
+
+		_methodParameterTypes70 = new String[] {
 				"java.lang.String", "java.lang.String", "java.util.Date"
 			};
 
-		_methodName70 = "getMaxAge";
+		_methodName71 = "getMaxAge";
 
-		_methodParameterTypes70 = new String[] {  };
+		_methodParameterTypes71 = new String[] {  };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -355,6 +364,21 @@ public class AnalyticsEventLocalServiceClpInvoker {
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2],
 				((Long)arguments[3]).longValue(),
+				(java.util.Map<java.lang.String, long[]>)arguments[4],
+				(java.lang.String)arguments[5], (java.lang.String)arguments[6],
+				(java.lang.String)arguments[7], (java.lang.String)arguments[8],
+				(java.lang.String)arguments[9],
+				(java.lang.String)arguments[10],
+				(java.lang.String)arguments[11],
+				(com.liferay.portal.service.ServiceContext)arguments[12]);
+		}
+
+		if (_methodName49.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
+			return AnalyticsEventLocalServiceUtil.addAnalyticsEvent(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2],
+				((Long)arguments[3]).longValue(),
 				(java.lang.String)arguments[4], (long[])arguments[5],
 				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
 				(java.lang.String)arguments[8], (java.lang.String)arguments[9],
@@ -364,8 +388,8 @@ public class AnalyticsEventLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[13]);
 		}
 
-		if (_methodName49.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
+		if (_methodName50.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.addAnalyticsEvent(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2],
@@ -377,103 +401,103 @@ public class AnalyticsEventLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[11]);
 		}
 
-		if (_methodName50.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
+		if (_methodName51.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
 			AnalyticsEventLocalServiceUtil.checkAnalyticsEvents();
 
 			return null;
 		}
 
-		if (_methodName51.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
+		if (_methodName52.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.deleteAnalyticsEvent((com.liferay.content.targeting.analytics.model.AnalyticsEvent)arguments[0]);
 		}
 
-		if (_methodName52.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
+		if (_methodName53.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
 			AnalyticsEventLocalServiceUtil.deleteAnalyticsEvents(((Long)arguments[0]).longValue(),
 				(java.util.Date)arguments[1]);
 
 			return null;
 		}
 
-		if (_methodName53.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents(((Long)arguments[0]).longValue(),
-				(java.util.Date)arguments[1]);
-		}
-
 		if (_methodName54.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1],
-				((Long)arguments[2]).longValue(), (java.util.Date)arguments[3]);
+				(java.util.Date)arguments[1]);
 		}
 
 		if (_methodName55.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
-				((Long)arguments[2]).longValue(), (java.lang.String)arguments[3]);
+				((Long)arguments[2]).longValue(), (java.util.Date)arguments[3]);
 		}
 
 		if (_methodName56.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(), (java.lang.String)arguments[2]);
+			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1],
+				((Long)arguments[2]).longValue(), (java.lang.String)arguments[3]);
 		}
 
 		if (_methodName57.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2], (java.util.Date)arguments[3]);
+				((Long)arguments[1]).longValue(), (java.lang.String)arguments[2]);
 		}
 
 		if (_methodName58.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents((java.lang.String)arguments[0],
-				(java.lang.String)arguments[1], (java.util.Date)arguments[2]);
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.util.Date)arguments[3]);
 		}
 
 		if (_methodName59.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsContent((java.util.Date)arguments[0]);
+			return AnalyticsEventLocalServiceUtil.getAnalyticsEvents((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1], (java.util.Date)arguments[2]);
 		}
 
 		if (_methodName60.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsContentIds((java.util.Date)arguments[0]);
+			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsContent((java.util.Date)arguments[0]);
 		}
 
 		if (_methodName61.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount(((Long)arguments[0]).longValue(),
-				(java.util.Date)arguments[1]);
+			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsContentIds((java.util.Date)arguments[0]);
 		}
 
 		if (_methodName62.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1],
-				((Long)arguments[2]).longValue(), (java.lang.String)arguments[3]);
+				(java.util.Date)arguments[1]);
 		}
 
 		if (_methodName63.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(), (java.lang.String)arguments[2]);
+			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1],
+				((Long)arguments[2]).longValue(), (java.lang.String)arguments[3]);
 		}
 
 		if (_methodName64.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2], (java.util.Date)arguments[3]);
+				((Long)arguments[1]).longValue(), (java.lang.String)arguments[2]);
 		}
 
 		if (_methodName65.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
+			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.util.Date)arguments[3]);
+		}
+
+		if (_methodName66.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2],
@@ -481,35 +505,35 @@ public class AnalyticsEventLocalServiceClpInvoker {
 				(java.lang.String)arguments[4], (java.util.Date)arguments[5]);
 		}
 
-		if (_methodName66.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes66, parameterTypes)) {
+		if (_methodName67.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
 				(java.util.Date)arguments[4]);
 		}
 
-		if (_methodName67.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes67, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount((java.lang.String)arguments[0],
-				(java.lang.String)arguments[1], (java.util.Date)arguments[2]);
-		}
-
 		if (_methodName68.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
-			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsIds((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2], (java.util.Date)arguments[3]);
+			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsCount((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1], (java.util.Date)arguments[2]);
 		}
 
 		if (_methodName69.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsIds((java.lang.String)arguments[0],
-				(java.lang.String)arguments[1], (java.util.Date)arguments[2]);
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.util.Date)arguments[3]);
 		}
 
 		if (_methodName70.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
+			return AnalyticsEventLocalServiceUtil.getAnalyticsEventsIds((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1], (java.util.Date)arguments[2]);
+		}
+
+		if (_methodName71.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
 			return AnalyticsEventLocalServiceUtil.getMaxAge();
 		}
 
@@ -598,4 +622,6 @@ public class AnalyticsEventLocalServiceClpInvoker {
 	private String[] _methodParameterTypes69;
 	private String _methodName70;
 	private String[] _methodParameterTypes70;
+	private String _methodName71;
+	private String[] _methodParameterTypes71;
 }

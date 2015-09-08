@@ -31,6 +31,22 @@ public class AnalyticsEventServiceClpInvoker {
 		_methodName27 = "setBeanIdentifier";
 
 		_methodParameterTypes27 = new String[] { "java.lang.String" };
+
+		_methodName32 = "getAnalyticsEvents";
+
+		_methodParameterTypes32 = new String[] { "long", "java.util.Date" };
+
+		_methodName33 = "getAnalyticsEvents";
+
+		_methodParameterTypes33 = new String[] {
+				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName34 = "getAnalyticsEvents";
+
+		_methodParameterTypes34 = new String[] {
+				"java.lang.String", "java.lang.String", "java.util.Date"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -47,6 +63,25 @@ public class AnalyticsEventServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName32.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes32, parameterTypes)) {
+			return AnalyticsEventServiceUtil.getAnalyticsEvents(((Long)arguments[0]).longValue(),
+				(java.util.Date)arguments[1]);
+		}
+
+		if (_methodName33.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes33, parameterTypes)) {
+			return AnalyticsEventServiceUtil.getAnalyticsEvents((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.util.Date)arguments[3]);
+		}
+
+		if (_methodName34.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes34, parameterTypes)) {
+			return AnalyticsEventServiceUtil.getAnalyticsEvents((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1], (java.util.Date)arguments[2]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -54,4 +89,10 @@ public class AnalyticsEventServiceClpInvoker {
 	private String[] _methodParameterTypes26;
 	private String _methodName27;
 	private String[] _methodParameterTypes27;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
+	private String _methodName33;
+	private String[] _methodParameterTypes33;
+	private String _methodName34;
+	private String[] _methodParameterTypes34;
 }
