@@ -14,7 +14,13 @@
 
 package com.liferay.content.targeting.analytics.service.impl;
 
+import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.base.AnalyticsEventServiceBaseImpl;
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * The implementation of the analytics event remote service.
@@ -31,5 +37,32 @@ import com.liferay.content.targeting.analytics.service.base.AnalyticsEventServic
  * @see com.liferay.content.targeting.analytics.service.AnalyticsEventServiceUtil
  */
 public class AnalyticsEventServiceImpl extends AnalyticsEventServiceBaseImpl {
+
+	@Override
+	public List<AnalyticsEvent> getAnalyticsEvents(
+			long companyId, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventLocalService.getAnalyticsEvents(
+			companyId, createDate);
+	}
+
+	@Override
+	public List<AnalyticsEvent> getAnalyticsEvents(
+			String className, long classPK, String eventType, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventLocalService.getAnalyticsEvents(
+			className, classPK, eventType, createDate);
+	}
+
+	@Override
+	public List<AnalyticsEvent> getAnalyticsEvents(
+			String elementId, String eventType, Date createDate)
+		throws PortalException, SystemException {
+
+		return analyticsEventLocalService.getAnalyticsEvents(
+			elementId, eventType, createDate);
+	}
 
 }
