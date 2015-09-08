@@ -52,8 +52,8 @@ public class AnonymousUserUserSegmentsPluginMessagingConfigurator
 				_log.warn(
 					"Cannot register anonymous users segments API message " +
 						"listener because destination " +
-						_anonymousUserSegmentsMessageDestination +
-						" does not exist yet");
+							_anonymousUserSegmentsMessageDestination +
+								" does not exist yet");
 			}
 		}
 
@@ -65,7 +65,7 @@ public class AnonymousUserUserSegmentsPluginMessagingConfigurator
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-AnonymousUserUserSegmentsPluginMessagingConfigurator.class);
+		AnonymousUserUserSegmentsPluginMessagingConfigurator.class);
 
 	private String _anonymousUserSegmentsMessageDestination;
 

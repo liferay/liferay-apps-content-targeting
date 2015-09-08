@@ -44,7 +44,7 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class UserSegmentPreAction extends Action {
 
-	public long[] getMatchesUserSegmentIds(
+	public long[] getMatchingUserSegmentIds(
 			HttpServletRequest request, long[] groupIds,
 			AnonymousUser anonymousUser)
 		throws Exception {
@@ -110,7 +110,7 @@ public class UserSegmentPreAction extends Action {
 
 			long[] groupIds = getGroupIds(request);
 
-			long[] originalUserSegmentIds = getMatchesUserSegmentIds(
+			long[] originalUserSegmentIds = getMatchingUserSegmentIds(
 				request, groupIds, anonymousUser);
 
 			if (userSegmentsIds == null) {

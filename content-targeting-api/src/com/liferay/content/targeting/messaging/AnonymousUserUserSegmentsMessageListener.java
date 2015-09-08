@@ -60,6 +60,7 @@ public class AnonymousUserUserSegmentsMessageListener
 			anonymousUserId, userSegmentId, false, true, serviceContext);
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
 		calendar.setTimeInMillis(timeInMillis);
 	}
 
