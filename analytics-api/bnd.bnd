@@ -1,6 +1,6 @@
 Bundle-Name: Analytics API
 Bundle-SymbolicName: com.liferay.content.targeting.analytics.api
-Bundle-Version: 1.1.0
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.content.targeting.analytics,\
 	com.liferay.content.targeting.analytics.messaging,\
@@ -31,4 +31,4 @@ Require-Capability:\
 	filter:="(version=1.0.0)"
 Service-Component: com.liferay.content.targeting.analytics.*
 Web-ContextPath: /analytics-api
--baseline: *;version="1.1.0"
+-baseline: *;version="2.0.0"
