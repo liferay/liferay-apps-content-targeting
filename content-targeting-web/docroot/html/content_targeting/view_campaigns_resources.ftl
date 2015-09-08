@@ -114,7 +114,7 @@
 					<@liferay_ui["icon"]
 						image="sitemap"
 						label=true
-						message="tactics"
+						message="promotions"
 						method="get"
 						url="${viewCampaignTacticsURL}"
 					/>

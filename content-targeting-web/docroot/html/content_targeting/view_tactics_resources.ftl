@@ -24,7 +24,7 @@
 </@>
 
 <@liferay_ui["search-container"]
-	emptyResultsMessage="no-tactics-were-found"
+	emptyResultsMessage="no-promotions-were-found"
 	iteratorURL=viewTacticsURL
 	rowChecker=tacticsRowChecker
 	total=tacticSearchContainerIterator.getTotal(campaignId)

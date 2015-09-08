@@ -32,7 +32,7 @@
 			<@portlet["param"] name="redirect" value="${redirectURL}" />
 		</@>
 
-		<@aui["nav-item"] href="${addTacticURL}" iconCssClass="icon-plus" label="add-tactic" />
+		<@aui["nav-item"] href="${addTacticURL}" iconCssClass="icon-plus" label="add-promotion" />
 
 		<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteTactics" label="delete" />
 	</#if>

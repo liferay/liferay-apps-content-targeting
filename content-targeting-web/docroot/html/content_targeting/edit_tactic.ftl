@@ -20,7 +20,7 @@
 
 <@liferay_ui["header"]
 	backURL="${redirect}"
-	title='${(tactic.getName(locale))!"new-tactic"}'
+	title='${(tactic.getName(locale))!"new-promotion"}'
 />
 
 <@invalidChannelsException />
@@ -52,7 +52,7 @@
 		hiddenInput="userSegmentAssetCategoryIds"
 		vocabularyGroupIds="${vocabularyGroupIds}"
 		vocabularyIds="${vocabularyIds}"
-		warningMessage="editing-user-segments-deletes-all-unsaved-tactic-data"
+		warningMessage="editing-user-segments-deletes-all-unsaved-promotion-data"
 	/>
 
 	<span class="slider-holder"></span>
@@ -113,7 +113,7 @@
 
 					<div class="diagram-builder-canvas form-builder-canvas ${cssHasItemsClass}">
 						<div class="alert alert-info alert-no-items">
-							<@liferay_ui["message"] key="drag-and-drop-the-different-channels-you-want-to-use-for-this-tactic" />
+							<@liferay_ui["message"] key="drag-and-drop-the-different-channels-you-want-to-use-for-this-promotion" />
 						</div>
 
 						<div class="diagram-builder-drop-container form-builder-drop-container">
