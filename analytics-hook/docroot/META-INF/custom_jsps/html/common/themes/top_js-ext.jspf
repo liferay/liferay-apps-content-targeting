@@ -42,9 +42,10 @@
 				{
 					className: '<%= Layout.class.getName() %>',
 					classPK: '<%= layout.getPlid() %>',
-					groupId: '<%= layout.getGroupId() %>',
-					referrerClassName: '<%= analyticsReferrerClassName %>',
-					referrerClassPK: '<%= analyticsReferrerClassPK %>'
+					referrers: [{
+						referrerClassName: '<%= analyticsReferrerClassName %>',
+						referrerClassPKs: '<%= analyticsReferrerClassPKs %>'
+					}]
 				}
 			);
 		</c:if>

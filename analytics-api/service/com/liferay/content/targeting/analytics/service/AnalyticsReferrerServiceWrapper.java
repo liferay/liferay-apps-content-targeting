@@ -58,6 +58,13 @@ public class AnalyticsReferrerServiceWrapper implements AnalyticsReferrerService
 			arguments);
 	}
 
+	@Override
+	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
+		long analyticsEventId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsReferrerService.getAnalyticsReferrers(analyticsEventId);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */

@@ -31,6 +31,22 @@ public class AnalyticsEventServiceClp implements AnalyticsEventService {
 		_methodName1 = "setBeanIdentifier";
 
 		_methodParameterTypes1 = new String[] { "java.lang.String" };
+
+		_methodName3 = "getAnalyticsEvents";
+
+		_methodParameterTypes3 = new String[] { "long", "java.util.Date" };
+
+		_methodName4 = "getAnalyticsEvents";
+
+		_methodParameterTypes4 = new String[] {
+				"java.lang.String", "long", "java.lang.String", "java.util.Date"
+			};
+
+		_methodName5 = "getAnalyticsEvents";
+
+		_methodParameterTypes5 = new String[] {
+				"java.lang.String", "java.lang.String", "java.util.Date"
+			};
 	}
 
 	@Override
@@ -83,9 +99,140 @@ public class AnalyticsEventServiceClp implements AnalyticsEventService {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		long companyId, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName3,
+					_methodParameterTypes3,
+					new Object[] {
+						companyId,
+						
+					ClpSerializer.translateInput(createDate)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		java.lang.String className, long classPK, java.lang.String eventType,
+		java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName4,
+					_methodParameterTypes4,
+					new Object[] {
+						ClpSerializer.translateInput(className),
+						
+					classPK,
+						
+					ClpSerializer.translateInput(eventType),
+						
+					ClpSerializer.translateInput(createDate)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5,
+					new Object[] {
+						ClpSerializer.translateInput(elementId),
+						
+					ClpSerializer.translateInput(eventType),
+						
+					ClpSerializer.translateInput(createDate)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent>)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
 	private String _methodName1;
 	private String[] _methodParameterTypes1;
+	private String _methodName3;
+	private String[] _methodParameterTypes3;
+	private String _methodName4;
+	private String[] _methodParameterTypes4;
+	private String _methodName5;
+	private String[] _methodParameterTypes5;
 }

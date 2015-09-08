@@ -31,6 +31,10 @@ public class AnalyticsReferrerServiceClpInvoker {
 		_methodName27 = "setBeanIdentifier";
 
 		_methodParameterTypes27 = new String[] { "java.lang.String" };
+
+		_methodName32 = "getAnalyticsReferrers";
+
+		_methodParameterTypes32 = new String[] { "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -47,6 +51,11 @@ public class AnalyticsReferrerServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName32.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes32, parameterTypes)) {
+			return AnalyticsReferrerServiceUtil.getAnalyticsReferrers(((Long)arguments[0]).longValue());
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -54,4 +63,6 @@ public class AnalyticsReferrerServiceClpInvoker {
 	private String[] _methodParameterTypes26;
 	private String _methodName27;
 	private String[] _methodParameterTypes27;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
 }

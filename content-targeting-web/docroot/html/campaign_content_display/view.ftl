@@ -40,7 +40,7 @@
 				<@liferay_util["param"] name="analyticsClassName" value=queryRule.getAssetClassName() />
 				<@liferay_util["param"] name="analyticsClassPK" value=queryRule.getAssetClassPK()?string />
 				<@liferay_util["param"] name="analyticsReferrerClassName" value=campaignClassName />
-				<@liferay_util["param"] name="analyticsReferrerClassPK" value=queryRule.getCampaignId()?string />
+				<@liferay_util["param"] name="analyticsReferrerClassPKs" value=queryRule.getCampaignId()?string />
 			</@>
 		<#else>
 			<div class="alert alert-info">

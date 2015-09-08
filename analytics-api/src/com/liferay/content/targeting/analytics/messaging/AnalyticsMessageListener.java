@@ -19,11 +19,11 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.ServiceContext;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eduardo Garcia
@@ -41,41 +41,38 @@ public class AnalyticsMessageListener implements MessageListener {
 	}
 
 	protected void doReceive(Message message) throws Exception {
-		long companyId = message.getLong("companyId");
-		long userId = message.getLong("userId");
+		String additionalInfo = message.getString("additionalInfo");
 		long anonymousUserId = message.getLong("anonymousUserId");
-		String elementId = message.getString("elementId");
-		String eventType = message.getString("event");
 		String className = message.getString("className");
 		long classPK = message.getLong("classPK");
-		String referrerClassName = message.getString("referrerClassName");
+		String clientIP = message.getString("clientIP");
+		long companyId = message.getLong("companyId");
+		String elementId = message.getString("elementId");
+		String eventType = message.getString("event");
+		String languageId = message.getString("languageId");
 
-		String[] values = StringUtil.split(
-			message.getString("referrerClassPK"));
+		Map<String, long[]> referrers = (Map<String, long[]>)message.get(
+			"referrers");
 
-		long[] referrerClassPKs = GetterUtil.getLongValues(values);
+		if ((referrers == null) || referrers.isEmpty()) {
+			referrers = new HashMap<String, long[]>();
 
-		if (Validator.isNull(referrerClassName) ||
-			Validator.isNull(referrerClassPKs)) {
-
-			referrerClassName = Layout.class.getName();
-			referrerClassPKs = new long[] {message.getLong("plid")};
+			referrers.put(
+				Layout.class.getName(), new long[] {message.getLong("plid")});
 		}
 
-		String clientIP = message.getString("clientIP");
-		String userAgent = message.getString("userAgent");
-		String languageId = message.getString("languageId");
 		String URL = message.getString("layoutURL");
-		String additionalInfo = message.getString("additionalInfo");
+		String userAgent = message.getString("userAgent");
+		long userId = message.getLong("userId");
 
 		ServiceContext serviceContext = new ServiceContext();
 
 		serviceContext.setCompanyId(companyId);
 
 		AnalyticsEventLocalServiceUtil.addAnalyticsEvent(
-			userId, anonymousUserId, className, classPK, referrerClassName,
-			referrerClassPKs, elementId, eventType, clientIP, userAgent,
-			languageId, URL, additionalInfo, serviceContext);
+			userId, anonymousUserId, className, classPK, referrers, elementId,
+			eventType, clientIP, userAgent, languageId, URL, additionalInfo,
+			serviceContext);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

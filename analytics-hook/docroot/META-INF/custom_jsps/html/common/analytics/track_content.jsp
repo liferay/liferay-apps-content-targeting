@@ -21,7 +21,7 @@ String analyticsClassName = HtmlUtil.escapeJS(ParamUtil.getString(request, "anal
 String analyticsClassPK = HtmlUtil.escapeJS(ParamUtil.getString(request, "analyticsClassPK"));
 
 analyticsReferrerClassName = HtmlUtil.escapeJS(ParamUtil.getString(request, "analyticsReferrerClassName", analyticsReferrerClassName));
-analyticsReferrerClassPK = HtmlUtil.escapeJS(ParamUtil.getString(request, "analyticsReferrerClassPK", analyticsReferrerClassPK));
+analyticsReferrerClassPKs = HtmlUtil.escapeJS(ParamUtil.getString(request, "analyticsReferrerClassPKs", analyticsReferrerClassPKs));
 
 String analyticsEvent = HtmlUtil.escapeJS(ParamUtil.getString(request, "analyticsEvent", "view"));
 %>
@@ -33,8 +33,10 @@ String analyticsEvent = HtmlUtil.escapeJS(ParamUtil.getString(request, "analytic
 			{
 				className: '<%= analyticsClassName %>',
 				classPK: '<%= analyticsClassPK %>',
-				referrerClassName: '<%= analyticsReferrerClassName %>',
-				referrerClassPK: '<%= analyticsReferrerClassPK %>'
+				referrers: [{
+					referrerClassName: '<%= analyticsReferrerClassName %>',
+					referrerClassPKs: '<%= analyticsReferrerClassPKs %>'}
+				}]
 			}
 		);
 	</aui:script>

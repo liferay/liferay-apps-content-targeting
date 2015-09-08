@@ -14,6 +14,13 @@
 
 package com.liferay.content.targeting.analytics.service.http;
 
+import com.liferay.content.targeting.analytics.service.AnalyticsEventServiceUtil;
+
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import java.rmi.RemoteException;
+
 /**
  * Provides the SOAP utility for the
  * {@link com.liferay.content.targeting.analytics.service.AnalyticsEventServiceUtil} service utility. The
@@ -55,4 +62,55 @@ package com.liferay.content.targeting.analytics.service.http;
  * @generated
  */
 public class AnalyticsEventServiceSoap {
+	public static com.liferay.content.targeting.analytics.model.AnalyticsEventSoap[] getAnalyticsEvents(
+		long companyId, java.util.Date createDate) throws RemoteException {
+		try {
+			java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> returnValue =
+				AnalyticsEventServiceUtil.getAnalyticsEvents(companyId,
+					createDate);
+
+			return com.liferay.content.targeting.analytics.model.AnalyticsEventSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.content.targeting.analytics.model.AnalyticsEventSoap[] getAnalyticsEvents(
+		java.lang.String className, long classPK, java.lang.String eventType,
+		java.util.Date createDate) throws RemoteException {
+		try {
+			java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> returnValue =
+				AnalyticsEventServiceUtil.getAnalyticsEvents(className,
+					classPK, eventType, createDate);
+
+			return com.liferay.content.targeting.analytics.model.AnalyticsEventSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.content.targeting.analytics.model.AnalyticsEventSoap[] getAnalyticsEvents(
+		java.lang.String elementId, java.lang.String eventType,
+		java.util.Date createDate) throws RemoteException {
+		try {
+			java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> returnValue =
+				AnalyticsEventServiceUtil.getAnalyticsEvents(elementId,
+					eventType, createDate);
+
+			return com.liferay.content.targeting.analytics.model.AnalyticsEventSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	private static Log _log = LogFactoryUtil.getLog(AnalyticsEventServiceSoap.class);
 }

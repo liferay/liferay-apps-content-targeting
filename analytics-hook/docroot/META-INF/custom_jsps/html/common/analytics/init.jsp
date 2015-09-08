@@ -17,15 +17,15 @@
 <%@ include file="/html/common/init.jsp" %>
 
 <%
-long [] analyticsReferrerClassPKs = (long[])request.getAttribute("userSegmentIds");
+long [] analyticsReferrerIds = (long[])request.getAttribute("userSegmentIds");
 String analyticsReferrerClassName = "com.liferay.content.targeting.model.UserSegment";
 
-if (Validator.isNull(analyticsReferrerClassPKs)) {
-	analyticsReferrerClassPKs = new long[]{layout.getPlid()};
+if (Validator.isNull(analyticsReferrerIds)) {
+	analyticsReferrerIds = new long[]{layout.getPlid()};
 	analyticsReferrerClassName = Layout.class.getName();
 }
 
-String analyticsReferrerClassPK = StringUtil.merge(analyticsReferrerClassPKs);
+String analyticsReferrerClassPKs = StringUtil.merge(analyticsReferrerIds);
 
 // See com.liferay.content.targeting.analytics.util.AnalyticsUtil
 

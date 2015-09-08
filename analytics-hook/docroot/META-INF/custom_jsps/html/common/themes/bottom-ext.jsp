@@ -32,8 +32,10 @@
 				eventType,
 				{
 					elementId: elementId,
-					referrerClassName: '<%= analyticsReferrerClassName %>',
-					referrerClassPK: '<%= analyticsReferrerClassPK %>'
+					referrers: [{
+						referrerClassName: '<%= analyticsReferrerClassName %>',
+						referrerClassPKs: '<%= analyticsReferrerClassPKs %>'
+					}]
 				}
 			);
 		};

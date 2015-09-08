@@ -291,6 +291,23 @@ public class AnalyticsEventLocalServiceWrapper
 	@Override
 	public com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
 		long userId, long anonymousUserId, java.lang.String className,
+		long classPK, java.util.Map<java.lang.String, long[]> referrers,
+		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String clientIP, java.lang.String userAgent,
+		java.lang.String languageId, java.lang.String URL,
+		java.lang.String additionalInfo,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _analyticsEventLocalService.addAnalyticsEvent(userId,
+			anonymousUserId, className, classPK, referrers, elementId,
+			eventType, clientIP, userAgent, languageId, URL, additionalInfo,
+			serviceContext);
+	}
+
+	@Override
+	public com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
+		long userId, long anonymousUserId, java.lang.String className,
 		long classPK, java.lang.String referrerClassName,
 		long[] referrerClassPKs, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String clientIP,
