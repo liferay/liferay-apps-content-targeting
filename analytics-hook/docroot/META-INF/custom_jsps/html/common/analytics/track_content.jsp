@@ -35,7 +35,7 @@ String analyticsEvent = HtmlUtil.escapeJS(ParamUtil.getString(request, "analytic
 				classPK: '<%= analyticsClassPK %>',
 				referrers: [{
 					referrerClassName: '<%= analyticsReferrerClassName %>',
-					referrerClassPKs: '<%= analyticsReferrerClassPKs %>'}
+					referrerClassPKs: '<%= analyticsReferrerClassPKs %>'
 				}]
 			}
 		);
