@@ -1,3 +1,13 @@
+create table CT_AnonymousUserUserSegment (
+	anonymousUserUserSegmentId LONG not null primary key,
+	companyId LONG,
+	modifiedDate DATE null,
+	anonymousUserId LONG,
+	userSegmentId LONG,
+	manual BOOLEAN,
+	active_ BOOLEAN
+);
+
 create table CT_Campaign (
 	uuid_ VARCHAR(75) null,
 	campaignId LONG not null primary key,

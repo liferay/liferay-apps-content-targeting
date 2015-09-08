@@ -1,6 +1,6 @@
 Bundle-Name: Anonymous Users API
 Bundle-SymbolicName: com.liferay.content.targeting.anonymous.users.api
-Bundle-Version: 1.1.0
+Bundle-Version: 2.0.0
 Export-Package:\
 	com.liferay.content.targeting.anonymous.users,\
 	com.liferay.content.targeting.anonymous.users.model,\
@@ -24,4 +24,4 @@ Require-Capability:\
 	filter:="(version=1.0.0)"
 Service-Component: com.liferay.content.targeting.anonymous.users.*
 Web-ContextPath: /anonymous-users-api
--baseline: *;version="1.1.0"
+-baseline: *;version="2.0.0"

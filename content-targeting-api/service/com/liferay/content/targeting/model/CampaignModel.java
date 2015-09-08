@@ -533,19 +533,19 @@ public interface CampaignModel extends BaseModel<Campaign>, StagedGroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(Campaign campaign);
+	public int compareTo(com.liferay.content.targeting.model.Campaign campaign);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Campaign> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.Campaign> toCacheModel();
 
 	@Override
-	public Campaign toEscapedModel();
+	public com.liferay.content.targeting.model.Campaign toEscapedModel();
 
 	@Override
-	public Campaign toUnescapedModel();
+	public com.liferay.content.targeting.model.Campaign toUnescapedModel();
 
 	@Override
 	public String toString();

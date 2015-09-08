@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,7 +44,7 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class UserSegmentPreAction extends Action {
 
-	public long[] getMatchesUserSegmentIds(
+	public long[] getMatchingUserSegmentIds(
 			HttpServletRequest request, long[] groupIds,
 			AnonymousUser anonymousUser)
 		throws Exception {
@@ -54,31 +53,11 @@ public class UserSegmentPreAction extends Action {
 			return null;
 		}
 
-		List<Long> userSegmentIds = new ArrayList<Long>();
-
 		List<UserSegment> userSegments =
 			UserSegmentLocalServiceUtil.getUserSegments(groupIds);
 
-		for (UserSegment userSegment : userSegments) {
-			if (matches(request, anonymousUser, userSegment)) {
-				userSegmentIds.add(userSegment.getUserSegmentId());
-			}
-		}
-
-		return ArrayUtil.toLongArray(userSegmentIds);
-	}
-
-	public boolean matches(
-			HttpServletRequest request, AnonymousUser anonymousUser,
-			UserSegment userSegment)
-		throws Exception {
-
-		if (_rulesEngine == null) {
-			_initRulesEngine();
-		}
-
-		return _rulesEngine.matches(
-			request, anonymousUser, userSegment.getRuleInstances());
+		return _rulesEngine.getMatchingUserSegmentIds(
+			request, anonymousUser, userSegments);
 	}
 
 	@Override
@@ -131,7 +110,7 @@ public class UserSegmentPreAction extends Action {
 
 			long[] groupIds = getGroupIds(request);
 
-			long[] originalUserSegmentIds = getMatchesUserSegmentIds(
+			long[] originalUserSegmentIds = getMatchingUserSegmentIds(
 				request, groupIds, anonymousUser);
 
 			if (userSegmentsIds == null) {

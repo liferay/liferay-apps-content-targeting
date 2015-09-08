@@ -19,9 +19,16 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RulesEngine;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
+import com.liferay.content.targeting.model.UserSegment;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.Message;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.util.ArrayUtil;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,6 +41,26 @@ import org.osgi.service.component.annotations.Reference;
  */
 @Component
 public class DefaultRulesEngineImpl implements RulesEngine {
+
+	public long[] getMatchingUserSegmentIds(
+			HttpServletRequest request, AnonymousUser anonymousUser,
+			List<UserSegment> userSegments)
+		throws SystemException {
+
+		List<Long> userSegmentIds = new ArrayList<Long>();
+
+		for (UserSegment userSegment : userSegments) {
+			if (matches(
+					request, anonymousUser, userSegment.getRuleInstances())) {
+
+				updateAnonymousUserUserSegment(anonymousUser, userSegment);
+
+				userSegmentIds.add(userSegment.getUserSegmentId());
+			}
+		}
+
+		return ArrayUtil.toLongArray(userSegmentIds);
+	}
 
 	@Override
 	public boolean matches(
@@ -68,6 +95,23 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 	@Reference
 	public void setRulesRegistry(RulesRegistry rulesRegistry) {
 		_rulesRegistry = rulesRegistry;
+	}
+
+	protected void updateAnonymousUserUserSegment(
+			AnonymousUser anonymousUser, UserSegment userSegment)
+		throws SystemException {
+
+		Date now = new Date();
+
+		Message message = new Message();
+
+		message.put("anonymousUserId", anonymousUser.getAnonymousUserId());
+		message.put("companyId", anonymousUser.getCompanyId());
+		message.put("date", now.getTime());
+		message.put("userId", anonymousUser.getUserId());
+		message.put("userSegmentId", userSegment.getUserSegmentId());
+
+		MessageBusUtil.sendMessage("liferay/anonymous_user_segments", message);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

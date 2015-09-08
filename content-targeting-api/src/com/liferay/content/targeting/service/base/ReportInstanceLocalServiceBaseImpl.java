@@ -16,6 +16,7 @@ package com.liferay.content.targeting.service.base;
 
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
+import com.liferay.content.targeting.service.persistence.AnonymousUserUserSegmentPersistence;
 import com.liferay.content.targeting.service.persistence.CampaignFinder;
 import com.liferay.content.targeting.service.persistence.CampaignPersistence;
 import com.liferay.content.targeting.service.persistence.ChannelInstancePersistence;
@@ -285,6 +286,63 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	public ReportInstance updateReportInstance(ReportInstance reportInstance)
 		throws SystemException {
 		return reportInstancePersistence.update(reportInstance);
+	}
+
+	/**
+	 * Returns the anonymous user user segment local service.
+	 *
+	 * @return the anonymous user user segment local service
+	 */
+	public com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService getAnonymousUserUserSegmentLocalService() {
+		return anonymousUserUserSegmentLocalService;
+	}
+
+	/**
+	 * Sets the anonymous user user segment local service.
+	 *
+	 * @param anonymousUserUserSegmentLocalService the anonymous user user segment local service
+	 */
+	public void setAnonymousUserUserSegmentLocalService(
+		com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService anonymousUserUserSegmentLocalService) {
+		this.anonymousUserUserSegmentLocalService = anonymousUserUserSegmentLocalService;
+	}
+
+	/**
+	 * Returns the anonymous user user segment remote service.
+	 *
+	 * @return the anonymous user user segment remote service
+	 */
+	public com.liferay.content.targeting.service.AnonymousUserUserSegmentService getAnonymousUserUserSegmentService() {
+		return anonymousUserUserSegmentService;
+	}
+
+	/**
+	 * Sets the anonymous user user segment remote service.
+	 *
+	 * @param anonymousUserUserSegmentService the anonymous user user segment remote service
+	 */
+	public void setAnonymousUserUserSegmentService(
+		com.liferay.content.targeting.service.AnonymousUserUserSegmentService anonymousUserUserSegmentService) {
+		this.anonymousUserUserSegmentService = anonymousUserUserSegmentService;
+	}
+
+	/**
+	 * Returns the anonymous user user segment persistence.
+	 *
+	 * @return the anonymous user user segment persistence
+	 */
+	public AnonymousUserUserSegmentPersistence getAnonymousUserUserSegmentPersistence() {
+		return anonymousUserUserSegmentPersistence;
+	}
+
+	/**
+	 * Sets the anonymous user user segment persistence.
+	 *
+	 * @param anonymousUserUserSegmentPersistence the anonymous user user segment persistence
+	 */
+	public void setAnonymousUserUserSegmentPersistence(
+		AnonymousUserUserSegmentPersistence anonymousUserUserSegmentPersistence) {
+		this.anonymousUserUserSegmentPersistence = anonymousUserUserSegmentPersistence;
 	}
 
 	/**
@@ -878,6 +936,12 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 		}
 	}
 
+	@BeanReference(type = com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService.class)
+	protected com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService anonymousUserUserSegmentLocalService;
+	@BeanReference(type = com.liferay.content.targeting.service.AnonymousUserUserSegmentService.class)
+	protected com.liferay.content.targeting.service.AnonymousUserUserSegmentService anonymousUserUserSegmentService;
+	@BeanReference(type = AnonymousUserUserSegmentPersistence.class)
+	protected AnonymousUserUserSegmentPersistence anonymousUserUserSegmentPersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.CampaignLocalService.class)
 	protected com.liferay.content.targeting.service.CampaignLocalService campaignLocalService;
 	@BeanReference(type = com.liferay.content.targeting.service.CampaignService.class)

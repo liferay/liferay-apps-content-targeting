@@ -1,6 +1,15 @@
 <?xml version="1.0"?>
 
 <model-hints>
+	<model name="com.liferay.content.targeting.model.AnonymousUserUserSegment">
+		<field name="anonymousUserUserSegmentId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="modifiedDate" type="Date" />
+		<field name="anonymousUserId" type="long" />
+		<field name="userSegmentId" type="long" />
+		<field name="manual" type="boolean" />
+		<field name="active" type="boolean" />
+	</model>
 	<model name="com.liferay.content.targeting.model.Campaign">
 		<field name="uuid" type="String" />
 		<field name="campaignId" type="long" />

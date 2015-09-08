@@ -16,6 +16,8 @@ package com.liferay.content.targeting.api.model;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.model.RuleInstance;
+import com.liferay.content.targeting.model.UserSegment;
+import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
 
@@ -25,6 +27,10 @@ import javax.servlet.http.HttpServletRequest;
  * @author Julio Camarero
  */
 public interface RulesEngine {
+
+	public long[] getMatchingUserSegmentIds(
+		HttpServletRequest request, AnonymousUser anonymousUser,
+		List<UserSegment> userSegments) throws SystemException;
 
 	public boolean matches(
 		HttpServletRequest request, AnonymousUser anonymousUser,
