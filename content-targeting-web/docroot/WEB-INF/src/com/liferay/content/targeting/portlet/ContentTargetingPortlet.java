@@ -1546,7 +1546,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				String title = LanguageUtil.format(
 					portletConfig, themeDisplay.getLocale(),
-					"tactics-for-the-x-x", titleObject);
+					"promotions-for-the-x-x", titleObject);
 
 				template.put("title", title);
 			}
