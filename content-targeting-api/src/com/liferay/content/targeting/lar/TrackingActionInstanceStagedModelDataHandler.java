@@ -216,7 +216,8 @@ public class TrackingActionInstanceStagedModelDataHandler
 			importedTrackingActionInstance =
 				TrackingActionInstanceLocalServiceUtil.
 					addTrackingActionInstance(
-						userId, trackingActionInstance.getTrackingActionKey(),
+						userId, trackingActionInstance.getReportInstanceId(),
+						trackingActionInstance.getTrackingActionKey(),
 						trackingActionInstance.getCampaignId(),
 						trackingActionInstance.getAlias(),
 						trackingActionInstance.getReferrerClassName(),
@@ -232,6 +233,7 @@ public class TrackingActionInstanceStagedModelDataHandler
 					updateTrackingActionInstance(
 						existingTrackingActionInstance.
 							getTrackingActionInstanceId(),
+						trackingActionInstance.getReportInstanceId(),
 						trackingActionInstance.getAlias(),
 						trackingActionInstance.getReferrerClassName(),
 						trackingActionInstance.getReferrerClassPK(),

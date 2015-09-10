@@ -66,10 +66,10 @@ public class TrackingActionInstanceLocalServiceImpl
 
 	@Override
 	public TrackingActionInstance addTrackingActionInstance(
-			long userId, String trackingActionKey, long campaignId,
-			String alias, String referrerClassName, long referrerClassPK,
-			String elementId, String eventType, String typeSettings,
-			ServiceContext serviceContext)
+			long userId, long reportInstanceId, String trackingActionKey,
+			long campaignId, String alias, String referrerClassName,
+			long referrerClassPK, String elementId, String eventType,
+			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
 		validate(0, campaignId, alias);
@@ -94,6 +94,7 @@ public class TrackingActionInstanceLocalServiceImpl
 		trackingActionInstance.setTrackingActionKey(trackingActionKey);
 		trackingActionInstance.setCampaignId(campaignId);
 		trackingActionInstance.setAlias(alias);
+		trackingActionInstance.setReportInstanceId(reportInstanceId);
 		trackingActionInstance.setReferrerClassName(referrerClassName);
 		trackingActionInstance.setReferrerClassPK(referrerClassPK);
 		trackingActionInstance.setElementId(elementId);
@@ -165,6 +166,15 @@ public class TrackingActionInstanceLocalServiceImpl
 	}
 
 	@Override
+	public TrackingActionInstance fetchTrackingActionInstanceByReportInstanceId(
+			long reportInstanceId, String alias)
+		throws SystemException {
+
+		return trackingActionInstancePersistence.fetchByR_A(
+			reportInstanceId, alias);
+	}
+
+	@Override
 	public List<TrackingActionInstance> getTrackingActionInstances(
 			long campaignId)
 		throws SystemException {
@@ -191,6 +201,37 @@ public class TrackingActionInstanceLocalServiceImpl
 	}
 
 	@Override
+	public List<TrackingActionInstance>
+		getTrackingActionInstancesByReportInstanceId(
+			long reportInstanceId)
+		throws SystemException {
+
+		return trackingActionInstancePersistence.findByReportInstanceId(
+			reportInstanceId);
+	}
+
+	@Override
+	public List<TrackingActionInstance>
+		getTrackingActionInstancesByReportInstanceId(
+			long reportInstanceId, String className, long classPK,
+			String eventType)
+		throws SystemException {
+
+		return trackingActionInstancePersistence.findByR_R_R_E(
+			reportInstanceId, className, classPK, eventType);
+	}
+
+	@Override
+	public List<TrackingActionInstance>
+		getTrackingActionInstancesByReportInstanceId(
+			long reportInstanceId, String elementId, String eventType)
+		throws SystemException {
+
+		return trackingActionInstancePersistence.findByR_E_E(
+			reportInstanceId, elementId, eventType);
+	}
+
+	@Override
 	public int getTrackingActionInstancesCount(long campaignId)
 		throws SystemException {
 
@@ -199,7 +240,7 @@ public class TrackingActionInstanceLocalServiceImpl
 
 	@Override
 	public TrackingActionInstance updateTrackingActionInstance(
-			long trackingActionInstanceId, String alias,
+			long trackingActionInstanceId, long reportInstanceId, String alias,
 			String referrerClassName, long referrerClassPK, String elementId,
 			String eventType, String typeSettings,
 			ServiceContext serviceContext)
@@ -218,6 +259,7 @@ public class TrackingActionInstanceLocalServiceImpl
 		trackingActionInstance.setModifiedDate(
 			serviceContext.getModifiedDate(now));
 		trackingActionInstance.setAlias(alias);
+		trackingActionInstance.setReportInstanceId(reportInstanceId);
 		trackingActionInstance.setReferrerClassName(referrerClassName);
 		trackingActionInstance.setReferrerClassPK(referrerClassPK);
 		trackingActionInstance.setElementId(elementId);
