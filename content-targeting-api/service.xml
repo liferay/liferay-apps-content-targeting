@@ -171,6 +171,8 @@
 		<!-- Other fields -->
 
 		<column name="reportKey" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
 		<column name="className" type="String" />
 		<column name="classPK" type="long" />
 		<column name="typeSettings" type="String" />
@@ -187,7 +189,7 @@
 			<finder-column name="className" />
 			<finder-column name="classPK" />
 		</finder>
-		<finder name="R_C_C" return-type="ReportInstance" unique="true">
+		<finder name="R_C_C" return-type="Collection">
 			<finder-column name="reportKey" />
 			<finder-column name="className" />
 			<finder-column name="classPK" />
@@ -303,6 +305,7 @@
 
 		<column name="trackingActionKey" type="String" />
 		<column name="campaignId" type="long" />
+		<column name="reportInstanceId" type="long" />
 		<column name="alias" type="String" />
 		<column name="referrerClassName" type="String" />
 		<column name="referrerClassPK" type="long" />
@@ -335,6 +338,24 @@
 		</finder>
 		<finder name="C_R_R_E" return-type="Collection">
 			<finder-column name="campaignId" />
+			<finder-column name="referrerClassName" />
+			<finder-column name="referrerClassPK" />
+			<finder-column name="eventType" />
+		</finder>
+		<finder name="ReportInstanceId" return-type="Collection">
+			<finder-column name="reportInstanceId" />
+		</finder>
+		<finder name="R_A" return-type="TrackingAction" unique="true">
+			<finder-column name="reportInstanceId" />
+			<finder-column name="alias" />
+		</finder>
+		<finder name="R_E_E" return-type="Collection">
+			<finder-column name="reportInstanceId" />
+			<finder-column name="elementId" />
+			<finder-column name="eventType" />
+		</finder>
+		<finder name="R_R_R_E" return-type="Collection">
+			<finder-column name="reportInstanceId" />
 			<finder-column name="referrerClassName" />
 			<finder-column name="referrerClassPK" />
 			<finder-column name="eventType" />
@@ -398,6 +419,7 @@
 		<exception>InvalidChannels</exception>
 		<exception>InvalidDateRange</exception>
 		<exception>InvalidName</exception>
+		<exception>InvalidReport</exception>
 		<exception>InvalidRule</exception>
 		<exception>InvalidRules</exception>
 		<exception>InvalidTrackingAction</exception>
