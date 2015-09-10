@@ -76,6 +76,7 @@ public class CTActionClp extends BaseModelImpl<CTAction> implements CTAction {
 
 		attributes.put("CTActionId", getCTActionId());
 		attributes.put("campaignId", getCampaignId());
+		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("alias", getAlias());
 		attributes.put("referrerClassName", getReferrerClassName());
@@ -100,6 +101,12 @@ public class CTActionClp extends BaseModelImpl<CTAction> implements CTAction {
 
 		if (campaignId != null) {
 			setCampaignId(campaignId);
+		}
+
+		Long reportInstanceId = (Long)attributes.get("reportInstanceId");
+
+		if (reportInstanceId != null) {
+			setReportInstanceId(reportInstanceId);
 		}
 
 		Long userSegmentId = (Long)attributes.get("userSegmentId");
@@ -190,6 +197,30 @@ public class CTActionClp extends BaseModelImpl<CTAction> implements CTAction {
 				Method method = clazz.getMethod("setCampaignId", long.class);
 
 				method.invoke(_ctActionRemoteModel, campaignId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getReportInstanceId() {
+		return _reportInstanceId;
+	}
+
+	@Override
+	public void setReportInstanceId(long reportInstanceId) {
+		_reportInstanceId = reportInstanceId;
+
+		if (_ctActionRemoteModel != null) {
+			try {
+				Class<?> clazz = _ctActionRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setReportInstanceId",
+						long.class);
+
+				method.invoke(_ctActionRemoteModel, reportInstanceId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -472,6 +503,7 @@ public class CTActionClp extends BaseModelImpl<CTAction> implements CTAction {
 
 		clone.setCTActionId(getCTActionId());
 		clone.setCampaignId(getCampaignId());
+		clone.setReportInstanceId(getReportInstanceId());
 		clone.setUserSegmentId(getUserSegmentId());
 		clone.setAlias(getAlias());
 		clone.setReferrerClassName(getReferrerClassName());
@@ -532,12 +564,14 @@ public class CTActionClp extends BaseModelImpl<CTAction> implements CTAction {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{CTActionId=");
 		sb.append(getCTActionId());
 		sb.append(", campaignId=");
 		sb.append(getCampaignId());
+		sb.append(", reportInstanceId=");
+		sb.append(getReportInstanceId());
 		sb.append(", userSegmentId=");
 		sb.append(getUserSegmentId());
 		sb.append(", alias=");
@@ -561,7 +595,7 @@ public class CTActionClp extends BaseModelImpl<CTAction> implements CTAction {
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -575,6 +609,10 @@ public class CTActionClp extends BaseModelImpl<CTAction> implements CTAction {
 		sb.append(
 			"<column><column-name>campaignId</column-name><column-value><![CDATA[");
 		sb.append(getCampaignId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>reportInstanceId</column-name><column-value><![CDATA[");
+		sb.append(getReportInstanceId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userSegmentId</column-name><column-value><![CDATA[");
@@ -616,6 +654,7 @@ public class CTActionClp extends BaseModelImpl<CTAction> implements CTAction {
 
 	private long _CTActionId;
 	private long _campaignId;
+	private long _reportInstanceId;
 	private long _userSegmentId;
 	private String _alias;
 	private String _referrerClassName;

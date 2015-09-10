@@ -111,212 +111,48 @@ public class CTActionTotalUtil {
 	}
 
 	/**
-	* Returns all the c t action totals where campaignId = &#63;.
+	* Returns all the c t action totals where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	*
-	* @param campaignId the campaign ID
-	* @return the matching c t action totals
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> findByCampaignId(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByCampaignId(campaignId);
-	}
-
-	/**
-	* Returns a range of all the c t action totals where campaignId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param campaignId the campaign ID
-	* @param start the lower bound of the range of c t action totals
-	* @param end the upper bound of the range of c t action totals (not inclusive)
-	* @return the range of matching c t action totals
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> findByCampaignId(
-		long campaignId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByCampaignId(campaignId, start, end);
-	}
-
-	/**
-	* Returns an ordered range of all the c t action totals where campaignId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param campaignId the campaign ID
-	* @param start the lower bound of the range of c t action totals
-	* @param end the upper bound of the range of c t action totals (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching c t action totals
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> findByCampaignId(
-		long campaignId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByCampaignId(campaignId, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the first c t action total in the ordered set where campaignId = &#63;.
-	*
-	* @param campaignId the campaign ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching c t action total
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a matching c t action total could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal findByCampaignId_First(
-		long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByCampaignId_First(campaignId, orderByComparator);
-	}
-
-	/**
-	* Returns the first c t action total in the ordered set where campaignId = &#63;.
-	*
-	* @param campaignId the campaign ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching c t action total, or <code>null</code> if a matching c t action total could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchByCampaignId_First(
-		long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByCampaignId_First(campaignId, orderByComparator);
-	}
-
-	/**
-	* Returns the last c t action total in the ordered set where campaignId = &#63;.
-	*
-	* @param campaignId the campaign ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching c t action total
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a matching c t action total could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal findByCampaignId_Last(
-		long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByCampaignId_Last(campaignId, orderByComparator);
-	}
-
-	/**
-	* Returns the last c t action total in the ordered set where campaignId = &#63;.
-	*
-	* @param campaignId the campaign ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching c t action total, or <code>null</code> if a matching c t action total could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchByCampaignId_Last(
-		long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .fetchByCampaignId_Last(campaignId, orderByComparator);
-	}
-
-	/**
-	* Returns the c t action totals before and after the current c t action total in the ordered set where campaignId = &#63;.
-	*
-	* @param CTActionTotalId the primary key of the current c t action total
-	* @param campaignId the campaign ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next c t action total
-	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a c t action total with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal[] findByCampaignId_PrevAndNext(
-		long CTActionTotalId, long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence()
-				   .findByCampaignId_PrevAndNext(CTActionTotalId, campaignId,
-			orderByComparator);
-	}
-
-	/**
-	* Removes all the c t action totals where campaignId = &#63; from the database.
-	*
-	* @param campaignId the campaign ID
-	* @throws SystemException if a system exception occurred
-	*/
-	public static void removeByCampaignId(long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByCampaignId(campaignId);
-	}
-
-	/**
-	* Returns the number of c t action totals where campaignId = &#63;.
-	*
-	* @param campaignId the campaign ID
-	* @return the number of matching c t action totals
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int countByCampaignId(long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByCampaignId(campaignId);
-	}
-
-	/**
-	* Returns all the c t action totals where campaignId = &#63; and modifiedDate &gt; &#63;.
-	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param modifiedDate the modified date
 	* @return the matching c t action totals
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> findByC_GtD(
-		long campaignId, java.util.Date modifiedDate)
+	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> findByR_GtD(
+		long reportInstanceId, java.util.Date modifiedDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_GtD(campaignId, modifiedDate);
+		return getPersistence().findByR_GtD(reportInstanceId, modifiedDate);
 	}
 
 	/**
-	* Returns a range of all the c t action totals where campaignId = &#63; and modifiedDate &gt; &#63;.
+	* Returns a range of all the c t action totals where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param modifiedDate the modified date
 	* @param start the lower bound of the range of c t action totals
 	* @param end the upper bound of the range of c t action totals (not inclusive)
 	* @return the range of matching c t action totals
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> findByC_GtD(
-		long campaignId, java.util.Date modifiedDate, int start, int end)
+	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> findByR_GtD(
+		long reportInstanceId, java.util.Date modifiedDate, int start, int end)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_GtD(campaignId, modifiedDate, start, end);
+		return getPersistence()
+				   .findByR_GtD(reportInstanceId, modifiedDate, start, end);
 	}
 
 	/**
-	* Returns an ordered range of all the c t action totals where campaignId = &#63; and modifiedDate &gt; &#63;.
+	* Returns an ordered range of all the c t action totals where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	*
 	* <p>
 	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param modifiedDate the modified date
 	* @param start the lower bound of the range of c t action totals
 	* @param end the upper bound of the range of c t action totals (not inclusive)
@@ -324,141 +160,144 @@ public class CTActionTotalUtil {
 	* @return the ordered range of matching c t action totals
 	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> findByC_GtD(
-		long campaignId, java.util.Date modifiedDate, int start, int end,
+	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> findByR_GtD(
+		long reportInstanceId, java.util.Date modifiedDate, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByC_GtD(campaignId, modifiedDate, start, end,
+				   .findByR_GtD(reportInstanceId, modifiedDate, start, end,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first c t action total in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the first c t action total in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param modifiedDate the modified date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t action total
 	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a matching c t action total could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal findByC_GtD_First(
-		long campaignId, java.util.Date modifiedDate,
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal findByR_GtD_First(
+		long reportInstanceId, java.util.Date modifiedDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByC_GtD_First(campaignId, modifiedDate,
+				   .findByR_GtD_First(reportInstanceId, modifiedDate,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the first c t action total in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the first c t action total in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param modifiedDate the modified date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching c t action total, or <code>null</code> if a matching c t action total could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchByC_GtD_First(
-		long campaignId, java.util.Date modifiedDate,
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchByR_GtD_First(
+		long reportInstanceId, java.util.Date modifiedDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByC_GtD_First(campaignId, modifiedDate,
+				   .fetchByR_GtD_First(reportInstanceId, modifiedDate,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the last c t action total in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the last c t action total in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param modifiedDate the modified date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t action total
 	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a matching c t action total could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal findByC_GtD_Last(
-		long campaignId, java.util.Date modifiedDate,
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal findByR_GtD_Last(
+		long reportInstanceId, java.util.Date modifiedDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByC_GtD_Last(campaignId, modifiedDate, orderByComparator);
+				   .findByR_GtD_Last(reportInstanceId, modifiedDate,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the last c t action total in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the last c t action total in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param modifiedDate the modified date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching c t action total, or <code>null</code> if a matching c t action total could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchByC_GtD_Last(
-		long campaignId, java.util.Date modifiedDate,
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchByR_GtD_Last(
+		long reportInstanceId, java.util.Date modifiedDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByC_GtD_Last(campaignId, modifiedDate,
+				   .fetchByR_GtD_Last(reportInstanceId, modifiedDate,
 			orderByComparator);
 	}
 
 	/**
-	* Returns the c t action totals before and after the current c t action total in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the c t action totals before and after the current c t action total in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	*
 	* @param CTActionTotalId the primary key of the current c t action total
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param modifiedDate the modified date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next c t action total
 	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a c t action total with the primary key could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal[] findByC_GtD_PrevAndNext(
-		long CTActionTotalId, long campaignId, java.util.Date modifiedDate,
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal[] findByR_GtD_PrevAndNext(
+		long CTActionTotalId, long reportInstanceId,
+		java.util.Date modifiedDate,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByC_GtD_PrevAndNext(CTActionTotalId, campaignId,
+				   .findByR_GtD_PrevAndNext(CTActionTotalId, reportInstanceId,
 			modifiedDate, orderByComparator);
 	}
 
 	/**
-	* Removes all the c t action totals where campaignId = &#63; and modifiedDate &gt; &#63; from the database.
+	* Removes all the c t action totals where reportInstanceId = &#63; and modifiedDate &gt; &#63; from the database.
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param modifiedDate the modified date
 	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_GtD(long campaignId,
+	public static void removeByR_GtD(long reportInstanceId,
 		java.util.Date modifiedDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		getPersistence().removeByC_GtD(campaignId, modifiedDate);
+		getPersistence().removeByR_GtD(reportInstanceId, modifiedDate);
 	}
 
 	/**
-	* Returns the number of c t action totals where campaignId = &#63; and modifiedDate &gt; &#63;.
+	* Returns the number of c t action totals where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param modifiedDate the modified date
 	* @return the number of matching c t action totals
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_GtD(long campaignId, java.util.Date modifiedDate)
+	public static int countByR_GtD(long reportInstanceId,
+		java.util.Date modifiedDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_GtD(campaignId, modifiedDate);
+		return getPersistence().countByR_GtD(reportInstanceId, modifiedDate);
 	}
 
 	/**
-	* Returns the c t action total where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException} if it could not be found.
+	* Returns the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException} if it could not be found.
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param referrerClassName the referrer class name
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
@@ -467,21 +306,21 @@ public class CTActionTotalUtil {
 	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a matching c t action total could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal findByC_R_R_E_E(
-		long campaignId, java.lang.String referrerClassName,
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal findByR_R_R_E_E(
+		long reportInstanceId, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .findByC_R_R_E_E(campaignId, referrerClassName,
+				   .findByR_R_R_E_E(reportInstanceId, referrerClassName,
 			referrerClassPK, elementId, eventType);
 	}
 
 	/**
-	* Returns the c t action total where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param referrerClassName the referrer class name
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
@@ -489,20 +328,20 @@ public class CTActionTotalUtil {
 	* @return the matching c t action total, or <code>null</code> if a matching c t action total could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchByC_R_R_E_E(
-		long campaignId, java.lang.String referrerClassName,
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchByR_R_R_E_E(
+		long reportInstanceId, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByC_R_R_E_E(campaignId, referrerClassName,
+				   .fetchByR_R_R_E_E(reportInstanceId, referrerClassName,
 			referrerClassPK, elementId, eventType);
 	}
 
 	/**
-	* Returns the c t action total where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	* Returns the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param referrerClassName the referrer class name
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
@@ -511,20 +350,20 @@ public class CTActionTotalUtil {
 	* @return the matching c t action total, or <code>null</code> if a matching c t action total could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchByC_R_R_E_E(
-		long campaignId, java.lang.String referrerClassName,
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchByR_R_R_E_E(
+		long reportInstanceId, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, boolean retrieveFromCache)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByC_R_R_E_E(campaignId, referrerClassName,
+				   .fetchByR_R_R_E_E(reportInstanceId, referrerClassName,
 			referrerClassPK, elementId, eventType, retrieveFromCache);
 	}
 
 	/**
-	* Removes the c t action total where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
+	* Removes the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param referrerClassName the referrer class name
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
@@ -532,21 +371,21 @@ public class CTActionTotalUtil {
 	* @return the c t action total that was removed
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal removeByC_R_R_E_E(
-		long campaignId, java.lang.String referrerClassName,
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal removeByR_R_R_E_E(
+		long reportInstanceId, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType)
 		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .removeByC_R_R_E_E(campaignId, referrerClassName,
+				   .removeByR_R_R_E_E(reportInstanceId, referrerClassName,
 			referrerClassPK, elementId, eventType);
 	}
 
 	/**
-	* Returns the number of c t action totals where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
+	* Returns the number of c t action totals where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
 	*
-	* @param campaignId the campaign ID
+	* @param reportInstanceId the report instance ID
 	* @param referrerClassName the referrer class name
 	* @param referrerClassPK the referrer class p k
 	* @param elementId the element ID
@@ -554,13 +393,184 @@ public class CTActionTotalUtil {
 	* @return the number of matching c t action totals
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_R_R_E_E(long campaignId,
+	public static int countByR_R_R_E_E(long reportInstanceId,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .countByC_R_R_E_E(campaignId, referrerClassName,
+				   .countByR_R_R_E_E(reportInstanceId, referrerClassName,
 			referrerClassPK, elementId, eventType);
+	}
+
+	/**
+	* Returns all the c t action totals where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @return the matching c t action totals
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> findByReportInstanceId(
+		long reportInstanceId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByReportInstanceId(reportInstanceId);
+	}
+
+	/**
+	* Returns a range of all the c t action totals where reportInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param start the lower bound of the range of c t action totals
+	* @param end the upper bound of the range of c t action totals (not inclusive)
+	* @return the range of matching c t action totals
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> findByReportInstanceId(
+		long reportInstanceId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByReportInstanceId(reportInstanceId, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the c t action totals where reportInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param start the lower bound of the range of c t action totals
+	* @param end the upper bound of the range of c t action totals (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching c t action totals
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> findByReportInstanceId(
+		long reportInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByReportInstanceId(reportInstanceId, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first c t action total in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching c t action total
+	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a matching c t action total could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal findByReportInstanceId_First(
+		long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByReportInstanceId_First(reportInstanceId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first c t action total in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching c t action total, or <code>null</code> if a matching c t action total could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchByReportInstanceId_First(
+		long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByReportInstanceId_First(reportInstanceId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last c t action total in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching c t action total
+	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a matching c t action total could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal findByReportInstanceId_Last(
+		long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByReportInstanceId_Last(reportInstanceId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the last c t action total in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching c t action total, or <code>null</code> if a matching c t action total could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal fetchByReportInstanceId_Last(
+		long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByReportInstanceId_Last(reportInstanceId,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the c t action totals before and after the current c t action total in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param CTActionTotalId the primary key of the current c t action total
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next c t action total
+	* @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a c t action total with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal[] findByReportInstanceId_PrevAndNext(
+		long CTActionTotalId, long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByReportInstanceId_PrevAndNext(CTActionTotalId,
+			reportInstanceId, orderByComparator);
+	}
+
+	/**
+	* Removes all the c t action totals where reportInstanceId = &#63; from the database.
+	*
+	* @param reportInstanceId the report instance ID
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByReportInstanceId(long reportInstanceId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByReportInstanceId(reportInstanceId);
+	}
+
+	/**
+	* Returns the number of c t action totals where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @return the number of matching c t action totals
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByReportInstanceId(long reportInstanceId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByReportInstanceId(reportInstanceId);
 	}
 
 	/**

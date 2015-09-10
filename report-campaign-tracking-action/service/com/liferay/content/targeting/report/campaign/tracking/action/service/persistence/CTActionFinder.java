@@ -19,10 +19,10 @@ package com.liferay.content.targeting.report.campaign.tracking.action.service.pe
  */
 public interface CTActionFinder {
 	public java.util.List<java.lang.Object[]> findByAnalyticsWithClassName(
-		long campaignId, java.util.Date modifiedDate)
+		long reportInstanceId, java.util.Date modifiedDate)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public java.util.List<java.lang.Object[]> findByAnalyticsWithElementId(
-		long campaignId, java.util.Date modifiedDate)
+		long reportInstanceId, java.util.Date modifiedDate)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

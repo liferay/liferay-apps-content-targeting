@@ -88,6 +88,20 @@ public interface CTActionModel extends BaseModel<CTAction> {
 	public void setCampaignId(long campaignId);
 
 	/**
+	 * Returns the report instance ID of this c t action.
+	 *
+	 * @return the report instance ID of this c t action
+	 */
+	public long getReportInstanceId();
+
+	/**
+	 * Sets the report instance ID of this c t action.
+	 *
+	 * @param reportInstanceId the report instance ID of this c t action
+	 */
+	public void setReportInstanceId(long reportInstanceId);
+
+	/**
 	 * Returns the user segment ID of this c t action.
 	 *
 	 * @return the user segment ID of this c t action

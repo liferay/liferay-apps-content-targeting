@@ -10,6 +10,7 @@
 			<generator class="assigned" />
 		</id>
 		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="reportInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userSegmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="alias" type="com.liferay.portal.dao.orm.hibernate.StringType" column="alias_" />
 		<property name="referrerClassName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -25,6 +26,7 @@
 			<generator class="assigned" />
 		</id>
 		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="reportInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="alias" type="com.liferay.portal.dao.orm.hibernate.StringType" column="alias_" />
 		<property name="referrerClassName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="referrerClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />

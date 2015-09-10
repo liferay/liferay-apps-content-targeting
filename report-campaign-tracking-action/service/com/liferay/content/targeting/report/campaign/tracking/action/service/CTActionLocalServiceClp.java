@@ -732,7 +732,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction addCTAction(
-		long campaignId, long userSegmentId, java.lang.String alias,
+		long reportInstanceId, long userSegmentId, java.lang.String alias,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -743,7 +743,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName19,
 					_methodParameterTypes19,
 					new Object[] {
-						campaignId,
+						reportInstanceId,
 						
 					userSegmentId,
 						
@@ -783,7 +783,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction addCTAction(
-		long campaignId, long userSegmentId, java.lang.String alias,
+		long reportInstanceId, long userSegmentId, java.lang.String alias,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -794,7 +794,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName20,
 					_methodParameterTypes20,
 					new Object[] {
-						campaignId,
+						reportInstanceId,
 						
 					userSegmentId,
 						
@@ -836,7 +836,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction addCTAction(
-		long campaignId, long userSegmentId, java.lang.String alias,
+		long reportInstanceId, long userSegmentId, java.lang.String alias,
 		java.lang.String elementId, java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -846,7 +846,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName21,
 					_methodParameterTypes21,
 					new Object[] {
-						campaignId,
+						reportInstanceId,
 						
 					userSegmentId,
 						
@@ -912,12 +912,12 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 	}
 
 	@Override
-	public void checkCTActionEvents(long campaignId)
+	public void checkCTActionEvents(long reportInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
 			_invokableLocalService.invokeMethod(_methodName23,
-				_methodParameterTypes23, new Object[] { campaignId });
+				_methodParameterTypes23, new Object[] { reportInstanceId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -942,7 +942,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction getCTAction(
-		long campaignId, long userSegmentId,
+		long reportInstanceId, long userSegmentId,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -953,7 +953,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName24,
 					_methodParameterTypes24,
 					new Object[] {
-						campaignId,
+						reportInstanceId,
 						
 					userSegmentId,
 						
@@ -991,14 +991,14 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> getCTActions(
-		long campaignId)
+		long reportInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName25,
-					_methodParameterTypes25, new Object[] { campaignId });
+					_methodParameterTypes25, new Object[] { reportInstanceId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1025,7 +1025,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> getCTActions(
-		long campaignId, java.util.Date modifiedDate)
+		long reportInstanceId, java.util.Date modifiedDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1034,7 +1034,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName26,
 					_methodParameterTypes26,
 					new Object[] {
-						campaignId,
+						reportInstanceId,
 						
 					ClpSerializer.translateInput(modifiedDate)
 					});
@@ -1064,7 +1064,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> getCTActions(
-		long campaignId, int start, int end,
+		long reportInstanceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -1074,7 +1074,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName27,
 					_methodParameterTypes27,
 					new Object[] {
-						campaignId,
+						reportInstanceId,
 						
 					start,
 						
@@ -1108,7 +1108,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> getCTActions(
-		long campaignId, java.lang.String elementId)
+		long reportInstanceId, java.lang.String elementId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1117,7 +1117,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName28,
 					_methodParameterTypes28,
 					new Object[] {
-						campaignId,
+						reportInstanceId,
 						
 					ClpSerializer.translateInput(elementId)
 					});
@@ -1147,7 +1147,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> getCTActions(
-		long campaignId, java.lang.String className, long classPK)
+		long reportInstanceId, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1156,7 +1156,7 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName29,
 					_methodParameterTypes29,
 					new Object[] {
-						campaignId,
+						reportInstanceId,
 						
 					ClpSerializer.translateInput(className),
 						
@@ -1187,14 +1187,14 @@ public class CTActionLocalServiceClp implements CTActionLocalService {
 	}
 
 	@Override
-	public int getCTActionsCount(long campaignId)
+	public int getCTActionsCount(long reportInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30, new Object[] { campaignId });
+					_methodParameterTypes30, new Object[] { reportInstanceId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

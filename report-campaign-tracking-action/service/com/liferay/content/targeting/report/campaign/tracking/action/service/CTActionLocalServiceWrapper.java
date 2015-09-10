@@ -288,35 +288,36 @@ public class CTActionLocalServiceWrapper implements CTActionLocalService,
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction addCTAction(
-		long campaignId, long userSegmentId, java.lang.String alias,
+		long reportInstanceId, long userSegmentId, java.lang.String alias,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionLocalService.addCTAction(campaignId, userSegmentId,
-			alias, referrerClassName, referrerClassPK, eventType, count);
+		return _ctActionLocalService.addCTAction(reportInstanceId,
+			userSegmentId, alias, referrerClassName, referrerClassPK,
+			eventType, count);
 	}
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction addCTAction(
-		long campaignId, long userSegmentId, java.lang.String alias,
+		long reportInstanceId, long userSegmentId, java.lang.String alias,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionLocalService.addCTAction(campaignId, userSegmentId,
-			alias, referrerClassName, referrerClassPK, elementId, eventType,
-			count);
+		return _ctActionLocalService.addCTAction(reportInstanceId,
+			userSegmentId, alias, referrerClassName, referrerClassPK,
+			elementId, eventType, count);
 	}
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction addCTAction(
-		long campaignId, long userSegmentId, java.lang.String alias,
+		long reportInstanceId, long userSegmentId, java.lang.String alias,
 		java.lang.String elementId, java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionLocalService.addCTAction(campaignId, userSegmentId,
-			alias, elementId, eventType, count);
+		return _ctActionLocalService.addCTAction(reportInstanceId,
+			userSegmentId, alias, elementId, eventType, count);
 	}
 
 	@Override
@@ -327,70 +328,72 @@ public class CTActionLocalServiceWrapper implements CTActionLocalService,
 	}
 
 	@Override
-	public void checkCTActionEvents(long campaignId)
+	public void checkCTActionEvents(long reportInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		_ctActionLocalService.checkCTActionEvents(campaignId);
+		_ctActionLocalService.checkCTActionEvents(reportInstanceId);
 	}
 
 	@Override
 	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction getCTAction(
-		long campaignId, long userSegmentId,
+		long reportInstanceId, long userSegmentId,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionLocalService.getCTAction(campaignId, userSegmentId,
-			referrerClassName, referrerClassPK, elementId, eventType);
+		return _ctActionLocalService.getCTAction(reportInstanceId,
+			userSegmentId, referrerClassName, referrerClassPK, elementId,
+			eventType);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> getCTActions(
-		long campaignId)
+		long reportInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionLocalService.getCTActions(campaignId);
+		return _ctActionLocalService.getCTActions(reportInstanceId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> getCTActions(
-		long campaignId, java.util.Date modifiedDate)
+		long reportInstanceId, java.util.Date modifiedDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionLocalService.getCTActions(campaignId, modifiedDate);
+		return _ctActionLocalService.getCTActions(reportInstanceId, modifiedDate);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> getCTActions(
-		long campaignId, int start, int end,
+		long reportInstanceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionLocalService.getCTActions(campaignId, start, end,
+		return _ctActionLocalService.getCTActions(reportInstanceId, start, end,
 			orderByComparator);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> getCTActions(
-		long campaignId, java.lang.String elementId)
+		long reportInstanceId, java.lang.String elementId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionLocalService.getCTActions(campaignId, elementId);
+		return _ctActionLocalService.getCTActions(reportInstanceId, elementId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction> getCTActions(
-		long campaignId, java.lang.String className, long classPK)
+		long reportInstanceId, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionLocalService.getCTActions(campaignId, className, classPK);
+		return _ctActionLocalService.getCTActions(reportInstanceId, className,
+			classPK);
 	}
 
 	@Override
-	public int getCTActionsCount(long campaignId)
+	public int getCTActionsCount(long reportInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _ctActionLocalService.getCTActionsCount(campaignId);
+		return _ctActionLocalService.getCTActionsCount(reportInstanceId);
 	}
 
 	/**

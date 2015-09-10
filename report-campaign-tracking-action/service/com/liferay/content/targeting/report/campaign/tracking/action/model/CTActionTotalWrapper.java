@@ -52,6 +52,7 @@ public class CTActionTotalWrapper implements CTActionTotal,
 
 		attributes.put("CTActionTotalId", getCTActionTotalId());
 		attributes.put("campaignId", getCampaignId());
+		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("alias", getAlias());
 		attributes.put("referrerClassName", getReferrerClassName());
 		attributes.put("referrerClassPK", getReferrerClassPK());
@@ -75,6 +76,12 @@ public class CTActionTotalWrapper implements CTActionTotal,
 
 		if (campaignId != null) {
 			setCampaignId(campaignId);
+		}
+
+		Long reportInstanceId = (Long)attributes.get("reportInstanceId");
+
+		if (reportInstanceId != null) {
+			setReportInstanceId(reportInstanceId);
 		}
 
 		String alias = (String)attributes.get("alias");
@@ -178,6 +185,26 @@ public class CTActionTotalWrapper implements CTActionTotal,
 	@Override
 	public void setCampaignId(long campaignId) {
 		_ctActionTotal.setCampaignId(campaignId);
+	}
+
+	/**
+	* Returns the report instance ID of this c t action total.
+	*
+	* @return the report instance ID of this c t action total
+	*/
+	@Override
+	public long getReportInstanceId() {
+		return _ctActionTotal.getReportInstanceId();
+	}
+
+	/**
+	* Sets the report instance ID of this c t action total.
+	*
+	* @param reportInstanceId the report instance ID of this c t action total
+	*/
+	@Override
+	public void setReportInstanceId(long reportInstanceId) {
+		_ctActionTotal.setReportInstanceId(reportInstanceId);
 	}
 
 	/**

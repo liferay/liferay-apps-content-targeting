@@ -88,6 +88,20 @@ public interface CTActionTotalModel extends BaseModel<CTActionTotal> {
 	public void setCampaignId(long campaignId);
 
 	/**
+	 * Returns the report instance ID of this c t action total.
+	 *
+	 * @return the report instance ID of this c t action total
+	 */
+	public long getReportInstanceId();
+
+	/**
+	 * Sets the report instance ID of this c t action total.
+	 *
+	 * @param reportInstanceId the report instance ID of this c t action total
+	 */
+	public void setReportInstanceId(long reportInstanceId);
+
+	/**
 	 * Returns the alias of this c t action total.
 	 *
 	 * @return the alias of this c t action total

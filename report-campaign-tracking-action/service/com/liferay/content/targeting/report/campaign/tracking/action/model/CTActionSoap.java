@@ -33,6 +33,7 @@ public class CTActionSoap implements Serializable {
 
 		soapModel.setCTActionId(model.getCTActionId());
 		soapModel.setCampaignId(model.getCampaignId());
+		soapModel.setReportInstanceId(model.getReportInstanceId());
 		soapModel.setUserSegmentId(model.getUserSegmentId());
 		soapModel.setAlias(model.getAlias());
 		soapModel.setReferrerClassName(model.getReferrerClassName());
@@ -109,6 +110,14 @@ public class CTActionSoap implements Serializable {
 		_campaignId = campaignId;
 	}
 
+	public long getReportInstanceId() {
+		return _reportInstanceId;
+	}
+
+	public void setReportInstanceId(long reportInstanceId) {
+		_reportInstanceId = reportInstanceId;
+	}
+
 	public long getUserSegmentId() {
 		return _userSegmentId;
 	}
@@ -175,6 +184,7 @@ public class CTActionSoap implements Serializable {
 
 	private long _CTActionId;
 	private long _campaignId;
+	private long _reportInstanceId;
 	private long _userSegmentId;
 	private String _alias;
 	private String _referrerClassName;

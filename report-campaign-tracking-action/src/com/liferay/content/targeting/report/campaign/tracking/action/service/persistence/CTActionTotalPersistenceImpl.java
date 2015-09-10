@@ -89,538 +89,44 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionTotalModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CAMPAIGNID =
-		new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_GTD = new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionTotalModelImpl.FINDER_CACHE_ENABLED,
 			CTActionTotalImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByCampaignId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID =
-		new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
-			CTActionTotalModelImpl.FINDER_CACHE_ENABLED,
-			CTActionTotalImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByCampaignId", new String[] { Long.class.getName() },
-			CTActionTotalModelImpl.CAMPAIGNID_COLUMN_BITMASK |
-			CTActionTotalModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_CAMPAIGNID = new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
-			CTActionTotalModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCampaignId",
-			new String[] { Long.class.getName() });
-
-	/**
-	 * Returns all the c t action totals where campaignId = &#63;.
-	 *
-	 * @param campaignId the campaign ID
-	 * @return the matching c t action totals
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<CTActionTotal> findByCampaignId(long campaignId)
-		throws SystemException {
-		return findByCampaignId(campaignId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the c t action totals where campaignId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param campaignId the campaign ID
-	 * @param start the lower bound of the range of c t action totals
-	 * @param end the upper bound of the range of c t action totals (not inclusive)
-	 * @return the range of matching c t action totals
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<CTActionTotal> findByCampaignId(long campaignId, int start,
-		int end) throws SystemException {
-		return findByCampaignId(campaignId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the c t action totals where campaignId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param campaignId the campaign ID
-	 * @param start the lower bound of the range of c t action totals
-	 * @param end the upper bound of the range of c t action totals (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching c t action totals
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<CTActionTotal> findByCampaignId(long campaignId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID;
-			finderArgs = new Object[] { campaignId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CAMPAIGNID;
-			finderArgs = new Object[] { campaignId, start, end, orderByComparator };
-		}
-
-		List<CTActionTotal> list = (List<CTActionTotal>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (CTActionTotal ctActionTotal : list) {
-				if ((campaignId != ctActionTotal.getCampaignId())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_CTACTIONTOTAL_WHERE);
-
-			query.append(_FINDER_COLUMN_CAMPAIGNID_CAMPAIGNID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(CTActionTotalModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(campaignId);
-
-				if (!pagination) {
-					list = (List<CTActionTotal>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
-
-					list = new UnmodifiableList<CTActionTotal>(list);
-				}
-				else {
-					list = (List<CTActionTotal>)QueryUtil.list(q, getDialect(),
-							start, end);
-				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first c t action total in the ordered set where campaignId = &#63;.
-	 *
-	 * @param campaignId the campaign ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching c t action total
-	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a matching c t action total could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTActionTotal findByCampaignId_First(long campaignId,
-		OrderByComparator orderByComparator)
-		throws NoSuchCTActionTotalException, SystemException {
-		CTActionTotal ctActionTotal = fetchByCampaignId_First(campaignId,
-				orderByComparator);
-
-		if (ctActionTotal != null) {
-			return ctActionTotal;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("campaignId=");
-		msg.append(campaignId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchCTActionTotalException(msg.toString());
-	}
-
-	/**
-	 * Returns the first c t action total in the ordered set where campaignId = &#63;.
-	 *
-	 * @param campaignId the campaign ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching c t action total, or <code>null</code> if a matching c t action total could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTActionTotal fetchByCampaignId_First(long campaignId,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<CTActionTotal> list = findByCampaignId(campaignId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last c t action total in the ordered set where campaignId = &#63;.
-	 *
-	 * @param campaignId the campaign ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c t action total
-	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a matching c t action total could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTActionTotal findByCampaignId_Last(long campaignId,
-		OrderByComparator orderByComparator)
-		throws NoSuchCTActionTotalException, SystemException {
-		CTActionTotal ctActionTotal = fetchByCampaignId_Last(campaignId,
-				orderByComparator);
-
-		if (ctActionTotal != null) {
-			return ctActionTotal;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("campaignId=");
-		msg.append(campaignId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchCTActionTotalException(msg.toString());
-	}
-
-	/**
-	 * Returns the last c t action total in the ordered set where campaignId = &#63;.
-	 *
-	 * @param campaignId the campaign ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c t action total, or <code>null</code> if a matching c t action total could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTActionTotal fetchByCampaignId_Last(long campaignId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByCampaignId(campaignId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTActionTotal> list = findByCampaignId(campaignId, count - 1,
-				count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the c t action totals before and after the current c t action total in the ordered set where campaignId = &#63;.
-	 *
-	 * @param CTActionTotalId the primary key of the current c t action total
-	 * @param campaignId the campaign ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next c t action total
-	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a c t action total with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTActionTotal[] findByCampaignId_PrevAndNext(long CTActionTotalId,
-		long campaignId, OrderByComparator orderByComparator)
-		throws NoSuchCTActionTotalException, SystemException {
-		CTActionTotal ctActionTotal = findByPrimaryKey(CTActionTotalId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTActionTotal[] array = new CTActionTotalImpl[3];
-
-			array[0] = getByCampaignId_PrevAndNext(session, ctActionTotal,
-					campaignId, orderByComparator, true);
-
-			array[1] = ctActionTotal;
-
-			array[2] = getByCampaignId_PrevAndNext(session, ctActionTotal,
-					campaignId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected CTActionTotal getByCampaignId_PrevAndNext(Session session,
-		CTActionTotal ctActionTotal, long campaignId,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_CTACTIONTOTAL_WHERE);
-
-		query.append(_FINDER_COLUMN_CAMPAIGNID_CAMPAIGNID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(CTActionTotalModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(campaignId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ctActionTotal);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<CTActionTotal> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the c t action totals where campaignId = &#63; from the database.
-	 *
-	 * @param campaignId the campaign ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void removeByCampaignId(long campaignId) throws SystemException {
-		for (CTActionTotal ctActionTotal : findByCampaignId(campaignId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(ctActionTotal);
-		}
-	}
-
-	/**
-	 * Returns the number of c t action totals where campaignId = &#63;.
-	 *
-	 * @param campaignId the campaign ID
-	 * @return the number of matching c t action totals
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public int countByCampaignId(long campaignId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_CAMPAIGNID;
-
-		Object[] finderArgs = new Object[] { campaignId };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_CTACTIONTOTAL_WHERE);
-
-			query.append(_FINDER_COLUMN_CAMPAIGNID_CAMPAIGNID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(campaignId);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_CAMPAIGNID_CAMPAIGNID_2 = "ctActionTotal.campaignId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_GTD = new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
-			CTActionTotalModelImpl.FINDER_CACHE_ENABLED,
-			CTActionTotalImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByC_GtD",
+			"findByR_GtD",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_GTD = new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_R_GTD = new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionTotalModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_GtD",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_GtD",
 			new String[] { Long.class.getName(), Date.class.getName() });
 
 	/**
-	 * Returns all the c t action totals where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns all the c t action totals where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @return the matching c t action totals
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTActionTotal> findByC_GtD(long campaignId, Date modifiedDate)
-		throws SystemException {
-		return findByC_GtD(campaignId, modifiedDate, QueryUtil.ALL_POS,
+	public List<CTActionTotal> findByR_GtD(long reportInstanceId,
+		Date modifiedDate) throws SystemException {
+		return findByR_GtD(reportInstanceId, modifiedDate, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the c t action totals where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns a range of all the c t action totals where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param start the lower bound of the range of c t action totals
 	 * @param end the upper bound of the range of c t action totals (not inclusive)
@@ -628,19 +134,19 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTActionTotal> findByC_GtD(long campaignId, Date modifiedDate,
-		int start, int end) throws SystemException {
-		return findByC_GtD(campaignId, modifiedDate, start, end, null);
+	public List<CTActionTotal> findByR_GtD(long reportInstanceId,
+		Date modifiedDate, int start, int end) throws SystemException {
+		return findByR_GtD(reportInstanceId, modifiedDate, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the c t action totals where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns an ordered range of all the c t action totals where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param start the lower bound of the range of c t action totals
 	 * @param end the upper bound of the range of c t action totals (not inclusive)
@@ -649,16 +155,16 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTActionTotal> findByC_GtD(long campaignId, Date modifiedDate,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+	public List<CTActionTotal> findByR_GtD(long reportInstanceId,
+		Date modifiedDate, int start, int end,
+		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_GTD;
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_R_GTD;
 		finderArgs = new Object[] {
-				campaignId, modifiedDate,
+				reportInstanceId, modifiedDate,
 				
 				start, end, orderByComparator
 			};
@@ -668,7 +174,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 		if ((list != null) && !list.isEmpty()) {
 			for (CTActionTotal ctActionTotal : list) {
-				if ((campaignId != ctActionTotal.getCampaignId()) ||
+				if ((reportInstanceId != ctActionTotal.getReportInstanceId()) ||
 						(modifiedDate.getTime() >= ctActionTotal.getModifiedDate()
 																	.getTime())) {
 					list = null;
@@ -691,17 +197,17 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 			query.append(_SQL_SELECT_CTACTIONTOTAL_WHERE);
 
-			query.append(_FINDER_COLUMN_C_GTD_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_R_GTD_REPORTINSTANCEID_2);
 
 			boolean bindModifiedDate = false;
 
 			if (modifiedDate == null) {
-				query.append(_FINDER_COLUMN_C_GTD_MODIFIEDDATE_1);
+				query.append(_FINDER_COLUMN_R_GTD_MODIFIEDDATE_1);
 			}
 			else {
 				bindModifiedDate = true;
 
-				query.append(_FINDER_COLUMN_C_GTD_MODIFIEDDATE_2);
+				query.append(_FINDER_COLUMN_R_GTD_MODIFIEDDATE_2);
 			}
 
 			if (orderByComparator != null) {
@@ -724,7 +230,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(campaignId);
+				qPos.add(reportInstanceId);
 
 				if (bindModifiedDate) {
 					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
@@ -761,9 +267,9 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	}
 
 	/**
-	 * Returns the first c t action total in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns the first c t action total in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching c t action total
@@ -771,10 +277,10 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTActionTotal findByC_GtD_First(long campaignId, Date modifiedDate,
-		OrderByComparator orderByComparator)
+	public CTActionTotal findByR_GtD_First(long reportInstanceId,
+		Date modifiedDate, OrderByComparator orderByComparator)
 		throws NoSuchCTActionTotalException, SystemException {
-		CTActionTotal ctActionTotal = fetchByC_GtD_First(campaignId,
+		CTActionTotal ctActionTotal = fetchByR_GtD_First(reportInstanceId,
 				modifiedDate, orderByComparator);
 
 		if (ctActionTotal != null) {
@@ -785,8 +291,8 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("campaignId=");
-		msg.append(campaignId);
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
 
 		msg.append(", modifiedDate=");
 		msg.append(modifiedDate);
@@ -797,19 +303,20 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	}
 
 	/**
-	 * Returns the first c t action total in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns the first c t action total in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching c t action total, or <code>null</code> if a matching c t action total could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTActionTotal fetchByC_GtD_First(long campaignId, Date modifiedDate,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<CTActionTotal> list = findByC_GtD(campaignId, modifiedDate, 0, 1,
-				orderByComparator);
+	public CTActionTotal fetchByR_GtD_First(long reportInstanceId,
+		Date modifiedDate, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<CTActionTotal> list = findByR_GtD(reportInstanceId, modifiedDate,
+				0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -819,9 +326,9 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	}
 
 	/**
-	 * Returns the last c t action total in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns the last c t action total in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching c t action total
@@ -829,10 +336,10 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTActionTotal findByC_GtD_Last(long campaignId, Date modifiedDate,
-		OrderByComparator orderByComparator)
+	public CTActionTotal findByR_GtD_Last(long reportInstanceId,
+		Date modifiedDate, OrderByComparator orderByComparator)
 		throws NoSuchCTActionTotalException, SystemException {
-		CTActionTotal ctActionTotal = fetchByC_GtD_Last(campaignId,
+		CTActionTotal ctActionTotal = fetchByR_GtD_Last(reportInstanceId,
 				modifiedDate, orderByComparator);
 
 		if (ctActionTotal != null) {
@@ -843,8 +350,8 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("campaignId=");
-		msg.append(campaignId);
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
 
 		msg.append(", modifiedDate=");
 		msg.append(modifiedDate);
@@ -855,24 +362,25 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	}
 
 	/**
-	 * Returns the last c t action total in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns the last c t action total in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching c t action total, or <code>null</code> if a matching c t action total could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTActionTotal fetchByC_GtD_Last(long campaignId, Date modifiedDate,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByC_GtD(campaignId, modifiedDate);
+	public CTActionTotal fetchByR_GtD_Last(long reportInstanceId,
+		Date modifiedDate, OrderByComparator orderByComparator)
+		throws SystemException {
+		int count = countByR_GtD(reportInstanceId, modifiedDate);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTActionTotal> list = findByC_GtD(campaignId, modifiedDate,
+		List<CTActionTotal> list = findByR_GtD(reportInstanceId, modifiedDate,
 				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -883,10 +391,10 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	}
 
 	/**
-	 * Returns the c t action totals before and after the current c t action total in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns the c t action totals before and after the current c t action total in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
 	 * @param CTActionTotalId the primary key of the current c t action total
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next c t action total
@@ -894,8 +402,9 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTActionTotal[] findByC_GtD_PrevAndNext(long CTActionTotalId,
-		long campaignId, Date modifiedDate, OrderByComparator orderByComparator)
+	public CTActionTotal[] findByR_GtD_PrevAndNext(long CTActionTotalId,
+		long reportInstanceId, Date modifiedDate,
+		OrderByComparator orderByComparator)
 		throws NoSuchCTActionTotalException, SystemException {
 		CTActionTotal ctActionTotal = findByPrimaryKey(CTActionTotalId);
 
@@ -906,13 +415,13 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 			CTActionTotal[] array = new CTActionTotalImpl[3];
 
-			array[0] = getByC_GtD_PrevAndNext(session, ctActionTotal,
-					campaignId, modifiedDate, orderByComparator, true);
+			array[0] = getByR_GtD_PrevAndNext(session, ctActionTotal,
+					reportInstanceId, modifiedDate, orderByComparator, true);
 
 			array[1] = ctActionTotal;
 
-			array[2] = getByC_GtD_PrevAndNext(session, ctActionTotal,
-					campaignId, modifiedDate, orderByComparator, false);
+			array[2] = getByR_GtD_PrevAndNext(session, ctActionTotal,
+					reportInstanceId, modifiedDate, orderByComparator, false);
 
 			return array;
 		}
@@ -924,8 +433,8 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 		}
 	}
 
-	protected CTActionTotal getByC_GtD_PrevAndNext(Session session,
-		CTActionTotal ctActionTotal, long campaignId, Date modifiedDate,
+	protected CTActionTotal getByR_GtD_PrevAndNext(Session session,
+		CTActionTotal ctActionTotal, long reportInstanceId, Date modifiedDate,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -939,17 +448,17 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 		query.append(_SQL_SELECT_CTACTIONTOTAL_WHERE);
 
-		query.append(_FINDER_COLUMN_C_GTD_CAMPAIGNID_2);
+		query.append(_FINDER_COLUMN_R_GTD_REPORTINSTANCEID_2);
 
 		boolean bindModifiedDate = false;
 
 		if (modifiedDate == null) {
-			query.append(_FINDER_COLUMN_C_GTD_MODIFIEDDATE_1);
+			query.append(_FINDER_COLUMN_R_GTD_MODIFIEDDATE_1);
 		}
 		else {
 			bindModifiedDate = true;
 
-			query.append(_FINDER_COLUMN_C_GTD_MODIFIEDDATE_2);
+			query.append(_FINDER_COLUMN_R_GTD_MODIFIEDDATE_2);
 		}
 
 		if (orderByComparator != null) {
@@ -1020,7 +529,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(campaignId);
+		qPos.add(reportInstanceId);
 
 		if (bindModifiedDate) {
 			qPos.add(CalendarUtil.getTimestamp(modifiedDate));
@@ -1045,35 +554,35 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	}
 
 	/**
-	 * Removes all the c t action totals where campaignId = &#63; and modifiedDate &gt; &#63; from the database.
+	 * Removes all the c t action totals where reportInstanceId = &#63; and modifiedDate &gt; &#63; from the database.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_GtD(long campaignId, Date modifiedDate)
+	public void removeByR_GtD(long reportInstanceId, Date modifiedDate)
 		throws SystemException {
-		for (CTActionTotal ctActionTotal : findByC_GtD(campaignId,
+		for (CTActionTotal ctActionTotal : findByR_GtD(reportInstanceId,
 				modifiedDate, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ctActionTotal);
 		}
 	}
 
 	/**
-	 * Returns the number of c t action totals where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns the number of c t action totals where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @return the number of matching c t action totals
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_GtD(long campaignId, Date modifiedDate)
+	public int countByR_GtD(long reportInstanceId, Date modifiedDate)
 		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_GTD;
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_R_GTD;
 
-		Object[] finderArgs = new Object[] { campaignId, modifiedDate };
+		Object[] finderArgs = new Object[] { reportInstanceId, modifiedDate };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -1083,17 +592,17 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 			query.append(_SQL_COUNT_CTACTIONTOTAL_WHERE);
 
-			query.append(_FINDER_COLUMN_C_GTD_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_R_GTD_REPORTINSTANCEID_2);
 
 			boolean bindModifiedDate = false;
 
 			if (modifiedDate == null) {
-				query.append(_FINDER_COLUMN_C_GTD_MODIFIEDDATE_1);
+				query.append(_FINDER_COLUMN_R_GTD_MODIFIEDDATE_1);
 			}
 			else {
 				bindModifiedDate = true;
 
-				query.append(_FINDER_COLUMN_C_GTD_MODIFIEDDATE_2);
+				query.append(_FINDER_COLUMN_R_GTD_MODIFIEDDATE_2);
 			}
 
 			String sql = query.toString();
@@ -1107,7 +616,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(campaignId);
+				qPos.add(reportInstanceId);
 
 				if (bindModifiedDate) {
 					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
@@ -1130,26 +639,26 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_GTD_CAMPAIGNID_2 = "ctActionTotal.campaignId = ? AND ";
-	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_1 = "ctActionTotal.modifiedDate > NULL";
-	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_2 = "ctActionTotal.modifiedDate > ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_R_R_E_E = new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_R_GTD_REPORTINSTANCEID_2 = "ctActionTotal.reportInstanceId = ? AND ";
+	private static final String _FINDER_COLUMN_R_GTD_MODIFIEDDATE_1 = "ctActionTotal.modifiedDate > NULL";
+	private static final String _FINDER_COLUMN_R_GTD_MODIFIEDDATE_2 = "ctActionTotal.modifiedDate > ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_R_R_R_E_E = new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionTotalModelImpl.FINDER_CACHE_ENABLED,
 			CTActionTotalImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByC_R_R_E_E",
+			"fetchByR_R_R_E_E",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName(), String.class.getName(),
 				String.class.getName()
 			},
-			CTActionTotalModelImpl.CAMPAIGNID_COLUMN_BITMASK |
+			CTActionTotalModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
 			CTActionTotalModelImpl.REFERRERCLASSNAME_COLUMN_BITMASK |
 			CTActionTotalModelImpl.REFERRERCLASSPK_COLUMN_BITMASK |
 			CTActionTotalModelImpl.ELEMENTID_COLUMN_BITMASK |
 			CTActionTotalModelImpl.EVENTTYPE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_R_R_E_E = new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_R_R_R_E_E = new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionTotalModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_R_E_E",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R_R_E_E",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName(), String.class.getName(),
@@ -1157,9 +666,9 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 			});
 
 	/**
-	 * Returns the c t action total where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException} if it could not be found.
+	 * Returns the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException} if it could not be found.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
@@ -1169,10 +678,10 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTActionTotal findByC_R_R_E_E(long campaignId,
+	public CTActionTotal findByR_R_R_E_E(long reportInstanceId,
 		String referrerClassName, long referrerClassPK, String elementId,
 		String eventType) throws NoSuchCTActionTotalException, SystemException {
-		CTActionTotal ctActionTotal = fetchByC_R_R_E_E(campaignId,
+		CTActionTotal ctActionTotal = fetchByR_R_R_E_E(reportInstanceId,
 				referrerClassName, referrerClassPK, elementId, eventType);
 
 		if (ctActionTotal == null) {
@@ -1180,8 +689,8 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("campaignId=");
-			msg.append(campaignId);
+			msg.append("reportInstanceId=");
+			msg.append(reportInstanceId);
 
 			msg.append(", referrerClassName=");
 			msg.append(referrerClassName);
@@ -1208,9 +717,9 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	}
 
 	/**
-	 * Returns the c t action total where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
@@ -1219,17 +728,17 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTActionTotal fetchByC_R_R_E_E(long campaignId,
+	public CTActionTotal fetchByR_R_R_E_E(long reportInstanceId,
 		String referrerClassName, long referrerClassPK, String elementId,
 		String eventType) throws SystemException {
-		return fetchByC_R_R_E_E(campaignId, referrerClassName, referrerClassPK,
-			elementId, eventType, true);
+		return fetchByR_R_R_E_E(reportInstanceId, referrerClassName,
+			referrerClassPK, elementId, eventType, true);
 	}
 
 	/**
-	 * Returns the c t action total where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
@@ -1239,25 +748,25 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTActionTotal fetchByC_R_R_E_E(long campaignId,
+	public CTActionTotal fetchByR_R_R_E_E(long reportInstanceId,
 		String referrerClassName, long referrerClassPK, String elementId,
 		String eventType, boolean retrieveFromCache) throws SystemException {
 		Object[] finderArgs = new Object[] {
-				campaignId, referrerClassName, referrerClassPK, elementId,
+				reportInstanceId, referrerClassName, referrerClassPK, elementId,
 				eventType
 			};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_R_R_E_E,
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_R_R_R_E_E,
 					finderArgs, this);
 		}
 
 		if (result instanceof CTActionTotal) {
 			CTActionTotal ctActionTotal = (CTActionTotal)result;
 
-			if ((campaignId != ctActionTotal.getCampaignId()) ||
+			if ((reportInstanceId != ctActionTotal.getReportInstanceId()) ||
 					!Validator.equals(referrerClassName,
 						ctActionTotal.getReferrerClassName()) ||
 					(referrerClassPK != ctActionTotal.getReferrerClassPK()) ||
@@ -1272,50 +781,50 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 			query.append(_SQL_SELECT_CTACTIONTOTAL_WHERE);
 
-			query.append(_FINDER_COLUMN_C_R_R_E_E_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_R_R_R_E_E_REPORTINSTANCEID_2);
 
 			boolean bindReferrerClassName = false;
 
 			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_C_R_R_E_E_REFERRERCLASSNAME_1);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_1);
 			}
 			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_R_R_E_E_REFERRERCLASSNAME_3);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_3);
 			}
 			else {
 				bindReferrerClassName = true;
 
-				query.append(_FINDER_COLUMN_C_R_R_E_E_REFERRERCLASSNAME_2);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_2);
 			}
 
-			query.append(_FINDER_COLUMN_C_R_R_E_E_REFERRERCLASSPK_2);
+			query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSPK_2);
 
 			boolean bindElementId = false;
 
 			if (elementId == null) {
-				query.append(_FINDER_COLUMN_C_R_R_E_E_ELEMENTID_1);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_ELEMENTID_1);
 			}
 			else if (elementId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_R_R_E_E_ELEMENTID_3);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_ELEMENTID_3);
 			}
 			else {
 				bindElementId = true;
 
-				query.append(_FINDER_COLUMN_C_R_R_E_E_ELEMENTID_2);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_ELEMENTID_2);
 			}
 
 			boolean bindEventType = false;
 
 			if (eventType == null) {
-				query.append(_FINDER_COLUMN_C_R_R_E_E_EVENTTYPE_1);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_EVENTTYPE_1);
 			}
 			else if (eventType.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_R_R_E_E_EVENTTYPE_3);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_EVENTTYPE_3);
 			}
 			else {
 				bindEventType = true;
 
-				query.append(_FINDER_COLUMN_C_R_R_E_E_EVENTTYPE_2);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_EVENTTYPE_2);
 			}
 
 			String sql = query.toString();
@@ -1329,7 +838,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(campaignId);
+				qPos.add(reportInstanceId);
 
 				if (bindReferrerClassName) {
 					qPos.add(referrerClassName);
@@ -1348,7 +857,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 				List<CTActionTotal> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R_R_E_E,
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_R_R_E_E,
 						finderArgs, list);
 				}
 				else {
@@ -1358,7 +867,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 					cacheResult(ctActionTotal);
 
-					if ((ctActionTotal.getCampaignId() != campaignId) ||
+					if ((ctActionTotal.getReportInstanceId() != reportInstanceId) ||
 							(ctActionTotal.getReferrerClassName() == null) ||
 							!ctActionTotal.getReferrerClassName()
 											  .equals(referrerClassName) ||
@@ -1367,13 +876,13 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 							!ctActionTotal.getElementId().equals(elementId) ||
 							(ctActionTotal.getEventType() == null) ||
 							!ctActionTotal.getEventType().equals(eventType)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R_R_E_E,
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_R_R_E_E,
 							finderArgs, ctActionTotal);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R_R_E_E,
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_R_R_E_E,
 					finderArgs);
 
 				throw processException(e);
@@ -1392,9 +901,9 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	}
 
 	/**
-	 * Removes the c t action total where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
+	 * Removes the c t action total where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
@@ -1403,19 +912,19 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTActionTotal removeByC_R_R_E_E(long campaignId,
+	public CTActionTotal removeByR_R_R_E_E(long reportInstanceId,
 		String referrerClassName, long referrerClassPK, String elementId,
 		String eventType) throws NoSuchCTActionTotalException, SystemException {
-		CTActionTotal ctActionTotal = findByC_R_R_E_E(campaignId,
+		CTActionTotal ctActionTotal = findByR_R_R_E_E(reportInstanceId,
 				referrerClassName, referrerClassPK, elementId, eventType);
 
 		return remove(ctActionTotal);
 	}
 
 	/**
-	 * Returns the number of c t action totals where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
+	 * Returns the number of c t action totals where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @param elementId the element ID
@@ -1424,13 +933,13 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_R_R_E_E(long campaignId, String referrerClassName,
-		long referrerClassPK, String elementId, String eventType)
-		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_R_R_E_E;
+	public int countByR_R_R_E_E(long reportInstanceId,
+		String referrerClassName, long referrerClassPK, String elementId,
+		String eventType) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_R_R_E_E;
 
 		Object[] finderArgs = new Object[] {
-				campaignId, referrerClassName, referrerClassPK, elementId,
+				reportInstanceId, referrerClassName, referrerClassPK, elementId,
 				eventType
 			};
 
@@ -1442,50 +951,50 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 			query.append(_SQL_COUNT_CTACTIONTOTAL_WHERE);
 
-			query.append(_FINDER_COLUMN_C_R_R_E_E_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_R_R_R_E_E_REPORTINSTANCEID_2);
 
 			boolean bindReferrerClassName = false;
 
 			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_C_R_R_E_E_REFERRERCLASSNAME_1);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_1);
 			}
 			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_R_R_E_E_REFERRERCLASSNAME_3);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_3);
 			}
 			else {
 				bindReferrerClassName = true;
 
-				query.append(_FINDER_COLUMN_C_R_R_E_E_REFERRERCLASSNAME_2);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_2);
 			}
 
-			query.append(_FINDER_COLUMN_C_R_R_E_E_REFERRERCLASSPK_2);
+			query.append(_FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSPK_2);
 
 			boolean bindElementId = false;
 
 			if (elementId == null) {
-				query.append(_FINDER_COLUMN_C_R_R_E_E_ELEMENTID_1);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_ELEMENTID_1);
 			}
 			else if (elementId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_R_R_E_E_ELEMENTID_3);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_ELEMENTID_3);
 			}
 			else {
 				bindElementId = true;
 
-				query.append(_FINDER_COLUMN_C_R_R_E_E_ELEMENTID_2);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_ELEMENTID_2);
 			}
 
 			boolean bindEventType = false;
 
 			if (eventType == null) {
-				query.append(_FINDER_COLUMN_C_R_R_E_E_EVENTTYPE_1);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_EVENTTYPE_1);
 			}
 			else if (eventType.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_R_R_E_E_EVENTTYPE_3);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_EVENTTYPE_3);
 			}
 			else {
 				bindEventType = true;
 
-				query.append(_FINDER_COLUMN_C_R_R_E_E_EVENTTYPE_2);
+				query.append(_FINDER_COLUMN_R_R_R_E_E_EVENTTYPE_2);
 			}
 
 			String sql = query.toString();
@@ -1499,7 +1008,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(campaignId);
+				qPos.add(reportInstanceId);
 
 				if (bindReferrerClassName) {
 					qPos.add(referrerClassName);
@@ -1532,17 +1041,520 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_R_R_E_E_CAMPAIGNID_2 = "ctActionTotal.campaignId = ? AND ";
-	private static final String _FINDER_COLUMN_C_R_R_E_E_REFERRERCLASSNAME_1 = "ctActionTotal.referrerClassName IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_R_R_E_E_REFERRERCLASSNAME_2 = "ctActionTotal.referrerClassName = ? AND ";
-	private static final String _FINDER_COLUMN_C_R_R_E_E_REFERRERCLASSNAME_3 = "(ctActionTotal.referrerClassName IS NULL OR ctActionTotal.referrerClassName = '') AND ";
-	private static final String _FINDER_COLUMN_C_R_R_E_E_REFERRERCLASSPK_2 = "ctActionTotal.referrerClassPK = ? AND ";
-	private static final String _FINDER_COLUMN_C_R_R_E_E_ELEMENTID_1 = "ctActionTotal.elementId IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_R_R_E_E_ELEMENTID_2 = "ctActionTotal.elementId = ? AND ";
-	private static final String _FINDER_COLUMN_C_R_R_E_E_ELEMENTID_3 = "(ctActionTotal.elementId IS NULL OR ctActionTotal.elementId = '') AND ";
-	private static final String _FINDER_COLUMN_C_R_R_E_E_EVENTTYPE_1 = "ctActionTotal.eventType IS NULL";
-	private static final String _FINDER_COLUMN_C_R_R_E_E_EVENTTYPE_2 = "ctActionTotal.eventType = ?";
-	private static final String _FINDER_COLUMN_C_R_R_E_E_EVENTTYPE_3 = "(ctActionTotal.eventType IS NULL OR ctActionTotal.eventType = '')";
+	private static final String _FINDER_COLUMN_R_R_R_E_E_REPORTINSTANCEID_2 = "ctActionTotal.reportInstanceId = ? AND ";
+	private static final String _FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_1 = "ctActionTotal.referrerClassName IS NULL AND ";
+	private static final String _FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_2 = "ctActionTotal.referrerClassName = ? AND ";
+	private static final String _FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSNAME_3 = "(ctActionTotal.referrerClassName IS NULL OR ctActionTotal.referrerClassName = '') AND ";
+	private static final String _FINDER_COLUMN_R_R_R_E_E_REFERRERCLASSPK_2 = "ctActionTotal.referrerClassPK = ? AND ";
+	private static final String _FINDER_COLUMN_R_R_R_E_E_ELEMENTID_1 = "ctActionTotal.elementId IS NULL AND ";
+	private static final String _FINDER_COLUMN_R_R_R_E_E_ELEMENTID_2 = "ctActionTotal.elementId = ? AND ";
+	private static final String _FINDER_COLUMN_R_R_R_E_E_ELEMENTID_3 = "(ctActionTotal.elementId IS NULL OR ctActionTotal.elementId = '') AND ";
+	private static final String _FINDER_COLUMN_R_R_R_E_E_EVENTTYPE_1 = "ctActionTotal.eventType IS NULL";
+	private static final String _FINDER_COLUMN_R_R_R_E_E_EVENTTYPE_2 = "ctActionTotal.eventType = ?";
+	private static final String _FINDER_COLUMN_R_R_R_E_E_EVENTTYPE_3 = "(ctActionTotal.eventType IS NULL OR ctActionTotal.eventType = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_REPORTINSTANCEID =
+		new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
+			CTActionTotalModelImpl.FINDER_CACHE_ENABLED,
+			CTActionTotalImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByReportInstanceId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID =
+		new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
+			CTActionTotalModelImpl.FINDER_CACHE_ENABLED,
+			CTActionTotalImpl.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByReportInstanceId", new String[] { Long.class.getName() },
+			CTActionTotalModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
+			CTActionTotalModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_REPORTINSTANCEID = new FinderPath(CTActionTotalModelImpl.ENTITY_CACHE_ENABLED,
+			CTActionTotalModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByReportInstanceId", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the c t action totals where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @return the matching c t action totals
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<CTActionTotal> findByReportInstanceId(long reportInstanceId)
+		throws SystemException {
+		return findByReportInstanceId(reportInstanceId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the c t action totals where reportInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param start the lower bound of the range of c t action totals
+	 * @param end the upper bound of the range of c t action totals (not inclusive)
+	 * @return the range of matching c t action totals
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<CTActionTotal> findByReportInstanceId(long reportInstanceId,
+		int start, int end) throws SystemException {
+		return findByReportInstanceId(reportInstanceId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the c t action totals where reportInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionTotalModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param start the lower bound of the range of c t action totals
+	 * @param end the upper bound of the range of c t action totals (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching c t action totals
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<CTActionTotal> findByReportInstanceId(long reportInstanceId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID;
+			finderArgs = new Object[] { reportInstanceId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_REPORTINSTANCEID;
+			finderArgs = new Object[] {
+					reportInstanceId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CTActionTotal> list = (List<CTActionTotal>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (CTActionTotal ctActionTotal : list) {
+				if ((reportInstanceId != ctActionTotal.getReportInstanceId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CTACTIONTOTAL_WHERE);
+
+			query.append(_FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CTActionTotalModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(reportInstanceId);
+
+				if (!pagination) {
+					list = (List<CTActionTotal>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<CTActionTotal>(list);
+				}
+				else {
+					list = (List<CTActionTotal>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first c t action total in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching c t action total
+	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a matching c t action total could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CTActionTotal findByReportInstanceId_First(long reportInstanceId,
+		OrderByComparator orderByComparator)
+		throws NoSuchCTActionTotalException, SystemException {
+		CTActionTotal ctActionTotal = fetchByReportInstanceId_First(reportInstanceId,
+				orderByComparator);
+
+		if (ctActionTotal != null) {
+			return ctActionTotal;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCTActionTotalException(msg.toString());
+	}
+
+	/**
+	 * Returns the first c t action total in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching c t action total, or <code>null</code> if a matching c t action total could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CTActionTotal fetchByReportInstanceId_First(long reportInstanceId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<CTActionTotal> list = findByReportInstanceId(reportInstanceId, 0,
+				1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last c t action total in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching c t action total
+	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a matching c t action total could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CTActionTotal findByReportInstanceId_Last(long reportInstanceId,
+		OrderByComparator orderByComparator)
+		throws NoSuchCTActionTotalException, SystemException {
+		CTActionTotal ctActionTotal = fetchByReportInstanceId_Last(reportInstanceId,
+				orderByComparator);
+
+		if (ctActionTotal != null) {
+			return ctActionTotal;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCTActionTotalException(msg.toString());
+	}
+
+	/**
+	 * Returns the last c t action total in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching c t action total, or <code>null</code> if a matching c t action total could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CTActionTotal fetchByReportInstanceId_Last(long reportInstanceId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByReportInstanceId(reportInstanceId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CTActionTotal> list = findByReportInstanceId(reportInstanceId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the c t action totals before and after the current c t action total in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param CTActionTotalId the primary key of the current c t action total
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next c t action total
+	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionTotalException if a c t action total with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CTActionTotal[] findByReportInstanceId_PrevAndNext(
+		long CTActionTotalId, long reportInstanceId,
+		OrderByComparator orderByComparator)
+		throws NoSuchCTActionTotalException, SystemException {
+		CTActionTotal ctActionTotal = findByPrimaryKey(CTActionTotalId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CTActionTotal[] array = new CTActionTotalImpl[3];
+
+			array[0] = getByReportInstanceId_PrevAndNext(session,
+					ctActionTotal, reportInstanceId, orderByComparator, true);
+
+			array[1] = ctActionTotal;
+
+			array[2] = getByReportInstanceId_PrevAndNext(session,
+					ctActionTotal, reportInstanceId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CTActionTotal getByReportInstanceId_PrevAndNext(Session session,
+		CTActionTotal ctActionTotal, long reportInstanceId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CTACTIONTOTAL_WHERE);
+
+		query.append(_FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CTActionTotalModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(reportInstanceId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(ctActionTotal);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CTActionTotal> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the c t action totals where reportInstanceId = &#63; from the database.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByReportInstanceId(long reportInstanceId)
+		throws SystemException {
+		for (CTActionTotal ctActionTotal : findByReportInstanceId(
+				reportInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(ctActionTotal);
+		}
+	}
+
+	/**
+	 * Returns the number of c t action totals where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @return the number of matching c t action totals
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByReportInstanceId(long reportInstanceId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_REPORTINSTANCEID;
+
+		Object[] finderArgs = new Object[] { reportInstanceId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CTACTIONTOTAL_WHERE);
+
+			query.append(_FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(reportInstanceId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2 =
+		"ctActionTotal.reportInstanceId = ?";
 
 	public CTActionTotalPersistenceImpl() {
 		setModelClass(CTActionTotal.class);
@@ -1559,9 +1571,9 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 			CTActionTotalImpl.class, ctActionTotal.getPrimaryKey(),
 			ctActionTotal);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R_R_E_E,
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_R_R_E_E,
 			new Object[] {
-				ctActionTotal.getCampaignId(),
+				ctActionTotal.getReportInstanceId(),
 				ctActionTotal.getReferrerClassName(),
 				ctActionTotal.getReferrerClassPK(), ctActionTotal.getElementId(),
 				ctActionTotal.getEventType()
@@ -1643,33 +1655,33 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 	protected void cacheUniqueFindersCache(CTActionTotal ctActionTotal) {
 		if (ctActionTotal.isNew()) {
 			Object[] args = new Object[] {
-					ctActionTotal.getCampaignId(),
+					ctActionTotal.getReportInstanceId(),
 					ctActionTotal.getReferrerClassName(),
 					ctActionTotal.getReferrerClassPK(),
 					ctActionTotal.getElementId(), ctActionTotal.getEventType()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R_R_E_E, args,
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_R_R_E_E, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R_R_E_E, args,
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_R_R_E_E, args,
 				ctActionTotal);
 		}
 		else {
 			CTActionTotalModelImpl ctActionTotalModelImpl = (CTActionTotalModelImpl)ctActionTotal;
 
 			if ((ctActionTotalModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_R_R_E_E.getColumnBitmask()) != 0) {
+					FINDER_PATH_FETCH_BY_R_R_R_E_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ctActionTotal.getCampaignId(),
+						ctActionTotal.getReportInstanceId(),
 						ctActionTotal.getReferrerClassName(),
 						ctActionTotal.getReferrerClassPK(),
 						ctActionTotal.getElementId(),
 						ctActionTotal.getEventType()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_R_R_E_E, args,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_R_R_E_E, args,
 					Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_R_R_E_E, args,
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_R_R_E_E, args,
 					ctActionTotal);
 			}
 		}
@@ -1679,27 +1691,27 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 		CTActionTotalModelImpl ctActionTotalModelImpl = (CTActionTotalModelImpl)ctActionTotal;
 
 		Object[] args = new Object[] {
-				ctActionTotal.getCampaignId(),
+				ctActionTotal.getReportInstanceId(),
 				ctActionTotal.getReferrerClassName(),
 				ctActionTotal.getReferrerClassPK(), ctActionTotal.getElementId(),
 				ctActionTotal.getEventType()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_R_E_E, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R_R_E_E, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_R_R_E_E, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_R_R_E_E, args);
 
 		if ((ctActionTotalModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_C_R_R_E_E.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_R_R_R_E_E.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					ctActionTotalModelImpl.getOriginalCampaignId(),
+					ctActionTotalModelImpl.getOriginalReportInstanceId(),
 					ctActionTotalModelImpl.getOriginalReferrerClassName(),
 					ctActionTotalModelImpl.getOriginalReferrerClassPK(),
 					ctActionTotalModelImpl.getOriginalElementId(),
 					ctActionTotalModelImpl.getOriginalEventType()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_R_E_E, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_R_R_E_E, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_R_R_E_E, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_R_R_E_E, args);
 		}
 	}
 
@@ -1846,21 +1858,21 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 		else {
 			if ((ctActionTotalModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ctActionTotalModelImpl.getOriginalCampaignId()
+						ctActionTotalModelImpl.getOriginalReportInstanceId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CAMPAIGNID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_REPORTINSTANCEID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID,
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID,
 					args);
 
-				args = new Object[] { ctActionTotalModelImpl.getCampaignId() };
+				args = new Object[] { ctActionTotalModelImpl.getReportInstanceId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CAMPAIGNID,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_REPORTINSTANCEID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID,
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID,
 					args);
 			}
 		}
@@ -1887,6 +1899,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 
 		ctActionTotalImpl.setCTActionTotalId(ctActionTotal.getCTActionTotalId());
 		ctActionTotalImpl.setCampaignId(ctActionTotal.getCampaignId());
+		ctActionTotalImpl.setReportInstanceId(ctActionTotal.getReportInstanceId());
 		ctActionTotalImpl.setAlias(ctActionTotal.getAlias());
 		ctActionTotalImpl.setReferrerClassName(ctActionTotal.getReferrerClassName());
 		ctActionTotalImpl.setReferrerClassPK(ctActionTotal.getReferrerClassPK());
