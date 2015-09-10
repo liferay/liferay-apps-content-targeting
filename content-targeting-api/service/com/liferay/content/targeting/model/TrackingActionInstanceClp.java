@@ -86,6 +86,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("trackingActionKey", getTrackingActionKey());
 		attributes.put("campaignId", getCampaignId());
+		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("alias", getAlias());
 		attributes.put("referrerClassName", getReferrerClassName());
 		attributes.put("referrerClassPK", getReferrerClassPK());
@@ -157,6 +158,12 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 
 		if (campaignId != null) {
 			setCampaignId(campaignId);
+		}
+
+		Long reportInstanceId = (Long)attributes.get("reportInstanceId");
+
+		if (reportInstanceId != null) {
+			setReportInstanceId(reportInstanceId);
 		}
 
 		String alias = (String)attributes.get("alias");
@@ -433,6 +440,31 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 				Method method = clazz.getMethod("setCampaignId", long.class);
 
 				method.invoke(_trackingActionInstanceRemoteModel, campaignId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getReportInstanceId() {
+		return _reportInstanceId;
+	}
+
+	@Override
+	public void setReportInstanceId(long reportInstanceId) {
+		_reportInstanceId = reportInstanceId;
+
+		if (_trackingActionInstanceRemoteModel != null) {
+			try {
+				Class<?> clazz = _trackingActionInstanceRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setReportInstanceId",
+						long.class);
+
+				method.invoke(_trackingActionInstanceRemoteModel,
+					reportInstanceId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -739,6 +771,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 		clone.setModifiedDate(getModifiedDate());
 		clone.setTrackingActionKey(getTrackingActionKey());
 		clone.setCampaignId(getCampaignId());
+		clone.setReportInstanceId(getReportInstanceId());
 		clone.setAlias(getAlias());
 		clone.setReferrerClassName(getReferrerClassName());
 		clone.setReferrerClassPK(getReferrerClassPK());
@@ -798,7 +831,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
@@ -820,6 +853,8 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 		sb.append(getTrackingActionKey());
 		sb.append(", campaignId=");
 		sb.append(getCampaignId());
+		sb.append(", reportInstanceId=");
+		sb.append(getReportInstanceId());
 		sb.append(", alias=");
 		sb.append(getAlias());
 		sb.append(", referrerClassName=");
@@ -839,7 +874,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(52);
+		StringBundler sb = new StringBundler(55);
 
 		sb.append("<model><model-name>");
 		sb.append("com.liferay.content.targeting.model.TrackingActionInstance");
@@ -886,6 +921,10 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 		sb.append(getCampaignId());
 		sb.append("]]></column-value></column>");
 		sb.append(
+			"<column><column-name>reportInstanceId</column-name><column-value><![CDATA[");
+		sb.append(getReportInstanceId());
+		sb.append("]]></column-value></column>");
+		sb.append(
 			"<column><column-name>alias</column-name><column-value><![CDATA[");
 		sb.append(getAlias());
 		sb.append("]]></column-value></column>");
@@ -926,6 +965,7 @@ public class TrackingActionInstanceClp extends BaseModelImpl<TrackingActionInsta
 	private Date _modifiedDate;
 	private String _trackingActionKey;
 	private long _campaignId;
+	private long _reportInstanceId;
 	private String _alias;
 	private String _referrerClassName;
 	private long _referrerClassPK;

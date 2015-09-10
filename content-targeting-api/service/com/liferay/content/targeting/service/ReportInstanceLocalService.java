@@ -256,6 +256,16 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 
 	public com.liferay.content.targeting.model.ReportInstance addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
+		long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.content.targeting.model.ReportInstance addReportInstance(
+		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -266,8 +276,7 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date getReportInstanceModifiedDate(
+	public java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
@@ -275,4 +284,14 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.content.targeting.model.ReportInstance updateReportInstance(
+		long reportInstanceId, long userId, java.lang.String reportKey,
+		java.lang.String className, long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 }

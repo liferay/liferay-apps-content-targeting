@@ -31,4 +31,16 @@ public interface ReportInstance extends ReportInstanceModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.ReportInstanceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public java.lang.String getReportGuid();
+
+	public java.lang.String getTypeName(java.util.Locale locale);
+
+	public java.util.Map<java.lang.String, java.lang.String> getValues();
+
+	public boolean isInstantiable();
+
+	public void setReportGuid(java.lang.String reportGuid);
+
+	public void setValues(
+		java.util.Map<java.lang.String, java.lang.String> values);
 }

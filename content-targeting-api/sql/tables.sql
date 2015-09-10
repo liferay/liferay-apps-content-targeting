@@ -56,6 +56,8 @@ create table CT_ReportInstance (
 	userName VARCHAR(75) null,
 	modifiedDate DATE null,
 	reportKey VARCHAR(75) null,
+	name STRING null,
+	description STRING null,
 	className VARCHAR(75) null,
 	classPK LONG,
 	typeSettings TEXT null
@@ -106,6 +108,7 @@ create table CT_TrackingActionInstance (
 	modifiedDate DATE null,
 	trackingActionKey VARCHAR(75) null,
 	campaignId LONG,
+	reportInstanceId LONG,
 	alias_ VARCHAR(75) null,
 	referrerClassName VARCHAR(75) null,
 	referrerClassPK LONG,

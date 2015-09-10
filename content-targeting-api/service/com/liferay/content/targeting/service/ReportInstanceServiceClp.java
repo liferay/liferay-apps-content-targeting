@@ -36,24 +36,50 @@ public class ReportInstanceServiceClp implements ReportInstanceService {
 
 		_methodParameterTypes3 = new String[] {
 				"long", "java.lang.String", "java.lang.String", "long",
+				"java.util.Map", "java.util.Map", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName4 = "addReportInstance";
+
+		_methodParameterTypes4 = new String[] {
+				"long", "java.lang.String", "java.lang.String", "long",
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName4 = "fetchReportInstance";
+		_methodName5 = "fetchReportInstance";
 
-		_methodParameterTypes4 = new String[] {
+		_methodParameterTypes5 = new String[] { "long" };
+
+		_methodName6 = "fetchReportInstance";
+
+		_methodParameterTypes6 = new String[] {
 				"java.lang.String", "java.lang.String", "long"
 			};
 
-		_methodName5 = "getReportInstanceModifiedDate";
+		_methodName7 = "findReportInstances";
 
-		_methodParameterTypes5 = new String[] {
+		_methodParameterTypes7 = new String[] {
 				"java.lang.String", "java.lang.String", "long"
 			};
 
-		_methodName6 = "getReportInstances";
+		_methodName8 = "getReportInstances";
 
-		_methodParameterTypes6 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes8 = new String[] { "java.lang.String", "long" };
+
+		_methodName9 = "updateReportInstance";
+
+		_methodParameterTypes9 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String", "long",
+				"java.util.Map", "java.util.Map", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
+
+		_methodName10 = "updateReportInstance";
+
+		_methodParameterTypes10 = new String[] {
+				"com.liferay.content.targeting.model.ReportInstance"
+			};
 	}
 
 	@Override
@@ -109,7 +135,10 @@ public class ReportInstanceServiceClp implements ReportInstanceService {
 	@Override
 	public com.liferay.content.targeting.model.ReportInstance addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
-		long classPK, java.lang.String typeSettings,
+		long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -118,6 +147,59 @@ public class ReportInstanceServiceClp implements ReportInstanceService {
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName3,
 					_methodParameterTypes3,
+					new Object[] {
+						userId,
+						
+					ClpSerializer.translateInput(reportKey),
+						
+					ClpSerializer.translateInput(className),
+						
+					classPK,
+						
+					ClpSerializer.translateInput(nameMap),
+						
+					ClpSerializer.translateInput(descriptionMap),
+						
+					ClpSerializer.translateInput(typeSettings),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.content.targeting.model.ReportInstance)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.content.targeting.model.ReportInstance addReportInstance(
+		long userId, java.lang.String reportKey, java.lang.String className,
+		long classPK, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName4,
+					_methodParameterTypes4,
 					new Object[] {
 						userId,
 						
@@ -157,13 +239,42 @@ public class ReportInstanceServiceClp implements ReportInstanceService {
 
 	@Override
 	public com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
+		long reportInstanceId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5, new Object[] { reportInstanceId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.content.targeting.model.ReportInstance)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName4,
-					_methodParameterTypes4,
+			returnObj = _invokableService.invokeMethod(_methodName6,
+					_methodParameterTypes6,
 					new Object[] {
 						ClpSerializer.translateInput(reportKey),
 						
@@ -192,14 +303,14 @@ public class ReportInstanceServiceClp implements ReportInstanceService {
 	}
 
 	@Override
-	public java.util.Date getReportInstanceModifiedDate(
+	public java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName5,
-					_methodParameterTypes5,
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7,
 					new Object[] {
 						ClpSerializer.translateInput(reportKey),
 						
@@ -224,7 +335,7 @@ public class ReportInstanceServiceClp implements ReportInstanceService {
 			}
 		}
 
-		return (java.util.Date)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.liferay.content.targeting.model.ReportInstance>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
@@ -234,8 +345,8 @@ public class ReportInstanceServiceClp implements ReportInstanceService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName6,
-					_methodParameterTypes6,
+			returnObj = _invokableService.invokeMethod(_methodName8,
+					_methodParameterTypes8,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -261,6 +372,94 @@ public class ReportInstanceServiceClp implements ReportInstanceService {
 		return (java.util.List<com.liferay.content.targeting.model.ReportInstance>)ClpSerializer.translateOutput(returnObj);
 	}
 
+	@Override
+	public com.liferay.content.targeting.model.ReportInstance updateReportInstance(
+		long reportInstanceId, long userId, java.lang.String reportKey,
+		java.lang.String className, long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName9,
+					_methodParameterTypes9,
+					new Object[] {
+						reportInstanceId,
+						
+					userId,
+						
+					ClpSerializer.translateInput(reportKey),
+						
+					ClpSerializer.translateInput(className),
+						
+					classPK,
+						
+					ClpSerializer.translateInput(nameMap),
+						
+					ClpSerializer.translateInput(descriptionMap),
+						
+					ClpSerializer.translateInput(typeSettings),
+						
+					ClpSerializer.translateInput(serviceContext)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.content.targeting.model.ReportInstance)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public com.liferay.content.targeting.model.ReportInstance updateReportInstance(
+		com.liferay.content.targeting.model.ReportInstance reportInstance)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName10,
+					_methodParameterTypes10,
+					new Object[] { ClpSerializer.translateInput(reportInstance) });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (com.liferay.content.targeting.model.ReportInstance)ClpSerializer.translateOutput(returnObj);
+	}
+
 	private InvokableService _invokableService;
 	private String _methodName0;
 	private String[] _methodParameterTypes0;
@@ -274,4 +473,12 @@ public class ReportInstanceServiceClp implements ReportInstanceService {
 	private String[] _methodParameterTypes5;
 	private String _methodName6;
 	private String[] _methodParameterTypes6;
+	private String _methodName7;
+	private String[] _methodParameterTypes7;
+	private String _methodName8;
+	private String[] _methodParameterTypes8;
+	private String _methodName9;
+	private String[] _methodParameterTypes9;
+	private String _methodName10;
+	private String[] _methodParameterTypes10;
 }

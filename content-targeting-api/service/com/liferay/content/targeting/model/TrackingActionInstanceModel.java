@@ -237,6 +237,20 @@ public interface TrackingActionInstanceModel extends BaseModel<TrackingActionIns
 	public void setCampaignId(long campaignId);
 
 	/**
+	 * Returns the report instance ID of this tracking action instance.
+	 *
+	 * @return the report instance ID of this tracking action instance
+	 */
+	public long getReportInstanceId();
+
+	/**
+	 * Sets the report instance ID of this tracking action instance.
+	 *
+	 * @param reportInstanceId the report instance ID of this tracking action instance
+	 */
+	public void setReportInstanceId(long reportInstanceId);
+
+	/**
 	 * Returns the alias of this tracking action instance.
 	 *
 	 * @return the alias of this tracking action instance

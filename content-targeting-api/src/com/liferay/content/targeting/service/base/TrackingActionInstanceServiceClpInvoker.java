@@ -41,26 +41,39 @@ public class TrackingActionInstanceServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName73 = "deleteTrackingActionInstance";
+		_methodName73 = "addTrackingActionInstance";
 
-		_methodParameterTypes73 = new String[] { "long" };
+		_methodParameterTypes73 = new String[] {
+				"long", "long", "java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "long", "java.lang.String",
+				"java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
 
-		_methodName74 = "fetchTrackingActionInstance";
+		_methodName74 = "deleteTrackingActionInstance";
 
-		_methodParameterTypes74 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes74 = new String[] { "long" };
 
-		_methodName75 = "getTrackingActionInstances";
+		_methodName75 = "fetchTrackingActionInstance";
 
-		_methodParameterTypes75 = new String[] { "long" };
+		_methodParameterTypes75 = new String[] { "long", "java.lang.String" };
 
-		_methodName76 = "getTrackingActionInstancesCount";
+		_methodName76 = "getTrackingActionInstances";
 
 		_methodParameterTypes76 = new String[] { "long" };
 
-		_methodName77 = "updateTrackingActionInstance";
+		_methodName77 = "getTrackingActionInstancesByReportInstanceId";
 
-		_methodParameterTypes77 = new String[] {
-				"long", "java.lang.String", "java.lang.String", "long",
+		_methodParameterTypes77 = new String[] { "long" };
+
+		_methodName78 = "getTrackingActionInstancesCount";
+
+		_methodParameterTypes78 = new String[] { "long" };
+
+		_methodName79 = "updateTrackingActionInstance";
+
+		_methodParameterTypes79 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String", "long",
 				"java.lang.String", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -94,33 +107,52 @@ public class TrackingActionInstanceServiceClpInvoker {
 
 		if (_methodName73.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes73, parameterTypes)) {
-			return TrackingActionInstanceServiceUtil.deleteTrackingActionInstance(((Long)arguments[0]).longValue());
+			return TrackingActionInstanceServiceUtil.addTrackingActionInstance(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2],
+				((Long)arguments[3]).longValue(),
+				(java.lang.String)arguments[4], (java.lang.String)arguments[5],
+				((Long)arguments[6]).longValue(),
+				(java.lang.String)arguments[7], (java.lang.String)arguments[8],
+				(java.lang.String)arguments[9],
+				(com.liferay.portal.service.ServiceContext)arguments[10]);
 		}
 
 		if (_methodName74.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes74, parameterTypes)) {
-			return TrackingActionInstanceServiceUtil.fetchTrackingActionInstance(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
+			return TrackingActionInstanceServiceUtil.deleteTrackingActionInstance(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName75.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes75, parameterTypes)) {
-			return TrackingActionInstanceServiceUtil.getTrackingActionInstances(((Long)arguments[0]).longValue());
+			return TrackingActionInstanceServiceUtil.fetchTrackingActionInstance(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName76.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes76, parameterTypes)) {
-			return TrackingActionInstanceServiceUtil.getTrackingActionInstancesCount(((Long)arguments[0]).longValue());
+			return TrackingActionInstanceServiceUtil.getTrackingActionInstances(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName77.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes77, parameterTypes)) {
+			return TrackingActionInstanceServiceUtil.getTrackingActionInstancesByReportInstanceId(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName78.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes78, parameterTypes)) {
+			return TrackingActionInstanceServiceUtil.getTrackingActionInstancesCount(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName79.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes79, parameterTypes)) {
 			return TrackingActionInstanceServiceUtil.updateTrackingActionInstance(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
-				((Long)arguments[3]).longValue(),
-				(java.lang.String)arguments[4], (java.lang.String)arguments[5],
-				(java.lang.String)arguments[6],
-				(com.liferay.portal.service.ServiceContext)arguments[7]);
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				((Long)arguments[4]).longValue(),
+				(java.lang.String)arguments[5], (java.lang.String)arguments[6],
+				(java.lang.String)arguments[7],
+				(com.liferay.portal.service.ServiceContext)arguments[8]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -142,4 +174,8 @@ public class TrackingActionInstanceServiceClpInvoker {
 	private String[] _methodParameterTypes76;
 	private String _methodName77;
 	private String[] _methodParameterTypes77;
+	private String _methodName78;
+	private String[] _methodParameterTypes78;
+	private String _methodName79;
+	private String[] _methodParameterTypes79;
 }

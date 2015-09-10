@@ -38,7 +38,7 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{reportInstanceId=");
 		sb.append(reportInstanceId);
@@ -54,6 +54,10 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 		sb.append(modifiedDate);
 		sb.append(", reportKey=");
 		sb.append(reportKey);
+		sb.append(", name=");
+		sb.append(name);
+		sb.append(", description=");
+		sb.append(description);
 		sb.append(", className=");
 		sb.append(className);
 		sb.append(", classPK=");
@@ -95,6 +99,20 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 			reportInstanceImpl.setReportKey(reportKey);
 		}
 
+		if (name == null) {
+			reportInstanceImpl.setName(StringPool.BLANK);
+		}
+		else {
+			reportInstanceImpl.setName(name);
+		}
+
+		if (description == null) {
+			reportInstanceImpl.setDescription(StringPool.BLANK);
+		}
+		else {
+			reportInstanceImpl.setDescription(description);
+		}
+
 		if (className == null) {
 			reportInstanceImpl.setClassName(StringPool.BLANK);
 		}
@@ -125,6 +143,8 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 		userName = objectInput.readUTF();
 		modifiedDate = objectInput.readLong();
 		reportKey = objectInput.readUTF();
+		name = objectInput.readUTF();
+		description = objectInput.readUTF();
 		className = objectInput.readUTF();
 		classPK = objectInput.readLong();
 		typeSettings = objectInput.readUTF();
@@ -154,6 +174,20 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 			objectOutput.writeUTF(reportKey);
 		}
 
+		if (name == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(name);
+		}
+
+		if (description == null) {
+			objectOutput.writeUTF(StringPool.BLANK);
+		}
+		else {
+			objectOutput.writeUTF(description);
+		}
+
 		if (className == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
 		}
@@ -178,6 +212,8 @@ public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 	public String userName;
 	public long modifiedDate;
 	public String reportKey;
+	public String name;
+	public String description;
 	public String className;
 	public long classPK;
 	public String typeSettings;

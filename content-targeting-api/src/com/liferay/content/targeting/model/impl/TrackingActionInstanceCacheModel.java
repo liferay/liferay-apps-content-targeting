@@ -38,7 +38,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(33);
+		StringBundler sb = new StringBundler(35);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
@@ -60,6 +60,8 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		sb.append(trackingActionKey);
 		sb.append(", campaignId=");
 		sb.append(campaignId);
+		sb.append(", reportInstanceId=");
+		sb.append(reportInstanceId);
 		sb.append(", alias=");
 		sb.append(alias);
 		sb.append(", referrerClassName=");
@@ -122,6 +124,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		}
 
 		trackingActionInstanceImpl.setCampaignId(campaignId);
+		trackingActionInstanceImpl.setReportInstanceId(reportInstanceId);
 
 		if (alias == null) {
 			trackingActionInstanceImpl.setAlias(StringPool.BLANK);
@@ -177,6 +180,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		modifiedDate = objectInput.readLong();
 		trackingActionKey = objectInput.readUTF();
 		campaignId = objectInput.readLong();
+		reportInstanceId = objectInput.readLong();
 		alias = objectInput.readUTF();
 		referrerClassName = objectInput.readUTF();
 		referrerClassPK = objectInput.readLong();
@@ -218,6 +222,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 		}
 
 		objectOutput.writeLong(campaignId);
+		objectOutput.writeLong(reportInstanceId);
 
 		if (alias == null) {
 			objectOutput.writeUTF(StringPool.BLANK);
@@ -267,6 +272,7 @@ public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActi
 	public long modifiedDate;
 	public String trackingActionKey;
 	public long campaignId;
+	public long reportInstanceId;
 	public String alias;
 	public String referrerClassName;
 	public long referrerClassPK;

@@ -42,6 +42,7 @@ public class TrackingActionInstanceSoap implements Serializable {
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setTrackingActionKey(model.getTrackingActionKey());
 		soapModel.setCampaignId(model.getCampaignId());
+		soapModel.setReportInstanceId(model.getReportInstanceId());
 		soapModel.setAlias(model.getAlias());
 		soapModel.setReferrerClassName(model.getReferrerClassName());
 		soapModel.setReferrerClassPK(model.getReferrerClassPK());
@@ -183,6 +184,14 @@ public class TrackingActionInstanceSoap implements Serializable {
 		_campaignId = campaignId;
 	}
 
+	public long getReportInstanceId() {
+		return _reportInstanceId;
+	}
+
+	public void setReportInstanceId(long reportInstanceId) {
+		_reportInstanceId = reportInstanceId;
+	}
+
 	public String getAlias() {
 		return _alias;
 	}
@@ -241,6 +250,7 @@ public class TrackingActionInstanceSoap implements Serializable {
 	private Date _modifiedDate;
 	private String _trackingActionKey;
 	private long _campaignId;
+	private long _reportInstanceId;
 	private String _alias;
 	private String _referrerClassName;
 	private long _referrerClassPK;
