@@ -30,6 +30,14 @@
 	</@>
 </#macro>
 
+<#macro invalidChannelsException>
+	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidChannelsException" message="there-is-an-error-in-one-of-your-channels" />
+</#macro>
+
+<#macro invalidReportsException>
+	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidReportsException" message="there-is-an-error-in-one-of-your-report-elements" />
+</#macro>
+
 <#macro invalidRulesException>
 	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidRulesException" message="there-is-an-error-in-one-of-your-rules" />
 </#macro>
@@ -38,9 +46,7 @@
 	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidTrackingActionsException" message="there-is-an-error-in-one-of-your-tracking-actions" />
 </#macro>
 
-<#macro invalidChannelsException>
-	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidChannelsException" message="there-is-an-error-in-one-of-your-channels" />
-</#macro>
+
 
 <#macro usedUserSegmentException>
 	<@liferay_ui["error"] key="com.liferay.content.targeting.UsedUserSegmentException">

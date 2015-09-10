@@ -87,10 +87,12 @@
 			<@liferay_ui["icon-menu"]>
 				<#if (reportsCount > 0)>
 					<@portlet["renderURL"] var="viewCampaignReportsURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
+						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 						<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
+						<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
 						<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 						<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
+						<@portlet["param"] name="campaignTabs" value="reports" />
 					</@>
 
 					<@liferay_ui["icon"]
@@ -104,11 +106,12 @@
 
 				<#if (channelsCount > 0)>
 					<@portlet["renderURL"] var="viewCampaignTacticsURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_TACTICS}" />
+						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 						<@portlet["param"] name="redirect" value="${viewCampaignsURL}" />
 						<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 						<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
 						<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
+						<@portlet["param"] name="campaignTabs" value="promotions" />
 					</@>
 
 					<@liferay_ui["icon"]

@@ -20,10 +20,11 @@
 
 	<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
 		<@portlet["renderURL"] var="redirectURL">
-			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_TACTICS}" />
+			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 			<@portlet["param"] name="campaignId" value="${campaignId}" />
 			<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 			<@portlet["param"] name="classPK" value="${campaignId}" />
+			<@portlet["param"] name="campaignTabs" value="promotions" />
 		</@>
 
 		<@portlet["renderURL"] var="addTacticURL">
