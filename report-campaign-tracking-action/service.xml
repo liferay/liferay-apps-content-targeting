@@ -12,6 +12,7 @@
 		<!-- Other fields -->
 
 		<column name="campaignId" type="long" />
+		<column name="reportInstanceId" type="long" />
 		<column name="userSegmentId" type="long" />
 		<column name="alias" type="String" />
 		<column name="referrerClassName" type="String" />
@@ -29,33 +30,33 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CampaignId" return-type="Collection">
-			<finder-column name="campaignId" />
-		</finder>
-
-		<finder name="C_GtD" return-type="Collection">
-			<finder-column name="campaignId" />
+		<finder name="R_GtD" return-type="Collection">
+			<finder-column name="reportInstanceId" />
 			<finder-column name="modifiedDate" comparator="&gt;" />
 		</finder>
 
-		<finder name="C_E" return-type="Collection">
-			<finder-column name="campaignId" />
+		<finder name="R_E" return-type="Collection">
+			<finder-column name="reportInstanceId" />
 			<finder-column name="elementId" />
 		</finder>
 
-		<finder name="C_R_R" return-type="Collection">
-			<finder-column name="campaignId" />
+		<finder name="R_R_R" return-type="Collection">
+			<finder-column name="reportInstanceId" />
 			<finder-column name="referrerClassName" />
 			<finder-column name="referrerClassPK" />
 		</finder>
 
-		<finder name="C_U_R_R_E_E" return-type="CTAction" unique="true">
-			<finder-column name="campaignId" />
+		<finder name="R_U_R_R_E_E" return-type="CTAction" unique="true">
+			<finder-column name="reportInstanceId" />
 			<finder-column name="userSegmentId" />
 			<finder-column name="referrerClassName" />
 			<finder-column name="referrerClassPK" />
 			<finder-column name="elementId" />
 			<finder-column name="eventType" />
+		</finder>
+
+		<finder name="ReportInstanceId" return-type="Collection">
+			<finder-column name="reportInstanceId" />
 		</finder>
 	</entity>
 
@@ -68,6 +69,7 @@
 		<!-- Other fields -->
 
 		<column name="campaignId" type="long" />
+		<column name="reportInstanceId" type="long" />
 		<column name="alias" type="String" />
 		<column name="referrerClassName" type="String" />
 		<column name="referrerClassPK" type="long" />
@@ -84,21 +86,21 @@
 
 		<!-- Finder methods -->
 
-		<finder name="CampaignId" return-type="Collection">
-			<finder-column name="campaignId" />
-		</finder>
-
-		<finder name="C_GtD" return-type="Collection">
-			<finder-column name="campaignId" />
+		<finder name="R_GtD" return-type="Collection">
+			<finder-column name="reportInstanceId" />
 			<finder-column name="modifiedDate" comparator="&gt;" />
 		</finder>
 
-		<finder name="C_R_R_E_E" return-type="CTAction" unique="true">
-			<finder-column name="campaignId" />
+		<finder name="R_R_R_E_E" return-type="CTAction" unique="true">
+			<finder-column name="reportInstanceId" />
 			<finder-column name="referrerClassName" />
 			<finder-column name="referrerClassPK" />
 			<finder-column name="elementId" />
 			<finder-column name="eventType" />
+		</finder>
+
+		<finder name="ReportInstanceId" return-type="Collection">
+			<finder-column name="reportInstanceId" />
 		</finder>
 	</entity>
 </service-builder>
