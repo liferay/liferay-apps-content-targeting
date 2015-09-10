@@ -14,6 +14,7 @@
 <@portlet["renderURL"] varImpl="portletURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORT}" />
 	<@portlet["param"] name="redirect" value="${redirect}" />
+	<@portlet["param"] name="reportInstanceId" value="${reportInstanceId}" />
 	<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
 	<@portlet["param"] name="className" value="${className}" />
 	<@portlet["param"] name="classPK" value="${classPK?string}" />
