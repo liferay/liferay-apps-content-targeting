@@ -25,6 +25,9 @@ public class ContentTargetingPath {
 	public static final String EDIT_CAMPAIGN =
 		"html/content_targeting/edit_campaign.ftl";
 
+	public static final String EDIT_REPORT =
+		"html/content_targeting/edit_report.ftl";
+
 	public static final String EDIT_TACTIC =
 		"html/content_targeting/edit_tactic.ftl";
 

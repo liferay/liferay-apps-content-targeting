@@ -14,16 +14,14 @@
 
 package com.liferay.content.targeting.util;
 
-import com.liferay.content.targeting.api.model.Report;
-import com.liferay.content.targeting.api.model.ReportsRegistry;
+import com.liferay.content.targeting.model.ReportInstance;
+import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.portlet.PortletException;
 
@@ -34,7 +32,7 @@ import org.osgi.framework.FrameworkUtil;
  * @author Eduardo Garcia
  */
 public class ReportSearchContainerIterator
-	extends SearchContainerIterator<Report> {
+	extends SearchContainerIterator<ReportInstance> {
 
 	/**
 	 * @deprecated As of Audience Targeting 2.0, replaced by {@link
@@ -58,12 +56,12 @@ public class ReportSearchContainerIterator
 
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		_reportsRegistry = ServiceTrackerUtil.getService(
-			ReportsRegistry.class, bundle.getBundleContext());
+		_reportInstanceLocalService = ServiceTrackerUtil.getService(
+			ReportInstanceLocalService.class, bundle.getBundleContext());
 	}
 
 	@Override
-	public List<Report> getResults(int start, int end)
+	public List<ReportInstance> getResults(int start, int end)
 		throws PortalException, SystemException {
 
 		return ListUtil.subList(getResults(), start, end);
@@ -74,22 +72,14 @@ public class ReportSearchContainerIterator
 		return getResults().size();
 	}
 
-	protected List<Report> getResults() {
-		Map<String, Report> reportMap = _reportsRegistry.getReports(_className);
+	protected List<ReportInstance> getResults() throws SystemException {
 
-		List<Report> reports = new ArrayList<Report>();
-
-		for (Report report : reportMap.values()) {
-			if ((_classPK <= 0) || report.isVisible(_classPK)) {
-				reports.add(report);
-			}
-		}
-
-		return reports;
+		return _reportInstanceLocalService.getReportInstances(
+			_className, _classPK);
 	}
 
 	private String _className;
 	private long _classPK;
-	private ReportsRegistry _reportsRegistry;
+	private ReportInstanceLocalService _reportInstanceLocalService;
 
 }
