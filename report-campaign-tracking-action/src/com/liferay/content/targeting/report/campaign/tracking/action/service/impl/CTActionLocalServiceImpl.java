@@ -15,13 +15,10 @@
 package com.liferay.content.targeting.report.campaign.tracking.action.service.impl;
 
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
-import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.report.campaign.tracking.action.CTActionReport;
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.base.CTActionLocalServiceBaseImpl;
-import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.counter.service.CounterLocalServiceUtil;
@@ -63,33 +60,37 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 
 	@Override
 	public CTAction addCTAction(
-			long campaignId, long userSegmentId, String alias,
+			long reportInstanceId, long userSegmentId, String alias,
 			String referrerClassName, long referrerClassPK, String eventType,
 			int count)
 		throws PortalException, SystemException {
 
 		return addCTAction(
-			campaignId, userSegmentId, alias, referrerClassName,
+			reportInstanceId, userSegmentId, alias, referrerClassName,
 			referrerClassPK, StringPool.BLANK, eventType, count);
 	}
 
 	@Override
 	public CTAction addCTAction(
-			long campaignId, long userSegmentId, String alias,
+			long reportInstanceId, long userSegmentId, String alias,
 			String referrerClassName, long referrerClassPK, String elementId,
 			String eventType, int count)
 		throws PortalException, SystemException {
 
 		CTAction ctAction = getCTAction(
-			campaignId, userSegmentId, referrerClassName, referrerClassPK,
+			reportInstanceId, userSegmentId, referrerClassName, referrerClassPK,
 			elementId, eventType);
+
+		ReportInstance reportInstance =
+			_reportInstanceLocalService.fetchReportInstance(reportInstanceId);
 
 		if (ctAction == null) {
 			long ctActionId = CounterLocalServiceUtil.increment();
 
 			ctAction = ctActionPersistence.create(ctActionId);
 
-			ctAction.setCampaignId(campaignId);
+			ctAction.setCampaignId(reportInstance.getClassPK());
+			ctAction.setReportInstanceId(reportInstanceId);
 			ctAction.setUserSegmentId(userSegmentId);
 			ctAction.setAlias(alias);
 			ctAction.setReferrerClassName(referrerClassName);
@@ -108,32 +109,28 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 
 	@Override
 	public CTAction addCTAction(
-			long campaignId, long userSegmentId, String alias, String elementId,
-			String eventType, int count)
+			long reportInstanceId, long userSegmentId, String alias,
+			String elementId, String eventType, int count)
 		throws PortalException, SystemException {
 
 		return addCTAction(
-			campaignId, userSegmentId, alias, StringPool.BLANK, -1, elementId,
-			eventType, count);
+			reportInstanceId, userSegmentId, alias, StringPool.BLANK, -1,
+			elementId, eventType, count);
 	}
 
 	@Override
 	public void checkCTActionEvents() throws PortalException, SystemException {
 		try {
-			List<Campaign> campaigns = _campaignLocalService.getCampaigns(
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+			List<ReportInstance> reportInstances =
+				_reportInstanceLocalService.getReportInstances(
+					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 			ServiceContext serviceContext = new ServiceContext();
 
-			for (Campaign campaign : campaigns) {
-				checkCTActionEvents(campaign.getCampaignId());
+			for (ReportInstance reportInstance : reportInstances) {
+				checkCTActionEvents(reportInstance.getReportInstanceId());
 
-				serviceContext.setScopeGroupId(campaign.getGroupId());
-
-				_reportInstanceLocalService.addReportInstance(
-					campaign.getUserId(), CTActionReport.class.getSimpleName(),
-					Campaign.class.getName(), campaign.getCampaignId(),
-					StringPool.BLANK, serviceContext);
+				serviceContext.setScopeGroupId(reportInstance.getGroupId());
 			}
 		}
 		catch (NullPointerException npe) {
@@ -144,98 +141,98 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 	}
 
 	@Override
-	public void checkCTActionEvents(long campaignId)
+	public void checkCTActionEvents(long reportInstanceId)
 		throws PortalException, SystemException {
 
 		Date modifiedDate = null;
 
 		ReportInstance reportInstance =
-			_reportInstanceLocalService.fetchReportInstance(
-				CTActionReport.class.getSimpleName(), Campaign.class.getName(),
-				campaignId);
+			_reportInstanceLocalService.fetchReportInstance(reportInstanceId);
 
 		if (reportInstance != null) {
 			modifiedDate = reportInstance.getModifiedDate();
 		}
 
-		List<CTAction> ctActions = ctActionPersistence.findByCampaignId(
-			campaignId);
+		List<CTAction> ctActions = ctActionPersistence.findByReportInstanceId(
+			reportInstanceId);
 
 		for (CTAction ctAction : ctActions) {
-			if (_trackingActionInstaceLocalService.fetchTrackingActionInstance(
-					campaignId, ctAction.getAlias()) == null) {
+			if (_trackingActionInstaceLocalService.
+					fetchTrackingActionInstanceByReportInstanceId(
+						reportInstanceId, ctAction.getAlias()) == null) {
 
 				ctActionPersistence.remove(ctAction.getCTActionId());
 			}
 		}
 
-		addCTActionsFromAnalyticsWithElementId(campaignId, modifiedDate);
-		addCTActionsFromAnalyticsWithClassName(campaignId, modifiedDate);
+		addCTActionsFromAnalyticsWithElementId(reportInstanceId, modifiedDate);
+		addCTActionsFromAnalyticsWithClassName(reportInstanceId, modifiedDate);
 	}
 
 	@Override
 	public CTAction getCTAction(
-			long campaignId, long userSegmentId, String referrerClassName,
+			long reportInstanceId, long userSegmentId, String referrerClassName,
 			long referrerClassPK, String elementId, String eventType)
 		throws PortalException, SystemException {
 
-		return ctActionPersistence.fetchByC_U_R_R_E_E(
-			campaignId, userSegmentId, referrerClassName, referrerClassPK,
+		return ctActionPersistence.fetchByR_U_R_R_E_E(
+			reportInstanceId, userSegmentId, referrerClassName, referrerClassPK,
 			elementId, eventType);
 	}
 
 	@Override
-	public List<CTAction> getCTActions(long campaignId)
+	public List<CTAction> getCTActions(long reportInstanceId)
 		throws PortalException, SystemException {
 
-		return ctActionPersistence.findByCampaignId(campaignId);
+		return ctActionPersistence.findByReportInstanceId(reportInstanceId);
 	}
 
 	@Override
-	public List<CTAction> getCTActions(long campaignId, Date modifiedDate)
+	public List<CTAction> getCTActions(long reportInstanceId, Date modifiedDate)
 		throws PortalException, SystemException {
 
-		return ctActionPersistence.findByC_GtD(campaignId, modifiedDate);
+		return ctActionPersistence.findByR_GtD(reportInstanceId, modifiedDate);
 	}
 
 	@Override
 	public List<CTAction> getCTActions(
-			long campaignId, int start, int end,
+			long reportInstanceId, int start, int end,
 			OrderByComparator orderByComparator)
 		throws PortalException, SystemException {
 
-		return ctActionPersistence.findByCampaignId(
-			campaignId, start, end, orderByComparator);
+		return ctActionPersistence.findByReportInstanceId(
+			reportInstanceId, start, end, orderByComparator);
 	}
 
 	@Override
-	public List<CTAction> getCTActions(long campaignId, String elementId)
+	public List<CTAction> getCTActions(long reportInstanceId, String elementId)
 		throws PortalException, SystemException {
 
-		return ctActionPersistence.findByC_E(campaignId, elementId);
+		return ctActionPersistence.findByR_E(reportInstanceId, elementId);
 	}
 
 	@Override
 	public List<CTAction> getCTActions(
-			long campaignId, String className, long classPK)
+			long reportInstanceId, String className, long classPK)
 		throws PortalException, SystemException {
 
-		return ctActionPersistence.findByC_R_R(campaignId, className, classPK);
+		return ctActionPersistence.findByR_R_R(
+			reportInstanceId, className, classPK);
 	}
 
 	@Override
-	public int getCTActionsCount(long campaignId)
+	public int getCTActionsCount(long reportInstanceId)
 		throws PortalException, SystemException {
 
-		return ctActionPersistence.countByCampaignId(campaignId);
+		return ctActionPersistence.countByReportInstanceId(reportInstanceId);
 	}
 
 	protected void addCTActionsFromAnalyticsWithClassName(
-			long campaignId, Date date)
+			long reportInstanceId, Date date)
 		throws PortalException, SystemException {
 
 		List<Object[]> ctActionAnalyticsList =
-			ctActionFinder.findByAnalyticsWithClassName(campaignId, date);
+			ctActionFinder.findByAnalyticsWithClassName(reportInstanceId, date);
 
 		for (Object[] ctActionAnalytics : ctActionAnalyticsList) {
 			long userSegmentId = (Long)ctActionAnalytics[0];
@@ -253,13 +250,13 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 			}
 
 			addCTAction(
-				campaignId, userSegmentId, alias, className, classPK, eventType,
-				count);
+				reportInstanceId, userSegmentId, alias, className, classPK,
+				eventType, count);
 		}
 	}
 
 	protected void addCTActionsFromAnalyticsWithElementId(
-			long campaignId, Date date)
+			long reportInstanceId, Date date)
 		throws PortalException, SystemException {
 
 		if (date == null) {
@@ -267,7 +264,7 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 		}
 
 		List<Object[]> ctActionAnalyticsList =
-			ctActionFinder.findByAnalyticsWithElementId(campaignId, date);
+			ctActionFinder.findByAnalyticsWithElementId(reportInstanceId, date);
 
 		for (Object[] ctActionAnalytics : ctActionAnalyticsList) {
 			long userSegmentId = (Long)ctActionAnalytics[0];
@@ -284,7 +281,8 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 			}
 
 			addCTAction(
-				campaignId, userSegmentId, alias, elementId, eventType, count);
+				reportInstanceId, userSegmentId, alias, elementId, eventType,
+				count);
 		}
 	}
 
@@ -293,8 +291,6 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 
 		_analyticsEventLocalService = ServiceTrackerUtil.getService(
 			AnalyticsEventLocalService.class, bundle.getBundleContext());
-		_campaignLocalService = ServiceTrackerUtil.getService(
-			CampaignLocalService.class, bundle.getBundleContext());
 		_reportInstanceLocalService = ServiceTrackerUtil.getService(
 			ReportInstanceLocalService.class, bundle.getBundleContext());
 		_trackingActionInstaceLocalService = ServiceTrackerUtil.getService(
@@ -306,7 +302,6 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 		CTActionLocalServiceImpl.class);
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
-	private CampaignLocalService _campaignLocalService;
 	private ReportInstanceLocalService _reportInstanceLocalService;
 	private TrackingActionInstanceLocalService
 		_trackingActionInstaceLocalService;

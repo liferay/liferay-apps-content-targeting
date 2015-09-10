@@ -40,7 +40,7 @@ public class CTActionFinderImpl extends BasePersistenceImpl<CTAction>
 
 	@Override
 	public List<Object[]> findByAnalyticsWithClassName(
-			long campaignId, Date modifiedDate)
+			long reportInstanceId, Date modifiedDate)
 		throws SystemException {
 
 		Session session = null;
@@ -60,7 +60,7 @@ public class CTActionFinderImpl extends BasePersistenceImpl<CTAction>
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(campaignId);
+			qPos.add(reportInstanceId);
 			qPos.add(modifiedDate);
 
 			return q.list();
@@ -75,7 +75,7 @@ public class CTActionFinderImpl extends BasePersistenceImpl<CTAction>
 
 	@Override
 	public List<Object[]> findByAnalyticsWithElementId(
-			long campaignId, Date modifiedDate)
+			long reportInstanceId, Date modifiedDate)
 		throws SystemException {
 
 		Session session = null;
@@ -94,7 +94,7 @@ public class CTActionFinderImpl extends BasePersistenceImpl<CTAction>
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
-			qPos.add(campaignId);
+			qPos.add(reportInstanceId);
 			qPos.add(modifiedDate);
 
 			return q.list();

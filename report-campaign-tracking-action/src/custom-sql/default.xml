@@ -16,7 +16,7 @@
 				CT_Analytics_AnalyticsReferrer ON
 					(CT_Analytics_AnalyticsReferrer.analyticsEventId = CT_Analytics_AnalyticsEvent.analyticsEventId)
 			WHERE
-				(CT_TrackingActionInstance.campaignId = ?) AND
+				(CT_TrackingActionInstance.reportInstanceId = ?) AND
 				(CT_Analytics_AnalyticsEvent.createDate >= ?)
 		]]>
 	</sql>
@@ -34,7 +34,7 @@
 				CT_Analytics_AnalyticsReferrer ON
 					(CT_Analytics_AnalyticsReferrer.analyticsEventId = CT_Analytics_AnalyticsEvent.analyticsEventId)
 			WHERE
-				(CT_TrackingActionInstance.campaignId = ?) AND
+				(CT_TrackingActionInstance.reportInstanceId = ?) AND
 				(CT_Analytics_AnalyticsEvent.createDate >= ?)
 		]]>
 	</sql>
