@@ -99,6 +99,10 @@ public class ReportInstanceLocalServiceImpl
 		return reportInstance;
 	}
 
+	/**
+	* @deprecated As of 2.0.0
+	*/
+	@Deprecated
 	@Override
 	public ReportInstance addReportInstance(
 			long userId, String reportKey, String className, long classPK,

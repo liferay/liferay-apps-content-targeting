@@ -106,6 +106,24 @@ public class TrackingActionInstanceLocalServiceImpl
 		return trackingActionInstance;
 	}
 
+	/**
+	* @deprecated As of 2.0.0
+	*/
+	@Deprecated
+	@Override
+	public TrackingActionInstance addTrackingActionInstance(
+			long userId, String trackingActionKey, long campaignId,
+			String alias, String referrerClassName, long referrerClassPK,
+			String elementId, String eventType, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		return addTrackingActionInstance(
+			userId, 0, trackingActionKey, campaignId, alias, referrerClassName,
+			referrerClassPK, elementId, eventType, typeSettings,
+			serviceContext);
+	}
+
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public TrackingActionInstance deleteTrackingActionInstance(
