@@ -15,14 +15,14 @@
 package com.liferay.content.targeting.portlet;
 
 import com.liferay.content.targeting.DuplicateChannelInstanceException;
-import com.liferay.content.targeting.DuplicateTrackingActionInstanceException;
 import com.liferay.content.targeting.InvalidChannelException;
 import com.liferay.content.targeting.InvalidChannelsException;
 import com.liferay.content.targeting.InvalidDateRangeException;
 import com.liferay.content.targeting.InvalidNameException;
+import com.liferay.content.targeting.InvalidReportException;
+import com.liferay.content.targeting.InvalidReportsException;
 import com.liferay.content.targeting.InvalidRuleException;
 import com.liferay.content.targeting.InvalidRulesException;
-import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.InvalidTrackingActionsException;
 import com.liferay.content.targeting.UsedUserSegmentException;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
@@ -34,24 +34,23 @@ import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RuleCategoriesRegistry;
 import com.liferay.content.targeting.api.model.RulesRegistry;
-import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.Tactic;
-import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.util.BreadcrumbUtil;
 import com.liferay.content.targeting.portlet.util.ChannelTemplate;
+import com.liferay.content.targeting.portlet.util.ReportInstanceRowChecker;
 import com.liferay.content.targeting.portlet.util.RuleTemplate;
-import com.liferay.content.targeting.portlet.util.TrackingActionTemplate;
 import com.liferay.content.targeting.portlet.util.UnavailableServiceException;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.service.ChannelInstanceLocalService;
 import com.liferay.content.targeting.service.ChannelInstanceService;
+import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.ReportInstanceService;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.RuleInstanceService;
@@ -180,6 +179,38 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
+	public void deleteReportInstance(
+			ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		try {
+			long[] deleteReportInstanceIds = null;
+
+			long reportInstanceId = ParamUtil.getLong(
+				request, "reportInstanceId");
+
+			if (reportInstanceId > 0) {
+				deleteReportInstanceIds = new long[]{reportInstanceId};
+			}
+			else {
+				deleteReportInstanceIds = StringUtil.split(
+					ParamUtil.getString(request, "reportInstanceIds"), 0L);
+			}
+
+			for (long deleteReportInstanceId : deleteReportInstanceIds) {
+				_reportInstanceLocalService.deleteReportInstance(
+					deleteReportInstanceId);
+			}
+
+			sendRedirect(request, response);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName(), e);
+
+			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
+		}
+	}
+
 	public void deleteTactic(ActionRequest request, ActionResponse response)
 		throws Exception {
 
@@ -283,6 +314,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			ChannelInstanceLocalService.class, bundle.getBundleContext());
 		_channelsRegistry = ServiceTrackerUtil.getService(
 			ChannelsRegistry.class, bundle.getBundleContext());
+		_reportInstanceLocalService = ServiceTrackerUtil.getService(
+			ReportInstanceLocalService.class, bundle.getBundleContext());
 		_reportInstanceService = ServiceTrackerUtil.getService(
 			ReportInstanceService.class, bundle.getBundleContext());
 		_reportsRegistry = ServiceTrackerUtil.getService(
@@ -423,12 +456,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		throws Exception {
 
 		long classPK = ParamUtil.getLong(request, "classPK");
+		long reportInstanceId = ParamUtil.getLong(request, "reportInstanceId");
 		String reportKey = ParamUtil.getString(request, "reportKey");
 
 		try {
 			Report report = _reportsRegistry.getReport(reportKey);
 
-			String typeSettings = report.updateReport(classPK);
+			String typeSettings = report.updateReport(
+				classPK, reportInstanceId);
 
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				ReportInstance.class.getName(), request);
@@ -438,10 +473,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			serviceContext.setScopeGroupId(
 				themeDisplay.getSiteGroupIdOrLiveGroupId());
-
-			_reportInstanceService.addReportInstance(
-				themeDisplay.getUserId(), reportKey, report.getReportType(),
-				classPK, typeSettings, serviceContext);
 
 			sendRedirect(request, response);
 		}
@@ -456,6 +487,89 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				response.setRenderParameter(
 					"mvcPath", ContentTargetingPath.ERROR);
 			}
+		}
+	}
+
+	public void updateReportInstance(
+			ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		long reportInstanceId = ParamUtil.getLong(request, "reportInstanceId");
+		String reportKey = ParamUtil.getString(request, "reportKey");
+		String className = ParamUtil.getString(request, "className");
+		long classPK = ParamUtil.getLong(request, "classPK");
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			request, "name");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(request, "description");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			request);
+
+		try {
+			Callable<ReportInstance> reportInstanceCallable =
+				new ReportInstanceCallable(
+					request, response, themeDisplay.getUserId(),
+					reportInstanceId, reportKey, className, classPK, nameMap,
+					descriptionMap, serviceContext);
+
+			ReportInstance reportInstance = TransactionalCallableUtil.call(
+				_transactionAttribute, reportInstanceCallable);
+
+			boolean saveAndContinue = ParamUtil.get(
+				request, "saveAndContinue", false);
+
+			if (saveAndContinue) {
+				String redirect = ParamUtil.get(request, "redirect", "");
+				response.setRenderParameter("className", className);
+				response.setRenderParameter("classPK", String.valueOf(classPK));
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.EDIT_REPORT);
+				response.setRenderParameter("redirect", redirect);
+				response.setRenderParameter(
+					"p_p_mode", PortletMode.VIEW.toString());
+				response.setRenderParameter(
+					"reportInstanceId",
+					String.valueOf(reportInstance.getReportInstanceId()));
+				response.setRenderParameter("reportKey", reportKey);
+
+				addSuccessMessage(request, response);
+			}
+			else {
+				sendRedirect(request, response);
+			}
+		}
+		catch (Exception e) {
+			PortalUtil.copyRequestParameters(request, response);
+
+			SessionErrors.add(request, e.getClass().getName(), e);
+
+			if (e instanceof InvalidDateRangeException ||
+				e instanceof InvalidNameException ||
+				e instanceof InvalidReportsException ||
+				e instanceof PrincipalException) {
+
+				SessionMessages.add(
+					request,
+					PortalUtil.getPortletId(request) +
+						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.EDIT_REPORT);
+			}
+			else {
+				response.setRenderParameter(
+					"mvcPath", ContentTargetingPath.ERROR);
+			}
+		}
+		catch (Throwable t) {
+			_log.error(t);
+
+			response.setRenderParameter("mvcPath", ContentTargetingPath.ERROR);
 		}
 	}
 
@@ -657,35 +771,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
-	protected void deleteTrackingActionInstances(
-			List<TrackingActionInstance> trackingActionInstances)
-		throws Exception {
-
-		for (TrackingActionInstance
-			trackingActionInstance : trackingActionInstances) {
-
-			_trackingActionInstanceService.deleteTrackingActionInstance(
-				trackingActionInstance.getTrackingActionInstanceId());
-		}
-	}
-
-	protected InvalidTrackingActionsException
-		getInvalidTrackingActionsException(
-			PortletRequest portletRequest) {
-
-		if (SessionErrors.contains(
-				portletRequest,
-			InvalidTrackingActionsException.class.getName())) {
-
-			return (InvalidTrackingActionsException)SessionErrors.get(
-				portletRequest,
-				InvalidTrackingActionsException.class.getName());
-		}
-		else {
-			return new InvalidTrackingActionsException();
-		}
-	}
-
 	@Override
 	protected void doPopulateContext(
 			String path, PortletRequest portletRequest,
@@ -704,6 +789,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			"campaignConstants",
 			staticModels.get(CampaignConstants.class.getName()));
 		template.put(
+			"campaignTabs",
+			ParamUtil.getString(portletRequest, "campaignTabs", "details"));
+		template.put(
 			"contentTargetingPath",
 			staticModels.get(ContentTargetingPath.class.getName()));
 		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
@@ -711,6 +799,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put("portletContext", getPortletContext());
 		template.put(
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
+		template.put("reportInstanceClass", ReportInstance.class);
 		template.put(
 			"tabs1",
 			ParamUtil.getString(portletRequest, "tabs1", "user-segments"));
@@ -974,112 +1063,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return ruleInstances;
 	}
 
-	protected String getTrackingActionHtml(
-		TrackingAction trackingAction,
-		TrackingActionInstance trackingActionInstance, Template template,
-		Map<String, String> values,
-		List<InvalidTrackingActionException> exceptions) {
-
-		Map<String, Object> context = cloneTemplateContext(template);
-
-		String html = StringPool.BLANK;
-
-		if ((exceptions != null) && !exceptions.isEmpty()) {
-			try {
-				context.put("exceptions", exceptions);
-
-				html += ContentTargetingContextUtil.parseTemplate(
-					getClass(), "templates/ct_exceptions.ftl", context);
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
-
-		HttpServletRequest request = (HttpServletRequest)context.get("request");
-
-		Map<String, List<ValidatorTag>> validatorTagsMap =
-			new HashMap<String, List<ValidatorTag>>();
-
-		request.setAttribute("aui:form:validatorTagsMap", validatorTagsMap);
-
-		if (values == null) {
-			values = Collections.emptyMap();
-		}
-
-		html += trackingAction.getFormHTML(
-			trackingActionInstance, context, values);
-
-		if (!validatorTagsMap.isEmpty()) {
-			try {
-				context.put("validatorTagsMap", validatorTagsMap);
-
-				html += ContentTargetingContextUtil.parseTemplate(
-					getClass(), "templates/ct_validators.ftl", context);
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
-
-		return html;
-	}
-
-	protected List<TrackingActionInstance> getTrackingActionsFromRequest(
-			PortletRequest request, PortletResponse response)
-		throws Exception {
-
-		List<TrackingActionInstance> trackingActionsInstances =
-			new ArrayList<TrackingActionInstance>();
-
-		String campaignTrackingActions = ParamUtil.getString(
-			request, "campaignTrackingActions");
-
-		if (Validator.isNull(campaignTrackingActions)) {
-			return trackingActionsInstances;
-		}
-
-		JSONObject jSONObject = JSONFactoryUtil.createJSONObject(
-			campaignTrackingActions);
-
-		String trackingActions = jSONObject.getString("fields");
-
-		JSONArray jSONArray = JSONFactoryUtil.createJSONArray(trackingActions);
-
-		for (int i = 0; i < jSONArray.length(); i++) {
-			JSONObject jSONObjectTrackingAction = jSONArray.getJSONObject(i);
-
-			long trackingActionInstanceId = 0;
-
-			String type = jSONObjectTrackingAction.getString("type");
-
-			if (type.contains(StringPool.UNDERLINE)) {
-				String[] ids = type.split(StringPool.UNDERLINE);
-
-				trackingActionInstanceId = GetterUtil.getLong(ids[1]);
-				type = ids[0];
-			}
-
-			String id = jSONObjectTrackingAction.getString("id");
-
-			Map<String, String> trackingActionValues = getJSONValues(
-				jSONObjectTrackingAction.getJSONArray("data"),
-				response.getNamespace(), id);
-
-			TrackingActionInstance trackingActionInstance =
-				_trackingActionInstanceLocalService.
-					createTrackingActionInstance(trackingActionInstanceId);
-
-			trackingActionInstance.setTrackingActionGuid(id);
-			trackingActionInstance.setTrackingActionKey(type);
-			trackingActionInstance.setValues(trackingActionValues);
-
-			trackingActionsInstances.add(trackingActionInstance);
-		}
-
-		return trackingActionsInstances;
-	}
-
 	protected void populateViewContext(
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template,
@@ -1092,26 +1075,30 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
+		template.put(
+			"campaignPermission",
+			staticModels.get(CampaignPermission.class.getName()));
+		template.put(
+			"contentTargetingPermission",
+			staticModels.get(ContentTargetingPermission.class.getName()));
+		template.put(
+			"userSegmentPermission",
+			staticModels.get(UserSegmentPermission.class.getName()));
+		template.put(
+			"actionKeys", staticModels.get(ActionKeys.class.getName()));
+
+		long scopeGroupId = (Long) template.get("scopeGroupId");
+
+		Group scopeGroup = themeDisplay.getScopeGroup();
+
+		template.put("scopeGroup", scopeGroup);
+
 		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW) ||
 			path.equals(ContentTargetingPath.VIEW_CAMPAIGNS_RESOURCES) ||
 			path.equals(ContentTargetingPath.VIEW_USER_SEGMENTS_RESOURCES)) {
 
-			template.put(
-				"actionKeys", staticModels.get(ActionKeys.class.getName()));
-			template.put(
-				"campaignPermission",
-				staticModels.get(CampaignPermission.class.getName()));
-			template.put(
-				"contentTargetingPermission",
-				staticModels.get(ContentTargetingPermission.class.getName()));
-			template.put(
-				"userSegmentPermission",
-				staticModels.get(UserSegmentPermission.class.getName()));
-
 			PermissionChecker permissionChecker =
 				(PermissionChecker) template.get("permissionChecker");
-
-			long scopeGroupId = (Long) template.get("scopeGroupId");
 
 			if (UserSegmentPermission.contains(
 					permissionChecker, scopeGroupId, scopeGroupId,
@@ -1170,6 +1157,44 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			List<UserSegment> campaignUserSegments = null;
 
 			if (campaignId > 0) {
+				template.put(
+					"reports",
+					_reportsRegistry.getReports(
+						Campaign.class.getName()).values());
+
+				template.put(
+					"reportsRowChecker",
+					new ReportInstanceRowChecker(
+						portletRequest, portletResponse));
+
+				template.put(
+					"reportSearchContainerIterator",
+					new ReportSearchContainerIterator(
+						themeDisplay.getScopeGroupId(), null,
+						Campaign.class.getName(), campaignId));
+
+				String className = Campaign.class.getName();
+
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(request);
+
+				for (Report report
+					: _reportsRegistry.getReports(className).values()) {
+
+					int reportInstanceCount =
+						_reportInstanceLocalService.findReportInstances(
+							report.getReportKey(), className, campaignId).
+								size();
+
+					if (!report.isInstantiable() &&
+						(reportInstanceCount == 0)) {
+
+						_reportInstanceLocalService.addReportInstance(
+							themeDisplay.getUserId(), report.getReportKey(),
+							className, campaignId, "", serviceContext);
+					}
+				}
+
 				Campaign campaign = _campaignLocalService.getCampaign(
 					campaignId);
 
@@ -1273,111 +1298,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			template.put("userSegments", userSegments);
 
-			template.put("trackingActionsRegistry", _trackingActionsRegistry);
-
-			Map<String, TrackingAction> trackingActions =
-				_trackingActionsRegistry.getTrackingActions();
-
 			boolean isolated = themeDisplay.isIsolated();
-
-			try {
-				themeDisplay.setIsolated(true);
-
-				template.put("trackingActions", trackingActions.values());
-
-				List<TrackingActionInstance> trackingActionInstances =
-					getTrackingActionsFromRequest(
-						portletRequest, portletResponse);
-
-				if (trackingActionInstances.isEmpty() && (campaignId > 0)) {
-					trackingActionInstances =
-						_trackingActionInstanceService.
-							getTrackingActionInstances(campaignId);
-				}
-
-				List<TrackingActionTemplate> addedTrackingActionTemplates =
-					new ArrayList<TrackingActionTemplate>();
-
-				if (!trackingActionInstances.isEmpty()) {
-					template.put(
-						"trackingActionInstances", trackingActionInstances);
-
-					InvalidTrackingActionsException itae =
-						getInvalidTrackingActionsException(portletRequest);
-
-					for (TrackingActionInstance instance
-						: trackingActionInstances) {
-
-						TrackingAction trackingAction =
-							_trackingActionsRegistry.getTrackingAction(
-								instance.getTrackingActionKey());
-
-						if (trackingAction == null) {
-							continue;
-						}
-
-						TrackingActionTemplate trackingActionTemplate =
-							new TrackingActionTemplate();
-
-						if (instance.getTrackingActionInstanceId() > 0) {
-							trackingActionTemplate.setInstanceId(
-								String.valueOf(
-									instance.getTrackingActionInstanceId()));
-						}
-						else {
-							trackingActionTemplate.setInstanceId(
-								instance.getTrackingActionGuid());
-						}
-
-						trackingActionTemplate.setTrackingAction(
-							trackingAction);
-
-						String html = getTrackingActionHtml(
-							trackingAction, instance, template,
-							instance.getValues(),
-							itae.getExceptions(
-								instance.getTrackingActionGuid()));
-
-						trackingActionTemplate.setTemplate(
-							HtmlUtil.escapeAttribute(html));
-
-						addedTrackingActionTemplates.add(
-							trackingActionTemplate);
-					}
-				}
-
-				template.put(
-					"addedTrackingActionTemplates",
-					addedTrackingActionTemplates);
-
-				List<TrackingActionTemplate> trackingActionTemplates =
-					new ArrayList<TrackingActionTemplate>();
-
-				for (TrackingAction trackingAction : trackingActions.values()) {
-					if (!trackingAction.isVisible()) {
-						continue;
-					}
-
-					TrackingActionTemplate trackingActionTemplate =
-						new TrackingActionTemplate();
-
-					trackingActionTemplate.setTrackingAction(trackingAction);
-
-					String html = getTrackingActionHtml(
-						trackingAction, null, template, null, null);
-
-					trackingActionTemplate.setTemplate(
-						HtmlUtil.escapeAttribute(html));
-
-					trackingActionTemplates.add(trackingActionTemplate);
-				}
-
-				template.put(
-					"trackingActionTemplates", trackingActionTemplates);
-			}
-			finally {
-				themeDisplay.setIsolated(isolated);
-			}
 
 			if (path.equals(ContentTargetingPath.EDIT_TACTIC)) {
 				isolated = themeDisplay.isIsolated();
@@ -1488,8 +1409,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			PermissionChecker permissionChecker =
 				(PermissionChecker) template.get("permissionChecker");
 
-			long scopeGroupId = (Long) template.get("scopeGroupId");
-
 			if (CampaignPermission.contains(
 					permissionChecker, scopeGroupId, scopeGroupId,
 				ActionKeys.DELETE)) {
@@ -1515,10 +1434,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					portletRequest, "className");
 				long classPK = ParamUtil.getLong(portletRequest, "classPK");
 
-				Group scopeGroup = themeDisplay.getScopeGroup();
-
 				template.put("className", className);
-				template.put("scopeGroup", scopeGroup);
 
 				String name = StringPool.BLANK;
 
@@ -1546,7 +1462,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				String title = LanguageUtil.format(
 					portletConfig, themeDisplay.getLocale(),
-					"tactics-for-the-x-x", titleObject);
+					"promotions-for-the-x-x", titleObject);
 
 				template.put("title", title);
 			}
@@ -1686,9 +1602,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			String className = ParamUtil.getString(portletRequest, "className");
 			long classPK = ParamUtil.getLong(portletRequest, "classPK");
+			long reportInstanceId = ParamUtil.getLong(
+				portletRequest, "reportInstanceId");
 
-			Group scopeGroup = themeDisplay.getScopeGroup();
-
+			template.put("reportInstanceId", reportInstanceId);
 			template.put("className", className);
 			template.put("scopeGroup", scopeGroup);
 			template.put("reportInstanceService", _reportInstanceService);
@@ -1752,11 +1669,79 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				template.put("title", title);
 
 				template.put(
+					"reports", _reportsRegistry.getReports(className).values());
+				template.put(
+					"reportsRowChecker",
+					new ReportInstanceRowChecker(
+						portletRequest, portletResponse));
+				template.put(
 					"reportSearchContainerIterator",
 					new ReportSearchContainerIterator(
 						themeDisplay.getScopeGroupId(), null, className,
 						classPK));
+
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(request);
+
+				for (Report report
+						: _reportsRegistry.getReports(className).values()) {
+
+					int reportInstanceCount =
+						_reportInstanceLocalService.findReportInstances(
+							report.getReportKey(), className, classPK).size();
+
+					if (!report.isInstantiable() &&
+						(reportInstanceCount == 0)) {
+
+						_reportInstanceLocalService.addReportInstance(
+							themeDisplay.getUserId(), report.getReportKey(),
+							className, classPK, "", serviceContext);
+					}
+				}
 			}
+		}
+		else if (path.equals(ContentTargetingPath.EDIT_REPORT)) {
+			String className = ParamUtil.getString(portletRequest, "className");
+			long classPK = ParamUtil.getLong(portletRequest, "classPK");
+			long reportInstanceId = ParamUtil.getLong(
+				portletRequest, "reportInstanceId");
+
+			String reportNameXml = StringPool.BLANK;
+			String reportDescriptionXml = StringPool.BLANK;
+			String reportKey = ParamUtil.getString(portletRequest, "reportKey");
+
+			if (className.equals(Campaign.class.getName())) {
+				template.put("campaignId", classPK);
+			}
+			else {
+				template.put("userSegmentId", classPK);
+			}
+
+			Report report = _reportsRegistry.getReport(reportKey);
+
+			ReportInstance reportInstance =
+				_reportInstanceService.fetchReportInstance(reportInstanceId);
+
+			template.put("reportInstance", reportInstance);
+
+			Map<String, String> values = new HashMap<String, String>();
+
+			if (reportInstance != null) {
+				values = reportInstance.getValues();
+			}
+
+			template.put("classPK", classPK);
+			template.put("className", className);
+			template.put("reportDescriptionXml", reportDescriptionXml);
+			template.put(
+				"reportEditHTML",
+				report.getEditHTML(
+					getClass(), portletRequest, portletResponse, reportInstance,
+					cloneTemplateContext(template), values));
+			template.put("reportInstance", reportInstance);
+			template.put("reportInstanceId", reportInstanceId);
+			template.put("reportNameXml", reportNameXml);
+			template.put("reportKey", reportKey);
 		}
 	}
 
@@ -1853,6 +1838,50 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return channelExceptions;
 	}
 
+	protected List<InvalidReportException> updateReportElements(
+			ReportInstance reportInstance, PortletRequest request,
+			PortletResponse response)
+		throws Exception {
+
+		List<InvalidReportException> reportExceptions =
+			new ArrayList<InvalidReportException>();
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			request);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		Report report = _reportsRegistry.getReport(
+			reportInstance.getReportKey());
+
+		Map<String, String> values = new HashMap<String, String>();
+
+		try {
+			values.put("className", reportInstance.getClassName());
+			values.put("classPK", String.valueOf(reportInstance.getClassPK()));
+			values.put(
+				"reportInstanceId",
+				String.valueOf(reportInstance.getReportInstanceId()));
+			values.put("reportKey", reportInstance.getReportKey());
+
+			String typeSettings = report.processEditReport(
+				request, response, reportInstance.getReportGuid(), values);
+
+			reportInstance.setTypeSettings(typeSettings);
+
+			_reportInstanceService.updateReportInstance(reportInstance);
+		}
+		catch (Exception e) {
+			InvalidReportException ire = new InvalidReportException(e);
+			ire.setReportGuid(reportInstance.getReportGuid());
+
+			reportExceptions.add(ire);
+		}
+
+		return reportExceptions;
+	}
+
 	protected List<InvalidRuleException> updateRules(
 			long userSegmentId, PortletRequest request,
 			PortletResponse response)
@@ -1929,117 +1958,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		deleteRuleInstances(ruleInstances);
 
 		return ruleExceptions;
-	}
-
-	protected List<InvalidTrackingActionException> updateTrackingActions(
-			long campaignId, PortletRequest request, PortletResponse response)
-		throws Exception {
-
-		List<TrackingActionInstance> requestTrackingActionInstances =
-			getTrackingActionsFromRequest(request, response);
-
-		List<TrackingActionInstance> trackingActionInstances = ListUtil.copy(
-			_trackingActionInstanceService.getTrackingActionInstances(
-				campaignId));
-
-		List<InvalidTrackingActionException> trackingActionExceptions =
-			new ArrayList<InvalidTrackingActionException>();
-
-		if (requestTrackingActionInstances.isEmpty()) {
-			deleteTrackingActionInstances(trackingActionInstances);
-
-			return trackingActionExceptions;
-		}
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			TrackingActionInstance.class.getName(), request);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		for (TrackingActionInstance requestTrackingActionInstance
-			: requestTrackingActionInstances) {
-
-			TrackingAction trackingAction =
-				_trackingActionsRegistry.getTrackingAction(
-					requestTrackingActionInstance.getTrackingActionKey());
-
-			if (trackingAction == null) {
-				continue;
-			}
-
-			String typeSettings = null;
-
-			Map<String, String> trackingActionValues =
-				requestTrackingActionInstance.getValues();
-
-			try {
-				typeSettings = trackingAction.processTrackingAction(
-					request, response,
-					requestTrackingActionInstance.getTrackingActionGuid(),
-					trackingActionValues);
-			}
-			catch (InvalidTrackingActionException itae) {
-				itae.setTrackingActionGuid(
-					requestTrackingActionInstance.getTrackingActionGuid());
-
-				trackingActionExceptions.add(itae);
-			}
-			catch (Exception e) {
-				trackingActionExceptions.add(
-					new InvalidTrackingActionException(e.getMessage()));
-			}
-
-			String alias = trackingActionValues.get("alias");
-			String referrerClassName = trackingActionValues.get(
-				"referrerClassName");
-			long referrerClassPK = GetterUtil.getLong(
-				trackingActionValues.get("referrerClassPK"));
-			String elementId = trackingActionValues.get("elementId");
-			String eventType = trackingActionValues.get("eventType");
-
-			long trackingActionInstanceId =
-				requestTrackingActionInstance.getTrackingActionInstanceId();
-
-			try {
-				if (trackingActionInstanceId > 0) {
-					TrackingActionInstance trackingActionInstance =
-						_trackingActionInstanceService.
-							updateTrackingActionInstance(
-								trackingActionInstanceId, alias,
-								referrerClassName, referrerClassPK, elementId,
-								eventType, typeSettings, serviceContext);
-
-					trackingActionInstances.remove(trackingActionInstance);
-				}
-				else {
-					_trackingActionInstanceService.addTrackingActionInstance(
-						themeDisplay.getUserId(),
-						requestTrackingActionInstance.getTrackingActionKey(),
-						campaignId, alias, referrerClassName, referrerClassPK,
-						elementId, eventType, typeSettings, serviceContext);
-				}
-			}
-			catch (DuplicateTrackingActionInstanceException dtaie) {
-				InvalidTrackingActionException itae =
-					new InvalidTrackingActionException(
-						"please-use-a-unique-alias");
-
-				itae.setTrackingActionGuid(
-					requestTrackingActionInstance.getTrackingActionGuid());
-
-				trackingActionExceptions.add(itae);
-			}
-			catch (PortalException pe) {
-				_log.error("Cannot update tracking action", pe);
-			}
-		}
-
-		// Delete removed Tracking Actions
-
-		deleteTrackingActionInstances(trackingActionInstances);
-
-		return trackingActionExceptions;
 	}
 
 	private void _checkServices()
@@ -2140,6 +2058,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 	private ChannelInstanceLocalService _channelInstanceLocalService;
 	private ChannelInstanceService _channelInstanceService;
 	private ChannelsRegistry _channelsRegistry;
+	private ReportInstanceLocalService _reportInstanceLocalService;
 	private ReportInstanceService _reportInstanceService;
 	private ReportsRegistry _reportsRegistry;
 	private RuleCategoriesRegistry _ruleCategoriesRegistry;
@@ -2199,16 +2118,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					_serviceContext);
 			}
 
-			List<InvalidTrackingActionException> trackingActionExceptions =
-				updateTrackingActions(
-					campaign.getCampaignId(), _portletRequest,
-					_portletResponse);
-
-			if (!trackingActionExceptions.isEmpty()) {
-				throw new InvalidTrackingActionsException(
-					trackingActionExceptions);
-			}
-
 			return campaign;
 		}
 
@@ -2224,6 +2133,65 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		private int _priority;
 		private boolean _active;
 		private long[] _userSegmentIds;
+		private ServiceContext _serviceContext;
+
+	}
+
+	private class ReportInstanceCallable implements Callable<ReportInstance> {
+
+		private ReportInstanceCallable(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			long userId, long reportInstanceId, String reportKey,
+			String className, long classPK, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext) {
+
+			_portletRequest = portletRequest;
+			_portletResponse = portletResponse;
+			_userId = userId;
+			_reportInstanceId = reportInstanceId;
+			_reportKey = reportKey;
+			_className = className;
+			_classPK = classPK;
+			_nameMap = nameMap;
+			_descriptionMap = descriptionMap;
+			_serviceContext = serviceContext;
+		}
+
+		@Override
+		public ReportInstance call() throws Exception {
+			ReportInstance reportInstance = null;
+
+			if (_reportInstanceId > 0) {
+				reportInstance = _reportInstanceService.updateReportInstance(
+					_reportInstanceId, _userId, _reportKey, _className,
+					_classPK, _nameMap, _descriptionMap, "", _serviceContext);
+			}
+			else {
+				reportInstance = _reportInstanceService.addReportInstance(
+					_userId, _reportKey, _className, _classPK, _nameMap,
+					_descriptionMap, "", _serviceContext);
+			}
+
+			List<InvalidReportException> reportExceptions =
+				updateReportElements(
+					reportInstance, _portletRequest, _portletResponse);
+
+			if (!reportExceptions.isEmpty()) {
+				throw new InvalidReportsException(reportExceptions);
+			}
+
+			return reportInstance;
+		}
+
+		private PortletRequest _portletRequest;
+		private PortletResponse _portletResponse;
+		private long _userId;
+		private long _reportInstanceId;
+		private String _reportKey;
+		private String _className;
+		private long _classPK;
+		private Map<Locale, String> _nameMap;
+		private Map<Locale, String> _descriptionMap;
 		private ServiceContext _serviceContext;
 
 	}
