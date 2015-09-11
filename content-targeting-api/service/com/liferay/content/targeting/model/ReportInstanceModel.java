@@ -468,20 +468,19 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.model.ReportInstance reportInstance);
+	public int compareTo(ReportInstance reportInstance);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.content.targeting.model.ReportInstance> toCacheModel();
+	public CacheModel<ReportInstance> toCacheModel();
 
 	@Override
-	public com.liferay.content.targeting.model.ReportInstance toEscapedModel();
+	public ReportInstance toEscapedModel();
 
 	@Override
-	public com.liferay.content.targeting.model.ReportInstance toUnescapedModel();
+	public ReportInstance toUnescapedModel();
 
 	@Override
 	public String toString();

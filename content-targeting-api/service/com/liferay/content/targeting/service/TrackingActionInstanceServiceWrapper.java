@@ -60,9 +60,7 @@ public class TrackingActionInstanceServiceWrapper
 	}
 
 	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this interface directly. Always use {@link com.liferay.content.targeting.service.TrackingActionInstanceServiceUtil} to access the tracking action instance remote service.
+	* @deprecated As of 2.0.0
 	*/
 	@Override
 	public com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(

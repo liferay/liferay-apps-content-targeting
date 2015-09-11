@@ -469,19 +469,19 @@ public interface TacticModel extends BaseModel<Tactic>, StagedGroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(com.liferay.content.targeting.model.Tactic tactic);
+	public int compareTo(Tactic tactic);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.content.targeting.model.Tactic> toCacheModel();
+	public CacheModel<Tactic> toCacheModel();
 
 	@Override
-	public com.liferay.content.targeting.model.Tactic toEscapedModel();
+	public Tactic toEscapedModel();
 
 	@Override
-	public com.liferay.content.targeting.model.Tactic toUnescapedModel();
+	public Tactic toUnescapedModel();
 
 	@Override
 	public String toString();

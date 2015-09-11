@@ -303,6 +303,9 @@ public class ReportInstanceLocalServiceWrapper
 			serviceContext);
 	}
 
+	/**
+	* @deprecated As of 2.0.0
+	*/
 	@Override
 	public com.liferay.content.targeting.model.ReportInstance addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,

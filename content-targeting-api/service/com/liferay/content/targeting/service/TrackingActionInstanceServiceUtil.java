@@ -64,9 +64,7 @@ public class TrackingActionInstanceServiceUtil {
 	}
 
 	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this interface directly. Always use {@link com.liferay.content.targeting.service.TrackingActionInstanceServiceUtil} to access the tracking action instance remote service.
+	* @deprecated As of 2.0.0
 	*/
 	public static com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
 		long userId, java.lang.String trackingActionKey, long campaignId,

@@ -360,6 +360,23 @@ public class TrackingActionInstanceLocalServiceWrapper
 			parameterTypes, arguments);
 	}
 
+	/**
+	* @deprecated As of 2.0.0
+	*/
+	@Override
+	public com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
+		long userId, java.lang.String trackingActionKey, long campaignId,
+		java.lang.String alias, java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _trackingActionInstanceLocalService.addTrackingActionInstance(userId,
+			trackingActionKey, campaignId, alias, referrerClassName,
+			referrerClassPK, elementId, eventType, typeSettings, serviceContext);
+	}
+
 	@Override
 	public com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
 		long userId, long reportInstanceId, java.lang.String trackingActionKey,
