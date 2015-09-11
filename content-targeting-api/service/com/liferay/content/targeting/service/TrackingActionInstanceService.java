@@ -67,15 +67,24 @@ public interface TrackingActionInstanceService extends BaseService,
 		throws java.lang.Throwable;
 
 	/**
-	* NOTE FOR DEVELOPERS:
-	*
-	* Never reference this interface directly. Always use {@link com.liferay.content.targeting.service.TrackingActionInstanceServiceUtil} to access the tracking action instance remote service.
+	* @deprecated As of 2.0.0
 	*/
+	@java.lang.Deprecated
 	public com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
 		long userId, java.lang.String trackingActionKey, long campaignId,
 		java.lang.String alias, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
+		long userId, long reportInstanceId, java.lang.String trackingActionKey,
+		long campaignId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
@@ -95,14 +104,19 @@ public interface TrackingActionInstanceService extends BaseService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
+		long reportInstanceId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getTrackingActionInstancesCount(long campaignId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.content.targeting.model.TrackingActionInstance updateTrackingActionInstance(
-		long trackingActionInstanceId, java.lang.String alias,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType,
-		java.lang.String typeSettings,
+		long trackingActionInstanceId, long reportInstanceId,
+		java.lang.String alias, java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;

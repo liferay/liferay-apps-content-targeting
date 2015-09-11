@@ -51,6 +51,7 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 
 		attributes.put("CTActionId", getCTActionId());
 		attributes.put("campaignId", getCampaignId());
+		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("alias", getAlias());
 		attributes.put("referrerClassName", getReferrerClassName());
@@ -75,6 +76,12 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 
 		if (campaignId != null) {
 			setCampaignId(campaignId);
+		}
+
+		Long reportInstanceId = (Long)attributes.get("reportInstanceId");
+
+		if (reportInstanceId != null) {
+			setReportInstanceId(reportInstanceId);
 		}
 
 		Long userSegmentId = (Long)attributes.get("userSegmentId");
@@ -184,6 +191,26 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 	@Override
 	public void setCampaignId(long campaignId) {
 		_ctAction.setCampaignId(campaignId);
+	}
+
+	/**
+	* Returns the report instance ID of this c t action.
+	*
+	* @return the report instance ID of this c t action
+	*/
+	@Override
+	public long getReportInstanceId() {
+		return _ctAction.getReportInstanceId();
+	}
+
+	/**
+	* Sets the report instance ID of this c t action.
+	*
+	* @param reportInstanceId the report instance ID of this c t action
+	*/
+	@Override
+	public void setReportInstanceId(long reportInstanceId) {
+		_ctAction.setReportInstanceId(reportInstanceId);
 	}
 
 	/**

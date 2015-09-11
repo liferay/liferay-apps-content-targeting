@@ -12,7 +12,7 @@
  * details.
  */
 
-package com.liferay.content.targeting.portlet.util;
+package com.liferay.content.targeting.report.campaign.tracking.action.util;
 
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.portal.kernel.util.StringPool;

@@ -12,17 +12,39 @@
  * details.
  */
 
-package com.liferay.content.targeting.report.campaign.tracking.action.service.persistence;
+package com.liferay.content.targeting;
+
+import com.liferay.portal.kernel.exception.PortalException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public interface CTActionFinder {
-	public java.util.List<java.lang.Object[]> findByAnalyticsWithClassName(
-		long reportInstanceId, java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
+public class InvalidReportException extends PortalException {
 
-	public java.util.List<java.lang.Object[]> findByAnalyticsWithElementId(
-		long reportInstanceId, java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public InvalidReportException() {
+		super();
+	}
+
+	public InvalidReportException(String msg) {
+		super(msg);
+	}
+
+	public InvalidReportException(String msg, Throwable cause) {
+		super(msg, cause);
+	}
+
+	public InvalidReportException(Throwable cause) {
+		super(cause);
+	}
+
+	public String getReportGuid() {
+		return _reportGuid;
+	}
+
+	public void setReportGuid(String reportGuid) {
+		_reportGuid = reportGuid;
+	}
+
+	private String _reportGuid;
+
 }

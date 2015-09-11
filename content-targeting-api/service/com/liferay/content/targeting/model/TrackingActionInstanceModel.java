@@ -237,6 +237,20 @@ public interface TrackingActionInstanceModel extends BaseModel<TrackingActionIns
 	public void setCampaignId(long campaignId);
 
 	/**
+	 * Returns the report instance ID of this tracking action instance.
+	 *
+	 * @return the report instance ID of this tracking action instance
+	 */
+	public long getReportInstanceId();
+
+	/**
+	 * Sets the report instance ID of this tracking action instance.
+	 *
+	 * @param reportInstanceId the report instance ID of this tracking action instance
+	 */
+	public void setReportInstanceId(long reportInstanceId);
+
+	/**
 	 * Returns the alias of this tracking action instance.
 	 *
 	 * @return the alias of this tracking action instance
@@ -362,20 +376,19 @@ public interface TrackingActionInstanceModel extends BaseModel<TrackingActionIns
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance);
+	public int compareTo(TrackingActionInstance trackingActionInstance);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.content.targeting.model.TrackingActionInstance> toCacheModel();
+	public CacheModel<TrackingActionInstance> toCacheModel();
 
 	@Override
-	public com.liferay.content.targeting.model.TrackingActionInstance toEscapedModel();
+	public TrackingActionInstance toEscapedModel();
 
 	@Override
-	public com.liferay.content.targeting.model.TrackingActionInstance toUnescapedModel();
+	public TrackingActionInstance toUnescapedModel();
 
 	@Override
 	public String toString();

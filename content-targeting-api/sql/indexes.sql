@@ -6,8 +6,6 @@ create index IX_5370A08F on CT_AnonymousUserUserSegment (companyId, modifiedDate
 create index IX_BD1F5349 on CT_AnonymousUserUserSegment (companyId, modifiedDate, manual);
 create index IX_5CDDC72F on CT_AnonymousUserUserSegment (userSegmentId);
 create index IX_C34D4CBA on CT_AnonymousUserUserSegment (userSegmentId, active_);
-create index IX_BE4320D0 on CT_AnonymousUserUserSegment (uuid_);
-create index IX_1C594158 on CT_AnonymousUserUserSegment (uuid_, companyId);
 
 create index IX_80FBFA6 on CT_Campaign (groupId);
 create index IX_DB3D03B0 on CT_Campaign (uuid_);
@@ -26,7 +24,7 @@ create index IX_246DEE04 on CT_ChannelInstance (uuid_, companyId);
 create unique index IX_4DE22586 on CT_ChannelInstance (uuid_, groupId);
 
 create index IX_3E22574D on CT_ReportInstance (className, classPK);
-create unique index IX_956562EE on CT_ReportInstance (reportKey, className, classPK);
+create index IX_956562EE on CT_ReportInstance (reportKey, className, classPK);
 
 create index IX_B034D565 on CT_RuleInstance (groupId);
 create index IX_98186965 on CT_RuleInstance (ruleKey, userSegmentId);
@@ -49,6 +47,10 @@ create unique index IX_FE48A6B8 on CT_TrackingActionInstance (campaignId, alias_
 create index IX_8DDDDC52 on CT_TrackingActionInstance (campaignId, elementId, eventType);
 create index IX_A96A17F on CT_TrackingActionInstance (campaignId, referrerClassName, referrerClassPK, eventType);
 create index IX_8EAC9E74 on CT_TrackingActionInstance (groupId);
+create index IX_E297D64E on CT_TrackingActionInstance (reportInstanceId);
+create unique index IX_5D0CB811 on CT_TrackingActionInstance (reportInstanceId, alias_);
+create index IX_94F81DEB on CT_TrackingActionInstance (reportInstanceId, elementId, eventType);
+create index IX_9DBA2E06 on CT_TrackingActionInstance (reportInstanceId, referrerClassName, referrerClassPK, eventType);
 create index IX_E97F3DFE on CT_TrackingActionInstance (uuid_);
 create index IX_5544BB6A on CT_TrackingActionInstance (uuid_, companyId);
 create unique index IX_D8B9146C on CT_TrackingActionInstance (uuid_, groupId);

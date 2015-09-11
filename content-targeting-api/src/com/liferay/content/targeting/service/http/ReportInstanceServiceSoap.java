@@ -18,8 +18,12 @@ import com.liferay.content.targeting.service.ReportInstanceServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.LocalizationUtil;
 
 import java.rmi.RemoteException;
+
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
@@ -64,12 +68,56 @@ import java.rmi.RemoteException;
 public class ReportInstanceServiceSoap {
 	public static com.liferay.content.targeting.model.ReportInstanceSoap addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
+		long classPK, java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.content.targeting.model.ReportInstance returnValue = ReportInstanceServiceUtil.addReportInstance(userId,
+					reportKey, className, classPK, nameMap, descriptionMap,
+					typeSettings, serviceContext);
+
+			return com.liferay.content.targeting.model.ReportInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	/**
+	* @deprecated As of 2.0.0
+	*/
+	public static com.liferay.content.targeting.model.ReportInstanceSoap addReportInstance(
+		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws RemoteException {
 		try {
 			com.liferay.content.targeting.model.ReportInstance returnValue = ReportInstanceServiceUtil.addReportInstance(userId,
 					reportKey, className, classPK, typeSettings, serviceContext);
+
+			return com.liferay.content.targeting.model.ReportInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.content.targeting.model.ReportInstanceSoap fetchReportInstance(
+		long reportInstanceId) throws RemoteException {
+		try {
+			com.liferay.content.targeting.model.ReportInstance returnValue = ReportInstanceServiceUtil.fetchReportInstance(reportInstanceId);
 
 			return com.liferay.content.targeting.model.ReportInstanceSoap.toSoapModel(returnValue);
 		}
@@ -96,14 +144,15 @@ public class ReportInstanceServiceSoap {
 		}
 	}
 
-	public static java.util.Date getReportInstanceModifiedDate(
+	public static com.liferay.content.targeting.model.ReportInstanceSoap[] findReportInstances(
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws RemoteException {
 		try {
-			java.util.Date returnValue = ReportInstanceServiceUtil.getReportInstanceModifiedDate(reportKey,
+			java.util.List<com.liferay.content.targeting.model.ReportInstance> returnValue =
+				ReportInstanceServiceUtil.findReportInstances(reportKey,
 					className, classPK);
 
-			return returnValue;
+			return com.liferay.content.targeting.model.ReportInstanceSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -119,6 +168,50 @@ public class ReportInstanceServiceSoap {
 				ReportInstanceServiceUtil.getReportInstances(className, classPK);
 
 			return com.liferay.content.targeting.model.ReportInstanceSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.content.targeting.model.ReportInstanceSoap updateReportInstance(
+		long reportInstanceId, long userId, java.lang.String reportKey,
+		java.lang.String className, long classPK,
+		java.lang.String[] nameMapLanguageIds,
+		java.lang.String[] nameMapValues,
+		java.lang.String[] descriptionMapLanguageIds,
+		java.lang.String[] descriptionMapValues, java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(nameMapLanguageIds,
+					nameMapValues);
+			Map<Locale, String> descriptionMap = LocalizationUtil.getLocalizationMap(descriptionMapLanguageIds,
+					descriptionMapValues);
+
+			com.liferay.content.targeting.model.ReportInstance returnValue = ReportInstanceServiceUtil.updateReportInstance(reportInstanceId,
+					userId, reportKey, className, classPK, nameMap,
+					descriptionMap, typeSettings, serviceContext);
+
+			return com.liferay.content.targeting.model.ReportInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static com.liferay.content.targeting.model.ReportInstanceSoap updateReportInstance(
+		com.liferay.content.targeting.model.ReportInstanceSoap reportInstance)
+		throws RemoteException {
+		try {
+			com.liferay.content.targeting.model.ReportInstance returnValue = ReportInstanceServiceUtil.updateReportInstance(com.liferay.content.targeting.model.impl.ReportInstanceModelImpl.toModel(
+						reportInstance));
+
+			return com.liferay.content.targeting.model.ReportInstanceSoap.toSoapModel(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);

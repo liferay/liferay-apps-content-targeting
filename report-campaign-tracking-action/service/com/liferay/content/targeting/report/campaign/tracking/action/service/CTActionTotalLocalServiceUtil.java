@@ -276,35 +276,35 @@ public class CTActionTotalLocalServiceUtil {
 	}
 
 	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
-		long campaignId, java.lang.String alias,
+		long reportInstanceId, java.lang.String alias,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addCTActionTotal(campaignId, alias, referrerClassName,
-			referrerClassPK, eventType, count);
+				   .addCTActionTotal(reportInstanceId, alias,
+			referrerClassName, referrerClassPK, eventType, count);
 	}
 
 	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
-		long campaignId, java.lang.String alias,
+		long reportInstanceId, java.lang.String alias,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addCTActionTotal(campaignId, alias, referrerClassName,
-			referrerClassPK, elementId, eventType, count);
+				   .addCTActionTotal(reportInstanceId, alias,
+			referrerClassName, referrerClassPK, elementId, eventType, count);
 	}
 
 	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal addCTActionTotal(
-		long campaignId, java.lang.String alias, java.lang.String elementId,
-		java.lang.String eventType, int count)
+		long reportInstanceId, java.lang.String alias,
+		java.lang.String elementId, java.lang.String eventType, int count)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .addCTActionTotal(campaignId, alias, elementId, eventType,
-			count);
+				   .addCTActionTotal(reportInstanceId, alias, elementId,
+			eventType, count);
 	}
 
 	public static void checkCTActionTotalEvents()
@@ -313,49 +313,50 @@ public class CTActionTotalLocalServiceUtil {
 		getService().checkCTActionTotalEvents();
 	}
 
-	public static void checkCTActionTotalEvents(long campaignId)
+	public static void checkCTActionTotalEvents(long reportInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		getService().checkCTActionTotalEvents(campaignId);
+		getService().checkCTActionTotalEvents(reportInstanceId);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> getCTActionsTotal(
-		long campaignId)
+		long reportInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCTActionsTotal(campaignId);
+		return getService().getCTActionsTotal(reportInstanceId);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> getCTActionsTotal(
-		long campaignId, java.util.Date modifiedDate)
+		long reportInstanceId, java.util.Date modifiedDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCTActionsTotal(campaignId, modifiedDate);
+		return getService().getCTActionsTotal(reportInstanceId, modifiedDate);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> getCTActionsTotal(
-		long campaignId, int start, int end,
+		long reportInstanceId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getCTActionsTotal(campaignId, start, end, orderByComparator);
+				   .getCTActionsTotal(reportInstanceId, start, end,
+			orderByComparator);
 	}
 
-	public static int getCTActionsTotalCount(long campaignId)
+	public static int getCTActionsTotalCount(long reportInstanceId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getCTActionsTotalCount(campaignId);
+		return getService().getCTActionsTotalCount(reportInstanceId);
 	}
 
 	public static com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal getCTActionTotal(
-		long campaignId, java.lang.String referrerClassName,
+		long reportInstanceId, java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
-				   .getCTActionTotal(campaignId, referrerClassName,
+				   .getCTActionTotal(reportInstanceId, referrerClassName,
 			referrerClassPK, elementId, eventType);
 	}
 

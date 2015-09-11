@@ -67,6 +67,20 @@ public interface ReportInstanceService extends BaseService, InvokableService {
 
 	public com.liferay.content.targeting.model.ReportInstance addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
+		long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* @deprecated As of 2.0.0
+	*/
+	@java.lang.Deprecated
+	public com.liferay.content.targeting.model.ReportInstance addReportInstance(
+		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -74,16 +88,34 @@ public interface ReportInstanceService extends BaseService, InvokableService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		java.lang.String reportKey, java.lang.String className, long classPK)
+		long reportInstanceId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date getReportInstanceModifiedDate(
+	public com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
+		java.lang.String reportKey, java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
 		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.content.targeting.model.ReportInstance updateReportInstance(
+		long reportInstanceId, long userId, java.lang.String reportKey,
+		java.lang.String className, long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	public com.liferay.content.targeting.model.ReportInstance updateReportInstance(
+		com.liferay.content.targeting.model.ReportInstance reportInstance)
 		throws com.liferay.portal.kernel.exception.SystemException;
 }

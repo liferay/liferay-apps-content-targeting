@@ -57,6 +57,8 @@ public class ReportInstanceWrapper implements ReportInstance,
 		attributes.put("userName", getUserName());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("reportKey", getReportKey());
+		attributes.put("name", getName());
+		attributes.put("description", getDescription());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
 		attributes.put("typeSettings", getTypeSettings());
@@ -106,6 +108,18 @@ public class ReportInstanceWrapper implements ReportInstance,
 
 		if (reportKey != null) {
 			setReportKey(reportKey);
+		}
+
+		String name = (String)attributes.get("name");
+
+		if (name != null) {
+			setName(name);
+		}
+
+		String description = (String)attributes.get("description");
+
+		if (description != null) {
+			setDescription(description);
 		}
 
 		String className = (String)attributes.get("className");
@@ -310,6 +324,288 @@ public class ReportInstanceWrapper implements ReportInstance,
 	}
 
 	/**
+	* Returns the name of this report instance.
+	*
+	* @return the name of this report instance
+	*/
+	@Override
+	public java.lang.String getName() {
+		return _reportInstance.getName();
+	}
+
+	/**
+	* Returns the localized name of this report instance in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized name of this report instance
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale) {
+		return _reportInstance.getName(locale);
+	}
+
+	/**
+	* Returns the localized name of this report instance in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this report instance. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getName(java.util.Locale locale, boolean useDefault) {
+		return _reportInstance.getName(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized name of this report instance in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized name of this report instance
+	*/
+	@Override
+	public java.lang.String getName(java.lang.String languageId) {
+		return _reportInstance.getName(languageId);
+	}
+
+	/**
+	* Returns the localized name of this report instance in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized name of this report instance
+	*/
+	@Override
+	public java.lang.String getName(java.lang.String languageId,
+		boolean useDefault) {
+		return _reportInstance.getName(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getNameCurrentLanguageId() {
+		return _reportInstance.getNameCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getNameCurrentValue() {
+		return _reportInstance.getNameCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized names of this report instance.
+	*
+	* @return the locales and localized names of this report instance
+	*/
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getNameMap() {
+		return _reportInstance.getNameMap();
+	}
+
+	/**
+	* Sets the name of this report instance.
+	*
+	* @param name the name of this report instance
+	*/
+	@Override
+	public void setName(java.lang.String name) {
+		_reportInstance.setName(name);
+	}
+
+	/**
+	* Sets the localized name of this report instance in the language.
+	*
+	* @param name the localized name of this report instance
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setName(java.lang.String name, java.util.Locale locale) {
+		_reportInstance.setName(name, locale);
+	}
+
+	/**
+	* Sets the localized name of this report instance in the language, and sets the default locale.
+	*
+	* @param name the localized name of this report instance
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setName(java.lang.String name, java.util.Locale locale,
+		java.util.Locale defaultLocale) {
+		_reportInstance.setName(name, locale, defaultLocale);
+	}
+
+	@Override
+	public void setNameCurrentLanguageId(java.lang.String languageId) {
+		_reportInstance.setNameCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized names of this report instance from the map of locales and localized names.
+	*
+	* @param nameMap the locales and localized names of this report instance
+	*/
+	@Override
+	public void setNameMap(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap) {
+		_reportInstance.setNameMap(nameMap);
+	}
+
+	/**
+	* Sets the localized names of this report instance from the map of locales and localized names, and sets the default locale.
+	*
+	* @param nameMap the locales and localized names of this report instance
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setNameMap(
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Locale defaultLocale) {
+		_reportInstance.setNameMap(nameMap, defaultLocale);
+	}
+
+	/**
+	* Returns the description of this report instance.
+	*
+	* @return the description of this report instance
+	*/
+	@Override
+	public java.lang.String getDescription() {
+		return _reportInstance.getDescription();
+	}
+
+	/**
+	* Returns the localized description of this report instance in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param locale the locale of the language
+	* @return the localized description of this report instance
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale) {
+		return _reportInstance.getDescription(locale);
+	}
+
+	/**
+	* Returns the localized description of this report instance in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param locale the local of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this report instance. If <code>useDefault</code> is <code>false</code> and no localization exists for the requested language, an empty string will be returned.
+	*/
+	@Override
+	public java.lang.String getDescription(java.util.Locale locale,
+		boolean useDefault) {
+		return _reportInstance.getDescription(locale, useDefault);
+	}
+
+	/**
+	* Returns the localized description of this report instance in the language. Uses the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @return the localized description of this report instance
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId) {
+		return _reportInstance.getDescription(languageId);
+	}
+
+	/**
+	* Returns the localized description of this report instance in the language, optionally using the default language if no localization exists for the requested language.
+	*
+	* @param languageId the ID of the language
+	* @param useDefault whether to use the default language if no localization exists for the requested language
+	* @return the localized description of this report instance
+	*/
+	@Override
+	public java.lang.String getDescription(java.lang.String languageId,
+		boolean useDefault) {
+		return _reportInstance.getDescription(languageId, useDefault);
+	}
+
+	@Override
+	public java.lang.String getDescriptionCurrentLanguageId() {
+		return _reportInstance.getDescriptionCurrentLanguageId();
+	}
+
+	@Override
+	public java.lang.String getDescriptionCurrentValue() {
+		return _reportInstance.getDescriptionCurrentValue();
+	}
+
+	/**
+	* Returns a map of the locales and localized descriptions of this report instance.
+	*
+	* @return the locales and localized descriptions of this report instance
+	*/
+	@Override
+	public java.util.Map<java.util.Locale, java.lang.String> getDescriptionMap() {
+		return _reportInstance.getDescriptionMap();
+	}
+
+	/**
+	* Sets the description of this report instance.
+	*
+	* @param description the description of this report instance
+	*/
+	@Override
+	public void setDescription(java.lang.String description) {
+		_reportInstance.setDescription(description);
+	}
+
+	/**
+	* Sets the localized description of this report instance in the language.
+	*
+	* @param description the localized description of this report instance
+	* @param locale the locale of the language
+	*/
+	@Override
+	public void setDescription(java.lang.String description,
+		java.util.Locale locale) {
+		_reportInstance.setDescription(description, locale);
+	}
+
+	/**
+	* Sets the localized description of this report instance in the language, and sets the default locale.
+	*
+	* @param description the localized description of this report instance
+	* @param locale the locale of the language
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setDescription(java.lang.String description,
+		java.util.Locale locale, java.util.Locale defaultLocale) {
+		_reportInstance.setDescription(description, locale, defaultLocale);
+	}
+
+	@Override
+	public void setDescriptionCurrentLanguageId(java.lang.String languageId) {
+		_reportInstance.setDescriptionCurrentLanguageId(languageId);
+	}
+
+	/**
+	* Sets the localized descriptions of this report instance from the map of locales and localized descriptions.
+	*
+	* @param descriptionMap the locales and localized descriptions of this report instance
+	*/
+	@Override
+	public void setDescriptionMap(
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap) {
+		_reportInstance.setDescriptionMap(descriptionMap);
+	}
+
+	/**
+	* Sets the localized descriptions of this report instance from the map of locales and localized descriptions, and sets the default locale.
+	*
+	* @param descriptionMap the locales and localized descriptions of this report instance
+	* @param defaultLocale the default locale
+	*/
+	@Override
+	public void setDescriptionMap(
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.util.Locale defaultLocale) {
+		_reportInstance.setDescriptionMap(descriptionMap, defaultLocale);
+	}
+
+	/**
 	* Returns the class name of this report instance.
 	*
 	* @return the class name of this report instance
@@ -428,6 +724,29 @@ public class ReportInstanceWrapper implements ReportInstance,
 	}
 
 	@Override
+	public java.lang.String[] getAvailableLanguageIds() {
+		return _reportInstance.getAvailableLanguageIds();
+	}
+
+	@Override
+	public java.lang.String getDefaultLanguageId() {
+		return _reportInstance.getDefaultLanguageId();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport()
+		throws com.liferay.portal.LocaleException {
+		_reportInstance.prepareLocalizedFieldsForImport();
+	}
+
+	@Override
+	public void prepareLocalizedFieldsForImport(
+		java.util.Locale defaultImportLocale)
+		throws com.liferay.portal.LocaleException {
+		_reportInstance.prepareLocalizedFieldsForImport(defaultImportLocale);
+	}
+
+	@Override
 	public java.lang.Object clone() {
 		return new ReportInstanceWrapper((ReportInstance)_reportInstance.clone());
 	}
@@ -472,6 +791,37 @@ public class ReportInstanceWrapper implements ReportInstance,
 	public void persist()
 		throws com.liferay.portal.kernel.exception.SystemException {
 		_reportInstance.persist();
+	}
+
+	@Override
+	public java.lang.String getReportGuid() {
+		return _reportInstance.getReportGuid();
+	}
+
+	@Override
+	public java.lang.String getTypeName(java.util.Locale locale) {
+		return _reportInstance.getTypeName(locale);
+	}
+
+	@Override
+	public java.util.Map<java.lang.String, java.lang.String> getValues() {
+		return _reportInstance.getValues();
+	}
+
+	@Override
+	public boolean isInstantiable() {
+		return _reportInstance.isInstantiable();
+	}
+
+	@Override
+	public void setReportGuid(java.lang.String reportGuid) {
+		_reportInstance.setReportGuid(reportGuid);
+	}
+
+	@Override
+	public void setValues(
+		java.util.Map<java.lang.String, java.lang.String> values) {
+		_reportInstance.setValues(values);
 	}
 
 	@Override

@@ -65,6 +65,23 @@ public class ReportInstanceServiceUtil {
 
 	public static com.liferay.content.targeting.model.ReportInstance addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
+		long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addReportInstance(userId, reportKey, className, classPK,
+			nameMap, descriptionMap, typeSettings, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 2.0.0
+	*/
+	public static com.liferay.content.targeting.model.ReportInstance addReportInstance(
+		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -75,22 +92,48 @@ public class ReportInstanceServiceUtil {
 	}
 
 	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
+		long reportInstanceId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchReportInstance(reportInstanceId);
+	}
+
+	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchReportInstance(reportKey, className, classPK);
 	}
 
-	public static java.util.Date getReportInstanceModifiedDate(
+	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getReportInstanceModifiedDate(reportKey, className, classPK);
+		return getService().findReportInstances(reportKey, className, classPK);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().getReportInstances(className, classPK);
+	}
+
+	public static com.liferay.content.targeting.model.ReportInstance updateReportInstance(
+		long reportInstanceId, long userId, java.lang.String reportKey,
+		java.lang.String className, long classPK,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .updateReportInstance(reportInstanceId, userId, reportKey,
+			className, classPK, nameMap, descriptionMap, typeSettings,
+			serviceContext);
+	}
+
+	public static com.liferay.content.targeting.model.ReportInstance updateReportInstance(
+		com.liferay.content.targeting.model.ReportInstance reportInstance)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().updateReportInstance(reportInstance);
 	}
 
 	public static void clearService() {

@@ -17,8 +17,6 @@
 <#include "../init.ftl" />
 <#include "../macros.ftl" />
 
-<@breadcrumb />
-
 <#if validator.isNull(redirect)>
 	<@portlet["renderURL"] var="redirect">
 		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
@@ -26,17 +24,13 @@
 	</@>
 </#if>
 
-<@liferay_ui["header"]
-	backURL="${redirect}"
-	title="${title}"
-/>
-
 <@portlet["renderURL"] var="searchURL">
-	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_TACTICS}" />
+	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 	<@portlet["param"] name="campaignId" value="${campaignId}" />
+	<@portlet["param"] name="campaignTabs" value="promotions" />
 </@>
 
-<@aui["form"] action="${searchURL}" method="post" name="fm">
+<@aui["form"] action="${searchURL}" method="post" name="fmTactics">
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
 	<@aui["input"] name="campaignId" type="hidden" value="${campaignId}" />
 	<@aui["input"] name="tacticsIds" type="hidden" />
@@ -64,7 +58,7 @@
 		{
 			contentPanel: tacticsPanel,
 			inputNode: inputNode,
-			resourceURL: '<@portlet["resourceURL"]><@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_TACTICS_RESOURCES}" /></@>',
+			resourceURL: '<@portlet["resourceURL"]><@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" /><@portlet["param"] name="campaignId" value="${campaignId}" /><@portlet["param"] name="campaignTabs" value="promotions" /></@>',
 			namespace: '<@portlet["namespace"] />'
 		}
 	);

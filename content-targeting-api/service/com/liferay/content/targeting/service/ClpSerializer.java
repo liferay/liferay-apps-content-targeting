@@ -653,6 +653,11 @@ public class ClpSerializer {
 		}
 
 		if (className.equals(
+					"com.liferay.content.targeting.InvalidReportException")) {
+			return new com.liferay.content.targeting.InvalidReportException();
+		}
+
+		if (className.equals(
 					"com.liferay.content.targeting.InvalidRuleException")) {
 			return new com.liferay.content.targeting.InvalidRuleException();
 		}

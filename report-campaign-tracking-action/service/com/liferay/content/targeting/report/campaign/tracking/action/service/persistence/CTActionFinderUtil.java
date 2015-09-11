@@ -22,15 +22,17 @@ import com.liferay.portal.kernel.util.ReferenceRegistry;
  */
 public class CTActionFinderUtil {
 	public static java.util.List<java.lang.Object[]> findByAnalyticsWithClassName(
-		long campaignId, java.util.Date modifiedDate)
+		long reportInstanceId, java.util.Date modifiedDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByAnalyticsWithClassName(campaignId, modifiedDate);
+		return getFinder()
+				   .findByAnalyticsWithClassName(reportInstanceId, modifiedDate);
 	}
 
 	public static java.util.List<java.lang.Object[]> findByAnalyticsWithElementId(
-		long campaignId, java.util.Date modifiedDate)
+		long reportInstanceId, java.util.Date modifiedDate)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getFinder().findByAnalyticsWithElementId(campaignId, modifiedDate);
+		return getFinder()
+				   .findByAnalyticsWithElementId(reportInstanceId, modifiedDate);
 	}
 
 	public static CTActionFinder getFinder() {

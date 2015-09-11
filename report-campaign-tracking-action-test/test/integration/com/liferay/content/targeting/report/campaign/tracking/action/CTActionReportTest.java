@@ -75,6 +75,7 @@ public class CTActionReportTest {
 		long classPK = 2;
 		String elementId = "form_id";
 		String eventType = "view";
+		long reportInstanceId = 1;
 
 		int initialCTActionCount = _ctActionLocalService.getCTActionsCount(
 			campaignId);
@@ -82,12 +83,13 @@ public class CTActionReportTest {
 		// Add tracking actions
 
 		_trackingActionInstanceLocalService.addTrackingActionInstance(
-			userId, "FormTrackingAction", campaignId, "Form alias", null, -1,
-			elementId, eventType, null, serviceContext);
+			userId, reportInstanceId, "FormTrackingAction", campaignId,
+			"Form alias", null, -1, elementId, eventType, null, serviceContext);
 
 		_trackingActionInstanceLocalService.addTrackingActionInstance(
-			userId, "PageTrackingAction", campaignId, "Page alias", className,
-			classPK, null, eventType, StringPool.BLANK, serviceContext);
+			userId, reportInstanceId, "PageTrackingAction", campaignId,
+			"Page alias", className, classPK, null, eventType, StringPool.BLANK,
+			serviceContext);
 
 		// Obtain report from registry
 
@@ -95,11 +97,11 @@ public class CTActionReportTest {
 
 		// Test update report without analytics
 
-		report.updateReport(campaignId);
+		report.updateReport(reportInstanceId);
 
 		Assert.assertEquals(
 			initialCTActionCount,
-			_ctActionLocalService.getCTActionsCount(campaignId));
+			_ctActionLocalService.getCTActionsCount(reportInstanceId));
 
 		// Add analytics
 
@@ -115,11 +117,11 @@ public class CTActionReportTest {
 
 		// Test update report with analytics
 
-		report.updateReport(campaignId);
+		report.updateReport(reportInstanceId);
 
 		Assert.assertEquals(
 			initialCTActionCount + 2,
-			_ctActionLocalService.getCTActionsCount(campaignId));
+			_ctActionLocalService.getCTActionsCount(reportInstanceId));
 	}
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;

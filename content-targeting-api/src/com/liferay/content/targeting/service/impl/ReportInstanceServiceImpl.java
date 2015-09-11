@@ -22,8 +22,9 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * The implementation of the report instance remote service.
@@ -44,6 +45,27 @@ public class ReportInstanceServiceImpl extends ReportInstanceServiceBaseImpl {
 	@Override
 	public ReportInstance addReportInstance(
 			long userId, String reportKey, String className, long classPK,
+			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
+			String typeSettings, ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		ReportPermission.check(
+			getPermissionChecker(), userId, serviceContext.getCompanyId(),
+			serviceContext.getScopeGroupId(), className, classPK,
+			ActionKeys.UPDATE);
+
+		return reportInstanceLocalService.addReportInstance(
+			userId, reportKey, className, classPK, nameMap, descriptionMap,
+			typeSettings, serviceContext);
+	}
+
+	/**
+	* @deprecated As of 2.0.0
+	*/
+	@Deprecated
+	@Override
+	public ReportInstance addReportInstance(
+			long userId, String reportKey, String className, long classPK,
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
@@ -58,6 +80,13 @@ public class ReportInstanceServiceImpl extends ReportInstanceServiceBaseImpl {
 	}
 
 	@Override
+	public ReportInstance fetchReportInstance(long reportInstanceId)
+		throws SystemException {
+
+		return reportInstanceLocalService.fetchReportInstance(reportInstanceId);
+	}
+
+	@Override
 	public ReportInstance fetchReportInstance(
 			String reportKey, String className, long classPK)
 		throws SystemException {
@@ -67,11 +96,11 @@ public class ReportInstanceServiceImpl extends ReportInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public Date getReportInstanceModifiedDate(
+	public List<ReportInstance> findReportInstances(
 			String reportKey, String className, long classPK)
 		throws SystemException {
 
-		return reportInstanceLocalService.getReportInstanceModifiedDate(
+		return reportInstanceLocalService.findReportInstances(
 			reportKey, className, classPK);
 	}
 
@@ -82,6 +111,31 @@ public class ReportInstanceServiceImpl extends ReportInstanceServiceBaseImpl {
 
 		return reportInstanceLocalService.getReportInstances(
 			className, classPK);
+	}
+
+	@Override
+	public ReportInstance updateReportInstance(
+			long reportInstanceId, long userId, String reportKey,
+			String className, long classPK, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, String typeSettings,
+			ServiceContext serviceContext)
+		throws PortalException, SystemException {
+
+		ReportPermission.check(
+			getPermissionChecker(), userId, serviceContext.getCompanyId(),
+			serviceContext.getScopeGroupId(), className, classPK,
+			ActionKeys.UPDATE);
+
+		return reportInstanceLocalService.updateReportInstance(
+			reportInstanceId, userId, reportKey, className, classPK, nameMap,
+			descriptionMap, typeSettings, serviceContext);
+	}
+
+	@Override
+	public ReportInstance updateReportInstance(ReportInstance reportInstance)
+		throws SystemException {
+
+		return reportInstanceLocalService.updateReportInstance(reportInstance);
 	}
 
 }

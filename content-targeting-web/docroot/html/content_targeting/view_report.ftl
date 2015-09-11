@@ -21,7 +21,14 @@
 
 <#if validator.isNull(backURL)>
 	<@portlet["renderURL"] var="backURL">
-		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
+		<#if className == campaignClass.getName()>
+			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
+			<@portlet["param"] name="campaignId" value="${classPK?string}" />
+			<@portlet["param"] name="campaignTabs" value="reports" />
+		<#else>
+			<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
+		</#if>
+
 		<@portlet["param"] name="redirect" value="${redirect}" />
 		<@portlet["param"] name="className" value="${className}" />
 		<@portlet["param"] name="classPK" value="${classPK?string}" />
@@ -41,6 +48,7 @@
 
 <@portlet["actionURL"] name="updateReport" var="updateReportURL">
 	<@portlet["param"] name="redirect" value="${currentURL}" />
+	<@portlet["param"] name="reportInstanceId" value="${reportInstanceId?string}" />
 	<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
 	<@portlet["param"] name="classPK" value="${classPK?string}" />
 </@>

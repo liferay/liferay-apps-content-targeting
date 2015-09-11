@@ -87,535 +87,43 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	public static final FinderPath FINDER_PATH_COUNT_ALL = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll", new String[0]);
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CAMPAIGNID =
-		new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_GTD = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByCampaignId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID =
-		new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
-			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByCampaignId",
-			new String[] { Long.class.getName() },
-			CTActionModelImpl.CAMPAIGNID_COLUMN_BITMASK |
-			CTActionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_CAMPAIGNID = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
-			CTActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByCampaignId",
-			new String[] { Long.class.getName() });
-
-	/**
-	 * Returns all the c t actions where campaignId = &#63;.
-	 *
-	 * @param campaignId the campaign ID
-	 * @return the matching c t actions
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<CTAction> findByCampaignId(long campaignId)
-		throws SystemException {
-		return findByCampaignId(campaignId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the c t actions where campaignId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param campaignId the campaign ID
-	 * @param start the lower bound of the range of c t actions
-	 * @param end the upper bound of the range of c t actions (not inclusive)
-	 * @return the range of matching c t actions
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<CTAction> findByCampaignId(long campaignId, int start, int end)
-		throws SystemException {
-		return findByCampaignId(campaignId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the c t actions where campaignId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param campaignId the campaign ID
-	 * @param start the lower bound of the range of c t actions
-	 * @param end the upper bound of the range of c t actions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching c t actions
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public List<CTAction> findByCampaignId(long campaignId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID;
-			finderArgs = new Object[] { campaignId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CAMPAIGNID;
-			finderArgs = new Object[] { campaignId, start, end, orderByComparator };
-		}
-
-		List<CTAction> list = (List<CTAction>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
-
-		if ((list != null) && !list.isEmpty()) {
-			for (CTAction ctAction : list) {
-				if ((campaignId != ctAction.getCampaignId())) {
-					list = null;
-
-					break;
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_CTACTION_WHERE);
-
-			query.append(_FINDER_COLUMN_CAMPAIGNID_CAMPAIGNID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(CTActionModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(campaignId);
-
-				if (!pagination) {
-					list = (List<CTAction>)QueryUtil.list(q, getDialect(),
-							start, end, false);
-
-					Collections.sort(list);
-
-					list = new UnmodifiableList<CTAction>(list);
-				}
-				else {
-					list = (List<CTAction>)QueryUtil.list(q, getDialect(),
-							start, end);
-				}
-
-				cacheResult(list);
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first c t action in the ordered set where campaignId = &#63;.
-	 *
-	 * @param campaignId the campaign ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching c t action
-	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTAction findByCampaignId_First(long campaignId,
-		OrderByComparator orderByComparator)
-		throws NoSuchCTActionException, SystemException {
-		CTAction ctAction = fetchByCampaignId_First(campaignId,
-				orderByComparator);
-
-		if (ctAction != null) {
-			return ctAction;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("campaignId=");
-		msg.append(campaignId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchCTActionException(msg.toString());
-	}
-
-	/**
-	 * Returns the first c t action in the ordered set where campaignId = &#63;.
-	 *
-	 * @param campaignId the campaign ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTAction fetchByCampaignId_First(long campaignId,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<CTAction> list = findByCampaignId(campaignId, 0, 1,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last c t action in the ordered set where campaignId = &#63;.
-	 *
-	 * @param campaignId the campaign ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c t action
-	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTAction findByCampaignId_Last(long campaignId,
-		OrderByComparator orderByComparator)
-		throws NoSuchCTActionException, SystemException {
-		CTAction ctAction = fetchByCampaignId_Last(campaignId, orderByComparator);
-
-		if (ctAction != null) {
-			return ctAction;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("campaignId=");
-		msg.append(campaignId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchCTActionException(msg.toString());
-	}
-
-	/**
-	 * Returns the last c t action in the ordered set where campaignId = &#63;.
-	 *
-	 * @param campaignId the campaign ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTAction fetchByCampaignId_Last(long campaignId,
-		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByCampaignId(campaignId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<CTAction> list = findByCampaignId(campaignId, count - 1, count,
-				orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the c t actions before and after the current c t action in the ordered set where campaignId = &#63;.
-	 *
-	 * @param CTActionId the primary key of the current c t action
-	 * @param campaignId the campaign ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next c t action
-	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a c t action with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public CTAction[] findByCampaignId_PrevAndNext(long CTActionId,
-		long campaignId, OrderByComparator orderByComparator)
-		throws NoSuchCTActionException, SystemException {
-		CTAction ctAction = findByPrimaryKey(CTActionId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			CTAction[] array = new CTActionImpl[3];
-
-			array[0] = getByCampaignId_PrevAndNext(session, ctAction,
-					campaignId, orderByComparator, true);
-
-			array[1] = ctAction;
-
-			array[2] = getByCampaignId_PrevAndNext(session, ctAction,
-					campaignId, orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected CTAction getByCampaignId_PrevAndNext(Session session,
-		CTAction ctAction, long campaignId,
-		OrderByComparator orderByComparator, boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_CTACTION_WHERE);
-
-		query.append(_FINDER_COLUMN_CAMPAIGNID_CAMPAIGNID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(CTActionModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(campaignId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(ctAction);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<CTAction> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the c t actions where campaignId = &#63; from the database.
-	 *
-	 * @param campaignId the campaign ID
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public void removeByCampaignId(long campaignId) throws SystemException {
-		for (CTAction ctAction : findByCampaignId(campaignId,
-				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(ctAction);
-		}
-	}
-
-	/**
-	 * Returns the number of c t actions where campaignId = &#63;.
-	 *
-	 * @param campaignId the campaign ID
-	 * @return the number of matching c t actions
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public int countByCampaignId(long campaignId) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_CAMPAIGNID;
-
-		Object[] finderArgs = new Object[] { campaignId };
-
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_CTACTION_WHERE);
-
-			query.append(_FINDER_COLUMN_CAMPAIGNID_CAMPAIGNID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(campaignId);
-
-				count = (Long)q.uniqueResult();
-
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_CAMPAIGNID_CAMPAIGNID_2 = "ctAction.campaignId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_GTD = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
-			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_GtD",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_GtD",
 			new String[] {
 				Long.class.getName(), Date.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_GTD = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_R_GTD = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_GtD",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByR_GtD",
 			new String[] { Long.class.getName(), Date.class.getName() });
 
 	/**
-	 * Returns all the c t actions where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @return the matching c t actions
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTAction> findByC_GtD(long campaignId, Date modifiedDate)
+	public List<CTAction> findByR_GtD(long reportInstanceId, Date modifiedDate)
 		throws SystemException {
-		return findByC_GtD(campaignId, modifiedDate, QueryUtil.ALL_POS,
+		return findByR_GtD(reportInstanceId, modifiedDate, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the c t actions where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns a range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param start the lower bound of the range of c t actions
 	 * @param end the upper bound of the range of c t actions (not inclusive)
@@ -623,19 +131,19 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTAction> findByC_GtD(long campaignId, Date modifiedDate,
+	public List<CTAction> findByR_GtD(long reportInstanceId, Date modifiedDate,
 		int start, int end) throws SystemException {
-		return findByC_GtD(campaignId, modifiedDate, start, end, null);
+		return findByR_GtD(reportInstanceId, modifiedDate, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the c t actions where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns an ordered range of all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param start the lower bound of the range of c t actions
 	 * @param end the upper bound of the range of c t actions (not inclusive)
@@ -644,16 +152,16 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTAction> findByC_GtD(long campaignId, Date modifiedDate,
+	public List<CTAction> findByR_GtD(long reportInstanceId, Date modifiedDate,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
-		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_GTD;
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_R_GTD;
 		finderArgs = new Object[] {
-				campaignId, modifiedDate,
+				reportInstanceId, modifiedDate,
 				
 				start, end, orderByComparator
 			};
@@ -663,7 +171,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (CTAction ctAction : list) {
-				if ((campaignId != ctAction.getCampaignId()) ||
+				if ((reportInstanceId != ctAction.getReportInstanceId()) ||
 						(modifiedDate.getTime() >= ctAction.getModifiedDate()
 															   .getTime())) {
 					list = null;
@@ -686,17 +194,17 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			query.append(_SQL_SELECT_CTACTION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_GTD_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_R_GTD_REPORTINSTANCEID_2);
 
 			boolean bindModifiedDate = false;
 
 			if (modifiedDate == null) {
-				query.append(_FINDER_COLUMN_C_GTD_MODIFIEDDATE_1);
+				query.append(_FINDER_COLUMN_R_GTD_MODIFIEDDATE_1);
 			}
 			else {
 				bindModifiedDate = true;
 
-				query.append(_FINDER_COLUMN_C_GTD_MODIFIEDDATE_2);
+				query.append(_FINDER_COLUMN_R_GTD_MODIFIEDDATE_2);
 			}
 
 			if (orderByComparator != null) {
@@ -719,7 +227,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(campaignId);
+				qPos.add(reportInstanceId);
 
 				if (bindModifiedDate) {
 					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
@@ -756,9 +264,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the first c t action in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns the first c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching c t action
@@ -766,10 +274,10 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction findByC_GtD_First(long campaignId, Date modifiedDate,
+	public CTAction findByR_GtD_First(long reportInstanceId, Date modifiedDate,
 		OrderByComparator orderByComparator)
 		throws NoSuchCTActionException, SystemException {
-		CTAction ctAction = fetchByC_GtD_First(campaignId, modifiedDate,
+		CTAction ctAction = fetchByR_GtD_First(reportInstanceId, modifiedDate,
 				orderByComparator);
 
 		if (ctAction != null) {
@@ -780,8 +288,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("campaignId=");
-		msg.append(campaignId);
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
 
 		msg.append(", modifiedDate=");
 		msg.append(modifiedDate);
@@ -792,18 +300,19 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the first c t action in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns the first c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction fetchByC_GtD_First(long campaignId, Date modifiedDate,
-		OrderByComparator orderByComparator) throws SystemException {
-		List<CTAction> list = findByC_GtD(campaignId, modifiedDate, 0, 1,
+	public CTAction fetchByR_GtD_First(long reportInstanceId,
+		Date modifiedDate, OrderByComparator orderByComparator)
+		throws SystemException {
+		List<CTAction> list = findByR_GtD(reportInstanceId, modifiedDate, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -814,9 +323,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the last c t action in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns the last c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching c t action
@@ -824,10 +333,10 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction findByC_GtD_Last(long campaignId, Date modifiedDate,
+	public CTAction findByR_GtD_Last(long reportInstanceId, Date modifiedDate,
 		OrderByComparator orderByComparator)
 		throws NoSuchCTActionException, SystemException {
-		CTAction ctAction = fetchByC_GtD_Last(campaignId, modifiedDate,
+		CTAction ctAction = fetchByR_GtD_Last(reportInstanceId, modifiedDate,
 				orderByComparator);
 
 		if (ctAction != null) {
@@ -838,8 +347,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("campaignId=");
-		msg.append(campaignId);
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
 
 		msg.append(", modifiedDate=");
 		msg.append(modifiedDate);
@@ -850,25 +359,25 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the last c t action in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns the last c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction fetchByC_GtD_Last(long campaignId, Date modifiedDate,
+	public CTAction fetchByR_GtD_Last(long reportInstanceId, Date modifiedDate,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByC_GtD(campaignId, modifiedDate);
+		int count = countByR_GtD(reportInstanceId, modifiedDate);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTAction> list = findByC_GtD(campaignId, modifiedDate, count - 1,
-				count, orderByComparator);
+		List<CTAction> list = findByR_GtD(reportInstanceId, modifiedDate,
+				count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -878,10 +387,10 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the c t actions before and after the current c t action in the ordered set where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
 	 * @param CTActionId the primary key of the current c t action
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next c t action
@@ -889,8 +398,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction[] findByC_GtD_PrevAndNext(long CTActionId, long campaignId,
-		Date modifiedDate, OrderByComparator orderByComparator)
+	public CTAction[] findByR_GtD_PrevAndNext(long CTActionId,
+		long reportInstanceId, Date modifiedDate,
+		OrderByComparator orderByComparator)
 		throws NoSuchCTActionException, SystemException {
 		CTAction ctAction = findByPrimaryKey(CTActionId);
 
@@ -901,13 +411,13 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			CTAction[] array = new CTActionImpl[3];
 
-			array[0] = getByC_GtD_PrevAndNext(session, ctAction, campaignId,
-					modifiedDate, orderByComparator, true);
+			array[0] = getByR_GtD_PrevAndNext(session, ctAction,
+					reportInstanceId, modifiedDate, orderByComparator, true);
 
 			array[1] = ctAction;
 
-			array[2] = getByC_GtD_PrevAndNext(session, ctAction, campaignId,
-					modifiedDate, orderByComparator, false);
+			array[2] = getByR_GtD_PrevAndNext(session, ctAction,
+					reportInstanceId, modifiedDate, orderByComparator, false);
 
 			return array;
 		}
@@ -919,8 +429,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		}
 	}
 
-	protected CTAction getByC_GtD_PrevAndNext(Session session,
-		CTAction ctAction, long campaignId, Date modifiedDate,
+	protected CTAction getByR_GtD_PrevAndNext(Session session,
+		CTAction ctAction, long reportInstanceId, Date modifiedDate,
 		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
@@ -934,17 +444,17 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		query.append(_SQL_SELECT_CTACTION_WHERE);
 
-		query.append(_FINDER_COLUMN_C_GTD_CAMPAIGNID_2);
+		query.append(_FINDER_COLUMN_R_GTD_REPORTINSTANCEID_2);
 
 		boolean bindModifiedDate = false;
 
 		if (modifiedDate == null) {
-			query.append(_FINDER_COLUMN_C_GTD_MODIFIEDDATE_1);
+			query.append(_FINDER_COLUMN_R_GTD_MODIFIEDDATE_1);
 		}
 		else {
 			bindModifiedDate = true;
 
-			query.append(_FINDER_COLUMN_C_GTD_MODIFIEDDATE_2);
+			query.append(_FINDER_COLUMN_R_GTD_MODIFIEDDATE_2);
 		}
 
 		if (orderByComparator != null) {
@@ -1015,7 +525,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(campaignId);
+		qPos.add(reportInstanceId);
 
 		if (bindModifiedDate) {
 			qPos.add(CalendarUtil.getTimestamp(modifiedDate));
@@ -1040,35 +550,35 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Removes all the c t actions where campaignId = &#63; and modifiedDate &gt; &#63; from the database.
+	 * Removes all the c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63; from the database.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_GtD(long campaignId, Date modifiedDate)
+	public void removeByR_GtD(long reportInstanceId, Date modifiedDate)
 		throws SystemException {
-		for (CTAction ctAction : findByC_GtD(campaignId, modifiedDate,
+		for (CTAction ctAction : findByR_GtD(reportInstanceId, modifiedDate,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ctAction);
 		}
 	}
 
 	/**
-	 * Returns the number of c t actions where campaignId = &#63; and modifiedDate &gt; &#63;.
+	 * Returns the number of c t actions where reportInstanceId = &#63; and modifiedDate &gt; &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param modifiedDate the modified date
 	 * @return the number of matching c t actions
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_GtD(long campaignId, Date modifiedDate)
+	public int countByR_GtD(long reportInstanceId, Date modifiedDate)
 		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_GTD;
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_R_GTD;
 
-		Object[] finderArgs = new Object[] { campaignId, modifiedDate };
+		Object[] finderArgs = new Object[] { reportInstanceId, modifiedDate };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -1078,17 +588,17 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			query.append(_SQL_COUNT_CTACTION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_GTD_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_R_GTD_REPORTINSTANCEID_2);
 
 			boolean bindModifiedDate = false;
 
 			if (modifiedDate == null) {
-				query.append(_FINDER_COLUMN_C_GTD_MODIFIEDDATE_1);
+				query.append(_FINDER_COLUMN_R_GTD_MODIFIEDDATE_1);
 			}
 			else {
 				bindModifiedDate = true;
 
-				query.append(_FINDER_COLUMN_C_GTD_MODIFIEDDATE_2);
+				query.append(_FINDER_COLUMN_R_GTD_MODIFIEDDATE_2);
 			}
 
 			String sql = query.toString();
@@ -1102,7 +612,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(campaignId);
+				qPos.add(reportInstanceId);
 
 				if (bindModifiedDate) {
 					qPos.add(CalendarUtil.getTimestamp(modifiedDate));
@@ -1125,53 +635,53 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_GTD_CAMPAIGNID_2 = "ctAction.campaignId = ? AND ";
-	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_1 = "ctAction.modifiedDate > NULL";
-	private static final String _FINDER_COLUMN_C_GTD_MODIFIEDDATE_2 = "ctAction.modifiedDate > ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_E = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_R_GTD_REPORTINSTANCEID_2 = "ctAction.reportInstanceId = ? AND ";
+	private static final String _FINDER_COLUMN_R_GTD_MODIFIEDDATE_1 = "ctAction.modifiedDate > NULL";
+	private static final String _FINDER_COLUMN_R_GTD_MODIFIEDDATE_2 = "ctAction.modifiedDate > ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_E = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_E",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_E",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_E = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_E",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_E",
 			new String[] { Long.class.getName(), String.class.getName() },
-			CTActionModelImpl.CAMPAIGNID_COLUMN_BITMASK |
+			CTActionModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
 			CTActionModelImpl.ELEMENTID_COLUMN_BITMASK |
 			CTActionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_E = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_R_E = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_E",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_E",
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns all the c t actions where campaignId = &#63; and elementId = &#63;.
+	 * Returns all the c t actions where reportInstanceId = &#63; and elementId = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param elementId the element ID
 	 * @return the matching c t actions
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTAction> findByC_E(long campaignId, String elementId)
+	public List<CTAction> findByR_E(long reportInstanceId, String elementId)
 		throws SystemException {
-		return findByC_E(campaignId, elementId, QueryUtil.ALL_POS,
+		return findByR_E(reportInstanceId, elementId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the c t actions where campaignId = &#63; and elementId = &#63;.
+	 * Returns a range of all the c t actions where reportInstanceId = &#63; and elementId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param elementId the element ID
 	 * @param start the lower bound of the range of c t actions
 	 * @param end the upper bound of the range of c t actions (not inclusive)
@@ -1179,19 +689,19 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTAction> findByC_E(long campaignId, String elementId,
+	public List<CTAction> findByR_E(long reportInstanceId, String elementId,
 		int start, int end) throws SystemException {
-		return findByC_E(campaignId, elementId, start, end, null);
+		return findByR_E(reportInstanceId, elementId, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the c t actions where campaignId = &#63; and elementId = &#63;.
+	 * Returns an ordered range of all the c t actions where reportInstanceId = &#63; and elementId = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param elementId the element ID
 	 * @param start the lower bound of the range of c t actions
 	 * @param end the upper bound of the range of c t actions (not inclusive)
@@ -1200,7 +710,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTAction> findByC_E(long campaignId, String elementId,
+	public List<CTAction> findByR_E(long reportInstanceId, String elementId,
 		int start, int end, OrderByComparator orderByComparator)
 		throws SystemException {
 		boolean pagination = true;
@@ -1210,13 +720,13 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_E;
-			finderArgs = new Object[] { campaignId, elementId };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E;
+			finderArgs = new Object[] { reportInstanceId, elementId };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_E;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_R_E;
 			finderArgs = new Object[] {
-					campaignId, elementId,
+					reportInstanceId, elementId,
 					
 					start, end, orderByComparator
 				};
@@ -1227,7 +737,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (CTAction ctAction : list) {
-				if ((campaignId != ctAction.getCampaignId()) ||
+				if ((reportInstanceId != ctAction.getReportInstanceId()) ||
 						!Validator.equals(elementId, ctAction.getElementId())) {
 					list = null;
 
@@ -1249,20 +759,20 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			query.append(_SQL_SELECT_CTACTION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_E_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_R_E_REPORTINSTANCEID_2);
 
 			boolean bindElementId = false;
 
 			if (elementId == null) {
-				query.append(_FINDER_COLUMN_C_E_ELEMENTID_1);
+				query.append(_FINDER_COLUMN_R_E_ELEMENTID_1);
 			}
 			else if (elementId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_E_ELEMENTID_3);
+				query.append(_FINDER_COLUMN_R_E_ELEMENTID_3);
 			}
 			else {
 				bindElementId = true;
 
-				query.append(_FINDER_COLUMN_C_E_ELEMENTID_2);
+				query.append(_FINDER_COLUMN_R_E_ELEMENTID_2);
 			}
 
 			if (orderByComparator != null) {
@@ -1285,7 +795,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(campaignId);
+				qPos.add(reportInstanceId);
 
 				if (bindElementId) {
 					qPos.add(elementId);
@@ -1322,9 +832,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the first c t action in the ordered set where campaignId = &#63; and elementId = &#63;.
+	 * Returns the first c t action in the ordered set where reportInstanceId = &#63; and elementId = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param elementId the element ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching c t action
@@ -1332,10 +842,10 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction findByC_E_First(long campaignId, String elementId,
+	public CTAction findByR_E_First(long reportInstanceId, String elementId,
 		OrderByComparator orderByComparator)
 		throws NoSuchCTActionException, SystemException {
-		CTAction ctAction = fetchByC_E_First(campaignId, elementId,
+		CTAction ctAction = fetchByR_E_First(reportInstanceId, elementId,
 				orderByComparator);
 
 		if (ctAction != null) {
@@ -1346,8 +856,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("campaignId=");
-		msg.append(campaignId);
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
 
 		msg.append(", elementId=");
 		msg.append(elementId);
@@ -1358,18 +868,18 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the first c t action in the ordered set where campaignId = &#63; and elementId = &#63;.
+	 * Returns the first c t action in the ordered set where reportInstanceId = &#63; and elementId = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param elementId the element ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction fetchByC_E_First(long campaignId, String elementId,
+	public CTAction fetchByR_E_First(long reportInstanceId, String elementId,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<CTAction> list = findByC_E(campaignId, elementId, 0, 1,
+		List<CTAction> list = findByR_E(reportInstanceId, elementId, 0, 1,
 				orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1380,9 +890,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the last c t action in the ordered set where campaignId = &#63; and elementId = &#63;.
+	 * Returns the last c t action in the ordered set where reportInstanceId = &#63; and elementId = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param elementId the element ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching c t action
@@ -1390,10 +900,10 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction findByC_E_Last(long campaignId, String elementId,
+	public CTAction findByR_E_Last(long reportInstanceId, String elementId,
 		OrderByComparator orderByComparator)
 		throws NoSuchCTActionException, SystemException {
-		CTAction ctAction = fetchByC_E_Last(campaignId, elementId,
+		CTAction ctAction = fetchByR_E_Last(reportInstanceId, elementId,
 				orderByComparator);
 
 		if (ctAction != null) {
@@ -1404,8 +914,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("campaignId=");
-		msg.append(campaignId);
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
 
 		msg.append(", elementId=");
 		msg.append(elementId);
@@ -1416,24 +926,24 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the last c t action in the ordered set where campaignId = &#63; and elementId = &#63;.
+	 * Returns the last c t action in the ordered set where reportInstanceId = &#63; and elementId = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param elementId the element ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction fetchByC_E_Last(long campaignId, String elementId,
+	public CTAction fetchByR_E_Last(long reportInstanceId, String elementId,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByC_E(campaignId, elementId);
+		int count = countByR_E(reportInstanceId, elementId);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTAction> list = findByC_E(campaignId, elementId, count - 1,
+		List<CTAction> list = findByR_E(reportInstanceId, elementId, count - 1,
 				count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1444,10 +954,10 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the c t actions before and after the current c t action in the ordered set where campaignId = &#63; and elementId = &#63;.
+	 * Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63; and elementId = &#63;.
 	 *
 	 * @param CTActionId the primary key of the current c t action
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param elementId the element ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next c t action
@@ -1455,8 +965,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction[] findByC_E_PrevAndNext(long CTActionId, long campaignId,
-		String elementId, OrderByComparator orderByComparator)
+	public CTAction[] findByR_E_PrevAndNext(long CTActionId,
+		long reportInstanceId, String elementId,
+		OrderByComparator orderByComparator)
 		throws NoSuchCTActionException, SystemException {
 		CTAction ctAction = findByPrimaryKey(CTActionId);
 
@@ -1467,13 +978,13 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			CTAction[] array = new CTActionImpl[3];
 
-			array[0] = getByC_E_PrevAndNext(session, ctAction, campaignId,
-					elementId, orderByComparator, true);
+			array[0] = getByR_E_PrevAndNext(session, ctAction,
+					reportInstanceId, elementId, orderByComparator, true);
 
 			array[1] = ctAction;
 
-			array[2] = getByC_E_PrevAndNext(session, ctAction, campaignId,
-					elementId, orderByComparator, false);
+			array[2] = getByR_E_PrevAndNext(session, ctAction,
+					reportInstanceId, elementId, orderByComparator, false);
 
 			return array;
 		}
@@ -1485,9 +996,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		}
 	}
 
-	protected CTAction getByC_E_PrevAndNext(Session session, CTAction ctAction,
-		long campaignId, String elementId, OrderByComparator orderByComparator,
-		boolean previous) {
+	protected CTAction getByR_E_PrevAndNext(Session session, CTAction ctAction,
+		long reportInstanceId, String elementId,
+		OrderByComparator orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1500,20 +1011,20 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		query.append(_SQL_SELECT_CTACTION_WHERE);
 
-		query.append(_FINDER_COLUMN_C_E_CAMPAIGNID_2);
+		query.append(_FINDER_COLUMN_R_E_REPORTINSTANCEID_2);
 
 		boolean bindElementId = false;
 
 		if (elementId == null) {
-			query.append(_FINDER_COLUMN_C_E_ELEMENTID_1);
+			query.append(_FINDER_COLUMN_R_E_ELEMENTID_1);
 		}
 		else if (elementId.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_C_E_ELEMENTID_3);
+			query.append(_FINDER_COLUMN_R_E_ELEMENTID_3);
 		}
 		else {
 			bindElementId = true;
 
-			query.append(_FINDER_COLUMN_C_E_ELEMENTID_2);
+			query.append(_FINDER_COLUMN_R_E_ELEMENTID_2);
 		}
 
 		if (orderByComparator != null) {
@@ -1584,7 +1095,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(campaignId);
+		qPos.add(reportInstanceId);
 
 		if (bindElementId) {
 			qPos.add(elementId);
@@ -1609,35 +1120,35 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Removes all the c t actions where campaignId = &#63; and elementId = &#63; from the database.
+	 * Removes all the c t actions where reportInstanceId = &#63; and elementId = &#63; from the database.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param elementId the element ID
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_E(long campaignId, String elementId)
+	public void removeByR_E(long reportInstanceId, String elementId)
 		throws SystemException {
-		for (CTAction ctAction : findByC_E(campaignId, elementId,
+		for (CTAction ctAction : findByR_E(reportInstanceId, elementId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(ctAction);
 		}
 	}
 
 	/**
-	 * Returns the number of c t actions where campaignId = &#63; and elementId = &#63;.
+	 * Returns the number of c t actions where reportInstanceId = &#63; and elementId = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param elementId the element ID
 	 * @return the number of matching c t actions
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_E(long campaignId, String elementId)
+	public int countByR_E(long reportInstanceId, String elementId)
 		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_E;
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_E;
 
-		Object[] finderArgs = new Object[] { campaignId, elementId };
+		Object[] finderArgs = new Object[] { reportInstanceId, elementId };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
@@ -1647,20 +1158,20 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			query.append(_SQL_COUNT_CTACTION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_E_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_R_E_REPORTINSTANCEID_2);
 
 			boolean bindElementId = false;
 
 			if (elementId == null) {
-				query.append(_FINDER_COLUMN_C_E_ELEMENTID_1);
+				query.append(_FINDER_COLUMN_R_E_ELEMENTID_1);
 			}
 			else if (elementId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_E_ELEMENTID_3);
+				query.append(_FINDER_COLUMN_R_E_ELEMENTID_3);
 			}
 			else {
 				bindElementId = true;
 
-				query.append(_FINDER_COLUMN_C_E_ELEMENTID_2);
+				query.append(_FINDER_COLUMN_R_E_ELEMENTID_2);
 			}
 
 			String sql = query.toString();
@@ -1674,7 +1185,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(campaignId);
+				qPos.add(reportInstanceId);
 
 				if (bindElementId) {
 					qPos.add(elementId);
@@ -1697,13 +1208,13 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_E_CAMPAIGNID_2 = "ctAction.campaignId = ? AND ";
-	private static final String _FINDER_COLUMN_C_E_ELEMENTID_1 = "ctAction.elementId IS NULL";
-	private static final String _FINDER_COLUMN_C_E_ELEMENTID_2 = "ctAction.elementId = ?";
-	private static final String _FINDER_COLUMN_C_E_ELEMENTID_3 = "(ctAction.elementId IS NULL OR ctAction.elementId = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_R_R = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_R_E_REPORTINSTANCEID_2 = "ctAction.reportInstanceId = ? AND ";
+	private static final String _FINDER_COLUMN_R_E_ELEMENTID_1 = "ctAction.elementId IS NULL";
+	private static final String _FINDER_COLUMN_R_E_ELEMENTID_2 = "ctAction.elementId = ?";
+	private static final String _FINDER_COLUMN_R_E_ELEMENTID_3 = "(ctAction.elementId IS NULL OR ctAction.elementId = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_R_R = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_R_R",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_R_R",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName(),
@@ -1711,50 +1222,50 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R_R = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_R_R",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_R_R",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			},
-			CTActionModelImpl.CAMPAIGNID_COLUMN_BITMASK |
+			CTActionModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
 			CTActionModelImpl.REFERRERCLASSNAME_COLUMN_BITMASK |
 			CTActionModelImpl.REFERRERCLASSPK_COLUMN_BITMASK |
 			CTActionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_R_R = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_R_R_R = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_R_R",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_R_R",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				Long.class.getName()
 			});
 
 	/**
-	 * Returns all the c t actions where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @return the matching c t actions
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTAction> findByC_R_R(long campaignId,
+	public List<CTAction> findByR_R_R(long reportInstanceId,
 		String referrerClassName, long referrerClassPK)
 		throws SystemException {
-		return findByC_R_R(campaignId, referrerClassName, referrerClassPK,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByR_R_R(reportInstanceId, referrerClassName,
+			referrerClassPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the c t actions where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns a range of all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @param start the lower bound of the range of c t actions
@@ -1763,21 +1274,21 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTAction> findByC_R_R(long campaignId,
+	public List<CTAction> findByR_R_R(long reportInstanceId,
 		String referrerClassName, long referrerClassPK, int start, int end)
 		throws SystemException {
-		return findByC_R_R(campaignId, referrerClassName, referrerClassPK,
-			start, end, null);
+		return findByR_R_R(reportInstanceId, referrerClassName,
+			referrerClassPK, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the c t actions where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns an ordered range of all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @param start the lower bound of the range of c t actions
@@ -1787,7 +1298,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<CTAction> findByC_R_R(long campaignId,
+	public List<CTAction> findByR_R_R(long reportInstanceId,
 		String referrerClassName, long referrerClassPK, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
@@ -1797,15 +1308,15 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R_R;
 			finderArgs = new Object[] {
-					campaignId, referrerClassName, referrerClassPK
+					reportInstanceId, referrerClassName, referrerClassPK
 				};
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_R_R;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_R_R_R;
 			finderArgs = new Object[] {
-					campaignId, referrerClassName, referrerClassPK,
+					reportInstanceId, referrerClassName, referrerClassPK,
 					
 					start, end, orderByComparator
 				};
@@ -1816,7 +1327,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		if ((list != null) && !list.isEmpty()) {
 			for (CTAction ctAction : list) {
-				if ((campaignId != ctAction.getCampaignId()) ||
+				if ((reportInstanceId != ctAction.getReportInstanceId()) ||
 						!Validator.equals(referrerClassName,
 							ctAction.getReferrerClassName()) ||
 						(referrerClassPK != ctAction.getReferrerClassPK())) {
@@ -1840,23 +1351,23 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			query.append(_SQL_SELECT_CTACTION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_R_R_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_R_R_R_REPORTINSTANCEID_2);
 
 			boolean bindReferrerClassName = false;
 
 			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_1);
+				query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_1);
 			}
 			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_3);
+				query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_3);
 			}
 			else {
 				bindReferrerClassName = true;
 
-				query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_2);
+				query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_2);
 			}
 
-			query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSPK_2);
+			query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSPK_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1878,7 +1389,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(campaignId);
+				qPos.add(reportInstanceId);
 
 				if (bindReferrerClassName) {
 					qPos.add(referrerClassName);
@@ -1917,9 +1428,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the first c t action in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns the first c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1928,12 +1439,12 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction findByC_R_R_First(long campaignId,
+	public CTAction findByR_R_R_First(long reportInstanceId,
 		String referrerClassName, long referrerClassPK,
 		OrderByComparator orderByComparator)
 		throws NoSuchCTActionException, SystemException {
-		CTAction ctAction = fetchByC_R_R_First(campaignId, referrerClassName,
-				referrerClassPK, orderByComparator);
+		CTAction ctAction = fetchByR_R_R_First(reportInstanceId,
+				referrerClassName, referrerClassPK, orderByComparator);
 
 		if (ctAction != null) {
 			return ctAction;
@@ -1943,8 +1454,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("campaignId=");
-		msg.append(campaignId);
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
 
 		msg.append(", referrerClassName=");
 		msg.append(referrerClassName);
@@ -1958,9 +1469,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the first c t action in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns the first c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1968,10 +1479,10 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction fetchByC_R_R_First(long campaignId,
+	public CTAction fetchByR_R_R_First(long reportInstanceId,
 		String referrerClassName, long referrerClassPK,
 		OrderByComparator orderByComparator) throws SystemException {
-		List<CTAction> list = findByC_R_R(campaignId, referrerClassName,
+		List<CTAction> list = findByR_R_R(reportInstanceId, referrerClassName,
 				referrerClassPK, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1982,9 +1493,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the last c t action in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns the last c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -1993,11 +1504,12 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction findByC_R_R_Last(long campaignId, String referrerClassName,
-		long referrerClassPK, OrderByComparator orderByComparator)
+	public CTAction findByR_R_R_Last(long reportInstanceId,
+		String referrerClassName, long referrerClassPK,
+		OrderByComparator orderByComparator)
 		throws NoSuchCTActionException, SystemException {
-		CTAction ctAction = fetchByC_R_R_Last(campaignId, referrerClassName,
-				referrerClassPK, orderByComparator);
+		CTAction ctAction = fetchByR_R_R_Last(reportInstanceId,
+				referrerClassName, referrerClassPK, orderByComparator);
 
 		if (ctAction != null) {
 			return ctAction;
@@ -2007,8 +1519,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("campaignId=");
-		msg.append(campaignId);
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
 
 		msg.append(", referrerClassName=");
 		msg.append(referrerClassName);
@@ -2022,9 +1534,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the last c t action in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns the last c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2032,16 +1544,17 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction fetchByC_R_R_Last(long campaignId,
+	public CTAction fetchByR_R_R_Last(long reportInstanceId,
 		String referrerClassName, long referrerClassPK,
 		OrderByComparator orderByComparator) throws SystemException {
-		int count = countByC_R_R(campaignId, referrerClassName, referrerClassPK);
+		int count = countByR_R_R(reportInstanceId, referrerClassName,
+				referrerClassPK);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<CTAction> list = findByC_R_R(campaignId, referrerClassName,
+		List<CTAction> list = findByR_R_R(reportInstanceId, referrerClassName,
 				referrerClassPK, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -2052,10 +1565,10 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the c t actions before and after the current c t action in the ordered set where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
 	 * @param CTActionId the primary key of the current c t action
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
@@ -2064,8 +1577,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction[] findByC_R_R_PrevAndNext(long CTActionId, long campaignId,
-		String referrerClassName, long referrerClassPK,
+	public CTAction[] findByR_R_R_PrevAndNext(long CTActionId,
+		long reportInstanceId, String referrerClassName, long referrerClassPK,
 		OrderByComparator orderByComparator)
 		throws NoSuchCTActionException, SystemException {
 		CTAction ctAction = findByPrimaryKey(CTActionId);
@@ -2077,13 +1590,15 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			CTAction[] array = new CTActionImpl[3];
 
-			array[0] = getByC_R_R_PrevAndNext(session, ctAction, campaignId,
-					referrerClassName, referrerClassPK, orderByComparator, true);
+			array[0] = getByR_R_R_PrevAndNext(session, ctAction,
+					reportInstanceId, referrerClassName, referrerClassPK,
+					orderByComparator, true);
 
 			array[1] = ctAction;
 
-			array[2] = getByC_R_R_PrevAndNext(session, ctAction, campaignId,
-					referrerClassName, referrerClassPK, orderByComparator, false);
+			array[2] = getByR_R_R_PrevAndNext(session, ctAction,
+					reportInstanceId, referrerClassName, referrerClassPK,
+					orderByComparator, false);
 
 			return array;
 		}
@@ -2095,8 +1610,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		}
 	}
 
-	protected CTAction getByC_R_R_PrevAndNext(Session session,
-		CTAction ctAction, long campaignId, String referrerClassName,
+	protected CTAction getByR_R_R_PrevAndNext(Session session,
+		CTAction ctAction, long reportInstanceId, String referrerClassName,
 		long referrerClassPK, OrderByComparator orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -2111,23 +1626,23 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		query.append(_SQL_SELECT_CTACTION_WHERE);
 
-		query.append(_FINDER_COLUMN_C_R_R_CAMPAIGNID_2);
+		query.append(_FINDER_COLUMN_R_R_R_REPORTINSTANCEID_2);
 
 		boolean bindReferrerClassName = false;
 
 		if (referrerClassName == null) {
-			query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_1);
+			query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_1);
 		}
 		else if (referrerClassName.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_3);
+			query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_3);
 		}
 		else {
 			bindReferrerClassName = true;
 
-			query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_2);
+			query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_2);
 		}
 
-		query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSPK_2);
+		query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSPK_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
@@ -2197,7 +1712,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
-		qPos.add(campaignId);
+		qPos.add(reportInstanceId);
 
 		if (bindReferrerClassName) {
 			qPos.add(referrerClassName);
@@ -2224,38 +1739,39 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Removes all the c t actions where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; from the database.
+	 * Removes all the c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; from the database.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_R_R(long campaignId, String referrerClassName,
+	public void removeByR_R_R(long reportInstanceId, String referrerClassName,
 		long referrerClassPK) throws SystemException {
-		for (CTAction ctAction : findByC_R_R(campaignId, referrerClassName,
-				referrerClassPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (CTAction ctAction : findByR_R_R(reportInstanceId,
+				referrerClassName, referrerClassPK, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
 			remove(ctAction);
 		}
 	}
 
 	/**
-	 * Returns the number of c t actions where campaignId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 * Returns the number of c t actions where reportInstanceId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @return the number of matching c t actions
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_R_R(long campaignId, String referrerClassName,
+	public int countByR_R_R(long reportInstanceId, String referrerClassName,
 		long referrerClassPK) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_R_R;
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_R_R;
 
 		Object[] finderArgs = new Object[] {
-				campaignId, referrerClassName, referrerClassPK
+				reportInstanceId, referrerClassName, referrerClassPK
 			};
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
@@ -2266,23 +1782,23 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			query.append(_SQL_COUNT_CTACTION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_R_R_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_R_R_R_REPORTINSTANCEID_2);
 
 			boolean bindReferrerClassName = false;
 
 			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_1);
+				query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_1);
 			}
 			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_3);
+				query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_3);
 			}
 			else {
 				bindReferrerClassName = true;
 
-				query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_2);
+				query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_2);
 			}
 
-			query.append(_FINDER_COLUMN_C_R_R_REFERRERCLASSPK_2);
+			query.append(_FINDER_COLUMN_R_R_R_REFERRERCLASSPK_2);
 
 			String sql = query.toString();
 
@@ -2295,7 +1811,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(campaignId);
+				qPos.add(reportInstanceId);
 
 				if (bindReferrerClassName) {
 					qPos.add(referrerClassName);
@@ -2320,28 +1836,28 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_R_R_CAMPAIGNID_2 = "ctAction.campaignId = ? AND ";
-	private static final String _FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_1 = "ctAction.referrerClassName IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_2 = "ctAction.referrerClassName = ? AND ";
-	private static final String _FINDER_COLUMN_C_R_R_REFERRERCLASSNAME_3 = "(ctAction.referrerClassName IS NULL OR ctAction.referrerClassName = '') AND ";
-	private static final String _FINDER_COLUMN_C_R_R_REFERRERCLASSPK_2 = "ctAction.referrerClassPK = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_C_U_R_R_E_E = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_R_R_R_REPORTINSTANCEID_2 = "ctAction.reportInstanceId = ? AND ";
+	private static final String _FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_1 = "ctAction.referrerClassName IS NULL AND ";
+	private static final String _FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_2 = "ctAction.referrerClassName = ? AND ";
+	private static final String _FINDER_COLUMN_R_R_R_REFERRERCLASSNAME_3 = "(ctAction.referrerClassName IS NULL OR ctAction.referrerClassName = '') AND ";
+	private static final String _FINDER_COLUMN_R_R_R_REFERRERCLASSPK_2 = "ctAction.referrerClassPK = ?";
+	public static final FinderPath FINDER_PATH_FETCH_BY_R_U_R_R_E_E = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
-			FINDER_CLASS_NAME_ENTITY, "fetchByC_U_R_R_E_E",
+			FINDER_CLASS_NAME_ENTITY, "fetchByR_U_R_R_E_E",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Long.class.getName(),
 				String.class.getName(), String.class.getName()
 			},
-			CTActionModelImpl.CAMPAIGNID_COLUMN_BITMASK |
+			CTActionModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
 			CTActionModelImpl.USERSEGMENTID_COLUMN_BITMASK |
 			CTActionModelImpl.REFERRERCLASSNAME_COLUMN_BITMASK |
 			CTActionModelImpl.REFERRERCLASSPK_COLUMN_BITMASK |
 			CTActionModelImpl.ELEMENTID_COLUMN_BITMASK |
 			CTActionModelImpl.EVENTTYPE_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_U_R_R_E_E = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_R_U_R_R_E_E = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByC_U_R_R_E_E",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_U_R_R_E_E",
 			new String[] {
 				Long.class.getName(), Long.class.getName(),
 				String.class.getName(), Long.class.getName(),
@@ -2349,9 +1865,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 			});
 
 	/**
-	 * Returns the c t action where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException} if it could not be found.
+	 * Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or throws a {@link com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException} if it could not be found.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param userSegmentId the user segment ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
@@ -2362,10 +1878,11 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction findByC_U_R_R_E_E(long campaignId, long userSegmentId,
-		String referrerClassName, long referrerClassPK, String elementId,
-		String eventType) throws NoSuchCTActionException, SystemException {
-		CTAction ctAction = fetchByC_U_R_R_E_E(campaignId, userSegmentId,
+	public CTAction findByR_U_R_R_E_E(long reportInstanceId,
+		long userSegmentId, String referrerClassName, long referrerClassPK,
+		String elementId, String eventType)
+		throws NoSuchCTActionException, SystemException {
+		CTAction ctAction = fetchByR_U_R_R_E_E(reportInstanceId, userSegmentId,
 				referrerClassName, referrerClassPK, elementId, eventType);
 
 		if (ctAction == null) {
@@ -2373,8 +1890,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-			msg.append("campaignId=");
-			msg.append(campaignId);
+			msg.append("reportInstanceId=");
+			msg.append(reportInstanceId);
 
 			msg.append(", userSegmentId=");
 			msg.append(userSegmentId);
@@ -2404,9 +1921,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Returns the c t action where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param userSegmentId the user segment ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
@@ -2416,17 +1933,17 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction fetchByC_U_R_R_E_E(long campaignId, long userSegmentId,
-		String referrerClassName, long referrerClassPK, String elementId,
-		String eventType) throws SystemException {
-		return fetchByC_U_R_R_E_E(campaignId, userSegmentId, referrerClassName,
-			referrerClassPK, elementId, eventType, true);
+	public CTAction fetchByR_U_R_R_E_E(long reportInstanceId,
+		long userSegmentId, String referrerClassName, long referrerClassPK,
+		String elementId, String eventType) throws SystemException {
+		return fetchByR_U_R_R_E_E(reportInstanceId, userSegmentId,
+			referrerClassName, referrerClassPK, elementId, eventType, true);
 	}
 
 	/**
-	 * Returns the c t action where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param userSegmentId the user segment ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
@@ -2437,25 +1954,26 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction fetchByC_U_R_R_E_E(long campaignId, long userSegmentId,
-		String referrerClassName, long referrerClassPK, String elementId,
-		String eventType, boolean retrieveFromCache) throws SystemException {
+	public CTAction fetchByR_U_R_R_E_E(long reportInstanceId,
+		long userSegmentId, String referrerClassName, long referrerClassPK,
+		String elementId, String eventType, boolean retrieveFromCache)
+		throws SystemException {
 		Object[] finderArgs = new Object[] {
-				campaignId, userSegmentId, referrerClassName, referrerClassPK,
-				elementId, eventType
+				reportInstanceId, userSegmentId, referrerClassName,
+				referrerClassPK, elementId, eventType
 			};
 
 		Object result = null;
 
 		if (retrieveFromCache) {
-			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E,
+			result = FinderCacheUtil.getResult(FINDER_PATH_FETCH_BY_R_U_R_R_E_E,
 					finderArgs, this);
 		}
 
 		if (result instanceof CTAction) {
 			CTAction ctAction = (CTAction)result;
 
-			if ((campaignId != ctAction.getCampaignId()) ||
+			if ((reportInstanceId != ctAction.getReportInstanceId()) ||
 					(userSegmentId != ctAction.getUserSegmentId()) ||
 					!Validator.equals(referrerClassName,
 						ctAction.getReferrerClassName()) ||
@@ -2471,52 +1989,52 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			query.append(_SQL_SELECT_CTACTION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_U_R_R_E_E_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_R_U_R_R_E_E_REPORTINSTANCEID_2);
 
-			query.append(_FINDER_COLUMN_C_U_R_R_E_E_USERSEGMENTID_2);
+			query.append(_FINDER_COLUMN_R_U_R_R_E_E_USERSEGMENTID_2);
 
 			boolean bindReferrerClassName = false;
 
 			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_1);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_1);
 			}
 			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_3);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_3);
 			}
 			else {
 				bindReferrerClassName = true;
 
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_2);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_2);
 			}
 
-			query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSPK_2);
+			query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSPK_2);
 
 			boolean bindElementId = false;
 
 			if (elementId == null) {
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_1);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_ELEMENTID_1);
 			}
 			else if (elementId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_3);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_ELEMENTID_3);
 			}
 			else {
 				bindElementId = true;
 
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_2);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_ELEMENTID_2);
 			}
 
 			boolean bindEventType = false;
 
 			if (eventType == null) {
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_1);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_EVENTTYPE_1);
 			}
 			else if (eventType.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_3);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_EVENTTYPE_3);
 			}
 			else {
 				bindEventType = true;
 
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_2);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_EVENTTYPE_2);
 			}
 
 			String sql = query.toString();
@@ -2530,7 +2048,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(campaignId);
+				qPos.add(reportInstanceId);
 
 				qPos.add(userSegmentId);
 
@@ -2551,7 +2069,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 				List<CTAction> list = q.list();
 
 				if (list.isEmpty()) {
-					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E,
+					FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_U_R_R_E_E,
 						finderArgs, list);
 				}
 				else {
@@ -2561,7 +2079,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 					cacheResult(ctAction);
 
-					if ((ctAction.getCampaignId() != campaignId) ||
+					if ((ctAction.getReportInstanceId() != reportInstanceId) ||
 							(ctAction.getUserSegmentId() != userSegmentId) ||
 							(ctAction.getReferrerClassName() == null) ||
 							!ctAction.getReferrerClassName()
@@ -2571,13 +2089,13 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 							!ctAction.getElementId().equals(elementId) ||
 							(ctAction.getEventType() == null) ||
 							!ctAction.getEventType().equals(eventType)) {
-						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E,
+						FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_U_R_R_E_E,
 							finderArgs, ctAction);
 					}
 				}
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E,
+				FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_U_R_R_E_E,
 					finderArgs);
 
 				throw processException(e);
@@ -2596,9 +2114,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	}
 
 	/**
-	 * Removes the c t action where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
+	 * Removes the c t action where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63; from the database.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param userSegmentId the user segment ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
@@ -2608,19 +2126,20 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public CTAction removeByC_U_R_R_E_E(long campaignId, long userSegmentId,
-		String referrerClassName, long referrerClassPK, String elementId,
-		String eventType) throws NoSuchCTActionException, SystemException {
-		CTAction ctAction = findByC_U_R_R_E_E(campaignId, userSegmentId,
+	public CTAction removeByR_U_R_R_E_E(long reportInstanceId,
+		long userSegmentId, String referrerClassName, long referrerClassPK,
+		String elementId, String eventType)
+		throws NoSuchCTActionException, SystemException {
+		CTAction ctAction = findByR_U_R_R_E_E(reportInstanceId, userSegmentId,
 				referrerClassName, referrerClassPK, elementId, eventType);
 
 		return remove(ctAction);
 	}
 
 	/**
-	 * Returns the number of c t actions where campaignId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
+	 * Returns the number of c t actions where reportInstanceId = &#63; and userSegmentId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63; and elementId = &#63; and eventType = &#63;.
 	 *
-	 * @param campaignId the campaign ID
+	 * @param reportInstanceId the report instance ID
 	 * @param userSegmentId the user segment ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
@@ -2630,14 +2149,14 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_U_R_R_E_E(long campaignId, long userSegmentId,
+	public int countByR_U_R_R_E_E(long reportInstanceId, long userSegmentId,
 		String referrerClassName, long referrerClassPK, String elementId,
 		String eventType) throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_U_R_R_E_E;
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_U_R_R_E_E;
 
 		Object[] finderArgs = new Object[] {
-				campaignId, userSegmentId, referrerClassName, referrerClassPK,
-				elementId, eventType
+				reportInstanceId, userSegmentId, referrerClassName,
+				referrerClassPK, elementId, eventType
 			};
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
@@ -2648,52 +2167,52 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 			query.append(_SQL_COUNT_CTACTION_WHERE);
 
-			query.append(_FINDER_COLUMN_C_U_R_R_E_E_CAMPAIGNID_2);
+			query.append(_FINDER_COLUMN_R_U_R_R_E_E_REPORTINSTANCEID_2);
 
-			query.append(_FINDER_COLUMN_C_U_R_R_E_E_USERSEGMENTID_2);
+			query.append(_FINDER_COLUMN_R_U_R_R_E_E_USERSEGMENTID_2);
 
 			boolean bindReferrerClassName = false;
 
 			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_1);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_1);
 			}
 			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_3);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_3);
 			}
 			else {
 				bindReferrerClassName = true;
 
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_2);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_2);
 			}
 
-			query.append(_FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSPK_2);
+			query.append(_FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSPK_2);
 
 			boolean bindElementId = false;
 
 			if (elementId == null) {
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_1);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_ELEMENTID_1);
 			}
 			else if (elementId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_3);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_ELEMENTID_3);
 			}
 			else {
 				bindElementId = true;
 
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_2);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_ELEMENTID_2);
 			}
 
 			boolean bindEventType = false;
 
 			if (eventType == null) {
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_1);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_EVENTTYPE_1);
 			}
 			else if (eventType.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_3);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_EVENTTYPE_3);
 			}
 			else {
 				bindEventType = true;
 
-				query.append(_FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_2);
+				query.append(_FINDER_COLUMN_R_U_R_R_E_E_EVENTTYPE_2);
 			}
 
 			String sql = query.toString();
@@ -2707,7 +2226,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				qPos.add(campaignId);
+				qPos.add(reportInstanceId);
 
 				qPos.add(userSegmentId);
 
@@ -2742,18 +2261,519 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_U_R_R_E_E_CAMPAIGNID_2 = "ctAction.campaignId = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_R_R_E_E_USERSEGMENTID_2 = "ctAction.userSegmentId = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_1 = "ctAction.referrerClassName IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_2 = "ctAction.referrerClassName = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSNAME_3 = "(ctAction.referrerClassName IS NULL OR ctAction.referrerClassName = '') AND ";
-	private static final String _FINDER_COLUMN_C_U_R_R_E_E_REFERRERCLASSPK_2 = "ctAction.referrerClassPK = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_1 = "ctAction.elementId IS NULL AND ";
-	private static final String _FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_2 = "ctAction.elementId = ? AND ";
-	private static final String _FINDER_COLUMN_C_U_R_R_E_E_ELEMENTID_3 = "(ctAction.elementId IS NULL OR ctAction.elementId = '') AND ";
-	private static final String _FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_1 = "ctAction.eventType IS NULL";
-	private static final String _FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_2 = "ctAction.eventType = ?";
-	private static final String _FINDER_COLUMN_C_U_R_R_E_E_EVENTTYPE_3 = "(ctAction.eventType IS NULL OR ctAction.eventType = '')";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_REPORTINSTANCEID_2 = "ctAction.reportInstanceId = ? AND ";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_USERSEGMENTID_2 = "ctAction.userSegmentId = ? AND ";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_1 = "ctAction.referrerClassName IS NULL AND ";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_2 = "ctAction.referrerClassName = ? AND ";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSNAME_3 = "(ctAction.referrerClassName IS NULL OR ctAction.referrerClassName = '') AND ";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_REFERRERCLASSPK_2 = "ctAction.referrerClassPK = ? AND ";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_ELEMENTID_1 = "ctAction.elementId IS NULL AND ";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_ELEMENTID_2 = "ctAction.elementId = ? AND ";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_ELEMENTID_3 = "(ctAction.elementId IS NULL OR ctAction.elementId = '') AND ";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_EVENTTYPE_1 = "ctAction.eventType IS NULL";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_EVENTTYPE_2 = "ctAction.eventType = ?";
+	private static final String _FINDER_COLUMN_R_U_R_R_E_E_EVENTTYPE_3 = "(ctAction.eventType IS NULL OR ctAction.eventType = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_REPORTINSTANCEID =
+		new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByReportInstanceId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID =
+		new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+			CTActionModelImpl.FINDER_CACHE_ENABLED, CTActionImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByReportInstanceId", new String[] { Long.class.getName() },
+			CTActionModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
+			CTActionModelImpl.MODIFIEDDATE_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_REPORTINSTANCEID = new FinderPath(CTActionModelImpl.ENTITY_CACHE_ENABLED,
+			CTActionModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByReportInstanceId", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the c t actions where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @return the matching c t actions
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<CTAction> findByReportInstanceId(long reportInstanceId)
+		throws SystemException {
+		return findByReportInstanceId(reportInstanceId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the c t actions where reportInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param start the lower bound of the range of c t actions
+	 * @param end the upper bound of the range of c t actions (not inclusive)
+	 * @return the range of matching c t actions
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<CTAction> findByReportInstanceId(long reportInstanceId,
+		int start, int end) throws SystemException {
+		return findByReportInstanceId(reportInstanceId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the c t actions where reportInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.report.campaign.tracking.action.model.impl.CTActionModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param start the lower bound of the range of c t actions
+	 * @param end the upper bound of the range of c t actions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching c t actions
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<CTAction> findByReportInstanceId(long reportInstanceId,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID;
+			finderArgs = new Object[] { reportInstanceId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_REPORTINSTANCEID;
+			finderArgs = new Object[] {
+					reportInstanceId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<CTAction> list = (List<CTAction>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (CTAction ctAction : list) {
+				if ((reportInstanceId != ctAction.getReportInstanceId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CTACTION_WHERE);
+
+			query.append(_FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(CTActionModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(reportInstanceId);
+
+				if (!pagination) {
+					list = (List<CTAction>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<CTAction>(list);
+				}
+				else {
+					list = (List<CTAction>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first c t action in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching c t action
+	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CTAction findByReportInstanceId_First(long reportInstanceId,
+		OrderByComparator orderByComparator)
+		throws NoSuchCTActionException, SystemException {
+		CTAction ctAction = fetchByReportInstanceId_First(reportInstanceId,
+				orderByComparator);
+
+		if (ctAction != null) {
+			return ctAction;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCTActionException(msg.toString());
+	}
+
+	/**
+	 * Returns the first c t action in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching c t action, or <code>null</code> if a matching c t action could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CTAction fetchByReportInstanceId_First(long reportInstanceId,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<CTAction> list = findByReportInstanceId(reportInstanceId, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last c t action in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching c t action
+	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a matching c t action could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CTAction findByReportInstanceId_Last(long reportInstanceId,
+		OrderByComparator orderByComparator)
+		throws NoSuchCTActionException, SystemException {
+		CTAction ctAction = fetchByReportInstanceId_Last(reportInstanceId,
+				orderByComparator);
+
+		if (ctAction != null) {
+			return ctAction;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchCTActionException(msg.toString());
+	}
+
+	/**
+	 * Returns the last c t action in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching c t action, or <code>null</code> if a matching c t action could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CTAction fetchByReportInstanceId_Last(long reportInstanceId,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByReportInstanceId(reportInstanceId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<CTAction> list = findByReportInstanceId(reportInstanceId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the c t actions before and after the current c t action in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param CTActionId the primary key of the current c t action
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next c t action
+	 * @throws com.liferay.content.targeting.report.campaign.tracking.action.NoSuchCTActionException if a c t action with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public CTAction[] findByReportInstanceId_PrevAndNext(long CTActionId,
+		long reportInstanceId, OrderByComparator orderByComparator)
+		throws NoSuchCTActionException, SystemException {
+		CTAction ctAction = findByPrimaryKey(CTActionId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			CTAction[] array = new CTActionImpl[3];
+
+			array[0] = getByReportInstanceId_PrevAndNext(session, ctAction,
+					reportInstanceId, orderByComparator, true);
+
+			array[1] = ctAction;
+
+			array[2] = getByReportInstanceId_PrevAndNext(session, ctAction,
+					reportInstanceId, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected CTAction getByReportInstanceId_PrevAndNext(Session session,
+		CTAction ctAction, long reportInstanceId,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CTACTION_WHERE);
+
+		query.append(_FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(CTActionModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(reportInstanceId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(ctAction);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<CTAction> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the c t actions where reportInstanceId = &#63; from the database.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByReportInstanceId(long reportInstanceId)
+		throws SystemException {
+		for (CTAction ctAction : findByReportInstanceId(reportInstanceId,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(ctAction);
+		}
+	}
+
+	/**
+	 * Returns the number of c t actions where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @return the number of matching c t actions
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByReportInstanceId(long reportInstanceId)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_REPORTINSTANCEID;
+
+		Object[] finderArgs = new Object[] { reportInstanceId };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CTACTION_WHERE);
+
+			query.append(_FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(reportInstanceId);
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2 =
+		"ctAction.reportInstanceId = ?";
 
 	public CTActionPersistenceImpl() {
 		setModelClass(CTAction.class);
@@ -2769,9 +2789,9 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		EntityCacheUtil.putResult(CTActionModelImpl.ENTITY_CACHE_ENABLED,
 			CTActionImpl.class, ctAction.getPrimaryKey(), ctAction);
 
-		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E,
+		FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_U_R_R_E_E,
 			new Object[] {
-				ctAction.getCampaignId(), ctAction.getUserSegmentId(),
+				ctAction.getReportInstanceId(), ctAction.getUserSegmentId(),
 				ctAction.getReferrerClassName(), ctAction.getReferrerClassPK(),
 				ctAction.getElementId(), ctAction.getEventType()
 			}, ctAction);
@@ -2852,32 +2872,33 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 	protected void cacheUniqueFindersCache(CTAction ctAction) {
 		if (ctAction.isNew()) {
 			Object[] args = new Object[] {
-					ctAction.getCampaignId(), ctAction.getUserSegmentId(),
+					ctAction.getReportInstanceId(), ctAction.getUserSegmentId(),
 					ctAction.getReferrerClassName(),
 					ctAction.getReferrerClassPK(), ctAction.getElementId(),
 					ctAction.getEventType()
 				};
 
-			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_R_R_E_E, args,
+			FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_U_R_R_E_E, args,
 				Long.valueOf(1));
-			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E, args,
+			FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_U_R_R_E_E, args,
 				ctAction);
 		}
 		else {
 			CTActionModelImpl ctActionModelImpl = (CTActionModelImpl)ctAction;
 
 			if ((ctActionModelImpl.getColumnBitmask() &
-					FINDER_PATH_FETCH_BY_C_U_R_R_E_E.getColumnBitmask()) != 0) {
+					FINDER_PATH_FETCH_BY_R_U_R_R_E_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ctAction.getCampaignId(), ctAction.getUserSegmentId(),
+						ctAction.getReportInstanceId(),
+						ctAction.getUserSegmentId(),
 						ctAction.getReferrerClassName(),
 						ctAction.getReferrerClassPK(), ctAction.getElementId(),
 						ctAction.getEventType()
 					};
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_C_U_R_R_E_E,
+				FinderCacheUtil.putResult(FINDER_PATH_COUNT_BY_R_U_R_R_E_E,
 					args, Long.valueOf(1));
-				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E,
+				FinderCacheUtil.putResult(FINDER_PATH_FETCH_BY_R_U_R_R_E_E,
 					args, ctAction);
 			}
 		}
@@ -2887,18 +2908,18 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		CTActionModelImpl ctActionModelImpl = (CTActionModelImpl)ctAction;
 
 		Object[] args = new Object[] {
-				ctAction.getCampaignId(), ctAction.getUserSegmentId(),
+				ctAction.getReportInstanceId(), ctAction.getUserSegmentId(),
 				ctAction.getReferrerClassName(), ctAction.getReferrerClassPK(),
 				ctAction.getElementId(), ctAction.getEventType()
 			};
 
-		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_R_R_E_E, args);
-		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_U_R_R_E_E, args);
+		FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_U_R_R_E_E, args);
 
 		if ((ctActionModelImpl.getColumnBitmask() &
-				FINDER_PATH_FETCH_BY_C_U_R_R_E_E.getColumnBitmask()) != 0) {
+				FINDER_PATH_FETCH_BY_R_U_R_R_E_E.getColumnBitmask()) != 0) {
 			args = new Object[] {
-					ctActionModelImpl.getOriginalCampaignId(),
+					ctActionModelImpl.getOriginalReportInstanceId(),
 					ctActionModelImpl.getOriginalUserSegmentId(),
 					ctActionModelImpl.getOriginalReferrerClassName(),
 					ctActionModelImpl.getOriginalReferrerClassPK(),
@@ -2906,8 +2927,8 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 					ctActionModelImpl.getOriginalEventType()
 				};
 
-			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_U_R_R_E_E, args);
-			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_C_U_R_R_E_E, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_U_R_R_E_E, args);
+			FinderCacheUtil.removeResult(FINDER_PATH_FETCH_BY_R_U_R_R_E_E, args);
 		}
 	}
 
@@ -3053,65 +3074,65 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		else {
 			if ((ctActionModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ctActionModelImpl.getOriginalCampaignId()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CAMPAIGNID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID,
-					args);
-
-				args = new Object[] { ctActionModelImpl.getCampaignId() };
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CAMPAIGNID,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CAMPAIGNID,
-					args);
-			}
-
-			if ((ctActionModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_E.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						ctActionModelImpl.getOriginalCampaignId(),
+						ctActionModelImpl.getOriginalReportInstanceId(),
 						ctActionModelImpl.getOriginalElementId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_E, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_E,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_E, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E,
 					args);
 
 				args = new Object[] {
-						ctActionModelImpl.getCampaignId(),
+						ctActionModelImpl.getReportInstanceId(),
 						ctActionModelImpl.getElementId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_E, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_E,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_E, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E,
 					args);
 			}
 
 			if ((ctActionModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R.getColumnBitmask()) != 0) {
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R_R.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						ctActionModelImpl.getOriginalCampaignId(),
+						ctActionModelImpl.getOriginalReportInstanceId(),
 						ctActionModelImpl.getOriginalReferrerClassName(),
 						ctActionModelImpl.getOriginalReferrerClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_R_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R_R,
 					args);
 
 				args = new Object[] {
-						ctActionModelImpl.getCampaignId(),
+						ctActionModelImpl.getReportInstanceId(),
 						ctActionModelImpl.getReferrerClassName(),
 						ctActionModelImpl.getReferrerClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_R_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_R_R, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R_R,
+					args);
+			}
+
+			if ((ctActionModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						ctActionModelImpl.getOriginalReportInstanceId()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_REPORTINSTANCEID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID,
+					args);
+
+				args = new Object[] { ctActionModelImpl.getReportInstanceId() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_REPORTINSTANCEID,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID,
 					args);
 			}
 		}
@@ -3137,6 +3158,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 
 		ctActionImpl.setCTActionId(ctAction.getCTActionId());
 		ctActionImpl.setCampaignId(ctAction.getCampaignId());
+		ctActionImpl.setReportInstanceId(ctAction.getReportInstanceId());
 		ctActionImpl.setUserSegmentId(ctAction.getUserSegmentId());
 		ctActionImpl.setAlias(ctAction.getAlias());
 		ctActionImpl.setReferrerClassName(ctAction.getReferrerClassName());

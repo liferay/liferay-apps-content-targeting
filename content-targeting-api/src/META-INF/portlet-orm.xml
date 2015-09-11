@@ -105,10 +105,16 @@
 				<temporal>TIMESTAMP</temporal>
 			</basic>
 			<basic name="reportKey" />
+			<basic name="name" />
+			<basic name="description" />
 			<basic name="className" />
 			<basic name="classPK" />
 			<basic name="typeSettings" />
+			<transient name="descriptionCurrentLanguageId" />
+			<transient name="descriptionMap" />
 			<transient name="modelAttributes" />
+			<transient name="nameCurrentLanguageId" />
+			<transient name="nameMap" />
 			<transient name="primaryKey" />
 			<transient name="primaryKeyObj" />
 			<transient name="userUuid" />
@@ -186,6 +192,7 @@
 			</basic>
 			<basic name="trackingActionKey" />
 			<basic name="campaignId" />
+			<basic name="reportInstanceId" />
 			<basic name="alias">
 				<column name="ALIAS_" />
 			</basic>
@@ -246,7 +253,10 @@
 	</entity>
 	<entity class="com.liferay.content.targeting.model.impl.ReportInstanceImpl" name="ReportInstance">
 		<table name="CT_ReportInstance" />
-		<attributes />
+		<attributes>
+			<transient name="reportGuid" />
+			<transient name="values" />
+		</attributes>
 	</entity>
 	<entity class="com.liferay.content.targeting.model.impl.RuleInstanceImpl" name="RuleInstance">
 		<table name="CT_RuleInstance" />

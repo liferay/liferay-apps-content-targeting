@@ -1,0 +1,121 @@
+<#assign aui = PortletJspTagLibs["/META-INF/aui.tld"] />
+<#assign liferay_theme = PortletJspTagLibs["/META-INF/liferay-theme.tld"] />
+<#assign liferay_ui = PortletJspTagLibs["/META-INF/liferay-ui.tld"] />
+<#assign portlet = PortletJspTagLibs["/META-INF/liferay-portlet.tld"] />
+
+<@portlet["defineObjects"] />
+
+<@liferay_theme["defineObjects"] />
+
+<#-- This setting is necessary since we are not loading FTL_liferay.ftl in the reports or rules -->
+
+<#setting number_format="computer">
+
+<@aui["input"] name="reportTrackingActions" type="hidden" />
+
+<@liferay_ui["panel"] cssClass="tracking-actions-panel" collapsible=true defaultState="closed" extended=false id="trackingActionPanel" helpMessage="tracking-actions-help" persistState=true title="tracking-actions">
+	<div class="component diagram-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
+		<div class="diagram-builder-content form-builder-content" id="formBuilderCB">
+			<div class="tabbable">
+				<div class="tabbable-content">
+					<ul class="nav nav-tabs">
+						<li class="active"><a href="javascript:;">Add node</a></li>
+						<li><a href="javascript:;">Settings</a></li>
+					</ul>
+
+					<div class="tab-content">
+						<div class="tab-pane">
+							<div class="hide panel-page-menu" id="formBuilderSB">
+								<div class="form-builder-search-panels">
+									<i class="icon-search"></i>
+
+									<div class="search-panels-bar">
+										<@aui["input"] cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
+									</div>
+								</div>
+							</div>
+
+							<ul class="clearfix diagram-builder-fields-container form-builder-fields-container">
+								<#list trackingActionTemplates as template>
+									<#assign trackingAction = template.getTrackingAction()>
+									<#assign templateKey = template.getTemplateKey()>
+
+									<li class="diagram-builder-field form-builder-field hide" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
+										<span class="diagram-builder-field-icon icon ${trackingAction.getIcon()}"></span>
+										<div class="diagram-builder-field-label">
+											<div class="row">
+												<div class="field-title">${trackingAction.getName(locale)}</div>
+												<div class="field-description">${trackingAction.getDescription(locale)}</div>
+												<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
+											</div>
+										</div>
+									</li>
+								</#list>
+							</ul>
+						</div>
+
+						<div class="tab-pane"></div>
+					</div>
+				</div>
+			</div>
+
+			<div class="diagram-builder-content-container form-builder-content-container">
+				<#assign cssHasItemsClass = "">
+
+				<#if (addedTrackingActionTemplates?size > 0)>
+					<#assign cssHasItemsClass = "has-items">
+				</#if>
+
+				<div class="diagram-builder-canvas form-builder-canvas ${cssHasItemsClass}">
+					<div class="alert alert-info alert-no-items">
+						<@liferay_ui["message"] key="drag-actions-to-track-in-the-reports-of-this-campaign" />
+					</div>
+
+					<div class="diagram-builder-drop-container form-builder-drop-container">
+						<#list addedTrackingActionTemplates as template>
+							<#assign trackingAction = template.getTrackingAction()>
+							<#assign templateKey = template.getTemplateKey()>
+
+							<div class="component form-builder-field hide widget yui3-widget" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
+								<div>
+									<div>
+										<div class="field-header">
+											<div class="field-icon"><i class="${trackingAction.getIcon()}"></i></div>
+											<div class="field-info row">
+												<div class="field-title">${trackingAction.getName(locale)}</div>
+												<div class="field-description">${trackingAction.getDescription(locale)}</div>
+												<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
+											</div>4
+										</div>
+										<div class="field-editor">
+										</div>
+									</div>
+								</div>
+							</div>
+						</#list>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</@>
+
+<@aui["script"] use="liferay-ct-form-builder">
+	var reportBuilder = new A.LiferayCTFormBuilder(
+		{
+			boundingBox: '#formBuilderBB',
+			contentBox: '#formBuilderCB',
+			searchBox: '#formBuilderSB'
+		}
+	).render();
+
+
+	saveFields = function() {
+		document.<@portlet["namespace"] />fm.<@portlet["namespace"] />reportTrackingActions.value = reportBuilder.exportAsJSON();
+	};
+
+	var form = A.one('#<@portlet["namespace"] />fm');
+
+	form.on('submit', saveFields);
+</@>

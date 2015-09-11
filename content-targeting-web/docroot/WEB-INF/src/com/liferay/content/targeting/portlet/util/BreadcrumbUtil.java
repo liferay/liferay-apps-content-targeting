@@ -43,7 +43,10 @@ public class BreadcrumbUtil {
 
 		PortletURL portletURL = renderResponse.createRenderURL();
 
-		portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW_REPORTS);
+		portletURL.setParameter("mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
+		portletURL.setParameter(
+			"campaignId", String.valueOf(campaign.getCampaignId()));
+		portletURL.setParameter("campaignTabs", "reports");
 		portletURL.setParameter("className", Campaign.class.getName());
 		portletURL.setParameter(
 			"classPK", String.valueOf(campaign.getCampaignId()));

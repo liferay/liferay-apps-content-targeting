@@ -56,6 +56,12 @@
 		<field name="userName" type="String" />
 		<field name="modifiedDate" type="Date" />
 		<field name="reportKey" type="String" />
+		<field name="name" type="String" localized="true">
+			<validator name="required" />
+		</field>
+		<field name="description" type="String" localized="true">
+			<hint-collection name="TEXTAREA" />
+		</field>
 		<field name="className" type="String" />
 		<field name="classPK" type="long" />
 		<field name="typeSettings" type="String">
@@ -105,6 +111,7 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="trackingActionKey" type="String" />
 		<field name="campaignId" type="long" />
+		<field name="reportInstanceId" type="long" />
 		<field name="alias" type="String" />
 		<field name="referrerClassName" type="String" />
 		<field name="referrerClassPK" type="long" />

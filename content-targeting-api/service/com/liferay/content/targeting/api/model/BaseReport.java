@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.api.model;
 
+import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -22,6 +23,9 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eduardo Garcia
@@ -53,6 +57,29 @@ public abstract class BaseReport implements Report {
 		}
 
 		return description;
+	}
+
+	@Override
+	public String getEditHTML(
+			Class commonClass, PortletRequest request, PortletResponse response,
+			ReportInstance reportInstance, Map<String, Object> context,
+			Map<String, String> values) {
+
+		String content = StringPool.BLANK;
+
+		try {
+			populateEditContext(
+				commonClass, request, response, reportInstance, context,
+				values);
+
+			content = ContentTargetingContextUtil.parseTemplate(
+				getClass(), _EDIT_FORM_TEMPLATE_PATH, context);
+		}
+		catch (Exception e) {
+			return "";
+		}
+
+		return content;
 	}
 
 	@Override
@@ -92,12 +119,40 @@ public abstract class BaseReport implements Report {
 	}
 
 	@Override
+	public boolean isInstantiable() {
+		return false;
+	}
+
+	@Override
 	public boolean isVisible(long classPK) {
 		return true;
 	}
 
+	@Override
+	public String processEditReport(
+			PortletRequest request, PortletResponse response, String id,
+			Map<String, String> values)
+		throws Exception {
+
+		return null;
+	}
+
+	@Override
+	public String updateReport(long classPK, long reportInstanceId) {
+		return updateReport(classPK);
+	}
+
 	protected void populateContext(Map<String, Object> context) {
 	}
+
+	protected void populateEditContext(
+		Class commonClass, PortletRequest request, PortletResponse response,
+		ReportInstance reportInstance, Map<String, Object> context,
+		Map<String, String> values) {
+	}
+
+	protected static final String _EDIT_FORM_TEMPLATE_PATH =
+		"templates/ct_edit_report.ftl";
 
 	protected static final String _FORM_TEMPLATE_PATH =
 		"templates/ct_report.ftl";

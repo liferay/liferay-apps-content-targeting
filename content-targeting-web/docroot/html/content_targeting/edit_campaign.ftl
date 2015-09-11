@@ -23,172 +23,32 @@
 	title='${(campaign.getName(locale))!"new-campaign"}'
 />
 
-<@invalidTrackingActionsException />
+<#assign classPK=campaignId>
+<#assign className=campaignClass.getName()>
 
-<@portlet["actionURL"] name="updateCampaign" var="addCampaignURL" />
+<#if (campaignId > 0)>
+	<#assign pills="details,promotions,reports">
+<#else>
+	<#assign pills="details">
+</#if>
 
-<@aui["form"] action="${addCampaignURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
-	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
-	<@aui["input"] name="campaignId" type="hidden" value=campaignId />
-	<@aui["input"] name="campaignTrackingActions" type="hidden" />
-	<@aui["input"] name="saveAndContinue" type="hidden" />
-
-	<@aui["model-context"] bean=campaign model=campaignClass />
-
-	<@invalidNameException />
-
-	<@aui["input"] name="name" />
-
-	<@aui["input"] name="description" />
-
-	<@userSegmentSelector
-		assetCategoryIds="${userSegmentAssetCategoryIdsAsString}"
-		assetCategoryNames="${userSegmentAssetCategoryNames}"
-		hiddenInput="userSegmentAssetCategoryIds"
-		vocabularyGroupIds="${vocabularyGroupIds}"
-		vocabularyIds="${vocabularyIds}"
-		warningMessage="editing-user-segments-deletes-all-unsaved-campaign-data"
-	/>
-
-	<@invalidDateRangeException />
-
-	<@aui["input"] name="startDate" value=startDate />
-
-	<@aui["input"] name="endDate" value=endDate />
-
-	<@aui["input"] helpMessage="time-zone-help" label="time-zone" name="timeZoneId" type="timeZone" value=timeZoneId />
-
-	<@aui["input"] cssClass="slider-input" helpMessage="priority-help" inlineField=true name="priority" size="2" maxlength="3" type="text" value="${priority}" />
-
-	<span class="slider-holder"></span>
-
-	<@aui["input"] name="active" value=true />
-
-	<@liferay_ui["panel"] cssClass="tracking-actions-panel" collapsible=true defaultState="closed" extended=false id="trackingActionPanel" helpMessage="tracking-actions-help" persistState=true title="tracking-actions">
-		<div class="component diagram-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
-			<div class="diagram-builder-content form-builder-content" id="formBuilderCB">
-				<div class="tabbable">
-					<div class="tabbable-content">
-						<ul class="nav nav-tabs">
-							<li class="active"><a href="javascript:;">Add node</a></li>
-							<li><a href="javascript:;">Settings</a></li>
-						</ul>
-
-						<div class="tab-content">
-							<div class="tab-pane">
-								<div class="hide panel-page-menu" id="formBuilderSB">
-									<div class="form-builder-search-panels">
-										<i class="icon-search"></i>
-
-										<div class="search-panels-bar">
-											<@aui["input"] cssClass="search-panels-input search-query" label="" name="searchPanel" type="text" />
-										</div>
-									</div>
-								</div>
-
-								<ul class="clearfix diagram-builder-fields-container form-builder-fields-container">
-									<#list trackingActionTemplates as template>
-										<#assign trackingAction = template.getTrackingAction()>
-										<#assign templateKey = template.getTemplateKey()>
-
-										<li class="diagram-builder-field form-builder-field hide" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
-											<span class="diagram-builder-field-icon icon ${trackingAction.getIcon()}"></span>
-											<div class="diagram-builder-field-label">
-												<div class="row">
-													<div class="field-title">${trackingAction.getName(locale)}</div>
-													<div class="field-description">${trackingAction.getDescription(locale)}</div>
-													<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
-												</div>
-											</div>
-										</li>
-									</#list>
-								</ul>
-							</div>
-
-							<div class="tab-pane"></div>
-						</div>
-					</div>
-				</div>
-
-				<div class="diagram-builder-content-container form-builder-content-container">
-					<#assign cssHasItemsClass = "">
-
-					<#if (addedTrackingActionTemplates?size > 0)>
-						<#assign cssHasItemsClass = "has-items">
-					</#if>
-
-					<div class="diagram-builder-canvas form-builder-canvas ${cssHasItemsClass}">
-						<div class="alert alert-info alert-no-items">
-							<@liferay_ui["message"] key="drag-actions-to-track-in-the-reports-of-this-campaign" />
-						</div>
-
-						<div class="diagram-builder-drop-container form-builder-drop-container">
-							<#list addedTrackingActionTemplates as template>
-								<#assign trackingAction = template.getTrackingAction()>
-								<#assign templateKey = template.getTemplateKey()>
-
-								<div class="component form-builder-field hide widget yui3-widget" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
-									<div>
-										<div>
-											<div class="field-header">
-												<div class="field-icon"><i class="${trackingAction.getIcon()}"></i></div>
-												<div class="field-info row">
-													<div class="field-title">${trackingAction.getName(locale)}</div>
-													<div class="field-description">${trackingAction.getDescription(locale)}</div>
-													<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
-												</div>
-											</div>
-											<div class="field-editor">
-											</div>
-										</div>
-									</div>
-								</div>
-							</#list>
-						</div>
-					</div>
-				</div>
-
-			</div>
-		</div>
+<@liferay_ui["tabs"]
+	names="${pills}"
+	refresh=false
+	type="pills"
+	value="${campaignTabs}"
+>
+	<@liferay_ui["section"]>
+		<#include "campaign_details.ftl" />
 	</@>
 
-	<@aui["button-row"]>
-		<@aui["button"] type="submit" />
+	<#if (campaignId > 0)>
+		<@liferay_ui["section"]>
+			<#include "view_tactics.ftl" />
+		</@>
 
-		<@aui["button"] type="button" value="save-and-continue" onClick="saveAndContinue();" />
-
-		<@aui["button"] href="${redirect}" type="cancel" />
-	</@>
-
-	<@aui["script"] use="aui-toggler,liferay-ct-form-builder,liferay-input-slider">
-		new Liferay.InputSlider(
-			{
-				inputNode: '#<@portlet["namespace"] />priority'
-			}
-		);
-
-		var campaignBuilder = new A.LiferayCTFormBuilder(
-			{
-				boundingBox: '#formBuilderBB',
-				contentBox: '#formBuilderCB',
-				searchBox: '#formBuilderSB'
-			}
-		).render();
-
-		saveAndContinue = function() {
-			document.<@portlet["namespace"] />fm.<@portlet["namespace"] />campaignTrackingActions.value = campaignBuilder.exportAsJSON();
-
-			A.one('#<@portlet["namespace"] />saveAndContinue').val('true');
-
-			submitForm(document.<@portlet["namespace"] />fm);
-		};
-
-		saveFields = function() {
-			document.<@portlet["namespace"] />fm.<@portlet["namespace"] />campaignTrackingActions.value = campaignBuilder.exportAsJSON();
-
-			A.one('#<@portlet["namespace"] />saveAndContinue').val('false');
-
-			submitForm(document.<@portlet["namespace"] />fm);
-		};
-	</@>
+		<@liferay_ui["section"]>
+			<#include "view_reports.ftl" />
+		</@>
+	</#if>
 </@>

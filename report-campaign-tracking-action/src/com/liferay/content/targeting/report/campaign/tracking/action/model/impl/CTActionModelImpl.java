@@ -67,6 +67,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "CTActionId", Types.BIGINT },
 			{ "campaignId", Types.BIGINT },
+			{ "reportInstanceId", Types.BIGINT },
 			{ "userSegmentId", Types.BIGINT },
 			{ "alias_", Types.VARCHAR },
 			{ "referrerClassName", Types.VARCHAR },
@@ -76,7 +77,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 			{ "count", Types.INTEGER },
 			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_CTA_CTAction (CTActionId LONG not null primary key,campaignId LONG,userSegmentId LONG,alias_ VARCHAR(75) null,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_CTA_CTAction (CTActionId LONG not null primary key,campaignId LONG,reportInstanceId LONG,userSegmentId LONG,alias_ VARCHAR(75) null,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_CTA_CTAction";
 	public static final String ORDER_BY_JPQL = " ORDER BY ctAction.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_CTA_CTAction.modifiedDate DESC";
@@ -92,12 +93,12 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 	public static final boolean COLUMN_BITMASK_ENABLED = GetterUtil.getBoolean(com.liferay.util.service.ServiceProps.get(
 				"value.object.column.bitmask.enabled.com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction"),
 			true);
-	public static long CAMPAIGNID_COLUMN_BITMASK = 1L;
-	public static long ELEMENTID_COLUMN_BITMASK = 2L;
-	public static long EVENTTYPE_COLUMN_BITMASK = 4L;
-	public static long MODIFIEDDATE_COLUMN_BITMASK = 8L;
-	public static long REFERRERCLASSNAME_COLUMN_BITMASK = 16L;
-	public static long REFERRERCLASSPK_COLUMN_BITMASK = 32L;
+	public static long ELEMENTID_COLUMN_BITMASK = 1L;
+	public static long EVENTTYPE_COLUMN_BITMASK = 2L;
+	public static long MODIFIEDDATE_COLUMN_BITMASK = 4L;
+	public static long REFERRERCLASSNAME_COLUMN_BITMASK = 8L;
+	public static long REFERRERCLASSPK_COLUMN_BITMASK = 16L;
+	public static long REPORTINSTANCEID_COLUMN_BITMASK = 32L;
 	public static long USERSEGMENTID_COLUMN_BITMASK = 64L;
 
 	/**
@@ -115,6 +116,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 		model.setCTActionId(soapModel.getCTActionId());
 		model.setCampaignId(soapModel.getCampaignId());
+		model.setReportInstanceId(soapModel.getReportInstanceId());
 		model.setUserSegmentId(soapModel.getUserSegmentId());
 		model.setAlias(soapModel.getAlias());
 		model.setReferrerClassName(soapModel.getReferrerClassName());
@@ -189,6 +191,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 		attributes.put("CTActionId", getCTActionId());
 		attributes.put("campaignId", getCampaignId());
+		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("alias", getAlias());
 		attributes.put("referrerClassName", getReferrerClassName());
@@ -213,6 +216,12 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 		if (campaignId != null) {
 			setCampaignId(campaignId);
+		}
+
+		Long reportInstanceId = (Long)attributes.get("reportInstanceId");
+
+		if (reportInstanceId != null) {
+			setReportInstanceId(reportInstanceId);
 		}
 
 		Long userSegmentId = (Long)attributes.get("userSegmentId");
@@ -283,19 +292,30 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 	@Override
 	public void setCampaignId(long campaignId) {
-		_columnBitmask |= CAMPAIGNID_COLUMN_BITMASK;
-
-		if (!_setOriginalCampaignId) {
-			_setOriginalCampaignId = true;
-
-			_originalCampaignId = _campaignId;
-		}
-
 		_campaignId = campaignId;
 	}
 
-	public long getOriginalCampaignId() {
-		return _originalCampaignId;
+	@JSON
+	@Override
+	public long getReportInstanceId() {
+		return _reportInstanceId;
+	}
+
+	@Override
+	public void setReportInstanceId(long reportInstanceId) {
+		_columnBitmask |= REPORTINSTANCEID_COLUMN_BITMASK;
+
+		if (!_setOriginalReportInstanceId) {
+			_setOriginalReportInstanceId = true;
+
+			_originalReportInstanceId = _reportInstanceId;
+		}
+
+		_reportInstanceId = reportInstanceId;
+	}
+
+	public long getOriginalReportInstanceId() {
+		return _originalReportInstanceId;
 	}
 
 	@JSON
@@ -503,6 +523,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 		ctActionImpl.setCTActionId(getCTActionId());
 		ctActionImpl.setCampaignId(getCampaignId());
+		ctActionImpl.setReportInstanceId(getReportInstanceId());
 		ctActionImpl.setUserSegmentId(getUserSegmentId());
 		ctActionImpl.setAlias(getAlias());
 		ctActionImpl.setReferrerClassName(getReferrerClassName());
@@ -563,9 +584,9 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 	public void resetOriginalValues() {
 		CTActionModelImpl ctActionModelImpl = this;
 
-		ctActionModelImpl._originalCampaignId = ctActionModelImpl._campaignId;
+		ctActionModelImpl._originalReportInstanceId = ctActionModelImpl._reportInstanceId;
 
-		ctActionModelImpl._setOriginalCampaignId = false;
+		ctActionModelImpl._setOriginalReportInstanceId = false;
 
 		ctActionModelImpl._originalUserSegmentId = ctActionModelImpl._userSegmentId;
 
@@ -593,6 +614,8 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		ctActionCacheModel.CTActionId = getCTActionId();
 
 		ctActionCacheModel.campaignId = getCampaignId();
+
+		ctActionCacheModel.reportInstanceId = getReportInstanceId();
 
 		ctActionCacheModel.userSegmentId = getUserSegmentId();
 
@@ -646,12 +669,14 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{CTActionId=");
 		sb.append(getCTActionId());
 		sb.append(", campaignId=");
 		sb.append(getCampaignId());
+		sb.append(", reportInstanceId=");
+		sb.append(getReportInstanceId());
 		sb.append(", userSegmentId=");
 		sb.append(getUserSegmentId());
 		sb.append(", alias=");
@@ -675,7 +700,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -689,6 +714,10 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		sb.append(
 			"<column><column-name>campaignId</column-name><column-value><![CDATA[");
 		sb.append(getCampaignId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>reportInstanceId</column-name><column-value><![CDATA[");
+		sb.append(getReportInstanceId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userSegmentId</column-name><column-value><![CDATA[");
@@ -734,8 +763,9 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		};
 	private long _CTActionId;
 	private long _campaignId;
-	private long _originalCampaignId;
-	private boolean _setOriginalCampaignId;
+	private long _reportInstanceId;
+	private long _originalReportInstanceId;
+	private boolean _setOriginalReportInstanceId;
 	private long _userSegmentId;
 	private long _originalUserSegmentId;
 	private boolean _setOriginalUserSegmentId;

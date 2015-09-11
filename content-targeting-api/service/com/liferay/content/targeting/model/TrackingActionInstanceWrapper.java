@@ -62,6 +62,7 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("trackingActionKey", getTrackingActionKey());
 		attributes.put("campaignId", getCampaignId());
+		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("alias", getAlias());
 		attributes.put("referrerClassName", getReferrerClassName());
 		attributes.put("referrerClassPK", getReferrerClassPK());
@@ -133,6 +134,12 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 
 		if (campaignId != null) {
 			setCampaignId(campaignId);
+		}
+
+		Long reportInstanceId = (Long)attributes.get("reportInstanceId");
+
+		if (reportInstanceId != null) {
+			setReportInstanceId(reportInstanceId);
 		}
 
 		String alias = (String)attributes.get("alias");
@@ -412,6 +419,26 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 	@Override
 	public void setCampaignId(long campaignId) {
 		_trackingActionInstance.setCampaignId(campaignId);
+	}
+
+	/**
+	* Returns the report instance ID of this tracking action instance.
+	*
+	* @return the report instance ID of this tracking action instance
+	*/
+	@Override
+	public long getReportInstanceId() {
+		return _trackingActionInstance.getReportInstanceId();
+	}
+
+	/**
+	* Sets the report instance ID of this tracking action instance.
+	*
+	* @param reportInstanceId the report instance ID of this tracking action instance
+	*/
+	@Override
+	public void setReportInstanceId(long reportInstanceId) {
+		_trackingActionInstance.setReportInstanceId(reportInstanceId);
 	}
 
 	/**

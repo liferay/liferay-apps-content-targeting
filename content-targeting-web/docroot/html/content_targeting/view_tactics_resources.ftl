@@ -17,10 +17,11 @@
 <#include "../init.ftl" />
 
 <@portlet["renderURL"] varImpl="viewTacticsURL">
+	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 	<@portlet["param"] name="campaignId" value="${campaignId}" />
+	<@portlet["param"] name="campaignTabs" value="promotions" />
 	<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 	<@portlet["param"] name="classPK" value="${campaignId}" />
-	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_TACTICS}" />
 </@>
 
 <@liferay_ui["search-container"]
@@ -95,7 +96,7 @@
 		A.one('#<@portlet["namespace"] />${searchContainerReference.getId()}SearchContainer').on(
 			'click',
 			function() {
-				var hide = (Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fm, '<@portlet["namespace"] />allRowIds').length == 0);
+				var hide = (Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmTactics, '<@portlet["namespace"] />allRowIds').length == 0);
 
 				deleteTactics.toggle(!hide);
 			},
@@ -106,11 +107,12 @@
 			'click',
 			function(event) {
 				if (confirm('<@liferay_ui["message"] key="are-you-sure-you-want-to-delete-this" />')) {
-					document.<@portlet["namespace"] />fm.<@portlet["namespace"] />tacticsIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fm, '<@portlet["namespace"] />allRowIds');
+					document.<@portlet["namespace"] />fmTactics.<@portlet["namespace"] />tacticsIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmTactics, '<@portlet["namespace"] />allRowIds');
 
 					<@portlet["renderURL"] var="redirectURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_TACTICS}" />
+						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 						<@portlet["param"] name="campaignId" value="${campaignId}" />
+						<@portlet["param"] name="campaignTabs" value="promotions" />
 						<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 						<@portlet["param"] name="classPK" value="${campaignId}" />
 					</@>
@@ -119,7 +121,7 @@
 						<@portlet["param"] name="redirect" value="${redirectURL}" />
 					</@>
 
-					submitForm(document.<@portlet["namespace"] />fm, '${deleteTacticsURL}');
+					submitForm(document.<@portlet["namespace"] />fmTactics, '${deleteTacticsURL}');
 				}
 			}
 		);

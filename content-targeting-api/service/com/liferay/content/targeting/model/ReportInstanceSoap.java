@@ -38,6 +38,8 @@ public class ReportInstanceSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setReportKey(model.getReportKey());
+		soapModel.setName(model.getName());
+		soapModel.setDescription(model.getDescription());
 		soapModel.setClassName(model.getClassName());
 		soapModel.setClassPK(model.getClassPK());
 		soapModel.setTypeSettings(model.getTypeSettings());
@@ -149,6 +151,22 @@ public class ReportInstanceSoap implements Serializable {
 		_reportKey = reportKey;
 	}
 
+	public String getName() {
+		return _name;
+	}
+
+	public void setName(String name) {
+		_name = name;
+	}
+
+	public String getDescription() {
+		return _description;
+	}
+
+	public void setDescription(String description) {
+		_description = description;
+	}
+
 	public String getClassName() {
 		return _className;
 	}
@@ -180,6 +198,8 @@ public class ReportInstanceSoap implements Serializable {
 	private String _userName;
 	private Date _modifiedDate;
 	private String _reportKey;
+	private String _name;
+	private String _description;
 	private String _className;
 	private long _classPK;
 	private String _typeSettings;

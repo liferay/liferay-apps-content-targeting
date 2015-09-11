@@ -71,6 +71,8 @@
 		<property name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="reportKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="className" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -121,6 +123,7 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="trackingActionKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="reportInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="alias" type="com.liferay.portal.dao.orm.hibernate.StringType" column="alias_" />
 		<property name="referrerClassName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="referrerClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
