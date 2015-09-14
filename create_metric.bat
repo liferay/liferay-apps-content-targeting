@@ -12,14 +12,13 @@ goto end
 
 :errorCreate
 	echo.
-	echo Usage: create_tracking_action.bat test "Test"
+	echo Usage: create_metric.bat test "Test"
 	echo.
-	echo The first test is your tracking action id. A new directory will be
-	echo created based on the tracking action id.
+	echo The first test is your metric id. A new directory will be created
+	echo based on the metric id.
 	echo.
-	echo The second \"Test\" is the tracking action\'s display name. The
-	echo quotation marks are only needed because there is a space in the display
-	echo name.
+	echo The second \"Test\" is the metric\'s display name. The quotation marks
+	echo are only needed because there is a space in the display name.
 
 	goto end
 
