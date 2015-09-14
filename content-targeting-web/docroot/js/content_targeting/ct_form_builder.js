@@ -124,6 +124,30 @@ AUI.add(
 							instance.set('fieldsTogglerDelegate', togglerDelegate);
 
 							instance._eventHandles = eventHandles;
+
+                            Liferay.after(
+                                'form:registered',
+                                function (data) {
+                                    var formValidator = data.form.formValidator;
+
+                                    if (formValidator) {
+                                        A.Do.after(
+                                            function(){
+                                                for (var errorFieldName in formValidator.errors) {
+                                                    var fieldToggler = A.one('#' + errorFieldName).ancestor('.form-builder-field-content').one('.field-header').getData().toggler;
+
+                                                    if (fieldToggler) {
+                                                        fieldToggler.expand();
+                                                    }
+                                                }
+                                            },
+                                            formValidator,
+                                            'validate'
+                                        );
+                                    }
+
+                                }
+                            );
 						},
 
 						destructor: function() {
