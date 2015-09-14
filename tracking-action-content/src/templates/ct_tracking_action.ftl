@@ -7,7 +7,7 @@
 
 <#if !trackingContentEnabled >
 	<div class="alert alert-error">
-		<strong><@liferay_ui["message"] key="this-tracking-action-will-not-work-properly-because-content-tracking-is-not-enabled" /></strong>
+		<strong><@liferay_ui["message"] key="this-metric-will-not-work-properly-because-content-tracking-is-not-enabled" /></strong>
 
 		<#assign enableLocationPortalLabel = languageUtil.get(locale, "portal-settings-content-targeting-analytics") />
 
@@ -71,14 +71,14 @@
 </div>
 
 <#if eventTypes?has_content && (eventTypes?size > 1)>
-	<@aui["select"] label="tracking-action" name="{ct_field_guid}eventType">
+	<@aui["select"] label="event-type" name="{ct_field_guid}eventType">
 		<#list eventTypes as curEventType>
 			<@aui["option"] label="${curEventType}" selected=(eventType == curEventType) value=curEventType />
 		</#list>
 	</@>
 <#else>
 	<#list eventTypes as curEventType>
-		<@aui["input"] disabled=true label="tracking-action" name="{ct_field_guid}eventType" type="text" value=curEventType />
+		<@aui["input"] disabled=true label="event-type" name="{ct_field_guid}eventType" type="text" value=curEventType />
 	</#list>
 </#if>
 

@@ -21,7 +21,7 @@
 </@>
 
 <@liferay_ui["search-container"]
-	emptyResultsMessage=languageUtil.format(locale, "there-is-not-enough-data-to-generate-a-tracking-actions-report-for-the-campaign-x", name)
+	emptyResultsMessage=languageUtil.format(locale, "there-is-not-enough-data-to-generate-a-metrics-report-for-the-campaign-x", name)
 	iteratorURL=portletURL
 	total=searchContainerIterator.getTotal()
 >

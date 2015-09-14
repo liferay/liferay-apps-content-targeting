@@ -36,7 +36,7 @@
 					<@portlet["param"] name="campaignTabs" value="reports" />
 				</@>
 
-				<@aui["nav-item"] dropdown=true id="addButtonContainer" label="add" iconCssClass="icon-plus" label="add-report">
+				<@aui["nav-item"] dropdown=true id="addButtonContainer" label="add" iconCssClass="icon-plus" label="add">
 					<#list reports as report>
 						<#if report.isInstantiable()>
 							<@portlet["renderURL"] var="addReportURL">
@@ -64,7 +64,7 @@
 					<@portlet["param"] name="classPK" value="${classPK}" />
 				</@>
 
-				<@aui["nav-item"] dropdown=true id="addButtonContainer" label="add" iconCssClass="icon-plus" label="add-report">
+				<@aui["nav-item"] dropdown=true id="addButtonContainer" label="add" iconCssClass="icon-plus" label="add">
 					<#list reports as report>
 						<#if report.isInstantiable()>
 							<@portlet["renderURL"] var="addReportURL">

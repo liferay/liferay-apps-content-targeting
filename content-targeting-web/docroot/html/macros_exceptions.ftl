@@ -43,7 +43,7 @@
 </#macro>
 
 <#macro invalidTrackingActionsException>
-	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidTrackingActionsException" message="there-is-an-error-in-one-of-your-tracking-actions" />
+	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidTrackingActionsException" message="there-is-an-error-in-one-of-your-metrics" />
 </#macro>
 
 
