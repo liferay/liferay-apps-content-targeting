@@ -1227,10 +1227,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				String userSegmentAssetCategoryIdsAsString = StringUtil.merge(
 					userSegmentAssetCategoryIds);
 
-				if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN)) {
-					template.put(
-						"userSegmentAssetCategoryIdsAsString",
-						userSegmentAssetCategoryIdsAsString);
+				if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN) ||
+					path.equals(ContentTargetingPath.EDIT_TACTIC)) {
+
 					template.put(
 						"userSegmentAssetCategoryNames",
 						ContentTargetingUtil.getAssetCategoryNames(
@@ -1239,14 +1238,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				}
 				else {
 					template.put(
-						"userSegmentAssetCategoryIdsAsString",
-						StringPool.BLANK);
-					template.put(
 						"userSegmentAssetCategoryNames", StringPool.BLANK);
 				}
 
 				template.put(
 					"campaignUserSegmentsIds",
+					userSegmentAssetCategoryIdsAsString);
+				template.put(
+					"userSegmentAssetCategoryIdsAsString",
 					userSegmentAssetCategoryIdsAsString);
 			}
 			else {
