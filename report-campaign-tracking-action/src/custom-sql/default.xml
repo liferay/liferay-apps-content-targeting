@@ -17,6 +17,8 @@
 					(CT_Analytics_AnalyticsReferrer.analyticsEventId = CT_Analytics_AnalyticsEvent.analyticsEventId)
 			WHERE
 				(CT_TrackingActionInstance.reportInstanceId = ?) AND
+				(CT_Analytics_AnalyticsEvent.className != '') AND
+				(CT_Analytics_AnalyticsEvent.classPK > 0) AND
 				(CT_Analytics_AnalyticsEvent.createDate >= ?)
 		]]>
 	</sql>
@@ -35,6 +37,7 @@
 					(CT_Analytics_AnalyticsReferrer.analyticsEventId = CT_Analytics_AnalyticsEvent.analyticsEventId)
 			WHERE
 				(CT_TrackingActionInstance.reportInstanceId = ?) AND
+				(CT_Analytics_AnalyticsEvent.elementId != '') AND
 				(CT_Analytics_AnalyticsEvent.createDate >= ?)
 		]]>
 	</sql>
@@ -46,7 +49,7 @@
 				CT_Analytics_AnalyticsEvent
 			WHERE
 				(CT_Analytics_AnalyticsEvent.createDate >= ?) AND
-				(CT_Analytics_AnalyticsEvent.classPK != 0)
+				(CT_Analytics_AnalyticsEvent.classPK > 0)
 			GROUP BY
 	  			CT_Analytics_AnalyticsEvent.className, CT_Analytics_AnalyticsEvent.classPK, CT_Analytics_AnalyticsEvent.eventType
 		]]>

@@ -17,8 +17,11 @@ package com.liferay.content.targeting.report.campaign.tracking.action;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
+import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.CTActionLocalService;
+import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
@@ -57,6 +60,9 @@ public class CTActionReportTest {
 			AnalyticsEventLocalService.class, _bundle.getBundleContext());
 		_ctActionLocalService = ServiceTrackerUtil.getService(
 			CTActionLocalService.class, _bundle.getBundleContext());
+        _reportInstanceLocalService = ServiceTrackerUtil.getService(
+            ReportInstanceLocalService.class,
+            _bundle.getBundleContext());
 		_reportsRegistry = ServiceTrackerUtil.getService(
 			ReportsRegistry.class, _bundle.getBundleContext());
 		_trackingActionInstanceLocalService = ServiceTrackerUtil.getService(
@@ -75,20 +81,26 @@ public class CTActionReportTest {
 		long classPK = 2;
 		String elementId = "form_id";
 		String eventType = "view";
-		long reportInstanceId = 1;
+
+        ReportInstance reportInstance =
+            _reportInstanceLocalService.addReportInstance(
+                userId, "CTActionReport", Campaign.class.getName(), campaignId,
+                "", serviceContext);
+
+        long reportInstanceId = reportInstance.getReportInstanceId();
 
 		int initialCTActionCount = _ctActionLocalService.getCTActionsCount(
-			campaignId);
+            reportInstanceId);
 
 		// Add tracking actions
 
 		_trackingActionInstanceLocalService.addTrackingActionInstance(
 			userId, reportInstanceId, "FormTrackingAction", campaignId,
-			"Form alias", null, -1, elementId, eventType, null, serviceContext);
+			"Form alias1", null, -1, elementId, eventType, null, serviceContext);
 
 		_trackingActionInstanceLocalService.addTrackingActionInstance(
 			userId, reportInstanceId, "PageTrackingAction", campaignId,
-			"Page alias", className, classPK, null, eventType, StringPool.BLANK,
+			"Page alias1", className, classPK, null, eventType, StringPool.BLANK,
 			serviceContext);
 
 		// Obtain report from registry
@@ -97,7 +109,7 @@ public class CTActionReportTest {
 
 		// Test update report without analytics
 
-		report.updateReport(reportInstanceId);
+		report.updateReport(campaignId);
 
 		Assert.assertEquals(
 			initialCTActionCount,
@@ -117,11 +129,13 @@ public class CTActionReportTest {
 
 		// Test update report with analytics
 
-		report.updateReport(reportInstanceId);
+		report.updateReport(campaignId);
 
 		Assert.assertEquals(
 			initialCTActionCount + 2,
 			_ctActionLocalService.getCTActionsCount(reportInstanceId));
+
+        _reportInstanceLocalService.deleteReportInstance(reportInstanceId);
 	}
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
@@ -130,6 +144,7 @@ public class CTActionReportTest {
 	private Bundle _bundle;
 
 	private CTActionLocalService _ctActionLocalService;
+    private ReportInstanceLocalService _reportInstanceLocalService;
 	private ReportsRegistry _reportsRegistry;
 	private TrackingActionInstanceLocalService
 		_trackingActionInstanceLocalService;
