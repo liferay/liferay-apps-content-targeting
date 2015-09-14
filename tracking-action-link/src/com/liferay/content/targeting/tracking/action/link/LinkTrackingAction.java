@@ -64,7 +64,7 @@ public class LinkTrackingAction extends BaseTrackingAction {
 		TrackingActionInstance trackingActionInstance, Locale locale) {
 
 		String summary = LanguageUtil.format(
-			locale, "tracking-action-x-in-link-x",
+			locale, "metric-x-in-link-x",
 			new Object[] {
 				trackingActionInstance.getEventType(),
 				trackingActionInstance.getElementId()

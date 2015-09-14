@@ -64,7 +64,7 @@ public class YoutubeTrackingAction extends BaseTrackingAction {
 		TrackingActionInstance trackingActionInstance, Locale locale) {
 
 		String summary = LanguageUtil.format(
-			locale, "tracking-action-x-in-youtube-x",
+			locale, "metric-x-in-youtube-x",
 			new Object[] {
 				trackingActionInstance.getEventType(),
 				trackingActionInstance.getElementId()
