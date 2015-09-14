@@ -60,9 +60,8 @@ public class CTActionReportTest {
 			AnalyticsEventLocalService.class, _bundle.getBundleContext());
 		_ctActionLocalService = ServiceTrackerUtil.getService(
 			CTActionLocalService.class, _bundle.getBundleContext());
-        _reportInstanceLocalService = ServiceTrackerUtil.getService(
-            ReportInstanceLocalService.class,
-            _bundle.getBundleContext());
+		_reportInstanceLocalService = ServiceTrackerUtil.getService(
+			ReportInstanceLocalService.class, _bundle.getBundleContext());
 		_reportsRegistry = ServiceTrackerUtil.getService(
 			ReportsRegistry.class, _bundle.getBundleContext());
 		_trackingActionInstanceLocalService = ServiceTrackerUtil.getService(
@@ -82,26 +81,27 @@ public class CTActionReportTest {
 		String elementId = "form_id";
 		String eventType = "view";
 
-        ReportInstance reportInstance =
-            _reportInstanceLocalService.addReportInstance(
-                userId, "CTActionReport", Campaign.class.getName(), campaignId,
-                "", serviceContext);
+		ReportInstance reportInstance =
+			_reportInstanceLocalService.addReportInstance(
+				userId, "CTActionReport", Campaign.class.getName(), campaignId,
+				"", serviceContext);
 
-        long reportInstanceId = reportInstance.getReportInstanceId();
+		long reportInstanceId = reportInstance.getReportInstanceId();
 
 		int initialCTActionCount = _ctActionLocalService.getCTActionsCount(
-            reportInstanceId);
+			reportInstanceId);
 
 		// Add tracking actions
 
 		_trackingActionInstanceLocalService.addTrackingActionInstance(
 			userId, reportInstanceId, "FormTrackingAction", campaignId,
-			"Form alias1", null, -1, elementId, eventType, null, serviceContext);
+			"Form alias1", null, -1, elementId, eventType, null,
+			serviceContext);
 
 		_trackingActionInstanceLocalService.addTrackingActionInstance(
 			userId, reportInstanceId, "PageTrackingAction", campaignId,
-			"Page alias1", className, classPK, null, eventType, StringPool.BLANK,
-			serviceContext);
+			"Page alias1", className, classPK, null, eventType,
+			StringPool.BLANK, serviceContext);
 
 		// Obtain report from registry
 
@@ -135,7 +135,7 @@ public class CTActionReportTest {
 			initialCTActionCount + 2,
 			_ctActionLocalService.getCTActionsCount(reportInstanceId));
 
-        _reportInstanceLocalService.deleteReportInstance(reportInstanceId);
+		_reportInstanceLocalService.deleteReportInstance(reportInstanceId);
 	}
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
@@ -144,7 +144,7 @@ public class CTActionReportTest {
 	private Bundle _bundle;
 
 	private CTActionLocalService _ctActionLocalService;
-    private ReportInstanceLocalService _reportInstanceLocalService;
+	private ReportInstanceLocalService _reportInstanceLocalService;
 	private ReportsRegistry _reportsRegistry;
 	private TrackingActionInstanceLocalService
 		_trackingActionInstanceLocalService;
