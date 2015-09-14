@@ -43,19 +43,21 @@
 		warningMessage="editing-user-segments-deletes-all-unsaved-campaign-data"
 	/>
 
-	<@invalidDateRangeException />
-
-	<@aui["input"] name="startDate" value=startDate />
-
-	<@aui["input"] name="endDate" value=endDate />
-
-	<@aui["input"] helpMessage="time-zone-help" label="time-zone" name="timeZoneId" type="timeZone" value=timeZoneId />
-
 	<@aui["input"] cssClass="slider-input" helpMessage="priority-help" inlineField=true name="priority" size="2" maxlength="3" type="text" value="${priority}" />
 
 	<span class="slider-holder"></span>
 
 	<@aui["input"] name="active" value=true />
+
+	<@liferay_ui["panel"] cssClass="dates-panel" collapsible=true defaultState="open" extended=false id="datesPanel" helpMessage="" persistState=true title="Dates">
+		<@invalidDateRangeException />
+
+		<@aui["input"] name="startDate" value=startDate />
+
+		<@aui["input"] name="endDate" value=endDate />
+
+		<@aui["input"] helpMessage="time-zone-help" label="time-zone" name="timeZoneId" type="timeZone" value=timeZoneId />
+	</@>
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />
