@@ -78,10 +78,10 @@ public class DefaultRulesEngineImplTest {
 
 		_anonymousUserLocalService = ServiceTrackerUtil.getService(
 			AnonymousUserLocalService.class, _bundle.getBundleContext());
-		_rulesEngine = ServiceTrackerUtil.getService(
-			RulesEngine.class, _bundle.getBundleContext());
 		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
 			RuleInstanceLocalService.class, _bundle.getBundleContext());
+		_rulesEngine = ServiceTrackerUtil.getService(
+			RulesEngine.class, _bundle.getBundleContext());
 		_rulesRegistry = ServiceTrackerUtil.getService(
 			RulesRegistry.class, _bundle.getBundleContext());
 		_userSegmentLocalService = ServiceTrackerUtil.getService(
@@ -96,26 +96,26 @@ public class DefaultRulesEngineImplTest {
 
 		nameMap.put(LocaleUtil.getDefault(), "test-category");
 
+		_anonymousUser = _anonymousUserLocalService.addAnonymousUser(
+			1, "127.0.0.1", StringPool.BLANK, _serviceContext);
 		_userSegment = _userSegmentLocalService.addUserSegment(
 			TestPropsValues.getUserId(), nameMap, null, _serviceContext);
 	}
 
 	@After
 	public void tearDown() throws Exception {
+		_anonymousUserLocalService.deleteAnonymousUser(_anonymousUser);
 		_userSegmentLocalService.deleteUserSegment(_userSegment);
 	}
 
 	@Test
 	public void testGetMatchingUserSegmentIds() throws Exception {
-		AnonymousUser anonymousUser =
-			_anonymousUserLocalService.addAnonymousUser(
-				1, "127.0.0.1", StringPool.BLANK, _serviceContext);
-
 		Rule rule = getTestRule();
 
 		_rulesRegistry.getRules().put(rule.getRuleKey(), rule);
 
 		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
 		jsonObj.put("lastIP", "127.0.0.1");
 		jsonObj.put("userAgent", "Mozilla");
 
@@ -125,10 +125,6 @@ public class DefaultRulesEngineImplTest {
 			TestPropsValues.getUserId(), "TestRule",
 			_userSegment.getUserSegmentId(), typeSettings, _serviceContext);
 
-		List<RuleInstance> ruleInstances =
-			_ruleInstanceLocalService.getRuleInstances(
-				_userSegment.getUserSegmentId());
-
 		HttpServletRequest mockRequest = getMockRequestMatch();
 
 		List<UserSegment> userSegments = new ArrayList<UserSegment>();
@@ -136,23 +132,18 @@ public class DefaultRulesEngineImplTest {
 		userSegments.add(_userSegment);
 
 		long[] userSegmentIds = _rulesEngine.getMatchingUserSegmentIds(
-			mockRequest, anonymousUser, userSegments);
+			mockRequest, _anonymousUser, userSegments);
 
 		Assert.assertEquals(1, userSegmentIds.length);
 
 		Assert.assertEquals(userSegmentIds[0], _userSegment.getUserSegmentId());
 
-		_anonymousUserLocalService.deleteAnonymousUser(anonymousUser);
 		_ruleInstanceLocalService.deleteRuleInstance(ruleInstance);
 		_rulesRegistry.getRules().clear();
 	}
 
 	@Test
 	public void testMatches() throws Exception {
-		AnonymousUser anonymousUser =
-			_anonymousUserLocalService.addAnonymousUser(
-			1, "127.0.0.1", StringPool.BLANK, _serviceContext);
-
 		Rule rule = getTestRule();
 
 		_rulesRegistry.getRules().put(rule.getRuleKey(), rule);
@@ -174,19 +165,14 @@ public class DefaultRulesEngineImplTest {
 		HttpServletRequest mockRequest = getMockRequestMatch();
 
 		Assert.assertTrue(
-			_rulesEngine.matches(mockRequest, anonymousUser, ruleInstances));
+			_rulesEngine.matches(mockRequest, _anonymousUser, ruleInstances));
 
-		_anonymousUserLocalService.deleteAnonymousUser(anonymousUser);
 		_ruleInstanceLocalService.deleteRuleInstance(ruleInstance);
 		_rulesRegistry.getRules().clear();
 	}
 
 	@Test
 	public void testNoMatches() throws Exception {
-		AnonymousUser anonymousUser =
-			_anonymousUserLocalService.addAnonymousUser(
-			1, "127.0.0.1", StringPool.BLANK, _serviceContext);
-
 		Rule rule = getTestRule();
 
 		_rulesRegistry.getRules().put(rule.getRuleKey(), rule);
@@ -208,9 +194,8 @@ public class DefaultRulesEngineImplTest {
 		HttpServletRequest mockRequest = getMockRequestNoMatch();
 
 		Assert.assertFalse(
-			_rulesEngine.matches(mockRequest, anonymousUser, ruleInstances));
+			_rulesEngine.matches(mockRequest, _anonymousUser, ruleInstances));
 
-		_anonymousUserLocalService.deleteAnonymousUser(anonymousUser);
 		_ruleInstanceLocalService.deleteRuleInstance(ruleInstance);
 		_rulesRegistry.getRules().clear();
 	}
@@ -279,6 +264,7 @@ public class DefaultRulesEngineImplTest {
 		return rule;
 	}
 
+	private AnonymousUser _anonymousUser;
 	private AnonymousUserLocalService _anonymousUserLocalService;
 
 	@ArquillianResource
