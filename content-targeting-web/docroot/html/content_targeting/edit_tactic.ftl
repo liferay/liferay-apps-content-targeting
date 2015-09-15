@@ -57,7 +57,7 @@
 
 	<span class="slider-holder"></span>
 
-	<@liferay_ui["panel"] cssClass="channel-panel" collapsible=true defaultState="open" extended=false id="channelPanel" helpMessage="channels-help" persistState=true title="channels">
+	<@liferay_ui["panel"] cssClass="channel-panel" collapsible=false defaultState="open" extended=false id="channelPanel" helpMessage="channels-help" persistState=true title="channels">
 		<div class="component diagram-builder form-builder liferayctformbuilder yui3-widget" id="formBuilderBB">
 			<div class="diagram-builder-content form-builder-content" id="formBuilderCB">
 				<div class="tabbable">
