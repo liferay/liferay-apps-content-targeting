@@ -110,12 +110,18 @@
 		}
 	).render();
 
-
-	saveFields = function() {
+	<@portlet["namespace"] />_saveMetrics = function() {
 		document.<@portlet["namespace"] />fm.<@portlet["namespace"] />reportTrackingActions.value = reportBuilder.exportAsJSON();
 	};
 
 	var form = A.one('#<@portlet["namespace"] />fm');
 
-	form.on('submit', saveFields);
+	Liferay.before(
+		'submitForm',
+		function(data) {
+			if (data.form === form) {
+				<@portlet["namespace"] />_saveMetrics();
+			}
+		}
+	);
 </@>
