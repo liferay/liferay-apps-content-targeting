@@ -39,14 +39,17 @@
 
 			var countValueSpan = document.createElement("span");
 			countValueSpan.style.fontWeight = "bold";
+
 			var metricValueSpan = document.createElement("span");
 			metricValueSpan.style.fontWeight = "bold";
+
 			var segmentValueDiv = document.createElement("div");
 			segmentValueDiv.style.fontWeight = "bold";
 			segmentValueDiv.style.paddingLeft = "10px";
 
 			countValueSpan.appendChild(document.createTextNode(data.count));
 			metricValueSpan.appendChild(document.createTextNode(data.content));
+
 			var segments = data.user_segments.split(",");
 
 			for (var idx in segments) {
