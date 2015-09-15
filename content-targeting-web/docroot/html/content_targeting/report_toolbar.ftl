@@ -30,6 +30,7 @@
 			<#if campaignPermission.contains(permissionChecker, classPK?long, actionKeys.UPDATE) && instantiableExists>
 				<@portlet["renderURL"] var="redirectURL">
 					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
+					<@portlet["param"] name="backURL" value="${redirect}" />
 					<@portlet["param"] name="campaignId" value="${classPK}" />
 					<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 					<@portlet["param"] name="classPK" value="${classPK}" />
@@ -60,6 +61,7 @@
 				<@portlet["renderURL"] var="redirectURL">
 					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
 					<@portlet["param"] name="userSegmentId" value="${classPK}" />
+					<@portlet["param"] name="backURL" value="${redirect}" />
 					<@portlet["param"] name="className" value="${userSegmentClass.getName()}" />
 					<@portlet["param"] name="classPK" value="${classPK}" />
 				</@>

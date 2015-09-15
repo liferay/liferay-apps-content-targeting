@@ -18,6 +18,17 @@
 <#include "../macros.ftl" />
 <#include "../macros_exceptions.ftl" />
 
+<#if !validator.isBlank(backURL)>
+	<#assign redirect=backURL>
+</#if>
+
+<#if validator.isBlank(redirect)>
+	<@portlet["renderURL"] var="redirect">
+		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+		<@portlet["param"] name="tabs1" value="campaigns" />
+	</@>
+</#if>
+
 <@liferay_ui["header"]
 	backURL="${redirect}"
 	title='${(campaign.getName(locale))!"new-campaign"}'

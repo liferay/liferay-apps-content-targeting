@@ -43,6 +43,8 @@
 </#if>
 
 <@portlet["renderURL"] varImpl="viewReportsURL">
+	<@portlet["param"] name="backURL" value="${redirect}" />
+
 	<#if className == campaignClass.getName()>
 		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 		<@portlet["param"] name="campaignId" value="${classPK?string}" />
@@ -82,9 +84,9 @@
 
 					<@portlet["renderURL"] varImpl="viewReportURL">
 						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORT}" />
-						<@portlet["param"] name="backURL" value="${viewReportsURL}" />
 						<@portlet["param"] name="className" value="${className}" />
 						<@portlet["param"] name="classPK" value="${classPK?string}" />
+						<@portlet["param"] name="redirect" value="${viewReportsURL}" />
 						<@portlet["param"] name="reportKey" value="${reportInstance.getReportKey()}" />
 						<@portlet["param"] name="reportInstanceId" value="${reportInstance.getReportInstanceId()?string}" />
 					</@>

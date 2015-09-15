@@ -36,6 +36,7 @@
 		<@aui["input"] name="userSegmentId" type="hidden" value="${classPK}" />
 	</#if>
 
+	<@aui["input"] name="backURL" type="hidden" value="${backURL}" />
 	<@aui["input"] name="className" type="hidden" value="${className}" />
 	<@aui["input"] name="classPK" type="hidden" value="${classPK}" />
 	<@aui["input"] name="reportInstanceId" type="hidden" value="${reportInstanceId}" />
