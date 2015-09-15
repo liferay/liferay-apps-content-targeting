@@ -125,29 +125,41 @@ AUI.add(
 
 							instance._eventHandles = eventHandles;
 
-                            Liferay.after(
-                                'form:registered',
-                                function (data) {
-                                    var formValidator = data.form.formValidator;
+							Liferay.after(
+								'form:registered',
+								function(data) {
+									togglerDelegate.createAll();
 
-                                    if (formValidator) {
-                                        A.Do.after(
-                                            function(){
-                                                for (var errorFieldName in formValidator.errors) {
-                                                    var fieldToggler = A.one('#' + errorFieldName).ancestor('.form-builder-field-content').one('.field-header').getData().toggler;
+									var formValidator = data.form.formValidator;
 
-                                                    if (fieldToggler) {
-                                                        fieldToggler.expand();
-                                                    }
-                                                }
-                                            },
-                                            formValidator,
-                                            'validate'
-                                        );
-                                    }
+									if (formValidator) {
+										A.Do.after(
+											function() {
+												for (var errorFieldName in formValidator.errors) {
+													var fieldToggler = A.one('#' + errorFieldName).ancestor('.form-builder-field-content').one('.field-header').getData().toggler;
 
-                                }
-                            );
+													if (fieldToggler) {
+														fieldToggler.expand();
+													}
+												}
+											},
+											formValidator,
+											'validate'
+										);
+									}
+
+									A.on(
+										'domready',
+										function() {
+											var fieldHeader = A.one('.field-header');
+
+											if (fieldHeader) {
+												fieldHeader.getData().toggler.expand();
+											}
+										}
+									);
+								}
+							);
 						},
 
 						destructor: function() {
