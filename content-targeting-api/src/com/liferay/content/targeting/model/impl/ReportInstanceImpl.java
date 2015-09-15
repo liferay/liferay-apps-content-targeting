@@ -17,6 +17,7 @@ package com.liferay.content.targeting.model.impl;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
@@ -52,6 +53,10 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 
 		if (report == null) {
 			return StringPool.BLANK;
+		}
+
+		if (!report.isInstantiable()) {
+			return LanguageUtil.get(locale, "system-report");
 		}
 
 		return report.getName(locale);
