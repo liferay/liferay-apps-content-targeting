@@ -51,11 +51,12 @@ public class CTActionTotalImpl extends CTActionTotalBaseImpl {
 
 		if (getReferrerClassPK() == 0) {
 			ctActions = _ctActionLocalService.getCTActions(
-				getCampaignId(), getElementId());
+				getReportInstanceId(), getElementId());
 		}
 		else {
 			ctActions = _ctActionLocalService.getCTActions(
-				getCampaignId(), getReferrerClassName(), getReferrerClassPK());
+				getReportInstanceId(), getReferrerClassName(),
+				getReferrerClassPK());
 		}
 
 		return filterUserSegment(ctActions);
