@@ -29,6 +29,7 @@
 
 <@aui["form"] action="${addReportInstanceURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
+	<@aui["input"] name="backURL" type="hidden" value="${backURL}" />
 
 	<#if className == campaignClass.getName()>
 		<@aui["input"] name="campaignId" type="hidden" value="${classPK}" />
