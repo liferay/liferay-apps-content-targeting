@@ -525,6 +525,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			if (saveAndContinue) {
 				String redirect = ParamUtil.get(request, "redirect", "");
+
 				response.setRenderParameter("className", className);
 				response.setRenderParameter("classPK", String.valueOf(classPK));
 				response.setRenderParameter(
