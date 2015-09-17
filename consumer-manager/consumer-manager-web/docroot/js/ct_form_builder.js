@@ -124,6 +124,42 @@ AUI.add(
 							instance.set('fieldsTogglerDelegate', togglerDelegate);
 
 							instance._eventHandles = eventHandles;
+
+							Liferay.after(
+								'form:registered',
+								function(data) {
+									togglerDelegate.createAll();
+
+									var formValidator = data.form.formValidator;
+
+									if (formValidator) {
+										A.Do.after(
+											function() {
+												for (var errorFieldName in formValidator.errors) {
+													var fieldToggler = A.one('#' + errorFieldName).ancestor('.form-builder-field-content').one('.field-header').getData().toggler;
+
+													if (fieldToggler) {
+														fieldToggler.expand();
+													}
+												}
+											},
+											formValidator,
+											'validate'
+										);
+									}
+
+									A.on(
+										'domready',
+										function() {
+											var fieldHeader = A.one('.field-header');
+
+											if (fieldHeader) {
+												fieldHeader.getData().toggler.expand();
+											}
+										}
+									);
+								}
+							);
 						},
 
 						destructor: function() {
@@ -508,20 +544,28 @@ AUI.add(
 
 							var togglerDelegate = instance.get('fieldsTogglerDelegate');
 
+							var fieldId = field.get('fieldId');
+
+							if (!fieldId) {
+								field = A.Widget.getByNode(A.one(field.get('boundingBox').ancestor()));
+							}
+
 							var fieldBox = field.get('contentBox');
 							var fieldEditor = fieldBox.one('.field-editor');
 							var fieldHeader = fieldBox.one('.field-header');
 
+							var assignLastFocus = true;
+
 							if (!fieldEditor || !fieldHeader) {
-								return;
+								assignLastFocus = false;
 							}
 
-							if (onClick && field !== lastFocusedField) {
+							if (assignLastFocus && onClick && field !== lastFocusedField) {
 								if (lastFocusedField) lastFocusedField.blur();
 
 								instance.lastFocusedField = field.focus();
 							}
-							else if (!onClick) {
+							else if (assignLastFocus && !onClick) {
 								var element = fieldEditor.one('input, select, textarea, button');
 
 								if (element !== lastFocusedField) {
@@ -535,6 +579,22 @@ AUI.add(
 
 							if (target.getDOMNode() !== document.activeElement) {
 								target.focus();
+							}
+
+							var lastClickTarget = field.get('lastClickTarget');
+
+							if (lastClickTarget && lastClickTarget !== target) {
+								var id = lastClickTarget.get('id');
+
+								var picker = Liferay.component(id + 'TimePicker') || Liferay.component(id + 'DatePicker');
+
+								if (picker) {
+									picker.getPopover().hide();
+								}
+							}
+
+							if (field && target) {
+								field.set('lastClickTarget', target);
 							}
 						}
 					}
