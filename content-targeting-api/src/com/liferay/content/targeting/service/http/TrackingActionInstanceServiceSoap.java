@@ -62,6 +62,30 @@ import java.rmi.RemoteException;
  * @generated
  */
 public class TrackingActionInstanceServiceSoap {
+	public static com.liferay.content.targeting.model.TrackingActionInstanceSoap addTrackingActionInstance(
+		long userId, long reportInstanceId, java.lang.String trackingActionKey,
+		long campaignId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws RemoteException {
+		try {
+			com.liferay.content.targeting.model.TrackingActionInstance returnValue =
+				TrackingActionInstanceServiceUtil.addTrackingActionInstance(userId,
+					reportInstanceId, trackingActionKey, campaignId, alias,
+					referrerClassName, referrerClassPK, elementId, eventType,
+					typeSettings, serviceContext);
+
+			return com.liferay.content.targeting.model.TrackingActionInstanceSoap.toSoapModel(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	/**
 	* @deprecated As of 2.0.0
 	*/
@@ -78,30 +102,6 @@ public class TrackingActionInstanceServiceSoap {
 					trackingActionKey, campaignId, alias, referrerClassName,
 					referrerClassPK, elementId, eventType, typeSettings,
 					serviceContext);
-
-			return com.liferay.content.targeting.model.TrackingActionInstanceSoap.toSoapModel(returnValue);
-		}
-		catch (Exception e) {
-			_log.error(e, e);
-
-			throw new RemoteException(e.getMessage());
-		}
-	}
-
-	public static com.liferay.content.targeting.model.TrackingActionInstanceSoap addTrackingActionInstance(
-		long userId, long reportInstanceId, java.lang.String trackingActionKey,
-		long campaignId, java.lang.String alias,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType,
-		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws RemoteException {
-		try {
-			com.liferay.content.targeting.model.TrackingActionInstance returnValue =
-				TrackingActionInstanceServiceUtil.addTrackingActionInstance(userId,
-					reportInstanceId, trackingActionKey, campaignId, alias,
-					referrerClassName, referrerClassPK, elementId, eventType,
-					typeSettings, serviceContext);
 
 			return com.liferay.content.targeting.model.TrackingActionInstanceSoap.toSoapModel(returnValue);
 		}

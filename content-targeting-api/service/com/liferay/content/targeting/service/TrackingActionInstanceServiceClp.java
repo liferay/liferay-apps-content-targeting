@@ -36,7 +36,7 @@ public class TrackingActionInstanceServiceClp
 		_methodName3 = "addTrackingActionInstance";
 
 		_methodParameterTypes3 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String",
+				"long", "long", "java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
@@ -45,7 +45,7 @@ public class TrackingActionInstanceServiceClp
 		_methodName4 = "addTrackingActionInstance";
 
 		_methodParameterTypes4 = new String[] {
-				"long", "long", "java.lang.String", "long", "java.lang.String",
+				"long", "java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
@@ -132,10 +132,11 @@ public class TrackingActionInstanceServiceClp
 
 	@Override
 	public com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
-		long userId, java.lang.String trackingActionKey, long campaignId,
-		java.lang.String alias, java.lang.String referrerClassName,
-		long referrerClassPK, java.lang.String elementId,
-		java.lang.String eventType, java.lang.String typeSettings,
+		long userId, long reportInstanceId, java.lang.String trackingActionKey,
+		long campaignId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -146,6 +147,8 @@ public class TrackingActionInstanceServiceClp
 					_methodParameterTypes3,
 					new Object[] {
 						userId,
+						
+					reportInstanceId,
 						
 					ClpSerializer.translateInput(trackingActionKey),
 						
@@ -191,11 +194,10 @@ public class TrackingActionInstanceServiceClp
 
 	@Override
 	public com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
-		long userId, long reportInstanceId, java.lang.String trackingActionKey,
-		long campaignId, java.lang.String alias,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType,
-		java.lang.String typeSettings,
+		long userId, java.lang.String trackingActionKey, long campaignId,
+		java.lang.String alias, java.lang.String referrerClassName,
+		long referrerClassPK, java.lang.String elementId,
+		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
@@ -206,8 +208,6 @@ public class TrackingActionInstanceServiceClp
 					_methodParameterTypes4,
 					new Object[] {
 						userId,
-						
-					reportInstanceId,
 						
 					ClpSerializer.translateInput(trackingActionKey),
 						

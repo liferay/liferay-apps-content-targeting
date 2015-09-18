@@ -133,7 +133,7 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 		_methodName93 = "addTrackingActionInstance";
 
 		_methodParameterTypes93 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String",
+				"long", "long", "java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
@@ -142,7 +142,7 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 		_methodName94 = "addTrackingActionInstance";
 
 		_methodParameterTypes94 = new String[] {
-				"long", "long", "java.lang.String", "long", "java.lang.String",
+				"long", "java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "long", "java.lang.String",
 				"java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
@@ -339,18 +339,6 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 		if (_methodName93.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes93, parameterTypes)) {
 			return TrackingActionInstanceLocalServiceUtil.addTrackingActionInstance(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1],
-				((Long)arguments[2]).longValue(),
-				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
-				((Long)arguments[5]).longValue(),
-				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
-				(java.lang.String)arguments[8],
-				(com.liferay.portal.service.ServiceContext)arguments[9]);
-		}
-
-		if (_methodName94.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes94, parameterTypes)) {
-			return TrackingActionInstanceLocalServiceUtil.addTrackingActionInstance(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2],
 				((Long)arguments[3]).longValue(),
@@ -359,6 +347,18 @@ public class TrackingActionInstanceLocalServiceClpInvoker {
 				(java.lang.String)arguments[7], (java.lang.String)arguments[8],
 				(java.lang.String)arguments[9],
 				(com.liferay.portal.service.ServiceContext)arguments[10]);
+		}
+
+		if (_methodName94.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes94, parameterTypes)) {
+			return TrackingActionInstanceLocalServiceUtil.addTrackingActionInstance(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1],
+				((Long)arguments[2]).longValue(),
+				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
+				((Long)arguments[5]).longValue(),
+				(java.lang.String)arguments[6], (java.lang.String)arguments[7],
+				(java.lang.String)arguments[8],
+				(com.liferay.portal.service.ServiceContext)arguments[9]);
 		}
 
 		if (_methodName95.equals(name) &&

@@ -344,6 +344,21 @@ public class TrackingActionInstanceLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
+		long userId, long reportInstanceId, java.lang.String trackingActionKey,
+		long campaignId, java.lang.String alias,
+		java.lang.String referrerClassName, long referrerClassPK,
+		java.lang.String elementId, java.lang.String eventType,
+		java.lang.String typeSettings,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .addTrackingActionInstance(userId, reportInstanceId,
+			trackingActionKey, campaignId, alias, referrerClassName,
+			referrerClassPK, elementId, eventType, typeSettings, serviceContext);
+	}
+
 	/**
 	* @deprecated As of 2.0.0
 	*/
@@ -359,21 +374,6 @@ public class TrackingActionInstanceLocalServiceUtil {
 				   .addTrackingActionInstance(userId, trackingActionKey,
 			campaignId, alias, referrerClassName, referrerClassPK, elementId,
 			eventType, typeSettings, serviceContext);
-	}
-
-	public static com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
-		long userId, long reportInstanceId, java.lang.String trackingActionKey,
-		long campaignId, java.lang.String alias,
-		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String elementId, java.lang.String eventType,
-		java.lang.String typeSettings,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .addTrackingActionInstance(userId, reportInstanceId,
-			trackingActionKey, campaignId, alias, referrerClassName,
-			referrerClassPK, elementId, eventType, typeSettings, serviceContext);
 	}
 
 	public static com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstance(
