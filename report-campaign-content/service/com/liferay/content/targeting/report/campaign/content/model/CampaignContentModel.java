@@ -196,20 +196,19 @@ public interface CampaignContentModel extends BaseModel<CampaignContent> {
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.report.campaign.content.model.CampaignContent campaignContent);
+	public int compareTo(CampaignContent campaignContent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.content.targeting.report.campaign.content.model.CampaignContent> toCacheModel();
+	public CacheModel<CampaignContent> toCacheModel();
 
 	@Override
-	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent toEscapedModel();
+	public CampaignContent toEscapedModel();
 
 	@Override
-	public com.liferay.content.targeting.report.campaign.content.model.CampaignContent toUnescapedModel();
+	public CampaignContent toUnescapedModel();
 
 	@Override
 	public String toString();

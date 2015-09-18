@@ -264,105 +264,105 @@ public class UserSegmentLocalServiceClpInvoker {
 
 		_methodParameterTypes51 = new String[] { "long", "long[][]" };
 
-		_methodName118 = "getBeanIdentifier";
+		_methodName136 = "getBeanIdentifier";
 
-		_methodParameterTypes118 = new String[] {  };
+		_methodParameterTypes136 = new String[] {  };
 
-		_methodName119 = "setBeanIdentifier";
+		_methodName137 = "setBeanIdentifier";
 
-		_methodParameterTypes119 = new String[] { "java.lang.String" };
+		_methodParameterTypes137 = new String[] { "java.lang.String" };
 
-		_methodName124 = "addUserSegment";
+		_methodName142 = "addUserSegment";
 
-		_methodParameterTypes124 = new String[] {
+		_methodParameterTypes142 = new String[] {
 				"long", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName125 = "addUserSegmentResources";
+		_methodName143 = "addUserSegmentResources";
 
-		_methodParameterTypes125 = new String[] {
+		_methodParameterTypes143 = new String[] {
 				"com.liferay.content.targeting.model.UserSegment", "boolean",
 				"boolean"
 			};
 
-		_methodName126 = "addUserSegmentResources";
+		_methodName144 = "addUserSegmentResources";
 
-		_methodParameterTypes126 = new String[] {
+		_methodParameterTypes144 = new String[] {
 				"com.liferay.content.targeting.model.UserSegment",
 				"java.lang.String[][]", "java.lang.String[][]"
 			};
 
-		_methodName127 = "deleteUserSegment";
+		_methodName145 = "deleteUserSegment";
 
-		_methodParameterTypes127 = new String[] { "long" };
+		_methodParameterTypes145 = new String[] { "long" };
 
-		_methodName128 = "deleteUserSegment";
+		_methodName146 = "deleteUserSegment";
 
-		_methodParameterTypes128 = new String[] {
+		_methodParameterTypes146 = new String[] {
 				"com.liferay.content.targeting.model.UserSegment"
 			};
 
-		_methodName129 = "deleteUserSegments";
+		_methodName147 = "deleteUserSegments";
 
-		_methodParameterTypes129 = new String[] { "long" };
+		_methodParameterTypes147 = new String[] { "long" };
 
-		_methodName130 = "fetchUserSegmentByAssetCategoryId";
+		_methodName148 = "fetchUserSegmentByAssetCategoryId";
 
-		_methodParameterTypes130 = new String[] { "long" };
+		_methodParameterTypes148 = new String[] { "long" };
 
-		_methodName131 = "getUserSegments";
+		_methodName149 = "getUserSegments";
 
-		_methodParameterTypes131 = new String[] { "long" };
+		_methodParameterTypes149 = new String[] { "long" };
 
-		_methodName132 = "getUserSegments";
+		_methodName150 = "getUserSegments";
 
-		_methodParameterTypes132 = new String[] {
+		_methodParameterTypes150 = new String[] {
 				"long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName133 = "getUserSegments";
+		_methodName151 = "getUserSegments";
 
-		_methodParameterTypes133 = new String[] { "long[][]" };
+		_methodParameterTypes151 = new String[] { "long[][]" };
 
-		_methodName134 = "getUserSegments";
+		_methodName152 = "getUserSegments";
 
-		_methodParameterTypes134 = new String[] {
+		_methodParameterTypes152 = new String[] {
 				"long[][]", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName135 = "getUserSegmentsCount";
+		_methodName153 = "getUserSegmentsCount";
 
-		_methodParameterTypes135 = new String[] { "long" };
+		_methodParameterTypes153 = new String[] { "long" };
 
-		_methodName136 = "getUserSegmentsCount";
+		_methodName154 = "getUserSegmentsCount";
 
-		_methodParameterTypes136 = new String[] { "long[][]" };
+		_methodParameterTypes154 = new String[] { "long[][]" };
 
-		_methodName137 = "search";
+		_methodName155 = "search";
 
-		_methodParameterTypes137 = new String[] {
+		_methodParameterTypes155 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName138 = "searchUserSegments";
+		_methodName156 = "searchUserSegments";
 
-		_methodParameterTypes138 = new String[] {
+		_methodParameterTypes156 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName139 = "updateUserSegment";
+		_methodName157 = "updateUserSegment";
 
-		_methodParameterTypes139 = new String[] {
+		_methodParameterTypes157 = new String[] {
 				"long", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName140 = "updateUserSegmentResources";
+		_methodName158 = "updateUserSegmentResources";
 
-		_methodParameterTypes140 = new String[] {
+		_methodParameterTypes158 = new String[] {
 				"com.liferay.content.targeting.model.UserSegment",
 				"java.lang.String[][]", "java.lang.String[][]"
 			};
@@ -711,28 +711,28 @@ public class UserSegmentLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName118.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+		if (_methodName136.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName119.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
+		if (_methodName137.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
 			UserSegmentLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName142.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes142, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.addUserSegment(((Long)arguments[0]).longValue(),
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName143.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes143, parameterTypes)) {
 			UserSegmentLocalServiceUtil.addUserSegmentResources((com.liferay.content.targeting.model.UserSegment)arguments[0],
 				((Boolean)arguments[1]).booleanValue(),
 				((Boolean)arguments[2]).booleanValue());
@@ -740,8 +740,8 @@ public class UserSegmentLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName144.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes144, parameterTypes)) {
 			UserSegmentLocalServiceUtil.addUserSegmentResources((com.liferay.content.targeting.model.UserSegment)arguments[0],
 				(java.lang.String[])arguments[1],
 				(java.lang.String[])arguments[2]);
@@ -749,90 +749,90 @@ public class UserSegmentLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+		if (_methodName145.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes145, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.deleteUserSegment(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName128.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
+		if (_methodName146.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes146, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.deleteUserSegment((com.liferay.content.targeting.model.UserSegment)arguments[0]);
 		}
 
-		if (_methodName129.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
+		if (_methodName147.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes147, parameterTypes)) {
 			UserSegmentLocalServiceUtil.deleteUserSegments(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
-		if (_methodName130.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
+		if (_methodName148.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes148, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.fetchUserSegmentByAssetCategoryId(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName131.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
+		if (_methodName149.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes149, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.getUserSegments(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName132.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
+		if (_methodName150.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes150, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.getUserSegments(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
-		if (_methodName133.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
+		if (_methodName151.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes151, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.getUserSegments((long[])arguments[0]);
 		}
 
-		if (_methodName134.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes134, parameterTypes)) {
+		if (_methodName152.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes152, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.getUserSegments((long[])arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
-		if (_methodName135.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes135, parameterTypes)) {
+		if (_methodName153.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes153, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.getUserSegmentsCount(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName136.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes136, parameterTypes)) {
+		if (_methodName154.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes154, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.getUserSegmentsCount((long[])arguments[0]);
 		}
 
-		if (_methodName137.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes137, parameterTypes)) {
+		if (_methodName155.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes155, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.search(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName138.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes138, parameterTypes)) {
+		if (_methodName156.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes156, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.searchUserSegments(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName139.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes139, parameterTypes)) {
+		if (_methodName157.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes157, parameterTypes)) {
 			return UserSegmentLocalServiceUtil.updateUserSegment(((Long)arguments[0]).longValue(),
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName140.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes140, parameterTypes)) {
+		if (_methodName158.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes158, parameterTypes)) {
 			UserSegmentLocalServiceUtil.updateUserSegmentResources((com.liferay.content.targeting.model.UserSegment)arguments[0],
 				(java.lang.String[])arguments[1],
 				(java.lang.String[])arguments[2]);
@@ -947,42 +947,42 @@ public class UserSegmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes50;
 	private String _methodName51;
 	private String[] _methodParameterTypes51;
-	private String _methodName118;
-	private String[] _methodParameterTypes118;
-	private String _methodName119;
-	private String[] _methodParameterTypes119;
-	private String _methodName124;
-	private String[] _methodParameterTypes124;
-	private String _methodName125;
-	private String[] _methodParameterTypes125;
-	private String _methodName126;
-	private String[] _methodParameterTypes126;
-	private String _methodName127;
-	private String[] _methodParameterTypes127;
-	private String _methodName128;
-	private String[] _methodParameterTypes128;
-	private String _methodName129;
-	private String[] _methodParameterTypes129;
-	private String _methodName130;
-	private String[] _methodParameterTypes130;
-	private String _methodName131;
-	private String[] _methodParameterTypes131;
-	private String _methodName132;
-	private String[] _methodParameterTypes132;
-	private String _methodName133;
-	private String[] _methodParameterTypes133;
-	private String _methodName134;
-	private String[] _methodParameterTypes134;
-	private String _methodName135;
-	private String[] _methodParameterTypes135;
 	private String _methodName136;
 	private String[] _methodParameterTypes136;
 	private String _methodName137;
 	private String[] _methodParameterTypes137;
-	private String _methodName138;
-	private String[] _methodParameterTypes138;
-	private String _methodName139;
-	private String[] _methodParameterTypes139;
-	private String _methodName140;
-	private String[] _methodParameterTypes140;
+	private String _methodName142;
+	private String[] _methodParameterTypes142;
+	private String _methodName143;
+	private String[] _methodParameterTypes143;
+	private String _methodName144;
+	private String[] _methodParameterTypes144;
+	private String _methodName145;
+	private String[] _methodParameterTypes145;
+	private String _methodName146;
+	private String[] _methodParameterTypes146;
+	private String _methodName147;
+	private String[] _methodParameterTypes147;
+	private String _methodName148;
+	private String[] _methodParameterTypes148;
+	private String _methodName149;
+	private String[] _methodParameterTypes149;
+	private String _methodName150;
+	private String[] _methodParameterTypes150;
+	private String _methodName151;
+	private String[] _methodParameterTypes151;
+	private String _methodName152;
+	private String[] _methodParameterTypes152;
+	private String _methodName153;
+	private String[] _methodParameterTypes153;
+	private String _methodName154;
+	private String[] _methodParameterTypes154;
+	private String _methodName155;
+	private String[] _methodParameterTypes155;
+	private String _methodName156;
+	private String[] _methodParameterTypes156;
+	private String _methodName157;
+	private String[] _methodParameterTypes157;
+	private String _methodName158;
+	private String[] _methodParameterTypes158;
 }

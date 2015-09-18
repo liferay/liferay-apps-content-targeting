@@ -240,20 +240,19 @@ public interface CTActionTotalModel extends BaseModel<CTActionTotal> {
 	public Object clone();
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal ctActionTotal);
+	public int compareTo(CTActionTotal ctActionTotal);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal> toCacheModel();
+	public CacheModel<CTActionTotal> toCacheModel();
 
 	@Override
-	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal toEscapedModel();
+	public CTActionTotal toEscapedModel();
 
 	@Override
-	public com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal toUnescapedModel();
+	public CTActionTotal toUnescapedModel();
 
 	@Override
 	public String toString();

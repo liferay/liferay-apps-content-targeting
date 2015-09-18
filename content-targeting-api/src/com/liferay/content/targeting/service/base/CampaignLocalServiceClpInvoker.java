@@ -193,127 +193,127 @@ public class CampaignLocalServiceClpInvoker {
 
 		_methodParameterTypes35 = new String[] { "long", "long[][]" };
 
-		_methodName102 = "getBeanIdentifier";
+		_methodName108 = "getBeanIdentifier";
 
-		_methodParameterTypes102 = new String[] {  };
+		_methodParameterTypes108 = new String[] {  };
 
-		_methodName103 = "setBeanIdentifier";
+		_methodName109 = "setBeanIdentifier";
 
-		_methodParameterTypes103 = new String[] { "java.lang.String" };
+		_methodParameterTypes109 = new String[] { "java.lang.String" };
 
-		_methodName108 = "addCampaign";
+		_methodName114 = "addCampaign";
 
-		_methodParameterTypes108 = new String[] {
+		_methodParameterTypes114 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
 				"java.util.Date", "int", "boolean", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName109 = "addCampaign";
+		_methodName115 = "addCampaign";
 
-		_methodParameterTypes109 = new String[] {
+		_methodParameterTypes115 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
 				"java.util.Date", "java.lang.String", "int", "boolean",
 				"long[][]", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName110 = "addCampaignResources";
+		_methodName116 = "addCampaignResources";
 
-		_methodParameterTypes110 = new String[] {
+		_methodParameterTypes116 = new String[] {
 				"com.liferay.content.targeting.model.Campaign", "boolean",
 				"boolean"
 			};
 
-		_methodName111 = "addCampaignResources";
+		_methodName117 = "addCampaignResources";
 
-		_methodParameterTypes111 = new String[] {
+		_methodParameterTypes117 = new String[] {
 				"com.liferay.content.targeting.model.Campaign",
 				"java.lang.String[][]", "java.lang.String[][]"
 			};
 
-		_methodName112 = "deleteCampaign";
+		_methodName118 = "deleteCampaign";
 
-		_methodParameterTypes112 = new String[] {
+		_methodParameterTypes118 = new String[] {
 				"com.liferay.content.targeting.model.Campaign"
 			};
 
-		_methodName113 = "deleteCampaign";
+		_methodName119 = "deleteCampaign";
 
-		_methodParameterTypes113 = new String[] { "long" };
+		_methodParameterTypes119 = new String[] { "long" };
 
-		_methodName114 = "deleteCampaigns";
+		_methodName120 = "deleteCampaigns";
 
-		_methodParameterTypes114 = new String[] { "long" };
+		_methodParameterTypes120 = new String[] { "long" };
 
-		_methodName115 = "fetchCurrentMaxPriorityCampaign";
+		_methodName121 = "fetchCurrentMaxPriorityCampaign";
 
-		_methodParameterTypes115 = new String[] { "long[][]", "long[][]" };
+		_methodParameterTypes121 = new String[] { "long[][]", "long[][]" };
 
-		_methodName116 = "getCampaigns";
+		_methodName122 = "getCampaigns";
 
-		_methodParameterTypes116 = new String[] { "long" };
+		_methodParameterTypes122 = new String[] { "long" };
 
-		_methodName117 = "getCampaigns";
+		_methodName123 = "getCampaigns";
 
-		_methodParameterTypes117 = new String[] {
+		_methodParameterTypes123 = new String[] {
 				"long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName118 = "getCampaigns";
+		_methodName124 = "getCampaigns";
 
-		_methodParameterTypes118 = new String[] { "long[][]" };
+		_methodParameterTypes124 = new String[] { "long[][]" };
 
-		_methodName119 = "getCampaigns";
+		_methodName125 = "getCampaigns";
 
-		_methodParameterTypes119 = new String[] {
+		_methodParameterTypes125 = new String[] {
 				"long[][]", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName120 = "getCampaigns";
+		_methodName126 = "getCampaigns";
 
-		_methodParameterTypes120 = new String[] { "long[][]", "long[][]" };
+		_methodParameterTypes126 = new String[] { "long[][]", "long[][]" };
 
-		_methodName121 = "getCampaignsCount";
+		_methodName127 = "getCampaignsCount";
 
-		_methodParameterTypes121 = new String[] { "long" };
+		_methodParameterTypes127 = new String[] { "long" };
 
-		_methodName122 = "getCampaignsCount";
+		_methodName128 = "getCampaignsCount";
 
-		_methodParameterTypes122 = new String[] { "long[][]" };
+		_methodParameterTypes128 = new String[] { "long[][]" };
 
-		_methodName123 = "search";
+		_methodName129 = "search";
 
-		_methodParameterTypes123 = new String[] {
+		_methodParameterTypes129 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName124 = "searchCampaigns";
+		_methodName130 = "searchCampaigns";
 
-		_methodParameterTypes124 = new String[] {
+		_methodParameterTypes130 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName125 = "updateCampaign";
+		_methodName131 = "updateCampaign";
 
-		_methodParameterTypes125 = new String[] {
+		_methodParameterTypes131 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
 				"java.util.Date", "int", "boolean", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName126 = "updateCampaign";
+		_methodName132 = "updateCampaign";
 
-		_methodParameterTypes126 = new String[] {
+		_methodParameterTypes132 = new String[] {
 				"long", "java.util.Map", "java.util.Map", "java.util.Date",
 				"java.util.Date", "java.lang.String", "int", "boolean",
 				"long[][]", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName127 = "updateCampaignResources";
+		_methodName133 = "updateCampaignResources";
 
-		_methodParameterTypes127 = new String[] {
+		_methodParameterTypes133 = new String[] {
 				"com.liferay.content.targeting.model.Campaign",
 				"java.lang.String[][]", "java.lang.String[][]"
 			};
@@ -547,20 +547,20 @@ public class CampaignLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName102.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
+		if (_methodName108.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
 			return CampaignLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName103.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
+		if (_methodName109.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
 			CampaignLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName108.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes108, parameterTypes)) {
+		if (_methodName114.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
 			return CampaignLocalServiceUtil.addCampaign(((Long)arguments[0]).longValue(),
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -570,8 +570,8 @@ public class CampaignLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[8]);
 		}
 
-		if (_methodName109.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes109, parameterTypes)) {
+		if (_methodName115.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
 			return CampaignLocalServiceUtil.addCampaign(((Long)arguments[0]).longValue(),
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -582,8 +582,8 @@ public class CampaignLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[9]);
 		}
 
-		if (_methodName110.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes110, parameterTypes)) {
+		if (_methodName116.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
 			CampaignLocalServiceUtil.addCampaignResources((com.liferay.content.targeting.model.Campaign)arguments[0],
 				((Boolean)arguments[1]).booleanValue(),
 				((Boolean)arguments[2]).booleanValue());
@@ -591,8 +591,8 @@ public class CampaignLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName111.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes111, parameterTypes)) {
+		if (_methodName117.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
 			CampaignLocalServiceUtil.addCampaignResources((com.liferay.content.targeting.model.Campaign)arguments[0],
 				(java.lang.String[])arguments[1],
 				(java.lang.String[])arguments[2]);
@@ -600,89 +600,89 @@ public class CampaignLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName112.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes112, parameterTypes)) {
+		if (_methodName118.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
 			return CampaignLocalServiceUtil.deleteCampaign((com.liferay.content.targeting.model.Campaign)arguments[0]);
 		}
 
-		if (_methodName113.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes113, parameterTypes)) {
+		if (_methodName119.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
 			return CampaignLocalServiceUtil.deleteCampaign(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName114.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes114, parameterTypes)) {
+		if (_methodName120.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
 			CampaignLocalServiceUtil.deleteCampaigns(((Long)arguments[0]).longValue());
 
 			return null;
 		}
 
-		if (_methodName115.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes115, parameterTypes)) {
+		if (_methodName121.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
 			return CampaignLocalServiceUtil.fetchCurrentMaxPriorityCampaign((long[])arguments[0],
 				(long[])arguments[1]);
 		}
 
-		if (_methodName116.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes116, parameterTypes)) {
+		if (_methodName122.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
 			return CampaignLocalServiceUtil.getCampaigns(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName117.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
+		if (_methodName123.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
 			return CampaignLocalServiceUtil.getCampaigns(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
-		if (_methodName118.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
+		if (_methodName124.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
 			return CampaignLocalServiceUtil.getCampaigns((long[])arguments[0]);
 		}
 
-		if (_methodName119.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
+		if (_methodName125.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
 			return CampaignLocalServiceUtil.getCampaigns((long[])arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
-		if (_methodName120.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes120, parameterTypes)) {
+		if (_methodName126.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
 			return CampaignLocalServiceUtil.getCampaigns((long[])arguments[0],
 				(long[])arguments[1]);
 		}
 
-		if (_methodName121.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes121, parameterTypes)) {
+		if (_methodName127.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
 			return CampaignLocalServiceUtil.getCampaignsCount(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName122.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes122, parameterTypes)) {
+		if (_methodName128.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes128, parameterTypes)) {
 			return CampaignLocalServiceUtil.getCampaignsCount((long[])arguments[0]);
 		}
 
-		if (_methodName123.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes123, parameterTypes)) {
+		if (_methodName129.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes129, parameterTypes)) {
 			return CampaignLocalServiceUtil.search(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName124.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes124, parameterTypes)) {
+		if (_methodName130.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes130, parameterTypes)) {
 			return CampaignLocalServiceUtil.searchCampaigns(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName125.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes125, parameterTypes)) {
+		if (_methodName131.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes131, parameterTypes)) {
 			return CampaignLocalServiceUtil.updateCampaign(((Long)arguments[0]).longValue(),
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -692,8 +692,8 @@ public class CampaignLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[8]);
 		}
 
-		if (_methodName126.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes126, parameterTypes)) {
+		if (_methodName132.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes132, parameterTypes)) {
 			return CampaignLocalServiceUtil.updateCampaign(((Long)arguments[0]).longValue(),
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -704,8 +704,8 @@ public class CampaignLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[9]);
 		}
 
-		if (_methodName127.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes127, parameterTypes)) {
+		if (_methodName133.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes133, parameterTypes)) {
 			CampaignLocalServiceUtil.updateCampaignResources((com.liferay.content.targeting.model.Campaign)arguments[0],
 				(java.lang.String[])arguments[1],
 				(java.lang.String[])arguments[2]);
@@ -788,22 +788,10 @@ public class CampaignLocalServiceClpInvoker {
 	private String[] _methodParameterTypes34;
 	private String _methodName35;
 	private String[] _methodParameterTypes35;
-	private String _methodName102;
-	private String[] _methodParameterTypes102;
-	private String _methodName103;
-	private String[] _methodParameterTypes103;
 	private String _methodName108;
 	private String[] _methodParameterTypes108;
 	private String _methodName109;
 	private String[] _methodParameterTypes109;
-	private String _methodName110;
-	private String[] _methodParameterTypes110;
-	private String _methodName111;
-	private String[] _methodParameterTypes111;
-	private String _methodName112;
-	private String[] _methodParameterTypes112;
-	private String _methodName113;
-	private String[] _methodParameterTypes113;
 	private String _methodName114;
 	private String[] _methodParameterTypes114;
 	private String _methodName115;
@@ -832,4 +820,16 @@ public class CampaignLocalServiceClpInvoker {
 	private String[] _methodParameterTypes126;
 	private String _methodName127;
 	private String[] _methodParameterTypes127;
+	private String _methodName128;
+	private String[] _methodParameterTypes128;
+	private String _methodName129;
+	private String[] _methodParameterTypes129;
+	private String _methodName130;
+	private String[] _methodParameterTypes130;
+	private String _methodName131;
+	private String[] _methodParameterTypes131;
+	private String _methodName132;
+	private String[] _methodParameterTypes132;
+	private String _methodName133;
+	private String[] _methodParameterTypes133;
 }
