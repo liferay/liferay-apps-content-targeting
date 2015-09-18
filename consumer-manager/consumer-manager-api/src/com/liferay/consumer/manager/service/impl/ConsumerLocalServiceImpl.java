@@ -18,7 +18,6 @@ import com.liferay.consumer.manager.model.Consumer;
 import com.liferay.consumer.manager.model.ConsumerExtensionInstance;
 import com.liferay.consumer.manager.service.base.ConsumerLocalServiceBaseImpl;
 import com.liferay.consumer.manager.util.BaseModelSearchResult;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
@@ -35,7 +34,6 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,13 +64,13 @@ public class ConsumerLocalServiceImpl extends ConsumerLocalServiceBaseImpl {
 			Map<Locale, String> nameMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
-
-		Date now = new Date();
-
-		long consumerId = CounterLocalServiceUtil.increment();
+		long consumerId = counterLocalService.increment();
 
 		Consumer consumer = consumerPersistence.create(consumerId);
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+
+		Date now = new Date();
 
 		consumer.setUuid(serviceContext.getUuid());
 		consumer.setCompanyId(user.getCompanyId());
@@ -80,7 +78,6 @@ public class ConsumerLocalServiceImpl extends ConsumerLocalServiceBaseImpl {
 		consumer.setUserName(user.getFullName());
 		consumer.setCreateDate(serviceContext.getCreateDate(now));
 		consumer.setModifiedDate(serviceContext.getModifiedDate(now));
-
 		consumer.setConsumerKey(consumerKey);
 		consumer.setNameMap(nameMap);
 		consumer.setDescriptionMap(descriptionMap);

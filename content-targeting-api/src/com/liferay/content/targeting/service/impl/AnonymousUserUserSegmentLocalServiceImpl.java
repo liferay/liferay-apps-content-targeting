@@ -15,13 +15,12 @@
 package com.liferay.content.targeting.service.impl;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
-import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil;
+import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.content.targeting.model.AnonymousUserUserSegment;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.service.base.AnonymousUserUserSegmentLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.PortletPropsValues;
-import com.liferay.counter.service.CounterLocalServiceUtil;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -33,6 +32,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * The implementation of the anonymous user user segment local service.
@@ -51,13 +53,20 @@ import java.util.List;
 public class AnonymousUserUserSegmentLocalServiceImpl
 	extends AnonymousUserUserSegmentLocalServiceBaseImpl {
 
+	public AnonymousUserUserSegmentLocalServiceImpl() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_anonymousUserLocalService = ServiceTrackerUtil.getService(
+			AnonymousUserLocalService.class, bundle.getBundleContext());
+	}
+
 	@Override
 	public AnonymousUserUserSegment addAnonymousUserUserSegment(
 			long anonymousUserId, long userSegmentId, boolean manual,
 			boolean active, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		long anonymousUserUserSegmentId = CounterLocalServiceUtil.increment();
+		long anonymousUserUserSegmentId = counterLocalService.increment();
 
 		Date now = new Date();
 
@@ -116,7 +125,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 		throws PortalException, SystemException {
 
 		return getAnonymousUsersByUserSegmentIdsCount(
-			new long[]{ userSegmentId }, active);
+				new long[]{userSegmentId}, active);
 	}
 
 	@Override
@@ -134,7 +143,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 				: anonymousUserUserSegments) {
 
 			AnonymousUser anonymousUser =
-				AnonymousUserLocalServiceUtil.getAnonymousUser(
+				_anonymousUserLocalService.getAnonymousUser(
 					anonymousUserUserSegment.getAnonymousUserId());
 
 			anonymousUsers.add(anonymousUser);
@@ -189,7 +198,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 				: anonymousUserUserSegments) {
 
 			UserSegment userSegment =
-				UserSegmentLocalServiceUtil.getUserSegment(
+				userSegmentLocalService.getUserSegment(
 					anonymousUserUserSegment.getUserSegmentId());
 
 			userSegments.add(userSegment);
@@ -252,5 +261,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 				anonymousUserUserSegment);
 		}
 	}
+
+	private AnonymousUserLocalService _anonymousUserLocalService;
 
 }

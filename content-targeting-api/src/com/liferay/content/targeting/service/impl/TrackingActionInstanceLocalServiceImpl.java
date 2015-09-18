@@ -19,7 +19,6 @@ import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.base.TrackingActionInstanceLocalServiceBaseImpl;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -74,11 +72,11 @@ public class TrackingActionInstanceLocalServiceImpl
 
 		validate(0, campaignId, alias);
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		Date now = new Date();
 
-		long trackingActionInstanceId = CounterLocalServiceUtil.increment();
+		long trackingActionInstanceId = counterLocalService.increment();
 
 		TrackingActionInstance trackingActionInstance =
 			trackingActionInstancePersistence.create(trackingActionInstanceId);

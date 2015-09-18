@@ -21,7 +21,6 @@ import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAct
 import com.liferay.content.targeting.report.campaign.tracking.action.service.base.CTActionTotalLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -84,7 +83,7 @@ public class CTActionTotalLocalServiceImpl
 			_reportInstanceLocalService.fetchReportInstance(reportInstanceId);
 
 		if (ctActionTotal == null) {
-			long ctActionTotalId = CounterLocalServiceUtil.increment();
+			long ctActionTotalId = counterLocalService.increment();
 
 			ctActionTotal = ctActionTotalPersistence.create(ctActionTotalId);
 

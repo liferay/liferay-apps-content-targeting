@@ -20,11 +20,9 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.TrackingActionInstance;
-import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.content.targeting.service.base.CampaignLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.content.targeting.util.CampaignUtil;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
@@ -42,9 +40,7 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -90,7 +86,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 			long[] userSegmentIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		Date now = new Date();
 
@@ -98,7 +94,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 			timeZoneId = user.getTimeZone().getID();
 		}
 
-		long campaignId = CounterLocalServiceUtil.increment();
+		long campaignId = counterLocalService.increment();
 
 		Campaign campaign = campaignPersistence.create(campaignId);
 
@@ -213,12 +209,12 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 		// Tactics
 
-		List<Tactic> tactics = TacticLocalServiceUtil.getResults(
-			campaign.getCampaignId(), 0, TacticLocalServiceUtil.getTotal(
+		List<Tactic> tactics = tacticLocalService.getResults(
+			campaign.getCampaignId(), 0, tacticLocalService.getTotal(
 				campaign.getCampaignId()));
 
 		for (Tactic tactic : tactics) {
-			TacticLocalServiceUtil.deleteTactic(tactic.getTacticId());
+			tacticLocalService.deleteTactic(tactic.getTacticId());
 		}
 
 		return campaign;
@@ -411,7 +407,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 		SearchContext searchContext = new SearchContext();
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = groupLocalService.getGroup(groupId);
 
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setEnd(end);

@@ -16,11 +16,9 @@ package com.liferay.content.targeting.service.impl;
 
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
-import com.liferay.content.targeting.service.ChannelInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.base.TacticLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.content.targeting.util.TacticUtil;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Hits;
@@ -32,9 +30,7 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -64,11 +60,11 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		Date now = new Date();
 
-		long tacticId = CounterLocalServiceUtil.increment();
+		long tacticId = counterLocalService.increment();
 
 		Tactic tactic = tacticPersistence.create(tacticId);
 
@@ -99,9 +95,9 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 		throws PortalException, SystemException {
 
 		for (ChannelInstance channelInstance
-			: ChannelInstanceLocalServiceUtil.getChannelInstances(tacticId)) {
+			: channelInstanceLocalService.getChannelInstances(tacticId)) {
 
-			ChannelInstanceLocalServiceUtil.deleteChannelInstance(
+			channelInstanceLocalService.deleteChannelInstance(
 				channelInstance.getChannelInstanceId());
 		}
 
@@ -179,7 +175,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 		SearchContext searchContext = new SearchContext();
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = groupLocalService.getGroup(groupId);
 
 		searchContext.setAttribute("campaignId", campaignId);
 		searchContext.setCompanyId(group.getCompanyId());
@@ -197,7 +193,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 		SearchContext searchContext = new SearchContext();
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = groupLocalService.getGroup(groupId);
 
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setEnd(end);

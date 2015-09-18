@@ -20,14 +20,12 @@ import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.service.base.ReportInstanceLocalServiceBaseImpl;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -72,11 +70,11 @@ public class ReportInstanceLocalServiceImpl
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		long groupId = serviceContext.getScopeGroupId();
 
-		long reportInstanceId = CounterLocalServiceUtil.increment();
+		long reportInstanceId = counterLocalService.increment();
 
 		ReportInstance reportInstance = reportInstancePersistence.create(
 			reportInstanceId);

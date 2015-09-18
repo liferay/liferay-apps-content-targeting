@@ -25,7 +25,6 @@ import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.UserSegmentUtil;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -46,15 +45,11 @@ import com.liferay.portal.model.Group;
 import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
-import com.liferay.portal.service.GroupLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.asset.DuplicateCategoryException;
 import com.liferay.portlet.asset.NoSuchCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
-import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
-import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -86,11 +81,11 @@ public class UserSegmentLocalServiceImpl
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		Date now = new Date();
 
-		long userSegmentId = CounterLocalServiceUtil.increment();
+		long userSegmentId = counterLocalService.increment();
 
 		UserSegment userSegment = userSegmentPersistence.create(userSegmentId);
 
@@ -105,7 +100,7 @@ public class UserSegmentLocalServiceImpl
 			serviceContext.getAttribute("userSegmentAssetCategoryId"));
 
 		if (assetCategoryId > 0) {
-			assetCategory = AssetCategoryLocalServiceUtil.getAssetCategory(
+			assetCategory = assetCategoryLocalService.getAssetCategory(
 				assetCategoryId);
 		}
 		else {
@@ -250,8 +245,7 @@ public class UserSegmentLocalServiceImpl
 
 		// Categories
 
-		Group group = GroupLocalServiceUtil.fetchGroup(
-			userSegment.getGroupId());
+		Group group = groupLocalService.fetchGroup(userSegment.getGroupId());
 
 		AssetCategory stagingAssetCategory = getStagingAssetCategory(
 			group, userSegment.getAssetCategoryId());
@@ -432,7 +426,7 @@ public class UserSegmentLocalServiceImpl
 		AssetCategory assetCategory = null;
 
 		try {
-			assetCategory = AssetCategoryLocalServiceUtil.addCategory(
+			assetCategory = assetCategoryLocalService.addCategory(
 				userId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				titleMap, descriptionMap, vocabularyId, null, serviceContext);
 		}
@@ -449,7 +443,7 @@ public class UserSegmentLocalServiceImpl
 
 		SearchContext searchContext = new SearchContext();
 
-		Group group = GroupLocalServiceUtil.getGroup(groupId);
+		Group group = groupLocalService.getGroup(groupId);
 
 		searchContext.setCompanyId(group.getCompanyId());
 
@@ -472,9 +466,9 @@ public class UserSegmentLocalServiceImpl
 		Group stagingGroup = scopeGroup.getStagingGroup();
 
 		AssetCategory assetCategory =
-			AssetCategoryLocalServiceUtil.fetchAssetCategory(assetCategoryId);
+			assetCategoryLocalService.fetchAssetCategory(assetCategoryId);
 
-		return AssetCategoryLocalServiceUtil.fetchAssetCategoryByUuidAndGroupId(
+		return assetCategoryLocalService.fetchAssetCategoryByUuidAndGroupId(
 			assetCategory.getUuid(), stagingGroup.getGroupId());
 	}
 
@@ -482,10 +476,10 @@ public class UserSegmentLocalServiceImpl
 		throws PortalException, SystemException {
 
 		AssetCategory assetCategory =
-			AssetCategoryLocalServiceUtil.fetchAssetCategory(assetCategoryId);
+			assetCategoryLocalService.fetchAssetCategory(assetCategoryId);
 
 		try {
-			AssetCategoryLocalServiceUtil.deleteCategory(assetCategory);
+			assetCategoryLocalService.deleteCategory(assetCategory);
 		}
 		catch (NoSuchCategoryException nsace) {
 			if (_log.isDebugEnabled()) {
@@ -495,14 +489,14 @@ public class UserSegmentLocalServiceImpl
 		}
 
 		int categoriesCount =
-			AssetCategoryLocalServiceUtil.getVocabularyRootCategoriesCount(
+			assetCategoryLocalService.getVocabularyRootCategoriesCount(
 				assetCategory.getVocabularyId());
 
 		if (categoriesCount > 0) {
 			return;
 		}
 
-		AssetVocabularyLocalServiceUtil.deleteAssetVocabulary(
+		assetVocabularyLocalService.deleteAssetVocabulary(
 			assetCategory.getVocabularyId());
 	}
 
@@ -537,10 +531,10 @@ public class UserSegmentLocalServiceImpl
 		long vocabularyId = UserSegmentUtil.getAssetVocabularyId(
 			userId, serviceContext);
 
-		AssetCategory assetCategory = AssetCategoryLocalServiceUtil.getCategory(
+		AssetCategory assetCategory = assetCategoryLocalService.getCategory(
 			assetCategoryId);
 
-		AssetCategoryLocalServiceUtil.updateCategory(
+		assetCategoryLocalService.updateCategory(
 			userId, assetCategoryId, assetCategory.getParentCategoryId(),
 			titleMap, descriptionMap, vocabularyId, null, serviceContext);
 

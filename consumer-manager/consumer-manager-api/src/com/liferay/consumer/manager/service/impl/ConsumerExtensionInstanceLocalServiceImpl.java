@@ -16,12 +16,10 @@ package com.liferay.consumer.manager.service.impl;
 
 import com.liferay.consumer.manager.model.ConsumerExtensionInstance;
 import com.liferay.consumer.manager.service.base.ConsumerExtensionInstanceLocalServiceBaseImpl;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -49,15 +47,15 @@ public class ConsumerExtensionInstanceLocalServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		User user = UserLocalServiceUtil.getUser(serviceContext.getUserId());
-
-		Date now = new Date();
-
-		long consumerExtensionInstanceId = CounterLocalServiceUtil.increment();
+		long consumerExtensionInstanceId = counterLocalService.increment();
 
 		ConsumerExtensionInstance consumerExtensionInstance =
 			consumerExtensionInstancePersistence.create(
 				consumerExtensionInstanceId);
+
+		User user = userLocalService.getUser(serviceContext.getUserId());
+
+		Date now = new Date();
 
 		consumerExtensionInstance.setUuid(serviceContext.getUuid());
 		consumerExtensionInstance.setCompanyId(user.getCompanyId());
@@ -67,7 +65,6 @@ public class ConsumerExtensionInstanceLocalServiceImpl
 			serviceContext.getCreateDate(now));
 		consumerExtensionInstance.setModifiedDate(
 			serviceContext.getModifiedDate(now));
-
 		consumerExtensionInstance.setConsumerExtensionKey(consumerExtensionKey);
 		consumerExtensionInstance.setConsumerId(consumerId);
 		consumerExtensionInstance.setTypeSettings(typeSettings);

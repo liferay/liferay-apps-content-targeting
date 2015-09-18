@@ -18,7 +18,6 @@ import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 import com.liferay.content.targeting.analytics.service.base.AnalyticsEventLocalServiceBaseImpl;
 import com.liferay.content.targeting.analytics.util.PortletPropsValues;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -29,7 +28,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.service.persistence.CompanyActionableDynamicQuery;
 
 import java.util.Calendar;
@@ -111,14 +109,14 @@ public class AnalyticsEventLocalServiceImpl
 			String additionalInfo, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		long analyticsEventId = CounterLocalServiceUtil.increment();
+		long analyticsEventId = counterLocalService.increment();
 
 		AnalyticsEvent analyticsEvent = analyticsEventPersistence.create(
 			analyticsEventId);
 
 		analyticsEvent.setCompanyId(serviceContext.getCompanyId());
 
-		User user = UserLocalServiceUtil.fetchUser(userId);
+		User user = userLocalService.fetchUser(userId);
 
 		if (user != null) {
 			analyticsEvent.setUserId(user.getUserId());

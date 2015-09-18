@@ -23,7 +23,6 @@ import com.liferay.content.targeting.report.user.segment.content.model.UserSegme
 import com.liferay.content.targeting.report.user.segment.content.service.base.UserSegmentContentLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -72,7 +71,7 @@ public class UserSegmentContentLocalServiceImpl
 			userSegmentId, className, classPK, eventType);
 
 		if (userSegmentContent == null) {
-			long userSegmentContentId = CounterLocalServiceUtil.increment();
+			long userSegmentContentId = counterLocalService.increment();
 
 			userSegmentContent = userSegmentContentPersistence.create(
 				userSegmentContentId);

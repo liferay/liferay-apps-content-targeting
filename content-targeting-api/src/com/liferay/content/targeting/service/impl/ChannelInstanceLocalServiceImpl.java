@@ -19,7 +19,6 @@ import com.liferay.content.targeting.api.model.Channel;
 import com.liferay.content.targeting.api.model.ChannelsRegistry;
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.service.base.ChannelInstanceLocalServiceBaseImpl;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -32,7 +31,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -72,11 +70,11 @@ public class ChannelInstanceLocalServiceImpl
 
 		validate(0, tacticId, alias);
 
-		User user = UserLocalServiceUtil.getUser(userId);
+		User user = userLocalService.getUser(userId);
 
 		Date now = new Date();
 
-		long channelInstanceId = CounterLocalServiceUtil.increment();
+		long channelInstanceId = counterLocalService.increment();
 
 		ChannelInstance channelInstance = channelInstancePersistence.create(
 			channelInstanceId);

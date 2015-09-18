@@ -21,7 +21,6 @@ import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAct
 import com.liferay.content.targeting.report.campaign.tracking.action.service.base.CTActionLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -85,7 +84,7 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 			_reportInstanceLocalService.fetchReportInstance(reportInstanceId);
 
 		if (ctAction == null) {
-			long ctActionId = CounterLocalServiceUtil.increment();
+			long ctActionId = counterLocalService.increment();
 
 			ctAction = ctActionPersistence.create(ctActionId);
 

@@ -97,6 +97,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<entity name="ChannelInstance" uuid="true" local-service="true" remote-service="true">
@@ -281,6 +282,7 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<entity name="TrackingActionInstance" uuid="true" local-service="true" remote-service="true">
@@ -411,6 +413,9 @@
 
 		<!-- References -->
 
+		<reference package-path="com.liferay.portlet.asset" entity="AssetCategory" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetVocabulary" />
+		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<exceptions>

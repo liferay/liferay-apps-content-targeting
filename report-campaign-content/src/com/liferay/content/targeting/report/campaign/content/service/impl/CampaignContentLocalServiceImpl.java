@@ -23,7 +23,6 @@ import com.liferay.content.targeting.report.campaign.content.model.CampaignConte
 import com.liferay.content.targeting.report.campaign.content.service.base.CampaignContentLocalServiceBaseImpl;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
-import com.liferay.counter.service.CounterLocalServiceUtil;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -72,7 +71,7 @@ public class CampaignContentLocalServiceImpl
 			campaignId, className, classPK, eventType);
 
 		if (campaignContent == null) {
-			long campaignContentId = CounterLocalServiceUtil.increment();
+			long campaignContentId = counterLocalService.increment();
 
 			campaignContent = campaignContentPersistence.create(
 				campaignContentId);
