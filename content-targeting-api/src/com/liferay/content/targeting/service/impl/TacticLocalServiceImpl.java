@@ -118,6 +118,12 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 		return TacticUtil.getTactics(campaignId, start, end);
 	}
 
+	public List<Tactic> getTactics(long campaignId)
+		throws PortalException, SystemException {
+
+		return tacticPersistence.findByCampaignId(campaignId);
+	}
+
 	public int getTotal(long campaignId)
 		throws PortalException, SystemException {
 
