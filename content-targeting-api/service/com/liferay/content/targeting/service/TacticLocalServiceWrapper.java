@@ -524,6 +524,14 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _tacticLocalService.getTactics(campaignId);
+	}
+
+	@Override
 	public int getTotal(long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

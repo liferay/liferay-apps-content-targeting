@@ -70,6 +70,14 @@ public class TacticServiceWrapper implements TacticService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _tacticService.getTactics(campaignId);
+	}
+
+	@Override
 	public com.liferay.content.targeting.model.Tactic updateTactic(
 		long tacticId, long campaignId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,

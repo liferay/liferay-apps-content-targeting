@@ -1463,6 +1463,546 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	private static final String _FINDER_COLUMN_UUID_C_UUID_2 = "channelInstance.uuid = ? AND ";
 	private static final String _FINDER_COLUMN_UUID_C_UUID_3 = "(channelInstance.uuid IS NULL OR channelInstance.uuid = '') AND ";
 	private static final String _FINDER_COLUMN_UUID_C_COMPANYID_2 = "channelInstance.companyId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CHANNELKEY =
+		new FinderPath(ChannelInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			ChannelInstanceModelImpl.FINDER_CACHE_ENABLED,
+			ChannelInstanceImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByChannelKey",
+			new String[] {
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHANNELKEY =
+		new FinderPath(ChannelInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			ChannelInstanceModelImpl.FINDER_CACHE_ENABLED,
+			ChannelInstanceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByChannelKey",
+			new String[] { String.class.getName() },
+			ChannelInstanceModelImpl.CHANNELKEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_CHANNELKEY = new FinderPath(ChannelInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			ChannelInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByChannelKey",
+			new String[] { String.class.getName() });
+
+	/**
+	 * Returns all the channel instances where channelKey = &#63;.
+	 *
+	 * @param channelKey the channel key
+	 * @return the matching channel instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ChannelInstance> findByChannelKey(String channelKey)
+		throws SystemException {
+		return findByChannelKey(channelKey, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the channel instances where channelKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param channelKey the channel key
+	 * @param start the lower bound of the range of channel instances
+	 * @param end the upper bound of the range of channel instances (not inclusive)
+	 * @return the range of matching channel instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ChannelInstance> findByChannelKey(String channelKey, int start,
+		int end) throws SystemException {
+		return findByChannelKey(channelKey, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the channel instances where channelKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param channelKey the channel key
+	 * @param start the lower bound of the range of channel instances
+	 * @param end the upper bound of the range of channel instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching channel instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ChannelInstance> findByChannelKey(String channelKey, int start,
+		int end, OrderByComparator orderByComparator) throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHANNELKEY;
+			finderArgs = new Object[] { channelKey };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CHANNELKEY;
+			finderArgs = new Object[] { channelKey, start, end, orderByComparator };
+		}
+
+		List<ChannelInstance> list = (List<ChannelInstance>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (ChannelInstance channelInstance : list) {
+				if (!Validator.equals(channelKey,
+							channelInstance.getChannelKey())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_CHANNELINSTANCE_WHERE);
+
+			boolean bindChannelKey = false;
+
+			if (channelKey == null) {
+				query.append(_FINDER_COLUMN_CHANNELKEY_CHANNELKEY_1);
+			}
+			else if (channelKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_CHANNELKEY_CHANNELKEY_3);
+			}
+			else {
+				bindChannelKey = true;
+
+				query.append(_FINDER_COLUMN_CHANNELKEY_CHANNELKEY_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(ChannelInstanceModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindChannelKey) {
+					qPos.add(channelKey);
+				}
+
+				if (!pagination) {
+					list = (List<ChannelInstance>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<ChannelInstance>(list);
+				}
+				else {
+					list = (List<ChannelInstance>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first channel instance in the ordered set where channelKey = &#63;.
+	 *
+	 * @param channelKey the channel key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching channel instance
+	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance findByChannelKey_First(String channelKey,
+		OrderByComparator orderByComparator)
+		throws NoSuchChannelInstanceException, SystemException {
+		ChannelInstance channelInstance = fetchByChannelKey_First(channelKey,
+				orderByComparator);
+
+		if (channelInstance != null) {
+			return channelInstance;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("channelKey=");
+		msg.append(channelKey);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchChannelInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the first channel instance in the ordered set where channelKey = &#63;.
+	 *
+	 * @param channelKey the channel key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching channel instance, or <code>null</code> if a matching channel instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance fetchByChannelKey_First(String channelKey,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<ChannelInstance> list = findByChannelKey(channelKey, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last channel instance in the ordered set where channelKey = &#63;.
+	 *
+	 * @param channelKey the channel key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching channel instance
+	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance findByChannelKey_Last(String channelKey,
+		OrderByComparator orderByComparator)
+		throws NoSuchChannelInstanceException, SystemException {
+		ChannelInstance channelInstance = fetchByChannelKey_Last(channelKey,
+				orderByComparator);
+
+		if (channelInstance != null) {
+			return channelInstance;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("channelKey=");
+		msg.append(channelKey);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchChannelInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the last channel instance in the ordered set where channelKey = &#63;.
+	 *
+	 * @param channelKey the channel key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching channel instance, or <code>null</code> if a matching channel instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance fetchByChannelKey_Last(String channelKey,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByChannelKey(channelKey);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ChannelInstance> list = findByChannelKey(channelKey, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the channel instances before and after the current channel instance in the ordered set where channelKey = &#63;.
+	 *
+	 * @param channelInstanceId the primary key of the current channel instance
+	 * @param channelKey the channel key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next channel instance
+	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance[] findByChannelKey_PrevAndNext(
+		long channelInstanceId, String channelKey,
+		OrderByComparator orderByComparator)
+		throws NoSuchChannelInstanceException, SystemException {
+		ChannelInstance channelInstance = findByPrimaryKey(channelInstanceId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ChannelInstance[] array = new ChannelInstanceImpl[3];
+
+			array[0] = getByChannelKey_PrevAndNext(session, channelInstance,
+					channelKey, orderByComparator, true);
+
+			array[1] = channelInstance;
+
+			array[2] = getByChannelKey_PrevAndNext(session, channelInstance,
+					channelKey, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ChannelInstance getByChannelKey_PrevAndNext(Session session,
+		ChannelInstance channelInstance, String channelKey,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CHANNELINSTANCE_WHERE);
+
+		boolean bindChannelKey = false;
+
+		if (channelKey == null) {
+			query.append(_FINDER_COLUMN_CHANNELKEY_CHANNELKEY_1);
+		}
+		else if (channelKey.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_CHANNELKEY_CHANNELKEY_3);
+		}
+		else {
+			bindChannelKey = true;
+
+			query.append(_FINDER_COLUMN_CHANNELKEY_CHANNELKEY_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ChannelInstanceModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		if (bindChannelKey) {
+			qPos.add(channelKey);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(channelInstance);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<ChannelInstance> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the channel instances where channelKey = &#63; from the database.
+	 *
+	 * @param channelKey the channel key
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByChannelKey(String channelKey) throws SystemException {
+		for (ChannelInstance channelInstance : findByChannelKey(channelKey,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(channelInstance);
+		}
+	}
+
+	/**
+	 * Returns the number of channel instances where channelKey = &#63;.
+	 *
+	 * @param channelKey the channel key
+	 * @return the number of matching channel instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByChannelKey(String channelKey) throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_CHANNELKEY;
+
+		Object[] finderArgs = new Object[] { channelKey };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_CHANNELINSTANCE_WHERE);
+
+			boolean bindChannelKey = false;
+
+			if (channelKey == null) {
+				query.append(_FINDER_COLUMN_CHANNELKEY_CHANNELKEY_1);
+			}
+			else if (channelKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_CHANNELKEY_CHANNELKEY_3);
+			}
+			else {
+				bindChannelKey = true;
+
+				query.append(_FINDER_COLUMN_CHANNELKEY_CHANNELKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				if (bindChannelKey) {
+					qPos.add(channelKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_CHANNELKEY_CHANNELKEY_1 = "channelInstance.channelKey IS NULL";
+	private static final String _FINDER_COLUMN_CHANNELKEY_CHANNELKEY_2 = "channelInstance.channelKey = ?";
+	private static final String _FINDER_COLUMN_CHANNELKEY_CHANNELKEY_3 = "(channelInstance.channelKey IS NULL OR channelInstance.channelKey = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_GROUPID = new FinderPath(ChannelInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			ChannelInstanceModelImpl.FINDER_CACHE_ENABLED,
 			ChannelInstanceImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
@@ -3210,6 +3750,581 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	private static final String _FINDER_COLUMN_T_A_ALIAS_1 = "channelInstance.alias IS NULL";
 	private static final String _FINDER_COLUMN_T_A_ALIAS_2 = "channelInstance.alias = ?";
 	private static final String _FINDER_COLUMN_T_A_ALIAS_3 = "(channelInstance.alias IS NULL OR channelInstance.alias = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_T_K = new FinderPath(ChannelInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			ChannelInstanceModelImpl.FINDER_CACHE_ENABLED,
+			ChannelInstanceImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByT_K",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_K = new FinderPath(ChannelInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			ChannelInstanceModelImpl.FINDER_CACHE_ENABLED,
+			ChannelInstanceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByT_K",
+			new String[] { Long.class.getName(), String.class.getName() },
+			ChannelInstanceModelImpl.TACTICID_COLUMN_BITMASK |
+			ChannelInstanceModelImpl.CHANNELKEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_T_K = new FinderPath(ChannelInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			ChannelInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByT_K",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns all the channel instances where tacticId = &#63; and channelKey = &#63;.
+	 *
+	 * @param tacticId the tactic ID
+	 * @param channelKey the channel key
+	 * @return the matching channel instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ChannelInstance> findByT_K(long tacticId, String channelKey)
+		throws SystemException {
+		return findByT_K(tacticId, channelKey, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the channel instances where tacticId = &#63; and channelKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param tacticId the tactic ID
+	 * @param channelKey the channel key
+	 * @param start the lower bound of the range of channel instances
+	 * @param end the upper bound of the range of channel instances (not inclusive)
+	 * @return the range of matching channel instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ChannelInstance> findByT_K(long tacticId, String channelKey,
+		int start, int end) throws SystemException {
+		return findByT_K(tacticId, channelKey, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the channel instances where tacticId = &#63; and channelKey = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param tacticId the tactic ID
+	 * @param channelKey the channel key
+	 * @param start the lower bound of the range of channel instances
+	 * @param end the upper bound of the range of channel instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching channel instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<ChannelInstance> findByT_K(long tacticId, String channelKey,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_K;
+			finderArgs = new Object[] { tacticId, channelKey };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_T_K;
+			finderArgs = new Object[] {
+					tacticId, channelKey,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<ChannelInstance> list = (List<ChannelInstance>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (ChannelInstance channelInstance : list) {
+				if ((tacticId != channelInstance.getTacticId()) ||
+						!Validator.equals(channelKey,
+							channelInstance.getChannelKey())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_CHANNELINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_T_K_TACTICID_2);
+
+			boolean bindChannelKey = false;
+
+			if (channelKey == null) {
+				query.append(_FINDER_COLUMN_T_K_CHANNELKEY_1);
+			}
+			else if (channelKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_T_K_CHANNELKEY_3);
+			}
+			else {
+				bindChannelKey = true;
+
+				query.append(_FINDER_COLUMN_T_K_CHANNELKEY_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(ChannelInstanceModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(tacticId);
+
+				if (bindChannelKey) {
+					qPos.add(channelKey);
+				}
+
+				if (!pagination) {
+					list = (List<ChannelInstance>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<ChannelInstance>(list);
+				}
+				else {
+					list = (List<ChannelInstance>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first channel instance in the ordered set where tacticId = &#63; and channelKey = &#63;.
+	 *
+	 * @param tacticId the tactic ID
+	 * @param channelKey the channel key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching channel instance
+	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance findByT_K_First(long tacticId, String channelKey,
+		OrderByComparator orderByComparator)
+		throws NoSuchChannelInstanceException, SystemException {
+		ChannelInstance channelInstance = fetchByT_K_First(tacticId,
+				channelKey, orderByComparator);
+
+		if (channelInstance != null) {
+			return channelInstance;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("tacticId=");
+		msg.append(tacticId);
+
+		msg.append(", channelKey=");
+		msg.append(channelKey);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchChannelInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the first channel instance in the ordered set where tacticId = &#63; and channelKey = &#63;.
+	 *
+	 * @param tacticId the tactic ID
+	 * @param channelKey the channel key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching channel instance, or <code>null</code> if a matching channel instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance fetchByT_K_First(long tacticId, String channelKey,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<ChannelInstance> list = findByT_K(tacticId, channelKey, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last channel instance in the ordered set where tacticId = &#63; and channelKey = &#63;.
+	 *
+	 * @param tacticId the tactic ID
+	 * @param channelKey the channel key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching channel instance
+	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance findByT_K_Last(long tacticId, String channelKey,
+		OrderByComparator orderByComparator)
+		throws NoSuchChannelInstanceException, SystemException {
+		ChannelInstance channelInstance = fetchByT_K_Last(tacticId, channelKey,
+				orderByComparator);
+
+		if (channelInstance != null) {
+			return channelInstance;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("tacticId=");
+		msg.append(tacticId);
+
+		msg.append(", channelKey=");
+		msg.append(channelKey);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchChannelInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the last channel instance in the ordered set where tacticId = &#63; and channelKey = &#63;.
+	 *
+	 * @param tacticId the tactic ID
+	 * @param channelKey the channel key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching channel instance, or <code>null</code> if a matching channel instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance fetchByT_K_Last(long tacticId, String channelKey,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByT_K(tacticId, channelKey);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<ChannelInstance> list = findByT_K(tacticId, channelKey, count - 1,
+				count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the channel instances before and after the current channel instance in the ordered set where tacticId = &#63; and channelKey = &#63;.
+	 *
+	 * @param channelInstanceId the primary key of the current channel instance
+	 * @param tacticId the tactic ID
+	 * @param channelKey the channel key
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next channel instance
+	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ChannelInstance[] findByT_K_PrevAndNext(long channelInstanceId,
+		long tacticId, String channelKey, OrderByComparator orderByComparator)
+		throws NoSuchChannelInstanceException, SystemException {
+		ChannelInstance channelInstance = findByPrimaryKey(channelInstanceId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			ChannelInstance[] array = new ChannelInstanceImpl[3];
+
+			array[0] = getByT_K_PrevAndNext(session, channelInstance, tacticId,
+					channelKey, orderByComparator, true);
+
+			array[1] = channelInstance;
+
+			array[2] = getByT_K_PrevAndNext(session, channelInstance, tacticId,
+					channelKey, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected ChannelInstance getByT_K_PrevAndNext(Session session,
+		ChannelInstance channelInstance, long tacticId, String channelKey,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_CHANNELINSTANCE_WHERE);
+
+		query.append(_FINDER_COLUMN_T_K_TACTICID_2);
+
+		boolean bindChannelKey = false;
+
+		if (channelKey == null) {
+			query.append(_FINDER_COLUMN_T_K_CHANNELKEY_1);
+		}
+		else if (channelKey.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_T_K_CHANNELKEY_3);
+		}
+		else {
+			bindChannelKey = true;
+
+			query.append(_FINDER_COLUMN_T_K_CHANNELKEY_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(ChannelInstanceModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(tacticId);
+
+		if (bindChannelKey) {
+			qPos.add(channelKey);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(channelInstance);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<ChannelInstance> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the channel instances where tacticId = &#63; and channelKey = &#63; from the database.
+	 *
+	 * @param tacticId the tactic ID
+	 * @param channelKey the channel key
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByT_K(long tacticId, String channelKey)
+		throws SystemException {
+		for (ChannelInstance channelInstance : findByT_K(tacticId, channelKey,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(channelInstance);
+		}
+	}
+
+	/**
+	 * Returns the number of channel instances where tacticId = &#63; and channelKey = &#63;.
+	 *
+	 * @param tacticId the tactic ID
+	 * @param channelKey the channel key
+	 * @return the number of matching channel instances
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByT_K(long tacticId, String channelKey)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_T_K;
+
+		Object[] finderArgs = new Object[] { tacticId, channelKey };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_CHANNELINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_T_K_TACTICID_2);
+
+			boolean bindChannelKey = false;
+
+			if (channelKey == null) {
+				query.append(_FINDER_COLUMN_T_K_CHANNELKEY_1);
+			}
+			else if (channelKey.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_T_K_CHANNELKEY_3);
+			}
+			else {
+				bindChannelKey = true;
+
+				query.append(_FINDER_COLUMN_T_K_CHANNELKEY_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(tacticId);
+
+				if (bindChannelKey) {
+					qPos.add(channelKey);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_T_K_TACTICID_2 = "channelInstance.tacticId = ? AND ";
+	private static final String _FINDER_COLUMN_T_K_CHANNELKEY_1 = "channelInstance.channelKey IS NULL";
+	private static final String _FINDER_COLUMN_T_K_CHANNELKEY_2 = "channelInstance.channelKey = ?";
+	private static final String _FINDER_COLUMN_T_K_CHANNELKEY_3 = "(channelInstance.channelKey IS NULL OR channelInstance.channelKey = '')";
 
 	public ChannelInstancePersistenceImpl() {
 		setModelClass(ChannelInstance.class);
@@ -3590,6 +4705,25 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 			}
 
 			if ((channelInstanceModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHANNELKEY.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						channelInstanceModelImpl.getOriginalChannelKey()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CHANNELKEY,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHANNELKEY,
+					args);
+
+				args = new Object[] { channelInstanceModelImpl.getChannelKey() };
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CHANNELKEY,
+					args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CHANNELKEY,
+					args);
+			}
+
+			if ((channelInstanceModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_GROUPID.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						channelInstanceModelImpl.getOriginalGroupId()
@@ -3639,6 +4773,27 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_TACTICID, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_TACTICID,
+					args);
+			}
+
+			if ((channelInstanceModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_K.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						channelInstanceModelImpl.getOriginalTacticId(),
+						channelInstanceModelImpl.getOriginalChannelKey()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_K, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_K,
+					args);
+
+				args = new Object[] {
+						channelInstanceModelImpl.getTacticId(),
+						channelInstanceModelImpl.getChannelKey()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_T_K, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_T_K,
 					args);
 			}
 		}
