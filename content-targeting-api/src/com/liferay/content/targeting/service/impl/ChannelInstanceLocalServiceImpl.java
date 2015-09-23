@@ -152,7 +152,7 @@ public class ChannelInstanceLocalServiceImpl
 
 	@Override
 	public List<ChannelInstance> getChannelInstances(
-		long tacticId, String channelKey)
+			long tacticId, String channelKey)
 		throws PortalException, SystemException {
 
 		if (tacticId > 0) {
