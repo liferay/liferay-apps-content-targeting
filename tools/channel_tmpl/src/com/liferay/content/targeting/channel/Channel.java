@@ -55,6 +55,14 @@ public class @channel.java.class.name@Channel extends BaseChannel {
 	}
 
 	@Override
+	public String processChannel(
+		PortletRequest request, PortletResponse response, String id,
+		Map<String, String> values) throws InvalidChannelException {
+
+		return StringPool.BLANK;
+	}
+
+	@Override
 	protected void populateContext(
 		ChannelInstance channelInstance, Map<String, Object> context,
 		Map<String, String> values) {

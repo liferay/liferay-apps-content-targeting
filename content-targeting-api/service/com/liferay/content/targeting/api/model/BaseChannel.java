@@ -156,7 +156,7 @@ public abstract class BaseChannel implements Channel {
 		PortletRequest request, PortletResponse response, String id,
 		Map<String, String> values) throws InvalidChannelException {
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	@Override
