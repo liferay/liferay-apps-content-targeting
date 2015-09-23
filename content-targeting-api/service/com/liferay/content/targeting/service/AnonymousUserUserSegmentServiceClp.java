@@ -78,9 +78,17 @@ public class AnonymousUserUserSegmentServiceClp
 				"long", "boolean", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName10 = "updateAnonymousUserUserSegment";
+		_methodName10 = "getUserSegmentsByUserId";
 
-		_methodParameterTypes10 = new String[] {
+		_methodParameterTypes10 = new String[] { "long", "boolean" };
+
+		_methodName11 = "getUserSegmentsByUserIdCount";
+
+		_methodParameterTypes11 = new String[] { "long", "boolean" };
+
+		_methodName12 = "updateAnonymousUserUserSegment";
+
+		_methodParameterTypes12 = new String[] {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -431,6 +439,73 @@ public class AnonymousUserUserSegmentServiceClp
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUserId(
+		long userId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName10,
+					_methodParameterTypes10, new Object[] { userId, active });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.content.targeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int getUserSegmentsByUserIdCount(long userId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName11,
+					_methodParameterTypes11, new Object[] { userId, active });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
 	public com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -439,8 +514,8 @@ public class AnonymousUserUserSegmentServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName10,
-					_methodParameterTypes10,
+			returnObj = _invokableService.invokeMethod(_methodName12,
+					_methodParameterTypes12,
 					new Object[] {
 						anonymousUserUserSegmentId,
 						
@@ -491,4 +566,8 @@ public class AnonymousUserUserSegmentServiceClp
 	private String[] _methodParameterTypes9;
 	private String _methodName10;
 	private String[] _methodParameterTypes10;
+	private String _methodName11;
+	private String[] _methodParameterTypes11;
+	private String _methodName12;
+	private String[] _methodParameterTypes12;
 }

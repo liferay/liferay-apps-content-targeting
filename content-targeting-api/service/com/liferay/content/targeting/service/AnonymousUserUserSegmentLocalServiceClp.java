@@ -159,15 +159,23 @@ public class AnonymousUserUserSegmentLocalServiceClp
 
 		_methodParameterTypes28 = new String[] { "long", "boolean" };
 
-		_methodName29 = "updateAnonymousUserUserSegment";
+		_methodName29 = "getUserSegmentsByUserId";
 
-		_methodParameterTypes29 = new String[] {
+		_methodParameterTypes29 = new String[] { "long", "boolean" };
+
+		_methodName30 = "getUserSegmentsByUserIdCount";
+
+		_methodParameterTypes30 = new String[] { "long", "boolean" };
+
+		_methodName31 = "updateAnonymousUserUserSegment";
+
+		_methodParameterTypes31 = new String[] {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName30 = "updateAnonymousUserUserSegments";
+		_methodName32 = "updateAnonymousUserUserSegments";
 
-		_methodParameterTypes30 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes32 = new String[] { "long", "java.util.Date" };
 	}
 
 	@Override
@@ -1092,6 +1100,73 @@ public class AnonymousUserUserSegmentLocalServiceClp
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUserId(
+		long userId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29, new Object[] { userId, active });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.content.targeting.model.UserSegment>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int getUserSegmentsByUserIdCount(long userId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30, new Object[] { userId, active });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
 	public com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId,
 		com.liferay.portal.service.ServiceContext serviceContext)
@@ -1100,8 +1175,8 @@ public class AnonymousUserUserSegmentLocalServiceClp
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						anonymousUserUserSegmentId,
 						
@@ -1137,8 +1212,8 @@ public class AnonymousUserUserSegmentLocalServiceClp
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		try {
-			_invokableLocalService.invokeMethod(_methodName30,
-				_methodParameterTypes30,
+			_invokableLocalService.invokeMethod(_methodName32,
+				_methodParameterTypes32,
 				new Object[] {
 					companyId,
 					
@@ -1227,4 +1302,8 @@ public class AnonymousUserUserSegmentLocalServiceClp
 	private String[] _methodParameterTypes29;
 	private String _methodName30;
 	private String[] _methodParameterTypes30;
+	private String _methodName31;
+	private String[] _methodParameterTypes31;
+	private String _methodName32;
+	private String[] _methodParameterTypes32;
 }

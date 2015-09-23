@@ -157,15 +157,23 @@ public class AnonymousUserUserSegmentLocalServiceClpInvoker {
 
 		_methodParameterTypes98 = new String[] { "long", "boolean" };
 
-		_methodName99 = "updateAnonymousUserUserSegment";
+		_methodName99 = "getUserSegmentsByUserId";
 
-		_methodParameterTypes99 = new String[] {
+		_methodParameterTypes99 = new String[] { "long", "boolean" };
+
+		_methodName100 = "getUserSegmentsByUserIdCount";
+
+		_methodParameterTypes100 = new String[] { "long", "boolean" };
+
+		_methodName101 = "updateAnonymousUserUserSegment";
+
+		_methodParameterTypes101 = new String[] {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName100 = "updateAnonymousUserUserSegments";
+		_methodName102 = "updateAnonymousUserUserSegments";
 
-		_methodParameterTypes100 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes102 = new String[] { "long", "java.util.Date" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -334,12 +342,24 @@ public class AnonymousUserUserSegmentLocalServiceClpInvoker {
 
 		if (_methodName99.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes99, parameterTypes)) {
-			return AnonymousUserUserSegmentLocalServiceUtil.updateAnonymousUserUserSegment(((Long)arguments[0]).longValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[1]);
+			return AnonymousUserUserSegmentLocalServiceUtil.getUserSegmentsByUserId(((Long)arguments[0]).longValue(),
+				((Boolean)arguments[1]).booleanValue());
 		}
 
 		if (_methodName100.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
+			return AnonymousUserUserSegmentLocalServiceUtil.getUserSegmentsByUserIdCount(((Long)arguments[0]).longValue(),
+				((Boolean)arguments[1]).booleanValue());
+		}
+
+		if (_methodName101.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
+			return AnonymousUserUserSegmentLocalServiceUtil.updateAnonymousUserUserSegment(((Long)arguments[0]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
+		}
+
+		if (_methodName102.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
 			AnonymousUserUserSegmentLocalServiceUtil.updateAnonymousUserUserSegments(((Long)arguments[0]).longValue(),
 				(java.util.Date)arguments[1]);
 
@@ -409,4 +429,8 @@ public class AnonymousUserUserSegmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes99;
 	private String _methodName100;
 	private String[] _methodParameterTypes100;
+	private String _methodName101;
+	private String[] _methodParameterTypes101;
+	private String _methodName102;
+	private String[] _methodParameterTypes102;
 }

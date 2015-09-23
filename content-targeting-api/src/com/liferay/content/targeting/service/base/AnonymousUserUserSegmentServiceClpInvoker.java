@@ -77,9 +77,17 @@ public class AnonymousUserUserSegmentServiceClpInvoker {
 				"long", "boolean", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName79 = "updateAnonymousUserUserSegment";
+		_methodName79 = "getUserSegmentsByUserId";
 
-		_methodParameterTypes79 = new String[] {
+		_methodParameterTypes79 = new String[] { "long", "boolean" };
+
+		_methodName80 = "getUserSegmentsByUserIdCount";
+
+		_methodParameterTypes80 = new String[] { "long", "boolean" };
+
+		_methodName81 = "updateAnonymousUserUserSegment";
+
+		_methodParameterTypes81 = new String[] {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -151,6 +159,18 @@ public class AnonymousUserUserSegmentServiceClpInvoker {
 
 		if (_methodName79.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes79, parameterTypes)) {
+			return AnonymousUserUserSegmentServiceUtil.getUserSegmentsByUserId(((Long)arguments[0]).longValue(),
+				((Boolean)arguments[1]).booleanValue());
+		}
+
+		if (_methodName80.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes80, parameterTypes)) {
+			return AnonymousUserUserSegmentServiceUtil.getUserSegmentsByUserIdCount(((Long)arguments[0]).longValue(),
+				((Boolean)arguments[1]).booleanValue());
+		}
+
+		if (_methodName81.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes81, parameterTypes)) {
 			return AnonymousUserUserSegmentServiceUtil.updateAnonymousUserUserSegment(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
@@ -178,4 +198,8 @@ public class AnonymousUserUserSegmentServiceClpInvoker {
 	private String[] _methodParameterTypes78;
 	private String _methodName79;
 	private String[] _methodParameterTypes79;
+	private String _methodName80;
+	private String[] _methodParameterTypes80;
+	private String _methodName81;
+	private String[] _methodParameterTypes81;
 }

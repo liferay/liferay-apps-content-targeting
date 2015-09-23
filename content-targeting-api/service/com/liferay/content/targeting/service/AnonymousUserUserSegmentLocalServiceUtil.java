@@ -361,6 +361,19 @@ public class AnonymousUserUserSegmentLocalServiceUtil {
 			active);
 	}
 
+	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUserId(
+		long userId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSegmentsByUserId(userId, active);
+	}
+
+	public static int getUserSegmentsByUserIdCount(long userId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getUserSegmentsByUserIdCount(userId, active);
+	}
+
 	public static com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId,
 		com.liferay.portal.service.ServiceContext serviceContext)

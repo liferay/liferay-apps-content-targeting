@@ -127,6 +127,23 @@ public class AnonymousUserUserSegmentServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUserId(
+		long userId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _anonymousUserUserSegmentService.getUserSegmentsByUserId(userId,
+			active);
+	}
+
+	@Override
+	public int getUserSegmentsByUserIdCount(long userId, boolean active)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _anonymousUserUserSegmentService.getUserSegmentsByUserIdCount(userId,
+			active);
+	}
+
+	@Override
 	public com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId,
 		com.liferay.portal.service.ServiceContext serviceContext)

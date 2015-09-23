@@ -185,6 +185,37 @@ public class AnonymousUserUserSegmentServiceSoap {
 		}
 	}
 
+	public static com.liferay.content.targeting.model.UserSegmentSoap[] getUserSegmentsByUserId(
+		long userId, boolean active) throws RemoteException {
+		try {
+			java.util.List<com.liferay.content.targeting.model.UserSegment> returnValue =
+				AnonymousUserUserSegmentServiceUtil.getUserSegmentsByUserId(userId,
+					active);
+
+			return com.liferay.content.targeting.model.UserSegmentSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
+	public static int getUserSegmentsByUserIdCount(long userId, boolean active)
+		throws RemoteException {
+		try {
+			int returnValue = AnonymousUserUserSegmentServiceUtil.getUserSegmentsByUserIdCount(userId,
+					active);
+
+			return returnValue;
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.content.targeting.model.AnonymousUserUserSegmentSoap updateAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId,
 		com.liferay.portal.service.ServiceContext serviceContext)
