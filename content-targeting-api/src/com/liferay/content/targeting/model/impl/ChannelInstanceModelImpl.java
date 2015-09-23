@@ -99,11 +99,11 @@ public class ChannelInstanceModelImpl extends BaseModelImpl<ChannelInstance>
 			true);
 	public static long ALIAS_COLUMN_BITMASK = 1L;
 	public static long CAMPAIGNID_COLUMN_BITMASK = 2L;
-	public static long COMPANYID_COLUMN_BITMASK = 4L;
-	public static long GROUPID_COLUMN_BITMASK = 8L;
-	public static long TACTICID_COLUMN_BITMASK = 16L;
-	public static long UUID_COLUMN_BITMASK = 32L;
-	public static long CHANNELKEY_COLUMN_BITMASK = 64L;
+	public static long CHANNELKEY_COLUMN_BITMASK = 4L;
+	public static long COMPANYID_COLUMN_BITMASK = 8L;
+	public static long GROUPID_COLUMN_BITMASK = 16L;
+	public static long TACTICID_COLUMN_BITMASK = 32L;
+	public static long UUID_COLUMN_BITMASK = 64L;
 
 	/**
 	 * Converts the soap model instance into a normal model instance.
@@ -449,7 +449,15 @@ public class ChannelInstanceModelImpl extends BaseModelImpl<ChannelInstance>
 	public void setChannelKey(String channelKey) {
 		_columnBitmask = -1L;
 
+		if (_originalChannelKey == null) {
+			_originalChannelKey = _channelKey;
+		}
+
 		_channelKey = channelKey;
+	}
+
+	public String getOriginalChannelKey() {
+		return GetterUtil.getString(_originalChannelKey);
 	}
 
 	@JSON
@@ -651,6 +659,8 @@ public class ChannelInstanceModelImpl extends BaseModelImpl<ChannelInstance>
 		channelInstanceModelImpl._originalCompanyId = channelInstanceModelImpl._companyId;
 
 		channelInstanceModelImpl._setOriginalCompanyId = false;
+
+		channelInstanceModelImpl._originalChannelKey = channelInstanceModelImpl._channelKey;
 
 		channelInstanceModelImpl._originalCampaignId = channelInstanceModelImpl._campaignId;
 
@@ -862,6 +872,7 @@ public class ChannelInstanceModelImpl extends BaseModelImpl<ChannelInstance>
 	private Date _createDate;
 	private Date _modifiedDate;
 	private String _channelKey;
+	private String _originalChannelKey;
 	private long _campaignId;
 	private long _originalCampaignId;
 	private boolean _setOriginalCampaignId;

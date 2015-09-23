@@ -212,25 +212,29 @@ public class TacticLocalServiceClp implements TacticLocalService {
 
 		_methodParameterTypes40 = new String[] { "long", "int", "int" };
 
-		_methodName41 = "getTotal";
+		_methodName41 = "getTactics";
 
 		_methodParameterTypes41 = new String[] { "long" };
 
-		_methodName42 = "searchTactics";
+		_methodName42 = "getTotal";
 
-		_methodParameterTypes42 = new String[] {
-				"long", "long", "java.lang.String", "int", "int"
-			};
+		_methodParameterTypes42 = new String[] { "long" };
 
 		_methodName43 = "searchTactics";
 
 		_methodParameterTypes43 = new String[] {
+				"long", "long", "java.lang.String", "int", "int"
+			};
+
+		_methodName44 = "searchTactics";
+
+		_methodParameterTypes44 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName44 = "updateTactic";
+		_methodName45 = "updateTactic";
 
-		_methodParameterTypes44 = new String[] {
+		_methodParameterTypes45 = new String[] {
 				"long", "long", "java.util.Map", "java.util.Map", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -1464,7 +1468,8 @@ public class TacticLocalServiceClp implements TacticLocalService {
 	}
 
 	@Override
-	public int getTotal(long campaignId)
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1472,6 +1477,39 @@ public class TacticLocalServiceClp implements TacticLocalService {
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName41,
 					_methodParameterTypes41, new Object[] { campaignId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.content.targeting.model.Tactic>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
+	public int getTotal(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName42,
+					_methodParameterTypes42, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1505,8 +1543,8 @@ public class TacticLocalServiceClp implements TacticLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName42,
-					_methodParameterTypes42,
+			returnObj = _invokableLocalService.invokeMethod(_methodName43,
+					_methodParameterTypes43,
 					new Object[] {
 						campaignId,
 						
@@ -1550,8 +1588,8 @@ public class TacticLocalServiceClp implements TacticLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName43,
-					_methodParameterTypes43,
+			returnObj = _invokableLocalService.invokeMethod(_methodName44,
+					_methodParameterTypes44,
 					new Object[] {
 						groupId,
 						
@@ -1597,8 +1635,8 @@ public class TacticLocalServiceClp implements TacticLocalService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName44,
-					_methodParameterTypes44,
+			returnObj = _invokableLocalService.invokeMethod(_methodName45,
+					_methodParameterTypes45,
 					new Object[] {
 						tacticId,
 						
@@ -1725,4 +1763,6 @@ public class TacticLocalServiceClp implements TacticLocalService {
 	private String[] _methodParameterTypes43;
 	private String _methodName44;
 	private String[] _methodParameterTypes44;
+	private String _methodName45;
+	private String[] _methodParameterTypes45;
 }

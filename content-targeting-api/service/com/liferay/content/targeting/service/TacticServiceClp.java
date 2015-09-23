@@ -39,9 +39,13 @@ public class TacticServiceClp implements TacticService {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName4 = "updateTactic";
+		_methodName4 = "getTactics";
 
-		_methodParameterTypes4 = new String[] {
+		_methodParameterTypes4 = new String[] { "long" };
+
+		_methodName5 = "updateTactic";
+
+		_methodParameterTypes5 = new String[] {
 				"long", "long", "java.util.Map", "java.util.Map", "long[][]",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -149,6 +153,40 @@ public class TacticServiceClp implements TacticService {
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName4,
+					_methodParameterTypes4, new Object[] { campaignId });
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.content.targeting.model.Tactic>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public com.liferay.content.targeting.model.Tactic updateTactic(
 		long tacticId, long campaignId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -160,8 +198,8 @@ public class TacticServiceClp implements TacticService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName4,
-					_methodParameterTypes4,
+			returnObj = _invokableService.invokeMethod(_methodName5,
+					_methodParameterTypes5,
 					new Object[] {
 						tacticId,
 						
@@ -208,4 +246,6 @@ public class TacticServiceClp implements TacticService {
 	private String[] _methodParameterTypes3;
 	private String _methodName4;
 	private String[] _methodParameterTypes4;
+	private String _methodName5;
+	private String[] _methodParameterTypes5;
 }

@@ -114,58 +114,58 @@ public class AnonymousUserUserSegmentLocalServiceClpInvoker {
 
 		_methodParameterTypes83 = new String[] { "java.lang.String" };
 
-		_methodName88 = "addAnonymousUserUserSegment";
+		_methodName89 = "addAnonymousUserUserSegment";
 
-		_methodParameterTypes88 = new String[] {
+		_methodParameterTypes89 = new String[] {
 				"long", "long", "boolean", "boolean",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName89 = "checkAnonymousUserUserSegments";
+		_methodName90 = "checkAnonymousUserUserSegments";
 
-		_methodParameterTypes89 = new String[] {  };
+		_methodParameterTypes90 = new String[] {  };
 
-		_methodName90 = "getAnonymousUsersByUserSegmentId";
-
-		_methodParameterTypes90 = new String[] { "long", "boolean" };
-
-		_methodName91 = "getAnonymousUsersByUserSegmentIdCount";
+		_methodName91 = "getAnonymousUsersByUserSegmentId";
 
 		_methodParameterTypes91 = new String[] { "long", "boolean" };
 
-		_methodName92 = "getAnonymousUsersByUserSegmentIds";
+		_methodName92 = "getAnonymousUsersByUserSegmentIdCount";
 
-		_methodParameterTypes92 = new String[] { "long[][]", "boolean" };
+		_methodParameterTypes92 = new String[] { "long", "boolean" };
 
-		_methodName93 = "getAnonymousUsersByUserSegmentIdsCount";
+		_methodName93 = "getAnonymousUsersByUserSegmentIds";
 
 		_methodParameterTypes93 = new String[] { "long[][]", "boolean" };
 
-		_methodName94 = "getAnonymousUserUserSegments";
+		_methodName94 = "getAnonymousUsersByUserSegmentIdsCount";
 
-		_methodParameterTypes94 = new String[] { "long", "long" };
+		_methodParameterTypes94 = new String[] { "long[][]", "boolean" };
 
-		_methodName95 = "getMaxAge";
+		_methodName95 = "getAnonymousUserUserSegments";
 
-		_methodParameterTypes95 = new String[] {  };
+		_methodParameterTypes95 = new String[] { "long", "long" };
 
-		_methodName96 = "getUserSegmentsByAnonymousUserId";
+		_methodName96 = "getMaxAge";
 
-		_methodParameterTypes96 = new String[] { "long", "boolean" };
+		_methodParameterTypes96 = new String[] {  };
 
-		_methodName97 = "getUserSegmentsByAnonymousUserIdCount";
+		_methodName97 = "getUserSegmentsByAnonymousUserId";
 
 		_methodParameterTypes97 = new String[] { "long", "boolean" };
 
-		_methodName98 = "updateAnonymousUserUserSegment";
+		_methodName98 = "getUserSegmentsByAnonymousUserIdCount";
 
-		_methodParameterTypes98 = new String[] {
+		_methodParameterTypes98 = new String[] { "long", "boolean" };
+
+		_methodName99 = "updateAnonymousUserUserSegment";
+
+		_methodParameterTypes99 = new String[] {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName99 = "updateAnonymousUserUserSegments";
+		_methodName100 = "updateAnonymousUserUserSegments";
 
-		_methodParameterTypes99 = new String[] { "long", "java.util.Date" };
+		_methodParameterTypes100 = new String[] { "long", "java.util.Date" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -269,8 +269,8 @@ public class AnonymousUserUserSegmentLocalServiceClpInvoker {
 			return null;
 		}
 
-		if (_methodName88.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes88, parameterTypes)) {
+		if (_methodName89.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
 			return AnonymousUserUserSegmentLocalServiceUtil.addAnonymousUserUserSegment(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Boolean)arguments[2]).booleanValue(),
@@ -278,68 +278,68 @@ public class AnonymousUserUserSegmentLocalServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
-		if (_methodName89.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes89, parameterTypes)) {
+		if (_methodName90.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
 			AnonymousUserUserSegmentLocalServiceUtil.checkAnonymousUserUserSegments();
 
 			return null;
 		}
 
-		if (_methodName90.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes90, parameterTypes)) {
-			return AnonymousUserUserSegmentLocalServiceUtil.getAnonymousUsersByUserSegmentId(((Long)arguments[0]).longValue(),
-				((Boolean)arguments[1]).booleanValue());
-		}
-
 		if (_methodName91.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes91, parameterTypes)) {
-			return AnonymousUserUserSegmentLocalServiceUtil.getAnonymousUsersByUserSegmentIdCount(((Long)arguments[0]).longValue(),
+			return AnonymousUserUserSegmentLocalServiceUtil.getAnonymousUsersByUserSegmentId(((Long)arguments[0]).longValue(),
 				((Boolean)arguments[1]).booleanValue());
 		}
 
 		if (_methodName92.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes92, parameterTypes)) {
-			return AnonymousUserUserSegmentLocalServiceUtil.getAnonymousUsersByUserSegmentIds((long[])arguments[0],
+			return AnonymousUserUserSegmentLocalServiceUtil.getAnonymousUsersByUserSegmentIdCount(((Long)arguments[0]).longValue(),
 				((Boolean)arguments[1]).booleanValue());
 		}
 
 		if (_methodName93.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes93, parameterTypes)) {
-			return AnonymousUserUserSegmentLocalServiceUtil.getAnonymousUsersByUserSegmentIdsCount((long[])arguments[0],
+			return AnonymousUserUserSegmentLocalServiceUtil.getAnonymousUsersByUserSegmentIds((long[])arguments[0],
 				((Boolean)arguments[1]).booleanValue());
 		}
 
 		if (_methodName94.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes94, parameterTypes)) {
-			return AnonymousUserUserSegmentLocalServiceUtil.getAnonymousUserUserSegments(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
+			return AnonymousUserUserSegmentLocalServiceUtil.getAnonymousUsersByUserSegmentIdsCount((long[])arguments[0],
+				((Boolean)arguments[1]).booleanValue());
 		}
 
 		if (_methodName95.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes95, parameterTypes)) {
-			return AnonymousUserUserSegmentLocalServiceUtil.getMaxAge();
+			return AnonymousUserUserSegmentLocalServiceUtil.getAnonymousUserUserSegments(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName96.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes96, parameterTypes)) {
-			return AnonymousUserUserSegmentLocalServiceUtil.getUserSegmentsByAnonymousUserId(((Long)arguments[0]).longValue(),
-				((Boolean)arguments[1]).booleanValue());
+			return AnonymousUserUserSegmentLocalServiceUtil.getMaxAge();
 		}
 
 		if (_methodName97.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes97, parameterTypes)) {
-			return AnonymousUserUserSegmentLocalServiceUtil.getUserSegmentsByAnonymousUserIdCount(((Long)arguments[0]).longValue(),
+			return AnonymousUserUserSegmentLocalServiceUtil.getUserSegmentsByAnonymousUserId(((Long)arguments[0]).longValue(),
 				((Boolean)arguments[1]).booleanValue());
 		}
 
 		if (_methodName98.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes98, parameterTypes)) {
-			return AnonymousUserUserSegmentLocalServiceUtil.updateAnonymousUserUserSegment(((Long)arguments[0]).longValue(),
-				(com.liferay.portal.service.ServiceContext)arguments[1]);
+			return AnonymousUserUserSegmentLocalServiceUtil.getUserSegmentsByAnonymousUserIdCount(((Long)arguments[0]).longValue(),
+				((Boolean)arguments[1]).booleanValue());
 		}
 
 		if (_methodName99.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes99, parameterTypes)) {
+			return AnonymousUserUserSegmentLocalServiceUtil.updateAnonymousUserUserSegment(((Long)arguments[0]).longValue(),
+				(com.liferay.portal.service.ServiceContext)arguments[1]);
+		}
+
+		if (_methodName100.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
 			AnonymousUserUserSegmentLocalServiceUtil.updateAnonymousUserUserSegments(((Long)arguments[0]).longValue(),
 				(java.util.Date)arguments[1]);
 
@@ -385,8 +385,6 @@ public class AnonymousUserUserSegmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes82;
 	private String _methodName83;
 	private String[] _methodParameterTypes83;
-	private String _methodName88;
-	private String[] _methodParameterTypes88;
 	private String _methodName89;
 	private String[] _methodParameterTypes89;
 	private String _methodName90;
@@ -409,4 +407,6 @@ public class AnonymousUserUserSegmentLocalServiceClpInvoker {
 	private String[] _methodParameterTypes98;
 	private String _methodName99;
 	private String[] _methodParameterTypes99;
+	private String _methodName100;
+	private String[] _methodParameterTypes100;
 }

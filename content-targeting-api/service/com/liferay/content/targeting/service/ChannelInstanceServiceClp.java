@@ -47,9 +47,13 @@ public class ChannelInstanceServiceClp implements ChannelInstanceService {
 
 		_methodParameterTypes5 = new String[] { "long", "long" };
 
-		_methodName6 = "updateChannelInstance";
+		_methodName6 = "getChannelInstances";
 
-		_methodParameterTypes6 = new String[] {
+		_methodParameterTypes6 = new String[] { "long", "java.lang.String" };
+
+		_methodName7 = "updateChannelInstance";
+
+		_methodParameterTypes7 = new String[] {
 				"long", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -226,6 +230,45 @@ public class ChannelInstanceServiceClp implements ChannelInstanceService {
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
+		long tacticId, java.lang.String channelKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableService.invokeMethod(_methodName6,
+					_methodParameterTypes6,
+					new Object[] {
+						tacticId,
+						
+					ClpSerializer.translateInput(channelKey)
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.PortalException) {
+				throw (com.liferay.portal.kernel.exception.PortalException)t;
+			}
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return (java.util.List<com.liferay.content.targeting.model.ChannelInstance>)ClpSerializer.translateOutput(returnObj);
+	}
+
+	@Override
 	public com.liferay.content.targeting.model.ChannelInstance updateChannelInstance(
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,
@@ -235,8 +278,8 @@ public class ChannelInstanceServiceClp implements ChannelInstanceService {
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableService.invokeMethod(_methodName6,
-					_methodParameterTypes6,
+			returnObj = _invokableService.invokeMethod(_methodName7,
+					_methodParameterTypes7,
 					new Object[] {
 						channelInstanceId,
 						
@@ -283,4 +326,6 @@ public class ChannelInstanceServiceClp implements ChannelInstanceService {
 	private String[] _methodParameterTypes5;
 	private String _methodName6;
 	private String[] _methodParameterTypes6;
+	private String _methodName7;
+	private String[] _methodParameterTypes7;
 }
