@@ -61,9 +61,9 @@ public abstract class BaseReport implements Report {
 
 	@Override
 	public String getEditHTML(
-			Class commonClass, PortletRequest request, PortletResponse response,
-			ReportInstance reportInstance, Map<String, Object> context,
-			Map<String, String> values) {
+		Class commonClass, PortletRequest request, PortletResponse response,
+		ReportInstance reportInstance, Map<String, Object> context,
+		Map<String, String> values) {
 
 		String content = StringPool.BLANK;
 
@@ -76,7 +76,10 @@ public abstract class BaseReport implements Report {
 				getClass(), _EDIT_FORM_TEMPLATE_PATH, context);
 		}
 		catch (Exception e) {
-			return "";
+			_log.error(
+				"Error while processing edit report form template " +
+					_EDIT_FORM_TEMPLATE_PATH,
+				e);
 		}
 
 		return content;
