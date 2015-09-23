@@ -474,6 +474,16 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			serviceContext.setScopeGroupId(
 				themeDisplay.getSiteGroupIdOrLiveGroupId());
 
+			ReportInstance reportInstance =
+				_reportInstanceLocalService.fetchReportInstance(
+					reportInstanceId);
+
+			if (reportInstance != null) {
+				reportInstance.setModifiedDate(new Date());
+				_reportInstanceLocalService.updateReportInstance(
+					reportInstance);
+			}
+
 			sendRedirect(request, response);
 		}
 		catch (Exception e) {
