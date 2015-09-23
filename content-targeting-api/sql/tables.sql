@@ -49,11 +49,13 @@ create table CT_ChannelInstance (
 );
 
 create table CT_ReportInstance (
+	uuid_ VARCHAR(75) null,
 	reportInstanceId LONG not null primary key,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
 	userName VARCHAR(75) null,
+	createDate DATE null,
 	modifiedDate DATE null,
 	reportKey VARCHAR(75) null,
 	name STRING null,

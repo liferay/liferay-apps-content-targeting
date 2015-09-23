@@ -31,11 +31,13 @@ public class ReportInstanceSoap implements Serializable {
 	public static ReportInstanceSoap toSoapModel(ReportInstance model) {
 		ReportInstanceSoap soapModel = new ReportInstanceSoap();
 
+		soapModel.setUuid(model.getUuid());
 		soapModel.setReportInstanceId(model.getReportInstanceId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
 		soapModel.setUserName(model.getUserName());
+		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
 		soapModel.setReportKey(model.getReportKey());
 		soapModel.setName(model.getName());
@@ -95,6 +97,14 @@ public class ReportInstanceSoap implements Serializable {
 		setReportInstanceId(pk);
 	}
 
+	public String getUuid() {
+		return _uuid;
+	}
+
+	public void setUuid(String uuid) {
+		_uuid = uuid;
+	}
+
 	public long getReportInstanceId() {
 		return _reportInstanceId;
 	}
@@ -133,6 +143,14 @@ public class ReportInstanceSoap implements Serializable {
 
 	public void setUserName(String userName) {
 		_userName = userName;
+	}
+
+	public Date getCreateDate() {
+		return _createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		_createDate = createDate;
 	}
 
 	public Date getModifiedDate() {
@@ -191,11 +209,13 @@ public class ReportInstanceSoap implements Serializable {
 		_typeSettings = typeSettings;
 	}
 
+	private String _uuid;
 	private long _reportInstanceId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;
 	private String _userName;
+	private Date _createDate;
 	private Date _modifiedDate;
 	private String _reportKey;
 	private String _name;

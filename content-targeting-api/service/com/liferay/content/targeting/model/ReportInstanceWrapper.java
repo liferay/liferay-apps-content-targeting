@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.model;
 
+import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -50,11 +51,13 @@ public class ReportInstanceWrapper implements ReportInstance,
 	public Map<String, Object> getModelAttributes() {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
+		attributes.put("uuid", getUuid());
 		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
 		attributes.put("userName", getUserName());
+		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
 		attributes.put("reportKey", getReportKey());
 		attributes.put("name", getName());
@@ -68,6 +71,12 @@ public class ReportInstanceWrapper implements ReportInstance,
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
+		String uuid = (String)attributes.get("uuid");
+
+		if (uuid != null) {
+			setUuid(uuid);
+		}
+
 		Long reportInstanceId = (Long)attributes.get("reportInstanceId");
 
 		if (reportInstanceId != null) {
@@ -96,6 +105,12 @@ public class ReportInstanceWrapper implements ReportInstance,
 
 		if (userName != null) {
 			setUserName(userName);
+		}
+
+		Date createDate = (Date)attributes.get("createDate");
+
+		if (createDate != null) {
+			setCreateDate(createDate);
 		}
 
 		Date modifiedDate = (Date)attributes.get("modifiedDate");
@@ -159,6 +174,26 @@ public class ReportInstanceWrapper implements ReportInstance,
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		_reportInstance.setPrimaryKey(primaryKey);
+	}
+
+	/**
+	* Returns the uuid of this report instance.
+	*
+	* @return the uuid of this report instance
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _reportInstance.getUuid();
+	}
+
+	/**
+	* Sets the uuid of this report instance.
+	*
+	* @param uuid the uuid of this report instance
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_reportInstance.setUuid(uuid);
 	}
 
 	/**
@@ -281,6 +316,26 @@ public class ReportInstanceWrapper implements ReportInstance,
 	@Override
 	public void setUserName(java.lang.String userName) {
 		_reportInstance.setUserName(userName);
+	}
+
+	/**
+	* Returns the create date of this report instance.
+	*
+	* @return the create date of this report instance
+	*/
+	@Override
+	public java.util.Date getCreateDate() {
+		return _reportInstance.getCreateDate();
+	}
+
+	/**
+	* Sets the create date of this report instance.
+	*
+	* @param createDate the create date of this report instance
+	*/
+	@Override
+	public void setCreateDate(java.util.Date createDate) {
+		_reportInstance.setCreateDate(createDate);
 	}
 
 	/**
@@ -821,6 +876,11 @@ public class ReportInstanceWrapper implements ReportInstance,
 		}
 
 		return false;
+	}
+
+	@Override
+	public StagedModelType getStagedModelType() {
+		return _reportInstance.getStagedModelType();
 	}
 
 	/**

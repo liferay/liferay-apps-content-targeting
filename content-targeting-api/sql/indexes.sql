@@ -27,6 +27,9 @@ create unique index IX_4DE22586 on CT_ChannelInstance (uuid_, groupId);
 
 create index IX_3E22574D on CT_ReportInstance (className, classPK);
 create index IX_956562EE on CT_ReportInstance (reportKey, className, classPK);
+create index IX_D62B9977 on CT_ReportInstance (uuid_);
+create index IX_CDD8AA51 on CT_ReportInstance (uuid_, companyId);
+create unique index IX_FF799113 on CT_ReportInstance (uuid_, groupId);
 
 create index IX_B034D565 on CT_RuleInstance (groupId);
 create index IX_98186965 on CT_RuleInstance (ruleKey, userSegmentId);
