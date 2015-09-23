@@ -40,7 +40,7 @@
 
 		<@aui["nav-bar-search"] cssClass="pull-right">
 			<div class="form-search">
-				<@liferay_ui["input-search"] id="tacticskeywords" name="keywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
+				<@liferay_ui["input-search"] id="tacticskeywords" name="tacticKeywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
 			</div>
 		</@>
 	</@>
@@ -58,7 +58,7 @@
 		{
 			contentPanel: tacticsPanel,
 			inputNode: inputNode,
-			resourceURL: '<@portlet["resourceURL"]><@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" /><@portlet["param"] name="campaignId" value="${campaignId}" /><@portlet["param"] name="campaignTabs" value="promotions" /></@>',
+			resourceURL: '<@portlet["resourceURL"]><@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_TACTICS_RESOURCES}" /></@>',
 			namespace: '<@portlet["namespace"] />'
 		}
 	);

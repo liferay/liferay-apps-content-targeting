@@ -91,7 +91,7 @@
 
 	<@aui["nav-bar-search"] cssClass="pull-right">
 		<div class="form-search">
-			<@liferay_ui["input-search"] id="reportkeywords" name="keywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
+			<@liferay_ui["input-search"] id="reportkeywords" name="reportKeywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
 		</div>
 	</@>
 </@>
