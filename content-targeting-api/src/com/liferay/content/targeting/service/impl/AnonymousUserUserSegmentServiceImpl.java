@@ -129,6 +129,23 @@ public class AnonymousUserUserSegmentServiceImpl
 	}
 
 	@Override
+	public List<UserSegment> getUserSegmentsByUserId(
+			long userId, boolean active)
+		throws PortalException, SystemException {
+
+		return anonymousUserUserSegmentLocalService.getUserSegmentsByUserId(
+			userId, active);
+	}
+
+	@Override
+	public int getUserSegmentsByUserIdCount(long userId, boolean active)
+		throws PortalException, SystemException {
+
+		return anonymousUserUserSegmentLocalService.
+			getUserSegmentsByUserIdCount(userId, active);
+	}
+
+	@Override
 	public AnonymousUserUserSegment updateAnonymousUserUserSegment(
 			long anonymousUserUserSegmentId, ServiceContext serviceContext)
 		throws PortalException, SystemException {

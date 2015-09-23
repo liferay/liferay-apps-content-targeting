@@ -217,6 +217,39 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 	}
 
 	@Override
+	public List<UserSegment> getUserSegmentsByUserId(
+			long userId, boolean active)
+		throws PortalException, SystemException {
+
+		List<UserSegment> userSegments = new ArrayList<UserSegment>();
+
+		AnonymousUser anonymousUser =
+			_anonymousUserLocalService.fetchAnonymousUserByUserId(userId);
+
+		if (anonymousUser == null) {
+			return userSegments;
+		}
+
+		return getUserSegmentsByAnonymousUserId(
+			anonymousUser.getAnonymousUserId(), active);
+	}
+
+	@Override
+	public int getUserSegmentsByUserIdCount(long userId, boolean active)
+		throws PortalException, SystemException {
+
+		AnonymousUser anonymousUser =
+			_anonymousUserLocalService.fetchAnonymousUserByUserId(userId);
+
+		if (anonymousUser == null) {
+			return 0;
+		}
+
+		return getUserSegmentsByAnonymousUserIdCount(
+			anonymousUser.getAnonymousUserId(), active);
+	}
+
+	@Override
 	public AnonymousUserUserSegment updateAnonymousUserUserSegment(
 			long anonymousUserUserSegmentId, ServiceContext serviceContext)
 		throws PortalException, SystemException {
