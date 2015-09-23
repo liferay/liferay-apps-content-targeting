@@ -48,6 +48,30 @@
 		</permissions>
 	</model-resource>
 	<model-resource>
+		<model-name>com.liferay.content.targeting.model.ReportInstance</model-name>
+		<portlet-ref>
+			<portlet-name>ctcore</portlet-name>
+		</portlet-ref>
+		<weight>2</weight>
+		<permissions>
+			<supports>
+				<action-key>DELETE</action-key>
+				<action-key>UPDATE</action-key>
+				<action-key>VIEW</action-key>
+			</supports>
+			<site-member-defaults>
+				<action-key>VIEW</action-key>
+			</site-member-defaults>
+			<guest-defaults>
+				<action-key>VIEW</action-key>
+			</guest-defaults>
+			<guest-unsupported>
+				<action-key>DELETE</action-key>
+				<action-key>UPDATE</action-key>
+			</guest-unsupported>
+		</permissions>
+	</model-resource>
+	<model-resource>
 		<model-name>com.liferay.content.targeting.model.Tactic</model-name>
 		<portlet-ref>
 			<portlet-name>ctcore</portlet-name>

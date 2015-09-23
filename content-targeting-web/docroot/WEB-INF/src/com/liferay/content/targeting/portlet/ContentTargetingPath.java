@@ -47,6 +47,9 @@ public class ContentTargetingPath {
 	public static final String VIEW_REPORTS =
 		"html/content_targeting/view_reports.ftl";
 
+	public static final String VIEW_REPORTS_RESOURCES =
+		"html/content_targeting/view_reports_resources.ftl";
+
 	public static final String VIEW_TACTICS =
 		"html/content_targeting/view_tactics.ftl";
 
