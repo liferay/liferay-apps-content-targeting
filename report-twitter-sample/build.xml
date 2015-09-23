@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<project name="report-twitter-sample" basedir="." default="compile">
+	<property name="plugin.version" value="1" />
+
+	<property name="plugin.name" value="com.liferay.content.targeting.report.twitter.sample" />
+
+	<property name="import.shared" value="analytics-api,anonymous-users-api,content-targeting-api" />
+
+	<import file="../../../build-common-osgi-plugin.xml" />
+</project>

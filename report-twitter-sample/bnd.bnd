@@ -1,0 +1,29 @@
+Bundle-Name: Twitter Sample Report
+Bundle-SymbolicName: com.liferay.content.targeting.report.twitter.sample
+Bundle-Version: 1.0.0
+Import-Package:\
+	com.liferay.content.targeting.analytics.model,\
+	com.liferay.content.targeting.analytics.service,\
+	com.liferay.content.targeting.analytics.service.messaging,\
+	com.liferay.content.targeting.anonymous.users.model,\
+	com.liferay.content.targeting.anonymous.users.service,\
+	com.liferay.content.targeting.anonymous.users.service.messaging,\
+	com.liferay.content.targeting.api.model,\
+	com.liferay.content.targeting.model,\
+	com.liferay.content.targeting.report.campaign.content,\
+	com.liferay.content.targeting.report.campaign.content.model,\
+	com.liferay.content.targeting.report.campaign.content.service,\
+	com.liferay.content.targeting.service,\
+	com.liferay.content.targeting.service.messaging,\
+	com.liferay.content.targeting.util,\
+	com.liferay.osgi.util.service,\
+	com.liferay.portal.kernel.lar,\
+	javax.portlet,\
+	*;resolution:="optional"
+Include-Resource:\
+	classes,\
+	WEB-INF/liferay-hook.xml=META-INF/liferay-hook.xml,\
+	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar
+Service-Component: com.liferay.content.targeting.report.twitter.sample.*
+Web-ContextPath: /report-twitter-sample
+-baseline: *;version="1.0.0"
