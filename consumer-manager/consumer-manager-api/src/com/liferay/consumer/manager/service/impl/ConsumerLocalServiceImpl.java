@@ -36,6 +36,7 @@ import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -155,6 +156,10 @@ public class ConsumerLocalServiceImpl extends ConsumerLocalServiceBaseImpl {
 
 				consumerIds.add(consumerExtensionInstance.getConsumerId());
 			}
+		}
+
+		if (consumerIds.isEmpty()) {
+			return Collections.emptyList();
 		}
 
 		return consumerPersistence.findByConsumerIds(
