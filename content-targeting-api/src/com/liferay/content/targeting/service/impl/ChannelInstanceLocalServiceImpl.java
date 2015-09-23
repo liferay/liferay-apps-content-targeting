@@ -151,6 +151,18 @@ public class ChannelInstanceLocalServiceImpl
 	}
 
 	@Override
+	public List<ChannelInstance> getChannelInstances(
+			long tacticId, String channelKey)
+		throws PortalException, SystemException {
+
+		if (tacticId > 0) {
+			return channelInstancePersistence.findByT_K(tacticId, channelKey);
+		}
+
+		return channelInstancePersistence.findByChannelKey(channelKey);
+	}
+
+	@Override
 	public ChannelInstance updateChannelInstance(
 			long channelInstanceId, String alias, String typeSettings,
 			ServiceContext serviceContext)

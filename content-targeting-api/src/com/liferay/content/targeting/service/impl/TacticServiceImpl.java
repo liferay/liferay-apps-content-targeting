@@ -22,6 +22,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -54,6 +55,13 @@ public class TacticServiceImpl extends TacticServiceBaseImpl {
 		return tacticLocalService.addTactic(
 			userId, campaignId, nameMap, descriptionMap, userSegmentsIds,
 			serviceContext);
+	}
+
+	@Override
+	public List<Tactic> getTactics(long campaignId)
+		throws PortalException, SystemException {
+
+		return tacticLocalService.getTactics(campaignId);
 	}
 
 	@Override

@@ -74,10 +74,16 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 			long campaignId, long tacticId)
 		throws PortalException, SystemException {
 
-		CampaignPermission.check(
-			getPermissionChecker(), campaignId, ActionKeys.VIEW);
-
 		return channelInstanceLocalService.getChannelInstances(tacticId);
+	}
+
+	@Override
+	public List<ChannelInstance> getChannelInstances(
+			long tacticId, String channelKey)
+		throws PortalException, SystemException {
+
+		return channelInstanceLocalService.getChannelInstances(
+			tacticId, channelKey);
 	}
 
 	@Override

@@ -498,6 +498,13 @@ public class TacticLocalServiceUtil {
 		return getService().getResults(campaignId, start, end);
 	}
 
+	public static java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTactics(campaignId);
+	}
+
 	public static int getTotal(long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {

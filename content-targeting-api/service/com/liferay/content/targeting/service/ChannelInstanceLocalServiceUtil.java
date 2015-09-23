@@ -356,6 +356,13 @@ public class ChannelInstanceLocalServiceUtil {
 		return getService().getChannelInstances(tacticId);
 	}
 
+	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
+		long tacticId, java.lang.String channelKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getChannelInstances(tacticId, channelKey);
+	}
+
 	public static com.liferay.content.targeting.model.ChannelInstance updateChannelInstance(
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,

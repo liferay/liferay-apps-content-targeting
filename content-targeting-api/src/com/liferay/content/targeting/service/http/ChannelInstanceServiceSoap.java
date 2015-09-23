@@ -111,6 +111,22 @@ public class ChannelInstanceServiceSoap {
 		}
 	}
 
+	public static com.liferay.content.targeting.model.ChannelInstanceSoap[] getChannelInstances(
+		long tacticId, java.lang.String channelKey) throws RemoteException {
+		try {
+			java.util.List<com.liferay.content.targeting.model.ChannelInstance> returnValue =
+				ChannelInstanceServiceUtil.getChannelInstances(tacticId,
+					channelKey);
+
+			return com.liferay.content.targeting.model.ChannelInstanceSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.content.targeting.model.ChannelInstanceSoap updateChannelInstance(
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,

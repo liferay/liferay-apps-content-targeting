@@ -86,6 +86,14 @@ public class ChannelInstanceServiceWrapper implements ChannelInstanceService,
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
+		long tacticId, java.lang.String channelKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _channelInstanceService.getChannelInstances(tacticId, channelKey);
+	}
+
+	@Override
 	public com.liferay.content.targeting.model.ChannelInstance updateChannelInstance(
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,

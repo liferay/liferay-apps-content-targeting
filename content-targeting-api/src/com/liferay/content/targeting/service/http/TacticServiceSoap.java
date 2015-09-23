@@ -92,6 +92,21 @@ public class TacticServiceSoap {
 		}
 	}
 
+	public static com.liferay.content.targeting.model.TacticSoap[] getTactics(
+		long campaignId) throws RemoteException {
+		try {
+			java.util.List<com.liferay.content.targeting.model.Tactic> returnValue =
+				TacticServiceUtil.getTactics(campaignId);
+
+			return com.liferay.content.targeting.model.TacticSoap.toSoapModels(returnValue);
+		}
+		catch (Exception e) {
+			_log.error(e, e);
+
+			throw new RemoteException(e.getMessage());
+		}
+	}
+
 	public static com.liferay.content.targeting.model.TacticSoap updateTactic(
 		long tacticId, long campaignId, java.lang.String[] nameMapLanguageIds,
 		java.lang.String[] nameMapValues,

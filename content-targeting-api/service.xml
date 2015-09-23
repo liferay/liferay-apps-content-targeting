@@ -134,6 +134,9 @@
 
 		<!-- Finder methods -->
 
+		<finder name="ChannelKey" return-type="Collection">
+			<finder-column name="channelKey" />
+		</finder>
 		<finder name="GroupId" return-type="Collection">
 			<finder-column name="groupId" />
 		</finder>
@@ -146,6 +149,10 @@
 		<finder name="T_A" return-type="ChannelInstance" unique="true">
 			<finder-column name="tacticId" />
 			<finder-column name="alias" />
+		</finder>
+		<finder name="T_K" return-type="Collection">
+			<finder-column name="tacticId" />
+			<finder-column name="channelKey" />
 		</finder>
 
 		<!-- References -->
