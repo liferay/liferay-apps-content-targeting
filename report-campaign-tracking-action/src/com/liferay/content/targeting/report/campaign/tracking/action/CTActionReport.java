@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.report.campaign.tracking.action;
 
 import com.liferay.content.targeting.DuplicateTrackingActionInstanceException;
+import com.liferay.content.targeting.InvalidReportException;
 import com.liferay.content.targeting.InvalidTrackingActionException;
 import com.liferay.content.targeting.InvalidTrackingActionsException;
 import com.liferay.content.targeting.api.model.BaseReport;
@@ -283,9 +284,22 @@ public class CTActionReport extends BaseReport {
 				portletRequest,
 				InvalidTrackingActionsException.class.getName());
 		}
-		else {
-			return new InvalidTrackingActionsException();
+		else if (SessionErrors.contains(
+					portletRequest,
+			InvalidReportException.class.getName())) {
+
+			InvalidReportException invalidReportException =
+				(InvalidReportException)SessionErrors.get(
+					portletRequest, InvalidReportException.class.getName());
+
+			Throwable throwable = invalidReportException.getCause();
+
+			if (throwable instanceof InvalidTrackingActionsException) {
+				return (InvalidTrackingActionsException)throwable;
+			}
 		}
+
+		return new InvalidTrackingActionsException();
 	}
 
 	protected String getTrackingActionHtml(

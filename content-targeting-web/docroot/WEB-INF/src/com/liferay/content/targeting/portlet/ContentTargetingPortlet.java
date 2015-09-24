@@ -20,7 +20,6 @@ import com.liferay.content.targeting.InvalidChannelsException;
 import com.liferay.content.targeting.InvalidDateRangeException;
 import com.liferay.content.targeting.InvalidNameException;
 import com.liferay.content.targeting.InvalidReportException;
-import com.liferay.content.targeting.InvalidReportsException;
 import com.liferay.content.targeting.InvalidRuleException;
 import com.liferay.content.targeting.InvalidRulesException;
 import com.liferay.content.targeting.InvalidTrackingActionsException;
@@ -561,7 +560,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			if (e instanceof InvalidDateRangeException ||
 				e instanceof InvalidNameException ||
-				e instanceof InvalidReportsException ||
+				e instanceof InvalidReportException ||
 				e instanceof PrincipalException) {
 
 				SessionMessages.add(
@@ -1822,10 +1821,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return channelExceptions;
 	}
 
-	protected List<InvalidReportException> updateReportElements(
+	protected void updateReportElements(
 			ReportInstance reportInstance, PortletRequest request,
 			PortletResponse response)
-		throws Exception {
+		throws InvalidReportException {
 
 		Report report = _reportsRegistry.getReport(
 			reportInstance.getReportKey());
@@ -1839,9 +1838,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			String.valueOf(reportInstance.getReportInstanceId()));
 		values.put("reportKey", reportInstance.getReportKey());
 
-		List<InvalidReportException> reportExceptions =
-			new ArrayList<InvalidReportException>();
-
 		try {
 			String typeSettings = report.processEditReport(
 				request, response, reportInstance.getReportGuid(), values);
@@ -1851,14 +1847,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			_reportInstanceService.updateReportInstance(reportInstance);
 		}
 		catch (Exception e) {
-			InvalidReportException ire = new InvalidReportException(e);
-
-			ire.setReportGuid(reportInstance.getReportGuid());
-
-			reportExceptions.add(ire);
+			throw new InvalidReportException(e);
 		}
-
-		return reportExceptions;
 	}
 
 	protected List<InvalidRuleException> updateRules(
@@ -2151,13 +2141,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					_descriptionMap, "", _serviceContext);
 			}
 
-			List<InvalidReportException> reportExceptions =
-				updateReportElements(
-					reportInstance, _portletRequest, _portletResponse);
-
-			if (!reportExceptions.isEmpty()) {
-				throw new InvalidReportsException(reportExceptions);
-			}
+			updateReportElements(
+				reportInstance, _portletRequest, _portletResponse);
 
 			return reportInstance;
 		}

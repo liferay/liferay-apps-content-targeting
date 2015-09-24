@@ -34,8 +34,8 @@
 	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidChannelsException" message="there-is-an-error-in-one-of-your-channels" />
 </#macro>
 
-<#macro invalidReportsException>
-	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidReportsException" message="there-is-an-error-in-one-of-your-report-elements" />
+<#macro invalidReportException>
+	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidReportException" message="there-is-an-error-in-one-of-your-report-elements" />
 </#macro>
 
 <#macro invalidRulesException>

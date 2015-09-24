@@ -23,7 +23,7 @@
 	title='${(report.getName(locale))!"new-report"}'
 />
 
-<@invalidReportsException />
+<@invalidReportException />
 
 <@portlet["actionURL"] name="updateReportInstance" var="addReportInstanceURL" />
 
