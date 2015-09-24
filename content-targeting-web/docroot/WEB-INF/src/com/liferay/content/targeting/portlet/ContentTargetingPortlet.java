@@ -807,6 +807,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			staticModels.get(ContentTargetingPath.class.getName()));
 		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
 		template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
+		template.put("portletClass", getClass());
 		template.put("portletContext", getPortletContext());
 		template.put(
 			"redirect", ParamUtil.getString(portletRequest, "redirect"));
@@ -1607,15 +1608,12 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				themeDisplay.setIsolated(isolated);
 			}
 		}
-		else if (path.equals(ContentTargetingPath.VIEW_REPORT) ||
+		else if (path.equals(ContentTargetingPath.EDIT_REPORT) ||
+				 path.equals(ContentTargetingPath.VIEW_REPORT) ||
 				 path.equals(ContentTargetingPath.VIEW_REPORTS)) {
 
 			String className = ParamUtil.getString(portletRequest, "className");
 			long classPK = ParamUtil.getLong(portletRequest, "classPK");
-			long reportInstanceId = ParamUtil.getLong(
-				portletRequest, "reportInstanceId");
-
-			template.put("reportInstanceId", reportInstanceId);
 			template.put("className", className);
 			template.put("scopeGroup", scopeGroup);
 			template.put("reportInstanceService", _reportInstanceService);
@@ -1646,21 +1644,40 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			template.put("classPK", classPK);
 
-			if (path.equals(ContentTargetingPath.VIEW_REPORT)) {
+			if (path.equals(ContentTargetingPath.EDIT_REPORT) ||
+				path.equals(ContentTargetingPath.VIEW_REPORT)) {
+
 				template.put("name", name);
 
+				long reportInstanceId = ParamUtil.getLong(
+					portletRequest, "reportInstanceId");
 				String reportKey = ParamUtil.getString(
 					portletRequest, "reportKey");
 
 				Report report = _reportsRegistry.getReport(reportKey);
 
+				ReportInstance reportInstance =
+					_reportInstanceService.fetchReportInstance(
+						reportInstanceId);
+
 				template.put("report", report);
-				template.put(
-					"reportHtml",
-					report.getHTML(cloneTemplateContext(template)));
+				template.put("reportInstance", reportInstance);
+				template.put("reportInstanceId", reportInstanceId);
+				template.put("reportKey", reportKey);
 
 				BreadcrumbUtil.addPortletBreadcrumbEntries(
 					request, (RenderResponse)portletResponse, report);
+
+				if (path.equals(ContentTargetingPath.EDIT_REPORT)) {
+					template.put(
+						"reportEditHtml",
+						report.getEditHTML(cloneTemplateContext(template)));
+				}
+				else if (path.equals(ContentTargetingPath.VIEW_REPORT)) {
+					template.put(
+						"reportHtml",
+						report.getHTML(cloneTemplateContext(template)));
+				}
 			}
 
 			if (path.equals(ContentTargetingPath.VIEW_REPORTS)) {
@@ -1709,49 +1726,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					}
 				}
 			}
-		}
-		else if (path.equals(ContentTargetingPath.EDIT_REPORT)) {
-			String className = ParamUtil.getString(portletRequest, "className");
-			long classPK = ParamUtil.getLong(portletRequest, "classPK");
-			long reportInstanceId = ParamUtil.getLong(
-				portletRequest, "reportInstanceId");
-
-			String reportNameXml = StringPool.BLANK;
-			String reportDescriptionXml = StringPool.BLANK;
-			String reportKey = ParamUtil.getString(portletRequest, "reportKey");
-
-			if (className.equals(Campaign.class.getName())) {
-				template.put("campaignId", classPK);
-			}
-			else {
-				template.put("userSegmentId", classPK);
-			}
-
-			Report report = _reportsRegistry.getReport(reportKey);
-
-			ReportInstance reportInstance =
-				_reportInstanceService.fetchReportInstance(reportInstanceId);
-
-			template.put("reportInstance", reportInstance);
-
-			Map<String, String> values = new HashMap<String, String>();
-
-			if (reportInstance != null) {
-				values = reportInstance.getValues();
-			}
-
-			template.put("classPK", classPK);
-			template.put("className", className);
-			template.put("reportDescriptionXml", reportDescriptionXml);
-			template.put(
-				"reportEditHTML",
-				report.getEditHTML(
-					getClass(), portletRequest, portletResponse, reportInstance,
-					cloneTemplateContext(template), values));
-			template.put("reportInstance", reportInstance);
-			template.put("reportInstanceId", reportInstanceId);
-			template.put("reportNameXml", reportNameXml);
-			template.put("reportKey", reportKey);
 		}
 	}
 
@@ -1853,28 +1827,22 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			PortletResponse response)
 		throws Exception {
 
-		List<InvalidReportException> reportExceptions =
-			new ArrayList<InvalidReportException>();
-
-		ServiceContext serviceContext = ServiceContextFactory.getInstance(
-			request);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		Report report = _reportsRegistry.getReport(
 			reportInstance.getReportKey());
 
 		Map<String, String> values = new HashMap<String, String>();
 
-		try {
-			values.put("className", reportInstance.getClassName());
-			values.put("classPK", String.valueOf(reportInstance.getClassPK()));
-			values.put(
-				"reportInstanceId",
-				String.valueOf(reportInstance.getReportInstanceId()));
-			values.put("reportKey", reportInstance.getReportKey());
+		values.put("className", reportInstance.getClassName());
+		values.put("classPK", String.valueOf(reportInstance.getClassPK()));
+		values.put(
+			"reportInstanceId",
+			String.valueOf(reportInstance.getReportInstanceId()));
+		values.put("reportKey", reportInstance.getReportKey());
 
+		List<InvalidReportException> reportExceptions =
+			new ArrayList<InvalidReportException>();
+
+		try {
 			String typeSettings = report.processEditReport(
 				request, response, reportInstance.getReportGuid(), values);
 
@@ -1884,6 +1852,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 		catch (Exception e) {
 			InvalidReportException ire = new InvalidReportException(e);
+
 			ire.setReportGuid(reportInstance.getReportGuid());
 
 			reportExceptions.add(ire);

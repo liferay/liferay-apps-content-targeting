@@ -65,6 +65,8 @@ import java.util.Map;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderRequest;
+import javax.portlet.RenderResponse;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -143,7 +145,7 @@ public class CTActionReport extends BaseReport {
 			}
 		}
 
-		return "";
+		return StringPool.BLANK;
 	}
 
 	@Reference
@@ -287,10 +289,12 @@ public class CTActionReport extends BaseReport {
 	}
 
 	protected String getTrackingActionHtml(
-		Class commonClass, TrackingAction trackingAction,
+		TrackingAction trackingAction,
 		TrackingActionInstance trackingActionInstance,
-		Map<String, Object> context, Map<String, String> values,
+		Map<String, Object> context,
 		List<InvalidTrackingActionException> exceptions) {
+
+		Class portletClass = (Class)context.get("portletClass");
 
 		String html = StringPool.BLANK;
 
@@ -299,7 +303,7 @@ public class CTActionReport extends BaseReport {
 				context.put("exceptions", exceptions);
 
 				html += ContentTargetingContextUtil.parseTemplate(
-					commonClass, "templates/ct_exceptions.ftl", context);
+					portletClass, "templates/ct_exceptions.ftl", context);
 			}
 			catch (Exception e) {
 				_log.error(e);
@@ -313,8 +317,12 @@ public class CTActionReport extends BaseReport {
 
 		request.setAttribute("aui:form:validatorTagsMap", validatorTagsMap);
 
-		if (values == null) {
-			values = Collections.emptyMap();
+		Map<String, String> values = Collections.emptyMap();
+
+		if ((trackingActionInstance != null) &&
+			(trackingActionInstance.getValues() != null)) {
+
+			values = trackingActionInstance.getValues();
 		}
 
 		html += trackingAction.getFormHTML(
@@ -325,7 +333,7 @@ public class CTActionReport extends BaseReport {
 				context.put("validatorTagsMap", validatorTagsMap);
 
 				html += ContentTargetingContextUtil.parseTemplate(
-					commonClass, "templates/ct_validators.ftl", context);
+					portletClass, "templates/ct_validators.ftl", context);
 			}
 			catch (Exception e) {
 				_log.error(e);
@@ -418,17 +426,19 @@ public class CTActionReport extends BaseReport {
 	}
 
 	@Override
-	protected void populateEditContext(
-		Class commonClass, PortletRequest request, PortletResponse response,
-		ReportInstance reportInstance, Map<String, Object> context,
-		Map<String, String> values) {
-
-		context.put("trackingActionsRegistry", _trackingActionsRegistry);
-
+	protected void populateEditContext(Map<String, Object> context) {
 		Map<String, TrackingAction> trackingActions =
 			_trackingActionsRegistry.getTrackingActions();
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+		context.put("trackingActions", trackingActions.values());
+		context.put("trackingActionsRegistry", _trackingActionsRegistry);
+
+		RenderRequest renderRequest = (RenderRequest)context.get(
+			"renderRequest");
+		RenderResponse renderResponse = (RenderResponse)context.get(
+			"renderResponse");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)renderRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
 		boolean isolated = themeDisplay.isIsolated();
@@ -436,16 +446,17 @@ public class CTActionReport extends BaseReport {
 		try {
 			themeDisplay.setIsolated(true);
 
-			context.put("trackingActions", trackingActions.values());
-
 			List<TrackingActionInstance> trackingActionInstances =
-				getTrackingActionsFromRequest(request, response);
+				getTrackingActionsFromRequest(renderRequest, renderResponse);
 
-			if (trackingActionInstances.isEmpty() && (reportInstance != null)) {
+			if (trackingActionInstances.isEmpty()) {
+				final long reportInstanceId = MapUtil.getLong(
+					context, "reportInstanceId", 0);
+
 				trackingActionInstances =
 					_trackingActionInstanceService.
 						getTrackingActionInstancesByReportInstanceId(
-							reportInstance.getReportInstanceId());
+							reportInstanceId);
 			}
 
 			List<TrackingActionTemplate> addedTrackingActionTemplates =
@@ -455,7 +466,7 @@ public class CTActionReport extends BaseReport {
 				context.put("trackingActionInstances", trackingActionInstances);
 
 				InvalidTrackingActionsException itae =
-					getInvalidTrackingActionsException(request);
+					getInvalidTrackingActionsException(renderRequest);
 
 				for (TrackingActionInstance instance
 					: trackingActionInstances) {
@@ -483,10 +494,11 @@ public class CTActionReport extends BaseReport {
 
 					trackingActionTemplate.setTrackingAction(trackingAction);
 
+					List<InvalidTrackingActionException> exceptions =
+						itae.getExceptions(instance.getTrackingActionGuid());
+
 					String html = getTrackingActionHtml(
-						commonClass, trackingAction, instance, context,
-						instance.getValues(), itae.getExceptions(
-							instance.getTrackingActionGuid()));
+						trackingAction, instance, context, exceptions);
 
 					trackingActionTemplate.setTemplate(
 						HtmlUtil.escapeAttribute(html));
@@ -514,7 +526,7 @@ public class CTActionReport extends BaseReport {
 				trackingActionTemplate.setTrackingAction(trackingAction);
 
 				String html = getTrackingActionHtml(
-					commonClass, trackingAction, null, context, null, null);
+					trackingAction, null, context, null);
 
 				trackingActionTemplate.setTemplate(
 					HtmlUtil.escapeAttribute(html));

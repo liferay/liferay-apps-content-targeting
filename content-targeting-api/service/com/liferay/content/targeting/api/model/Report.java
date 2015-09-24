@@ -14,8 +14,6 @@
 
 package com.liferay.content.targeting.api.model;
 
-import com.liferay.content.targeting.model.ReportInstance;
-
 import java.util.Locale;
 import java.util.Map;
 
@@ -52,21 +50,11 @@ public interface Report {
 	 * Returns the HTML code containing the advanced properties edit form for
 	 * the report
 	 *
-	 * @param  commonClass the class to get common templates
-	 * @param  request the request from which to get the request parameters
-	 * @param  response the response to receive the render parameters
-	 * @param  reportInstance the report instance with stored configuration
 	 * @param  context the map defining the form evaluation context
-	 * @param  values the values configured by users for the current report
-	 *         instance based on the form controls from the HTML. This will be
-	 *         used when there is an error and the form is reloaded.
 	 * @return the HTML code containing the form fields required to edit the
 	 *         report instance configuration, based on the context
 	 */
-	public String getEditHTML(
-		Class commonClass, PortletRequest request, PortletResponse response,
-		ReportInstance reportInstance, Map<String, Object> context,
-		Map<String, String> values);
+	public String getEditHTML(Map<String, Object> context);
 
 	/**
 	 * Returns the HTML code containing the report presentation based on the

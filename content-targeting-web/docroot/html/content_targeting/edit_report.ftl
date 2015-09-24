@@ -30,13 +30,6 @@
 <@aui["form"] action="${addReportInstanceURL}" method="post" name="fm" onSubmit="event.preventDefault(); saveFields();">
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
 	<@aui["input"] name="backURL" type="hidden" value="${backURL}" />
-
-	<#if className == campaignClass.getName()>
-		<@aui["input"] name="campaignId" type="hidden" value="${classPK}" />
-	<#else>
-		<@aui["input"] name="userSegmentId" type="hidden" value="${classPK}" />
-	</#if>
-
 	<@aui["input"] name="className" type="hidden" value="${className}" />
 	<@aui["input"] name="classPK" type="hidden" value="${classPK}" />
 	<@aui["input"] name="reportInstanceId" type="hidden" value="${reportInstanceId}" />
@@ -53,7 +46,7 @@
 
 	<@aui["input"] name="description" />
 
-	${reportEditHTML}
+	${reportEditHtml}
 
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" />

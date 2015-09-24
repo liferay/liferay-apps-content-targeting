@@ -14,7 +14,6 @@
 
 package com.liferay.content.targeting.api.model;
 
-import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -60,17 +59,11 @@ public abstract class BaseReport implements Report {
 	}
 
 	@Override
-	public String getEditHTML(
-		Class commonClass, PortletRequest request, PortletResponse response,
-		ReportInstance reportInstance, Map<String, Object> context,
-		Map<String, String> values) {
-
+	public String getEditHTML(Map<String, Object> context) {
 		String content = StringPool.BLANK;
 
 		try {
-			populateEditContext(
-				commonClass, request, response, reportInstance, context,
-				values);
+			populateEditContext(context);
 
 			content = ContentTargetingContextUtil.parseTemplate(
 				getClass(), _EDIT_FORM_TEMPLATE_PATH, context);
@@ -148,10 +141,7 @@ public abstract class BaseReport implements Report {
 	protected void populateContext(Map<String, Object> context) {
 	}
 
-	protected void populateEditContext(
-		Class commonClass, PortletRequest request, PortletResponse response,
-		ReportInstance reportInstance, Map<String, Object> context,
-		Map<String, String> values) {
+	protected void populateEditContext(Map<String, Object> context) {
 	}
 
 	protected static final String _EDIT_FORM_TEMPLATE_PATH =
