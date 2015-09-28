@@ -12,8 +12,9 @@
  * details.
  */
 
-package com.liferay.consumer.manager.extension.@extension.java.package.name@;
+package com.liferay.consumer.manager.extension.twitter.sample;
 
+import com.liferay.consumer.manager.api.model.ConsumerExtension;
 import com.liferay.consumer.manager.api.model.BaseConsumerExtension;
 import com.liferay.consumer.manager.model.ConsumerExtensionInstance;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -29,7 +30,7 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Brian Chan
  */
 @Component(immediate = true, service = ConsumerExtension.class)
-public class @extension.java.class.name@ConsumerExtension
+public class TwitterSampleConsumerExtension
 	extends BaseConsumerExtension {
 
 	@Activate
