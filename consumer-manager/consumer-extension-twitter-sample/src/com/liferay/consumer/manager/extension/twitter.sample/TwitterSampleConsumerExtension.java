@@ -14,24 +14,31 @@
 
 package com.liferay.consumer.manager.extension.twitter.sample;
 
-import com.liferay.consumer.manager.api.model.ConsumerExtension;
+import com.liferay.consumer.manager.InvalidConsumerExtensionException;
 import com.liferay.consumer.manager.api.model.BaseConsumerExtension;
+import com.liferay.consumer.manager.api.model.ConsumerExtension;
 import com.liferay.consumer.manager.model.ConsumerExtensionInstance;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 
 /**
- * @author Brian Chan
+ * @author Eduardo Garcia
  */
 @Component(immediate = true, service = ConsumerExtension.class)
-public class TwitterSampleConsumerExtension
-	extends BaseConsumerExtension {
+public class TwitterSampleConsumerExtension extends BaseConsumerExtension {
 
 	@Activate
 	@Override
@@ -47,7 +54,7 @@ public class TwitterSampleConsumerExtension
 
 	@Override
 	public String getIcon() {
-		return "icon-puzzle";
+		return "icon-twitter";
 	}
 
 	@Override
@@ -58,9 +65,63 @@ public class TwitterSampleConsumerExtension
 	}
 
 	@Override
+	public String processConsumerExtension(
+			PortletRequest request, PortletResponse response, String id,
+			Map<String, String> values)
+		throws InvalidConsumerExtensionException {
+
+		String twitterAccessKey = values.get("twitterAccessKey");
+		String twitterAccessSecret = values.get("twitterAccessSecret");
+		String twitterConsumerKey = values.get("twitterConsumerKey");
+		String twitterConsumerSecret = values.get("twitterConsumerSecret");
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+		jsonObj.put("twitterAccessKey", twitterAccessKey);
+		jsonObj.put("twitterAccessSecret", twitterAccessSecret);
+		jsonObj.put("twitterConsumerKey", twitterConsumerKey);
+		jsonObj.put("twitterConsumerSecret", twitterConsumerSecret);
+
+		return jsonObj.toString();
+	}
+
+	@Override
 	protected void populateContext(
 		ConsumerExtensionInstance extensionInstance,
 		Map<String, Object> context, Map<String, String> values) {
+
+		String twitterAccessKey = StringPool.BLANK;
+		String twitterAccessSecret = StringPool.BLANK;
+		String twitterConsumerKey = StringPool.BLANK;
+		String twitterConsumerSecret = StringPool.BLANK;
+
+		if (!values.isEmpty()) {
+			twitterAccessKey = values.get("twitterAccessKey");
+			twitterAccessSecret = values.get("twitterAccessSecret");
+			twitterConsumerKey = values.get("twitterConsumerKey");
+			twitterConsumerSecret = values.get("twitterConsumerSecret");
+		}
+		else if (extensionInstance != null) {
+			String typeSettings = extensionInstance.getTypeSettings();
+
+			try {
+				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+					typeSettings);
+
+				twitterAccessKey = jsonObj.getString("twitterAccessKey");
+				twitterAccessSecret = jsonObj.getString("twitterAccessSecret");
+				twitterConsumerKey = jsonObj.getString("twitterConsumerKey");
+				twitterConsumerSecret = jsonObj.getString(
+					"twitterConsumerSecret");
+			}
+			catch (JSONException jse) {
+			}
+		}
+
+		context.put("twitterAccessKey", twitterAccessKey);
+		context.put("twitterAccessSecret", twitterAccessSecret);
+		context.put("twitterConsumerKey", twitterConsumerKey);
+		context.put("twitterConsumerSecret", twitterConsumerSecret);
 	}
 
 }

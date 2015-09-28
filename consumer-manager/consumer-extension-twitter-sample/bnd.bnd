@@ -1,6 +1,8 @@
 Bundle-Name: Twitter Sample extension
 Bundle-SymbolicName: com.liferay.consumer.manager.extension.twitter.sample
 Bundle-Version: 1.0.0
+Export-Package:\
+	com.liferay.consumer.manager.extension.twitter.sample.provider
 Import-Package:\
 	com.liferay.consumer.manager.api.model,\
 	com.liferay.consumer.manager.service,\
