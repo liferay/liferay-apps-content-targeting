@@ -119,7 +119,7 @@ public class BaseConsumerExtension implements ConsumerExtension {
 	public String getSummary(
 		ConsumerExtensionInstance consumerExtensionInstance, Locale locale) {
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	@Override
@@ -134,10 +134,11 @@ public class BaseConsumerExtension implements ConsumerExtension {
 
 	@Override
 	public String processConsumerExtension(
-		PortletRequest request, PortletResponse response, String id,
-		Map<String, String> values) throws InvalidConsumerExtensionException {
+			PortletRequest request, PortletResponse response, String id,
+			Map<String, String> values)
+		throws InvalidConsumerExtensionException {
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	protected void populateContext(
