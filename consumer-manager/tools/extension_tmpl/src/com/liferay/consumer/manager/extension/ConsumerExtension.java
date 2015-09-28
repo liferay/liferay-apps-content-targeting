@@ -14,8 +14,8 @@
 
 package com.liferay.consumer.manager.extension.@extension.java.package.name@;
 
-import com.liferay.consumer.manager.api.model.ConsumerExtension;
 import com.liferay.consumer.manager.api.model.BaseConsumerExtension;
+import com.liferay.consumer.manager.api.model.ConsumerExtension;
 import com.liferay.consumer.manager.model.ConsumerExtensionInstance;
 import com.liferay.portal.kernel.language.LanguageUtil;
 
