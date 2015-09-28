@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/consumer-extension-twitter-sample/consumer-extension-twitter-sample.iml" filepath="$PROJECT_DIR$/consumer-extension-twitter-sample/consumer-extension-twitter-sample.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/consumer-manager.iml" filepath="$PROJECT_DIR$/.idea/consumer-manager.iml" />
       <module fileurl="file://$PROJECT_DIR$/consumer-manager-api/consumer-manager-api.iml" filepath="$PROJECT_DIR$/consumer-manager-api/consumer-manager-api.iml" />
       <module fileurl="file://$PROJECT_DIR$/consumer-manager-web/consumer-manager-web.iml" filepath="$PROJECT_DIR$/consumer-manager-web/consumer-manager-web.iml" />
