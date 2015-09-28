@@ -18,9 +18,16 @@ import com.liferay.content.targeting.api.model.BaseReport;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
+import com.liferay.portal.kernel.json.JSONException;
+import com.liferay.portal.kernel.json.JSONFactoryUtil;
+import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Map;
+
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -46,18 +53,33 @@ public class TwitterSampleReport extends BaseReport {
 	}
 
 	@Override
-	public boolean isInstantiable() {
-		return true;
-	}
-
-	@Override
 	public String getIcon() {
-		return "icon-puzzle";
+		return "icon-twitter";
 	}
 
 	@Override
 	public String getReportType() {
 		return Campaign.class.getName();
+	}
+
+	@Override
+	public boolean isInstantiable() {
+		return true;
+	}
+
+	@Override
+	public String processEditReport(
+			PortletRequest request, PortletResponse response,
+			ReportInstance reportInstance)
+		throws Exception {
+
+		String topic = ParamUtil.getString(request, "topic");
+
+		JSONObject jsonObj = JSONFactoryUtil.createJSONObject();
+
+		jsonObj.put("topic", topic);
+
+		return jsonObj.toString();
 	}
 
 	@Override
@@ -67,6 +89,30 @@ public class TwitterSampleReport extends BaseReport {
 	@Override
 	protected void populateContext(
 		ReportInstance reportInstance, Map<String, Object> context) {
+
+		String topic = StringPool.BLANK;
+
+		if (reportInstance != null) {
+			String typeSettings = reportInstance.getTypeSettings();
+
+			try {
+				JSONObject jsonObj = JSONFactoryUtil.createJSONObject(
+					typeSettings);
+
+				topic = jsonObj.getString("topic");
+			}
+			catch (JSONException jse) {
+			}
+		}
+
+		context.put("topic", topic);
+	}
+
+	@Override
+	protected void populateEditContext(
+		ReportInstance reportInstance, Map<String, Object> context) {
+
+		populateContext(reportInstance, context);
 	}
 
 }
