@@ -58,10 +58,6 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 		return report.getName(locale);
 	}
 
-	public Map<String, String> getValues() {
-		return _values;
-	}
-
 	public boolean isInstantiable() {
 		Report report = _reportsRegistry.getReport(getReportKey());
 
@@ -72,11 +68,6 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 		return report.isInstantiable();
 	}
 
-	public void setValues(Map<String, String> values) {
-		this._values = values;
-	}
-
 	private ReportsRegistry _reportsRegistry;
-	private Map<String, String> _values;
 
 }

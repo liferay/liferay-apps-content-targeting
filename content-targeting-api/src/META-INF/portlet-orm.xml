@@ -253,10 +253,7 @@
 	</entity>
 	<entity class="com.liferay.content.targeting.model.impl.ReportInstanceImpl" name="ReportInstance">
 		<table name="CT_ReportInstance" />
-		<attributes>
-			<transient name="reportGuid" />
-			<transient name="values" />
-		</attributes>
+		<attributes />
 	</entity>
 	<entity class="com.liferay.content.targeting.model.impl.RuleInstanceImpl" name="RuleInstance">
 		<table name="CT_RuleInstance" />

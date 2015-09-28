@@ -794,34 +794,13 @@ public class ReportInstanceWrapper implements ReportInstance,
 	}
 
 	@Override
-	public java.lang.String getReportGuid() {
-		return _reportInstance.getReportGuid();
-	}
-
-	@Override
 	public java.lang.String getTypeName(java.util.Locale locale) {
 		return _reportInstance.getTypeName(locale);
 	}
 
 	@Override
-	public java.util.Map<java.lang.String, java.lang.String> getValues() {
-		return _reportInstance.getValues();
-	}
-
-	@Override
 	public boolean isInstantiable() {
 		return _reportInstance.isInstantiable();
-	}
-
-	@Override
-	public void setReportGuid(java.lang.String reportGuid) {
-		_reportInstance.setReportGuid(reportGuid);
-	}
-
-	@Override
-	public void setValues(
-		java.util.Map<java.lang.String, java.lang.String> values) {
-		_reportInstance.setValues(values);
 	}
 
 	@Override
