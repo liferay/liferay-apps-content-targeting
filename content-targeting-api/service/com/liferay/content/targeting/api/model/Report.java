@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.api.model;
 
+import com.liferay.content.targeting.model.ReportInstance;
+
 import java.util.Locale;
 import java.util.Map;
 
@@ -50,21 +52,37 @@ public interface Report {
 	 * Returns the HTML code containing the advanced properties edit form for
 	 * the report
 	 *
+	 * @param  reportInstance the report instance with stored configuration
 	 * @param  context the map defining the form evaluation context
 	 * @return the HTML code containing the form fields required to edit the
 	 *         report instance configuration, based on the context
 	 */
-	public String getEditHTML(Map<String, Object> context);
+	public String getEditHTML(
+		ReportInstance reportInstance, Map<String, Object> context);
 
 	/**
 	 * Returns the HTML code containing the report presentation based on the
 	 * context.
 	 *
+	 * @deprecated As of 2.0.0
 	 * @param  context the map defining the form evaluation context
 	 * @return the HTML code containing the form fields required to show the
 	 *         report instance, based on the context
 	 */
+	@Deprecated
 	public String getHTML(Map<String, Object> context);
+
+	/**
+	 * Returns the HTML code containing the report presentation based on the
+	 * context.
+	 *
+	 * @param  reportInstance the report instance with stored configuration
+	 * @param  context the map defining the form evaluation context
+	 * @return the HTML code containing the form fields required to show the
+	 *         report instance, based on the context
+	 */
+	public String getHTML(
+		ReportInstance reportInstance, Map<String, Object> context);
 
 	/**
 	 * Returns the Font Awesome CSS class for the report icon.
@@ -123,33 +141,30 @@ public interface Report {
 	 *
 	 * @param  request the request from which to get the request parameters
 	 * @param  response the response to receive the render parameters
-	 * @param  id the identifier that differentiates between report
-	 *         instances of the same type of an instantiable report
-	 * @param  values the values configured by users for the current report
-	 *         instance based on the form controls from the HTML
+	 * @param  reportInstance the report instance with stored configuration
 	 * @return the result of evaluating the tracking action form fields in the
 	 * 		   context of the request and response
 	 */
 	public String processEditReport(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
+			PortletRequest request, PortletResponse response,
+			ReportInstance reportInstance)
 		throws Exception;
 
 	/**
 	 * Returns the result of updating the report.
 	 *
+	 * @deprecated As of 2.0.0
 	 * @param  classPK the id of the element with the report type to be updated
 	 * @return the result of updating the report
 	 */
+	@Deprecated
 	public String updateReport(long classPK);
 
 	/**
-	 * Returns the result of updating the report.
+	 * Updates the report data.
 	 *
-	 * @param  classPK the id of the element with the report type to be updated
-	 * @param  reportInstanceId the id of the report instance to be updated
-	 * @return the result of updating the report
+	 * @param  reportInstance the report instance with stored configuration
 	 */
-	public String updateReport(long classPK, long reportInstanceId);
+	public void updateReport(ReportInstance reportInstance);
 
 }

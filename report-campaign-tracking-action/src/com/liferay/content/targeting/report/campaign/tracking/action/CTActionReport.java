@@ -127,19 +127,17 @@ public class CTActionReport extends BaseReport {
 
 	@Override
 	public String processEditReport(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
+			PortletRequest request, PortletResponse response,
+			ReportInstance reportInstance)
 		throws Exception {
 
-		String className = values.get("className");
-		long classPK = GetterUtil.getLong(values.get("classPK"));
-		long reportInstanceId = GetterUtil.getLong(
-			values.get("reportInstanceId"));
+		String className = reportInstance.getClassName();
 
 		if (className.equals(Campaign.class.getName())) {
 			List<InvalidTrackingActionException> itaeList =
 				updateTrackingActions(
-					reportInstanceId, classPK, request, response);
+					reportInstance.getReportInstanceId(),
+					reportInstance.getClassPK(), request, response);
 
 			if (!itaeList.isEmpty()) {
 				throw new InvalidTrackingActionsException(itaeList);
@@ -193,39 +191,13 @@ public class CTActionReport extends BaseReport {
 	}
 
 	@Override
-	public String updateReport(long classPK) {
+	public void updateReport(ReportInstance reportInstance) {
 		try {
-			List<ReportInstance> reportInstances =
-				_reportInstanceLocalService.findReportInstances(
-					getReportKey(), Campaign.class.getName(), classPK);
-
-			if (reportInstances.isEmpty()) {
-				return StringPool.BLANK;
-			}
-
-			for (ReportInstance reportInstance : reportInstances) {
-				return updateReport(
-					classPK, reportInstance.getReportInstanceId());
-			}
-		}
-		catch (Exception e) {
-			_log.error("Cannot update report", e);
-		}
-
-		return StringPool.BLANK;
-	}
-
-	@Override
-	public String updateReport(long classPK, long reportInstanceId) {
-		try {
-			ReportInstance reportInstance =
-				_reportInstanceLocalService.fetchReportInstance(
-					reportInstanceId);
-
-			_ctActionLocalService.checkCTActionEvents(reportInstanceId);
+			_ctActionLocalService.checkCTActionEvents(
+				reportInstance.getReportInstanceId());
 
 			_ctActionTotalLocalService.checkCTActionTotalEvents(
-				reportInstanceId);
+				reportInstance.getReportInstanceId());
 
 			if (reportInstance != null) {
 				reportInstance.setModifiedDate(new Date());
@@ -237,8 +209,6 @@ public class CTActionReport extends BaseReport {
 		catch (Exception e) {
 			_log.error("Cannot update report", e);
 		}
-
-		return StringPool.BLANK;
 	}
 
 	protected void deleteTrackingActionInstances(
@@ -413,7 +383,9 @@ public class CTActionReport extends BaseReport {
 	}
 
 	@Override
-	protected void populateContext(Map<String, Object> context) {
+	protected void populateContext(
+		ReportInstance reportInstance, Map<String, Object> context) {
+
 		final long reportInstanceId = MapUtil.getLong(
 			context, "reportInstanceId", 0);
 
@@ -440,7 +412,9 @@ public class CTActionReport extends BaseReport {
 	}
 
 	@Override
-	protected void populateEditContext(Map<String, Object> context) {
+	protected void populateEditContext(
+		ReportInstance reportInstance, Map<String, Object> context) {
+
 		Map<String, TrackingAction> trackingActions =
 			_trackingActionsRegistry.getTrackingActions();
 

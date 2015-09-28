@@ -454,16 +454,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 	public void updateReport(ActionRequest request, ActionResponse response)
 		throws Exception {
 
-		long classPK = ParamUtil.getLong(request, "classPK");
 		long reportInstanceId = ParamUtil.getLong(request, "reportInstanceId");
 		String reportKey = ParamUtil.getString(request, "reportKey");
 
 		try {
-			Report report = _reportsRegistry.getReport(reportKey);
-
-			String typeSettings = report.updateReport(
-				classPK, reportInstanceId);
-
 			ServiceContext serviceContext = ServiceContextFactory.getInstance(
 				ReportInstance.class.getName(), request);
 
@@ -478,7 +472,12 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					reportInstanceId);
 
 			if (reportInstance != null) {
+				Report report = _reportsRegistry.getReport(reportKey);
+
+				report.updateReport(reportInstance);
+
 				reportInstance.setModifiedDate(new Date());
+
 				_reportInstanceLocalService.updateReportInstance(
 					reportInstance);
 			}
@@ -1670,12 +1669,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				if (path.equals(ContentTargetingPath.EDIT_REPORT)) {
 					template.put(
 						"reportEditHtml",
-						report.getEditHTML(cloneTemplateContext(template)));
+						report.getEditHTML(
+							reportInstance, cloneTemplateContext(template)));
 				}
 				else if (path.equals(ContentTargetingPath.VIEW_REPORT)) {
 					template.put(
 						"reportHtml",
-						report.getHTML(cloneTemplateContext(template)));
+						report.getHTML(
+							reportInstance, cloneTemplateContext(template)));
 				}
 			}
 
@@ -1829,18 +1830,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		Report report = _reportsRegistry.getReport(
 			reportInstance.getReportKey());
 
-		Map<String, String> values = new HashMap<String, String>();
-
-		values.put("className", reportInstance.getClassName());
-		values.put("classPK", String.valueOf(reportInstance.getClassPK()));
-		values.put(
-			"reportInstanceId",
-			String.valueOf(reportInstance.getReportInstanceId()));
-		values.put("reportKey", reportInstance.getReportKey());
-
 		try {
 			String typeSettings = report.processEditReport(
-				request, response, reportInstance.getReportGuid(), values);
+				request, response, reportInstance);
 
 			reportInstance.setTypeSettings(typeSettings);
 

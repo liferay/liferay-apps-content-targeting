@@ -16,6 +16,7 @@ package com.liferay.content.targeting.report.user.segment.content;
 
 import com.liferay.content.targeting.api.model.BaseReport;
 import com.liferay.content.targeting.api.model.Report;
+import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent;
 import com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentLocalService;
@@ -26,7 +27,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.MapUtil;
-import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.List;
 import java.util.Map;
@@ -72,20 +72,20 @@ public class UserSegmentContentReport extends BaseReport {
 	}
 
 	@Override
-	public String updateReport(long classPK) {
+	public void updateReport(ReportInstance reportInstance) {
 		try {
 			_userSegmentContentLocalService.checkUserSegmentContentEvents(
-				classPK);
+				reportInstance.getClassPK());
 		}
 		catch (Exception e) {
 			_log.error("Cannot update report", e);
 		}
-
-		return StringPool.BLANK;
 	}
 
 	@Override
-	protected void populateContext(Map<String, Object> context) {
+	protected void populateContext(
+		ReportInstance reportInstance, Map<String, Object> context) {
+
 		final long classPK = MapUtil.getLong(context, "classPK", 0);
 
 		context.put(

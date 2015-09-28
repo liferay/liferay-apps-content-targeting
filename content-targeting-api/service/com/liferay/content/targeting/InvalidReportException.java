@@ -37,14 +37,4 @@ public class InvalidReportException extends PortalException {
 		super(cause);
 	}
 
-	public String getReportGuid() {
-		return _reportGuid;
-	}
-
-	public void setReportGuid(String reportGuid) {
-		_reportGuid = reportGuid;
-	}
-
-	private String _reportGuid;
-
 }

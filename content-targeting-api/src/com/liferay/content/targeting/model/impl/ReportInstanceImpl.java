@@ -44,10 +44,6 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 			ReportsRegistry.class, bundle.getBundleContext());
 	}
 
-	public String getReportGuid() {
-		return _reportGuid;
-	}
-
 	public String getTypeName(Locale locale) {
 		Report report = _reportsRegistry.getReport(getReportKey());
 
@@ -76,15 +72,10 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 		return report.isInstantiable();
 	}
 
-	public void setReportGuid(String reportGuid) {
-		_reportGuid = reportGuid;
-	}
-
 	public void setValues(Map<String, String> values) {
 		this._values = values;
 	}
 
-	private String _reportGuid;
 	private ReportsRegistry _reportsRegistry;
 	private Map<String, String> _values;
 

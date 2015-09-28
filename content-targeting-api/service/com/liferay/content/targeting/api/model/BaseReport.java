@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.api.model;
 
+import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -59,11 +60,13 @@ public abstract class BaseReport implements Report {
 	}
 
 	@Override
-	public String getEditHTML(Map<String, Object> context) {
+	public String getEditHTML(
+		ReportInstance reportInstance, Map<String, Object> context) {
+
 		String content = StringPool.BLANK;
 
 		try {
-			populateEditContext(context);
+			populateEditContext(reportInstance, context);
 
 			content = ContentTargetingContextUtil.parseTemplate(
 				getClass(), _EDIT_FORM_TEMPLATE_PATH, context);
@@ -80,10 +83,17 @@ public abstract class BaseReport implements Report {
 
 	@Override
 	public String getHTML(Map<String, Object> context) {
+		return getHTML(null, context);
+	}
+
+	@Override
+	public String getHTML(
+		ReportInstance reportInstance, Map<String, Object> context) {
+
 		String content = StringPool.BLANK;
 
 		try {
-			populateContext(context);
+			populateContext(reportInstance, context);
 
 			content = ContentTargetingContextUtil.parseTemplate(
 				getClass(), _FORM_TEMPLATE_PATH, context);
@@ -126,22 +136,29 @@ public abstract class BaseReport implements Report {
 
 	@Override
 	public String processEditReport(
-			PortletRequest request, PortletResponse response, String id,
-			Map<String, String> values)
+			PortletRequest request, PortletResponse response,
+			ReportInstance reportInstance)
 		throws Exception {
 
-		return null;
+		return StringPool.BLANK;
 	}
 
 	@Override
-	public String updateReport(long classPK, long reportInstanceId) {
-		return updateReport(classPK);
+	public String updateReport(long classPK) {
+		return StringPool.BLANK;
 	}
 
 	protected void populateContext(Map<String, Object> context) {
 	}
 
-	protected void populateEditContext(Map<String, Object> context) {
+	protected void populateContext(
+		ReportInstance reportInstance, Map<String, Object> context) {
+
+		populateContext(null, context);
+	}
+
+	protected void populateEditContext(
+		ReportInstance reportInstance, Map<String, Object> context) {
 	}
 
 	protected static final String _EDIT_FORM_TEMPLATE_PATH =
