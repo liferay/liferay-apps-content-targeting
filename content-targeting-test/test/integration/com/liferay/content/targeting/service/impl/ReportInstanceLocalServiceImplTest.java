@@ -82,11 +82,15 @@ public class ReportInstanceLocalServiceImplTest {
 		int initReportInstancesCount =
 			_reportInstanceLocalService.getReportInstancesCount();
 
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), "test-report");
+
 		ReportInstance reportInstance =
 			_reportInstanceLocalService.addReportInstance(
 				TestPropsValues.getUserId(), "report-key",
 				UserSegment.class.getName(), _userSegment.getUserSegmentId(),
-				"type-settings", _serviceContext);
+				nameMap, null, "type-settings", _serviceContext);
 
 		Assert.assertEquals(
 			initReportInstancesCount + 1,
@@ -105,10 +109,14 @@ public class ReportInstanceLocalServiceImplTest {
 		int initReportInstancesCount =
 			_reportInstanceLocalService.getReportInstancesCount();
 
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), "test-report");
+
 		_reportInstanceLocalService.addReportInstance(
 			TestPropsValues.getUserId(), "report-key",
 			UserSegment.class.getName(), _userSegment.getUserSegmentId(),
-			"type-settings", _serviceContext);
+			nameMap, null, "type-settings", _serviceContext);
 
 		_userSegmentLocalService.deleteUserSegment(
 			_userSegment.getUserSegmentId());

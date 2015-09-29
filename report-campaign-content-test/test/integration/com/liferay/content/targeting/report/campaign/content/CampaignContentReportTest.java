@@ -18,8 +18,10 @@ import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalServic
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.report.campaign.content.service.CampaignContentLocalService;
 import com.liferay.content.targeting.service.CampaignLocalService;
+import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
@@ -65,6 +67,8 @@ public class CampaignContentReportTest {
 			CampaignContentLocalService.class, _bundle.getBundleContext());
 		_campaignLocalService = ServiceTrackerUtil.getService(
 			CampaignLocalService.class, _bundle.getBundleContext());
+		_reportInstanceLocalService = ServiceTrackerUtil.getService(
+			ReportInstanceLocalService.class, _bundle.getBundleContext());
 		_reportsRegistry = ServiceTrackerUtil.getService(
 			ReportsRegistry.class, _bundle.getBundleContext());
 	}
@@ -91,7 +95,13 @@ public class CampaignContentReportTest {
 
 		// Test update report without analytics
 
-		report.updateReport(campaign.getCampaignId());
+		ReportInstance reportInstance =
+			_reportInstanceLocalService.addReportInstance(
+				TestPropsValues.getUserId(), report.getReportKey(),
+				Campaign.class.getName(), campaign.getCampaignId(), nameMap,
+				null, "type-settings", serviceContext);
+
+		report.updateReport(reportInstance);
 
 		Assert.assertEquals(
 			initialCampaignContentCount,
@@ -108,7 +118,7 @@ public class CampaignContentReportTest {
 
 		// Test update report with analytics
 
-		report.updateReport(campaign.getCampaignId());
+		report.updateReport(reportInstance);
 
 		Assert.assertEquals(
 			initialCampaignContentCount + 1,
@@ -124,6 +134,7 @@ public class CampaignContentReportTest {
 	private CampaignContentLocalService
 		_campaignContentLocalService;
 	private CampaignLocalService _campaignLocalService;
+	private ReportInstanceLocalService _reportInstanceLocalService;
 	private ReportsRegistry _reportsRegistry;
 
 }

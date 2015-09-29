@@ -17,8 +17,10 @@ package com.liferay.content.targeting.report.user.segment.content;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
+import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.report.user.segment.content.service.UserSegmentContentLocalService;
+import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
@@ -64,6 +66,8 @@ public class UserSegmentContentReportTest {
 			UserSegmentContentLocalService.class, _bundle.getBundleContext());
 		_userSegmentLocalService = ServiceTrackerUtil.getService(
 			UserSegmentLocalService.class, _bundle.getBundleContext());
+		_reportInstanceLocalService = ServiceTrackerUtil.getService(
+			ReportInstanceLocalService.class, _bundle.getBundleContext());
 		_reportsRegistry = ServiceTrackerUtil.getService(
 			ReportsRegistry.class, _bundle.getBundleContext());
 	}
@@ -89,7 +93,13 @@ public class UserSegmentContentReportTest {
 
 		// Test update report without analytics
 
-		report.updateReport(userSegment.getUserSegmentId());
+		ReportInstance reportInstance =
+			_reportInstanceLocalService.addReportInstance(
+				TestPropsValues.getUserId(), report.getReportKey(),
+				UserSegment.class.getName(), userSegment.getUserSegmentId(),
+				nameMap, null, "type-settings", serviceContext);
+
+		report.updateReport(reportInstance);
 
 		Assert.assertEquals(
 			initialUserSegmentContentCount,
@@ -107,7 +117,7 @@ public class UserSegmentContentReportTest {
 
 		// Test update report with analytics
 
-		report.updateReport(userSegment.getUserSegmentId());
+		report.updateReport(reportInstance);
 
 		Assert.assertEquals(
 			initialUserSegmentContentCount + 1,
@@ -120,6 +130,7 @@ public class UserSegmentContentReportTest {
 	@ArquillianResource
 	private Bundle _bundle;
 
+	private ReportInstanceLocalService _reportInstanceLocalService;
 	private ReportsRegistry _reportsRegistry;
 	private UserSegmentContentLocalService
 		_userSegmentContentLocalService;

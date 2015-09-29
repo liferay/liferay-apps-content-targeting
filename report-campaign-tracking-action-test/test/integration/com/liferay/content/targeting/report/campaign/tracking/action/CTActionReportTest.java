@@ -26,9 +26,15 @@ import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.service.test.service.ServiceTestUtil;
 import com.liferay.content.targeting.service.test.util.TestPropsValues;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.ServiceContext;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
@@ -81,10 +87,18 @@ public class CTActionReportTest {
 		String elementId = "form_id";
 		String eventType = "view";
 
+		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+
+		nameMap.put(LocaleUtil.getDefault(), StringUtil.randomString());
+
+		// Obtain report from registry
+
+		Report report = _reportsRegistry.getReport("CTActionReport");
+
 		ReportInstance reportInstance =
 			_reportInstanceLocalService.addReportInstance(
-				userId, "CTActionReport", Campaign.class.getName(), campaignId,
-				"", serviceContext);
+				userId, report.getReportKey(), Campaign.class.getName(),
+				campaignId, nameMap, null, "", serviceContext);
 
 		long reportInstanceId = reportInstance.getReportInstanceId();
 
@@ -103,13 +117,9 @@ public class CTActionReportTest {
 			"Page alias1", className, classPK, null, eventType,
 			StringPool.BLANK, serviceContext);
 
-		// Obtain report from registry
-
-		Report report = _reportsRegistry.getReport("CTActionReport");
-
 		// Test update report without analytics
 
-		report.updateReport(campaignId);
+		report.updateReport(reportInstance);
 
 		Assert.assertEquals(
 			initialCTActionCount,
@@ -129,7 +139,7 @@ public class CTActionReportTest {
 
 		// Test update report with analytics
 
-		report.updateReport(campaignId);
+		report.updateReport(reportInstance);
 
 		Assert.assertEquals(
 			initialCTActionCount + 2,

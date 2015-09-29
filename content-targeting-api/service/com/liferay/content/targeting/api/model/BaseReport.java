@@ -148,6 +148,11 @@ public abstract class BaseReport implements Report {
 		return StringPool.BLANK;
 	}
 
+	@Override
+	public void updateReport(ReportInstance reportInstance) {
+		updateReport(reportInstance.getClassPK());
+	}
+
 	protected void populateContext(Map<String, Object> context) {
 	}
 
