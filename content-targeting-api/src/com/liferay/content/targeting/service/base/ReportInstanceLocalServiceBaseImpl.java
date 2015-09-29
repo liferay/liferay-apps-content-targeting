@@ -41,6 +41,7 @@ import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
 
 import java.io.Serializable;
@@ -226,6 +227,35 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the report instance with the matching UUID and company.
+	 *
+	 * @param uuid the report instance's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching report instance, or <code>null</code> if a matching report instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ReportInstance fetchReportInstanceByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return reportInstancePersistence.fetchByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
+	 * Returns the report instance matching the UUID and group.
+	 *
+	 * @param uuid the report instance's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching report instance, or <code>null</code> if a matching report instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ReportInstance fetchReportInstanceByUuidAndGroupId(String uuid,
+		long groupId) throws SystemException {
+		return reportInstancePersistence.fetchByUUID_G(uuid, groupId);
+	}
+
+	/**
 	 * Returns the report instance with the primary key.
 	 *
 	 * @param reportInstanceId the primary key of the report instance
@@ -243,6 +273,37 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException, SystemException {
 		return reportInstancePersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the report instance with the matching UUID and company.
+	 *
+	 * @param uuid the report instance's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching report instance
+	 * @throws PortalException if a matching report instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ReportInstance getReportInstanceByUuidAndCompanyId(String uuid,
+		long companyId) throws PortalException, SystemException {
+		return reportInstancePersistence.findByUuid_C_First(uuid, companyId,
+			null);
+	}
+
+	/**
+	 * Returns the report instance matching the UUID and group.
+	 *
+	 * @param uuid the report instance's UUID
+	 * @param groupId the primary key of the group
+	 * @return the matching report instance
+	 * @throws PortalException if a matching report instance could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ReportInstance getReportInstanceByUuidAndGroupId(String uuid,
+		long groupId) throws PortalException, SystemException {
+		return reportInstancePersistence.findByUUID_G(uuid, groupId);
 	}
 
 	/**
@@ -780,6 +841,62 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the group local service.
+	 *
+	 * @return the group local service
+	 */
+	public com.liferay.portal.service.GroupLocalService getGroupLocalService() {
+		return groupLocalService;
+	}
+
+	/**
+	 * Sets the group local service.
+	 *
+	 * @param groupLocalService the group local service
+	 */
+	public void setGroupLocalService(
+		com.liferay.portal.service.GroupLocalService groupLocalService) {
+		this.groupLocalService = groupLocalService;
+	}
+
+	/**
+	 * Returns the group remote service.
+	 *
+	 * @return the group remote service
+	 */
+	public com.liferay.portal.service.GroupService getGroupService() {
+		return groupService;
+	}
+
+	/**
+	 * Sets the group remote service.
+	 *
+	 * @param groupService the group remote service
+	 */
+	public void setGroupService(
+		com.liferay.portal.service.GroupService groupService) {
+		this.groupService = groupService;
+	}
+
+	/**
+	 * Returns the group persistence.
+	 *
+	 * @return the group persistence
+	 */
+	public GroupPersistence getGroupPersistence() {
+		return groupPersistence;
+	}
+
+	/**
+	 * Sets the group persistence.
+	 *
+	 * @param groupPersistence the group persistence
+	 */
+	public void setGroupPersistence(GroupPersistence groupPersistence) {
+		this.groupPersistence = groupPersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -988,6 +1105,12 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	protected UserSegmentPersistence userSegmentPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
+	protected com.liferay.portal.service.GroupLocalService groupLocalService;
+	@BeanReference(type = com.liferay.portal.service.GroupService.class)
+	protected com.liferay.portal.service.GroupService groupService;
+	@BeanReference(type = GroupPersistence.class)
+	protected GroupPersistence groupPersistence;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)

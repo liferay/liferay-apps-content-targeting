@@ -20,13 +20,23 @@ import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.service.base.ReportInstanceLocalServiceBaseImpl;
+import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.IndexerRegistryUtil;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -79,6 +89,8 @@ public class ReportInstanceLocalServiceImpl
 		ReportInstance reportInstance = reportInstancePersistence.create(
 			reportInstanceId);
 
+		reportInstance.setCreateDate(new Date());
+		reportInstance.setUuid(serviceContext.getUuid());
 		reportInstance.setGroupId(groupId);
 		reportInstance.setCompanyId(user.getCompanyId());
 		reportInstance.setUserId(user.getUserId());
@@ -179,6 +191,27 @@ public class ReportInstanceLocalServiceImpl
 	}
 
 	@Override
+	public List<ReportInstance> getReportInstances(
+			String className, long classPK, int start, int end)
+		throws SystemException {
+
+		return reportInstancePersistence.findByC_C(
+			className, classPK, start, end);
+	}
+
+	@Override
+	public List<ReportInstance> searchReportInstances(
+			long groupId, String className, long classPK, String keywords,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		SearchContext searchContext = buildSearchContext(
+			groupId, className, classPK, keywords, start, end);
+
+		return searchReportInstances(searchContext).getBaseModels();
+	}
+
+	@Override
 	public ReportInstance updateReportInstance(
 			long reportInstanceId, long userId, String reportKey,
 			String className, long classPK, Map<Locale, String> nameMap,
@@ -199,6 +232,70 @@ public class ReportInstanceLocalServiceImpl
 		reportInstancePersistence.update(reportInstance);
 
 		return reportInstance;
+	}
+
+	protected SearchContext buildSearchContext(
+			long groupId, String className, long classPK, String keywords,
+			int start, int end)
+		throws PortalException, SystemException {
+
+		SearchContext searchContext = new SearchContext();
+
+		Group group = groupLocalService.getGroup(groupId);
+
+		searchContext.setAttribute("className", className);
+		searchContext.setAttribute("classPK", classPK);
+		searchContext.setCompanyId(group.getCompanyId());
+		searchContext.setGroupIds(new long[]{groupId});
+		searchContext.setEnd(end);
+		searchContext.setKeywords(keywords == null ? "" : keywords);
+		searchContext.setStart(start);
+
+		return searchContext;
+	}
+
+	protected BaseModelSearchResult<ReportInstance> searchReportInstances(
+			SearchContext searchContext)
+		throws PortalException, SystemException {
+
+		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
+			ReportInstance.class);
+
+		for (int i = 0; i < 10; i++) {
+			Hits hits = indexer.search(searchContext);
+
+			List<ReportInstance> reportInstances = null;
+
+			if (hits != null) {
+				List<Document> documents = hits.toList();
+
+				reportInstances = new ArrayList<ReportInstance>(
+					documents.size());
+
+				for (Document document : documents) {
+					long reportInstanceId = GetterUtil.getLong(
+						document.get("reportInstanceId"));
+
+					ReportInstance reportInstance = getReportInstance(
+						reportInstanceId);
+
+					if (reportInstance != null) {
+						reportInstances.add(reportInstance);
+					}
+				}
+			}
+			else {
+				reportInstances = new ArrayList<ReportInstance>(0);
+			}
+
+			if ((hits != null) && (reportInstances != null)) {
+				return new BaseModelSearchResult<ReportInstance>(
+					reportInstances, hits.getLength());
+			}
+		}
+
+		throw new SearchException(
+			"Unable to fix the search index after 10 attempts");
 	}
 
 	private ReportsRegistry _reportsRegistry;

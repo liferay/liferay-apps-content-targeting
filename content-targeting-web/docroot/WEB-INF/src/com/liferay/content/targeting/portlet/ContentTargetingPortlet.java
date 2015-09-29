@@ -1143,6 +1143,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN) ||
 				 path.equals(ContentTargetingPath.EDIT_TACTIC) ||
+				 path.equals(ContentTargetingPath.VIEW_REPORTS_RESOURCES) ||
 				 path.equals(ContentTargetingPath.VIEW_TACTICS) ||
 				 path.equals(ContentTargetingPath.VIEW_TACTICS_RESOURCES)) {
 
@@ -1177,10 +1178,13 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					new ReportInstanceRowChecker(
 						portletRequest, portletResponse));
 
+				String reportKeywords = ParamUtil.getString(
+					portletRequest, "reportKeywords");
+
 				template.put(
 					"reportSearchContainerIterator",
 					new ReportSearchContainerIterator(
-						themeDisplay.getScopeGroupId(), null,
+						themeDisplay.getScopeGroupId(), reportKeywords,
 						Campaign.class.getName(), campaignId));
 
 				String className = Campaign.class.getName();
@@ -1426,7 +1430,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					"tacticsRowChecker", new RowChecker(portletResponse));
 			}
 
-			String keywords = ParamUtil.getString(portletRequest, "keywords");
+			String keywords = ParamUtil.getString(
+				portletRequest, "tacticKeywords");
 
 			template.put(
 				"tacticSearchContainerIterator",
@@ -1701,11 +1706,15 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					"reportsRowChecker",
 					new ReportInstanceRowChecker(
 						portletRequest, portletResponse));
+
+				String reportKeywords = ParamUtil.getString(
+					portletRequest, "reportKeywords");
+
 				template.put(
 					"reportSearchContainerIterator",
 					new ReportSearchContainerIterator(
-						themeDisplay.getScopeGroupId(), null, className,
-						classPK));
+						themeDisplay.getScopeGroupId(), reportKeywords,
+						className, classPK));
 
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(request);

@@ -176,6 +176,32 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	/**
+	* Returns the report instance with the matching UUID and company.
+	*
+	* @param uuid the report instance's UUID
+	* @param companyId the primary key of the company
+	* @return the matching report instance, or <code>null</code> if a matching report instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.content.targeting.model.ReportInstance fetchReportInstanceByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the report instance matching the UUID and group.
+	*
+	* @param uuid the report instance's UUID
+	* @param groupId the primary key of the group
+	* @return the matching report instance, or <code>null</code> if a matching report instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.content.targeting.model.ReportInstance fetchReportInstanceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	/**
 	* Returns the report instance with the primary key.
 	*
 	* @param reportInstanceId the primary key of the report instance
@@ -193,6 +219,36 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.model.PersistedModel getPersistedModel(
 		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the report instance with the matching UUID and company.
+	*
+	* @param uuid the report instance's UUID
+	* @param companyId the primary key of the company
+	* @return the matching report instance
+	* @throws PortalException if a matching report instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.content.targeting.model.ReportInstance getReportInstanceByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
+
+	/**
+	* Returns the report instance matching the UUID and group.
+	*
+	* @param uuid the report instance's UUID
+	* @param groupId the primary key of the group
+	* @return the matching report instance
+	* @throws PortalException if a matching report instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.content.targeting.model.ReportInstance getReportInstanceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
@@ -288,6 +344,18 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
+		java.lang.String className, long classPK, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.ReportInstance> searchReportInstances(
+		long groupId, java.lang.String className, long classPK,
+		java.lang.String keywords, int start, int end)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.content.targeting.model.ReportInstance updateReportInstance(
 		long reportInstanceId, long userId, java.lang.String reportKey,

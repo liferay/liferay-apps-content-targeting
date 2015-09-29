@@ -1,6 +1,6 @@
 <#--
 /**
- * Copyright (c) 2000-2012 Liferay, Inc. All rights reserved.
+ * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
  * This library is free software; you can redistribute it and/or modify it under
  * the terms of the GNU Lesser General Public License as published by the Free
@@ -40,7 +40,7 @@
 
 		<@aui["nav-bar-search"] cssClass="pull-right">
 			<div class="form-search">
-				<@liferay_ui["input-search"] id="tacticskeywords" name="keywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
+				<@liferay_ui["input-search"] id="tacticskeywords" name="tacticKeywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
 			</div>
 		</@>
 	</@>
@@ -58,7 +58,7 @@
 		{
 			contentPanel: tacticsPanel,
 			inputNode: inputNode,
-			resourceURL: '<@portlet["resourceURL"]><@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" /><@portlet["param"] name="campaignId" value="${campaignId}" /><@portlet["param"] name="campaignTabs" value="promotions" /></@>',
+			resourceURL: '<@portlet["resourceURL"]><@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_TACTICS_RESOURCES}" /></@>',
 			namespace: '<@portlet["namespace"] />'
 		}
 	);

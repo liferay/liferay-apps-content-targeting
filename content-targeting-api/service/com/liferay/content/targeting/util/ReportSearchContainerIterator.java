@@ -17,9 +17,10 @@ package com.liferay.content.targeting.util;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.util.ListUtil;
+import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
@@ -64,7 +65,13 @@ public class ReportSearchContainerIterator
 	public List<ReportInstance> getResults(int start, int end)
 		throws PortalException, SystemException {
 
-		return ListUtil.subList(getResults(), start, end);
+		if (Validator.isBlank(keywords)) {
+			return _reportInstanceLocalService.getReportInstances(
+				_className, _classPK, start, end);
+		}
+
+		return _reportInstanceLocalService.searchReportInstances(
+			groupId, _className, _classPK, keywords, start, end);
 	}
 
 	@Override
@@ -72,10 +79,10 @@ public class ReportSearchContainerIterator
 		return getResults().size();
 	}
 
-	protected List<ReportInstance> getResults() throws SystemException {
+	protected List<ReportInstance> getResults()
+		throws PortalException, SystemException {
 
-		return _reportInstanceLocalService.getReportInstances(
-			_className, _classPK);
+		return getResults(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 
 	private String _className;

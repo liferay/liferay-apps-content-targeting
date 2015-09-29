@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.bean.AutoEscape;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -42,7 +43,8 @@ import java.util.Map;
  * @see com.liferay.content.targeting.model.impl.ReportInstanceModelImpl
  * @generated
  */
-public interface ReportInstanceModel extends BaseModel<ReportInstance> {
+public interface ReportInstanceModel extends BaseModel<ReportInstance>,
+	StagedGroupedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -64,6 +66,23 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	public void setPrimaryKey(long primaryKey);
 
 	/**
+	 * Returns the uuid of this report instance.
+	 *
+	 * @return the uuid of this report instance
+	 */
+	@AutoEscape
+	@Override
+	public String getUuid();
+
+	/**
+	 * Sets the uuid of this report instance.
+	 *
+	 * @param uuid the uuid of this report instance
+	 */
+	@Override
+	public void setUuid(String uuid);
+
+	/**
 	 * Returns the report instance ID of this report instance.
 	 *
 	 * @return the report instance ID of this report instance
@@ -82,6 +101,7 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	 *
 	 * @return the group ID of this report instance
 	 */
+	@Override
 	public long getGroupId();
 
 	/**
@@ -89,6 +109,7 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	 *
 	 * @param groupId the group ID of this report instance
 	 */
+	@Override
 	public void setGroupId(long groupId);
 
 	/**
@@ -96,6 +117,7 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	 *
 	 * @return the company ID of this report instance
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -103,6 +125,7 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	 *
 	 * @param companyId the company ID of this report instance
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -110,6 +133,7 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	 *
 	 * @return the user ID of this report instance
 	 */
+	@Override
 	public long getUserId();
 
 	/**
@@ -117,6 +141,7 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	 *
 	 * @param userId the user ID of this report instance
 	 */
+	@Override
 	public void setUserId(long userId);
 
 	/**
@@ -125,6 +150,7 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	 * @return the user uuid of this report instance
 	 * @throws SystemException if a system exception occurred
 	 */
+	@Override
 	public String getUserUuid() throws SystemException;
 
 	/**
@@ -132,6 +158,7 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	 *
 	 * @param userUuid the user uuid of this report instance
 	 */
+	@Override
 	public void setUserUuid(String userUuid);
 
 	/**
@@ -140,6 +167,7 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	 * @return the user name of this report instance
 	 */
 	@AutoEscape
+	@Override
 	public String getUserName();
 
 	/**
@@ -147,13 +175,31 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	 *
 	 * @param userName the user name of this report instance
 	 */
+	@Override
 	public void setUserName(String userName);
+
+	/**
+	 * Returns the create date of this report instance.
+	 *
+	 * @return the create date of this report instance
+	 */
+	@Override
+	public Date getCreateDate();
+
+	/**
+	 * Sets the create date of this report instance.
+	 *
+	 * @param createDate the create date of this report instance
+	 */
+	@Override
+	public void setCreateDate(Date createDate);
 
 	/**
 	 * Returns the modified date of this report instance.
 	 *
 	 * @return the modified date of this report instance
 	 */
+	@Override
 	public Date getModifiedDate();
 
 	/**
@@ -161,6 +207,7 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	 *
 	 * @param modifiedDate the modified date of this report instance
 	 */
+	@Override
 	public void setModifiedDate(Date modifiedDate);
 
 	/**
@@ -468,19 +515,20 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance> {
 	public Object clone();
 
 	@Override
-	public int compareTo(ReportInstance reportInstance);
+	public int compareTo(
+		com.liferay.content.targeting.model.ReportInstance reportInstance);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ReportInstance> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.ReportInstance> toCacheModel();
 
 	@Override
-	public ReportInstance toEscapedModel();
+	public com.liferay.content.targeting.model.ReportInstance toEscapedModel();
 
 	@Override
-	public ReportInstance toUnescapedModel();
+	public com.liferay.content.targeting.model.ReportInstance toUnescapedModel();
 
 	@Override
 	public String toString();

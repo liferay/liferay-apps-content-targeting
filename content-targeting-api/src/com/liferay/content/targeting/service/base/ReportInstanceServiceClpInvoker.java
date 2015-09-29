@@ -24,80 +24,80 @@ import java.util.Arrays;
  */
 public class ReportInstanceServiceClpInvoker {
 	public ReportInstanceServiceClpInvoker() {
-		_methodName62 = "getBeanIdentifier";
+		_methodName68 = "getBeanIdentifier";
 
-		_methodParameterTypes62 = new String[] {  };
+		_methodParameterTypes68 = new String[] {  };
 
-		_methodName63 = "setBeanIdentifier";
+		_methodName69 = "setBeanIdentifier";
 
-		_methodParameterTypes63 = new String[] { "java.lang.String" };
+		_methodParameterTypes69 = new String[] { "java.lang.String" };
 
-		_methodName68 = "addReportInstance";
+		_methodName74 = "addReportInstance";
 
-		_methodParameterTypes68 = new String[] {
+		_methodParameterTypes74 = new String[] {
 				"long", "java.lang.String", "java.lang.String", "long",
 				"java.util.Map", "java.util.Map", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName69 = "addReportInstance";
+		_methodName75 = "addReportInstance";
 
-		_methodParameterTypes69 = new String[] {
+		_methodParameterTypes75 = new String[] {
 				"long", "java.lang.String", "java.lang.String", "long",
 				"java.lang.String", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName70 = "fetchReportInstance";
+		_methodName76 = "fetchReportInstance";
 
-		_methodParameterTypes70 = new String[] { "long" };
+		_methodParameterTypes76 = new String[] { "long" };
 
-		_methodName71 = "fetchReportInstance";
+		_methodName77 = "fetchReportInstance";
 
-		_methodParameterTypes71 = new String[] {
+		_methodParameterTypes77 = new String[] {
 				"java.lang.String", "java.lang.String", "long"
 			};
 
-		_methodName72 = "findReportInstances";
+		_methodName78 = "findReportInstances";
 
-		_methodParameterTypes72 = new String[] {
+		_methodParameterTypes78 = new String[] {
 				"java.lang.String", "java.lang.String", "long"
 			};
 
-		_methodName73 = "getReportInstances";
+		_methodName79 = "getReportInstances";
 
-		_methodParameterTypes73 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes79 = new String[] { "java.lang.String", "long" };
 
-		_methodName74 = "updateReportInstance";
+		_methodName80 = "updateReportInstance";
 
-		_methodParameterTypes74 = new String[] {
+		_methodParameterTypes80 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String", "long",
 				"java.util.Map", "java.util.Map", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName75 = "updateReportInstance";
+		_methodName81 = "updateReportInstance";
 
-		_methodParameterTypes75 = new String[] {
+		_methodParameterTypes81 = new String[] {
 				"com.liferay.content.targeting.model.ReportInstance"
 			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName62.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
+		if (_methodName68.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
 			return ReportInstanceServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName63.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
+		if (_methodName69.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
 			ReportInstanceServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName68.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes68, parameterTypes)) {
+		if (_methodName74.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes74, parameterTypes)) {
 			return ReportInstanceServiceUtil.addReportInstance(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				((Long)arguments[3]).longValue(),
@@ -107,8 +107,8 @@ public class ReportInstanceServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
-		if (_methodName69.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes69, parameterTypes)) {
+		if (_methodName75.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes75, parameterTypes)) {
 			return ReportInstanceServiceUtil.addReportInstance(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
 				((Long)arguments[3]).longValue(),
@@ -116,31 +116,31 @@ public class ReportInstanceServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[5]);
 		}
 
-		if (_methodName70.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes70, parameterTypes)) {
+		if (_methodName76.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes76, parameterTypes)) {
 			return ReportInstanceServiceUtil.fetchReportInstance(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName71.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes71, parameterTypes)) {
+		if (_methodName77.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes77, parameterTypes)) {
 			return ReportInstanceServiceUtil.fetchReportInstance((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], ((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName72.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes72, parameterTypes)) {
+		if (_methodName78.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes78, parameterTypes)) {
 			return ReportInstanceServiceUtil.findReportInstances((java.lang.String)arguments[0],
 				(java.lang.String)arguments[1], ((Long)arguments[2]).longValue());
 		}
 
-		if (_methodName73.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes73, parameterTypes)) {
+		if (_methodName79.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes79, parameterTypes)) {
 			return ReportInstanceServiceUtil.getReportInstances((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue());
 		}
 
-		if (_methodName74.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes74, parameterTypes)) {
+		if (_methodName80.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes80, parameterTypes)) {
 			return ReportInstanceServiceUtil.updateReportInstance(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -151,32 +151,32 @@ public class ReportInstanceServiceClpInvoker {
 				(com.liferay.portal.service.ServiceContext)arguments[8]);
 		}
 
-		if (_methodName75.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes75, parameterTypes)) {
+		if (_methodName81.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes81, parameterTypes)) {
 			return ReportInstanceServiceUtil.updateReportInstance((com.liferay.content.targeting.model.ReportInstance)arguments[0]);
 		}
 
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName62;
-	private String[] _methodParameterTypes62;
-	private String _methodName63;
-	private String[] _methodParameterTypes63;
 	private String _methodName68;
 	private String[] _methodParameterTypes68;
 	private String _methodName69;
 	private String[] _methodParameterTypes69;
-	private String _methodName70;
-	private String[] _methodParameterTypes70;
-	private String _methodName71;
-	private String[] _methodParameterTypes71;
-	private String _methodName72;
-	private String[] _methodParameterTypes72;
-	private String _methodName73;
-	private String[] _methodParameterTypes73;
 	private String _methodName74;
 	private String[] _methodParameterTypes74;
 	private String _methodName75;
 	private String[] _methodParameterTypes75;
+	private String _methodName76;
+	private String[] _methodParameterTypes76;
+	private String _methodName77;
+	private String[] _methodParameterTypes77;
+	private String _methodName78;
+	private String[] _methodParameterTypes78;
+	private String _methodName79;
+	private String[] _methodParameterTypes79;
+	private String _methodName80;
+	private String[] _methodParameterTypes80;
+	private String _methodName81;
+	private String[] _methodParameterTypes81;
 }

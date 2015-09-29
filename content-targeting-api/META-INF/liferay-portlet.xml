@@ -5,6 +5,8 @@
 	<portlet>
 		<portlet-name>ctcore</portlet-name>
 		<indexer-class>com.liferay.content.targeting.util.CampaignIndexer</indexer-class>
+		<indexer-class>com.liferay.content.targeting.util.ReportInstanceIndexer</indexer-class>
+		<indexer-class>com.liferay.content.targeting.util.TacticIndexer</indexer-class>
 		<indexer-class>com.liferay.content.targeting.util.UserSegmentIndexer</indexer-class>
 		<scheduler-entry>
 			<scheduler-event-listener-class>com.liferay.content.targeting.messaging.CheckAnonymousUserUserSegmentsMessageListener</scheduler-event-listener-class>
