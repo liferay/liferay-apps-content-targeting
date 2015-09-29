@@ -76,9 +76,9 @@ public class ConsumerExtensionInstanceModelImpl extends BaseModelImpl<ConsumerEx
 			{ "modifiedDate", Types.TIMESTAMP },
 			{ "consumerExtensionKey", Types.VARCHAR },
 			{ "consumerId", Types.BIGINT },
-			{ "typeSettings", Types.VARCHAR }
+			{ "typeSettings", Types.CLOB }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CM_ConsumerExtensionInstance (uuid_ VARCHAR(75) null,consumerExtensionInstanceId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,consumerExtensionKey VARCHAR(75) null,consumerId LONG,typeSettings VARCHAR(75) null)";
+	public static final String TABLE_SQL_CREATE = "create table CM_ConsumerExtensionInstance (uuid_ VARCHAR(75) null,consumerExtensionInstanceId LONG not null primary key,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,consumerExtensionKey VARCHAR(75) null,consumerId LONG,typeSettings TEXT null)";
 	public static final String TABLE_SQL_DROP = "drop table CM_ConsumerExtensionInstance";
 	public static final String ORDER_BY_JPQL = " ORDER BY consumerExtensionInstance.consumerExtensionKey DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CM_ConsumerExtensionInstance.consumerExtensionKey DESC";

@@ -21,5 +21,5 @@ create table CM_ConsumerExtensionInstance (
 	modifiedDate DATE null,
 	consumerExtensionKey VARCHAR(75) null,
 	consumerId LONG,
-	typeSettings VARCHAR(75) null
+	typeSettings TEXT null
 );
