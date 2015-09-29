@@ -33,7 +33,7 @@
 
 		<@aui["nav-bar-search"] cssClass="pull-right">
 			<div class="form-search">
-				<@liferay_ui["input-search"] id="userSegmentkeywords" name="keywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
+				<@liferay_ui["input-search"] id="userSegmentKeywords" name="userSegmentKeywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
 			</div>
 		</@>
 	</@>
@@ -45,7 +45,7 @@
 
 <@aui["script"] use="liferay-ajax-search">
 	var userSegmentsPanel = A.one('#<@portlet["namespace"] />userSegmentsPanel');
-	var inputNode = A.one('#<@portlet["namespace"] />userSegmentkeywords');
+	var inputNode = A.one('#<@portlet["namespace"] />userSegmentKeywords');
 
 	var search = new Liferay.AjaxContentSearch(
 		{

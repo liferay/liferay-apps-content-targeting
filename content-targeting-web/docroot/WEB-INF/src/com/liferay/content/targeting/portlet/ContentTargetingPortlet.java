@@ -1126,14 +1126,21 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					"campaignsRowChecker", new RowChecker(portletResponse));
 			}
 
-			String keywords = ParamUtil.getString(portletRequest, "keywords");
+			String campaignKeywords = ParamUtil.getString(
+				portletRequest, "campaignKeywords");
+
+			String userSegmentKeywords = ParamUtil.getString(
+				portletRequest, "userSegmentKeywords");
 
 			template.put(
 				"campaignSearchContainerIterator",
-				new CampaignSearchContainerIterator(scopeGroupId, keywords));
+				new CampaignSearchContainerIterator(
+					scopeGroupId, campaignKeywords));
+
 			template.put(
 				"userSegmentSearchContainerIterator",
-				new UserSegmentSearchContainerIterator(scopeGroupId, keywords));
+				new UserSegmentSearchContainerIterator(
+					scopeGroupId, userSegmentKeywords));
 
 			Map<String, Channel> channels = _channelsRegistry.getChannels();
 			Map<String, Report> reports = _reportsRegistry.getReports();

@@ -30,7 +30,7 @@
 
 		<@aui["nav-bar-search"] cssClass="pull-right">
 			<div class="form-search">
-				<@liferay_ui["input-search"] id="campaignkeywords" name="keywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
+				<@liferay_ui["input-search"] id="campaignKeywords" name="campaignKeywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
 			</div>
 		</@>
 	</@>
@@ -42,7 +42,7 @@
 
 <@aui["script"] use="liferay-ajax-search">
 	var campaignsPanel = A.one('#<@portlet["namespace"] />campaignsPanel');
-	var inputNode = A.one('#<@portlet["namespace"] />campaignkeywords');
+	var inputNode = A.one('#<@portlet["namespace"] />campaignKeywords');
 
 	var search = new Liferay.AjaxContentSearch(
 		{
