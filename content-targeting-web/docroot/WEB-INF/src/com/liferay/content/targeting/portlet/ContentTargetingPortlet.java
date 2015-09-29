@@ -1143,9 +1143,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN) ||
 				 path.equals(ContentTargetingPath.EDIT_TACTIC) ||
+				 path.equals(ContentTargetingPath.VIEW_REPORTS_RESOURCES) ||
 				 path.equals(ContentTargetingPath.VIEW_TACTICS) ||
-				 path.equals(ContentTargetingPath.VIEW_TACTICS_RESOURCES) ||
-				 path.equals(ContentTargetingPath.VIEW_REPORTS_RESOURCES)) {
+				 path.equals(ContentTargetingPath.VIEW_TACTICS_RESOURCES)) {
 
 			template.put(
 				"contentTargetingPermission",
