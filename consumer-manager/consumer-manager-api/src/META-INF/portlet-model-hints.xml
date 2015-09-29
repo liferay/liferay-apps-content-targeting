@@ -29,6 +29,8 @@
 		<field name="modifiedDate" type="Date" />
 		<field name="consumerExtensionKey" type="String" />
 		<field name="consumerId" type="long" />
-		<field name="typeSettings" type="String" />
+		<field name="typeSettings" type="String">
+			<hint-collection name="CLOB" />
+		</field>
 	</model>
 </model-hints>
