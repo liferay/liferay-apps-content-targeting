@@ -3,4 +3,6 @@
 
 <#setting number_format="computer">
 
-This is the <b>Twitter Sample</b> channel.
+<@aui["input"] label="message" name="{ct_field_guid}message" type="textarea" value=message>
+	<@aui["validator"] name="required" />
+</@>
