@@ -1207,10 +1207,20 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				for (Report report
 					: _reportsRegistry.getReports(className).values()) {
 
-					int reportInstanceCount =
+					List<ReportInstance> reportInstances =
 						_reportInstanceLocalService.findReportInstances(
-							report.getReportKey(), className, campaignId).
-								size();
+							report.getReportKey(), className, campaignId);
+
+					int reportInstanceCount = reportInstances.size();
+
+					if (!report.isInstantiable() && (reportInstanceCount > 1)) {
+						for (ReportInstance reportInstance : reportInstances) {
+							_reportInstanceLocalService.deleteReportInstance(
+								reportInstance.getReportInstanceId());
+						}
+
+						reportInstanceCount = 0;
+					}
 
 					if (!report.isInstantiable() &&
 						(reportInstanceCount == 0)) {
@@ -1743,9 +1753,20 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				for (Report report
 						: _reportsRegistry.getReports(className).values()) {
 
-					int reportInstanceCount =
+					List<ReportInstance> reportInstances =
 						_reportInstanceLocalService.findReportInstances(
-							report.getReportKey(), className, classPK).size();
+							report.getReportKey(), className, classPK);
+
+					int reportInstanceCount = reportInstances.size();
+
+					if (!report.isInstantiable() && (reportInstanceCount > 1)) {
+						for (ReportInstance reportInstance : reportInstances) {
+							_reportInstanceLocalService.deleteReportInstance(
+								reportInstance.getReportInstanceId());
+						}
+
+						reportInstanceCount = 0;
+					}
 
 					if (!report.isInstantiable() &&
 						(reportInstanceCount == 0)) {

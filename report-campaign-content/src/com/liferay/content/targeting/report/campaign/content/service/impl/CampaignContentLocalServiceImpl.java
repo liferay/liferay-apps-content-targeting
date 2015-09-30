@@ -30,7 +30,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.service.ServiceContext;
 
@@ -105,12 +104,6 @@ public class CampaignContentLocalServiceImpl
 				checkCampaignContentEvents(campaign.getCampaignId());
 
 				serviceContext.setScopeGroupId(campaign.getGroupId());
-
-				_reportInstanceLocalService.addReportInstance(
-					campaign.getUserId(),
-					CampaignContentReport.class.getSimpleName(),
-					Campaign.class.getName(), campaign.getCampaignId(),
-					StringPool.BLANK, serviceContext);
 			}
 		}
 		catch (NullPointerException npe) {
