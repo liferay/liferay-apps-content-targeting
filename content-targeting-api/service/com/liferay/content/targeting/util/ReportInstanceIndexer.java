@@ -31,8 +31,11 @@ import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.model.Group;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.service.GroupLocalServiceUtil;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -169,6 +172,19 @@ public class ReportInstanceIndexer extends BaseIndexer {
 			@Override
 			protected void performAction(Object object) throws PortalException {
 				ReportInstance reportInstance = (ReportInstance)object;
+
+				if (reportInstance.getGroupId() == 0) {
+					try {
+						Group companyGroup =
+							GroupLocalServiceUtil.getCompanyGroup(companyId);
+
+						reportInstance.setGroupId(companyGroup.getGroupId());
+						reportInstance.setCreateDate(new Date());
+					}
+					catch (Exception e) {
+						_log.error(e, e);
+					}
+				}
 
 				Document document = getDocument(reportInstance);
 
