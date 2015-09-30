@@ -82,20 +82,20 @@ public class ConsumerExtensionInstanceServiceUtil {
 				   .deleteConsumerExtensionInstance(consumerExtensionInstanceId);
 	}
 
-	public static com.liferay.consumer.manager.model.ConsumerExtensionInstance getConsumerExtensionInstance(
-		long consumerId, java.lang.String consumerExtensionKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getConsumerExtensionInstance(consumerId,
-			consumerExtensionKey);
-	}
-
 	public static java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> getConsumerExtensionInstances(
 		long consumerId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getConsumerExtensionInstances(consumerId);
+	}
+
+	public static java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> getConsumerExtensionInstances(
+		long consumerId, java.lang.String consumerExtensionKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getConsumerExtensionInstances(consumerId,
+			consumerExtensionKey);
 	}
 
 	public static com.liferay.consumer.manager.model.ConsumerExtensionInstance updateConsumerExtensionInstance(

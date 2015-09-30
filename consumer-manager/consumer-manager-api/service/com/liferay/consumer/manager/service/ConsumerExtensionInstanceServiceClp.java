@@ -45,13 +45,13 @@ public class ConsumerExtensionInstanceServiceClp
 
 		_methodParameterTypes4 = new String[] { "long" };
 
-		_methodName5 = "getConsumerExtensionInstance";
+		_methodName5 = "getConsumerExtensionInstances";
 
-		_methodParameterTypes5 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes5 = new String[] { "long" };
 
 		_methodName6 = "getConsumerExtensionInstances";
 
-		_methodParameterTypes6 = new String[] { "long" };
+		_methodParameterTypes6 = new String[] { "long", "java.lang.String" };
 
 		_methodName7 = "updateConsumerExtensionInstance";
 
@@ -192,20 +192,15 @@ public class ConsumerExtensionInstanceServiceClp
 	}
 
 	@Override
-	public com.liferay.consumer.manager.model.ConsumerExtensionInstance getConsumerExtensionInstance(
-		long consumerId, java.lang.String consumerExtensionKey)
+	public java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> getConsumerExtensionInstances(
+		long consumerId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName5,
-					_methodParameterTypes5,
-					new Object[] {
-						consumerId,
-						
-					ClpSerializer.translateInput(consumerExtensionKey)
-					});
+					_methodParameterTypes5, new Object[] { consumerId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -227,19 +222,24 @@ public class ConsumerExtensionInstanceServiceClp
 			}
 		}
 
-		return (com.liferay.consumer.manager.model.ConsumerExtensionInstance)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
 	public java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> getConsumerExtensionInstances(
-		long consumerId)
+		long consumerId, java.lang.String consumerExtensionKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableService.invokeMethod(_methodName6,
-					_methodParameterTypes6, new Object[] { consumerId });
+					_methodParameterTypes6,
+					new Object[] {
+						consumerId,
+						
+					ClpSerializer.translateInput(consumerExtensionKey)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

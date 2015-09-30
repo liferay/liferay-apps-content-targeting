@@ -79,20 +79,20 @@ public class ConsumerExtensionInstanceServiceWrapper
 	}
 
 	@Override
-	public com.liferay.consumer.manager.model.ConsumerExtensionInstance getConsumerExtensionInstance(
-		long consumerId, java.lang.String consumerExtensionKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _consumerExtensionInstanceService.getConsumerExtensionInstance(consumerId,
-			consumerExtensionKey);
-	}
-
-	@Override
 	public java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> getConsumerExtensionInstances(
 		long consumerId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _consumerExtensionInstanceService.getConsumerExtensionInstances(consumerId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> getConsumerExtensionInstances(
+		long consumerId, java.lang.String consumerExtensionKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _consumerExtensionInstanceService.getConsumerExtensionInstances(consumerId,
+			consumerExtensionKey);
 	}
 
 	@Override

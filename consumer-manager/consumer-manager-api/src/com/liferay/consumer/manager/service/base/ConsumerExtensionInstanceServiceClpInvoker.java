@@ -43,13 +43,13 @@ public class ConsumerExtensionInstanceServiceClpInvoker {
 
 		_methodParameterTypes31 = new String[] { "long" };
 
-		_methodName32 = "getConsumerExtensionInstance";
+		_methodName32 = "getConsumerExtensionInstances";
 
-		_methodParameterTypes32 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes32 = new String[] { "long" };
 
 		_methodName33 = "getConsumerExtensionInstances";
 
-		_methodParameterTypes33 = new String[] { "long" };
+		_methodParameterTypes33 = new String[] { "long", "java.lang.String" };
 
 		_methodName34 = "updateConsumerExtensionInstance";
 
@@ -88,13 +88,13 @@ public class ConsumerExtensionInstanceServiceClpInvoker {
 
 		if (_methodName32.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes32, parameterTypes)) {
-			return ConsumerExtensionInstanceServiceUtil.getConsumerExtensionInstance(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
+			return ConsumerExtensionInstanceServiceUtil.getConsumerExtensionInstances(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName33.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes33, parameterTypes)) {
-			return ConsumerExtensionInstanceServiceUtil.getConsumerExtensionInstances(((Long)arguments[0]).longValue());
+			return ConsumerExtensionInstanceServiceUtil.getConsumerExtensionInstances(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName34.equals(name) &&

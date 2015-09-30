@@ -96,15 +96,13 @@ public class ConsumerExtensionInstanceServiceSoap {
 		}
 	}
 
-	public static com.liferay.consumer.manager.model.ConsumerExtensionInstanceSoap getConsumerExtensionInstance(
-		long consumerId, java.lang.String consumerExtensionKey)
-		throws RemoteException {
+	public static com.liferay.consumer.manager.model.ConsumerExtensionInstanceSoap[] getConsumerExtensionInstances(
+		long consumerId) throws RemoteException {
 		try {
-			com.liferay.consumer.manager.model.ConsumerExtensionInstance returnValue =
-				ConsumerExtensionInstanceServiceUtil.getConsumerExtensionInstance(consumerId,
-					consumerExtensionKey);
+			java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> returnValue =
+				ConsumerExtensionInstanceServiceUtil.getConsumerExtensionInstances(consumerId);
 
-			return com.liferay.consumer.manager.model.ConsumerExtensionInstanceSoap.toSoapModel(returnValue);
+			return com.liferay.consumer.manager.model.ConsumerExtensionInstanceSoap.toSoapModels(returnValue);
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -114,10 +112,12 @@ public class ConsumerExtensionInstanceServiceSoap {
 	}
 
 	public static com.liferay.consumer.manager.model.ConsumerExtensionInstanceSoap[] getConsumerExtensionInstances(
-		long consumerId) throws RemoteException {
+		long consumerId, java.lang.String consumerExtensionKey)
+		throws RemoteException {
 		try {
 			java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> returnValue =
-				ConsumerExtensionInstanceServiceUtil.getConsumerExtensionInstances(consumerId);
+				ConsumerExtensionInstanceServiceUtil.getConsumerExtensionInstances(consumerId,
+					consumerExtensionKey);
 
 			return com.liferay.consumer.manager.model.ConsumerExtensionInstanceSoap.toSoapModels(returnValue);
 		}

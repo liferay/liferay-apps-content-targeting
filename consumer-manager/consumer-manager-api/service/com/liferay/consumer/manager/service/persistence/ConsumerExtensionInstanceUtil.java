@@ -954,80 +954,188 @@ public class ConsumerExtensionInstanceUtil {
 	}
 
 	/**
-	* Returns the consumer extension instance where consumerExtensionKey = &#63; and consumerId = &#63; or throws a {@link com.liferay.consumer.manager.NoSuchConsumerExtensionInstanceException} if it could not be found.
+	* Returns all the consumer extension instances where consumerId = &#63; and consumerExtensionKey = &#63;.
 	*
-	* @param consumerExtensionKey the consumer extension key
 	* @param consumerId the consumer ID
-	* @return the matching consumer extension instance
+	* @param consumerExtensionKey the consumer extension key
+	* @return the matching consumer extension instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> findByC_C(
+		long consumerId, java.lang.String consumerExtensionKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_C(consumerId, consumerExtensionKey);
+	}
+
+	/**
+	* Returns a range of all the consumer extension instances where consumerId = &#63; and consumerExtensionKey = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerExtensionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param consumerId the consumer ID
+	* @param consumerExtensionKey the consumer extension key
+	* @param start the lower bound of the range of consumer extension instances
+	* @param end the upper bound of the range of consumer extension instances (not inclusive)
+	* @return the range of matching consumer extension instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> findByC_C(
+		long consumerId, java.lang.String consumerExtensionKey, int start,
+		int end) throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C(consumerId, consumerExtensionKey, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the consumer extension instances where consumerId = &#63; and consumerExtensionKey = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerExtensionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param consumerId the consumer ID
+	* @param consumerExtensionKey the consumer extension key
+	* @param start the lower bound of the range of consumer extension instances
+	* @param end the upper bound of the range of consumer extension instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching consumer extension instances
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> findByC_C(
+		long consumerId, java.lang.String consumerExtensionKey, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C(consumerId, consumerExtensionKey, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first consumer extension instance in the ordered set where consumerId = &#63; and consumerExtensionKey = &#63;.
+	*
+	* @param consumerId the consumer ID
+	* @param consumerExtensionKey the consumer extension key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching consumer extension instance
 	* @throws com.liferay.consumer.manager.NoSuchConsumerExtensionInstanceException if a matching consumer extension instance could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.consumer.manager.model.ConsumerExtensionInstance findByC_C(
-		java.lang.String consumerExtensionKey, long consumerId)
+	public static com.liferay.consumer.manager.model.ConsumerExtensionInstance findByC_C_First(
+		long consumerId, java.lang.String consumerExtensionKey,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.consumer.manager.NoSuchConsumerExtensionInstanceException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().findByC_C(consumerExtensionKey, consumerId);
+		return getPersistence()
+				   .findByC_C_First(consumerId, consumerExtensionKey,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the consumer extension instance where consumerExtensionKey = &#63; and consumerId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	* Returns the first consumer extension instance in the ordered set where consumerId = &#63; and consumerExtensionKey = &#63;.
 	*
-	* @param consumerExtensionKey the consumer extension key
 	* @param consumerId the consumer ID
-	* @return the matching consumer extension instance, or <code>null</code> if a matching consumer extension instance could not be found
+	* @param consumerExtensionKey the consumer extension key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching consumer extension instance, or <code>null</code> if a matching consumer extension instance could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.consumer.manager.model.ConsumerExtensionInstance fetchByC_C(
-		java.lang.String consumerExtensionKey, long consumerId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().fetchByC_C(consumerExtensionKey, consumerId);
-	}
-
-	/**
-	* Returns the consumer extension instance where consumerExtensionKey = &#63; and consumerId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param consumerExtensionKey the consumer extension key
-	* @param consumerId the consumer ID
-	* @param retrieveFromCache whether to use the finder cache
-	* @return the matching consumer extension instance, or <code>null</code> if a matching consumer extension instance could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.consumer.manager.model.ConsumerExtensionInstance fetchByC_C(
-		java.lang.String consumerExtensionKey, long consumerId,
-		boolean retrieveFromCache)
+	public static com.liferay.consumer.manager.model.ConsumerExtensionInstance fetchByC_C_First(
+		long consumerId, java.lang.String consumerExtensionKey,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getPersistence()
-				   .fetchByC_C(consumerExtensionKey, consumerId,
-			retrieveFromCache);
+				   .fetchByC_C_First(consumerId, consumerExtensionKey,
+			orderByComparator);
 	}
 
 	/**
-	* Removes the consumer extension instance where consumerExtensionKey = &#63; and consumerId = &#63; from the database.
+	* Returns the last consumer extension instance in the ordered set where consumerId = &#63; and consumerExtensionKey = &#63;.
 	*
-	* @param consumerExtensionKey the consumer extension key
 	* @param consumerId the consumer ID
-	* @return the consumer extension instance that was removed
+	* @param consumerExtensionKey the consumer extension key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching consumer extension instance
+	* @throws com.liferay.consumer.manager.NoSuchConsumerExtensionInstanceException if a matching consumer extension instance could not be found
 	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.consumer.manager.model.ConsumerExtensionInstance removeByC_C(
-		java.lang.String consumerExtensionKey, long consumerId)
+	public static com.liferay.consumer.manager.model.ConsumerExtensionInstance findByC_C_Last(
+		long consumerId, java.lang.String consumerExtensionKey,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
 		throws com.liferay.consumer.manager.NoSuchConsumerExtensionInstanceException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().removeByC_C(consumerExtensionKey, consumerId);
+		return getPersistence()
+				   .findByC_C_Last(consumerId, consumerExtensionKey,
+			orderByComparator);
 	}
 
 	/**
-	* Returns the number of consumer extension instances where consumerExtensionKey = &#63; and consumerId = &#63;.
+	* Returns the last consumer extension instance in the ordered set where consumerId = &#63; and consumerExtensionKey = &#63;.
 	*
-	* @param consumerExtensionKey the consumer extension key
 	* @param consumerId the consumer ID
+	* @param consumerExtensionKey the consumer extension key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching consumer extension instance, or <code>null</code> if a matching consumer extension instance could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.consumer.manager.model.ConsumerExtensionInstance fetchByC_C_Last(
+		long consumerId, java.lang.String consumerExtensionKey,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_C_Last(consumerId, consumerExtensionKey,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the consumer extension instances before and after the current consumer extension instance in the ordered set where consumerId = &#63; and consumerExtensionKey = &#63;.
+	*
+	* @param consumerExtensionInstanceId the primary key of the current consumer extension instance
+	* @param consumerId the consumer ID
+	* @param consumerExtensionKey the consumer extension key
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next consumer extension instance
+	* @throws com.liferay.consumer.manager.NoSuchConsumerExtensionInstanceException if a consumer extension instance with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.consumer.manager.model.ConsumerExtensionInstance[] findByC_C_PrevAndNext(
+		long consumerExtensionInstanceId, long consumerId,
+		java.lang.String consumerExtensionKey,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.consumer.manager.NoSuchConsumerExtensionInstanceException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_C_PrevAndNext(consumerExtensionInstanceId,
+			consumerId, consumerExtensionKey, orderByComparator);
+	}
+
+	/**
+	* Removes all the consumer extension instances where consumerId = &#63; and consumerExtensionKey = &#63; from the database.
+	*
+	* @param consumerId the consumer ID
+	* @param consumerExtensionKey the consumer extension key
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_C(long consumerId,
+		java.lang.String consumerExtensionKey)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_C(consumerId, consumerExtensionKey);
+	}
+
+	/**
+	* Returns the number of consumer extension instances where consumerId = &#63; and consumerExtensionKey = &#63;.
+	*
+	* @param consumerId the consumer ID
+	* @param consumerExtensionKey the consumer extension key
 	* @return the number of matching consumer extension instances
 	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_C(java.lang.String consumerExtensionKey,
-		long consumerId)
+	public static int countByC_C(long consumerId,
+		java.lang.String consumerExtensionKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
-		return getPersistence().countByC_C(consumerExtensionKey, consumerId);
+		return getPersistence().countByC_C(consumerId, consumerExtensionKey);
 	}
 
 	/**

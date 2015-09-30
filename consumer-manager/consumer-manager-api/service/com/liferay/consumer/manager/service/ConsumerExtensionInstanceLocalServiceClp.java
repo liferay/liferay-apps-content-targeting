@@ -131,13 +131,13 @@ public class ConsumerExtensionInstanceLocalServiceClp
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName22 = "getConsumerExtensionInstance";
+		_methodName22 = "getConsumerExtensionInstances";
 
-		_methodParameterTypes22 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes22 = new String[] { "long" };
 
 		_methodName23 = "getConsumerExtensionInstances";
 
-		_methodParameterTypes23 = new String[] { "long" };
+		_methodParameterTypes23 = new String[] { "long", "java.lang.String" };
 
 		_methodName24 = "updateConsumerExtensionInstance";
 
@@ -818,19 +818,14 @@ public class ConsumerExtensionInstanceLocalServiceClp
 	}
 
 	@Override
-	public com.liferay.consumer.manager.model.ConsumerExtensionInstance getConsumerExtensionInstance(
-		long consumerId, java.lang.String consumerExtensionKey)
+	public java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> getConsumerExtensionInstances(
+		long consumerId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName22,
-					_methodParameterTypes22,
-					new Object[] {
-						consumerId,
-						
-					ClpSerializer.translateInput(consumerExtensionKey)
-					});
+					_methodParameterTypes22, new Object[] { consumerId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -848,18 +843,23 @@ public class ConsumerExtensionInstanceLocalServiceClp
 			}
 		}
 
-		return (com.liferay.consumer.manager.model.ConsumerExtensionInstance)ClpSerializer.translateOutput(returnObj);
+		return (java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance>)ClpSerializer.translateOutput(returnObj);
 	}
 
 	@Override
 	public java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> getConsumerExtensionInstances(
-		long consumerId)
+		long consumerId, java.lang.String consumerExtensionKey)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName23,
-					_methodParameterTypes23, new Object[] { consumerId });
+					_methodParameterTypes23,
+					new Object[] {
+						consumerId,
+						
+					ClpSerializer.translateInput(consumerExtensionKey)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);

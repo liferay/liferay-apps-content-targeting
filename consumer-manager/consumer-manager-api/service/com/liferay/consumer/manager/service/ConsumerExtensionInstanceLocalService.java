@@ -290,13 +290,13 @@ public interface ConsumerExtensionInstanceLocalService extends BaseLocalService,
 			com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.consumer.manager.model.ConsumerExtensionInstance getConsumerExtensionInstance(
-		long consumerId, java.lang.String consumerExtensionKey)
+	public java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> getConsumerExtensionInstances(
+		long consumerId)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.consumer.manager.model.ConsumerExtensionInstance> getConsumerExtensionInstances(
-		long consumerId)
+		long consumerId, java.lang.String consumerExtensionKey)
 		throws com.liferay.portal.kernel.exception.SystemException;
 
 	public com.liferay.consumer.manager.model.ConsumerExtensionInstance updateConsumerExtensionInstance(
