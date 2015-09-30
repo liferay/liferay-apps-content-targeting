@@ -59,7 +59,7 @@ public class ConsumerServiceClp implements ConsumerService {
 
 		_methodName8 = "getConsumersByConsumerExtensionKey";
 
-		_methodParameterTypes8 = new String[] { "java.lang.String" };
+		_methodParameterTypes8 = new String[] { "long", "java.lang.String" };
 
 		_methodName9 = "updateConsumer";
 
@@ -307,7 +307,7 @@ public class ConsumerServiceClp implements ConsumerService {
 
 	@Override
 	public java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersByConsumerExtensionKey(
-		java.lang.String consumerExtensionKey)
+		long companyId, java.lang.String consumerExtensionKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -316,7 +316,9 @@ public class ConsumerServiceClp implements ConsumerService {
 			returnObj = _invokableService.invokeMethod(_methodName8,
 					_methodParameterTypes8,
 					new Object[] {
-						ClpSerializer.translateInput(consumerExtensionKey)
+						companyId,
+						
+					ClpSerializer.translateInput(consumerExtensionKey)
 					});
 		}
 		catch (Throwable t) {

@@ -2208,53 +2208,52 @@ public class ConsumerExtensionInstancePersistenceImpl
 	}
 
 	private static final String _FINDER_COLUMN_CONSUMERID_CONSUMERID_2 = "consumerExtensionInstance.consumerId = ?";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_CONSUMEREXTENSIONKEY =
-		new FinderPath(ConsumerExtensionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C = new FinderPath(ConsumerExtensionInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			ConsumerExtensionInstanceModelImpl.FINDER_CACHE_ENABLED,
 			ConsumerExtensionInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
-			"findByConsumerExtensionKey",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
 			new String[] {
-				String.class.getName(),
+				Long.class.getName(), String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSUMEREXTENSIONKEY =
-		new FinderPath(ConsumerExtensionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C = new FinderPath(ConsumerExtensionInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			ConsumerExtensionInstanceModelImpl.FINDER_CACHE_ENABLED,
 			ConsumerExtensionInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByConsumerExtensionKey",
-			new String[] { String.class.getName() },
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+			new String[] { Long.class.getName(), String.class.getName() },
+			ConsumerExtensionInstanceModelImpl.COMPANYID_COLUMN_BITMASK |
 			ConsumerExtensionInstanceModelImpl.CONSUMEREXTENSIONKEY_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_CONSUMEREXTENSIONKEY = new FinderPath(ConsumerExtensionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(ConsumerExtensionInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			ConsumerExtensionInstanceModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByConsumerExtensionKey",
-			new String[] { String.class.getName() });
+			"countByC_C",
+			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns all the consumer extension instances where consumerExtensionKey = &#63;.
+	 * Returns all the consumer extension instances where companyId = &#63; and consumerExtensionKey = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param consumerExtensionKey the consumer extension key
 	 * @return the matching consumer extension instances
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ConsumerExtensionInstance> findByConsumerExtensionKey(
+	public List<ConsumerExtensionInstance> findByC_C(long companyId,
 		String consumerExtensionKey) throws SystemException {
-		return findByConsumerExtensionKey(consumerExtensionKey,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+		return findByC_C(companyId, consumerExtensionKey, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
 	}
 
 	/**
-	 * Returns a range of all the consumer extension instances where consumerExtensionKey = &#63;.
+	 * Returns a range of all the consumer extension instances where companyId = &#63; and consumerExtensionKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerExtensionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @param companyId the company ID
 	 * @param consumerExtensionKey the consumer extension key
 	 * @param start the lower bound of the range of consumer extension instances
 	 * @param end the upper bound of the range of consumer extension instances (not inclusive)
@@ -2262,19 +2261,20 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ConsumerExtensionInstance> findByConsumerExtensionKey(
+	public List<ConsumerExtensionInstance> findByC_C(long companyId,
 		String consumerExtensionKey, int start, int end)
 		throws SystemException {
-		return findByConsumerExtensionKey(consumerExtensionKey, start, end, null);
+		return findByC_C(companyId, consumerExtensionKey, start, end, null);
 	}
 
 	/**
-	 * Returns an ordered range of all the consumer extension instances where consumerExtensionKey = &#63;.
+	 * Returns an ordered range of all the consumer extension instances where companyId = &#63; and consumerExtensionKey = &#63;.
 	 *
 	 * <p>
 	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.consumer.manager.model.impl.ConsumerExtensionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
+	 * @param companyId the company ID
 	 * @param consumerExtensionKey the consumer extension key
 	 * @param start the lower bound of the range of consumer extension instances
 	 * @param end the upper bound of the range of consumer extension instances (not inclusive)
@@ -2283,7 +2283,7 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ConsumerExtensionInstance> findByConsumerExtensionKey(
+	public List<ConsumerExtensionInstance> findByC_C(long companyId,
 		String consumerExtensionKey, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
@@ -2293,13 +2293,13 @@ public class ConsumerExtensionInstancePersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSUMEREXTENSIONKEY;
-			finderArgs = new Object[] { consumerExtensionKey };
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C;
+			finderArgs = new Object[] { companyId, consumerExtensionKey };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_CONSUMEREXTENSIONKEY;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C;
 			finderArgs = new Object[] {
-					consumerExtensionKey,
+					companyId, consumerExtensionKey,
 					
 					start, end, orderByComparator
 				};
@@ -2310,7 +2310,8 @@ public class ConsumerExtensionInstancePersistenceImpl
 
 		if ((list != null) && !list.isEmpty()) {
 			for (ConsumerExtensionInstance consumerExtensionInstance : list) {
-				if (!Validator.equals(consumerExtensionKey,
+				if ((companyId != consumerExtensionInstance.getCompanyId()) ||
+						!Validator.equals(consumerExtensionKey,
 							consumerExtensionInstance.getConsumerExtensionKey())) {
 					list = null;
 
@@ -2323,27 +2324,29 @@ public class ConsumerExtensionInstancePersistenceImpl
 			StringBundler query = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(3 +
+				query = new StringBundler(4 +
 						(orderByComparator.getOrderByFields().length * 3));
 			}
 			else {
-				query = new StringBundler(3);
+				query = new StringBundler(4);
 			}
 
 			query.append(_SQL_SELECT_CONSUMEREXTENSIONINSTANCE_WHERE);
 
+			query.append(_FINDER_COLUMN_C_C_COMPANYID_2);
+
 			boolean bindConsumerExtensionKey = false;
 
 			if (consumerExtensionKey == null) {
-				query.append(_FINDER_COLUMN_CONSUMEREXTENSIONKEY_CONSUMEREXTENSIONKEY_1);
+				query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_1);
 			}
 			else if (consumerExtensionKey.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_CONSUMEREXTENSIONKEY_CONSUMEREXTENSIONKEY_3);
+				query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_3);
 			}
 			else {
 				bindConsumerExtensionKey = true;
 
-				query.append(_FINDER_COLUMN_CONSUMEREXTENSIONKEY_CONSUMEREXTENSIONKEY_2);
+				query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_2);
 			}
 
 			if (orderByComparator != null) {
@@ -2365,6 +2368,8 @@ public class ConsumerExtensionInstancePersistenceImpl
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
 
 				if (bindConsumerExtensionKey) {
 					qPos.add(consumerExtensionKey);
@@ -2401,8 +2406,9 @@ public class ConsumerExtensionInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the first consumer extension instance in the ordered set where consumerExtensionKey = &#63;.
+	 * Returns the first consumer extension instance in the ordered set where companyId = &#63; and consumerExtensionKey = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param consumerExtensionKey the consumer extension key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching consumer extension instance
@@ -2410,21 +2416,24 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ConsumerExtensionInstance findByConsumerExtensionKey_First(
+	public ConsumerExtensionInstance findByC_C_First(long companyId,
 		String consumerExtensionKey, OrderByComparator orderByComparator)
 		throws NoSuchConsumerExtensionInstanceException, SystemException {
-		ConsumerExtensionInstance consumerExtensionInstance = fetchByConsumerExtensionKey_First(consumerExtensionKey,
-				orderByComparator);
+		ConsumerExtensionInstance consumerExtensionInstance = fetchByC_C_First(companyId,
+				consumerExtensionKey, orderByComparator);
 
 		if (consumerExtensionInstance != null) {
 			return consumerExtensionInstance;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler msg = new StringBundler(6);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("consumerExtensionKey=");
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", consumerExtensionKey=");
 		msg.append(consumerExtensionKey);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
@@ -2433,19 +2442,20 @@ public class ConsumerExtensionInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the first consumer extension instance in the ordered set where consumerExtensionKey = &#63;.
+	 * Returns the first consumer extension instance in the ordered set where companyId = &#63; and consumerExtensionKey = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param consumerExtensionKey the consumer extension key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching consumer extension instance, or <code>null</code> if a matching consumer extension instance could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ConsumerExtensionInstance fetchByConsumerExtensionKey_First(
+	public ConsumerExtensionInstance fetchByC_C_First(long companyId,
 		String consumerExtensionKey, OrderByComparator orderByComparator)
 		throws SystemException {
-		List<ConsumerExtensionInstance> list = findByConsumerExtensionKey(consumerExtensionKey,
-				0, 1, orderByComparator);
+		List<ConsumerExtensionInstance> list = findByC_C(companyId,
+				consumerExtensionKey, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2455,8 +2465,9 @@ public class ConsumerExtensionInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last consumer extension instance in the ordered set where consumerExtensionKey = &#63;.
+	 * Returns the last consumer extension instance in the ordered set where companyId = &#63; and consumerExtensionKey = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param consumerExtensionKey the consumer extension key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching consumer extension instance
@@ -2464,21 +2475,24 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ConsumerExtensionInstance findByConsumerExtensionKey_Last(
+	public ConsumerExtensionInstance findByC_C_Last(long companyId,
 		String consumerExtensionKey, OrderByComparator orderByComparator)
 		throws NoSuchConsumerExtensionInstanceException, SystemException {
-		ConsumerExtensionInstance consumerExtensionInstance = fetchByConsumerExtensionKey_Last(consumerExtensionKey,
-				orderByComparator);
+		ConsumerExtensionInstance consumerExtensionInstance = fetchByC_C_Last(companyId,
+				consumerExtensionKey, orderByComparator);
 
 		if (consumerExtensionInstance != null) {
 			return consumerExtensionInstance;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler msg = new StringBundler(6);
 
 		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("consumerExtensionKey=");
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", consumerExtensionKey=");
 		msg.append(consumerExtensionKey);
 
 		msg.append(StringPool.CLOSE_CURLY_BRACE);
@@ -2487,25 +2501,26 @@ public class ConsumerExtensionInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the last consumer extension instance in the ordered set where consumerExtensionKey = &#63;.
+	 * Returns the last consumer extension instance in the ordered set where companyId = &#63; and consumerExtensionKey = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param consumerExtensionKey the consumer extension key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching consumer extension instance, or <code>null</code> if a matching consumer extension instance could not be found
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ConsumerExtensionInstance fetchByConsumerExtensionKey_Last(
+	public ConsumerExtensionInstance fetchByC_C_Last(long companyId,
 		String consumerExtensionKey, OrderByComparator orderByComparator)
 		throws SystemException {
-		int count = countByConsumerExtensionKey(consumerExtensionKey);
+		int count = countByC_C(companyId, consumerExtensionKey);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<ConsumerExtensionInstance> list = findByConsumerExtensionKey(consumerExtensionKey,
-				count - 1, count, orderByComparator);
+		List<ConsumerExtensionInstance> list = findByC_C(companyId,
+				consumerExtensionKey, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
 			return list.get(0);
@@ -2515,9 +2530,10 @@ public class ConsumerExtensionInstancePersistenceImpl
 	}
 
 	/**
-	 * Returns the consumer extension instances before and after the current consumer extension instance in the ordered set where consumerExtensionKey = &#63;.
+	 * Returns the consumer extension instances before and after the current consumer extension instance in the ordered set where companyId = &#63; and consumerExtensionKey = &#63;.
 	 *
 	 * @param consumerExtensionInstanceId the primary key of the current consumer extension instance
+	 * @param companyId the company ID
 	 * @param consumerExtensionKey the consumer extension key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next consumer extension instance
@@ -2525,9 +2541,9 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ConsumerExtensionInstance[] findByConsumerExtensionKey_PrevAndNext(
-		long consumerExtensionInstanceId, String consumerExtensionKey,
-		OrderByComparator orderByComparator)
+	public ConsumerExtensionInstance[] findByC_C_PrevAndNext(
+		long consumerExtensionInstanceId, long companyId,
+		String consumerExtensionKey, OrderByComparator orderByComparator)
 		throws NoSuchConsumerExtensionInstanceException, SystemException {
 		ConsumerExtensionInstance consumerExtensionInstance = findByPrimaryKey(consumerExtensionInstanceId);
 
@@ -2538,15 +2554,13 @@ public class ConsumerExtensionInstancePersistenceImpl
 
 			ConsumerExtensionInstance[] array = new ConsumerExtensionInstanceImpl[3];
 
-			array[0] = getByConsumerExtensionKey_PrevAndNext(session,
-					consumerExtensionInstance, consumerExtensionKey,
-					orderByComparator, true);
+			array[0] = getByC_C_PrevAndNext(session, consumerExtensionInstance,
+					companyId, consumerExtensionKey, orderByComparator, true);
 
 			array[1] = consumerExtensionInstance;
 
-			array[2] = getByConsumerExtensionKey_PrevAndNext(session,
-					consumerExtensionInstance, consumerExtensionKey,
-					orderByComparator, false);
+			array[2] = getByC_C_PrevAndNext(session, consumerExtensionInstance,
+					companyId, consumerExtensionKey, orderByComparator, false);
 
 			return array;
 		}
@@ -2558,8 +2572,8 @@ public class ConsumerExtensionInstancePersistenceImpl
 		}
 	}
 
-	protected ConsumerExtensionInstance getByConsumerExtensionKey_PrevAndNext(
-		Session session, ConsumerExtensionInstance consumerExtensionInstance,
+	protected ConsumerExtensionInstance getByC_C_PrevAndNext(Session session,
+		ConsumerExtensionInstance consumerExtensionInstance, long companyId,
 		String consumerExtensionKey, OrderByComparator orderByComparator,
 		boolean previous) {
 		StringBundler query = null;
@@ -2574,18 +2588,20 @@ public class ConsumerExtensionInstancePersistenceImpl
 
 		query.append(_SQL_SELECT_CONSUMEREXTENSIONINSTANCE_WHERE);
 
+		query.append(_FINDER_COLUMN_C_C_COMPANYID_2);
+
 		boolean bindConsumerExtensionKey = false;
 
 		if (consumerExtensionKey == null) {
-			query.append(_FINDER_COLUMN_CONSUMEREXTENSIONKEY_CONSUMEREXTENSIONKEY_1);
+			query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_1);
 		}
 		else if (consumerExtensionKey.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_CONSUMEREXTENSIONKEY_CONSUMEREXTENSIONKEY_3);
+			query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_3);
 		}
 		else {
 			bindConsumerExtensionKey = true;
 
-			query.append(_FINDER_COLUMN_CONSUMEREXTENSIONKEY_CONSUMEREXTENSIONKEY_2);
+			query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_2);
 		}
 
 		if (orderByComparator != null) {
@@ -2656,6 +2672,8 @@ public class ConsumerExtensionInstancePersistenceImpl
 
 		QueryPos qPos = QueryPos.getInstance(q);
 
+		qPos.add(companyId);
+
 		if (bindConsumerExtensionKey) {
 			qPos.add(consumerExtensionKey);
 		}
@@ -2679,54 +2697,59 @@ public class ConsumerExtensionInstancePersistenceImpl
 	}
 
 	/**
-	 * Removes all the consumer extension instances where consumerExtensionKey = &#63; from the database.
+	 * Removes all the consumer extension instances where companyId = &#63; and consumerExtensionKey = &#63; from the database.
 	 *
+	 * @param companyId the company ID
 	 * @param consumerExtensionKey the consumer extension key
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByConsumerExtensionKey(String consumerExtensionKey)
+	public void removeByC_C(long companyId, String consumerExtensionKey)
 		throws SystemException {
-		for (ConsumerExtensionInstance consumerExtensionInstance : findByConsumerExtensionKey(
-				consumerExtensionKey, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+		for (ConsumerExtensionInstance consumerExtensionInstance : findByC_C(
+				companyId, consumerExtensionKey, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
 			remove(consumerExtensionInstance);
 		}
 	}
 
 	/**
-	 * Returns the number of consumer extension instances where consumerExtensionKey = &#63;.
+	 * Returns the number of consumer extension instances where companyId = &#63; and consumerExtensionKey = &#63;.
 	 *
+	 * @param companyId the company ID
 	 * @param consumerExtensionKey the consumer extension key
 	 * @return the number of matching consumer extension instances
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByConsumerExtensionKey(String consumerExtensionKey)
+	public int countByC_C(long companyId, String consumerExtensionKey)
 		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_CONSUMEREXTENSIONKEY;
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C;
 
-		Object[] finderArgs = new Object[] { consumerExtensionKey };
+		Object[] finderArgs = new Object[] { companyId, consumerExtensionKey };
 
 		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
 				this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler query = new StringBundler(3);
 
 			query.append(_SQL_COUNT_CONSUMEREXTENSIONINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_C_C_COMPANYID_2);
 
 			boolean bindConsumerExtensionKey = false;
 
 			if (consumerExtensionKey == null) {
-				query.append(_FINDER_COLUMN_CONSUMEREXTENSIONKEY_CONSUMEREXTENSIONKEY_1);
+				query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_1);
 			}
 			else if (consumerExtensionKey.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_CONSUMEREXTENSIONKEY_CONSUMEREXTENSIONKEY_3);
+				query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_3);
 			}
 			else {
 				bindConsumerExtensionKey = true;
 
-				query.append(_FINDER_COLUMN_CONSUMEREXTENSIONKEY_CONSUMEREXTENSIONKEY_2);
+				query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_2);
 			}
 
 			String sql = query.toString();
@@ -2739,6 +2762,8 @@ public class ConsumerExtensionInstancePersistenceImpl
 				Query q = session.createQuery(sql);
 
 				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
 
 				if (bindConsumerExtensionKey) {
 					qPos.add(consumerExtensionKey);
@@ -2761,33 +2786,31 @@ public class ConsumerExtensionInstancePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_CONSUMEREXTENSIONKEY_CONSUMEREXTENSIONKEY_1 =
-		"consumerExtensionInstance.consumerExtensionKey IS NULL";
-	private static final String _FINDER_COLUMN_CONSUMEREXTENSIONKEY_CONSUMEREXTENSIONKEY_2 =
-		"consumerExtensionInstance.consumerExtensionKey = ?";
-	private static final String _FINDER_COLUMN_CONSUMEREXTENSIONKEY_CONSUMEREXTENSIONKEY_3 =
-		"(consumerExtensionInstance.consumerExtensionKey IS NULL OR consumerExtensionInstance.consumerExtensionKey = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C = new FinderPath(ConsumerExtensionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+	private static final String _FINDER_COLUMN_C_C_COMPANYID_2 = "consumerExtensionInstance.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_1 = "consumerExtensionInstance.consumerExtensionKey IS NULL";
+	private static final String _FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_2 = "consumerExtensionInstance.consumerExtensionKey = ?";
+	private static final String _FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_3 = "(consumerExtensionInstance.consumerExtensionKey IS NULL OR consumerExtensionInstance.consumerExtensionKey = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_K = new FinderPath(ConsumerExtensionInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			ConsumerExtensionInstanceModelImpl.FINDER_CACHE_ENABLED,
 			ConsumerExtensionInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_C",
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByC_K",
 			new String[] {
 				Long.class.getName(), String.class.getName(),
 				
 			Integer.class.getName(), Integer.class.getName(),
 				OrderByComparator.class.getName()
 			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C = new FinderPath(ConsumerExtensionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_K = new FinderPath(ConsumerExtensionInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			ConsumerExtensionInstanceModelImpl.FINDER_CACHE_ENABLED,
 			ConsumerExtensionInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_C",
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByC_K",
 			new String[] { Long.class.getName(), String.class.getName() },
 			ConsumerExtensionInstanceModelImpl.CONSUMERID_COLUMN_BITMASK |
 			ConsumerExtensionInstanceModelImpl.CONSUMEREXTENSIONKEY_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_C_C = new FinderPath(ConsumerExtensionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+	public static final FinderPath FINDER_PATH_COUNT_BY_C_K = new FinderPath(ConsumerExtensionInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			ConsumerExtensionInstanceModelImpl.FINDER_CACHE_ENABLED,
 			Long.class, FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByC_C",
+			"countByC_K",
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
@@ -2799,9 +2822,9 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ConsumerExtensionInstance> findByC_C(long consumerId,
+	public List<ConsumerExtensionInstance> findByC_K(long consumerId,
 		String consumerExtensionKey) throws SystemException {
-		return findByC_C(consumerId, consumerExtensionKey, QueryUtil.ALL_POS,
+		return findByC_K(consumerId, consumerExtensionKey, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
 
@@ -2820,10 +2843,10 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ConsumerExtensionInstance> findByC_C(long consumerId,
+	public List<ConsumerExtensionInstance> findByC_K(long consumerId,
 		String consumerExtensionKey, int start, int end)
 		throws SystemException {
-		return findByC_C(consumerId, consumerExtensionKey, start, end, null);
+		return findByC_K(consumerId, consumerExtensionKey, start, end, null);
 	}
 
 	/**
@@ -2842,7 +2865,7 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ConsumerExtensionInstance> findByC_C(long consumerId,
+	public List<ConsumerExtensionInstance> findByC_K(long consumerId,
 		String consumerExtensionKey, int start, int end,
 		OrderByComparator orderByComparator) throws SystemException {
 		boolean pagination = true;
@@ -2852,11 +2875,11 @@ public class ConsumerExtensionInstancePersistenceImpl
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 				(orderByComparator == null)) {
 			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_K;
 			finderArgs = new Object[] { consumerId, consumerExtensionKey };
 		}
 		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_C;
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_K;
 			finderArgs = new Object[] {
 					consumerId, consumerExtensionKey,
 					
@@ -2892,20 +2915,20 @@ public class ConsumerExtensionInstancePersistenceImpl
 
 			query.append(_SQL_SELECT_CONSUMEREXTENSIONINSTANCE_WHERE);
 
-			query.append(_FINDER_COLUMN_C_C_CONSUMERID_2);
+			query.append(_FINDER_COLUMN_C_K_CONSUMERID_2);
 
 			boolean bindConsumerExtensionKey = false;
 
 			if (consumerExtensionKey == null) {
-				query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_1);
+				query.append(_FINDER_COLUMN_C_K_CONSUMEREXTENSIONKEY_1);
 			}
 			else if (consumerExtensionKey.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_3);
+				query.append(_FINDER_COLUMN_C_K_CONSUMEREXTENSIONKEY_3);
 			}
 			else {
 				bindConsumerExtensionKey = true;
 
-				query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_2);
+				query.append(_FINDER_COLUMN_C_K_CONSUMEREXTENSIONKEY_2);
 			}
 
 			if (orderByComparator != null) {
@@ -2975,10 +2998,10 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ConsumerExtensionInstance findByC_C_First(long consumerId,
+	public ConsumerExtensionInstance findByC_K_First(long consumerId,
 		String consumerExtensionKey, OrderByComparator orderByComparator)
 		throws NoSuchConsumerExtensionInstanceException, SystemException {
-		ConsumerExtensionInstance consumerExtensionInstance = fetchByC_C_First(consumerId,
+		ConsumerExtensionInstance consumerExtensionInstance = fetchByC_K_First(consumerId,
 				consumerExtensionKey, orderByComparator);
 
 		if (consumerExtensionInstance != null) {
@@ -3010,10 +3033,10 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ConsumerExtensionInstance fetchByC_C_First(long consumerId,
+	public ConsumerExtensionInstance fetchByC_K_First(long consumerId,
 		String consumerExtensionKey, OrderByComparator orderByComparator)
 		throws SystemException {
-		List<ConsumerExtensionInstance> list = findByC_C(consumerId,
+		List<ConsumerExtensionInstance> list = findByC_K(consumerId,
 				consumerExtensionKey, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3034,10 +3057,10 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ConsumerExtensionInstance findByC_C_Last(long consumerId,
+	public ConsumerExtensionInstance findByC_K_Last(long consumerId,
 		String consumerExtensionKey, OrderByComparator orderByComparator)
 		throws NoSuchConsumerExtensionInstanceException, SystemException {
-		ConsumerExtensionInstance consumerExtensionInstance = fetchByC_C_Last(consumerId,
+		ConsumerExtensionInstance consumerExtensionInstance = fetchByC_K_Last(consumerId,
 				consumerExtensionKey, orderByComparator);
 
 		if (consumerExtensionInstance != null) {
@@ -3069,16 +3092,16 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ConsumerExtensionInstance fetchByC_C_Last(long consumerId,
+	public ConsumerExtensionInstance fetchByC_K_Last(long consumerId,
 		String consumerExtensionKey, OrderByComparator orderByComparator)
 		throws SystemException {
-		int count = countByC_C(consumerId, consumerExtensionKey);
+		int count = countByC_K(consumerId, consumerExtensionKey);
 
 		if (count == 0) {
 			return null;
 		}
 
-		List<ConsumerExtensionInstance> list = findByC_C(consumerId,
+		List<ConsumerExtensionInstance> list = findByC_K(consumerId,
 				consumerExtensionKey, count - 1, count, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -3100,7 +3123,7 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public ConsumerExtensionInstance[] findByC_C_PrevAndNext(
+	public ConsumerExtensionInstance[] findByC_K_PrevAndNext(
 		long consumerExtensionInstanceId, long consumerId,
 		String consumerExtensionKey, OrderByComparator orderByComparator)
 		throws NoSuchConsumerExtensionInstanceException, SystemException {
@@ -3113,12 +3136,12 @@ public class ConsumerExtensionInstancePersistenceImpl
 
 			ConsumerExtensionInstance[] array = new ConsumerExtensionInstanceImpl[3];
 
-			array[0] = getByC_C_PrevAndNext(session, consumerExtensionInstance,
+			array[0] = getByC_K_PrevAndNext(session, consumerExtensionInstance,
 					consumerId, consumerExtensionKey, orderByComparator, true);
 
 			array[1] = consumerExtensionInstance;
 
-			array[2] = getByC_C_PrevAndNext(session, consumerExtensionInstance,
+			array[2] = getByC_K_PrevAndNext(session, consumerExtensionInstance,
 					consumerId, consumerExtensionKey, orderByComparator, false);
 
 			return array;
@@ -3131,7 +3154,7 @@ public class ConsumerExtensionInstancePersistenceImpl
 		}
 	}
 
-	protected ConsumerExtensionInstance getByC_C_PrevAndNext(Session session,
+	protected ConsumerExtensionInstance getByC_K_PrevAndNext(Session session,
 		ConsumerExtensionInstance consumerExtensionInstance, long consumerId,
 		String consumerExtensionKey, OrderByComparator orderByComparator,
 		boolean previous) {
@@ -3147,20 +3170,20 @@ public class ConsumerExtensionInstancePersistenceImpl
 
 		query.append(_SQL_SELECT_CONSUMEREXTENSIONINSTANCE_WHERE);
 
-		query.append(_FINDER_COLUMN_C_C_CONSUMERID_2);
+		query.append(_FINDER_COLUMN_C_K_CONSUMERID_2);
 
 		boolean bindConsumerExtensionKey = false;
 
 		if (consumerExtensionKey == null) {
-			query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_1);
+			query.append(_FINDER_COLUMN_C_K_CONSUMEREXTENSIONKEY_1);
 		}
 		else if (consumerExtensionKey.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_3);
+			query.append(_FINDER_COLUMN_C_K_CONSUMEREXTENSIONKEY_3);
 		}
 		else {
 			bindConsumerExtensionKey = true;
 
-			query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_2);
+			query.append(_FINDER_COLUMN_C_K_CONSUMEREXTENSIONKEY_2);
 		}
 
 		if (orderByComparator != null) {
@@ -3263,9 +3286,9 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_C(long consumerId, String consumerExtensionKey)
+	public void removeByC_K(long consumerId, String consumerExtensionKey)
 		throws SystemException {
-		for (ConsumerExtensionInstance consumerExtensionInstance : findByC_C(
+		for (ConsumerExtensionInstance consumerExtensionInstance : findByC_K(
 				consumerId, consumerExtensionKey, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(consumerExtensionInstance);
@@ -3281,9 +3304,9 @@ public class ConsumerExtensionInstancePersistenceImpl
 	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_C(long consumerId, String consumerExtensionKey)
+	public int countByC_K(long consumerId, String consumerExtensionKey)
 		throws SystemException {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_C;
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_C_K;
 
 		Object[] finderArgs = new Object[] { consumerId, consumerExtensionKey };
 
@@ -3295,20 +3318,20 @@ public class ConsumerExtensionInstancePersistenceImpl
 
 			query.append(_SQL_COUNT_CONSUMEREXTENSIONINSTANCE_WHERE);
 
-			query.append(_FINDER_COLUMN_C_C_CONSUMERID_2);
+			query.append(_FINDER_COLUMN_C_K_CONSUMERID_2);
 
 			boolean bindConsumerExtensionKey = false;
 
 			if (consumerExtensionKey == null) {
-				query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_1);
+				query.append(_FINDER_COLUMN_C_K_CONSUMEREXTENSIONKEY_1);
 			}
 			else if (consumerExtensionKey.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_3);
+				query.append(_FINDER_COLUMN_C_K_CONSUMEREXTENSIONKEY_3);
 			}
 			else {
 				bindConsumerExtensionKey = true;
 
-				query.append(_FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_2);
+				query.append(_FINDER_COLUMN_C_K_CONSUMEREXTENSIONKEY_2);
 			}
 
 			String sql = query.toString();
@@ -3345,10 +3368,10 @@ public class ConsumerExtensionInstancePersistenceImpl
 		return count.intValue();
 	}
 
-	private static final String _FINDER_COLUMN_C_C_CONSUMERID_2 = "consumerExtensionInstance.consumerId = ? AND ";
-	private static final String _FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_1 = "consumerExtensionInstance.consumerExtensionKey IS NULL";
-	private static final String _FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_2 = "consumerExtensionInstance.consumerExtensionKey = ?";
-	private static final String _FINDER_COLUMN_C_C_CONSUMEREXTENSIONKEY_3 = "(consumerExtensionInstance.consumerExtensionKey IS NULL OR consumerExtensionInstance.consumerExtensionKey = '')";
+	private static final String _FINDER_COLUMN_C_K_CONSUMERID_2 = "consumerExtensionInstance.consumerId = ? AND ";
+	private static final String _FINDER_COLUMN_C_K_CONSUMEREXTENSIONKEY_1 = "consumerExtensionInstance.consumerExtensionKey IS NULL";
+	private static final String _FINDER_COLUMN_C_K_CONSUMEREXTENSIONKEY_2 = "consumerExtensionInstance.consumerExtensionKey = ?";
+	private static final String _FINDER_COLUMN_C_K_CONSUMEREXTENSIONKEY_3 = "(consumerExtensionInstance.consumerExtensionKey IS NULL OR consumerExtensionInstance.consumerExtensionKey = '')";
 
 	public ConsumerExtensionInstancePersistenceImpl() {
 		setModelClass(ConsumerExtensionInstance.class);
@@ -3674,35 +3697,35 @@ public class ConsumerExtensionInstancePersistenceImpl
 			}
 
 			if ((consumerExtensionInstanceModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSUMEREXTENSIONKEY.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						consumerExtensionInstanceModelImpl.getOriginalConsumerExtensionKey()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CONSUMEREXTENSIONKEY,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSUMEREXTENSIONKEY,
-					args);
-
-				args = new Object[] {
-						consumerExtensionInstanceModelImpl.getConsumerExtensionKey()
-					};
-
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_CONSUMEREXTENSIONKEY,
-					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_CONSUMEREXTENSIONKEY,
-					args);
-			}
-
-			if ((consumerExtensionInstanceModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
-						consumerExtensionInstanceModelImpl.getOriginalConsumerId(),
+						consumerExtensionInstanceModelImpl.getOriginalCompanyId(),
 						consumerExtensionInstanceModelImpl.getOriginalConsumerExtensionKey()
 					};
 
 				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
 				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+					args);
+
+				args = new Object[] {
+						consumerExtensionInstanceModelImpl.getCompanyId(),
+						consumerExtensionInstanceModelImpl.getConsumerExtensionKey()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+					args);
+			}
+
+			if ((consumerExtensionInstanceModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_K.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						consumerExtensionInstanceModelImpl.getOriginalConsumerId(),
+						consumerExtensionInstanceModelImpl.getOriginalConsumerExtensionKey()
+					};
+
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_K,
 					args);
 
 				args = new Object[] {
@@ -3710,8 +3733,8 @@ public class ConsumerExtensionInstancePersistenceImpl
 						consumerExtensionInstanceModelImpl.getConsumerExtensionKey()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_C,
+				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_C_K, args);
+				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_K,
 					args);
 			}
 		}

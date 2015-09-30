@@ -150,7 +150,7 @@ public class ConsumerLocalServiceClp implements ConsumerLocalService {
 
 		_methodName26 = "getConsumersByConsumerExtensionKey";
 
-		_methodParameterTypes26 = new String[] { "java.lang.String" };
+		_methodParameterTypes26 = new String[] { "long", "java.lang.String" };
 
 		_methodName27 = "getConsumersCount";
 
@@ -989,7 +989,7 @@ public class ConsumerLocalServiceClp implements ConsumerLocalService {
 
 	@Override
 	public java.util.List<com.liferay.consumer.manager.model.Consumer> getConsumersByConsumerExtensionKey(
-		java.lang.String consumerExtensionKey)
+		long companyId, java.lang.String consumerExtensionKey)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -998,7 +998,9 @@ public class ConsumerLocalServiceClp implements ConsumerLocalService {
 			returnObj = _invokableLocalService.invokeMethod(_methodName26,
 					_methodParameterTypes26,
 					new Object[] {
-						ClpSerializer.translateInput(consumerExtensionKey)
+						companyId,
+						
+					ClpSerializer.translateInput(consumerExtensionKey)
 					});
 		}
 		catch (Throwable t) {

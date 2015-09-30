@@ -59,7 +59,7 @@ public class ConsumerServiceClpInvoker {
 
 		_methodName35 = "getConsumersByConsumerExtensionKey";
 
-		_methodParameterTypes35 = new String[] { "java.lang.String" };
+		_methodParameterTypes35 = new String[] { "long", "java.lang.String" };
 
 		_methodName36 = "updateConsumer";
 
@@ -115,7 +115,8 @@ public class ConsumerServiceClpInvoker {
 
 		if (_methodName35.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes35, parameterTypes)) {
-			return ConsumerServiceUtil.getConsumersByConsumerExtensionKey((java.lang.String)arguments[0]);
+			return ConsumerServiceUtil.getConsumersByConsumerExtensionKey(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName36.equals(name) &&

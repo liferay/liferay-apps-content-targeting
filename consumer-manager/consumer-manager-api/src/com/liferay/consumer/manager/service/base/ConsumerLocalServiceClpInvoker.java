@@ -160,7 +160,7 @@ public class ConsumerLocalServiceClpInvoker {
 
 		_methodName55 = "getConsumersByConsumerExtensionKey";
 
-		_methodParameterTypes55 = new String[] { "java.lang.String" };
+		_methodParameterTypes55 = new String[] { "long", "java.lang.String" };
 
 		_methodName56 = "getConsumersCount";
 
@@ -343,7 +343,8 @@ public class ConsumerLocalServiceClpInvoker {
 
 		if (_methodName55.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
-			return ConsumerLocalServiceUtil.getConsumersByConsumerExtensionKey((java.lang.String)arguments[0]);
+			return ConsumerLocalServiceUtil.getConsumersByConsumerExtensionKey(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1]);
 		}
 
 		if (_methodName56.equals(name) &&
