@@ -5,7 +5,7 @@
 
 	<property name="plugin.name" value="com.liferay.content.targeting.rule.twitter.sample" />
 
-	<property name="import.shared" value="anonymous-users-api,consumer-manager/consumer-manager-api,content-targeting-api" />
+	<property name="import.shared" value="anonymous-users-api,consumer-manager/consumer-manager-api,consumer-manager/consumer-extension-twitter-sample,content-targeting-api" />
 
 	<import file="../../../build-common-osgi-plugin.xml" />
 </project>
