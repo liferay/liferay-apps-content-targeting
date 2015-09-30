@@ -73,19 +73,6 @@ public class ConsumerExtensionInstanceServiceImpl
 	}
 
 	@Override
-	public ConsumerExtensionInstance getConsumerExtensionInstance(
-			long consumerId, String consumerExtensionKey)
-		throws PortalException, SystemException {
-
-		ConsumerPermission.check(
-			getPermissionChecker(), consumerId, ActionKeys.VIEW_CONSUMERS);
-
-		return
-			consumerExtensionInstanceLocalService.getConsumerExtensionInstance(
-				consumerId, consumerExtensionKey);
-	}
-
-	@Override
 	public List<ConsumerExtensionInstance> getConsumerExtensionInstances(
 			long consumerId)
 		throws PortalException, SystemException {
@@ -96,6 +83,19 @@ public class ConsumerExtensionInstanceServiceImpl
 		return
 			consumerExtensionInstanceLocalService.getConsumerExtensionInstances(
 				consumerId);
+	}
+
+	@Override
+	public List<ConsumerExtensionInstance> getConsumerExtensionInstances(
+			long consumerId, String consumerExtensionKey)
+		throws PortalException, SystemException {
+
+		ConsumerPermission.check(
+			getPermissionChecker(), consumerId, ActionKeys.VIEW_CONSUMERS);
+
+		return
+			consumerExtensionInstanceLocalService.getConsumerExtensionInstances(
+				consumerId, consumerExtensionKey);
 	}
 
 	@Override

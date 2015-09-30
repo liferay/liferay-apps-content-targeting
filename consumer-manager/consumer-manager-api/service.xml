@@ -81,9 +81,9 @@
 		<finder name="ConsumerExtensionKey" return-type="Collection">
 			<finder-column name="consumerExtensionKey" />
 		</finder>
-		<finder name="C_C" return-type="ConsumerExtension">
-			<finder-column name="consumerExtensionKey" />
+		<finder name="C_C" return-type="Collection">
 			<finder-column name="consumerId" />
+			<finder-column name="consumerExtensionKey" />
 		</finder>
 	</entity>
 	<exceptions>

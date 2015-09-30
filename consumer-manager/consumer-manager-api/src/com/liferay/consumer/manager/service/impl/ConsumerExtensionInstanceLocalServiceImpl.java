@@ -84,21 +84,21 @@ public class ConsumerExtensionInstanceLocalServiceImpl
 	}
 
 	@Override
-	public ConsumerExtensionInstance getConsumerExtensionInstance(
-			long consumerId, String consumerExtensionKey)
-		throws SystemException {
-
-		return consumerExtensionInstancePersistence.fetchByC_C(
-			consumerExtensionKey, consumerId);
-	}
-
-	@Override
 	public List<ConsumerExtensionInstance> getConsumerExtensionInstances(
 			long consumerId)
 		throws SystemException {
 
 		return consumerExtensionInstancePersistence.findByConsumerId(
 			consumerId);
+	}
+
+	@Override
+	public List<ConsumerExtensionInstance> getConsumerExtensionInstances(
+			long consumerId, String consumerExtensionKey)
+		throws SystemException {
+
+		return consumerExtensionInstancePersistence.findByC_C(
+			consumerId, consumerExtensionKey);
 	}
 
 	@Override
