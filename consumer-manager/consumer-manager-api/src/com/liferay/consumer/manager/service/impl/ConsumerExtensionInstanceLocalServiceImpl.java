@@ -97,7 +97,7 @@ public class ConsumerExtensionInstanceLocalServiceImpl
 			long consumerId, String consumerExtensionKey)
 		throws SystemException {
 
-		return consumerExtensionInstancePersistence.findByC_C(
+		return consumerExtensionInstancePersistence.findByC_K(
 			consumerId, consumerExtensionKey);
 	}
 

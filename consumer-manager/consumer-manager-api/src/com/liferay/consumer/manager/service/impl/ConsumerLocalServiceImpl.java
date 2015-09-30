@@ -139,14 +139,14 @@ public class ConsumerLocalServiceImpl extends ConsumerLocalServiceBaseImpl {
 
 	@Override
 	public List<Consumer> getConsumersByConsumerExtensionKey(
-			String consumerExtensionKey)
+			long companyId, String consumerExtensionKey)
 		throws PortalException, SystemException {
 
 		List<Long> consumerIds = new ArrayList<Long>();
 
 		List<ConsumerExtensionInstance> consumerExtensionInstances =
-			consumerExtensionInstancePersistence.findByConsumerExtensionKey(
-				consumerExtensionKey);
+			consumerExtensionInstancePersistence.findByC_C(
+				companyId, consumerExtensionKey);
 
 		for (ConsumerExtensionInstance consumerExtensionInstance :
 				consumerExtensionInstances) {

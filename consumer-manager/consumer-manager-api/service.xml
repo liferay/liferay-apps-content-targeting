@@ -78,10 +78,11 @@
 		<finder name="ConsumerId" return-type="Collection">
 			<finder-column name="consumerId" />
 		</finder>
-		<finder name="ConsumerExtensionKey" return-type="Collection">
+		<finder name="C_C" return-type="Collection">
+			<finder-column name="companyId" />
 			<finder-column name="consumerExtensionKey" />
 		</finder>
-		<finder name="C_C" return-type="Collection">
+		<finder name="C_K" return-type="Collection">
 			<finder-column name="consumerId" />
 			<finder-column name="consumerExtensionKey" />
 		</finder>

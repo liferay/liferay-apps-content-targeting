@@ -91,11 +91,11 @@ public class ConsumerServiceImpl extends ConsumerServiceBaseImpl {
 
 	@Override
 	public List<Consumer> getConsumersByConsumerExtensionKey(
-			String consumerExtensionKey)
+			long companyId, String consumerExtensionKey)
 		throws PortalException, SystemException {
 
 		return consumerLocalService.getConsumersByConsumerExtensionKey(
-			consumerExtensionKey);
+			companyId, consumerExtensionKey);
 	}
 
 	@Override
