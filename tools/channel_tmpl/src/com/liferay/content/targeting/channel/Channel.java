@@ -14,10 +14,12 @@
 
 package com.liferay.content.targeting.channel.@channel.java.package.name@;
 
+import com.liferay.content.targeting.InvalidChannelException;
 import com.liferay.content.targeting.api.model.BaseChannel;
 import com.liferay.content.targeting.api.model.Channel;
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.portal.kernel.language.LanguageUtil;
+import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
 import java.util.Map;
