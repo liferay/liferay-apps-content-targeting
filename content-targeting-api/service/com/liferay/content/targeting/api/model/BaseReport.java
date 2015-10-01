@@ -159,7 +159,7 @@ public abstract class BaseReport implements Report {
 	protected void populateContext(
 		ReportInstance reportInstance, Map<String, Object> context) {
 
-		populateContext(null, context);
+		populateContext(context);
 	}
 
 	protected void populateEditContext(
