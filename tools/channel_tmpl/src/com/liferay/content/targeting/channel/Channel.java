@@ -22,6 +22,9 @@ import com.liferay.portal.kernel.language.LanguageUtil;
 import java.util.Locale;
 import java.util.Map;
 
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
+
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -56,8 +59,9 @@ public class @channel.java.class.name@Channel extends BaseChannel {
 
 	@Override
 	public String processChannel(
-		PortletRequest request, PortletResponse response, String id,
-		Map<String, String> values) throws InvalidChannelException {
+			PortletRequest request, PortletResponse response, String id,
+			Map<String, String> values)
+		throws InvalidChannelException {
 
 		return StringPool.BLANK;
 	}
