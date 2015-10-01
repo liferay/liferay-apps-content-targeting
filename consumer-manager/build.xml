@@ -122,13 +122,16 @@
 		</if>
 
 		<copy todir="${extension.dir}">
-			<fileset
-				dir="${user.dir}/tools/extension_tmpl"
-				/>
+			<fileset dir="${user.dir}/tools/extension_tmpl" />
 		</copy>
 
 		<antelope:stringutil string="${extension.display.name}" property="extension.java.class.name">
 			<antelope:replace regex="\s+" replacement="" />
+			<antelope:trim/>
+		</antelope:stringutil>
+
+		<antelope:stringutil string="${extension.name}" property="extension.java.package.dir">
+			<antelope:replace regex="-" replacement="/" />
 			<antelope:trim/>
 		</antelope:stringutil>
 
@@ -139,8 +142,8 @@
 
 		<move
 			file="${extension.dir}/src/com/liferay/consumer/manager/extension/ConsumerExtension.java"
-			tofile="${extension.dir}/src/com/liferay/consumer/manager/extension/${extension.java.package.name}/${extension.java.class.name}ConsumerExtension.java"
-			/>
+			tofile="${extension.dir}/src/com/liferay/consumer/manager/extension/${extension.java.package.dir}/${extension.java.class.name}ConsumerExtension.java"
+		/>
 
 		<replace dir="${extension.dir}">
 			<replacefilter token="@extension.display.name@" value="${extension.display.name}" />

@@ -95,6 +95,63 @@
 		<loop-macrodef-or-target module.dirs="${app.core.path}" target.name="consolidate-test" />
 	</target>
 
+	<target name="create-channel">
+		<if>
+			<or>
+				<not>
+					<isset property="channel.display.name" />
+				</not>
+				<not>
+					<isset property="channel.name" />
+				</not>
+			</or>
+			<then>
+				<fail>This task must be called by the create_channel script.</fail>
+			</then>
+		</if>
+
+		<property name="channel.parent.dir" value="${user.dir}" />
+		<property name="channel.dir" value="${channel.parent.dir}/channel-${channel.name}" />
+
+		<if>
+			<available file="${channel.dir}" />
+			<then>
+				<fail>${channel.dir} already exists.</fail>
+			</then>
+		</if>
+
+		<copy todir="${channel.dir}">
+			<fileset dir="${user.dir}/tools/channel_tmpl" />
+		</copy>
+
+		<antelope:stringutil string="${channel.display.name}" property="channel.java.class.name">
+			<antelope:replace regex="\s+" replacement="" />
+			<antelope:trim/>
+		</antelope:stringutil>
+
+		<antelope:stringutil string="${channel.name}" property="channel.java.package.dir">
+			<antelope:replace regex="-" replacement="/" />
+			<antelope:trim/>
+		</antelope:stringutil>
+
+		<antelope:stringutil string="${channel.name}" property="channel.java.package.name">
+			<antelope:replace regex="-" replacement="." />
+			<antelope:trim/>
+		</antelope:stringutil>
+
+		<move
+			file="${channel.dir}/src/com/liferay/content/targeting/channel/Channel.java"
+			tofile="${channel.dir}/src/com/liferay/content/targeting/channel/${channel.java.package.dir}/${channel.java.class.name}Channel.java"
+		/>
+
+		<replace dir="${channel.dir}">
+			<replacefilter token="@channel.display.name@" value="${channel.display.name}" />
+			<replacefilter token="@channel.java.class.name@" value="${channel.java.class.name}" />
+			<replacefilter token="@channel.java.package.name@" value="${channel.java.package.name}" />
+			<replacefilter token="@channel.name@" value="${channel.name}" />
+		</replace>
+	</target>
+
 	<target name="create-report">
 		<if>
 			<or>
@@ -129,12 +186,17 @@
 			<antelope:trim/>
 		</antelope:stringutil>
 
+		<antelope:stringutil string="${report.name}" property="report.java.package.dir">
+			<antelope:replace regex="-" replacement="/" />
+			<antelope:trim/>
+		</antelope:stringutil>
+
 		<antelope:stringutil string="${report.name}" property="report.java.package.name">
 			<antelope:replace regex="-" replacement="." />
 			<antelope:trim/>
 		</antelope:stringutil>
 
-		<move file="${report.dir}/src/com/liferay/content/targeting/report/Report.java" tofile="${report.dir}/src/com/liferay/content/targeting/report/${report.java.package.name}/${report.java.class.name}Report.java" />
+		<move file="${report.dir}/src/com/liferay/content/targeting/report/Report.java" tofile="${report.dir}/src/com/liferay/content/targeting/report/${report.java.package.dir}/${report.java.class.name}Report.java" />
 
 		<replace dir="${report.dir}">
 			<replacefilter token="@report.display.name@" value="${report.display.name}" />
@@ -178,12 +240,17 @@
 			<antelope:trim/>
 		</antelope:stringutil>
 
+		<antelope:stringutil string="${rule.name}" property="rule.java.package.dir">
+			<antelope:replace regex="-" replacement="/" />
+			<antelope:trim/>
+		</antelope:stringutil>
+
 		<antelope:stringutil string="${rule.name}" property="rule.java.package.name">
 			<antelope:replace regex="-" replacement="." />
 			<antelope:trim/>
 		</antelope:stringutil>
 
-		<move file="${rule.dir}/src/com/liferay/content/targeting/rule/Rule.java" tofile="${rule.dir}/src/com/liferay/content/targeting/rule/${rule.java.package.name}/${rule.java.class.name}Rule.java" />
+		<move file="${rule.dir}/src/com/liferay/content/targeting/rule/Rule.java" tofile="${rule.dir}/src/com/liferay/content/targeting/rule/${rule.java.package.dir}/${rule.java.class.name}Rule.java" />
 
 		<replace dir="${rule.dir}">
 			<replacefilter token="@rule.display.name@" value="${rule.display.name}" />
@@ -227,6 +294,11 @@
 			<antelope:trim/>
 		</antelope:stringutil>
 
+		<antelope:stringutil string="${tracking.action.name}" property="tracking.action.java.package.dir">
+			<antelope:replace regex="-" replacement="/" />
+			<antelope:trim/>
+		</antelope:stringutil>
+
 		<antelope:stringutil string="${tracking.action.name}" property="tracking.action.java.package.name">
 			<antelope:replace regex="-" replacement="." />
 			<antelope:trim/>
@@ -234,7 +306,7 @@
 
 		<move
 			file="${tracking.action.dir}/src/com/liferay/content/targeting/tracking/action/TrackingAction.java"
-			tofile="${tracking.action.dir}/src/com/liferay/content/targeting/tracking/action/${tracking.action.java.package.name}/${tracking.action.java.class.name}TrackingAction.java"
+			tofile="${tracking.action.dir}/src/com/liferay/content/targeting/tracking/action/${tracking.action.java.package.dir}/${tracking.action.java.class.name}TrackingAction.java"
 		/>
 
 		<replace dir="${tracking.action.dir}">
@@ -244,59 +316,6 @@
 			<replacefilter token="@tracking.action.name@" value="${tracking.action.name}" />
 		</replace>
 	</target>
-
-	<target name="create-channel">
-		<if>
-			<or>
-				<not>
-					<isset property="channel.display.name" />
-				</not>
-				<not>
-					<isset property="channel.name" />
-				</not>
-			</or>
-			<then>
-				<fail>This task must be called by the create_channel script.</fail>
-			</then>
-		</if>
-
-		<property name="channel.parent.dir" value="${user.dir}" />
-		<property name="channel.dir" value="${channel.parent.dir}/channel-${channel.name}" />
-
-		<if>
-			<available file="${channel.dir}" />
-			<then>
-				<fail>${channel.dir} already exists.</fail>
-			</then>
-		</if>
-
-		<copy todir="${channel.dir}">
-			<fileset dir="${user.dir}/tools/channel_tmpl" />
-		</copy>
-
-		<antelope:stringutil string="${channel.display.name}" property="channel.java.class.name">
-			<antelope:replace regex="\s+" replacement="" />
-			<antelope:trim/>
-		</antelope:stringutil>
-
-		<antelope:stringutil string="${channel.name}" property="channel.java.package.name">
-			<antelope:replace regex="-" replacement="." />
-			<antelope:trim/>
-		</antelope:stringutil>
-
-		<move
-			file="${channel.dir}/src/com/liferay/content/targeting/channel/Channel.java"
-			tofile="${channel.dir}/src/com/liferay/content/targeting/channel/${channel.java.package.name}/${channel.java.class.name}Channel.java"
-		/>
-
-		<replace dir="${channel.dir}">
-			<replacefilter token="@channel.display.name@" value="${channel.display.name}" />
-			<replacefilter token="@channel.java.class.name@" value="${channel.java.class.name}" />
-			<replacefilter token="@channel.java.package.name@" value="${channel.java.package.name}" />
-			<replacefilter token="@channel.name@" value="${channel.name}" />
-		</replace>
-	</target>
-
 
 	<target name="release">
 		<if>
