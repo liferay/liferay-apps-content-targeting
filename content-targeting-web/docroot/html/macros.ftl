@@ -15,6 +15,44 @@
 -->
 
 
+<#macro fieldHeaderListener
+	fieldName
+>
+	<@aui["script"] use="aui-base">
+		var formBuilder = A.one('.form-builder-drop-container');
+
+		formBuilder.delegate(
+			'blur',
+			function(){
+				var node = this;
+
+				var headerSpan = node.ancestor('.form-builder-field-content').one('span.field-description-alias');
+
+				if (node.val() && node.val() !== '') {
+					headerSpan.text(': ' + node.val());
+				}
+				else {
+					headerSpan.text('');
+				}
+			},
+			'[name*="${fieldName}"]'
+		);
+
+		formBuilder.all('[name*="${fieldName}"]').each(
+			function(node) {
+				var headerSpan = node.ancestor('.form-builder-field-content').one('span.field-description-alias');
+
+				if (node.val() && node.val() !== '') {
+					headerSpan.text(': ' + node.val());
+				}
+				else {
+					headerSpan.text('');
+				}
+			}
+		);
+
+	</@>
+</#macro>
 
 <#macro breadcrumb>
 	<@liferay_ui["breadcrumb"] showCurrentGroup=false showCurrentPortlet=false showLayout=false />
