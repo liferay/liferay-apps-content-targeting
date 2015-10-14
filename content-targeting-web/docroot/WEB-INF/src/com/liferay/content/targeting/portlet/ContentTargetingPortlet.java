@@ -133,6 +133,7 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
 import javax.portlet.UnavailableException;
 
@@ -792,7 +793,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		TemplateHashModel staticModels = wrapper.getStaticModels();
 
-		template.put("backURL", ParamUtil.getString(portletRequest, "backURL"));
 		template.put("campaignClass", Campaign.class);
 		template.put(
 			"campaignConstants",
@@ -807,8 +807,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 		template.put("portletClass", getClass());
 		template.put("portletContext", getPortletContext());
-		template.put(
-			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 		template.put("reportInstanceClass", ReportInstance.class);
 		template.put(
 			"tabs1",
@@ -1097,6 +1095,13 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put(
 			"actionKeys", staticModels.get(ActionKeys.class.getName()));
 
+		String redirect = ParamUtil.getString(portletRequest, "redirect");
+		String backURL = ParamUtil.getString(
+			portletRequest, "backURL", redirect);
+
+		template.put("redirect", redirect);
+		template.put("backURL", backURL);
+
 		long scopeGroupId = (Long) template.get("scopeGroupId");
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
@@ -1256,6 +1261,15 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						ContentTargetingUtil.getAssetCategoryNames(
 							userSegmentAssetCategoryIds,
 							themeDisplay.getLocale()));
+
+					if (Validator.isNull(backURL)) {
+						PortletURL portletURL =
+							((RenderResponse)portletResponse).createRenderURL();
+
+						portletURL.setParameter(
+							"mvcPath", ContentTargetingPath.VIEW);
+						portletURL.setParameter("tabs1", "campaigns");
+					}
 				}
 				else {
 					template.put(
@@ -1741,6 +1755,30 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 							className, classPK, "", serviceContext);
 					}
 				}
+			}
+
+			if (Validator.isNull(backURL)) {
+				PortletURL portletURL =
+					((RenderResponse)portletResponse).createRenderURL();
+
+				if (className.equals(Campaign.class.getName())) {
+					portletURL.setParameter(
+						"mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
+					portletURL.setParameter(
+						"campaignId", String.valueOf(classPK));
+					portletURL.setParameter("campaignTabs", "reports");
+				}
+				else {
+					portletURL.setParameter(
+						"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
+					portletURL.setParameter(
+						"userSegmentId", String.valueOf(classPK));
+				}
+
+				portletURL.setParameter("className", className);
+				portletURL.setParameter("classPK", String.valueOf(classPK));
+
+				template.put("backURL", portletURL.toString());
 			}
 		}
 	}

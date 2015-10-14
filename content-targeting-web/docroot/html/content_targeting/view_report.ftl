@@ -20,7 +20,7 @@
 <@breadcrumb />
 
 <@liferay_ui["header"]
-	backURL="${redirect}"
+	backURL="${backURL}"
 	title=report.getName(locale)
 />
 

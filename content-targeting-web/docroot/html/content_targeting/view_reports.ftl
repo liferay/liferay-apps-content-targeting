@@ -44,7 +44,7 @@
 
 <@portlet["renderURL"] varImpl="viewReportsURL">
 	<@portlet["param"] name="redirect" value="${redirect}" />
-	<@portlet["param"] name="backURL" value="${redirect}" />
+	<@portlet["param"] name="backURL" value="${backURL}" />
 
 	<#if className == campaignClass.getName()>
 		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
