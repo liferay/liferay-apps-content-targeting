@@ -31,7 +31,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.Date;
 import java.util.List;
@@ -99,12 +98,8 @@ public class UserSegmentContentLocalServiceImpl
 				_userSegmentLocalService.getUserSegments(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			ServiceContext serviceContext = new ServiceContext();
-
 			for (UserSegment userSegment : userSegments) {
 				checkUserSegmentContentEvents(userSegment.getUserSegmentId());
-
-				serviceContext.setScopeGroupId(userSegment.getGroupId());
 			}
 		}
 		catch (NullPointerException npe) {

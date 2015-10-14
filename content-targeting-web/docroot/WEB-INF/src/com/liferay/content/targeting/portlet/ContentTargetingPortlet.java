@@ -1204,31 +1204,24 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(request);
 
-				for (Report report
-					: _reportsRegistry.getReports(className).values()) {
+				Map<String, Report> reports = _reportsRegistry.getReports();
 
-					List<ReportInstance> reportInstances =
-						_reportInstanceLocalService.findReportInstances(
-							report.getReportKey(), className, campaignId);
-
-					int reportInstanceCount = reportInstances.size();
-
-					if (!report.isInstantiable() && (reportInstanceCount > 1)) {
-						for (ReportInstance reportInstance : reportInstances) {
-							_reportInstanceLocalService.deleteReportInstance(
-								reportInstance.getReportInstanceId());
-						}
-
-						reportInstanceCount = 0;
+				for (Report report : reports.values()) {
+					if (report.isInstantiable()) {
+						continue;
 					}
 
-					if (!report.isInstantiable() &&
-						(reportInstanceCount == 0)) {
+					if (_reportInstanceLocalService.getReportInstanceCount(
+							report.getReportKey(), className, campaignId)
+						> 0) {
 
-						_reportInstanceLocalService.addReportInstance(
-							themeDisplay.getUserId(), report.getReportKey(),
-							className, campaignId, "", serviceContext);
+						continue;
 					}
+
+					_reportInstanceLocalService.addReportInstance(
+						themeDisplay.getUserId(), report.getReportKey(),
+						className, campaignId, StringPool.BLANK,
+						serviceContext);
 				}
 
 				Campaign campaign = _campaignLocalService.getCampaign(
@@ -1750,31 +1743,24 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(request);
 
-				for (Report report
-						: _reportsRegistry.getReports(className).values()) {
+				Map<String, Report> reports = _reportsRegistry.getReports(
+					className);
 
-					List<ReportInstance> reportInstances =
-						_reportInstanceLocalService.findReportInstances(
-							report.getReportKey(), className, classPK);
-
-					int reportInstanceCount = reportInstances.size();
-
-					if (!report.isInstantiable() && (reportInstanceCount > 1)) {
-						for (ReportInstance reportInstance : reportInstances) {
-							_reportInstanceLocalService.deleteReportInstance(
-								reportInstance.getReportInstanceId());
-						}
-
-						reportInstanceCount = 0;
+				for (Report report : reports.values()) {
+					if (report.isInstantiable()) {
+						continue;
 					}
 
-					if (!report.isInstantiable() &&
-						(reportInstanceCount == 0)) {
+					if (_reportInstanceLocalService.getReportInstanceCount(
+							report.getReportKey(), className, classPK)
+						> 0) {
 
-						_reportInstanceLocalService.addReportInstance(
-							themeDisplay.getUserId(), report.getReportKey(),
-							className, classPK, "", serviceContext);
+						continue;
 					}
+
+					_reportInstanceLocalService.addReportInstance(
+						themeDisplay.getUserId(), report.getReportKey(),
+						className, classPK, StringPool.BLANK, serviceContext);
 				}
 			}
 
