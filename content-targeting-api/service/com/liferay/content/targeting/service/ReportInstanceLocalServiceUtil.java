@@ -350,9 +350,6 @@ public class ReportInstanceLocalServiceUtil {
 			nameMap, descriptionMap, typeSettings, serviceContext);
 	}
 
-	/**
-	* @deprecated As of 2.0.0
-	*/
 	public static com.liferay.content.targeting.model.ReportInstance addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK, java.lang.String typeSettings,
