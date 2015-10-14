@@ -19,7 +19,7 @@
 <#include "../macros_exceptions.ftl" />
 
 <@liferay_ui["header"]
-	backURL="${redirect}"
+	backURL="${backURL}"
 	title='${(tactic.getName(locale))!"new-promotion"}'
 />
 

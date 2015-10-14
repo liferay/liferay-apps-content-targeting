@@ -19,24 +19,8 @@
 
 <@breadcrumb />
 
-<#if !validator.isBlank(backURL)>
-	<#assign redirect=backURL>
-</#if>
-
-<#if validator.isBlank(redirect)>
-	<@portlet["renderURL"] var="redirect">
-		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-		<@portlet["param"] name="className" value="${className}" />
-		<@portlet["param"] name="classPK" value="${classPK?string}" />
-		<#if (className == campaignClass.getName())>
-			<@portlet["param"] name="campaignId" value="${classPK?string}" />
-		</#if>
-		<@portlet["param"] name="campaignTabs" value="reports" />
-	</@>
-</#if>
-
 <@liferay_ui["header"]
-	backURL="${redirect}"
+	backURL="${backURL}"
 	title=report.getName(locale)
 />
 
@@ -47,7 +31,7 @@
 </#if>
 
 <@portlet["actionURL"] name="updateReport" var="updateReportURL">
-	<@portlet["param"] name="backURL" value="${redirect}" />
+	<@portlet["param"] name="backURL" value="${backURL}" />
 	<@portlet["param"] name="redirect" value="${currentURL}" />
 	<@portlet["param"] name="reportInstanceId" value="${reportInstanceId?string}" />
 	<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />

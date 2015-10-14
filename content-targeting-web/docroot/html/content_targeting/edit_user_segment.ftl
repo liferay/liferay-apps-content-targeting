@@ -18,7 +18,7 @@
 <#include "../macros_exceptions.ftl" />
 
 <@liferay_ui["header"]
-	backURL="${redirect}"
+	backURL="${backURL}"
 	title='${(userSegment.getName(locale))!"new-user-segment"}'
 />
 

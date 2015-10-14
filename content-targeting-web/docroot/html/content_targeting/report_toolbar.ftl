@@ -30,7 +30,7 @@
 			<#if campaignPermission.contains(permissionChecker, classPK?long, actionKeys.UPDATE) && instantiableExists>
 				<@portlet["renderURL"] var="redirectURL">
 					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
-					<@portlet["param"] name="backURL" value="${redirect}" />
+					<@portlet["param"] name="backURL" value="${backURL}" />
 					<@portlet["param"] name="campaignId" value="${classPK}" />
 					<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 					<@portlet["param"] name="classPK" value="${classPK}" />
