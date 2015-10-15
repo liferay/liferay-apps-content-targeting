@@ -399,6 +399,14 @@ public class ReportInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public int getReportInstanceCount(java.lang.String reportKey,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return _reportInstanceLocalService.getReportInstanceCount(reportKey,
+			className, classPK);
+	}
+
+	@Override
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {

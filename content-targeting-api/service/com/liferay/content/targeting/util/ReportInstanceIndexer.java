@@ -14,8 +14,12 @@
 
 package com.liferay.content.targeting.util;
 
+import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
+import com.liferay.content.targeting.model.UserSegment;
+import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.service.persistence.ReportInstanceActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -33,6 +37,7 @@ import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import java.util.Date;
 import java.util.Locale;
 
 import javax.portlet.PortletURL;
@@ -169,6 +174,32 @@ public class ReportInstanceIndexer extends BaseIndexer {
 			@Override
 			protected void performAction(Object object) throws PortalException {
 				ReportInstance reportInstance = (ReportInstance)object;
+
+				if (reportInstance.getGroupId() == 0) {
+					try {
+						String className = reportInstance.getClassName();
+
+						if (className.equals(Campaign.class.getName())) {
+							Campaign campaign =
+								CampaignLocalServiceUtil.getCampaign(
+									reportInstance.getClassPK());
+
+							reportInstance.setGroupId(campaign.getGroupId());
+						}
+						else {
+							UserSegment userSegment =
+								UserSegmentLocalServiceUtil.getUserSegment(
+									reportInstance.getClassPK());
+
+							reportInstance.setGroupId(userSegment.getGroupId());
+						}
+
+						reportInstance.setCreateDate(new Date());
+					}
+					catch (Exception e) {
+						_log.error(e, e);
+					}
+				}
 
 				Document document = getDocument(reportInstance);
 

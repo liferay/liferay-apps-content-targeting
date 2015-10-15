@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.service.impl;
 
+import com.liferay.content.targeting.DuplicateReportInstanceException;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.ReportInstance;
@@ -27,6 +28,8 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.Indexable;
+import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
@@ -73,12 +76,25 @@ public class ReportInstanceLocalServiceImpl
 			bundle.getBundleContext());
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ReportInstance addReportInstance(
 			long userId, String reportKey, String className, long classPK,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
+
+		Report report = _reportsRegistry.getReport(reportKey);
+
+		if (!report.isInstantiable() &&
+			(reportInstancePersistence.countByR_C_C(
+				reportKey, className, classPK) > 0)) {
+
+			throw new DuplicateReportInstanceException(
+				"A report instance of the type " + reportKey + " already " +
+					"exists in this classPK " + classPK
+			);
+		}
 
 		User user = userLocalService.getUser(userId);
 
@@ -109,6 +125,7 @@ public class ReportInstanceLocalServiceImpl
 		return reportInstance;
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ReportInstance addReportInstance(
 			long userId, String reportKey, String className, long classPK,
@@ -132,6 +149,7 @@ public class ReportInstanceLocalServiceImpl
 			typeSettings, serviceContext);
 	}
 
+	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ReportInstance deleteReportInstance(long reportInstanceId)
 		throws PortalException, SystemException {
@@ -179,6 +197,15 @@ public class ReportInstanceLocalServiceImpl
 	}
 
 	@Override
+	public int getReportInstanceCount(
+			String reportKey, String className, long classPK)
+		throws SystemException {
+
+		return reportInstancePersistence.countByR_C_C(
+			reportKey, className, classPK);
+	}
+
+	@Override
 	public List<ReportInstance> getReportInstances(
 			String className, long classPK)
 		throws SystemException {
@@ -207,6 +234,7 @@ public class ReportInstanceLocalServiceImpl
 		return searchReportInstances(searchContext).getBaseModels();
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public ReportInstance updateReportInstance(
 			long reportInstanceId, long userId, String reportKey,

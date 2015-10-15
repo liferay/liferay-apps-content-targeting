@@ -1179,6 +1179,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			List<UserSegment> campaignUserSegments = null;
 
+			Campaign campaign = null;
+
 			if (campaignId > 0) {
 				template.put(
 					"reports",
@@ -1204,25 +1206,27 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(request);
 
-				for (Report report
-					: _reportsRegistry.getReports(className).values()) {
+				Map<String, Report> reports = _reportsRegistry.getReports();
 
-					int reportInstanceCount =
-						_reportInstanceLocalService.findReportInstances(
-							report.getReportKey(), className, campaignId).
-								size();
-
-					if (!report.isInstantiable() &&
-						(reportInstanceCount == 0)) {
-
-						_reportInstanceLocalService.addReportInstance(
-							themeDisplay.getUserId(), report.getReportKey(),
-							className, campaignId, "", serviceContext);
+				for (Report report : reports.values()) {
+					if (report.isInstantiable()) {
+						continue;
 					}
+
+					if (_reportInstanceLocalService.getReportInstanceCount(
+							report.getReportKey(), className, campaignId)
+						> 0) {
+
+						continue;
+					}
+
+					_reportInstanceLocalService.addReportInstance(
+						themeDisplay.getUserId(), report.getReportKey(),
+						className, campaignId, StringPool.BLANK,
+						serviceContext);
 				}
 
-				Campaign campaign = _campaignLocalService.getCampaign(
-					campaignId);
+				campaign = _campaignLocalService.getCampaign(campaignId);
 
 				template.put("campaign", campaign);
 
@@ -1297,8 +1301,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				template.put("timeZoneId", themeDisplay.getTimeZone().getID());
 			}
 
+			Tactic tactic = null;
+
 			if (tacticId > 0) {
-				Tactic tactic = _tacticLocalService.getTactic(tacticId);
+				tactic = _tacticLocalService.getTactic(tacticId);
 
 				template.put("tactic", tactic);
 
@@ -1438,6 +1444,17 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				}
 
 				template.put("channelsRegistry", _channelsRegistry);
+
+				if (campaign != null) {
+					BreadcrumbUtil.addPortletBreadcrumbEntries(
+						request, (RenderResponse)portletResponse, campaign,
+						"promotions");
+
+					if (tactic != null) {
+						BreadcrumbUtil.addPortletBreadcrumbEntries(
+							request, (RenderResponse)portletResponse, tactic);
+					}
+				}
 			}
 
 			PermissionChecker permissionChecker =
@@ -1457,50 +1474,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			template.put(
 				"tacticSearchContainerIterator",
 				new TacticSearchContainerIterator(scopeGroupId, keywords));
-
-			if (path.equals(ContentTargetingPath.VIEW_TACTICS) ||
-				path.equals(ContentTargetingPath.VIEW_TACTICS_RESOURCES)) {
-
-				template.put(
-					"campaignPermission",
-					staticModels.get(CampaignPermission.class.getName()));
-
-				String className = ParamUtil.getString(
-					portletRequest, "className");
-				long classPK = ParamUtil.getLong(portletRequest, "classPK");
-
-				template.put("className", className);
-
-				String name = StringPool.BLANK;
-
-				if (className.equals(Campaign.class.getName())) {
-					Campaign campaign = _campaignLocalService.getCampaign(
-						classPK);
-
-					name = campaign.getName(themeDisplay.getLocale());
-
-					BreadcrumbUtil.addPortletBreadcrumbEntries(
-						request, (RenderResponse)portletResponse, campaign);
-
-					classPK = _getCampaignClassPK(campaign, scopeGroup);
-
-					template.put("classPK", classPK);
-				}
-
-				PortletConfig portletConfig =
-					(PortletConfig)portletRequest.getAttribute(
-						JavaConstants.JAVAX_PORTLET_CONFIG);
-
-				Object[] titleObject = new Object[] {
-					ResourceActionsUtil.getModelResource(
-						themeDisplay.getLocale(), className), name};
-
-				String title = LanguageUtil.format(
-					portletConfig, themeDisplay.getLocale(),
-					"promotions-for-the-x-x", titleObject);
-
-				template.put("title", title);
-			}
 
 			ServiceContext serviceContext = new ServiceContext();
 
@@ -1638,6 +1611,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			String className = ParamUtil.getString(portletRequest, "className");
 			long classPK = ParamUtil.getLong(portletRequest, "classPK");
+
 			template.put("className", className);
 			template.put("scopeGroup", scopeGroup);
 			template.put("reportInstanceService", _reportInstanceService);
@@ -1650,7 +1624,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				name = campaign.getName(themeDisplay.getLocale());
 
 				BreadcrumbUtil.addPortletBreadcrumbEntries(
-					request, (RenderResponse)portletResponse, campaign);
+					request, (RenderResponse)portletResponse, campaign,
+					"reports");
 
 				classPK = _getCampaignClassPK(campaign, scopeGroup);
 			}
@@ -1740,20 +1715,24 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(request);
 
-				for (Report report
-						: _reportsRegistry.getReports(className).values()) {
+				Map<String, Report> reports = _reportsRegistry.getReports(
+					className);
 
-					int reportInstanceCount =
-						_reportInstanceLocalService.findReportInstances(
-							report.getReportKey(), className, classPK).size();
-
-					if (!report.isInstantiable() &&
-						(reportInstanceCount == 0)) {
-
-						_reportInstanceLocalService.addReportInstance(
-							themeDisplay.getUserId(), report.getReportKey(),
-							className, classPK, "", serviceContext);
+				for (Report report : reports.values()) {
+					if (report.isInstantiable()) {
+						continue;
 					}
+
+					if (_reportInstanceLocalService.getReportInstanceCount(
+							report.getReportKey(), className, classPK)
+						> 0) {
+
+						continue;
+					}
+
+					_reportInstanceLocalService.addReportInstance(
+						themeDisplay.getUserId(), report.getReportKey(),
+						className, classPK, StringPool.BLANK, serviceContext);
 				}
 			}
 

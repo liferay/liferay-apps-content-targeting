@@ -161,26 +161,32 @@ public class ReportInstanceLocalServiceClpInvoker {
 				"java.lang.String", "java.lang.String", "long"
 			};
 
-		_methodName100 = "getReportInstances";
+		_methodName100 = "getReportInstanceCount";
 
-		_methodParameterTypes100 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes100 = new String[] {
+				"java.lang.String", "java.lang.String", "long"
+			};
 
 		_methodName101 = "getReportInstances";
 
-		_methodParameterTypes101 = new String[] {
+		_methodParameterTypes101 = new String[] { "java.lang.String", "long" };
+
+		_methodName102 = "getReportInstances";
+
+		_methodParameterTypes102 = new String[] {
 				"java.lang.String", "long", "int", "int"
 			};
 
-		_methodName102 = "searchReportInstances";
+		_methodName103 = "searchReportInstances";
 
-		_methodParameterTypes102 = new String[] {
+		_methodParameterTypes103 = new String[] {
 				"long", "java.lang.String", "long", "java.lang.String", "int",
 				"int"
 			};
 
-		_methodName103 = "updateReportInstance";
+		_methodName104 = "updateReportInstance";
 
-		_methodParameterTypes103 = new String[] {
+		_methodParameterTypes104 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String", "long",
 				"java.util.Map", "java.util.Map", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
@@ -351,20 +357,26 @@ public class ReportInstanceLocalServiceClpInvoker {
 
 		if (_methodName100.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes100, parameterTypes)) {
-			return ReportInstanceLocalServiceUtil.getReportInstances((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue());
+			return ReportInstanceLocalServiceUtil.getReportInstanceCount((java.lang.String)arguments[0],
+				(java.lang.String)arguments[1], ((Long)arguments[2]).longValue());
 		}
 
 		if (_methodName101.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes101, parameterTypes)) {
+			return ReportInstanceLocalServiceUtil.getReportInstances((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName102.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
 			return ReportInstanceLocalServiceUtil.getReportInstances((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName102.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes102, parameterTypes)) {
+		if (_methodName103.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
 			return ReportInstanceLocalServiceUtil.searchReportInstances(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -373,8 +385,8 @@ public class ReportInstanceLocalServiceClpInvoker {
 				((Integer)arguments[5]).intValue());
 		}
 
-		if (_methodName103.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes103, parameterTypes)) {
+		if (_methodName104.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes104, parameterTypes)) {
 			return ReportInstanceLocalServiceUtil.updateReportInstance(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
@@ -450,4 +462,6 @@ public class ReportInstanceLocalServiceClpInvoker {
 	private String[] _methodParameterTypes102;
 	private String _methodName103;
 	private String[] _methodParameterTypes103;
+	private String _methodName104;
+	private String[] _methodParameterTypes104;
 }
