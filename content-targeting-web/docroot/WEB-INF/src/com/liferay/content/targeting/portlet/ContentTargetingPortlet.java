@@ -106,6 +106,7 @@ import com.liferay.portal.security.permission.PermissionChecker;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.service.permission.UserPermissionUtil;
 import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
 import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 import com.liferay.portal.theme.ThemeDisplay;
@@ -816,6 +817,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put(
 			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
 		template.put("userSegmentClass", UserSegment.class);
+		template.put(
+			"userPermissionUtil",
+			staticModels.get(UserPermissionUtil.class.getName()));
 		template.put(
 			"userSegmentTabs",
 			ParamUtil.getString(portletRequest, "userSegmentTabs", "details"));
