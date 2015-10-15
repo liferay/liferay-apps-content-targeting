@@ -53,6 +53,7 @@ import java.util.Map;
  */
 public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Tactic addTactic(
 			long userId, long campaignId, Map<Locale, String> nameMap,
@@ -151,6 +152,7 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 		return searchTactics(searchContext);
 	}
 
+	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public Tactic updateTactic(
 			long tacticId, long campaignId, Map<Locale, String> nameMap,
