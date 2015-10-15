@@ -158,26 +158,32 @@ public class ReportInstanceLocalServiceClp implements ReportInstanceLocalService
 				"java.lang.String", "java.lang.String", "long"
 			};
 
-		_methodName27 = "getReportInstances";
+		_methodName27 = "getReportInstanceCount";
 
-		_methodParameterTypes27 = new String[] { "java.lang.String", "long" };
+		_methodParameterTypes27 = new String[] {
+				"java.lang.String", "java.lang.String", "long"
+			};
 
 		_methodName28 = "getReportInstances";
 
-		_methodParameterTypes28 = new String[] {
+		_methodParameterTypes28 = new String[] { "java.lang.String", "long" };
+
+		_methodName29 = "getReportInstances";
+
+		_methodParameterTypes29 = new String[] {
 				"java.lang.String", "long", "int", "int"
 			};
 
-		_methodName29 = "searchReportInstances";
+		_methodName30 = "searchReportInstances";
 
-		_methodParameterTypes29 = new String[] {
+		_methodParameterTypes30 = new String[] {
 				"long", "java.lang.String", "long", "java.lang.String", "int",
 				"int"
 			};
 
-		_methodName30 = "updateReportInstance";
+		_methodName31 = "updateReportInstance";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes31 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String", "long",
 				"java.util.Map", "java.util.Map", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
@@ -1042,7 +1048,7 @@ public class ReportInstanceLocalServiceClp implements ReportInstanceLocalService
 	}
 
 	@Override
-	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
+	public int getReportInstanceCount(java.lang.String reportKey,
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
@@ -1050,6 +1056,42 @@ public class ReportInstanceLocalServiceClp implements ReportInstanceLocalService
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName27,
 					_methodParameterTypes27,
+					new Object[] {
+						ClpSerializer.translateInput(reportKey),
+						
+					ClpSerializer.translateInput(className),
+						
+					classPK
+					});
+		}
+		catch (Throwable t) {
+			t = ClpSerializer.translateThrowable(t);
+
+			if (t instanceof com.liferay.portal.kernel.exception.SystemException) {
+				throw (com.liferay.portal.kernel.exception.SystemException)t;
+			}
+
+			if (t instanceof RuntimeException) {
+				throw (RuntimeException)t;
+			}
+			else {
+				throw new RuntimeException(t.getClass().getName() +
+					" is not a valid exception");
+			}
+		}
+
+		return ((Integer)returnObj).intValue();
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		Object returnObj = null;
+
+		try {
+			returnObj = _invokableLocalService.invokeMethod(_methodName28,
+					_methodParameterTypes28,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1082,8 +1124,8 @@ public class ReportInstanceLocalServiceClp implements ReportInstanceLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName28,
-					_methodParameterTypes28,
+			returnObj = _invokableLocalService.invokeMethod(_methodName29,
+					_methodParameterTypes29,
 					new Object[] {
 						ClpSerializer.translateInput(className),
 						
@@ -1122,8 +1164,8 @@ public class ReportInstanceLocalServiceClp implements ReportInstanceLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName29,
-					_methodParameterTypes29,
+			returnObj = _invokableLocalService.invokeMethod(_methodName30,
+					_methodParameterTypes30,
 					new Object[] {
 						groupId,
 						
@@ -1174,8 +1216,8 @@ public class ReportInstanceLocalServiceClp implements ReportInstanceLocalService
 		Object returnObj = null;
 
 		try {
-			returnObj = _invokableLocalService.invokeMethod(_methodName30,
-					_methodParameterTypes30,
+			returnObj = _invokableLocalService.invokeMethod(_methodName31,
+					_methodParameterTypes31,
 					new Object[] {
 						reportInstanceId,
 						
@@ -1280,4 +1322,6 @@ public class ReportInstanceLocalServiceClp implements ReportInstanceLocalService
 	private String[] _methodParameterTypes29;
 	private String _methodName30;
 	private String[] _methodParameterTypes30;
+	private String _methodName31;
+	private String[] _methodParameterTypes31;
 }

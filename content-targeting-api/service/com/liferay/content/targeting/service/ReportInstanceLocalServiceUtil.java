@@ -373,6 +373,12 @@ public class ReportInstanceLocalServiceUtil {
 		return getService().findReportInstances(reportKey, className, classPK);
 	}
 
+	public static int getReportInstanceCount(java.lang.String reportKey,
+		java.lang.String className, long classPK)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().getReportInstanceCount(reportKey, className, classPK);
+	}
+
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
 		java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
