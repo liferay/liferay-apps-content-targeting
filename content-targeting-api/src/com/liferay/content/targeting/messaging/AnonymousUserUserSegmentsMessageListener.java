@@ -41,27 +41,34 @@ public class AnonymousUserUserSegmentsMessageListener
 			AnonymousUserUserSegmentLocalServiceUtil.
 				getAnonymousUserUserSegments(anonymousUserId, userSegmentId);
 
+		boolean hasActiveUserSegment = false;
+
+		Calendar calendar = CalendarFactoryUtil.getCalendar();
+		calendar.setTimeInMillis(timeInMillis);
+
 		for (AnonymousUserUserSegment anonymousUserUserSegment
 				: anonymousUserUserSegments) {
 
 			if (anonymousUserUserSegment.isActive()) {
-				anonymousUserUserSegment.setActive(false);
+				anonymousUserUserSegment.setModifiedDate(calendar.getTime());
 
 				AnonymousUserUserSegmentLocalServiceUtil.
 					updateAnonymousUserUserSegment(anonymousUserUserSegment);
+
+				hasActiveUserSegment = true;
 			}
 		}
 
-		ServiceContext serviceContext = new ServiceContext();
+		if (!hasActiveUserSegment) {
+			ServiceContext serviceContext = new ServiceContext();
 
-		serviceContext.setCompanyId(companyId);
+			serviceContext.setCompanyId(companyId);
 
-		AnonymousUserUserSegmentLocalServiceUtil.addAnonymousUserUserSegment(
-			anonymousUserId, userSegmentId, false, true, serviceContext);
-
-		Calendar calendar = CalendarFactoryUtil.getCalendar();
-
-		calendar.setTimeInMillis(timeInMillis);
+			AnonymousUserUserSegmentLocalServiceUtil.
+				addAnonymousUserUserSegment(
+					anonymousUserId, userSegmentId, false, true,
+					serviceContext);
+		}
 	}
 
 }
