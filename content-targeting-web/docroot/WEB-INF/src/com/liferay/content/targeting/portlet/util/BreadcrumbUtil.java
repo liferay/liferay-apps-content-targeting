@@ -16,6 +16,7 @@ package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.ContentTargetingPath;
 import com.liferay.content.targeting.util.WebKeys;
@@ -34,7 +35,7 @@ public class BreadcrumbUtil {
 
 	public static void addPortletBreadcrumbEntries(
 		HttpServletRequest request, RenderResponse renderResponse,
-		Campaign campaign) {
+		Campaign campaign, String campaignTabName) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -46,7 +47,7 @@ public class BreadcrumbUtil {
 		portletURL.setParameter("mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
 		portletURL.setParameter(
 			"campaignId", String.valueOf(campaign.getCampaignId()));
-		portletURL.setParameter("campaignTabs", "reports");
+		portletURL.setParameter("campaignTabs", campaignTabName);
 		portletURL.setParameter("className", Campaign.class.getName());
 		portletURL.setParameter(
 			"classPK", String.valueOf(campaign.getCampaignId()));
@@ -81,6 +82,17 @@ public class BreadcrumbUtil {
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, themeDisplay.translate(tabs1), portletURL.toString());
+	}
+
+	public static void addPortletBreadcrumbEntries(
+		HttpServletRequest request, RenderResponse renderResponse,
+		Tactic tactic) {
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		PortalUtil.addPortletBreadcrumbEntry(
+			request, tactic.getName(themeDisplay.getLocale()), null);
 	}
 
 	public static void addPortletBreadcrumbEntries(
