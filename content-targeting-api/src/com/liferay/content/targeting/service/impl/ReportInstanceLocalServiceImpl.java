@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
@@ -267,8 +268,20 @@ public class ReportInstanceLocalServiceImpl
 
 		Group group = groupLocalService.getGroup(groupId);
 
-		searchContext.setAttribute("className", className);
-		searchContext.setAttribute("classPK", classPK);
+		MultiValueFacet classNameFacet = new MultiValueFacet(searchContext);
+
+		classNameFacet.setFieldName("className");
+		classNameFacet.setStatic(true);
+		classNameFacet.setValues(new String[] {className});
+
+		MultiValueFacet classPKFacet = new MultiValueFacet(searchContext);
+
+		classPKFacet.setFieldName("classPK");
+		classPKFacet.setStatic(true);
+		classPKFacet.setValues(new long[] {classPK});
+
+		searchContext.addFacet(classNameFacet);
+		searchContext.addFacet(classPKFacet);
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setGroupIds(new long[]{groupId});
 		searchContext.setEnd(end);
