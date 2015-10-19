@@ -18,6 +18,13 @@
 <#include "../macros.ftl" />
 <#include "../macros_exceptions.ftl" />
 
+<#if validator.isNull(backURL)>
+	<@portlet["renderURL"] var="backURL">
+		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
+		<@portlet["param"] name="tabs1" value="campaigns" />
+	</@>
+</#if>
+
 <@liferay_ui["header"]
 	backURL="${backURL}"
 	title='${(campaign.getName(locale))!"new-campaign"}'
