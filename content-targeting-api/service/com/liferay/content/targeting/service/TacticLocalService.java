@@ -420,6 +420,7 @@ public interface TacticLocalService extends BaseLocalService,
 		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.Tactic addTactic(long userId,
 		long campaignId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -459,6 +460,7 @@ public interface TacticLocalService extends BaseLocalService,
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException;
 
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.Tactic updateTactic(
 		long tacticId, long campaignId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
