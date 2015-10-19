@@ -49,8 +49,8 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 
 		while (linkMatcher.find()) {
 			String trackingLinkURL = getTrackingLinkURL(
-					companyId, userId, anonymousUserId, className, classPK,
-					elementId, linkMatcher.group(2));
+				companyId, userId, anonymousUserId, className, classPK,
+				elementId, linkMatcher.group(2));
 
 			StringBundler sb = new StringBundler(3);
 
