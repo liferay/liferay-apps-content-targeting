@@ -12,7 +12,9 @@ AUI.add(
 					'</div>' +
 					'<div class="row field-info">' +
 						'<div class="field-title">{name}</div>' +
-						'<div class="field-description">{description}</div>' +
+						'<div class="field-description">{description}' +
+							'<span class="field-description-alias"></span>' +
+						'</div>' +
 					'</div>' +
 				'</div>' +
 				'<div class="field-editor toggler-content-collapsed">{editor}</div>' +
