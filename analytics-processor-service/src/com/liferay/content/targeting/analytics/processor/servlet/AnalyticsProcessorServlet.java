@@ -29,10 +29,9 @@ import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
-import com.liferay.portal.model.User;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
 import java.awt.Color;
@@ -73,31 +72,42 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		try {
-			long imageId = ParamUtil.getLong(request, "imageId");
+		long imageId = ParamUtil.getLong(request, "imageId");
+		String redirect = ParamUtil.getString(request, "redirect");
 
-			String redirect = ParamUtil.getString(request, "redirect");
-
-			if (imageId > 0) {
-				trackEvent(request, response, "view", "");
-
+		if (imageId > 0) {
+			try {
+				processEvent(request, response, "view", StringPool.BLANK);
+			}
+			catch (Exception e) {
+				_log.error("Tracking image failed", e);
+			}
+			finally {
 				serveImage(request, response);
 			}
-			else if (!Validator.isBlank(redirect)) {
-				trackEvent(request, response, "click", redirect);
-
+		}
+		else if (Validator.isNotNull(redirect)) {
+			try {
+				processEvent(request, response, "click", redirect);
+			}
+			catch (Exception e) {
+				_log.error("Tracking url failed", e);
+			}
+			finally {
 				response.sendRedirect(redirect);
 			}
-			else {
+		}
+		else {
+			try {
 				processEvents(request, response);
 			}
-		}
-		catch (Exception e) {
-			_log.error(e, e);
+			catch (Exception e) {
+				_log.error("Tracking events failed", e);
 
-			PortalUtil.sendError(
-				HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,
-				response);
+				PortalUtil.sendError(
+					HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e, request,
+					response);
+			}
 		}
 	}
 
@@ -121,47 +131,39 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 	public void setServletContext(ServletContext servletContext) {
 	}
 
-	protected void copyJSONObjectData(Message message, JSONObject jsonObject) {
-		Iterator<String> keys = jsonObject.keys();
+	protected void processEvent(
+			HttpServletRequest request, HttpServletResponse response,
+			String event, String url)
+		throws Exception {
 
-		while (keys.hasNext()) {
-			String key = keys.next();
+		long companyId = PortalUtil.getCompanyId(request);
 
-			if (key.equals("referrers")) {
-				JSONArray referrersJSONArray = jsonObject.getJSONArray(key);
+		String className = ParamUtil.getString(request, "className");
+		long classPK = ParamUtil.getLong(request, "classPK");
+		String elementId = ParamUtil.getString(request, "elementId");
+		long requestAnonymousUserId = ParamUtil.getLong(
+			request, "anonymousUserId");
+		long userId = ParamUtil.getLong(request, "userId");
 
-				message.put("referrers", getReferrersMap(referrersJSONArray));
-			}
-			else {
-				message.put(key, jsonObject.getString(key));
-			}
-		}
-	}
+		long anonymousUserId = _getAnonymousUserId(
+				request, response, requestAnonymousUserId, userId);
 
-	protected Map<String, long[]> getReferrersMap(
-		JSONArray referrersJSONArray) {
+		Message message = new Message();
 
-		Map<String, long[]> referrersMap = new HashMap<String, long[]>();
+		message.put("clientIP", request.getRemoteAddr());
+		message.put("userAgent", request.getHeader(HttpHeaders.USER_AGENT));
 
-		if (referrersJSONArray == null) {
-			return referrersMap;
-		}
+		message.put("additionalInfo", url);
+		message.put("anonymousUserId", anonymousUserId);
+		message.put("companyId", companyId);
+		message.put("className", className);
+		message.put("classPK", classPK);
+		message.put("userId", userId);
+		message.put("event", event);
+		message.put("elementId", elementId);
+		message.put("layoutURL", url);
 
-		for (int i = 0; i < referrersJSONArray.length(); ++i) {
-			JSONObject referrerJSONObject = referrersJSONArray.getJSONObject(i);
-
-			String referrerClassName = referrerJSONObject.getString(
-				"referrerClassName");
-
-			String[] values = StringUtil.split(
-				referrerJSONObject.getString(("referrerClassPKs")));
-
-			long[] referrerClassPKs = GetterUtil.getLongValues(values);
-
-			referrersMap.put(referrerClassName, referrerClassPKs);
-		}
-
-		return referrersMap;
+		MessageBusUtil.sendMessage("liferay/analytics", message);
 	}
 
 	protected void processEvents(
@@ -191,24 +193,12 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 			throw new IllegalArgumentException();
 		}
 
-		long anonymousUserId = contextJSONObject.getLong("anonymousUserId", 0);
+		long requestAnonymousUserId = contextJSONObject.getLong(
+			"anonymousUserId", 0);
 		long userId = contextJSONObject.getLong("userId", 0);
 
-		if ((anonymousUserId == 0) && (userId > 0)) {
-			AnonymousUser anonymousUser =
-				_anonymousUserLocalService.fetchAnonymousUserByUserId(userId);
-
-			if (anonymousUser != null) {
-				anonymousUserId = anonymousUser.getAnonymousUserId();
-			}
-		}
-
-		if (anonymousUserId == 0) {
-			AnonymousUser anonymousUser =
-				_anonymousUsersManager.getAnonymousUser(request, response);
-
-			anonymousUserId = anonymousUser.getAnonymousUserId();
-		}
+		long anonymousUserId = _getAnonymousUserId(
+			request, response, requestAnonymousUserId, userId);
 
 		for (int i = 0; i < eventsJSONArray.length(); ++i) {
 			Message message = new Message();
@@ -218,10 +208,10 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 			message.put("event", eventJSONObject.getString("event", "view"));
 			message.put("timestamp", eventJSONObject.getString("timestamp"));
 
-			copyJSONObjectData(
+			_copyJSONObjectData(
 				message, eventJSONObject.getJSONObject("properties"));
 
-			copyJSONObjectData(message, contextJSONObject);
+			_copyJSONObjectData(message, contextJSONObject);
 
 			message.put("anonymousUserId", anonymousUserId);
 			message.put("companyId", companyId);
@@ -243,7 +233,7 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 	}
 
 	protected void serveImage(
-			HttpServletRequest request, HttpServletResponse response) {
+		HttpServletRequest request, HttpServletResponse response) {
 
 		BufferedImage singlePixelImage = new BufferedImage(
 			1, 1, BufferedImage.TYPE_4BYTE_ABGR);
@@ -266,55 +256,69 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		}
 	}
 
-	protected void trackEvent(
-			HttpServletRequest request, HttpServletResponse response,
-			String event, String url) {
+	private void _copyJSONObjectData(Message message, JSONObject jsonObject) {
+		Iterator<String> keys = jsonObject.keys();
 
-		long companyId = PortalUtil.getCompanyId(request);
+		while (keys.hasNext()) {
+			String key = keys.next();
 
-		long anonymousUserId = ParamUtil.getLong(request, "anonymousUserId");
-		String className = ParamUtil.getString(request, "className");
-		long classPK = ParamUtil.getLong(request, "classPK");
-		long userId = ParamUtil.getLong(request, "userId");
-		String email = ParamUtil.getString(request, "email");
+			if (key.equals("referrers")) {
+				JSONArray referrersJSONArray = jsonObject.getJSONArray(key);
 
-		String elementId = ParamUtil.getString(request, "elementId");
-
-		if (Validator.isNotNull(email)) {
-			try {
-				User user = UserLocalServiceUtil.getUserByEmailAddress(
-					companyId, email);
-
-				userId = user.getUserId();
-
-				if (userId > 0) {
-					anonymousUserId =
-						_anonymousUserLocalService.fetchAnonymousUserByUserId(
-							userId).getAnonymousUserId();
-				}
+				message.put("referrers", _getReferrersMap(referrersJSONArray));
 			}
-			catch (Exception e) {
-				if (_log.isWarnEnabled()) {
-					_log.warn(e, e);
-				}
+			else {
+				message.put(key, jsonObject.getString(key));
+			}
+		}
+	}
+
+	private long _getAnonymousUserId(
+			HttpServletRequest request, HttpServletResponse response,
+			long anonymousUserId, long userId)
+		throws Exception {
+
+		if ((anonymousUserId == 0) && (userId > 0)) {
+			AnonymousUser anonymousUser =
+				_anonymousUserLocalService.fetchAnonymousUserByUserId(userId);
+
+			if (anonymousUser != null) {
+				anonymousUserId = anonymousUser.getAnonymousUserId();
 			}
 		}
 
-		Message message = new Message();
+		if (anonymousUserId == 0) {
+			AnonymousUser anonymousUser =
+				_anonymousUsersManager.getAnonymousUser(request, response);
 
-		message.put("clientIP", request.getRemoteAddr());
-		message.put("userAgent", request.getHeader(HttpHeaders.USER_AGENT));
+			anonymousUserId = anonymousUser.getAnonymousUserId();
+		}
 
-		message.put("additionalInfo", url);
-		message.put("anonymousUserId", anonymousUserId);
-		message.put("className", className);
-		message.put("classPK", classPK);
-		message.put("userId", userId);
-		message.put("event", event);
-		message.put("elementId", elementId);
-		message.put("layoutURL", url);
+		return anonymousUserId;
+	}
 
-		MessageBusUtil.sendMessage("liferay/analytics", message);
+	private Map<String, long[]> _getReferrersMap(JSONArray referrersJSONArray) {
+		Map<String, long[]> referrersMap = new HashMap<String, long[]>();
+
+		if (referrersJSONArray == null) {
+			return referrersMap;
+		}
+
+		for (int i = 0; i < referrersJSONArray.length(); ++i) {
+			JSONObject referrerJSONObject = referrersJSONArray.getJSONObject(i);
+
+			String referrerClassName = referrerJSONObject.getString(
+				"referrerClassName");
+
+			String[] values = StringUtil.split(
+				referrerJSONObject.getString(("referrerClassPKs")));
+
+			long[] referrerClassPKs = GetterUtil.getLongValues(values);
+
+			referrersMap.put(referrerClassName, referrerClassPKs);
+		}
+
+		return referrersMap;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
