@@ -6,6 +6,7 @@ Export-Package:\
 	com.liferay.content.targeting.analytics.messaging,\
 	com.liferay.content.targeting.analytics.messaging.config,\
 	com.liferay.content.targeting.analytics.model,\
+	com.liferay.content.targeting.analytics.processor,\
 	com.liferay.content.targeting.analytics.service,\
 	com.liferay.content.targeting.analytics.service.messaging,\
 	com.liferay.content.targeting.analytics.util
