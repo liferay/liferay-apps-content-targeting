@@ -25,11 +25,11 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.servlet.HttpHeaders;
+import com.liferay.portal.kernel.servlet.HttpMethods;
 import com.liferay.portal.kernel.servlet.ServletResponseUtil;
 import com.liferay.portal.kernel.util.ContentTypes;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.util.PortalUtil;
@@ -72,29 +72,36 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws IOException, ServletException {
 
-		long imageId = ParamUtil.getLong(request, "imageId");
-		String redirect = ParamUtil.getString(request, "redirect");
+		String method = GetterUtil.getString(request.getMethod());
 
-		if (imageId > 0) {
-			try {
-				processEvent(request, response, "view", StringPool.BLANK);
+		if (StringUtil.equalsIgnoreCase(method, HttpMethods.GET)) {
+			String imageId = ParamUtil.getString(request, "imageId");
+
+			if (Validator.isNotNull(imageId)) {
+				try {
+					processEvent(request, response);
+				}
+				catch (Exception e) {
+					_log.error("Tracking image failed", e);
+				}
+				finally {
+					serveImage(request, response);
+				}
 			}
-			catch (Exception e) {
-				_log.error("Tracking image failed", e);
-			}
-			finally {
-				serveImage(request, response);
-			}
-		}
-		else if (Validator.isNotNull(redirect)) {
-			try {
-				processEvent(request, response, "click", redirect);
-			}
-			catch (Exception e) {
-				_log.error("Tracking url failed", e);
-			}
-			finally {
-				response.sendRedirect(redirect);
+			else {
+				try {
+					processEvent(request, response);
+				}
+				catch (Exception e) {
+					_log.error("Tracking url failed", e);
+				}
+				finally {
+					String redirect = ParamUtil.getString(request, "redirect");
+
+					if (Validator.isNotNull(redirect)) {
+						response.sendRedirect(redirect);
+					}
+				}
 			}
 		}
 		else {
@@ -132,36 +139,35 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 	}
 
 	protected void processEvent(
-			HttpServletRequest request, HttpServletResponse response,
-			String event, String url)
+			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
+		String additionalInfo = ParamUtil.getString(request, "additionalInfo");
 		String className = ParamUtil.getString(request, "className");
 		long classPK = ParamUtil.getLong(request, "classPK");
 		String elementId = ParamUtil.getString(request, "elementId");
+		String event = ParamUtil.getString(request, "event");
 		long requestAnonymousUserId = ParamUtil.getLong(
 			request, "anonymousUserId");
 		long userId = ParamUtil.getLong(request, "userId");
 
 		long anonymousUserId = _getAnonymousUserId(
-				request, response, requestAnonymousUserId, userId);
+			request, response, requestAnonymousUserId, userId);
 
 		Message message = new Message();
 
-		message.put("clientIP", request.getRemoteAddr());
-		message.put("userAgent", request.getHeader(HttpHeaders.USER_AGENT));
-
-		message.put("additionalInfo", url);
+		message.put("additionalInfo", additionalInfo);
 		message.put("anonymousUserId", anonymousUserId);
-		message.put("companyId", companyId);
 		message.put("className", className);
 		message.put("classPK", classPK);
-		message.put("userId", userId);
-		message.put("event", event);
+		message.put("clientIP", request.getRemoteAddr());
+		message.put("companyId", companyId);
 		message.put("elementId", elementId);
-		message.put("layoutURL", url);
+		message.put("event", event);
+		message.put("userAgent", request.getHeader(HttpHeaders.USER_AGENT));
+		message.put("userId", userId);
 
 		MessageBusUtil.sendMessage("liferay/analytics", message);
 	}
