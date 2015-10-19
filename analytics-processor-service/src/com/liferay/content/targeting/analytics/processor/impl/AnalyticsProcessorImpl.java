@@ -23,14 +23,18 @@ import com.liferay.portal.kernel.util.HttpUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
+import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.Company;
-import com.liferay.portal.service.CompanyLocalServiceUtil;
+import com.liferay.portal.service.CompanyLocalService;
 import com.liferay.portal.util.PortalUtil;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -41,7 +45,8 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 	@Override
 	public String addTrackingLinks(
 		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String elementId, String content) {
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String content) {
 
 		Matcher linkMatcher = _LINK_PATTERN.matcher(content);
 
@@ -50,7 +55,8 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 		while (linkMatcher.find()) {
 			String trackingLinkURL = getTrackingLinkURL(
 				companyId, userId, anonymousUserId, className, classPK,
-				elementId, linkMatcher.group(2));
+				referrerClassName, referrerClassPKs, elementId,
+				linkMatcher.group(2));
 
 			StringBundler sb = new StringBundler(3);
 
@@ -69,18 +75,22 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 	@Override
 	public String getTrackingEventURL(
 		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String elementId, String event, String additionalInfo) {
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String event, String additionalInfo) {
 
 		String trackingEventURL = StringPool.BLANK;
 
 		try {
-			Company company = CompanyLocalServiceUtil.getCompany(companyId);
+			Company company = _companyLocalService.getCompany(companyId);
 
 			String portalURL = PortalUtil.getPortalURL(
 				company.getVirtualHostname(), PortalUtil.getPortalPort(false),
 				false);
 
 			trackingEventURL = portalURL + _TRACK_PATH;
+
+			trackingEventURL = HttpUtil.addParameter(
+				trackingEventURL, "event", event);
 
 			if (userId > 0) {
 				trackingEventURL = HttpUtil.addParameter(
@@ -93,16 +103,32 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 					String.valueOf(anonymousUserId));
 			}
 
-			trackingEventURL = HttpUtil.addParameter(
-				trackingEventURL, "className", className);
-			trackingEventURL = HttpUtil.addParameter(
-				trackingEventURL, "classPK", String.valueOf(classPK));
-			trackingEventURL = HttpUtil.addParameter(
-				trackingEventURL, "elementId", elementId);
-			trackingEventURL = HttpUtil.addParameter(
-				trackingEventURL, "event", event);
-			trackingEventURL = HttpUtil.addParameter(
-				trackingEventURL, "additionalInfo", additionalInfo);
+			if (Validator.isNotNull(className) && (classPK > 0)) {
+				trackingEventURL = HttpUtil.addParameter(
+					trackingEventURL, "className", className);
+				trackingEventURL = HttpUtil.addParameter(
+					trackingEventURL, "classPK", classPK);
+			}
+
+			if (Validator.isNotNull(referrerClassName) &&
+				Validator.isNotNull(referrerClassPKs)) {
+
+				trackingEventURL = HttpUtil.addParameter(
+					trackingEventURL, "referrerClassName", referrerClassName);
+				trackingEventURL = HttpUtil.addParameter(
+					trackingEventURL, "referrerClassPK",
+					StringUtil.merge(referrerClassPKs));
+			}
+
+			if (Validator.isNotNull(elementId)) {
+				trackingEventURL = HttpUtil.addParameter(
+					trackingEventURL, "elementId", elementId);
+			}
+
+			if (Validator.isNotNull(additionalInfo)) {
+				trackingEventURL = HttpUtil.addParameter(
+					trackingEventURL, "additionalInfo", additionalInfo);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -114,11 +140,12 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 	@Override
 	public String getTrackingImageHTML(
 		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String elementId, String additionalInfo) {
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String additionalInfo) {
 
 		String trackingImageURL = getTrackingImageURL(
-			companyId, userId, anonymousUserId, className, classPK, elementId,
-			additionalInfo);
+			companyId, userId, anonymousUserId, className, classPK,
+			referrerClassName, referrerClassPKs, elementId, additionalInfo);
 
 		return String.format(_IMAGE_PATTERN, trackingImageURL);
 	}
@@ -126,11 +153,13 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 	@Override
 	public String getTrackingImageURL(
 		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String elementId, String additionalInfo) {
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String additionalInfo) {
 
 		String trackingImageURL = getTrackingEventURL(
-			companyId, userId, anonymousUserId, className, classPK, elementId,
-			"view", additionalInfo);
+			companyId, userId, anonymousUserId, className, classPK,
+			referrerClassName, referrerClassPKs, elementId, "view",
+			additionalInfo);
 
 		trackingImageURL = HttpUtil.addParameter(
 			trackingImageURL, "imageId", StringUtil.randomId());
@@ -141,11 +170,12 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 	@Override
 	public String getTrackingLinkURL(
 		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String elementId, String redirect) {
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String redirect) {
 
 		String trackingLinkURL = getTrackingEventURL(
-			companyId, userId, anonymousUserId, className, classPK, elementId,
-			"click", redirect);
+			companyId, userId, anonymousUserId, className, classPK,
+			referrerClassName, referrerClassPKs, elementId, "click", redirect);
 
 		trackingLinkURL = HttpUtil.addParameter(
 			trackingLinkURL, "linkId", StringUtil.randomId());
@@ -155,10 +185,18 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 		return trackingLinkURL;
 	}
 
+	@Reference
+	public void setCompanyLocalService(
+		CompanyLocalService companyLocalService) {
+
+		_companyLocalService = companyLocalService;
+	}
+
 	@Override
 	public void trackEvent(
 		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String elementId, String event, String additionalInfo) {
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String event, String additionalInfo) {
 
 		Message message = new Message();
 
@@ -169,6 +207,17 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 		message.put("companyId", companyId);
 		message.put("elementId", elementId);
 		message.put("event", event);
+
+		if (Validator.isNotNull(referrerClassName) &&
+			Validator.isNotNull(referrerClassPKs)) {
+
+			Map<String, long[]> referrers = new HashMap<String, long[]>();
+
+			referrers.put(referrerClassName, referrerClassPKs);
+
+			message.put("referrers", referrers);
+		}
+
 		message.put("userId", userId);
 
 		MessageBusUtil.sendMessage("liferay/analytics", message);
@@ -183,5 +232,7 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 		AnalyticsProcessorImpl.class);
 
 	private final static String _TRACK_PATH = "/o/analytics-processor/track";
+
+	private CompanyLocalService _companyLocalService;
 
 }

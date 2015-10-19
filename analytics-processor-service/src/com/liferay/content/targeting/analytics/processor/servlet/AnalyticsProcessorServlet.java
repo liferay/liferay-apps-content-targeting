@@ -142,13 +142,26 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
+		String event = ParamUtil.getString(request, "event");
+
+		if (Validator.isNull(event)) {
+			throw new IllegalArgumentException();
+		}
+
 		long companyId = PortalUtil.getCompanyId(request);
+
+		if (companyId == 0) {
+			throw new IllegalArgumentException();
+		}
 
 		String additionalInfo = ParamUtil.getString(request, "additionalInfo");
 		String className = ParamUtil.getString(request, "className");
 		long classPK = ParamUtil.getLong(request, "classPK");
 		String elementId = ParamUtil.getString(request, "elementId");
-		String event = ParamUtil.getString(request, "event");
+		String referrerClassName = ParamUtil.getString(
+			request,"referrerClassName");
+		long[] referrerClassPKs = ParamUtil.getLongValues(
+			request, "referrerClassPKs");
 		long requestAnonymousUserId = ParamUtil.getLong(
 			request, "anonymousUserId");
 		long userId = ParamUtil.getLong(request, "userId");
@@ -166,6 +179,12 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		message.put("companyId", companyId);
 		message.put("elementId", elementId);
 		message.put("event", event);
+
+		Map<String, long[]> referrers = new HashMap<String, long[]>();
+
+		referrers.put(referrerClassName, referrerClassPKs);
+
+		message.put("referrers", referrers);
 		message.put("userAgent", request.getHeader(HttpHeaders.USER_AGENT));
 		message.put("userId", userId);
 

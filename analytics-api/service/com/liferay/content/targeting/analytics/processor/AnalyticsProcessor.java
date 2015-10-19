@@ -22,26 +22,32 @@ public interface AnalyticsProcessor {
 
 	public String addTrackingLinks(
 		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String elementId, String content);
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String content);
 
 	public String getTrackingEventURL(
 		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String elementId, String event, String additionalInfo);
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String event, String additionalInfo);
 
 	public String getTrackingImageHTML(
 		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String elementId, String additionalInfo);
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String additionalInfo);
 
 	public String getTrackingImageURL(
 		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String elementId, String additionalInfo);
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String additionalInfo);
 
 	public String getTrackingLinkURL(
 		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String elementId, String redirect);
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String redirect);
 
 	public void trackEvent(
 		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String elementId, String event, String additionalInfo);
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String event, String additionalInfo);
 
 }
