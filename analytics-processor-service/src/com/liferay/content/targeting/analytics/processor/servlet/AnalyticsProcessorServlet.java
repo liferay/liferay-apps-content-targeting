@@ -31,13 +31,22 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.model.User;
+import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portal.util.PortalUtil;
 
+import java.awt.Color;
+import java.awt.image.BufferedImage;
+
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -65,7 +74,23 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		throws IOException, ServletException {
 
 		try {
-			processEvents(request, response);
+			long imageId = ParamUtil.getLong(request, "imageId");
+
+			String redirect = ParamUtil.getString(request, "redirect");
+
+			if (imageId > 0) {
+				trackEvent(request, response, "view", "");
+
+				serveImage(request, response);
+			}
+			else if (!Validator.isBlank(redirect)) {
+				trackEvent(request, response, "click", redirect);
+
+				response.sendRedirect(redirect);
+			}
+			else {
+				processEvents(request, response);
+			}
 		}
 		catch (Exception e) {
 			_log.error(e, e);
@@ -215,6 +240,81 @@ public class AnalyticsProcessorServlet extends HttpServlet {
 		responseJSONObject.put("anonymousUserId", anonymousUserId);
 
 		ServletResponseUtil.write(response, responseJSONObject.toString());
+	}
+
+	protected void serveImage(
+			HttpServletRequest request, HttpServletResponse response) {
+
+		BufferedImage singlePixelImage = new BufferedImage(
+			1, 1, BufferedImage.TYPE_4BYTE_ABGR);
+
+		Color transparent = new Color(0, 0, 0, 0);
+
+		singlePixelImage.setRGB(0, 0, transparent.getRGB());
+
+		File file = new File("pixel.png");
+
+		try {
+			ImageIO.write(singlePixelImage, "png", file);
+
+			ServletResponseUtil.sendFile(
+				request, response, file.getName(), new FileInputStream(file),
+				file.length(), "image/png");
+		}
+		catch (IOException e) {
+			_log.error(e);
+		}
+	}
+
+	protected void trackEvent(
+			HttpServletRequest request, HttpServletResponse response,
+			String event, String url) {
+
+		long companyId = PortalUtil.getCompanyId(request);
+
+		long anonymousUserId = ParamUtil.getLong(request, "anonymousUserId");
+		String className = ParamUtil.getString(request, "className");
+		long classPK = ParamUtil.getLong(request, "classPK");
+		long userId = ParamUtil.getLong(request, "userId");
+		String email = ParamUtil.getString(request, "email");
+
+		String elementId = ParamUtil.getString(request, "elementId");
+
+		if (Validator.isNotNull(email)) {
+			try {
+				User user = UserLocalServiceUtil.getUserByEmailAddress(
+					companyId, email);
+
+				userId = user.getUserId();
+
+				if (userId > 0) {
+					anonymousUserId =
+						_anonymousUserLocalService.fetchAnonymousUserByUserId(
+							userId).getAnonymousUserId();
+				}
+			}
+			catch (Exception e) {
+				if (_log.isWarnEnabled()) {
+					_log.warn(e, e);
+				}
+			}
+		}
+
+		Message message = new Message();
+
+		message.put("clientIP", request.getRemoteAddr());
+		message.put("userAgent", request.getHeader(HttpHeaders.USER_AGENT));
+
+		message.put("additionalInfo", url);
+		message.put("anonymousUserId", anonymousUserId);
+		message.put("className", className);
+		message.put("classPK", classPK);
+		message.put("userId", userId);
+		message.put("event", event);
+		message.put("elementId", elementId);
+		message.put("layoutURL", url);
+
+		MessageBusUtil.sendMessage("liferay/analytics", message);
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
