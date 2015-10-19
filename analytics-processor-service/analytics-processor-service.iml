@@ -20,6 +20,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="anonymous-users-api" />
+    <orderEntry type="module" module-name="analytics-api" />
     <orderEntry type="library" name="portal" level="project" />
     <orderEntry type="library" name="reference" level="project" />
     <orderEntry type="module-library">
@@ -47,4 +48,3 @@
     </orderEntry>
   </component>
 </module>
-
