@@ -28,6 +28,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.facet.MultiValueFacet;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -185,7 +186,13 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 		Group group = groupLocalService.getGroup(groupId);
 
-		searchContext.setAttribute("campaignId", campaignId);
+		MultiValueFacet facet = new MultiValueFacet(searchContext);
+
+		facet.setFieldName("campaignId");
+		facet.setStatic(true);
+		facet.setValues(new long[] {campaignId});
+
+		searchContext.addFacet(facet);
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[]{groupId});
