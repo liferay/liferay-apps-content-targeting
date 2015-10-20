@@ -1474,7 +1474,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 			template.put(
 				"tacticSearchContainerIterator",
-				new TacticSearchContainerIterator(scopeGroupId, keywords));
+				new TacticSearchContainerIterator(
+					campaignId, scopeGroupId, keywords));
 
 			ServiceContext serviceContext = new ServiceContext();
 

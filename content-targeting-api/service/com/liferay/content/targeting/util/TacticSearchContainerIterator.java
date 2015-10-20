@@ -35,12 +35,15 @@ import org.osgi.framework.FrameworkUtil;
 public class TacticSearchContainerIterator
 	extends SearchContainerIterator<Tactic> {
 
-	public TacticSearchContainerIterator(long groupId, String keywords)
+	public TacticSearchContainerIterator(
+			long campaignId, long groupId, String keywords)
 		throws PortletException {
 
 		super(groupId, keywords);
 
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_campaignId = campaignId;
 
 		_tacticLocalService = ServiceTrackerUtil.getService(
 			TacticLocalService.class, bundle.getBundleContext());
@@ -55,7 +58,8 @@ public class TacticSearchContainerIterator
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =
-			_tacticLocalService.searchTactics(groupId, keywords, start, end);
+			_tacticLocalService.searchTactics(
+				_campaignId, groupId, keywords, start, end);
 
 		return searchResults.getBaseModels();
 	}
@@ -68,7 +72,8 @@ public class TacticSearchContainerIterator
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =
-			_tacticLocalService.searchTactics(groupId, keywords, start, end);
+			_tacticLocalService.searchTactics(
+				campaignId, groupId, keywords, start, end);
 
 		return searchResults.getBaseModels();
 	}
@@ -81,7 +86,8 @@ public class TacticSearchContainerIterator
 
 		BaseModelSearchResult<Tactic> searchResults =
 			_tacticLocalService.searchTactics(
-				groupId, keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
+				_campaignId, groupId, keywords, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 
 		return searchResults.getLength();
 	}
@@ -101,6 +107,7 @@ public class TacticSearchContainerIterator
 		return searchResults.getLength();
 	}
 
+	private long _campaignId;
 	private TacticLocalService _tacticLocalService;
 
 }

@@ -112,6 +112,7 @@ public class TacticIndexer extends BaseIndexer {
 			Field.DESCRIPTION, tactic.getDescriptionMap());
 		document.addLocalizedText(Field.NAME, tactic.getNameMap());
 
+		document.addKeyword("campaignId", tactic.getCampaignId());
 		document.addKeyword("tacticId", tactic.getTacticId());
 
 		if (_log.isDebugEnabled()) {
