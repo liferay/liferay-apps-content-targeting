@@ -186,13 +186,13 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 
 		Group group = groupLocalService.getGroup(groupId);
 
-		MultiValueFacet facet = new MultiValueFacet(searchContext);
+		MultiValueFacet multiValueFacet = new MultiValueFacet(searchContext);
 
-		facet.setFieldName("campaignId");
-		facet.setStatic(true);
-		facet.setValues(new long[] {campaignId});
+		multiValueFacet.setFieldName("campaignId");
+		multiValueFacet.setStatic(true);
+		multiValueFacet.setValues(new long[]{campaignId});
 
-		searchContext.addFacet(facet);
+		searchContext.addFacet(multiValueFacet);
 		searchContext.setCompanyId(group.getCompanyId());
 		searchContext.setEnd(end);
 		searchContext.setGroupIds(new long[]{groupId});
