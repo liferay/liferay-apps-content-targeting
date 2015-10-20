@@ -1206,7 +1206,8 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(request);
 
-				Map<String, Report> reports = _reportsRegistry.getReports();
+				Map<String, Report> reports = _reportsRegistry.getReports(
+					className);
 
 				for (Report report : reports.values()) {
 					if (report.isInstantiable()) {
