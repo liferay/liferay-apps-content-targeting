@@ -62,23 +62,6 @@
 			name=""
 		>
 			<@liferay_ui["icon-menu"]>
-				<#if (reportsCount > 0)>
-					<@portlet["renderURL"] var="viewUserSegmentReportsURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
-						<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
-						<@portlet["param"] name="className" value="${userSegmentClass.getName()}" />
-						<@portlet["param"] name="classPK" value="${userSegment.getUserSegmentId()?string}" />
-					</@>
-
-					<@liferay_ui["icon"]
-						image="view"
-						label=true
-						message="reports"
-						method="get"
-						url="${viewUserSegmentReportsURL}"
-					/>
-				</#if>
-
 				<#if editUserSegmentURL??>
 					<@liferay_ui["icon"]
 						image="edit"

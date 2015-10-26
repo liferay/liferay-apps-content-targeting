@@ -23,15 +23,6 @@
 	</@>
 </#if>
 
-<#if className != campaignClass.getName()>
-	<@breadcrumb />
-
-	<@liferay_ui["header"]
-		backURL="${redirect}"
-		title="${title}"
-	/>
-</#if>
-
 <#if scopeGroup.isStagingGroup()>
 	<div class="alert alert-warning">
 		<@liferay_ui["message"] key="the-staging-environment-is-activated-reports-data-refer-to-the-live-environment" />
@@ -50,6 +41,10 @@
 		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 		<@portlet["param"] name="campaignId" value="${classPK?string}" />
 		<@portlet["param"] name="campaignTabs" value="reports" />
+	<#elseif className == userSegmentClass.getName()>
+		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
+		<@portlet["param"] name="userSegmentId" value="${classPK?string}" />
+		<@portlet["param"] name="userSegmentTabs" value="reports" />
 	<#else>
 		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
 	</#if>
