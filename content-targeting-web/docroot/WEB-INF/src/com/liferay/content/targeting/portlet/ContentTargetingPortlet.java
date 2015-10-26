@@ -117,6 +117,7 @@ import freemarker.template.TemplateHashModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -815,6 +816,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put(
 			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
 		template.put("userSegmentClass", UserSegment.class);
+		template.put(
+			"userSegmentTabs",
+			ParamUtil.getString(portletRequest, "userSegmentTabs", "details"));
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
@@ -1508,6 +1512,45 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
 			long userSegmentId = ParamUtil.getLong(
 				portletRequest, "userSegmentId");
+
+			String className = UserSegment.class.getName();
+
+			Collection<Report> reports = _reportsRegistry.getReports(
+				className).values();
+
+			template.put("reports", reports);
+
+			if (userSegmentId > 0) {
+				String reportKeywords = ParamUtil.getString(
+					portletRequest, "reportKeywords");
+
+				template.put(
+					"reportSearchContainerIterator",
+					new ReportSearchContainerIterator(
+						themeDisplay.getScopeGroupId(), reportKeywords,
+						UserSegment.class.getName(), userSegmentId));
+
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(request);
+
+				for (Report report : reports) {
+					if (report.isInstantiable()) {
+						continue;
+					}
+
+					if (_reportInstanceLocalService.getReportInstanceCount(
+							report.getReportKey(), className, userSegmentId)
+						> 0) {
+
+						continue;
+					}
+
+					_reportInstanceLocalService.addReportInstance(
+						themeDisplay.getUserId(), report.getReportKey(),
+						className, userSegmentId, StringPool.BLANK,
+						serviceContext);
+				}
+			}
 
 			template.put("ruleCategoriesRegistry", _ruleCategoriesRegistry);
 			template.put("rulesRegistry", _rulesRegistry);
