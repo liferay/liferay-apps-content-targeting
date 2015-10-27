@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN"
+		"http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.liferay.content.targeting.report.campaign.mobile">
+
+	<namespace>CT_CMR</namespace>
+	<entity name="CampaignMobile" local-service="true" remote-service="true">
+
+		<column name="campaignMobileId" type="long" primary="true"/>
+
+		<!-- Other fields -->
+
+		<column name="campaignId" type="long"/>
+		<column name="count" type="int"/>
+		<column name="modifiedDate" type="Date"/>
+
+		<column name="eventType" type="String"/>
+		<column name="className" type="String"/>
+		<column name="classPK" type="long"/>
+		<column name="elementId" type="String"/>
+
+		<column name="consumerId" type="long"/>
+		<column name="placeholderId" type="long"/>
+		<column name="userSegmentId" type="long"/>
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate"/>
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CampaignId" return-type="Collection">
+			<finder-column name="campaignId"/>
+		</finder>
+
+		<finder name="EventType" return-type="Collection">
+			<finder-column name="eventType"/>
+		</finder>
+
+		<finder name="C_GtD" return-type="Collection">
+			<finder-column name="campaignId"/>
+			<finder-column name="modifiedDate" comparator="&gt;"/>
+		</finder>
+
+		<finder name="C_C_P_U_C_C_E" return-type="CampaignMobile" unique="true">
+			<finder-column name="campaignId"/>
+			<finder-column name="consumerId"/>
+			<finder-column name="placeholderId"/>
+			<finder-column name="userSegmentId"/>
+			<finder-column name="className"/>
+			<finder-column name="classPK"/>
+			<finder-column name="eventType"/>
+		</finder>
+	</entity>
+
+	<entity name="ConsumerData" local-service="true" remote-service="true">
+
+		<column name="consumerDataId" type="long" primary="true"/>
+
+		<!-- Other fields -->
+
+		<column name="campaignId" type="long"/>
+		<column name="count" type="int"/>
+		<column name="modifiedDate" type="Date"/>
+
+		<column name="eventType" type="String"/>
+		<column name="elementId" type="String"/>
+
+		<column name="consumerId" type="long"/>
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="modifiedDate"/>
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="CampaignId" return-type="Collection">
+			<finder-column name="campaignId"/>
+		</finder>
+
+		<finder name="EventType" return-type="Collection">
+			<finder-column name="eventType"/>
+		</finder>
+
+		<finder name="C_GtD" return-type="Collection">
+			<finder-column name="campaignId"/>
+			<finder-column name="modifiedDate" comparator="&gt;"/>
+		</finder>
+
+		<finder name="C_C_E" return-type="ConsumerData" unique="true">
+			<finder-column name="campaignId"/>
+			<finder-column name="consumerId"/>
+			<finder-column name="eventType"/>
+		</finder>
+	</entity>
+
+</service-builder>

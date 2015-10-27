@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="com.liferay.content.targeting.report.campaign.mobile.model.impl.CampaignMobileModelImpl">
+		<attributes>
+			<id name="campaignMobileId" />
+			<basic name="campaignId" />
+			<basic name="count" />
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="eventType" />
+			<basic name="className" />
+			<basic name="classPK" />
+			<basic name="elementId" />
+			<basic name="consumerId" />
+			<basic name="placeholderId" />
+			<basic name="userSegmentId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.content.targeting.report.campaign.mobile.model.impl.ConsumerDataModelImpl">
+		<attributes>
+			<id name="consumerDataId" />
+			<basic name="campaignId" />
+			<basic name="count" />
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="eventType" />
+			<basic name="elementId" />
+			<basic name="consumerId" />
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="com.liferay.content.targeting.report.campaign.mobile.model.impl.CampaignMobileImpl" name="CampaignMobile">
+		<table name="CT_CMR_CampaignMobile" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.content.targeting.report.campaign.mobile.model.impl.ConsumerDataImpl" name="ConsumerData">
+		<table name="CT_CMR_ConsumerData" />
+		<attributes />
+	</entity>
+</entity-mappings>
