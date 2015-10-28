@@ -43,36 +43,6 @@ import org.osgi.service.component.annotations.Reference;
 public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 
 	@Override
-	public String addTrackingLinks(
-		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String referrerClassName, long[] referrerClassPKs,
-		String elementId, String content) {
-
-		Matcher linkMatcher = _LINK_PATTERN.matcher(content);
-
-		StringBuffer stringBuffer = new StringBuffer();
-
-		while (linkMatcher.find()) {
-			String trackingLinkURL = getTrackingLinkURL(
-				companyId, userId, anonymousUserId, className, classPK,
-				referrerClassName, referrerClassPKs, elementId,
-				linkMatcher.group(2));
-
-			StringBundler sb = new StringBundler(3);
-
-			sb.append(linkMatcher.group(1));
-			sb.append(trackingLinkURL);
-			sb.append(linkMatcher.group(3));
-
-			linkMatcher.appendReplacement(stringBuffer, sb.toString());
-		}
-
-		linkMatcher.appendTail(stringBuffer);
-
-		return stringBuffer.toString();
-	}
-
-	@Override
 	public String getTrackingEventURL(
 		long companyId, long userId, long anonymousUserId, String className,
 		long classPK, String referrerClassName, long[] referrerClassPKs,
@@ -185,6 +155,64 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 		return trackingLinkURL;
 	}
 
+	@Override
+	public String replaceLinks(
+		long companyId, long userId, long anonymousUserId, String className,
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String content) {
+
+		StringBuffer stringBuffer = new StringBuffer();
+
+		Matcher linkMatcher = _LINK_PATTERN.matcher(content);
+
+		while (linkMatcher.find()) {
+			String trackingLinkURL = getTrackingLinkURL(
+				companyId, userId, anonymousUserId, className, classPK,
+				referrerClassName, referrerClassPKs, elementId,
+				linkMatcher.group(1));
+
+			StringBundler sb = new StringBundler(1);
+
+			sb.append(trackingLinkURL);
+
+			linkMatcher.appendReplacement(stringBuffer, sb.toString());
+		}
+
+		linkMatcher.appendTail(stringBuffer);
+
+		return stringBuffer.toString();
+	}
+
+	@Override
+	public String replaceLinksHTML(
+		long companyId, long userId, long anonymousUserId, String className,
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String content) {
+
+		StringBuffer stringBuffer = new StringBuffer();
+
+		Matcher linkMatcher = _LINK_PATTERN_HTML.matcher(content);
+
+		while (linkMatcher.find()) {
+			String trackingLinkURL = getTrackingLinkURL(
+				companyId, userId, anonymousUserId, className, classPK,
+				referrerClassName, referrerClassPKs, elementId,
+				linkMatcher.group(2));
+
+			StringBundler sb = new StringBundler(3);
+
+			sb.append(linkMatcher.group(1));
+			sb.append(trackingLinkURL);
+			sb.append(linkMatcher.group(3));
+
+			linkMatcher.appendReplacement(stringBuffer, sb.toString());
+		}
+
+		linkMatcher.appendTail(stringBuffer);
+
+		return stringBuffer.toString();
+	}
+
 	@Reference
 	public void setCompanyLocalService(
 		CompanyLocalService companyLocalService) {
@@ -226,6 +254,9 @@ public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 	private static final String _IMAGE_PATTERN = "<img alt=\"\" src=\"%s\" />";
 
 	private static final Pattern _LINK_PATTERN = Pattern.compile(
+		"(([htf]+tp)s?:\\/\\/[^\\s]+)");
+
+	private static final Pattern _LINK_PATTERN_HTML = Pattern.compile(
 		"(<a\\s+.*?href=\")([^\"]+)(\")");
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -20,11 +20,6 @@ package com.liferay.content.targeting.analytics.processor;
  */
 public interface AnalyticsProcessor {
 
-	public String addTrackingLinks(
-		long companyId, long userId, long anonymousUserId, String className,
-		long classPK, String referrerClassName, long[] referrerClassPKs,
-		String elementId, String content);
-
 	public String getTrackingEventURL(
 		long companyId, long userId, long anonymousUserId, String className,
 		long classPK, String referrerClassName, long[] referrerClassPKs,
@@ -44,6 +39,16 @@ public interface AnalyticsProcessor {
 		long companyId, long userId, long anonymousUserId, String className,
 		long classPK, String referrerClassName, long[] referrerClassPKs,
 		String elementId, String redirect);
+
+	public String replaceLinks(
+		long companyId, long userId, long anonymousUserId, String className,
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String content);
+
+	public String replaceLinksHTML(
+		long companyId, long userId, long anonymousUserId, String className,
+		long classPK, String referrerClassName, long[] referrerClassPKs,
+		String elementId, String content);
 
 	public void trackEvent(
 		long companyId, long userId, long anonymousUserId, String className,
