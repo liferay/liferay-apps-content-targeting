@@ -25,7 +25,6 @@
 	</@>
 </#if>
 
-
 <@liferay_ui["header"]
 	backURL="${backURL}"
 	title='${(userSegment.getName(locale))!"new-user-segment"}'
