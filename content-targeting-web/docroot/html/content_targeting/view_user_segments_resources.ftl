@@ -62,29 +62,31 @@
 			name=""
 		>
 			<@liferay_ui["icon-menu"]>
-				<#if (reportsCount > 0)>
-					<@portlet["renderURL"] var="viewUserSegmentReportsURL">
-						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
-						<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
-						<@portlet["param"] name="className" value="${userSegmentClass.getName()}" />
-						<@portlet["param"] name="classPK" value="${userSegment.getUserSegmentId()?string}" />
-					</@>
-
-					<@liferay_ui["icon"]
-						image="view"
-						label=true
-						message="reports"
-						method="get"
-						url="${viewUserSegmentReportsURL}"
-					/>
-				</#if>
-
 				<#if editUserSegmentURL??>
 					<@liferay_ui["icon"]
 						image="edit"
 						method="get"
 						url="${editUserSegmentURL}"
 					/>
+
+					<#if (reportsCount > 0)>
+						<@portlet["renderURL"] var="viewUserSegmentReportsURL">
+							<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
+							<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
+							<@portlet["param"] name="className" value="${userSegmentClass.getName()}" />
+							<@portlet["param"] name="classPK" value="${userSegment.getUserSegmentId()?string}" />
+							<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
+							<@portlet["param"] name="userSegmentTabs" value="reports" />
+						</@>
+
+						<@liferay_ui["icon"]
+							image="view"
+							label=true
+							message="reports"
+							method="get"
+							url="${viewUserSegmentReportsURL}"
+						/>
+					</#if>
 				</#if>
 
 				<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.DELETE)>

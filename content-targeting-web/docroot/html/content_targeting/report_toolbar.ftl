@@ -59,7 +59,7 @@
 		<#else>
 			<#if userSegmentPermission.contains(permissionChecker, classPK?long, actionKeys.UPDATE) && instantiableExists>
 				<@portlet["renderURL"] var="redirectURL">
-					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
+					<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
 					<@portlet["param"] name="backURL" value="${redirect}" />
 					<@portlet["param"] name="userSegmentId" value="${classPK}" />
 					<@portlet["param"] name="className" value="${userSegmentClass.getName()}" />
