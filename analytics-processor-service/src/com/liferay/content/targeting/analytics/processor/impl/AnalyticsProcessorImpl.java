@@ -39,7 +39,11 @@ import org.osgi.service.component.annotations.Reference;
 /**
  * @author Eduardo Garcia
  */
-@Component
+@Component(
+	property = {
+		"service.ranking:Integer=100"
+	}
+)
 public class AnalyticsProcessorImpl implements AnalyticsProcessor {
 
 	@Override
