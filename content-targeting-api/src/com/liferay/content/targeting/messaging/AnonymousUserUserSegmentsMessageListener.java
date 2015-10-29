@@ -44,6 +44,7 @@ public class AnonymousUserUserSegmentsMessageListener
 		boolean hasActiveUserSegment = false;
 
 		Calendar calendar = CalendarFactoryUtil.getCalendar();
+
 		calendar.setTimeInMillis(timeInMillis);
 
 		for (AnonymousUserUserSegment anonymousUserUserSegment
