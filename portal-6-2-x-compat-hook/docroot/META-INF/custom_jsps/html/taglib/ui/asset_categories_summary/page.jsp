@@ -21,34 +21,23 @@ String className = (String)request.getAttribute("liferay-ui:asset-categories-sum
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-summary:classPK"));
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-categories-summary:portletURL");
 
-List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
+AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
 
-long[] groupIds = getCurrentAndAncestorSiteGroupIds(scopeGroupId);
-
-for (long groupId : groupIds) {
-	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(groupId, false));
-}
-
+List<AssetVocabulary> vocabularies = AssetVocabularyServiceUtil.getGroupsVocabularies(new long[] {((assetEntry != null) ? assetEntry.getGroupId() : themeDisplay.getSiteGroupId()), themeDisplay.getCompanyGroupId()});
 List<AssetCategory> categories = AssetCategoryServiceUtil.getCategories(className, classPK);
 
 for (AssetVocabulary vocabulary : vocabularies) {
 	vocabulary = vocabulary.toEscapedModel();
+
+	String vocabularyTitle = vocabulary.getTitle(themeDisplay.getLocale());
 
 	List<AssetCategory> curCategories = _filterCategories(categories, vocabulary);
 %>
 
 	<c:if test="<%= !curCategories.isEmpty() %>">
 		<span class="taglib-asset-categories-summary">
-			<%= vocabulary.getTitle(locale) %>
+			<%= vocabularyTitle %>:
 
-				<c:if test="<%= vocabulary.getGroupId() != themeDisplay.getSiteGroupId() %>">
-
-					<%
-					Group vocabularyGroup = GroupLocalServiceUtil.getGroup(vocabulary.getGroupId());
-					%>
-
-					(<%= vocabularyGroup.getDescriptiveName() %>)
-				</c:if>:
 			<c:choose>
 				<c:when test="<%= portletURL != null %>">
 
