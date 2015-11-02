@@ -15,33 +15,7 @@
 --%>
 
 <%!
-private long[] getCurrentAndAncestorSiteGroupIds(long groupId)
-	throws PortalException, SystemException {
-
-	List<Group> groups = new ArrayList<Group>();
-
-	long siteGroupId = PortalUtil.getSiteGroupId(groupId);
-
-	Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
-
-	if (!siteGroup.isLayoutPrototype()) {
-		groups.add(siteGroup);
-	}
-
-	groups.addAll(doGetAncestorSiteGroupIds(groupId));
-
-	long[] groupIds = new long[groups.size()];
-
-	for (int i = 0; i < groups.size(); i++) {
-		Group group = groups.get(i);
-
-		groupIds[i] = group.getGroupId();
-	}
-
-	return groupIds;
-}
-
-protected List<Group> doGetAncestorSiteGroupIds(long groupId)
+private List<Group> _doGetAncestorSiteGroups(long groupId)
 	throws PortalException, SystemException {
 
 	List<Group> groups = new ArrayList<Group>();
@@ -59,5 +33,81 @@ protected List<Group> doGetAncestorSiteGroupIds(long groupId)
 	}
 
 	return groups;
+}
+
+protected Group _doGetCurrentSiteGroup(long groupId)
+	throws PortalException, SystemException {
+
+	long siteGroupId = PortalUtil.getSiteGroupId(groupId);
+
+	Group siteGroup = GroupLocalServiceUtil.getGroup(siteGroupId);
+
+	if (!siteGroup.isLayoutPrototype()) {
+		return siteGroup;
+	}
+
+	return null;
+}
+
+private long[] _getCurrentAndAncestorSiteGroupIds(long groupId)
+	throws PortalException, SystemException {
+
+	List<Group> groups = _getCurrentAndAncestorSiteGroups(groupId);
+
+	long[] groupIds = new long[groups.size()];
+
+	for (int i = 0; i < groups.size(); i++) {
+		Group group = groups.get(i);
+
+		groupIds[i] = group.getGroupId();
+	}
+
+	return groupIds;
+}
+
+private long[] _getCurrentAndAncestorSiteGroupIds(long[] groupIds)
+	throws PortalException, SystemException {
+
+	List<Group> groups = _getCurrentAndAncestorSiteGroups(groupIds);
+
+	long[] currentAndAncestorSiteGroupIds = new long[groups.size()];
+
+	for (int i = 0; i < groups.size(); i++) {
+		Group group = groups.get(i);
+
+		currentAndAncestorSiteGroupIds[i] = group.getGroupId();
+	}
+
+	return currentAndAncestorSiteGroupIds;
+}
+
+private List<Group> _getCurrentAndAncestorSiteGroups(long groupId)
+	throws PortalException, SystemException {
+
+	Set<Group> groups = new LinkedHashSet<Group>();
+
+	Group siteGroup = _doGetCurrentSiteGroup(groupId);
+
+	if (siteGroup != null) {
+		groups.add(siteGroup);
+	}
+
+	groups.addAll(
+		_doGetAncestorSiteGroups(groupId));
+
+	return new ArrayList<Group>(groups);
+}
+
+private List<Group> _getCurrentAndAncestorSiteGroups(long[] groupIds)
+	throws PortalException, SystemException {
+
+	Set<Group> groups = new LinkedHashSet<Group>();
+
+	for (int i = 0; i < groupIds.length; i++) {
+		groups.addAll(
+			_getCurrentAndAncestorSiteGroups(groupIds[i]));
+	}
+
+	return new ArrayList<Group>(groups);
 }
 %>
