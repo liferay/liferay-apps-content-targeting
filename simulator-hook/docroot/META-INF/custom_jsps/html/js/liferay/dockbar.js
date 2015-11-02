@@ -77,7 +77,7 @@ AUI.add(
 
 				var panelNode = null;
 
-				var panel = Liferay.Dockbar.DOCKBAR_PANELS[panelId];
+				var panel = DOCKBAR_PANELS[panelId];
 
 				if (panel) {
 					panelNode = panel.node;
@@ -130,7 +130,7 @@ AUI.add(
 				var namespace = instance._namespace;
 
 				AObject.each(
-					Liferay.Dockbar.DOCKBAR_PANELS,
+					DOCKBAR_PANELS,
 					function(item, index, collection) {
 						var panelId = item.id;
 
@@ -194,7 +194,7 @@ AUI.add(
 				var instance = this;
 
 				AObject.each(
-					Liferay.Dockbar.DOCKBAR_PANELS,
+					DOCKBAR_PANELS,
 					function(item, index, collection) {
 						if (item.id !== panelId) {
 							BODY.removeClass(item.css);
@@ -208,7 +208,7 @@ AUI.add(
 					}
 				);
 
-				var panel = Liferay.Dockbar.DOCKBAR_PANELS[panelId];
+				var panel = DOCKBAR_PANELS[panelId];
 
 				if (panel) {
 					var panelNode = panel.node;
@@ -310,7 +310,6 @@ AUI.add(
 					btnNavigation.on(
 						EVENT_CLICK,
 						function(event) {
-							btnNavigation.toggleClass('open');
 							navigation.toggleClass('open');
 						}
 					);
@@ -461,8 +460,6 @@ AUI.add(
 		};
 
 		Liferay.Dockbar = Dockbar;
-
-		Liferay.Dockbar.DOCKBAR_PANELS = DOCKBAR_PANELS;
 
 		Liferay.Dockbar.ADD_PANEL = STR_ADD_PANEL;
 
