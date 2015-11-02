@@ -30,9 +30,16 @@
 				var node = this;
 
 				var headerSpan = node.ancestor('.form-builder-field-content').one('span.field-description-alias');
+				var headerInfoSpan = node.ancestor('.form-builder-field-content').one('span.field-description-info');
 
 				if (node.val() && node.val() !== '') {
-					headerSpan.text(': ' + node.val());
+					var headerValue = node.val();
+
+					if (headerInfoSpan.text() !== '') {
+						headerValue += '. ';
+					}
+
+					headerSpan.text(headerValue);
 				}
 				else {
 					headerSpan.text('');
@@ -44,9 +51,16 @@
 		formBuilder.all('[name*="${fieldName}"]').each(
 			function(node) {
 				var headerSpan = node.ancestor('.form-builder-field-content').one('span.field-description-alias');
+				var headerInfoSpan = node.ancestor('.form-builder-field-content').one('span.field-description-info');
 
 				if (node.val() && node.val() !== '') {
-					headerSpan.text(': ' + node.val());
+					var headerValue = node.val();
+
+					if (headerInfoSpan.text() !== '') {
+						headerValue += '. ';
+					}
+
+					headerSpan.text(headerValue);
 				}
 				else {
 					headerSpan.text('');
