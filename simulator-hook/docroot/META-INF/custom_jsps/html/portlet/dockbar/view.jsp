@@ -29,21 +29,6 @@ boolean hasLayoutCustomizePermission = LayoutPermissionUtil.contains(permissionC
 boolean hasLayoutUpdatePermission = LayoutPermissionUtil.contains(permissionChecker, layout, ActionKeys.UPDATE);
 
 String toggleControlsState = GetterUtil.getString(SessionClicks.get(request, "liferay_toggle_controls", "visible"));
-
-String simulatorPortletName = "ctsimulator_WAR_contenttargetingweb";
-
-boolean hasViewSimulatorPermission = false;
-
-ResourceAction resourceAction = ResourceActionLocalServiceUtil.fetchResourceAction(simulatorPortletName, ActionKeys.VIEW);
-
-if (resourceAction != null) {
-	hasViewSimulatorPermission = permissionChecker.hasPermission(scopeGroupId, simulatorPortletName, simulatorPortletName, ActionKeys.VIEW);
-}
-else if (_log.isWarnEnabled()) {
-	_log.warn("Audience Targeting is not fully installed yet. Please restart the server to complete the installation");
-}
-
-boolean showSimulatorControls = !group.isLayoutPrototype() && !group.isLayoutSetPrototype() && hasViewSimulatorPermission;
 %>
 
 <aui:nav-bar cssClass="navbar-static-top dockbar" data-namespace="<%= renderResponse.getNamespace() %>" id="dockbar">
@@ -100,7 +85,7 @@ boolean showSimulatorControls = !group.isLayoutPrototype() && !group.isLayoutSet
 		}
 		%>
 
-		<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
+		<c:if test="<%= controlPanelCategory.startsWith(PortletCategoryKeys.CURRENT_SITE) || !(controlPanelCategory.equals(PortletCategoryKeys.MY) && PropsValues.DOCKBAR_ADMINISTRATIVE_LINKS_SHOW_IN_POP_UP) %>">
 			<div class="brand">
 				<a class="control-panel-back-link" href="<%= backURL %>" title="<liferay-ui:message key="back" />">
 					<i class="control-panel-back-icon icon-chevron-sign-left"></i>
@@ -120,6 +105,11 @@ boolean showSimulatorControls = !group.isLayoutPrototype() && !group.isLayoutSet
 							<span class="site-administration-title">
 								<liferay-ui:message key="site-administration" />
 							</span>
+						</c:when>
+						<c:when test="<%= controlPanelCategory.equals(PortletCategoryKeys.MY) %>">
+							<a href="<%= themeDisplay.getURLMyAccount() %>">
+								<liferay-ui:message key="my-account" />
+							</a>
 						</c:when>
 						<c:otherwise>
 							<a href="<%= themeDisplay.getURLControlPanel() %>">
@@ -199,7 +189,7 @@ boolean showSimulatorControls = !group.isLayoutPrototype() && !group.isLayoutSet
 	boolean showToggleControls = (!group.hasStagingGroup() || group.isStagingGroup()) && (hasLayoutUpdatePermission || (layoutTypePortlet.isCustomizable() && layoutTypePortlet.isCustomizedView() && hasLayoutCustomizePermission) || PortletPermissionUtil.hasConfigurationPermission(permissionChecker, themeDisplay.getSiteGroupId(), layout, ActionKeys.CONFIGURATION));
 	%>
 
-	<c:if test="<%= !group.isControlPanel() && userSetupComplete && (showAddControls || showPreviewControls || showEditControls || showSimulatorControls || showToggleControls) %>">
+	<c:if test="<%= !group.isControlPanel() && userSetupComplete && (showAddControls || showPreviewControls || showEditControls || showToggleControls) %>">
 		<aui:nav ariaLabel='<%= LanguageUtil.get(pageContext, "layout-controls") %>' collapsible="<%= true %>" cssClass='<%= portalMessageUseAnimation ? "nav-add-controls" : "nav-add-controls nav-add-controls-notice" %>' icon="pencil" id="navAddControls">
 			<c:if test="<%= showAddControls %>">
 				<portlet:renderURL var="addURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
@@ -227,25 +217,6 @@ boolean showSimulatorControls = !group.isLayoutPrototype() && !group.isLayoutSet
 				</portlet:renderURL>
 
 				<aui:nav-item anchorId="editLayoutPanel" cssClass="page-edit-controls" data-panelURL="<%= editLayoutURL %>" href="javascript:;" iconCssClass="icon-edit" label="edit" />
-			</c:if>
-
-			<c:if test="<%= showSimulatorControls %>">
-
-				<%
-				String cssClass = "page-edit-controls";
-
-				boolean isSimulatedUserSegments = GetterUtil.getBoolean(request.getAttribute("isSimulatedUserSegments"));
-
-				if (isSimulatedUserSegments) {
-					cssClass = "page-edit-controls simulated";
-				}
-				%>
-
-				<liferay-portlet:renderURL portletName="<%= simulatorPortletName %>" var="simulatorURL" windowState="<%= LiferayWindowState.EXCLUSIVE.toString() %>">
-					<portlet:param name="mvcPath" value="html/ct_simulator/view.ftl" />
-				</liferay-portlet:renderURL>
-
-				<aui:nav-item anchorId="simulatorPanel" cssClass="<%= cssClass %>" data-panelURL="<%= simulatorURL %>" href="javascript:;" iconCssClass="icon-screenshot" label="simulator" title="simulator" />
 			</c:if>
 
 			<c:if test="<%= showToggleControls %>">
@@ -303,54 +274,6 @@ List<LayoutPrototype> layoutPrototypes = LayoutPrototypeServiceUtil.search(compa
 	}
 </aui:script>
 
-<c:if test="<%= !group.isControlPanel() && user.isSetupComplete() && showSimulatorControls %>">
-	<aui:script use="liferay-dockbar">
-		Liferay.Dockbar.DOCKBAR_PANELS.simulatorPanel = {
-			css: 'lfr-has-simulator',
-			id: 'simulatorPanel',
-			node: null,
-			showFn: A.bind(Liferay.Dockbar._showPanel, Liferay.Dockbar),
-			tpl: '<div class="lfr-add-panel lfr-admin-panel" id="{0}" />'
-		};
-	</aui:script>
-
-	<script type="text/javascript">
-		AUI().applyConfig(
-			{
-				modules: {
-					'liferay-simulator': {
-						fullpath: '<%= HtmlUtil.escapeJS(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/o/content-targeting-web/js/ct_simulator/simulator.js")) %>'
-					}
-				}
-			}
-		);
-	</script>
-
-	<%
-	String href = HtmlUtil.escapeAttribute(PortalUtil.getStaticResourceURL(request, themeDisplay.getCDNDynamicResourcesHost() + themeDisplay.getPathContext() + "/o/content-targeting-web/css/ct_simulator/main.css"));
-	%>
-
-	<link href="<%= href %>" rel="stylesheet" type="text/css">
-
-	<style type="text/css">
-		.aui .lfr-has-simulator {
-			padding-left: 350px;
-		}
-
-		.aui .dockbar-split.lfr-has-simulator .nav-add-controls {
-			left: 350px;
-		}
-
-		.aui .dockbar-split .dockbar .navbar-inner .nav-add-controls > li.simulated > a {
-			background-color: #92F545;
-		}
-
-		.aui .dockbar-split .dockbar .navbar-inner .nav-add-controls > li.simulated > a [class^="icon-"] {
-			color: #000;
-		}
-	</style>
-</c:if>
-
 <%!
 private boolean _hasPortlets(String category, ThemeDisplay themeDisplay) throws SystemException {
 	List<Portlet> portlets = PortalUtil.getControlPanelPortlets(category, themeDisplay);
@@ -361,6 +284,4 @@ private boolean _hasPortlets(String category, ThemeDisplay themeDisplay) throws 
 
 	return true;
 }
-
-private static Log _log = LogFactoryUtil.getLog("portal-web.docroot.html.portlet.dockbar.view_jsp");
 %>
