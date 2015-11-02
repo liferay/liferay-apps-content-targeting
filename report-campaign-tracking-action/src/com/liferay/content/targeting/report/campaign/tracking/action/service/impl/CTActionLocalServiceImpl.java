@@ -29,7 +29,6 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.service.ServiceContext;
 
 import java.util.Date;
 import java.util.List;
@@ -124,12 +123,8 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 				_reportInstanceLocalService.getReportInstances(
 					QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
-			ServiceContext serviceContext = new ServiceContext();
-
 			for (ReportInstance reportInstance : reportInstances) {
 				checkCTActionEvents(reportInstance.getReportInstanceId());
-
-				serviceContext.setScopeGroupId(reportInstance.getGroupId());
 			}
 		}
 		catch (NullPointerException npe) {
