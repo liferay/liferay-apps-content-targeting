@@ -12,8 +12,9 @@ AUI.add(
 					'</div>' +
 					'<div class="row field-info">' +
 						'<div class="field-title">{name}</div>' +
-						'<div class="field-description">{description}' +
-							'<span class="field-description-alias"></span>' +
+						'<div class="field-description">' +
+							'<span class="field-description-alias">{description}</span>' +
+							'<span class="field-description-info"></span>' +
 						'</div>' +
 					'</div>' +
 				'</div>' +
