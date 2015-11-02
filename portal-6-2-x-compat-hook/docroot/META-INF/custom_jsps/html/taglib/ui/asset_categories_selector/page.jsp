@@ -21,17 +21,28 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_asset_
 
 String className = (String)request.getAttribute("liferay-ui:asset-categories-selector:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-selector:classPK"));
+long[] groupIds = (long[])request.getAttribute("liferay-ui:asset-categories-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-ui:asset-categories-selector:hiddenInput");
 String curCategoryIds = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-categories-selector:curCategoryIds"), "");
 String curCategoryNames = StringPool.BLANK;
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
 
+Group siteGroup = themeDisplay.getSiteGroup();
+
+if (ArrayUtil.isEmpty(groupIds)) {
+	groupIds = new long[] {siteGroup.getGroupId()};
+}
+
+if (!ArrayUtil.contains(groupIds, themeDisplay.getCompanyGroupId())) {
+	groupIds = ArrayUtil.append(groupIds, themeDisplay.getCompanyGroupId());
+}
+
+groupIds = ArrayUtil.unique(groupIds);
+
 List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
 
-long[] groupIds = getCurrentAndAncestorSiteGroupIds(scopeGroupId);
-
-for (long groupId : groupIds) {
-	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(groupId, false));
+for (int i = 0; i < groupIds.length; i++) {
+	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(groupIds[i], false));
 }
 
 if (Validator.isNotNull(className)) {
@@ -75,13 +86,8 @@ if (Validator.isNotNull(className)) {
 			<label id="<%= namespace %>assetCategoriesLabel_<%= vocabulary.getVocabularyId() %>">
 				<%= vocabulary.getTitle(locale) %>
 
-				<c:if test="<%= vocabulary.getGroupId() != themeDisplay.getSiteGroupId() %>">
-
-					<%
-					Group vocabularyGroup = GroupLocalServiceUtil.getGroup(vocabulary.getGroupId());
-					%>
-
-					(<%= vocabularyGroup.getDescriptiveName() %>)
+				<c:if test="<%= vocabulary.getGroupId() == themeDisplay.getCompanyGroupId() %>">
+					(<liferay-ui:message key="global" />)
 				</c:if>
 
 				<c:if test="<%= vocabulary.isRequired(classNameId) %>">
@@ -108,8 +114,8 @@ if (Validator.isNotNull(className)) {
 					moreResultsLabel: '<%= UnicodeLanguageUtil.get(pageContext, "load-more-results") %>',
 					portalModelResource: <%= Validator.isNotNull(className) && (ResourceActionsUtil.isPortalModelResource(className) || className.equals(Group.class.getName())) %>,
 					singleSelect: <%= !vocabulary.isMultiValued() %>,
-					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", vocabulary.getTitle(locale), false) %>',
-					vocabularyGroupIds: '<%= StringUtil.merge(groupIds) %>',
+					title: '<%= UnicodeLanguageUtil.format(pageContext, "select-x", vocabulary.getTitle(locale)) %>',
+					vocabularyGroupIds: '<%= vocabulary.getGroupId() %>',
 					vocabularyIds: '<%= String.valueOf(vocabulary.getVocabularyId()) %>'
 				}
 			).render();
