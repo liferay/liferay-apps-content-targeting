@@ -15,6 +15,7 @@
 -->
 
 <#include "../init.ftl" />
+<#include "../macros.ftl" />
 <#include "../macros_exceptions.ftl" />
 
 <@liferay_ui["header"]
@@ -162,3 +163,5 @@
 		};
 	</@>
 </@>
+
+<@fieldHeaderListener fieldName="alias" />
