@@ -68,7 +68,7 @@ public class TacticSearchContainerIterator
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(keywords)) {
-			return _tacticLocalService.getResults(campaignId, start, end);
+			return _tacticLocalService.getTactics(campaignId, start, end, null);
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =
@@ -96,7 +96,7 @@ public class TacticSearchContainerIterator
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(keywords)) {
-			return _tacticLocalService.getTotal(campaignId);
+			return _tacticLocalService.getTacticsCount(campaignId);
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =

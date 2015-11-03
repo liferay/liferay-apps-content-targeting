@@ -166,9 +166,8 @@ public class CampaignStagedModelDataHandler
 			Campaign campaign)
 		throws Exception {
 
-		List<Tactic> campaignTactics = TacticLocalServiceUtil.getResults(
-			campaign.getCampaignId(), 0,
-			TacticLocalServiceUtil.getTotal(campaign.getCampaignId()));
+		List<Tactic> campaignTactics = TacticLocalServiceUtil.getTactics(
+			campaign.getCampaignId());
 
 		for (Tactic tactic : campaignTactics) {
 			StagedModelDataHandlerUtil.exportReferenceStagedModel(
@@ -183,7 +182,7 @@ public class CampaignStagedModelDataHandler
 
 		List<TrackingActionInstance> trackingActionInstances =
 			TrackingActionInstanceLocalServiceUtil.getTrackingActionInstances(
-					campaign.getCampaignId());
+				campaign.getCampaignId());
 
 		for (TrackingActionInstance trackingActionInstance :
 				trackingActionInstances) {
@@ -248,7 +247,7 @@ public class CampaignStagedModelDataHandler
 
 		List<Element> trackingActionInstanceElements =
 			portletDataContext.getReferenceDataElements(
-					campaign, TrackingActionInstance.class);
+				campaign, TrackingActionInstance.class);
 
 		for (Element trackingActionInstanceElement :
 				trackingActionInstanceElements) {

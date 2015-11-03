@@ -29,6 +29,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.search.facet.MultiValueFacet;
+import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
@@ -114,22 +115,25 @@ public class TacticLocalServiceImpl extends TacticLocalServiceBaseImpl {
 		return deleteTactic(tactic.getTacticId());
 	}
 
-	public List<Tactic> getResults(long campaignId, int start, int end)
-		throws PortalException, SystemException {
-
-		return TacticUtil.getTactics(campaignId, start, end);
-	}
-
 	public List<Tactic> getTactics(long campaignId)
 		throws PortalException, SystemException {
 
 		return tacticPersistence.findByCampaignId(campaignId);
 	}
 
-	public int getTotal(long campaignId)
+	@Override
+	public List<Tactic> getTactics(
+			long campaignId, int start, int end, OrderByComparator obc)
 		throws PortalException, SystemException {
 
-		return TacticUtil.getCount(campaignId);
+		return tacticPersistence.findByCampaignId(campaignId, start, end, obc);
+	}
+
+	@Override
+	public int getTacticsCount(long campaignId)
+		throws PortalException, SystemException {
+
+		return tacticPersistence.countByCampaignId(campaignId);
 	}
 
 	public BaseModelSearchResult<Tactic> searchTactics(

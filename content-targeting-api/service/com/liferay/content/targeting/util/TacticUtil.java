@@ -16,9 +16,6 @@ package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
-import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
-import com.liferay.portal.kernel.dao.orm.PropertyFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
@@ -38,19 +35,6 @@ public class TacticUtil {
 
 	public static final String[] SELECTED_FIELD_NAMES =
 		{Field.COMPANY_ID, Field.GROUP_ID, Field.UID, "tacticId"};
-
-	public static int getCount(long campaignId)
-		throws PortalException, SystemException {
-
-		DynamicQuery query =
-			DynamicQueryFactoryUtil.forClass(Tactic.class).add(
-				PropertyFactoryUtil.forName("campaignId").eq(campaignId));
-
-		int count = new Long(
-			TacticLocalServiceUtil.dynamicQueryCount(query)).intValue();
-
-		return count;
-	}
 
 	public static List<Tactic> getTactics(Hits hits)
 		throws PortalException, SystemException {
@@ -88,19 +72,6 @@ public class TacticUtil {
 		}
 
 		return tactics;
-	}
-
-	public static List<Tactic> getTactics(long campaignId, int start, int end)
-		throws PortalException, SystemException {
-
-		DynamicQuery query =
-			DynamicQueryFactoryUtil.forClass(Tactic.class).add(
-				PropertyFactoryUtil.forName("campaignId").eq(campaignId));
-
-		List<Tactic> list = TacticLocalServiceUtil.dynamicQuery(
-			query, start, end);
-
-		return list;
 	}
 
 }

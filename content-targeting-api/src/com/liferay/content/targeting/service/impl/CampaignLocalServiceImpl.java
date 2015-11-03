@@ -209,9 +209,8 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 		// Tactics
 
-		List<Tactic> tactics = tacticLocalService.getResults(
-			campaign.getCampaignId(), 0, tacticLocalService.getTotal(
-				campaign.getCampaignId()));
+		List<Tactic> tactics = tacticLocalService.getTactics(
+			campaign.getCampaignId());
 
 		for (Tactic tactic : tactics) {
 			tacticLocalService.deleteTactic(tactic.getTacticId());
