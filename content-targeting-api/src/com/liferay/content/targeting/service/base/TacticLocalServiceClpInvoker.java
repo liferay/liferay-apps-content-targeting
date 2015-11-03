@@ -218,15 +218,18 @@ public class TacticLocalServiceClpInvoker {
 				"com.liferay.content.targeting.model.Tactic"
 			};
 
-		_methodName117 = "getResults";
+		_methodName117 = "getTactics";
 
-		_methodParameterTypes117 = new String[] { "long", "int", "int" };
+		_methodParameterTypes117 = new String[] { "long" };
 
 		_methodName118 = "getTactics";
 
-		_methodParameterTypes118 = new String[] { "long" };
+		_methodParameterTypes118 = new String[] {
+				"long", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			};
 
-		_methodName119 = "getTotal";
+		_methodName119 = "getTacticsCount";
 
 		_methodParameterTypes119 = new String[] { "long" };
 
@@ -512,19 +515,20 @@ public class TacticLocalServiceClpInvoker {
 
 		if (_methodName117.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes117, parameterTypes)) {
-			return TacticLocalServiceUtil.getResults(((Long)arguments[0]).longValue(),
-				((Integer)arguments[1]).intValue(),
-				((Integer)arguments[2]).intValue());
+			return TacticLocalServiceUtil.getTactics(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName118.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes118, parameterTypes)) {
-			return TacticLocalServiceUtil.getTactics(((Long)arguments[0]).longValue());
+			return TacticLocalServiceUtil.getTactics(((Long)arguments[0]).longValue(),
+				((Integer)arguments[1]).intValue(),
+				((Integer)arguments[2]).intValue(),
+				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
 		if (_methodName119.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes119, parameterTypes)) {
-			return TacticLocalServiceUtil.getTotal(((Long)arguments[0]).longValue());
+			return TacticLocalServiceUtil.getTacticsCount(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName120.equals(name) &&

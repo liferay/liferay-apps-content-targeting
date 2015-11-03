@@ -491,13 +491,6 @@ public class TacticLocalServiceUtil {
 			userSegmentsIds, serviceContext);
 	}
 
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> getResults(
-		long campaignId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getResults(campaignId, start, end);
-	}
-
 	public static java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
 		long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -505,10 +498,18 @@ public class TacticLocalServiceUtil {
 		return getService().getTactics(campaignId);
 	}
 
-	public static int getTotal(long campaignId)
+	public static java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long campaignId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getTotal(campaignId);
+		return getService().getTactics(campaignId, start, end, obc);
+	}
+
+	public static int getTacticsCount(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getTacticsCount(campaignId);
 	}
 
 	public static com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(

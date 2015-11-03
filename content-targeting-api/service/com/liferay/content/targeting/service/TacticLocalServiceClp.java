@@ -208,15 +208,18 @@ public class TacticLocalServiceClp implements TacticLocalService {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName40 = "getResults";
+		_methodName40 = "getTactics";
 
-		_methodParameterTypes40 = new String[] { "long", "int", "int" };
+		_methodParameterTypes40 = new String[] { "long" };
 
 		_methodName41 = "getTactics";
 
-		_methodParameterTypes41 = new String[] { "long" };
+		_methodParameterTypes41 = new String[] {
+				"long", "int", "int",
+				"com.liferay.portal.kernel.util.OrderByComparator"
+			};
 
-		_methodName42 = "getTotal";
+		_methodName42 = "getTacticsCount";
 
 		_methodParameterTypes42 = new String[] { "long" };
 
@@ -1433,16 +1436,15 @@ public class TacticLocalServiceClp implements TacticLocalService {
 	}
 
 	@Override
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getResults(
-		long campaignId, int start, int end)
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName40,
-					_methodParameterTypes40,
-					new Object[] { campaignId, start, end });
+					_methodParameterTypes40, new Object[] { campaignId });
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1469,14 +1471,24 @@ public class TacticLocalServiceClp implements TacticLocalService {
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
-		long campaignId)
+		long campaignId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;
 
 		try {
 			returnObj = _invokableLocalService.invokeMethod(_methodName41,
-					_methodParameterTypes41, new Object[] { campaignId });
+					_methodParameterTypes41,
+					new Object[] {
+						campaignId,
+						
+					start,
+						
+					end,
+						
+					ClpSerializer.translateInput(obc)
+					});
 		}
 		catch (Throwable t) {
 			t = ClpSerializer.translateThrowable(t);
@@ -1502,7 +1514,7 @@ public class TacticLocalServiceClp implements TacticLocalService {
 	}
 
 	@Override
-	public int getTotal(long campaignId)
+	public int getTacticsCount(long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		Object returnObj = null;

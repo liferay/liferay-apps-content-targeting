@@ -516,14 +516,6 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 	}
 
 	@Override
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getResults(
-		long campaignId, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return _tacticLocalService.getResults(campaignId, start, end);
-	}
-
-	@Override
 	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
 		long campaignId)
 		throws com.liferay.portal.kernel.exception.PortalException,
@@ -532,10 +524,19 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 	}
 
 	@Override
-	public int getTotal(long campaignId)
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long campaignId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
-		return _tacticLocalService.getTotal(campaignId);
+		return _tacticLocalService.getTactics(campaignId, start, end, obc);
+	}
+
+	@Override
+	public int getTacticsCount(long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _tacticLocalService.getTacticsCount(campaignId);
 	}
 
 	@Override
