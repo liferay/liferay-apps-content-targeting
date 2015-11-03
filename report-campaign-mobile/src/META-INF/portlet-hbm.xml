@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.liferay.content.targeting.report.campaign.mobile.model.CampaignMobile" />
+	<import class="com.liferay.content.targeting.report.campaign.mobile.model.ConsumerData" />
+	<class name="com.liferay.content.targeting.report.campaign.mobile.model.impl.CampaignMobileImpl" table="CT_CMR_CampaignMobile">
+		<cache usage="read-write" />
+		<id name="campaignMobileId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="count" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="className" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="elementId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="consumerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="placeholderId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userSegmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="com.liferay.content.targeting.report.campaign.mobile.model.impl.ConsumerDataImpl" table="CT_CMR_ConsumerData">
+		<cache usage="read-write" />
+		<id name="consumerDataId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="count" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
+		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="elementId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="consumerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+</hibernate-mapping>

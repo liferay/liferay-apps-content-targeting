@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+
+<custom-sql>
+	<sql id="com.liferay.content.targeting.report.campaign.mobile.service.persistence.CampaignMobileFinder.findBy">
+		<![CDATA[
+			SELECT
+  CT_Analytics_AnalyticsEvent.className AS className,
+  CT_Analytics_AnalyticsEvent.classPK   AS classPK,
+  CT_Analytics_AnalyticsEvent.elementId AS elementId,
+  CT_Analytics_AnalyticsEvent.eventType AS eventType,
+  campaign.referrerClassPK              AS campaignId,
+  consumer.referrerClassPK              AS consumerId,
+  placeholder.referrerClassPK           AS placeholderId,
+  userSegment.referrerClassPK           AS userSegmentId,
+  count(*)                              AS count
+FROM
+  CT_Analytics_AnalyticsEvent
+  LEFT OUTER JOIN
+  CT_Analytics_AnalyticsReferrer AS campaign
+    ON
+      (CT_Analytics_AnalyticsEvent.analyticsEventId = campaign.analyticsEventId)
+  LEFT OUTER JOIN
+  CT_Analytics_AnalyticsReferrer AS consumer
+    ON
+      (CT_Analytics_AnalyticsEvent.analyticsEventId = consumer.analyticsEventId)
+  LEFT OUTER JOIN
+  CT_Analytics_AnalyticsReferrer AS placeholder
+    ON
+      (CT_Analytics_AnalyticsEvent.analyticsEventId = placeholder.analyticsEventId)
+  LEFT OUTER JOIN
+  CT_Analytics_AnalyticsReferrer AS userSegment
+    ON
+      (CT_Analytics_AnalyticsEvent.analyticsEventId = userSegment.analyticsEventId)
+WHERE
+  (campaign.referrerClassName = 'com.liferay.content.targeting.model.Campaign')
+  AND (consumer.referrerClassName = 'com.liferay.consumer.manager.model.Consumer')
+  AND (placeholder.referrerClassName = 'com.liferay.consumer.manager.extension.screens.model.Placeholder')
+  AND (userSegment.referrerClassName = 'com.liferay.content.targeting.model.UserSegment')
+  AND 		(campaign.referrerClassPK != 0)
+    AND eventType != 'atOnScreen'
+  	AND 		(campaign.referrerClassPK = ?)
+		AND 		(CT_Analytics_AnalyticsEvent.companyId = ?) AND
+ 				(CT_Analytics_AnalyticsEvent.createDate >= ?)
+GROUP BY
+  CT_Analytics_AnalyticsEvent.className, CT_Analytics_AnalyticsEvent.classPK,
+  CT_Analytics_AnalyticsEvent.elementId, CT_Analytics_AnalyticsEvent.eventType,
+  campaign.referrerClassPK,
+  consumer.referrerClassPK,
+  placeholder.referrerClassPK,
+  userSegment.referrerClassPK
+		]]>
+	</sql>
+	<sql id="com.liferay.content.targeting.report.campaign.mobile.service.persistence.CampaignMobileFinder.countTimeATOnScreen">
+		<![CDATA[
+			SELECT
+  CT_Analytics_AnalyticsEvent.className AS className,
+  CT_Analytics_AnalyticsEvent.classPK   AS classPK,
+  CT_Analytics_AnalyticsEvent.elementId AS elementId,
+  CT_Analytics_AnalyticsEvent.eventType AS eventType,
+  campaign.referrerClassPK              AS campaignId,
+  consumer.referrerClassPK              AS consumerId,
+  placeholder.referrerClassPK           AS placeholderId,
+  userSegment.referrerClassPK           AS userSegmentId,
+  sum(additionalInfo)                        AS count
+FROM
+  CT_Analytics_AnalyticsEvent
+  LEFT OUTER JOIN
+  CT_Analytics_AnalyticsReferrer AS campaign
+    ON
+      (CT_Analytics_AnalyticsEvent.analyticsEventId = campaign.analyticsEventId)
+  LEFT OUTER JOIN
+  CT_Analytics_AnalyticsReferrer AS consumer
+    ON
+      (CT_Analytics_AnalyticsEvent.analyticsEventId = consumer.analyticsEventId)
+  LEFT OUTER JOIN
+  CT_Analytics_AnalyticsReferrer AS placeholder
+    ON
+      (CT_Analytics_AnalyticsEvent.analyticsEventId = placeholder.analyticsEventId)
+  LEFT OUTER JOIN
+  CT_Analytics_AnalyticsReferrer AS userSegment
+    ON
+      (CT_Analytics_AnalyticsEvent.analyticsEventId = userSegment.analyticsEventId)
+WHERE
+  (campaign.referrerClassName = 'com.liferay.content.targeting.model.Campaign')
+  AND (consumer.referrerClassName = 'com.liferay.consumer.manager.model.Consumer')
+  AND (placeholder.referrerClassName = 'com.liferay.consumer.manager.extension.screens.model.Placeholder')
+  AND (userSegment.referrerClassName = 'com.liferay.content.targeting.model.UserSegment')
+  AND 		(campaign.referrerClassPK != 0)
+  AND eventType = ?
+  	AND 		(campaign.referrerClassPK = ?)
+		AND 		(CT_Analytics_AnalyticsEvent.companyId = ?) AND
+ 				(CT_Analytics_AnalyticsEvent.createDate >= ?)
+GROUP BY
+  CT_Analytics_AnalyticsEvent.className, CT_Analytics_AnalyticsEvent.classPK,
+  CT_Analytics_AnalyticsEvent.elementId, CT_Analytics_AnalyticsEvent.eventType,
+  campaign.referrerClassPK,
+  consumer.referrerClassPK,
+  placeholder.referrerClassPK,
+  userSegment.referrerClassPK
+		]]>
+	</sql>
+	<sql id="com.liferay.content.targeting.report.campaign.mobile.service.persistence.ConsumerDataFinder.findBy">
+		<![CDATA[
+			SELECT
+  CT_Analytics_AnalyticsEvent.className AS className,
+  CT_Analytics_AnalyticsEvent.classPK   AS classPK,
+  CT_Analytics_AnalyticsEvent.elementId AS elementId,
+  CT_Analytics_AnalyticsEvent.eventType AS eventType,
+  consumer.referrerClassPK              AS consumerId,
+  count(*)                              AS count
+FROM
+  CT_Analytics_AnalyticsEvent
+  LEFT OUTER JOIN
+  CT_Analytics_AnalyticsReferrer AS consumer
+    ON
+      (CT_Analytics_AnalyticsEvent.analyticsEventId = consumer.analyticsEventId)
+WHERE
+   (consumer.referrerClassName = 'com.liferay.consumer.manager.model.Consumer')
+   AND eventType != 'sessionOnScreen'
+ 		AND 		(CT_Analytics_AnalyticsEvent.companyId = ?) AND
+ 				(CT_Analytics_AnalyticsEvent.createDate >= ?)
+GROUP BY
+  CT_Analytics_AnalyticsEvent.className, CT_Analytics_AnalyticsEvent.classPK,
+  CT_Analytics_AnalyticsEvent.elementId, CT_Analytics_AnalyticsEvent.eventType,
+  consumer.referrerClassPK
+		]]>
+	</sql>
+	<sql id="com.liferay.content.targeting.report.campaign.mobile.service.persistence.ConsumerDataFinder.sumTimeOnScreen">
+SELECT
+  CT_Analytics_AnalyticsEvent.className AS className,
+  CT_Analytics_AnalyticsEvent.classPK AS classPK,
+  CT_Analytics_AnalyticsEvent.elementId AS elementId,
+  CT_Analytics_AnalyticsEvent.eventType AS eventType,
+  consumer.referrerClassPK AS consumerId,
+  sum(additionalInfo) AS count
+FROM
+  CT_Analytics_AnalyticsEvent
+  LEFT OUTER JOIN
+  CT_Analytics_AnalyticsReferrer AS consumer
+  ON
+  (CT_Analytics_AnalyticsEvent.analyticsEventId = consumer.analyticsEventId)
+WHERE
+  (consumer.referrerClassName = 'com.liferay.consumer.manager.model.Consumer')
+  AND eventType = ?
+  AND (CT_Analytics_AnalyticsEvent.companyId = ?)
+  AND (CT_Analytics_AnalyticsEvent.createDate >= ?)
+GROUP BY
+  CT_Analytics_AnalyticsEvent.className,
+  CT_Analytics_AnalyticsEvent.classPK,
+  CT_Analytics_AnalyticsEvent.eventType,
+  consumer.referrerClassPK
+    </sql>
+
+</custom-sql>

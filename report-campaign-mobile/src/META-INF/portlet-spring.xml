@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.liferay.content.targeting.report.campaign.mobile.service.CampaignMobileLocalService" class="com.liferay.content.targeting.report.campaign.mobile.service.impl.CampaignMobileLocalServiceImpl" />
+	<bean id="com.liferay.content.targeting.report.campaign.mobile.service.CampaignMobileService" class="com.liferay.content.targeting.report.campaign.mobile.service.impl.CampaignMobileServiceImpl" />
+	<bean id="com.liferay.content.targeting.report.campaign.mobile.service.persistence.CampaignMobilePersistence" class="com.liferay.content.targeting.report.campaign.mobile.service.persistence.CampaignMobilePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.content.targeting.report.campaign.mobile.service.persistence.CampaignMobileFinder" class="com.liferay.content.targeting.report.campaign.mobile.service.persistence.CampaignMobileFinderImpl" parent="basePersistence" />
+	<bean id="com.liferay.content.targeting.report.campaign.mobile.service.ConsumerDataLocalService" class="com.liferay.content.targeting.report.campaign.mobile.service.impl.ConsumerDataLocalServiceImpl" />
+	<bean id="com.liferay.content.targeting.report.campaign.mobile.service.ConsumerDataService" class="com.liferay.content.targeting.report.campaign.mobile.service.impl.ConsumerDataServiceImpl" />
+	<bean id="com.liferay.content.targeting.report.campaign.mobile.service.persistence.ConsumerDataPersistence" class="com.liferay.content.targeting.report.campaign.mobile.service.persistence.ConsumerDataPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.content.targeting.report.campaign.mobile.service.persistence.ConsumerDataFinder" class="com.liferay.content.targeting.report.campaign.mobile.service.persistence.ConsumerDataFinderImpl" parent="basePersistence" />
+</beans>
