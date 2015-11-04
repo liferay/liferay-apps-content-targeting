@@ -57,6 +57,7 @@ public class CTActionFinderImpl extends BasePersistenceImpl<CTAction>
 			q.addScalar("classPK", Type.LONG);
 			q.addScalar("eventType", Type.STRING);
 			q.addScalar("alias_", Type.STRING);
+			q.addScalar("campaignId", Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 
@@ -91,6 +92,7 @@ public class CTActionFinderImpl extends BasePersistenceImpl<CTAction>
 			q.addScalar("elementId", Type.STRING);
 			q.addScalar("eventType", Type.STRING);
 			q.addScalar("alias_", Type.STRING);
+			q.addScalar("campaignId", Type.LONG);
 
 			QueryPos qPos = QueryPos.getInstance(q);
 

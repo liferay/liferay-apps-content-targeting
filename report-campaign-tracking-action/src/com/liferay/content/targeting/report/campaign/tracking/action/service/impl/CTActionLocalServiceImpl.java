@@ -15,7 +15,10 @@
 package com.liferay.content.targeting.report.campaign.tracking.action.service.impl;
 
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
+import com.liferay.content.targeting.api.model.TrackingAction;
+import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
 import com.liferay.content.targeting.model.ReportInstance;
+import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction;
 import com.liferay.content.targeting.report.campaign.tracking.action.service.base.CTActionLocalServiceBaseImpl;
@@ -29,6 +32,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.kernel.util.StringUtil;
 
 import java.util.Date;
 import java.util.List;
@@ -234,18 +238,51 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 			long classPK = (Long)ctActionAnalytics[2];
 			String eventType = (String)ctActionAnalytics[3];
 			String alias = (String)ctActionAnalytics[4];
+			long campaignId = (Long)ctActionAnalytics[5];
 
-			int count = _analyticsEventLocalService.getAnalyticsEventsCount(
-				className, classPK, UserSegment.class.getName(), userSegmentId,
-				eventType, date);
+			if (StringUtil.equalsIgnoreCase("all", eventType)) {
+				TrackingActionInstance trackingActionInstance =
+					_trackingActionInstaceLocalService.
+						fetchTrackingActionInstance(campaignId, alias);
 
-			if (count == 0) {
-				continue;
+				if (trackingActionInstance == null) {
+					continue;
+				}
+
+				TrackingAction trackingAction =
+					_trackingActionsRegistry.getTrackingAction(
+						trackingActionInstance.getTrackingActionKey());
+
+				for (String trackingActionEventType
+						: trackingAction.getEventTypes()) {
+
+					int count =
+						_analyticsEventLocalService.getAnalyticsEventsCount(
+							className, classPK, UserSegment.class.getName(),
+							userSegmentId, trackingActionEventType, date);
+
+					if (count == 0) {
+						continue;
+					}
+
+					addCTAction(
+						reportInstanceId, userSegmentId, alias, className,
+						classPK, trackingActionEventType, count);
+				}
 			}
+			else {
+				int count = _analyticsEventLocalService.getAnalyticsEventsCount(
+					className, classPK, UserSegment.class.getName(),
+					userSegmentId, eventType, date);
 
-			addCTAction(
-				reportInstanceId, userSegmentId, alias, className, classPK,
-				eventType, count);
+				if (count == 0) {
+					continue;
+				}
+
+				addCTAction(
+					reportInstanceId, userSegmentId, alias, className, classPK,
+					eventType, count);
+			}
 		}
 	}
 
@@ -265,18 +302,51 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 			String elementId = (String)ctActionAnalytics[1];
 			String eventType = (String)ctActionAnalytics[2];
 			String alias = (String)ctActionAnalytics[3];
+			long campaignId = (Long)ctActionAnalytics[4];
 
-			int count = _analyticsEventLocalService.getAnalyticsEventsCount(
-				UserSegment.class.getName(), userSegmentId, elementId,
-				eventType, date);
+			if (StringUtil.equalsIgnoreCase("all", eventType)) {
+				TrackingActionInstance trackingActionInstance =
+					_trackingActionInstaceLocalService.
+						fetchTrackingActionInstance(campaignId, alias);
 
-			if (count == 0) {
-				continue;
+				if (trackingActionInstance == null) {
+					continue;
+				}
+
+				TrackingAction trackingAction =
+					_trackingActionsRegistry.getTrackingAction(
+						trackingActionInstance.getTrackingActionKey());
+
+				for (String trackingActionEventType
+						: trackingAction.getEventTypes()) {
+
+					int count =
+						_analyticsEventLocalService.getAnalyticsEventsCount(
+							UserSegment.class.getName(), userSegmentId,
+							elementId, trackingActionEventType, date);
+
+					if (count == 0) {
+						continue;
+					}
+
+					addCTAction(
+						reportInstanceId, userSegmentId, alias, elementId,
+						trackingActionEventType, count);
+				}
 			}
+			else {
+				int count = _analyticsEventLocalService.getAnalyticsEventsCount(
+					UserSegment.class.getName(), userSegmentId, elementId,
+					eventType, date);
 
-			addCTAction(
-				reportInstanceId, userSegmentId, alias, elementId, eventType,
-				count);
+				if (count == 0) {
+					continue;
+				}
+
+				addCTAction(
+					reportInstanceId, userSegmentId, alias, elementId,
+					eventType, count);
+			}
 		}
 	}
 
@@ -290,6 +360,8 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 		_trackingActionInstaceLocalService = ServiceTrackerUtil.getService(
 			TrackingActionInstanceLocalService.class,
 			bundle.getBundleContext());
+		_trackingActionsRegistry = ServiceTrackerUtil.getService(
+			TrackingActionsRegistry.class, bundle.getBundleContext());
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
@@ -299,5 +371,6 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 	private ReportInstanceLocalService _reportInstanceLocalService;
 	private TrackingActionInstanceLocalService
 		_trackingActionInstaceLocalService;
+	private TrackingActionsRegistry _trackingActionsRegistry;
 
 }
