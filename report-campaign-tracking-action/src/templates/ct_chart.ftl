@@ -7,9 +7,10 @@
 </style>
 
 <@aui["script"] use="charts">
-	var ctActionChartDataValues = [
+	var ctActionTotalArray = [
 		<#list searchContainerIterator.getResults(searchContainer.getStart(), searchContainer.getEnd()) as ctActionTotal>
 			<#assign userSegmentNames="">
+
 			<#list ctActionTotal.getViewsByUserSegment() as ctAction>
 				<#if (userSegmentNames?length == 0)>
 					<#assign userSegmentNames = ctAction.getUserSegmentName(locale) + " - " + ctAction.getCount()>
@@ -18,9 +19,88 @@
 				</#if>
 			</#list>
 
-			{content:'${ctActionTotal.getAlias()}', count:${ctActionTotal.getCount()}, user_segments: '${userSegmentNames}'}<#if ctActionTotal_has_next>,</#if>
+			<#assign eventType=ctActionTotal.getEventType()>
+
+			<#if ctActionTotal.getEventType() == "sending">
+			    <#assign eventType="sent">
+			<#elseif ctActionTotal.getEventType() == "click">
+				<#assign eventType="link-clicks">
+			</#if>
+
+			{content:'${ctActionTotal.getAlias()}', event:'${eventType}', eventName:'${languageUtil.get(locale,eventType)}', count:${ctActionTotal.getCount()}, user_segments: '${userSegmentNames}'}<#if ctActionTotal_has_next>,</#if>
 		</#list>
 	];
+
+	var ctActionCharAxes = {
+		count:{
+			keys:[],
+			position:'left',
+			title:'<@liferay_ui["message"] key="count" />',
+			type:'numeric'
+		},
+		content:{
+			keys:['content'],
+			position:'bottom',
+			title:'<@liferay_ui["message"] key="content" />',
+			type:'category'
+		}
+	};
+
+	var ctActionChartDataValues = [];
+
+	for (var idx in ctActionTotalArray) {
+		var actionTotal = ctActionTotalArray[idx];
+		var event = actionTotal.event;
+		var eventName = actionTotal.eventName;
+		var actionName = actionTotal.content;
+		var eventCount = actionTotal.count;
+		var userSegments = actionTotal.user_segments;
+
+		if (A.Array.indexOf(ctActionCharAxes.count.keys, event) == -1) {
+			ctActionCharAxes.count.keys.push(event);
+		}
+
+		var currentActionIndex = -1;
+
+		for (var dataIdx in ctActionChartDataValues) {
+			var checkValue = ctActionChartDataValues[dataIdx];
+
+			if (checkValue.content === actionName) {
+				currentActionIndex = dataIdx;
+
+				break;
+			}
+		}
+
+		var dataValue = {
+			content: actionName
+		};
+
+		if (currentActionIndex != -1) {
+			dataValue = ctActionChartDataValues[currentActionIndex];
+		}
+
+		dataValue[event] = eventCount;
+
+		if (!dataValue.eventNames) {
+			dataValue.eventNames = {};
+		}
+
+		dataValue.eventNames[event] = eventName;
+
+		if (!dataValue.userSegments) {
+			dataValue.userSegments = {};
+		}
+
+		dataValue.userSegments[event] = userSegments;
+
+		if (currentActionIndex == -1) {
+			ctActionChartDataValues.push(dataValue);
+		}
+		else {
+			ctActionChartDataValues[currentActionIndex] = dataValue;
+		}
+	}
 
 	var ctActionChartTooltip = {
 		styles: {
@@ -31,14 +111,18 @@
 		markerLabelFunction: function(categoryItem, valueItem, itemIndex, series, seriesIndex) {
 			var msg = document.createElement("div");
 
-			var data = ctActionChartDataValues[seriesIndex];
+			var data = ctActionChartDataValues[itemIndex];
 
 			var countSpan = document.createElement("span");
+			var eventSpan = document.createElement("span");
 			var metricSpan = document.createElement("span");
 			var segmentSpan = document.createElement("span");
 
 			var countValueSpan = document.createElement("span");
 			countValueSpan.style.fontWeight = "bold";
+
+			var eventValueSpan = document.createElement("span");
+			eventValueSpan.style.fontWeight = "bold";
 
 			var metricValueSpan = document.createElement("span");
 			metricValueSpan.style.fontWeight = "bold";
@@ -47,51 +131,44 @@
 			segmentValueDiv.style.fontWeight = "bold";
 			segmentValueDiv.style.paddingLeft = "10px";
 
-			countValueSpan.appendChild(document.createTextNode(data.count));
+			countValueSpan.appendChild(document.createTextNode(data[valueItem.key]));
+			eventValueSpan.appendChild(document.createTextNode(data.eventNames[valueItem.key]));
 			metricValueSpan.appendChild(document.createTextNode(data.content));
 
-			var segments = data.user_segments.split(",");
-
-			for (var idx in segments) {
-				var segment = segments[idx].trim();
-
-				if (idx > 0) {
-					segmentValueDiv.appendChild(document.createElement("br"));
-				}
-
-				segmentValueDiv.appendChild(document.createTextNode(segment));
-			}
-
+			var segments = data.userSegments[valueItem.key].split(",");
 
 			countSpan.appendChild(document.createTextNode('${languageUtil.get(locale, "total-count")}: '));
 			metricSpan.appendChild(document.createTextNode('${languageUtil.get(locale, "metric")}: '));
-			segmentSpan.appendChild(document.createTextNode('${languageUtil.get(locale, "user-segments")}: '));
+			eventSpan.appendChild(document.createTextNode('${languageUtil.get(locale, "event")}: '));
 
 			msg.appendChild(metricSpan);
 			msg.appendChild(metricValueSpan);
 			msg.appendChild(msg.appendChild(document.createElement("br")));
+			msg.appendChild(eventSpan);
+			msg.appendChild(eventValueSpan);
+			msg.appendChild(msg.appendChild(document.createElement("br")));
 			msg.appendChild(countSpan);
 			msg.appendChild(countValueSpan);
-			msg.appendChild(msg.appendChild(document.createElement("br")));
-			msg.appendChild(segmentSpan);
-			msg.appendChild(segmentValueDiv);
+
+			if (data.userSegments[valueItem.key] !== '' && segments.length > 0) {
+				for (var idx in segments) {
+					var segment = segments[idx].trim();
+
+					if (idx > 0) {
+						segmentValueDiv.appendChild(document.createElement("br"));
+					}
+
+					segmentValueDiv.appendChild(document.createTextNode(segment));
+				}
+
+				segmentSpan.appendChild(document.createTextNode('${languageUtil.get(locale, "user-segments")}: '));
+
+				msg.appendChild(msg.appendChild(document.createElement("br")));
+				msg.appendChild(segmentSpan);
+				msg.appendChild(segmentValueDiv);
+			}
 
 			return msg;
-		}
-	};
-
-	var ctActionCharAxes = {
-		count:{
-			keys:['count'],
-			position:'left',
-			title:'<@liferay_ui["message"] key="count" />',
-			type:'numeric'
-		},
-		content:{
-			keys:['content'],
-			position:'bottom',
-			title:'<@liferay_ui["message"] key="content" />',
-			type:'category'
 		}
 	};
 
@@ -119,6 +196,37 @@
 			}
 		}
 	};
+
+	for (var idx in ctActionChartDataValues) {
+		var dataValue = ctActionChartDataValues[idx];
+
+		for (var checkIdx in ctActionChartDataValues) {
+			var checkValue = ctActionChartDataValues[checkIdx];
+
+			if (checkIdx != idx) {
+				for (var evt in checkValue) {
+					if (!dataValue[evt] && evt !== 'userSegments') {
+						dataValue[evt] = 0.05;
+					}
+				}
+			}
+		}
+
+		ctActionChartDataValues[idx] = dataValue;
+	}
+
+	ctActionChartDataValues.sort(
+		function(a, b) {
+			if (a.content === b.content) {
+				return 0;
+			}
+			else if (a.content > b.content) {
+				return 1;
+			}
+
+			return -1;
+		}
+	);
 
 	var ctActionChart = new A.Chart({
 		axes: ctActionCharAxes,

@@ -231,7 +231,14 @@ public class CTActionTotalLocalServiceImpl
 						reportInstanceId, className, classPK, eventType);
 
 			if (trackingActionInstances.isEmpty()) {
-				continue;
+				trackingActionInstances =
+					_trackingActionInstaceLocalService.
+						getTrackingActionInstancesByReportInstanceId(
+							reportInstanceId, className, classPK, "all");
+
+				if (trackingActionInstances.isEmpty()) {
+					continue;
+				}
 			}
 
 			TrackingActionInstance trackingActionInstance =
@@ -265,7 +272,14 @@ public class CTActionTotalLocalServiceImpl
 						reportInstanceId, elementId, eventType);
 
 			if (trackingActionInstances.isEmpty()) {
-				continue;
+				trackingActionInstances =
+					_trackingActionInstaceLocalService.
+						getTrackingActionInstancesByReportInstanceId(
+							reportInstanceId, elementId, "all");
+
+				if (trackingActionInstances.isEmpty()) {
+					continue;
+				}
 			}
 
 			TrackingActionInstance trackingActionInstance =

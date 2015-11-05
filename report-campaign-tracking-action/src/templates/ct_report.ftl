@@ -34,6 +34,14 @@
 		modelVar="ctActionTotal"
 	>
 
+		<#assign eventType=ctActionTotal.getEventType()>
+
+		<#if ctActionTotal.getEventType() == "sending">
+			<#assign eventType="sent">
+		<#elseif ctActionTotal.getEventType() == "click">
+			<#assign eventType="link-clicks">
+		</#if>
+
 		<@liferay_ui["search-container-column-text"]
 			name="alias"
 			value=ctActionTotal.getAlias()
@@ -41,7 +49,7 @@
 
 		<@liferay_ui["search-container-column-text"]
 			name="event"
-			value="${languageUtil.get(locale, ctActionTotal.getEventType())}"
+			value="${languageUtil.get(locale, eventType)}"
 		/>
 
 		<@liferay_ui["search-container-column-text"]
