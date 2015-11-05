@@ -9,6 +9,10 @@
 
 		<column name="scorePointId" type="long" primary="true" />
 
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+
 		<!-- Other fields -->
 
 		<column name="anonymousUserId" type="long" />
