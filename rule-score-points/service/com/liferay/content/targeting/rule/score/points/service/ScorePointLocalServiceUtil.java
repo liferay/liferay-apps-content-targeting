@@ -188,6 +188,20 @@ public class ScorePointLocalServiceUtil {
 	}
 
 	/**
+	* Returns the score point with the matching UUID and company.
+	*
+	* @param uuid the score point's UUID
+	* @param companyId the primary key of the company
+	* @return the matching score point, or <code>null</code> if a matching score point could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.rule.score.points.model.ScorePoint fetchScorePointByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().fetchScorePointByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
 	* Returns the score point with the primary key.
 	*
 	* @param scorePointId the primary key of the score point
@@ -207,6 +221,22 @@ public class ScorePointLocalServiceUtil {
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the score point with the matching UUID and company.
+	*
+	* @param uuid the score point's UUID
+	* @param companyId the primary key of the company
+	* @return the matching score point
+	* @throws PortalException if a matching score point could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.rule.score.points.model.ScorePoint getScorePointByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getScorePointByUuidAndCompanyId(uuid, companyId);
 	}
 
 	/**

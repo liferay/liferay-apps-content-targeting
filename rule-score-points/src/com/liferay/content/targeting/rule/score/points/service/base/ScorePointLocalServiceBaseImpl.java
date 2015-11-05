@@ -218,6 +218,20 @@ public abstract class ScorePointLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the score point with the matching UUID and company.
+	 *
+	 * @param uuid the score point's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching score point, or <code>null</code> if a matching score point could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ScorePoint fetchScorePointByUuidAndCompanyId(String uuid,
+		long companyId) throws SystemException {
+		return scorePointPersistence.fetchByUuid_C_First(uuid, companyId, null);
+	}
+
+	/**
 	 * Returns the score point with the primary key.
 	 *
 	 * @param scorePointId the primary key of the score point
@@ -235,6 +249,21 @@ public abstract class ScorePointLocalServiceBaseImpl
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException, SystemException {
 		return scorePointPersistence.findByPrimaryKey(primaryKeyObj);
+	}
+
+	/**
+	 * Returns the score point with the matching UUID and company.
+	 *
+	 * @param uuid the score point's UUID
+	 * @param  companyId the primary key of the company
+	 * @return the matching score point
+	 * @throws PortalException if a matching score point could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public ScorePoint getScorePointByUuidAndCompanyId(String uuid,
+		long companyId) throws PortalException, SystemException {
+		return scorePointPersistence.findByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**

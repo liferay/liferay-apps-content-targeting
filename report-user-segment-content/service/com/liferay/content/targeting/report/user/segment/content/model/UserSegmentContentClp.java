@@ -76,6 +76,7 @@ public class UserSegmentContentClp extends BaseModelImpl<UserSegmentContent>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("userSegmentContentId", getUserSegmentContentId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
@@ -92,6 +93,12 @@ public class UserSegmentContentClp extends BaseModelImpl<UserSegmentContent>
 
 		if (userSegmentContentId != null) {
 			setUserSegmentContentId(userSegmentContentId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userSegmentId = (Long)attributes.get("userSegmentId");
@@ -149,6 +156,29 @@ public class UserSegmentContentClp extends BaseModelImpl<UserSegmentContent>
 
 				method.invoke(_userSegmentContentRemoteModel,
 					userSegmentContentId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+
+		if (_userSegmentContentRemoteModel != null) {
+			try {
+				Class<?> clazz = _userSegmentContentRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCompanyId", long.class);
+
+				method.invoke(_userSegmentContentRemoteModel, companyId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -404,6 +434,7 @@ public class UserSegmentContentClp extends BaseModelImpl<UserSegmentContent>
 		UserSegmentContentClp clone = new UserSegmentContentClp();
 
 		clone.setUserSegmentContentId(getUserSegmentContentId());
+		clone.setCompanyId(getCompanyId());
 		clone.setUserSegmentId(getUserSegmentId());
 		clone.setClassName(getClassName());
 		clone.setClassPK(getClassPK());
@@ -463,10 +494,12 @@ public class UserSegmentContentClp extends BaseModelImpl<UserSegmentContent>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{userSegmentContentId=");
 		sb.append(getUserSegmentContentId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", userSegmentId=");
 		sb.append(getUserSegmentId());
 		sb.append(", className=");
@@ -486,7 +519,7 @@ public class UserSegmentContentClp extends BaseModelImpl<UserSegmentContent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -496,6 +529,10 @@ public class UserSegmentContentClp extends BaseModelImpl<UserSegmentContent>
 		sb.append(
 			"<column><column-name>userSegmentContentId</column-name><column-value><![CDATA[");
 		sb.append(getUserSegmentContentId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userSegmentId</column-name><column-value><![CDATA[");
@@ -528,6 +565,7 @@ public class UserSegmentContentClp extends BaseModelImpl<UserSegmentContent>
 	}
 
 	private long _userSegmentContentId;
+	private long _companyId;
 	private long _userSegmentId;
 	private String _className;
 	private long _classPK;

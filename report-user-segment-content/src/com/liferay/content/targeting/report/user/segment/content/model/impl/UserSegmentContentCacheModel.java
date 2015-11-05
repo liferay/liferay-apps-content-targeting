@@ -38,10 +38,12 @@ public class UserSegmentContentCacheModel implements CacheModel<UserSegmentConte
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{userSegmentContentId=");
 		sb.append(userSegmentContentId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", userSegmentId=");
 		sb.append(userSegmentId);
 		sb.append(", className=");
@@ -64,6 +66,7 @@ public class UserSegmentContentCacheModel implements CacheModel<UserSegmentConte
 		UserSegmentContentImpl userSegmentContentImpl = new UserSegmentContentImpl();
 
 		userSegmentContentImpl.setUserSegmentContentId(userSegmentContentId);
+		userSegmentContentImpl.setCompanyId(companyId);
 		userSegmentContentImpl.setUserSegmentId(userSegmentId);
 
 		if (className == null) {
@@ -99,6 +102,7 @@ public class UserSegmentContentCacheModel implements CacheModel<UserSegmentConte
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		userSegmentContentId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		userSegmentId = objectInput.readLong();
 		className = objectInput.readUTF();
 		classPK = objectInput.readLong();
@@ -111,6 +115,7 @@ public class UserSegmentContentCacheModel implements CacheModel<UserSegmentConte
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(userSegmentContentId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(userSegmentId);
 
 		if (className == null) {
@@ -134,6 +139,7 @@ public class UserSegmentContentCacheModel implements CacheModel<UserSegmentConte
 	}
 
 	public long userSegmentContentId;
+	public long companyId;
 	public long userSegmentId;
 	public String className;
 	public long classPK;

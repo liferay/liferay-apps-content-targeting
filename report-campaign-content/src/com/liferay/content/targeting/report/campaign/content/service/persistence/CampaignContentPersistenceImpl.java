@@ -1822,6 +1822,7 @@ public class CampaignContentPersistenceImpl extends BasePersistenceImpl<Campaign
 		campaignContentImpl.setPrimaryKey(campaignContent.getPrimaryKey());
 
 		campaignContentImpl.setCampaignContentId(campaignContent.getCampaignContentId());
+		campaignContentImpl.setCompanyId(campaignContent.getCompanyId());
 		campaignContentImpl.setCampaignId(campaignContent.getCampaignId());
 		campaignContentImpl.setClassName(campaignContent.getClassName());
 		campaignContentImpl.setClassPK(campaignContent.getClassPK());

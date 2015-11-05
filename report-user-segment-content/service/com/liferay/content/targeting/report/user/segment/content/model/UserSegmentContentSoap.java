@@ -32,6 +32,7 @@ public class UserSegmentContentSoap implements Serializable {
 		UserSegmentContentSoap soapModel = new UserSegmentContentSoap();
 
 		soapModel.setUserSegmentContentId(model.getUserSegmentContentId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserSegmentId(model.getUserSegmentId());
 		soapModel.setClassName(model.getClassName());
 		soapModel.setClassPK(model.getClassPK());
@@ -101,6 +102,14 @@ public class UserSegmentContentSoap implements Serializable {
 		_userSegmentContentId = userSegmentContentId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getUserSegmentId() {
 		return _userSegmentId;
 	}
@@ -150,6 +159,7 @@ public class UserSegmentContentSoap implements Serializable {
 	}
 
 	private long _userSegmentContentId;
+	private long _companyId;
 	private long _userSegmentId;
 	private String _className;
 	private long _classPK;

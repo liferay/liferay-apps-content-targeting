@@ -38,10 +38,12 @@ public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{campaignContentId=");
 		sb.append(campaignContentId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", campaignId=");
 		sb.append(campaignId);
 		sb.append(", className=");
@@ -64,6 +66,7 @@ public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 		CampaignContentImpl campaignContentImpl = new CampaignContentImpl();
 
 		campaignContentImpl.setCampaignContentId(campaignContentId);
+		campaignContentImpl.setCompanyId(companyId);
 		campaignContentImpl.setCampaignId(campaignId);
 
 		if (className == null) {
@@ -99,6 +102,7 @@ public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		campaignContentId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		campaignId = objectInput.readLong();
 		className = objectInput.readUTF();
 		classPK = objectInput.readLong();
@@ -111,6 +115,7 @@ public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(campaignContentId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(campaignId);
 
 		if (className == null) {
@@ -134,6 +139,7 @@ public class CampaignContentCacheModel implements CacheModel<CampaignContent>,
 	}
 
 	public long campaignContentId;
+	public long companyId;
 	public long campaignId;
 	public String className;
 	public long classPK;

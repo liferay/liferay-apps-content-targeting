@@ -36,12 +36,14 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{uuid=");
 		sb.append(uuid);
 		sb.append(", scorePointId=");
 		sb.append(scorePointId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", anonymousUserId=");
 		sb.append(anonymousUserId);
 		sb.append(", userSegmentId=");
@@ -65,6 +67,7 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 		}
 
 		scorePointImpl.setScorePointId(scorePointId);
+		scorePointImpl.setCompanyId(companyId);
 		scorePointImpl.setAnonymousUserId(anonymousUserId);
 		scorePointImpl.setUserSegmentId(userSegmentId);
 		scorePointImpl.setPoints(points);
@@ -78,6 +81,7 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		uuid = objectInput.readUTF();
 		scorePointId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		anonymousUserId = objectInput.readLong();
 		userSegmentId = objectInput.readLong();
 		points = objectInput.readLong();
@@ -94,6 +98,7 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 		}
 
 		objectOutput.writeLong(scorePointId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(anonymousUserId);
 		objectOutput.writeLong(userSegmentId);
 		objectOutput.writeLong(points);
@@ -101,6 +106,7 @@ public class ScorePointCacheModel implements CacheModel<ScorePoint>,
 
 	public String uuid;
 	public long scorePointId;
+	public long companyId;
 	public long anonymousUserId;
 	public long userSegmentId;
 	public long points;

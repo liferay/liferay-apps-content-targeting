@@ -10,6 +10,7 @@
 	<mapped-superclass class="com.liferay.content.targeting.report.campaign.content.model.impl.CampaignContentModelImpl">
 		<attributes>
 			<id name="campaignContentId" />
+			<basic name="companyId" />
 			<basic name="campaignId" />
 			<basic name="className" />
 			<basic name="classPK" />

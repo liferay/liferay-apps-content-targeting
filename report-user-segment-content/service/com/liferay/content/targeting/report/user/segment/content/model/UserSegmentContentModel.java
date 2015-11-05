@@ -74,6 +74,20 @@ public interface UserSegmentContentModel extends BaseModel<UserSegmentContent> {
 	public void setUserSegmentContentId(long userSegmentContentId);
 
 	/**
+	 * Returns the company ID of this user segment content.
+	 *
+	 * @return the company ID of this user segment content
+	 */
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this user segment content.
+	 *
+	 * @param companyId the company ID of this user segment content
+	 */
+	public void setCompanyId(long companyId);
+
+	/**
 	 * Returns the user segment ID of this user segment content.
 	 *
 	 * @return the user segment ID of this user segment content

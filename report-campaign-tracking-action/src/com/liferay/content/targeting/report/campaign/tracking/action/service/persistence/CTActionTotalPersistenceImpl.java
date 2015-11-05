@@ -1898,6 +1898,7 @@ public class CTActionTotalPersistenceImpl extends BasePersistenceImpl<CTActionTo
 		ctActionTotalImpl.setPrimaryKey(ctActionTotal.getPrimaryKey());
 
 		ctActionTotalImpl.setCTActionTotalId(ctActionTotal.getCTActionTotalId());
+		ctActionTotalImpl.setCompanyId(ctActionTotal.getCompanyId());
 		ctActionTotalImpl.setCampaignId(ctActionTotal.getCampaignId());
 		ctActionTotalImpl.setReportInstanceId(ctActionTotal.getReportInstanceId());
 		ctActionTotalImpl.setAlias(ctActionTotal.getAlias());

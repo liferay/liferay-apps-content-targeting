@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.content.targeting.report.campaign.tracking.action.model.CTAction">
 		<field name="CTActionId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="campaignId" type="long" />
 		<field name="reportInstanceId" type="long" />
 		<field name="userSegmentId" type="long" />
@@ -16,6 +17,7 @@
 	</model>
 	<model name="com.liferay.content.targeting.report.campaign.tracking.action.model.CTActionTotal">
 		<field name="CTActionTotalId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="campaignId" type="long" />
 		<field name="reportInstanceId" type="long" />
 		<field name="alias" type="String" />

@@ -66,6 +66,7 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 	public static final String TABLE_NAME = "CT_USCR_UserSegmentContent";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "userSegmentContentId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "userSegmentId", Types.BIGINT },
 			{ "className", Types.VARCHAR },
 			{ "classPK", Types.BIGINT },
@@ -73,7 +74,7 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 			{ "count", Types.INTEGER },
 			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_USCR_UserSegmentContent (userSegmentContentId LONG not null primary key,userSegmentId LONG,className VARCHAR(75) null,classPK LONG,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_USCR_UserSegmentContent (userSegmentContentId LONG not null primary key,companyId LONG,userSegmentId LONG,className VARCHAR(75) null,classPK LONG,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_USCR_UserSegmentContent";
 	public static final String ORDER_BY_JPQL = " ORDER BY userSegmentContent.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_USCR_UserSegmentContent.modifiedDate DESC";
@@ -109,6 +110,7 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 		UserSegmentContent model = new UserSegmentContentImpl();
 
 		model.setUserSegmentContentId(soapModel.getUserSegmentContentId());
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setUserSegmentId(soapModel.getUserSegmentId());
 		model.setClassName(soapModel.getClassName());
 		model.setClassPK(soapModel.getClassPK());
@@ -181,6 +183,7 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("userSegmentContentId", getUserSegmentContentId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
@@ -197,6 +200,12 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 
 		if (userSegmentContentId != null) {
 			setUserSegmentContentId(userSegmentContentId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userSegmentId = (Long)attributes.get("userSegmentId");
@@ -245,6 +254,17 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 	@Override
 	public void setUserSegmentContentId(long userSegmentContentId) {
 		_userSegmentContentId = userSegmentContentId;
+	}
+
+	@JSON
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@JSON
@@ -383,7 +403,7 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			UserSegmentContent.class.getName(), getPrimaryKey());
 	}
 
@@ -409,6 +429,7 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 		UserSegmentContentImpl userSegmentContentImpl = new UserSegmentContentImpl();
 
 		userSegmentContentImpl.setUserSegmentContentId(getUserSegmentContentId());
+		userSegmentContentImpl.setCompanyId(getCompanyId());
 		userSegmentContentImpl.setUserSegmentId(getUserSegmentId());
 		userSegmentContentImpl.setClassName(getClassName());
 		userSegmentContentImpl.setClassPK(getClassPK());
@@ -491,6 +512,8 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 
 		userSegmentContentCacheModel.userSegmentContentId = getUserSegmentContentId();
 
+		userSegmentContentCacheModel.companyId = getCompanyId();
+
 		userSegmentContentCacheModel.userSegmentId = getUserSegmentId();
 
 		userSegmentContentCacheModel.className = getClassName();
@@ -527,10 +550,12 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{userSegmentContentId=");
 		sb.append(getUserSegmentContentId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", userSegmentId=");
 		sb.append(getUserSegmentId());
 		sb.append(", className=");
@@ -550,7 +575,7 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -560,6 +585,10 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 		sb.append(
 			"<column><column-name>userSegmentContentId</column-name><column-value><![CDATA[");
 		sb.append(getUserSegmentContentId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>userSegmentId</column-name><column-value><![CDATA[");
@@ -596,6 +625,7 @@ public class UserSegmentContentModelImpl extends BaseModelImpl<UserSegmentConten
 			UserSegmentContent.class
 		};
 	private long _userSegmentContentId;
+	private long _companyId;
 	private long _userSegmentId;
 	private long _originalUserSegmentId;
 	private boolean _setOriginalUserSegmentId;

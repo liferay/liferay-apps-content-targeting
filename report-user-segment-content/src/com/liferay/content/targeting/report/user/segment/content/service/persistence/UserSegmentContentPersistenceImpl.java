@@ -1845,6 +1845,7 @@ public class UserSegmentContentPersistenceImpl extends BasePersistenceImpl<UserS
 		userSegmentContentImpl.setPrimaryKey(userSegmentContent.getPrimaryKey());
 
 		userSegmentContentImpl.setUserSegmentContentId(userSegmentContent.getUserSegmentContentId());
+		userSegmentContentImpl.setCompanyId(userSegmentContent.getCompanyId());
 		userSegmentContentImpl.setUserSegmentId(userSegmentContent.getUserSegmentId());
 		userSegmentContentImpl.setClassName(userSegmentContent.getClassName());
 		userSegmentContentImpl.setClassPK(userSegmentContent.getClassPK());

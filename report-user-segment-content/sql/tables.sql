@@ -1,5 +1,6 @@
 create table CT_USCR_UserSegmentContent (
 	userSegmentContentId LONG not null primary key,
+	companyId LONG,
 	userSegmentId LONG,
 	className VARCHAR(75) null,
 	classPK LONG,

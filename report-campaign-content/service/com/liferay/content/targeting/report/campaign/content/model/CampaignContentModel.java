@@ -74,6 +74,20 @@ public interface CampaignContentModel extends BaseModel<CampaignContent> {
 	public void setCampaignContentId(long campaignContentId);
 
 	/**
+	 * Returns the company ID of this campaign content.
+	 *
+	 * @return the company ID of this campaign content
+	 */
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this campaign content.
+	 *
+	 * @param companyId the company ID of this campaign content
+	 */
+	public void setCompanyId(long companyId);
+
+	/**
 	 * Returns the campaign ID of this campaign content.
 	 *
 	 * @return the campaign ID of this campaign content

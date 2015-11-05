@@ -38,10 +38,12 @@ public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 	Externalizable {
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{CTActionTotalId=");
 		sb.append(CTActionTotalId);
+		sb.append(", companyId=");
+		sb.append(companyId);
 		sb.append(", campaignId=");
 		sb.append(campaignId);
 		sb.append(", reportInstanceId=");
@@ -70,6 +72,7 @@ public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 		CTActionTotalImpl ctActionTotalImpl = new CTActionTotalImpl();
 
 		ctActionTotalImpl.setCTActionTotalId(CTActionTotalId);
+		ctActionTotalImpl.setCompanyId(companyId);
 		ctActionTotalImpl.setCampaignId(campaignId);
 		ctActionTotalImpl.setReportInstanceId(reportInstanceId);
 
@@ -120,6 +123,7 @@ public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		CTActionTotalId = objectInput.readLong();
+		companyId = objectInput.readLong();
 		campaignId = objectInput.readLong();
 		reportInstanceId = objectInput.readLong();
 		alias = objectInput.readUTF();
@@ -135,6 +139,7 @@ public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 	public void writeExternal(ObjectOutput objectOutput)
 		throws IOException {
 		objectOutput.writeLong(CTActionTotalId);
+		objectOutput.writeLong(companyId);
 		objectOutput.writeLong(campaignId);
 		objectOutput.writeLong(reportInstanceId);
 
@@ -173,6 +178,7 @@ public class CTActionTotalCacheModel implements CacheModel<CTActionTotal>,
 	}
 
 	public long CTActionTotalId;
+	public long companyId;
 	public long campaignId;
 	public long reportInstanceId;
 	public String alias;

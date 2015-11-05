@@ -8,6 +8,7 @@
 		<id name="campaignContentId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="className" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />

@@ -74,6 +74,20 @@ public interface CTActionTotalModel extends BaseModel<CTActionTotal> {
 	public void setCTActionTotalId(long CTActionTotalId);
 
 	/**
+	 * Returns the company ID of this c t action total.
+	 *
+	 * @return the company ID of this c t action total
+	 */
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this c t action total.
+	 *
+	 * @param companyId the company ID of this c t action total
+	 */
+	public void setCompanyId(long companyId);
+
+	/**
 	 * Returns the campaign ID of this c t action total.
 	 *
 	 * @return the campaign ID of this c t action total

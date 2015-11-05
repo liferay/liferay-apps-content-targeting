@@ -13,6 +13,7 @@
 			<basic name="uuid">
 				<column name="UUID_" />
 			</basic>
+			<basic name="companyId" />
 			<basic name="anonymousUserId" />
 			<basic name="userSegmentId" />
 			<basic name="points" />

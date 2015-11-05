@@ -84,55 +84,63 @@ public class ScorePointLocalServiceClpInvoker {
 
 		_methodParameterTypes10 = new String[] { "long" };
 
-		_methodName11 = "getScorePoint";
+		_methodName11 = "fetchScorePointByUuidAndCompanyId";
 
-		_methodParameterTypes11 = new String[] { "long" };
+		_methodParameterTypes11 = new String[] { "java.lang.String", "long" };
 
-		_methodName12 = "getPersistedModel";
+		_methodName12 = "getScorePoint";
 
-		_methodParameterTypes12 = new String[] { "java.io.Serializable" };
+		_methodParameterTypes12 = new String[] { "long" };
 
-		_methodName13 = "getScorePoints";
+		_methodName13 = "getPersistedModel";
 
-		_methodParameterTypes13 = new String[] { "int", "int" };
+		_methodParameterTypes13 = new String[] { "java.io.Serializable" };
 
-		_methodName14 = "getScorePointsCount";
+		_methodName14 = "getScorePointByUuidAndCompanyId";
 
-		_methodParameterTypes14 = new String[] {  };
+		_methodParameterTypes14 = new String[] { "java.lang.String", "long" };
 
-		_methodName15 = "updateScorePoint";
+		_methodName15 = "getScorePoints";
 
-		_methodParameterTypes15 = new String[] {
+		_methodParameterTypes15 = new String[] { "int", "int" };
+
+		_methodName16 = "getScorePointsCount";
+
+		_methodParameterTypes16 = new String[] {  };
+
+		_methodName17 = "updateScorePoint";
+
+		_methodParameterTypes17 = new String[] {
 				"com.liferay.content.targeting.rule.score.points.model.ScorePoint"
 			};
 
-		_methodName34 = "getBeanIdentifier";
+		_methodName36 = "getBeanIdentifier";
 
-		_methodParameterTypes34 = new String[] {  };
+		_methodParameterTypes36 = new String[] {  };
 
-		_methodName35 = "setBeanIdentifier";
+		_methodName37 = "setBeanIdentifier";
 
-		_methodParameterTypes35 = new String[] { "java.lang.String" };
+		_methodParameterTypes37 = new String[] { "java.lang.String" };
 
-		_methodName40 = "addScorePoints";
-
-		_methodParameterTypes40 = new String[] { "long", "long", "long" };
-
-		_methodName41 = "getPoints";
-
-		_methodParameterTypes41 = new String[] { "long", "long" };
-
-		_methodName42 = "getScorePoints";
-
-		_methodParameterTypes42 = new String[] { "long" };
-
-		_methodName43 = "incrementPoints";
+		_methodName43 = "addScorePoints";
 
 		_methodParameterTypes43 = new String[] { "long", "long", "long" };
 
-		_methodName44 = "updateScorePoints";
+		_methodName44 = "getPoints";
 
-		_methodParameterTypes44 = new String[] { "long", "long", "long" };
+		_methodParameterTypes44 = new String[] { "long", "long" };
+
+		_methodName45 = "getScorePoints";
+
+		_methodParameterTypes45 = new String[] { "long" };
+
+		_methodName46 = "incrementPoints";
+
+		_methodParameterTypes46 = new String[] { "long", "long", "long" };
+
+		_methodName47 = "updateScorePoints";
+
+		_methodParameterTypes47 = new String[] { "long", "long", "long" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -200,69 +208,81 @@ public class ScorePointLocalServiceClpInvoker {
 
 		if (_methodName11.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-			return ScorePointLocalServiceUtil.getScorePoint(((Long)arguments[0]).longValue());
+			return ScorePointLocalServiceUtil.fetchScorePointByUuidAndCompanyId((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName12.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes12, parameterTypes)) {
-			return ScorePointLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
+			return ScorePointLocalServiceUtil.getScorePoint(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName13.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes13, parameterTypes)) {
-			return ScorePointLocalServiceUtil.getScorePoints(((Integer)arguments[0]).intValue(),
-				((Integer)arguments[1]).intValue());
+			return ScorePointLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
 		}
 
 		if (_methodName14.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes14, parameterTypes)) {
-			return ScorePointLocalServiceUtil.getScorePointsCount();
+			return ScorePointLocalServiceUtil.getScorePointByUuidAndCompanyId((java.lang.String)arguments[0],
+				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName15.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes15, parameterTypes)) {
+			return ScorePointLocalServiceUtil.getScorePoints(((Integer)arguments[0]).intValue(),
+				((Integer)arguments[1]).intValue());
+		}
+
+		if (_methodName16.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes16, parameterTypes)) {
+			return ScorePointLocalServiceUtil.getScorePointsCount();
+		}
+
+		if (_methodName17.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes17, parameterTypes)) {
 			return ScorePointLocalServiceUtil.updateScorePoint((com.liferay.content.targeting.rule.score.points.model.ScorePoint)arguments[0]);
 		}
 
-		if (_methodName34.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes34, parameterTypes)) {
+		if (_methodName36.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
 			return ScorePointLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName35.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes35, parameterTypes)) {
+		if (_methodName37.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes37, parameterTypes)) {
 			ScorePointLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName40.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
-			return ScorePointLocalServiceUtil.addScorePoints(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue(),
-				((Long)arguments[2]).longValue());
-		}
-
-		if (_methodName41.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
-			return ScorePointLocalServiceUtil.getPoints(((Long)arguments[0]).longValue(),
-				((Long)arguments[1]).longValue());
-		}
-
-		if (_methodName42.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
-			return ScorePointLocalServiceUtil.getScorePoints(((Long)arguments[0]).longValue());
-		}
-
 		if (_methodName43.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
-			return ScorePointLocalServiceUtil.incrementPoints(((Long)arguments[0]).longValue(),
+			return ScorePointLocalServiceUtil.addScorePoints(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
 		}
 
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
+			return ScorePointLocalServiceUtil.getPoints(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue());
+		}
+
+		if (_methodName45.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
+			return ScorePointLocalServiceUtil.getScorePoints(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName46.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+			return ScorePointLocalServiceUtil.incrementPoints(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue());
+		}
+
+		if (_methodName47.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
 			return ScorePointLocalServiceUtil.updateScorePoints(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				((Long)arguments[2]).longValue());
@@ -303,18 +323,22 @@ public class ScorePointLocalServiceClpInvoker {
 	private String[] _methodParameterTypes14;
 	private String _methodName15;
 	private String[] _methodParameterTypes15;
-	private String _methodName34;
-	private String[] _methodParameterTypes34;
-	private String _methodName35;
-	private String[] _methodParameterTypes35;
-	private String _methodName40;
-	private String[] _methodParameterTypes40;
-	private String _methodName41;
-	private String[] _methodParameterTypes41;
-	private String _methodName42;
-	private String[] _methodParameterTypes42;
+	private String _methodName16;
+	private String[] _methodParameterTypes16;
+	private String _methodName17;
+	private String[] _methodParameterTypes17;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
 	private String _methodName43;
 	private String[] _methodParameterTypes43;
 	private String _methodName44;
 	private String[] _methodParameterTypes44;
+	private String _methodName45;
+	private String[] _methodParameterTypes45;
+	private String _methodName46;
+	private String[] _methodParameterTypes46;
+	private String _methodName47;
+	private String[] _methodParameterTypes47;
 }

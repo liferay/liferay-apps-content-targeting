@@ -9,6 +9,7 @@
 		<id name="CTActionId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="reportInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userSegmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -25,6 +26,7 @@
 		<id name="CTActionTotalId" type="long">
 			<generator class="assigned" />
 		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="reportInstanceId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="alias" type="com.liferay.portal.dao.orm.hibernate.StringType" column="alias_" />

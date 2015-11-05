@@ -66,6 +66,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 	public static final String TABLE_NAME = "CT_CTA_CTAction";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "CTActionId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "campaignId", Types.BIGINT },
 			{ "reportInstanceId", Types.BIGINT },
 			{ "userSegmentId", Types.BIGINT },
@@ -77,7 +78,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 			{ "count", Types.INTEGER },
 			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_CTA_CTAction (CTActionId LONG not null primary key,campaignId LONG,reportInstanceId LONG,userSegmentId LONG,alias_ VARCHAR(75) null,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_CTA_CTAction (CTActionId LONG not null primary key,companyId LONG,campaignId LONG,reportInstanceId LONG,userSegmentId LONG,alias_ VARCHAR(75) null,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_CTA_CTAction";
 	public static final String ORDER_BY_JPQL = " ORDER BY ctAction.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_CTA_CTAction.modifiedDate DESC";
@@ -115,6 +116,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		CTAction model = new CTActionImpl();
 
 		model.setCTActionId(soapModel.getCTActionId());
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setCampaignId(soapModel.getCampaignId());
 		model.setReportInstanceId(soapModel.getReportInstanceId());
 		model.setUserSegmentId(soapModel.getUserSegmentId());
@@ -190,6 +192,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("CTActionId", getCTActionId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("userSegmentId", getUserSegmentId());
@@ -210,6 +213,12 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 		if (CTActionId != null) {
 			setCTActionId(CTActionId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long campaignId = (Long)attributes.get("campaignId");
@@ -282,6 +291,17 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 	@Override
 	public void setCTActionId(long CTActionId) {
 		_CTActionId = CTActionId;
+	}
+
+	@JSON
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@JSON
@@ -496,7 +516,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			CTAction.class.getName(), getPrimaryKey());
 	}
 
@@ -522,6 +542,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		CTActionImpl ctActionImpl = new CTActionImpl();
 
 		ctActionImpl.setCTActionId(getCTActionId());
+		ctActionImpl.setCompanyId(getCompanyId());
 		ctActionImpl.setCampaignId(getCampaignId());
 		ctActionImpl.setReportInstanceId(getReportInstanceId());
 		ctActionImpl.setUserSegmentId(getUserSegmentId());
@@ -613,6 +634,8 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 		ctActionCacheModel.CTActionId = getCTActionId();
 
+		ctActionCacheModel.companyId = getCompanyId();
+
 		ctActionCacheModel.campaignId = getCampaignId();
 
 		ctActionCacheModel.reportInstanceId = getReportInstanceId();
@@ -669,10 +692,12 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(23);
+		StringBundler sb = new StringBundler(25);
 
 		sb.append("{CTActionId=");
 		sb.append(getCTActionId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", campaignId=");
 		sb.append(getCampaignId());
 		sb.append(", reportInstanceId=");
@@ -700,7 +725,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(37);
+		StringBundler sb = new StringBundler(40);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -710,6 +735,10 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 		sb.append(
 			"<column><column-name>CTActionId</column-name><column-value><![CDATA[");
 		sb.append(getCTActionId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>campaignId</column-name><column-value><![CDATA[");
@@ -762,6 +791,7 @@ public class CTActionModelImpl extends BaseModelImpl<CTAction>
 			CTAction.class
 		};
 	private long _CTActionId;
+	private long _companyId;
 	private long _campaignId;
 	private long _reportInstanceId;
 	private long _originalReportInstanceId;

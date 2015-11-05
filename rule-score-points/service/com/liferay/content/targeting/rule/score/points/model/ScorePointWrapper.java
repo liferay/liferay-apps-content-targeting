@@ -50,6 +50,7 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 
 		attributes.put("uuid", getUuid());
 		attributes.put("scorePointId", getScorePointId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("points", getPoints());
@@ -69,6 +70,12 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 
 		if (scorePointId != null) {
 			setScorePointId(scorePointId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
@@ -148,6 +155,26 @@ public class ScorePointWrapper implements ScorePoint, ModelWrapper<ScorePoint> {
 	@Override
 	public void setScorePointId(long scorePointId) {
 		_scorePoint.setScorePointId(scorePointId);
+	}
+
+	/**
+	* Returns the company ID of this score point.
+	*
+	* @return the company ID of this score point
+	*/
+	@Override
+	public long getCompanyId() {
+		return _scorePoint.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this score point.
+	*
+	* @param companyId the company ID of this score point
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_scorePoint.setCompanyId(companyId);
 	}
 
 	/**

@@ -66,6 +66,7 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 	public static final String TABLE_NAME = "CT_CTA_CTActionTotal";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "CTActionTotalId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "campaignId", Types.BIGINT },
 			{ "reportInstanceId", Types.BIGINT },
 			{ "alias_", Types.VARCHAR },
@@ -76,7 +77,7 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 			{ "count", Types.INTEGER },
 			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_CTA_CTActionTotal (CTActionTotalId LONG not null primary key,campaignId LONG,reportInstanceId LONG,alias_ VARCHAR(75) null,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_CTA_CTActionTotal (CTActionTotalId LONG not null primary key,companyId LONG,campaignId LONG,reportInstanceId LONG,alias_ VARCHAR(75) null,referrerClassName VARCHAR(75) null,referrerClassPK LONG,elementId VARCHAR(75) null,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_CTA_CTActionTotal";
 	public static final String ORDER_BY_JPQL = " ORDER BY ctActionTotal.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_CTA_CTActionTotal.modifiedDate DESC";
@@ -113,6 +114,7 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 		CTActionTotal model = new CTActionTotalImpl();
 
 		model.setCTActionTotalId(soapModel.getCTActionTotalId());
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setCampaignId(soapModel.getCampaignId());
 		model.setReportInstanceId(soapModel.getReportInstanceId());
 		model.setAlias(soapModel.getAlias());
@@ -187,6 +189,7 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("CTActionTotalId", getCTActionTotalId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("alias", getAlias());
@@ -206,6 +209,12 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 
 		if (CTActionTotalId != null) {
 			setCTActionTotalId(CTActionTotalId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long campaignId = (Long)attributes.get("campaignId");
@@ -272,6 +281,17 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 	@Override
 	public void setCTActionTotalId(long CTActionTotalId) {
 		_CTActionTotalId = CTActionTotalId;
+	}
+
+	@JSON
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@JSON
@@ -463,7 +483,7 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			CTActionTotal.class.getName(), getPrimaryKey());
 	}
 
@@ -489,6 +509,7 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 		CTActionTotalImpl ctActionTotalImpl = new CTActionTotalImpl();
 
 		ctActionTotalImpl.setCTActionTotalId(getCTActionTotalId());
+		ctActionTotalImpl.setCompanyId(getCompanyId());
 		ctActionTotalImpl.setCampaignId(getCampaignId());
 		ctActionTotalImpl.setReportInstanceId(getReportInstanceId());
 		ctActionTotalImpl.setAlias(getAlias());
@@ -576,6 +597,8 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 
 		ctActionTotalCacheModel.CTActionTotalId = getCTActionTotalId();
 
+		ctActionTotalCacheModel.companyId = getCompanyId();
+
 		ctActionTotalCacheModel.campaignId = getCampaignId();
 
 		ctActionTotalCacheModel.reportInstanceId = getReportInstanceId();
@@ -630,10 +653,12 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{CTActionTotalId=");
 		sb.append(getCTActionTotalId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", campaignId=");
 		sb.append(getCampaignId());
 		sb.append(", reportInstanceId=");
@@ -659,7 +684,7 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -669,6 +694,10 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 		sb.append(
 			"<column><column-name>CTActionTotalId</column-name><column-value><![CDATA[");
 		sb.append(getCTActionTotalId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>campaignId</column-name><column-value><![CDATA[");
@@ -717,6 +746,7 @@ public class CTActionTotalModelImpl extends BaseModelImpl<CTActionTotal>
 			CTActionTotal.class
 		};
 	private long _CTActionTotalId;
+	private long _companyId;
 	private long _campaignId;
 	private long _reportInstanceId;
 	private long _originalReportInstanceId;

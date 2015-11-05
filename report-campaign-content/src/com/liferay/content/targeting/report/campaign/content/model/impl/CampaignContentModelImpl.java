@@ -66,6 +66,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 	public static final String TABLE_NAME = "CT_CCR_CampaignContent";
 	public static final Object[][] TABLE_COLUMNS = {
 			{ "campaignContentId", Types.BIGINT },
+			{ "companyId", Types.BIGINT },
 			{ "campaignId", Types.BIGINT },
 			{ "className", Types.VARCHAR },
 			{ "classPK", Types.BIGINT },
@@ -73,7 +74,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 			{ "count", Types.INTEGER },
 			{ "modifiedDate", Types.TIMESTAMP }
 		};
-	public static final String TABLE_SQL_CREATE = "create table CT_CCR_CampaignContent (campaignContentId LONG not null primary key,campaignId LONG,className VARCHAR(75) null,classPK LONG,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
+	public static final String TABLE_SQL_CREATE = "create table CT_CCR_CampaignContent (campaignContentId LONG not null primary key,companyId LONG,campaignId LONG,className VARCHAR(75) null,classPK LONG,eventType VARCHAR(75) null,count INTEGER,modifiedDate DATE null)";
 	public static final String TABLE_SQL_DROP = "drop table CT_CCR_CampaignContent";
 	public static final String ORDER_BY_JPQL = " ORDER BY campaignContent.modifiedDate DESC";
 	public static final String ORDER_BY_SQL = " ORDER BY CT_CCR_CampaignContent.modifiedDate DESC";
@@ -109,6 +110,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 		CampaignContent model = new CampaignContentImpl();
 
 		model.setCampaignContentId(soapModel.getCampaignContentId());
+		model.setCompanyId(soapModel.getCompanyId());
 		model.setCampaignId(soapModel.getCampaignId());
 		model.setClassName(soapModel.getClassName());
 		model.setClassPK(soapModel.getClassPK());
@@ -181,6 +183,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("campaignContentId", getCampaignContentId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
@@ -197,6 +200,12 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 
 		if (campaignContentId != null) {
 			setCampaignContentId(campaignContentId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long campaignId = (Long)attributes.get("campaignId");
@@ -245,6 +254,17 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 	@Override
 	public void setCampaignContentId(long campaignContentId) {
 		_campaignContentId = campaignContentId;
+	}
+
+	@JSON
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
 	}
 
 	@JSON
@@ -383,7 +403,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 
 	@Override
 	public ExpandoBridge getExpandoBridge() {
-		return ExpandoBridgeFactoryUtil.getExpandoBridge(0,
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(getCompanyId(),
 			CampaignContent.class.getName(), getPrimaryKey());
 	}
 
@@ -409,6 +429,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 		CampaignContentImpl campaignContentImpl = new CampaignContentImpl();
 
 		campaignContentImpl.setCampaignContentId(getCampaignContentId());
+		campaignContentImpl.setCompanyId(getCompanyId());
 		campaignContentImpl.setCampaignId(getCampaignId());
 		campaignContentImpl.setClassName(getClassName());
 		campaignContentImpl.setClassPK(getClassPK());
@@ -491,6 +512,8 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 
 		campaignContentCacheModel.campaignContentId = getCampaignContentId();
 
+		campaignContentCacheModel.companyId = getCompanyId();
+
 		campaignContentCacheModel.campaignId = getCampaignId();
 
 		campaignContentCacheModel.className = getClassName();
@@ -527,10 +550,12 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{campaignContentId=");
 		sb.append(getCampaignContentId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", campaignId=");
 		sb.append(getCampaignId());
 		sb.append(", className=");
@@ -550,7 +575,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -560,6 +585,10 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 		sb.append(
 			"<column><column-name>campaignContentId</column-name><column-value><![CDATA[");
 		sb.append(getCampaignContentId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>campaignId</column-name><column-value><![CDATA[");
@@ -596,6 +625,7 @@ public class CampaignContentModelImpl extends BaseModelImpl<CampaignContent>
 			CampaignContent.class
 		};
 	private long _campaignContentId;
+	private long _companyId;
 	private long _campaignId;
 	private long _originalCampaignId;
 	private boolean _setOriginalCampaignId;

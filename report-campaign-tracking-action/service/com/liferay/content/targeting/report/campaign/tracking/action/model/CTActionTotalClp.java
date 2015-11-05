@@ -76,6 +76,7 @@ public class CTActionTotalClp extends BaseModelImpl<CTActionTotal>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("CTActionTotalId", getCTActionTotalId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("alias", getAlias());
@@ -95,6 +96,12 @@ public class CTActionTotalClp extends BaseModelImpl<CTActionTotal>
 
 		if (CTActionTotalId != null) {
 			setCTActionTotalId(CTActionTotalId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long campaignId = (Long)attributes.get("campaignId");
@@ -168,6 +175,29 @@ public class CTActionTotalClp extends BaseModelImpl<CTActionTotal>
 				Method method = clazz.getMethod("setCTActionTotalId", long.class);
 
 				method.invoke(_ctActionTotalRemoteModel, CTActionTotalId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+
+		if (_ctActionTotalRemoteModel != null) {
+			try {
+				Class<?> clazz = _ctActionTotalRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCompanyId", long.class);
+
+				method.invoke(_ctActionTotalRemoteModel, companyId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -475,6 +505,7 @@ public class CTActionTotalClp extends BaseModelImpl<CTActionTotal>
 		CTActionTotalClp clone = new CTActionTotalClp();
 
 		clone.setCTActionTotalId(getCTActionTotalId());
+		clone.setCompanyId(getCompanyId());
 		clone.setCampaignId(getCampaignId());
 		clone.setReportInstanceId(getReportInstanceId());
 		clone.setAlias(getAlias());
@@ -537,10 +568,12 @@ public class CTActionTotalClp extends BaseModelImpl<CTActionTotal>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(21);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{CTActionTotalId=");
 		sb.append(getCTActionTotalId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", campaignId=");
 		sb.append(getCampaignId());
 		sb.append(", reportInstanceId=");
@@ -566,7 +599,7 @@ public class CTActionTotalClp extends BaseModelImpl<CTActionTotal>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(34);
+		StringBundler sb = new StringBundler(37);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -576,6 +609,10 @@ public class CTActionTotalClp extends BaseModelImpl<CTActionTotal>
 		sb.append(
 			"<column><column-name>CTActionTotalId</column-name><column-value><![CDATA[");
 		sb.append(getCTActionTotalId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>campaignId</column-name><column-value><![CDATA[");
@@ -620,6 +657,7 @@ public class CTActionTotalClp extends BaseModelImpl<CTActionTotal>
 	}
 
 	private long _CTActionTotalId;
+	private long _companyId;
 	private long _campaignId;
 	private long _reportInstanceId;
 	private String _alias;

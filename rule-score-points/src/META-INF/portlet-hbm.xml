@@ -9,6 +9,7 @@
 			<generator class="assigned" />
 		</id>
 		<property name="uuid" type="com.liferay.portal.dao.orm.hibernate.StringType" column="uuid_" />
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="anonymousUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="userSegmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="points" type="com.liferay.portal.dao.orm.hibernate.LongType" />

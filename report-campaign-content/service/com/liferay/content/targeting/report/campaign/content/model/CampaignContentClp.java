@@ -76,6 +76,7 @@ public class CampaignContentClp extends BaseModelImpl<CampaignContent>
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("campaignContentId", getCampaignContentId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
@@ -92,6 +93,12 @@ public class CampaignContentClp extends BaseModelImpl<CampaignContent>
 
 		if (campaignContentId != null) {
 			setCampaignContentId(campaignContentId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long campaignId = (Long)attributes.get("campaignId");
@@ -148,6 +155,29 @@ public class CampaignContentClp extends BaseModelImpl<CampaignContent>
 						long.class);
 
 				method.invoke(_campaignContentRemoteModel, campaignContentId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+
+		if (_campaignContentRemoteModel != null) {
+			try {
+				Class<?> clazz = _campaignContentRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCompanyId", long.class);
+
+				method.invoke(_campaignContentRemoteModel, companyId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -403,6 +433,7 @@ public class CampaignContentClp extends BaseModelImpl<CampaignContent>
 		CampaignContentClp clone = new CampaignContentClp();
 
 		clone.setCampaignContentId(getCampaignContentId());
+		clone.setCompanyId(getCompanyId());
 		clone.setCampaignId(getCampaignId());
 		clone.setClassName(getClassName());
 		clone.setClassPK(getClassPK());
@@ -462,10 +493,12 @@ public class CampaignContentClp extends BaseModelImpl<CampaignContent>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(15);
+		StringBundler sb = new StringBundler(17);
 
 		sb.append("{campaignContentId=");
 		sb.append(getCampaignContentId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", campaignId=");
 		sb.append(getCampaignId());
 		sb.append(", className=");
@@ -485,7 +518,7 @@ public class CampaignContentClp extends BaseModelImpl<CampaignContent>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(25);
+		StringBundler sb = new StringBundler(28);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -495,6 +528,10 @@ public class CampaignContentClp extends BaseModelImpl<CampaignContent>
 		sb.append(
 			"<column><column-name>campaignContentId</column-name><column-value><![CDATA[");
 		sb.append(getCampaignContentId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>campaignId</column-name><column-value><![CDATA[");
@@ -527,6 +564,7 @@ public class CampaignContentClp extends BaseModelImpl<CampaignContent>
 	}
 
 	private long _campaignContentId;
+	private long _companyId;
 	private long _campaignId;
 	private String _className;
 	private long _classPK;

@@ -3157,6 +3157,7 @@ public class CTActionPersistenceImpl extends BasePersistenceImpl<CTAction>
 		ctActionImpl.setPrimaryKey(ctAction.getPrimaryKey());
 
 		ctActionImpl.setCTActionId(ctAction.getCTActionId());
+		ctActionImpl.setCompanyId(ctAction.getCompanyId());
 		ctActionImpl.setCampaignId(ctAction.getCampaignId());
 		ctActionImpl.setReportInstanceId(ctAction.getReportInstanceId());
 		ctActionImpl.setUserSegmentId(ctAction.getUserSegmentId());

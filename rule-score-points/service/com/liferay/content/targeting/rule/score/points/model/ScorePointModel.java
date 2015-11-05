@@ -88,6 +88,20 @@ public interface ScorePointModel extends BaseModel<ScorePoint> {
 	public void setScorePointId(long scorePointId);
 
 	/**
+	 * Returns the company ID of this score point.
+	 *
+	 * @return the company ID of this score point
+	 */
+	public long getCompanyId();
+
+	/**
+	 * Sets the company ID of this score point.
+	 *
+	 * @param companyId the company ID of this score point
+	 */
+	public void setCompanyId(long companyId);
+
+	/**
 	 * Returns the anonymous user ID of this score point.
 	 *
 	 * @return the anonymous user ID of this score point

@@ -50,6 +50,7 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("CTActionId", getCTActionId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("userSegmentId", getUserSegmentId());
@@ -70,6 +71,12 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 
 		if (CTActionId != null) {
 			setCTActionId(CTActionId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long campaignId = (Long)attributes.get("campaignId");
@@ -171,6 +178,26 @@ public class CTActionWrapper implements CTAction, ModelWrapper<CTAction> {
 	@Override
 	public void setCTActionId(long CTActionId) {
 		_ctAction.setCTActionId(CTActionId);
+	}
+
+	/**
+	* Returns the company ID of this c t action.
+	*
+	* @return the company ID of this c t action
+	*/
+	@Override
+	public long getCompanyId() {
+		return _ctAction.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this c t action.
+	*
+	* @param companyId the company ID of this c t action
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_ctAction.setCompanyId(companyId);
 	}
 
 	/**

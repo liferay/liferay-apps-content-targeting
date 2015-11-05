@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.content.targeting.report.user.segment.content.model.UserSegmentContent">
 		<field name="userSegmentContentId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="userSegmentId" type="long" />
 		<field name="className" type="String" />
 		<field name="classPK" type="long" />

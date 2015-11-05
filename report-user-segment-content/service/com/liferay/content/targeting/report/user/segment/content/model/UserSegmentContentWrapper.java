@@ -51,6 +51,7 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("userSegmentContentId", getUserSegmentContentId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("className", getClassName());
 		attributes.put("classPK", getClassPK());
@@ -67,6 +68,12 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 
 		if (userSegmentContentId != null) {
 			setUserSegmentContentId(userSegmentContentId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long userSegmentId = (Long)attributes.get("userSegmentId");
@@ -144,6 +151,26 @@ public class UserSegmentContentWrapper implements UserSegmentContent,
 	@Override
 	public void setUserSegmentContentId(long userSegmentContentId) {
 		_userSegmentContent.setUserSegmentContentId(userSegmentContentId);
+	}
+
+	/**
+	* Returns the company ID of this user segment content.
+	*
+	* @return the company ID of this user segment content
+	*/
+	@Override
+	public long getCompanyId() {
+		return _userSegmentContent.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this user segment content.
+	*
+	* @param companyId the company ID of this user segment content
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_userSegmentContent.setCompanyId(companyId);
 	}
 
 	/**

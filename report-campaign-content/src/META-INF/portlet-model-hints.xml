@@ -3,6 +3,7 @@
 <model-hints>
 	<model name="com.liferay.content.targeting.report.campaign.content.model.CampaignContent">
 		<field name="campaignContentId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="campaignId" type="long" />
 		<field name="className" type="String" />
 		<field name="classPK" type="long" />

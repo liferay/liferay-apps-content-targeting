@@ -10,6 +10,7 @@
 	<mapped-superclass class="com.liferay.content.targeting.report.user.segment.content.model.impl.UserSegmentContentModelImpl">
 		<attributes>
 			<id name="userSegmentContentId" />
+			<basic name="companyId" />
 			<basic name="userSegmentId" />
 			<basic name="className" />
 			<basic name="classPK" />

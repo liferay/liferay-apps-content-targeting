@@ -76,6 +76,7 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 
 		attributes.put("uuid", getUuid());
 		attributes.put("scorePointId", getScorePointId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("anonymousUserId", getAnonymousUserId());
 		attributes.put("userSegmentId", getUserSegmentId());
 		attributes.put("points", getPoints());
@@ -95,6 +96,12 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 
 		if (scorePointId != null) {
 			setScorePointId(scorePointId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long anonymousUserId = (Long)attributes.get("anonymousUserId");
@@ -155,6 +162,29 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 				Method method = clazz.getMethod("setScorePointId", long.class);
 
 				method.invoke(_scorePointRemoteModel, scorePointId);
+			}
+			catch (Exception e) {
+				throw new UnsupportedOperationException(e);
+			}
+		}
+	}
+
+	@Override
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	@Override
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+
+		if (_scorePointRemoteModel != null) {
+			try {
+				Class<?> clazz = _scorePointRemoteModel.getClass();
+
+				Method method = clazz.getMethod("setCompanyId", long.class);
+
+				method.invoke(_scorePointRemoteModel, companyId);
 			}
 			catch (Exception e) {
 				throw new UnsupportedOperationException(e);
@@ -313,6 +343,7 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 
 		clone.setUuid(getUuid());
 		clone.setScorePointId(getScorePointId());
+		clone.setCompanyId(getCompanyId());
 		clone.setAnonymousUserId(getAnonymousUserId());
 		clone.setUserSegmentId(getUserSegmentId());
 		clone.setPoints(getPoints());
@@ -376,12 +407,14 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(11);
+		StringBundler sb = new StringBundler(13);
 
 		sb.append("{uuid=");
 		sb.append(getUuid());
 		sb.append(", scorePointId=");
 		sb.append(getScorePointId());
+		sb.append(", companyId=");
+		sb.append(getCompanyId());
 		sb.append(", anonymousUserId=");
 		sb.append(getAnonymousUserId());
 		sb.append(", userSegmentId=");
@@ -395,7 +428,7 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 
 	@Override
 	public String toXmlString() {
-		StringBundler sb = new StringBundler(19);
+		StringBundler sb = new StringBundler(22);
 
 		sb.append("<model><model-name>");
 		sb.append(
@@ -409,6 +442,10 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 		sb.append(
 			"<column><column-name>scorePointId</column-name><column-value><![CDATA[");
 		sb.append(getScorePointId());
+		sb.append("]]></column-value></column>");
+		sb.append(
+			"<column><column-name>companyId</column-name><column-value><![CDATA[");
+		sb.append(getCompanyId());
 		sb.append("]]></column-value></column>");
 		sb.append(
 			"<column><column-name>anonymousUserId</column-name><column-value><![CDATA[");
@@ -430,6 +467,7 @@ public class ScorePointClp extends BaseModelImpl<ScorePoint>
 
 	private String _uuid;
 	private long _scorePointId;
+	private long _companyId;
 	private long _anonymousUserId;
 	private String _anonymousUserUuid;
 	private long _userSegmentId;

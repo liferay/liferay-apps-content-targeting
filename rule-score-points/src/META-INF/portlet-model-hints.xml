@@ -4,6 +4,7 @@
 	<model name="com.liferay.content.targeting.rule.score.points.model.ScorePoint">
 		<field name="uuid" type="String" />
 		<field name="scorePointId" type="long" />
+		<field name="companyId" type="long" />
 		<field name="anonymousUserId" type="long" />
 		<field name="userSegmentId" type="long" />
 		<field name="points" type="long" />

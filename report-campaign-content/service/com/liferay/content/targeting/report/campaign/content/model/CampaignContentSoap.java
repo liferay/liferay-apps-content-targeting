@@ -32,6 +32,7 @@ public class CampaignContentSoap implements Serializable {
 		CampaignContentSoap soapModel = new CampaignContentSoap();
 
 		soapModel.setCampaignContentId(model.getCampaignContentId());
+		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setCampaignId(model.getCampaignId());
 		soapModel.setClassName(model.getClassName());
 		soapModel.setClassPK(model.getClassPK());
@@ -100,6 +101,14 @@ public class CampaignContentSoap implements Serializable {
 		_campaignContentId = campaignContentId;
 	}
 
+	public long getCompanyId() {
+		return _companyId;
+	}
+
+	public void setCompanyId(long companyId) {
+		_companyId = companyId;
+	}
+
 	public long getCampaignId() {
 		return _campaignId;
 	}
@@ -149,6 +158,7 @@ public class CampaignContentSoap implements Serializable {
 	}
 
 	private long _campaignContentId;
+	private long _companyId;
 	private long _campaignId;
 	private String _className;
 	private long _classPK;

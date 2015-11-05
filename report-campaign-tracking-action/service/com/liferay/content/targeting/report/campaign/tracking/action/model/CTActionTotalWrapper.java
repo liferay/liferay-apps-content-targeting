@@ -51,6 +51,7 @@ public class CTActionTotalWrapper implements CTActionTotal,
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("CTActionTotalId", getCTActionTotalId());
+		attributes.put("companyId", getCompanyId());
 		attributes.put("campaignId", getCampaignId());
 		attributes.put("reportInstanceId", getReportInstanceId());
 		attributes.put("alias", getAlias());
@@ -70,6 +71,12 @@ public class CTActionTotalWrapper implements CTActionTotal,
 
 		if (CTActionTotalId != null) {
 			setCTActionTotalId(CTActionTotalId);
+		}
+
+		Long companyId = (Long)attributes.get("companyId");
+
+		if (companyId != null) {
+			setCompanyId(companyId);
 		}
 
 		Long campaignId = (Long)attributes.get("campaignId");
@@ -165,6 +172,26 @@ public class CTActionTotalWrapper implements CTActionTotal,
 	@Override
 	public void setCTActionTotalId(long CTActionTotalId) {
 		_ctActionTotal.setCTActionTotalId(CTActionTotalId);
+	}
+
+	/**
+	* Returns the company ID of this c t action total.
+	*
+	* @return the company ID of this c t action total
+	*/
+	@Override
+	public long getCompanyId() {
+		return _ctActionTotal.getCompanyId();
+	}
+
+	/**
+	* Sets the company ID of this c t action total.
+	*
+	* @param companyId the company ID of this c t action total
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_ctActionTotal.setCompanyId(companyId);
 	}
 
 	/**
