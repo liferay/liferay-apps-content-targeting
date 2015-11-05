@@ -78,14 +78,16 @@ public class CTActionTotalLocalServiceImpl
 			reportInstanceId, referrerClassName, referrerClassPK, elementId,
 			eventType);
 
-		ReportInstance reportInstance =
-			_reportInstanceLocalService.fetchReportInstance(reportInstanceId);
-
 		if (ctActionTotal == null) {
+			ReportInstance reportInstance =
+				_reportInstanceLocalService.fetchReportInstance(
+					reportInstanceId);
+
 			long ctActionTotalId = counterLocalService.increment();
 
 			ctActionTotal = ctActionTotalPersistence.create(ctActionTotalId);
 
+			ctActionTotal.setCompanyId(reportInstance.getCompanyId());
 			ctActionTotal.setCampaignId(reportInstance.getClassPK());
 			ctActionTotal.setReportInstanceId(reportInstanceId);
 			ctActionTotal.setAlias(alias);

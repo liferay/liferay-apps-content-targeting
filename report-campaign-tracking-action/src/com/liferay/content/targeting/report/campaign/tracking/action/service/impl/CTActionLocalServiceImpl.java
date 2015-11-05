@@ -83,14 +83,16 @@ public class CTActionLocalServiceImpl extends CTActionLocalServiceBaseImpl {
 			reportInstanceId, userSegmentId, referrerClassName, referrerClassPK,
 			elementId, eventType);
 
-		ReportInstance reportInstance =
-			_reportInstanceLocalService.fetchReportInstance(reportInstanceId);
-
 		if (ctAction == null) {
+			ReportInstance reportInstance =
+				_reportInstanceLocalService.fetchReportInstance(
+					reportInstanceId);
+
 			long ctActionId = counterLocalService.increment();
 
 			ctAction = ctActionPersistence.create(ctActionId);
 
+			ctAction.setCompanyId(reportInstance.getCompanyId());
 			ctAction.setCampaignId(reportInstance.getClassPK());
 			ctAction.setReportInstanceId(reportInstanceId);
 			ctAction.setUserSegmentId(userSegmentId);

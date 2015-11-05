@@ -14,13 +14,19 @@
 
 package com.liferay.content.targeting.rule.score.points.service.impl;
 
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.score.points.model.ScorePoint;
 import com.liferay.content.targeting.rule.score.points.service.base.ScorePointLocalServiceBaseImpl;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
+import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.List;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * The implementation of the score point local service.
@@ -38,6 +44,10 @@ import java.util.List;
  */
 public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 
+	public ScorePointLocalServiceImpl() {
+		_initServices();
+	}
+
 	@Override
 	public ScorePoint addScorePoints(
 			long anonymousUserId, long userSegmentId, long points)
@@ -47,10 +57,14 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 			anonymousUserId, userSegmentId);
 
 		if (scorePoint == null) {
+			UserSegment userSegment = _userSegmentLocalService.fetchUserSegment
+				(userSegmentId);
+
 			long scorePointId = counterLocalService.increment();
 
 			scorePoint = scorePointPersistence.create(scorePointId);
 
+			scorePoint.setCompanyId(userSegment.getCompanyId());
 			scorePoint.setAnonymousUserId(anonymousUserId);
 			scorePoint.setUserSegmentId(userSegmentId);
 			scorePoint.setPoints(points);
@@ -131,7 +145,16 @@ public class ScorePointLocalServiceImpl extends ScorePointLocalServiceBaseImpl {
 		return scorePoint;
 	}
 
+	private void _initServices() {
+		Bundle bundle = FrameworkUtil.getBundle(getClass());
+
+		_userSegmentLocalService = ServiceTrackerUtil.getService(
+			UserSegmentLocalService.class, bundle.getBundleContext());
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ScorePointLocalServiceImpl.class);
+
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

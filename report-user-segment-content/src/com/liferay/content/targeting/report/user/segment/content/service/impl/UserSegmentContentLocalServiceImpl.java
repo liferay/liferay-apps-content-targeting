@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.report.user.segment.content.service.impl;
 
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
-import com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.report.user.segment.content.UserSegmentContentReport;
@@ -69,11 +68,15 @@ public class UserSegmentContentLocalServiceImpl
 			userSegmentId, className, classPK, eventType);
 
 		if (userSegmentContent == null) {
+			UserSegment userSegment = _userSegmentLocalService.getUserSegment
+				(userSegmentId);
+
 			long userSegmentContentId = counterLocalService.increment();
 
 			userSegmentContent = userSegmentContentPersistence.create(
 				userSegmentContentId);
 
+			userSegmentContent.setCompanyId(userSegment.getCompanyId());
 			userSegmentContent.setUserSegmentId(userSegmentId);
 			userSegmentContent.setClassName(className);
 			userSegmentContent.setClassPK(classPK);
@@ -202,8 +205,6 @@ public class UserSegmentContentLocalServiceImpl
 
 		_analyticsEventLocalService = ServiceTrackerUtil.getService(
 			AnalyticsEventLocalService.class, bundle.getBundleContext());
-		_analyticsReferrerLocalService = ServiceTrackerUtil.getService(
-			AnalyticsReferrerLocalService.class, bundle.getBundleContext());
 		_reportInstanceLocalService = ServiceTrackerUtil.getService(
 			ReportInstanceLocalService.class, bundle.getBundleContext());
 		_userSegmentLocalService = ServiceTrackerUtil.getService(
@@ -214,7 +215,6 @@ public class UserSegmentContentLocalServiceImpl
 		UserSegmentContentLocalServiceImpl.class);
 
 	private AnalyticsEventLocalService _analyticsEventLocalService;
-	private AnalyticsReferrerLocalService _analyticsReferrerLocalService;
 	private ReportInstanceLocalService _reportInstanceLocalService;
 	private UserSegmentLocalService _userSegmentLocalService;
 
