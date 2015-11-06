@@ -22,6 +22,9 @@ public class ConsumerManagerPath {
 	public static final String EDIT_CONSUMER =
 		"html/consumer_manager/edit_consumer.ftl";
 
+	public static final String EDIT_REPORT =
+		"html/consumer_manager/edit_report.ftl";
+
 	public static final String ERROR = "html/error.ftl";
 
 	public static final String VIEW_CONSUMERS =
@@ -29,5 +32,11 @@ public class ConsumerManagerPath {
 
 	public static final String VIEW_CONSUMERS_RESOURCES =
 		"html/consumer_manager/view_consumers_resources.ftl";
+
+	public static final String VIEW_REPORT =
+		"html/consumer_manager/view_report.ftl";
+
+	public static final String VIEW_REPORTS_RESOURCES =
+		"html/consumer_manager/view_reports_resources.ftl";
 
 }

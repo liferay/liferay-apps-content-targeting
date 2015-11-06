@@ -18,13 +18,20 @@ import com.liferay.consumer.manager.DuplicateConsumerExtensionInstanceException;
 import com.liferay.consumer.manager.InvalidConsumerExtensionException;
 import com.liferay.consumer.manager.InvalidConsumerExtensionsException;
 import com.liferay.consumer.manager.InvalidNameException;
+import com.liferay.consumer.manager.InvalidReportException;
 import com.liferay.consumer.manager.api.model.ConsumerExtension;
+import com.liferay.consumer.manager.api.model.ConsumerExtensionReport;
+import com.liferay.consumer.manager.api.model.ConsumerExtensionReportsRegistry;
 import com.liferay.consumer.manager.api.model.ConsumerExtensionsRegistry;
 import com.liferay.consumer.manager.model.Consumer;
 import com.liferay.consumer.manager.model.ConsumerExtensionInstance;
+import com.liferay.consumer.manager.model.ConsumerExtensionReportInstance;
+import com.liferay.consumer.manager.portlet.util.BreadcrumbUtil;
 import com.liferay.consumer.manager.portlet.util.ConsumerExtensionTemplate;
 import com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalService;
 import com.liferay.consumer.manager.service.ConsumerExtensionInstanceService;
+import com.liferay.consumer.manager.service.ConsumerExtensionReportInstanceLocalService;
+import com.liferay.consumer.manager.service.ConsumerExtensionReportInstanceService;
 import com.liferay.consumer.manager.service.ConsumerLocalService;
 import com.liferay.consumer.manager.service.ConsumerLocalServiceUtil;
 import com.liferay.consumer.manager.service.ConsumerService;
@@ -33,6 +40,7 @@ import com.liferay.consumer.manager.service.permission.ConsumerPermission;
 import com.liferay.consumer.manager.util.ActionKeys;
 import com.liferay.consumer.manager.util.ConsumerManagerContextUtil;
 import com.liferay.consumer.manager.util.ConsumerSearchContainerIterator;
+import com.liferay.consumer.manager.util.ReportSearchContainerIterator;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -45,6 +53,7 @@ import com.liferay.portal.kernel.servlet.SessionErrors;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.template.Template;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -59,6 +68,8 @@ import com.liferay.portal.security.auth.PrincipalException;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
+import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
+import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -68,10 +79,12 @@ import freemarker.template.TemplateHashModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -79,12 +92,15 @@ import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+import javax.portlet.RenderResponse;
 import javax.portlet.UnavailableException;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+
+import org.springframework.transaction.interceptor.TransactionAttribute;
 
 /**
  * @author Eduardo Garcia
@@ -145,6 +161,16 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			bundle.getBundleContext());
 		_consumerExtensionsRegistry = ServiceTrackerUtil.getService(
 			ConsumerExtensionsRegistry.class, bundle.getBundleContext());
+		_consumerExtensionReportInstanceLocalService =
+			ServiceTrackerUtil.getService(
+				ConsumerExtensionReportInstanceLocalService.class,
+				bundle.getBundleContext());
+		_consumerExtensionReportInstanceService =
+			ServiceTrackerUtil.getService(
+				ConsumerExtensionReportInstanceService.class,
+				bundle.getBundleContext());
+		_consumerExtensionReportsRegistry = ServiceTrackerUtil.getService(
+			ConsumerExtensionReportsRegistry.class, bundle.getBundleContext());
 		_consumerLocalService = ServiceTrackerUtil.getService(
 			ConsumerLocalService.class, bundle.getBundleContext());
 		_consumerService = ServiceTrackerUtil.getService(
@@ -224,6 +250,141 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 
 				response.setRenderParameter(
 					"mvcPath", ConsumerManagerPath.EDIT_CONSUMER);
+			}
+			else {
+				response.setRenderParameter(
+					"mvcPath", ConsumerManagerPath.ERROR);
+			}
+		}
+		catch (Throwable t) {
+			_log.error(t);
+
+			response.setRenderParameter("mvcPath", ConsumerManagerPath.ERROR);
+		}
+	}
+
+	public void updateReport(ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		long consumerExtensionReportInstanceId = ParamUtil.getLong(
+			request, "consumerExtensionReportInstanceId");
+		String reportKey = ParamUtil.getString(request, "reportKey");
+
+		try {
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				ConsumerExtensionReportInstance.class.getName(), request);
+
+			ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+				WebKeys.THEME_DISPLAY);
+
+			serviceContext.setScopeGroupId(
+				themeDisplay.getSiteGroupIdOrLiveGroupId());
+
+			ConsumerExtensionReportInstance reportInstance =
+				_consumerExtensionReportInstanceLocalService.
+					fetchConsumerExtensionReportInstance(
+						consumerExtensionReportInstanceId);
+
+			if (reportInstance != null) {
+				ConsumerExtensionReport report =
+					_consumerExtensionReportsRegistry.getReport(reportKey);
+
+				report.updateReport(reportInstance);
+
+				reportInstance.setModifiedDate(new Date());
+
+				_consumerExtensionReportInstanceLocalService.
+					updateConsumerExtensionReportInstance(reportInstance);
+			}
+
+			sendRedirect(request, response);
+		}
+		catch (Exception e) {
+			SessionErrors.add(request, e.getClass().getName(), e);
+
+			if (e instanceof PrincipalException) {
+				response.setRenderParameter(
+					"mvcPath", ConsumerManagerPath.VIEW_REPORT);
+			}
+			else {
+				response.setRenderParameter(
+					"mvcPath", ConsumerManagerPath.ERROR);
+			}
+		}
+	}
+
+	public void updateReportInstance(
+			ActionRequest request, ActionResponse response)
+		throws Exception {
+
+		long consumerExtensionReportInstanceId = ParamUtil.getLong(
+			request, "consumerExtensionReportInstanceId");
+		String reportKey = ParamUtil.getString(request, "reportKey");
+		long consumerId = ParamUtil.getLong(request, "consumerId");
+
+		Map<Locale, String> nameMap = LocalizationUtil.getLocalizationMap(
+			request, "name");
+		Map<Locale, String> descriptionMap =
+			LocalizationUtil.getLocalizationMap(request, "description");
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
+		ServiceContext serviceContext = ServiceContextFactory.getInstance(
+			request);
+
+		try {
+			Callable<ConsumerExtensionReportInstance> reportInstanceCallable =
+				new ConsumerExtensionReportInstanceCallable(
+					request, response, themeDisplay.getUserId(),
+					consumerExtensionReportInstanceId, reportKey, consumerId,
+					nameMap, descriptionMap, serviceContext);
+
+			ConsumerExtensionReportInstance reportInstance =
+				TransactionalCallableUtil.call(
+					_transactionAttribute, reportInstanceCallable);
+
+			boolean saveAndContinue = ParamUtil.get(
+				request, "saveAndContinue", false);
+
+			if (saveAndContinue) {
+				String redirect = ParamUtil.get(request, "redirect", "");
+
+				response.setRenderParameter(
+					"consumerId", String.valueOf(consumerId));
+				response.setRenderParameter(
+					"mvcPath", ConsumerManagerPath.EDIT_REPORT);
+				response.setRenderParameter("redirect", redirect);
+				response.setRenderParameter(
+					"p_p_mode", PortletMode.VIEW.toString());
+				response.setRenderParameter(
+					"consumerExtensionReportInstanceId",
+					String.valueOf(
+						reportInstance.getConsumerExtensionReportInstanceId()));
+				response.setRenderParameter("reportKey", reportKey);
+
+				addSuccessMessage(request, response);
+			}
+			else {
+				sendRedirect(request, response);
+			}
+		}
+		catch (Exception e) {
+			PortalUtil.copyRequestParameters(request, response);
+
+			SessionErrors.add(request, e.getClass().getName(), e);
+
+			if (e instanceof InvalidNameException ||
+				e instanceof InvalidReportException ||
+				e instanceof PrincipalException) {
+
+				SessionMessages.add(
+					request,
+					PortalUtil.getPortletId(request) +
+						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+
+				response.setRenderParameter(
+					"mvcPath", ConsumerManagerPath.EDIT_REPORT);
 			}
 			else {
 				response.setRenderParameter(
@@ -405,9 +566,15 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 
 		TemplateHashModel staticModels = wrapper.getStaticModels();
 
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
+
 		template.put(
 			"actionKeys", staticModels.get(ActionKeys.class.getName()));
 		template.put("consumerClass", Consumer.class);
+		template.put(
+			"consumerExtensionReportInstanceClass",
+			ConsumerExtensionReportInstance.class);
 		template.put(
 			"consumerManagerPath",
 			staticModels.get(ConsumerManagerPath.class.getName()));
@@ -417,18 +584,19 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 		template.put(
 			"consumerPermission",
 			staticModels.get(ConsumerPermission.class.getName()));
+		template.put(
+			"consumerTabs",
+			ParamUtil.getString(portletRequest, "consumerTabs", "details"));
 		template.put("consumersRowChecker", new RowChecker(portletResponse));
 		template.put(
 			"portalUtil", staticModels.get(PortalUtil.class.getName()));
 		template.put(
 			"resourceActionsUtil",
 			staticModels.get(ResourceActionsUtil.class.getName()));
+		template.put("scopeGroup", themeDisplay.getScopeGroup());
 		template.put(
 			"unicodeFormatter",
 			staticModels.get(UnicodeFormatter.class.getName()));
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
 
 		String keywords = ParamUtil.getString(portletRequest, "keywords");
 
@@ -436,6 +604,44 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			"consumerSearchContainerIterator",
 			new ConsumerSearchContainerIterator(
 				themeDisplay.getCompanyId(), keywords, _consumerLocalService));
+
+		List<String> consumerExtensionReportCategories =
+			new ArrayList<String>();
+
+		Map<String, ConsumerExtensionReport> consumerExtensionReports =
+			_consumerExtensionReportsRegistry.getReports();
+
+		for (ConsumerExtensionReport consumerExtensionReport
+				: consumerExtensionReports.values()) {
+
+			if (!consumerExtensionReportCategories.contains(
+					consumerExtensionReport.getReportCategoryKey())) {
+
+				consumerExtensionReportCategories.add(
+					consumerExtensionReport.getReportCategoryKey());
+			}
+		}
+
+		if (!consumerExtensionReportCategories.contains(
+				ConsumerExtensionReport.DEVICES_CATEGORY_KEY)) {
+
+			consumerExtensionReportCategories.add(
+				ConsumerExtensionReport.DEVICES_CATEGORY_KEY);
+		}
+
+		if (!consumerExtensionReportCategories.contains(
+				ConsumerExtensionReport.REPORTS_CATEGORY_KEY)) {
+
+			consumerExtensionReportCategories.add(
+				ConsumerExtensionReport.REPORTS_CATEGORY_KEY);
+		}
+
+		template.put(
+			"consumerExtensionReportsRegistry",
+			_consumerExtensionReportsRegistry);
+		template.put(
+			"consumerExtensionReportCategories",
+			consumerExtensionReportCategories);
 
 		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
 
@@ -452,13 +658,64 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			TemplateHashModel staticModels)
 		throws Exception {
 
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long consumerId = -1;
+		long consumerId = ParamUtil.getLong(portletRequest, "consumerId");
 
-		if (ConsumerManagerPath.EDIT_CONSUMER.equals(path)) {
-			consumerId = ParamUtil.getLong(portletRequest, "consumerId");
+		if (consumerId > 0) {
+			Consumer consumer = ConsumerLocalServiceUtil.getConsumer(
+				consumerId);
+
+			template.put("consumer", consumer);
+			template.put("consumerId", consumerId);
+
+			Map<String, ConsumerExtensionReport> reports =
+				_consumerExtensionReportsRegistry.getReports();
+
+			ServiceContext serviceContext = ServiceContextFactory.getInstance(
+				portletRequest);
+
+			for (ConsumerExtensionReport report : reports.values()) {
+				if (report.isInstantiable()) {
+					continue;
+				}
+
+				if (_consumerExtensionReportInstanceLocalService.
+						getReportInstancesCount(
+						themeDisplay.getCompanyId(), consumerId,
+						report.getReportCategoryKey()) > 0) {
+
+					continue;
+				}
+
+				_consumerExtensionReportInstanceLocalService.
+					addConsumerExtensionReportInstance(
+						consumerId, report.getReportKey(),
+						report.getReportCategoryKey(),
+						report.getName(themeDisplay.getLocale()),
+						report.getDescription(themeDisplay.getLocale()), "",
+						serviceContext);
+			}
+
+			ReportSearchContainerIterator reportSearchContainerIterator =
+				new ReportSearchContainerIterator(
+					themeDisplay.getCompanyId(), consumerId, portletRequest,
+					_consumerExtensionReportInstanceLocalService);
+
+			String reportCategoryKey = ParamUtil.getString(
+				portletRequest, "reportCategoryKey");
+
+			template.put("reportCategoryKey", reportCategoryKey);
+			template.put(
+				"reportSearchContainerIterator", reportSearchContainerIterator);
+		}
+
+		if (ConsumerManagerPath.EDIT_CONSUMER.equals(path) ||
+			ConsumerManagerPath.VIEW_REPORTS_RESOURCES.equals(path)) {
 
 			Map<String, ConsumerExtension> consumerExtensions =
 				_consumerExtensionsRegistry.getConsumerExtensions();
@@ -567,13 +824,50 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 				themeDisplay.setIsolated(isolated);
 			}
 		}
+		else if (ConsumerManagerPath.EDIT_REPORT.equals(path) ||
+				 ConsumerManagerPath.VIEW_REPORT.equals(path)) {
 
-		if (consumerId > 0) {
-			Consumer consumer = ConsumerLocalServiceUtil.getConsumer(
-				consumerId);
+			long consumerExtensionReportInstanceId = ParamUtil.getLong(
+				portletRequest, "consumerExtensionReportInstanceId");
 
-			template.put("consumer", consumer);
-			template.put("consumerId", consumerId);
+			String reportKey = ParamUtil.getString(portletRequest, "reportKey");
+
+			ConsumerExtensionReport consumerExtensionReport =
+				_consumerExtensionReportsRegistry.getReport(reportKey);
+
+			String reportCategoryKey =
+				consumerExtensionReport.getReportCategoryKey();
+
+			ConsumerExtensionReportInstance consumerExtensionReportInstance =
+				_consumerExtensionReportInstanceLocalService.
+					getConsumerExtensionReportInstance(
+						consumerExtensionReportInstanceId);
+
+			BreadcrumbUtil.addPortletBreadcrumbEntries(
+				request, (RenderResponse)portletResponse,
+				consumerExtensionReport);
+
+			template.put("consumerExtensionReport", consumerExtensionReport);
+			template.put(
+				"consumerExtensionReportInstanceId",
+				consumerExtensionReportInstanceId);
+			template.put("reportCategoryKey", reportCategoryKey);
+			template.put("reportKey", reportKey);
+
+			if (path.equals(ConsumerManagerPath.EDIT_REPORT)) {
+				template.put(
+					"reportEditHtml",
+					consumerExtensionReport.getEditHTML(
+						consumerExtensionReportInstance,
+						cloneTemplateContext(template)));
+			}
+			else if (path.equals(ConsumerManagerPath.VIEW_REPORT)) {
+				template.put(
+					"reportHtml",
+					consumerExtensionReport.getHTML(
+						consumerExtensionReportInstance,
+						cloneTemplateContext(template)));
+			}
 		}
 	}
 
@@ -683,6 +977,29 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 		return consumerExtensionExceptions;
 	}
 
+	protected void updateReportElements(
+			ConsumerExtensionReportInstance reportInstance,
+			PortletRequest request, PortletResponse response)
+		throws InvalidReportException {
+
+		ConsumerExtensionReport report =
+			_consumerExtensionReportsRegistry.getReport(
+				reportInstance.getReportKey());
+
+		try {
+			String typeSettings = report.processEditReport(
+				request, response, reportInstance);
+
+			reportInstance.setTypeSettings(typeSettings);
+
+			_consumerExtensionReportInstanceLocalService.
+				updateConsumerExtensionReportInstance(reportInstance);
+		}
+		catch (Exception e) {
+			throw new InvalidReportException(e);
+		}
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		ConsumerManagerPortlet.class);
 
@@ -690,8 +1007,80 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 		_consumerExtensionInstanceLocalService;
 	private ConsumerExtensionInstanceService
 		_consumerExtensionInstanceService;
+	private ConsumerExtensionReportInstanceLocalService
+		_consumerExtensionReportInstanceLocalService;
+	private ConsumerExtensionReportsRegistry _consumerExtensionReportsRegistry;
+	protected ConsumerExtensionReportInstanceService
+		_consumerExtensionReportInstanceService;
 	private ConsumerExtensionsRegistry _consumerExtensionsRegistry;
 	private ConsumerLocalService _consumerLocalService;
 	private ConsumerService _consumerService;
+	private TransactionAttribute _transactionAttribute =
+		TransactionAttributeBuilder.build(
+			Propagation.REQUIRED, new Class<?>[]{Exception.class});
+
+	private class ConsumerExtensionReportInstanceCallable
+		implements Callable<ConsumerExtensionReportInstance> {
+
+		private ConsumerExtensionReportInstanceCallable(
+			PortletRequest portletRequest, PortletResponse portletResponse,
+			long userId, long reportInstanceId, String reportKey,
+			long consumerId, Map<Locale, String> nameMap,
+			Map<Locale, String> descriptionMap, ServiceContext serviceContext) {
+
+			_portletRequest = portletRequest;
+			_portletResponse = portletResponse;
+			_userId = userId;
+			_reportInstanceId = reportInstanceId;
+			_reportKey = reportKey;
+			_consumerId = consumerId;
+			_nameMap = nameMap;
+			_descriptionMap = descriptionMap;
+			_serviceContext = serviceContext;
+		}
+
+		@Override
+		public ConsumerExtensionReportInstance call() throws Exception {
+			ConsumerExtensionReportInstance reportInstance = null;
+
+			ConsumerExtensionReport consumerExtensionReport =
+				_consumerExtensionReportsRegistry.getReport(_reportKey);
+
+			String reportCategoryKey =
+				consumerExtensionReport.getReportCategoryKey();
+
+			if (_reportInstanceId > 0) {
+				reportInstance =
+					_consumerExtensionReportInstanceService.
+						updateConsumerExtensionReportInstance(
+							_reportInstanceId, _consumerId, _reportKey,
+							reportCategoryKey, _nameMap, _descriptionMap, "",
+							_serviceContext);
+			}
+			else {
+				reportInstance =
+					_consumerExtensionReportInstanceService.
+						addConsumerExtensionReportInstance(
+							_consumerId, _reportKey, reportCategoryKey,
+							_nameMap, _descriptionMap, "", _serviceContext);
+			}
+
+			updateReportElements(
+				reportInstance, _portletRequest, _portletResponse);
+
+			return reportInstance;
+		}
+
+		private PortletRequest _portletRequest;
+		private PortletResponse _portletResponse;
+		private long _userId;
+		private long _reportInstanceId;
+		private String _reportKey;
+		private long _consumerId;
+		private Map<Locale, String> _nameMap;
+		private Map<Locale, String> _descriptionMap;
+		private ServiceContext _serviceContext;
+
+	}
 
 }
