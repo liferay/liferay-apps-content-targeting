@@ -153,6 +153,63 @@
 		</replace>
 	</target>
 
+	<target name="create-extension-report">
+		<if>
+			<or>
+				<not>
+					<isset property="extension.report.display.name" />
+				</not>
+				<not>
+					<isset property="extension.report.name" />
+				</not>
+			</or>
+			<then>
+				<fail>This task must be called by the create_extension_report script.</fail>
+			</then>
+		</if>
+
+		<property name="extension.report.parent.dir" value="${user.dir}" />
+		<property name="extension.report.dir" value="${extension.report.parent.dir}/consumer-extension-report-${extension.report.name}" />
+
+		<if>
+			<available file="${extension.report.dir}" />
+			<then>
+				<fail>${extension.report.dir} already exists.</fail>
+			</then>
+		</if>
+
+		<copy todir="${extension.report.dir}">
+			<fileset dir="${user.dir}/tools/extension_report_tmpl" />
+		</copy>
+
+		<antelope:stringutil string="${extension.report.display.name}" property="extension.report.java.class.name">
+			<antelope:replace regex="\s+" replacement="" />
+			<antelope:trim/>
+		</antelope:stringutil>
+
+		<antelope:stringutil string="${extension.report.name}" property="extension.report.java.package.dir">
+			<antelope:replace regex="-" replacement="/" />
+			<antelope:trim/>
+		</antelope:stringutil>
+
+		<antelope:stringutil string="${extension.report.name}" property="extension.report.java.package.name">
+			<antelope:replace regex="-" replacement="." />
+			<antelope:trim/>
+		</antelope:stringutil>
+
+		<move
+				file="${extension.report.dir}/src/com/liferay/consumer/manager/extension/report/ConsumerExtensionReport.java"
+				tofile="${extension.report.dir}/src/com/liferay/consumer/manager/extension/report/${extension.report.java.package.dir}/${extension.report.java.class.name}ConsumerExtensionReport.java"
+				/>
+
+		<replace dir="${extension.report.dir}">
+			<replacefilter token="@extension.report.display.name@" value="${extension.report.display.name}" />
+			<replacefilter token="@extension.report.java.class.name@" value="${extension.report.java.class.name}" />
+			<replacefilter token="@extension.report.java.package.name@" value="${extension.report.java.package.name}" />
+			<replacefilter token="@extension.report.name@" value="${extension.report.name}" />
+		</replace>
+	</target>
+
 	<target name="release">
 		<if>
 			<and>
