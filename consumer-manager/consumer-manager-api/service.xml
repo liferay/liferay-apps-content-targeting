@@ -87,8 +87,53 @@
 			<finder-column name="consumerExtensionKey" />
 		</finder>
 	</entity>
+	<entity name="ConsumerExtensionReportInstance" uuid="true" local-service="true" remote-service="true">
+
+		<!-- PK fields -->
+
+		<column name="consumerExtensionReportInstanceId" type="long" primary="true" />
+
+		<!-- Audit fields -->
+
+		<column name="companyId" type="long" />
+		<column name="userId" type="long" />
+		<column name="userName" type="String" />
+		<column name="createDate" type="Date" />
+		<column name="modifiedDate" type="Date" />
+
+		<!-- Other fields -->
+
+		<column name="consumerId" type="long" />
+		<column name="reportCategoryKey" type="String" />
+		<column name="reportKey" type="String" />
+		<column name="name" type="String" localized="true" />
+		<column name="description" type="String" localized="true" />
+		<column name="typeSettings" type="String" />
+
+		<!-- Order -->
+
+		<order by="desc">
+			<order-column name="reportKey" />
+		</order>
+
+		<!-- Finder methods -->
+
+		<finder name="ConsumerId" return-type="Collection">
+			<finder-column name="consumerId" />
+		</finder>
+		<finder name="C_R" return-type="Collection">
+			<finder-column name="consumerId" />
+			<finder-column name="reportKey" />
+		</finder>
+		<finder name="C_C_R" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="consumerId" />
+			<finder-column name="reportCategoryKey" />
+		</finder>
+	</entity>
 	<exceptions>
 		<exception>InvalidConsumerExtension</exception>
 		<exception>InvalidName</exception>
+		<exception>InvalidReport</exception>
 	</exceptions>
 </service-builder>
