@@ -19,9 +19,6 @@ package com.liferay.content.targeting.util;
  */
 public class UserSegmentConstants {
 
-	public static final String VOCABULARY_DESCRIPTION =
-		"user-segment-description";
-
 	public static final String VOCABULARY_NAME = "user-segment";
 
 }
