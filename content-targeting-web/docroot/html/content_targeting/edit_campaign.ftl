@@ -41,7 +41,7 @@
 
 <@liferay_ui["tabs"]
 	names="${pills}"
-	refresh=false
+	refresh=true
 	type="pills"
 	value="${campaignTabs}"
 >
