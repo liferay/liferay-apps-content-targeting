@@ -67,6 +67,7 @@ AUI.add(
 									fieldsFilter.on('results', instance._onItemFilterResults, instance),
 									instance.on('fieldsChange', instance._onFieldsChange, instance),
 									instance.on({
+										'drag:mouseDown': instance._onDragMouseDown,
 										'drag:start': function() {
 											Liferay.fire('fieldDragStart');
 										},
@@ -310,6 +311,24 @@ AUI.add(
 							instance.simulateFocusField(field, event.target, true);
 
 							event.stopPropagation();
+						},
+
+						_onDragMouseDown: function(event) {
+							var mouseDownNode = event.ev.target;
+
+							if (mouseDownNode.hasClass('toggler-content-wrapper') || mouseDownNode.hasClass('field-editor')) {
+								event.halt();
+
+								return;
+							}
+
+							var fieldEditor = mouseDownNode.ancestor('.field-editor');
+
+							if (fieldEditor) {
+								event.halt();
+
+								return;
+							}
 						},
 
 						_onFieldsChange: function(event) {
