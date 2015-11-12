@@ -23,7 +23,7 @@
 	title='${(report.getName(locale))!"new-report"}'
 />
 
-<@invalidReportException />
+<@invalidConsumerReportException />
 
 <@portlet["actionURL"] name="updateReportInstance" var="addReportInstanceURL" />
 
@@ -31,13 +31,13 @@
 	<@aui["input"] name="redirect" type="hidden" value="${redirect}" />
 	<@aui["input"] name="backURL" type="hidden" value="${backURL}" />
 	<@aui["input"] name="consumerId" type="hidden" value="${consumerId}" />
-	<@aui["input"] name="consumerExtensionReportInstanceId" type="hidden" value="${consumerExtensionReportInstanceId}" />
+	<@aui["input"] name="consumerReportInstanceId" type="hidden" value="${consumerReportInstanceId}" />
 	<@aui["input"] name="reportKey" type="hidden" value="${reportKey}" />
 	<@aui["input"] name="saveAndContinue" type="hidden" />
 
 	<@invalidNameException />
 
-	<@aui["model-context"] bean=consumerExtensionReportInstance model=consumerExtensionReportInstanceClass />
+	<@aui["model-context"] bean=consumerReportInstance model=consumerReportInstanceClass />
 
 	<@invalidNameException />
 

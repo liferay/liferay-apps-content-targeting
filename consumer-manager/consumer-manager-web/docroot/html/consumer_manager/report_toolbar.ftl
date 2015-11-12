@@ -18,7 +18,7 @@
 
 <#assign instantiableExists = false>
 
-<#assign reports=consumerExtensionReportsRegistry.getReportsByCategoryKey(reportCategoryKey)?values>
+<#assign reports=consumerReportsRegistry.getReportsByCategoryKey(reportCategoryKey)?values>
 
 <#list reports as report>
 	<#if report.isInstantiable()>

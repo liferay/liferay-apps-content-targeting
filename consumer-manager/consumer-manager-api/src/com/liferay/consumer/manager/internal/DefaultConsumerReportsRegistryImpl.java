@@ -14,8 +14,8 @@
 
 package com.liferay.consumer.manager.internal;
 
-import com.liferay.consumer.manager.api.model.ConsumerExtensionReport;
-import com.liferay.consumer.manager.api.model.ConsumerExtensionReportsRegistry;
+import com.liferay.consumer.manager.api.model.ConsumerReport;
+import com.liferay.consumer.manager.api.model.ConsumerReportsRegistry;
 import com.liferay.portal.kernel.util.PredicateFilter;
 
 import java.util.HashMap;
@@ -31,29 +31,27 @@ import org.osgi.service.component.annotations.ReferencePolicy;
  * @author Eduardo Garcia
  */
 @Component
-public class DefaultConsumerExtensionReportsRegistryImpl
-	implements ConsumerExtensionReportsRegistry {
+public class DefaultConsumerReportsRegistryImpl
+	implements ConsumerReportsRegistry {
 
 	@Override
-	public ConsumerExtensionReport getReport(String reportKey) {
+	public ConsumerReport getReport(String reportKey) {
 		return _reports.get(reportKey);
 	}
 
 	@Override
-	public Map<String, ConsumerExtensionReport> getReports() {
+	public Map<String, ConsumerReport> getReports() {
 		return _reports;
 	}
 
 	@Override
-	public Map<String, ConsumerExtensionReport> getReports(
-		final String reportType) {
-
+	public Map<String, ConsumerReport> getReports(final String reportType) {
 		return _filter(
-			_reports, new HashMap<String, ConsumerExtensionReport>(),
-			new PredicateFilter<ConsumerExtensionReport>() {
+			_reports, new HashMap<String, ConsumerReport>(),
+			new PredicateFilter<ConsumerReport>() {
 
 				@Override
-				public boolean filter(ConsumerExtensionReport report) {
+				public boolean filter(ConsumerReport report) {
 					return report.getReportType().equals(reportType);
 				}
 
@@ -61,15 +59,15 @@ public class DefaultConsumerExtensionReportsRegistryImpl
 	}
 
 	@Override
-	public Map<String, ConsumerExtensionReport> getReportsByCategoryKey(
+	public Map<String, ConsumerReport> getReportsByCategoryKey(
 		final String reportCategoryKey) {
 
 		return _filter(
-			_reports, new HashMap<String, ConsumerExtensionReport>(),
-			new PredicateFilter<ConsumerExtensionReport>() {
+			_reports, new HashMap<String, ConsumerReport>(),
+			new PredicateFilter<ConsumerReport>() {
 
 				@Override
-				public boolean filter(ConsumerExtensionReport report) {
+				public boolean filter(ConsumerReport report) {
 					return report.getReportCategoryKey().equals(
 						reportCategoryKey);
 				}
@@ -81,11 +79,11 @@ public class DefaultConsumerExtensionReportsRegistryImpl
 		unbind = "unregisterReport",
 		cardinality = ReferenceCardinality.MULTIPLE,
 		policy = ReferencePolicy.DYNAMIC)
-	public void registerReport(ConsumerExtensionReport report) {
+	public void registerReport(ConsumerReport report) {
 		_reports.put(report.getReportKey(), report);
 	}
 
-	public void unregisterReport(ConsumerExtensionReport report) {
+	public void unregisterReport(ConsumerReport report) {
 		_reports.remove(report);
 	}
 
@@ -106,7 +104,7 @@ public class DefaultConsumerExtensionReportsRegistryImpl
 		return outputMap;
 	}
 
-	private Map<String, ConsumerExtensionReport> _reports =
-		new ConcurrentHashMap<String, ConsumerExtensionReport>();
+	private Map<String, ConsumerReport> _reports =
+		new ConcurrentHashMap<String, ConsumerReport>();
 
 }

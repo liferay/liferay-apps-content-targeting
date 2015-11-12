@@ -19,15 +19,15 @@ import java.util.Map;
 /**
  * @author Eduardo Garcia
  */
-public interface ConsumerExtensionReportsRegistry {
+public interface ConsumerReportsRegistry {
 
-	public ConsumerExtensionReport getReport(String reportKey);
+	public ConsumerReport getReport(String reportKey);
 
-	public Map<String, ConsumerExtensionReport> getReports();
+	public Map<String, ConsumerReport> getReports();
 
-	public Map<String, ConsumerExtensionReport> getReports(String reportType);
+	public Map<String, ConsumerReport> getReports(String reportType);
 
-	public Map<String, ConsumerExtensionReport> getReportsByCategoryKey(
+	public Map<String, ConsumerReport> getReportsByCategoryKey(
 		String reportCategoryKey);
 
 }

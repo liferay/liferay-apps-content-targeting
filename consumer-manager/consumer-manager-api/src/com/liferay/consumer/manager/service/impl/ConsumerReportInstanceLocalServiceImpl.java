@@ -14,10 +14,10 @@
 
 package com.liferay.consumer.manager.service.impl;
 
-import com.liferay.consumer.manager.api.model.ConsumerExtensionReport;
-import com.liferay.consumer.manager.api.model.ConsumerExtensionReportsRegistry;
-import com.liferay.consumer.manager.model.ConsumerExtensionReportInstance;
-import com.liferay.consumer.manager.service.base.ConsumerExtensionReportInstanceLocalServiceBaseImpl;
+import com.liferay.consumer.manager.api.model.ConsumerReport;
+import com.liferay.consumer.manager.api.model.ConsumerReportsRegistry;
+import com.liferay.consumer.manager.model.ConsumerReportInstance;
+import com.liferay.consumer.manager.service.base.ConsumerReportInstanceLocalServiceBaseImpl;
 import com.liferay.consumer.manager.util.BaseModelSearchResult;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -50,29 +50,29 @@ import org.osgi.framework.FrameworkUtil;
  * The implementation of the consumer extension report instance local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.consumer.manager.service.ConsumerExtensionReportInstanceLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link com.liferay.consumer.manager.service.ConsumerReportInstanceLocalService} interface.
  *
  * <p>
  * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see com.liferay.consumer.manager.service.base.ConsumerExtensionReportInstanceLocalServiceBaseImpl
- * @see com.liferay.consumer.manager.service.ConsumerExtensionReportInstanceLocalServiceUtil
+ * @see com.liferay.consumer.manager.service.base.ConsumerReportInstanceLocalServiceBaseImpl
+ * @see com.liferay.consumer.manager.service.ConsumerReportInstanceLocalServiceUtil
  */
-public class ConsumerExtensionReportInstanceLocalServiceImpl
-	extends ConsumerExtensionReportInstanceLocalServiceBaseImpl {
+public class ConsumerReportInstanceLocalServiceImpl
+	extends ConsumerReportInstanceLocalServiceBaseImpl {
 
-	public ConsumerExtensionReportInstanceLocalServiceImpl() {
+	public ConsumerReportInstanceLocalServiceImpl() {
 		Bundle bundle = FrameworkUtil.getBundle(getClass());
 
-		_consumerExtensionReportsRegistry = ServiceTrackerUtil.getService(
-			ConsumerExtensionReportsRegistry.class, bundle.getBundleContext());
+		_consumerReportsRegistry = ServiceTrackerUtil.getService(
+			ConsumerReportsRegistry.class, bundle.getBundleContext());
 	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ConsumerExtensionReportInstance addConsumerExtensionReportInstance(
+	public ConsumerReportInstance addConsumerReportInstance(
 			long consumerId, String reportKey, String reportCategoryKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String typeSettings, ServiceContext serviceContext)
@@ -81,8 +81,8 @@ public class ConsumerExtensionReportInstanceLocalServiceImpl
 		long consumerExtensionReportInstanceId =
 			counterLocalService.increment();
 
-		ConsumerExtensionReportInstance consumerExtensionReportInstance =
-			consumerExtensionReportInstancePersistence.create(
+		ConsumerReportInstance consumerExtensionReportInstance =
+			consumerReportInstancePersistence.create(
 				consumerExtensionReportInstanceId);
 
 		User user = userLocalService.getUser(serviceContext.getUserId());
@@ -105,7 +105,7 @@ public class ConsumerExtensionReportInstanceLocalServiceImpl
 		consumerExtensionReportInstance.setDescriptionMap(descriptionMap);
 		consumerExtensionReportInstance.setTypeSettings(typeSettings);
 
-		consumerExtensionReportInstancePersistence.update(
+		consumerReportInstancePersistence.update(
 			consumerExtensionReportInstance);
 
 		return consumerExtensionReportInstance;
@@ -113,7 +113,7 @@ public class ConsumerExtensionReportInstanceLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ConsumerExtensionReportInstance addConsumerExtensionReportInstance(
+	public ConsumerReportInstance addConsumerReportInstance(
 			long consumerId, String reportKey, String reportCategoryKey,
 			String name, String description, String typeSettings,
 			ServiceContext serviceContext)
@@ -125,44 +125,43 @@ public class ConsumerExtensionReportInstanceLocalServiceImpl
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 		descriptionMap.put(LocaleUtil.getDefault(), description);
 
-		return addConsumerExtensionReportInstance(
+		return addConsumerReportInstance(
 			consumerId, reportKey, reportCategoryKey, nameMap, descriptionMap,
 			typeSettings, serviceContext);
 	}
 
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public ConsumerExtensionReportInstance
-		deleteConsumerExtensionReportInstance(
+	public ConsumerReportInstance deleteConsumerReportInstance(
 			long consumerExtensionReportInstanceId)
 		throws PortalException, SystemException {
 
-		ConsumerExtensionReportInstance consumerExtensionReportInstance =
-			consumerExtensionReportInstancePersistence.fetchByPrimaryKey(
+		ConsumerReportInstance consumerExtensionReportInstance =
+			consumerReportInstancePersistence.fetchByPrimaryKey(
 				consumerExtensionReportInstanceId);
 
-		consumerExtensionReportInstancePersistence.remove(
+		consumerReportInstancePersistence.remove(
 			consumerExtensionReportInstanceId);
 
 		return consumerExtensionReportInstance;
 	}
 
 	@Override
-	public ConsumerExtensionReportInstance getReportInstance(
+	public ConsumerReportInstance getReportInstance(
 			long consumerExtensionReportInstanceId)
 		throws PortalException, SystemException {
 
-		return consumerExtensionReportInstancePersistence.findByPrimaryKey(
+		return consumerReportInstancePersistence.findByPrimaryKey(
 			consumerExtensionReportInstanceId);
 	}
 
 	@Override
-	public List<ConsumerExtensionReportInstance> getReportInstances(
+	public List<ConsumerReportInstance> getReportInstances(
 			long companyId, long consumerId, String reportCategoryKey,
 			int start, int end)
 		throws PortalException, SystemException {
 
-		return consumerExtensionReportInstancePersistence.findByC_C_R(
+		return consumerReportInstancePersistence.findByC_C_R(
 			companyId, consumerId, reportCategoryKey, start, end);
 	}
 
@@ -171,12 +170,12 @@ public class ConsumerExtensionReportInstanceLocalServiceImpl
 			long companyId, long consumerId, String reportCategoryKey)
 		throws PortalException, SystemException {
 
-		return consumerExtensionReportInstancePersistence.countByC_C_R(
+		return consumerReportInstancePersistence.countByC_C_R(
 			companyId, consumerId, reportCategoryKey);
 	}
 
 	@Override
-	public List<ConsumerExtensionReportInstance> searchReportInstances(
+	public List<ConsumerReportInstance> searchReportInstances(
 			long companyId, long consumerId, String reportCategoryKey,
 			String keywords, int start, int end)
 		throws PortalException, SystemException {
@@ -189,16 +188,15 @@ public class ConsumerExtensionReportInstanceLocalServiceImpl
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ConsumerExtensionReportInstance
-		updateConsumerExtensionReportInstance(
+	public ConsumerReportInstance updateConsumerReportInstance(
 			long consumerExtensionReportInstanceId, long consumerId,
 			String reportKey, String reportCategoryKey,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		ConsumerExtensionReportInstance consumerExtensionReportInstance =
-			consumerExtensionReportInstancePersistence.fetchByPrimaryKey(
+		ConsumerReportInstance consumerExtensionReportInstance =
+			consumerReportInstancePersistence.fetchByPrimaryKey(
 				consumerExtensionReportInstanceId);
 
 		if (consumerExtensionReportInstance == null) {
@@ -251,36 +249,35 @@ public class ConsumerExtensionReportInstanceLocalServiceImpl
 		return searchContext;
 	}
 
-	protected BaseModelSearchResult<ConsumerExtensionReportInstance>
+	protected BaseModelSearchResult<ConsumerReportInstance>
 			searchReportInstances(SearchContext searchContext)
 		throws PortalException, SystemException {
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
-			ConsumerExtensionReportInstance.class);
+			ConsumerReportInstance.class);
 
 		for (int i = 0; i < 10; i++) {
 			Hits hits = indexer.search(searchContext);
 
-			List<ConsumerExtensionReportInstance> reportInstances = null;
+			List<ConsumerReportInstance> reportInstances = null;
 
 			if (hits != null) {
 				List<Document> documents = hits.toList();
 
-				reportInstances =
-					new ArrayList<ConsumerExtensionReportInstance>(
-						documents.size());
+				reportInstances = new ArrayList<ConsumerReportInstance>(
+					documents.size());
 
 				for (Document document : documents) {
 					long consumerExtensionReportInstanceId = GetterUtil.getLong(
 						document.get("consumerExtensionReportInstanceId"));
 
-					ConsumerExtensionReportInstance
+					ConsumerReportInstance
 						consumerExtensionReportInstance =
 							getReportInstance(
 								consumerExtensionReportInstanceId);
 
-					ConsumerExtensionReport report =
-						_consumerExtensionReportsRegistry.getReport(
+					ConsumerReport report =
+						_consumerReportsRegistry.getReport(
 							consumerExtensionReportInstance.getReportKey());
 
 					if (!report.isVisible(
@@ -295,13 +292,12 @@ public class ConsumerExtensionReportInstanceLocalServiceImpl
 				}
 			}
 			else {
-				reportInstances =
-					new ArrayList<ConsumerExtensionReportInstance>(0);
+				reportInstances = new ArrayList<ConsumerReportInstance>(0);
 			}
 
 			if ((hits != null) && (reportInstances != null)) {
 				return
-					new BaseModelSearchResult<ConsumerExtensionReportInstance>(
+					new BaseModelSearchResult<ConsumerReportInstance>(
 						reportInstances, hits.getLength());
 			}
 		}
@@ -310,6 +306,6 @@ public class ConsumerExtensionReportInstanceLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	private ConsumerExtensionReportsRegistry _consumerExtensionReportsRegistry;
+	private ConsumerReportsRegistry _consumerReportsRegistry;
 
 }

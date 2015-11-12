@@ -27,7 +27,7 @@
 
 <@liferay_ui["header"]
 	backURL="${backURL}"
-	title=consumerExtensionReport.getName(locale)
+	title=consumerReport.getName(locale)
 />
 
 <#if scopeGroup.isStagingGroup()>
@@ -39,8 +39,8 @@
 <@portlet["actionURL"] name="updateReport" var="updateReportURL">
 	<@portlet["param"] name="backURL" value="${backURL}" />
 	<@portlet["param"] name="redirect" value="${currentURL}" />
-	<@portlet["param"] name="consumerExtensionReportInstanceId" value="${consumerExtensionReportInstanceId?string}" />
-	<@portlet["param"] name="reportKey" value="${consumerExtensionReport.getReportKey()}" />
+	<@portlet["param"] name="consumerReportInstanceId" value="${consumerReportInstanceId?string}" />
+	<@portlet["param"] name="reportKey" value="${consumerReport.getReportKey()}" />
 	<@portlet["param"] name="consumerId" value="${consumerId?string}" />
 </@>
 
@@ -54,7 +54,7 @@
 />
 
 <div class="report-description">
-	${consumerExtensionReport.getDescription(locale)}
+	${consumerReport.getDescription(locale)}
 </div>
 
 ${reportHtml}

@@ -87,11 +87,11 @@
 			<finder-column name="consumerExtensionKey" />
 		</finder>
 	</entity>
-	<entity name="ConsumerExtensionReportInstance" uuid="true" local-service="true" remote-service="true">
+	<entity name="ConsumerReportInstance" uuid="true" local-service="true" remote-service="true">
 
 		<!-- PK fields -->
 
-		<column name="consumerExtensionReportInstanceId" type="long" primary="true" />
+		<column name="consumerReportInstanceId" type="long" primary="true" />
 
 		<!-- Audit fields -->
 
@@ -133,7 +133,7 @@
 	</entity>
 	<exceptions>
 		<exception>InvalidConsumerExtension</exception>
+		<exception>InvalidConsumerReport</exception>
 		<exception>InvalidName</exception>
-		<exception>InvalidReport</exception>
 	</exceptions>
 </service-builder>

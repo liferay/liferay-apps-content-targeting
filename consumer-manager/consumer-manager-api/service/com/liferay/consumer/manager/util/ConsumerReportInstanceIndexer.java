@@ -14,9 +14,9 @@
 
 package com.liferay.consumer.manager.util;
 
-import com.liferay.consumer.manager.model.ConsumerExtensionReportInstance;
-import com.liferay.consumer.manager.service.ConsumerExtensionReportInstanceLocalServiceUtil;
-import com.liferay.consumer.manager.service.persistence.ConsumerExtensionReportInstanceActionableDynamicQuery;
+import com.liferay.consumer.manager.model.ConsumerReportInstance;
+import com.liferay.consumer.manager.service.ConsumerReportInstanceLocalServiceUtil;
+import com.liferay.consumer.manager.service.persistence.ConsumerReportInstanceActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -40,14 +40,14 @@ import javax.portlet.PortletURL;
 /**
  * @author Eudaldo Alonso
  */
-public class ConsumerExtensionReportInstanceIndexer extends BaseIndexer {
+public class ConsumerReportInstanceIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {
-		ConsumerExtensionReportInstance.class.getName()};
+		ConsumerReportInstance.class.getName()};
 
 	public static final String PORTLET_ID = PortletKeys.CM_ADMIN;
 
-	public ConsumerExtensionReportInstanceIndexer() {
+	public ConsumerReportInstanceIndexer() {
 		setFilterSearch(true);
 		setPermissionAware(false);
 	}
@@ -83,13 +83,12 @@ public class ConsumerExtensionReportInstanceIndexer extends BaseIndexer {
 
 	@Override
 	protected void doDelete(Object obj) throws Exception {
-		ConsumerExtensionReportInstance reportInstance =
-			(ConsumerExtensionReportInstance)obj;
+		ConsumerReportInstance reportInstance = (ConsumerReportInstance)obj;
 
 		Document document = new DocumentImpl();
 
 		document.addUID(
-			PORTLET_ID, reportInstance.getConsumerExtensionReportInstanceId());
+			PORTLET_ID, reportInstance.getConsumerReportInstanceId());
 
 		SearchEngineUtil.deleteDocument(
 			getSearchEngineId(), reportInstance.getCompanyId(),
@@ -98,8 +97,7 @@ public class ConsumerExtensionReportInstanceIndexer extends BaseIndexer {
 
 	@Override
 	protected Document doGetDocument(Object obj) throws Exception {
-		ConsumerExtensionReportInstance reportInstance =
-			(ConsumerExtensionReportInstance)obj;
+		ConsumerReportInstance reportInstance = (ConsumerReportInstance)obj;
 
 		if (_log.isDebugEnabled()) {
 			_log.debug(
@@ -115,7 +113,7 @@ public class ConsumerExtensionReportInstanceIndexer extends BaseIndexer {
 		document.addKeyword("consumerId", reportInstance.getConsumerId());
 		document.addKeyword(
 			"consumerExtensionReportInstanceId",
-			reportInstance.getConsumerExtensionReportInstanceId());
+			reportInstance.getConsumerReportInstanceId());
 		document.addKeyword(
 			"reportCategoryKey", reportInstance.getReportCategoryKey());
 
@@ -138,8 +136,7 @@ public class ConsumerExtensionReportInstanceIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(Object obj) throws Exception {
-		ConsumerExtensionReportInstance reportInstance =
-			(ConsumerExtensionReportInstance)obj;
+		ConsumerReportInstance reportInstance = (ConsumerReportInstance)obj;
 
 		Document document = getDocument(reportInstance);
 
@@ -151,9 +148,8 @@ public class ConsumerExtensionReportInstanceIndexer extends BaseIndexer {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		ConsumerExtensionReportInstance reportInstance =
-			ConsumerExtensionReportInstanceLocalServiceUtil.getReportInstance(
-				classPK);
+		ConsumerReportInstance reportInstance =
+			ConsumerReportInstanceLocalServiceUtil.getReportInstance(classPK);
 
 		doReindex(reportInstance);
 	}
@@ -174,12 +170,12 @@ public class ConsumerExtensionReportInstanceIndexer extends BaseIndexer {
 		throws PortalException, SystemException {
 
 		ActionableDynamicQuery actionableDynamicQuery =
-			new ConsumerExtensionReportInstanceActionableDynamicQuery() {
+			new ConsumerReportInstanceActionableDynamicQuery() {
 
 			@Override
 			protected void performAction(Object object) throws PortalException {
-				ConsumerExtensionReportInstance reportInstance =
-					(ConsumerExtensionReportInstance)object;
+				ConsumerReportInstance reportInstance =
+					(ConsumerReportInstance)object;
 
 				Document document = getDocument(reportInstance);
 
@@ -197,6 +193,6 @@ public class ConsumerExtensionReportInstanceIndexer extends BaseIndexer {
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-		ConsumerExtensionReportInstanceIndexer.class);
+		ConsumerReportInstanceIndexer.class);
 
 }

@@ -14,7 +14,7 @@
 
 package com.liferay.consumer.manager.portlet.util;
 
-import com.liferay.consumer.manager.api.model.ConsumerExtensionReport;
+import com.liferay.consumer.manager.api.model.ConsumerReport;
 import com.liferay.portal.kernel.util.WebKeys;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
@@ -30,7 +30,7 @@ public class BreadcrumbUtil {
 
 	public static void addPortletBreadcrumbEntries(
 		HttpServletRequest request, RenderResponse renderResponse,
-		ConsumerExtensionReport report) {
+		ConsumerReport report) {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);

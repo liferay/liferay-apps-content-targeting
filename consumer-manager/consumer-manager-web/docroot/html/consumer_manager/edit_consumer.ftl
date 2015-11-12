@@ -30,13 +30,13 @@
 />
 
 <#if (consumerId > 0)>
-	<#if (consumerExtensionReportCategories?has_content)>
+	<#if (consumerReportCategories?has_content)>
 		<#assign pills="details,devices,reports">
 	<#else>
 		<#assign pills="details">
 
-		<#list consumerExtensionReportCategories as consumerExtensionReportCategoryKey>
-			<#assign pills=pills + "," + consumerExtensionReportCategoryKey>
+		<#list consumerReportCategories as consumerReportCategoryKey>
+			<#assign pills=pills + "," + consumerReportCategoryKey>
 		</#list>
 	</#if>
 <#else>
@@ -53,9 +53,9 @@
 		<#include "consumer_details.ftl" />
 	</@>
 
-	<#list consumerExtensionReportCategories as consumerExtensionReportCategoryKey>
+	<#list consumerReportCategories as consumerReportCategoryKey>
 		<@liferay_ui["section"]>
-			<#assign reportCategoryKey=consumerExtensionReportCategoryKey>
+			<#assign reportCategoryKey=consumerReportCategoryKey>
 
 			<#include "view_reports.ftl" />
 		</@>

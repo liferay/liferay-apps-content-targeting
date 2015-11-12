@@ -14,7 +14,7 @@
 
 package com.liferay.consumer.manager.api.model;
 
-import com.liferay.consumer.manager.model.ConsumerExtensionReportInstance;
+import com.liferay.consumer.manager.model.ConsumerReportInstance;
 
 import java.util.Locale;
 import java.util.Map;
@@ -28,7 +28,7 @@ import javax.portlet.PortletResponse;
  *
  * @author Eduardo Garcia
  */
-public interface ConsumerExtensionReport {
+public interface ConsumerReport {
 
 	public static final String DEVICES_CATEGORY_KEY = "devices";
 
@@ -62,8 +62,7 @@ public interface ConsumerExtensionReport {
 	 *         report instance configuration, based on the context
 	 */
 	public String getEditHTML(
-		ConsumerExtensionReportInstance reportInstance,
-		Map<String, Object> context);
+		ConsumerReportInstance reportInstance, Map<String, Object> context);
 
 	/**
 	 * Returns the HTML code containing the report presentation based on the
@@ -75,8 +74,7 @@ public interface ConsumerExtensionReport {
 	 *         report instance, based on the context
 	 */
 	public String getHTML(
-		ConsumerExtensionReportInstance reportInstance,
-		Map<String, Object> context);
+		ConsumerReportInstance reportInstance, Map<String, Object> context);
 
 	/**
 	 * Returns the HTML code containing the report presentation based on the
@@ -160,7 +158,7 @@ public interface ConsumerExtensionReport {
 	 */
 	public String processEditReport(
 			PortletRequest request, PortletResponse response,
-			ConsumerExtensionReportInstance reportInstance)
+			ConsumerReportInstance reportInstance)
 		throws Exception;
 
 	/**
@@ -168,7 +166,7 @@ public interface ConsumerExtensionReport {
 	 *
 	 * @param  reportInstance the report instance with stored configuration
 	 */
-	public void updateReport(ConsumerExtensionReportInstance reportInstance);
+	public void updateReport(ConsumerReportInstance reportInstance);
 
 	/**
 	 * Returns the result of updating the report.

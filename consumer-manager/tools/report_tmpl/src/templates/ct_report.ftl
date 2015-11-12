@@ -19,4 +19,4 @@
 
 <#setting number_format="computer">
 
-This is the <b>@extension.report.display.name@</b> report.
+This is the <b>@report.display.name@</b> report.

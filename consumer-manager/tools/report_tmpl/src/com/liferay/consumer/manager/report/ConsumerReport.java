@@ -12,11 +12,12 @@
  * details.
  */
 
-package com.liferay.consumer.manager.extension.report.@extension.report.java.package.name@;
+package com.liferay.consumer.manager.report.@report.java.package.name@;
 
-import com.liferay.consumer.manager.api.model.BaseConsumerExtensionReport;
+import com.liferay.consumer.manager.api.model.BaseConsumerReport;
 import com.liferay.consumer.manager.api.model.ConsumerExtension;
-import com.liferay.consumer.manager.model.ConsumerExtensionReportInstance;
+import com.liferay.consumer.manager.api.model.ConsumerReport;
+import com.liferay.consumer.manager.model.ConsumerReportInstance;
 
 import java.util.Map;
 
@@ -28,9 +29,8 @@ import org.osgi.service.component.annotations.Deactivate;
  * @author Brian Chan
  */
 @Component(
-	immediate = true, service = ConsumerExtensionReport.class)
-public class @extension.report.java.class.name@ConsumerExtensionReport
-	extends BaseConsumerExtensionReport {
+	immediate = true, service = ConsumerReport.class)
+public class @report.java.class.name@ConsumerReport extends BaseConsumerReport {
 
 	@Activate
 	@Override
@@ -55,13 +55,12 @@ public class @extension.report.java.class.name@ConsumerExtensionReport
 	}
 
 	@Override
-	public void updateReport(ConsumerExtensionReportInstance reportInstance) {
+	public void updateReport(ConsumerReportInstance reportInstance) {
 	}
 
 	@Override
 	protected void populateContext(
-		ConsumerExtensionReportInstance reportInstance,
-		Map<String, Object> context) {
+		ConsumerReportInstance reportInstance, Map<String, Object> context) {
 	}
 
 }

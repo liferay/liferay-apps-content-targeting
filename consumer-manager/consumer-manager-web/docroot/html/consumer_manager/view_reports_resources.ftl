@@ -37,34 +37,34 @@
 		/>
 
 		<@liferay_ui["search-container-row"]
-			className="com.liferay.consumer.manager.model.ConsumerExtensionReportInstance"
-			keyProperty="consumerExtensionReportInstanceId"
-			modelVar="consumerExtensionReportInstance"
+			className="com.liferay.consumer.manager.model.ConsumerReportInstance"
+			keyProperty="consumerReportInstanceId"
+			modelVar="consumerReportInstance"
 		>
 
 			<@portlet["renderURL"] varImpl="viewReportURL">
 				<@portlet["param"] name="mvcPath" value="${consumerManagerPath.VIEW_REPORT}" />
 				<@portlet["param"] name="consumerId" value="${consumerId?string}" />
 				<@portlet["param"] name="redirect" value="${viewReportsURL}" />
-				<@portlet["param"] name="reportKey" value="${consumerExtensionReportInstance.getReportKey()}" />
-				<@portlet["param"] name="consumerExtensionReportInstanceId" value="${consumerExtensionReportInstance.getConsumerExtensionReportInstanceId()?string}" />
+				<@portlet["param"] name="reportKey" value="${consumerReportInstance.getReportKey()}" />
+				<@portlet["param"] name="consumerReportInstanceId" value="${consumerReportInstance.getConsumerReportInstanceId()?string}" />
 			</@>
 
 			<@liferay_ui["search-container-column-text"]
 				href=viewReportURL
 				name="name"
-				value=consumerExtensionReportInstance.getName(locale)
+				value=consumerReportInstance.getName(locale)
 			/>
 
 			<@liferay_ui["search-container-column-text"]
 				href=viewReportURL
 				name="description"
-				value=consumerExtensionReportInstance.getDescription(locale)
+				value=consumerReportInstance.getDescription(locale)
 			/>
 
 			<@liferay_ui["search-container-column-date"]
 				name="last-update"
-				value=consumerExtensionReportInstance.getModifiedDate()
+				value=consumerReportInstance.getModifiedDate()
 			/>
 
 			<@liferay_ui["search-container-column-text"]
@@ -72,13 +72,13 @@
 				name=""
 			>
 				<@liferay_ui["icon-menu"]>
-					<#if consumerExtensionReportInstance.isInstantiable()>
+					<#if consumerReportInstance.isInstantiable()>
 						<@portlet["renderURL"] var="editReportURL">
 							<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_REPORT}" />
 							<@portlet["param"] name="consumerId" value="${consumerId?string}" />
 							<@portlet["param"] name="redirect" value="${viewReportsURL}" />
-							<@portlet["param"] name="consumerExtensionReportInstanceId" value="${consumerExtensionReportInstance.getConsumerExtensionReportInstanceId()?string}" />
-							<@portlet["param"] name="reportKey" value="${consumerExtensionReportInstance.getReportKey()}" />
+							<@portlet["param"] name="consumerReportInstanceId" value="${consumerReportInstance.getConsumerReportInstanceId()?string}" />
+							<@portlet["param"] name="reportKey" value="${consumerReportInstance.getReportKey()}" />
 						</@>
 
 						<#if editReportURL??>
@@ -91,7 +91,7 @@
 
 						<@portlet["actionURL"] name="deleteReportInstance" var="deleteReportURL">
 							<@portlet["param"] name="redirect" value="${viewReportsURL}" />
-							<@portlet["param"] name="consumerExtensionReportInstance" value="${consumerExtensionReportInstance.getReportInstanceId()?string}" />
+							<@portlet["param"] name="consumerReportInstance" value="${consumerReportInstance.getReportInstanceId()?string}" />
 						</@>
 
 						<@liferay_ui["icon-delete"]
@@ -109,8 +109,8 @@
 
 					<@portlet["actionURL"] name="updateReport" var="updateReportURL">
 						<@portlet["param"] name="redirect" value="${viewReportsURL}" />
-						<@portlet["param"] name="consumerExtensionReportInstanceId" value="${consumerExtensionReportInstance.getConsumerExtensionReportInstanceId()?string}" />
-						<@portlet["param"] name="reportKey" value="${consumerExtensionReportInstance.getReportKey()}" />
+						<@portlet["param"] name="consumerReportInstanceId" value="${consumerReportInstance.getConsumerReportInstanceId()?string}" />
+						<@portlet["param"] name="reportKey" value="${consumerReportInstance.getReportKey()}" />
 						<@portlet["param"] name="consumerId" value="${consumerId?string}" />
 					</@>
 
@@ -147,7 +147,7 @@
 			'click',
 			function(event) {
 				if (confirm('<@liferay_ui["message"] key="are-you-sure-you-want-to-delete-this" />')) {
-					document.<@portlet["namespace"] />fmReports.<@portlet["namespace"] />consumerExtensionReportInstanceIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmReports, '<@portlet["namespace"] />allRowIds');
+					document.<@portlet["namespace"] />fmReports.<@portlet["namespace"] />consumerReportInstanceIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmReports, '<@portlet["namespace"] />allRowIds');
 
 					<@portlet["actionURL"] name="deleteReportInstance" var="deleteReportsURL">
 						<@portlet["param"] name="redirect" value="${viewReportsURL}" />

@@ -14,7 +14,7 @@
 
 package com.liferay.consumer.manager.api.model;
 
-import com.liferay.consumer.manager.model.ConsumerExtensionReportInstance;
+import com.liferay.consumer.manager.model.ConsumerReportInstance;
 import com.liferay.consumer.manager.util.ConsumerManagerContextUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -30,8 +30,7 @@ import javax.portlet.PortletResponse;
 /**
  * @author Eduardo Garcia
  */
-public abstract class BaseConsumerExtensionReport
-	implements ConsumerExtensionReport {
+public abstract class BaseConsumerReport implements ConsumerReport {
 
 	@Override
 	public void activate() {
@@ -62,7 +61,7 @@ public abstract class BaseConsumerExtensionReport
 
 	@Override
 	public String getEditHTML(
-		ConsumerExtensionReportInstance reportInstance,
+		ConsumerReportInstance reportInstance,
 		Map<String, Object> context) {
 
 		String content = StringPool.BLANK;
@@ -85,7 +84,7 @@ public abstract class BaseConsumerExtensionReport
 
 	@Override
 	public String getHTML(
-		ConsumerExtensionReportInstance reportInstance,
+		ConsumerReportInstance reportInstance,
 		Map<String, Object> context) {
 
 		String content = StringPool.BLANK;
@@ -145,14 +144,14 @@ public abstract class BaseConsumerExtensionReport
 	@Override
 	public String processEditReport(
 			PortletRequest request, PortletResponse response,
-			ConsumerExtensionReportInstance reportInstance)
+			ConsumerReportInstance reportInstance)
 		throws Exception {
 
 		return StringPool.BLANK;
 	}
 
 	@Override
-	public void updateReport(ConsumerExtensionReportInstance reportInstance) {
+	public void updateReport(ConsumerReportInstance reportInstance) {
 		updateReport(reportInstance.getConsumerId());
 	}
 
@@ -162,7 +161,7 @@ public abstract class BaseConsumerExtensionReport
 	}
 
 	protected void populateContext(
-		ConsumerExtensionReportInstance reportInstance,
+		ConsumerReportInstance reportInstance,
 		Map<String, Object> context) {
 
 		populateContext(context);
@@ -172,7 +171,7 @@ public abstract class BaseConsumerExtensionReport
 	}
 
 	protected void populateEditContext(
-		ConsumerExtensionReportInstance reportInstance,
+		ConsumerReportInstance reportInstance,
 		Map<String, Object> context) {
 	}
 
@@ -182,7 +181,6 @@ public abstract class BaseConsumerExtensionReport
 	protected static final String _FORM_TEMPLATE_PATH =
 		"templates/ct_report.ftl";
 
-	private static Log _log = LogFactoryUtil.getLog(
-		BaseConsumerExtensionReport.class);
+	private static Log _log = LogFactoryUtil.getLog(BaseConsumerReport.class);
 
 }

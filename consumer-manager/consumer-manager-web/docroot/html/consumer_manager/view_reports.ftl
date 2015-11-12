@@ -42,7 +42,7 @@
 
 <@aui["form"] action="${viewReportsURL}" method="post" name="${reportCategoryKey}_fmReports">
 	<@aui["input"] name="redirect" type="hidden" value="${viewReportsURL}" />
-	<@aui["input"] name="consumerExtensionReportInstanceIds" type="hidden" />
+	<@aui["input"] name="consumerReportInstanceIds" type="hidden" />
 
 	<div id="<@portlet["namespace"] />_${reportCategoryKey}_reportsPanel">
 		<#include "view_reports_resources.ftl" />

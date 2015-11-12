@@ -14,8 +14,8 @@
 
 package com.liferay.consumer.manager.util;
 
-import com.liferay.consumer.manager.model.ConsumerExtensionReportInstance;
-import com.liferay.consumer.manager.service.ConsumerExtensionReportInstanceLocalService;
+import com.liferay.consumer.manager.model.ConsumerReportInstance;
+import com.liferay.consumer.manager.service.ConsumerReportInstanceLocalService;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -31,23 +31,23 @@ import javax.portlet.PortletRequest;
  * @author Eduardo Garcia
  */
 public class ReportSearchContainerIterator
-	extends SearchContainerIterator<ConsumerExtensionReportInstance> {
+	extends SearchContainerIterator<ConsumerReportInstance> {
 
 	public ReportSearchContainerIterator(
 			long companyId, long consumerId, PortletRequest portletRequest,
-			ConsumerExtensionReportInstanceLocalService
-				consumerExtensionReportInstanceLocalService)
+			ConsumerReportInstanceLocalService
+				consumerReportInstanceLocalService)
 		throws PortletException {
 
 		super(companyId, "");
 
 		_consumerId = consumerId;
-		_consumerExtensionReportInstanceLocalService =
-			consumerExtensionReportInstanceLocalService;
+		_consumerReportInstanceLocalService =
+			consumerReportInstanceLocalService;
 		_portletRequest = portletRequest;
 	}
 
-	public List<ConsumerExtensionReportInstance> getResults(
+	public List<ConsumerReportInstance> getResults(
 			String reportCategoryKey, int start, int end)
 		throws PortalException, SystemException {
 
@@ -57,12 +57,12 @@ public class ReportSearchContainerIterator
 		keywords = ParamUtil.getString(_portletRequest, keywordsParam, null);
 
 		if (Validator.isNull(keywords)) {
-			_consumerExtensionReportInstanceLocalService.getReportInstances(
+			_consumerReportInstanceLocalService.getReportInstances(
 				companyId, _consumerId, reportCategoryKey, start, end);
 		}
 
-		List<ConsumerExtensionReportInstance> searchResults =
-			_consumerExtensionReportInstanceLocalService.searchReportInstances(
+		List<ConsumerReportInstance> searchResults =
+			_consumerReportInstanceLocalService.searchReportInstances(
 				companyId, _consumerId, reportCategoryKey, keywords, start,
 				end);
 
@@ -78,22 +78,21 @@ public class ReportSearchContainerIterator
 		keywords = ParamUtil.getString(_portletRequest, keywordsParam, null);
 
 		if (Validator.isNull(keywords)) {
-			_consumerExtensionReportInstanceLocalService.
-					getReportInstancesCount(
-						companyId, _consumerId, reportCategoryKey);
+			_consumerReportInstanceLocalService.getReportInstancesCount(
+				companyId, _consumerId, reportCategoryKey);
 		}
 
-		List<ConsumerExtensionReportInstance> searchResults =
-			_consumerExtensionReportInstanceLocalService.searchReportInstances(
+		List<ConsumerReportInstance> searchResults =
+			_consumerReportInstanceLocalService.searchReportInstances(
 				companyId, _consumerId, reportCategoryKey, keywords,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return searchResults.size();
 	}
 
-	private ConsumerExtensionReportInstanceLocalService
-		_consumerExtensionReportInstanceLocalService;
 	private long _consumerId;
+	private ConsumerReportInstanceLocalService
+		_consumerReportInstanceLocalService;
 	private PortletRequest _portletRequest;
 
 }
