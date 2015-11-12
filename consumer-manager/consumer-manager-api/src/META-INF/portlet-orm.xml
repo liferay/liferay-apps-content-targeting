@@ -59,6 +59,37 @@
 			<transient name="userUuid" />
 		</attributes>
 	</mapped-superclass>
+	<mapped-superclass class="com.liferay.consumer.manager.model.impl.ConsumerReportInstanceModelImpl">
+		<attributes>
+			<id name="consumerReportInstanceId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<basic name="companyId" />
+			<basic name="userId" />
+			<basic name="userName" />
+			<basic name="createDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="modifiedDate">
+				<temporal>TIMESTAMP</temporal>
+			</basic>
+			<basic name="consumerId" />
+			<basic name="reportCategoryKey" />
+			<basic name="reportKey" />
+			<basic name="name" />
+			<basic name="description" />
+			<basic name="typeSettings" />
+			<transient name="descriptionCurrentLanguageId" />
+			<transient name="descriptionMap" />
+			<transient name="modelAttributes" />
+			<transient name="nameCurrentLanguageId" />
+			<transient name="nameMap" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+			<transient name="userUuid" />
+		</attributes>
+	</mapped-superclass>
 	<entity class="com.liferay.consumer.manager.model.impl.ConsumerImpl" name="Consumer">
 		<table name="CM_Consumer" />
 		<attributes />
@@ -69,5 +100,9 @@
 			<transient name="consumerExtensionGuid" />
 			<transient name="values" />
 		</attributes>
+	</entity>
+	<entity class="com.liferay.consumer.manager.model.impl.ConsumerReportInstanceImpl" name="ConsumerReportInstance">
+		<table name="CM_ConsumerReportInstance" />
+		<attributes />
 	</entity>
 </entity-mappings>

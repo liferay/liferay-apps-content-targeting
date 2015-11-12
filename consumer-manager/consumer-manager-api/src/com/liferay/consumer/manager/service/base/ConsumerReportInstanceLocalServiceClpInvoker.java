@@ -14,7 +14,7 @@
 
 package com.liferay.consumer.manager.service.base;
 
-import com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalServiceUtil;
+import com.liferay.consumer.manager.service.ConsumerReportInstanceLocalServiceUtil;
 
 import java.util.Arrays;
 
@@ -22,26 +22,26 @@ import java.util.Arrays;
  * @author Brian Wing Shun Chan
  * @generated
  */
-public class ConsumerExtensionInstanceLocalServiceClpInvoker {
-	public ConsumerExtensionInstanceLocalServiceClpInvoker() {
-		_methodName0 = "addConsumerExtensionInstance";
+public class ConsumerReportInstanceLocalServiceClpInvoker {
+	public ConsumerReportInstanceLocalServiceClpInvoker() {
+		_methodName0 = "addConsumerReportInstance";
 
 		_methodParameterTypes0 = new String[] {
-				"com.liferay.consumer.manager.model.ConsumerExtensionInstance"
+				"com.liferay.consumer.manager.model.ConsumerReportInstance"
 			};
 
-		_methodName1 = "createConsumerExtensionInstance";
+		_methodName1 = "createConsumerReportInstance";
 
 		_methodParameterTypes1 = new String[] { "long" };
 
-		_methodName2 = "deleteConsumerExtensionInstance";
+		_methodName2 = "deleteConsumerReportInstance";
 
 		_methodParameterTypes2 = new String[] { "long" };
 
-		_methodName3 = "deleteConsumerExtensionInstance";
+		_methodName3 = "deleteConsumerReportInstance";
 
 		_methodParameterTypes3 = new String[] {
-				"com.liferay.consumer.manager.model.ConsumerExtensionInstance"
+				"com.liferay.consumer.manager.model.ConsumerReportInstance"
 			};
 
 		_methodName4 = "dynamicQuery";
@@ -80,15 +80,15 @@ public class ConsumerExtensionInstanceLocalServiceClpInvoker {
 				"com.liferay.portal.kernel.dao.orm.Projection"
 			};
 
-		_methodName10 = "fetchConsumerExtensionInstance";
+		_methodName10 = "fetchConsumerReportInstance";
 
 		_methodParameterTypes10 = new String[] { "long" };
 
-		_methodName11 = "fetchConsumerExtensionInstanceByUuidAndCompanyId";
+		_methodName11 = "fetchConsumerReportInstanceByUuidAndCompanyId";
 
 		_methodParameterTypes11 = new String[] { "java.lang.String", "long" };
 
-		_methodName12 = "getConsumerExtensionInstance";
+		_methodName12 = "getConsumerReportInstance";
 
 		_methodParameterTypes12 = new String[] { "long" };
 
@@ -96,22 +96,22 @@ public class ConsumerExtensionInstanceLocalServiceClpInvoker {
 
 		_methodParameterTypes13 = new String[] { "java.io.Serializable" };
 
-		_methodName14 = "getConsumerExtensionInstanceByUuidAndCompanyId";
+		_methodName14 = "getConsumerReportInstanceByUuidAndCompanyId";
 
 		_methodParameterTypes14 = new String[] { "java.lang.String", "long" };
 
-		_methodName15 = "getConsumerExtensionInstances";
+		_methodName15 = "getConsumerReportInstances";
 
 		_methodParameterTypes15 = new String[] { "int", "int" };
 
-		_methodName16 = "getConsumerExtensionInstancesCount";
+		_methodName16 = "getConsumerReportInstancesCount";
 
 		_methodParameterTypes16 = new String[] {  };
 
-		_methodName17 = "updateConsumerExtensionInstance";
+		_methodName17 = "updateConsumerReportInstance";
 
 		_methodParameterTypes17 = new String[] {
-				"com.liferay.consumer.manager.model.ConsumerExtensionInstance"
+				"com.liferay.consumer.manager.model.ConsumerReportInstance"
 			};
 
 		_methodName48 = "getBeanIdentifier";
@@ -122,29 +122,54 @@ public class ConsumerExtensionInstanceLocalServiceClpInvoker {
 
 		_methodParameterTypes49 = new String[] { "java.lang.String" };
 
-		_methodName54 = "addConsumerExtensionInstance";
+		_methodName55 = "addConsumerReportInstance";
 
-		_methodParameterTypes54 = new String[] {
-				"java.lang.String", "long", "java.lang.String",
+		_methodParameterTypes55 = new String[] {
+				"long", "java.lang.String", "java.lang.String", "java.util.Map",
+				"java.util.Map", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName55 = "deleteConsumerExtensionInstance";
+		_methodName56 = "addConsumerReportInstance";
 
-		_methodParameterTypes55 = new String[] { "long" };
+		_methodParameterTypes56 = new String[] {
+				"long", "java.lang.String", "java.lang.String",
+				"java.lang.String", "java.lang.String", "java.lang.String",
+				"com.liferay.portal.service.ServiceContext"
+			};
 
-		_methodName56 = "getConsumerExtensionInstances";
+		_methodName57 = "deleteConsumerReportInstance";
 
-		_methodParameterTypes56 = new String[] { "long" };
+		_methodParameterTypes57 = new String[] { "long" };
 
-		_methodName57 = "getConsumerExtensionInstances";
+		_methodName58 = "getReportInstance";
 
-		_methodParameterTypes57 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes58 = new String[] { "long" };
 
-		_methodName58 = "updateConsumerExtensionInstance";
+		_methodName59 = "getReportInstances";
 
-		_methodParameterTypes58 = new String[] {
-				"long", "java.lang.String", "long", "java.lang.String",
+		_methodParameterTypes59 = new String[] {
+				"long", "long", "java.lang.String", "int", "int"
+			};
+
+		_methodName60 = "getReportInstancesCount";
+
+		_methodParameterTypes60 = new String[] {
+				"long", "long", "java.lang.String"
+			};
+
+		_methodName61 = "searchReportInstances";
+
+		_methodParameterTypes61 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String", "int",
+				"int"
+			};
+
+		_methodName62 = "updateConsumerReportInstance";
+
+		_methodParameterTypes62 = new String[] {
+				"long", "long", "java.lang.String", "java.lang.String",
+				"java.util.Map", "java.util.Map", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 	}
@@ -153,44 +178,44 @@ public class ConsumerExtensionInstanceLocalServiceClpInvoker {
 		Object[] arguments) throws Throwable {
 		if (_methodName0.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes0, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.addConsumerExtensionInstance((com.liferay.consumer.manager.model.ConsumerExtensionInstance)arguments[0]);
+			return ConsumerReportInstanceLocalServiceUtil.addConsumerReportInstance((com.liferay.consumer.manager.model.ConsumerReportInstance)arguments[0]);
 		}
 
 		if (_methodName1.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes1, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.createConsumerExtensionInstance(((Long)arguments[0]).longValue());
+			return ConsumerReportInstanceLocalServiceUtil.createConsumerReportInstance(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName2.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes2, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.deleteConsumerExtensionInstance(((Long)arguments[0]).longValue());
+			return ConsumerReportInstanceLocalServiceUtil.deleteConsumerReportInstance(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName3.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes3, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.deleteConsumerExtensionInstance((com.liferay.consumer.manager.model.ConsumerExtensionInstance)arguments[0]);
+			return ConsumerReportInstanceLocalServiceUtil.deleteConsumerReportInstance((com.liferay.consumer.manager.model.ConsumerReportInstance)arguments[0]);
 		}
 
 		if (_methodName4.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes4, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.dynamicQuery();
+			return ConsumerReportInstanceLocalServiceUtil.dynamicQuery();
 		}
 
 		if (_methodName5.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes5, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
+			return ConsumerReportInstanceLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
 		}
 
 		if (_methodName6.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes6, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return ConsumerReportInstanceLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue());
 		}
 
 		if (_methodName7.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes7, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return ConsumerReportInstanceLocalServiceUtil.dynamicQuery((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
@@ -198,101 +223,132 @@ public class ConsumerExtensionInstanceLocalServiceClpInvoker {
 
 		if (_methodName8.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes8, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
+			return ConsumerReportInstanceLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0]);
 		}
 
 		if (_methodName9.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes9, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
+			return ConsumerReportInstanceLocalServiceUtil.dynamicQueryCount((com.liferay.portal.kernel.dao.orm.DynamicQuery)arguments[0],
 				(com.liferay.portal.kernel.dao.orm.Projection)arguments[1]);
 		}
 
 		if (_methodName10.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes10, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.fetchConsumerExtensionInstance(((Long)arguments[0]).longValue());
+			return ConsumerReportInstanceLocalServiceUtil.fetchConsumerReportInstance(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName11.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes11, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.fetchConsumerExtensionInstanceByUuidAndCompanyId((java.lang.String)arguments[0],
+			return ConsumerReportInstanceLocalServiceUtil.fetchConsumerReportInstanceByUuidAndCompanyId((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName12.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes12, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.getConsumerExtensionInstance(((Long)arguments[0]).longValue());
+			return ConsumerReportInstanceLocalServiceUtil.getConsumerReportInstance(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName13.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes13, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
+			return ConsumerReportInstanceLocalServiceUtil.getPersistedModel((java.io.Serializable)arguments[0]);
 		}
 
 		if (_methodName14.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes14, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.getConsumerExtensionInstanceByUuidAndCompanyId((java.lang.String)arguments[0],
+			return ConsumerReportInstanceLocalServiceUtil.getConsumerReportInstanceByUuidAndCompanyId((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue());
 		}
 
 		if (_methodName15.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes15, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.getConsumerExtensionInstances(((Integer)arguments[0]).intValue(),
+			return ConsumerReportInstanceLocalServiceUtil.getConsumerReportInstances(((Integer)arguments[0]).intValue(),
 				((Integer)arguments[1]).intValue());
 		}
 
 		if (_methodName16.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes16, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.getConsumerExtensionInstancesCount();
+			return ConsumerReportInstanceLocalServiceUtil.getConsumerReportInstancesCount();
 		}
 
 		if (_methodName17.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes17, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.updateConsumerExtensionInstance((com.liferay.consumer.manager.model.ConsumerExtensionInstance)arguments[0]);
+			return ConsumerReportInstanceLocalServiceUtil.updateConsumerReportInstance((com.liferay.consumer.manager.model.ConsumerReportInstance)arguments[0]);
 		}
 
 		if (_methodName48.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.getBeanIdentifier();
+			return ConsumerReportInstanceLocalServiceUtil.getBeanIdentifier();
 		}
 
 		if (_methodName49.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
-			ConsumerExtensionInstanceLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
+			ConsumerReportInstanceLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName54.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.addConsumerExtensionInstance((java.lang.String)arguments[0],
-				((Long)arguments[1]).longValue(),
-				(java.lang.String)arguments[2],
-				(com.liferay.portal.service.ServiceContext)arguments[3]);
-		}
-
 		if (_methodName55.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.deleteConsumerExtensionInstance(((Long)arguments[0]).longValue());
+			return ConsumerReportInstanceLocalServiceUtil.addConsumerReportInstance(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(java.util.Map<java.util.Locale, java.lang.String>)arguments[3],
+				(java.util.Map<java.util.Locale, java.lang.String>)arguments[4],
+				(java.lang.String)arguments[5],
+				(com.liferay.portal.service.ServiceContext)arguments[6]);
 		}
 
 		if (_methodName56.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.getConsumerExtensionInstances(((Long)arguments[0]).longValue());
+			return ConsumerReportInstanceLocalServiceUtil.addConsumerReportInstance(((Long)arguments[0]).longValue(),
+				(java.lang.String)arguments[1], (java.lang.String)arguments[2],
+				(java.lang.String)arguments[3], (java.lang.String)arguments[4],
+				(java.lang.String)arguments[5],
+				(com.liferay.portal.service.ServiceContext)arguments[6]);
 		}
 
 		if (_methodName57.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.getConsumerExtensionInstances(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1]);
+			return ConsumerReportInstanceLocalServiceUtil.deleteConsumerReportInstance(((Long)arguments[0]).longValue());
 		}
 
 		if (_methodName58.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
-			return ConsumerExtensionInstanceLocalServiceUtil.updateConsumerExtensionInstance(((Long)arguments[0]).longValue(),
-				(java.lang.String)arguments[1],
-				((Long)arguments[2]).longValue(),
-				(java.lang.String)arguments[3],
-				(com.liferay.portal.service.ServiceContext)arguments[4]);
+			return ConsumerReportInstanceLocalServiceUtil.getReportInstance(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName59.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
+			return ConsumerReportInstanceLocalServiceUtil.getReportInstances(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2],
+				((Integer)arguments[3]).intValue(),
+				((Integer)arguments[4]).intValue());
+		}
+
+		if (_methodName60.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
+			return ConsumerReportInstanceLocalServiceUtil.getReportInstancesCount(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(), (java.lang.String)arguments[2]);
+		}
+
+		if (_methodName61.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
+			return ConsumerReportInstanceLocalServiceUtil.searchReportInstances(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				((Integer)arguments[4]).intValue(),
+				((Integer)arguments[5]).intValue());
+		}
+
+		if (_methodName62.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
+			return ConsumerReportInstanceLocalServiceUtil.updateConsumerReportInstance(((Long)arguments[0]).longValue(),
+				((Long)arguments[1]).longValue(),
+				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
+				(java.util.Map<java.util.Locale, java.lang.String>)arguments[4],
+				(java.util.Map<java.util.Locale, java.lang.String>)arguments[5],
+				(java.lang.String)arguments[6],
+				(com.liferay.portal.service.ServiceContext)arguments[7]);
 		}
 
 		throw new UnsupportedOperationException();
@@ -338,8 +394,6 @@ public class ConsumerExtensionInstanceLocalServiceClpInvoker {
 	private String[] _methodParameterTypes48;
 	private String _methodName49;
 	private String[] _methodParameterTypes49;
-	private String _methodName54;
-	private String[] _methodParameterTypes54;
 	private String _methodName55;
 	private String[] _methodParameterTypes55;
 	private String _methodName56;
@@ -348,4 +402,12 @@ public class ConsumerExtensionInstanceLocalServiceClpInvoker {
 	private String[] _methodParameterTypes57;
 	private String _methodName58;
 	private String[] _methodParameterTypes58;
+	private String _methodName59;
+	private String[] _methodParameterTypes59;
+	private String _methodName60;
+	private String[] _methodParameterTypes60;
+	private String _methodName61;
+	private String[] _methodParameterTypes61;
+	private String _methodName62;
+	private String[] _methodParameterTypes62;
 }

@@ -7,4 +7,7 @@
 	<bean id="com.liferay.consumer.manager.service.ConsumerExtensionInstanceLocalService" class="com.liferay.consumer.manager.service.impl.ConsumerExtensionInstanceLocalServiceImpl" />
 	<bean id="com.liferay.consumer.manager.service.ConsumerExtensionInstanceService" class="com.liferay.consumer.manager.service.impl.ConsumerExtensionInstanceServiceImpl" />
 	<bean id="com.liferay.consumer.manager.service.persistence.ConsumerExtensionInstancePersistence" class="com.liferay.consumer.manager.service.persistence.ConsumerExtensionInstancePersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.consumer.manager.service.ConsumerReportInstanceLocalService" class="com.liferay.consumer.manager.service.impl.ConsumerReportInstanceLocalServiceImpl" />
+	<bean id="com.liferay.consumer.manager.service.ConsumerReportInstanceService" class="com.liferay.consumer.manager.service.impl.ConsumerReportInstanceServiceImpl" />
+	<bean id="com.liferay.consumer.manager.service.persistence.ConsumerReportInstancePersistence" class="com.liferay.consumer.manager.service.persistence.ConsumerReportInstancePersistenceImpl" parent="basePersistence" />
 </beans>
