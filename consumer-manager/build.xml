@@ -12,6 +12,7 @@
 
 	<property name="app.core" value="consumer-manager-api,consumer-manager-web" />
     <property name="app.extensions" value="consumer-extension-*" />
+	<property name="app.reports" value="consumer-report-*" />
 	<property name="app.services" value="consumer-manager-api" />
 
 	<property name="build.app.services" value="true" />
@@ -198,9 +199,9 @@
 		</antelope:stringutil>
 
 		<move
-				file="${report.dir}/src/com/liferay/consumer/manager/report/ConsumerReport.java"
-				tofile="${report.dir}/src/com/liferay/consumer/manager/report/${report.java.package.dir}/${report.java.class.name}ConsumerReport.java"
-				/>
+			file="${report.dir}/src/com/liferay/consumer/manager/report/ConsumerReport.java"
+			tofile="${report.dir}/src/com/liferay/consumer/manager/report/${report.java.package.dir}/${report.java.class.name}ConsumerReport.java"
+		/>
 
 		<replace dir="${report.dir}">
 			<replacefilter token="@report.display.name@" value="${report.display.name}" />
@@ -217,8 +218,7 @@
 				<equals arg1="${release.all}" arg2="true" />
 			</and>
 			<else>
-				<property name="app.plugins.includes"
-						  value="${app.core},${app.extensions}" />
+				<property name="app.plugins.includes" value="${app.core},${app.extensions},${app.reports}" />
 			</else>
 		</if>
 
