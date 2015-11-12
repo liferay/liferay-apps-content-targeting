@@ -148,11 +148,11 @@
 	</@>
 
 	<@aui["button-row"]>
-		<@aui["button"] type="submit" />
+		<@aui["button"] cssClass="control-button" type="submit" />
 
-		<@aui["button"] type="button" value="save-and-continue" onClick="saveAndContinue();" />
+		<@aui["button"] cssClass="control-button" type="button" value="save-and-continue" onClick="saveAndContinue();" />
 
-		<@aui["button"] href="${redirect}" type="cancel" />
+		<@aui["button"] cssClass="control-button" href="${redirect}" type="cancel" />
 	</@>
 
 	<@aui["script"]>
@@ -191,3 +191,5 @@
 </@>
 
 <@fieldHeaderListener fieldName="alias" />
+
+<@closeConfirm confirmMessage="leaving-this-window-deletes-all-unsaved-data" controlCssClasses=["control-button", "tab"] />

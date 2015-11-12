@@ -14,6 +14,45 @@
  */
 -->
 
+<#macro closeConfirm
+	confirmMessage
+	controlCssClasses=[]
+>
+	<#assign controlCssClassesSelector="">
+
+	<#list controlCssClasses as controlCssClass>
+		<#if (controlCssClassesSelector?length > 0)>
+			<#assign controlCssClassesSelector=controlCssClassesSelector + ",">
+		</#if>
+
+		<#assign controlCssClassesSelector=controlCssClassesSelector + "." + controlCssClass>
+	</#list>
+
+	<@aui["input"] type="hidden" name="closeConfirm" value="true" />
+
+	<@aui["script"] use="aui-base">
+		A.all('${controlCssClassesSelector}').on(
+			'mouseup',
+			function(event) {
+				var closeConfirmElement = A.one('#<@portlet["namespace"] />closeConfirm');
+
+				closeConfirmElement.val('false');
+			}
+		);
+
+		A.on(
+			'beforeunload',
+			function(event) {
+				var closeConfirmElement = A.one('#<@portlet["namespace"] />closeConfirm');
+
+				if (closeConfirmElement.val() === 'true') {
+					event.preventDefault('<@liferay_ui["message"] key="${confirmMessage}" />');
+				}
+			}
+		);
+	</@>
+</#macro>
+
 <#macro fieldHeaderListener
 	fieldName
 >

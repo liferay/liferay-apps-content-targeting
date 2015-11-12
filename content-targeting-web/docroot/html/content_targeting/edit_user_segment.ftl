@@ -39,8 +39,15 @@
 	<#assign pills="details">
 </#if>
 
+<@portlet["renderURL"] varImpl="switchTabsURL">
+	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
+	<@portlet["param"] name="userSegmentId" value="${userSegmentId}" />
+</@>
+
 <@liferay_ui["tabs"]
 	names="${pills}"
+	param="userSegmentTabs"
+	portletURL=switchTabsURL
 	refresh=true
 	type="pills"
 	value="${userSegmentTabs}"

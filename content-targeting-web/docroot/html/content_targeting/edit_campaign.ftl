@@ -39,8 +39,15 @@
 	<#assign pills="details">
 </#if>
 
+<@portlet["renderURL"] varImpl="switchTabsURL">
+	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
+	<@portlet["param"] name="campaignId" value="${campaignId}" />
+</@>
+
 <@liferay_ui["tabs"]
 	names="${pills}"
+	param="campaignTabs"
+	portletURL=switchTabsURL
 	refresh=true
 	type="pills"
 	value="${campaignTabs}"
