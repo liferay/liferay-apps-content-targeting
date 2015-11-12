@@ -249,6 +249,7 @@
 						}
 
 						.field-header {
+							cursor: move;
 							margin: 0 5px;
 							position: relative;
 
