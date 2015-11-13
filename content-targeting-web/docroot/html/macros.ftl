@@ -400,7 +400,7 @@
 
 				var modalBody = assetCategoriesSelector._popup.getStdModNode(A.WidgetStdMod.BODY);
 
-				modalBody.append('<div style="position: absolute; bottom: 15px; right: 15px;"><button class="btn btn-primary close-popup-button"><@liferay_ui["message"] key="accept" /></button></div>');
+				modalBody.append('<div style="position: absolute; bottom: 15px; right: 15px;"><button class="btn btn-primary close-popup-button"><@liferay_ui["message"] key="ok" /></button></div>');
 
 				modalBody.one('.close-popup-button').on(
 					'click',
