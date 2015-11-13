@@ -397,6 +397,18 @@
 
 			var changeTitle = function() {
 				assetCategoriesSelector._popup.titleNode.html(assetCategoriesSelector.get('title'));
+
+				var modalBody = assetCategoriesSelector._popup.getStdModNode(A.WidgetStdMod.BODY);
+
+				modalBody.append('<div style="position: absolute; bottom: 15px; right: 15px;"><button class="btn btn-primary close-popup-button"><@liferay_ui["message"] key="accept" /></button></div>');
+
+				modalBody.one('.close-popup-button').on(
+					'click',
+					function() {
+						assetCategoriesSelector._popup.hide();
+						this.ancestor('div').remove();
+					}
+				);
 			};
 
 			A.Do.after(changeTitle, assetCategoriesSelector, '_showSelectPopup');
