@@ -316,7 +316,7 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 		throws Exception {
 
 		long consumerReportInstanceId = ParamUtil.getLong(
-			request, "consumerReportInstanceId");
+				request, "consumerReportInstanceId");
 		String reportKey = ParamUtil.getString(request, "reportKey");
 		long consumerId = ParamUtil.getLong(request, "consumerId");
 
@@ -658,12 +658,13 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 
 		long consumerId = ParamUtil.getLong(portletRequest, "consumerId");
 
+		template.put("consumerId", consumerId);
+
 		if (consumerId > 0) {
 			Consumer consumer = ConsumerLocalServiceUtil.getConsumer(
 				consumerId);
 
 			template.put("consumer", consumer);
-			template.put("consumerId", consumerId);
 
 			Map<String, ConsumerReport> reports =
 				_consumerReportsRegistry.getReports();
