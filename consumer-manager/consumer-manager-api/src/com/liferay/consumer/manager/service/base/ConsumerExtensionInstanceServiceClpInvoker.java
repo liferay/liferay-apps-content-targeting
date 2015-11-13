@@ -24,36 +24,36 @@ import java.util.Arrays;
  */
 public class ConsumerExtensionInstanceServiceClpInvoker {
 	public ConsumerExtensionInstanceServiceClpInvoker() {
-		_methodName24 = "getBeanIdentifier";
+		_methodName30 = "getBeanIdentifier";
 
-		_methodParameterTypes24 = new String[] {  };
+		_methodParameterTypes30 = new String[] {  };
 
-		_methodName25 = "setBeanIdentifier";
+		_methodName31 = "setBeanIdentifier";
 
-		_methodParameterTypes25 = new String[] { "java.lang.String" };
+		_methodParameterTypes31 = new String[] { "java.lang.String" };
 
-		_methodName30 = "addConsumerExtensionInstance";
+		_methodName36 = "addConsumerExtensionInstance";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes36 = new String[] {
 				"java.lang.String", "long", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName31 = "deleteConsumerExtensionInstance";
+		_methodName37 = "deleteConsumerExtensionInstance";
 
-		_methodParameterTypes31 = new String[] { "long" };
+		_methodParameterTypes37 = new String[] { "long" };
 
-		_methodName32 = "getConsumerExtensionInstances";
+		_methodName38 = "getConsumerExtensionInstances";
 
-		_methodParameterTypes32 = new String[] { "long" };
+		_methodParameterTypes38 = new String[] { "long" };
 
-		_methodName33 = "getConsumerExtensionInstances";
+		_methodName39 = "getConsumerExtensionInstances";
 
-		_methodParameterTypes33 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes39 = new String[] { "long", "java.lang.String" };
 
-		_methodName34 = "updateConsumerExtensionInstance";
+		_methodName40 = "updateConsumerExtensionInstance";
 
-		_methodParameterTypes34 = new String[] {
+		_methodParameterTypes40 = new String[] {
 				"long", "java.lang.String", "long", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -61,44 +61,44 @@ public class ConsumerExtensionInstanceServiceClpInvoker {
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName24.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes24, parameterTypes)) {
+		if (_methodName30.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes30, parameterTypes)) {
 			return ConsumerExtensionInstanceServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName25.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes25, parameterTypes)) {
+		if (_methodName31.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes31, parameterTypes)) {
 			ConsumerExtensionInstanceServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName30.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes30, parameterTypes)) {
+		if (_methodName36.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
 			return ConsumerExtensionInstanceServiceUtil.addConsumerExtensionInstance((java.lang.String)arguments[0],
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2],
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName31.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes31, parameterTypes)) {
+		if (_methodName37.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes37, parameterTypes)) {
 			return ConsumerExtensionInstanceServiceUtil.deleteConsumerExtensionInstance(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName32.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes32, parameterTypes)) {
+		if (_methodName38.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes38, parameterTypes)) {
 			return ConsumerExtensionInstanceServiceUtil.getConsumerExtensionInstances(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName33.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes33, parameterTypes)) {
+		if (_methodName39.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes39, parameterTypes)) {
 			return ConsumerExtensionInstanceServiceUtil.getConsumerExtensionInstances(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
 
-		if (_methodName34.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes34, parameterTypes)) {
+		if (_methodName40.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
 			return ConsumerExtensionInstanceServiceUtil.updateConsumerExtensionInstance(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Long)arguments[2]).longValue(),
@@ -109,18 +109,18 @@ public class ConsumerExtensionInstanceServiceClpInvoker {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName24;
-	private String[] _methodParameterTypes24;
-	private String _methodName25;
-	private String[] _methodParameterTypes25;
 	private String _methodName30;
 	private String[] _methodParameterTypes30;
 	private String _methodName31;
 	private String[] _methodParameterTypes31;
-	private String _methodName32;
-	private String[] _methodParameterTypes32;
-	private String _methodName33;
-	private String[] _methodParameterTypes33;
-	private String _methodName34;
-	private String[] _methodParameterTypes34;
+	private String _methodName36;
+	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
+	private String _methodName39;
+	private String[] _methodParameterTypes39;
+	private String _methodName40;
+	private String[] _methodParameterTypes40;
 }

@@ -107,17 +107,17 @@ AUI.add(
 					_refreshContentList: function(event) {
 						var instance = this;
 
+						var ajaxData = {};
+
+						ajaxData[instance.get('inputNode').get('name')] = instance.get('inputNode').val();
+
 						A.io.request(
 							instance._resourceURL,
 							{
 								after: {
 									success: A.bind('_afterSuccess', instance)
 								},
-								data: instance.ns(
-									{
-										keywords: instance.get('inputNode').val()
-									}
-								)
+								data: ajaxData
 							}
 						);
 					}

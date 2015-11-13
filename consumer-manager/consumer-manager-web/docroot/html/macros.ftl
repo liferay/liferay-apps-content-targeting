@@ -14,6 +14,11 @@
  */
 -->
 
+
+<#macro breadcrumb>
+	<@liferay_ui["breadcrumb"] showCurrentGroup=false showCurrentPortlet=false showLayout=false />
+</#macro>
+
 <#macro closeConfirm
 	confirmMessage
 	controlCssClasses=[]

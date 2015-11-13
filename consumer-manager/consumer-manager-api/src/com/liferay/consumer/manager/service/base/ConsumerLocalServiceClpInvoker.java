@@ -114,73 +114,73 @@ public class ConsumerLocalServiceClpInvoker {
 				"com.liferay.consumer.manager.model.Consumer"
 			};
 
-		_methodName42 = "getBeanIdentifier";
+		_methodName48 = "getBeanIdentifier";
 
-		_methodParameterTypes42 = new String[] {  };
+		_methodParameterTypes48 = new String[] {  };
 
-		_methodName43 = "setBeanIdentifier";
+		_methodName49 = "setBeanIdentifier";
 
-		_methodParameterTypes43 = new String[] { "java.lang.String" };
+		_methodParameterTypes49 = new String[] { "java.lang.String" };
 
-		_methodName48 = "addConsumer";
+		_methodName54 = "addConsumer";
 
-		_methodParameterTypes48 = new String[] {
+		_methodParameterTypes54 = new String[] {
 				"java.lang.String", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName49 = "deleteConsumer";
+		_methodName55 = "deleteConsumer";
 
-		_methodParameterTypes49 = new String[] {
+		_methodParameterTypes55 = new String[] {
 				"com.liferay.consumer.manager.model.Consumer"
 			};
 
-		_methodName50 = "deleteConsumer";
+		_methodName56 = "deleteConsumer";
 
-		_methodParameterTypes50 = new String[] { "long" };
+		_methodParameterTypes56 = new String[] { "long" };
 
-		_methodName51 = "getConsumer";
+		_methodName57 = "getConsumer";
 
-		_methodParameterTypes51 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes57 = new String[] { "long", "java.lang.String" };
 
-		_methodName52 = "getConsumers";
+		_methodName58 = "getConsumers";
 
-		_methodParameterTypes52 = new String[] {  };
+		_methodParameterTypes58 = new String[] {  };
 
-		_methodName53 = "getConsumers";
+		_methodName59 = "getConsumers";
 
-		_methodParameterTypes53 = new String[] { "long" };
+		_methodParameterTypes59 = new String[] { "long" };
 
-		_methodName54 = "getConsumers";
+		_methodName60 = "getConsumers";
 
-		_methodParameterTypes54 = new String[] {
+		_methodParameterTypes60 = new String[] {
 				"long", "int", "int",
 				"com.liferay.portal.kernel.util.OrderByComparator"
 			};
 
-		_methodName55 = "getConsumersByConsumerExtensionKey";
+		_methodName61 = "getConsumersByConsumerExtensionKey";
 
-		_methodParameterTypes55 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes61 = new String[] { "long", "java.lang.String" };
 
-		_methodName56 = "getConsumersCount";
+		_methodName62 = "getConsumersCount";
 
-		_methodParameterTypes56 = new String[] { "long" };
+		_methodParameterTypes62 = new String[] { "long" };
 
-		_methodName57 = "search";
+		_methodName63 = "search";
 
-		_methodParameterTypes57 = new String[] {
+		_methodParameterTypes63 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName58 = "searchConsumers";
+		_methodName64 = "searchConsumers";
 
-		_methodParameterTypes58 = new String[] {
+		_methodParameterTypes64 = new String[] {
 				"long", "java.lang.String", "int", "int"
 			};
 
-		_methodName59 = "updateConsumer";
+		_methodName65 = "updateConsumer";
 
-		_methodParameterTypes59 = new String[] {
+		_methodParameterTypes65 = new String[] {
 				"long", "java.lang.String", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -287,89 +287,89 @@ public class ConsumerLocalServiceClpInvoker {
 			return ConsumerLocalServiceUtil.updateConsumer((com.liferay.consumer.manager.model.Consumer)arguments[0]);
 		}
 
-		if (_methodName42.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
+		if (_methodName48.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
 			return ConsumerLocalServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName43.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
+		if (_methodName49.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
 			ConsumerLocalServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName48.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
+		if (_methodName54.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
 			return ConsumerLocalServiceUtil.addConsumer((java.lang.String)arguments[0],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName49.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes49, parameterTypes)) {
+		if (_methodName55.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
 			return ConsumerLocalServiceUtil.deleteConsumer((com.liferay.consumer.manager.model.Consumer)arguments[0]);
 		}
 
-		if (_methodName50.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes50, parameterTypes)) {
+		if (_methodName56.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
 			return ConsumerLocalServiceUtil.deleteConsumer(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName51.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes51, parameterTypes)) {
+		if (_methodName57.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
 			return ConsumerLocalServiceUtil.getConsumer(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
 
-		if (_methodName52.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes52, parameterTypes)) {
+		if (_methodName58.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
 			return ConsumerLocalServiceUtil.getConsumers();
 		}
 
-		if (_methodName53.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes53, parameterTypes)) {
+		if (_methodName59.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
 			return ConsumerLocalServiceUtil.getConsumers(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName54.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes54, parameterTypes)) {
+		if (_methodName60.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes60, parameterTypes)) {
 			return ConsumerLocalServiceUtil.getConsumers(((Long)arguments[0]).longValue(),
 				((Integer)arguments[1]).intValue(),
 				((Integer)arguments[2]).intValue(),
 				(com.liferay.portal.kernel.util.OrderByComparator)arguments[3]);
 		}
 
-		if (_methodName55.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes55, parameterTypes)) {
+		if (_methodName61.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes61, parameterTypes)) {
 			return ConsumerLocalServiceUtil.getConsumersByConsumerExtensionKey(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
 
-		if (_methodName56.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes56, parameterTypes)) {
+		if (_methodName62.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes62, parameterTypes)) {
 			return ConsumerLocalServiceUtil.getConsumersCount(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName57.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes57, parameterTypes)) {
+		if (_methodName63.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes63, parameterTypes)) {
 			return ConsumerLocalServiceUtil.search(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName58.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes58, parameterTypes)) {
+		if (_methodName64.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes64, parameterTypes)) {
 			return ConsumerLocalServiceUtil.searchConsumers(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				((Integer)arguments[2]).intValue(),
 				((Integer)arguments[3]).intValue());
 		}
 
-		if (_methodName59.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes59, parameterTypes)) {
+		if (_methodName65.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes65, parameterTypes)) {
 			return ConsumerLocalServiceUtil.updateConsumer(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -416,22 +416,10 @@ public class ConsumerLocalServiceClpInvoker {
 	private String[] _methodParameterTypes16;
 	private String _methodName17;
 	private String[] _methodParameterTypes17;
-	private String _methodName42;
-	private String[] _methodParameterTypes42;
-	private String _methodName43;
-	private String[] _methodParameterTypes43;
 	private String _methodName48;
 	private String[] _methodParameterTypes48;
 	private String _methodName49;
 	private String[] _methodParameterTypes49;
-	private String _methodName50;
-	private String[] _methodParameterTypes50;
-	private String _methodName51;
-	private String[] _methodParameterTypes51;
-	private String _methodName52;
-	private String[] _methodParameterTypes52;
-	private String _methodName53;
-	private String[] _methodParameterTypes53;
 	private String _methodName54;
 	private String[] _methodParameterTypes54;
 	private String _methodName55;
@@ -444,4 +432,16 @@ public class ConsumerLocalServiceClpInvoker {
 	private String[] _methodParameterTypes58;
 	private String _methodName59;
 	private String[] _methodParameterTypes59;
+	private String _methodName60;
+	private String[] _methodParameterTypes60;
+	private String _methodName61;
+	private String[] _methodParameterTypes61;
+	private String _methodName62;
+	private String[] _methodParameterTypes62;
+	private String _methodName63;
+	private String[] _methodParameterTypes63;
+	private String _methodName64;
+	private String[] _methodParameterTypes64;
+	private String _methodName65;
+	private String[] _methodParameterTypes65;
 }

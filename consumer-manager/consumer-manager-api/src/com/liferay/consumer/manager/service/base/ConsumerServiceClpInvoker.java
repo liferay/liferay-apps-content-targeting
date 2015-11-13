@@ -24,46 +24,46 @@ import java.util.Arrays;
  */
 public class ConsumerServiceClpInvoker {
 	public ConsumerServiceClpInvoker() {
-		_methodName24 = "getBeanIdentifier";
+		_methodName30 = "getBeanIdentifier";
 
-		_methodParameterTypes24 = new String[] {  };
+		_methodParameterTypes30 = new String[] {  };
 
-		_methodName25 = "setBeanIdentifier";
+		_methodName31 = "setBeanIdentifier";
 
-		_methodParameterTypes25 = new String[] { "java.lang.String" };
+		_methodParameterTypes31 = new String[] { "java.lang.String" };
 
-		_methodName30 = "addConsumer";
+		_methodName36 = "addConsumer";
 
-		_methodParameterTypes30 = new String[] {
+		_methodParameterTypes36 = new String[] {
 				"java.lang.String", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName31 = "deleteConsumer";
+		_methodName37 = "deleteConsumer";
 
-		_methodParameterTypes31 = new String[] { "long" };
+		_methodParameterTypes37 = new String[] { "long" };
 
-		_methodName32 = "getConsumer";
+		_methodName38 = "getConsumer";
 
-		_methodParameterTypes32 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes38 = new String[] { "long", "java.lang.String" };
 
-		_methodName33 = "getConsumers";
+		_methodName39 = "getConsumers";
 
-		_methodParameterTypes33 = new String[] {  };
+		_methodParameterTypes39 = new String[] {  };
 
-		_methodName34 = "getConsumers";
+		_methodName40 = "getConsumers";
 
-		_methodParameterTypes34 = new String[] {
+		_methodParameterTypes40 = new String[] {
 				"long", "com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName35 = "getConsumersByConsumerExtensionKey";
+		_methodName41 = "getConsumersByConsumerExtensionKey";
 
-		_methodParameterTypes35 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes41 = new String[] { "long", "java.lang.String" };
 
-		_methodName36 = "updateConsumer";
+		_methodName42 = "updateConsumer";
 
-		_methodParameterTypes36 = new String[] {
+		_methodParameterTypes42 = new String[] {
 				"long", "java.lang.String", "java.util.Map", "java.util.Map",
 				"com.liferay.portal.service.ServiceContext"
 			};
@@ -71,56 +71,56 @@ public class ConsumerServiceClpInvoker {
 
 	public Object invokeMethod(String name, String[] parameterTypes,
 		Object[] arguments) throws Throwable {
-		if (_methodName24.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes24, parameterTypes)) {
+		if (_methodName30.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes30, parameterTypes)) {
 			return ConsumerServiceUtil.getBeanIdentifier();
 		}
 
-		if (_methodName25.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes25, parameterTypes)) {
+		if (_methodName31.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes31, parameterTypes)) {
 			ConsumerServiceUtil.setBeanIdentifier((java.lang.String)arguments[0]);
 
 			return null;
 		}
 
-		if (_methodName30.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes30, parameterTypes)) {
+		if (_methodName36.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
 			return ConsumerServiceUtil.addConsumer((java.lang.String)arguments[0],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
 				(com.liferay.portal.service.ServiceContext)arguments[3]);
 		}
 
-		if (_methodName31.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes31, parameterTypes)) {
+		if (_methodName37.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes37, parameterTypes)) {
 			return ConsumerServiceUtil.deleteConsumer(((Long)arguments[0]).longValue());
 		}
 
-		if (_methodName32.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes32, parameterTypes)) {
+		if (_methodName38.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes38, parameterTypes)) {
 			return ConsumerServiceUtil.getConsumer(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
 
-		if (_methodName33.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes33, parameterTypes)) {
+		if (_methodName39.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes39, parameterTypes)) {
 			return ConsumerServiceUtil.getConsumers();
 		}
 
-		if (_methodName34.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes34, parameterTypes)) {
+		if (_methodName40.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes40, parameterTypes)) {
 			return ConsumerServiceUtil.getConsumers(((Long)arguments[0]).longValue(),
 				(com.liferay.portal.service.ServiceContext)arguments[1]);
 		}
 
-		if (_methodName35.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes35, parameterTypes)) {
+		if (_methodName41.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
 			return ConsumerServiceUtil.getConsumersByConsumerExtensionKey(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
 
-		if (_methodName36.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes36, parameterTypes)) {
+		if (_methodName42.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
 			return ConsumerServiceUtil.updateConsumer(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1],
 				(java.util.Map<java.util.Locale, java.lang.String>)arguments[2],
@@ -131,22 +131,22 @@ public class ConsumerServiceClpInvoker {
 		throw new UnsupportedOperationException();
 	}
 
-	private String _methodName24;
-	private String[] _methodParameterTypes24;
-	private String _methodName25;
-	private String[] _methodParameterTypes25;
 	private String _methodName30;
 	private String[] _methodParameterTypes30;
 	private String _methodName31;
 	private String[] _methodParameterTypes31;
-	private String _methodName32;
-	private String[] _methodParameterTypes32;
-	private String _methodName33;
-	private String[] _methodParameterTypes33;
-	private String _methodName34;
-	private String[] _methodParameterTypes34;
-	private String _methodName35;
-	private String[] _methodParameterTypes35;
 	private String _methodName36;
 	private String[] _methodParameterTypes36;
+	private String _methodName37;
+	private String[] _methodParameterTypes37;
+	private String _methodName38;
+	private String[] _methodParameterTypes38;
+	private String _methodName39;
+	private String[] _methodParameterTypes39;
+	private String _methodName40;
+	private String[] _methodParameterTypes40;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
 }

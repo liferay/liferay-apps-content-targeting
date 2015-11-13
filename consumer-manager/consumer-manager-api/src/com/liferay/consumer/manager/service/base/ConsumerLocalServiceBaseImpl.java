@@ -18,6 +18,7 @@ import com.liferay.consumer.manager.model.Consumer;
 import com.liferay.consumer.manager.service.ConsumerLocalService;
 import com.liferay.consumer.manager.service.persistence.ConsumerExtensionInstancePersistence;
 import com.liferay.consumer.manager.service.persistence.ConsumerPersistence;
+import com.liferay.consumer.manager.service.persistence.ConsumerReportInstancePersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
 import com.liferay.portal.kernel.bean.IdentifiableBean;
@@ -420,6 +421,63 @@ public abstract class ConsumerLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the consumer report instance local service.
+	 *
+	 * @return the consumer report instance local service
+	 */
+	public com.liferay.consumer.manager.service.ConsumerReportInstanceLocalService getConsumerReportInstanceLocalService() {
+		return consumerReportInstanceLocalService;
+	}
+
+	/**
+	 * Sets the consumer report instance local service.
+	 *
+	 * @param consumerReportInstanceLocalService the consumer report instance local service
+	 */
+	public void setConsumerReportInstanceLocalService(
+		com.liferay.consumer.manager.service.ConsumerReportInstanceLocalService consumerReportInstanceLocalService) {
+		this.consumerReportInstanceLocalService = consumerReportInstanceLocalService;
+	}
+
+	/**
+	 * Returns the consumer report instance remote service.
+	 *
+	 * @return the consumer report instance remote service
+	 */
+	public com.liferay.consumer.manager.service.ConsumerReportInstanceService getConsumerReportInstanceService() {
+		return consumerReportInstanceService;
+	}
+
+	/**
+	 * Sets the consumer report instance remote service.
+	 *
+	 * @param consumerReportInstanceService the consumer report instance remote service
+	 */
+	public void setConsumerReportInstanceService(
+		com.liferay.consumer.manager.service.ConsumerReportInstanceService consumerReportInstanceService) {
+		this.consumerReportInstanceService = consumerReportInstanceService;
+	}
+
+	/**
+	 * Returns the consumer report instance persistence.
+	 *
+	 * @return the consumer report instance persistence
+	 */
+	public ConsumerReportInstancePersistence getConsumerReportInstancePersistence() {
+		return consumerReportInstancePersistence;
+	}
+
+	/**
+	 * Sets the consumer report instance persistence.
+	 *
+	 * @param consumerReportInstancePersistence the consumer report instance persistence
+	 */
+	public void setConsumerReportInstancePersistence(
+		ConsumerReportInstancePersistence consumerReportInstancePersistence) {
+		this.consumerReportInstancePersistence = consumerReportInstancePersistence;
+	}
+
+	/**
 	 * Returns the counter local service.
 	 *
 	 * @return the counter local service
@@ -607,6 +665,12 @@ public abstract class ConsumerLocalServiceBaseImpl extends BaseLocalServiceImpl
 	protected com.liferay.consumer.manager.service.ConsumerExtensionInstanceService consumerExtensionInstanceService;
 	@BeanReference(type = ConsumerExtensionInstancePersistence.class)
 	protected ConsumerExtensionInstancePersistence consumerExtensionInstancePersistence;
+	@BeanReference(type = com.liferay.consumer.manager.service.ConsumerReportInstanceLocalService.class)
+	protected com.liferay.consumer.manager.service.ConsumerReportInstanceLocalService consumerReportInstanceLocalService;
+	@BeanReference(type = com.liferay.consumer.manager.service.ConsumerReportInstanceService.class)
+	protected com.liferay.consumer.manager.service.ConsumerReportInstanceService consumerReportInstanceService;
+	@BeanReference(type = ConsumerReportInstancePersistence.class)
+	protected ConsumerReportInstancePersistence consumerReportInstancePersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
