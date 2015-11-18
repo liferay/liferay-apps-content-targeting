@@ -46,11 +46,17 @@
 	<@liferay_ui["error"] key="com.liferay.content.targeting.InvalidTrackingActionsException" message="there-is-an-error-in-one-of-your-metrics" />
 </#macro>
 
-
-
 <#macro usedUserSegmentException>
 	<@liferay_ui["error"] key="com.liferay.content.targeting.UsedUserSegmentException">
-		<@liferay_ui["message"] key="this-user-segment-can-not-be-deleted-because-it-is-used-by-the-following-campaigns" />
+		<@liferay_ui["message"] key="the-following-user-segments"/>
+
+		<ul>
+			<#list usedUserSegments as userSegment>
+				<li>${userSegment.getName(locale)}</li>
+			</#list>
+		</ul>
+
+		<@liferay_ui["message"] key="cannot-be-deleted-because-they-are-used-in-the-following-campaigns" />
 
 		<ul>
 			<#list errorException.getCampaigns() as campaign>

@@ -246,42 +246,60 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			ActionRequest request, ActionResponse response)
 		throws Exception {
 
-		try {
-			long[] deleteUserSegmentIds = null;
+		long[] deleteUserSegmentIds = null;
 
-			long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
+		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
 
-			if (userSegmentId > 0) {
-				deleteUserSegmentIds = new long[]{userSegmentId};
-			}
-			else {
-				deleteUserSegmentIds = StringUtil.split(
-					ParamUtil.getString(request, "userSegmentIds"), 0L);
-			}
+		if (userSegmentId > 0) {
+			deleteUserSegmentIds = new long[]{userSegmentId};
+		}
+		else {
+			deleteUserSegmentIds = StringUtil.split(
+				ParamUtil.getString(request, "userSegmentIds"), 0L);
+		}
 
-			for (long deleteUserSegmentId : deleteUserSegmentIds) {
+		List<UserSegment> usedUserSegments = new ArrayList<UserSegment>();
+
+		for (long deleteUserSegmentId : deleteUserSegmentIds) {
+			try {
 				_userSegmentService.deleteUserSegment(deleteUserSegmentId);
 			}
+			catch (Exception e) {
+				if (!SessionErrors.contains(request, e.getClass().getName())) {
+					SessionErrors.add(request, e.getClass().getName(), e);
+				}
 
-			sendRedirect(request, response);
+				if (e instanceof UsedUserSegmentException) {
+					UserSegment userSegment =
+						_userSegmentLocalService.fetchUserSegment(
+							deleteUserSegmentId);
+
+					if (userSegment != null) {
+						usedUserSegments.add(userSegment);
+					}
+				}
+				else {
+					response.setRenderParameter(
+						"mvcPath", ContentTargetingPath.ERROR);
+
+					return;
+				}
+			}
 		}
-		catch (Exception e) {
-			SessionErrors.add(request, e.getClass().getName(), e);
 
-			if (e instanceof UsedUserSegmentException) {
-				SessionMessages.add(
-					request,
-					PortalUtil.getPortletId(request) +
-						SessionMessages.KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
+		if (!usedUserSegments.isEmpty()) {
+			SessionMessages.add(
+				request,
+				PortalUtil.getPortletId(request) +
+					SessionMessages. KEY_SUFFIX_HIDE_DEFAULT_ERROR_MESSAGE);
 
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.VIEW);
-				response.setRenderParameter("tabs1", "user-segments");
-			}
-			else {
-				response.setRenderParameter(
-					"mvcPath", ContentTargetingPath.ERROR);
-			}
+			SessionMessages.add(request, "usedUserSegments", usedUserSegments);
+
+			response.setRenderParameter("mvcPath", ContentTargetingPath.VIEW);
+			response.setRenderParameter("tabs1", "user-segments");
+		}
+		else {
+			sendRedirect(request, response);
 		}
 	}
 
@@ -816,6 +834,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put("tacticClass", Tactic.class);
 		template.put(
 			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
+		template.put(
+			"usedUserSegments",
+			SessionMessages.get(portletRequest, "usedUserSegments"));
 		template.put("userSegmentClass", UserSegment.class);
 		template.put(
 			"userPermissionUtil",
