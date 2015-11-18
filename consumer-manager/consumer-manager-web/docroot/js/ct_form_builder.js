@@ -209,6 +209,40 @@ AUI.add(
 
 										categories[categoryKey].fields.push(itemNode);
 									}
+
+									itemNode.detach('dblclick');
+									itemNode.on(
+										'dblclick',
+										function() {
+											var config = {
+												hiddenAttributes: item.get('hiddenAttributes'),
+												label: item.get('label'),
+												localizationMap: item.get('localizationMap'),
+												options: item.get('options'),
+												predefinedValue: item.get('predefinedValue'),
+												readOnlyAttributes: item.get('readOnlyAttributes'),
+												required: item.get('required'),
+												showLabel: item.get('showLabel'),
+												tip: item.get('tip'),
+												type: item.get('type'),
+												unique: item.get('unique'),
+												width: item.get('width')
+											};
+
+											if (config.unique) {
+												config.id = instance._getFieldId(item);
+												config.name = item.get('name');
+											}
+
+											if ((item instanceof A.AvailableField) && !item.get('draggable')) {
+												return;
+											}
+
+											var newField = instance.createField(config);
+
+											instance.addField(newField, 0);
+										}
+									);
 								}
 							);
 
@@ -314,6 +348,15 @@ AUI.add(
 						},
 
 						_onDragMouseDown: function(event) {
+							var dragNode = event.target.get('node'),
+								availableField = A.AvailableField.getAvailableFieldByNode(dragNode);
+
+							if ((availableField instanceof A.AvailableField) && !availableField.get('draggable')) {
+								event.halt();
+
+								return;
+							}
+
 							var mouseDownNode = event.ev.target;
 
 							if (mouseDownNode.hasClass('toggler-content-wrapper') || mouseDownNode.hasClass('field-editor')) {
@@ -479,7 +522,8 @@ AUI.add(
 											id: fieldData[2] ? key : '',
 											key: key,
 											name: name,
-											shortDescription: shortDescription
+											shortDescription: shortDescription,
+											unique: unique
 										}
 									);
 
@@ -640,6 +684,10 @@ AUI.add(
 
 						fieldId: {
 							value: field.id
+						},
+
+						unique: {
+							value: field.unique
 						}
 					},
 
