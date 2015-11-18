@@ -246,9 +246,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			ActionRequest request, ActionResponse response)
 		throws Exception {
 
-		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
 		long[] deleteUserSegmentIds = null;
 
 		long userSegmentId = ParamUtil.getLong(request, "userSegmentId");
