@@ -372,6 +372,23 @@ public class ChannelInstanceLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getCampaignChannelInstances(
+		long campaignId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _channelInstanceLocalService.getCampaignChannelInstances(campaignId);
+	}
+
+	@Override
+	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getCampaignChannelInstances(
+		long campaignId, java.lang.String channelKey)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return _channelInstanceLocalService.getCampaignChannelInstances(campaignId,
+			channelKey);
+	}
+
+	@Override
 	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
 		long tacticId)
 		throws com.liferay.portal.kernel.exception.PortalException,

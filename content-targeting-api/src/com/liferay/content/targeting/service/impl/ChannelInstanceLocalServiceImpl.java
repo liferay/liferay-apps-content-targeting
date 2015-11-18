@@ -144,6 +144,21 @@ public class ChannelInstanceLocalServiceImpl
 	}
 
 	@Override
+	public List<ChannelInstance> getCampaignChannelInstances(long campaignId)
+		throws PortalException, SystemException {
+
+		return channelInstancePersistence.findByCampaignId(campaignId);
+	}
+
+	@Override
+	public List<ChannelInstance> getCampaignChannelInstances(
+			long campaignId, String channelKey)
+		throws PortalException, SystemException {
+
+		return channelInstancePersistence.findByC_K(campaignId, channelKey);
+	}
+
+	@Override
 	public List<ChannelInstance> getChannelInstances(long tacticId)
 		throws PortalException, SystemException {
 

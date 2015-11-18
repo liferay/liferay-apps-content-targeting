@@ -186,6 +186,19 @@ public interface TrackingAction {
 	public boolean isVisible();
 
 	/**
+	 * Returns <code>true</code> if the tracking action is visible.
+	 *
+	 * @param className the class name of the entity to check if the tracking
+	 *        action is visible within this entity
+	 * @param classPK the id of the entity to check if the tracking action is
+	 *        visible within this entity
+	 *
+	 * @return <code>true</code> if the tracking action is visible within
+	 * 		   specific entity; <code>false</code> otherwise
+	 */
+	public boolean isVisible(String className, long classPK);
+
+	/**
 	 * Returns the result of evaluating the tracking action form fields in the
 	 * context of the request and response.
 	 *

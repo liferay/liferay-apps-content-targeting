@@ -56,16 +56,18 @@
 									<#assign trackingAction = template.getTrackingAction()>
 									<#assign templateKey = template.getTemplateKey()>
 
-									<li class="diagram-builder-field form-builder-field hide" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
-										<span class="diagram-builder-field-icon icon ${trackingAction.getIcon()}"></span>
-										<div class="diagram-builder-field-label">
-											<div class="row">
-												<div class="field-title">${trackingAction.getName(locale)}</div>
-												<div class="field-description">${trackingAction.getDescription(locale)}</div>
-												<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
+									<#if trackingAction.isVisible(className?string, classPK?long)>
+										<li class="diagram-builder-field form-builder-field hide" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
+											<span class="diagram-builder-field-icon icon ${trackingAction.getIcon()}"></span>
+											<div class="diagram-builder-field-label">
+												<div class="row">
+													<div class="field-title">${trackingAction.getName(locale)}</div>
+													<div class="field-description">${trackingAction.getDescription(locale)}</div>
+													<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
+												</div>
 											</div>
-										</div>
-									</li>
+										</li>
+									</#if>
 								</#list>
 							</ul>
 						</div>
@@ -92,22 +94,24 @@
 							<#assign trackingAction = template.getTrackingAction()>
 							<#assign templateKey = template.getTemplateKey()>
 
-							<div class="component form-builder-field hide widget yui3-widget" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
-								<div>
+							<#if trackingAction.isVisible(className?string, classPK?long)>
+								<div class="component form-builder-field hide widget yui3-widget" data-icon="${trackingAction.getIcon()}" data-key="${templateKey}" data-template="${template.getTemplate()}" data-unique="${(!trackingAction.isInstantiable())?string}">
 									<div>
-										<div class="field-header">
-											<div class="field-icon"><i class="${trackingAction.getIcon()}"></i></div>
-											<div class="field-info row">
-												<div class="field-title">${trackingAction.getName(locale)}</div>
-												<div class="field-description">${trackingAction.getDescription(locale)}</div>
-												<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
-											</div>4
-										</div>
-										<div class="field-editor">
+										<div>
+											<div class="field-header">
+												<div class="field-icon"><i class="${trackingAction.getIcon()}"></i></div>
+												<div class="field-info row">
+													<div class="field-title">${trackingAction.getName(locale)}</div>
+													<div class="field-description">${trackingAction.getDescription(locale)}</div>
+													<div class="field-short-description">${trackingAction.getShortDescription(locale)}</div>
+												</div>4
+											</div>
+											<div class="field-editor">
+											</div>
 										</div>
 									</div>
 								</div>
-							</div>
+							</#if>
 						</#list>
 					</div>
 				</div>
