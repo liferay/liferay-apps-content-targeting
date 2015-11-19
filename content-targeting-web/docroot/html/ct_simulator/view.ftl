@@ -20,9 +20,9 @@
 
 <h1><@liferay_ui["message"] key="simulator" /></h1>
 
-<#assign campaignsLabel = languageUtil.get(locale, "campaigns") />
+<#assign campaignsLabel = languageUtil.get(portletConfig, locale, "campaigns") />
 
-<#assign userSegmentsLabel = languageUtil.get(locale, "user-segments") />
+<#assign userSegmentsLabel = languageUtil.get(portletConfig, locale, "user-segments") />
 
 <div class="content-targeting-simulator">
 	<@liferay_ui["tabs"]

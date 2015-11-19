@@ -38,7 +38,7 @@
 						<#assign selectedValue = true>
 					</#if>
 
-					<@aui["option"] label='${languageUtil.get(themeDisplay.getLocale(), "select-more-than-one")}...' selected=selectedValue value=false />
+					<@aui["option"] label='${languageUtil.get(portletConfig, locale, "select-more-than-one")}...' selected=selectedValue value=false />
 
 					<optgroup label="<@liferay_ui["message"] key="asset-type" />">
 						<#assign i = 0>

@@ -106,7 +106,7 @@
 	deleteConsumers.on(
 		'click',
 		function(event) {
-			if (confirm('${languageUtil.get(locale, "are-you-sure-you-want-to-delete-this")}')) {
+			if (confirm('${languageUtil.get(portletConfig, locale, "are-you-sure-you-want-to-delete-this")}')) {
 				document.<@portlet["namespace"] />fmConsumers.<@portlet["namespace"] />consumersIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmConsumers, '<@portlet["namespace"] />allRowIds');
 
 				<@portlet["renderURL"] var="redirectURL">

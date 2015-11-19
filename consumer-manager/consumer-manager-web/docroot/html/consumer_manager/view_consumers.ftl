@@ -29,7 +29,7 @@
 
 		<@aui["nav-bar-search"] cssClass="pull-right">
 			<div class="form-search">
-				<@liferay_ui["input-search"] id="consumerKeywords" name="keywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
+				<@liferay_ui["input-search"] id="consumerKeywords" name="keywords" placeholder='${languageUtil.get(portletConfig, locale, "keywords")}' />
 			</div>
 		</@>
 	</@>
