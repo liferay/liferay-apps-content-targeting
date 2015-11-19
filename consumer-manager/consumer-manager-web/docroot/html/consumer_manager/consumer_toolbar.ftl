@@ -27,10 +27,10 @@
 			<@portlet["param"] name="redirect" value="${redirectURL}" />
 		</@>
 
-		<@aui["nav-item"] href="${addConsumerURL}" iconCssClass="icon-plus" label="add-consumer" />
+		<@aui["nav-item"] href="${addConsumerURL}" iconCssClass="icon-plus" label='${languageUtil.get(portletConfig, locale, "add-consumer")}' />
 	</#if>
 
 	<#if consumerPermission.contains(permissionChecker, 0, actionKeys.DELETE)>
-		<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteConsumers" label="delete" />
+		<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteConsumers" label='${languageUtil.get(portletConfig, locale, "delete")}' />
 	</#if>
 </@>

@@ -33,8 +33,8 @@
 			<@portlet["param"] name="redirect" value="${redirectURL}" />
 		</@>
 
-		<@aui["nav-item"] href="${addTacticURL}" iconCssClass="icon-plus" label="add-promotion" />
+		<@aui["nav-item"] href="${addTacticURL}" iconCssClass="icon-plus" label='${languageUtil.get(portletConfig, locale, "add-promotion")}' />
 
-		<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteTactics" label="delete" />
+		<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteTactics" label='${languageUtil.get(portletConfig, locale, "delete")}' />
 	</#if>
 </@>

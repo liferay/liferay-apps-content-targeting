@@ -37,7 +37,7 @@
 					<@portlet["param"] name="campaignTabs" value="reports" />
 				</@>
 
-				<@aui["nav-item"] dropdown=true id="addButtonContainer" label="add" iconCssClass="icon-plus" label="add">
+				<@aui["nav-item"] dropdown=true iconCssClass="icon-plus" id="addButtonContainer" label='${languageUtil.get(portletConfig, locale, "add")}'>
 					<#list reports as report>
 						<#if report.isInstantiable()>
 							<@portlet["renderURL"] var="addReportURL">
@@ -49,12 +49,12 @@
 								<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
 							</@>
 
-							<@aui["nav-item"] id="add-${report.getReportKey()}" href="${addReportURL}" label="${report.getName(locale)}" iconCssClass="${report.getIcon()}"/>
+							<@aui["nav-item"] href="${addReportURL}" iconCssClass="${report.getIcon()}" id="add-${report.getReportKey()}" label="${report.getName(locale)}" />
 						</#if>
 					</#list>
 				</@>
 
-				<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteReports" label="delete" />
+				<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteReports" label='${languageUtil.get(portletConfig, locale, "delete")}' />
 			</#if>
 		<#else>
 			<#if userSegmentPermission.contains(permissionChecker, classPK?long, actionKeys.UPDATE) && instantiableExists>
@@ -66,7 +66,7 @@
 					<@portlet["param"] name="classPK" value="${classPK}" />
 				</@>
 
-				<@aui["nav-item"] dropdown=true id="addButtonContainer" label="add" iconCssClass="icon-plus" label="add">
+				<@aui["nav-item"] dropdown=true iconCssClass="icon-plus" id="addButtonContainer" label='${languageUtil.get(portletConfig, locale, "add")}'>
 					<#list reports as report>
 						<#if report.isInstantiable()>
 							<@portlet["renderURL"] var="addReportURL">
@@ -78,12 +78,12 @@
 								<@portlet["param"] name="reportKey" value="${report.getReportKey()}" />
 							</@>
 
-							<@aui["nav-item"] id="add-${report.getReportKey()}" href="${addReportURL}" label="${report.getName(locale)}" iconCssClass="${report.getIcon()}"/>
+							<@aui["nav-item"] href="${addReportURL}" iconCssClass="${report.getIcon()}" id="add-${report.getReportKey()}" label="${report.getName(locale)}" />
 						</#if>
 					</#list>
 				</@>
 
-				<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteReports" label="delete" />
+				<@aui["nav-item"] cssClass="hide" iconCssClass="icon-remove" id="deleteReports" label='${languageUtil.get(portletConfig, locale, "delete")}' />
 			</#if>
 		</#if>
 	</@>
@@ -91,7 +91,7 @@
 
 	<@aui["nav-bar-search"] cssClass="pull-right">
 		<div class="form-search">
-			<@liferay_ui["input-search"] id="reportkeywords" name="reportKeywords" placeholder='${languageUtil.get(themeDisplay.getLocale(), "keywords")}' />
+			<@liferay_ui["input-search"] id="reportkeywords" name="reportKeywords" placeholder='${languageUtil.get(portletConfig, locale, "keywords")}' />
 		</div>
 	</@>
 </@>
