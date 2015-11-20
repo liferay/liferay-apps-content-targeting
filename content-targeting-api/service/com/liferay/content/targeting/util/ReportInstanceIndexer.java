@@ -172,7 +172,7 @@ public class ReportInstanceIndexer extends BaseIndexer {
 			new ReportInstanceActionableDynamicQuery() {
 
 			@Override
-			protected void performAction(Object object) throws PortalException {
+			protected void performAction(Object object) {
 				ReportInstance reportInstance = (ReportInstance)object;
 
 				if (reportInstance.getGroupId() == 0) {
@@ -201,10 +201,20 @@ public class ReportInstanceIndexer extends BaseIndexer {
 					}
 				}
 
-				Document document = getDocument(reportInstance);
+				try {
+					Document document = getDocument(reportInstance);
 
-				if (document != null) {
-					addDocument(document);
+					if (document != null) {
+						addDocument(document);
+					}
+				}
+				catch (PortalException e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index report instance: " +
+								reportInstance.getReportInstanceId(),
+							e);
+					}
 				}
 			}
 

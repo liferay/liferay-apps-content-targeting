@@ -173,14 +173,24 @@ public class ConsumerReportInstanceIndexer extends BaseIndexer {
 			new ConsumerReportInstanceActionableDynamicQuery() {
 
 			@Override
-			protected void performAction(Object object) throws PortalException {
+			protected void performAction(Object object) {
 				ConsumerReportInstance reportInstance =
 					(ConsumerReportInstance)object;
 
-				Document document = getDocument(reportInstance);
+				try {
+					Document document = getDocument(reportInstance);
 
-				if (document != null) {
-					addDocument(document);
+					if (document != null) {
+						addDocument(document);
+					}
+				}
+				catch (PortalException e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index consumer report instance: " +
+								reportInstance.getConsumerReportInstanceId(),
+							e);
+					}
 				}
 			}
 

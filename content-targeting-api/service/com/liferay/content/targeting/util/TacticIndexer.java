@@ -168,13 +168,22 @@ public class TacticIndexer extends BaseIndexer {
 			new TacticActionableDynamicQuery() {
 
 			@Override
-			protected void performAction(Object object) throws PortalException {
+			protected void performAction(Object object) {
 				Tactic tactic = (Tactic)object;
 
-				Document document = getDocument(tactic);
+				try {
+					Document document = getDocument(tactic);
 
-				if (document != null) {
-					addDocument(document);
+					if (document != null) {
+						addDocument(document);
+					}
+				}
+				catch (PortalException e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index tactic: " + tactic.getTacticId(),
+							e);
+					}
 				}
 			}
 
