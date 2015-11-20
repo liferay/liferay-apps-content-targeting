@@ -169,13 +169,23 @@ public class UserSegmentIndexer extends BaseIndexer {
 			new UserSegmentActionableDynamicQuery() {
 
 			@Override
-			protected void performAction(Object object) throws PortalException {
+			protected void performAction(Object object) {
 				UserSegment userSegment = (UserSegment)object;
 
-				Document document = getDocument(userSegment);
+				try {
+					Document document = getDocument(userSegment);
 
-				if (document != null) {
-					addDocument(document);
+					if (document != null) {
+						addDocument(document);
+					}
+				}
+				catch (PortalException e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index user segment: " +
+								userSegment.getUserSegmentId(),
+							e);
+					}
 				}
 			}
 

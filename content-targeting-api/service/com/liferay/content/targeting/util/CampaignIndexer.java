@@ -167,13 +167,23 @@ public class CampaignIndexer extends BaseIndexer {
 			new CampaignActionableDynamicQuery() {
 
 			@Override
-			protected void performAction(Object object) throws PortalException {
+			protected void performAction(Object object) {
 				Campaign campaign = (Campaign)object;
 
-				Document document = getDocument(campaign);
+				try {
+					Document document = getDocument(campaign);
 
-				if (document != null) {
-					addDocument(document);
+					if (document != null) {
+						addDocument(document);
+					}
+				}
+				catch (PortalException e) {
+					if (_log.isWarnEnabled()) {
+						_log.warn(
+							"Unable to index campaign: " +
+								campaign.getCampaignId(),
+							e);
+					}
 				}
 			}
 
