@@ -373,6 +373,12 @@
 			manageUserSegmentsLink.on(
 				'click',
 				function() {
+					var closeConfirmElement = A.one('#<@portlet["namespace"] />closeConfirm');
+
+					if (closeConfirmElement) {
+						closeConfirmElement.val('false');
+					}
+
 					if (confirm('<@liferay_ui["message"] key="${warningMessage}" />')) {
 						window.location.href = "${viewUserSegments}";
 					}
