@@ -108,7 +108,9 @@ public class ContentTargetingContextUtil {
 				permissionChecker, scopeGroupId, portletId);
 		}
 		catch (Exception e) {
-			_log.error(e);
+			if (_log.isWarnEnabled()) {
+				_log.warn(e);
+			}
 		}
 
 		return false;
