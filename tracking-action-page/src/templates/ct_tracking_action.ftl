@@ -44,7 +44,7 @@
 	</div>
 </#if>
 
-<@aui["input"] helpMessage="alias-help" label="alias" name="{ct_field_guid}alias" type="text" value=alias>
+<@aui["input"] helpMessage="name-help" label="name" name="{ct_field_guid}alias" type="text" value=alias>
 	<@aui["validator"] name="required" />
 </@>
 

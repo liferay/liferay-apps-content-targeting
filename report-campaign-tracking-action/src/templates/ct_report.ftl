@@ -59,7 +59,7 @@
 		</#if>
 
 		<@liferay_ui["search-container-column-text"]
-			name="alias"
+			name="name"
 			value=ctActionTotal.getAlias()
 		/>
 
