@@ -75,8 +75,8 @@ AUI.add(
 											Liferay.fire('fieldDragEnd');
 										}
 									}),
-									A.Do.before('_beforeInsertField', instance, 'insertField', instance),
-									A.Do.after('_onInsertField', instance, 'insertField', instance),
+									A.Do.before('_beforeInsertField', instance, 'addField', instance),
+									A.Do.after('_onInsertField', instance, 'addField', instance),
 									A.Do.after('_onRemoveField', instance, 'removeField', instance)
 								);
 							}
