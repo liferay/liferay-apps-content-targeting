@@ -5,6 +5,24 @@
 		display: inline-block;
 	}
 
+	.channels-panel, .tracking-actions-panel {
+		margin-top: 3em;
+
+		.title-text {
+			font-size: 18px;
+		}
+	}
+
+	.definition-of-terms {
+		dd {
+			margin-left: 15em;
+		}
+
+		dl {
+			margin-bottom: 15px;
+		}
+	}
+
 	.form-builder {
 		.form-builder-content {
 			.form-builder-content-container {
@@ -384,14 +402,6 @@
 	.slider-holder {
 		display: inline-block;
 		margin: 0 2em 0 .5em;
-	}
-
-	.channels-panel, .tracking-actions-panel {
-		margin-top: 3em;
-
-		.title-text {
-			font-size: 18px;
-		}
 	}
 
 	.user-segment-selector {
