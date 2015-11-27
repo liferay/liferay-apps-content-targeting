@@ -571,8 +571,6 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			"actionKeys", staticModels.get(ActionKeys.class.getName()));
 		template.put("consumerClass", Consumer.class);
 		template.put(
-			"consumerReportInstanceClass", ConsumerReportInstance.class);
-		template.put(
 			"consumerManagerPath",
 			staticModels.get(ConsumerManagerPath.class.getName()));
 		template.put(
@@ -582,63 +580,16 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			"consumerPermission",
 			staticModels.get(ConsumerPermission.class.getName()));
 		template.put(
-			"consumerTabs",
-			ParamUtil.getString(portletRequest, "consumerTabs", "details"));
-		template.put("consumersRowChecker", new RowChecker(portletResponse));
+			"consumerReportInstanceClass", ConsumerReportInstance.class);
+		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
 		template.put(
 			"portalUtil", staticModels.get(PortalUtil.class.getName()));
 		template.put(
 			"resourceActionsUtil",
 			staticModels.get(ResourceActionsUtil.class.getName()));
-		template.put("scopeGroup", themeDisplay.getScopeGroup());
 		template.put(
 			"unicodeFormatter",
 			staticModels.get(UnicodeFormatter.class.getName()));
-
-		String keywords = ParamUtil.getString(portletRequest, "keywords");
-
-		template.put(
-			"consumerSearchContainerIterator",
-			new ConsumerSearchContainerIterator(
-				themeDisplay.getCompanyId(), keywords, _consumerLocalService));
-
-		List<String> consumerReportCategories = new ArrayList<String>();
-
-		Map<String, ConsumerReport> consumerReports =
-			_consumerReportsRegistry.getReports();
-
-		for (ConsumerReport consumerReport
-				: consumerReports.values()) {
-
-			if (!consumerReportCategories.contains(
-					consumerReport.getReportCategoryKey())) {
-
-				consumerReportCategories.add(
-					consumerReport.getReportCategoryKey());
-			}
-		}
-
-		if (!consumerReportCategories.contains(
-				ConsumerReport.DEVICES_CATEGORY_KEY)) {
-
-			consumerReportCategories.add(ConsumerReport.DEVICES_CATEGORY_KEY);
-		}
-
-		if (!consumerReportCategories.contains(
-				ConsumerReport.REPORTS_CATEGORY_KEY)) {
-
-			consumerReportCategories.add(ConsumerReport.REPORTS_CATEGORY_KEY);
-		}
-
-		template.put(
-			"consumerReportsRegistry",
-				_consumerReportsRegistry);
-		template.put("consumerReportCategories", consumerReportCategories);
-
-		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
-
-		template.put(
-			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
@@ -656,57 +607,79 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
 			WebKeys.THEME_DISPLAY);
 
-		long consumerId = ParamUtil.getLong(portletRequest, "consumerId");
+		template.put("scopeGroup", themeDisplay.getScopeGroup());
+		template.put(
+			"redirect", ParamUtil.getString(portletRequest, "redirect"));
 
-		template.put("consumerId", consumerId);
+		template.put("consumersRowChecker", new RowChecker(portletResponse));
 
-		if (consumerId > 0) {
-			Consumer consumer = ConsumerLocalServiceUtil.getConsumer(
-				consumerId);
+		String keywords = ParamUtil.getString(portletRequest, "keywords");
 
-			template.put("consumer", consumer);
+		template.put(
+			"consumerSearchContainerIterator",
+			new ConsumerSearchContainerIterator(
+				themeDisplay.getCompanyId(), keywords, _consumerLocalService));
 
-			Map<String, ConsumerReport> reports =
-				_consumerReportsRegistry.getReports();
+		if (path.equals(ConsumerManagerPath.EDIT_CONSUMER) ||
+			path.equals(ConsumerManagerPath.VIEW_REPORTS_RESOURCES)) {
 
-			ServiceContext serviceContext = ServiceContextFactory.getInstance(
-				portletRequest);
-
-			for (ConsumerReport report : reports.values()) {
-				if (report.isInstantiable()) {
-					continue;
-				}
-
-				if (_consumerReportInstanceLocalService.getReportInstancesCount(
-						themeDisplay.getCompanyId(), consumerId,
-						report.getReportCategoryKey()) > 0) {
-
-					continue;
-				}
-
-				_consumerReportInstanceLocalService.addConsumerReportInstance(
-					consumerId, report.getReportKey(),
-					report.getReportCategoryKey(),
-					report.getName(themeDisplay.getLocale()),
-					report.getDescription(themeDisplay.getLocale()), "",
-					serviceContext);
-			}
-
-			ReportSearchContainerIterator reportSearchContainerIterator =
-				new ReportSearchContainerIterator(
-					themeDisplay.getCompanyId(), consumerId, portletRequest,
-					_consumerReportInstanceLocalService);
-
-			String reportCategoryKey = ParamUtil.getString(
-				portletRequest, "reportCategoryKey");
-
-			template.put("reportCategoryKey", reportCategoryKey);
 			template.put(
-				"reportSearchContainerIterator", reportSearchContainerIterator);
-		}
+				"consumerTabs",
+				ParamUtil.getString(portletRequest, "consumerTabs", "details"));
 
-		if (ConsumerManagerPath.EDIT_CONSUMER.equals(path) ||
-			ConsumerManagerPath.VIEW_REPORTS_RESOURCES.equals(path)) {
+			long consumerId = ParamUtil.getLong(portletRequest, "consumerId");
+
+			template.put("consumerId", consumerId);
+
+			if (consumerId > 0) {
+				Consumer consumer = ConsumerLocalServiceUtil.getConsumer(
+					consumerId);
+
+				template.put("consumer", consumer);
+
+				// Reports
+
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(portletRequest);
+
+				Map<String, ConsumerReport> reports =
+					_consumerReportsRegistry.getReports();
+
+				for (ConsumerReport report : reports.values()) {
+					if (report.isInstantiable()) {
+						continue;
+					}
+
+					if (_consumerReportInstanceLocalService.
+							getReportInstancesCount(
+								themeDisplay.getCompanyId(), consumerId,
+								report.getReportCategoryKey()) > 0) {
+
+						continue;
+					}
+
+					_consumerReportInstanceLocalService.
+						addConsumerReportInstance(
+							consumerId, report.getReportKey(),
+							report.getReportCategoryKey(),
+							report.getName(themeDisplay.getLocale()),
+							report.getDescription(themeDisplay.getLocale()), "",
+							serviceContext);
+				}
+
+				ReportSearchContainerIterator reportSearchContainerIterator =
+					new ReportSearchContainerIterator(
+						themeDisplay.getCompanyId(), consumerId, portletRequest,
+						_consumerReportInstanceLocalService);
+
+				String reportCategoryKey = ParamUtil.getString(
+					portletRequest, "reportCategoryKey");
+
+				template.put("reportCategoryKey", reportCategoryKey);
+				template.put(
+					"reportSearchContainerIterator",
+					reportSearchContainerIterator);
+			}
 
 			Map<String, ConsumerExtension> consumerExtensions =
 				_consumerExtensionsRegistry.getConsumerExtensions();
@@ -728,7 +701,7 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 
 				List<ConsumerExtensionTemplate>
 					addedConsumerExtensionTemplates =
-					new ArrayList<ConsumerExtensionTemplate>();
+						new ArrayList<ConsumerExtensionTemplate>();
 
 				if (!consumerExtensionInstances.isEmpty()) {
 					template.put(
@@ -739,7 +712,7 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 						getInvalidConsumerExtensionsException(portletRequest);
 
 					for (ConsumerExtensionInstance instance
-						: consumerExtensionInstances) {
+							: consumerExtensionInstances) {
 
 						ConsumerExtension consumerExtension =
 							_consumerExtensionsRegistry.getConsumerExtension(
@@ -755,7 +728,8 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 						if (instance.getConsumerExtensionInstanceId() > 0) {
 							consumerExtensionTemplate.setInstanceId(
 								String.valueOf(
-									instance.getConsumerExtensionInstanceId()));
+									instance.
+										getConsumerExtensionInstanceId()));
 						}
 						else {
 							consumerExtensionTemplate.setInstanceId(
@@ -787,7 +761,7 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 					new ArrayList<ConsumerExtensionTemplate>();
 
 				for (ConsumerExtension consumerExtension
-					: consumerExtensions.values()) {
+						: consumerExtensions.values()) {
 
 					if (!consumerExtension.isVisible()) {
 						continue;
@@ -814,9 +788,33 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			finally {
 				themeDisplay.setIsolated(isolated);
 			}
+
+			List<String> consumerReportCategories = new ArrayList<String>();
+
+			consumerReportCategories.add(ConsumerReport.DEVICES_CATEGORY_KEY);
+			consumerReportCategories.add(ConsumerReport.REPORTS_CATEGORY_KEY);
+
+			Map<String, ConsumerReport> consumerReports =
+				_consumerReportsRegistry.getReports();
+
+			for (ConsumerReport consumerReport : consumerReports.values()) {
+				if (!consumerReportCategories.contains(
+						consumerReport.getReportCategoryKey())) {
+
+					consumerReportCategories.add(
+						consumerReport.getReportCategoryKey());
+				}
+			}
+
+			template.put("consumerReportCategories", consumerReportCategories);
+			template.put("consumerReportsRegistry", _consumerReportsRegistry);
 		}
-		else if (ConsumerManagerPath.EDIT_REPORT.equals(path) ||
-				 ConsumerManagerPath.VIEW_REPORT.equals(path)) {
+		else if (path.equals(ConsumerManagerPath.EDIT_REPORT) ||
+				 path.equals(ConsumerManagerPath.VIEW_REPORT)) {
+
+			long consumerId = ParamUtil.getLong(portletRequest, "consumerId");
+
+			template.put("consumerId", consumerId);
 
 			long consumerReportInstanceId = ParamUtil.getLong(
 				portletRequest, "consumerReportInstanceId");
@@ -829,7 +827,7 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			String reportCategoryKey = consumerReport.getReportCategoryKey();
 
 			ConsumerReportInstance consumerReportInstance =
-				_consumerReportInstanceLocalService.getConsumerReportInstance(
+				_consumerReportInstanceLocalService.fetchConsumerReportInstance(
 					consumerReportInstanceId);
 
 			BreadcrumbUtil.addPortletBreadcrumbEntries(

@@ -118,7 +118,6 @@ import freemarker.template.TemplateHashModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -813,16 +812,21 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		TemplateHashModel staticModels = wrapper.getStaticModels();
 
+		template.put(
+			"actionKeys", staticModels.get(ActionKeys.class.getName()));
 		template.put("campaignClass", Campaign.class);
 		template.put(
 			"campaignConstants",
 			staticModels.get(CampaignConstants.class.getName()));
 		template.put(
-			"campaignTabs",
-			ParamUtil.getString(portletRequest, "campaignTabs", "details"));
+			"campaignPermission",
+			staticModels.get(CampaignPermission.class.getName()));
 		template.put(
 			"contentTargetingPath",
 			staticModels.get(ContentTargetingPath.class.getName()));
+		template.put(
+			"contentTargetingPermission",
+			staticModels.get(ContentTargetingPermission.class.getName()));
 		template.put("currentURL", PortalUtil.getCurrentURL(portletRequest));
 		template.put("liferayWindowStatePopUp", LiferayWindowState.POP_UP);
 		template.put("portletClass", getClass());
@@ -834,16 +838,13 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put("tacticClass", Tactic.class);
 		template.put(
 			"userInfo", portletRequest.getAttribute(PortletRequest.USER_INFO));
-		template.put(
-			"usedUserSegments",
-			SessionMessages.get(portletRequest, "usedUserSegments"));
 		template.put("userSegmentClass", UserSegment.class);
+		template.put(
+			"userSegmentPermission",
+			staticModels.get(UserSegmentPermission.class.getName()));
 		template.put(
 			"userPermissionUtil",
 			staticModels.get(UserPermissionUtil.class.getName()));
-		template.put(
-			"userSegmentTabs",
-			ParamUtil.getString(portletRequest, "userSegmentTabs", "details"));
 
 		populateViewContext(
 			path, portletRequest, portletResponse, template, staticModels);
@@ -1106,24 +1107,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			TemplateHashModel staticModels)
 		throws Exception {
 
-		HttpServletRequest request = PortalUtil.getHttpServletRequest(
-			portletRequest);
-
-		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
-			WebKeys.THEME_DISPLAY);
-
-		template.put(
-			"campaignPermission",
-			staticModels.get(CampaignPermission.class.getName()));
-		template.put(
-			"contentTargetingPermission",
-			staticModels.get(ContentTargetingPermission.class.getName()));
-		template.put(
-			"userSegmentPermission",
-			staticModels.get(UserSegmentPermission.class.getName()));
-		template.put(
-			"actionKeys", staticModels.get(ActionKeys.class.getName()));
-
 		String redirect = ParamUtil.getString(portletRequest, "redirect");
 		String backURL = ParamUtil.getString(
 			portletRequest, "backURL", redirect);
@@ -1131,18 +1114,24 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		template.put("redirect", redirect);
 		template.put("backURL", backURL);
 
-		long scopeGroupId = (Long) template.get("scopeGroupId");
+		HttpServletRequest request = PortalUtil.getHttpServletRequest(
+			portletRequest);
+
+		ThemeDisplay themeDisplay = (ThemeDisplay)portletRequest.getAttribute(
+			WebKeys.THEME_DISPLAY);
 
 		Group scopeGroup = themeDisplay.getScopeGroup();
 
 		template.put("scopeGroup", scopeGroup);
 
+		long scopeGroupId = themeDisplay.getScopeGroupId();
+
+		PermissionChecker permissionChecker = (PermissionChecker)template.get(
+			"permissionChecker");
+
 		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW) ||
 			path.equals(ContentTargetingPath.VIEW_CAMPAIGNS_RESOURCES) ||
 			path.equals(ContentTargetingPath.VIEW_USER_SEGMENTS_RESOURCES)) {
-
-			PermissionChecker permissionChecker =
-				(PermissionChecker) template.get("permissionChecker");
 
 			if (UserSegmentPermission.contains(
 					permissionChecker, scopeGroupId, scopeGroupId,
@@ -1170,11 +1159,13 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				"campaignSearchContainerIterator",
 				new CampaignSearchContainerIterator(
 					scopeGroupId, campaignKeywords));
-
 			template.put(
 				"userSegmentSearchContainerIterator",
 				new UserSegmentSearchContainerIterator(
 					scopeGroupId, userSegmentKeywords));
+			template.put(
+				"usedUserSegments",
+				SessionMessages.get(portletRequest, "usedUserSegments"));
 
 			Map<String, Channel> channels = _channelsRegistry.getChannels();
 			Map<String, Report> reports = _reportsRegistry.getReports();
@@ -1184,38 +1175,146 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN) ||
 				 path.equals(ContentTargetingPath.EDIT_TACTIC) ||
-				 path.equals(ContentTargetingPath.VIEW_REPORTS_RESOURCES) ||
-				 path.equals(ContentTargetingPath.VIEW_TACTICS) ||
 				 path.equals(ContentTargetingPath.VIEW_TACTICS_RESOURCES)) {
 
 			template.put(
-				"contentTargetingPermission",
-				staticModels.get(ContentTargetingPermission.class.getName()));
-			template.put(
-				"actionKeys", staticModels.get(ActionKeys.class.getName()));
+				"campaignTabs",
+				ParamUtil.getString(portletRequest, "campaignTabs", "details"));
 
 			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");
-			long tacticId = ParamUtil.getLong(portletRequest, "tacticId");
 
 			template.put("campaignId", campaignId);
-			template.put("tacticId", tacticId);
-
-			int priority = 1;
-			long userSegmentId = -1;
 
 			Calendar endDate = Calendar.getInstance();
+			int priority = 1;
 			Calendar startDate = Calendar.getInstance();
-
+			String userSegmentAssetCategoryIdsAsString = StringPool.BLANK;
+			String userSegmentAssetCategoryNames = StringPool.BLANK;
+			String timeZoneId = StringPool.BLANK;
 			List<UserSegment> campaignUserSegments = null;
 
 			Campaign campaign = null;
 
 			if (campaignId > 0) {
-				template.put(
-					"reports",
-					_reportsRegistry.getReports(
-						Campaign.class.getName()).values());
+				campaign = _campaignLocalService.getCampaign(campaignId);
 
+				template.put("campaign", campaign);
+
+				startDate = Calendar.getInstance(
+					TimeZone.getTimeZone(campaign.getTimeZoneId()));
+				endDate = Calendar.getInstance(
+					TimeZone.getTimeZone(campaign.getTimeZoneId()));
+
+				endDate.setTime(campaign.getEndDate());
+				startDate.setTime(campaign.getStartDate());
+
+				timeZoneId = campaign.getTimeZoneId();
+
+				if (Validator.isBlank(timeZoneId)) {
+					timeZoneId = themeDisplay.getTimeZone().getID();
+				}
+
+				campaignUserSegments =
+					_userSegmentLocalService.getCampaignUserSegments(
+						campaignId);
+
+				long[] userSegmentAssetCategoryIds =
+					ContentTargetingUtil.getAssetCategoryIds(
+						campaignUserSegments);
+
+				userSegmentAssetCategoryIdsAsString = StringUtil.merge(
+					userSegmentAssetCategoryIds);
+
+				userSegmentAssetCategoryNames =
+					ContentTargetingUtil.getAssetCategoryNames(
+						userSegmentAssetCategoryIds, themeDisplay.getLocale());
+			}
+			else {
+				Date now = new Date();
+
+				endDate.setTime(now);
+				endDate.add(Calendar.YEAR, 1);
+
+				startDate.setTime(now);
+
+				timeZoneId = themeDisplay.getTimeZone().getID();
+			}
+
+			template.put(
+				"campaignUserSegmentsIds", userSegmentAssetCategoryIdsAsString);
+			template.put("endDate", endDate);
+			template.put("priority", priority);
+			template.put("startDate", startDate);
+			template.put("timeZoneId", timeZoneId);
+			template.put(
+				"userSegmentAssetCategoryIdsAsString",
+				userSegmentAssetCategoryIdsAsString);
+			template.put(
+				"userSegmentAssetCategoryNames", userSegmentAssetCategoryNames);
+
+			long[] groupIds =
+				ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+					scopeGroupId);
+
+			List<UserSegment> userSegments =
+				_userSegmentService.getUserSegments(groupIds);
+
+			template.put("userSegments", userSegments);
+
+			ServiceContext serviceContext = new ServiceContext();
+
+			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
+
+			long[] vocabularyGroupIds = new long[1];
+			long[] vocabularyIds = new long[1];
+
+			if (themeDisplay.getScopeGroupId() ==
+					themeDisplay.getCompanyGroupId()) {
+
+				vocabularyGroupIds[0] = themeDisplay.getCompanyGroupId();
+
+				vocabularyIds[0] = UserSegmentUtil.getAssetVocabularyId(
+					themeDisplay.getUserId(), serviceContext);
+			}
+			else {
+				vocabularyGroupIds =
+					ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
+						themeDisplay.getSiteGroupId());
+				vocabularyIds = UserSegmentUtil.getAssetVocabularyIds(
+					vocabularyGroupIds);
+			}
+
+			template.put(
+				"vocabularyGroupIds", StringUtil.merge(vocabularyGroupIds));
+			template.put("vocabularyIds", StringUtil.merge(vocabularyIds));
+
+			if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN) &&
+				(campaignId > 0)) {
+
+				// Tactics
+
+				if (CampaignPermission.contains(
+						permissionChecker, scopeGroupId, scopeGroupId,
+					ActionKeys.DELETE)) {
+
+					template.put(
+						"tacticsRowChecker", new RowChecker(portletResponse));
+				}
+
+				String keywords = ParamUtil.getString(
+					portletRequest, "tacticKeywords");
+
+				template.put(
+					"tacticSearchContainerIterator",
+					new TacticSearchContainerIterator(
+						campaignId, scopeGroupId, keywords));
+
+				// Reports
+
+				Map<String, Report> reports = _reportsRegistry.getReports(
+					Campaign.class.getName());
+
+				template.put("reports",reports.values());
 				template.put(
 					"reportsRowChecker",
 					new ReportInstanceRowChecker(
@@ -1230,21 +1329,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						themeDisplay.getScopeGroupId(), reportKeywords,
 						Campaign.class.getName(), campaignId));
 
-				String className = Campaign.class.getName();
-
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(request);
-
-				Map<String, Report> reports = _reportsRegistry.getReports(
-					className);
-
 				for (Report report : reports.values()) {
 					if (report.isInstantiable()) {
 						continue;
 					}
 
 					if (_reportInstanceLocalService.getReportInstanceCount(
-							report.getReportKey(), className, campaignId)
+							report.getReportKey(), Campaign.class.getName(),
+							campaignId)
 						> 0) {
 
 						continue;
@@ -1252,126 +1344,41 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 					_reportInstanceLocalService.addReportInstance(
 						themeDisplay.getUserId(), report.getReportKey(),
-						className, campaignId, StringPool.BLANK,
+						Campaign.class.getName(), campaignId, StringPool.BLANK,
 						serviceContext);
 				}
+			}
+			else if (path.equals(ContentTargetingPath.EDIT_TACTIC)) {
+				long tacticId = ParamUtil.getLong(portletRequest, "tacticId");
 
-				campaign = _campaignLocalService.getCampaign(campaignId);
+				template.put("tacticId", tacticId);
 
-				template.put("campaign", campaign);
+				Tactic tactic = null;
 
-				startDate = Calendar.getInstance(
-					TimeZone.getTimeZone(campaign.getTimeZoneId()));
-				endDate = Calendar.getInstance(
-					TimeZone.getTimeZone(campaign.getTimeZoneId()));
+				if (tacticId > 0) {
+					tactic = _tacticLocalService.getTactic(tacticId);
 
-				endDate.setTime(campaign.getEndDate());
-				startDate.setTime(campaign.getStartDate());
+					template.put("tactic", tactic);
 
-				String timeZoneId = campaign.getTimeZoneId();
+					List<UserSegment> tacticUserSegments =
+						_userSegmentLocalService.getTacticUserSegments(
+							tacticId);
 
-				if (Validator.isBlank(timeZoneId)) {
-					timeZoneId = themeDisplay.getTimeZone().getID();
-				}
+					long[] userSegmentAssetCategoryIds =
+						ContentTargetingUtil.getAssetCategoryIds(
+							tacticUserSegments);
 
-				template.put("timeZoneId", timeZoneId);
-
-				campaignUserSegments =
-					_userSegmentLocalService.getCampaignUserSegments(
-						campaignId);
-
-				long[] userSegmentAssetCategoryIds =
-					ContentTargetingUtil.getAssetCategoryIds(
-						campaignUserSegments);
-
-				String userSegmentAssetCategoryIdsAsString = StringUtil.merge(
-					userSegmentAssetCategoryIds);
-
-				if (path.equals(ContentTargetingPath.EDIT_CAMPAIGN) ||
-					path.equals(ContentTargetingPath.EDIT_TACTIC)) {
-
+					template.put(
+						"userSegmentAssetCategoryIdsAsString",
+						StringUtil.merge(userSegmentAssetCategoryIds));
 					template.put(
 						"userSegmentAssetCategoryNames",
 						ContentTargetingUtil.getAssetCategoryNames(
 							userSegmentAssetCategoryIds,
 							themeDisplay.getLocale()));
-
-					if (Validator.isNull(backURL)) {
-						PortletURL portletURL =
-							((RenderResponse)portletResponse).createRenderURL();
-
-						portletURL.setParameter(
-							"mvcPath", ContentTargetingPath.VIEW);
-						portletURL.setParameter("tabs1", "campaigns");
-					}
-				}
-				else {
-					template.put(
-						"userSegmentAssetCategoryNames", StringPool.BLANK);
 				}
 
-				template.put(
-					"campaignUserSegmentsIds",
-					userSegmentAssetCategoryIdsAsString);
-				template.put(
-					"userSegmentAssetCategoryIdsAsString",
-					userSegmentAssetCategoryIdsAsString);
-			}
-			else {
-				Date now = new Date();
-
-				endDate.setTime(now);
-				endDate.add(Calendar.YEAR, 1);
-
-				startDate.setTime(now);
-
-				template.put("userSegmentAssetCategoryIdsAsString", "");
-				template.put("userSegmentAssetCategoryNames", "");
-
-				template.put("timeZoneId", themeDisplay.getTimeZone().getID());
-			}
-
-			Tactic tactic = null;
-
-			if (tacticId > 0) {
-				tactic = _tacticLocalService.getTactic(tacticId);
-
-				template.put("tactic", tactic);
-
-				List<UserSegment> tacticUserSegments =
-					_userSegmentLocalService.getTacticUserSegments(tacticId);
-
-				long[] userSegmentAssetCategoryIds =
-					ContentTargetingUtil.getAssetCategoryIds(
-						tacticUserSegments);
-
-				template.put(
-					"userSegmentAssetCategoryIdsAsString",
-					StringUtil.merge(userSegmentAssetCategoryIds));
-				template.put(
-					"userSegmentAssetCategoryNames",
-					ContentTargetingUtil.getAssetCategoryNames(
-						userSegmentAssetCategoryIds, themeDisplay.getLocale()));
-			}
-
-			template.put("endDate", endDate);
-			template.put("priority", priority);
-			template.put("startDate", startDate);
-			template.put("userSegmentId", userSegmentId);
-
-			long[] groupIds =
-				ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
-					themeDisplay.getScopeGroupId());
-
-			List<UserSegment> userSegments =
-				_userSegmentService.getUserSegments(groupIds);
-
-			template.put("userSegments", userSegments);
-
-			boolean isolated = themeDisplay.isIsolated();
-
-			if (path.equals(ContentTargetingPath.EDIT_TACTIC)) {
-				isolated = themeDisplay.isIsolated();
+				boolean isolated = themeDisplay.isIsolated();
 
 				try {
 					themeDisplay.setIsolated(true);
@@ -1487,95 +1494,27 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				}
 			}
 
-			PermissionChecker permissionChecker =
-				(PermissionChecker) template.get("permissionChecker");
+			if (Validator.isNull(backURL) &&
+				(path.equals(ContentTargetingPath.EDIT_CAMPAIGN) ||
+				 path.equals(ContentTargetingPath.EDIT_TACTIC))) {
 
-			if (CampaignPermission.contains(
-					permissionChecker, scopeGroupId, scopeGroupId,
-				ActionKeys.DELETE)) {
+				PortletURL portletURL =
+						((RenderResponse)portletResponse).createRenderURL();
 
-				template.put(
-					"tacticsRowChecker", new RowChecker(portletResponse));
+				portletURL.setParameter("mvcPath", ContentTargetingPath.VIEW);
+				portletURL.setParameter("tabs1", "campaigns");
+
+				template.put("backURL", portletURL.toString());
 			}
-
-			String keywords = ParamUtil.getString(
-				portletRequest, "tacticKeywords");
-
-			template.put(
-				"tacticSearchContainerIterator",
-				new TacticSearchContainerIterator(
-					campaignId, scopeGroupId, keywords));
-
-			ServiceContext serviceContext = new ServiceContext();
-
-			serviceContext.setScopeGroupId(themeDisplay.getScopeGroupId());
-
-			long[] vocabularyGroupIds = new long[1];
-			long[] vocabularyIds = new long[1];
-
-			if (themeDisplay.getScopeGroupId() ==
-					themeDisplay.getCompanyGroupId()) {
-
-				vocabularyGroupIds[0] = themeDisplay.getCompanyGroupId();
-
-				vocabularyIds[0] = UserSegmentUtil.getAssetVocabularyId(
-					themeDisplay.getUserId(), serviceContext);
-			}
-			else {
-				vocabularyGroupIds =
-					ContentTargetingUtil.getAncestorsAndCurrentGroupIds(
-						themeDisplay.getSiteGroupId());
-				vocabularyIds = UserSegmentUtil.getAssetVocabularyIds(
-					vocabularyGroupIds);
-			}
-
-			template.put(
-				"vocabularyGroupIds", StringUtil.merge(vocabularyGroupIds));
-
-			template.put("vocabularyIds", StringUtil.merge(vocabularyIds));
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
+			template.put(
+				"userSegmentTabs",
+				ParamUtil.getString(
+					portletRequest, "userSegmentTabs", "details"));
+
 			long userSegmentId = ParamUtil.getLong(
 				portletRequest, "userSegmentId");
-
-			String className = UserSegment.class.getName();
-
-			Collection<Report> reports = _reportsRegistry.getReports(
-				className).values();
-
-			template.put("reports", reports);
-
-			if (userSegmentId > 0) {
-				String reportKeywords = ParamUtil.getString(
-					portletRequest, "reportKeywords");
-
-				template.put(
-					"reportSearchContainerIterator",
-					new ReportSearchContainerIterator(
-						themeDisplay.getScopeGroupId(), reportKeywords,
-						UserSegment.class.getName(), userSegmentId));
-
-				ServiceContext serviceContext =
-					ServiceContextFactory.getInstance(request);
-
-				for (Report report : reports) {
-					if (report.isInstantiable()) {
-						continue;
-					}
-
-					if (_reportInstanceLocalService.getReportInstanceCount(
-							report.getReportKey(), className, userSegmentId)
-						> 0) {
-
-						continue;
-					}
-
-					_reportInstanceLocalService.addReportInstance(
-						themeDisplay.getUserId(), report.getReportKey(),
-						className, userSegmentId, StringPool.BLANK,
-						serviceContext);
-				}
-			}
 
 			template.put("ruleCategoriesRegistry", _ruleCategoriesRegistry);
 			template.put("rulesRegistry", _rulesRegistry);
@@ -1643,13 +1582,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				template.put("addedRuleTemplates", addedRuleTemplates);
 
-				if (userSegmentId > 0) {
-					UserSegment userSegment =
-						_userSegmentLocalService.getUserSegment(userSegmentId);
-
-					template.put("userSegment", userSegment);
-				}
-
 				List<RuleTemplate> ruleTemplates =
 					new ArrayList<RuleTemplate>();
 
@@ -1674,16 +1606,61 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			finally {
 				themeDisplay.setIsolated(isolated);
 			}
+
+			if (userSegmentId > 0) {
+				UserSegment userSegment =
+					_userSegmentLocalService.getUserSegment(userSegmentId);
+
+				template.put("userSegment", userSegment);
+
+				// Reports
+
+				Map<String, Report> reports = _reportsRegistry.getReports(
+					UserSegment.class.getName());
+
+				template.put("reports", reports.values());
+
+				String reportKeywords = ParamUtil.getString(
+					portletRequest, "reportKeywords");
+
+				template.put(
+					"reportSearchContainerIterator",
+					new ReportSearchContainerIterator(
+						themeDisplay.getScopeGroupId(), reportKeywords,
+						UserSegment.class.getName(), userSegmentId));
+
+				ServiceContext serviceContext =
+					ServiceContextFactory.getInstance(request);
+
+				for (Report report : reports.values()) {
+					if (report.isInstantiable()) {
+						continue;
+					}
+
+					if (_reportInstanceLocalService.getReportInstanceCount(
+							report.getReportKey(), UserSegment.class.getName(),
+							userSegmentId)
+						> 0) {
+
+						continue;
+					}
+
+					_reportInstanceLocalService.addReportInstance(
+						themeDisplay.getUserId(), report.getReportKey(),
+						UserSegment.class.getName(), userSegmentId,
+						StringPool.BLANK, serviceContext);
+				}
+			}
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_REPORT) ||
 				 path.equals(ContentTargetingPath.VIEW_REPORT) ||
-				 path.equals(ContentTargetingPath.VIEW_REPORTS)) {
+				 path.equals(ContentTargetingPath.VIEW_REPORTS) ||
+				 path.equals(ContentTargetingPath.VIEW_REPORTS_RESOURCES)) {
 
 			String className = ParamUtil.getString(portletRequest, "className");
 			long classPK = ParamUtil.getLong(portletRequest, "classPK");
 
 			template.put("className", className);
-			template.put("scopeGroup", scopeGroup);
 			template.put("reportInstanceService", _reportInstanceService);
 
 			String name = StringPool.BLANK;
@@ -1749,9 +1726,34 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						report.getHTML(
 							reportInstance, cloneTemplateContext(template)));
 				}
-			}
 
-			if (path.equals(ContentTargetingPath.VIEW_REPORTS)) {
+				if (Validator.isNull(backURL)) {
+					PortletURL portletURL =
+						((RenderResponse)portletResponse).createRenderURL();
+
+					if (className.equals(Campaign.class.getName())) {
+						portletURL.setParameter(
+							"mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
+						portletURL.setParameter(
+							"campaignId", String.valueOf(classPK));
+						portletURL.setParameter("campaignTabs", "reports");
+					}
+					else {
+						portletURL.setParameter(
+							"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
+						portletURL.setParameter(
+							"userSegmentId", String.valueOf(classPK));
+					}
+
+					portletURL.setParameter("className", className);
+					portletURL.setParameter("classPK", String.valueOf(classPK));
+
+					template.put("backURL", portletURL.toString());
+				}
+			}
+			else if (path.equals(ContentTargetingPath.VIEW_REPORTS) ||
+					 path.equals(ContentTargetingPath.VIEW_REPORTS_RESOURCES)) {
+
 				PortletConfig portletConfig =
 					(PortletConfig)portletRequest.getAttribute(
 						JavaConstants.JAVAX_PORTLET_CONFIG);
@@ -1766,8 +1768,10 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 				template.put("title", title);
 
-				template.put(
-					"reports", _reportsRegistry.getReports(className).values());
+				Map<String, Report> reports = _reportsRegistry.getReports(
+					className);
+
+				template.put("reports", reports.values());
 				template.put(
 					"reportsRowChecker",
 					new ReportInstanceRowChecker(
@@ -1785,9 +1789,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				ServiceContext serviceContext =
 					ServiceContextFactory.getInstance(request);
 
-				Map<String, Report> reports = _reportsRegistry.getReports(
-					className);
-
 				for (Report report : reports.values()) {
 					if (report.isInstantiable()) {
 						continue;
@@ -1804,30 +1805,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						themeDisplay.getUserId(), report.getReportKey(),
 						className, classPK, StringPool.BLANK, serviceContext);
 				}
-			}
-
-			if (Validator.isNull(backURL)) {
-				PortletURL portletURL =
-					((RenderResponse)portletResponse).createRenderURL();
-
-				if (className.equals(Campaign.class.getName())) {
-					portletURL.setParameter(
-						"mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
-					portletURL.setParameter(
-						"campaignId", String.valueOf(classPK));
-					portletURL.setParameter("campaignTabs", "reports");
-				}
-				else {
-					portletURL.setParameter(
-						"mvcPath", ContentTargetingPath.EDIT_USER_SEGMENT);
-					portletURL.setParameter(
-						"userSegmentId", String.valueOf(classPK));
-				}
-
-				portletURL.setParameter("className", className);
-				portletURL.setParameter("classPK", String.valueOf(classPK));
-
-				template.put("backURL", portletURL.toString());
 			}
 		}
 	}
