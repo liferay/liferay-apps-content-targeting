@@ -21,6 +21,7 @@ import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -160,8 +161,12 @@ public class UserSegmentContentDisplayPortletDataHandler
 		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "referenced-user-segments")) {
 
-			StagedModelDataHandlerUtil.importReferenceStagedModels(
-				portletDataContext, UserSegment.class);
+			try {
+				StagedModelDataHandlerUtil.importReferenceStagedModels(
+					portletDataContext, UserSegment.class);
+			}
+			catch (PortletDataException pde) {
+			}
 		}
 
 		String[] newValues = new String[oldValues.length];

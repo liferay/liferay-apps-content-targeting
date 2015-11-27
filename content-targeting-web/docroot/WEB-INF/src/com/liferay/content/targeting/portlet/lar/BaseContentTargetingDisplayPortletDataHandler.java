@@ -20,6 +20,7 @@ import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -194,8 +195,12 @@ public abstract class BaseContentTargetingDisplayPortletDataHandler
 		}
 
 		if (isExportReferencedContent(portletDataContext)) {
-			StagedModelDataHandlerUtil.importReferenceStagedModels(
-				portletDataContext, AssetEntryReferencedStagedModel.class);
+			try {
+				StagedModelDataHandlerUtil.importReferenceStagedModels(
+					portletDataContext, AssetEntryReferencedStagedModel.class);
+			}
+			catch (PortletDataException pde) {
+			}
 		}
 
 		String classUuid = portletPreferences.getValue(key + "classUuid", null);

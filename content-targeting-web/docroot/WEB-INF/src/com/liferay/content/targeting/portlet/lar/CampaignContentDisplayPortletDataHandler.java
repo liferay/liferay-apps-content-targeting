@@ -21,6 +21,7 @@ import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.portal.kernel.lar.DataLevel;
 import com.liferay.portal.kernel.lar.ExportImportPathUtil;
 import com.liferay.portal.kernel.lar.PortletDataContext;
+import com.liferay.portal.kernel.lar.PortletDataException;
 import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
 import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
@@ -132,8 +133,12 @@ public class CampaignContentDisplayPortletDataHandler
 		if (portletDataContext.getBooleanParameter(
 				NAMESPACE, "referenced-campaigns")) {
 
-			StagedModelDataHandlerUtil.importReferenceStagedModels(
-				portletDataContext, Campaign.class);
+			try {
+				StagedModelDataHandlerUtil.importReferenceStagedModels(
+					portletDataContext, Campaign.class);
+			}
+			catch (PortletDataException pde) {
+			}
 		}
 
 		String uuid = portletPreferences.getValue(key + "uuid", null);
