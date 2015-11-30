@@ -88,4 +88,4 @@
 	</@>
 </@>
 
-<@closeConfirm confirmMessage="leaving-this-window-deletes-all-unsaved-data" controlCssClasses=["control-button", "tab"] />
+<@closeConfirm confirmMessage="leaving-this-window-deletes-all-unsaved-data" controlCssClasses=["control-button"] />
