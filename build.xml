@@ -19,6 +19,8 @@
 
 	<property name="build.app.services" value="true" />
 
+	<property name="source.formatter.excludes" value="**/tools/**,**/consumer-manager-web/build.xml**/" />
+
 	<target name="all">
 		<antcall target="release" />
 	</target>
@@ -315,6 +317,21 @@
 			<replacefilter token="@tracking.action.java.package.name@" value="${tracking.action.java.package.name}" />
 			<replacefilter token="@tracking.action.name@" value="${tracking.action.name}" />
 		</replace>
+	</target>
+
+	<target name="format-source">
+		<java
+			classname="com.liferay.portal.tools.sourceformatter.SourceFormatter"
+			classpathref="portal.classpath"
+			fork="true"
+			newenvironment="true"
+		>
+			<jvmarg value="-Xmx512m" />
+			<jvmarg value="-Xss2048k" />
+			<jvmarg value="-Dsource.formatter.excludes=${source.formatter.excludes}" />
+		</java>
+
+		<delete file="ServiceBuilder.temp" />
 	</target>
 
 	<target name="release">
