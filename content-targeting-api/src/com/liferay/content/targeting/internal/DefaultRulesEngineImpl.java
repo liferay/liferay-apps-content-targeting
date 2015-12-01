@@ -42,6 +42,7 @@ import org.osgi.service.component.annotations.Reference;
 @Component
 public class DefaultRulesEngineImpl implements RulesEngine {
 
+	@Override
 	public long[] getMatchingUserSegmentIds(
 			HttpServletRequest request, AnonymousUser anonymousUser,
 			List<UserSegment> userSegments)
