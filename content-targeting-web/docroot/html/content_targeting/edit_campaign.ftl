@@ -30,27 +30,23 @@
 	title='${(campaign.getName(locale))!"new-campaign"}'
 />
 
-<#assign classPK=campaignId>
-<#assign className=campaignClass.getName()>
-
 <#if (campaignId > 0)>
-	<#assign pills="details,promotions,reports">
+	<#assign campaignTabs="details,promotions,reports">
 <#else>
-	<#assign pills="details">
+	<#assign campaignTabs="details">
 </#if>
 
-<@portlet["renderURL"] varImpl="switchTabsURL">
+<@portlet["renderURL"] var="portletURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 	<@portlet["param"] name="campaignId" value="${campaignId}" />
 </@>
 
 <@liferay_ui["tabs"]
-	names="${pills}"
-	param="campaignTabs"
-	portletURL=switchTabsURL
-	refresh=true
+	names="${campaignTabs}"
+	param="tabs2"
 	type="pills"
-	value="${campaignTabs}"
+	url=portletURL
+	value="${tabs2}"
 >
 	<@liferay_ui["section"]>
 		<#include "campaign_details.ftl" />

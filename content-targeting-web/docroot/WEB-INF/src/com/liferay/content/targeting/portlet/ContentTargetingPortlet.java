@@ -1177,13 +1177,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				 path.equals(ContentTargetingPath.EDIT_TACTIC) ||
 				 path.equals(ContentTargetingPath.VIEW_TACTICS_RESOURCES)) {
 
-			template.put(
-				"campaignTabs",
-				ParamUtil.getString(portletRequest, "campaignTabs", "details"));
-
 			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");
 
 			template.put("campaignId", campaignId);
+			template.put("className", Campaign.class.getName());
+			template.put("classPK", campaignId);
+			template.put(
+				"tabs2",
+				ParamUtil.getString(portletRequest, "tabs2", "details"));
 
 			Calendar endDate = Calendar.getInstance();
 			int priority = 1;
@@ -1508,14 +1509,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			}
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
-			template.put(
-				"userSegmentTabs",
-				ParamUtil.getString(
-					portletRequest, "userSegmentTabs", "details"));
-
 			long userSegmentId = ParamUtil.getLong(
 				portletRequest, "userSegmentId");
 
+			template.put("className", UserSegment.class.getName());
+			template.put("classPK", userSegmentId);
+			template.put(
+				"tabs2",
+				ParamUtil.getString(portletRequest, "tabs2", "details"));
 			template.put("ruleCategoriesRegistry", _ruleCategoriesRegistry);
 			template.put("rulesRegistry", _rulesRegistry);
 			template.put("userSegmentId", userSegmentId);
@@ -1736,7 +1737,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 							"mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
 						portletURL.setParameter(
 							"campaignId", String.valueOf(classPK));
-						portletURL.setParameter("campaignTabs", "reports");
+						portletURL.setParameter("tabs2", "reports");
 					}
 					else {
 						portletURL.setParameter(

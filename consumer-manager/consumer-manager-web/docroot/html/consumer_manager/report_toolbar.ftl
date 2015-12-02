@@ -32,7 +32,7 @@
 			<@portlet["renderURL"] var="redirectURL">
 				<@portlet["param"] name="mvcPath" value="${consumerManagerPath.EDIT_CONSUMER}" />
 				<@portlet["param"] name="consumerId" value="${consumerId}" />
-				<@portlet["param"] name="consumerTabs" value="reports" />
+				<@portlet["param"] name="tabs2" value="reports" />
 			</@>
 
 			<@aui["nav-item"] dropdown=true iconCssClass="icon-plus" id="addButtonContainer" label='${languageUtil.get(portletConfig, locale, "add")}'>

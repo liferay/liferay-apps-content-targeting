@@ -37,7 +37,7 @@
 	<@portlet["param"] name="redirect" value="${redirect}" />
 	<@portlet["param"] name="mvcPath" value="${consumerManagerPath.EDIT_CONSUMER}" />
 	<@portlet["param"] name="consumerId" value="${consumerId?string}" />
-	<@portlet["param"] name="consumerTabs" value="${reportCategoryKey}" />
+	<@portlet["param"] name="tabs2" value="${reportCategoryKey}" />
 </@>
 
 <@aui["form"] action="${viewReportsURL}" method="post" name="${reportCategoryKey}_fmReports">

@@ -34,7 +34,7 @@
 					<@portlet["param"] name="campaignId" value="${classPK}" />
 					<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 					<@portlet["param"] name="classPK" value="${classPK}" />
-					<@portlet["param"] name="campaignTabs" value="reports" />
+					<@portlet["param"] name="tabs2" value="reports" />
 				</@>
 
 				<@aui["nav-item"] dropdown=true iconCssClass="icon-plus" id="addButtonContainer" label='${languageUtil.get(portletConfig, locale, "add")}'>

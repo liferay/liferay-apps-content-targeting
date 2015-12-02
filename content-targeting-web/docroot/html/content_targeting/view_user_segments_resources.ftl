@@ -76,7 +76,7 @@
 							<@portlet["param"] name="className" value="${userSegmentClass.getName()}" />
 							<@portlet["param"] name="classPK" value="${userSegment.getUserSegmentId()?string}" />
 							<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-							<@portlet["param"] name="userSegmentTabs" value="reports" />
+							<@portlet["param"] name="tabs2" value="reports" />
 						</@>
 
 						<@liferay_ui["icon"]

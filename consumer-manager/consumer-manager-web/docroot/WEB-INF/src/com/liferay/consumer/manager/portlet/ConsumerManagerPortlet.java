@@ -624,8 +624,8 @@ public class ConsumerManagerPortlet extends FreeMarkerPortlet {
 			path.equals(ConsumerManagerPath.VIEW_REPORTS_RESOURCES)) {
 
 			template.put(
-				"consumerTabs",
-				ParamUtil.getString(portletRequest, "consumerTabs", "details"));
+				"tabs2",
+				ParamUtil.getString(portletRequest, "tabs2", "details"));
 
 			long consumerId = ParamUtil.getLong(portletRequest, "consumerId");
 

@@ -30,27 +30,23 @@
 	title='${(userSegment.getName(locale))!"new-user-segment"}'
 />
 
-<#assign classPK=userSegmentId>
-<#assign className=userSegmentClass.getName()>
-
 <#if (userSegmentId > 0)>
-	<#assign pills="details,reports">
+	<#assign userSegmentTabs="details,reports">
 <#else>
-	<#assign pills="details">
+	<#assign userSegmentTabs="details">
 </#if>
 
-<@portlet["renderURL"] varImpl="switchTabsURL">
+<@portlet["renderURL"] var="portletURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
 	<@portlet["param"] name="userSegmentId" value="${userSegmentId}" />
 </@>
 
 <@liferay_ui["tabs"]
-	names="${pills}"
-	param="userSegmentTabs"
-	portletURL=switchTabsURL
-	refresh=true
+	names="${userSegmentTabs}"
+	param="tabs2"
 	type="pills"
-	value="${userSegmentTabs}"
+	url=portletURL
+	value="${tabs2}"
 >
 	<@liferay_ui["section"]>
 		<#include "user_segment_details.ftl" />

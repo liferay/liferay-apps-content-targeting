@@ -99,7 +99,7 @@
 							<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
 							<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 							<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
-							<@portlet["param"] name="campaignTabs" value="reports" />
+							<@portlet["param"] name="tabs2" value="reports" />
 						</@>
 
 						<@liferay_ui["icon"]
@@ -118,7 +118,7 @@
 							<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 							<@portlet["param"] name="classPK" value="${campaign.getCampaignId()?string}" />
 							<@portlet["param"] name="campaignId" value="${campaign.getCampaignId()?string}" />
-							<@portlet["param"] name="campaignTabs" value="promotions" />
+							<@portlet["param"] name="tabs2" value="promotions" />
 						</@>
 
 						<@liferay_ui["icon"]

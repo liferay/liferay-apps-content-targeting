@@ -19,7 +19,7 @@
 <@portlet["renderURL"] varImpl="viewTacticsURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 	<@portlet["param"] name="campaignId" value="${campaignId}" />
-	<@portlet["param"] name="campaignTabs" value="promotions" />
+	<@portlet["param"] name="tabs2" value="promotions" />
 	<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 	<@portlet["param"] name="classPK" value="${campaignId}" />
 </@>
@@ -112,7 +112,7 @@
 					<@portlet["renderURL"] var="redirectURL">
 						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 						<@portlet["param"] name="campaignId" value="${campaignId}" />
-						<@portlet["param"] name="campaignTabs" value="promotions" />
+						<@portlet["param"] name="tabs2" value="promotions" />
 						<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 						<@portlet["param"] name="classPK" value="${campaignId}" />
 					</@>

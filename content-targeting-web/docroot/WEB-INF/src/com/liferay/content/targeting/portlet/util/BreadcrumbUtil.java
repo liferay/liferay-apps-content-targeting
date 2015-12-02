@@ -47,10 +47,10 @@ public class BreadcrumbUtil {
 		portletURL.setParameter("mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
 		portletURL.setParameter(
 			"campaignId", String.valueOf(campaign.getCampaignId()));
-		portletURL.setParameter("campaignTabs", campaignTabName);
 		portletURL.setParameter("className", Campaign.class.getName());
 		portletURL.setParameter(
 			"classPK", String.valueOf(campaign.getCampaignId()));
+		portletURL.setParameter("tabs2", campaignTabName);
 
 		PortalUtil.addPortletBreadcrumbEntry(
 			request, campaign.getName(themeDisplay.getLocale()),

@@ -19,7 +19,7 @@
 
 <#if validator.isNull(backURL)>
 	<@portlet["renderURL"] var="backURL">
-		<@portlet["param"] name="consumerTabs" value="${reportCategoryKey}" />
+		<@portlet["param"] name="tabs2" value="${reportCategoryKey}" />
 		<@portlet["param"] name="mvcPath" value="${consumerManagerPath.EDIT_CONSUMER}" />
 		<@portlet["param"] name="consumerId" value="${consumerId}" />
 	</@>

@@ -27,7 +27,7 @@
 <@portlet["renderURL"] var="searchURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 	<@portlet["param"] name="campaignId" value="${campaignId}" />
-	<@portlet["param"] name="campaignTabs" value="promotions" />
+	<@portlet["param"] name="tabs2" value="promotions" />
 </@>
 
 <@aui["form"] action="${searchURL}" method="post" name="fmTactics">

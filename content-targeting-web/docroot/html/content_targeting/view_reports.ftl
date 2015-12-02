@@ -40,11 +40,11 @@
 	<#if className == campaignClass.getName()>
 		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 		<@portlet["param"] name="campaignId" value="${classPK?string}" />
-		<@portlet["param"] name="campaignTabs" value="reports" />
+		<@portlet["param"] name="tabs2" value="reports" />
 	<#elseif className == userSegmentClass.getName()>
 		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
 		<@portlet["param"] name="userSegmentId" value="${classPK?string}" />
-		<@portlet["param"] name="userSegmentTabs" value="reports" />
+		<@portlet["param"] name="tabs2" value="reports" />
 	<#else>
 		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORTS}" />
 	</#if>
