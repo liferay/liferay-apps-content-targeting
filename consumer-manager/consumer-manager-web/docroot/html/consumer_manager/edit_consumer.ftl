@@ -29,25 +29,25 @@
 	title='${(consumer.getName(locale))!"new-consumer"}'
 />
 
-<#if (consumerId > 0)>
-	<#if (consumerReportCategories?has_content)>
-		<#assign pills="details,devices,reports">
-	<#else>
-		<#assign pills="details">
+<#assign consumerManagerTabs="details">
 
-		<#list consumerReportCategories as consumerReportCategoryKey>
-			<#assign pills=pills + "," + consumerReportCategoryKey>
-		</#list>
-	</#if>
-<#else>
-	<#assign pills="details">
+<#if (consumerId > 0)>
+	<#list consumerReportCategories as consumerReportCategoryKey>
+		<#assign consumerManagerTabs=consumerManagerTabs + "," + consumerReportCategoryKey>
+	</#list>
 </#if>
 
+<@portlet["renderURL"] var="portletURL">
+	<@portlet["param"] name="mvcPath" value="${consumerManagerPath.EDIT_CONSUMER}" />
+	<@portlet["param"] name="consumerId" value="${consumerId}" />
+</@>
+
 <@liferay_ui["tabs"]
-	names="${pills}"
-	refresh=true
+	names="${consumerManagerTabs}"
+	param="tabs2"
 	type="pills"
-	value="${consumerTabs}"
+	url=portletURL
+	value="${tabs2}"
 >
 	<@liferay_ui["section"]>
 		<#include "consumer_details.ftl" />
