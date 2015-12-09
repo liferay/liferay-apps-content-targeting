@@ -14,5 +14,5 @@ Include-Resource:\
 	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar
 Private-Package: com.liferay.content.targeting.tracking.action.@tracking.action.java.package.name@.*
 Service-Component: com.liferay.content.targeting.tracking.action.@tracking.action.java.package.name@.*
-Web-ContextPath: /tracking-action-@tracking.name@
+Web-ContextPath: /tracking-action-@tracking.action.name@
 -baseline: *;version="1.0.0"
