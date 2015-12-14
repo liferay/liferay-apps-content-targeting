@@ -170,13 +170,13 @@ public class ContentTargetingContextUtil {
 
 		boolean hasSiteSettingsViewPermission =
 			ContentTargetingContextUtil.hasControlPanelPortletViewPermission(
-				context, PortletKeys.SITE_SETTINGS);
+				context, PortletKeys.PORTAL_SETTINGS);
 
 		if (hasSiteSettingsViewPermission) {
 			context.put(
 				"siteSettingsURL",
 				getSiteAdministrationPortletURL(
-					context, PortletKeys.SITE_SETTINGS, params));
+					context, PortletKeys.PORTAL_SETTINGS, params));
 		}
 	}
 

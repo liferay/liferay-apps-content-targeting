@@ -22,8 +22,8 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.WebKeys;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.events.Action;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -36,12 +36,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	property = {"key=servlet.service.events.pre"},
+	service = LifecycleAction.class
+)
 public class UserSegmentPreAction extends Action {
 
 	public long[] getMatchingUserSegmentIds(
@@ -62,9 +66,6 @@ public class UserSegmentPreAction extends Action {
 
 	@Override
 	public void run(HttpServletRequest request, HttpServletResponse response) {
-		_initAnonymousUserManager();
-		_initRulesEngine();
-
 		long[] userSegmentsIds = getUserSegmentIds(request, response);
 
 		if (ArrayUtil.isNotEmpty(userSegmentsIds)) {
@@ -87,10 +88,6 @@ public class UserSegmentPreAction extends Action {
 
 		long[] userSegmentsIds = null;
 
-		if (_userSegmentSimulator == null) {
-			_initUserSegmentSimulator();
-		}
-
 		long[] simulatedUserSegmentsIds =
 			_userSegmentSimulator.getUserSegmentIds(request, response);
 
@@ -98,10 +95,6 @@ public class UserSegmentPreAction extends Action {
 			request.setAttribute(WebKeys.IS_SIMULATED_USER_SEGMENTS, true);
 
 			userSegmentsIds = simulatedUserSegmentsIds;
-		}
-
-		if (_anonymousUsersManager == null) {
-			_initAnonymousUserManager();
 		}
 
 		try {
@@ -129,26 +122,37 @@ public class UserSegmentPreAction extends Action {
 		return userSegmentsIds;
 	}
 
-	private void _initAnonymousUserManager() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+	@Reference(unbind = "unsetAnonymousUsersManager")
+	protected void setAnonymousUsersManager(
+		AnonymousUsersManager anonymousUsersManager) {
 
-		_anonymousUsersManager = ServiceTrackerUtil.getService(
-			AnonymousUsersManager.class, bundle.getBundleContext());
+		_anonymousUsersManager = anonymousUsersManager;
 	}
 
-	private void _initRulesEngine() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_rulesEngine = ServiceTrackerUtil.getService(
-			RulesEngine.class, bundle.getBundleContext());
+	protected void setAnonymousUsersManager() {
+		_anonymousUsersManager = null;
 	}
 
-	private void _initUserSegmentSimulator() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_userSegmentSimulator = ServiceTrackerUtil.getService(
-			UserSegmentSimulator.class, bundle.getBundleContext());
+	@Reference(unbind = "unsetRulesEngine")
+	protected void setRulesEngine(RulesEngine rulesEngine) {
+		_rulesEngine = rulesEngine;
 	}
+
+	protected void unsetRulesEngine() {
+		_rulesEngine = null;
+	}
+
+	@Reference(unbind = "unsetUserSegmentSimulator")
+	protected void setUserSegmentSimulator(
+		UserSegmentSimulator userSegmentSimulator) {
+
+		_userSegmentSimulator = userSegmentSimulator;
+	}
+
+	protected void unsetUserSegmentSimulator() {
+		_userSegmentSimulator = null;
+	}
+
 
 	private static Log _log = LogFactoryUtil.getLog(UserSegmentPreAction.class);
 

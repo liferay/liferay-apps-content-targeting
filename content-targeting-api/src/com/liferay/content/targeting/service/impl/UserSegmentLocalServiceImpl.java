@@ -14,8 +14,8 @@
 
 package com.liferay.content.targeting.service.impl;
 
-import com.liferay.content.targeting.InvalidNameException;
-import com.liferay.content.targeting.UsedUserSegmentException;
+import com.liferay.content.targeting.exception.InvalidNameException;
+import com.liferay.content.targeting.exception.UsedUserSegmentException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.RuleInstance;
@@ -427,11 +427,12 @@ public class UserSegmentLocalServiceImpl
 
 		try {
 			assetCategory = assetCategoryLocalService.addCategory(
-				userId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				userId, serviceContext.getScopeGroupId(),
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				titleMap, descriptionMap, vocabularyId, null, serviceContext);
 		}
 		catch (DuplicateCategoryException dce) {
-			throw new InvalidNameException(InvalidNameException.DUPLICATED);
+			throw new InvalidNameException();
 		}
 
 		return assetCategory;
@@ -545,7 +546,7 @@ public class UserSegmentLocalServiceImpl
 		throws PortalException {
 
 		if (Validator.isNull(userSegment.getName(LocaleUtil.getDefault()))) {
-			throw new InvalidNameException(InvalidNameException.EMPTY);
+			throw new InvalidNameException();
 		}
 	}
 

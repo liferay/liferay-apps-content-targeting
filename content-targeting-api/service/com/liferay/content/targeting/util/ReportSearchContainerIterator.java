@@ -16,7 +16,7 @@ package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -26,8 +26,8 @@ import java.util.List;
 
 import javax.portlet.PortletException;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -35,6 +35,7 @@ import org.osgi.framework.FrameworkUtil;
 public class ReportSearchContainerIterator
 	extends SearchContainerIterator<ReportInstance> {
 
+	public ReportSearchContainerIterator() {}
 	/**
 	 * @deprecated As of Audience Targeting 2.0, replaced by {@link
 	 *             #ReportSearchContainerIterator(long, String, String, long)}
@@ -54,11 +55,6 @@ public class ReportSearchContainerIterator
 
 		_className = className;
 		_classPK = classPK;
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_reportInstanceLocalService = ServiceTrackerUtil.getService(
-			ReportInstanceLocalService.class, bundle.getBundleContext());
 	}
 
 	@Override
@@ -66,11 +62,11 @@ public class ReportSearchContainerIterator
 		throws PortalException, SystemException {
 
 		if (Validator.isBlank(keywords)) {
-			return _reportInstanceLocalService.getReportInstances(
+			return ReportInstanceLocalServiceUtil.getReportInstances(
 				_className, _classPK, start, end);
 		}
 
-		return _reportInstanceLocalService.searchReportInstances(
+		return ReportInstanceLocalServiceUtil.searchReportInstances(
 			groupId, _className, _classPK, keywords, start, end);
 	}
 
@@ -87,6 +83,5 @@ public class ReportSearchContainerIterator
 
 	private String _className;
 	private long _classPK;
-	private ReportInstanceLocalService _reportInstanceLocalService;
 
 }

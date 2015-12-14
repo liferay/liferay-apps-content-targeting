@@ -14,12 +14,11 @@
 
 package com.liferay.content.targeting.service.impl;
 
-import com.liferay.content.targeting.DuplicateTrackingActionInstanceException;
+import com.liferay.content.targeting.exception.DuplicateTrackingActionInstanceException;
 import com.liferay.content.targeting.api.model.TrackingAction;
 import com.liferay.content.targeting.api.model.TrackingActionsRegistry;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.base.TrackingActionInstanceLocalServiceBaseImpl;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -37,6 +36,7 @@ import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the tracking action instance local service.
@@ -54,13 +54,6 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class TrackingActionInstanceLocalServiceImpl
 	extends TrackingActionInstanceLocalServiceBaseImpl {
-
-	public TrackingActionInstanceLocalServiceImpl() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_trackingActionsRegistry = ServiceTrackerUtil.getService(
-			TrackingActionsRegistry.class, bundle.getBundleContext());
-	}
 
 	@Override
 	public TrackingActionInstance addTrackingActionInstance(
@@ -302,6 +295,19 @@ public class TrackingActionInstanceLocalServiceImpl
 				"A tracking action instance with the alias " + alias +
 					" already exists in campaign " + campaignId);
 		}
+	}
+
+	@Reference(unbind = "unsetTrackingActionsRegistry")
+	protected void setTrackingActionsRegistry(
+		TrackingActionsRegistry trackingActionsRegistry) {
+
+		_trackingActionsRegistry = trackingActionsRegistry;
+	}
+
+	protected void unsetTrackingActionsRegistry(
+		TrackingActionsRegistry trackingActionsRegistry) {
+
+		_trackingActionsRegistry = null;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

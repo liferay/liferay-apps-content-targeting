@@ -14,7 +14,7 @@
 
 package com.liferay.content.targeting.service.impl;
 
-import com.liferay.content.targeting.DuplicateReportInstanceException;
+import com.liferay.content.targeting.exception.DuplicateReportInstanceException;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.ReportInstance;
@@ -22,7 +22,6 @@ import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.service.base.ReportInstanceLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -46,9 +45,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the report instance local service.
@@ -66,16 +67,6 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class ReportInstanceLocalServiceImpl
 	extends ReportInstanceLocalServiceBaseImpl {
-
-	public ReportInstanceLocalServiceImpl() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_reportsRegistry = ServiceTrackerUtil.getService(
-			ReportsRegistry.class, bundle.getBundleContext());
-		_trackingActionInstanceLocalService = ServiceTrackerUtil.getService(
-			TrackingActionInstanceLocalService.class,
-			bundle.getBundleContext());
-	}
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
@@ -136,7 +127,7 @@ public class ReportInstanceLocalServiceImpl
 		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
 		Map<Locale, String> nameMap = new HashMap<Locale, String>();
 
-		Locale[] availableLocales = LanguageUtil.getAvailableLocales();
+		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
 
 		Report report = _reportsRegistry.getReport(reportKey);
 
@@ -333,6 +324,15 @@ public class ReportInstanceLocalServiceImpl
 
 		throw new SearchException(
 			"Unable to fix the search index after 10 attempts");
+	}
+
+	@Reference(unbind = "unsetReportsRegistry")
+	protected void setReportsRegistry(ReportsRegistry reportsRegistry) {
+		_reportsRegistry = reportsRegistry;
+	}
+
+	protected void unsetReportsRegistry(ReportsRegistry reportsRegistry) {
+		_reportsRegistry = null;
 	}
 
 	private ReportsRegistry _reportsRegistry;
