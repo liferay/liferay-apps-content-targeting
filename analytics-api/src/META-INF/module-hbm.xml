@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping default-lazy="false" auto-import="false">
+	<import class="com.liferay.content.targeting.analytics.model.AnalyticsEvent" />
+	<import class="com.liferay.content.targeting.analytics.model.AnalyticsReferrer" />
+	<class name="com.liferay.content.targeting.analytics.model.impl.AnalyticsEventImpl" table="CT_Analytics_AnalyticsEvent">
+		<id name="analyticsEventId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="anonymousUserId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="className" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="elementId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="clientIP" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="userAgent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="URL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="additionalInfo" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
+		<property name="createDate" type="org.hibernate.type.TimestampType" />
+	</class>
+	<class name="com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerImpl" table="CT_Analytics_AnalyticsReferrer">
+		<id name="analyticsReferrerId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property name="analyticsEventId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property name="referrerClassName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="referrerClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+</hibernate-mapping>

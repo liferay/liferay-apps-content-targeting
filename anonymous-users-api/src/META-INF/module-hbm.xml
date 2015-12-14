@@ -4,7 +4,6 @@
 <hibernate-mapping default-lazy="false" auto-import="false">
 	<import class="com.liferay.content.targeting.anonymous.users.model.AnonymousUser" />
 	<class name="com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserImpl" table="CT_AU_AnonymousUser">
-		<cache usage="read-write" />
 		<id name="anonymousUserId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -15,6 +14,6 @@
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="lastIp" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 </hibernate-mapping>
