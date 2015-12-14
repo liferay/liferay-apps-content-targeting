@@ -16,6 +16,7 @@ package com.liferay.content.targeting.analytics.messaging.config;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator;
 
@@ -40,7 +41,7 @@ public class AnalyticsPluginMessagingConfigurator
 		Map<String, List<MessageListener>> messageListeners) {
 
 		Collection<String> destinationNames =
-			getMessageBus().getDestinationNames();
+			MessageBusUtil.getMessageBus().getDestinationNames();
 
 		if (!destinationNames.contains(_analyticsMessageDestination)) {
 			messageListeners.remove(_analyticsMessageDestination);
