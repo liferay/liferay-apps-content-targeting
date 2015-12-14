@@ -22,6 +22,7 @@ import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Date;
 import java.util.List;
@@ -52,7 +53,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		ContentTargetingPermission.check(
+		_contentTargetingPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.ADD_CAMPAIGN);
 
@@ -69,7 +70,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 			long[] userSegmentIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		ContentTargetingPermission.check(
+		_contentTargetingPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.ADD_CAMPAIGN);
 
@@ -82,7 +83,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 	public Campaign deleteCampaign(long campaignId)
 		throws PortalException, SystemException {
 
-		CampaignPermission.check(
+		_campaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.DELETE);
 
 		return campaignLocalService.deleteCampaign(campaignId);
@@ -121,7 +122,7 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		CampaignPermission.check(
+		_campaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
 
 		return campaignLocalService.updateCampaign(
@@ -137,12 +138,37 @@ public class CampaignServiceImpl extends CampaignServiceBaseImpl {
 			long[] userSegmentIds, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		CampaignPermission.check(
+		_campaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
 
 		return campaignLocalService.updateCampaign(
 			campaignId, nameMap, descriptionMap, startDate, endDate, timeZoneId,
 			priority, active, userSegmentIds, serviceContext);
 	}
+
+	@Reference(unbind = "unsetCampaignPermission")
+	protected void setCampaignPermission(
+		CampaignPermission campaignPermission) {
+
+		_campaignPermission = campaignPermission;
+	}
+
+	@Reference(unbind = "unsetContentTargetingPermission")
+	protected void setContentTargetingPermission(
+		ContentTargetingPermission contentTargetingPermission) {
+
+		_contentTargetingPermission = contentTargetingPermission;
+	}
+
+	protected void unsetCampaignPermission() {
+		_campaignPermission = null;
+	}
+
+	protected void unsetContentTargetingPermission() {
+		_contentTargetingPermission = null;
+	}
+
+	private CampaignPermission _campaignPermission;
+	private ContentTargetingPermission _contentTargetingPermission;
 
 }

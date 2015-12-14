@@ -20,7 +20,6 @@ import com.liferay.content.targeting.model.AnonymousUserUserSegment;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.base.AnonymousUserUserSegmentLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.PortletPropsValues;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -33,8 +32,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the anonymous user user segment local service.
@@ -52,13 +50,6 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class AnonymousUserUserSegmentLocalServiceImpl
 	extends AnonymousUserUserSegmentLocalServiceBaseImpl {
-
-	public AnonymousUserUserSegmentLocalServiceImpl() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_anonymousUserLocalService = ServiceTrackerUtil.getService(
-			AnonymousUserLocalService.class, bundle.getBundleContext());
-	}
 
 	@Override
 	public AnonymousUserUserSegment addAnonymousUserUserSegment(
@@ -293,6 +284,19 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 			anonymousUserUserSegmentPersistence.update(
 				anonymousUserUserSegment);
 		}
+	}
+
+	@Reference(unbind = "unsetAnonymousUserLocalService")
+	protected void setAnonymousUserLocalService(
+		AnonymousUserLocalService anonymousUserLocalService) {
+
+		_anonymousUserLocalService = anonymousUserLocalService;
+	}
+
+	protected void unsetAnonymousUserLocalService(
+		AnonymousUserLocalService anonymousUserLocalService) {
+
+		_anonymousUserLocalService = null;
 	}
 
 	private AnonymousUserLocalService _anonymousUserLocalService;

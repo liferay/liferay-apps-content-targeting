@@ -16,18 +16,17 @@ package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.service.TacticLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 
 import javax.portlet.PortletException;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Pavel Savinov
@@ -35,18 +34,15 @@ import org.osgi.framework.FrameworkUtil;
 public class TacticSearchContainerIterator
 	extends SearchContainerIterator<Tactic> {
 
+	public TacticSearchContainerIterator() {}
+
 	public TacticSearchContainerIterator(
 			long campaignId, long groupId, String keywords)
 		throws PortletException {
 
 		super(groupId, keywords);
 
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
 		_campaignId = campaignId;
-
-		_tacticLocalService = ServiceTrackerUtil.getService(
-			TacticLocalService.class, bundle.getBundleContext());
 	}
 
 	@Override
@@ -54,11 +50,11 @@ public class TacticSearchContainerIterator
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(keywords)) {
-			return _tacticLocalService.getTactics(start, end);
+			return TacticLocalServiceUtil.getTactics(start, end);
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =
-			_tacticLocalService.searchTactics(
+			TacticLocalServiceUtil.searchTactics(
 				_campaignId, groupId, keywords, start, end);
 
 		return searchResults.getBaseModels();
@@ -68,11 +64,11 @@ public class TacticSearchContainerIterator
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(keywords)) {
-			return _tacticLocalService.getTactics(campaignId, start, end, null);
+			return TacticLocalServiceUtil.getTactics(campaignId, start, end, null);
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =
-			_tacticLocalService.searchTactics(
+			TacticLocalServiceUtil.searchTactics(
 				campaignId, groupId, keywords, start, end);
 
 		return searchResults.getBaseModels();
@@ -81,11 +77,11 @@ public class TacticSearchContainerIterator
 	@Override
 	public int getTotal() throws PortalException, SystemException {
 		if (Validator.isNull(keywords)) {
-			return _tacticLocalService.getTacticsCount();
+			return TacticLocalServiceUtil.getTacticsCount();
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =
-			_tacticLocalService.searchTactics(
+			TacticLocalServiceUtil.searchTactics(
 				_campaignId, groupId, keywords, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -96,11 +92,11 @@ public class TacticSearchContainerIterator
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(keywords)) {
-			return _tacticLocalService.getTacticsCount(campaignId);
+			return TacticLocalServiceUtil.getTacticsCount(campaignId);
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =
-			_tacticLocalService.searchTactics(
+			TacticLocalServiceUtil.searchTactics(
 				campaignId, groupId, keywords, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS);
 
@@ -108,6 +104,5 @@ public class TacticSearchContainerIterator
 	}
 
 	private long _campaignId;
-	private TacticLocalService _tacticLocalService;
 
 }

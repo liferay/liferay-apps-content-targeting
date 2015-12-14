@@ -42,7 +42,6 @@ import org.osgi.service.component.annotations.Reference;
 @Component
 public class DefaultRulesEngineImpl implements RulesEngine {
 
-	@Override
 	public long[] getMatchingUserSegmentIds(
 			HttpServletRequest request, AnonymousUser anonymousUser,
 			List<UserSegment> userSegments)
@@ -93,7 +92,7 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 		return true;
 	}
 
-	@Reference
+	@Reference(unbind = "unsetRulesRegistry")
 	public void setRulesRegistry(RulesRegistry rulesRegistry) {
 		_rulesRegistry = rulesRegistry;
 	}
@@ -113,6 +112,10 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 		message.put("userSegmentId", userSegment.getUserSegmentId());
 
 		MessageBusUtil.sendMessage("liferay/anonymous_user_segments", message);
+	}
+
+	protected void unsetRulesRegistry() {
+		_rulesRegistry = null;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -18,7 +18,6 @@ import com.liferay.content.targeting.api.model.Rule;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.base.RuleInstanceLocalServiceBaseImpl;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -36,6 +35,7 @@ import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the rule instance local service.
@@ -53,13 +53,6 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class RuleInstanceLocalServiceImpl
 	extends RuleInstanceLocalServiceBaseImpl {
-
-	public RuleInstanceLocalServiceImpl() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_rulesRegistry = ServiceTrackerUtil.getService(
-			RulesRegistry.class, bundle.getBundleContext());
-	}
 
 	@Override
 	public RuleInstance addRuleInstance(
@@ -182,6 +175,15 @@ public class RuleInstanceLocalServiceImpl
 		ruleInstancePersistence.update(ruleInstance);
 
 		return ruleInstance;
+	}
+
+	@Reference(unbind = "unsetRulesRegistry")
+	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
+		_rulesRegistry = rulesRegistry;
+	}
+
+	protected void unsetRulesRegistry(RulesRegistry rulesRegistry) {
+		_rulesRegistry = null;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

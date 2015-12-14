@@ -14,8 +14,8 @@
 
 package com.liferay.content.targeting.service.impl;
 
-import com.liferay.content.targeting.InvalidDateRangeException;
-import com.liferay.content.targeting.InvalidNameException;
+import com.liferay.content.targeting.exception.InvalidDateRangeException;
+import com.liferay.content.targeting.exception.InvalidNameException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.Tactic;
@@ -441,7 +441,7 @@ public class CampaignLocalServiceImpl extends CampaignLocalServiceBaseImpl {
 
 	protected void validateCampaign(Campaign campaign) throws PortalException {
 		if (Validator.isNull(campaign.getName(LocaleUtil.getDefault()))) {
-			throw new InvalidNameException(InvalidNameException.EMPTY);
+			throw new InvalidNameException();
 		}
 
 		if ((campaign.getStartDate() == null) ||

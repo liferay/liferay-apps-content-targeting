@@ -39,6 +39,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eudaldo Alonso
@@ -56,8 +57,9 @@ public class UserSegmentUtil {
 		serviceContext.setAddGuestPermissions(true);
 
 		return AssetVocabularyLocalServiceUtil.addVocabulary(
-			userId, StringPool.BLANK, _getAssetVocabularyTitleMap(), null,
-			StringPool.BLANK, serviceContext);
+			userId, serviceContext.getScopeGroupId(), StringPool.BLANK,
+			_getAssetVocabularyTitleMap(), null, StringPool.BLANK,
+			serviceContext);
 	}
 
 	public static long getAssetVocabularyId(
@@ -168,7 +170,7 @@ public class UserSegmentUtil {
 	private static Map<Locale, String> _getAssetVocabularyTitleMap() {
 		Map<Locale, String> titleMap = new HashMap<Locale, String>();
 
-		Locale[] locales = LanguageUtil.getAvailableLocales();
+		Set<Locale> locales = LanguageUtil.getAvailableLocales();
 
 		for (Locale locale : locales) {
 			titleMap.put(

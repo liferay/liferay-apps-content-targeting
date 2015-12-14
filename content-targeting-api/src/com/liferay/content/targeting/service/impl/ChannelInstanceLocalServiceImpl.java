@@ -14,12 +14,11 @@
 
 package com.liferay.content.targeting.service.impl;
 
-import com.liferay.content.targeting.DuplicateChannelInstanceException;
+import com.liferay.content.targeting.exception.DuplicateChannelInstanceException;
 import com.liferay.content.targeting.api.model.Channel;
 import com.liferay.content.targeting.api.model.ChannelsRegistry;
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.service.base.ChannelInstanceLocalServiceBaseImpl;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -37,6 +36,7 @@ import java.util.List;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the channel instance local service.
@@ -54,13 +54,6 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class ChannelInstanceLocalServiceImpl
 	extends ChannelInstanceLocalServiceBaseImpl {
-
-	public ChannelInstanceLocalServiceImpl() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_channelsRegistry = ServiceTrackerUtil.getService(
-			ChannelsRegistry.class, bundle.getBundleContext());
-	}
 
 	@Override
 	public ChannelInstance addChannelInstance(
@@ -213,6 +206,15 @@ public class ChannelInstanceLocalServiceImpl
 				"A channel instance with the alias " + alias + " already " +
 					"exists in tactic " + tacticId);
 		}
+	}
+
+	@Reference(unbind = "unsetChannelsRegistry")
+	protected void setChannelsRegistry(ChannelsRegistry channelsRegistry) {
+		_channelsRegistry = channelsRegistry;
+	}
+
+	protected void unsetChannelsRegistry(ChannelsRegistry channelsRegistry) {
+		_channelsRegistry = null;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

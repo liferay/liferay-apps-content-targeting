@@ -16,7 +16,7 @@ package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.service.CampaignLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -26,24 +26,22 @@ import java.util.List;
 
 import javax.portlet.PortletException;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
+@Component
 public class CampaignSearchContainerIterator
 	extends SearchContainerIterator<Campaign> {
+
+	public CampaignSearchContainerIterator() {}
 
 	public CampaignSearchContainerIterator(long groupId, String keywords)
 		throws PortletException {
 
 		super(groupId, keywords);
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		_campaignLocalService = ServiceTrackerUtil.getService(
-			CampaignLocalService.class, bundle.getBundleContext());
 	}
 
 	@Override
@@ -51,12 +49,12 @@ public class CampaignSearchContainerIterator
 		throws PortalException, SystemException {
 
 		if (Validator.isNull(keywords)) {
-			return _campaignLocalService.getCampaigns(
-					groupId, start, end, null);
+			return CampaignLocalServiceUtil.getCampaigns(
+				groupId, start, end, null);
 		}
 
 		BaseModelSearchResult<Campaign> searchResults =
-			_campaignLocalService.searchCampaigns(
+			CampaignLocalServiceUtil.searchCampaigns(
 				groupId, keywords, start, end);
 
 		return searchResults.getBaseModels();
@@ -65,16 +63,14 @@ public class CampaignSearchContainerIterator
 	@Override
 	public int getTotal() throws PortalException, SystemException {
 		if (Validator.isNull(keywords)) {
-			return _campaignLocalService.getCampaignsCount(groupId);
+			return CampaignLocalServiceUtil.getCampaignsCount(groupId);
 		}
 
 		BaseModelSearchResult<Campaign> searchResults =
-			_campaignLocalService.searchCampaigns(
+			CampaignLocalServiceUtil.searchCampaigns(
 				groupId, keywords, QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 
 		return searchResults.getLength();
 	}
-
-	private CampaignLocalService _campaignLocalService;
 
 }

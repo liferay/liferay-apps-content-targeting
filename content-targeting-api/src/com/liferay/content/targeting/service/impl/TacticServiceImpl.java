@@ -21,6 +21,7 @@ import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 import java.util.Locale;
@@ -49,7 +50,7 @@ public class TacticServiceImpl extends TacticServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		CampaignPermission.check(
+		_campaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
 
 		return tacticLocalService.addTactic(
@@ -71,12 +72,25 @@ public class TacticServiceImpl extends TacticServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		CampaignPermission.check(
+		_campaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
 
 		return tacticLocalService.updateTactic(
 			tacticId, campaignId, nameMap, descriptionMap, userSegmentsIds,
 			serviceContext);
 	}
+
+	@Reference(unbind="unsetCampaignPermission")
+	protected void setCampaignPermission(
+		CampaignPermission campaignPermission) {
+
+		_campaignPermission = campaignPermission;
+	}
+
+	protected void unsetCampaignPermission() {
+		_campaignPermission = null;
+	}
+
+	private CampaignPermission _campaignPermission;
 
 }

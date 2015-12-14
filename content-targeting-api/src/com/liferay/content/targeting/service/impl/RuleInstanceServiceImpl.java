@@ -21,6 +21,7 @@ import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 
@@ -46,7 +47,7 @@ public class RuleInstanceServiceImpl extends RuleInstanceServiceBaseImpl {
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		UserSegmentPermission.check(
+		_userSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
 
 		return ruleInstanceLocalService.addRuleInstance(
@@ -60,7 +61,7 @@ public class RuleInstanceServiceImpl extends RuleInstanceServiceBaseImpl {
 		RuleInstance ruleInstance = ruleInstanceLocalService.getRuleInstance(
 			ruleInstanceId);
 
-		UserSegmentPermission.check(
+		_userSegmentPermission.check(
 			getPermissionChecker(), ruleInstance.getUserSegmentId(),
 			ActionKeys.UPDATE);
 
@@ -90,12 +91,25 @@ public class RuleInstanceServiceImpl extends RuleInstanceServiceBaseImpl {
 		RuleInstance ruleInstance = ruleInstanceLocalService.getRuleInstance(
 			ruleInstanceId);
 
-		UserSegmentPermission.check(
+		_userSegmentPermission.check(
 			getPermissionChecker(), ruleInstance.getUserSegmentId(),
 			ActionKeys.UPDATE);
 
 		return ruleInstanceLocalService.updateRuleInstance(
 			ruleInstanceId, typeSettings, serviceContext);
 	}
+
+	@Reference(unbind="unsetUserSegmentPermission")
+	protected void setUserSegmentPermission(
+		UserSegmentPermission userSegmentPermission) {
+
+		_userSegmentPermission = userSegmentPermission;
+	}
+
+	protected void unsetUserSegmentPermission() {
+		_userSegmentPermission = null;
+	}
+
+	private UserSegmentPermission _userSegmentPermission;
 
 }
