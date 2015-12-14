@@ -12,6 +12,7 @@
 	<dependencies defaultconf="default">
 		<dependency name="com.liferay.osgi.util" org="com.liferay" rev="1.0.1" />
 		<dependency name="com.liferay.portal.log.bridge" org="com.liferay" rev="1.0.0" />
+		<dependency name="com.liferay.portal.spring.extender" org="com.liferay" rev="1.0.2" />
 		<dependency name="org.osgi.core" org="org.osgi" rev="5.0.0" />
 		<dependency name="org.osgi.enterprise" org="org.osgi" rev="5.0.0" />
 	</dependencies>
