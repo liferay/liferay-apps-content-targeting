@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.RuleInstanceLocalService;
 import com.liferay.content.targeting.service.persistence.AnonymousUserUserSegmentPersistence;
@@ -27,22 +29,36 @@ import com.liferay.content.targeting.service.persistence.TrackingActionInstanceP
 import com.liferay.content.targeting.service.persistence.UserSegmentPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.util.PortalUtil;
+
+import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
+import com.liferay.portlet.exportimport.lar.ManifestSummary;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
 
@@ -62,9 +78,10 @@ import javax.sql.DataSource;
  * @see com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class RuleInstanceLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements RuleInstanceLocalService,
-		IdentifiableBean {
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -76,12 +93,10 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 *
 	 * @param ruleInstance the rule instance
 	 * @return the rule instance that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public RuleInstance addRuleInstance(RuleInstance ruleInstance)
-		throws SystemException {
+	public RuleInstance addRuleInstance(RuleInstance ruleInstance) {
 		ruleInstance.setNew(true);
 
 		return ruleInstancePersistence.update(ruleInstance);
@@ -104,7 +119,7 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 * @param ruleInstanceId the primary key of the rule instance
 	 * @return the rule instance that was removed
 	 * @throws PortalException if a rule instance with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -119,7 +134,7 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 * @param ruleInstance the rule instance
 	 * @return the rule instance that was removed
 	 * @throws PortalException
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -141,12 +156,9 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return ruleInstancePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -161,12 +173,10 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return ruleInstancePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -183,62 +193,42 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return ruleInstancePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return ruleInstancePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return ruleInstancePersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public RuleInstance fetchRuleInstance(long ruleInstanceId)
-		throws SystemException {
+	public RuleInstance fetchRuleInstance(long ruleInstanceId) {
 		return ruleInstancePersistence.fetchByPrimaryKey(ruleInstanceId);
-	}
-
-	/**
-	 * Returns the rule instance with the matching UUID and company.
-	 *
-	 * @param uuid the rule instance's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public RuleInstance fetchRuleInstanceByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
-		return ruleInstancePersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**
@@ -247,11 +237,10 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 * @param uuid the rule instance's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public RuleInstance fetchRuleInstanceByUuidAndGroupId(String uuid,
-		long groupId) throws SystemException {
+		long groupId) {
 		return ruleInstancePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -261,33 +250,144 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 * @param ruleInstanceId the primary key of the rule instance
 	 * @return the rule instance
 	 * @throws PortalException if a rule instance with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public RuleInstance getRuleInstance(long ruleInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return ruleInstancePersistence.findByPrimaryKey(ruleInstanceId);
 	}
 
 	@Override
+	public ActionableDynamicQuery getActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(RuleInstance.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("ruleInstanceId");
+
+		return actionableDynamicQuery;
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+		indexableActionableDynamicQuery.setModelClass(RuleInstance.class);
+
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
+			"ruleInstanceId");
+
+		return indexableActionableDynamicQuery;
+	}
+
+	protected void initActionableDynamicQuery(
+		ActionableDynamicQuery actionableDynamicQuery) {
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(RuleInstance.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("ruleInstanceId");
+	}
+
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
+
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
+
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
+				}
+			});
+
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<RuleInstance>() {
+				@Override
+				public void performAction(RuleInstance ruleInstance)
+					throws PortalException {
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						ruleInstance);
+				}
+			});
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+				PortalUtil.getClassNameId(RuleInstance.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return ruleInstanceLocalService.deleteRuleInstance((RuleInstance)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return ruleInstancePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
-	 * Returns the rule instance with the matching UUID and company.
+	 * Returns all the rule instances matching the UUID and company.
 	 *
-	 * @param uuid the rule instance's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching rule instance
-	 * @throws PortalException if a matching rule instance could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @param uuid the UUID of the rule instances
+	 * @param companyId the primary key of the company
+	 * @return the matching rule instances, or an empty list if no matches were found
 	 */
 	@Override
-	public RuleInstance getRuleInstanceByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
-		return ruleInstancePersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<RuleInstance> getRuleInstancesByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return ruleInstancePersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of rule instances matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the rule instances
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of rule instances
+	 * @param end the upper bound of the range of rule instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching rule instances, or an empty list if no matches were found
+	 */
+	@Override
+	public List<RuleInstance> getRuleInstancesByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<RuleInstance> orderByComparator) {
+		return ruleInstancePersistence.findByUuid_C(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -297,11 +397,10 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching rule instance
 	 * @throws PortalException if a matching rule instance could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public RuleInstance getRuleInstanceByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException, SystemException {
+		long groupId) throws PortalException {
 		return ruleInstancePersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -315,11 +414,9 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 * @param start the lower bound of the range of rule instances
 	 * @param end the upper bound of the range of rule instances (not inclusive)
 	 * @return the range of rule instances
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<RuleInstance> getRuleInstances(int start, int end)
-		throws SystemException {
+	public List<RuleInstance> getRuleInstances(int start, int end) {
 		return ruleInstancePersistence.findAll(start, end);
 	}
 
@@ -327,10 +424,9 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 * Returns the number of rule instances.
 	 *
 	 * @return the number of rule instances
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getRuleInstancesCount() throws SystemException {
+	public int getRuleInstancesCount() {
 		return ruleInstancePersistence.countAll();
 	}
 
@@ -339,12 +435,10 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 *
 	 * @param ruleInstance the rule instance
 	 * @return the rule instance that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public RuleInstance updateRuleInstance(RuleInstance ruleInstance)
-		throws SystemException {
+	public RuleInstance updateRuleInstance(RuleInstance ruleInstance) {
 		return ruleInstancePersistence.update(ruleInstance);
 	}
 
@@ -598,7 +692,7 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 *
 	 * @return the rule instance local service
 	 */
-	public com.liferay.content.targeting.service.RuleInstanceLocalService getRuleInstanceLocalService() {
+	public RuleInstanceLocalService getRuleInstanceLocalService() {
 		return ruleInstanceLocalService;
 	}
 
@@ -608,7 +702,7 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 * @param ruleInstanceLocalService the rule instance local service
 	 */
 	public void setRuleInstanceLocalService(
-		com.liferay.content.targeting.service.RuleInstanceLocalService ruleInstanceLocalService) {
+		RuleInstanceLocalService ruleInstanceLocalService) {
 		this.ruleInstanceLocalService = ruleInstanceLocalService;
 	}
 
@@ -840,6 +934,63 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the class name local service.
+	 *
+	 * @return the class name local service
+	 */
+	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
+		return classNameLocalService;
+	}
+
+	/**
+	 * Sets the class name local service.
+	 *
+	 * @param classNameLocalService the class name local service
+	 */
+	public void setClassNameLocalService(
+		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
+		this.classNameLocalService = classNameLocalService;
+	}
+
+	/**
+	 * Returns the class name remote service.
+	 *
+	 * @return the class name remote service
+	 */
+	public com.liferay.portal.service.ClassNameService getClassNameService() {
+		return classNameService;
+	}
+
+	/**
+	 * Sets the class name remote service.
+	 *
+	 * @param classNameService the class name remote service
+	 */
+	public void setClassNameService(
+		com.liferay.portal.service.ClassNameService classNameService) {
+		this.classNameService = classNameService;
+	}
+
+	/**
+	 * Returns the class name persistence.
+	 *
+	 * @return the class name persistence
+	 */
+	public ClassNamePersistence getClassNamePersistence() {
+		return classNamePersistence;
+	}
+
+	/**
+	 * Sets the class name persistence.
+	 *
+	 * @param classNamePersistence the class name persistence
+	 */
+	public void setClassNamePersistence(
+		ClassNamePersistence classNamePersistence) {
+		this.classNamePersistence = classNamePersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -953,58 +1104,23 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
-
-		PersistedModelLocalServiceRegistryUtil.register("com.liferay.content.targeting.model.RuleInstance",
+		persistedModelLocalServiceRegistry.register("com.liferay.content.targeting.model.RuleInstance",
 			ruleInstanceLocalService);
 	}
 
 	public void destroy() {
-		PersistedModelLocalServiceRegistryUtil.unregister(
+		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.content.targeting.model.RuleInstance");
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
+	public String getOSGiServiceIdentifier() {
+		return RuleInstanceLocalService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -1016,13 +1132,18 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Performs an SQL query.
+	 * Performs a SQL query.
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = ruleInstancePersistence.getDataSource();
+
+			DB db = DBManagerUtil.getDB();
+
+			sql = db.buildSQL(sql);
+			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -1061,7 +1182,7 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	@BeanReference(type = ReportInstancePersistence.class)
 	protected ReportInstancePersistence reportInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.RuleInstanceLocalService.class)
-	protected com.liferay.content.targeting.service.RuleInstanceLocalService ruleInstanceLocalService;
+	protected RuleInstanceLocalService ruleInstanceLocalService;
 	@BeanReference(type = com.liferay.content.targeting.service.RuleInstanceService.class)
 	protected com.liferay.content.targeting.service.RuleInstanceService ruleInstanceService;
 	@BeanReference(type = RuleInstancePersistence.class)
@@ -1086,6 +1207,12 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	protected UserSegmentPersistence userSegmentPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
+	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
+	protected com.liferay.portal.service.ClassNameService classNameService;
+	@BeanReference(type = ClassNamePersistence.class)
+	protected ClassNamePersistence classNamePersistence;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.SystemEventLocalService.class)
@@ -1098,7 +1225,6 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private String _beanIdentifier;
-	private ClassLoader _classLoader;
-	private RuleInstanceLocalServiceClpInvoker _clpInvoker = new RuleInstanceLocalServiceClpInvoker();
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

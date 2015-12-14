@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.content.targeting.service.http.AnonymousUserUserSegmentServiceSoap
  * @generated
  */
+@ProviderType
 public class AnonymousUserUserSegmentSoap implements Serializable {
 	public static AnonymousUserUserSegmentSoap toSoapModel(
 		AnonymousUserUserSegment model) {

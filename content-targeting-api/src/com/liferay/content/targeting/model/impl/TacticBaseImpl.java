@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the Tactic service. Represents a row in the &quot;CT_Tactic&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see TacticImpl
- * @see com.liferay.content.targeting.model.Tactic
+ * @see Tactic
  * @generated
  */
+@ProviderType
 public abstract class TacticBaseImpl extends TacticModelImpl implements Tactic {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -38,7 +39,7 @@ public abstract class TacticBaseImpl extends TacticModelImpl implements Tactic {
 	 * Never modify or reference this class directly. All methods that expect a tactic model instance should use the {@link Tactic} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			TacticLocalServiceUtil.addTactic(this);
 		}

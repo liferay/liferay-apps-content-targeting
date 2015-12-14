@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the UserSegment service. Represents a row in the &quot;CT_UserSegment&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see UserSegmentImpl
- * @see com.liferay.content.targeting.model.UserSegment
+ * @see UserSegment
  * @generated
  */
+@ProviderType
 public abstract class UserSegmentBaseImpl extends UserSegmentModelImpl
 	implements UserSegment {
 	/*
@@ -39,7 +40,7 @@ public abstract class UserSegmentBaseImpl extends UserSegmentModelImpl
 	 * Never modify or reference this class directly. All methods that expect a user segment model instance should use the {@link UserSegment} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			UserSegmentLocalServiceUtil.addUserSegment(this);
 		}

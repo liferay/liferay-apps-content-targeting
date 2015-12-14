@@ -25,4 +25,5 @@ package com.liferay.content.targeting.model.impl;
  */
 public class AnonymousUserUserSegmentImpl
 	extends AnonymousUserUserSegmentBaseImpl {
+
 }

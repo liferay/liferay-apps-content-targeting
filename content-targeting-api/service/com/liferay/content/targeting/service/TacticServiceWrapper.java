@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
@@ -23,37 +25,11 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see TacticService
  * @generated
  */
+@ProviderType
 public class TacticServiceWrapper implements TacticService,
 	ServiceWrapper<TacticService> {
 	public TacticServiceWrapper(TacticService tacticService) {
 		_tacticService = tacticService;
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _tacticService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_tacticService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _tacticService.invokeMethod(name, parameterTypes, arguments);
 	}
 
 	@Override
@@ -67,6 +43,16 @@ public class TacticServiceWrapper implements TacticService,
 			com.liferay.portal.kernel.exception.SystemException {
 		return _tacticService.addTactic(userId, campaignId, nameMap,
 			descriptionMap, userSegmentsIds, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _tacticService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -93,6 +79,7 @@ public class TacticServiceWrapper implements TacticService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public TacticService getWrappedTacticService() {
 		return _tacticService;
 	}
@@ -100,6 +87,7 @@ public class TacticServiceWrapper implements TacticService,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedTacticService(TacticService tacticService) {
 		_tacticService = tacticService;
 	}

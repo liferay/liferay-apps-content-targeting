@@ -16,7 +16,12 @@ package com.liferay.content.targeting.model.impl;
 
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
+import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.UserSegment;
+import com.liferay.content.targeting.service.CampaignLocalService;
+import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
@@ -24,6 +29,7 @@ import java.util.Locale;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * The extended model implementation for the ReportInstance service. Represents a row in the &quot;CT_ReportInstance&quot; database table, with each column mapped to a property of this class.
@@ -36,11 +42,36 @@ import org.osgi.framework.FrameworkUtil;
  */
 public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 
-	public ReportInstanceImpl() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+	public String getReportName(Locale locale) throws SystemException {
+		Report report = _reportsRegistry.getReport(getReportKey());
 
-		_reportsRegistry = ServiceTrackerUtil.getService(
-			ReportsRegistry.class, bundle.getBundleContext());
+		if (report == null) {
+			return StringPool.BLANK;
+		}
+
+		String reportName = report.getName(locale);
+
+		if (Campaign.class.getName().equals(getClassName())) {
+			Campaign campaign = _campaignLocalService.fetchCampaign(
+				getClassPK());
+
+			if (campaign != null) {
+				reportName = String.format(
+					"%s %s", campaign.getName(locale), report.getName(locale));
+			}
+		}
+		else if (UserSegment.class.getName().equals(getClassName())) {
+			UserSegment userSegment = _userSegmentLocalService.fetchUserSegment(
+				getClassPK());
+
+			if (userSegment != null) {
+				reportName = String.format(
+					"%s %s", userSegment.getName(locale),
+					report.getName(locale));
+			}
+		}
+
+		return reportName;
 	}
 
 	public String getTypeName(Locale locale) {
@@ -67,6 +98,27 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 		return report.isInstantiable();
 	}
 
+	@Reference(unbind = "-")
+	protected void setCampaignLocalService(
+		CampaignLocalService campaignLocalService) {
+
+		_campaignLocalService = campaignLocalService;
+	}
+
+	@Reference(unbind = "-")
+	protected void setReportsRegistry(ReportsRegistry reportsRegistry) {
+		_reportsRegistry = reportsRegistry;
+	}
+
+	@Reference
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
+	private CampaignLocalService _campaignLocalService;
 	private ReportsRegistry _reportsRegistry;
+	private UserSegmentLocalService _userSegmentLocalService;
 
 }

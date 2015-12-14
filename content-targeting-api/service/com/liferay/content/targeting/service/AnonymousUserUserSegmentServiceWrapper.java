@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
@@ -23,40 +25,13 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see AnonymousUserUserSegmentService
  * @generated
  */
+@ProviderType
 public class AnonymousUserUserSegmentServiceWrapper
 	implements AnonymousUserUserSegmentService,
 		ServiceWrapper<AnonymousUserUserSegmentService> {
 	public AnonymousUserUserSegmentServiceWrapper(
 		AnonymousUserUserSegmentService anonymousUserUserSegmentService) {
 		_anonymousUserUserSegmentService = anonymousUserUserSegmentService;
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _anonymousUserUserSegmentService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_anonymousUserUserSegmentService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _anonymousUserUserSegmentService.invokeMethod(name,
-			parameterTypes, arguments);
 	}
 
 	@Override
@@ -105,6 +80,16 @@ public class AnonymousUserUserSegmentServiceWrapper
 			com.liferay.portal.kernel.exception.SystemException {
 		return _anonymousUserUserSegmentService.getAnonymousUsersByUserSegmentIdsCount(userSegmentIds,
 			active, serviceContext);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _anonymousUserUserSegmentService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -156,6 +141,7 @@ public class AnonymousUserUserSegmentServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
+	@Deprecated
 	public AnonymousUserUserSegmentService getWrappedAnonymousUserUserSegmentService() {
 		return _anonymousUserUserSegmentService;
 	}
@@ -163,6 +149,7 @@ public class AnonymousUserUserSegmentServiceWrapper
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
 	 */
+	@Deprecated
 	public void setWrappedAnonymousUserUserSegmentService(
 		AnonymousUserUserSegmentService anonymousUserUserSegmentService) {
 		_anonymousUserUserSegmentService = anonymousUserUserSegmentService;

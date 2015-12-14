@@ -14,8 +14,11 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.TrackingActionInstance;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -34,8 +37,33 @@ import java.util.Date;
  * @see TrackingActionInstance
  * @generated
  */
+@ProviderType
 public class TrackingActionInstanceCacheModel implements CacheModel<TrackingActionInstance>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof TrackingActionInstanceCacheModel)) {
+			return false;
+		}
+
+		TrackingActionInstanceCacheModel trackingActionInstanceCacheModel = (TrackingActionInstanceCacheModel)obj;
+
+		if (trackingActionInstanceId == trackingActionInstanceCacheModel.trackingActionInstanceId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, trackingActionInstanceId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(35);

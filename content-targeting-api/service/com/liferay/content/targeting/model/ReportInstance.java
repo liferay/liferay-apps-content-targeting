@@ -14,6 +14,9 @@
 
 package com.liferay.content.targeting.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -25,12 +28,34 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.model.impl.ReportInstanceModelImpl
  * @generated
  */
+@ProviderType
 public interface ReportInstance extends ReportInstanceModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.ReportInstanceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ReportInstance, Long> REPORT_INSTANCE_ID_ACCESSOR =
+		new Accessor<ReportInstance, Long>() {
+			@Override
+			public Long get(ReportInstance reportInstance) {
+				return reportInstance.getReportInstanceId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ReportInstance> getTypeClass() {
+				return ReportInstance.class;
+			}
+		};
+
+	public java.lang.String getReportName(java.util.Locale locale)
+		throws com.liferay.portal.kernel.exception.SystemException;
+
 	public java.lang.String getTypeName(java.util.Locale locale);
 
 	public boolean isInstantiable();

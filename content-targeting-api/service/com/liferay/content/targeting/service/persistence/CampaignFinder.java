@@ -14,9 +14,13 @@
 
 package com.liferay.content.targeting.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Brian Wing Shun Chan
+ * @generated
  */
+@ProviderType
 public interface CampaignFinder {
 	public java.util.List<com.liferay.content.targeting.model.Campaign> filterFindByG_D_A_U(
 		long[] groupIds, java.util.Date date, boolean active,

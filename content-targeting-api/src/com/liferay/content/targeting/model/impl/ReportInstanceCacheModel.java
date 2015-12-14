@@ -14,8 +14,11 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.ReportInstance;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -34,8 +37,33 @@ import java.util.Date;
  * @see ReportInstance
  * @generated
  */
+@ProviderType
 public class ReportInstanceCacheModel implements CacheModel<ReportInstance>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof ReportInstanceCacheModel)) {
+			return false;
+		}
+
+		ReportInstanceCacheModel reportInstanceCacheModel = (ReportInstanceCacheModel)obj;
+
+		if (reportInstanceId == reportInstanceCacheModel.reportInstanceId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, reportInstanceId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(29);

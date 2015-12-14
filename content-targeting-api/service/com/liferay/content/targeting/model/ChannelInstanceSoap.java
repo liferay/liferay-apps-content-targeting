@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.content.targeting.service.http.ChannelInstanceServiceSoap
  * @generated
  */
+@ProviderType
 public class ChannelInstanceSoap implements Serializable {
 	public static ChannelInstanceSoap toSoapModel(ChannelInstance model) {
 		ChannelInstanceSoap soapModel = new ChannelInstanceSoap();

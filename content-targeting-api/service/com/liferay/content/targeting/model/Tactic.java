@@ -14,6 +14,9 @@
 
 package com.liferay.content.targeting.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -25,10 +28,27 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.model.impl.TacticModelImpl
  * @generated
  */
+@ProviderType
 public interface Tactic extends TacticModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.TacticImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Tactic, Long> TACTIC_ID_ACCESSOR = new Accessor<Tactic, Long>() {
+			@Override
+			public Long get(Tactic tactic) {
+				return tactic.getTacticId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Tactic> getTypeClass() {
+				return Tactic.class;
+			}
+		};
 }

@@ -14,6 +14,9 @@
 
 package com.liferay.content.targeting.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -25,12 +28,31 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl
  * @generated
  */
+@ProviderType
 public interface ChannelInstance extends ChannelInstanceModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.ChannelInstanceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<ChannelInstance, Long> CHANNEL_INSTANCE_ID_ACCESSOR =
+		new Accessor<ChannelInstance, Long>() {
+			@Override
+			public Long get(ChannelInstance channelInstance) {
+				return channelInstance.getChannelInstanceId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<ChannelInstance> getTypeClass() {
+				return ChannelInstance.class;
+			}
+		};
+
 	public java.lang.String getChannelGuid();
 
 	public java.util.Map<java.lang.String, java.lang.String> getValues();

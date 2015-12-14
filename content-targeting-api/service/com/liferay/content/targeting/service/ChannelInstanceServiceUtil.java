@@ -14,9 +14,12 @@
 
 package com.liferay.content.targeting.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableService;
+import aQute.bnd.annotation.ProviderType;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the remote service utility for ChannelInstance. This utility wraps
@@ -32,37 +35,13 @@ import com.liferay.portal.service.InvokableService;
  * @see com.liferay.content.targeting.service.impl.ChannelInstanceServiceImpl
  * @generated
  */
+@ProviderType
 public class ChannelInstanceServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.content.targeting.service.impl.ChannelInstanceServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
-	}
-
 	public static com.liferay.content.targeting.model.ChannelInstance addChannelInstance(
 		long userId, long tacticId, java.lang.String channelKey,
 		long campaignId, java.lang.String alias, java.lang.String typeSettings,
@@ -95,6 +74,15 @@ public class ChannelInstanceServiceUtil {
 		return getService().getChannelInstances(tacticId, channelKey);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
 	public static com.liferay.content.targeting.model.ChannelInstance updateChannelInstance(
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,
@@ -106,34 +94,25 @@ public class ChannelInstanceServiceUtil {
 			typeSettings, serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static ChannelInstanceService getService() {
-		if (_service == null) {
-			InvokableService invokableService = (InvokableService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					ChannelInstanceService.class.getName());
-
-			if (invokableService instanceof ChannelInstanceService) {
-				_service = (ChannelInstanceService)invokableService;
-			}
-			else {
-				_service = new ChannelInstanceServiceClp(invokableService);
-			}
-
-			ReferenceRegistry.registerReference(ChannelInstanceServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(ChannelInstanceService service) {
 	}
 
-	private static ChannelInstanceService _service;
+	private static ServiceTracker<ChannelInstanceService, ChannelInstanceService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(ChannelInstanceServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<ChannelInstanceService, ChannelInstanceService>(bundle.getBundleContext(),
+				ChannelInstanceService.class, null);
+
+		_serviceTracker.open();
+	}
 }

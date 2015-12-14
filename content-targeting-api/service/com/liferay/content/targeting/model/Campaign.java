@@ -14,6 +14,9 @@
 
 package com.liferay.content.targeting.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -25,12 +28,30 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.model.impl.CampaignModelImpl
  * @generated
  */
+@ProviderType
 public interface Campaign extends CampaignModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.CampaignImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<Campaign, Long> CAMPAIGN_ID_ACCESSOR = new Accessor<Campaign, Long>() {
+			@Override
+			public Long get(Campaign campaign) {
+				return campaign.getCampaignId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<Campaign> getTypeClass() {
+				return Campaign.class;
+			}
+		};
+
 	public java.lang.String getNameWithGroupName(java.util.Locale locale,
 		long groupId);
 

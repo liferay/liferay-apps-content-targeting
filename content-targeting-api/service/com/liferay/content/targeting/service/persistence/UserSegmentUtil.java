@@ -14,19 +14,23 @@
 
 package com.liferay.content.targeting.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.UserSegment;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
 /**
- * The persistence utility for the user segment service. This utility wraps {@link UserSegmentPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the user segment service. This utility wraps {@link com.liferay.content.targeting.service.persistence.impl.UserSegmentPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -34,9 +38,10 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see UserSegmentPersistence
- * @see UserSegmentPersistenceImpl
+ * @see com.liferay.content.targeting.service.persistence.impl.UserSegmentPersistenceImpl
  * @generated
  */
+@ProviderType
 public class UserSegmentUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -61,8 +66,7 @@ public class UserSegmentUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -70,7 +74,7 @@ public class UserSegmentUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<UserSegment> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -78,8 +82,7 @@ public class UserSegmentUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<UserSegment> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -88,7 +91,7 @@ public class UserSegmentUtil {
 	 */
 	public static List<UserSegment> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -97,8 +100,7 @@ public class UserSegmentUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static UserSegment update(UserSegment userSegment)
-		throws SystemException {
+	public static UserSegment update(UserSegment userSegment) {
 		return getPersistence().update(userSegment);
 	}
 
@@ -106,7 +108,7 @@ public class UserSegmentUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static UserSegment update(UserSegment userSegment,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(userSegment, serviceContext);
 	}
 
@@ -115,11 +117,8 @@ public class UserSegmentUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findByUuid(java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -127,18 +126,16 @@ public class UserSegmentUtil {
 	* Returns a range of all the user segments where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
 	* @param start the lower bound of the range of user segments
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @return the range of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findByUuid(java.lang.String uuid,
+		int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -146,7 +143,7 @@ public class UserSegmentUtil {
 	* Returns an ordered range of all the user segments where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -154,13 +151,32 @@ public class UserSegmentUtil {
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findByUuid(java.lang.String uuid,
+		int start, int end, OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the user segments where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching user segments
+	*/
+	public static List<UserSegment> findByUuid(java.lang.String uuid,
+		int start, int end, OrderByComparator<UserSegment> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid(uuid, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -170,13 +186,10 @@ public class UserSegmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment findByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment findByUuid_First(java.lang.String uuid,
+		OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -186,12 +199,9 @@ public class UserSegmentUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user segment, or <code>null</code> if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment fetchByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment fetchByUuid_First(java.lang.String uuid,
+		OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -202,13 +212,10 @@ public class UserSegmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment findByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment findByUuid_Last(java.lang.String uuid,
+		OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -218,12 +225,9 @@ public class UserSegmentUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user segment, or <code>null</code> if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment fetchByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment fetchByUuid_Last(java.lang.String uuid,
+		OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -235,13 +239,10 @@ public class UserSegmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment[] findByUuid_PrevAndNext(
-		long userSegmentId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment[] findByUuid_PrevAndNext(long userSegmentId,
+		java.lang.String uuid, OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(userSegmentId, uuid,
 			orderByComparator);
@@ -251,10 +252,8 @@ public class UserSegmentUtil {
 	* Removes all the user segments where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -263,10 +262,8 @@ public class UserSegmentUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -277,12 +274,9 @@ public class UserSegmentUtil {
 	* @param groupId the group ID
 	* @return the matching user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment findByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment findByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -292,11 +286,8 @@ public class UserSegmentUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment fetchByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -305,13 +296,11 @@ public class UserSegmentUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -321,12 +310,9 @@ public class UserSegmentUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the user segment that was removed
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment removeByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -336,10 +322,8 @@ public class UserSegmentUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -349,11 +333,9 @@ public class UserSegmentUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findByUuid_C(java.lang.String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -361,7 +343,7 @@ public class UserSegmentUtil {
 	* Returns a range of all the user segments where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -369,11 +351,9 @@ public class UserSegmentUtil {
 	* @param start the lower bound of the range of user segments
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @return the range of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -381,7 +361,7 @@ public class UserSegmentUtil {
 	* Returns an ordered range of all the user segments where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -390,14 +370,36 @@ public class UserSegmentUtil {
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the user segments where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching user segments
+	*/
+	public static List<UserSegment> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<UserSegment> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -408,13 +410,10 @@ public class UserSegmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment findByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -426,12 +425,9 @@ public class UserSegmentUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user segment, or <code>null</code> if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment fetchByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -444,13 +440,10 @@ public class UserSegmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment findByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -462,12 +455,9 @@ public class UserSegmentUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user segment, or <code>null</code> if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -481,13 +471,11 @@ public class UserSegmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment[] findByUuid_C_PrevAndNext(
-		long userSegmentId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment[] findByUuid_C_PrevAndNext(long userSegmentId,
+		java.lang.String uuid, long companyId,
+		OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(userSegmentId, uuid, companyId,
 			orderByComparator);
@@ -498,10 +486,8 @@ public class UserSegmentUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -511,10 +497,8 @@ public class UserSegmentUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -524,12 +508,9 @@ public class UserSegmentUtil {
 	* @param assetCategoryId the asset category ID
 	* @return the matching user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment findByAssetCategoryId(
-		long assetCategoryId)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment findByAssetCategoryId(long assetCategoryId)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence().findByAssetCategoryId(assetCategoryId);
 	}
 
@@ -538,11 +519,8 @@ public class UserSegmentUtil {
 	*
 	* @param assetCategoryId the asset category ID
 	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment fetchByAssetCategoryId(
-		long assetCategoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment fetchByAssetCategoryId(long assetCategoryId) {
 		return getPersistence().fetchByAssetCategoryId(assetCategoryId);
 	}
 
@@ -550,13 +528,11 @@ public class UserSegmentUtil {
 	* Returns the user segment where assetCategoryId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param assetCategoryId the asset category ID
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching user segment, or <code>null</code> if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment fetchByAssetCategoryId(
-		long assetCategoryId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment fetchByAssetCategoryId(long assetCategoryId,
+		boolean retrieveFromCache) {
 		return getPersistence()
 				   .fetchByAssetCategoryId(assetCategoryId, retrieveFromCache);
 	}
@@ -566,12 +542,9 @@ public class UserSegmentUtil {
 	*
 	* @param assetCategoryId the asset category ID
 	* @return the user segment that was removed
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment removeByAssetCategoryId(
-		long assetCategoryId)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment removeByAssetCategoryId(long assetCategoryId)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence().removeByAssetCategoryId(assetCategoryId);
 	}
 
@@ -580,10 +553,8 @@ public class UserSegmentUtil {
 	*
 	* @param assetCategoryId the asset category ID
 	* @return the number of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByAssetCategoryId(long assetCategoryId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByAssetCategoryId(long assetCategoryId) {
 		return getPersistence().countByAssetCategoryId(assetCategoryId);
 	}
 
@@ -592,11 +563,8 @@ public class UserSegmentUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findByGroupId(long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -604,18 +572,16 @@ public class UserSegmentUtil {
 	* Returns a range of all the user segments where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
 	* @param start the lower bound of the range of user segments
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @return the range of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findByGroupId(long groupId, int start,
+		int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -623,7 +589,7 @@ public class UserSegmentUtil {
 	* Returns an ordered range of all the user segments where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -631,14 +597,33 @@ public class UserSegmentUtil {
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the user segments where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching user segments
+	*/
+	public static List<UserSegment> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<UserSegment> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByGroupId(groupId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -648,13 +633,10 @@ public class UserSegmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment findByGroupId_First(long groupId,
+		OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -664,12 +646,9 @@ public class UserSegmentUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user segment, or <code>null</code> if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment fetchByGroupId_First(long groupId,
+		OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -680,13 +659,10 @@ public class UserSegmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment findByGroupId_Last(long groupId,
+		OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -696,12 +672,9 @@ public class UserSegmentUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user segment, or <code>null</code> if a matching user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment fetchByGroupId_Last(long groupId,
+		OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -713,13 +686,10 @@ public class UserSegmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment[] findByGroupId_PrevAndNext(
-		long userSegmentId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment[] findByGroupId_PrevAndNext(long userSegmentId,
+		long groupId, OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(userSegmentId, groupId,
 			orderByComparator);
@@ -730,11 +700,8 @@ public class UserSegmentUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching user segments that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> filterFindByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> filterFindByGroupId(long groupId) {
 		return getPersistence().filterFindByGroupId(groupId);
 	}
 
@@ -742,18 +709,16 @@ public class UserSegmentUtil {
 	* Returns a range of all the user segments that the user has permission to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
 	* @param start the lower bound of the range of user segments
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @return the range of matching user segments that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> filterFindByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> filterFindByGroupId(long groupId,
+		int start, int end) {
 		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
@@ -761,7 +726,7 @@ public class UserSegmentUtil {
 	* Returns an ordered range of all the user segments that the user has permissions to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -769,12 +734,9 @@ public class UserSegmentUtil {
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user segments that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> filterFindByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> filterFindByGroupId(long groupId,
+		int start, int end, OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -787,13 +749,11 @@ public class UserSegmentUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment[] filterFindByGroupId_PrevAndNext(
+	public static UserSegment[] filterFindByGroupId_PrevAndNext(
 		long userSegmentId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<UserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(userSegmentId, groupId,
 			orderByComparator);
@@ -804,11 +764,8 @@ public class UserSegmentUtil {
 	*
 	* @param groupIds the group IDs
 	* @return the matching user segments that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> filterFindByGroupId(
-		long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> filterFindByGroupId(long[] groupIds) {
 		return getPersistence().filterFindByGroupId(groupIds);
 	}
 
@@ -816,18 +773,16 @@ public class UserSegmentUtil {
 	* Returns a range of all the user segments that the user has permission to view where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
 	* @param start the lower bound of the range of user segments
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @return the range of matching user segments that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> filterFindByGroupId(
-		long[] groupIds, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> filterFindByGroupId(long[] groupIds,
+		int start, int end) {
 		return getPersistence().filterFindByGroupId(groupIds, start, end);
 	}
 
@@ -835,7 +790,7 @@ public class UserSegmentUtil {
 	* Returns an ordered range of all the user segments that the user has permission to view where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -843,12 +798,9 @@ public class UserSegmentUtil {
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user segments that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> filterFindByGroupId(
-		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> filterFindByGroupId(long[] groupIds,
+		int start, int end, OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupIds, start, end, orderByComparator);
 	}
@@ -857,16 +809,13 @@ public class UserSegmentUtil {
 	* Returns all the user segments where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
 	* @return the matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findByGroupId(
-		long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findByGroupId(long[] groupIds) {
 		return getPersistence().findByGroupId(groupIds);
 	}
 
@@ -874,18 +823,16 @@ public class UserSegmentUtil {
 	* Returns a range of all the user segments where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
 	* @param start the lower bound of the range of user segments
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @return the range of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findByGroupId(
-		long[] groupIds, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findByGroupId(long[] groupIds, int start,
+		int end) {
 		return getPersistence().findByGroupId(groupIds, start, end);
 	}
 
@@ -893,7 +840,7 @@ public class UserSegmentUtil {
 	* Returns an ordered range of all the user segments where groupId = any &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupIds the group IDs
@@ -901,24 +848,41 @@ public class UserSegmentUtil {
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findByGroupId(
-		long[] groupIds, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findByGroupId(long[] groupIds, int start,
+		int end, OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupIds, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the user segments where groupId = &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching user segments
+	*/
+	public static List<UserSegment> findByGroupId(long[] groupIds, int start,
+		int end, OrderByComparator<UserSegment> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByGroupId(groupIds, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
 	* Removes all the user segments where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByGroupId(long groupId) {
 		getPersistence().removeByGroupId(groupId);
 	}
 
@@ -927,10 +891,8 @@ public class UserSegmentUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
 	}
 
@@ -939,10 +901,8 @@ public class UserSegmentUtil {
 	*
 	* @param groupIds the group IDs
 	* @return the number of matching user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByGroupId(long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByGroupId(long[] groupIds) {
 		return getPersistence().countByGroupId(groupIds);
 	}
 
@@ -951,10 +911,8 @@ public class UserSegmentUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching user segments that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByGroupId(long groupId) {
 		return getPersistence().filterCountByGroupId(groupId);
 	}
 
@@ -963,10 +921,8 @@ public class UserSegmentUtil {
 	*
 	* @param groupIds the group IDs
 	* @return the number of matching user segments that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByGroupId(long[] groupIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByGroupId(long[] groupIds) {
 		return getPersistence().filterCountByGroupId(groupIds);
 	}
 
@@ -975,8 +931,7 @@ public class UserSegmentUtil {
 	*
 	* @param userSegment the user segment
 	*/
-	public static void cacheResult(
-		com.liferay.content.targeting.model.UserSegment userSegment) {
+	public static void cacheResult(UserSegment userSegment) {
 		getPersistence().cacheResult(userSegment);
 	}
 
@@ -985,8 +940,7 @@ public class UserSegmentUtil {
 	*
 	* @param userSegments the user segments
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.content.targeting.model.UserSegment> userSegments) {
+	public static void cacheResult(List<UserSegment> userSegments) {
 		getPersistence().cacheResult(userSegments);
 	}
 
@@ -996,8 +950,7 @@ public class UserSegmentUtil {
 	* @param userSegmentId the primary key for the new user segment
 	* @return the new user segment
 	*/
-	public static com.liferay.content.targeting.model.UserSegment create(
-		long userSegmentId) {
+	public static UserSegment create(long userSegmentId) {
 		return getPersistence().create(userSegmentId);
 	}
 
@@ -1007,18 +960,13 @@ public class UserSegmentUtil {
 	* @param userSegmentId the primary key of the user segment
 	* @return the user segment that was removed
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment remove(
-		long userSegmentId)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment remove(long userSegmentId)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence().remove(userSegmentId);
 	}
 
-	public static com.liferay.content.targeting.model.UserSegment updateImpl(
-		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment updateImpl(UserSegment userSegment) {
 		return getPersistence().updateImpl(userSegment);
 	}
 
@@ -1028,12 +976,9 @@ public class UserSegmentUtil {
 	* @param userSegmentId the primary key of the user segment
 	* @return the user segment
 	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment findByPrimaryKey(
-		long userSegmentId)
-		throws com.liferay.content.targeting.NoSuchUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment findByPrimaryKey(long userSegmentId)
+		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
 		return getPersistence().findByPrimaryKey(userSegmentId);
 	}
 
@@ -1042,22 +987,22 @@ public class UserSegmentUtil {
 	*
 	* @param userSegmentId the primary key of the user segment
 	* @return the user segment, or <code>null</code> if a user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.UserSegment fetchByPrimaryKey(
-		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static UserSegment fetchByPrimaryKey(long userSegmentId) {
 		return getPersistence().fetchByPrimaryKey(userSegmentId);
+	}
+
+	public static java.util.Map<java.io.Serializable, UserSegment> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
 	* Returns all the user segments.
 	*
 	* @return the user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1065,17 +1010,14 @@ public class UserSegmentUtil {
 	* Returns a range of all the user segments.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of user segments
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @return the range of user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1083,29 +1025,43 @@ public class UserSegmentUtil {
 	* Returns an ordered range of all the user segments.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of user segments
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findAll(int start, int end,
+		OrderByComparator<UserSegment> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	* Removes all the user segments from the database.
+	* Returns an ordered range of all the user segments.
 	*
-	* @throws SystemException if a system exception occurred
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of user segments
+	* @param end the upper bound of the range of user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of user segments
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<UserSegment> findAll(int start, int end,
+		OrderByComparator<UserSegment> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Removes all the user segments from the database.
+	*/
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -1113,11 +1069,19 @@ public class UserSegmentUtil {
 	* Returns the number of user segments.
 	*
 	* @return the number of user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
+	}
+
+	/**
+	* Returns the primaryKeys of campaigns associated with the user segment.
+	*
+	* @param pk the primary key of the user segment
+	* @return long[] of the primaryKeys of campaigns associated with the user segment
+	*/
+	public static long[] getCampaignPrimaryKeys(long pk) {
+		return getPersistence().getCampaignPrimaryKeys(pk);
 	}
 
 	/**
@@ -1125,10 +1089,9 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @return the campaigns associated with the user segment
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long pk) throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+		long pk) {
 		return getPersistence().getCampaigns(pk);
 	}
 
@@ -1136,18 +1099,16 @@ public class UserSegmentUtil {
 	* Returns a range of all the campaigns associated with the user segment.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the user segment
 	* @param start the lower bound of the range of user segments
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @return the range of campaigns associated with the user segment
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long pk, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+		long pk, int start, int end) {
 		return getPersistence().getCampaigns(pk, start, end);
 	}
 
@@ -1155,7 +1116,7 @@ public class UserSegmentUtil {
 	* Returns an ordered range of all the campaigns associated with the user segment.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the user segment
@@ -1163,12 +1124,10 @@ public class UserSegmentUtil {
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of campaigns associated with the user segment
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
+	public static List<com.liferay.content.targeting.model.Campaign> getCampaigns(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<com.liferay.content.targeting.model.Campaign> orderByComparator) {
 		return getPersistence().getCampaigns(pk, start, end, orderByComparator);
 	}
 
@@ -1177,10 +1136,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @return the number of campaigns associated with the user segment
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getCampaignsSize(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getCampaignsSize(long pk) {
 		return getPersistence().getCampaignsSize(pk);
 	}
 
@@ -1190,10 +1147,8 @@ public class UserSegmentUtil {
 	* @param pk the primary key of the user segment
 	* @param campaignPK the primary key of the campaign
 	* @return <code>true</code> if the campaign is associated with the user segment; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
-	public static boolean containsCampaign(long pk, long campaignPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean containsCampaign(long pk, long campaignPK) {
 		return getPersistence().containsCampaign(pk, campaignPK);
 	}
 
@@ -1202,10 +1157,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment to check for associations with campaigns
 	* @return <code>true</code> if the user segment has any campaigns associated with it; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
-	public static boolean containsCampaigns(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean containsCampaigns(long pk) {
 		return getPersistence().containsCampaigns(pk);
 	}
 
@@ -1214,10 +1167,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param campaignPK the primary key of the campaign
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void addCampaign(long pk, long campaignPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void addCampaign(long pk, long campaignPK) {
 		getPersistence().addCampaign(pk, campaignPK);
 	}
 
@@ -1226,11 +1177,9 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param campaign the campaign
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addCampaign(long pk,
-		com.liferay.content.targeting.model.Campaign campaign)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.Campaign campaign) {
 		getPersistence().addCampaign(pk, campaign);
 	}
 
@@ -1239,10 +1188,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param campaignPKs the primary keys of the campaigns
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void addCampaigns(long pk, long[] campaignPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void addCampaigns(long pk, long[] campaignPKs) {
 		getPersistence().addCampaigns(pk, campaignPKs);
 	}
 
@@ -1251,11 +1198,9 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param campaigns the campaigns
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addCampaigns(long pk,
-		java.util.List<com.liferay.content.targeting.model.Campaign> campaigns)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		List<com.liferay.content.targeting.model.Campaign> campaigns) {
 		getPersistence().addCampaigns(pk, campaigns);
 	}
 
@@ -1263,10 +1208,8 @@ public class UserSegmentUtil {
 	* Clears all associations between the user segment and its campaigns. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the user segment to clear the associated campaigns from
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void clearCampaigns(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void clearCampaigns(long pk) {
 		getPersistence().clearCampaigns(pk);
 	}
 
@@ -1275,10 +1218,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param campaignPK the primary key of the campaign
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeCampaign(long pk, long campaignPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeCampaign(long pk, long campaignPK) {
 		getPersistence().removeCampaign(pk, campaignPK);
 	}
 
@@ -1287,11 +1228,9 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param campaign the campaign
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeCampaign(long pk,
-		com.liferay.content.targeting.model.Campaign campaign)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.Campaign campaign) {
 		getPersistence().removeCampaign(pk, campaign);
 	}
 
@@ -1300,10 +1239,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param campaignPKs the primary keys of the campaigns
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeCampaigns(long pk, long[] campaignPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeCampaigns(long pk, long[] campaignPKs) {
 		getPersistence().removeCampaigns(pk, campaignPKs);
 	}
 
@@ -1312,11 +1249,9 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param campaigns the campaigns
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeCampaigns(long pk,
-		java.util.List<com.liferay.content.targeting.model.Campaign> campaigns)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		List<com.liferay.content.targeting.model.Campaign> campaigns) {
 		getPersistence().removeCampaigns(pk, campaigns);
 	}
 
@@ -1325,10 +1260,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param campaignPKs the primary keys of the campaigns to be associated with the user segment
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void setCampaigns(long pk, long[] campaignPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void setCampaigns(long pk, long[] campaignPKs) {
 		getPersistence().setCampaigns(pk, campaignPKs);
 	}
 
@@ -1337,12 +1270,20 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param campaigns the campaigns to be associated with the user segment
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void setCampaigns(long pk,
-		java.util.List<com.liferay.content.targeting.model.Campaign> campaigns)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		List<com.liferay.content.targeting.model.Campaign> campaigns) {
 		getPersistence().setCampaigns(pk, campaigns);
+	}
+
+	/**
+	* Returns the primaryKeys of tactics associated with the user segment.
+	*
+	* @param pk the primary key of the user segment
+	* @return long[] of the primaryKeys of tactics associated with the user segment
+	*/
+	public static long[] getTacticPrimaryKeys(long pk) {
+		return getPersistence().getTacticPrimaryKeys(pk);
 	}
 
 	/**
@@ -1350,10 +1291,9 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @return the tactics associated with the user segment
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
-		long pk) throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long pk) {
 		return getPersistence().getTactics(pk);
 	}
 
@@ -1361,18 +1301,16 @@ public class UserSegmentUtil {
 	* Returns a range of all the tactics associated with the user segment.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the user segment
 	* @param start the lower bound of the range of user segments
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @return the range of tactics associated with the user segment
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
-		long pk, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long pk, int start, int end) {
 		return getPersistence().getTactics(pk, start, end);
 	}
 
@@ -1380,7 +1318,7 @@ public class UserSegmentUtil {
 	* Returns an ordered range of all the tactics associated with the user segment.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link UserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the user segment
@@ -1388,12 +1326,10 @@ public class UserSegmentUtil {
 	* @param end the upper bound of the range of user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of tactics associated with the user segment
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
+	public static List<com.liferay.content.targeting.model.Tactic> getTactics(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<com.liferay.content.targeting.model.Tactic> orderByComparator) {
 		return getPersistence().getTactics(pk, start, end, orderByComparator);
 	}
 
@@ -1402,10 +1338,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @return the number of tactics associated with the user segment
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getTacticsSize(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getTacticsSize(long pk) {
 		return getPersistence().getTacticsSize(pk);
 	}
 
@@ -1415,10 +1349,8 @@ public class UserSegmentUtil {
 	* @param pk the primary key of the user segment
 	* @param tacticPK the primary key of the tactic
 	* @return <code>true</code> if the tactic is associated with the user segment; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
-	public static boolean containsTactic(long pk, long tacticPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean containsTactic(long pk, long tacticPK) {
 		return getPersistence().containsTactic(pk, tacticPK);
 	}
 
@@ -1427,10 +1359,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment to check for associations with tactics
 	* @return <code>true</code> if the user segment has any tactics associated with it; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
-	public static boolean containsTactics(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean containsTactics(long pk) {
 		return getPersistence().containsTactics(pk);
 	}
 
@@ -1439,10 +1369,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param tacticPK the primary key of the tactic
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void addTactic(long pk, long tacticPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void addTactic(long pk, long tacticPK) {
 		getPersistence().addTactic(pk, tacticPK);
 	}
 
@@ -1451,11 +1379,9 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param tactic the tactic
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addTactic(long pk,
-		com.liferay.content.targeting.model.Tactic tactic)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.Tactic tactic) {
 		getPersistence().addTactic(pk, tactic);
 	}
 
@@ -1464,10 +1390,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param tacticPKs the primary keys of the tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void addTactics(long pk, long[] tacticPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void addTactics(long pk, long[] tacticPKs) {
 		getPersistence().addTactics(pk, tacticPKs);
 	}
 
@@ -1476,11 +1400,9 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param tactics the tactics
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addTactics(long pk,
-		java.util.List<com.liferay.content.targeting.model.Tactic> tactics)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		List<com.liferay.content.targeting.model.Tactic> tactics) {
 		getPersistence().addTactics(pk, tactics);
 	}
 
@@ -1488,10 +1410,8 @@ public class UserSegmentUtil {
 	* Clears all associations between the user segment and its tactics. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the user segment to clear the associated tactics from
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void clearTactics(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void clearTactics(long pk) {
 		getPersistence().clearTactics(pk);
 	}
 
@@ -1500,10 +1420,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param tacticPK the primary key of the tactic
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeTactic(long pk, long tacticPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeTactic(long pk, long tacticPK) {
 		getPersistence().removeTactic(pk, tacticPK);
 	}
 
@@ -1512,11 +1430,9 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param tactic the tactic
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeTactic(long pk,
-		com.liferay.content.targeting.model.Tactic tactic)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.Tactic tactic) {
 		getPersistence().removeTactic(pk, tactic);
 	}
 
@@ -1525,10 +1441,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param tacticPKs the primary keys of the tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeTactics(long pk, long[] tacticPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeTactics(long pk, long[] tacticPKs) {
 		getPersistence().removeTactics(pk, tacticPKs);
 	}
 
@@ -1537,11 +1451,9 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param tactics the tactics
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeTactics(long pk,
-		java.util.List<com.liferay.content.targeting.model.Tactic> tactics)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		List<com.liferay.content.targeting.model.Tactic> tactics) {
 		getPersistence().removeTactics(pk, tactics);
 	}
 
@@ -1550,10 +1462,8 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param tacticPKs the primary keys of the tactics to be associated with the user segment
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void setTactics(long pk, long[] tacticPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void setTactics(long pk, long[] tacticPKs) {
 		getPersistence().setTactics(pk, tacticPKs);
 	}
 
@@ -1562,31 +1472,35 @@ public class UserSegmentUtil {
 	*
 	* @param pk the primary key of the user segment
 	* @param tactics the tactics to be associated with the user segment
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void setTactics(long pk,
-		java.util.List<com.liferay.content.targeting.model.Tactic> tactics)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		List<com.liferay.content.targeting.model.Tactic> tactics) {
 		getPersistence().setTactics(pk, tactics);
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static UserSegmentPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (UserSegmentPersistence)PortletBeanLocatorUtil.locate(com.liferay.content.targeting.service.ClpSerializer.getServletContextName(),
-					UserSegmentPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(UserSegmentUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(UserSegmentPersistence persistence) {
 	}
 
-	private static UserSegmentPersistence _persistence;
+	private static ServiceTracker<UserSegmentPersistence, UserSegmentPersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(UserSegmentUtil.class);
+
+		_serviceTracker = new ServiceTracker<UserSegmentPersistence, UserSegmentPersistence>(bundle.getBundleContext(),
+				UserSegmentPersistence.class, null);
+
+		_serviceTracker.open();
+	}
 }

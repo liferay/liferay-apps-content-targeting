@@ -14,12 +14,16 @@
 
 package com.liferay.content.targeting.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.StagedGroupedModel;
+import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.ShardedModel;
+import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,7 +47,9 @@ import java.util.Map;
  * @see com.liferay.content.targeting.model.impl.TacticModelImpl
  * @generated
  */
-public interface TacticModel extends BaseModel<Tactic>, StagedGroupedModel {
+@ProviderType
+public interface TacticModel extends BaseModel<Tactic>, GroupedModel,
+	LocalizedModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -147,10 +153,9 @@ public interface TacticModel extends BaseModel<Tactic>, StagedGroupedModel {
 	 * Returns the user uuid of this tactic.
 	 *
 	 * @return the user uuid of this tactic
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this tactic.
@@ -456,12 +461,16 @@ public interface TacticModel extends BaseModel<Tactic>, StagedGroupedModel {
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	@Override
 	public String[] getAvailableLanguageIds();
 
+	@Override
 	public String getDefaultLanguageId();
 
+	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException;
 
+	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
@@ -469,19 +478,19 @@ public interface TacticModel extends BaseModel<Tactic>, StagedGroupedModel {
 	public Object clone();
 
 	@Override
-	public int compareTo(Tactic tactic);
+	public int compareTo(com.liferay.content.targeting.model.Tactic tactic);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<Tactic> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.Tactic> toCacheModel();
 
 	@Override
-	public Tactic toEscapedModel();
+	public com.liferay.content.targeting.model.Tactic toEscapedModel();
 
 	@Override
-	public Tactic toUnescapedModel();
+	public com.liferay.content.targeting.model.Tactic toUnescapedModel();
 
 	@Override
 	public String toString();

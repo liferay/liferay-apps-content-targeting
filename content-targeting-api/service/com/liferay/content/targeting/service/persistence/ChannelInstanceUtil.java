@@ -14,19 +14,23 @@
 
 package com.liferay.content.targeting.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.ChannelInstance;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
 /**
- * The persistence utility for the channel instance service. This utility wraps {@link ChannelInstancePersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the channel instance service. This utility wraps {@link com.liferay.content.targeting.service.persistence.impl.ChannelInstancePersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -34,9 +38,10 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see ChannelInstancePersistence
- * @see ChannelInstancePersistenceImpl
+ * @see com.liferay.content.targeting.service.persistence.impl.ChannelInstancePersistenceImpl
  * @generated
  */
+@ProviderType
 public class ChannelInstanceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -61,8 +66,7 @@ public class ChannelInstanceUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
@@ -70,7 +74,7 @@ public class ChannelInstanceUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
 	public static List<ChannelInstance> findWithDynamicQuery(
-		DynamicQuery dynamicQuery) throws SystemException {
+		DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -78,8 +82,7 @@ public class ChannelInstanceUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<ChannelInstance> findWithDynamicQuery(
-		DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+		DynamicQuery dynamicQuery, int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -88,7 +91,7 @@ public class ChannelInstanceUtil {
 	 */
 	public static List<ChannelInstance> findWithDynamicQuery(
 		DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -97,8 +100,7 @@ public class ChannelInstanceUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static ChannelInstance update(ChannelInstance channelInstance)
-		throws SystemException {
+	public static ChannelInstance update(ChannelInstance channelInstance) {
 		return getPersistence().update(channelInstance);
 	}
 
@@ -106,7 +108,7 @@ public class ChannelInstanceUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
 	public static ChannelInstance update(ChannelInstance channelInstance,
-		ServiceContext serviceContext) throws SystemException {
+		ServiceContext serviceContext) {
 		return getPersistence().update(channelInstance, serviceContext);
 	}
 
@@ -115,11 +117,8 @@ public class ChannelInstanceUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByUuid(java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -127,18 +126,16 @@ public class ChannelInstanceUtil {
 	* Returns a range of all the channel instances where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
 	* @param start the lower bound of the range of channel instances
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @return the range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByUuid(java.lang.String uuid,
+		int start, int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -146,7 +143,7 @@ public class ChannelInstanceUtil {
 	* Returns an ordered range of all the channel instances where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -154,13 +151,33 @@ public class ChannelInstanceUtil {
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByUuid(java.lang.String uuid,
+		int start, int end, OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the channel instances where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching channel instances
+	*/
+	public static List<ChannelInstance> findByUuid(java.lang.String uuid,
+		int start, int end,
+		OrderByComparator<ChannelInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid(uuid, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -170,13 +187,10 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByUuid_First(java.lang.String uuid,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -186,12 +200,9 @@ public class ChannelInstanceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByUuid_First(java.lang.String uuid,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -202,13 +213,10 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByUuid_Last(java.lang.String uuid,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -218,12 +226,9 @@ public class ChannelInstanceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByUuid_Last(java.lang.String uuid,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -235,13 +240,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance[] findByUuid_PrevAndNext(
+	public static ChannelInstance[] findByUuid_PrevAndNext(
 		long channelInstanceId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(channelInstanceId, uuid,
 			orderByComparator);
@@ -251,10 +254,8 @@ public class ChannelInstanceUtil {
 	* Removes all the channel instances where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -263,10 +264,8 @@ public class ChannelInstanceUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -277,12 +276,10 @@ public class ChannelInstanceUtil {
 	* @param groupId the group ID
 	* @return the matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByUUID_G(java.lang.String uuid,
+		long groupId)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -292,11 +289,9 @@ public class ChannelInstanceUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByUUID_G(java.lang.String uuid,
+		long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -305,13 +300,11 @@ public class ChannelInstanceUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByUUID_G(java.lang.String uuid,
+		long groupId, boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -321,12 +314,10 @@ public class ChannelInstanceUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the channel instance that was removed
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance removeByUUID_G(java.lang.String uuid,
+		long groupId)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -336,10 +327,8 @@ public class ChannelInstanceUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -349,11 +338,9 @@ public class ChannelInstanceUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByUuid_C(java.lang.String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -361,7 +348,7 @@ public class ChannelInstanceUtil {
 	* Returns a range of all the channel instances where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -369,11 +356,9 @@ public class ChannelInstanceUtil {
 	* @param start the lower bound of the range of channel instances
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @return the range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -381,7 +366,7 @@ public class ChannelInstanceUtil {
 	* Returns an ordered range of all the channel instances where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -390,14 +375,36 @@ public class ChannelInstanceUtil {
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the channel instances where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching channel instances
+	*/
+	public static List<ChannelInstance> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<ChannelInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -408,13 +415,10 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -426,12 +430,9 @@ public class ChannelInstanceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -444,13 +445,10 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -462,12 +460,9 @@ public class ChannelInstanceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -481,13 +476,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance[] findByUuid_C_PrevAndNext(
+	public static ChannelInstance[] findByUuid_C_PrevAndNext(
 		long channelInstanceId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(channelInstanceId, uuid,
 			companyId, orderByComparator);
@@ -498,10 +491,8 @@ public class ChannelInstanceUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -511,10 +502,8 @@ public class ChannelInstanceUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -523,11 +512,9 @@ public class ChannelInstanceUtil {
 	*
 	* @param channelKey the channel key
 	* @return the matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByChannelKey(
-		java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByChannelKey(
+		java.lang.String channelKey) {
 		return getPersistence().findByChannelKey(channelKey);
 	}
 
@@ -535,18 +522,16 @@ public class ChannelInstanceUtil {
 	* Returns a range of all the channel instances where channelKey = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param channelKey the channel key
 	* @param start the lower bound of the range of channel instances
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @return the range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByChannelKey(
-		java.lang.String channelKey, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByChannelKey(
+		java.lang.String channelKey, int start, int end) {
 		return getPersistence().findByChannelKey(channelKey, start, end);
 	}
 
@@ -554,7 +539,7 @@ public class ChannelInstanceUtil {
 	* Returns an ordered range of all the channel instances where channelKey = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param channelKey the channel key
@@ -562,14 +547,35 @@ public class ChannelInstanceUtil {
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByChannelKey(
+	public static List<ChannelInstance> findByChannelKey(
 		java.lang.String channelKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .findByChannelKey(channelKey, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the channel instances where channelKey = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param channelKey the channel key
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching channel instances
+	*/
+	public static List<ChannelInstance> findByChannelKey(
+		java.lang.String channelKey, int start, int end,
+		OrderByComparator<ChannelInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByChannelKey(channelKey, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -579,13 +585,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByChannelKey_First(
+	public static ChannelInstance findByChannelKey_First(
 		java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByChannelKey_First(channelKey, orderByComparator);
 	}
@@ -596,12 +600,10 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByChannelKey_First(
+	public static ChannelInstance fetchByChannelKey_First(
 		java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByChannelKey_First(channelKey, orderByComparator);
 	}
@@ -613,13 +615,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByChannelKey_Last(
+	public static ChannelInstance findByChannelKey_Last(
 		java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByChannelKey_Last(channelKey, orderByComparator);
 	}
@@ -630,12 +630,10 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByChannelKey_Last(
+	public static ChannelInstance fetchByChannelKey_Last(
 		java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByChannelKey_Last(channelKey, orderByComparator);
 	}
@@ -648,13 +646,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance[] findByChannelKey_PrevAndNext(
+	public static ChannelInstance[] findByChannelKey_PrevAndNext(
 		long channelInstanceId, java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByChannelKey_PrevAndNext(channelInstanceId, channelKey,
 			orderByComparator);
@@ -664,10 +660,8 @@ public class ChannelInstanceUtil {
 	* Removes all the channel instances where channelKey = &#63; from the database.
 	*
 	* @param channelKey the channel key
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByChannelKey(java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByChannelKey(java.lang.String channelKey) {
 		getPersistence().removeByChannelKey(channelKey);
 	}
 
@@ -676,10 +670,8 @@ public class ChannelInstanceUtil {
 	*
 	* @param channelKey the channel key
 	* @return the number of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByChannelKey(java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByChannelKey(java.lang.String channelKey) {
 		return getPersistence().countByChannelKey(channelKey);
 	}
 
@@ -688,11 +680,8 @@ public class ChannelInstanceUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByGroupId(long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -700,18 +689,16 @@ public class ChannelInstanceUtil {
 	* Returns a range of all the channel instances where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
 	* @param start the lower bound of the range of channel instances
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @return the range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByGroupId(long groupId, int start,
+		int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -719,7 +706,7 @@ public class ChannelInstanceUtil {
 	* Returns an ordered range of all the channel instances where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -727,14 +714,33 @@ public class ChannelInstanceUtil {
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the channel instances where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching channel instances
+	*/
+	public static List<ChannelInstance> findByGroupId(long groupId, int start,
+		int end, OrderByComparator<ChannelInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByGroupId(groupId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -744,13 +750,10 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByGroupId_First(long groupId,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -760,12 +763,9 @@ public class ChannelInstanceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByGroupId_First(long groupId,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -776,13 +776,10 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByGroupId_Last(long groupId,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -792,12 +789,9 @@ public class ChannelInstanceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByGroupId_Last(long groupId,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -809,13 +803,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance[] findByGroupId_PrevAndNext(
+	public static ChannelInstance[] findByGroupId_PrevAndNext(
 		long channelInstanceId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(channelInstanceId, groupId,
 			orderByComparator);
@@ -825,10 +817,8 @@ public class ChannelInstanceUtil {
 	* Removes all the channel instances where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByGroupId(long groupId) {
 		getPersistence().removeByGroupId(groupId);
 	}
 
@@ -837,10 +827,8 @@ public class ChannelInstanceUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
 	}
 
@@ -849,11 +837,8 @@ public class ChannelInstanceUtil {
 	*
 	* @param campaignId the campaign ID
 	* @return the matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByCampaignId(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByCampaignId(long campaignId) {
 		return getPersistence().findByCampaignId(campaignId);
 	}
 
@@ -861,18 +846,16 @@ public class ChannelInstanceUtil {
 	* Returns a range of all the channel instances where campaignId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param campaignId the campaign ID
 	* @param start the lower bound of the range of channel instances
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @return the range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByCampaignId(
-		long campaignId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByCampaignId(long campaignId,
+		int start, int end) {
 		return getPersistence().findByCampaignId(campaignId, start, end);
 	}
 
@@ -880,7 +863,7 @@ public class ChannelInstanceUtil {
 	* Returns an ordered range of all the channel instances where campaignId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param campaignId the campaign ID
@@ -888,14 +871,34 @@ public class ChannelInstanceUtil {
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByCampaignId(
-		long campaignId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByCampaignId(long campaignId,
+		int start, int end, OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .findByCampaignId(campaignId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the channel instances where campaignId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param campaignId the campaign ID
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching channel instances
+	*/
+	public static List<ChannelInstance> findByCampaignId(long campaignId,
+		int start, int end,
+		OrderByComparator<ChannelInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCampaignId(campaignId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -905,13 +908,10 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByCampaignId_First(
-		long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByCampaignId_First(long campaignId,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByCampaignId_First(campaignId, orderByComparator);
 	}
@@ -922,12 +922,9 @@ public class ChannelInstanceUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByCampaignId_First(
-		long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByCampaignId_First(long campaignId,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByCampaignId_First(campaignId, orderByComparator);
 	}
@@ -939,13 +936,10 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByCampaignId_Last(
-		long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByCampaignId_Last(long campaignId,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByCampaignId_Last(campaignId, orderByComparator);
 	}
@@ -956,12 +950,9 @@ public class ChannelInstanceUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByCampaignId_Last(
-		long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByCampaignId_Last(long campaignId,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByCampaignId_Last(campaignId, orderByComparator);
 	}
@@ -974,13 +965,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance[] findByCampaignId_PrevAndNext(
+	public static ChannelInstance[] findByCampaignId_PrevAndNext(
 		long channelInstanceId, long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByCampaignId_PrevAndNext(channelInstanceId, campaignId,
 			orderByComparator);
@@ -990,10 +979,8 @@ public class ChannelInstanceUtil {
 	* Removes all the channel instances where campaignId = &#63; from the database.
 	*
 	* @param campaignId the campaign ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByCampaignId(long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByCampaignId(long campaignId) {
 		getPersistence().removeByCampaignId(campaignId);
 	}
 
@@ -1002,10 +989,8 @@ public class ChannelInstanceUtil {
 	*
 	* @param campaignId the campaign ID
 	* @return the number of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByCampaignId(long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByCampaignId(long campaignId) {
 		return getPersistence().countByCampaignId(campaignId);
 	}
 
@@ -1014,11 +999,8 @@ public class ChannelInstanceUtil {
 	*
 	* @param tacticId the tactic ID
 	* @return the matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByTacticId(
-		long tacticId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByTacticId(long tacticId) {
 		return getPersistence().findByTacticId(tacticId);
 	}
 
@@ -1026,18 +1008,16 @@ public class ChannelInstanceUtil {
 	* Returns a range of all the channel instances where tacticId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param tacticId the tactic ID
 	* @param start the lower bound of the range of channel instances
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @return the range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByTacticId(
-		long tacticId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByTacticId(long tacticId,
+		int start, int end) {
 		return getPersistence().findByTacticId(tacticId, start, end);
 	}
 
@@ -1045,7 +1025,7 @@ public class ChannelInstanceUtil {
 	* Returns an ordered range of all the channel instances where tacticId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param tacticId the tactic ID
@@ -1053,14 +1033,34 @@ public class ChannelInstanceUtil {
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByTacticId(
-		long tacticId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByTacticId(long tacticId,
+		int start, int end, OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .findByTacticId(tacticId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the channel instances where tacticId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param tacticId the tactic ID
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching channel instances
+	*/
+	public static List<ChannelInstance> findByTacticId(long tacticId,
+		int start, int end,
+		OrderByComparator<ChannelInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByTacticId(tacticId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -1070,13 +1070,10 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByTacticId_First(
-		long tacticId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByTacticId_First(long tacticId,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence().findByTacticId_First(tacticId, orderByComparator);
 	}
 
@@ -1086,12 +1083,9 @@ public class ChannelInstanceUtil {
 	* @param tacticId the tactic ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByTacticId_First(
-		long tacticId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByTacticId_First(long tacticId,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByTacticId_First(tacticId, orderByComparator);
 	}
@@ -1103,13 +1097,10 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByTacticId_Last(
-		long tacticId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByTacticId_Last(long tacticId,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence().findByTacticId_Last(tacticId, orderByComparator);
 	}
 
@@ -1119,12 +1110,9 @@ public class ChannelInstanceUtil {
 	* @param tacticId the tactic ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByTacticId_Last(
-		long tacticId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByTacticId_Last(long tacticId,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence().fetchByTacticId_Last(tacticId, orderByComparator);
 	}
 
@@ -1136,13 +1124,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance[] findByTacticId_PrevAndNext(
+	public static ChannelInstance[] findByTacticId_PrevAndNext(
 		long channelInstanceId, long tacticId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByTacticId_PrevAndNext(channelInstanceId, tacticId,
 			orderByComparator);
@@ -1152,10 +1138,8 @@ public class ChannelInstanceUtil {
 	* Removes all the channel instances where tacticId = &#63; from the database.
 	*
 	* @param tacticId the tactic ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByTacticId(long tacticId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByTacticId(long tacticId) {
 		getPersistence().removeByTacticId(tacticId);
 	}
 
@@ -1164,10 +1148,8 @@ public class ChannelInstanceUtil {
 	*
 	* @param tacticId the tactic ID
 	* @return the number of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByTacticId(long tacticId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByTacticId(long tacticId) {
 		return getPersistence().countByTacticId(tacticId);
 	}
 
@@ -1177,11 +1159,9 @@ public class ChannelInstanceUtil {
 	* @param campaignId the campaign ID
 	* @param channelKey the channel key
 	* @return the matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByC_K(
-		long campaignId, java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByC_K(long campaignId,
+		java.lang.String channelKey) {
 		return getPersistence().findByC_K(campaignId, channelKey);
 	}
 
@@ -1189,7 +1169,7 @@ public class ChannelInstanceUtil {
 	* Returns a range of all the channel instances where campaignId = &#63; and channelKey = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param campaignId the campaign ID
@@ -1197,11 +1177,9 @@ public class ChannelInstanceUtil {
 	* @param start the lower bound of the range of channel instances
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @return the range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByC_K(
-		long campaignId, java.lang.String channelKey, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByC_K(long campaignId,
+		java.lang.String channelKey, int start, int end) {
 		return getPersistence().findByC_K(campaignId, channelKey, start, end);
 	}
 
@@ -1209,7 +1187,7 @@ public class ChannelInstanceUtil {
 	* Returns an ordered range of all the channel instances where campaignId = &#63; and channelKey = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param campaignId the campaign ID
@@ -1218,15 +1196,37 @@ public class ChannelInstanceUtil {
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByC_K(
-		long campaignId, java.lang.String channelKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByC_K(long campaignId,
+		java.lang.String channelKey, int start, int end,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .findByC_K(campaignId, channelKey, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the channel instances where campaignId = &#63; and channelKey = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param campaignId the campaign ID
+	* @param channelKey the channel key
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching channel instances
+	*/
+	public static List<ChannelInstance> findByC_K(long campaignId,
+		java.lang.String channelKey, int start, int end,
+		OrderByComparator<ChannelInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByC_K(campaignId, channelKey, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -1237,13 +1237,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByC_K_First(
-		long campaignId, java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByC_K_First(long campaignId,
+		java.lang.String channelKey,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByC_K_First(campaignId, channelKey, orderByComparator);
 	}
@@ -1255,12 +1253,10 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByC_K_First(
-		long campaignId, java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByC_K_First(long campaignId,
+		java.lang.String channelKey,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_K_First(campaignId, channelKey, orderByComparator);
 	}
@@ -1273,13 +1269,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByC_K_Last(
-		long campaignId, java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByC_K_Last(long campaignId,
+		java.lang.String channelKey,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByC_K_Last(campaignId, channelKey, orderByComparator);
 	}
@@ -1291,12 +1285,10 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByC_K_Last(
-		long campaignId, java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByC_K_Last(long campaignId,
+		java.lang.String channelKey,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByC_K_Last(campaignId, channelKey, orderByComparator);
 	}
@@ -1310,13 +1302,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance[] findByC_K_PrevAndNext(
+	public static ChannelInstance[] findByC_K_PrevAndNext(
 		long channelInstanceId, long campaignId, java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByC_K_PrevAndNext(channelInstanceId, campaignId,
 			channelKey, orderByComparator);
@@ -1327,10 +1317,8 @@ public class ChannelInstanceUtil {
 	*
 	* @param campaignId the campaign ID
 	* @param channelKey the channel key
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByC_K(long campaignId, java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByC_K(long campaignId, java.lang.String channelKey) {
 		getPersistence().removeByC_K(campaignId, channelKey);
 	}
 
@@ -1340,10 +1328,8 @@ public class ChannelInstanceUtil {
 	* @param campaignId the campaign ID
 	* @param channelKey the channel key
 	* @return the number of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByC_K(long campaignId, java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByC_K(long campaignId, java.lang.String channelKey) {
 		return getPersistence().countByC_K(campaignId, channelKey);
 	}
 
@@ -1354,12 +1340,10 @@ public class ChannelInstanceUtil {
 	* @param alias the alias
 	* @return the matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByT_A(
-		long tacticId, java.lang.String alias)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByT_A(long tacticId,
+		java.lang.String alias)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence().findByT_A(tacticId, alias);
 	}
 
@@ -1369,11 +1353,9 @@ public class ChannelInstanceUtil {
 	* @param tacticId the tactic ID
 	* @param alias the alias
 	* @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByT_A(
-		long tacticId, java.lang.String alias)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByT_A(long tacticId,
+		java.lang.String alias) {
 		return getPersistence().fetchByT_A(tacticId, alias);
 	}
 
@@ -1382,13 +1364,11 @@ public class ChannelInstanceUtil {
 	*
 	* @param tacticId the tactic ID
 	* @param alias the alias
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByT_A(
-		long tacticId, java.lang.String alias, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByT_A(long tacticId,
+		java.lang.String alias, boolean retrieveFromCache) {
 		return getPersistence().fetchByT_A(tacticId, alias, retrieveFromCache);
 	}
 
@@ -1398,12 +1378,10 @@ public class ChannelInstanceUtil {
 	* @param tacticId the tactic ID
 	* @param alias the alias
 	* @return the channel instance that was removed
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance removeByT_A(
-		long tacticId, java.lang.String alias)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance removeByT_A(long tacticId,
+		java.lang.String alias)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence().removeByT_A(tacticId, alias);
 	}
 
@@ -1413,10 +1391,8 @@ public class ChannelInstanceUtil {
 	* @param tacticId the tactic ID
 	* @param alias the alias
 	* @return the number of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByT_A(long tacticId, java.lang.String alias)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByT_A(long tacticId, java.lang.String alias) {
 		return getPersistence().countByT_A(tacticId, alias);
 	}
 
@@ -1426,11 +1402,9 @@ public class ChannelInstanceUtil {
 	* @param tacticId the tactic ID
 	* @param channelKey the channel key
 	* @return the matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByT_K(
-		long tacticId, java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByT_K(long tacticId,
+		java.lang.String channelKey) {
 		return getPersistence().findByT_K(tacticId, channelKey);
 	}
 
@@ -1438,7 +1412,7 @@ public class ChannelInstanceUtil {
 	* Returns a range of all the channel instances where tacticId = &#63; and channelKey = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param tacticId the tactic ID
@@ -1446,11 +1420,9 @@ public class ChannelInstanceUtil {
 	* @param start the lower bound of the range of channel instances
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @return the range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByT_K(
-		long tacticId, java.lang.String channelKey, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByT_K(long tacticId,
+		java.lang.String channelKey, int start, int end) {
 		return getPersistence().findByT_K(tacticId, channelKey, start, end);
 	}
 
@@ -1458,7 +1430,7 @@ public class ChannelInstanceUtil {
 	* Returns an ordered range of all the channel instances where tacticId = &#63; and channelKey = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param tacticId the tactic ID
@@ -1467,15 +1439,37 @@ public class ChannelInstanceUtil {
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findByT_K(
-		long tacticId, java.lang.String channelKey, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findByT_K(long tacticId,
+		java.lang.String channelKey, int start, int end,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .findByT_K(tacticId, channelKey, start, end,
 			orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the channel instances where tacticId = &#63; and channelKey = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param tacticId the tactic ID
+	* @param channelKey the channel key
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching channel instances
+	*/
+	public static List<ChannelInstance> findByT_K(long tacticId,
+		java.lang.String channelKey, int start, int end,
+		OrderByComparator<ChannelInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByT_K(tacticId, channelKey, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -1486,13 +1480,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByT_K_First(
-		long tacticId, java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByT_K_First(long tacticId,
+		java.lang.String channelKey,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByT_K_First(tacticId, channelKey, orderByComparator);
 	}
@@ -1504,12 +1496,10 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByT_K_First(
-		long tacticId, java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByT_K_First(long tacticId,
+		java.lang.String channelKey,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_K_First(tacticId, channelKey, orderByComparator);
 	}
@@ -1522,13 +1512,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByT_K_Last(
-		long tacticId, java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByT_K_Last(long tacticId,
+		java.lang.String channelKey,
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByT_K_Last(tacticId, channelKey, orderByComparator);
 	}
@@ -1540,12 +1528,10 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance, or <code>null</code> if a matching channel instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByT_K_Last(
-		long tacticId, java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByT_K_Last(long tacticId,
+		java.lang.String channelKey,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence()
 				   .fetchByT_K_Last(tacticId, channelKey, orderByComparator);
 	}
@@ -1559,13 +1545,11 @@ public class ChannelInstanceUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance[] findByT_K_PrevAndNext(
+	public static ChannelInstance[] findByT_K_PrevAndNext(
 		long channelInstanceId, long tacticId, java.lang.String channelKey,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<ChannelInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence()
 				   .findByT_K_PrevAndNext(channelInstanceId, tacticId,
 			channelKey, orderByComparator);
@@ -1576,10 +1560,8 @@ public class ChannelInstanceUtil {
 	*
 	* @param tacticId the tactic ID
 	* @param channelKey the channel key
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByT_K(long tacticId, java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByT_K(long tacticId, java.lang.String channelKey) {
 		getPersistence().removeByT_K(tacticId, channelKey);
 	}
 
@@ -1589,10 +1571,8 @@ public class ChannelInstanceUtil {
 	* @param tacticId the tactic ID
 	* @param channelKey the channel key
 	* @return the number of matching channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByT_K(long tacticId, java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByT_K(long tacticId, java.lang.String channelKey) {
 		return getPersistence().countByT_K(tacticId, channelKey);
 	}
 
@@ -1601,8 +1581,7 @@ public class ChannelInstanceUtil {
 	*
 	* @param channelInstance the channel instance
 	*/
-	public static void cacheResult(
-		com.liferay.content.targeting.model.ChannelInstance channelInstance) {
+	public static void cacheResult(ChannelInstance channelInstance) {
 		getPersistence().cacheResult(channelInstance);
 	}
 
@@ -1611,8 +1590,7 @@ public class ChannelInstanceUtil {
 	*
 	* @param channelInstances the channel instances
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.content.targeting.model.ChannelInstance> channelInstances) {
+	public static void cacheResult(List<ChannelInstance> channelInstances) {
 		getPersistence().cacheResult(channelInstances);
 	}
 
@@ -1622,8 +1600,7 @@ public class ChannelInstanceUtil {
 	* @param channelInstanceId the primary key for the new channel instance
 	* @return the new channel instance
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance create(
-		long channelInstanceId) {
+	public static ChannelInstance create(long channelInstanceId) {
 		return getPersistence().create(channelInstanceId);
 	}
 
@@ -1633,18 +1610,13 @@ public class ChannelInstanceUtil {
 	* @param channelInstanceId the primary key of the channel instance
 	* @return the channel instance that was removed
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance remove(
-		long channelInstanceId)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance remove(long channelInstanceId)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence().remove(channelInstanceId);
 	}
 
-	public static com.liferay.content.targeting.model.ChannelInstance updateImpl(
-		com.liferay.content.targeting.model.ChannelInstance channelInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance updateImpl(ChannelInstance channelInstance) {
 		return getPersistence().updateImpl(channelInstance);
 	}
 
@@ -1654,12 +1626,9 @@ public class ChannelInstanceUtil {
 	* @param channelInstanceId the primary key of the channel instance
 	* @return the channel instance
 	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance findByPrimaryKey(
-		long channelInstanceId)
-		throws com.liferay.content.targeting.NoSuchChannelInstanceException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance findByPrimaryKey(long channelInstanceId)
+		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
 		return getPersistence().findByPrimaryKey(channelInstanceId);
 	}
 
@@ -1668,22 +1637,22 @@ public class ChannelInstanceUtil {
 	*
 	* @param channelInstanceId the primary key of the channel instance
 	* @return the channel instance, or <code>null</code> if a channel instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.ChannelInstance fetchByPrimaryKey(
-		long channelInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static ChannelInstance fetchByPrimaryKey(long channelInstanceId) {
 		return getPersistence().fetchByPrimaryKey(channelInstanceId);
+	}
+
+	public static java.util.Map<java.io.Serializable, ChannelInstance> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
 	* Returns all the channel instances.
 	*
 	* @return the channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1691,17 +1660,14 @@ public class ChannelInstanceUtil {
 	* Returns a range of all the channel instances.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of channel instances
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @return the range of channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1709,29 +1675,43 @@ public class ChannelInstanceUtil {
 	* Returns an ordered range of all the channel instances.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of channel instances
 	* @param end the upper bound of the range of channel instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findAll(int start, int end,
+		OrderByComparator<ChannelInstance> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	* Removes all the channel instances from the database.
+	* Returns an ordered range of all the channel instances.
 	*
-	* @throws SystemException if a system exception occurred
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link ChannelInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of channel instances
+	* @param end the upper bound of the range of channel instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of channel instances
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<ChannelInstance> findAll(int start, int end,
+		OrderByComparator<ChannelInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Removes all the channel instances from the database.
+	*/
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -1739,30 +1719,34 @@ public class ChannelInstanceUtil {
 	* Returns the number of channel instances.
 	*
 	* @return the number of channel instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static ChannelInstancePersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (ChannelInstancePersistence)PortletBeanLocatorUtil.locate(com.liferay.content.targeting.service.ClpSerializer.getServletContextName(),
-					ChannelInstancePersistence.class.getName());
-
-			ReferenceRegistry.registerReference(ChannelInstanceUtil.class,
-				"_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setPersistence(ChannelInstancePersistence persistence) {
 	}
 
-	private static ChannelInstancePersistence _persistence;
+	private static ServiceTracker<ChannelInstancePersistence, ChannelInstancePersistence> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(ChannelInstanceUtil.class);
+
+		_serviceTracker = new ServiceTracker<ChannelInstancePersistence, ChannelInstancePersistence>(bundle.getBundleContext(),
+				ChannelInstancePersistence.class, null);
+
+		_serviceTracker.open();
+	}
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.AnonymousUserUserSegment;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -26,10 +28,11 @@ import com.liferay.portal.service.persistence.BasePersistence;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see AnonymousUserUserSegmentPersistenceImpl
+ * @see com.liferay.content.targeting.service.persistence.impl.AnonymousUserUserSegmentPersistenceImpl
  * @see AnonymousUserUserSegmentUtil
  * @generated
  */
+@ProviderType
 public interface AnonymousUserUserSegmentPersistence extends BasePersistence<AnonymousUserUserSegment> {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -43,17 +46,15 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param anonymousUserId the anonymous user ID
 	* @param active the active
 	* @return the matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByAnonymousUserId(
-		long anonymousUserId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<AnonymousUserUserSegment> findByAnonymousUserId(
+		long anonymousUserId, boolean active);
 
 	/**
 	* Returns a range of all the anonymous user user segments where anonymousUserId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param anonymousUserId the anonymous user ID
@@ -61,17 +62,15 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param start the lower bound of the range of anonymous user user segments
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @return the range of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByAnonymousUserId(
-		long anonymousUserId, boolean active, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<AnonymousUserUserSegment> findByAnonymousUserId(
+		long anonymousUserId, boolean active, int start, int end);
 
 	/**
 	* Returns an ordered range of all the anonymous user user segments where anonymousUserId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param anonymousUserId the anonymous user ID
@@ -80,12 +79,30 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByAnonymousUserId(
+	public java.util.List<AnonymousUserUserSegment> findByAnonymousUserId(
 		long anonymousUserId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the anonymous user user segments where anonymousUserId = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param active the active
+	* @param start the lower bound of the range of anonymous user user segments
+	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching anonymous user user segments
+	*/
+	public java.util.List<AnonymousUserUserSegment> findByAnonymousUserId(
+		long anonymousUserId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and active = &#63;.
@@ -95,13 +112,11 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment findByAnonymousUserId_First(
+	public AnonymousUserUserSegment findByAnonymousUserId_First(
 		long anonymousUserId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and active = &#63;.
@@ -110,12 +125,10 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment fetchByAnonymousUserId_First(
+	public AnonymousUserUserSegment fetchByAnonymousUserId_First(
 		long anonymousUserId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
 
 	/**
 	* Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and active = &#63;.
@@ -125,13 +138,11 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment findByAnonymousUserId_Last(
+	public AnonymousUserUserSegment findByAnonymousUserId_Last(
 		long anonymousUserId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and active = &#63;.
@@ -140,12 +151,10 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment fetchByAnonymousUserId_Last(
+	public AnonymousUserUserSegment fetchByAnonymousUserId_Last(
 		long anonymousUserId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
 
 	/**
 	* Returns the anonymous user user segments before and after the current anonymous user user segment in the ordered set where anonymousUserId = &#63; and active = &#63;.
@@ -156,23 +165,19 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment[] findByAnonymousUserId_PrevAndNext(
+	public AnonymousUserUserSegment[] findByAnonymousUserId_PrevAndNext(
 		long anonymousUserUserSegmentId, long anonymousUserId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Removes all the anonymous user user segments where anonymousUserId = &#63; and active = &#63; from the database.
 	*
 	* @param anonymousUserId the anonymous user ID
 	* @param active the active
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByAnonymousUserId(long anonymousUserId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByAnonymousUserId(long anonymousUserId, boolean active);
 
 	/**
 	* Returns the number of anonymous user user segments where anonymousUserId = &#63; and active = &#63;.
@@ -180,10 +185,8 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param anonymousUserId the anonymous user ID
 	* @param active the active
 	* @return the number of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByAnonymousUserId(long anonymousUserId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByAnonymousUserId(long anonymousUserId, boolean active);
 
 	/**
 	* Returns all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
@@ -191,17 +194,15 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param anonymousUserId the anonymous user ID
 	* @param userSegmentId the user segment ID
 	* @return the matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByA_U(
-		long anonymousUserId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<AnonymousUserUserSegment> findByA_U(
+		long anonymousUserId, long userSegmentId);
 
 	/**
 	* Returns a range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param anonymousUserId the anonymous user ID
@@ -209,17 +210,15 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param start the lower bound of the range of anonymous user user segments
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @return the range of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByA_U(
-		long anonymousUserId, long userSegmentId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<AnonymousUserUserSegment> findByA_U(
+		long anonymousUserId, long userSegmentId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param anonymousUserId the anonymous user ID
@@ -228,12 +227,30 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByA_U(
+	public java.util.List<AnonymousUserUserSegment> findByA_U(
 		long anonymousUserId, long userSegmentId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param anonymousUserId the anonymous user ID
+	* @param userSegmentId the user segment ID
+	* @param start the lower bound of the range of anonymous user user segments
+	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching anonymous user user segments
+	*/
+	public java.util.List<AnonymousUserUserSegment> findByA_U(
+		long anonymousUserId, long userSegmentId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
@@ -243,13 +260,11 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment findByA_U_First(
-		long anonymousUserId, long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment findByA_U_First(long anonymousUserId,
+		long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the first anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
@@ -258,12 +273,10 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment fetchByA_U_First(
-		long anonymousUserId, long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment fetchByA_U_First(long anonymousUserId,
+		long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
 
 	/**
 	* Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
@@ -273,13 +286,11 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment findByA_U_Last(
-		long anonymousUserId, long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment findByA_U_Last(long anonymousUserId,
+		long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the last anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
@@ -288,12 +299,10 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment fetchByA_U_Last(
-		long anonymousUserId, long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment fetchByA_U_Last(long anonymousUserId,
+		long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
 
 	/**
 	* Returns the anonymous user user segments before and after the current anonymous user user segment in the ordered set where anonymousUserId = &#63; and userSegmentId = &#63;.
@@ -304,24 +313,20 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment[] findByA_U_PrevAndNext(
+	public AnonymousUserUserSegment[] findByA_U_PrevAndNext(
 		long anonymousUserUserSegmentId, long anonymousUserId,
 		long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Removes all the anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63; from the database.
 	*
 	* @param anonymousUserId the anonymous user ID
 	* @param userSegmentId the user segment ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByA_U(long anonymousUserId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByA_U(long anonymousUserId, long userSegmentId);
 
 	/**
 	* Returns the number of anonymous user user segments where anonymousUserId = &#63; and userSegmentId = &#63;.
@@ -329,10 +334,8 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param anonymousUserId the anonymous user ID
 	* @param userSegmentId the user segment ID
 	* @return the number of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByA_U(long anonymousUserId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByA_U(long anonymousUserId, long userSegmentId);
 
 	/**
 	* Returns all the anonymous user user segments where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
@@ -341,17 +344,15 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param modifiedDate the modified date
 	* @param manual the manual
 	* @return the matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByC_LtD_M(
-		long companyId, java.util.Date modifiedDate, boolean manual)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<AnonymousUserUserSegment> findByC_LtD_M(
+		long companyId, java.util.Date modifiedDate, boolean manual);
 
 	/**
 	* Returns a range of all the anonymous user user segments where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -360,17 +361,16 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param start the lower bound of the range of anonymous user user segments
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @return the range of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByC_LtD_M(
+	public java.util.List<AnonymousUserUserSegment> findByC_LtD_M(
 		long companyId, java.util.Date modifiedDate, boolean manual, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Returns an ordered range of all the anonymous user user segments where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param companyId the company ID
@@ -380,13 +380,33 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByC_LtD_M(
+	public java.util.List<AnonymousUserUserSegment> findByC_LtD_M(
 		long companyId, java.util.Date modifiedDate, boolean manual, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the anonymous user user segments where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param modifiedDate the modified date
+	* @param manual the manual
+	* @param start the lower bound of the range of anonymous user user segments
+	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching anonymous user user segments
+	*/
+	public java.util.List<AnonymousUserUserSegment> findByC_LtD_M(
+		long companyId, java.util.Date modifiedDate, boolean manual, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first anonymous user user segment in the ordered set where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
@@ -397,13 +417,11 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment findByC_LtD_M_First(
-		long companyId, java.util.Date modifiedDate, boolean manual,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment findByC_LtD_M_First(long companyId,
+		java.util.Date modifiedDate, boolean manual,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the first anonymous user user segment in the ordered set where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
@@ -413,12 +431,10 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param manual the manual
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment fetchByC_LtD_M_First(
-		long companyId, java.util.Date modifiedDate, boolean manual,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment fetchByC_LtD_M_First(long companyId,
+		java.util.Date modifiedDate, boolean manual,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
 
 	/**
 	* Returns the last anonymous user user segment in the ordered set where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
@@ -429,13 +445,11 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment findByC_LtD_M_Last(
-		long companyId, java.util.Date modifiedDate, boolean manual,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment findByC_LtD_M_Last(long companyId,
+		java.util.Date modifiedDate, boolean manual,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the last anonymous user user segment in the ordered set where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
@@ -445,12 +459,10 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param manual the manual
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment fetchByC_LtD_M_Last(
-		long companyId, java.util.Date modifiedDate, boolean manual,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment fetchByC_LtD_M_Last(long companyId,
+		java.util.Date modifiedDate, boolean manual,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
 
 	/**
 	* Returns the anonymous user user segments before and after the current anonymous user user segment in the ordered set where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
@@ -462,14 +474,12 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment[] findByC_LtD_M_PrevAndNext(
+	public AnonymousUserUserSegment[] findByC_LtD_M_PrevAndNext(
 		long anonymousUserUserSegmentId, long companyId,
 		java.util.Date modifiedDate, boolean manual,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Removes all the anonymous user user segments where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63; from the database.
@@ -477,11 +487,9 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param companyId the company ID
 	* @param modifiedDate the modified date
 	* @param manual the manual
-	* @throws SystemException if a system exception occurred
 	*/
 	public void removeByC_LtD_M(long companyId, java.util.Date modifiedDate,
-		boolean manual)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		boolean manual);
 
 	/**
 	* Returns the number of anonymous user user segments where companyId = &#63; and modifiedDate &lt; &#63; and manual = &#63;.
@@ -490,11 +498,9 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param modifiedDate the modified date
 	* @param manual the manual
 	* @return the number of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
 	public int countByC_LtD_M(long companyId, java.util.Date modifiedDate,
-		boolean manual)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		boolean manual);
 
 	/**
 	* Returns all the anonymous user user segments where userSegmentId = &#63; and active = &#63;.
@@ -502,17 +508,15 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param userSegmentId the user segment ID
 	* @param active the active
 	* @return the matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByUserSegmentIds(
-		long userSegmentId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<AnonymousUserUserSegment> findByUserSegmentIds(
+		long userSegmentId, boolean active);
 
 	/**
 	* Returns a range of all the anonymous user user segments where userSegmentId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userSegmentId the user segment ID
@@ -520,17 +524,15 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param start the lower bound of the range of anonymous user user segments
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @return the range of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByUserSegmentIds(
-		long userSegmentId, boolean active, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<AnonymousUserUserSegment> findByUserSegmentIds(
+		long userSegmentId, boolean active, int start, int end);
 
 	/**
 	* Returns an ordered range of all the anonymous user user segments where userSegmentId = &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userSegmentId the user segment ID
@@ -539,12 +541,30 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByUserSegmentIds(
+	public java.util.List<AnonymousUserUserSegment> findByUserSegmentIds(
 		long userSegmentId, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the anonymous user user segments where userSegmentId = &#63; and active = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userSegmentId the user segment ID
+	* @param active the active
+	* @param start the lower bound of the range of anonymous user user segments
+	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching anonymous user user segments
+	*/
+	public java.util.List<AnonymousUserUserSegment> findByUserSegmentIds(
+		long userSegmentId, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first anonymous user user segment in the ordered set where userSegmentId = &#63; and active = &#63;.
@@ -554,13 +574,11 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment findByUserSegmentIds_First(
+	public AnonymousUserUserSegment findByUserSegmentIds_First(
 		long userSegmentId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the first anonymous user user segment in the ordered set where userSegmentId = &#63; and active = &#63;.
@@ -569,12 +587,10 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment fetchByUserSegmentIds_First(
+	public AnonymousUserUserSegment fetchByUserSegmentIds_First(
 		long userSegmentId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
 
 	/**
 	* Returns the last anonymous user user segment in the ordered set where userSegmentId = &#63; and active = &#63;.
@@ -584,13 +600,11 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment findByUserSegmentIds_Last(
+	public AnonymousUserUserSegment findByUserSegmentIds_Last(
 		long userSegmentId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the last anonymous user user segment in the ordered set where userSegmentId = &#63; and active = &#63;.
@@ -599,12 +613,10 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment, or <code>null</code> if a matching anonymous user user segment could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment fetchByUserSegmentIds_Last(
+	public AnonymousUserUserSegment fetchByUserSegmentIds_Last(
 		long userSegmentId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
 
 	/**
 	* Returns the anonymous user user segments before and after the current anonymous user user segment in the ordered set where userSegmentId = &#63; and active = &#63;.
@@ -615,35 +627,31 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment[] findByUserSegmentIds_PrevAndNext(
+	public AnonymousUserUserSegment[] findByUserSegmentIds_PrevAndNext(
 		long anonymousUserUserSegmentId, long userSegmentId, boolean active,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns all the anonymous user user segments where userSegmentId = any &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userSegmentIds the user segment IDs
 	* @param active the active
 	* @return the matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByUserSegmentIds(
-		long[] userSegmentIds, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<AnonymousUserUserSegment> findByUserSegmentIds(
+		long[] userSegmentIds, boolean active);
 
 	/**
 	* Returns a range of all the anonymous user user segments where userSegmentId = any &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userSegmentIds the user segment IDs
@@ -651,17 +659,15 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param start the lower bound of the range of anonymous user user segments
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @return the range of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByUserSegmentIds(
-		long[] userSegmentIds, boolean active, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<AnonymousUserUserSegment> findByUserSegmentIds(
+		long[] userSegmentIds, boolean active, int start, int end);
 
 	/**
 	* Returns an ordered range of all the anonymous user user segments where userSegmentId = any &#63; and active = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userSegmentIds the user segment IDs
@@ -670,22 +676,38 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findByUserSegmentIds(
+	public java.util.List<AnonymousUserUserSegment> findByUserSegmentIds(
 		long[] userSegmentIds, boolean active, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the anonymous user user segments where userSegmentId = &#63; and active = &#63;, optionally using the finder cache.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userSegmentId the user segment ID
+	* @param active the active
+	* @param start the lower bound of the range of anonymous user user segments
+	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching anonymous user user segments
+	*/
+	public java.util.List<AnonymousUserUserSegment> findByUserSegmentIds(
+		long[] userSegmentIds, boolean active, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes all the anonymous user user segments where userSegmentId = &#63; and active = &#63; from the database.
 	*
 	* @param userSegmentId the user segment ID
 	* @param active the active
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUserSegmentIds(long userSegmentId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUserSegmentIds(long userSegmentId, boolean active);
 
 	/**
 	* Returns the number of anonymous user user segments where userSegmentId = &#63; and active = &#63;.
@@ -693,10 +715,8 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param userSegmentId the user segment ID
 	* @param active the active
 	* @return the number of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUserSegmentIds(long userSegmentId, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUserSegmentIds(long userSegmentId, boolean active);
 
 	/**
 	* Returns the number of anonymous user user segments where userSegmentId = any &#63; and active = &#63;.
@@ -704,18 +724,15 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param userSegmentIds the user segment IDs
 	* @param active the active
 	* @return the number of matching anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUserSegmentIds(long[] userSegmentIds, boolean active)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUserSegmentIds(long[] userSegmentIds, boolean active);
 
 	/**
 	* Caches the anonymous user user segment in the entity cache if it is enabled.
 	*
 	* @param anonymousUserUserSegment the anonymous user user segment
 	*/
-	public void cacheResult(
-		com.liferay.content.targeting.model.AnonymousUserUserSegment anonymousUserUserSegment);
+	public void cacheResult(AnonymousUserUserSegment anonymousUserUserSegment);
 
 	/**
 	* Caches the anonymous user user segments in the entity cache if it is enabled.
@@ -723,7 +740,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param anonymousUserUserSegments the anonymous user user segments
 	*/
 	public void cacheResult(
-		java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> anonymousUserUserSegments);
+		java.util.List<AnonymousUserUserSegment> anonymousUserUserSegments);
 
 	/**
 	* Creates a new anonymous user user segment with the primary key. Does not add the anonymous user user segment to the database.
@@ -731,8 +748,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param anonymousUserUserSegmentId the primary key for the new anonymous user user segment
 	* @return the new anonymous user user segment
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment create(
-		long anonymousUserUserSegmentId);
+	public AnonymousUserUserSegment create(long anonymousUserUserSegmentId);
 
 	/**
 	* Removes the anonymous user user segment with the primary key from the database. Also notifies the appropriate model listeners.
@@ -740,16 +756,12 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param anonymousUserUserSegmentId the primary key of the anonymous user user segment
 	* @return the anonymous user user segment that was removed
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment remove(
-		long anonymousUserUserSegmentId)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment remove(long anonymousUserUserSegmentId)
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment updateImpl(
-		com.liferay.content.targeting.model.AnonymousUserUserSegment anonymousUserUserSegment)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment updateImpl(
+		AnonymousUserUserSegment anonymousUserUserSegment);
 
 	/**
 	* Returns the anonymous user user segment with the primary key or throws a {@link com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException} if it could not be found.
@@ -757,81 +769,88 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param anonymousUserUserSegmentId the primary key of the anonymous user user segment
 	* @return the anonymous user user segment
 	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment findByPrimaryKey(
+	public AnonymousUserUserSegment findByPrimaryKey(
 		long anonymousUserUserSegmentId)
-		throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
 
 	/**
 	* Returns the anonymous user user segment with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param anonymousUserUserSegmentId the primary key of the anonymous user user segment
 	* @return the anonymous user user segment, or <code>null</code> if a anonymous user user segment with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.AnonymousUserUserSegment fetchByPrimaryKey(
-		long anonymousUserUserSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public AnonymousUserUserSegment fetchByPrimaryKey(
+		long anonymousUserUserSegmentId);
+
+	@Override
+	public java.util.Map<java.io.Serializable, AnonymousUserUserSegment> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the anonymous user user segments.
 	*
 	* @return the anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<AnonymousUserUserSegment> findAll();
 
 	/**
 	* Returns a range of all the anonymous user user segments.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of anonymous user user segments
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @return the range of anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<AnonymousUserUserSegment> findAll(int start, int end);
 
 	/**
 	* Returns an ordered range of all the anonymous user user segments.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of anonymous user user segments
 	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<AnonymousUserUserSegment> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the anonymous user user segments.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserUserSegmentModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of anonymous user user segments
+	* @param end the upper bound of the range of anonymous user user segments (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of anonymous user user segments
+	*/
+	public java.util.List<AnonymousUserUserSegment> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUserUserSegment> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes all the anonymous user user segments from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of anonymous user user segments.
 	*
 	* @return the number of anonymous user user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
+
+	@Override
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }
