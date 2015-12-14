@@ -17,7 +17,6 @@ package com.liferay.content.targeting.anonymous.users.util;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
@@ -46,7 +45,7 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 	@Override
 	public AnonymousUser getAnonymousUser(
 			HttpServletRequest request, HttpServletResponse response)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long companyId = PortalUtil.getCompanyId(request);
 		long userId = PortalUtil.getUserId(request);
@@ -84,7 +83,7 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 	@Override
 	public AnonymousUser getAnonymousUser(
 			HttpServletRequest request, long userId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long companyId = PortalUtil.getCompanyId(request);
 
@@ -120,7 +119,7 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 	@Override
 	public AnonymousUser getAnonymousUser(
 			RenderRequest renderRequest, RenderResponse renderResponse)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		HttpServletRequest request = PortalUtil.getHttpServletRequest(
 			renderRequest);
@@ -177,8 +176,7 @@ public class DefaultAnonymousUsersManagerImpl implements AnonymousUsersManager {
 	}
 
 	protected AnonymousUser getAnonymousUserFromCookie(
-			HttpServletRequest request)
-		throws SystemException {
+		HttpServletRequest request) {
 
 		AnonymousUser anonymousUser = null;
 

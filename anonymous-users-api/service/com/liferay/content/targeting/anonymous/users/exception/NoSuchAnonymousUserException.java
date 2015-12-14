@@ -12,17 +12,19 @@
  * details.
  */
 
-package com.liferay.content.targeting.anonymous.users;
+package com.liferay.content.targeting.anonymous.users.exception;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
+@ProviderType
 public class NoSuchAnonymousUserException extends NoSuchModelException {
 
 	public NoSuchAnonymousUserException() {
-		super();
 	}
 
 	public NoSuchAnonymousUserException(String msg) {

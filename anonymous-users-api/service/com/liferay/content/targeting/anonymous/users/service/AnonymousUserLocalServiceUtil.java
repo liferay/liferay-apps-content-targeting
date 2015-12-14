@@ -14,9 +14,12 @@
 
 package com.liferay.content.targeting.anonymous.users.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import aQute.bnd.annotation.ProviderType;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for AnonymousUser. This utility wraps
@@ -32,6 +35,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * @see com.liferay.content.targeting.anonymous.users.service.impl.AnonymousUserLocalServiceImpl
  * @generated
  */
+@ProviderType
 public class AnonymousUserLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -44,265 +48,10 @@ public class AnonymousUserLocalServiceUtil {
 	*
 	* @param anonymousUser the anonymous user
 	* @return the anonymous user that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser addAnonymousUser(
-		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser) {
 		return getService().addAnonymousUser(anonymousUser);
-	}
-
-	/**
-	* Creates a new anonymous user with the primary key. Does not add the anonymous user to the database.
-	*
-	* @param anonymousUserId the primary key for the new anonymous user
-	* @return the new anonymous user
-	*/
-	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser createAnonymousUser(
-		long anonymousUserId) {
-		return getService().createAnonymousUser(anonymousUserId);
-	}
-
-	/**
-	* Deletes the anonymous user with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param anonymousUserId the primary key of the anonymous user
-	* @return the anonymous user that was removed
-	* @throws PortalException if a anonymous user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser deleteAnonymousUser(
-		long anonymousUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteAnonymousUser(anonymousUserId);
-	}
-
-	/**
-	* Deletes the anonymous user from the database. Also notifies the appropriate model listeners.
-	*
-	* @param anonymousUser the anonymous user
-	* @return the anonymous user that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser deleteAnonymousUser(
-		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteAnonymousUser(anonymousUser);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	* @throws SystemException if a system exception occurred
-	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
-	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
-	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUser(
-		long anonymousUserId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchAnonymousUser(anonymousUserId);
-	}
-
-	/**
-	* Returns the anonymous user with the matching UUID and company.
-	*
-	* @param uuid the anonymous user's UUID
-	* @param companyId the primary key of the company
-	* @return the matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUserByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchAnonymousUserByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns the anonymous user with the primary key.
-	*
-	* @param anonymousUserId the primary key of the anonymous user
-	* @return the anonymous user
-	* @throws PortalException if a anonymous user with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser getAnonymousUser(
-		long anonymousUserId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAnonymousUser(anonymousUserId);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the anonymous user with the matching UUID and company.
-	*
-	* @param uuid the anonymous user's UUID
-	* @param companyId the primary key of the company
-	* @return the matching anonymous user
-	* @throws PortalException if a matching anonymous user could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser getAnonymousUserByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAnonymousUserByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns a range of all the anonymous users.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of anonymous users
-	* @param end the upper bound of the range of anonymous users (not inclusive)
-	* @return the range of anonymous users
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsers(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAnonymousUsers(start, end);
-	}
-
-	/**
-	* Returns the number of anonymous users.
-	*
-	* @return the number of anonymous users
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int getAnonymousUsersCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAnonymousUsersCount();
-	}
-
-	/**
-	* Updates the anonymous user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param anonymousUser the anonymous user
-	* @return the anonymous user that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser updateAnonymousUser(
-		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateAnonymousUser(anonymousUser);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
 	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser addAnonymousUser(
@@ -321,11 +70,138 @@ public class AnonymousUserLocalServiceUtil {
 		getService().checkAnonymousUsers();
 	}
 
+	/**
+	* Creates a new anonymous user with the primary key. Does not add the anonymous user to the database.
+	*
+	* @param anonymousUserId the primary key for the new anonymous user
+	* @return the new anonymous user
+	*/
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser createAnonymousUser(
+		long anonymousUserId) {
+		return getService().createAnonymousUser(anonymousUserId);
+	}
+
+	/**
+	* Deletes the anonymous user from the database. Also notifies the appropriate model listeners.
+	*
+	* @param anonymousUser the anonymous user
+	* @return the anonymous user that was removed
+	*/
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser deleteAnonymousUser(
+		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser) {
+		return getService().deleteAnonymousUser(anonymousUser);
+	}
+
+	/**
+	* Deletes the anonymous user with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param anonymousUserId the primary key of the anonymous user
+	* @return the anonymous user that was removed
+	* @throws PortalException if a anonymous user with the primary key could not be found
+	*/
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser deleteAnonymousUser(
+		long anonymousUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteAnonymousUser(anonymousUserId);
+	}
+
 	public static void deleteAnonymousUsers(long companyId,
 		java.util.Date createDate, boolean includeUsers)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().deleteAnonymousUsers(companyId, createDate, includeUsers);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return getService().dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return getService()
+				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUser(
+		long anonymousUserId) {
+		return getService().fetchAnonymousUser(anonymousUserId);
 	}
 
 	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUserByUserId(
@@ -335,10 +211,113 @@ public class AnonymousUserLocalServiceUtil {
 		return getService().fetchAnonymousUserByUserId(userId);
 	}
 
+	/**
+	* Returns the anonymous user with the matching UUID and company.
+	*
+	* @param uuid the anonymous user's UUID
+	* @param companyId the primary key of the company
+	* @return the matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
+	*/
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUserByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().fetchAnonymousUserByUuidAndCompanyId(uuid, companyId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the anonymous user with the primary key.
+	*
+	* @param anonymousUserId the primary key of the anonymous user
+	* @return the anonymous user
+	* @throws PortalException if a anonymous user with the primary key could not be found
+	*/
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser getAnonymousUser(
+		long anonymousUserId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAnonymousUser(anonymousUserId);
+	}
+
+	/**
+	* Returns the anonymous user with the matching UUID and company.
+	*
+	* @param uuid the anonymous user's UUID
+	* @param companyId the primary key of the company
+	* @return the matching anonymous user
+	* @throws PortalException if a matching anonymous user could not be found
+	*/
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser getAnonymousUserByUuidAndCompanyId(
+		java.lang.String uuid, long companyId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAnonymousUserByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of all the anonymous users.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of anonymous users
+	* @param end the upper bound of the range of anonymous users (not inclusive)
+	* @return the range of anonymous users
+	*/
+	public static java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsers(
+		int start, int end) {
+		return getService().getAnonymousUsers(start, end);
+	}
+
+	/**
+	* Returns the number of anonymous users.
+	*
+	* @return the number of anonymous users
+	*/
+	public static int getAnonymousUsersCount() {
+		return getService().getAnonymousUsersCount();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static java.util.Date getMaxAge()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getMaxAge();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the anonymous user in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param anonymousUser the anonymous user
+	* @return the anonymous user that was updated
+	*/
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser updateAnonymousUser(
+		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser) {
+		return getService().updateAnonymousUser(anonymousUser);
 	}
 
 	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser updateAnonymousUser(
@@ -359,34 +338,25 @@ public class AnonymousUserLocalServiceUtil {
 		return getService().updateLastIp(anonymousUserId, lastIp);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static AnonymousUserLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					AnonymousUserLocalService.class.getName());
-
-			if (invokableLocalService instanceof AnonymousUserLocalService) {
-				_service = (AnonymousUserLocalService)invokableLocalService;
-			}
-			else {
-				_service = new AnonymousUserLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(AnonymousUserLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(AnonymousUserLocalService service) {
 	}
 
-	private static AnonymousUserLocalService _service;
+	private static ServiceTracker<AnonymousUserLocalService, AnonymousUserLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(AnonymousUserLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<AnonymousUserLocalService, AnonymousUserLocalService>(bundle.getBundleContext(),
+				AnonymousUserLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }

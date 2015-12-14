@@ -14,9 +14,12 @@
 
 package com.liferay.content.targeting.anonymous.users.model;
 
-import com.liferay.portal.kernel.lar.StagedModelType;
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -31,6 +34,7 @@ import java.util.Map;
  * @see AnonymousUser
  * @generated
  */
+@ProviderType
 public class AnonymousUserWrapper implements AnonymousUser,
 	ModelWrapper<AnonymousUser> {
 	public AnonymousUserWrapper(AnonymousUser anonymousUser) {
@@ -121,44 +125,15 @@ public class AnonymousUserWrapper implements AnonymousUser,
 		}
 	}
 
-	/**
-	* Returns the primary key of this anonymous user.
-	*
-	* @return the primary key of this anonymous user
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _anonymousUser.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new AnonymousUserWrapper((AnonymousUser)_anonymousUser.clone());
 	}
 
-	/**
-	* Sets the primary key of this anonymous user.
-	*
-	* @param primaryKey the primary key of this anonymous user
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_anonymousUser.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the uuid of this anonymous user.
-	*
-	* @return the uuid of this anonymous user
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _anonymousUser.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this anonymous user.
-	*
-	* @param uuid the uuid of this anonymous user
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_anonymousUser.setUuid(uuid);
+	public int compareTo(
+		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser) {
+		return _anonymousUser.compareTo(anonymousUser);
 	}
 
 	/**
@@ -172,35 +147,13 @@ public class AnonymousUserWrapper implements AnonymousUser,
 	}
 
 	/**
-	* Sets the anonymous user ID of this anonymous user.
-	*
-	* @param anonymousUserId the anonymous user ID of this anonymous user
-	*/
-	@Override
-	public void setAnonymousUserId(long anonymousUserId) {
-		_anonymousUser.setAnonymousUserId(anonymousUserId);
-	}
-
-	/**
 	* Returns the anonymous user uuid of this anonymous user.
 	*
 	* @return the anonymous user uuid of this anonymous user
-	* @throws SystemException if a system exception occurred
 	*/
 	@Override
-	public java.lang.String getAnonymousUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getAnonymousUserUuid() {
 		return _anonymousUser.getAnonymousUserUuid();
-	}
-
-	/**
-	* Sets the anonymous user uuid of this anonymous user.
-	*
-	* @param anonymousUserUuid the anonymous user uuid of this anonymous user
-	*/
-	@Override
-	public void setAnonymousUserUuid(java.lang.String anonymousUserUuid) {
-		_anonymousUser.setAnonymousUserUuid(anonymousUserUuid);
 	}
 
 	/**
@@ -214,115 +167,18 @@ public class AnonymousUserWrapper implements AnonymousUser,
 	}
 
 	/**
-	* Sets the company ID of this anonymous user.
-	*
-	* @param companyId the company ID of this anonymous user
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_anonymousUser.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this anonymous user.
-	*
-	* @return the user ID of this anonymous user
-	*/
-	@Override
-	public long getUserId() {
-		return _anonymousUser.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this anonymous user.
-	*
-	* @param userId the user ID of this anonymous user
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_anonymousUser.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this anonymous user.
-	*
-	* @return the user uuid of this anonymous user
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _anonymousUser.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this anonymous user.
-	*
-	* @param userUuid the user uuid of this anonymous user
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_anonymousUser.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this anonymous user.
-	*
-	* @return the user name of this anonymous user
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _anonymousUser.getUserName();
-	}
-
-	/**
-	* Sets the user name of this anonymous user.
-	*
-	* @param userName the user name of this anonymous user
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_anonymousUser.setUserName(userName);
-	}
-
-	/**
 	* Returns the create date of this anonymous user.
 	*
 	* @return the create date of this anonymous user
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _anonymousUser.getCreateDate();
 	}
 
-	/**
-	* Sets the create date of this anonymous user.
-	*
-	* @param createDate the create date of this anonymous user
-	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_anonymousUser.setCreateDate(createDate);
-	}
-
-	/**
-	* Returns the modified date of this anonymous user.
-	*
-	* @return the modified date of this anonymous user
-	*/
-	@Override
-	public java.util.Date getModifiedDate() {
-		return _anonymousUser.getModifiedDate();
-	}
-
-	/**
-	* Sets the modified date of this anonymous user.
-	*
-	* @param modifiedDate the modified date of this anonymous user
-	*/
-	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_anonymousUser.setModifiedDate(modifiedDate);
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _anonymousUser.getExpandoBridge();
 	}
 
 	/**
@@ -336,13 +192,28 @@ public class AnonymousUserWrapper implements AnonymousUser,
 	}
 
 	/**
-	* Sets the last ip of this anonymous user.
+	* Returns the modified date of this anonymous user.
 	*
-	* @param lastIp the last ip of this anonymous user
+	* @return the modified date of this anonymous user
 	*/
 	@Override
-	public void setLastIp(java.lang.String lastIp) {
-		_anonymousUser.setLastIp(lastIp);
+	public Date getModifiedDate() {
+		return _anonymousUser.getModifiedDate();
+	}
+
+	/**
+	* Returns the primary key of this anonymous user.
+	*
+	* @return the primary key of this anonymous user
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _anonymousUser.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _anonymousUser.getPrimaryKeyObj();
 	}
 
 	/**
@@ -355,24 +226,54 @@ public class AnonymousUserWrapper implements AnonymousUser,
 		return _anonymousUser.getTypeSettings();
 	}
 
+	@Override
+	public com.liferay.portal.model.User getUser() {
+		return _anonymousUser.getUser();
+	}
+
 	/**
-	* Sets the type settings of this anonymous user.
+	* Returns the user ID of this anonymous user.
 	*
-	* @param typeSettings the type settings of this anonymous user
+	* @return the user ID of this anonymous user
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
-		_anonymousUser.setTypeSettings(typeSettings);
+	public long getUserId() {
+		return _anonymousUser.getUserId();
+	}
+
+	/**
+	* Returns the user name of this anonymous user.
+	*
+	* @return the user name of this anonymous user
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _anonymousUser.getUserName();
+	}
+
+	/**
+	* Returns the user uuid of this anonymous user.
+	*
+	* @return the user uuid of this anonymous user
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _anonymousUser.getUserUuid();
+	}
+
+	/**
+	* Returns the uuid of this anonymous user.
+	*
+	* @return the uuid of this anonymous user
+	*/
+	@Override
+	public java.lang.String getUuid() {
+		return _anonymousUser.getUuid();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _anonymousUser.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_anonymousUser.setNew(n);
+	public int hashCode() {
+		return _anonymousUser.hashCode();
 	}
 
 	@Override
@@ -381,28 +282,63 @@ public class AnonymousUserWrapper implements AnonymousUser,
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_anonymousUser.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _anonymousUser.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _anonymousUser.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _anonymousUser.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_anonymousUser.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_anonymousUser.persist();
+	}
+
+	/**
+	* Sets the anonymous user ID of this anonymous user.
+	*
+	* @param anonymousUserId the anonymous user ID of this anonymous user
+	*/
+	@Override
+	public void setAnonymousUserId(long anonymousUserId) {
+		_anonymousUser.setAnonymousUserId(anonymousUserId);
+	}
+
+	/**
+	* Sets the anonymous user uuid of this anonymous user.
+	*
+	* @param anonymousUserUuid the anonymous user uuid of this anonymous user
+	*/
+	@Override
+	public void setAnonymousUserUuid(java.lang.String anonymousUserUuid) {
+		_anonymousUser.setAnonymousUserUuid(anonymousUserUuid);
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _anonymousUser.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_anonymousUser.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this anonymous user.
+	*
+	* @param companyId the company ID of this anonymous user
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_anonymousUser.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this anonymous user.
+	*
+	* @param createDate the create date of this anonymous user
+	*/
+	@Override
+	public void setCreateDate(Date createDate) {
+		_anonymousUser.setCreateDate(createDate);
 	}
 
 	@Override
@@ -423,20 +359,94 @@ public class AnonymousUserWrapper implements AnonymousUser,
 		_anonymousUser.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the last ip of this anonymous user.
+	*
+	* @param lastIp the last ip of this anonymous user
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new AnonymousUserWrapper((AnonymousUser)_anonymousUser.clone());
+	public void setLastIp(java.lang.String lastIp) {
+		_anonymousUser.setLastIp(lastIp);
+	}
+
+	/**
+	* Sets the modified date of this anonymous user.
+	*
+	* @param modifiedDate the modified date of this anonymous user
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_anonymousUser.setModifiedDate(modifiedDate);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser) {
-		return _anonymousUser.compareTo(anonymousUser);
+	public void setNew(boolean n) {
+		_anonymousUser.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this anonymous user.
+	*
+	* @param primaryKey the primary key of this anonymous user
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_anonymousUser.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _anonymousUser.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_anonymousUser.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the type settings of this anonymous user.
+	*
+	* @param typeSettings the type settings of this anonymous user
+	*/
+	@Override
+	public void setTypeSettings(java.lang.String typeSettings) {
+		_anonymousUser.setTypeSettings(typeSettings);
+	}
+
+	/**
+	* Sets the user ID of this anonymous user.
+	*
+	* @param userId the user ID of this anonymous user
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_anonymousUser.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this anonymous user.
+	*
+	* @param userName the user name of this anonymous user
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_anonymousUser.setUserName(userName);
+	}
+
+	/**
+	* Sets the user uuid of this anonymous user.
+	*
+	* @param userUuid the user uuid of this anonymous user
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_anonymousUser.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the uuid of this anonymous user.
+	*
+	* @param uuid the uuid of this anonymous user
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_anonymousUser.setUuid(uuid);
 	}
 
 	@Override
@@ -450,29 +460,18 @@ public class AnonymousUserWrapper implements AnonymousUser,
 	}
 
 	@Override
-	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser toUnescapedModel() {
-		return new AnonymousUserWrapper(_anonymousUser.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _anonymousUser.toString();
 	}
 
 	@Override
+	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser toUnescapedModel() {
+		return new AnonymousUserWrapper(_anonymousUser.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _anonymousUser.toXmlString();
-	}
-
-	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_anonymousUser.persist();
-	}
-
-	@Override
-	public com.liferay.portal.model.User getUser() {
-		return _anonymousUser.getUser();
 	}
 
 	@Override
@@ -502,6 +501,7 @@ public class AnonymousUserWrapper implements AnonymousUser,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public AnonymousUser getWrappedAnonymousUser() {
 		return _anonymousUser;
 	}
@@ -512,9 +512,19 @@ public class AnonymousUserWrapper implements AnonymousUser,
 	}
 
 	@Override
+	public boolean isEntityCacheEnabled() {
+		return _anonymousUser.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _anonymousUser.isFinderCacheEnabled();
+	}
+
+	@Override
 	public void resetOriginalValues() {
 		_anonymousUser.resetOriginalValues();
 	}
 
-	private AnonymousUser _anonymousUser;
+	private final AnonymousUser _anonymousUser;
 }

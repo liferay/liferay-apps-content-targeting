@@ -12,47 +12,48 @@
  * details.
  */
 
-package com.liferay.content.targeting.anonymous.users.service.persistence;
+package com.liferay.content.targeting.anonymous.users.service.persistence.impl;
 
-import com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserImpl;
 import com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl;
+import com.liferay.content.targeting.anonymous.users.service.persistence.AnonymousUserPersistence;
 
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.CalendarUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
-import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.ModelListener;
+import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
+
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -64,9 +65,10 @@ import java.util.Set;
  *
  * @author Brian Wing Shun Chan
  * @see AnonymousUserPersistence
- * @see AnonymousUserUtil
+ * @see com.liferay.content.targeting.anonymous.users.service.persistence.AnonymousUserUtil
  * @generated
  */
+@ProviderType
 public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousUser>
 	implements AnonymousUserPersistence {
 	/*
@@ -115,11 +117,9 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 *
 	 * @param uuid the uuid
 	 * @return the matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnonymousUser> findByUuid(String uuid)
-		throws SystemException {
+	public List<AnonymousUser> findByUuid(String uuid) {
 		return findByUuid(uuid, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -127,18 +127,16 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Returns a range of all the anonymous users where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
 	 * @param start the lower bound of the range of anonymous users
 	 * @param end the upper bound of the range of anonymous users (not inclusive)
 	 * @return the range of matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnonymousUser> findByUuid(String uuid, int start, int end)
-		throws SystemException {
+	public List<AnonymousUser> findByUuid(String uuid, int start, int end) {
 		return findByUuid(uuid, start, end, null);
 	}
 
@@ -146,7 +144,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Returns an ordered range of all the anonymous users where uuid = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -154,11 +152,31 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param end the upper bound of the range of anonymous users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnonymousUser> findByUuid(String uuid, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator) {
+		return findByUuid(uuid, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the anonymous users where uuid = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param start the lower bound of the range of anonymous users
+	 * @param end the upper bound of the range of anonymous users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching anonymous users
+	 */
+	@Override
+	public List<AnonymousUser> findByUuid(String uuid, int start, int end,
+		OrderByComparator<AnonymousUser> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -174,15 +192,19 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 			finderArgs = new Object[] { uuid, start, end, orderByComparator };
 		}
 
-		List<AnonymousUser> list = (List<AnonymousUser>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AnonymousUser> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AnonymousUser anonymousUser : list) {
-				if (!Validator.equals(uuid, anonymousUser.getUuid())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AnonymousUser>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AnonymousUser anonymousUser : list) {
+					if (!Validator.equals(uuid, anonymousUser.getUuid())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -244,7 +266,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AnonymousUser>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AnonymousUser>)QueryUtil.list(q, getDialect(),
@@ -253,10 +275,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -275,12 +297,11 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser findByUuid_First(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnonymousUserException, SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator)
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = fetchByUuid_First(uuid, orderByComparator);
 
 		if (anonymousUser != null) {
@@ -305,11 +326,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser fetchByUuid_First(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator) {
 		List<AnonymousUser> list = findByUuid(uuid, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -326,12 +346,11 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser findByUuid_Last(String uuid,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnonymousUserException, SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator)
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = fetchByUuid_Last(uuid, orderByComparator);
 
 		if (anonymousUser != null) {
@@ -356,11 +375,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser fetchByUuid_Last(String uuid,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator) {
 		int count = countByUuid(uuid);
 
 		if (count == 0) {
@@ -385,12 +403,11 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser[] findByUuid_PrevAndNext(long anonymousUserId,
-		String uuid, OrderByComparator orderByComparator)
-		throws NoSuchAnonymousUserException, SystemException {
+		String uuid, OrderByComparator<AnonymousUser> orderByComparator)
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = findByPrimaryKey(anonymousUserId);
 
 		Session session = null;
@@ -420,7 +437,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 	protected AnonymousUser getByUuid_PrevAndNext(Session session,
 		AnonymousUser anonymousUser, String uuid,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnonymousUser> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -541,10 +558,9 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Removes all the anonymous users where uuid = &#63; from the database.
 	 *
 	 * @param uuid the uuid
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid(String uuid) throws SystemException {
+	public void removeByUuid(String uuid) {
 		for (AnonymousUser anonymousUser : findByUuid(uuid, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
 			remove(anonymousUser);
@@ -556,16 +572,14 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 *
 	 * @param uuid the uuid
 	 * @return the number of matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid(String uuid) throws SystemException {
+	public int countByUuid(String uuid) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID;
 
 		Object[] finderArgs = new Object[] { uuid };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -603,10 +617,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -650,11 +664,9 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnonymousUser> findByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public List<AnonymousUser> findByUuid_C(String uuid, long companyId) {
 		return findByUuid_C(uuid, companyId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -663,7 +675,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Returns a range of all the anonymous users where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -671,11 +683,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param start the lower bound of the range of anonymous users
 	 * @param end the upper bound of the range of anonymous users (not inclusive)
 	 * @return the range of matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnonymousUser> findByUuid_C(String uuid, long companyId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByUuid_C(uuid, companyId, start, end, null);
 	}
 
@@ -683,7 +694,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Returns an ordered range of all the anonymous users where uuid = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param uuid the uuid
@@ -692,12 +703,32 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param end the upper bound of the range of anonymous users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnonymousUser> findByUuid_C(String uuid, long companyId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator<AnonymousUser> orderByComparator) {
+		return findByUuid_C(uuid, companyId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the anonymous users where uuid = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param uuid the uuid
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of anonymous users
+	 * @param end the upper bound of the range of anonymous users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching anonymous users
+	 */
+	@Override
+	public List<AnonymousUser> findByUuid_C(String uuid, long companyId,
+		int start, int end, OrderByComparator<AnonymousUser> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -717,16 +748,20 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 				};
 		}
 
-		List<AnonymousUser> list = (List<AnonymousUser>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AnonymousUser> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AnonymousUser anonymousUser : list) {
-				if (!Validator.equals(uuid, anonymousUser.getUuid()) ||
-						(companyId != anonymousUser.getCompanyId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AnonymousUser>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AnonymousUser anonymousUser : list) {
+					if (!Validator.equals(uuid, anonymousUser.getUuid()) ||
+							(companyId != anonymousUser.getCompanyId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -792,7 +827,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AnonymousUser>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AnonymousUser>)QueryUtil.list(q, getDialect(),
@@ -801,10 +836,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -824,12 +859,11 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser findByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnonymousUserException, SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator)
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = fetchByUuid_C_First(uuid, companyId,
 				orderByComparator);
 
@@ -859,11 +893,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser fetchByUuid_C_First(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator) {
 		List<AnonymousUser> list = findByUuid_C(uuid, companyId, 0, 1,
 				orderByComparator);
 
@@ -882,12 +915,11 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser findByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnonymousUserException, SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator)
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = fetchByUuid_C_Last(uuid, companyId,
 				orderByComparator);
 
@@ -917,11 +949,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser fetchByUuid_C_Last(String uuid, long companyId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator) {
 		int count = countByUuid_C(uuid, companyId);
 
 		if (count == 0) {
@@ -947,12 +978,12 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser[] findByUuid_C_PrevAndNext(long anonymousUserId,
-		String uuid, long companyId, OrderByComparator orderByComparator)
-		throws NoSuchAnonymousUserException, SystemException {
+		String uuid, long companyId,
+		OrderByComparator<AnonymousUser> orderByComparator)
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = findByPrimaryKey(anonymousUserId);
 
 		Session session = null;
@@ -982,7 +1013,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 	protected AnonymousUser getByUuid_C_PrevAndNext(Session session,
 		AnonymousUser anonymousUser, String uuid, long companyId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnonymousUser> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1108,11 +1139,9 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 *
 	 * @param uuid the uuid
 	 * @param companyId the company ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public void removeByUuid_C(String uuid, long companyId) {
 		for (AnonymousUser anonymousUser : findByUuid_C(uuid, companyId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(anonymousUser);
@@ -1125,17 +1154,14 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param uuid the uuid
 	 * @param companyId the company ID
 	 * @return the number of matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUuid_C(String uuid, long companyId)
-		throws SystemException {
+	public int countByUuid_C(String uuid, long companyId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_UUID_C;
 
 		Object[] finderArgs = new Object[] { uuid, companyId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1177,10 +1203,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1222,11 +1248,9 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 *
 	 * @param userId the user ID
 	 * @return the matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnonymousUser> findByUserId(long userId)
-		throws SystemException {
+	public List<AnonymousUser> findByUserId(long userId) {
 		return findByUserId(userId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -1234,18 +1258,16 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Returns a range of all the anonymous users where userId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param userId the user ID
 	 * @param start the lower bound of the range of anonymous users
 	 * @param end the upper bound of the range of anonymous users (not inclusive)
 	 * @return the range of matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnonymousUser> findByUserId(long userId, int start, int end)
-		throws SystemException {
+	public List<AnonymousUser> findByUserId(long userId, int start, int end) {
 		return findByUserId(userId, start, end, null);
 	}
 
@@ -1253,7 +1275,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Returns an ordered range of all the anonymous users where userId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param userId the user ID
@@ -1261,11 +1283,31 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param end the upper bound of the range of anonymous users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnonymousUser> findByUserId(long userId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator) {
+		return findByUserId(userId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the anonymous users where userId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param userId the user ID
+	 * @param start the lower bound of the range of anonymous users
+	 * @param end the upper bound of the range of anonymous users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching anonymous users
+	 */
+	@Override
+	public List<AnonymousUser> findByUserId(long userId, int start, int end,
+		OrderByComparator<AnonymousUser> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1281,15 +1323,19 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 			finderArgs = new Object[] { userId, start, end, orderByComparator };
 		}
 
-		List<AnonymousUser> list = (List<AnonymousUser>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AnonymousUser> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AnonymousUser anonymousUser : list) {
-				if ((userId != anonymousUser.getUserId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AnonymousUser>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AnonymousUser anonymousUser : list) {
+					if ((userId != anonymousUser.getUserId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1337,7 +1383,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AnonymousUser>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AnonymousUser>)QueryUtil.list(q, getDialect(),
@@ -1346,10 +1392,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1368,12 +1414,11 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser findByUserId_First(long userId,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnonymousUserException, SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator)
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = fetchByUserId_First(userId,
 				orderByComparator);
 
@@ -1399,11 +1444,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser fetchByUserId_First(long userId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator) {
 		List<AnonymousUser> list = findByUserId(userId, 0, 1, orderByComparator);
 
 		if (!list.isEmpty()) {
@@ -1420,12 +1464,11 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser findByUserId_Last(long userId,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnonymousUserException, SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator)
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = fetchByUserId_Last(userId,
 				orderByComparator);
 
@@ -1451,11 +1494,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param userId the user ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser fetchByUserId_Last(long userId,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator) {
 		int count = countByUserId(userId);
 
 		if (count == 0) {
@@ -1480,12 +1522,11 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser[] findByUserId_PrevAndNext(long anonymousUserId,
-		long userId, OrderByComparator orderByComparator)
-		throws NoSuchAnonymousUserException, SystemException {
+		long userId, OrderByComparator<AnonymousUser> orderByComparator)
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = findByPrimaryKey(anonymousUserId);
 
 		Session session = null;
@@ -1515,7 +1556,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 	protected AnonymousUser getByUserId_PrevAndNext(Session session,
 		AnonymousUser anonymousUser, long userId,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnonymousUser> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1622,10 +1663,9 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Removes all the anonymous users where userId = &#63; from the database.
 	 *
 	 * @param userId the user ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByUserId(long userId) throws SystemException {
+	public void removeByUserId(long userId) {
 		for (AnonymousUser anonymousUser : findByUserId(userId,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(anonymousUser);
@@ -1637,16 +1677,14 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 *
 	 * @param userId the user ID
 	 * @return the number of matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByUserId(long userId) throws SystemException {
+	public int countByUserId(long userId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_USERID;
 
 		Object[] finderArgs = new Object[] { userId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -1670,10 +1708,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1707,11 +1745,9 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param companyId the company ID
 	 * @param createDate the create date
 	 * @return the matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnonymousUser> findByC_LtD(long companyId, Date createDate)
-		throws SystemException {
+	public List<AnonymousUser> findByC_LtD(long companyId, Date createDate) {
 		return findByC_LtD(companyId, createDate, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -1720,7 +1756,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Returns a range of all the anonymous users where companyId = &#63; and createDate &lt; &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1728,11 +1764,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param start the lower bound of the range of anonymous users
 	 * @param end the upper bound of the range of anonymous users (not inclusive)
 	 * @return the range of matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnonymousUser> findByC_LtD(long companyId, Date createDate,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return findByC_LtD(companyId, createDate, start, end, null);
 	}
 
@@ -1740,7 +1775,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Returns an ordered range of all the anonymous users where companyId = &#63; and createDate &lt; &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1749,12 +1784,33 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param end the upper bound of the range of anonymous users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnonymousUser> findByC_LtD(long companyId, Date createDate,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator<AnonymousUser> orderByComparator) {
+		return findByC_LtD(companyId, createDate, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the anonymous users where companyId = &#63; and createDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @param start the lower bound of the range of anonymous users
+	 * @param end the upper bound of the range of anonymous users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching anonymous users
+	 */
+	@Override
+	public List<AnonymousUser> findByC_LtD(long companyId, Date createDate,
+		int start, int end, OrderByComparator<AnonymousUser> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1766,17 +1822,21 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 				start, end, orderByComparator
 			};
 
-		List<AnonymousUser> list = (List<AnonymousUser>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AnonymousUser> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AnonymousUser anonymousUser : list) {
-				if ((companyId != anonymousUser.getCompanyId()) ||
-						(createDate.getTime() <= anonymousUser.getCreateDate()
-																  .getTime())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AnonymousUser>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AnonymousUser anonymousUser : list) {
+					if ((companyId != anonymousUser.getCompanyId()) ||
+							(createDate.getTime() <= anonymousUser.getCreateDate()
+																	  .getTime())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1830,7 +1890,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 				qPos.add(companyId);
 
 				if (bindCreateDate) {
-					qPos.add(CalendarUtil.getTimestamp(createDate));
+					qPos.add(new Timestamp(createDate.getTime()));
 				}
 
 				if (!pagination) {
@@ -1839,7 +1899,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AnonymousUser>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AnonymousUser>)QueryUtil.list(q, getDialect(),
@@ -1848,10 +1908,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1871,12 +1931,11 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser findByC_LtD_First(long companyId, Date createDate,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnonymousUserException, SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator)
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = fetchByC_LtD_First(companyId, createDate,
 				orderByComparator);
 
@@ -1906,11 +1965,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser fetchByC_LtD_First(long companyId, Date createDate,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator) {
 		List<AnonymousUser> list = findByC_LtD(companyId, createDate, 0, 1,
 				orderByComparator);
 
@@ -1929,12 +1987,11 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser findByC_LtD_Last(long companyId, Date createDate,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnonymousUserException, SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator)
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = fetchByC_LtD_Last(companyId, createDate,
 				orderByComparator);
 
@@ -1964,11 +2021,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser fetchByC_LtD_Last(long companyId, Date createDate,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator) {
 		int count = countByC_LtD(companyId, createDate);
 
 		if (count == 0) {
@@ -1994,12 +2050,12 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser[] findByC_LtD_PrevAndNext(long anonymousUserId,
-		long companyId, Date createDate, OrderByComparator orderByComparator)
-		throws NoSuchAnonymousUserException, SystemException {
+		long companyId, Date createDate,
+		OrderByComparator<AnonymousUser> orderByComparator)
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = findByPrimaryKey(anonymousUserId);
 
 		Session session = null;
@@ -2029,7 +2085,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 	protected AnonymousUser getByC_LtD_PrevAndNext(Session session,
 		AnonymousUser anonymousUser, long companyId, Date createDate,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnonymousUser> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -2126,7 +2182,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 		qPos.add(companyId);
 
 		if (bindCreateDate) {
-			qPos.add(CalendarUtil.getTimestamp(createDate));
+			qPos.add(new Timestamp(createDate.getTime()));
 		}
 
 		if (orderByComparator != null) {
@@ -2152,11 +2208,9 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 *
 	 * @param companyId the company ID
 	 * @param createDate the create date
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByC_LtD(long companyId, Date createDate)
-		throws SystemException {
+	public void removeByC_LtD(long companyId, Date createDate) {
 		for (AnonymousUser anonymousUser : findByC_LtD(companyId, createDate,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(anonymousUser);
@@ -2169,17 +2223,14 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param companyId the company ID
 	 * @param createDate the create date
 	 * @return the number of matching anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByC_LtD(long companyId, Date createDate)
-		throws SystemException {
+	public int countByC_LtD(long companyId, Date createDate) {
 		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_LTD;
 
 		Object[] finderArgs = new Object[] { companyId, createDate };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -2213,15 +2264,15 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 				qPos.add(companyId);
 
 				if (bindCreateDate) {
-					qPos.add(CalendarUtil.getTimestamp(createDate));
+					qPos.add(new Timestamp(createDate.getTime()));
 				}
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2234,7 +2285,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	}
 
 	private static final String _FINDER_COLUMN_C_LTD_COMPANYID_2 = "anonymousUser.companyId = ? AND ";
-	private static final String _FINDER_COLUMN_C_LTD_CREATEDATE_1 = "anonymousUser.createDate < NULL";
+	private static final String _FINDER_COLUMN_C_LTD_CREATEDATE_1 = "anonymousUser.createDate IS NULL";
 	private static final String _FINDER_COLUMN_C_LTD_CREATEDATE_2 = "anonymousUser.createDate < ?";
 
 	public AnonymousUserPersistenceImpl() {
@@ -2248,7 +2299,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 */
 	@Override
 	public void cacheResult(AnonymousUser anonymousUser) {
-		EntityCacheUtil.putResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
 			AnonymousUserImpl.class, anonymousUser.getPrimaryKey(),
 			anonymousUser);
 
@@ -2263,7 +2314,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	@Override
 	public void cacheResult(List<AnonymousUser> anonymousUsers) {
 		for (AnonymousUser anonymousUser : anonymousUsers) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
 						AnonymousUserImpl.class, anonymousUser.getPrimaryKey()) == null) {
 				cacheResult(anonymousUser);
@@ -2278,45 +2329,41 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Clears the cache for all anonymous users.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(AnonymousUserImpl.class.getName());
-		}
+		entityCache.clearCache(AnonymousUserImpl.class);
 
-		EntityCacheUtil.clearCache(AnonymousUserImpl.class.getName());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the anonymous user.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(AnonymousUser anonymousUser) {
-		EntityCacheUtil.removeResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
 			AnonymousUserImpl.class, anonymousUser.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<AnonymousUser> anonymousUsers) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (AnonymousUser anonymousUser : anonymousUsers) {
-			EntityCacheUtil.removeResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
 				AnonymousUserImpl.class, anonymousUser.getPrimaryKey());
 		}
 	}
@@ -2347,11 +2394,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param anonymousUserId the primary key of the anonymous user
 	 * @return the anonymous user that was removed
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser remove(long anonymousUserId)
-		throws NoSuchAnonymousUserException, SystemException {
+		throws NoSuchAnonymousUserException {
 		return remove((Serializable)anonymousUserId);
 	}
 
@@ -2361,11 +2407,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param primaryKey the primary key of the anonymous user
 	 * @return the anonymous user that was removed
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser remove(Serializable primaryKey)
-		throws NoSuchAnonymousUserException, SystemException {
+		throws NoSuchAnonymousUserException {
 		Session session = null;
 
 		try {
@@ -2397,8 +2442,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	}
 
 	@Override
-	protected AnonymousUser removeImpl(AnonymousUser anonymousUser)
-		throws SystemException {
+	protected AnonymousUser removeImpl(AnonymousUser anonymousUser) {
 		anonymousUser = toUnwrappedModel(anonymousUser);
 
 		Session session = null;
@@ -2430,9 +2474,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	}
 
 	@Override
-	public AnonymousUser updateImpl(
-		com.liferay.content.targeting.anonymous.users.model.AnonymousUser anonymousUser)
-		throws SystemException {
+	public AnonymousUser updateImpl(AnonymousUser anonymousUser) {
 		anonymousUser = toUnwrappedModel(anonymousUser);
 
 		boolean isNew = anonymousUser.isNew();
@@ -2443,6 +2485,29 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 			String uuid = PortalUUIDUtil.generate();
 
 			anonymousUser.setUuid(uuid);
+		}
+
+		ServiceContext serviceContext = ServiceContextThreadLocal.getServiceContext();
+
+		Date now = new Date();
+
+		if (isNew && (anonymousUser.getCreateDate() == null)) {
+			if (serviceContext == null) {
+				anonymousUser.setCreateDate(now);
+			}
+			else {
+				anonymousUser.setCreateDate(serviceContext.getCreateDate(now));
+			}
+		}
+
+		if (!anonymousUserModelImpl.hasSetModifiedDate()) {
+			if (serviceContext == null) {
+				anonymousUser.setModifiedDate(now);
+			}
+			else {
+				anonymousUser.setModifiedDate(serviceContext.getModifiedDate(
+						now));
+			}
 		}
 
 		Session session = null;
@@ -2456,7 +2521,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 				anonymousUser.setNew(false);
 			}
 			else {
-				session.merge(anonymousUser);
+				anonymousUser = (AnonymousUser)session.merge(anonymousUser);
 			}
 		}
 		catch (Exception e) {
@@ -2466,10 +2531,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !AnonymousUserModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2479,14 +2544,14 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 						anonymousUserModelImpl.getOriginalUuid()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 
 				args = new Object[] { anonymousUserModelImpl.getUuid() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID,
 					args);
 			}
 
@@ -2497,8 +2562,8 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 						anonymousUserModelImpl.getOriginalCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 
 				args = new Object[] {
@@ -2506,8 +2571,8 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 						anonymousUserModelImpl.getCompanyId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_UUID_C, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_UUID_C,
 					args);
 			}
 
@@ -2517,21 +2582,23 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 						anonymousUserModelImpl.getOriginalUserId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 
 				args = new Object[] { anonymousUserModelImpl.getUserId() };
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_USERID, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_USERID,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
 			AnonymousUserImpl.class, anonymousUser.getPrimaryKey(),
-			anonymousUser);
+			anonymousUser, false);
+
+		anonymousUser.resetOriginalValues();
 
 		return anonymousUser;
 	}
@@ -2565,11 +2632,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param primaryKey the primary key of the anonymous user
 	 * @return the anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchAnonymousUserException, SystemException {
+		throws NoSuchAnonymousUserException {
 		AnonymousUser anonymousUser = fetchByPrimaryKey(primaryKey);
 
 		if (anonymousUser == null) {
@@ -2590,11 +2656,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * @param anonymousUserId the primary key of the anonymous user
 	 * @return the anonymous user
 	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnonymousUser findByPrimaryKey(long anonymousUserId)
-		throws NoSuchAnonymousUserException, SystemException {
+		throws NoSuchAnonymousUserException {
 		return findByPrimaryKey((Serializable)anonymousUserId);
 	}
 
@@ -2603,12 +2668,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 *
 	 * @param primaryKey the primary key of the anonymous user
 	 * @return the anonymous user, or <code>null</code> if a anonymous user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AnonymousUser fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
-		AnonymousUser anonymousUser = (AnonymousUser)EntityCacheUtil.getResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
+	public AnonymousUser fetchByPrimaryKey(Serializable primaryKey) {
+		AnonymousUser anonymousUser = (AnonymousUser)entityCache.getResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
 				AnonymousUserImpl.class, primaryKey);
 
 		if (anonymousUser == _nullAnonymousUser) {
@@ -2628,12 +2691,12 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 					cacheResult(anonymousUser);
 				}
 				else {
-					EntityCacheUtil.putResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
 						AnonymousUserImpl.class, primaryKey, _nullAnonymousUser);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
 					AnonymousUserImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2651,22 +2714,111 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 *
 	 * @param anonymousUserId the primary key of the anonymous user
 	 * @return the anonymous user, or <code>null</code> if a anonymous user with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AnonymousUser fetchByPrimaryKey(long anonymousUserId)
-		throws SystemException {
+	public AnonymousUser fetchByPrimaryKey(long anonymousUserId) {
 		return fetchByPrimaryKey((Serializable)anonymousUserId);
+	}
+
+	@Override
+	public Map<Serializable, AnonymousUser> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, AnonymousUser> map = new HashMap<Serializable, AnonymousUser>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			AnonymousUser anonymousUser = fetchByPrimaryKey(primaryKey);
+
+			if (anonymousUser != null) {
+				map.put(primaryKey, anonymousUser);
+			}
+
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			AnonymousUser anonymousUser = (AnonymousUser)entityCache.getResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
+					AnonymousUserImpl.class, primaryKey);
+
+			if (anonymousUser == null) {
+				if (uncachedPrimaryKeys == null) {
+					uncachedPrimaryKeys = new HashSet<Serializable>();
+				}
+
+				uncachedPrimaryKeys.add(primaryKey);
+			}
+			else {
+				map.put(primaryKey, anonymousUser);
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
+			return map;
+		}
+
+		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
+				1);
+
+		query.append(_SQL_SELECT_ANONYMOUSUSER_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : uncachedPrimaryKeys) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (AnonymousUser anonymousUser : (List<AnonymousUser>)q.list()) {
+				map.put(anonymousUser.getPrimaryKeyObj(), anonymousUser);
+
+				cacheResult(anonymousUser);
+
+				uncachedPrimaryKeys.remove(anonymousUser.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				entityCache.putResult(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
+					AnonymousUserImpl.class, primaryKey, _nullAnonymousUser);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
 	 * Returns all the anonymous users.
 	 *
 	 * @return the anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnonymousUser> findAll() throws SystemException {
+	public List<AnonymousUser> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2674,17 +2826,15 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Returns a range of all the anonymous users.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of anonymous users
 	 * @param end the upper bound of the range of anonymous users (not inclusive)
 	 * @return the range of anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnonymousUser> findAll(int start, int end)
-		throws SystemException {
+	public List<AnonymousUser> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2692,18 +2842,37 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Returns an ordered range of all the anonymous users.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of anonymous users
 	 * @param end the upper bound of the range of anonymous users (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnonymousUser> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnonymousUser> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the anonymous users.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of anonymous users
+	 * @param end the upper bound of the range of anonymous users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of anonymous users
+	 */
+	@Override
+	public List<AnonymousUser> findAll(int start, int end,
+		OrderByComparator<AnonymousUser> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2719,8 +2888,12 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<AnonymousUser> list = (List<AnonymousUser>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AnonymousUser> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<AnonymousUser>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2758,7 +2931,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AnonymousUser>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AnonymousUser>)QueryUtil.list(q, getDialect(),
@@ -2767,10 +2940,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2785,10 +2958,9 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	/**
 	 * Removes all the anonymous users from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (AnonymousUser anonymousUser : findAll()) {
 			remove(anonymousUser);
 		}
@@ -2798,11 +2970,10 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	 * Returns the number of anonymous users.
 	 *
 	 * @return the number of anonymous users
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+	public int countAll() {
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2815,11 +2986,11 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2833,56 +3004,45 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	}
 
 	@Override
-	protected Set<String> getBadColumnNames() {
+	public Set<String> getBadColumnNames() {
 		return _badColumnNames;
+	}
+
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return AnonymousUserModelImpl.TABLE_COLUMNS_MAP;
 	}
 
 	/**
 	 * Initializes the anonymous user persistence.
 	 */
 	public void afterPropertiesSet() {
-		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(
-					com.liferay.util.service.ServiceProps.get(
-						"value.object.listener.com.liferay.content.targeting.anonymous.users.model.AnonymousUser")));
-
-		if (listenerClassNames.length > 0) {
-			try {
-				List<ModelListener<AnonymousUser>> listenersList = new ArrayList<ModelListener<AnonymousUser>>();
-
-				for (String listenerClassName : listenerClassNames) {
-					listenersList.add((ModelListener<AnonymousUser>)InstanceFactory.newInstance(
-							getClassLoader(), listenerClassName));
-				}
-
-				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(AnonymousUserImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(AnonymousUserImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_ANONYMOUSUSER = "SELECT anonymousUser FROM AnonymousUser anonymousUser";
+	private static final String _SQL_SELECT_ANONYMOUSUSER_WHERE_PKS_IN = "SELECT anonymousUser FROM AnonymousUser anonymousUser WHERE anonymousUserId IN (";
 	private static final String _SQL_SELECT_ANONYMOUSUSER_WHERE = "SELECT anonymousUser FROM AnonymousUser anonymousUser WHERE ";
 	private static final String _SQL_COUNT_ANONYMOUSUSER = "SELECT COUNT(anonymousUser) FROM AnonymousUser anonymousUser";
 	private static final String _SQL_COUNT_ANONYMOUSUSER_WHERE = "SELECT COUNT(anonymousUser) FROM AnonymousUser anonymousUser WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "anonymousUser.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AnonymousUser exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AnonymousUser exists with the key {";
-	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
-	private static Log _log = LogFactoryUtil.getLog(AnonymousUserPersistenceImpl.class);
-	private static Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
+	private static final Log _log = LogFactoryUtil.getLog(AnonymousUserPersistenceImpl.class);
+	private static final Set<String> _badColumnNames = SetUtil.fromArray(new String[] {
 				"uuid"
 			});
-	private static AnonymousUser _nullAnonymousUser = new AnonymousUserImpl() {
+	private static final AnonymousUser _nullAnonymousUser = new AnonymousUserImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2894,7 +3054,7 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 			}
 		};
 
-	private static CacheModel<AnonymousUser> _nullAnonymousUserCacheModel = new CacheModel<AnonymousUser>() {
+	private static final CacheModel<AnonymousUser> _nullAnonymousUserCacheModel = new CacheModel<AnonymousUser>() {
 			@Override
 			public AnonymousUser toEntityModel() {
 				return _nullAnonymousUser;
