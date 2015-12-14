@@ -20,8 +20,7 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.content.targeting.service.persistence.ReportInstanceActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -31,20 +30,24 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.permission.PermissionChecker;
+import org.osgi.service.component.annotations.Component;
 
 import java.util.Date;
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = Indexer.class)
 public class ReportInstanceIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {ReportInstance.class.getName()};
@@ -54,6 +57,11 @@ public class ReportInstanceIndexer extends BaseIndexer {
 	public ReportInstanceIndexer() {
 		setFilterSearch(true);
 		setPermissionAware(false);
+	}
+
+	@Override
+	public String getClassName() {
+		return ReportInstance.class.getName();
 	}
 
 	@Override
@@ -128,7 +136,8 @@ public class ReportInstanceIndexer extends BaseIndexer {
 	@Override
 	protected Summary doGetSummary(
 		Document document, Locale locale, String snippet,
-		PortletURL portletURL) {
+		PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
 
 		return null;
 	}
@@ -168,8 +177,8 @@ public class ReportInstanceIndexer extends BaseIndexer {
 	protected void reindexReportInstances(final long companyId)
 		throws PortalException, SystemException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			new ReportInstanceActionableDynamicQuery() {
+		IndexableActionableDynamicQuery actionableDynamicQuery =
+			new IndexableActionableDynamicQuery() {
 
 			@Override
 			protected void performAction(Object object) {
@@ -205,7 +214,7 @@ public class ReportInstanceIndexer extends BaseIndexer {
 					Document document = getDocument(reportInstance);
 
 					if (document != null) {
-						addDocument(document);
+						addDocuments(document);
 					}
 				}
 				catch (PortalException e) {
