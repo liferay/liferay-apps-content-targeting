@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.analytics.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import java.util.List;
  * @see com.liferay.content.targeting.analytics.service.http.AnalyticsReferrerServiceSoap
  * @generated
  */
+@ProviderType
 public class AnalyticsReferrerSoap implements Serializable {
 	public static AnalyticsReferrerSoap toSoapModel(AnalyticsReferrer model) {
 		AnalyticsReferrerSoap soapModel = new AnalyticsReferrerSoap();

@@ -12,44 +12,45 @@
  * details.
  */
 
-package com.liferay.content.targeting.analytics.service.persistence;
+package com.liferay.content.targeting.analytics.service.persistence.impl;
 
-import com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
 import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 import com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerImpl;
 import com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl;
+import com.liferay.content.targeting.analytics.service.persistence.AnalyticsReferrerPersistence;
 
-import com.liferay.portal.kernel.cache.CacheRegistryUtil;
-import com.liferay.portal.kernel.dao.orm.EntityCacheUtil;
-import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
+import com.liferay.portal.kernel.dao.orm.EntityCache;
+import com.liferay.portal.kernel.dao.orm.FinderCache;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.Query;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.dao.orm.Session;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.PropsKeys;
-import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.util.UnmodifiableList;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.ModelListener;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.io.Serializable;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * The persistence implementation for the analytics referrer service.
@@ -60,9 +61,10 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see AnalyticsReferrerPersistence
- * @see AnalyticsReferrerUtil
+ * @see com.liferay.content.targeting.analytics.service.persistence.AnalyticsReferrerUtil
  * @generated
  */
+@ProviderType
 public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<AnalyticsReferrer>
 	implements AnalyticsReferrerPersistence {
 	/*
@@ -114,11 +116,9 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 *
 	 * @param analyticsEventId the analytics event ID
 	 * @return the matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnalyticsReferrer> findByAnalyticsEventId(long analyticsEventId)
-		throws SystemException {
+	public List<AnalyticsReferrer> findByAnalyticsEventId(long analyticsEventId) {
 		return findByAnalyticsEventId(analyticsEventId, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -127,18 +127,17 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Returns a range of all the analytics referrers where analyticsEventId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param analyticsEventId the analytics event ID
 	 * @param start the lower bound of the range of analytics referrers
 	 * @param end the upper bound of the range of analytics referrers (not inclusive)
 	 * @return the range of matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnalyticsReferrer> findByAnalyticsEventId(
-		long analyticsEventId, int start, int end) throws SystemException {
+		long analyticsEventId, int start, int end) {
 		return findByAnalyticsEventId(analyticsEventId, start, end, null);
 	}
 
@@ -146,7 +145,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Returns an ordered range of all the analytics referrers where analyticsEventId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param analyticsEventId the analytics event ID
@@ -154,12 +153,34 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param end the upper bound of the range of analytics referrers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnalyticsReferrer> findByAnalyticsEventId(
 		long analyticsEventId, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
+		return findByAnalyticsEventId(analyticsEventId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the analytics referrers where analyticsEventId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param analyticsEventId the analytics event ID
+	 * @param start the lower bound of the range of analytics referrers
+	 * @param end the upper bound of the range of analytics referrers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching analytics referrers
+	 */
+	@Override
+	public List<AnalyticsReferrer> findByAnalyticsEventId(
+		long analyticsEventId, int start, int end,
+		OrderByComparator<AnalyticsReferrer> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -179,15 +200,19 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 				};
 		}
 
-		List<AnalyticsReferrer> list = (List<AnalyticsReferrer>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AnalyticsReferrer> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AnalyticsReferrer analyticsReferrer : list) {
-				if ((analyticsEventId != analyticsReferrer.getAnalyticsEventId())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AnalyticsReferrer>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AnalyticsReferrer analyticsReferrer : list) {
+					if ((analyticsEventId != analyticsReferrer.getAnalyticsEventId())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -235,7 +260,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AnalyticsReferrer>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AnalyticsReferrer>)QueryUtil.list(q,
@@ -244,10 +269,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -266,12 +291,12 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics referrer
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer findByAnalyticsEventId_First(
-		long analyticsEventId, OrderByComparator orderByComparator)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		long analyticsEventId,
+		OrderByComparator<AnalyticsReferrer> orderByComparator)
+		throws NoSuchAnalyticsReferrerException {
 		AnalyticsReferrer analyticsReferrer = fetchByAnalyticsEventId_First(analyticsEventId,
 				orderByComparator);
 
@@ -297,12 +322,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param analyticsEventId the analytics event ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer fetchByAnalyticsEventId_First(
-		long analyticsEventId, OrderByComparator orderByComparator)
-		throws SystemException {
+		long analyticsEventId,
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		List<AnalyticsReferrer> list = findByAnalyticsEventId(analyticsEventId,
 				0, 1, orderByComparator);
 
@@ -320,12 +344,12 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics referrer
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer findByAnalyticsEventId_Last(
-		long analyticsEventId, OrderByComparator orderByComparator)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		long analyticsEventId,
+		OrderByComparator<AnalyticsReferrer> orderByComparator)
+		throws NoSuchAnalyticsReferrerException {
 		AnalyticsReferrer analyticsReferrer = fetchByAnalyticsEventId_Last(analyticsEventId,
 				orderByComparator);
 
@@ -351,12 +375,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param analyticsEventId the analytics event ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer fetchByAnalyticsEventId_Last(
-		long analyticsEventId, OrderByComparator orderByComparator)
-		throws SystemException {
+		long analyticsEventId,
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		int count = countByAnalyticsEventId(analyticsEventId);
 
 		if (count == 0) {
@@ -381,13 +404,12 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics referrer
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer[] findByAnalyticsEventId_PrevAndNext(
 		long analyticsReferrerId, long analyticsEventId,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		OrderByComparator<AnalyticsReferrer> orderByComparator)
+		throws NoSuchAnalyticsReferrerException {
 		AnalyticsReferrer analyticsReferrer = findByPrimaryKey(analyticsReferrerId);
 
 		Session session = null;
@@ -418,8 +440,8 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 	protected AnalyticsReferrer getByAnalyticsEventId_PrevAndNext(
 		Session session, AnalyticsReferrer analyticsReferrer,
-		long analyticsEventId, OrderByComparator orderByComparator,
-		boolean previous) {
+		long analyticsEventId,
+		OrderByComparator<AnalyticsReferrer> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -526,11 +548,9 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Removes all the analytics referrers where analyticsEventId = &#63; from the database.
 	 *
 	 * @param analyticsEventId the analytics event ID
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByAnalyticsEventId(long analyticsEventId)
-		throws SystemException {
+	public void removeByAnalyticsEventId(long analyticsEventId) {
 		for (AnalyticsReferrer analyticsReferrer : findByAnalyticsEventId(
 				analyticsEventId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
 			remove(analyticsReferrer);
@@ -542,17 +562,14 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 *
 	 * @param analyticsEventId the analytics event ID
 	 * @return the number of matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByAnalyticsEventId(long analyticsEventId)
-		throws SystemException {
+	public int countByAnalyticsEventId(long analyticsEventId) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_ANALYTICSEVENTID;
 
 		Object[] finderArgs = new Object[] { analyticsEventId };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(2);
@@ -576,10 +593,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -621,11 +638,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @return the matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnalyticsReferrer> findByR_R(String referrerClassName,
-		long referrerClassPK) throws SystemException {
+		long referrerClassPK) {
 		return findByR_R(referrerClassName, referrerClassPK, QueryUtil.ALL_POS,
 			QueryUtil.ALL_POS, null);
 	}
@@ -634,7 +650,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Returns a range of all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param referrerClassName the referrer class name
@@ -642,11 +658,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param start the lower bound of the range of analytics referrers
 	 * @param end the upper bound of the range of analytics referrers (not inclusive)
 	 * @return the range of matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnalyticsReferrer> findByR_R(String referrerClassName,
-		long referrerClassPK, int start, int end) throws SystemException {
+		long referrerClassPK, int start, int end) {
 		return findByR_R(referrerClassName, referrerClassPK, start, end, null);
 	}
 
@@ -654,7 +669,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Returns an ordered range of all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param referrerClassName the referrer class name
@@ -663,12 +678,35 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param end the upper bound of the range of analytics referrers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnalyticsReferrer> findByR_R(String referrerClassName,
 		long referrerClassPK, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
+		return findByR_R(referrerClassName, referrerClassPK, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the analytics referrers where referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param start the lower bound of the range of analytics referrers
+	 * @param end the upper bound of the range of analytics referrers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching analytics referrers
+	 */
+	@Override
+	public List<AnalyticsReferrer> findByR_R(String referrerClassName,
+		long referrerClassPK, int start, int end,
+		OrderByComparator<AnalyticsReferrer> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -688,17 +726,21 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 				};
 		}
 
-		List<AnalyticsReferrer> list = (List<AnalyticsReferrer>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AnalyticsReferrer> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AnalyticsReferrer analyticsReferrer : list) {
-				if (!Validator.equals(referrerClassName,
-							analyticsReferrer.getReferrerClassName()) ||
-						(referrerClassPK != analyticsReferrer.getReferrerClassPK())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AnalyticsReferrer>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AnalyticsReferrer analyticsReferrer : list) {
+					if (!Validator.equals(referrerClassName,
+								analyticsReferrer.getReferrerClassName()) ||
+							(referrerClassPK != analyticsReferrer.getReferrerClassPK())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -764,7 +806,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AnalyticsReferrer>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AnalyticsReferrer>)QueryUtil.list(q,
@@ -773,10 +815,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -796,12 +838,12 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics referrer
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer findByR_R_First(String referrerClassName,
-		long referrerClassPK, OrderByComparator orderByComparator)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		long referrerClassPK,
+		OrderByComparator<AnalyticsReferrer> orderByComparator)
+		throws NoSuchAnalyticsReferrerException {
 		AnalyticsReferrer analyticsReferrer = fetchByR_R_First(referrerClassName,
 				referrerClassPK, orderByComparator);
 
@@ -831,12 +873,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer fetchByR_R_First(String referrerClassName,
-		long referrerClassPK, OrderByComparator orderByComparator)
-		throws SystemException {
+		long referrerClassPK,
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		List<AnalyticsReferrer> list = findByR_R(referrerClassName,
 				referrerClassPK, 0, 1, orderByComparator);
 
@@ -855,12 +896,12 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics referrer
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer findByR_R_Last(String referrerClassName,
-		long referrerClassPK, OrderByComparator orderByComparator)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		long referrerClassPK,
+		OrderByComparator<AnalyticsReferrer> orderByComparator)
+		throws NoSuchAnalyticsReferrerException {
 		AnalyticsReferrer analyticsReferrer = fetchByR_R_Last(referrerClassName,
 				referrerClassPK, orderByComparator);
 
@@ -890,12 +931,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer fetchByR_R_Last(String referrerClassName,
-		long referrerClassPK, OrderByComparator orderByComparator)
-		throws SystemException {
+		long referrerClassPK,
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		int count = countByR_R(referrerClassName, referrerClassPK);
 
 		if (count == 0) {
@@ -921,13 +961,12 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics referrer
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer[] findByR_R_PrevAndNext(long analyticsReferrerId,
 		String referrerClassName, long referrerClassPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		OrderByComparator<AnalyticsReferrer> orderByComparator)
+		throws NoSuchAnalyticsReferrerException {
 		AnalyticsReferrer analyticsReferrer = findByPrimaryKey(analyticsReferrerId);
 
 		Session session = null;
@@ -957,8 +996,8 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 	protected AnalyticsReferrer getByR_R_PrevAndNext(Session session,
 		AnalyticsReferrer analyticsReferrer, String referrerClassName,
-		long referrerClassPK, OrderByComparator orderByComparator,
-		boolean previous) {
+		long referrerClassPK,
+		OrderByComparator<AnalyticsReferrer> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1084,11 +1123,9 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 *
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeByR_R(String referrerClassName, long referrerClassPK)
-		throws SystemException {
+	public void removeByR_R(String referrerClassName, long referrerClassPK) {
 		for (AnalyticsReferrer analyticsReferrer : findByR_R(
 				referrerClassName, referrerClassPK, QueryUtil.ALL_POS,
 				QueryUtil.ALL_POS, null)) {
@@ -1102,17 +1139,14 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @return the number of matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countByR_R(String referrerClassName, long referrerClassPK)
-		throws SystemException {
+	public int countByR_R(String referrerClassName, long referrerClassPK) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_R;
 
 		Object[] finderArgs = new Object[] { referrerClassName, referrerClassPK };
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(3);
@@ -1154,10 +1188,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1217,12 +1251,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @return the matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnalyticsReferrer> findByA_R_R(long analyticsEventId,
-		String referrerClassName, long referrerClassPK)
-		throws SystemException {
+		String referrerClassName, long referrerClassPK) {
 		return findByA_R_R(analyticsEventId, referrerClassName,
 			referrerClassPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -1231,7 +1263,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Returns a range of all the analytics referrers where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param analyticsEventId the analytics event ID
@@ -1240,12 +1272,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param start the lower bound of the range of analytics referrers
 	 * @param end the upper bound of the range of analytics referrers (not inclusive)
 	 * @return the range of matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnalyticsReferrer> findByA_R_R(long analyticsEventId,
-		String referrerClassName, long referrerClassPK, int start, int end)
-		throws SystemException {
+		String referrerClassName, long referrerClassPK, int start, int end) {
 		return findByA_R_R(analyticsEventId, referrerClassName,
 			referrerClassPK, start, end, null);
 	}
@@ -1254,7 +1284,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Returns an ordered range of all the analytics referrers where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param analyticsEventId the analytics event ID
@@ -1264,12 +1294,36 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param end the upper bound of the range of analytics referrers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnalyticsReferrer> findByA_R_R(long analyticsEventId,
 		String referrerClassName, long referrerClassPK, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
+		return findByA_R_R(analyticsEventId, referrerClassName,
+			referrerClassPK, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the analytics referrers where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param analyticsEventId the analytics event ID
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param start the lower bound of the range of analytics referrers
+	 * @param end the upper bound of the range of analytics referrers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching analytics referrers
+	 */
+	@Override
+	public List<AnalyticsReferrer> findByA_R_R(long analyticsEventId,
+		String referrerClassName, long referrerClassPK, int start, int end,
+		OrderByComparator<AnalyticsReferrer> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -1291,18 +1345,22 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 				};
 		}
 
-		List<AnalyticsReferrer> list = (List<AnalyticsReferrer>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AnalyticsReferrer> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AnalyticsReferrer analyticsReferrer : list) {
-				if ((analyticsEventId != analyticsReferrer.getAnalyticsEventId()) ||
-						!Validator.equals(referrerClassName,
-							analyticsReferrer.getReferrerClassName()) ||
-						(referrerClassPK != analyticsReferrer.getReferrerClassPK())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AnalyticsReferrer>)finderCache.getResult(finderPath,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AnalyticsReferrer analyticsReferrer : list) {
+					if ((analyticsEventId != analyticsReferrer.getAnalyticsEventId()) ||
+							!Validator.equals(referrerClassName,
+								analyticsReferrer.getReferrerClassName()) ||
+							(referrerClassPK != analyticsReferrer.getReferrerClassPK())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1372,7 +1430,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AnalyticsReferrer>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AnalyticsReferrer>)QueryUtil.list(q,
@@ -1381,10 +1439,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -1405,13 +1463,12 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics referrer
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer findByA_R_R_First(long analyticsEventId,
 		String referrerClassName, long referrerClassPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		OrderByComparator<AnalyticsReferrer> orderByComparator)
+		throws NoSuchAnalyticsReferrerException {
 		AnalyticsReferrer analyticsReferrer = fetchByA_R_R_First(analyticsEventId,
 				referrerClassName, referrerClassPK, orderByComparator);
 
@@ -1445,12 +1502,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer fetchByA_R_R_First(long analyticsEventId,
 		String referrerClassName, long referrerClassPK,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		List<AnalyticsReferrer> list = findByA_R_R(analyticsEventId,
 				referrerClassName, referrerClassPK, 0, 1, orderByComparator);
 
@@ -1470,13 +1526,12 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics referrer
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer findByA_R_R_Last(long analyticsEventId,
 		String referrerClassName, long referrerClassPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		OrderByComparator<AnalyticsReferrer> orderByComparator)
+		throws NoSuchAnalyticsReferrerException {
 		AnalyticsReferrer analyticsReferrer = fetchByA_R_R_Last(analyticsEventId,
 				referrerClassName, referrerClassPK, orderByComparator);
 
@@ -1510,12 +1565,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics referrer, or <code>null</code> if a matching analytics referrer could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer fetchByA_R_R_Last(long analyticsEventId,
 		String referrerClassName, long referrerClassPK,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
 		int count = countByA_R_R(analyticsEventId, referrerClassName,
 				referrerClassPK);
 
@@ -1544,14 +1598,13 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics referrer
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer[] findByA_R_R_PrevAndNext(
 		long analyticsReferrerId, long analyticsEventId,
 		String referrerClassName, long referrerClassPK,
-		OrderByComparator orderByComparator)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		OrderByComparator<AnalyticsReferrer> orderByComparator)
+		throws NoSuchAnalyticsReferrerException {
 		AnalyticsReferrer analyticsReferrer = findByPrimaryKey(analyticsReferrerId);
 
 		Session session = null;
@@ -1584,7 +1637,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	protected AnalyticsReferrer getByA_R_R_PrevAndNext(Session session,
 		AnalyticsReferrer analyticsReferrer, long analyticsEventId,
 		String referrerClassName, long referrerClassPK,
-		OrderByComparator orderByComparator, boolean previous) {
+		OrderByComparator<AnalyticsReferrer> orderByComparator, boolean previous) {
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
@@ -1713,19 +1766,17 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Returns all the analytics referrers where analyticsEventId = any &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param analyticsEventIds the analytics event IDs
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @return the matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnalyticsReferrer> findByA_R_R(long[] analyticsEventIds,
-		String referrerClassName, long referrerClassPK)
-		throws SystemException {
+		String referrerClassName, long referrerClassPK) {
 		return findByA_R_R(analyticsEventIds, referrerClassName,
 			referrerClassPK, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
@@ -1734,7 +1785,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Returns a range of all the analytics referrers where analyticsEventId = any &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param analyticsEventIds the analytics event IDs
@@ -1743,12 +1794,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param start the lower bound of the range of analytics referrers
 	 * @param end the upper bound of the range of analytics referrers (not inclusive)
 	 * @return the range of matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnalyticsReferrer> findByA_R_R(long[] analyticsEventIds,
-		String referrerClassName, long referrerClassPK, int start, int end)
-		throws SystemException {
+		String referrerClassName, long referrerClassPK, int start, int end) {
 		return findByA_R_R(analyticsEventIds, referrerClassName,
 			referrerClassPK, start, end, null);
 	}
@@ -1757,7 +1806,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Returns an ordered range of all the analytics referrers where analyticsEventId = any &#63; and referrerClassName = &#63; and referrerClassPK = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param analyticsEventIds the analytics event IDs
@@ -1767,13 +1816,46 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param end the upper bound of the range of analytics referrers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnalyticsReferrer> findByA_R_R(long[] analyticsEventIds,
 		String referrerClassName, long referrerClassPK, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
-		if ((analyticsEventIds != null) && (analyticsEventIds.length == 1)) {
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
+		return findByA_R_R(analyticsEventIds, referrerClassName,
+			referrerClassPK, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the analytics referrers where analyticsEventId = &#63; and referrerClassName = &#63; and referrerClassPK = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param analyticsEventId the analytics event ID
+	 * @param referrerClassName the referrer class name
+	 * @param referrerClassPK the referrer class p k
+	 * @param start the lower bound of the range of analytics referrers
+	 * @param end the upper bound of the range of analytics referrers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching analytics referrers
+	 */
+	@Override
+	public List<AnalyticsReferrer> findByA_R_R(long[] analyticsEventIds,
+		String referrerClassName, long referrerClassPK, int start, int end,
+		OrderByComparator<AnalyticsReferrer> orderByComparator,
+		boolean retrieveFromCache) {
+		if (analyticsEventIds == null) {
+			analyticsEventIds = new long[0];
+		}
+		else if (analyticsEventIds.length > 1) {
+			analyticsEventIds = ArrayUtil.unique(analyticsEventIds);
+
+			Arrays.sort(analyticsEventIds);
+		}
+
+		if (analyticsEventIds.length == 1) {
 			return findByA_R_R(analyticsEventIds[0], referrerClassName,
 				referrerClassPK, start, end, orderByComparator);
 		}
@@ -1798,19 +1880,23 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 				};
 		}
 
-		List<AnalyticsReferrer> list = (List<AnalyticsReferrer>)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_A_R_R,
-				finderArgs, this);
+		List<AnalyticsReferrer> list = null;
 
-		if ((list != null) && !list.isEmpty()) {
-			for (AnalyticsReferrer analyticsReferrer : list) {
-				if (!ArrayUtil.contains(analyticsEventIds,
-							analyticsReferrer.getAnalyticsEventId()) ||
-						!Validator.equals(referrerClassName,
-							analyticsReferrer.getReferrerClassName()) ||
-						(referrerClassPK != analyticsReferrer.getReferrerClassPK())) {
-					list = null;
+		if (retrieveFromCache) {
+			list = (List<AnalyticsReferrer>)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_A_R_R,
+					finderArgs, this);
 
-					break;
+			if ((list != null) && !list.isEmpty()) {
+				for (AnalyticsReferrer analyticsReferrer : list) {
+					if (!ArrayUtil.contains(analyticsEventIds,
+								analyticsReferrer.getAnalyticsEventId()) ||
+							!Validator.equals(referrerClassName,
+								analyticsReferrer.getReferrerClassName()) ||
+							(referrerClassPK != analyticsReferrer.getReferrerClassPK())) {
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
@@ -1820,55 +1906,38 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 			query.append(_SQL_SELECT_ANALYTICSREFERRER_WHERE);
 
-			boolean conjunctionable = false;
-
-			if ((analyticsEventIds == null) || (analyticsEventIds.length > 0)) {
-				if (conjunctionable) {
-					query.append(WHERE_AND);
-				}
-
+			if (analyticsEventIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < analyticsEventIds.length; i++) {
-					query.append(_FINDER_COLUMN_A_R_R_ANALYTICSEVENTID_5);
+				query.append(_FINDER_COLUMN_A_R_R_ANALYTICSEVENTID_7);
 
-					if ((i + 1) < analyticsEventIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(analyticsEventIds));
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
-				conjunctionable = true;
-			}
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
-			if (conjunctionable) {
 				query.append(WHERE_AND);
 			}
 
 			boolean bindReferrerClassName = false;
 
 			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_4);
+				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_1);
 			}
 			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_6);
+				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_3);
 			}
 			else {
 				bindReferrerClassName = true;
 
-				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_5);
+				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_2);
 			}
 
-			conjunctionable = true;
+			query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSPK_2);
 
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSPK_5);
-
-			conjunctionable = true;
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
@@ -1890,10 +1959,6 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (analyticsEventIds != null) {
-					qPos.add(analyticsEventIds);
-				}
-
 				if (bindReferrerClassName) {
 					qPos.add(referrerClassName);
 				}
@@ -1906,7 +1971,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AnalyticsReferrer>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AnalyticsReferrer>)QueryUtil.list(q,
@@ -1915,11 +1980,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_A_R_R,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_A_R_R,
 					finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_A_R_R,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_FIND_BY_A_R_R,
 					finderArgs);
 
 				throw processException(e);
@@ -1938,11 +2003,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param analyticsEventId the analytics event ID
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void removeByA_R_R(long analyticsEventId, String referrerClassName,
-		long referrerClassPK) throws SystemException {
+		long referrerClassPK) {
 		for (AnalyticsReferrer analyticsReferrer : findByA_R_R(
 				analyticsEventId, referrerClassName, referrerClassPK,
 				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
@@ -1957,19 +2021,17 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @return the number of matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int countByA_R_R(long analyticsEventId, String referrerClassName,
-		long referrerClassPK) throws SystemException {
+		long referrerClassPK) {
 		FinderPath finderPath = FINDER_PATH_COUNT_BY_A_R_R;
 
 		Object[] finderArgs = new Object[] {
 				analyticsEventId, referrerClassName, referrerClassPK
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
-				this);
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
 			StringBundler query = new StringBundler(4);
@@ -2015,10 +2077,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+				finderCache.putResult(finderPath, finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2037,17 +2099,25 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassName the referrer class name
 	 * @param referrerClassPK the referrer class p k
 	 * @return the number of matching analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public int countByA_R_R(long[] analyticsEventIds, String referrerClassName,
-		long referrerClassPK) throws SystemException {
+		long referrerClassPK) {
+		if (analyticsEventIds == null) {
+			analyticsEventIds = new long[0];
+		}
+		else if (analyticsEventIds.length > 1) {
+			analyticsEventIds = ArrayUtil.unique(analyticsEventIds);
+
+			Arrays.sort(analyticsEventIds);
+		}
+
 		Object[] finderArgs = new Object[] {
 				StringUtil.merge(analyticsEventIds), referrerClassName,
 				referrerClassPK
 			};
 
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_A_R_R,
+		Long count = (Long)finderCache.getResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_A_R_R,
 				finderArgs, this);
 
 		if (count == null) {
@@ -2055,55 +2125,38 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 			query.append(_SQL_COUNT_ANALYTICSREFERRER_WHERE);
 
-			boolean conjunctionable = false;
-
-			if ((analyticsEventIds == null) || (analyticsEventIds.length > 0)) {
-				if (conjunctionable) {
-					query.append(WHERE_AND);
-				}
-
+			if (analyticsEventIds.length > 0) {
 				query.append(StringPool.OPEN_PARENTHESIS);
 
-				for (int i = 0; i < analyticsEventIds.length; i++) {
-					query.append(_FINDER_COLUMN_A_R_R_ANALYTICSEVENTID_5);
+				query.append(_FINDER_COLUMN_A_R_R_ANALYTICSEVENTID_7);
 
-					if ((i + 1) < analyticsEventIds.length) {
-						query.append(WHERE_OR);
-					}
-				}
+				query.append(StringUtil.merge(analyticsEventIds));
 
 				query.append(StringPool.CLOSE_PARENTHESIS);
 
-				conjunctionable = true;
-			}
+				query.append(StringPool.CLOSE_PARENTHESIS);
 
-			if (conjunctionable) {
 				query.append(WHERE_AND);
 			}
 
 			boolean bindReferrerClassName = false;
 
 			if (referrerClassName == null) {
-				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_4);
+				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_1);
 			}
 			else if (referrerClassName.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_6);
+				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_3);
 			}
 			else {
 				bindReferrerClassName = true;
 
-				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_5);
+				query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_2);
 			}
 
-			conjunctionable = true;
+			query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSPK_2);
 
-			if (conjunctionable) {
-				query.append(WHERE_AND);
-			}
-
-			query.append(_FINDER_COLUMN_A_R_R_REFERRERCLASSPK_5);
-
-			conjunctionable = true;
+			query.setStringAt(removeConjunction(query.stringAt(query.index() -
+						1)), query.index() - 1);
 
 			String sql = query.toString();
 
@@ -2116,10 +2169,6 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 				QueryPos qPos = QueryPos.getInstance(q);
 
-				if (analyticsEventIds != null) {
-					qPos.add(analyticsEventIds);
-				}
-
 				if (bindReferrerClassName) {
 					qPos.add(referrerClassName);
 				}
@@ -2128,11 +2177,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_A_R_R,
+				finderCache.putResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_A_R_R,
 					finderArgs, count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_A_R_R,
+				finderCache.removeResult(FINDER_PATH_WITH_PAGINATION_COUNT_BY_A_R_R,
 					finderArgs);
 
 				throw processException(e);
@@ -2146,20 +2195,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	}
 
 	private static final String _FINDER_COLUMN_A_R_R_ANALYTICSEVENTID_2 = "analyticsReferrer.analyticsEventId = ? AND ";
-	private static final String _FINDER_COLUMN_A_R_R_ANALYTICSEVENTID_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_A_R_R_ANALYTICSEVENTID_2) + ")";
+	private static final String _FINDER_COLUMN_A_R_R_ANALYTICSEVENTID_7 = "analyticsReferrer.analyticsEventId IN (";
 	private static final String _FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_1 = "analyticsReferrer.referrerClassName IS NULL AND ";
 	private static final String _FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_2 = "analyticsReferrer.referrerClassName = ? AND ";
 	private static final String _FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_3 = "(analyticsReferrer.referrerClassName IS NULL OR analyticsReferrer.referrerClassName = '') AND ";
-	private static final String _FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_4 = "(" +
-		removeConjunction(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_1) + ")";
-	private static final String _FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_2) + ")";
-	private static final String _FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_6 = "(" +
-		removeConjunction(_FINDER_COLUMN_A_R_R_REFERRERCLASSNAME_3) + ")";
 	private static final String _FINDER_COLUMN_A_R_R_REFERRERCLASSPK_2 = "analyticsReferrer.referrerClassPK = ?";
-	private static final String _FINDER_COLUMN_A_R_R_REFERRERCLASSPK_5 = "(" +
-		removeConjunction(_FINDER_COLUMN_A_R_R_REFERRERCLASSPK_2) + ")";
 
 	public AnalyticsReferrerPersistenceImpl() {
 		setModelClass(AnalyticsReferrer.class);
@@ -2172,7 +2212,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 */
 	@Override
 	public void cacheResult(AnalyticsReferrer analyticsReferrer) {
-		EntityCacheUtil.putResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
 			AnalyticsReferrerImpl.class, analyticsReferrer.getPrimaryKey(),
 			analyticsReferrer);
 
@@ -2187,7 +2227,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	@Override
 	public void cacheResult(List<AnalyticsReferrer> analyticsReferrers) {
 		for (AnalyticsReferrer analyticsReferrer : analyticsReferrers) {
-			if (EntityCacheUtil.getResult(
+			if (entityCache.getResult(
 						AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
 						AnalyticsReferrerImpl.class,
 						analyticsReferrer.getPrimaryKey()) == null) {
@@ -2203,45 +2243,41 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Clears the cache for all analytics referrers.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache() {
-		if (_HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE) {
-			CacheRegistryUtil.clear(AnalyticsReferrerImpl.class.getName());
-		}
+		entityCache.clearCache(AnalyticsReferrerImpl.class);
 
-		EntityCacheUtil.clearCache(AnalyticsReferrerImpl.class.getName());
-
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	/**
 	 * Clears the cache for the analytics referrer.
 	 *
 	 * <p>
-	 * The {@link com.liferay.portal.kernel.dao.orm.EntityCache} and {@link com.liferay.portal.kernel.dao.orm.FinderCache} are both cleared by this method.
+	 * The {@link EntityCache} and {@link FinderCache} are both cleared by this method.
 	 * </p>
 	 */
 	@Override
 	public void clearCache(AnalyticsReferrer analyticsReferrer) {
-		EntityCacheUtil.removeResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.removeResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
 			AnalyticsReferrerImpl.class, analyticsReferrer.getPrimaryKey());
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
 	@Override
 	public void clearCache(List<AnalyticsReferrer> analyticsReferrers) {
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 
 		for (AnalyticsReferrer analyticsReferrer : analyticsReferrers) {
-			EntityCacheUtil.removeResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
+			entityCache.removeResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
 				AnalyticsReferrerImpl.class, analyticsReferrer.getPrimaryKey());
 		}
 	}
@@ -2268,11 +2304,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param analyticsReferrerId the primary key of the analytics referrer
 	 * @return the analytics referrer that was removed
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer remove(long analyticsReferrerId)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		throws NoSuchAnalyticsReferrerException {
 		return remove((Serializable)analyticsReferrerId);
 	}
 
@@ -2282,11 +2317,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param primaryKey the primary key of the analytics referrer
 	 * @return the analytics referrer that was removed
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer remove(Serializable primaryKey)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		throws NoSuchAnalyticsReferrerException {
 		Session session = null;
 
 		try {
@@ -2318,8 +2352,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	}
 
 	@Override
-	protected AnalyticsReferrer removeImpl(AnalyticsReferrer analyticsReferrer)
-		throws SystemException {
+	protected AnalyticsReferrer removeImpl(AnalyticsReferrer analyticsReferrer) {
 		analyticsReferrer = toUnwrappedModel(analyticsReferrer);
 
 		Session session = null;
@@ -2351,9 +2384,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	}
 
 	@Override
-	public AnalyticsReferrer updateImpl(
-		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer)
-		throws SystemException {
+	public AnalyticsReferrer updateImpl(AnalyticsReferrer analyticsReferrer) {
 		analyticsReferrer = toUnwrappedModel(analyticsReferrer);
 
 		boolean isNew = analyticsReferrer.isNew();
@@ -2371,7 +2402,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 				analyticsReferrer.setNew(false);
 			}
 			else {
-				session.merge(analyticsReferrer);
+				analyticsReferrer = (AnalyticsReferrer)session.merge(analyticsReferrer);
 			}
 		}
 		catch (Exception e) {
@@ -2381,10 +2412,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 			closeSession(session);
 		}
 
-		FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
 
 		if (isNew || !AnalyticsReferrerModelImpl.COLUMN_BITMASK_ENABLED) {
-			FinderCacheUtil.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 
 		else {
@@ -2394,18 +2425,18 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 						analyticsReferrerModelImpl.getOriginalAnalyticsEventId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ANALYTICSEVENTID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ANALYTICSEVENTID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ANALYTICSEVENTID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ANALYTICSEVENTID,
 					args);
 
 				args = new Object[] {
 						analyticsReferrerModelImpl.getAnalyticsEventId()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_ANALYTICSEVENTID,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_ANALYTICSEVENTID,
 					args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ANALYTICSEVENTID,
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_ANALYTICSEVENTID,
 					args);
 			}
 
@@ -2416,8 +2447,8 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 						analyticsReferrerModelImpl.getOriginalReferrerClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R,
 					args);
 
 				args = new Object[] {
@@ -2425,8 +2456,8 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 						analyticsReferrerModelImpl.getReferrerClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_R_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_R,
 					args);
 			}
 
@@ -2438,8 +2469,8 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 						analyticsReferrerModelImpl.getOriginalReferrerClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_R_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_R_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_A_R_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_R_R,
 					args);
 
 				args = new Object[] {
@@ -2448,15 +2479,17 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 						analyticsReferrerModelImpl.getReferrerClassPK()
 					};
 
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_BY_A_R_R, args);
-				FinderCacheUtil.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_R_R,
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_A_R_R, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_A_R_R,
 					args);
 			}
 		}
 
-		EntityCacheUtil.putResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
+		entityCache.putResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
 			AnalyticsReferrerImpl.class, analyticsReferrer.getPrimaryKey(),
-			analyticsReferrer);
+			analyticsReferrer, false);
+
+		analyticsReferrer.resetOriginalValues();
 
 		return analyticsReferrer;
 	}
@@ -2486,11 +2519,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param primaryKey the primary key of the analytics referrer
 	 * @return the analytics referrer
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer findByPrimaryKey(Serializable primaryKey)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		throws NoSuchAnalyticsReferrerException {
 		AnalyticsReferrer analyticsReferrer = fetchByPrimaryKey(primaryKey);
 
 		if (analyticsReferrer == null) {
@@ -2511,11 +2543,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param analyticsReferrerId the primary key of the analytics referrer
 	 * @return the analytics referrer
 	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsReferrer findByPrimaryKey(long analyticsReferrerId)
-		throws NoSuchAnalyticsReferrerException, SystemException {
+		throws NoSuchAnalyticsReferrerException {
 		return findByPrimaryKey((Serializable)analyticsReferrerId);
 	}
 
@@ -2524,12 +2555,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 *
 	 * @param primaryKey the primary key of the analytics referrer
 	 * @return the analytics referrer, or <code>null</code> if a analytics referrer with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AnalyticsReferrer fetchByPrimaryKey(Serializable primaryKey)
-		throws SystemException {
-		AnalyticsReferrer analyticsReferrer = (AnalyticsReferrer)EntityCacheUtil.getResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
+	public AnalyticsReferrer fetchByPrimaryKey(Serializable primaryKey) {
+		AnalyticsReferrer analyticsReferrer = (AnalyticsReferrer)entityCache.getResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
 				AnalyticsReferrerImpl.class, primaryKey);
 
 		if (analyticsReferrer == _nullAnalyticsReferrer) {
@@ -2549,13 +2578,13 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 					cacheResult(analyticsReferrer);
 				}
 				else {
-					EntityCacheUtil.putResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
+					entityCache.putResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
 						AnalyticsReferrerImpl.class, primaryKey,
 						_nullAnalyticsReferrer);
 				}
 			}
 			catch (Exception e) {
-				EntityCacheUtil.removeResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
+				entityCache.removeResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
 					AnalyticsReferrerImpl.class, primaryKey);
 
 				throw processException(e);
@@ -2573,22 +2602,112 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 *
 	 * @param analyticsReferrerId the primary key of the analytics referrer
 	 * @return the analytics referrer, or <code>null</code> if a analytics referrer with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public AnalyticsReferrer fetchByPrimaryKey(long analyticsReferrerId)
-		throws SystemException {
+	public AnalyticsReferrer fetchByPrimaryKey(long analyticsReferrerId) {
 		return fetchByPrimaryKey((Serializable)analyticsReferrerId);
+	}
+
+	@Override
+	public Map<Serializable, AnalyticsReferrer> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+		if (primaryKeys.isEmpty()) {
+			return Collections.emptyMap();
+		}
+
+		Map<Serializable, AnalyticsReferrer> map = new HashMap<Serializable, AnalyticsReferrer>();
+
+		if (primaryKeys.size() == 1) {
+			Iterator<Serializable> iterator = primaryKeys.iterator();
+
+			Serializable primaryKey = iterator.next();
+
+			AnalyticsReferrer analyticsReferrer = fetchByPrimaryKey(primaryKey);
+
+			if (analyticsReferrer != null) {
+				map.put(primaryKey, analyticsReferrer);
+			}
+
+			return map;
+		}
+
+		Set<Serializable> uncachedPrimaryKeys = null;
+
+		for (Serializable primaryKey : primaryKeys) {
+			AnalyticsReferrer analyticsReferrer = (AnalyticsReferrer)entityCache.getResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
+					AnalyticsReferrerImpl.class, primaryKey);
+
+			if (analyticsReferrer == null) {
+				if (uncachedPrimaryKeys == null) {
+					uncachedPrimaryKeys = new HashSet<Serializable>();
+				}
+
+				uncachedPrimaryKeys.add(primaryKey);
+			}
+			else {
+				map.put(primaryKey, analyticsReferrer);
+			}
+		}
+
+		if (uncachedPrimaryKeys == null) {
+			return map;
+		}
+
+		StringBundler query = new StringBundler((uncachedPrimaryKeys.size() * 2) +
+				1);
+
+		query.append(_SQL_SELECT_ANALYTICSREFERRER_WHERE_PKS_IN);
+
+		for (Serializable primaryKey : uncachedPrimaryKeys) {
+			query.append(String.valueOf(primaryKey));
+
+			query.append(StringPool.COMMA);
+		}
+
+		query.setIndex(query.index() - 1);
+
+		query.append(StringPool.CLOSE_PARENTHESIS);
+
+		String sql = query.toString();
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			Query q = session.createQuery(sql);
+
+			for (AnalyticsReferrer analyticsReferrer : (List<AnalyticsReferrer>)q.list()) {
+				map.put(analyticsReferrer.getPrimaryKeyObj(), analyticsReferrer);
+
+				cacheResult(analyticsReferrer);
+
+				uncachedPrimaryKeys.remove(analyticsReferrer.getPrimaryKeyObj());
+			}
+
+			for (Serializable primaryKey : uncachedPrimaryKeys) {
+				entityCache.putResult(AnalyticsReferrerModelImpl.ENTITY_CACHE_ENABLED,
+					AnalyticsReferrerImpl.class, primaryKey,
+					_nullAnalyticsReferrer);
+			}
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+
+		return map;
 	}
 
 	/**
 	 * Returns all the analytics referrers.
 	 *
 	 * @return the analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnalyticsReferrer> findAll() throws SystemException {
+	public List<AnalyticsReferrer> findAll() {
 		return findAll(QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
 	}
 
@@ -2596,17 +2715,15 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Returns a range of all the analytics referrers.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of analytics referrers
 	 * @param end the upper bound of the range of analytics referrers (not inclusive)
 	 * @return the range of analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnalyticsReferrer> findAll(int start, int end)
-		throws SystemException {
+	public List<AnalyticsReferrer> findAll(int start, int end) {
 		return findAll(start, end, null);
 	}
 
@@ -2614,18 +2731,37 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Returns an ordered range of all the analytics referrers.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of analytics referrers
 	 * @param end the upper bound of the range of analytics referrers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<AnalyticsReferrer> findAll(int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+		OrderByComparator<AnalyticsReferrer> orderByComparator) {
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the analytics referrers.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link AnalyticsReferrerModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of analytics referrers
+	 * @param end the upper bound of the range of analytics referrers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of analytics referrers
+	 */
+	@Override
+	public List<AnalyticsReferrer> findAll(int start, int end,
+		OrderByComparator<AnalyticsReferrer> orderByComparator,
+		boolean retrieveFromCache) {
 		boolean pagination = true;
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
@@ -2641,8 +2777,12 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 			finderArgs = new Object[] { start, end, orderByComparator };
 		}
 
-		List<AnalyticsReferrer> list = (List<AnalyticsReferrer>)FinderCacheUtil.getResult(finderPath,
-				finderArgs, this);
+		List<AnalyticsReferrer> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<AnalyticsReferrer>)finderCache.getResult(finderPath,
+					finderArgs, this);
+		}
 
 		if (list == null) {
 			StringBundler query = null;
@@ -2680,7 +2820,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 					Collections.sort(list);
 
-					list = new UnmodifiableList<AnalyticsReferrer>(list);
+					list = Collections.unmodifiableList(list);
 				}
 				else {
 					list = (List<AnalyticsReferrer>)QueryUtil.list(q,
@@ -2689,10 +2829,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 				cacheResult(list);
 
-				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+				finderCache.putResult(finderPath, finderArgs, list);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(finderPath, finderArgs);
+				finderCache.removeResult(finderPath, finderArgs);
 
 				throw processException(e);
 			}
@@ -2707,10 +2847,9 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	/**
 	 * Removes all the analytics referrers from the database.
 	 *
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void removeAll() throws SystemException {
+	public void removeAll() {
 		for (AnalyticsReferrer analyticsReferrer : findAll()) {
 			remove(analyticsReferrer);
 		}
@@ -2720,11 +2859,10 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * Returns the number of analytics referrers.
 	 *
 	 * @return the number of analytics referrers
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int countAll() throws SystemException {
-		Long count = (Long)FinderCacheUtil.getResult(FINDER_PATH_COUNT_ALL,
+	public int countAll() {
+		Long count = (Long)finderCache.getResult(FINDER_PATH_COUNT_ALL,
 				FINDER_ARGS_EMPTY, this);
 
 		if (count == null) {
@@ -2737,11 +2875,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 				count = (Long)q.uniqueResult();
 
-				FinderCacheUtil.putResult(FINDER_PATH_COUNT_ALL,
-					FINDER_ARGS_EMPTY, count);
+				finderCache.putResult(FINDER_PATH_COUNT_ALL, FINDER_ARGS_EMPTY,
+					count);
 			}
 			catch (Exception e) {
-				FinderCacheUtil.removeResult(FINDER_PATH_COUNT_ALL,
+				finderCache.removeResult(FINDER_PATH_COUNT_ALL,
 					FINDER_ARGS_EMPTY);
 
 				throw processException(e);
@@ -2754,49 +2892,38 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 		return count.intValue();
 	}
 
+	@Override
+	protected Map<String, Integer> getTableColumnsMap() {
+		return AnalyticsReferrerModelImpl.TABLE_COLUMNS_MAP;
+	}
+
 	/**
 	 * Initializes the analytics referrer persistence.
 	 */
 	public void afterPropertiesSet() {
-		String[] listenerClassNames = StringUtil.split(GetterUtil.getString(
-					com.liferay.util.service.ServiceProps.get(
-						"value.object.listener.com.liferay.content.targeting.analytics.model.AnalyticsReferrer")));
-
-		if (listenerClassNames.length > 0) {
-			try {
-				List<ModelListener<AnalyticsReferrer>> listenersList = new ArrayList<ModelListener<AnalyticsReferrer>>();
-
-				for (String listenerClassName : listenerClassNames) {
-					listenersList.add((ModelListener<AnalyticsReferrer>)InstanceFactory.newInstance(
-							getClassLoader(), listenerClassName));
-				}
-
-				listeners = listenersList.toArray(new ModelListener[listenersList.size()]);
-			}
-			catch (Exception e) {
-				_log.error(e);
-			}
-		}
 	}
 
 	public void destroy() {
-		EntityCacheUtil.removeCache(AnalyticsReferrerImpl.class.getName());
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_ENTITY);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
-		FinderCacheUtil.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+		entityCache.removeCache(AnalyticsReferrerImpl.class.getName());
+		finderCache.removeCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = EntityCache.class)
+	protected EntityCache entityCache;
+	@ServiceReference(type = FinderCache.class)
+	protected FinderCache finderCache;
 	private static final String _SQL_SELECT_ANALYTICSREFERRER = "SELECT analyticsReferrer FROM AnalyticsReferrer analyticsReferrer";
+	private static final String _SQL_SELECT_ANALYTICSREFERRER_WHERE_PKS_IN = "SELECT analyticsReferrer FROM AnalyticsReferrer analyticsReferrer WHERE analyticsReferrerId IN (";
 	private static final String _SQL_SELECT_ANALYTICSREFERRER_WHERE = "SELECT analyticsReferrer FROM AnalyticsReferrer analyticsReferrer WHERE ";
 	private static final String _SQL_COUNT_ANALYTICSREFERRER = "SELECT COUNT(analyticsReferrer) FROM AnalyticsReferrer analyticsReferrer";
 	private static final String _SQL_COUNT_ANALYTICSREFERRER_WHERE = "SELECT COUNT(analyticsReferrer) FROM AnalyticsReferrer analyticsReferrer WHERE ";
 	private static final String _ORDER_BY_ENTITY_ALIAS = "analyticsReferrer.";
 	private static final String _NO_SUCH_ENTITY_WITH_PRIMARY_KEY = "No AnalyticsReferrer exists with the primary key ";
 	private static final String _NO_SUCH_ENTITY_WITH_KEY = "No AnalyticsReferrer exists with the key {";
-	private static final boolean _HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE = GetterUtil.getBoolean(PropsUtil.get(
-				PropsKeys.HIBERNATE_CACHE_USE_SECOND_LEVEL_CACHE));
-	private static Log _log = LogFactoryUtil.getLog(AnalyticsReferrerPersistenceImpl.class);
-	private static AnalyticsReferrer _nullAnalyticsReferrer = new AnalyticsReferrerImpl() {
+	private static final Log _log = LogFactoryUtil.getLog(AnalyticsReferrerPersistenceImpl.class);
+	private static final AnalyticsReferrer _nullAnalyticsReferrer = new AnalyticsReferrerImpl() {
 			@Override
 			public Object clone() {
 				return this;
@@ -2808,7 +2935,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 			}
 		};
 
-	private static CacheModel<AnalyticsReferrer> _nullAnalyticsReferrerCacheModel =
+	private static final CacheModel<AnalyticsReferrer> _nullAnalyticsReferrerCacheModel =
 		new CacheModel<AnalyticsReferrer>() {
 			@Override
 			public AnalyticsReferrer toEntityModel() {

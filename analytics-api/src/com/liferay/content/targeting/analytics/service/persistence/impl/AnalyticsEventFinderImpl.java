@@ -12,15 +12,15 @@
  * details.
  */
 
-package com.liferay.content.targeting.analytics.service.persistence;
+package com.liferay.content.targeting.analytics.service.persistence.impl;
 
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
+import com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventFinder;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.dao.orm.Type;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.util.dao.orm.CustomSQLUtil;
 
 import java.util.Date;
@@ -30,11 +30,16 @@ import java.util.List;
  * @author Eudaldo Alonso
  */
 public class AnalyticsEventFinderImpl
-	extends BasePersistenceImpl<AnalyticsEvent>
+	extends AnalyticsEventFinderBaseImpl
 	implements AnalyticsEventFinder {
 
 	public static final String FIND_BY_C_GtC_R_R =
 		AnalyticsEventFinder.class.getName() + ".findByC_GtC_R_R";
+
+	@Override
+	public int findBlabla() {
+		return 0;
+	}
 
 	@Override
 	public List<Object[]> findByC_GtC_R_R(

@@ -12,28 +12,30 @@
  * details.
  */
 
-package com.liferay.content.targeting.analytics;
+package com.liferay.content.targeting.analytics.exception;
+
+import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.portal.NoSuchModelException;
 
 /**
  * @author Brian Wing Shun Chan
  */
-public class NoSuchAnalyticsEventException extends NoSuchModelException {
+@ProviderType
+public class NoSuchAnalyticsReferrerException extends NoSuchModelException {
 
-	public NoSuchAnalyticsEventException() {
-		super();
+	public NoSuchAnalyticsReferrerException() {
 	}
 
-	public NoSuchAnalyticsEventException(String msg) {
+	public NoSuchAnalyticsReferrerException(String msg) {
 		super(msg);
 	}
 
-	public NoSuchAnalyticsEventException(String msg, Throwable cause) {
+	public NoSuchAnalyticsReferrerException(String msg, Throwable cause) {
 		super(msg, cause);
 	}
 
-	public NoSuchAnalyticsEventException(Throwable cause) {
+	public NoSuchAnalyticsReferrerException(Throwable cause) {
 		super(cause);
 	}
 

@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.analytics.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import java.io.Serializable;
 
 import java.util.ArrayList;
@@ -27,6 +29,7 @@ import java.util.List;
  * @see com.liferay.content.targeting.analytics.service.http.AnalyticsEventServiceSoap
  * @generated
  */
+@ProviderType
 public class AnalyticsEventSoap implements Serializable {
 	public static AnalyticsEventSoap toSoapModel(AnalyticsEvent model) {
 		AnalyticsEventSoap soapModel = new AnalyticsEventSoap();

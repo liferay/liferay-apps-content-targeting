@@ -14,10 +14,12 @@
 
 package com.liferay.content.targeting.analytics.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -39,7 +41,9 @@ import java.util.Date;
  * @see com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl
  * @generated
  */
-public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
+@ProviderType
+public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -79,6 +83,7 @@ public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
 	 *
 	 * @return the company ID of this analytics event
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -86,6 +91,7 @@ public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
 	 *
 	 * @param companyId the company ID of this analytics event
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -106,9 +112,8 @@ public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
 	 * Returns the user uuid of this analytics event.
 	 *
 	 * @return the user uuid of this analytics event
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this analytics event.
@@ -135,9 +140,8 @@ public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
 	 * Returns the anonymous user uuid of this analytics event.
 	 *
 	 * @return the anonymous user uuid of this analytics event
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getAnonymousUserUuid() throws SystemException;
+	public String getAnonymousUserUuid();
 
 	/**
 	 * Sets the anonymous user uuid of this analytics event.
@@ -331,19 +335,20 @@ public interface AnalyticsEventModel extends BaseModel<AnalyticsEvent> {
 	public Object clone();
 
 	@Override
-	public int compareTo(AnalyticsEvent analyticsEvent);
+	public int compareTo(
+		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AnalyticsEvent> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.analytics.model.AnalyticsEvent> toCacheModel();
 
 	@Override
-	public AnalyticsEvent toEscapedModel();
+	public com.liferay.content.targeting.analytics.model.AnalyticsEvent toEscapedModel();
 
 	@Override
-	public AnalyticsEvent toUnescapedModel();
+	public com.liferay.content.targeting.analytics.model.AnalyticsEvent toUnescapedModel();
 
 	@Override
 	public String toString();

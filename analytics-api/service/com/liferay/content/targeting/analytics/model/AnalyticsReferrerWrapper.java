@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.analytics.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -29,6 +31,7 @@ import java.util.Map;
  * @see AnalyticsReferrer
  * @generated
  */
+@ProviderType
 public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	ModelWrapper<AnalyticsReferrer> {
 	public AnalyticsReferrerWrapper(AnalyticsReferrer analyticsReferrer) {
@@ -84,44 +87,15 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 		}
 	}
 
-	/**
-	* Returns the primary key of this analytics referrer.
-	*
-	* @return the primary key of this analytics referrer
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _analyticsReferrer.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new AnalyticsReferrerWrapper((AnalyticsReferrer)_analyticsReferrer.clone());
 	}
 
-	/**
-	* Sets the primary key of this analytics referrer.
-	*
-	* @param primaryKey the primary key of this analytics referrer
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_analyticsReferrer.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the analytics referrer ID of this analytics referrer.
-	*
-	* @return the analytics referrer ID of this analytics referrer
-	*/
-	@Override
-	public long getAnalyticsReferrerId() {
-		return _analyticsReferrer.getAnalyticsReferrerId();
-	}
-
-	/**
-	* Sets the analytics referrer ID of this analytics referrer.
-	*
-	* @param analyticsReferrerId the analytics referrer ID of this analytics referrer
-	*/
-	@Override
-	public void setAnalyticsReferrerId(long analyticsReferrerId) {
-		_analyticsReferrer.setAnalyticsReferrerId(analyticsReferrerId);
+	public int compareTo(
+		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer) {
+		return _analyticsReferrer.compareTo(analyticsReferrer);
 	}
 
 	/**
@@ -135,13 +109,33 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	}
 
 	/**
-	* Sets the analytics event ID of this analytics referrer.
+	* Returns the analytics referrer ID of this analytics referrer.
 	*
-	* @param analyticsEventId the analytics event ID of this analytics referrer
+	* @return the analytics referrer ID of this analytics referrer
 	*/
 	@Override
-	public void setAnalyticsEventId(long analyticsEventId) {
-		_analyticsReferrer.setAnalyticsEventId(analyticsEventId);
+	public long getAnalyticsReferrerId() {
+		return _analyticsReferrer.getAnalyticsReferrerId();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _analyticsReferrer.getExpandoBridge();
+	}
+
+	/**
+	* Returns the primary key of this analytics referrer.
+	*
+	* @return the primary key of this analytics referrer
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _analyticsReferrer.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _analyticsReferrer.getPrimaryKeyObj();
 	}
 
 	/**
@@ -155,16 +149,6 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	}
 
 	/**
-	* Sets the referrer class name of this analytics referrer.
-	*
-	* @param referrerClassName the referrer class name of this analytics referrer
-	*/
-	@Override
-	public void setReferrerClassName(java.lang.String referrerClassName) {
-		_analyticsReferrer.setReferrerClassName(referrerClassName);
-	}
-
-	/**
 	* Returns the referrer class p k of this analytics referrer.
 	*
 	* @return the referrer class p k of this analytics referrer
@@ -174,24 +158,9 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 		return _analyticsReferrer.getReferrerClassPK();
 	}
 
-	/**
-	* Sets the referrer class p k of this analytics referrer.
-	*
-	* @param referrerClassPK the referrer class p k of this analytics referrer
-	*/
 	@Override
-	public void setReferrerClassPK(long referrerClassPK) {
-		_analyticsReferrer.setReferrerClassPK(referrerClassPK);
-	}
-
-	@Override
-	public boolean isNew() {
-		return _analyticsReferrer.isNew();
-	}
-
-	@Override
-	public void setNew(boolean n) {
-		_analyticsReferrer.setNew(n);
+	public int hashCode() {
+		return _analyticsReferrer.hashCode();
 	}
 
 	@Override
@@ -200,28 +169,43 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_analyticsReferrer.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _analyticsReferrer.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _analyticsReferrer.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _analyticsReferrer.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_analyticsReferrer.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_analyticsReferrer.persist();
+	}
+
+	/**
+	* Sets the analytics event ID of this analytics referrer.
+	*
+	* @param analyticsEventId the analytics event ID of this analytics referrer
+	*/
+	@Override
+	public void setAnalyticsEventId(long analyticsEventId) {
+		_analyticsReferrer.setAnalyticsEventId(analyticsEventId);
+	}
+
+	/**
+	* Sets the analytics referrer ID of this analytics referrer.
+	*
+	* @param analyticsReferrerId the analytics referrer ID of this analytics referrer
+	*/
+	@Override
+	public void setAnalyticsReferrerId(long analyticsReferrerId) {
+		_analyticsReferrer.setAnalyticsReferrerId(analyticsReferrerId);
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _analyticsReferrer.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_analyticsReferrer.setCachedModel(cachedModel);
 	}
 
 	@Override
@@ -243,19 +227,43 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	}
 
 	@Override
-	public java.lang.Object clone() {
-		return new AnalyticsReferrerWrapper((AnalyticsReferrer)_analyticsReferrer.clone());
+	public void setNew(boolean n) {
+		_analyticsReferrer.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this analytics referrer.
+	*
+	* @param primaryKey the primary key of this analytics referrer
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_analyticsReferrer.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer) {
-		return _analyticsReferrer.compareTo(analyticsReferrer);
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_analyticsReferrer.setPrimaryKeyObj(primaryKeyObj);
 	}
 
+	/**
+	* Sets the referrer class name of this analytics referrer.
+	*
+	* @param referrerClassName the referrer class name of this analytics referrer
+	*/
 	@Override
-	public int hashCode() {
-		return _analyticsReferrer.hashCode();
+	public void setReferrerClassName(java.lang.String referrerClassName) {
+		_analyticsReferrer.setReferrerClassName(referrerClassName);
+	}
+
+	/**
+	* Sets the referrer class p k of this analytics referrer.
+	*
+	* @param referrerClassPK the referrer class p k of this analytics referrer
+	*/
+	@Override
+	public void setReferrerClassPK(long referrerClassPK) {
+		_analyticsReferrer.setReferrerClassPK(referrerClassPK);
 	}
 
 	@Override
@@ -269,24 +277,18 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	}
 
 	@Override
-	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer toUnescapedModel() {
-		return new AnalyticsReferrerWrapper(_analyticsReferrer.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _analyticsReferrer.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _analyticsReferrer.toXmlString();
+	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer toUnescapedModel() {
+		return new AnalyticsReferrerWrapper(_analyticsReferrer.toUnescapedModel());
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_analyticsReferrer.persist();
+	public java.lang.String toXmlString() {
+		return _analyticsReferrer.toXmlString();
 	}
 
 	@Override
@@ -312,6 +314,7 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public AnalyticsReferrer getWrappedAnalyticsReferrer() {
 		return _analyticsReferrer;
 	}
@@ -322,9 +325,19 @@ public class AnalyticsReferrerWrapper implements AnalyticsReferrer,
 	}
 
 	@Override
+	public boolean isEntityCacheEnabled() {
+		return _analyticsReferrer.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _analyticsReferrer.isFinderCacheEnabled();
+	}
+
+	@Override
 	public void resetOriginalValues() {
 		_analyticsReferrer.resetOriginalValues();
 	}
 
-	private AnalyticsReferrer _analyticsReferrer;
+	private final AnalyticsReferrer _analyticsReferrer;
 }

@@ -14,6 +14,9 @@
 
 package com.liferay.content.targeting.analytics.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -25,10 +28,28 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl
  * @generated
  */
+@ProviderType
 public interface AnalyticsReferrer extends AnalyticsReferrerModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<AnalyticsReferrer, Long> ANALYTICS_REFERRER_ID_ACCESSOR =
+		new Accessor<AnalyticsReferrer, Long>() {
+			@Override
+			public Long get(AnalyticsReferrer analyticsReferrer) {
+				return analyticsReferrer.getAnalyticsReferrerId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<AnalyticsReferrer> getTypeClass() {
+				return AnalyticsReferrer.class;
+			}
+		};
 }

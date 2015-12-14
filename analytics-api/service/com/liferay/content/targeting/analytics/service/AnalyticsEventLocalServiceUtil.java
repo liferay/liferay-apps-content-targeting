@@ -14,9 +14,12 @@
 
 package com.liferay.content.targeting.analytics.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import aQute.bnd.annotation.ProviderType;
+
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for AnalyticsEvent. This utility wraps
@@ -32,6 +35,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * @see com.liferay.content.targeting.analytics.service.impl.AnalyticsEventLocalServiceImpl
  * @generated
  */
+@ProviderType
 public class AnalyticsEventLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -44,241 +48,15 @@ public class AnalyticsEventLocalServiceUtil {
 	*
 	* @param analyticsEvent the analytics event
 	* @return the analytics event that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
-		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent) {
 		return getService().addAnalyticsEvent(analyticsEvent);
-	}
-
-	/**
-	* Creates a new analytics event with the primary key. Does not add the analytics event to the database.
-	*
-	* @param analyticsEventId the primary key for the new analytics event
-	* @return the new analytics event
-	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent createAnalyticsEvent(
-		long analyticsEventId) {
-		return getService().createAnalyticsEvent(analyticsEventId);
-	}
-
-	/**
-	* Deletes the analytics event with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param analyticsEventId the primary key of the analytics event
-	* @return the analytics event that was removed
-	* @throws PortalException if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent deleteAnalyticsEvent(
-		long analyticsEventId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteAnalyticsEvent(analyticsEventId);
-	}
-
-	/**
-	* Deletes the analytics event from the database. Also notifies the appropriate model listeners.
-	*
-	* @param analyticsEvent the analytics event
-	* @return the analytics event that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent deleteAnalyticsEvent(
-		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteAnalyticsEvent(analyticsEvent);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	* @throws SystemException if a system exception occurred
-	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
-	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
-	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchAnalyticsEvent(
-		long analyticsEventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchAnalyticsEvent(analyticsEventId);
-	}
-
-	/**
-	* Returns the analytics event with the primary key.
-	*
-	* @param analyticsEventId the primary key of the analytics event
-	* @return the analytics event
-	* @throws PortalException if a analytics event with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent getAnalyticsEvent(
-		long analyticsEventId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAnalyticsEvent(analyticsEventId);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns a range of all the analytics events.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of analytics events
-	* @param end the upper bound of the range of analytics events (not inclusive)
-	* @return the range of analytics events
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAnalyticsEvents(start, end);
-	}
-
-	/**
-	* Returns the number of analytics events.
-	*
-	* @return the number of analytics events
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int getAnalyticsEventsCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAnalyticsEventsCount();
-	}
-
-	/**
-	* Updates the analytics event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param analyticsEvent the analytics event
-	* @return the analytics event that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent updateAnalyticsEvent(
-		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateAnalyticsEvent(analyticsEvent);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
 	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
 		long userId, long anonymousUserId, java.lang.String className,
-		long classPK, java.util.Map<java.lang.String, long[]> referrers,
-		java.lang.String elementId, java.lang.String eventType,
+		long classPK, java.lang.String elementId, java.lang.String eventType,
 		java.lang.String clientIP, java.lang.String userAgent,
 		java.lang.String languageId, java.lang.String URL,
 		java.lang.String additionalInfo,
@@ -287,8 +65,8 @@ public class AnalyticsEventLocalServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addAnalyticsEvent(userId, anonymousUserId, className,
-			classPK, referrers, elementId, eventType, clientIP, userAgent,
-			languageId, URL, additionalInfo, serviceContext);
+			classPK, elementId, eventType, clientIP, userAgent, languageId,
+			URL, additionalInfo, serviceContext);
 	}
 
 	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
@@ -309,7 +87,8 @@ public class AnalyticsEventLocalServiceUtil {
 
 	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
 		long userId, long anonymousUserId, java.lang.String className,
-		long classPK, java.lang.String elementId, java.lang.String eventType,
+		long classPK, java.util.Map<java.lang.String, long[]> referrers,
+		java.lang.String elementId, java.lang.String eventType,
 		java.lang.String clientIP, java.lang.String userAgent,
 		java.lang.String languageId, java.lang.String URL,
 		java.lang.String additionalInfo,
@@ -318,14 +97,51 @@ public class AnalyticsEventLocalServiceUtil {
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService()
 				   .addAnalyticsEvent(userId, anonymousUserId, className,
-			classPK, elementId, eventType, clientIP, userAgent, languageId,
-			URL, additionalInfo, serviceContext);
+			classPK, referrers, elementId, eventType, clientIP, userAgent,
+			languageId, URL, additionalInfo, serviceContext);
 	}
 
 	public static void checkAnalyticsEvents()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		getService().checkAnalyticsEvents();
+	}
+
+	/**
+	* Creates a new analytics event with the primary key. Does not add the analytics event to the database.
+	*
+	* @param analyticsEventId the primary key for the new analytics event
+	* @return the new analytics event
+	*/
+	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent createAnalyticsEvent(
+		long analyticsEventId) {
+		return getService().createAnalyticsEvent(analyticsEventId);
+	}
+
+	/**
+	* Deletes the analytics event from the database. Also notifies the appropriate model listeners.
+	*
+	* @param analyticsEvent the analytics event
+	* @return the analytics event that was removed
+	* @throws SystemException
+	*/
+	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent deleteAnalyticsEvent(
+		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteAnalyticsEvent(analyticsEvent);
+	}
+
+	/**
+	* Deletes the analytics event with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param analyticsEventId the primary key of the analytics event
+	* @return the analytics event that was removed
+	* @throws PortalException if a analytics event with the primary key could not be found
+	*/
+	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent deleteAnalyticsEvent(
+		long analyticsEventId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deleteAnalyticsEvent(analyticsEventId);
 	}
 
 	public static void deleteAnalyticsEvents(long companyId,
@@ -335,21 +151,113 @@ public class AnalyticsEventLocalServiceUtil {
 		getService().deleteAnalyticsEvents(companyId, createDate);
 	}
 
-	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
-		long companyId, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAnalyticsEvents(companyId, createDate);
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
 	}
 
-	public static java.util.List<java.lang.Object[]> getAnalyticsEvents(
-		long companyId, java.lang.String referrerClassName,
-		long referrerClassPK, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return getService().dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 		return getService()
-				   .getAnalyticsEvents(companyId, referrerClassName,
-			referrerClassPK, createDate);
+				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent fetchAnalyticsEvent(
+		long analyticsEventId) {
+		return getService().fetchAnalyticsEvent(analyticsEventId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the analytics event with the primary key.
+	*
+	* @param analyticsEventId the primary key of the analytics event
+	* @return the analytics event
+	* @throws PortalException if a analytics event with the primary key could not be found
+	*/
+	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent getAnalyticsEvent(
+		long analyticsEventId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getAnalyticsEvent(analyticsEventId);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
@@ -379,11 +287,44 @@ public class AnalyticsEventLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		long companyId, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAnalyticsEvents(companyId, createDate);
+	}
+
+	public static java.util.List<java.lang.Object[]> getAnalyticsEvents(
+		long companyId, java.lang.String referrerClassName,
+		long referrerClassPK, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getAnalyticsEvents(companyId, referrerClassName,
+			referrerClassPK, createDate);
+	}
+
+	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String elementId, java.lang.String eventType,
 		java.util.Date createDate)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getAnalyticsEvents(elementId, eventType, createDate);
+	}
+
+	/**
+	* Returns a range of all the analytics events.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.analytics.model.impl.AnalyticsEventModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of analytics events
+	* @param end the upper bound of the range of analytics events (not inclusive)
+	* @return the range of analytics events
+	*/
+	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
+		int start, int end) {
+		return getService().getAnalyticsEvents(start, end);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEventsContent(
@@ -399,11 +340,13 @@ public class AnalyticsEventLocalServiceUtil {
 		return getService().getAnalyticsEventsContentIds(createDate);
 	}
 
-	public static int getAnalyticsEventsCount(long companyId,
-		java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getAnalyticsEventsCount(companyId, createDate);
+	/**
+	* Returns the number of analytics events.
+	*
+	* @return the number of analytics events
+	*/
+	public static int getAnalyticsEventsCount() {
+		return getService().getAnalyticsEventsCount();
 	}
 
 	public static int getAnalyticsEventsCount(long anonymousUserId,
@@ -442,6 +385,21 @@ public class AnalyticsEventLocalServiceUtil {
 			referrerClassName, referrerClassPK, eventType, createDate);
 	}
 
+	public static int getAnalyticsEventsCount(long companyId,
+		java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().getAnalyticsEventsCount(companyId, createDate);
+	}
+
+	public static int getAnalyticsEventsCount(java.lang.String elementId,
+		java.lang.String eventType, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService()
+				   .getAnalyticsEventsCount(elementId, eventType, createDate);
+	}
+
 	public static int getAnalyticsEventsCount(
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType,
@@ -451,14 +409,6 @@ public class AnalyticsEventLocalServiceUtil {
 		return getService()
 				   .getAnalyticsEventsCount(referrerClassName, referrerClassPK,
 			elementId, eventType, createDate);
-	}
-
-	public static int getAnalyticsEventsCount(java.lang.String elementId,
-		java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .getAnalyticsEventsCount(elementId, eventType, createDate);
 	}
 
 	public static long[] getAnalyticsEventsIds(java.lang.String className,
@@ -478,40 +428,61 @@ public class AnalyticsEventLocalServiceUtil {
 				   .getAnalyticsEventsIds(elementId, eventType, createDate);
 	}
 
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
 	public static java.util.Date getMaxAge()
 		throws com.liferay.portal.kernel.exception.PortalException,
 			com.liferay.portal.kernel.exception.SystemException {
 		return getService().getMaxAge();
 	}
 
-	public static void clearService() {
-		_service = null;
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Updates the analytics event in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param analyticsEvent the analytics event
+	* @return the analytics event that was updated
+	*/
+	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent updateAnalyticsEvent(
+		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent) {
+		return getService().updateAnalyticsEvent(analyticsEvent);
 	}
 
 	public static AnalyticsEventLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					AnalyticsEventLocalService.class.getName());
-
-			if (invokableLocalService instanceof AnalyticsEventLocalService) {
-				_service = (AnalyticsEventLocalService)invokableLocalService;
-			}
-			else {
-				_service = new AnalyticsEventLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(AnalyticsEventLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
 	/**
 	 * @deprecated As of 6.2.0
 	 */
+	@Deprecated
 	public void setService(AnalyticsEventLocalService service) {
 	}
 
-	private static AnalyticsEventLocalService _service;
+	private static ServiceTracker<AnalyticsEventLocalService, AnalyticsEventLocalService> _serviceTracker;
+
+	static {
+		Bundle bundle = FrameworkUtil.getBundle(AnalyticsEventLocalServiceUtil.class);
+
+		_serviceTracker = new ServiceTracker<AnalyticsEventLocalService, AnalyticsEventLocalService>(bundle.getBundleContext(),
+				AnalyticsEventLocalService.class, null);
+
+		_serviceTracker.open();
+	}
 }
