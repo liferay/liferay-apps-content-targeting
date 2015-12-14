@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.anonymous.users.hook.events;
 
 import com.liferay.content.targeting.anonymous.users.util.AnonymousUsersCookieManager;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
 import com.liferay.portal.kernel.log.Log;
@@ -24,8 +23,7 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
@@ -48,8 +46,6 @@ public class AnonymousUsersLoginAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 		throws Exception {
 
-		_initAnonymousUserManager();
-
 		_anonymousUsersCookieManager.deleteCookie(request, response);
 
 		if (_log.isDebugEnabled()) {
@@ -57,11 +53,15 @@ public class AnonymousUsersLoginAction extends Action {
 		}
 	}
 
-	private void _initAnonymousUserManager() {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+	@Reference(unbind ="unsetAnonymousUsersCookieManager")
+	protected void setAnonymousUsersCookieManager(
+		AnonymousUsersCookieManager anonymousUsersCookieManager) {
 
-		_anonymousUsersCookieManager = ServiceTrackerUtil.getService(
-			AnonymousUsersCookieManager.class, bundle.getBundleContext());
+		_anonymousUsersCookieManager = anonymousUsersCookieManager;
+	}
+
+	protected void unsetAnonymousUsersCookieManager() {
+		_anonymousUsersCookieManager = null;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
