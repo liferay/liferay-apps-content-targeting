@@ -15,12 +15,12 @@
 package com.liferay.content.targeting.lar;
 
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.StagedGroupedModel;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.expando.model.ExpandoBridge;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
 
@@ -77,6 +77,11 @@ public class AssetEntryReferencedStagedModel
 	@Override
 	public String getModelClassName() {
 		return AssetEntryReferencedStagedModel.class.getName();
+	}
+
+	@Override
+	public Date getLastPublishDate() {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -149,6 +154,11 @@ public class AssetEntryReferencedStagedModel
 	@Override
 	public void setGroupId(long groupId) {
 		_assetEntry.setGroupId(groupId);
+	}
+
+	@Override
+	public void setLastPublishDate(Date date) {
+		throw new UnsupportedOperationException();
 	}
 
 	@Override

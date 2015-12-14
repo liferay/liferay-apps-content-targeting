@@ -20,24 +20,26 @@ import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.service.ChannelInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
+import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.UnavailableException;
 
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
@@ -48,32 +50,21 @@ public class ChannelInstanceStagedModelDataHandler
 	public static final String[] CLASS_NAMES = {
 		ChannelInstance.class.getName()};
 
-	public ChannelInstanceStagedModelDataHandler() throws UnavailableException {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		if (bundle == null) {
-			throw new UnavailableException(
-				"Can't find a reference to the OSGi bundle") {
-
-				@Override
-				public boolean isPermanent() {
-					return true;
-				}
-			};
-		}
-
-		_channelsRegistry = ServiceTrackerUtil.getService(
-			ChannelsRegistry.class, bundle.getBundleContext());
-	}
-
 	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ChannelInstance channelInstance =
 			ChannelInstanceLocalServiceUtil.
 				fetchChannelInstanceByUuidAndGroupId(uuid, groupId);
+
+		ChannelInstanceLocalServiceUtil.deleteChannelInstance(channelInstance);
+	}
+
+	@Override
+	public void deleteStagedModel(ChannelInstance channelInstance)
+		throws PortalException {
 
 		ChannelInstanceLocalServiceUtil.deleteChannelInstance(channelInstance);
 	}
@@ -86,6 +77,13 @@ public class ChannelInstanceStagedModelDataHandler
 	@Override
 	public String getDisplayName(ChannelInstance channelInstance) {
 		return channelInstance.getAlias();
+	}
+
+	@Override
+	public List<ChannelInstance>
+	fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -135,10 +133,10 @@ public class ChannelInstanceStagedModelDataHandler
 	}
 
 	@Override
-	protected void doImportCompanyStagedModel(
+	public void importCompanyStagedModel(
 			PortletDataContext portletDataContext, String uuid,
 			long channelInstanceId)
-		throws Exception {
+		throws PortletDataException {
 
 		ChannelInstance existingChannelInstance =
 			ChannelInstanceLocalServiceUtil.
@@ -224,9 +222,7 @@ public class ChannelInstanceStagedModelDataHandler
 	}
 
 	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
+	protected boolean validateMissingReference(String uuid, long groupId) {
 
 		ChannelInstance channelInstance =
 			ChannelInstanceLocalServiceUtil.
@@ -237,6 +233,11 @@ public class ChannelInstanceStagedModelDataHandler
 		}
 
 		return true;
+	}
+
+	@Reference(unbind = "-")
+	protected void setChannelsRegistry(ChannelsRegistry channelsRegistry) {
+		_channelsRegistry = channelsRegistry;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

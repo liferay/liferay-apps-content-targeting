@@ -15,16 +15,13 @@
 package com.liferay.content.targeting.lar;
 
 import com.liferay.content.targeting.model.RuleInstance;
+import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Element;
@@ -35,6 +32,11 @@ import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
 import com.liferay.portlet.asset.service.AssetVocabularyLocalServiceUtil;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyUtil;
+import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
+import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -46,6 +48,13 @@ public class UserSegmentStagedModelDataHandler
 	extends BaseStagedModelDataHandler<UserSegment> {
 
 	public static final String[] CLASS_NAMES = {UserSegment.class.getName()};
+
+	@Override
+	public void deleteStagedModel(UserSegment stagedUserSegment)
+		throws PortalException {
+
+		UserSegmentLocalServiceUtil.deleteUserSegment(stagedUserSegment);
+	}
 
 	@Override
 	public void deleteStagedModel(
@@ -72,6 +81,21 @@ public class UserSegmentStagedModelDataHandler
 	}
 
 	@Override
+	public List<UserSegment>
+		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
+	protected void doImportStagedModel(
+			PortletDataContext portletDataContext, UserSegment userSegment)
+		throws Exception {
+
+		importStagedModel(portletDataContext,userSegment);
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, UserSegment userSegment)
 		throws Exception {
@@ -90,10 +114,10 @@ public class UserSegmentStagedModelDataHandler
 	}
 
 	@Override
-	protected void doImportCompanyStagedModel(
+	public void importCompanyStagedModel(
 			PortletDataContext portletDataContext, String uuid,
 			long userSegmentId)
-		throws Exception {
+		throws PortletDataException {
 
 		UserSegment existingUserSegment =
 			UserSegmentLocalServiceUtil.fetchUserSegmentByUuidAndGroupId(
@@ -114,63 +138,70 @@ public class UserSegmentStagedModelDataHandler
 	}
 
 	@Override
-	protected void doImportStagedModel(
+	public void importStagedModel(
 			PortletDataContext portletDataContext, UserSegment userSegment)
-		throws Exception {
+		throws PortletDataException {
 
-		Element userSegmentElement = portletDataContext.getImportDataElement(
-			userSegment);
+		try {
+			Element userSegmentElement =
+				portletDataContext.getImportDataElement(userSegment);
 
-		AssetCategory importedAssetCategory = importAssetCategory(
-			portletDataContext, userSegmentElement);
+			AssetCategory importedAssetCategory = importAssetCategory(
+				portletDataContext, userSegmentElement);
 
-		long userId = portletDataContext.getUserId(userSegment.getUserUuid());
+			long userId = portletDataContext.getUserId(
+				userSegment.getUserUuid());
 
-		ServiceContext serviceContext = portletDataContext.createServiceContext(
-			userSegment);
+			ServiceContext serviceContext =
+				portletDataContext.createServiceContext(userSegment);
 
-		if (importedAssetCategory != null) {
-			serviceContext.setAttribute(
-				"userSegmentAssetCategoryId",
-				importedAssetCategory.getCategoryId());
-		}
+			if (importedAssetCategory != null) {
+				serviceContext.setAttribute(
+					"userSegmentAssetCategoryId",
+					importedAssetCategory.getCategoryId());
+			}
 
-		serviceContext.setUserId(userId);
+			serviceContext.setUserId(userId);
 
-		UserSegment importedUserSegment = null;
+			UserSegment importedUserSegment = null;
 
-		if (portletDataContext.isDataStrategyMirror()) {
-			UserSegment existingUserSegment =
-				UserSegmentLocalServiceUtil.fetchUserSegmentByUuidAndGroupId(
-					userSegment.getUuid(),
-					portletDataContext.getScopeGroupId());
+			if (portletDataContext.isDataStrategyMirror()) {
+				UserSegment existingUserSegment =
+					UserSegmentLocalServiceUtil.
+						fetchUserSegmentByUuidAndGroupId(
+							userSegment.getUuid(),
+							portletDataContext.getScopeGroupId());
 
-			if (existingUserSegment == null) {
-				serviceContext.setUuid(userSegment.getUuid());
+				if (existingUserSegment == null) {
+					serviceContext.setUuid(userSegment.getUuid());
 
+					importedUserSegment =
+						UserSegmentLocalServiceUtil.addUserSegment(
+							userId, userSegment.getNameMap(),
+							userSegment.getDescriptionMap(), serviceContext);
+				} else {
+					importedUserSegment =
+						UserSegmentLocalServiceUtil.updateUserSegment(
+							existingUserSegment.getUserSegmentId(),
+							userSegment.getNameMap(),
+							userSegment.getDescriptionMap(), serviceContext);
+				}
+			} else {
 				importedUserSegment =
 					UserSegmentLocalServiceUtil.addUserSegment(
 						userId, userSegment.getNameMap(),
 						userSegment.getDescriptionMap(), serviceContext);
 			}
-			else {
-				importedUserSegment =
-					UserSegmentLocalServiceUtil.updateUserSegment(
-						existingUserSegment.getUserSegmentId(),
-						userSegment.getNameMap(),
-						userSegment.getDescriptionMap(), serviceContext);
-			}
-		}
-		else {
-			importedUserSegment = UserSegmentLocalServiceUtil.addUserSegment(
-				userId, userSegment.getNameMap(),
-				userSegment.getDescriptionMap(), serviceContext);
-		}
 
-		importRuleInstances(
-			portletDataContext, userSegment, importedUserSegment);
+			importRuleInstances(
+				portletDataContext, userSegment, importedUserSegment);
 
-		portletDataContext.importClassedModel(userSegment, importedUserSegment);
+			portletDataContext.importClassedModel(
+				userSegment, importedUserSegment);
+		}
+		catch (Exception e) {
+			throw new PortletDataException(e);
+		}
 	}
 
 	protected void exportAssetCategory(
@@ -301,7 +332,7 @@ public class UserSegmentStagedModelDataHandler
 
 				importedAssetCategory =
 					AssetCategoryLocalServiceUtil.addCategory(
-						userId,
+						userId, portletDataContext.getGroupId(),
 						AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 						assetCategory.getTitleMap(),
 						assetCategory.getDescriptionMap(),
@@ -311,7 +342,8 @@ public class UserSegmentStagedModelDataHandler
 			else {
 				importedAssetCategory =
 					AssetCategoryLocalServiceUtil.updateCategory(
-						userId, existingAssetCategory.getCategoryId(),
+						userId,
+						existingAssetCategory.getCategoryId(),
 						existingAssetCategory.getParentCategoryId(),
 						assetCategory.getTitleMap(),
 						assetCategory.getDescriptionMap(),
@@ -321,7 +353,8 @@ public class UserSegmentStagedModelDataHandler
 		}
 		else {
 			importedAssetCategory = AssetCategoryLocalServiceUtil.addCategory(
-				userId, AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
+				userId, portletDataContext.getGroupId(),
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
 				assetCategory.getTitleMap(), assetCategory.getDescriptionMap(),
 				assetVocabulary.getVocabularyId(), null, serviceContext);
 		}
@@ -408,10 +441,7 @@ public class UserSegmentStagedModelDataHandler
 	}
 
 	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
+	protected boolean validateMissingReference(String uuid, long groupId) {
 		UserSegment userSegment =
 			UserSegmentLocalServiceUtil.fetchUserSegmentByUuidAndGroupId(
 				uuid, groupId);

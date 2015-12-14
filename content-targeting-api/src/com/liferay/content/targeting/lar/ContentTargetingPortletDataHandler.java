@@ -23,17 +23,16 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
-import com.liferay.content.targeting.service.persistence.CampaignExportActionableDynamicQuery;
-import com.liferay.content.targeting.service.persistence.UserSegmentExportActionableDynamicQuery;
 import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
-import com.liferay.portal.kernel.lar.BasePortletDataHandler;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
-import com.liferay.portal.kernel.lar.PortletDataHandlerControl;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
-import com.liferay.portal.kernel.lar.StagedModelType;
 import com.liferay.portal.kernel.xml.Element;
+import com.liferay.portlet.exportimport.lar.BasePortletDataHandler;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
+import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
+
 
 import java.util.List;
 
@@ -113,7 +112,8 @@ public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 
 		if (portletDataContext.getBooleanParameter(NAMESPACE, "campaigns")) {
 			ActionableDynamicQuery campaignActionableDynamicQuery =
-				new CampaignExportActionableDynamicQuery(portletDataContext);
+				_campaignLocalService.getExportActionableDynamicQuery(
+					portletDataContext);
 
 			campaignActionableDynamicQuery.performActions();
 		}
@@ -122,7 +122,8 @@ public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 				NAMESPACE, "user-segments")) {
 
 			ActionableDynamicQuery userSegmentActionableDynamicQuery =
-				new UserSegmentExportActionableDynamicQuery(portletDataContext);
+				_userSegmentLocalService.getExportActionableDynamicQuery(
+					portletDataContext);
 
 			userSegmentActionableDynamicQuery.performActions();
 		}
@@ -175,12 +176,14 @@ public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 		throws Exception {
 
 		ActionableDynamicQuery campaignActionableDynamicQuery =
-			new CampaignExportActionableDynamicQuery(portletDataContext);
+			_campaignLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		campaignActionableDynamicQuery.performCount();
 
 		ActionableDynamicQuery userSegmentActionableDynamicQuery =
-			new UserSegmentExportActionableDynamicQuery(portletDataContext);
+			_userSegmentLocalService.getExportActionableDynamicQuery(
+				portletDataContext);
 
 		userSegmentActionableDynamicQuery.performCount();
 	}
