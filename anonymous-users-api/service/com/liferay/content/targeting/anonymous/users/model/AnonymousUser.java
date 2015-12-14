@@ -14,6 +14,9 @@
 
 package com.liferay.content.targeting.anonymous.users.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -25,11 +28,30 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl
  * @generated
  */
+@ProviderType
 public interface AnonymousUser extends AnonymousUserModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<AnonymousUser, Long> ANONYMOUS_USER_ID_ACCESSOR =
+		new Accessor<AnonymousUser, Long>() {
+			@Override
+			public Long get(AnonymousUser anonymousUser) {
+				return anonymousUser.getAnonymousUserId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<AnonymousUser> getTypeClass() {
+				return AnonymousUser.class;
+			}
+		};
+
 	public com.liferay.portal.model.User getUser();
 }

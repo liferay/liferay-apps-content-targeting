@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.service.ChannelInstanceLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the ChannelInstance service. Represents a row in the &quot;CT_ChannelInstance&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see ChannelInstanceImpl
- * @see com.liferay.content.targeting.model.ChannelInstance
+ * @see ChannelInstance
  * @generated
  */
+@ProviderType
 public abstract class ChannelInstanceBaseImpl extends ChannelInstanceModelImpl
 	implements ChannelInstance {
 	/*
@@ -39,7 +40,7 @@ public abstract class ChannelInstanceBaseImpl extends ChannelInstanceModelImpl
 	 * Never modify or reference this class directly. All methods that expect a channel instance model instance should use the {@link ChannelInstance} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			ChannelInstanceLocalServiceUtil.addChannelInstance(this);
 		}

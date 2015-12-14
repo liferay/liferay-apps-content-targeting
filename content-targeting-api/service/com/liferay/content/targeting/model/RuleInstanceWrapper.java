@@ -14,9 +14,12 @@
 
 package com.liferay.content.targeting.model;
 
-import com.liferay.portal.kernel.lar.StagedModelType;
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
+
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -31,6 +34,7 @@ import java.util.Map;
  * @see RuleInstance
  * @generated
  */
+@ProviderType
 public class RuleInstanceWrapper implements RuleInstance,
 	ModelWrapper<RuleInstance> {
 	public RuleInstanceWrapper(RuleInstance ruleInstance) {
@@ -135,84 +139,15 @@ public class RuleInstanceWrapper implements RuleInstance,
 		}
 	}
 
-	/**
-	* Returns the primary key of this rule instance.
-	*
-	* @return the primary key of this rule instance
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _ruleInstance.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new RuleInstanceWrapper((RuleInstance)_ruleInstance.clone());
 	}
 
-	/**
-	* Sets the primary key of this rule instance.
-	*
-	* @param primaryKey the primary key of this rule instance
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_ruleInstance.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the uuid of this rule instance.
-	*
-	* @return the uuid of this rule instance
-	*/
-	@Override
-	public java.lang.String getUuid() {
-		return _ruleInstance.getUuid();
-	}
-
-	/**
-	* Sets the uuid of this rule instance.
-	*
-	* @param uuid the uuid of this rule instance
-	*/
-	@Override
-	public void setUuid(java.lang.String uuid) {
-		_ruleInstance.setUuid(uuid);
-	}
-
-	/**
-	* Returns the rule instance ID of this rule instance.
-	*
-	* @return the rule instance ID of this rule instance
-	*/
-	@Override
-	public long getRuleInstanceId() {
-		return _ruleInstance.getRuleInstanceId();
-	}
-
-	/**
-	* Sets the rule instance ID of this rule instance.
-	*
-	* @param ruleInstanceId the rule instance ID of this rule instance
-	*/
-	@Override
-	public void setRuleInstanceId(long ruleInstanceId) {
-		_ruleInstance.setRuleInstanceId(ruleInstanceId);
-	}
-
-	/**
-	* Returns the group ID of this rule instance.
-	*
-	* @return the group ID of this rule instance
-	*/
-	@Override
-	public long getGroupId() {
-		return _ruleInstance.getGroupId();
-	}
-
-	/**
-	* Sets the group ID of this rule instance.
-	*
-	* @param groupId the group ID of this rule instance
-	*/
-	@Override
-	public void setGroupId(long groupId) {
-		_ruleInstance.setGroupId(groupId);
+	public int compareTo(
+		com.liferay.content.targeting.model.RuleInstance ruleInstance) {
+		return _ruleInstance.compareTo(ruleInstance);
 	}
 
 	/**
@@ -226,95 +161,28 @@ public class RuleInstanceWrapper implements RuleInstance,
 	}
 
 	/**
-	* Sets the company ID of this rule instance.
-	*
-	* @param companyId the company ID of this rule instance
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_ruleInstance.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this rule instance.
-	*
-	* @return the user ID of this rule instance
-	*/
-	@Override
-	public long getUserId() {
-		return _ruleInstance.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this rule instance.
-	*
-	* @param userId the user ID of this rule instance
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_ruleInstance.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this rule instance.
-	*
-	* @return the user uuid of this rule instance
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _ruleInstance.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this rule instance.
-	*
-	* @param userUuid the user uuid of this rule instance
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_ruleInstance.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the user name of this rule instance.
-	*
-	* @return the user name of this rule instance
-	*/
-	@Override
-	public java.lang.String getUserName() {
-		return _ruleInstance.getUserName();
-	}
-
-	/**
-	* Sets the user name of this rule instance.
-	*
-	* @param userName the user name of this rule instance
-	*/
-	@Override
-	public void setUserName(java.lang.String userName) {
-		_ruleInstance.setUserName(userName);
-	}
-
-	/**
 	* Returns the create date of this rule instance.
 	*
 	* @return the create date of this rule instance
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
+	public Date getCreateDate() {
 		return _ruleInstance.getCreateDate();
 	}
 
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _ruleInstance.getExpandoBridge();
+	}
+
 	/**
-	* Sets the create date of this rule instance.
+	* Returns the group ID of this rule instance.
 	*
-	* @param createDate the create date of this rule instance
+	* @return the group ID of this rule instance
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
-		_ruleInstance.setCreateDate(createDate);
+	public long getGroupId() {
+		return _ruleInstance.getGroupId();
 	}
 
 	/**
@@ -323,18 +191,38 @@ public class RuleInstanceWrapper implements RuleInstance,
 	* @return the modified date of this rule instance
 	*/
 	@Override
-	public java.util.Date getModifiedDate() {
+	public Date getModifiedDate() {
 		return _ruleInstance.getModifiedDate();
 	}
 
 	/**
-	* Sets the modified date of this rule instance.
+	* Returns the primary key of this rule instance.
 	*
-	* @param modifiedDate the modified date of this rule instance
+	* @return the primary key of this rule instance
 	*/
 	@Override
-	public void setModifiedDate(java.util.Date modifiedDate) {
-		_ruleInstance.setModifiedDate(modifiedDate);
+	public long getPrimaryKey() {
+		return _ruleInstance.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _ruleInstance.getPrimaryKeyObj();
+	}
+
+	@Override
+	public java.lang.String getRuleGuid() {
+		return _ruleInstance.getRuleGuid();
+	}
+
+	/**
+	* Returns the rule instance ID of this rule instance.
+	*
+	* @return the rule instance ID of this rule instance
+	*/
+	@Override
+	public long getRuleInstanceId() {
+		return _ruleInstance.getRuleInstanceId();
 	}
 
 	/**
@@ -348,13 +236,33 @@ public class RuleInstanceWrapper implements RuleInstance,
 	}
 
 	/**
-	* Sets the rule key of this rule instance.
+	* Returns the type settings of this rule instance.
 	*
-	* @param ruleKey the rule key of this rule instance
+	* @return the type settings of this rule instance
 	*/
 	@Override
-	public void setRuleKey(java.lang.String ruleKey) {
-		_ruleInstance.setRuleKey(ruleKey);
+	public java.lang.String getTypeSettings() {
+		return _ruleInstance.getTypeSettings();
+	}
+
+	/**
+	* Returns the user ID of this rule instance.
+	*
+	* @return the user ID of this rule instance
+	*/
+	@Override
+	public long getUserId() {
+		return _ruleInstance.getUserId();
+	}
+
+	/**
+	* Returns the user name of this rule instance.
+	*
+	* @return the user name of this rule instance
+	*/
+	@Override
+	public java.lang.String getUserName() {
+		return _ruleInstance.getUserName();
 	}
 
 	/**
@@ -367,44 +275,39 @@ public class RuleInstanceWrapper implements RuleInstance,
 		return _ruleInstance.getUserSegmentId();
 	}
 
-	/**
-	* Sets the user segment ID of this rule instance.
-	*
-	* @param userSegmentId the user segment ID of this rule instance
-	*/
 	@Override
-	public void setUserSegmentId(long userSegmentId) {
-		_ruleInstance.setUserSegmentId(userSegmentId);
+	public java.lang.String getUserSegmentName(java.util.Locale locale) {
+		return _ruleInstance.getUserSegmentName(locale);
 	}
 
 	/**
-	* Returns the type settings of this rule instance.
+	* Returns the user uuid of this rule instance.
 	*
-	* @return the type settings of this rule instance
+	* @return the user uuid of this rule instance
 	*/
 	@Override
-	public java.lang.String getTypeSettings() {
-		return _ruleInstance.getTypeSettings();
+	public java.lang.String getUserUuid() {
+		return _ruleInstance.getUserUuid();
 	}
 
 	/**
-	* Sets the type settings of this rule instance.
+	* Returns the uuid of this rule instance.
 	*
-	* @param typeSettings the type settings of this rule instance
+	* @return the uuid of this rule instance
 	*/
 	@Override
-	public void setTypeSettings(java.lang.String typeSettings) {
-		_ruleInstance.setTypeSettings(typeSettings);
+	public java.lang.String getUuid() {
+		return _ruleInstance.getUuid();
 	}
 
 	@Override
-	public boolean isNew() {
-		return _ruleInstance.isNew();
+	public Map<java.lang.String, java.lang.String> getValues() {
+		return _ruleInstance.getValues();
 	}
 
 	@Override
-	public void setNew(boolean n) {
-		_ruleInstance.setNew(n);
+	public int hashCode() {
+		return _ruleInstance.hashCode();
 	}
 
 	@Override
@@ -413,28 +316,43 @@ public class RuleInstanceWrapper implements RuleInstance,
 	}
 
 	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_ruleInstance.setCachedModel(cachedModel);
-	}
-
-	@Override
 	public boolean isEscapedModel() {
 		return _ruleInstance.isEscapedModel();
 	}
 
 	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _ruleInstance.getPrimaryKeyObj();
+	public boolean isNew() {
+		return _ruleInstance.isNew();
 	}
 
 	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_ruleInstance.setPrimaryKeyObj(primaryKeyObj);
+	public void persist() {
+		_ruleInstance.persist();
 	}
 
 	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _ruleInstance.getExpandoBridge();
+	public void setCachedModel(boolean cachedModel) {
+		_ruleInstance.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the company ID of this rule instance.
+	*
+	* @param companyId the company ID of this rule instance
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_ruleInstance.setCompanyId(companyId);
+	}
+
+	/**
+	* Sets the create date of this rule instance.
+	*
+	* @param createDate the create date of this rule instance
+	*/
+	@Override
+	public void setCreateDate(Date createDate) {
+		_ruleInstance.setCreateDate(createDate);
 	}
 
 	@Override
@@ -455,20 +373,134 @@ public class RuleInstanceWrapper implements RuleInstance,
 		_ruleInstance.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the group ID of this rule instance.
+	*
+	* @param groupId the group ID of this rule instance
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new RuleInstanceWrapper((RuleInstance)_ruleInstance.clone());
+	public void setGroupId(long groupId) {
+		_ruleInstance.setGroupId(groupId);
+	}
+
+	/**
+	* Sets the modified date of this rule instance.
+	*
+	* @param modifiedDate the modified date of this rule instance
+	*/
+	@Override
+	public void setModifiedDate(Date modifiedDate) {
+		_ruleInstance.setModifiedDate(modifiedDate);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.model.RuleInstance ruleInstance) {
-		return _ruleInstance.compareTo(ruleInstance);
+	public void setNew(boolean n) {
+		_ruleInstance.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this rule instance.
+	*
+	* @param primaryKey the primary key of this rule instance
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_ruleInstance.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _ruleInstance.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_ruleInstance.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	@Override
+	public void setRuleGuid(java.lang.String ruleGuid) {
+		_ruleInstance.setRuleGuid(ruleGuid);
+	}
+
+	/**
+	* Sets the rule instance ID of this rule instance.
+	*
+	* @param ruleInstanceId the rule instance ID of this rule instance
+	*/
+	@Override
+	public void setRuleInstanceId(long ruleInstanceId) {
+		_ruleInstance.setRuleInstanceId(ruleInstanceId);
+	}
+
+	/**
+	* Sets the rule key of this rule instance.
+	*
+	* @param ruleKey the rule key of this rule instance
+	*/
+	@Override
+	public void setRuleKey(java.lang.String ruleKey) {
+		_ruleInstance.setRuleKey(ruleKey);
+	}
+
+	/**
+	* Sets the type settings of this rule instance.
+	*
+	* @param typeSettings the type settings of this rule instance
+	*/
+	@Override
+	public void setTypeSettings(java.lang.String typeSettings) {
+		_ruleInstance.setTypeSettings(typeSettings);
+	}
+
+	/**
+	* Sets the user ID of this rule instance.
+	*
+	* @param userId the user ID of this rule instance
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_ruleInstance.setUserId(userId);
+	}
+
+	/**
+	* Sets the user name of this rule instance.
+	*
+	* @param userName the user name of this rule instance
+	*/
+	@Override
+	public void setUserName(java.lang.String userName) {
+		_ruleInstance.setUserName(userName);
+	}
+
+	/**
+	* Sets the user segment ID of this rule instance.
+	*
+	* @param userSegmentId the user segment ID of this rule instance
+	*/
+	@Override
+	public void setUserSegmentId(long userSegmentId) {
+		_ruleInstance.setUserSegmentId(userSegmentId);
+	}
+
+	/**
+	* Sets the user uuid of this rule instance.
+	*
+	* @param userUuid the user uuid of this rule instance
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_ruleInstance.setUserUuid(userUuid);
+	}
+
+	/**
+	* Sets the uuid of this rule instance.
+	*
+	* @param uuid the uuid of this rule instance
+	*/
+	@Override
+	public void setUuid(java.lang.String uuid) {
+		_ruleInstance.setUuid(uuid);
+	}
+
+	@Override
+	public void setValues(Map<java.lang.String, java.lang.String> values) {
+		_ruleInstance.setValues(values);
 	}
 
 	@Override
@@ -482,50 +514,18 @@ public class RuleInstanceWrapper implements RuleInstance,
 	}
 
 	@Override
-	public com.liferay.content.targeting.model.RuleInstance toUnescapedModel() {
-		return new RuleInstanceWrapper(_ruleInstance.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _ruleInstance.toString();
 	}
 
 	@Override
+	public com.liferay.content.targeting.model.RuleInstance toUnescapedModel() {
+		return new RuleInstanceWrapper(_ruleInstance.toUnescapedModel());
+	}
+
+	@Override
 	public java.lang.String toXmlString() {
 		return _ruleInstance.toXmlString();
-	}
-
-	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_ruleInstance.persist();
-	}
-
-	@Override
-	public java.lang.String getRuleGuid() {
-		return _ruleInstance.getRuleGuid();
-	}
-
-	@Override
-	public java.lang.String getUserSegmentName(java.util.Locale locale) {
-		return _ruleInstance.getUserSegmentName(locale);
-	}
-
-	@Override
-	public java.util.Map<java.lang.String, java.lang.String> getValues() {
-		return _ruleInstance.getValues();
-	}
-
-	@Override
-	public void setRuleGuid(java.lang.String ruleGuid) {
-		_ruleInstance.setRuleGuid(ruleGuid);
-	}
-
-	@Override
-	public void setValues(
-		java.util.Map<java.lang.String, java.lang.String> values) {
-		_ruleInstance.setValues(values);
 	}
 
 	@Override
@@ -552,16 +552,19 @@ public class RuleInstanceWrapper implements RuleInstance,
 		return _ruleInstance.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	public RuleInstance getWrappedRuleInstance() {
+	@Override
+	public RuleInstance getWrappedModel() {
 		return _ruleInstance;
 	}
 
 	@Override
-	public RuleInstance getWrappedModel() {
-		return _ruleInstance;
+	public boolean isEntityCacheEnabled() {
+		return _ruleInstance.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _ruleInstance.isFinderCacheEnabled();
 	}
 
 	@Override
@@ -569,5 +572,5 @@ public class RuleInstanceWrapper implements RuleInstance,
 		_ruleInstance.resetOriginalValues();
 	}
 
-	private RuleInstance _ruleInstance;
+	private final RuleInstance _ruleInstance;
 }

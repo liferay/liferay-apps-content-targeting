@@ -21,12 +21,16 @@ import com.liferay.content.targeting.analytics.service.persistence.AnalyticsEven
 import com.liferay.content.targeting.analytics.service.persistence.AnalyticsReferrerPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.service.BaseServiceImpl;
+import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.util.PortalUtil;
 
 import javax.sql.DataSource;
 
@@ -43,7 +47,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class AnalyticsEventServiceBaseImpl extends BaseServiceImpl
-	implements AnalyticsEventService, IdentifiableBean {
+	implements AnalyticsEventService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -74,7 +78,7 @@ public abstract class AnalyticsEventServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the analytics event remote service
 	 */
-	public com.liferay.content.targeting.analytics.service.AnalyticsEventService getAnalyticsEventService() {
+	public AnalyticsEventService getAnalyticsEventService() {
 		return analyticsEventService;
 	}
 
@@ -84,7 +88,7 @@ public abstract class AnalyticsEventServiceBaseImpl extends BaseServiceImpl
 	 * @param analyticsEventService the analytics event remote service
 	 */
 	public void setAnalyticsEventService(
-		com.liferay.content.targeting.analytics.service.AnalyticsEventService analyticsEventService) {
+		AnalyticsEventService analyticsEventService) {
 		this.analyticsEventService = analyticsEventService;
 	}
 
@@ -203,6 +207,63 @@ public abstract class AnalyticsEventServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the class name local service.
+	 *
+	 * @return the class name local service
+	 */
+	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
+		return classNameLocalService;
+	}
+
+	/**
+	 * Sets the class name local service.
+	 *
+	 * @param classNameLocalService the class name local service
+	 */
+	public void setClassNameLocalService(
+		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
+		this.classNameLocalService = classNameLocalService;
+	}
+
+	/**
+	 * Returns the class name remote service.
+	 *
+	 * @return the class name remote service
+	 */
+	public com.liferay.portal.service.ClassNameService getClassNameService() {
+		return classNameService;
+	}
+
+	/**
+	 * Sets the class name remote service.
+	 *
+	 * @param classNameService the class name remote service
+	 */
+	public void setClassNameService(
+		com.liferay.portal.service.ClassNameService classNameService) {
+		this.classNameService = classNameService;
+	}
+
+	/**
+	 * Returns the class name persistence.
+	 *
+	 * @return the class name persistence
+	 */
+	public ClassNamePersistence getClassNamePersistence() {
+		return classNamePersistence;
+	}
+
+	/**
+	 * Sets the class name persistence.
+	 *
+	 * @param classNamePersistence the class name persistence
+	 */
+	public void setClassNamePersistence(
+		ClassNamePersistence classNamePersistence) {
+		this.classNamePersistence = classNamePersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -278,53 +339,19 @@ public abstract class AnalyticsEventServiceBaseImpl extends BaseServiceImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
 	}
 
 	public void destroy() {
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
+	public String getOSGiServiceIdentifier() {
+		return AnalyticsEventService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -336,13 +363,18 @@ public abstract class AnalyticsEventServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Performs an SQL query.
+	 * Performs a SQL query.
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = analyticsEventPersistence.getDataSource();
+
+			DB db = DBManagerUtil.getDB();
+
+			sql = db.buildSQL(sql);
+			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -357,7 +389,7 @@ public abstract class AnalyticsEventServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService.class)
 	protected com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService analyticsEventLocalService;
 	@BeanReference(type = com.liferay.content.targeting.analytics.service.AnalyticsEventService.class)
-	protected com.liferay.content.targeting.analytics.service.AnalyticsEventService analyticsEventService;
+	protected AnalyticsEventService analyticsEventService;
 	@BeanReference(type = AnalyticsEventPersistence.class)
 	protected AnalyticsEventPersistence analyticsEventPersistence;
 	@BeanReference(type = AnalyticsEventFinder.class)
@@ -370,6 +402,12 @@ public abstract class AnalyticsEventServiceBaseImpl extends BaseServiceImpl
 	protected AnalyticsReferrerPersistence analyticsReferrerPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
+	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
+	protected com.liferay.portal.service.ClassNameService classNameService;
+	@BeanReference(type = ClassNamePersistence.class)
+	protected ClassNamePersistence classNamePersistence;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
@@ -378,7 +416,4 @@ public abstract class AnalyticsEventServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private String _beanIdentifier;
-	private ClassLoader _classLoader;
-	private AnalyticsEventServiceClpInvoker _clpInvoker = new AnalyticsEventServiceClpInvoker();
 }

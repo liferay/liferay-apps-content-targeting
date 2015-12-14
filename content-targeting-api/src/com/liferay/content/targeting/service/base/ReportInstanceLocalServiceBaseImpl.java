@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.persistence.AnonymousUserUserSegmentPersistence;
@@ -27,22 +29,37 @@ import com.liferay.content.targeting.service.persistence.TrackingActionInstanceP
 import com.liferay.content.targeting.service.persistence.UserSegmentPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.util.PortalUtil;
+
+import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
+import com.liferay.portlet.exportimport.lar.ManifestSummary;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
 
@@ -62,9 +79,10 @@ import javax.sql.DataSource;
  * @see com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class ReportInstanceLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements ReportInstanceLocalService,
-		IdentifiableBean {
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -76,12 +94,10 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 *
 	 * @param reportInstance the report instance
 	 * @return the report instance that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ReportInstance addReportInstance(ReportInstance reportInstance)
-		throws SystemException {
+	public ReportInstance addReportInstance(ReportInstance reportInstance) {
 		reportInstance.setNew(true);
 
 		return reportInstancePersistence.update(reportInstance);
@@ -104,7 +120,7 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 * @param reportInstanceId the primary key of the report instance
 	 * @return the report instance that was removed
 	 * @throws PortalException if a report instance with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -118,12 +134,10 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 *
 	 * @param reportInstance the report instance
 	 * @return the report instance that was removed
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public ReportInstance deleteReportInstance(ReportInstance reportInstance)
-		throws SystemException {
+	public ReportInstance deleteReportInstance(ReportInstance reportInstance) {
 		return reportInstancePersistence.remove(reportInstance);
 	}
 
@@ -140,12 +154,9 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return reportInstancePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -160,12 +171,10 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return reportInstancePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -182,63 +191,42 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return reportInstancePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return reportInstancePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return reportInstancePersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public ReportInstance fetchReportInstance(long reportInstanceId)
-		throws SystemException {
+	public ReportInstance fetchReportInstance(long reportInstanceId) {
 		return reportInstancePersistence.fetchByPrimaryKey(reportInstanceId);
-	}
-
-	/**
-	 * Returns the report instance with the matching UUID and company.
-	 *
-	 * @param uuid the report instance's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching report instance, or <code>null</code> if a matching report instance could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public ReportInstance fetchReportInstanceByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
-		return reportInstancePersistence.fetchByUuid_C_First(uuid, companyId,
-			null);
 	}
 
 	/**
@@ -247,11 +235,10 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 * @param uuid the report instance's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching report instance, or <code>null</code> if a matching report instance could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ReportInstance fetchReportInstanceByUuidAndGroupId(String uuid,
-		long groupId) throws SystemException {
+		long groupId) {
 		return reportInstancePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -261,34 +248,144 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 * @param reportInstanceId the primary key of the report instance
 	 * @return the report instance
 	 * @throws PortalException if a report instance with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ReportInstance getReportInstance(long reportInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return reportInstancePersistence.findByPrimaryKey(reportInstanceId);
 	}
 
 	@Override
+	public ActionableDynamicQuery getActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(ReportInstance.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("reportInstanceId");
+
+		return actionableDynamicQuery;
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+		indexableActionableDynamicQuery.setModelClass(ReportInstance.class);
+
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
+			"reportInstanceId");
+
+		return indexableActionableDynamicQuery;
+	}
+
+	protected void initActionableDynamicQuery(
+		ActionableDynamicQuery actionableDynamicQuery) {
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(ReportInstance.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("reportInstanceId");
+	}
+
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
+
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
+
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
+				}
+			});
+
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<ReportInstance>() {
+				@Override
+				public void performAction(ReportInstance reportInstance)
+					throws PortalException {
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						reportInstance);
+				}
+			});
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+				PortalUtil.getClassNameId(ReportInstance.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return reportInstanceLocalService.deleteReportInstance((ReportInstance)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return reportInstancePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
-	 * Returns the report instance with the matching UUID and company.
+	 * Returns all the report instances matching the UUID and company.
 	 *
-	 * @param uuid the report instance's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching report instance
-	 * @throws PortalException if a matching report instance could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @param uuid the UUID of the report instances
+	 * @param companyId the primary key of the company
+	 * @return the matching report instances, or an empty list if no matches were found
 	 */
 	@Override
-	public ReportInstance getReportInstanceByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
-		return reportInstancePersistence.findByUuid_C_First(uuid, companyId,
-			null);
+	public List<ReportInstance> getReportInstancesByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return reportInstancePersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of report instances matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the report instances
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of report instances
+	 * @param end the upper bound of the range of report instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching report instances, or an empty list if no matches were found
+	 */
+	@Override
+	public List<ReportInstance> getReportInstancesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<ReportInstance> orderByComparator) {
+		return reportInstancePersistence.findByUuid_C(uuid, companyId, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -298,11 +395,10 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching report instance
 	 * @throws PortalException if a matching report instance could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public ReportInstance getReportInstanceByUuidAndGroupId(String uuid,
-		long groupId) throws PortalException, SystemException {
+		long groupId) throws PortalException {
 		return reportInstancePersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -316,11 +412,9 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 * @param start the lower bound of the range of report instances
 	 * @param end the upper bound of the range of report instances (not inclusive)
 	 * @return the range of report instances
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<ReportInstance> getReportInstances(int start, int end)
-		throws SystemException {
+	public List<ReportInstance> getReportInstances(int start, int end) {
 		return reportInstancePersistence.findAll(start, end);
 	}
 
@@ -328,10 +422,9 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 * Returns the number of report instances.
 	 *
 	 * @return the number of report instances
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getReportInstancesCount() throws SystemException {
+	public int getReportInstancesCount() {
 		return reportInstancePersistence.countAll();
 	}
 
@@ -340,12 +433,10 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 *
 	 * @param reportInstance the report instance
 	 * @return the report instance that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public ReportInstance updateReportInstance(ReportInstance reportInstance)
-		throws SystemException {
+	public ReportInstance updateReportInstance(ReportInstance reportInstance) {
 		return reportInstancePersistence.update(reportInstance);
 	}
 
@@ -366,25 +457,6 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	public void setAnonymousUserUserSegmentLocalService(
 		com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService anonymousUserUserSegmentLocalService) {
 		this.anonymousUserUserSegmentLocalService = anonymousUserUserSegmentLocalService;
-	}
-
-	/**
-	 * Returns the anonymous user user segment remote service.
-	 *
-	 * @return the anonymous user user segment remote service
-	 */
-	public com.liferay.content.targeting.service.AnonymousUserUserSegmentService getAnonymousUserUserSegmentService() {
-		return anonymousUserUserSegmentService;
-	}
-
-	/**
-	 * Sets the anonymous user user segment remote service.
-	 *
-	 * @param anonymousUserUserSegmentService the anonymous user user segment remote service
-	 */
-	public void setAnonymousUserUserSegmentService(
-		com.liferay.content.targeting.service.AnonymousUserUserSegmentService anonymousUserUserSegmentService) {
-		this.anonymousUserUserSegmentService = anonymousUserUserSegmentService;
 	}
 
 	/**
@@ -423,25 +495,6 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	public void setCampaignLocalService(
 		com.liferay.content.targeting.service.CampaignLocalService campaignLocalService) {
 		this.campaignLocalService = campaignLocalService;
-	}
-
-	/**
-	 * Returns the campaign remote service.
-	 *
-	 * @return the campaign remote service
-	 */
-	public com.liferay.content.targeting.service.CampaignService getCampaignService() {
-		return campaignService;
-	}
-
-	/**
-	 * Sets the campaign remote service.
-	 *
-	 * @param campaignService the campaign remote service
-	 */
-	public void setCampaignService(
-		com.liferay.content.targeting.service.CampaignService campaignService) {
-		this.campaignService = campaignService;
 	}
 
 	/**
@@ -500,25 +553,6 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the channel instance remote service.
-	 *
-	 * @return the channel instance remote service
-	 */
-	public com.liferay.content.targeting.service.ChannelInstanceService getChannelInstanceService() {
-		return channelInstanceService;
-	}
-
-	/**
-	 * Sets the channel instance remote service.
-	 *
-	 * @param channelInstanceService the channel instance remote service
-	 */
-	public void setChannelInstanceService(
-		com.liferay.content.targeting.service.ChannelInstanceService channelInstanceService) {
-		this.channelInstanceService = channelInstanceService;
-	}
-
-	/**
 	 * Returns the channel instance persistence.
 	 *
 	 * @return the channel instance persistence
@@ -542,7 +576,7 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 *
 	 * @return the report instance local service
 	 */
-	public com.liferay.content.targeting.service.ReportInstanceLocalService getReportInstanceLocalService() {
+	public ReportInstanceLocalService getReportInstanceLocalService() {
 		return reportInstanceLocalService;
 	}
 
@@ -552,27 +586,8 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 * @param reportInstanceLocalService the report instance local service
 	 */
 	public void setReportInstanceLocalService(
-		com.liferay.content.targeting.service.ReportInstanceLocalService reportInstanceLocalService) {
+		ReportInstanceLocalService reportInstanceLocalService) {
 		this.reportInstanceLocalService = reportInstanceLocalService;
-	}
-
-	/**
-	 * Returns the report instance remote service.
-	 *
-	 * @return the report instance remote service
-	 */
-	public com.liferay.content.targeting.service.ReportInstanceService getReportInstanceService() {
-		return reportInstanceService;
-	}
-
-	/**
-	 * Sets the report instance remote service.
-	 *
-	 * @param reportInstanceService the report instance remote service
-	 */
-	public void setReportInstanceService(
-		com.liferay.content.targeting.service.ReportInstanceService reportInstanceService) {
-		this.reportInstanceService = reportInstanceService;
 	}
 
 	/**
@@ -614,25 +629,6 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the rule instance remote service.
-	 *
-	 * @return the rule instance remote service
-	 */
-	public com.liferay.content.targeting.service.RuleInstanceService getRuleInstanceService() {
-		return ruleInstanceService;
-	}
-
-	/**
-	 * Sets the rule instance remote service.
-	 *
-	 * @param ruleInstanceService the rule instance remote service
-	 */
-	public void setRuleInstanceService(
-		com.liferay.content.targeting.service.RuleInstanceService ruleInstanceService) {
-		this.ruleInstanceService = ruleInstanceService;
-	}
-
-	/**
 	 * Returns the rule instance persistence.
 	 *
 	 * @return the rule instance persistence
@@ -671,25 +667,6 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the tactic remote service.
-	 *
-	 * @return the tactic remote service
-	 */
-	public com.liferay.content.targeting.service.TacticService getTacticService() {
-		return tacticService;
-	}
-
-	/**
-	 * Sets the tactic remote service.
-	 *
-	 * @param tacticService the tactic remote service
-	 */
-	public void setTacticService(
-		com.liferay.content.targeting.service.TacticService tacticService) {
-		this.tacticService = tacticService;
-	}
-
-	/**
 	 * Returns the tactic persistence.
 	 *
 	 * @return the tactic persistence
@@ -724,25 +701,6 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	public void setTrackingActionInstanceLocalService(
 		com.liferay.content.targeting.service.TrackingActionInstanceLocalService trackingActionInstanceLocalService) {
 		this.trackingActionInstanceLocalService = trackingActionInstanceLocalService;
-	}
-
-	/**
-	 * Returns the tracking action instance remote service.
-	 *
-	 * @return the tracking action instance remote service
-	 */
-	public com.liferay.content.targeting.service.TrackingActionInstanceService getTrackingActionInstanceService() {
-		return trackingActionInstanceService;
-	}
-
-	/**
-	 * Sets the tracking action instance remote service.
-	 *
-	 * @param trackingActionInstanceService the tracking action instance remote service
-	 */
-	public void setTrackingActionInstanceService(
-		com.liferay.content.targeting.service.TrackingActionInstanceService trackingActionInstanceService) {
-		this.trackingActionInstanceService = trackingActionInstanceService;
 	}
 
 	/**
@@ -784,25 +742,6 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the user segment remote service.
-	 *
-	 * @return the user segment remote service
-	 */
-	public com.liferay.content.targeting.service.UserSegmentService getUserSegmentService() {
-		return userSegmentService;
-	}
-
-	/**
-	 * Sets the user segment remote service.
-	 *
-	 * @param userSegmentService the user segment remote service
-	 */
-	public void setUserSegmentService(
-		com.liferay.content.targeting.service.UserSegmentService userSegmentService) {
-		this.userSegmentService = userSegmentService;
-	}
-
-	/**
 	 * Returns the user segment persistence.
 	 *
 	 * @return the user segment persistence
@@ -841,6 +780,44 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the class name local service.
+	 *
+	 * @return the class name local service
+	 */
+	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
+		return classNameLocalService;
+	}
+
+	/**
+	 * Sets the class name local service.
+	 *
+	 * @param classNameLocalService the class name local service
+	 */
+	public void setClassNameLocalService(
+		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
+		this.classNameLocalService = classNameLocalService;
+	}
+
+	/**
+	 * Returns the class name persistence.
+	 *
+	 * @return the class name persistence
+	 */
+	public ClassNamePersistence getClassNamePersistence() {
+		return classNamePersistence;
+	}
+
+	/**
+	 * Sets the class name persistence.
+	 *
+	 * @param classNamePersistence the class name persistence
+	 */
+	public void setClassNamePersistence(
+		ClassNamePersistence classNamePersistence) {
+		this.classNamePersistence = classNamePersistence;
+	}
+
+	/**
 	 * Returns the group local service.
 	 *
 	 * @return the group local service
@@ -857,25 +834,6 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	public void setGroupLocalService(
 		com.liferay.portal.service.GroupLocalService groupLocalService) {
 		this.groupLocalService = groupLocalService;
-	}
-
-	/**
-	 * Returns the group remote service.
-	 *
-	 * @return the group remote service
-	 */
-	public com.liferay.portal.service.GroupService getGroupService() {
-		return groupService;
-	}
-
-	/**
-	 * Sets the group remote service.
-	 *
-	 * @param groupService the group remote service
-	 */
-	public void setGroupService(
-		com.liferay.portal.service.GroupService groupService) {
-		this.groupService = groupService;
 	}
 
 	/**
@@ -935,25 +893,6 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
 	 * Returns the user persistence.
 	 *
 	 * @return the user persistence
@@ -972,58 +911,23 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
-
-		PersistedModelLocalServiceRegistryUtil.register("com.liferay.content.targeting.model.ReportInstance",
+		persistedModelLocalServiceRegistry.register("com.liferay.content.targeting.model.ReportInstance",
 			reportInstanceLocalService);
 	}
 
 	public void destroy() {
-		PersistedModelLocalServiceRegistryUtil.unregister(
+		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.content.targeting.model.ReportInstance");
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
+	public String getOSGiServiceIdentifier() {
+		return ReportInstanceLocalService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -1035,13 +939,18 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Performs an SQL query.
+	 * Performs a SQL query.
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = reportInstancePersistence.getDataSource();
+
+			DB db = DBManagerUtil.getDB();
+
+			sql = db.buildSQL(sql);
+			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -1055,71 +964,54 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 
 	@BeanReference(type = com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService.class)
 	protected com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService anonymousUserUserSegmentLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.AnonymousUserUserSegmentService.class)
-	protected com.liferay.content.targeting.service.AnonymousUserUserSegmentService anonymousUserUserSegmentService;
 	@BeanReference(type = AnonymousUserUserSegmentPersistence.class)
 	protected AnonymousUserUserSegmentPersistence anonymousUserUserSegmentPersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.CampaignLocalService.class)
 	protected com.liferay.content.targeting.service.CampaignLocalService campaignLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.CampaignService.class)
-	protected com.liferay.content.targeting.service.CampaignService campaignService;
 	@BeanReference(type = CampaignPersistence.class)
 	protected CampaignPersistence campaignPersistence;
 	@BeanReference(type = CampaignFinder.class)
 	protected CampaignFinder campaignFinder;
 	@BeanReference(type = com.liferay.content.targeting.service.ChannelInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.ChannelInstanceLocalService channelInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.ChannelInstanceService.class)
-	protected com.liferay.content.targeting.service.ChannelInstanceService channelInstanceService;
 	@BeanReference(type = ChannelInstancePersistence.class)
 	protected ChannelInstancePersistence channelInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.ReportInstanceLocalService.class)
-	protected com.liferay.content.targeting.service.ReportInstanceLocalService reportInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.ReportInstanceService.class)
-	protected com.liferay.content.targeting.service.ReportInstanceService reportInstanceService;
+	protected ReportInstanceLocalService reportInstanceLocalService;
 	@BeanReference(type = ReportInstancePersistence.class)
 	protected ReportInstancePersistence reportInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.RuleInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.RuleInstanceLocalService ruleInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.RuleInstanceService.class)
-	protected com.liferay.content.targeting.service.RuleInstanceService ruleInstanceService;
 	@BeanReference(type = RuleInstancePersistence.class)
 	protected RuleInstancePersistence ruleInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.TacticLocalService.class)
 	protected com.liferay.content.targeting.service.TacticLocalService tacticLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.TacticService.class)
-	protected com.liferay.content.targeting.service.TacticService tacticService;
 	@BeanReference(type = TacticPersistence.class)
 	protected TacticPersistence tacticPersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.TrackingActionInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.TrackingActionInstanceLocalService trackingActionInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.TrackingActionInstanceService.class)
-	protected com.liferay.content.targeting.service.TrackingActionInstanceService trackingActionInstanceService;
 	@BeanReference(type = TrackingActionInstancePersistence.class)
 	protected TrackingActionInstancePersistence trackingActionInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.UserSegmentLocalService.class)
 	protected com.liferay.content.targeting.service.UserSegmentLocalService userSegmentLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.UserSegmentService.class)
-	protected com.liferay.content.targeting.service.UserSegmentService userSegmentService;
 	@BeanReference(type = UserSegmentPersistence.class)
 	protected UserSegmentPersistence userSegmentPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = ClassNamePersistence.class)
+	protected ClassNamePersistence classNamePersistence;
+	@ServiceReference(type = com.liferay.portal.service.GroupLocalService.class)
 	protected com.liferay.portal.service.GroupLocalService groupLocalService;
-	@BeanReference(type = com.liferay.portal.service.GroupService.class)
-	protected com.liferay.portal.service.GroupService groupService;
-	@BeanReference(type = GroupPersistence.class)
+	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private String _beanIdentifier;
-	private ClassLoader _classLoader;
-	private ReportInstanceLocalServiceClpInvoker _clpInvoker = new ReportInstanceLocalServiceClpInvoker();
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

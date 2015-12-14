@@ -14,9 +14,11 @@
 
 package com.liferay.content.targeting.service;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
-import com.liferay.portal.service.InvokableLocalService;
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for ReportInstance. This utility wraps
@@ -32,6 +34,7 @@ import com.liferay.portal.service.InvokableLocalService;
  * @see com.liferay.content.targeting.service.impl.ReportInstanceLocalServiceImpl
  * @generated
  */
+@ProviderType
 public class ReportInstanceLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -44,296 +47,10 @@ public class ReportInstanceLocalServiceUtil {
 	*
 	* @param reportInstance the report instance
 	* @return the report instance that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	public static com.liferay.content.targeting.model.ReportInstance addReportInstance(
-		com.liferay.content.targeting.model.ReportInstance reportInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.ReportInstance reportInstance) {
 		return getService().addReportInstance(reportInstance);
-	}
-
-	/**
-	* Creates a new report instance with the primary key. Does not add the report instance to the database.
-	*
-	* @param reportInstanceId the primary key for the new report instance
-	* @return the new report instance
-	*/
-	public static com.liferay.content.targeting.model.ReportInstance createReportInstance(
-		long reportInstanceId) {
-		return getService().createReportInstance(reportInstanceId);
-	}
-
-	/**
-	* Deletes the report instance with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param reportInstanceId the primary key of the report instance
-	* @return the report instance that was removed
-	* @throws PortalException if a report instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ReportInstance deleteReportInstance(
-		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteReportInstance(reportInstanceId);
-	}
-
-	/**
-	* Deletes the report instance from the database. Also notifies the appropriate model listeners.
-	*
-	* @param reportInstance the report instance
-	* @return the report instance that was removed
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ReportInstance deleteReportInstance(
-		com.liferay.content.targeting.model.ReportInstance reportInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().deleteReportInstance(reportInstance);
-	}
-
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
-		return getService().dynamicQuery();
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns the matching rows.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the matching rows
-	* @throws SystemException if a system exception occurred
-	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().dynamicQuery(dynamicQuery);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns a range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
-	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().dynamicQuery(dynamicQuery, start, end);
-	}
-
-	/**
-	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param dynamicQuery the dynamic query
-	* @param start the lower bound of the range of model instances
-	* @param end the upper bound of the range of model instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
-	*/
-	@SuppressWarnings("rawtypes")
-	public static java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().dynamicQueryCount(dynamicQuery);
-	}
-
-	/**
-	* Returns the number of rows that match the dynamic query.
-	*
-	* @param dynamicQuery the dynamic query
-	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
-	*/
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().dynamicQueryCount(dynamicQuery, projection);
-	}
-
-	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchReportInstance(reportInstanceId);
-	}
-
-	/**
-	* Returns the report instance with the matching UUID and company.
-	*
-	* @param uuid the report instance's UUID
-	* @param companyId the primary key of the company
-	* @return the matching report instance, or <code>null</code> if a matching report instance could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstanceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService()
-				   .fetchReportInstanceByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns the report instance matching the UUID and group.
-	*
-	* @param uuid the report instance's UUID
-	* @param groupId the primary key of the group
-	* @return the matching report instance, or <code>null</code> if a matching report instance could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().fetchReportInstanceByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns the report instance with the primary key.
-	*
-	* @param reportInstanceId the primary key of the report instance
-	* @return the report instance
-	* @throws PortalException if a report instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ReportInstance getReportInstance(
-		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getReportInstance(reportInstanceId);
-	}
-
-	public static com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getPersistedModel(primaryKeyObj);
-	}
-
-	/**
-	* Returns the report instance with the matching UUID and company.
-	*
-	* @param uuid the report instance's UUID
-	* @param companyId the primary key of the company
-	* @return the matching report instance
-	* @throws PortalException if a matching report instance could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ReportInstance getReportInstanceByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getReportInstanceByUuidAndCompanyId(uuid, companyId);
-	}
-
-	/**
-	* Returns the report instance matching the UUID and group.
-	*
-	* @param uuid the report instance's UUID
-	* @param groupId the primary key of the group
-	* @return the matching report instance
-	* @throws PortalException if a matching report instance could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ReportInstance getReportInstanceByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
-		return getService().getReportInstanceByUuidAndGroupId(uuid, groupId);
-	}
-
-	/**
-	* Returns a range of all the report instances.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param start the lower bound of the range of report instances
-	* @param end the upper bound of the range of report instances (not inclusive)
-	* @return the range of report instances
-	* @throws SystemException if a system exception occurred
-	*/
-	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getReportInstances(start, end);
-	}
-
-	/**
-	* Returns the number of report instances.
-	*
-	* @return the number of report instances
-	* @throws SystemException if a system exception occurred
-	*/
-	public static int getReportInstancesCount()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().getReportInstancesCount();
-	}
-
-	/**
-	* Updates the report instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
-	*
-	* @param reportInstance the report instance
-	* @return the report instance that was updated
-	* @throws SystemException if a system exception occurred
-	*/
-	public static com.liferay.content.targeting.model.ReportInstance updateReportInstance(
-		com.liferay.content.targeting.model.ReportInstance reportInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return getService().updateReportInstance(reportInstance);
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public static java.lang.String getBeanIdentifier() {
-		return getService().getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public static void setBeanIdentifier(java.lang.String beanIdentifier) {
-		getService().setBeanIdentifier(beanIdentifier);
-	}
-
-	public static java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
 	public static com.liferay.content.targeting.model.ReportInstance addReportInstance(
@@ -361,16 +78,212 @@ public class ReportInstanceLocalServiceUtil {
 			typeSettings, serviceContext);
 	}
 
+	/**
+	* Creates a new report instance with the primary key. Does not add the report instance to the database.
+	*
+	* @param reportInstanceId the primary key for the new report instance
+	* @return the new report instance
+	*/
+	public static com.liferay.content.targeting.model.ReportInstance createReportInstance(
+		long reportInstanceId) {
+		return getService().createReportInstance(reportInstanceId);
+	}
+
+	/**
+	* @throws PortalException
+	*/
+	public static com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().deletePersistedModel(persistedModel);
+	}
+
+	/**
+	* Deletes the report instance from the database. Also notifies the appropriate model listeners.
+	*
+	* @param reportInstance the report instance
+	* @return the report instance that was removed
+	*/
+	public static com.liferay.content.targeting.model.ReportInstance deleteReportInstance(
+		com.liferay.content.targeting.model.ReportInstance reportInstance) {
+		return getService().deleteReportInstance(reportInstance);
+	}
+
+	/**
+	* Deletes the report instance with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param reportInstanceId the primary key of the report instance
+	* @return the report instance that was removed
+	* @throws PortalException if a report instance with the primary key could not be found
+	* @throws SystemException
+	*/
+	public static com.liferay.content.targeting.model.ReportInstance deleteReportInstance(
+		long reportInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getService().deleteReportInstance(reportInstanceId);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
+		return getService().dynamicQuery();
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns the matching rows.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQuery(dynamicQuery);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns a range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @return the range of matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end) {
+		return getService().dynamicQuery(dynamicQuery, start, end);
+	}
+
+	/**
+	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param dynamicQuery the dynamic query
+	* @param start the lower bound of the range of model instances
+	* @param end the upper bound of the range of model instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching rows
+	*/
+	public static <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+		return getService()
+				   .dynamicQuery(dynamicQuery, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+		return getService().dynamicQueryCount(dynamicQuery);
+	}
+
+	/**
+	* Returns the number of rows matching the dynamic query.
+	*
+	* @param dynamicQuery the dynamic query
+	* @param projection the projection to apply to the query
+	* @return the number of rows matching the dynamic query
+	*/
+	public static long dynamicQueryCount(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+		com.liferay.portal.kernel.dao.orm.Projection projection) {
+		return getService().dynamicQueryCount(dynamicQuery, projection);
+	}
+
+	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
+		long reportInstanceId) {
+		return getService().fetchReportInstance(reportInstanceId);
+	}
+
 	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().fetchReportInstance(reportKey, className, classPK);
 	}
 
+	/**
+	* Returns the report instance matching the UUID and group.
+	*
+	* @param uuid the report instance's UUID
+	* @param groupId the primary key of the group
+	* @return the matching report instance, or <code>null</code> if a matching report instance could not be found
+	*/
+	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstanceByUuidAndGroupId(
+		java.lang.String uuid, long groupId) {
+		return getService().fetchReportInstanceByUuidAndGroupId(uuid, groupId);
+	}
+
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
 		java.lang.String reportKey, java.lang.String className, long classPK)
 		throws com.liferay.portal.kernel.exception.SystemException {
 		return getService().findReportInstances(reportKey, className, classPK);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
+		return getService().getActionableDynamicQuery();
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext) {
+		return getService().getExportActionableDynamicQuery(portletDataContext);
+	}
+
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		return getService().getIndexableActionableDynamicQuery();
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public static java.lang.String getOSGiServiceIdentifier() {
+		return getService().getOSGiServiceIdentifier();
+	}
+
+	public static com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getPersistedModel(primaryKeyObj);
+	}
+
+	/**
+	* Returns the report instance with the primary key.
+	*
+	* @param reportInstanceId the primary key of the report instance
+	* @return the report instance
+	* @throws PortalException if a report instance with the primary key could not be found
+	*/
+	public static com.liferay.content.targeting.model.ReportInstance getReportInstance(
+		long reportInstanceId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getReportInstance(reportInstanceId);
+	}
+
+	/**
+	* Returns the report instance matching the UUID and group.
+	*
+	* @param uuid the report instance's UUID
+	* @param groupId the primary key of the group
+	* @return the matching report instance
+	* @throws PortalException if a matching report instance could not be found
+	*/
+	public static com.liferay.content.targeting.model.ReportInstance getReportInstanceByUuidAndGroupId(
+		java.lang.String uuid, long groupId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+		return getService().getReportInstanceByUuidAndGroupId(uuid, groupId);
 	}
 
 	public static int getReportInstanceCount(java.lang.String reportKey,
@@ -391,6 +304,61 @@ public class ReportInstanceLocalServiceUtil {
 		return getService().getReportInstances(className, classPK, start, end);
 	}
 
+	/**
+	* Returns a range of all the report instances.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.ReportInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of report instances
+	* @param end the upper bound of the range of report instances (not inclusive)
+	* @return the range of report instances
+	*/
+	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
+		int start, int end) {
+		return getService().getReportInstances(start, end);
+	}
+
+	/**
+	* Returns all the report instances matching the UUID and company.
+	*
+	* @param uuid the UUID of the report instances
+	* @param companyId the primary key of the company
+	* @return the matching report instances, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstancesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId) {
+		return getService().getReportInstancesByUuidAndCompanyId(uuid, companyId);
+	}
+
+	/**
+	* Returns a range of report instances matching the UUID and company.
+	*
+	* @param uuid the UUID of the report instances
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of report instances
+	* @param end the upper bound of the range of report instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching report instances, or an empty list if no matches were found
+	*/
+	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstancesByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.ReportInstance> orderByComparator) {
+		return getService()
+				   .getReportInstancesByUuidAndCompanyId(uuid, companyId,
+			start, end, orderByComparator);
+	}
+
+	/**
+	* Returns the number of report instances.
+	*
+	* @return the number of report instances
+	*/
+	public static int getReportInstancesCount() {
+		return getService().getReportInstancesCount();
+	}
+
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> searchReportInstances(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String keywords, int start, int end)
@@ -399,6 +367,17 @@ public class ReportInstanceLocalServiceUtil {
 		return getService()
 				   .searchReportInstances(groupId, className, classPK,
 			keywords, start, end);
+	}
+
+	/**
+	* Updates the report instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	*
+	* @param reportInstance the report instance
+	* @return the report instance that was updated
+	*/
+	public static com.liferay.content.targeting.model.ReportInstance updateReportInstance(
+		com.liferay.content.targeting.model.ReportInstance reportInstance) {
+		return getService().updateReportInstance(reportInstance);
 	}
 
 	public static com.liferay.content.targeting.model.ReportInstance updateReportInstance(
@@ -416,34 +395,10 @@ public class ReportInstanceLocalServiceUtil {
 			serviceContext);
 	}
 
-	public static void clearService() {
-		_service = null;
-	}
-
 	public static ReportInstanceLocalService getService() {
-		if (_service == null) {
-			InvokableLocalService invokableLocalService = (InvokableLocalService)PortletBeanLocatorUtil.locate(ClpSerializer.getServletContextName(),
-					ReportInstanceLocalService.class.getName());
-
-			if (invokableLocalService instanceof ReportInstanceLocalService) {
-				_service = (ReportInstanceLocalService)invokableLocalService;
-			}
-			else {
-				_service = new ReportInstanceLocalServiceClp(invokableLocalService);
-			}
-
-			ReferenceRegistry.registerReference(ReportInstanceLocalServiceUtil.class,
-				"_service");
-		}
-
-		return _service;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setService(ReportInstanceLocalService service) {
-	}
-
-	private static ReportInstanceLocalService _service;
+	private static ServiceTracker<ReportInstanceLocalService, ReportInstanceLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(ReportInstanceLocalService.class);
 }

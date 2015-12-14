@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.analytics.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventFinder;
@@ -21,21 +23,28 @@ import com.liferay.content.targeting.analytics.service.persistence.AnalyticsEven
 import com.liferay.content.targeting.analytics.service.persistence.AnalyticsReferrerPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
 
@@ -55,9 +64,10 @@ import javax.sql.DataSource;
  * @see com.liferay.content.targeting.analytics.service.AnalyticsEventLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class AnalyticsEventLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements AnalyticsEventLocalService,
-		IdentifiableBean {
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -69,12 +79,10 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	 *
 	 * @param analyticsEvent the analytics event
 	 * @return the analytics event that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public AnalyticsEvent addAnalyticsEvent(AnalyticsEvent analyticsEvent)
-		throws SystemException {
+	public AnalyticsEvent addAnalyticsEvent(AnalyticsEvent analyticsEvent) {
 		analyticsEvent.setNew(true);
 
 		return analyticsEventPersistence.update(analyticsEvent);
@@ -97,12 +105,11 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	 * @param analyticsEventId the primary key of the analytics event
 	 * @return the analytics event that was removed
 	 * @throws PortalException if a analytics event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public AnalyticsEvent deleteAnalyticsEvent(long analyticsEventId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return analyticsEventPersistence.remove(analyticsEventId);
 	}
 
@@ -111,7 +118,7 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	 *
 	 * @param analyticsEvent the analytics event
 	 * @return the analytics event that was removed
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -133,12 +140,9 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return analyticsEventPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -153,12 +157,10 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return analyticsEventPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -175,47 +177,41 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return analyticsEventPersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return analyticsEventPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return analyticsEventPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public AnalyticsEvent fetchAnalyticsEvent(long analyticsEventId)
-		throws SystemException {
+	public AnalyticsEvent fetchAnalyticsEvent(long analyticsEventId) {
 		return analyticsEventPersistence.fetchByPrimaryKey(analyticsEventId);
 	}
 
@@ -225,17 +221,61 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	 * @param analyticsEventId the primary key of the analytics event
 	 * @return the analytics event
 	 * @throws PortalException if a analytics event with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public AnalyticsEvent getAnalyticsEvent(long analyticsEventId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return analyticsEventPersistence.findByPrimaryKey(analyticsEventId);
 	}
 
 	@Override
+	public ActionableDynamicQuery getActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.analytics.service.AnalyticsEventLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(AnalyticsEvent.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("analyticsEventId");
+
+		return actionableDynamicQuery;
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.analytics.service.AnalyticsEventLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+		indexableActionableDynamicQuery.setModelClass(AnalyticsEvent.class);
+
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
+			"analyticsEventId");
+
+		return indexableActionableDynamicQuery;
+	}
+
+	protected void initActionableDynamicQuery(
+		ActionableDynamicQuery actionableDynamicQuery) {
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.analytics.service.AnalyticsEventLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(AnalyticsEvent.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("analyticsEventId");
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return analyticsEventLocalService.deleteAnalyticsEvent((AnalyticsEvent)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return analyticsEventPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
@@ -249,11 +289,9 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	 * @param start the lower bound of the range of analytics events
 	 * @param end the upper bound of the range of analytics events (not inclusive)
 	 * @return the range of analytics events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<AnalyticsEvent> getAnalyticsEvents(int start, int end)
-		throws SystemException {
+	public List<AnalyticsEvent> getAnalyticsEvents(int start, int end) {
 		return analyticsEventPersistence.findAll(start, end);
 	}
 
@@ -261,10 +299,9 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	 * Returns the number of analytics events.
 	 *
 	 * @return the number of analytics events
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getAnalyticsEventsCount() throws SystemException {
+	public int getAnalyticsEventsCount() {
 		return analyticsEventPersistence.countAll();
 	}
 
@@ -273,12 +310,10 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	 *
 	 * @param analyticsEvent the analytics event
 	 * @return the analytics event that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public AnalyticsEvent updateAnalyticsEvent(AnalyticsEvent analyticsEvent)
-		throws SystemException {
+	public AnalyticsEvent updateAnalyticsEvent(AnalyticsEvent analyticsEvent) {
 		return analyticsEventPersistence.update(analyticsEvent);
 	}
 
@@ -287,7 +322,7 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	 *
 	 * @return the analytics event local service
 	 */
-	public com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService getAnalyticsEventLocalService() {
+	public AnalyticsEventLocalService getAnalyticsEventLocalService() {
 		return analyticsEventLocalService;
 	}
 
@@ -297,7 +332,7 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	 * @param analyticsEventLocalService the analytics event local service
 	 */
 	public void setAnalyticsEventLocalService(
-		com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService analyticsEventLocalService) {
+		AnalyticsEventLocalService analyticsEventLocalService) {
 		this.analyticsEventLocalService = analyticsEventLocalService;
 	}
 
@@ -435,6 +470,63 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the class name local service.
+	 *
+	 * @return the class name local service
+	 */
+	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
+		return classNameLocalService;
+	}
+
+	/**
+	 * Sets the class name local service.
+	 *
+	 * @param classNameLocalService the class name local service
+	 */
+	public void setClassNameLocalService(
+		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
+		this.classNameLocalService = classNameLocalService;
+	}
+
+	/**
+	 * Returns the class name remote service.
+	 *
+	 * @return the class name remote service
+	 */
+	public com.liferay.portal.service.ClassNameService getClassNameService() {
+		return classNameService;
+	}
+
+	/**
+	 * Sets the class name remote service.
+	 *
+	 * @param classNameService the class name remote service
+	 */
+	public void setClassNameService(
+		com.liferay.portal.service.ClassNameService classNameService) {
+		this.classNameService = classNameService;
+	}
+
+	/**
+	 * Returns the class name persistence.
+	 *
+	 * @return the class name persistence
+	 */
+	public ClassNamePersistence getClassNamePersistence() {
+		return classNamePersistence;
+	}
+
+	/**
+	 * Sets the class name persistence.
+	 *
+	 * @param classNamePersistence the class name persistence
+	 */
+	public void setClassNamePersistence(
+		ClassNamePersistence classNamePersistence) {
+		this.classNamePersistence = classNamePersistence;
+	}
+
+	/**
 	 * Returns the resource local service.
 	 *
 	 * @return the resource local service
@@ -510,58 +602,23 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
-
-		PersistedModelLocalServiceRegistryUtil.register("com.liferay.content.targeting.analytics.model.AnalyticsEvent",
+		persistedModelLocalServiceRegistry.register("com.liferay.content.targeting.analytics.model.AnalyticsEvent",
 			analyticsEventLocalService);
 	}
 
 	public void destroy() {
-		PersistedModelLocalServiceRegistryUtil.unregister(
+		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.content.targeting.analytics.model.AnalyticsEvent");
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
+	public String getOSGiServiceIdentifier() {
+		return AnalyticsEventLocalService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -573,13 +630,18 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	}
 
 	/**
-	 * Performs an SQL query.
+	 * Performs a SQL query.
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = analyticsEventPersistence.getDataSource();
+
+			DB db = DBManagerUtil.getDB();
+
+			sql = db.buildSQL(sql);
+			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -592,7 +654,7 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	}
 
 	@BeanReference(type = com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService.class)
-	protected com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService analyticsEventLocalService;
+	protected AnalyticsEventLocalService analyticsEventLocalService;
 	@BeanReference(type = com.liferay.content.targeting.analytics.service.AnalyticsEventService.class)
 	protected com.liferay.content.targeting.analytics.service.AnalyticsEventService analyticsEventService;
 	@BeanReference(type = AnalyticsEventPersistence.class)
@@ -607,6 +669,12 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	protected AnalyticsReferrerPersistence analyticsReferrerPersistence;
 	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
+	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
+	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
+	protected com.liferay.portal.service.ClassNameService classNameService;
+	@BeanReference(type = ClassNamePersistence.class)
+	protected ClassNamePersistence classNamePersistence;
 	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
 	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
@@ -615,7 +683,6 @@ public abstract class AnalyticsEventLocalServiceBaseImpl
 	protected com.liferay.portal.service.UserService userService;
 	@BeanReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private String _beanIdentifier;
-	private ClassLoader _classLoader;
-	private AnalyticsEventLocalServiceClpInvoker _clpInvoker = new AnalyticsEventLocalServiceClpInvoker();
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

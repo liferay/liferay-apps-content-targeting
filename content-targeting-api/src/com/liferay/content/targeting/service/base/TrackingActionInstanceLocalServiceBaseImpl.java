@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.service.persistence.AnonymousUserUserSegmentPersistence;
@@ -27,22 +29,37 @@ import com.liferay.content.targeting.service.persistence.TrackingActionInstanceP
 import com.liferay.content.targeting.service.persistence.UserSegmentPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.util.PortalUtil;
+
+import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
+import com.liferay.portlet.exportimport.lar.ManifestSummary;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
 
@@ -62,9 +79,10 @@ import javax.sql.DataSource;
  * @see com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements TrackingActionInstanceLocalService,
-		IdentifiableBean {
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -76,13 +94,11 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 *
 	 * @param trackingActionInstance the tracking action instance
 	 * @return the tracking action instance that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public TrackingActionInstance addTrackingActionInstance(
-		TrackingActionInstance trackingActionInstance)
-		throws SystemException {
+		TrackingActionInstance trackingActionInstance) {
 		trackingActionInstance.setNew(true);
 
 		return trackingActionInstancePersistence.update(trackingActionInstance);
@@ -106,7 +122,7 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 * @param trackingActionInstanceId the primary key of the tracking action instance
 	 * @return the tracking action instance that was removed
 	 * @throws PortalException if a tracking action instance with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -121,7 +137,7 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 * @param trackingActionInstance the tracking action instance
 	 * @return the tracking action instance that was removed
 	 * @throws PortalException
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -144,12 +160,9 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return trackingActionInstancePersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -164,12 +177,10 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return trackingActionInstancePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end);
 	}
@@ -186,63 +197,43 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return trackingActionInstancePersistence.findWithDynamicQuery(dynamicQuery,
 			start, end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return trackingActionInstancePersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return trackingActionInstancePersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
 	public TrackingActionInstance fetchTrackingActionInstance(
-		long trackingActionInstanceId) throws SystemException {
+		long trackingActionInstanceId) {
 		return trackingActionInstancePersistence.fetchByPrimaryKey(trackingActionInstanceId);
-	}
-
-	/**
-	 * Returns the tracking action instance with the matching UUID and company.
-	 *
-	 * @param uuid the tracking action instance's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public TrackingActionInstance fetchTrackingActionInstanceByUuidAndCompanyId(
-		String uuid, long companyId) throws SystemException {
-		return trackingActionInstancePersistence.fetchByUuid_C_First(uuid,
-			companyId, null);
 	}
 
 	/**
@@ -251,11 +242,10 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 * @param uuid the tracking action instance's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public TrackingActionInstance fetchTrackingActionInstanceByUuidAndGroupId(
-		String uuid, long groupId) throws SystemException {
+		String uuid, long groupId) {
 		return trackingActionInstancePersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -265,34 +255,148 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 * @param trackingActionInstanceId the primary key of the tracking action instance
 	 * @return the tracking action instance
 	 * @throws PortalException if a tracking action instance with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public TrackingActionInstance getTrackingActionInstance(
-		long trackingActionInstanceId) throws PortalException, SystemException {
+		long trackingActionInstanceId) throws PortalException {
 		return trackingActionInstancePersistence.findByPrimaryKey(trackingActionInstanceId);
 	}
 
 	@Override
+	public ActionableDynamicQuery getActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(TrackingActionInstance.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName(
+			"trackingActionInstanceId");
+
+		return actionableDynamicQuery;
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+		indexableActionableDynamicQuery.setModelClass(TrackingActionInstance.class);
+
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
+			"trackingActionInstanceId");
+
+		return indexableActionableDynamicQuery;
+	}
+
+	protected void initActionableDynamicQuery(
+		ActionableDynamicQuery actionableDynamicQuery) {
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(TrackingActionInstance.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName(
+			"trackingActionInstanceId");
+	}
+
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
+
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
+
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
+				}
+			});
+
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<TrackingActionInstance>() {
+				@Override
+				public void performAction(
+					TrackingActionInstance trackingActionInstance)
+					throws PortalException {
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						trackingActionInstance);
+				}
+			});
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+				PortalUtil.getClassNameId(
+					TrackingActionInstance.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return trackingActionInstanceLocalService.deleteTrackingActionInstance((TrackingActionInstance)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return trackingActionInstancePersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
-	 * Returns the tracking action instance with the matching UUID and company.
+	 * Returns all the tracking action instances matching the UUID and company.
 	 *
-	 * @param uuid the tracking action instance's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching tracking action instance
-	 * @throws PortalException if a matching tracking action instance could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @param uuid the UUID of the tracking action instances
+	 * @param companyId the primary key of the company
+	 * @return the matching tracking action instances, or an empty list if no matches were found
 	 */
 	@Override
-	public TrackingActionInstance getTrackingActionInstanceByUuidAndCompanyId(
-		String uuid, long companyId) throws PortalException, SystemException {
-		return trackingActionInstancePersistence.findByUuid_C_First(uuid,
-			companyId, null);
+	public List<TrackingActionInstance> getTrackingActionInstancesByUuidAndCompanyId(
+		String uuid, long companyId) {
+		return trackingActionInstancePersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of tracking action instances matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the tracking action instances
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of tracking action instances
+	 * @param end the upper bound of the range of tracking action instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching tracking action instances, or an empty list if no matches were found
+	 */
+	@Override
+	public List<TrackingActionInstance> getTrackingActionInstancesByUuidAndCompanyId(
+		String uuid, long companyId, int start, int end,
+		OrderByComparator<TrackingActionInstance> orderByComparator) {
+		return trackingActionInstancePersistence.findByUuid_C(uuid, companyId,
+			start, end, orderByComparator);
 	}
 
 	/**
@@ -302,11 +406,10 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching tracking action instance
 	 * @throws PortalException if a matching tracking action instance could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public TrackingActionInstance getTrackingActionInstanceByUuidAndGroupId(
-		String uuid, long groupId) throws PortalException, SystemException {
+		String uuid, long groupId) throws PortalException {
 		return trackingActionInstancePersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -320,11 +423,10 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 * @param start the lower bound of the range of tracking action instances
 	 * @param end the upper bound of the range of tracking action instances (not inclusive)
 	 * @return the range of tracking action instances
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<TrackingActionInstance> getTrackingActionInstances(int start,
-		int end) throws SystemException {
+		int end) {
 		return trackingActionInstancePersistence.findAll(start, end);
 	}
 
@@ -332,10 +434,9 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 * Returns the number of tracking action instances.
 	 *
 	 * @return the number of tracking action instances
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getTrackingActionInstancesCount() throws SystemException {
+	public int getTrackingActionInstancesCount() {
 		return trackingActionInstancePersistence.countAll();
 	}
 
@@ -344,13 +445,11 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 *
 	 * @param trackingActionInstance the tracking action instance
 	 * @return the tracking action instance that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public TrackingActionInstance updateTrackingActionInstance(
-		TrackingActionInstance trackingActionInstance)
-		throws SystemException {
+		TrackingActionInstance trackingActionInstance) {
 		return trackingActionInstancePersistence.update(trackingActionInstance);
 	}
 
@@ -371,25 +470,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	public void setAnonymousUserUserSegmentLocalService(
 		com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService anonymousUserUserSegmentLocalService) {
 		this.anonymousUserUserSegmentLocalService = anonymousUserUserSegmentLocalService;
-	}
-
-	/**
-	 * Returns the anonymous user user segment remote service.
-	 *
-	 * @return the anonymous user user segment remote service
-	 */
-	public com.liferay.content.targeting.service.AnonymousUserUserSegmentService getAnonymousUserUserSegmentService() {
-		return anonymousUserUserSegmentService;
-	}
-
-	/**
-	 * Sets the anonymous user user segment remote service.
-	 *
-	 * @param anonymousUserUserSegmentService the anonymous user user segment remote service
-	 */
-	public void setAnonymousUserUserSegmentService(
-		com.liferay.content.targeting.service.AnonymousUserUserSegmentService anonymousUserUserSegmentService) {
-		this.anonymousUserUserSegmentService = anonymousUserUserSegmentService;
 	}
 
 	/**
@@ -428,25 +508,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	public void setCampaignLocalService(
 		com.liferay.content.targeting.service.CampaignLocalService campaignLocalService) {
 		this.campaignLocalService = campaignLocalService;
-	}
-
-	/**
-	 * Returns the campaign remote service.
-	 *
-	 * @return the campaign remote service
-	 */
-	public com.liferay.content.targeting.service.CampaignService getCampaignService() {
-		return campaignService;
-	}
-
-	/**
-	 * Sets the campaign remote service.
-	 *
-	 * @param campaignService the campaign remote service
-	 */
-	public void setCampaignService(
-		com.liferay.content.targeting.service.CampaignService campaignService) {
-		this.campaignService = campaignService;
 	}
 
 	/**
@@ -505,25 +566,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the channel instance remote service.
-	 *
-	 * @return the channel instance remote service
-	 */
-	public com.liferay.content.targeting.service.ChannelInstanceService getChannelInstanceService() {
-		return channelInstanceService;
-	}
-
-	/**
-	 * Sets the channel instance remote service.
-	 *
-	 * @param channelInstanceService the channel instance remote service
-	 */
-	public void setChannelInstanceService(
-		com.liferay.content.targeting.service.ChannelInstanceService channelInstanceService) {
-		this.channelInstanceService = channelInstanceService;
-	}
-
-	/**
 	 * Returns the channel instance persistence.
 	 *
 	 * @return the channel instance persistence
@@ -559,25 +601,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	public void setReportInstanceLocalService(
 		com.liferay.content.targeting.service.ReportInstanceLocalService reportInstanceLocalService) {
 		this.reportInstanceLocalService = reportInstanceLocalService;
-	}
-
-	/**
-	 * Returns the report instance remote service.
-	 *
-	 * @return the report instance remote service
-	 */
-	public com.liferay.content.targeting.service.ReportInstanceService getReportInstanceService() {
-		return reportInstanceService;
-	}
-
-	/**
-	 * Sets the report instance remote service.
-	 *
-	 * @param reportInstanceService the report instance remote service
-	 */
-	public void setReportInstanceService(
-		com.liferay.content.targeting.service.ReportInstanceService reportInstanceService) {
-		this.reportInstanceService = reportInstanceService;
 	}
 
 	/**
@@ -619,25 +642,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the rule instance remote service.
-	 *
-	 * @return the rule instance remote service
-	 */
-	public com.liferay.content.targeting.service.RuleInstanceService getRuleInstanceService() {
-		return ruleInstanceService;
-	}
-
-	/**
-	 * Sets the rule instance remote service.
-	 *
-	 * @param ruleInstanceService the rule instance remote service
-	 */
-	public void setRuleInstanceService(
-		com.liferay.content.targeting.service.RuleInstanceService ruleInstanceService) {
-		this.ruleInstanceService = ruleInstanceService;
-	}
-
-	/**
 	 * Returns the rule instance persistence.
 	 *
 	 * @return the rule instance persistence
@@ -676,25 +680,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the tactic remote service.
-	 *
-	 * @return the tactic remote service
-	 */
-	public com.liferay.content.targeting.service.TacticService getTacticService() {
-		return tacticService;
-	}
-
-	/**
-	 * Sets the tactic remote service.
-	 *
-	 * @param tacticService the tactic remote service
-	 */
-	public void setTacticService(
-		com.liferay.content.targeting.service.TacticService tacticService) {
-		this.tacticService = tacticService;
-	}
-
-	/**
 	 * Returns the tactic persistence.
 	 *
 	 * @return the tactic persistence
@@ -717,7 +702,7 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 *
 	 * @return the tracking action instance local service
 	 */
-	public com.liferay.content.targeting.service.TrackingActionInstanceLocalService getTrackingActionInstanceLocalService() {
+	public TrackingActionInstanceLocalService getTrackingActionInstanceLocalService() {
 		return trackingActionInstanceLocalService;
 	}
 
@@ -727,27 +712,8 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 * @param trackingActionInstanceLocalService the tracking action instance local service
 	 */
 	public void setTrackingActionInstanceLocalService(
-		com.liferay.content.targeting.service.TrackingActionInstanceLocalService trackingActionInstanceLocalService) {
+		TrackingActionInstanceLocalService trackingActionInstanceLocalService) {
 		this.trackingActionInstanceLocalService = trackingActionInstanceLocalService;
-	}
-
-	/**
-	 * Returns the tracking action instance remote service.
-	 *
-	 * @return the tracking action instance remote service
-	 */
-	public com.liferay.content.targeting.service.TrackingActionInstanceService getTrackingActionInstanceService() {
-		return trackingActionInstanceService;
-	}
-
-	/**
-	 * Sets the tracking action instance remote service.
-	 *
-	 * @param trackingActionInstanceService the tracking action instance remote service
-	 */
-	public void setTrackingActionInstanceService(
-		com.liferay.content.targeting.service.TrackingActionInstanceService trackingActionInstanceService) {
-		this.trackingActionInstanceService = trackingActionInstanceService;
 	}
 
 	/**
@@ -789,25 +755,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the user segment remote service.
-	 *
-	 * @return the user segment remote service
-	 */
-	public com.liferay.content.targeting.service.UserSegmentService getUserSegmentService() {
-		return userSegmentService;
-	}
-
-	/**
-	 * Sets the user segment remote service.
-	 *
-	 * @param userSegmentService the user segment remote service
-	 */
-	public void setUserSegmentService(
-		com.liferay.content.targeting.service.UserSegmentService userSegmentService) {
-		this.userSegmentService = userSegmentService;
-	}
-
-	/**
 	 * Returns the user segment persistence.
 	 *
 	 * @return the user segment persistence
@@ -843,6 +790,44 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	public void setCounterLocalService(
 		com.liferay.counter.service.CounterLocalService counterLocalService) {
 		this.counterLocalService = counterLocalService;
+	}
+
+	/**
+	 * Returns the class name local service.
+	 *
+	 * @return the class name local service
+	 */
+	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
+		return classNameLocalService;
+	}
+
+	/**
+	 * Sets the class name local service.
+	 *
+	 * @param classNameLocalService the class name local service
+	 */
+	public void setClassNameLocalService(
+		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
+		this.classNameLocalService = classNameLocalService;
+	}
+
+	/**
+	 * Returns the class name persistence.
+	 *
+	 * @return the class name persistence
+	 */
+	public ClassNamePersistence getClassNamePersistence() {
+		return classNamePersistence;
+	}
+
+	/**
+	 * Sets the class name persistence.
+	 *
+	 * @param classNamePersistence the class name persistence
+	 */
+	public void setClassNamePersistence(
+		ClassNamePersistence classNamePersistence) {
+		this.classNamePersistence = classNamePersistence;
 	}
 
 	/**
@@ -922,25 +907,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
 	 * Returns the user persistence.
 	 *
 	 * @return the user persistence
@@ -959,58 +925,23 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
-
-		PersistedModelLocalServiceRegistryUtil.register("com.liferay.content.targeting.model.TrackingActionInstance",
+		persistedModelLocalServiceRegistry.register("com.liferay.content.targeting.model.TrackingActionInstance",
 			trackingActionInstanceLocalService);
 	}
 
 	public void destroy() {
-		PersistedModelLocalServiceRegistryUtil.unregister(
+		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.content.targeting.model.TrackingActionInstance");
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
+	public String getOSGiServiceIdentifier() {
+		return TrackingActionInstanceLocalService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -1022,13 +953,18 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Performs an SQL query.
+	 * Performs a SQL query.
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = trackingActionInstancePersistence.getDataSource();
+
+			DB db = DBManagerUtil.getDB();
+
+			sql = db.buildSQL(sql);
+			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -1042,69 +978,54 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 
 	@BeanReference(type = com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService.class)
 	protected com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService anonymousUserUserSegmentLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.AnonymousUserUserSegmentService.class)
-	protected com.liferay.content.targeting.service.AnonymousUserUserSegmentService anonymousUserUserSegmentService;
 	@BeanReference(type = AnonymousUserUserSegmentPersistence.class)
 	protected AnonymousUserUserSegmentPersistence anonymousUserUserSegmentPersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.CampaignLocalService.class)
 	protected com.liferay.content.targeting.service.CampaignLocalService campaignLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.CampaignService.class)
-	protected com.liferay.content.targeting.service.CampaignService campaignService;
 	@BeanReference(type = CampaignPersistence.class)
 	protected CampaignPersistence campaignPersistence;
 	@BeanReference(type = CampaignFinder.class)
 	protected CampaignFinder campaignFinder;
 	@BeanReference(type = com.liferay.content.targeting.service.ChannelInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.ChannelInstanceLocalService channelInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.ChannelInstanceService.class)
-	protected com.liferay.content.targeting.service.ChannelInstanceService channelInstanceService;
 	@BeanReference(type = ChannelInstancePersistence.class)
 	protected ChannelInstancePersistence channelInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.ReportInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.ReportInstanceLocalService reportInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.ReportInstanceService.class)
-	protected com.liferay.content.targeting.service.ReportInstanceService reportInstanceService;
 	@BeanReference(type = ReportInstancePersistence.class)
 	protected ReportInstancePersistence reportInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.RuleInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.RuleInstanceLocalService ruleInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.RuleInstanceService.class)
-	protected com.liferay.content.targeting.service.RuleInstanceService ruleInstanceService;
 	@BeanReference(type = RuleInstancePersistence.class)
 	protected RuleInstancePersistence ruleInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.TacticLocalService.class)
 	protected com.liferay.content.targeting.service.TacticLocalService tacticLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.TacticService.class)
-	protected com.liferay.content.targeting.service.TacticService tacticService;
 	@BeanReference(type = TacticPersistence.class)
 	protected TacticPersistence tacticPersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.TrackingActionInstanceLocalService.class)
-	protected com.liferay.content.targeting.service.TrackingActionInstanceLocalService trackingActionInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.TrackingActionInstanceService.class)
-	protected com.liferay.content.targeting.service.TrackingActionInstanceService trackingActionInstanceService;
+	protected TrackingActionInstanceLocalService trackingActionInstanceLocalService;
 	@BeanReference(type = TrackingActionInstancePersistence.class)
 	protected TrackingActionInstancePersistence trackingActionInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.UserSegmentLocalService.class)
 	protected com.liferay.content.targeting.service.UserSegmentLocalService userSegmentLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.UserSegmentService.class)
-	protected com.liferay.content.targeting.service.UserSegmentService userSegmentService;
 	@BeanReference(type = UserSegmentPersistence.class)
 	protected UserSegmentPersistence userSegmentPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = ClassNamePersistence.class)
+	protected ClassNamePersistence classNamePersistence;
+	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.SystemEventLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.SystemEventLocalService.class)
 	protected com.liferay.portal.service.SystemEventLocalService systemEventLocalService;
-	@BeanReference(type = SystemEventPersistence.class)
+	@ServiceReference(type = SystemEventPersistence.class)
 	protected SystemEventPersistence systemEventPersistence;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private String _beanIdentifier;
-	private ClassLoader _classLoader;
-	private TrackingActionInstanceLocalServiceClpInvoker _clpInvoker = new TrackingActionInstanceLocalServiceClpInvoker();
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

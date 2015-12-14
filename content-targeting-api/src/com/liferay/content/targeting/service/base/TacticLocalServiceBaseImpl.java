@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.service.TacticLocalService;
 import com.liferay.content.targeting.service.persistence.AnonymousUserUserSegmentPersistence;
@@ -27,23 +29,38 @@ import com.liferay.content.targeting.service.persistence.TrackingActionInstanceP
 import com.liferay.content.targeting.service.persistence.UserSegmentPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.util.PortalUtil;
+
+import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
+import com.liferay.portlet.exportimport.lar.ManifestSummary;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
 
@@ -63,8 +80,9 @@ import javax.sql.DataSource;
  * @see com.liferay.content.targeting.service.TacticLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
-	implements TacticLocalService, IdentifiableBean {
+	implements TacticLocalService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -76,11 +94,10 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param tactic the tactic
 	 * @return the tactic that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Tactic addTactic(Tactic tactic) throws SystemException {
+	public Tactic addTactic(Tactic tactic) {
 		tactic.setNew(true);
 
 		return tacticPersistence.update(tactic);
@@ -103,7 +120,7 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param tacticId the primary key of the tactic
 	 * @return the tactic that was removed
 	 * @throws PortalException if a tactic with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -118,7 +135,7 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param tactic the tactic
 	 * @return the tactic that was removed
 	 * @throws PortalException
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -140,12 +157,9 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return tacticPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -160,12 +174,10 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return tacticPersistence.findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -181,60 +193,41 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return tacticPersistence.findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return tacticPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return tacticPersistence.countWithDynamicQuery(dynamicQuery, projection);
 	}
 
 	@Override
-	public Tactic fetchTactic(long tacticId) throws SystemException {
+	public Tactic fetchTactic(long tacticId) {
 		return tacticPersistence.fetchByPrimaryKey(tacticId);
-	}
-
-	/**
-	 * Returns the tactic with the matching UUID and company.
-	 *
-	 * @param uuid the tactic's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching tactic, or <code>null</code> if a matching tactic could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public Tactic fetchTacticByUuidAndCompanyId(String uuid, long companyId)
-		throws SystemException {
-		return tacticPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**
@@ -243,11 +236,9 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param uuid the tactic's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching tactic, or <code>null</code> if a matching tactic could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Tactic fetchTacticByUuidAndGroupId(String uuid, long groupId)
-		throws SystemException {
+	public Tactic fetchTacticByUuidAndGroupId(String uuid, long groupId) {
 		return tacticPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -257,33 +248,141 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param tacticId the primary key of the tactic
 	 * @return the tactic
 	 * @throws PortalException if a tactic with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public Tactic getTactic(long tacticId)
-		throws PortalException, SystemException {
+	public Tactic getTactic(long tacticId) throws PortalException {
 		return tacticPersistence.findByPrimaryKey(tacticId);
 	}
 
 	@Override
+	public ActionableDynamicQuery getActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.TacticLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(Tactic.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("tacticId");
+
+		return actionableDynamicQuery;
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.TacticLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+		indexableActionableDynamicQuery.setModelClass(Tactic.class);
+
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName("tacticId");
+
+		return indexableActionableDynamicQuery;
+	}
+
+	protected void initActionableDynamicQuery(
+		ActionableDynamicQuery actionableDynamicQuery) {
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.TacticLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(Tactic.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("tacticId");
+	}
+
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
+
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
+
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
+				}
+			});
+
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<Tactic>() {
+				@Override
+				public void performAction(Tactic tactic)
+					throws PortalException {
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						tactic);
+				}
+			});
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+				PortalUtil.getClassNameId(Tactic.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return tacticLocalService.deleteTactic((Tactic)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return tacticPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
-	 * Returns the tactic with the matching UUID and company.
+	 * Returns all the tactics matching the UUID and company.
 	 *
-	 * @param uuid the tactic's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching tactic
-	 * @throws PortalException if a matching tactic could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @param uuid the UUID of the tactics
+	 * @param companyId the primary key of the company
+	 * @return the matching tactics, or an empty list if no matches were found
 	 */
 	@Override
-	public Tactic getTacticByUuidAndCompanyId(String uuid, long companyId)
-		throws PortalException, SystemException {
-		return tacticPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<Tactic> getTacticsByUuidAndCompanyId(String uuid, long companyId) {
+		return tacticPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of tactics matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the tactics
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of tactics
+	 * @param end the upper bound of the range of tactics (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching tactics, or an empty list if no matches were found
+	 */
+	@Override
+	public List<Tactic> getTacticsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<Tactic> orderByComparator) {
+		return tacticPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -293,11 +392,10 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching tactic
 	 * @throws PortalException if a matching tactic could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public Tactic getTacticByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return tacticPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -311,11 +409,9 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param start the lower bound of the range of tactics
 	 * @param end the upper bound of the range of tactics (not inclusive)
 	 * @return the range of tactics
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<Tactic> getTactics(int start, int end)
-		throws SystemException {
+	public List<Tactic> getTactics(int start, int end) {
 		return tacticPersistence.findAll(start, end);
 	}
 
@@ -323,10 +419,9 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * Returns the number of tactics.
 	 *
 	 * @return the number of tactics
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getTacticsCount() throws SystemException {
+	public int getTacticsCount() {
 		return tacticPersistence.countAll();
 	}
 
@@ -335,156 +430,137 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param tactic the tactic
 	 * @return the tactic that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public Tactic updateTactic(Tactic tactic) throws SystemException {
+	public Tactic updateTactic(Tactic tactic) {
 		return tacticPersistence.update(tactic);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUserSegmentTactic(long userSegmentId, long tacticId)
-		throws SystemException {
+	public void addUserSegmentTactic(long userSegmentId, long tacticId) {
 		userSegmentPersistence.addTactic(userSegmentId, tacticId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUserSegmentTactic(long userSegmentId, Tactic tactic)
-		throws SystemException {
+	public void addUserSegmentTactic(long userSegmentId, Tactic tactic) {
 		userSegmentPersistence.addTactic(userSegmentId, tactic);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUserSegmentTactics(long userSegmentId, long[] tacticIds)
-		throws SystemException {
+	public void addUserSegmentTactics(long userSegmentId, long[] tacticIds) {
 		userSegmentPersistence.addTactics(userSegmentId, tacticIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addUserSegmentTactics(long userSegmentId, List<Tactic> Tactics)
-		throws SystemException {
+	public void addUserSegmentTactics(long userSegmentId, List<Tactic> Tactics) {
 		userSegmentPersistence.addTactics(userSegmentId, Tactics);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearUserSegmentTactics(long userSegmentId)
-		throws SystemException {
+	public void clearUserSegmentTactics(long userSegmentId) {
 		userSegmentPersistence.clearTactics(userSegmentId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserSegmentTactic(long userSegmentId, long tacticId)
-		throws SystemException {
+	public void deleteUserSegmentTactic(long userSegmentId, long tacticId) {
 		userSegmentPersistence.removeTactic(userSegmentId, tacticId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserSegmentTactic(long userSegmentId, Tactic tactic)
-		throws SystemException {
+	public void deleteUserSegmentTactic(long userSegmentId, Tactic tactic) {
 		userSegmentPersistence.removeTactic(userSegmentId, tactic);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteUserSegmentTactics(long userSegmentId, long[] tacticIds)
-		throws SystemException {
+	public void deleteUserSegmentTactics(long userSegmentId, long[] tacticIds) {
 		userSegmentPersistence.removeTactics(userSegmentId, tacticIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteUserSegmentTactics(long userSegmentId,
-		List<Tactic> Tactics) throws SystemException {
+		List<Tactic> Tactics) {
 		userSegmentPersistence.removeTactics(userSegmentId, Tactics);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
+	 * Returns the userSegmentIds of the user segments associated with the tactic.
+	 *
+	 * @param tacticId the tacticId of the tactic
+	 * @return long[] the userSegmentIds of user segments associated with the tactic
 	 */
 	@Override
-	public List<Tactic> getUserSegmentTactics(long userSegmentId)
-		throws SystemException {
+	public long[] getUserSegmentPrimaryKeys(long tacticId) {
+		return tacticPersistence.getUserSegmentPrimaryKeys(tacticId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<Tactic> getUserSegmentTactics(long userSegmentId) {
 		return userSegmentPersistence.getTactics(userSegmentId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Tactic> getUserSegmentTactics(long userSegmentId, int start,
-		int end) throws SystemException {
+		int end) {
 		return userSegmentPersistence.getTactics(userSegmentId, start, end);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<Tactic> getUserSegmentTactics(long userSegmentId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator<Tactic> orderByComparator) {
 		return userSegmentPersistence.getTactics(userSegmentId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getUserSegmentTacticsCount(long userSegmentId)
-		throws SystemException {
+	public int getUserSegmentTacticsCount(long userSegmentId) {
 		return userSegmentPersistence.getTacticsSize(userSegmentId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasUserSegmentTactic(long userSegmentId, long tacticId)
-		throws SystemException {
+	public boolean hasUserSegmentTactic(long userSegmentId, long tacticId) {
 		return userSegmentPersistence.containsTactic(userSegmentId, tacticId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasUserSegmentTactics(long userSegmentId)
-		throws SystemException {
+	public boolean hasUserSegmentTactics(long userSegmentId) {
 		return userSegmentPersistence.containsTactics(userSegmentId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setUserSegmentTactics(long userSegmentId, long[] tacticIds)
-		throws SystemException {
+	public void setUserSegmentTactics(long userSegmentId, long[] tacticIds) {
 		userSegmentPersistence.setTactics(userSegmentId, tacticIds);
 	}
 
@@ -505,25 +581,6 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setAnonymousUserUserSegmentLocalService(
 		com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService anonymousUserUserSegmentLocalService) {
 		this.anonymousUserUserSegmentLocalService = anonymousUserUserSegmentLocalService;
-	}
-
-	/**
-	 * Returns the anonymous user user segment remote service.
-	 *
-	 * @return the anonymous user user segment remote service
-	 */
-	public com.liferay.content.targeting.service.AnonymousUserUserSegmentService getAnonymousUserUserSegmentService() {
-		return anonymousUserUserSegmentService;
-	}
-
-	/**
-	 * Sets the anonymous user user segment remote service.
-	 *
-	 * @param anonymousUserUserSegmentService the anonymous user user segment remote service
-	 */
-	public void setAnonymousUserUserSegmentService(
-		com.liferay.content.targeting.service.AnonymousUserUserSegmentService anonymousUserUserSegmentService) {
-		this.anonymousUserUserSegmentService = anonymousUserUserSegmentService;
 	}
 
 	/**
@@ -562,25 +619,6 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setCampaignLocalService(
 		com.liferay.content.targeting.service.CampaignLocalService campaignLocalService) {
 		this.campaignLocalService = campaignLocalService;
-	}
-
-	/**
-	 * Returns the campaign remote service.
-	 *
-	 * @return the campaign remote service
-	 */
-	public com.liferay.content.targeting.service.CampaignService getCampaignService() {
-		return campaignService;
-	}
-
-	/**
-	 * Sets the campaign remote service.
-	 *
-	 * @param campaignService the campaign remote service
-	 */
-	public void setCampaignService(
-		com.liferay.content.targeting.service.CampaignService campaignService) {
-		this.campaignService = campaignService;
 	}
 
 	/**
@@ -639,25 +677,6 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the channel instance remote service.
-	 *
-	 * @return the channel instance remote service
-	 */
-	public com.liferay.content.targeting.service.ChannelInstanceService getChannelInstanceService() {
-		return channelInstanceService;
-	}
-
-	/**
-	 * Sets the channel instance remote service.
-	 *
-	 * @param channelInstanceService the channel instance remote service
-	 */
-	public void setChannelInstanceService(
-		com.liferay.content.targeting.service.ChannelInstanceService channelInstanceService) {
-		this.channelInstanceService = channelInstanceService;
-	}
-
-	/**
 	 * Returns the channel instance persistence.
 	 *
 	 * @return the channel instance persistence
@@ -693,25 +712,6 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setReportInstanceLocalService(
 		com.liferay.content.targeting.service.ReportInstanceLocalService reportInstanceLocalService) {
 		this.reportInstanceLocalService = reportInstanceLocalService;
-	}
-
-	/**
-	 * Returns the report instance remote service.
-	 *
-	 * @return the report instance remote service
-	 */
-	public com.liferay.content.targeting.service.ReportInstanceService getReportInstanceService() {
-		return reportInstanceService;
-	}
-
-	/**
-	 * Sets the report instance remote service.
-	 *
-	 * @param reportInstanceService the report instance remote service
-	 */
-	public void setReportInstanceService(
-		com.liferay.content.targeting.service.ReportInstanceService reportInstanceService) {
-		this.reportInstanceService = reportInstanceService;
 	}
 
 	/**
@@ -753,25 +753,6 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the rule instance remote service.
-	 *
-	 * @return the rule instance remote service
-	 */
-	public com.liferay.content.targeting.service.RuleInstanceService getRuleInstanceService() {
-		return ruleInstanceService;
-	}
-
-	/**
-	 * Sets the rule instance remote service.
-	 *
-	 * @param ruleInstanceService the rule instance remote service
-	 */
-	public void setRuleInstanceService(
-		com.liferay.content.targeting.service.RuleInstanceService ruleInstanceService) {
-		this.ruleInstanceService = ruleInstanceService;
-	}
-
-	/**
 	 * Returns the rule instance persistence.
 	 *
 	 * @return the rule instance persistence
@@ -795,7 +776,7 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @return the tactic local service
 	 */
-	public com.liferay.content.targeting.service.TacticLocalService getTacticLocalService() {
+	public TacticLocalService getTacticLocalService() {
 		return tacticLocalService;
 	}
 
@@ -804,28 +785,8 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 *
 	 * @param tacticLocalService the tactic local service
 	 */
-	public void setTacticLocalService(
-		com.liferay.content.targeting.service.TacticLocalService tacticLocalService) {
+	public void setTacticLocalService(TacticLocalService tacticLocalService) {
 		this.tacticLocalService = tacticLocalService;
-	}
-
-	/**
-	 * Returns the tactic remote service.
-	 *
-	 * @return the tactic remote service
-	 */
-	public com.liferay.content.targeting.service.TacticService getTacticService() {
-		return tacticService;
-	}
-
-	/**
-	 * Sets the tactic remote service.
-	 *
-	 * @param tacticService the tactic remote service
-	 */
-	public void setTacticService(
-		com.liferay.content.targeting.service.TacticService tacticService) {
-		this.tacticService = tacticService;
 	}
 
 	/**
@@ -863,25 +824,6 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setTrackingActionInstanceLocalService(
 		com.liferay.content.targeting.service.TrackingActionInstanceLocalService trackingActionInstanceLocalService) {
 		this.trackingActionInstanceLocalService = trackingActionInstanceLocalService;
-	}
-
-	/**
-	 * Returns the tracking action instance remote service.
-	 *
-	 * @return the tracking action instance remote service
-	 */
-	public com.liferay.content.targeting.service.TrackingActionInstanceService getTrackingActionInstanceService() {
-		return trackingActionInstanceService;
-	}
-
-	/**
-	 * Sets the tracking action instance remote service.
-	 *
-	 * @param trackingActionInstanceService the tracking action instance remote service
-	 */
-	public void setTrackingActionInstanceService(
-		com.liferay.content.targeting.service.TrackingActionInstanceService trackingActionInstanceService) {
-		this.trackingActionInstanceService = trackingActionInstanceService;
 	}
 
 	/**
@@ -923,25 +865,6 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the user segment remote service.
-	 *
-	 * @return the user segment remote service
-	 */
-	public com.liferay.content.targeting.service.UserSegmentService getUserSegmentService() {
-		return userSegmentService;
-	}
-
-	/**
-	 * Sets the user segment remote service.
-	 *
-	 * @param userSegmentService the user segment remote service
-	 */
-	public void setUserSegmentService(
-		com.liferay.content.targeting.service.UserSegmentService userSegmentService) {
-		this.userSegmentService = userSegmentService;
-	}
-
-	/**
 	 * Returns the user segment persistence.
 	 *
 	 * @return the user segment persistence
@@ -980,6 +903,44 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
+	 * Returns the class name local service.
+	 *
+	 * @return the class name local service
+	 */
+	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
+		return classNameLocalService;
+	}
+
+	/**
+	 * Sets the class name local service.
+	 *
+	 * @param classNameLocalService the class name local service
+	 */
+	public void setClassNameLocalService(
+		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
+		this.classNameLocalService = classNameLocalService;
+	}
+
+	/**
+	 * Returns the class name persistence.
+	 *
+	 * @return the class name persistence
+	 */
+	public ClassNamePersistence getClassNamePersistence() {
+		return classNamePersistence;
+	}
+
+	/**
+	 * Sets the class name persistence.
+	 *
+	 * @param classNamePersistence the class name persistence
+	 */
+	public void setClassNamePersistence(
+		ClassNamePersistence classNamePersistence) {
+		this.classNamePersistence = classNamePersistence;
+	}
+
+	/**
 	 * Returns the group local service.
 	 *
 	 * @return the group local service
@@ -996,25 +957,6 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	public void setGroupLocalService(
 		com.liferay.portal.service.GroupLocalService groupLocalService) {
 		this.groupLocalService = groupLocalService;
-	}
-
-	/**
-	 * Returns the group remote service.
-	 *
-	 * @return the group remote service
-	 */
-	public com.liferay.portal.service.GroupService getGroupService() {
-		return groupService;
-	}
-
-	/**
-	 * Sets the group remote service.
-	 *
-	 * @param groupService the group remote service
-	 */
-	public void setGroupService(
-		com.liferay.portal.service.GroupService groupService) {
-		this.groupService = groupService;
 	}
 
 	/**
@@ -1112,25 +1054,6 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
 	 * Returns the user persistence.
 	 *
 	 * @return the user persistence
@@ -1149,58 +1072,23 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
-
-		PersistedModelLocalServiceRegistryUtil.register("com.liferay.content.targeting.model.Tactic",
+		persistedModelLocalServiceRegistry.register("com.liferay.content.targeting.model.Tactic",
 			tacticLocalService);
 	}
 
 	public void destroy() {
-		PersistedModelLocalServiceRegistryUtil.unregister(
+		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.content.targeting.model.Tactic");
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
+	public String getOSGiServiceIdentifier() {
+		return TacticLocalService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -1212,13 +1100,18 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	}
 
 	/**
-	 * Performs an SQL query.
+	 * Performs a SQL query.
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = tacticPersistence.getDataSource();
+
+			DB db = DBManagerUtil.getDB();
+
+			sql = db.buildSQL(sql);
+			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -1232,75 +1125,58 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 
 	@BeanReference(type = com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService.class)
 	protected com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService anonymousUserUserSegmentLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.AnonymousUserUserSegmentService.class)
-	protected com.liferay.content.targeting.service.AnonymousUserUserSegmentService anonymousUserUserSegmentService;
 	@BeanReference(type = AnonymousUserUserSegmentPersistence.class)
 	protected AnonymousUserUserSegmentPersistence anonymousUserUserSegmentPersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.CampaignLocalService.class)
 	protected com.liferay.content.targeting.service.CampaignLocalService campaignLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.CampaignService.class)
-	protected com.liferay.content.targeting.service.CampaignService campaignService;
 	@BeanReference(type = CampaignPersistence.class)
 	protected CampaignPersistence campaignPersistence;
 	@BeanReference(type = CampaignFinder.class)
 	protected CampaignFinder campaignFinder;
 	@BeanReference(type = com.liferay.content.targeting.service.ChannelInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.ChannelInstanceLocalService channelInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.ChannelInstanceService.class)
-	protected com.liferay.content.targeting.service.ChannelInstanceService channelInstanceService;
 	@BeanReference(type = ChannelInstancePersistence.class)
 	protected ChannelInstancePersistence channelInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.ReportInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.ReportInstanceLocalService reportInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.ReportInstanceService.class)
-	protected com.liferay.content.targeting.service.ReportInstanceService reportInstanceService;
 	@BeanReference(type = ReportInstancePersistence.class)
 	protected ReportInstancePersistence reportInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.RuleInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.RuleInstanceLocalService ruleInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.RuleInstanceService.class)
-	protected com.liferay.content.targeting.service.RuleInstanceService ruleInstanceService;
 	@BeanReference(type = RuleInstancePersistence.class)
 	protected RuleInstancePersistence ruleInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.TacticLocalService.class)
-	protected com.liferay.content.targeting.service.TacticLocalService tacticLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.TacticService.class)
-	protected com.liferay.content.targeting.service.TacticService tacticService;
+	protected TacticLocalService tacticLocalService;
 	@BeanReference(type = TacticPersistence.class)
 	protected TacticPersistence tacticPersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.TrackingActionInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.TrackingActionInstanceLocalService trackingActionInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.TrackingActionInstanceService.class)
-	protected com.liferay.content.targeting.service.TrackingActionInstanceService trackingActionInstanceService;
 	@BeanReference(type = TrackingActionInstancePersistence.class)
 	protected TrackingActionInstancePersistence trackingActionInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.UserSegmentLocalService.class)
 	protected com.liferay.content.targeting.service.UserSegmentLocalService userSegmentLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.UserSegmentService.class)
-	protected com.liferay.content.targeting.service.UserSegmentService userSegmentService;
 	@BeanReference(type = UserSegmentPersistence.class)
 	protected UserSegmentPersistence userSegmentPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = ClassNamePersistence.class)
+	protected ClassNamePersistence classNamePersistence;
+	@ServiceReference(type = com.liferay.portal.service.GroupLocalService.class)
 	protected com.liferay.portal.service.GroupLocalService groupLocalService;
-	@BeanReference(type = com.liferay.portal.service.GroupService.class)
-	protected com.liferay.portal.service.GroupService groupService;
-	@BeanReference(type = GroupPersistence.class)
+	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.SystemEventLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.SystemEventLocalService.class)
 	protected com.liferay.portal.service.SystemEventLocalService systemEventLocalService;
-	@BeanReference(type = SystemEventPersistence.class)
+	@ServiceReference(type = SystemEventPersistence.class)
 	protected SystemEventPersistence systemEventPersistence;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private String _beanIdentifier;
-	private ClassLoader _classLoader;
-	private TacticLocalServiceClpInvoker _clpInvoker = new TacticLocalServiceClpInvoker();
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

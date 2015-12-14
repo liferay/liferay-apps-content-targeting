@@ -14,8 +14,11 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.AnonymousUserUserSegment;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.model.CacheModel;
 
@@ -33,8 +36,33 @@ import java.util.Date;
  * @see AnonymousUserUserSegment
  * @generated
  */
+@ProviderType
 public class AnonymousUserUserSegmentCacheModel implements CacheModel<AnonymousUserUserSegment>,
 	Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof AnonymousUserUserSegmentCacheModel)) {
+			return false;
+		}
+
+		AnonymousUserUserSegmentCacheModel anonymousUserUserSegmentCacheModel = (AnonymousUserUserSegmentCacheModel)obj;
+
+		if (anonymousUserUserSegmentId == anonymousUserUserSegmentCacheModel.anonymousUserUserSegmentId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, anonymousUserUserSegmentId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(15);

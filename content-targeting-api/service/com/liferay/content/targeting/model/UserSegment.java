@@ -14,6 +14,9 @@
 
 package com.liferay.content.targeting.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -25,12 +28,30 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.model.impl.UserSegmentModelImpl
  * @generated
  */
+@ProviderType
 public interface UserSegment extends UserSegmentModel, PersistedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.UserSegmentImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<UserSegment, Long> USER_SEGMENT_ID_ACCESSOR = new Accessor<UserSegment, Long>() {
+			@Override
+			public Long get(UserSegment userSegment) {
+				return userSegment.getUserSegmentId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<UserSegment> getTypeClass() {
+				return UserSegment.class;
+			}
+		};
+
 	public long getAssetCategoryId(long groupId);
 
 	public java.lang.String getNameWithGroupName(java.util.Locale locale,

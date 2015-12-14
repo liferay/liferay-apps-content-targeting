@@ -14,6 +14,9 @@
 
 package com.liferay.content.targeting.model;
 
+import aQute.bnd.annotation.ProviderType;
+
+import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
 /**
@@ -25,6 +28,7 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl
  * @generated
  */
+@ProviderType
 public interface AnonymousUserUserSegment extends AnonymousUserUserSegmentModel,
 	PersistedModel {
 	/*
@@ -32,4 +36,21 @@ public interface AnonymousUserUserSegment extends AnonymousUserUserSegmentModel,
 	 *
 	 * Never modify this interface directly. Add methods to {@link com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public static final Accessor<AnonymousUserUserSegment, Long> ANONYMOUS_USER_USER_SEGMENT_ID_ACCESSOR =
+		new Accessor<AnonymousUserUserSegment, Long>() {
+			@Override
+			public Long get(AnonymousUserUserSegment anonymousUserUserSegment) {
+				return anonymousUserUserSegment.getAnonymousUserUserSegmentId();
+			}
+
+			@Override
+			public Class<Long> getAttributeClass() {
+				return Long.class;
+			}
+
+			@Override
+			public Class<AnonymousUserUserSegment> getTypeClass() {
+				return AnonymousUserUserSegment.class;
+			}
+		};
 }

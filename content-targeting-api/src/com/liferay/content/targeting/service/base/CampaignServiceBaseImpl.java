@@ -27,14 +27,19 @@ import com.liferay.content.targeting.service.persistence.TrackingActionInstanceP
 import com.liferay.content.targeting.service.persistence.UserSegmentPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.service.BaseServiceImpl;
+import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.util.PortalUtil;
 
 import javax.sql.DataSource;
 
@@ -51,7 +56,7 @@ import javax.sql.DataSource;
  * @generated
  */
 public abstract class CampaignServiceBaseImpl extends BaseServiceImpl
-	implements CampaignService, IdentifiableBean {
+	implements CampaignService, IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -139,7 +144,7 @@ public abstract class CampaignServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @return the campaign remote service
 	 */
-	public com.liferay.content.targeting.service.CampaignService getCampaignService() {
+	public CampaignService getCampaignService() {
 		return campaignService;
 	}
 
@@ -148,8 +153,7 @@ public abstract class CampaignServiceBaseImpl extends BaseServiceImpl
 	 *
 	 * @param campaignService the campaign remote service
 	 */
-	public void setCampaignService(
-		com.liferay.content.targeting.service.CampaignService campaignService) {
+	public void setCampaignService(CampaignService campaignService) {
 		this.campaignService = campaignService;
 	}
 
@@ -550,6 +554,63 @@ public abstract class CampaignServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
+	 * Returns the class name local service.
+	 *
+	 * @return the class name local service
+	 */
+	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
+		return classNameLocalService;
+	}
+
+	/**
+	 * Sets the class name local service.
+	 *
+	 * @param classNameLocalService the class name local service
+	 */
+	public void setClassNameLocalService(
+		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
+		this.classNameLocalService = classNameLocalService;
+	}
+
+	/**
+	 * Returns the class name remote service.
+	 *
+	 * @return the class name remote service
+	 */
+	public com.liferay.portal.service.ClassNameService getClassNameService() {
+		return classNameService;
+	}
+
+	/**
+	 * Sets the class name remote service.
+	 *
+	 * @param classNameService the class name remote service
+	 */
+	public void setClassNameService(
+		com.liferay.portal.service.ClassNameService classNameService) {
+		this.classNameService = classNameService;
+	}
+
+	/**
+	 * Returns the class name persistence.
+	 *
+	 * @return the class name persistence
+	 */
+	public ClassNamePersistence getClassNamePersistence() {
+		return classNamePersistence;
+	}
+
+	/**
+	 * Sets the class name persistence.
+	 *
+	 * @param classNamePersistence the class name persistence
+	 */
+	public void setClassNamePersistence(
+		ClassNamePersistence classNamePersistence) {
+		this.classNamePersistence = classNamePersistence;
+	}
+
+	/**
 	 * Returns the group local service.
 	 *
 	 * @return the group local service
@@ -719,53 +780,19 @@ public abstract class CampaignServiceBaseImpl extends BaseServiceImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
 	}
 
 	public void destroy() {
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
+	public String getOSGiServiceIdentifier() {
+		return CampaignService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -777,13 +804,18 @@ public abstract class CampaignServiceBaseImpl extends BaseServiceImpl
 	}
 
 	/**
-	 * Performs an SQL query.
+	 * Performs a SQL query.
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = campaignPersistence.getDataSource();
+
+			DB db = DBManagerUtil.getDB();
+
+			sql = db.buildSQL(sql);
+			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -804,7 +836,7 @@ public abstract class CampaignServiceBaseImpl extends BaseServiceImpl
 	@BeanReference(type = com.liferay.content.targeting.service.CampaignLocalService.class)
 	protected com.liferay.content.targeting.service.CampaignLocalService campaignLocalService;
 	@BeanReference(type = com.liferay.content.targeting.service.CampaignService.class)
-	protected com.liferay.content.targeting.service.CampaignService campaignService;
+	protected CampaignService campaignService;
 	@BeanReference(type = CampaignPersistence.class)
 	protected CampaignPersistence campaignPersistence;
 	@BeanReference(type = CampaignFinder.class)
@@ -845,27 +877,30 @@ public abstract class CampaignServiceBaseImpl extends BaseServiceImpl
 	protected com.liferay.content.targeting.service.UserSegmentService userSegmentService;
 	@BeanReference(type = UserSegmentPersistence.class)
 	protected UserSegmentPersistence userSegmentPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = com.liferay.portal.service.ClassNameService.class)
+	protected com.liferay.portal.service.ClassNameService classNameService;
+	@ServiceReference(type = ClassNamePersistence.class)
+	protected ClassNamePersistence classNamePersistence;
+	@ServiceReference(type = com.liferay.portal.service.GroupLocalService.class)
 	protected com.liferay.portal.service.GroupLocalService groupLocalService;
-	@BeanReference(type = com.liferay.portal.service.GroupService.class)
+	@ServiceReference(type = com.liferay.portal.service.GroupService.class)
 	protected com.liferay.portal.service.GroupService groupService;
-	@BeanReference(type = GroupPersistence.class)
+	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.SystemEventLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.SystemEventLocalService.class)
 	protected com.liferay.portal.service.SystemEventLocalService systemEventLocalService;
-	@BeanReference(type = SystemEventPersistence.class)
+	@ServiceReference(type = SystemEventPersistence.class)
 	protected SystemEventPersistence systemEventPersistence;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserService.class)
 	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	private String _beanIdentifier;
-	private ClassLoader _classLoader;
-	private CampaignServiceClpInvoker _clpInvoker = new CampaignServiceClpInvoker();
 }

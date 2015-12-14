@@ -14,15 +14,17 @@
 
 package com.liferay.content.targeting.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
+import com.liferay.portal.kernel.security.access.control.AccessControlled;
+import com.liferay.portal.kernel.spring.osgi.OSGiBeanProperties;
 import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
-import com.liferay.portal.security.ac.AccessControlled;
 import com.liferay.portal.service.BaseService;
-import com.liferay.portal.service.InvokableService;
 
 /**
  * Provides the remote service interface for Campaign. Methods of this
@@ -37,42 +39,24 @@ import com.liferay.portal.service.InvokableService;
  */
 @AccessControlled
 @JSONWebService
+@OSGiBeanProperties(property =  {
+	"json.web.service.context.name=ct", "json.web.service.context.path=Campaign"}, service = CampaignService.class)
+@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
-public interface CampaignService extends BaseService, InvokableService {
+public interface CampaignService extends BaseService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
 	 * Never modify or reference this interface directly. Always use {@link CampaignServiceUtil} to access the campaign remote service. Add custom service methods to {@link com.liferay.content.targeting.service.impl.CampaignServiceImpl} and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
-
 	public com.liferay.content.targeting.model.Campaign addCampaign(
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws PortalException, SystemException;
 
 	public com.liferay.content.targeting.model.Campaign addCampaign(
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -81,29 +65,29 @@ public interface CampaignService extends BaseService, InvokableService {
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws PortalException, SystemException;
 
 	public com.liferay.content.targeting.model.Campaign deleteCampaign(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		long campaignId) throws PortalException, SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.Campaign fetchCurrentMaxPriorityCampaign(
-		long[] groupIds, long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] groupIds, long[] userSegmentIds) throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		long groupId) throws PortalException, SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getCampaignsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws PortalException, SystemException;
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
 
 	public com.liferay.content.targeting.model.Campaign updateCampaign(
 		long campaignId,
@@ -112,8 +96,7 @@ public interface CampaignService extends BaseService, InvokableService {
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws PortalException, SystemException;
 
 	public com.liferay.content.targeting.model.Campaign updateCampaign(
 		long campaignId,
@@ -123,6 +106,5 @@ public interface CampaignService extends BaseService, InvokableService {
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws PortalException, SystemException;
 }

@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.RuleInstance;
 
 import com.liferay.portal.service.persistence.BasePersistence;
@@ -26,10 +28,11 @@ import com.liferay.portal.service.persistence.BasePersistence;
  * </p>
  *
  * @author Brian Wing Shun Chan
- * @see RuleInstancePersistenceImpl
+ * @see com.liferay.content.targeting.service.persistence.impl.RuleInstancePersistenceImpl
  * @see RuleInstanceUtil
  * @generated
  */
+@ProviderType
 public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -42,34 +45,29 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	*
 	* @param uuid the uuid
 	* @return the matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByUuid(java.lang.String uuid);
 
 	/**
 	* Returns a range of all the rule instances where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
 	* @param start the lower bound of the range of rule instances
 	* @param end the upper bound of the range of rule instances (not inclusive)
 	* @return the range of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByUuid(java.lang.String uuid,
+		int start, int end);
 
 	/**
 	* Returns an ordered range of all the rule instances where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -77,12 +75,29 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param end the upper bound of the range of rule instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByUuid(java.lang.String uuid,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the rule instances where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of rule instances
+	* @param end the upper bound of the range of rule instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching rule instances
+	*/
+	public java.util.List<RuleInstance> findByUuid(java.lang.String uuid,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first rule instance in the ordered set where uuid = &#63;.
@@ -91,13 +106,10 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance findByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance findByUuid_First(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the first rule instance in the ordered set where uuid = &#63;.
@@ -105,12 +117,9 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByUuid_First(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
 
 	/**
 	* Returns the last rule instance in the ordered set where uuid = &#63;.
@@ -119,13 +128,10 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance findByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance findByUuid_Last(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the last rule instance in the ordered set where uuid = &#63;.
@@ -133,12 +139,9 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByUuid_Last(java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
 
 	/**
 	* Returns the rule instances before and after the current rule instance in the ordered set where uuid = &#63;.
@@ -148,32 +151,26 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance[] findByUuid_PrevAndNext(
-		long ruleInstanceId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance[] findByUuid_PrevAndNext(long ruleInstanceId,
+		java.lang.String uuid,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Removes all the rule instances where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUuid(java.lang.String uuid);
 
 	/**
 	* Returns the number of rule instances where uuid = &#63;.
 	*
 	* @param uuid the uuid
 	* @return the number of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUuid(java.lang.String uuid);
 
 	/**
 	* Returns the rule instance where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchRuleInstanceException} if it could not be found.
@@ -182,12 +179,9 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param groupId the group ID
 	* @return the matching rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance findByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance findByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the rule instance where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
@@ -195,24 +189,19 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByUUID_G(java.lang.String uuid, long groupId);
 
 	/**
 	* Returns the rule instance where uuid = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByUUID_G(java.lang.String uuid, long groupId,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes the rule instance where uuid = &#63; and groupId = &#63; from the database.
@@ -220,12 +209,9 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the rule instance that was removed
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance removeByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the number of rule instances where uuid = &#63; and groupId = &#63;.
@@ -233,10 +219,8 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUUID_G(java.lang.String uuid, long groupId);
 
 	/**
 	* Returns all the rule instances where uuid = &#63; and companyId = &#63;.
@@ -244,17 +228,15 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByUuid_C(java.lang.String uuid,
+		long companyId);
 
 	/**
 	* Returns a range of all the rule instances where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -262,17 +244,15 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param start the lower bound of the range of rule instances
 	* @param end the upper bound of the range of rule instances (not inclusive)
 	* @return the range of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the rule instances where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -281,12 +261,30 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param end the upper bound of the range of rule instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the rule instances where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of rule instances
+	* @param end the upper bound of the range of rule instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching rule instances
+	*/
+	public java.util.List<RuleInstance> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first rule instance in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -296,13 +294,11 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance findByUuid_C_First(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the first rule instance in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -311,12 +307,10 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByUuid_C_First(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
 
 	/**
 	* Returns the last rule instance in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -326,13 +320,11 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance findByUuid_C_Last(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the last rule instance in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -341,12 +333,10 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
 
 	/**
 	* Returns the rule instances before and after the current rule instance in the ordered set where uuid = &#63; and companyId = &#63;.
@@ -357,23 +347,19 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance[] findByUuid_C_PrevAndNext(
-		long ruleInstanceId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance[] findByUuid_C_PrevAndNext(long ruleInstanceId,
+		java.lang.String uuid, long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Removes all the rule instances where uuid = &#63; and companyId = &#63; from the database.
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns the number of rule instances where uuid = &#63; and companyId = &#63;.
@@ -381,44 +367,37 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUuid_C(java.lang.String uuid, long companyId);
 
 	/**
 	* Returns all the rule instances where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @return the matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByGroupId(long groupId);
 
 	/**
 	* Returns a range of all the rule instances where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
 	* @param start the lower bound of the range of rule instances
 	* @param end the upper bound of the range of rule instances (not inclusive)
 	* @return the range of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByGroupId(long groupId, int start,
+		int end);
 
 	/**
 	* Returns an ordered range of all the rule instances where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -426,12 +405,29 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param end the upper bound of the range of rule instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByGroupId(long groupId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the rule instances where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of rule instances
+	* @param end the upper bound of the range of rule instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching rule instances
+	*/
+	public java.util.List<RuleInstance> findByGroupId(long groupId, int start,
+		int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first rule instance in the ordered set where groupId = &#63;.
@@ -440,13 +436,10 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance findByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the first rule instance in the ordered set where groupId = &#63;.
@@ -454,12 +447,9 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByGroupId_First(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
 
 	/**
 	* Returns the last rule instance in the ordered set where groupId = &#63;.
@@ -468,13 +458,10 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance findByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the last rule instance in the ordered set where groupId = &#63;.
@@ -482,12 +469,9 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByGroupId_Last(long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
 
 	/**
 	* Returns the rule instances before and after the current rule instance in the ordered set where groupId = &#63;.
@@ -497,66 +481,55 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance[] findByGroupId_PrevAndNext(
-		long ruleInstanceId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance[] findByGroupId_PrevAndNext(long ruleInstanceId,
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Removes all the rule instances where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByGroupId(long groupId);
 
 	/**
 	* Returns the number of rule instances where groupId = &#63;.
 	*
 	* @param groupId the group ID
 	* @return the number of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByGroupId(long groupId);
 
 	/**
 	* Returns all the rule instances where userSegmentId = &#63;.
 	*
 	* @param userSegmentId the user segment ID
 	* @return the matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByUserSegmentId(
-		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByUserSegmentId(long userSegmentId);
 
 	/**
 	* Returns a range of all the rule instances where userSegmentId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userSegmentId the user segment ID
 	* @param start the lower bound of the range of rule instances
 	* @param end the upper bound of the range of rule instances (not inclusive)
 	* @return the range of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByUserSegmentId(
-		long userSegmentId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByUserSegmentId(
+		long userSegmentId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the rule instances where userSegmentId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param userSegmentId the user segment ID
@@ -564,12 +537,29 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param end the upper bound of the range of rule instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByUserSegmentId(
+	public java.util.List<RuleInstance> findByUserSegmentId(
 		long userSegmentId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the rule instances where userSegmentId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param userSegmentId the user segment ID
+	* @param start the lower bound of the range of rule instances
+	* @param end the upper bound of the range of rule instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching rule instances
+	*/
+	public java.util.List<RuleInstance> findByUserSegmentId(
+		long userSegmentId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first rule instance in the ordered set where userSegmentId = &#63;.
@@ -578,13 +568,10 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance findByUserSegmentId_First(
-		long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance findByUserSegmentId_First(long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the first rule instance in the ordered set where userSegmentId = &#63;.
@@ -592,12 +579,9 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByUserSegmentId_First(
-		long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByUserSegmentId_First(long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
 
 	/**
 	* Returns the last rule instance in the ordered set where userSegmentId = &#63;.
@@ -606,13 +590,10 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance findByUserSegmentId_Last(
-		long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance findByUserSegmentId_Last(long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the last rule instance in the ordered set where userSegmentId = &#63;.
@@ -620,12 +601,9 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByUserSegmentId_Last(
-		long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByUserSegmentId_Last(long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
 
 	/**
 	* Returns the rule instances before and after the current rule instance in the ordered set where userSegmentId = &#63;.
@@ -635,32 +613,26 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance[] findByUserSegmentId_PrevAndNext(
-		long ruleInstanceId, long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance[] findByUserSegmentId_PrevAndNext(long ruleInstanceId,
+		long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Removes all the rule instances where userSegmentId = &#63; from the database.
 	*
 	* @param userSegmentId the user segment ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByUserSegmentId(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByUserSegmentId(long userSegmentId);
 
 	/**
 	* Returns the number of rule instances where userSegmentId = &#63;.
 	*
 	* @param userSegmentId the user segment ID
 	* @return the number of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByUserSegmentId(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByUserSegmentId(long userSegmentId);
 
 	/**
 	* Returns all the rule instances where ruleKey = &#63; and userSegmentId = &#63;.
@@ -668,17 +640,15 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param ruleKey the rule key
 	* @param userSegmentId the user segment ID
 	* @return the matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByR_U(
-		java.lang.String ruleKey, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByR_U(java.lang.String ruleKey,
+		long userSegmentId);
 
 	/**
 	* Returns a range of all the rule instances where ruleKey = &#63; and userSegmentId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param ruleKey the rule key
@@ -686,17 +656,15 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param start the lower bound of the range of rule instances
 	* @param end the upper bound of the range of rule instances (not inclusive)
 	* @return the range of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByR_U(
-		java.lang.String ruleKey, long userSegmentId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByR_U(java.lang.String ruleKey,
+		long userSegmentId, int start, int end);
 
 	/**
 	* Returns an ordered range of all the rule instances where ruleKey = &#63; and userSegmentId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param ruleKey the rule key
@@ -705,12 +673,30 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param end the upper bound of the range of rule instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findByR_U(
-		java.lang.String ruleKey, long userSegmentId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findByR_U(java.lang.String ruleKey,
+		long userSegmentId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the rule instances where ruleKey = &#63; and userSegmentId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param ruleKey the rule key
+	* @param userSegmentId the user segment ID
+	* @param start the lower bound of the range of rule instances
+	* @param end the upper bound of the range of rule instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching rule instances
+	*/
+	public java.util.List<RuleInstance> findByR_U(java.lang.String ruleKey,
+		long userSegmentId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Returns the first rule instance in the ordered set where ruleKey = &#63; and userSegmentId = &#63;.
@@ -720,13 +706,11 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance findByR_U_First(
-		java.lang.String ruleKey, long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance findByR_U_First(java.lang.String ruleKey,
+		long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the first rule instance in the ordered set where ruleKey = &#63; and userSegmentId = &#63;.
@@ -735,12 +719,10 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByR_U_First(
-		java.lang.String ruleKey, long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByR_U_First(java.lang.String ruleKey,
+		long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
 
 	/**
 	* Returns the last rule instance in the ordered set where ruleKey = &#63; and userSegmentId = &#63;.
@@ -750,13 +732,11 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance findByR_U_Last(
-		java.lang.String ruleKey, long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance findByR_U_Last(java.lang.String ruleKey,
+		long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the last rule instance in the ordered set where ruleKey = &#63; and userSegmentId = &#63;.
@@ -765,12 +745,10 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance, or <code>null</code> if a matching rule instance could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByR_U_Last(
-		java.lang.String ruleKey, long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByR_U_Last(java.lang.String ruleKey,
+		long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
 
 	/**
 	* Returns the rule instances before and after the current rule instance in the ordered set where ruleKey = &#63; and userSegmentId = &#63;.
@@ -781,23 +759,19 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance[] findByR_U_PrevAndNext(
-		long ruleInstanceId, java.lang.String ruleKey, long userSegmentId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance[] findByR_U_PrevAndNext(long ruleInstanceId,
+		java.lang.String ruleKey, long userSegmentId,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Removes all the rule instances where ruleKey = &#63; and userSegmentId = &#63; from the database.
 	*
 	* @param ruleKey the rule key
 	* @param userSegmentId the user segment ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeByR_U(java.lang.String ruleKey, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeByR_U(java.lang.String ruleKey, long userSegmentId);
 
 	/**
 	* Returns the number of rule instances where ruleKey = &#63; and userSegmentId = &#63;.
@@ -805,26 +779,22 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param ruleKey the rule key
 	* @param userSegmentId the user segment ID
 	* @return the number of matching rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countByR_U(java.lang.String ruleKey, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countByR_U(java.lang.String ruleKey, long userSegmentId);
 
 	/**
 	* Caches the rule instance in the entity cache if it is enabled.
 	*
 	* @param ruleInstance the rule instance
 	*/
-	public void cacheResult(
-		com.liferay.content.targeting.model.RuleInstance ruleInstance);
+	public void cacheResult(RuleInstance ruleInstance);
 
 	/**
 	* Caches the rule instances in the entity cache if it is enabled.
 	*
 	* @param ruleInstances the rule instances
 	*/
-	public void cacheResult(
-		java.util.List<com.liferay.content.targeting.model.RuleInstance> ruleInstances);
+	public void cacheResult(java.util.List<RuleInstance> ruleInstances);
 
 	/**
 	* Creates a new rule instance with the primary key. Does not add the rule instance to the database.
@@ -832,8 +802,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param ruleInstanceId the primary key for the new rule instance
 	* @return the new rule instance
 	*/
-	public com.liferay.content.targeting.model.RuleInstance create(
-		long ruleInstanceId);
+	public RuleInstance create(long ruleInstanceId);
 
 	/**
 	* Removes the rule instance with the primary key from the database. Also notifies the appropriate model listeners.
@@ -841,16 +810,11 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param ruleInstanceId the primary key of the rule instance
 	* @return the rule instance that was removed
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance remove(
-		long ruleInstanceId)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance remove(long ruleInstanceId)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
-	public com.liferay.content.targeting.model.RuleInstance updateImpl(
-		com.liferay.content.targeting.model.RuleInstance ruleInstance)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance updateImpl(RuleInstance ruleInstance);
 
 	/**
 	* Returns the rule instance with the primary key or throws a {@link com.liferay.content.targeting.NoSuchRuleInstanceException} if it could not be found.
@@ -858,81 +822,86 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param ruleInstanceId the primary key of the rule instance
 	* @return the rule instance
 	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance findByPrimaryKey(
-		long ruleInstanceId)
-		throws com.liferay.content.targeting.NoSuchRuleInstanceException,
-			com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance findByPrimaryKey(long ruleInstanceId)
+		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
 
 	/**
 	* Returns the rule instance with the primary key or returns <code>null</code> if it could not be found.
 	*
 	* @param ruleInstanceId the primary key of the rule instance
 	* @return the rule instance, or <code>null</code> if a rule instance with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public com.liferay.content.targeting.model.RuleInstance fetchByPrimaryKey(
-		long ruleInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public RuleInstance fetchByPrimaryKey(long ruleInstanceId);
+
+	@Override
+	public java.util.Map<java.io.Serializable, RuleInstance> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	/**
 	* Returns all the rule instances.
 	*
 	* @return the rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findAll();
 
 	/**
 	* Returns a range of all the rule instances.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of rule instances
 	* @param end the upper bound of the range of rule instances (not inclusive)
 	* @return the range of rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findAll(int start, int end);
 
 	/**
 	* Returns an ordered range of all the rule instances.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of rule instances
 	* @param end the upper bound of the range of rule instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<RuleInstance> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the rule instances.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link RuleInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of rule instances
+	* @param end the upper bound of the range of rule instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of rule instances
+	*/
+	public java.util.List<RuleInstance> findAll(int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator,
+		boolean retrieveFromCache);
 
 	/**
 	* Removes all the rule instances from the database.
-	*
-	* @throws SystemException if a system exception occurred
 	*/
-	public void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public void removeAll();
 
 	/**
 	* Returns the number of rule instances.
 	*
 	* @return the number of rule instances
-	* @throws SystemException if a system exception occurred
 	*/
-	public int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int countAll();
+
+	@Override
+	public java.util.Set<java.lang.String> getBadColumnNames();
 }

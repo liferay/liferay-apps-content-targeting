@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.analytics.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.analytics.service.AnalyticsReferrerServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -23,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.content.targeting.analytics.service.AnalyticsReferrerServiceUtil} service utility. The
+ * {@link AnalyticsReferrerServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -58,9 +60,10 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see AnalyticsReferrerServiceHttp
  * @see com.liferay.content.targeting.analytics.model.AnalyticsReferrerSoap
- * @see com.liferay.content.targeting.analytics.service.AnalyticsReferrerServiceUtil
+ * @see AnalyticsReferrerServiceUtil
  * @generated
  */
+@ProviderType
 public class AnalyticsReferrerServiceSoap {
 	public static com.liferay.content.targeting.analytics.model.AnalyticsReferrerSoap[] getAnalyticsReferrers(
 		long analyticsEventId) throws RemoteException {

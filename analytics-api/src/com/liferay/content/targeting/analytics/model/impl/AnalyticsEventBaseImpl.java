@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.analytics.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the AnalyticsEvent service. Represents a row in the &quot;CT_Analytics_AnalyticsEvent&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see AnalyticsEventImpl
- * @see com.liferay.content.targeting.analytics.model.AnalyticsEvent
+ * @see AnalyticsEvent
  * @generated
  */
+@ProviderType
 public abstract class AnalyticsEventBaseImpl extends AnalyticsEventModelImpl
 	implements AnalyticsEvent {
 	/*
@@ -39,7 +40,7 @@ public abstract class AnalyticsEventBaseImpl extends AnalyticsEventModelImpl
 	 * Never modify or reference this class directly. All methods that expect a analytics event model instance should use the {@link AnalyticsEvent} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			AnalyticsEventLocalServiceUtil.addAnalyticsEvent(this);
 		}

@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
@@ -23,37 +25,11 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see CampaignService
  * @generated
  */
+@ProviderType
 public class CampaignServiceWrapper implements CampaignService,
 	ServiceWrapper<CampaignService> {
 	public CampaignServiceWrapper(CampaignService campaignService) {
 		_campaignService = campaignService;
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _campaignService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_campaignService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _campaignService.invokeMethod(name, parameterTypes, arguments);
 	}
 
 	@Override
@@ -115,6 +91,16 @@ public class CampaignServiceWrapper implements CampaignService,
 		return _campaignService.getCampaignsCount(groupId);
 	}
 
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _campaignService.getOSGiServiceIdentifier();
+	}
+
 	@Override
 	public com.liferay.content.targeting.model.Campaign updateCampaign(
 		long campaignId,
@@ -144,20 +130,6 @@ public class CampaignServiceWrapper implements CampaignService,
 		return _campaignService.updateCampaign(campaignId, nameMap,
 			descriptionMap, startDate, endDate, timeZoneId, priority, active,
 			userSegmentIds, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public CampaignService getWrappedCampaignService() {
-		return _campaignService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedCampaignService(CampaignService campaignService) {
-		_campaignService = campaignService;
 	}
 
 	@Override

@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.base;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.persistence.AnonymousUserUserSegmentPersistence;
@@ -27,26 +29,40 @@ import com.liferay.content.targeting.service.persistence.TrackingActionInstanceP
 import com.liferay.content.targeting.service.persistence.UserSegmentPersistence;
 
 import com.liferay.portal.kernel.bean.BeanReference;
-import com.liferay.portal.kernel.bean.IdentifiableBean;
+import com.liferay.portal.kernel.dao.db.DB;
+import com.liferay.portal.kernel.dao.db.DBManagerUtil;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdate;
 import com.liferay.portal.kernel.dao.jdbc.SqlUpdateFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DefaultActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.dao.orm.Projection;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.module.framework.service.IdentifiableOSGiService;
 import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.model.PersistedModel;
 import com.liferay.portal.service.BaseLocalServiceImpl;
-import com.liferay.portal.service.PersistedModelLocalServiceRegistryUtil;
+import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.GroupPersistence;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
+import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.asset.service.persistence.AssetCategoryPersistence;
 import com.liferay.portlet.asset.service.persistence.AssetVocabularyPersistence;
+import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
+import com.liferay.portlet.exportimport.lar.ManifestSummary;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelType;
 
 import java.io.Serializable;
 
@@ -66,9 +82,10 @@ import javax.sql.DataSource;
  * @see com.liferay.content.targeting.service.UserSegmentLocalServiceUtil
  * @generated
  */
+@ProviderType
 public abstract class UserSegmentLocalServiceBaseImpl
 	extends BaseLocalServiceImpl implements UserSegmentLocalService,
-		IdentifiableBean {
+		IdentifiableOSGiService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -80,12 +97,10 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 *
 	 * @param userSegment the user segment
 	 * @return the user segment that was added
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public UserSegment addUserSegment(UserSegment userSegment)
-		throws SystemException {
+	public UserSegment addUserSegment(UserSegment userSegment) {
 		userSegment.setNew(true);
 
 		return userSegmentPersistence.update(userSegment);
@@ -108,7 +123,7 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param userSegmentId the primary key of the user segment
 	 * @return the user segment that was removed
 	 * @throws PortalException if a user segment with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -123,7 +138,7 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param userSegment the user segment
 	 * @return the user segment that was removed
 	 * @throws PortalException
-	 * @throws SystemException if a system exception occurred
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
@@ -145,12 +160,9 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery) {
 		return userSegmentPersistence.findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -165,12 +177,10 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param start the lower bound of the range of model instances
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end)
-		throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end) {
 		return userSegmentPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end);
 	}
@@ -187,62 +197,42 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	@SuppressWarnings("rawtypes")
-	public List dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-		OrderByComparator orderByComparator) throws SystemException {
+	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start,
+		int end, OrderByComparator<T> orderByComparator) {
 		return userSegmentPersistence.findWithDynamicQuery(dynamicQuery, start,
 			end, orderByComparator);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
-	public long dynamicQueryCount(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public long dynamicQueryCount(DynamicQuery dynamicQuery) {
 		return userSegmentPersistence.countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Returns the number of rows that match the dynamic query.
+	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
 	 * @param projection the projection to apply to the query
-	 * @return the number of rows that match the dynamic query
-	 * @throws SystemException if a system exception occurred
+	 * @return the number of rows matching the dynamic query
 	 */
 	@Override
 	public long dynamicQueryCount(DynamicQuery dynamicQuery,
-		Projection projection) throws SystemException {
+		Projection projection) {
 		return userSegmentPersistence.countWithDynamicQuery(dynamicQuery,
 			projection);
 	}
 
 	@Override
-	public UserSegment fetchUserSegment(long userSegmentId)
-		throws SystemException {
+	public UserSegment fetchUserSegment(long userSegmentId) {
 		return userSegmentPersistence.fetchByPrimaryKey(userSegmentId);
-	}
-
-	/**
-	 * Returns the user segment with the matching UUID and company.
-	 *
-	 * @param uuid the user segment's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching user segment, or <code>null</code> if a matching user segment could not be found
-	 * @throws SystemException if a system exception occurred
-	 */
-	@Override
-	public UserSegment fetchUserSegmentByUuidAndCompanyId(String uuid,
-		long companyId) throws SystemException {
-		return userSegmentPersistence.fetchByUuid_C_First(uuid, companyId, null);
 	}
 
 	/**
@@ -251,11 +241,10 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param uuid the user segment's UUID
 	 * @param groupId the primary key of the group
 	 * @return the matching user segment, or <code>null</code> if a matching user segment could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserSegment fetchUserSegmentByUuidAndGroupId(String uuid,
-		long groupId) throws SystemException {
+		long groupId) {
 		return userSegmentPersistence.fetchByUUID_G(uuid, groupId);
 	}
 
@@ -265,33 +254,144 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param userSegmentId the primary key of the user segment
 	 * @return the user segment
 	 * @throws PortalException if a user segment with the primary key could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserSegment getUserSegment(long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return userSegmentPersistence.findByPrimaryKey(userSegmentId);
 	}
 
 	@Override
+	public ActionableDynamicQuery getActionableDynamicQuery() {
+		ActionableDynamicQuery actionableDynamicQuery = new DefaultActionableDynamicQuery();
+
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.UserSegmentLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(UserSegment.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("userSegmentId");
+
+		return actionableDynamicQuery;
+	}
+
+	@Override
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
+		IndexableActionableDynamicQuery indexableActionableDynamicQuery = new IndexableActionableDynamicQuery();
+
+		indexableActionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.UserSegmentLocalServiceUtil.getService());
+		indexableActionableDynamicQuery.setClassLoader(getClassLoader());
+		indexableActionableDynamicQuery.setModelClass(UserSegment.class);
+
+		indexableActionableDynamicQuery.setPrimaryKeyPropertyName(
+			"userSegmentId");
+
+		return indexableActionableDynamicQuery;
+	}
+
+	protected void initActionableDynamicQuery(
+		ActionableDynamicQuery actionableDynamicQuery) {
+		actionableDynamicQuery.setBaseLocalService(com.liferay.content.targeting.service.UserSegmentLocalServiceUtil.getService());
+		actionableDynamicQuery.setClassLoader(getClassLoader());
+		actionableDynamicQuery.setModelClass(UserSegment.class);
+
+		actionableDynamicQuery.setPrimaryKeyPropertyName("userSegmentId");
+	}
+
+	@Override
+	public ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		final PortletDataContext portletDataContext) {
+		final ExportActionableDynamicQuery exportActionableDynamicQuery = new ExportActionableDynamicQuery() {
+				@Override
+				public long performCount() throws PortalException {
+					ManifestSummary manifestSummary = portletDataContext.getManifestSummary();
+
+					StagedModelType stagedModelType = getStagedModelType();
+
+					long modelAdditionCount = super.performCount();
+
+					manifestSummary.addModelAdditionCount(stagedModelType,
+						modelAdditionCount);
+
+					long modelDeletionCount = ExportImportHelperUtil.getModelDeletionCount(portletDataContext,
+							stagedModelType);
+
+					manifestSummary.addModelDeletionCount(stagedModelType,
+						modelDeletionCount);
+
+					return modelAdditionCount;
+				}
+			};
+
+		initActionableDynamicQuery(exportActionableDynamicQuery);
+
+		exportActionableDynamicQuery.setAddCriteriaMethod(new ActionableDynamicQuery.AddCriteriaMethod() {
+				@Override
+				public void addCriteria(DynamicQuery dynamicQuery) {
+					portletDataContext.addDateRangeCriteria(dynamicQuery,
+						"modifiedDate");
+				}
+			});
+
+		exportActionableDynamicQuery.setCompanyId(portletDataContext.getCompanyId());
+
+		exportActionableDynamicQuery.setPerformActionMethod(new ActionableDynamicQuery.PerformActionMethod<UserSegment>() {
+				@Override
+				public void performAction(UserSegment userSegment)
+					throws PortalException {
+					StagedModelDataHandlerUtil.exportStagedModel(portletDataContext,
+						userSegment);
+				}
+			});
+		exportActionableDynamicQuery.setStagedModelType(new StagedModelType(
+				PortalUtil.getClassNameId(UserSegment.class.getName())));
+
+		return exportActionableDynamicQuery;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
+	@Override
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException {
+		return userSegmentLocalService.deleteUserSegment((UserSegment)persistedModel);
+	}
+
+	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return userSegmentPersistence.findByPrimaryKey(primaryKeyObj);
 	}
 
 	/**
-	 * Returns the user segment with the matching UUID and company.
+	 * Returns all the user segments matching the UUID and company.
 	 *
-	 * @param uuid the user segment's UUID
-	 * @param  companyId the primary key of the company
-	 * @return the matching user segment
-	 * @throws PortalException if a matching user segment could not be found
-	 * @throws SystemException if a system exception occurred
+	 * @param uuid the UUID of the user segments
+	 * @param companyId the primary key of the company
+	 * @return the matching user segments, or an empty list if no matches were found
 	 */
 	@Override
-	public UserSegment getUserSegmentByUuidAndCompanyId(String uuid,
-		long companyId) throws PortalException, SystemException {
-		return userSegmentPersistence.findByUuid_C_First(uuid, companyId, null);
+	public List<UserSegment> getUserSegmentsByUuidAndCompanyId(String uuid,
+		long companyId) {
+		return userSegmentPersistence.findByUuid_C(uuid, companyId);
+	}
+
+	/**
+	 * Returns a range of user segments matching the UUID and company.
+	 *
+	 * @param uuid the UUID of the user segments
+	 * @param companyId the primary key of the company
+	 * @param start the lower bound of the range of user segments
+	 * @param end the upper bound of the range of user segments (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the range of matching user segments, or an empty list if no matches were found
+	 */
+	@Override
+	public List<UserSegment> getUserSegmentsByUuidAndCompanyId(String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<UserSegment> orderByComparator) {
+		return userSegmentPersistence.findByUuid_C(uuid, companyId, start, end,
+			orderByComparator);
 	}
 
 	/**
@@ -301,11 +401,10 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param groupId the primary key of the group
 	 * @return the matching user segment
 	 * @throws PortalException if a matching user segment could not be found
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public UserSegment getUserSegmentByUuidAndGroupId(String uuid, long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return userSegmentPersistence.findByUUID_G(uuid, groupId);
 	}
 
@@ -319,11 +418,9 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param start the lower bound of the range of user segments
 	 * @param end the upper bound of the range of user segments (not inclusive)
 	 * @return the range of user segments
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public List<UserSegment> getUserSegments(int start, int end)
-		throws SystemException {
+	public List<UserSegment> getUserSegments(int start, int end) {
 		return userSegmentPersistence.findAll(start, end);
 	}
 
@@ -331,10 +428,9 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * Returns the number of user segments.
 	 *
 	 * @return the number of user segments
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getUserSegmentsCount() throws SystemException {
+	public int getUserSegmentsCount() {
 		return userSegmentPersistence.countAll();
 	}
 
@@ -343,303 +439,268 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 *
 	 * @param userSegment the user segment
 	 * @return the user segment that was updated
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
-	public UserSegment updateUserSegment(UserSegment userSegment)
-		throws SystemException {
+	public UserSegment updateUserSegment(UserSegment userSegment) {
 		return userSegmentPersistence.update(userSegment);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addCampaignUserSegment(long campaignId, long userSegmentId)
-		throws SystemException {
+	public void addCampaignUserSegment(long campaignId, long userSegmentId) {
 		campaignPersistence.addUserSegment(campaignId, userSegmentId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addCampaignUserSegment(long campaignId, UserSegment userSegment)
-		throws SystemException {
+	public void addCampaignUserSegment(long campaignId, UserSegment userSegment) {
 		campaignPersistence.addUserSegment(campaignId, userSegment);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addCampaignUserSegments(long campaignId, long[] userSegmentIds)
-		throws SystemException {
+	public void addCampaignUserSegments(long campaignId, long[] userSegmentIds) {
 		campaignPersistence.addUserSegments(campaignId, userSegmentIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void addCampaignUserSegments(long campaignId,
-		List<UserSegment> UserSegments) throws SystemException {
+		List<UserSegment> UserSegments) {
 		campaignPersistence.addUserSegments(campaignId, UserSegments);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearCampaignUserSegments(long campaignId)
-		throws SystemException {
+	public void clearCampaignUserSegments(long campaignId) {
 		campaignPersistence.clearUserSegments(campaignId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteCampaignUserSegment(long campaignId, long userSegmentId)
-		throws SystemException {
+	public void deleteCampaignUserSegment(long campaignId, long userSegmentId) {
 		campaignPersistence.removeUserSegment(campaignId, userSegmentId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteCampaignUserSegment(long campaignId,
-		UserSegment userSegment) throws SystemException {
+		UserSegment userSegment) {
 		campaignPersistence.removeUserSegment(campaignId, userSegment);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteCampaignUserSegments(long campaignId,
-		long[] userSegmentIds) throws SystemException {
+		long[] userSegmentIds) {
 		campaignPersistence.removeUserSegments(campaignId, userSegmentIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteCampaignUserSegments(long campaignId,
-		List<UserSegment> UserSegments) throws SystemException {
+		List<UserSegment> UserSegments) {
 		campaignPersistence.removeUserSegments(campaignId, UserSegments);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
+	 * Returns the campaignIds of the campaigns associated with the user segment.
+	 *
+	 * @param userSegmentId the userSegmentId of the user segment
+	 * @return long[] the campaignIds of campaigns associated with the user segment
 	 */
 	@Override
-	public List<UserSegment> getCampaignUserSegments(long campaignId)
-		throws SystemException {
+	public long[] getCampaignPrimaryKeys(long userSegmentId) {
+		return userSegmentPersistence.getCampaignPrimaryKeys(userSegmentId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<UserSegment> getCampaignUserSegments(long campaignId) {
 		return campaignPersistence.getUserSegments(campaignId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserSegment> getCampaignUserSegments(long campaignId,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return campaignPersistence.getUserSegments(campaignId, start, end);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserSegment> getCampaignUserSegments(long campaignId,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator<UserSegment> orderByComparator) {
 		return campaignPersistence.getUserSegments(campaignId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getCampaignUserSegmentsCount(long campaignId)
-		throws SystemException {
+	public int getCampaignUserSegmentsCount(long campaignId) {
 		return campaignPersistence.getUserSegmentsSize(campaignId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasCampaignUserSegment(long campaignId, long userSegmentId)
-		throws SystemException {
+	public boolean hasCampaignUserSegment(long campaignId, long userSegmentId) {
 		return campaignPersistence.containsUserSegment(campaignId, userSegmentId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasCampaignUserSegments(long campaignId)
-		throws SystemException {
+	public boolean hasCampaignUserSegments(long campaignId) {
 		return campaignPersistence.containsUserSegments(campaignId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setCampaignUserSegments(long campaignId, long[] userSegmentIds)
-		throws SystemException {
+	public void setCampaignUserSegments(long campaignId, long[] userSegmentIds) {
 		campaignPersistence.setUserSegments(campaignId, userSegmentIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addTacticUserSegment(long tacticId, long userSegmentId)
-		throws SystemException {
+	public void addTacticUserSegment(long tacticId, long userSegmentId) {
 		tacticPersistence.addUserSegment(tacticId, userSegmentId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addTacticUserSegment(long tacticId, UserSegment userSegment)
-		throws SystemException {
+	public void addTacticUserSegment(long tacticId, UserSegment userSegment) {
 		tacticPersistence.addUserSegment(tacticId, userSegment);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void addTacticUserSegments(long tacticId, long[] userSegmentIds)
-		throws SystemException {
+	public void addTacticUserSegments(long tacticId, long[] userSegmentIds) {
 		tacticPersistence.addUserSegments(tacticId, userSegmentIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void addTacticUserSegments(long tacticId,
-		List<UserSegment> UserSegments) throws SystemException {
+		List<UserSegment> UserSegments) {
 		tacticPersistence.addUserSegments(tacticId, UserSegments);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void clearTacticUserSegments(long tacticId)
-		throws SystemException {
+	public void clearTacticUserSegments(long tacticId) {
 		tacticPersistence.clearUserSegments(tacticId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteTacticUserSegment(long tacticId, long userSegmentId)
-		throws SystemException {
+	public void deleteTacticUserSegment(long tacticId, long userSegmentId) {
 		tacticPersistence.removeUserSegment(tacticId, userSegmentId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteTacticUserSegment(long tacticId, UserSegment userSegment)
-		throws SystemException {
+	public void deleteTacticUserSegment(long tacticId, UserSegment userSegment) {
 		tacticPersistence.removeUserSegment(tacticId, userSegment);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void deleteTacticUserSegments(long tacticId, long[] userSegmentIds)
-		throws SystemException {
+	public void deleteTacticUserSegments(long tacticId, long[] userSegmentIds) {
 		tacticPersistence.removeUserSegments(tacticId, userSegmentIds);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public void deleteTacticUserSegments(long tacticId,
-		List<UserSegment> UserSegments) throws SystemException {
+		List<UserSegment> UserSegments) {
 		tacticPersistence.removeUserSegments(tacticId, UserSegments);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
+	 * Returns the tacticIds of the tactics associated with the user segment.
+	 *
+	 * @param userSegmentId the userSegmentId of the user segment
+	 * @return long[] the tacticIds of tactics associated with the user segment
 	 */
 	@Override
-	public List<UserSegment> getTacticUserSegments(long tacticId)
-		throws SystemException {
+	public long[] getTacticPrimaryKeys(long userSegmentId) {
+		return userSegmentPersistence.getTacticPrimaryKeys(userSegmentId);
+	}
+
+	/**
+	 */
+	@Override
+	public List<UserSegment> getTacticUserSegments(long tacticId) {
 		return tacticPersistence.getUserSegments(tacticId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserSegment> getTacticUserSegments(long tacticId, int start,
-		int end) throws SystemException {
+		int end) {
 		return tacticPersistence.getUserSegments(tacticId, start, end);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
 	public List<UserSegment> getTacticUserSegments(long tacticId, int start,
-		int end, OrderByComparator orderByComparator) throws SystemException {
+		int end, OrderByComparator<UserSegment> orderByComparator) {
 		return tacticPersistence.getUserSegments(tacticId, start, end,
 			orderByComparator);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public int getTacticUserSegmentsCount(long tacticId)
-		throws SystemException {
+	public int getTacticUserSegmentsCount(long tacticId) {
 		return tacticPersistence.getUserSegmentsSize(tacticId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasTacticUserSegment(long tacticId, long userSegmentId)
-		throws SystemException {
+	public boolean hasTacticUserSegment(long tacticId, long userSegmentId) {
 		return tacticPersistence.containsUserSegment(tacticId, userSegmentId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public boolean hasTacticUserSegments(long tacticId)
-		throws SystemException {
+	public boolean hasTacticUserSegments(long tacticId) {
 		return tacticPersistence.containsUserSegments(tacticId);
 	}
 
 	/**
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public void setTacticUserSegments(long tacticId, long[] userSegmentIds)
-		throws SystemException {
+	public void setTacticUserSegments(long tacticId, long[] userSegmentIds) {
 		tacticPersistence.setUserSegments(tacticId, userSegmentIds);
 	}
 
@@ -660,25 +721,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	public void setAnonymousUserUserSegmentLocalService(
 		com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService anonymousUserUserSegmentLocalService) {
 		this.anonymousUserUserSegmentLocalService = anonymousUserUserSegmentLocalService;
-	}
-
-	/**
-	 * Returns the anonymous user user segment remote service.
-	 *
-	 * @return the anonymous user user segment remote service
-	 */
-	public com.liferay.content.targeting.service.AnonymousUserUserSegmentService getAnonymousUserUserSegmentService() {
-		return anonymousUserUserSegmentService;
-	}
-
-	/**
-	 * Sets the anonymous user user segment remote service.
-	 *
-	 * @param anonymousUserUserSegmentService the anonymous user user segment remote service
-	 */
-	public void setAnonymousUserUserSegmentService(
-		com.liferay.content.targeting.service.AnonymousUserUserSegmentService anonymousUserUserSegmentService) {
-		this.anonymousUserUserSegmentService = anonymousUserUserSegmentService;
 	}
 
 	/**
@@ -717,25 +759,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	public void setCampaignLocalService(
 		com.liferay.content.targeting.service.CampaignLocalService campaignLocalService) {
 		this.campaignLocalService = campaignLocalService;
-	}
-
-	/**
-	 * Returns the campaign remote service.
-	 *
-	 * @return the campaign remote service
-	 */
-	public com.liferay.content.targeting.service.CampaignService getCampaignService() {
-		return campaignService;
-	}
-
-	/**
-	 * Sets the campaign remote service.
-	 *
-	 * @param campaignService the campaign remote service
-	 */
-	public void setCampaignService(
-		com.liferay.content.targeting.service.CampaignService campaignService) {
-		this.campaignService = campaignService;
 	}
 
 	/**
@@ -794,25 +817,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the channel instance remote service.
-	 *
-	 * @return the channel instance remote service
-	 */
-	public com.liferay.content.targeting.service.ChannelInstanceService getChannelInstanceService() {
-		return channelInstanceService;
-	}
-
-	/**
-	 * Sets the channel instance remote service.
-	 *
-	 * @param channelInstanceService the channel instance remote service
-	 */
-	public void setChannelInstanceService(
-		com.liferay.content.targeting.service.ChannelInstanceService channelInstanceService) {
-		this.channelInstanceService = channelInstanceService;
-	}
-
-	/**
 	 * Returns the channel instance persistence.
 	 *
 	 * @return the channel instance persistence
@@ -848,25 +852,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	public void setReportInstanceLocalService(
 		com.liferay.content.targeting.service.ReportInstanceLocalService reportInstanceLocalService) {
 		this.reportInstanceLocalService = reportInstanceLocalService;
-	}
-
-	/**
-	 * Returns the report instance remote service.
-	 *
-	 * @return the report instance remote service
-	 */
-	public com.liferay.content.targeting.service.ReportInstanceService getReportInstanceService() {
-		return reportInstanceService;
-	}
-
-	/**
-	 * Sets the report instance remote service.
-	 *
-	 * @param reportInstanceService the report instance remote service
-	 */
-	public void setReportInstanceService(
-		com.liferay.content.targeting.service.ReportInstanceService reportInstanceService) {
-		this.reportInstanceService = reportInstanceService;
 	}
 
 	/**
@@ -908,25 +893,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the rule instance remote service.
-	 *
-	 * @return the rule instance remote service
-	 */
-	public com.liferay.content.targeting.service.RuleInstanceService getRuleInstanceService() {
-		return ruleInstanceService;
-	}
-
-	/**
-	 * Sets the rule instance remote service.
-	 *
-	 * @param ruleInstanceService the rule instance remote service
-	 */
-	public void setRuleInstanceService(
-		com.liferay.content.targeting.service.RuleInstanceService ruleInstanceService) {
-		this.ruleInstanceService = ruleInstanceService;
-	}
-
-	/**
 	 * Returns the rule instance persistence.
 	 *
 	 * @return the rule instance persistence
@@ -962,25 +928,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	public void setTacticLocalService(
 		com.liferay.content.targeting.service.TacticLocalService tacticLocalService) {
 		this.tacticLocalService = tacticLocalService;
-	}
-
-	/**
-	 * Returns the tactic remote service.
-	 *
-	 * @return the tactic remote service
-	 */
-	public com.liferay.content.targeting.service.TacticService getTacticService() {
-		return tacticService;
-	}
-
-	/**
-	 * Sets the tactic remote service.
-	 *
-	 * @param tacticService the tactic remote service
-	 */
-	public void setTacticService(
-		com.liferay.content.targeting.service.TacticService tacticService) {
-		this.tacticService = tacticService;
 	}
 
 	/**
@@ -1021,25 +968,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the tracking action instance remote service.
-	 *
-	 * @return the tracking action instance remote service
-	 */
-	public com.liferay.content.targeting.service.TrackingActionInstanceService getTrackingActionInstanceService() {
-		return trackingActionInstanceService;
-	}
-
-	/**
-	 * Sets the tracking action instance remote service.
-	 *
-	 * @param trackingActionInstanceService the tracking action instance remote service
-	 */
-	public void setTrackingActionInstanceService(
-		com.liferay.content.targeting.service.TrackingActionInstanceService trackingActionInstanceService) {
-		this.trackingActionInstanceService = trackingActionInstanceService;
-	}
-
-	/**
 	 * Returns the tracking action instance persistence.
 	 *
 	 * @return the tracking action instance persistence
@@ -1063,7 +991,7 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 *
 	 * @return the user segment local service
 	 */
-	public com.liferay.content.targeting.service.UserSegmentLocalService getUserSegmentLocalService() {
+	public UserSegmentLocalService getUserSegmentLocalService() {
 		return userSegmentLocalService;
 	}
 
@@ -1073,27 +1001,8 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param userSegmentLocalService the user segment local service
 	 */
 	public void setUserSegmentLocalService(
-		com.liferay.content.targeting.service.UserSegmentLocalService userSegmentLocalService) {
+		UserSegmentLocalService userSegmentLocalService) {
 		this.userSegmentLocalService = userSegmentLocalService;
-	}
-
-	/**
-	 * Returns the user segment remote service.
-	 *
-	 * @return the user segment remote service
-	 */
-	public com.liferay.content.targeting.service.UserSegmentService getUserSegmentService() {
-		return userSegmentService;
-	}
-
-	/**
-	 * Sets the user segment remote service.
-	 *
-	 * @param userSegmentService the user segment remote service
-	 */
-	public void setUserSegmentService(
-		com.liferay.content.targeting.service.UserSegmentService userSegmentService) {
-		this.userSegmentService = userSegmentService;
 	}
 
 	/**
@@ -1135,6 +1044,44 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the class name local service.
+	 *
+	 * @return the class name local service
+	 */
+	public com.liferay.portal.service.ClassNameLocalService getClassNameLocalService() {
+		return classNameLocalService;
+	}
+
+	/**
+	 * Sets the class name local service.
+	 *
+	 * @param classNameLocalService the class name local service
+	 */
+	public void setClassNameLocalService(
+		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
+		this.classNameLocalService = classNameLocalService;
+	}
+
+	/**
+	 * Returns the class name persistence.
+	 *
+	 * @return the class name persistence
+	 */
+	public ClassNamePersistence getClassNamePersistence() {
+		return classNamePersistence;
+	}
+
+	/**
+	 * Sets the class name persistence.
+	 *
+	 * @param classNamePersistence the class name persistence
+	 */
+	public void setClassNamePersistence(
+		ClassNamePersistence classNamePersistence) {
+		this.classNamePersistence = classNamePersistence;
+	}
+
+	/**
 	 * Returns the group local service.
 	 *
 	 * @return the group local service
@@ -1151,25 +1098,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	public void setGroupLocalService(
 		com.liferay.portal.service.GroupLocalService groupLocalService) {
 		this.groupLocalService = groupLocalService;
-	}
-
-	/**
-	 * Returns the group remote service.
-	 *
-	 * @return the group remote service
-	 */
-	public com.liferay.portal.service.GroupService getGroupService() {
-		return groupService;
-	}
-
-	/**
-	 * Sets the group remote service.
-	 *
-	 * @param groupService the group remote service
-	 */
-	public void setGroupService(
-		com.liferay.portal.service.GroupService groupService) {
-		this.groupService = groupService;
 	}
 
 	/**
@@ -1267,25 +1195,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
 	 * Returns the user persistence.
 	 *
 	 * @return the user persistence
@@ -1320,25 +1229,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	public void setAssetCategoryLocalService(
 		com.liferay.portlet.asset.service.AssetCategoryLocalService assetCategoryLocalService) {
 		this.assetCategoryLocalService = assetCategoryLocalService;
-	}
-
-	/**
-	 * Returns the asset category remote service.
-	 *
-	 * @return the asset category remote service
-	 */
-	public com.liferay.portlet.asset.service.AssetCategoryService getAssetCategoryService() {
-		return assetCategoryService;
-	}
-
-	/**
-	 * Sets the asset category remote service.
-	 *
-	 * @param assetCategoryService the asset category remote service
-	 */
-	public void setAssetCategoryService(
-		com.liferay.portlet.asset.service.AssetCategoryService assetCategoryService) {
-		this.assetCategoryService = assetCategoryService;
 	}
 
 	/**
@@ -1380,25 +1270,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the asset vocabulary remote service.
-	 *
-	 * @return the asset vocabulary remote service
-	 */
-	public com.liferay.portlet.asset.service.AssetVocabularyService getAssetVocabularyService() {
-		return assetVocabularyService;
-	}
-
-	/**
-	 * Sets the asset vocabulary remote service.
-	 *
-	 * @param assetVocabularyService the asset vocabulary remote service
-	 */
-	public void setAssetVocabularyService(
-		com.liferay.portlet.asset.service.AssetVocabularyService assetVocabularyService) {
-		this.assetVocabularyService = assetVocabularyService;
-	}
-
-	/**
 	 * Returns the asset vocabulary persistence.
 	 *
 	 * @return the asset vocabulary persistence
@@ -1418,58 +1289,23 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	}
 
 	public void afterPropertiesSet() {
-		Class<?> clazz = getClass();
-
-		_classLoader = clazz.getClassLoader();
-
-		PersistedModelLocalServiceRegistryUtil.register("com.liferay.content.targeting.model.UserSegment",
+		persistedModelLocalServiceRegistry.register("com.liferay.content.targeting.model.UserSegment",
 			userSegmentLocalService);
 	}
 
 	public void destroy() {
-		PersistedModelLocalServiceRegistryUtil.unregister(
+		persistedModelLocalServiceRegistry.unregister(
 			"com.liferay.content.targeting.model.UserSegment");
 	}
 
 	/**
-	 * Returns the Spring bean ID for this bean.
+	 * Returns the OSGi service identifier.
 	 *
-	 * @return the Spring bean ID for this bean
+	 * @return the OSGi service identifier
 	 */
 	@Override
-	public String getBeanIdentifier() {
-		return _beanIdentifier;
-	}
-
-	/**
-	 * Sets the Spring bean ID for this bean.
-	 *
-	 * @param beanIdentifier the Spring bean ID for this bean
-	 */
-	@Override
-	public void setBeanIdentifier(String beanIdentifier) {
-		_beanIdentifier = beanIdentifier;
-	}
-
-	@Override
-	public Object invokeMethod(String name, String[] parameterTypes,
-		Object[] arguments) throws Throwable {
-		Thread currentThread = Thread.currentThread();
-
-		ClassLoader contextClassLoader = currentThread.getContextClassLoader();
-
-		if (contextClassLoader != _classLoader) {
-			currentThread.setContextClassLoader(_classLoader);
-		}
-
-		try {
-			return _clpInvoker.invokeMethod(name, parameterTypes, arguments);
-		}
-		finally {
-			if (contextClassLoader != _classLoader) {
-				currentThread.setContextClassLoader(contextClassLoader);
-			}
-		}
+	public String getOSGiServiceIdentifier() {
+		return UserSegmentLocalService.class.getName();
 	}
 
 	protected Class<?> getModelClass() {
@@ -1481,13 +1317,18 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	}
 
 	/**
-	 * Performs an SQL query.
+	 * Performs a SQL query.
 	 *
 	 * @param sql the sql query
 	 */
-	protected void runSQL(String sql) throws SystemException {
+	protected void runSQL(String sql) {
 		try {
 			DataSource dataSource = userSegmentPersistence.getDataSource();
+
+			DB db = DBManagerUtil.getDB();
+
+			sql = db.buildSQL(sql);
+			sql = PortalUtil.transformSQL(sql);
 
 			SqlUpdate sqlUpdate = SqlUpdateFactoryUtil.getSqlUpdate(dataSource,
 					sql, new int[0]);
@@ -1501,87 +1342,66 @@ public abstract class UserSegmentLocalServiceBaseImpl
 
 	@BeanReference(type = com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService.class)
 	protected com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService anonymousUserUserSegmentLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.AnonymousUserUserSegmentService.class)
-	protected com.liferay.content.targeting.service.AnonymousUserUserSegmentService anonymousUserUserSegmentService;
 	@BeanReference(type = AnonymousUserUserSegmentPersistence.class)
 	protected AnonymousUserUserSegmentPersistence anonymousUserUserSegmentPersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.CampaignLocalService.class)
 	protected com.liferay.content.targeting.service.CampaignLocalService campaignLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.CampaignService.class)
-	protected com.liferay.content.targeting.service.CampaignService campaignService;
 	@BeanReference(type = CampaignPersistence.class)
 	protected CampaignPersistence campaignPersistence;
 	@BeanReference(type = CampaignFinder.class)
 	protected CampaignFinder campaignFinder;
 	@BeanReference(type = com.liferay.content.targeting.service.ChannelInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.ChannelInstanceLocalService channelInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.ChannelInstanceService.class)
-	protected com.liferay.content.targeting.service.ChannelInstanceService channelInstanceService;
 	@BeanReference(type = ChannelInstancePersistence.class)
 	protected ChannelInstancePersistence channelInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.ReportInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.ReportInstanceLocalService reportInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.ReportInstanceService.class)
-	protected com.liferay.content.targeting.service.ReportInstanceService reportInstanceService;
 	@BeanReference(type = ReportInstancePersistence.class)
 	protected ReportInstancePersistence reportInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.RuleInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.RuleInstanceLocalService ruleInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.RuleInstanceService.class)
-	protected com.liferay.content.targeting.service.RuleInstanceService ruleInstanceService;
 	@BeanReference(type = RuleInstancePersistence.class)
 	protected RuleInstancePersistence ruleInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.TacticLocalService.class)
 	protected com.liferay.content.targeting.service.TacticLocalService tacticLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.TacticService.class)
-	protected com.liferay.content.targeting.service.TacticService tacticService;
 	@BeanReference(type = TacticPersistence.class)
 	protected TacticPersistence tacticPersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.TrackingActionInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.TrackingActionInstanceLocalService trackingActionInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.TrackingActionInstanceService.class)
-	protected com.liferay.content.targeting.service.TrackingActionInstanceService trackingActionInstanceService;
 	@BeanReference(type = TrackingActionInstancePersistence.class)
 	protected TrackingActionInstancePersistence trackingActionInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.UserSegmentLocalService.class)
-	protected com.liferay.content.targeting.service.UserSegmentLocalService userSegmentLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.UserSegmentService.class)
-	protected com.liferay.content.targeting.service.UserSegmentService userSegmentService;
+	protected UserSegmentLocalService userSegmentLocalService;
 	@BeanReference(type = UserSegmentPersistence.class)
 	protected UserSegmentPersistence userSegmentPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.GroupLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
+	@ServiceReference(type = ClassNamePersistence.class)
+	protected ClassNamePersistence classNamePersistence;
+	@ServiceReference(type = com.liferay.portal.service.GroupLocalService.class)
 	protected com.liferay.portal.service.GroupLocalService groupLocalService;
-	@BeanReference(type = com.liferay.portal.service.GroupService.class)
-	protected com.liferay.portal.service.GroupService groupService;
-	@BeanReference(type = GroupPersistence.class)
+	@ServiceReference(type = GroupPersistence.class)
 	protected GroupPersistence groupPersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.SystemEventLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.SystemEventLocalService.class)
 	protected com.liferay.portal.service.SystemEventLocalService systemEventLocalService;
-	@BeanReference(type = SystemEventPersistence.class)
+	@ServiceReference(type = SystemEventPersistence.class)
 	protected SystemEventPersistence systemEventPersistence;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@BeanReference(type = com.liferay.portlet.asset.service.AssetCategoryLocalService.class)
+	@ServiceReference(type = com.liferay.portlet.asset.service.AssetCategoryLocalService.class)
 	protected com.liferay.portlet.asset.service.AssetCategoryLocalService assetCategoryLocalService;
-	@BeanReference(type = com.liferay.portlet.asset.service.AssetCategoryService.class)
-	protected com.liferay.portlet.asset.service.AssetCategoryService assetCategoryService;
-	@BeanReference(type = AssetCategoryPersistence.class)
+	@ServiceReference(type = AssetCategoryPersistence.class)
 	protected AssetCategoryPersistence assetCategoryPersistence;
-	@BeanReference(type = com.liferay.portlet.asset.service.AssetVocabularyLocalService.class)
+	@ServiceReference(type = com.liferay.portlet.asset.service.AssetVocabularyLocalService.class)
 	protected com.liferay.portlet.asset.service.AssetVocabularyLocalService assetVocabularyLocalService;
-	@BeanReference(type = com.liferay.portlet.asset.service.AssetVocabularyService.class)
-	protected com.liferay.portlet.asset.service.AssetVocabularyService assetVocabularyService;
-	@BeanReference(type = AssetVocabularyPersistence.class)
+	@ServiceReference(type = AssetVocabularyPersistence.class)
 	protected AssetVocabularyPersistence assetVocabularyPersistence;
-	private String _beanIdentifier;
-	private ClassLoader _classLoader;
-	private UserSegmentLocalServiceClpInvoker _clpInvoker = new UserSegmentLocalServiceClpInvoker();
+	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

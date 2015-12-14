@@ -14,12 +14,16 @@
 
 package com.liferay.content.targeting.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.LocaleException;
 import com.liferay.portal.kernel.bean.AutoEscape;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.model.StagedGroupedModel;
+import com.liferay.portal.model.GroupedModel;
+import com.liferay.portal.model.LocalizedModel;
+import com.liferay.portal.model.ShardedModel;
+import com.liferay.portal.model.StagedAuditedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -43,8 +47,9 @@ import java.util.Map;
  * @see com.liferay.content.targeting.model.impl.ReportInstanceModelImpl
  * @generated
  */
+@ProviderType
 public interface ReportInstanceModel extends BaseModel<ReportInstance>,
-	StagedGroupedModel {
+	GroupedModel, LocalizedModel, ShardedModel, StagedAuditedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -148,10 +153,9 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance>,
 	 * Returns the user uuid of this report instance.
 	 *
 	 * @return the user uuid of this report instance
-	 * @throws SystemException if a system exception occurred
 	 */
 	@Override
-	public String getUserUuid() throws SystemException;
+	public String getUserUuid();
 
 	/**
 	 * Sets the user uuid of this report instance.
@@ -502,12 +506,16 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance>,
 	@Override
 	public void setExpandoBridgeAttributes(ServiceContext serviceContext);
 
+	@Override
 	public String[] getAvailableLanguageIds();
 
+	@Override
 	public String getDefaultLanguageId();
 
+	@Override
 	public void prepareLocalizedFieldsForImport() throws LocaleException;
 
+	@Override
 	public void prepareLocalizedFieldsForImport(Locale defaultImportLocale)
 		throws LocaleException;
 
@@ -515,19 +523,20 @@ public interface ReportInstanceModel extends BaseModel<ReportInstance>,
 	public Object clone();
 
 	@Override
-	public int compareTo(ReportInstance reportInstance);
+	public int compareTo(
+		com.liferay.content.targeting.model.ReportInstance reportInstance);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<ReportInstance> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.ReportInstance> toCacheModel();
 
 	@Override
-	public ReportInstance toEscapedModel();
+	public com.liferay.content.targeting.model.ReportInstance toEscapedModel();
 
 	@Override
-	public ReportInstance toUnescapedModel();
+	public com.liferay.content.targeting.model.ReportInstance toUnescapedModel();
 
 	@Override
 	public String toString();

@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.service.AnonymousUserUserSegmentServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -23,7 +25,7 @@ import java.rmi.RemoteException;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.content.targeting.service.AnonymousUserUserSegmentServiceUtil} service utility. The
+ * {@link AnonymousUserUserSegmentServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -58,9 +60,10 @@ import java.rmi.RemoteException;
  * @author Brian Wing Shun Chan
  * @see AnonymousUserUserSegmentServiceHttp
  * @see com.liferay.content.targeting.model.AnonymousUserUserSegmentSoap
- * @see com.liferay.content.targeting.service.AnonymousUserUserSegmentServiceUtil
+ * @see AnonymousUserUserSegmentServiceUtil
  * @generated
  */
+@ProviderType
 public class AnonymousUserUserSegmentServiceSoap {
 	public static com.liferay.content.targeting.model.AnonymousUserUserSegmentSoap addAnonymousUserUserSegment(
 		long anonymousUserId, long userSegmentId, boolean manual,

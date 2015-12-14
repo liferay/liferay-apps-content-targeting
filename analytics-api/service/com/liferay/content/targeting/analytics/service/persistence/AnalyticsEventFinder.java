@@ -14,10 +14,16 @@
 
 package com.liferay.content.targeting.analytics.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 /**
  * @author Brian Wing Shun Chan
+ * @generated
  */
+@ProviderType
 public interface AnalyticsEventFinder {
+	public int findBlabla();
+
 	public java.util.List<java.lang.Object[]> findByC_GtC_R_R(long companyId,
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.util.Date date)

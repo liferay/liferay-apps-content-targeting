@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.IndexableType;
@@ -21,7 +23,6 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.service.BaseLocalService;
-import com.liferay.portal.service.InvokableLocalService;
 import com.liferay.portal.service.PersistedModelLocalService;
 
 /**
@@ -36,10 +37,11 @@ import com.liferay.portal.service.PersistedModelLocalService;
  * @see com.liferay.content.targeting.service.impl.TacticLocalServiceImpl
  * @generated
  */
+@ProviderType
 @Transactional(isolation = Isolation.PORTAL, rollbackFor =  {
 	PortalException.class, SystemException.class})
 public interface TacticLocalService extends BaseLocalService,
-	InvokableLocalService, PersistedModelLocalService {
+	PersistedModelLocalService {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -51,12 +53,31 @@ public interface TacticLocalService extends BaseLocalService,
 	*
 	* @param tactic the tactic
 	* @return the tactic that was added
-	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.Tactic addTactic(
-		com.liferay.content.targeting.model.Tactic tactic)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.content.targeting.model.Tactic tactic);
+
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
+	public com.liferay.content.targeting.model.Tactic addTactic(long userId,
+		long campaignId,
+		java.util.Map<java.util.Locale, java.lang.String> nameMap,
+		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
+		long[] userSegmentsIds,
+		com.liferay.portal.service.ServiceContext serviceContext)
+		throws PortalException, SystemException;
+
+	public void addUserSegmentTactic(long userSegmentId,
+		com.liferay.content.targeting.model.Tactic tactic);
+
+	public void addUserSegmentTactic(long userSegmentId, long tacticId);
+
+	public void addUserSegmentTactics(long userSegmentId,
+		java.util.List<com.liferay.content.targeting.model.Tactic> Tactics);
+
+	public void addUserSegmentTactics(long userSegmentId, long[] tacticIds);
+
+	public void clearUserSegmentTactics(long userSegmentId);
 
 	/**
 	* Creates a new tactic with the primary key. Does not add the tactic to the database.
@@ -68,18 +89,12 @@ public interface TacticLocalService extends BaseLocalService,
 		long tacticId);
 
 	/**
-	* Deletes the tactic with the primary key from the database. Also notifies the appropriate model listeners.
-	*
-	* @param tacticId the primary key of the tactic
-	* @return the tactic that was removed
-	* @throws PortalException if a tactic with the primary key could not be found
-	* @throws SystemException if a system exception occurred
+	* @throws PortalException
 	*/
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
-	public com.liferay.content.targeting.model.Tactic deleteTactic(
-		long tacticId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+	@Override
+	public com.liferay.portal.model.PersistedModel deletePersistedModel(
+		com.liferay.portal.model.PersistedModel persistedModel)
+		throws PortalException;
 
 	/**
 	* Deletes the tactic from the database. Also notifies the appropriate model listeners.
@@ -87,13 +102,34 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param tactic the tactic
 	* @return the tactic that was removed
 	* @throws PortalException
-	* @throws SystemException if a system exception occurred
+	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.Tactic deleteTactic(
 		com.liferay.content.targeting.model.Tactic tactic)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws PortalException, SystemException;
+
+	/**
+	* Deletes the tactic with the primary key from the database. Also notifies the appropriate model listeners.
+	*
+	* @param tacticId the primary key of the tactic
+	* @return the tactic that was removed
+	* @throws PortalException if a tactic with the primary key could not be found
+	* @throws SystemException
+	*/
+	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
+	public com.liferay.content.targeting.model.Tactic deleteTactic(
+		long tacticId) throws PortalException, SystemException;
+
+	public void deleteUserSegmentTactic(long userSegmentId,
+		com.liferay.content.targeting.model.Tactic tactic);
+
+	public void deleteUserSegmentTactic(long userSegmentId, long tacticId);
+
+	public void deleteUserSegmentTactics(long userSegmentId,
+		java.util.List<com.liferay.content.targeting.model.Tactic> Tactics);
+
+	public void deleteUserSegmentTactics(long userSegmentId, long[] tacticIds);
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -102,12 +138,9 @@ public interface TacticLocalService extends BaseLocalService,
 	*
 	* @param dynamicQuery the dynamic query
 	* @return the matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public <T> java.util.List<T> dynamicQuery(
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
 	* Performs a dynamic query on the database and returns a range of the matching rows.
@@ -120,12 +153,10 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of model instances
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @return the range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) throws com.liferay.portal.kernel.exception.SystemException;
+		int end);
 
 	/**
 	* Performs a dynamic query on the database and returns an ordered range of the matching rows.
@@ -139,55 +170,34 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param end the upper bound of the range of model instances (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching rows
-	* @throws SystemException if a system exception occurred
 	*/
-	@SuppressWarnings("rawtypes")
-	public java.util.List dynamicQuery(
+	public <T> java.util.List<T> dynamicQuery(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
 		int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator);
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	public long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery);
 
 	/**
-	* Returns the number of rows that match the dynamic query.
+	* Returns the number of rows matching the dynamic query.
 	*
 	* @param dynamicQuery the dynamic query
 	* @param projection the projection to apply to the query
-	* @return the number of rows that match the dynamic query
-	* @throws SystemException if a system exception occurred
+	* @return the number of rows matching the dynamic query
 	*/
 	public long dynamicQueryCount(
 		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.portal.kernel.dao.orm.Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.Tactic fetchTactic(long tacticId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the tactic with the matching UUID and company.
-	*
-	* @param uuid the tactic's UUID
-	* @param companyId the primary key of the company
-	* @return the matching tactic, or <code>null</code> if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.Tactic fetchTacticByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public com.liferay.content.targeting.model.Tactic fetchTactic(long tacticId);
 
 	/**
 	* Returns the tactic matching the UUID and group.
@@ -195,12 +205,32 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param uuid the tactic's UUID
 	* @param groupId the primary key of the group
 	* @return the matching tactic, or <code>null</code> if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.Tactic fetchTacticByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.ExportActionableDynamicQuery getExportActionableDynamicQuery(
+		com.liferay.portlet.exportimport.lar.PortletDataContext portletDataContext);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	public java.lang.String getOSGiServiceIdentifier();
+
+	@Override
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.portal.model.PersistedModel getPersistedModel(
+		java.io.Serializable primaryKeyObj) throws PortalException;
 
 	/**
 	* Returns the tactic with the primary key.
@@ -208,34 +238,10 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param tacticId the primary key of the tactic
 	* @return the tactic
 	* @throws PortalException if a tactic with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.Tactic getTactic(long tacticId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Override
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.portal.model.PersistedModel getPersistedModel(
-		java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the tactic with the matching UUID and company.
-	*
-	* @param uuid the tactic's UUID
-	* @param companyId the primary key of the company
-	* @return the matching tactic
-	* @throws PortalException if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.model.Tactic getTacticByUuidAndCompanyId(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws PortalException;
 
 	/**
 	* Returns the tactic matching the UUID and group.
@@ -244,13 +250,20 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param groupId the primary key of the group
 	* @return the matching tactic
 	* @throws PortalException if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.Tactic getTacticByUuidAndGroupId(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		java.lang.String uuid, long groupId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long campaignId) throws PortalException, SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
+		long campaignId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator obc)
+		throws PortalException, SystemException;
 
 	/**
 	* Returns a range of all the tactics.
@@ -262,204 +275,101 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param start the lower bound of the range of tactics
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @return the range of tactics
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		int start, int end);
+
+	/**
+	* Returns all the tactics matching the UUID and company.
+	*
+	* @param uuid the UUID of the tactics
+	* @param companyId the primary key of the company
+	* @return the matching tactics, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getTacticsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId);
+
+	/**
+	* Returns a range of tactics matching the UUID and company.
+	*
+	* @param uuid the UUID of the tactics
+	* @param companyId the primary key of the company
+	* @param start the lower bound of the range of tactics
+	* @param end the upper bound of the range of tactics (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the range of matching tactics, or an empty list if no matches were found
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getTacticsByUuidAndCompanyId(
+		java.lang.String uuid, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.Tactic> orderByComparator);
 
 	/**
 	* Returns the number of tactics.
 	*
 	* @return the number of tactics
-	* @throws SystemException if a system exception occurred
 	*/
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTacticsCount()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public int getTacticsCount();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getTacticsCount(long campaignId)
+		throws PortalException, SystemException;
+
+	/**
+	* Returns the userSegmentIds of the user segments associated with the tactic.
+	*
+	* @param tacticId the tacticId of the tactic
+	* @return long[] the userSegmentIds of user segments associated with the tactic
+	*/
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long[] getUserSegmentPrimaryKeys(long tacticId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getUserSegmentTactics(
+		long userSegmentId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getUserSegmentTactics(
+		long userSegmentId, int start, int end);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public java.util.List<com.liferay.content.targeting.model.Tactic> getUserSegmentTactics(
+		long userSegmentId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<com.liferay.content.targeting.model.Tactic> orderByComparator);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public int getUserSegmentTacticsCount(long userSegmentId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserSegmentTactic(long userSegmentId, long tacticId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasUserSegmentTactics(long userSegmentId);
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
+		long campaignId, long groupId, java.lang.String keywords, int start,
+		int end) throws PortalException, SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
+		long groupId, java.lang.String keywords, int start, int end)
+		throws PortalException, SystemException;
+
+	public void setUserSegmentTactics(long userSegmentId, long[] tacticIds);
 
 	/**
 	* Updates the tactic in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	*
 	* @param tactic the tactic
 	* @return the tactic that was updated
-	* @throws SystemException if a system exception occurred
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.Tactic updateTactic(
-		com.liferay.content.targeting.model.Tactic tactic)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addUserSegmentTactic(long userSegmentId, long tacticId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addUserSegmentTactic(long userSegmentId,
-		com.liferay.content.targeting.model.Tactic tactic)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addUserSegmentTactics(long userSegmentId, long[] tacticIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void addUserSegmentTactics(long userSegmentId,
-		java.util.List<com.liferay.content.targeting.model.Tactic> Tactics)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void clearUserSegmentTactics(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteUserSegmentTactic(long userSegmentId, long tacticId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteUserSegmentTactic(long userSegmentId,
-		com.liferay.content.targeting.model.Tactic tactic)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteUserSegmentTactics(long userSegmentId, long[] tacticIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void deleteUserSegmentTactics(long userSegmentId,
-		java.util.List<com.liferay.content.targeting.model.Tactic> Tactics)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getUserSegmentTactics(
-		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getUserSegmentTactics(
-		long userSegmentId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getUserSegmentTactics(
-		long userSegmentId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserSegmentTacticsCount(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserSegmentTactic(long userSegmentId, long tacticId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public boolean hasUserSegmentTactics(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* @throws SystemException if a system exception occurred
-	*/
-	public void setUserSegmentTactics(long userSegmentId, long[] tacticIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	public java.lang.String getBeanIdentifier();
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	public void setBeanIdentifier(java.lang.String beanIdentifier);
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable;
-
-	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
-	public com.liferay.content.targeting.model.Tactic addTactic(long userId,
-		long campaignId,
-		java.util.Map<java.util.Locale, java.lang.String> nameMap,
-		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
-		long[] userSegmentsIds,
-		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
-		long campaignId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTacticsCount(long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
-		long campaignId, long groupId, java.lang.String keywords, int start,
-		int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
-		long groupId, java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		com.liferay.content.targeting.model.Tactic tactic);
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.Tactic updateTactic(
@@ -468,6 +378,5 @@ public interface TacticLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException;
+		throws PortalException, SystemException;
 }

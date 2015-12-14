@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.analytics.model;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.ModelWrapper;
 
@@ -30,6 +32,7 @@ import java.util.Map;
  * @see AnalyticsEvent
  * @generated
  */
+@ProviderType
 public class AnalyticsEventWrapper implements AnalyticsEvent,
 	ModelWrapper<AnalyticsEvent> {
 	public AnalyticsEventWrapper(AnalyticsEvent analyticsEvent) {
@@ -155,308 +158,15 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 		}
 	}
 
-	/**
-	* Returns the primary key of this analytics event.
-	*
-	* @return the primary key of this analytics event
-	*/
 	@Override
-	public long getPrimaryKey() {
-		return _analyticsEvent.getPrimaryKey();
+	public java.lang.Object clone() {
+		return new AnalyticsEventWrapper((AnalyticsEvent)_analyticsEvent.clone());
 	}
 
-	/**
-	* Sets the primary key of this analytics event.
-	*
-	* @param primaryKey the primary key of this analytics event
-	*/
 	@Override
-	public void setPrimaryKey(long primaryKey) {
-		_analyticsEvent.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	* Returns the analytics event ID of this analytics event.
-	*
-	* @return the analytics event ID of this analytics event
-	*/
-	@Override
-	public long getAnalyticsEventId() {
-		return _analyticsEvent.getAnalyticsEventId();
-	}
-
-	/**
-	* Sets the analytics event ID of this analytics event.
-	*
-	* @param analyticsEventId the analytics event ID of this analytics event
-	*/
-	@Override
-	public void setAnalyticsEventId(long analyticsEventId) {
-		_analyticsEvent.setAnalyticsEventId(analyticsEventId);
-	}
-
-	/**
-	* Returns the company ID of this analytics event.
-	*
-	* @return the company ID of this analytics event
-	*/
-	@Override
-	public long getCompanyId() {
-		return _analyticsEvent.getCompanyId();
-	}
-
-	/**
-	* Sets the company ID of this analytics event.
-	*
-	* @param companyId the company ID of this analytics event
-	*/
-	@Override
-	public void setCompanyId(long companyId) {
-		_analyticsEvent.setCompanyId(companyId);
-	}
-
-	/**
-	* Returns the user ID of this analytics event.
-	*
-	* @return the user ID of this analytics event
-	*/
-	@Override
-	public long getUserId() {
-		return _analyticsEvent.getUserId();
-	}
-
-	/**
-	* Sets the user ID of this analytics event.
-	*
-	* @param userId the user ID of this analytics event
-	*/
-	@Override
-	public void setUserId(long userId) {
-		_analyticsEvent.setUserId(userId);
-	}
-
-	/**
-	* Returns the user uuid of this analytics event.
-	*
-	* @return the user uuid of this analytics event
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.lang.String getUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _analyticsEvent.getUserUuid();
-	}
-
-	/**
-	* Sets the user uuid of this analytics event.
-	*
-	* @param userUuid the user uuid of this analytics event
-	*/
-	@Override
-	public void setUserUuid(java.lang.String userUuid) {
-		_analyticsEvent.setUserUuid(userUuid);
-	}
-
-	/**
-	* Returns the anonymous user ID of this analytics event.
-	*
-	* @return the anonymous user ID of this analytics event
-	*/
-	@Override
-	public long getAnonymousUserId() {
-		return _analyticsEvent.getAnonymousUserId();
-	}
-
-	/**
-	* Sets the anonymous user ID of this analytics event.
-	*
-	* @param anonymousUserId the anonymous user ID of this analytics event
-	*/
-	@Override
-	public void setAnonymousUserId(long anonymousUserId) {
-		_analyticsEvent.setAnonymousUserId(anonymousUserId);
-	}
-
-	/**
-	* Returns the anonymous user uuid of this analytics event.
-	*
-	* @return the anonymous user uuid of this analytics event
-	* @throws SystemException if a system exception occurred
-	*/
-	@Override
-	public java.lang.String getAnonymousUserUuid()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		return _analyticsEvent.getAnonymousUserUuid();
-	}
-
-	/**
-	* Sets the anonymous user uuid of this analytics event.
-	*
-	* @param anonymousUserUuid the anonymous user uuid of this analytics event
-	*/
-	@Override
-	public void setAnonymousUserUuid(java.lang.String anonymousUserUuid) {
-		_analyticsEvent.setAnonymousUserUuid(anonymousUserUuid);
-	}
-
-	/**
-	* Returns the class name of this analytics event.
-	*
-	* @return the class name of this analytics event
-	*/
-	@Override
-	public java.lang.String getClassName() {
-		return _analyticsEvent.getClassName();
-	}
-
-	/**
-	* Sets the class name of this analytics event.
-	*
-	* @param className the class name of this analytics event
-	*/
-	@Override
-	public void setClassName(java.lang.String className) {
-		_analyticsEvent.setClassName(className);
-	}
-
-	/**
-	* Returns the class p k of this analytics event.
-	*
-	* @return the class p k of this analytics event
-	*/
-	@Override
-	public long getClassPK() {
-		return _analyticsEvent.getClassPK();
-	}
-
-	/**
-	* Sets the class p k of this analytics event.
-	*
-	* @param classPK the class p k of this analytics event
-	*/
-	@Override
-	public void setClassPK(long classPK) {
-		_analyticsEvent.setClassPK(classPK);
-	}
-
-	/**
-	* Returns the element ID of this analytics event.
-	*
-	* @return the element ID of this analytics event
-	*/
-	@Override
-	public java.lang.String getElementId() {
-		return _analyticsEvent.getElementId();
-	}
-
-	/**
-	* Sets the element ID of this analytics event.
-	*
-	* @param elementId the element ID of this analytics event
-	*/
-	@Override
-	public void setElementId(java.lang.String elementId) {
-		_analyticsEvent.setElementId(elementId);
-	}
-
-	/**
-	* Returns the event type of this analytics event.
-	*
-	* @return the event type of this analytics event
-	*/
-	@Override
-	public java.lang.String getEventType() {
-		return _analyticsEvent.getEventType();
-	}
-
-	/**
-	* Sets the event type of this analytics event.
-	*
-	* @param eventType the event type of this analytics event
-	*/
-	@Override
-	public void setEventType(java.lang.String eventType) {
-		_analyticsEvent.setEventType(eventType);
-	}
-
-	/**
-	* Returns the client i p of this analytics event.
-	*
-	* @return the client i p of this analytics event
-	*/
-	@Override
-	public java.lang.String getClientIP() {
-		return _analyticsEvent.getClientIP();
-	}
-
-	/**
-	* Sets the client i p of this analytics event.
-	*
-	* @param clientIP the client i p of this analytics event
-	*/
-	@Override
-	public void setClientIP(java.lang.String clientIP) {
-		_analyticsEvent.setClientIP(clientIP);
-	}
-
-	/**
-	* Returns the user agent of this analytics event.
-	*
-	* @return the user agent of this analytics event
-	*/
-	@Override
-	public java.lang.String getUserAgent() {
-		return _analyticsEvent.getUserAgent();
-	}
-
-	/**
-	* Sets the user agent of this analytics event.
-	*
-	* @param userAgent the user agent of this analytics event
-	*/
-	@Override
-	public void setUserAgent(java.lang.String userAgent) {
-		_analyticsEvent.setUserAgent(userAgent);
-	}
-
-	/**
-	* Returns the language ID of this analytics event.
-	*
-	* @return the language ID of this analytics event
-	*/
-	@Override
-	public java.lang.String getLanguageId() {
-		return _analyticsEvent.getLanguageId();
-	}
-
-	/**
-	* Sets the language ID of this analytics event.
-	*
-	* @param languageId the language ID of this analytics event
-	*/
-	@Override
-	public void setLanguageId(java.lang.String languageId) {
-		_analyticsEvent.setLanguageId(languageId);
-	}
-
-	/**
-	* Returns the u r l of this analytics event.
-	*
-	* @return the u r l of this analytics event
-	*/
-	@Override
-	public java.lang.String getURL() {
-		return _analyticsEvent.getURL();
-	}
-
-	/**
-	* Sets the u r l of this analytics event.
-	*
-	* @param URL the u r l of this analytics event
-	*/
-	@Override
-	public void setURL(java.lang.String URL) {
-		_analyticsEvent.setURL(URL);
+	public int compareTo(
+		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent) {
+		return _analyticsEvent.compareTo(analyticsEvent);
 	}
 
 	/**
@@ -470,6 +180,201 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	}
 
 	/**
+	* Returns the analytics event ID of this analytics event.
+	*
+	* @return the analytics event ID of this analytics event
+	*/
+	@Override
+	public long getAnalyticsEventId() {
+		return _analyticsEvent.getAnalyticsEventId();
+	}
+
+	/**
+	* Returns the anonymous user ID of this analytics event.
+	*
+	* @return the anonymous user ID of this analytics event
+	*/
+	@Override
+	public long getAnonymousUserId() {
+		return _analyticsEvent.getAnonymousUserId();
+	}
+
+	/**
+	* Returns the anonymous user uuid of this analytics event.
+	*
+	* @return the anonymous user uuid of this analytics event
+	*/
+	@Override
+	public java.lang.String getAnonymousUserUuid() {
+		return _analyticsEvent.getAnonymousUserUuid();
+	}
+
+	/**
+	* Returns the class name of this analytics event.
+	*
+	* @return the class name of this analytics event
+	*/
+	@Override
+	public java.lang.String getClassName() {
+		return _analyticsEvent.getClassName();
+	}
+
+	/**
+	* Returns the class p k of this analytics event.
+	*
+	* @return the class p k of this analytics event
+	*/
+	@Override
+	public long getClassPK() {
+		return _analyticsEvent.getClassPK();
+	}
+
+	/**
+	* Returns the client i p of this analytics event.
+	*
+	* @return the client i p of this analytics event
+	*/
+	@Override
+	public java.lang.String getClientIP() {
+		return _analyticsEvent.getClientIP();
+	}
+
+	/**
+	* Returns the company ID of this analytics event.
+	*
+	* @return the company ID of this analytics event
+	*/
+	@Override
+	public long getCompanyId() {
+		return _analyticsEvent.getCompanyId();
+	}
+
+	/**
+	* Returns the create date of this analytics event.
+	*
+	* @return the create date of this analytics event
+	*/
+	@Override
+	public Date getCreateDate() {
+		return _analyticsEvent.getCreateDate();
+	}
+
+	/**
+	* Returns the element ID of this analytics event.
+	*
+	* @return the element ID of this analytics event
+	*/
+	@Override
+	public java.lang.String getElementId() {
+		return _analyticsEvent.getElementId();
+	}
+
+	/**
+	* Returns the event type of this analytics event.
+	*
+	* @return the event type of this analytics event
+	*/
+	@Override
+	public java.lang.String getEventType() {
+		return _analyticsEvent.getEventType();
+	}
+
+	@Override
+	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
+		return _analyticsEvent.getExpandoBridge();
+	}
+
+	/**
+	* Returns the language ID of this analytics event.
+	*
+	* @return the language ID of this analytics event
+	*/
+	@Override
+	public java.lang.String getLanguageId() {
+		return _analyticsEvent.getLanguageId();
+	}
+
+	/**
+	* Returns the primary key of this analytics event.
+	*
+	* @return the primary key of this analytics event
+	*/
+	@Override
+	public long getPrimaryKey() {
+		return _analyticsEvent.getPrimaryKey();
+	}
+
+	@Override
+	public java.io.Serializable getPrimaryKeyObj() {
+		return _analyticsEvent.getPrimaryKeyObj();
+	}
+
+	/**
+	* Returns the u r l of this analytics event.
+	*
+	* @return the u r l of this analytics event
+	*/
+	@Override
+	public java.lang.String getURL() {
+		return _analyticsEvent.getURL();
+	}
+
+	/**
+	* Returns the user agent of this analytics event.
+	*
+	* @return the user agent of this analytics event
+	*/
+	@Override
+	public java.lang.String getUserAgent() {
+		return _analyticsEvent.getUserAgent();
+	}
+
+	/**
+	* Returns the user ID of this analytics event.
+	*
+	* @return the user ID of this analytics event
+	*/
+	@Override
+	public long getUserId() {
+		return _analyticsEvent.getUserId();
+	}
+
+	/**
+	* Returns the user uuid of this analytics event.
+	*
+	* @return the user uuid of this analytics event
+	*/
+	@Override
+	public java.lang.String getUserUuid() {
+		return _analyticsEvent.getUserUuid();
+	}
+
+	@Override
+	public int hashCode() {
+		return _analyticsEvent.hashCode();
+	}
+
+	@Override
+	public boolean isCachedModel() {
+		return _analyticsEvent.isCachedModel();
+	}
+
+	@Override
+	public boolean isEscapedModel() {
+		return _analyticsEvent.isEscapedModel();
+	}
+
+	@Override
+	public boolean isNew() {
+		return _analyticsEvent.isNew();
+	}
+
+	@Override
+	public void persist() {
+		_analyticsEvent.persist();
+	}
+
+	/**
 	* Sets the additional info of this analytics event.
 	*
 	* @param additionalInfo the additional info of this analytics event
@@ -480,13 +385,78 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	}
 
 	/**
-	* Returns the create date of this analytics event.
+	* Sets the analytics event ID of this analytics event.
 	*
-	* @return the create date of this analytics event
+	* @param analyticsEventId the analytics event ID of this analytics event
 	*/
 	@Override
-	public java.util.Date getCreateDate() {
-		return _analyticsEvent.getCreateDate();
+	public void setAnalyticsEventId(long analyticsEventId) {
+		_analyticsEvent.setAnalyticsEventId(analyticsEventId);
+	}
+
+	/**
+	* Sets the anonymous user ID of this analytics event.
+	*
+	* @param anonymousUserId the anonymous user ID of this analytics event
+	*/
+	@Override
+	public void setAnonymousUserId(long anonymousUserId) {
+		_analyticsEvent.setAnonymousUserId(anonymousUserId);
+	}
+
+	/**
+	* Sets the anonymous user uuid of this analytics event.
+	*
+	* @param anonymousUserUuid the anonymous user uuid of this analytics event
+	*/
+	@Override
+	public void setAnonymousUserUuid(java.lang.String anonymousUserUuid) {
+		_analyticsEvent.setAnonymousUserUuid(anonymousUserUuid);
+	}
+
+	@Override
+	public void setCachedModel(boolean cachedModel) {
+		_analyticsEvent.setCachedModel(cachedModel);
+	}
+
+	/**
+	* Sets the class name of this analytics event.
+	*
+	* @param className the class name of this analytics event
+	*/
+	@Override
+	public void setClassName(java.lang.String className) {
+		_analyticsEvent.setClassName(className);
+	}
+
+	/**
+	* Sets the class p k of this analytics event.
+	*
+	* @param classPK the class p k of this analytics event
+	*/
+	@Override
+	public void setClassPK(long classPK) {
+		_analyticsEvent.setClassPK(classPK);
+	}
+
+	/**
+	* Sets the client i p of this analytics event.
+	*
+	* @param clientIP the client i p of this analytics event
+	*/
+	@Override
+	public void setClientIP(java.lang.String clientIP) {
+		_analyticsEvent.setClientIP(clientIP);
+	}
+
+	/**
+	* Sets the company ID of this analytics event.
+	*
+	* @param companyId the company ID of this analytics event
+	*/
+	@Override
+	public void setCompanyId(long companyId) {
+		_analyticsEvent.setCompanyId(companyId);
 	}
 
 	/**
@@ -495,48 +465,28 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	* @param createDate the create date of this analytics event
 	*/
 	@Override
-	public void setCreateDate(java.util.Date createDate) {
+	public void setCreateDate(Date createDate) {
 		_analyticsEvent.setCreateDate(createDate);
 	}
 
+	/**
+	* Sets the element ID of this analytics event.
+	*
+	* @param elementId the element ID of this analytics event
+	*/
 	@Override
-	public boolean isNew() {
-		return _analyticsEvent.isNew();
+	public void setElementId(java.lang.String elementId) {
+		_analyticsEvent.setElementId(elementId);
 	}
 
+	/**
+	* Sets the event type of this analytics event.
+	*
+	* @param eventType the event type of this analytics event
+	*/
 	@Override
-	public void setNew(boolean n) {
-		_analyticsEvent.setNew(n);
-	}
-
-	@Override
-	public boolean isCachedModel() {
-		return _analyticsEvent.isCachedModel();
-	}
-
-	@Override
-	public void setCachedModel(boolean cachedModel) {
-		_analyticsEvent.setCachedModel(cachedModel);
-	}
-
-	@Override
-	public boolean isEscapedModel() {
-		return _analyticsEvent.isEscapedModel();
-	}
-
-	@Override
-	public java.io.Serializable getPrimaryKeyObj() {
-		return _analyticsEvent.getPrimaryKeyObj();
-	}
-
-	@Override
-	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
-		_analyticsEvent.setPrimaryKeyObj(primaryKeyObj);
-	}
-
-	@Override
-	public com.liferay.portlet.expando.model.ExpandoBridge getExpandoBridge() {
-		return _analyticsEvent.getExpandoBridge();
+	public void setEventType(java.lang.String eventType) {
+		_analyticsEvent.setEventType(eventType);
 	}
 
 	@Override
@@ -557,20 +507,74 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 		_analyticsEvent.setExpandoBridgeAttributes(serviceContext);
 	}
 
+	/**
+	* Sets the language ID of this analytics event.
+	*
+	* @param languageId the language ID of this analytics event
+	*/
 	@Override
-	public java.lang.Object clone() {
-		return new AnalyticsEventWrapper((AnalyticsEvent)_analyticsEvent.clone());
+	public void setLanguageId(java.lang.String languageId) {
+		_analyticsEvent.setLanguageId(languageId);
 	}
 
 	@Override
-	public int compareTo(
-		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent) {
-		return _analyticsEvent.compareTo(analyticsEvent);
+	public void setNew(boolean n) {
+		_analyticsEvent.setNew(n);
+	}
+
+	/**
+	* Sets the primary key of this analytics event.
+	*
+	* @param primaryKey the primary key of this analytics event
+	*/
+	@Override
+	public void setPrimaryKey(long primaryKey) {
+		_analyticsEvent.setPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public int hashCode() {
-		return _analyticsEvent.hashCode();
+	public void setPrimaryKeyObj(java.io.Serializable primaryKeyObj) {
+		_analyticsEvent.setPrimaryKeyObj(primaryKeyObj);
+	}
+
+	/**
+	* Sets the u r l of this analytics event.
+	*
+	* @param URL the u r l of this analytics event
+	*/
+	@Override
+	public void setURL(java.lang.String URL) {
+		_analyticsEvent.setURL(URL);
+	}
+
+	/**
+	* Sets the user agent of this analytics event.
+	*
+	* @param userAgent the user agent of this analytics event
+	*/
+	@Override
+	public void setUserAgent(java.lang.String userAgent) {
+		_analyticsEvent.setUserAgent(userAgent);
+	}
+
+	/**
+	* Sets the user ID of this analytics event.
+	*
+	* @param userId the user ID of this analytics event
+	*/
+	@Override
+	public void setUserId(long userId) {
+		_analyticsEvent.setUserId(userId);
+	}
+
+	/**
+	* Sets the user uuid of this analytics event.
+	*
+	* @param userUuid the user uuid of this analytics event
+	*/
+	@Override
+	public void setUserUuid(java.lang.String userUuid) {
+		_analyticsEvent.setUserUuid(userUuid);
 	}
 
 	@Override
@@ -584,24 +588,18 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	}
 
 	@Override
-	public com.liferay.content.targeting.analytics.model.AnalyticsEvent toUnescapedModel() {
-		return new AnalyticsEventWrapper(_analyticsEvent.toUnescapedModel());
-	}
-
-	@Override
 	public java.lang.String toString() {
 		return _analyticsEvent.toString();
 	}
 
 	@Override
-	public java.lang.String toXmlString() {
-		return _analyticsEvent.toXmlString();
+	public com.liferay.content.targeting.analytics.model.AnalyticsEvent toUnescapedModel() {
+		return new AnalyticsEventWrapper(_analyticsEvent.toUnescapedModel());
 	}
 
 	@Override
-	public void persist()
-		throws com.liferay.portal.kernel.exception.SystemException {
-		_analyticsEvent.persist();
+	public java.lang.String toXmlString() {
+		return _analyticsEvent.toXmlString();
 	}
 
 	@Override
@@ -627,6 +625,7 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
 	 */
+	@Deprecated
 	public AnalyticsEvent getWrappedAnalyticsEvent() {
 		return _analyticsEvent;
 	}
@@ -637,9 +636,19 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 	}
 
 	@Override
+	public boolean isEntityCacheEnabled() {
+		return _analyticsEvent.isEntityCacheEnabled();
+	}
+
+	@Override
+	public boolean isFinderCacheEnabled() {
+		return _analyticsEvent.isFinderCacheEnabled();
+	}
+
+	@Override
 	public void resetOriginalValues() {
 		_analyticsEvent.resetOriginalValues();
 	}
 
-	private AnalyticsEvent _analyticsEvent;
+	private final AnalyticsEvent _analyticsEvent;
 }

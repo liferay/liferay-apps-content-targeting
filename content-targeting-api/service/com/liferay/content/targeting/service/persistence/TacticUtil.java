@@ -14,19 +14,22 @@
 
 package com.liferay.content.targeting.service.persistence;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.Tactic;
 
-import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.OrderByComparator;
-import com.liferay.portal.kernel.util.ReferenceRegistry;
 import com.liferay.portal.service.ServiceContext;
+
+import org.osgi.util.tracker.ServiceTracker;
 
 import java.util.List;
 
 /**
- * The persistence utility for the tactic service. This utility wraps {@link TacticPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
+ * The persistence utility for the tactic service. This utility wraps {@link com.liferay.content.targeting.service.persistence.impl.TacticPersistenceImpl} and provides direct access to the database for CRUD operations. This utility should only be used by the service layer, as it must operate within a transaction. Never access this utility in a JSP, controller, model, or other front-end class.
  *
  * <p>
  * Caching information and settings can be found in <code>portal.properties</code>
@@ -34,9 +37,10 @@ import java.util.List;
  *
  * @author Brian Wing Shun Chan
  * @see TacticPersistence
- * @see TacticPersistenceImpl
+ * @see com.liferay.content.targeting.service.persistence.impl.TacticPersistenceImpl
  * @generated
  */
+@ProviderType
 public class TacticUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -61,16 +65,14 @@ public class TacticUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#countWithDynamicQuery(DynamicQuery)
 	 */
-	public static long countWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static long countWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().countWithDynamicQuery(dynamicQuery);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery)
 	 */
-	public static List<Tactic> findWithDynamicQuery(DynamicQuery dynamicQuery)
-		throws SystemException {
+	public static List<Tactic> findWithDynamicQuery(DynamicQuery dynamicQuery) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery);
 	}
 
@@ -78,7 +80,7 @@ public class TacticUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int)
 	 */
 	public static List<Tactic> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end) throws SystemException {
+		int start, int end) {
 		return getPersistence().findWithDynamicQuery(dynamicQuery, start, end);
 	}
 
@@ -86,8 +88,7 @@ public class TacticUtil {
 	 * @see com.liferay.portal.service.persistence.BasePersistence#findWithDynamicQuery(DynamicQuery, int, int, OrderByComparator)
 	 */
 	public static List<Tactic> findWithDynamicQuery(DynamicQuery dynamicQuery,
-		int start, int end, OrderByComparator orderByComparator)
-		throws SystemException {
+		int start, int end, OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence()
 				   .findWithDynamicQuery(dynamicQuery, start, end,
 			orderByComparator);
@@ -96,15 +97,14 @@ public class TacticUtil {
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel)
 	 */
-	public static Tactic update(Tactic tactic) throws SystemException {
+	public static Tactic update(Tactic tactic) {
 		return getPersistence().update(tactic);
 	}
 
 	/**
 	 * @see com.liferay.portal.service.persistence.BasePersistence#update(com.liferay.portal.model.BaseModel, ServiceContext)
 	 */
-	public static Tactic update(Tactic tactic, ServiceContext serviceContext)
-		throws SystemException {
+	public static Tactic update(Tactic tactic, ServiceContext serviceContext) {
 		return getPersistence().update(tactic, serviceContext);
 	}
 
@@ -113,11 +113,8 @@ public class TacticUtil {
 	*
 	* @param uuid the uuid
 	* @return the matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findByUuid(
-		java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findByUuid(java.lang.String uuid) {
 		return getPersistence().findByUuid(uuid);
 	}
 
@@ -125,18 +122,16 @@ public class TacticUtil {
 	* Returns a range of all the tactics where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
 	* @param start the lower bound of the range of tactics
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @return the range of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findByUuid(
-		java.lang.String uuid, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findByUuid(java.lang.String uuid, int start,
+		int end) {
 		return getPersistence().findByUuid(uuid, start, end);
 	}
 
@@ -144,7 +139,7 @@ public class TacticUtil {
 	* Returns an ordered range of all the tactics where uuid = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -152,13 +147,32 @@ public class TacticUtil {
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findByUuid(
-		java.lang.String uuid, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findByUuid(java.lang.String uuid, int start,
+		int end, OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence().findByUuid(uuid, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the tactics where uuid = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param start the lower bound of the range of tactics
+	* @param end the upper bound of the range of tactics (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching tactics
+	*/
+	public static List<Tactic> findByUuid(java.lang.String uuid, int start,
+		int end, OrderByComparator<Tactic> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid(uuid, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -168,13 +182,10 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic findByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic findByUuid_First(java.lang.String uuid,
+		OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence().findByUuid_First(uuid, orderByComparator);
 	}
 
@@ -184,12 +195,9 @@ public class TacticUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tactic, or <code>null</code> if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic fetchByUuid_First(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic fetchByUuid_First(java.lang.String uuid,
+		OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence().fetchByUuid_First(uuid, orderByComparator);
 	}
 
@@ -200,13 +208,10 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic findByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic findByUuid_Last(java.lang.String uuid,
+		OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence().findByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -216,12 +221,9 @@ public class TacticUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tactic, or <code>null</code> if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic fetchByUuid_Last(
-		java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic fetchByUuid_Last(java.lang.String uuid,
+		OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence().fetchByUuid_Last(uuid, orderByComparator);
 	}
 
@@ -233,13 +235,10 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic[] findByUuid_PrevAndNext(
-		long tacticId, java.lang.String uuid,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic[] findByUuid_PrevAndNext(long tacticId,
+		java.lang.String uuid, OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence()
 				   .findByUuid_PrevAndNext(tacticId, uuid, orderByComparator);
 	}
@@ -248,10 +247,8 @@ public class TacticUtil {
 	* Removes all the tactics where uuid = &#63; from the database.
 	*
 	* @param uuid the uuid
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid(java.lang.String uuid) {
 		getPersistence().removeByUuid(uuid);
 	}
 
@@ -260,10 +257,8 @@ public class TacticUtil {
 	*
 	* @param uuid the uuid
 	* @return the number of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid(java.lang.String uuid)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid(java.lang.String uuid) {
 		return getPersistence().countByUuid(uuid);
 	}
 
@@ -274,12 +269,9 @@ public class TacticUtil {
 	* @param groupId the group ID
 	* @return the matching tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic findByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic findByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence().findByUUID_G(uuid, groupId);
 	}
 
@@ -289,11 +281,8 @@ public class TacticUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching tactic, or <code>null</code> if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic fetchByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic fetchByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().fetchByUUID_G(uuid, groupId);
 	}
 
@@ -302,13 +291,11 @@ public class TacticUtil {
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
-	* @param retrieveFromCache whether to use the finder cache
+	* @param retrieveFromCache whether to retrieve from the finder cache
 	* @return the matching tactic, or <code>null</code> if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic fetchByUUID_G(
-		java.lang.String uuid, long groupId, boolean retrieveFromCache)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic fetchByUUID_G(java.lang.String uuid, long groupId,
+		boolean retrieveFromCache) {
 		return getPersistence().fetchByUUID_G(uuid, groupId, retrieveFromCache);
 	}
 
@@ -318,12 +305,9 @@ public class TacticUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the tactic that was removed
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic removeByUUID_G(
-		java.lang.String uuid, long groupId)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic removeByUUID_G(java.lang.String uuid, long groupId)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence().removeByUUID_G(uuid, groupId);
 	}
 
@@ -333,10 +317,8 @@ public class TacticUtil {
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the number of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUUID_G(java.lang.String uuid, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUUID_G(java.lang.String uuid, long groupId) {
 		return getPersistence().countByUUID_G(uuid, groupId);
 	}
 
@@ -346,11 +328,9 @@ public class TacticUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findByUuid_C(
-		java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findByUuid_C(java.lang.String uuid,
+		long companyId) {
 		return getPersistence().findByUuid_C(uuid, companyId);
 	}
 
@@ -358,7 +338,7 @@ public class TacticUtil {
 	* Returns a range of all the tactics where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -366,11 +346,9 @@ public class TacticUtil {
 	* @param start the lower bound of the range of tactics
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @return the range of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end) {
 		return getPersistence().findByUuid_C(uuid, companyId, start, end);
 	}
 
@@ -378,7 +356,7 @@ public class TacticUtil {
 	* Returns an ordered range of all the tactics where uuid = &#63; and companyId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param uuid the uuid
@@ -387,14 +365,35 @@ public class TacticUtil {
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findByUuid_C(
-		java.lang.String uuid, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence()
 				   .findByUuid_C(uuid, companyId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the tactics where uuid = &#63; and companyId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param uuid the uuid
+	* @param companyId the company ID
+	* @param start the lower bound of the range of tactics
+	* @param end the upper bound of the range of tactics (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching tactics
+	*/
+	public static List<Tactic> findByUuid_C(java.lang.String uuid,
+		long companyId, int start, int end,
+		OrderByComparator<Tactic> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByUuid_C(uuid, companyId, start, end,
+			orderByComparator, retrieveFromCache);
 	}
 
 	/**
@@ -405,13 +404,10 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic findByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic findByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence()
 				   .findByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -423,12 +419,9 @@ public class TacticUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tactic, or <code>null</code> if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic fetchByUuid_C_First(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic fetchByUuid_C_First(java.lang.String uuid,
+		long companyId, OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_First(uuid, companyId, orderByComparator);
 	}
@@ -441,13 +434,10 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic findByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic findByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence()
 				   .findByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -459,12 +449,9 @@ public class TacticUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tactic, or <code>null</code> if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic fetchByUuid_C_Last(
-		java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic fetchByUuid_C_Last(java.lang.String uuid,
+		long companyId, OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence()
 				   .fetchByUuid_C_Last(uuid, companyId, orderByComparator);
 	}
@@ -478,13 +465,11 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic[] findByUuid_C_PrevAndNext(
-		long tacticId, java.lang.String uuid, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic[] findByUuid_C_PrevAndNext(long tacticId,
+		java.lang.String uuid, long companyId,
+		OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence()
 				   .findByUuid_C_PrevAndNext(tacticId, uuid, companyId,
 			orderByComparator);
@@ -495,10 +480,8 @@ public class TacticUtil {
 	*
 	* @param uuid the uuid
 	* @param companyId the company ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByUuid_C(java.lang.String uuid, long companyId) {
 		getPersistence().removeByUuid_C(uuid, companyId);
 	}
 
@@ -508,10 +491,8 @@ public class TacticUtil {
 	* @param uuid the uuid
 	* @param companyId the company ID
 	* @return the number of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByUuid_C(java.lang.String uuid, long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByUuid_C(java.lang.String uuid, long companyId) {
 		return getPersistence().countByUuid_C(uuid, companyId);
 	}
 
@@ -520,11 +501,8 @@ public class TacticUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findByGroupId(long groupId) {
 		return getPersistence().findByGroupId(groupId);
 	}
 
@@ -532,18 +510,15 @@ public class TacticUtil {
 	* Returns a range of all the tactics where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
 	* @param start the lower bound of the range of tactics
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @return the range of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findByGroupId(long groupId, int start, int end) {
 		return getPersistence().findByGroupId(groupId, start, end);
 	}
 
@@ -551,7 +526,7 @@ public class TacticUtil {
 	* Returns an ordered range of all the tactics where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -559,14 +534,32 @@ public class TacticUtil {
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findByGroupId(long groupId, int start, int end,
+		OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence()
 				   .findByGroupId(groupId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the tactics where groupId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param groupId the group ID
+	* @param start the lower bound of the range of tactics
+	* @param end the upper bound of the range of tactics (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching tactics
+	*/
+	public static List<Tactic> findByGroupId(long groupId, int start, int end,
+		OrderByComparator<Tactic> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByGroupId(groupId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -576,13 +569,10 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic findByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic findByGroupId_First(long groupId,
+		OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence().findByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -592,12 +582,9 @@ public class TacticUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tactic, or <code>null</code> if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic fetchByGroupId_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic fetchByGroupId_First(long groupId,
+		OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence().fetchByGroupId_First(groupId, orderByComparator);
 	}
 
@@ -608,13 +595,10 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic findByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic findByGroupId_Last(long groupId,
+		OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence().findByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -624,12 +608,9 @@ public class TacticUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tactic, or <code>null</code> if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic fetchByGroupId_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic fetchByGroupId_Last(long groupId,
+		OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence().fetchByGroupId_Last(groupId, orderByComparator);
 	}
 
@@ -641,13 +622,10 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic[] findByGroupId_PrevAndNext(
-		long tacticId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic[] findByGroupId_PrevAndNext(long tacticId,
+		long groupId, OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence()
 				   .findByGroupId_PrevAndNext(tacticId, groupId,
 			orderByComparator);
@@ -658,11 +636,8 @@ public class TacticUtil {
 	*
 	* @param groupId the group ID
 	* @return the matching tactics that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> filterFindByGroupId(
-		long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> filterFindByGroupId(long groupId) {
 		return getPersistence().filterFindByGroupId(groupId);
 	}
 
@@ -670,18 +645,16 @@ public class TacticUtil {
 	* Returns a range of all the tactics that the user has permission to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
 	* @param start the lower bound of the range of tactics
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @return the range of matching tactics that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> filterFindByGroupId(
-		long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> filterFindByGroupId(long groupId, int start,
+		int end) {
 		return getPersistence().filterFindByGroupId(groupId, start, end);
 	}
 
@@ -689,7 +662,7 @@ public class TacticUtil {
 	* Returns an ordered range of all the tactics that the user has permissions to view where groupId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param groupId the group ID
@@ -697,12 +670,9 @@ public class TacticUtil {
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching tactics that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> filterFindByGroupId(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> filterFindByGroupId(long groupId, int start,
+		int end, OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence()
 				   .filterFindByGroupId(groupId, start, end, orderByComparator);
 	}
@@ -715,13 +685,10 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic[] filterFindByGroupId_PrevAndNext(
-		long tacticId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic[] filterFindByGroupId_PrevAndNext(long tacticId,
+		long groupId, OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence()
 				   .filterFindByGroupId_PrevAndNext(tacticId, groupId,
 			orderByComparator);
@@ -731,10 +698,8 @@ public class TacticUtil {
 	* Removes all the tactics where groupId = &#63; from the database.
 	*
 	* @param groupId the group ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByGroupId(long groupId) {
 		getPersistence().removeByGroupId(groupId);
 	}
 
@@ -743,10 +708,8 @@ public class TacticUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByGroupId(long groupId) {
 		return getPersistence().countByGroupId(groupId);
 	}
 
@@ -755,10 +718,8 @@ public class TacticUtil {
 	*
 	* @param groupId the group ID
 	* @return the number of matching tactics that the user has permission to view
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int filterCountByGroupId(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int filterCountByGroupId(long groupId) {
 		return getPersistence().filterCountByGroupId(groupId);
 	}
 
@@ -767,11 +728,8 @@ public class TacticUtil {
 	*
 	* @param campaignId the campaign ID
 	* @return the matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findByCampaignId(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findByCampaignId(long campaignId) {
 		return getPersistence().findByCampaignId(campaignId);
 	}
 
@@ -779,18 +737,16 @@ public class TacticUtil {
 	* Returns a range of all the tactics where campaignId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param campaignId the campaign ID
 	* @param start the lower bound of the range of tactics
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @return the range of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findByCampaignId(
-		long campaignId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findByCampaignId(long campaignId, int start,
+		int end) {
 		return getPersistence().findByCampaignId(campaignId, start, end);
 	}
 
@@ -798,7 +754,7 @@ public class TacticUtil {
 	* Returns an ordered range of all the tactics where campaignId = &#63;.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param campaignId the campaign ID
@@ -806,14 +762,33 @@ public class TacticUtil {
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findByCampaignId(
-		long campaignId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findByCampaignId(long campaignId, int start,
+		int end, OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence()
 				   .findByCampaignId(campaignId, start, end, orderByComparator);
+	}
+
+	/**
+	* Returns an ordered range of all the tactics where campaignId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param campaignId the campaign ID
+	* @param start the lower bound of the range of tactics
+	* @param end the upper bound of the range of tactics (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching tactics
+	*/
+	public static List<Tactic> findByCampaignId(long campaignId, int start,
+		int end, OrderByComparator<Tactic> orderByComparator,
+		boolean retrieveFromCache) {
+		return getPersistence()
+				   .findByCampaignId(campaignId, start, end, orderByComparator,
+			retrieveFromCache);
 	}
 
 	/**
@@ -823,13 +798,10 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic findByCampaignId_First(
-		long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic findByCampaignId_First(long campaignId,
+		OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence()
 				   .findByCampaignId_First(campaignId, orderByComparator);
 	}
@@ -840,12 +812,9 @@ public class TacticUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tactic, or <code>null</code> if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic fetchByCampaignId_First(
-		long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic fetchByCampaignId_First(long campaignId,
+		OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence()
 				   .fetchByCampaignId_First(campaignId, orderByComparator);
 	}
@@ -857,13 +826,10 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic findByCampaignId_Last(
-		long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic findByCampaignId_Last(long campaignId,
+		OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence()
 				   .findByCampaignId_Last(campaignId, orderByComparator);
 	}
@@ -874,12 +840,9 @@ public class TacticUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tactic, or <code>null</code> if a matching tactic could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic fetchByCampaignId_Last(
-		long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic fetchByCampaignId_Last(long campaignId,
+		OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence()
 				   .fetchByCampaignId_Last(campaignId, orderByComparator);
 	}
@@ -892,13 +855,10 @@ public class TacticUtil {
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic[] findByCampaignId_PrevAndNext(
-		long tacticId, long campaignId,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic[] findByCampaignId_PrevAndNext(long tacticId,
+		long campaignId, OrderByComparator<Tactic> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence()
 				   .findByCampaignId_PrevAndNext(tacticId, campaignId,
 			orderByComparator);
@@ -908,10 +868,8 @@ public class TacticUtil {
 	* Removes all the tactics where campaignId = &#63; from the database.
 	*
 	* @param campaignId the campaign ID
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeByCampaignId(long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeByCampaignId(long campaignId) {
 		getPersistence().removeByCampaignId(campaignId);
 	}
 
@@ -920,10 +878,8 @@ public class TacticUtil {
 	*
 	* @param campaignId the campaign ID
 	* @return the number of matching tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countByCampaignId(long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByCampaignId(long campaignId) {
 		return getPersistence().countByCampaignId(campaignId);
 	}
 
@@ -932,8 +888,7 @@ public class TacticUtil {
 	*
 	* @param tactic the tactic
 	*/
-	public static void cacheResult(
-		com.liferay.content.targeting.model.Tactic tactic) {
+	public static void cacheResult(Tactic tactic) {
 		getPersistence().cacheResult(tactic);
 	}
 
@@ -942,8 +897,7 @@ public class TacticUtil {
 	*
 	* @param tactics the tactics
 	*/
-	public static void cacheResult(
-		java.util.List<com.liferay.content.targeting.model.Tactic> tactics) {
+	public static void cacheResult(List<Tactic> tactics) {
 		getPersistence().cacheResult(tactics);
 	}
 
@@ -953,8 +907,7 @@ public class TacticUtil {
 	* @param tacticId the primary key for the new tactic
 	* @return the new tactic
 	*/
-	public static com.liferay.content.targeting.model.Tactic create(
-		long tacticId) {
+	public static Tactic create(long tacticId) {
 		return getPersistence().create(tacticId);
 	}
 
@@ -964,18 +917,13 @@ public class TacticUtil {
 	* @param tacticId the primary key of the tactic
 	* @return the tactic that was removed
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic remove(
-		long tacticId)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic remove(long tacticId)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence().remove(tacticId);
 	}
 
-	public static com.liferay.content.targeting.model.Tactic updateImpl(
-		com.liferay.content.targeting.model.Tactic tactic)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic updateImpl(Tactic tactic) {
 		return getPersistence().updateImpl(tactic);
 	}
 
@@ -985,12 +933,9 @@ public class TacticUtil {
 	* @param tacticId the primary key of the tactic
 	* @return the tactic
 	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic findByPrimaryKey(
-		long tacticId)
-		throws com.liferay.content.targeting.NoSuchTacticException,
-			com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic findByPrimaryKey(long tacticId)
+		throws com.liferay.content.targeting.exception.NoSuchTacticException {
 		return getPersistence().findByPrimaryKey(tacticId);
 	}
 
@@ -999,22 +944,22 @@ public class TacticUtil {
 	*
 	* @param tacticId the primary key of the tactic
 	* @return the tactic, or <code>null</code> if a tactic with the primary key could not be found
-	* @throws SystemException if a system exception occurred
 	*/
-	public static com.liferay.content.targeting.model.Tactic fetchByPrimaryKey(
-		long tacticId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static Tactic fetchByPrimaryKey(long tacticId) {
 		return getPersistence().fetchByPrimaryKey(tacticId);
+	}
+
+	public static java.util.Map<java.io.Serializable, Tactic> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys) {
+		return getPersistence().fetchByPrimaryKeys(primaryKeys);
 	}
 
 	/**
 	* Returns all the tactics.
 	*
 	* @return the tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findAll() {
 		return getPersistence().findAll();
 	}
 
@@ -1022,17 +967,14 @@ public class TacticUtil {
 	* Returns a range of all the tactics.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of tactics
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @return the range of tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findAll(
-		int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findAll(int start, int end) {
 		return getPersistence().findAll(start, end);
 	}
 
@@ -1040,29 +982,42 @@ public class TacticUtil {
 	* Returns an ordered range of all the tactics.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param start the lower bound of the range of tactics
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.Tactic> findAll(
-		int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findAll(int start, int end,
+		OrderByComparator<Tactic> orderByComparator) {
 		return getPersistence().findAll(start, end, orderByComparator);
 	}
 
 	/**
-	* Removes all the tactics from the database.
+	* Returns an ordered range of all the tactics.
 	*
-	* @throws SystemException if a system exception occurred
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param start the lower bound of the range of tactics
+	* @param end the upper bound of the range of tactics (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of tactics
 	*/
-	public static void removeAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<Tactic> findAll(int start, int end,
+		OrderByComparator<Tactic> orderByComparator, boolean retrieveFromCache) {
+		return getPersistence()
+				   .findAll(start, end, orderByComparator, retrieveFromCache);
+	}
+
+	/**
+	* Removes all the tactics from the database.
+	*/
+	public static void removeAll() {
 		getPersistence().removeAll();
 	}
 
@@ -1070,11 +1025,19 @@ public class TacticUtil {
 	* Returns the number of tactics.
 	*
 	* @return the number of tactics
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int countAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countAll() {
 		return getPersistence().countAll();
+	}
+
+	/**
+	* Returns the primaryKeys of user segments associated with the tactic.
+	*
+	* @param pk the primary key of the tactic
+	* @return long[] of the primaryKeys of user segments associated with the tactic
+	*/
+	public static long[] getUserSegmentPrimaryKeys(long pk) {
+		return getPersistence().getUserSegmentPrimaryKeys(pk);
 	}
 
 	/**
@@ -1082,10 +1045,9 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic
 	* @return the user segments associated with the tactic
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long pk) throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
+		long pk) {
 		return getPersistence().getUserSegments(pk);
 	}
 
@@ -1093,18 +1055,16 @@ public class TacticUtil {
 	* Returns a range of all the user segments associated with the tactic.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the tactic
 	* @param start the lower bound of the range of tactics
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @return the range of user segments associated with the tactic
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long pk, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
+		long pk, int start, int end) {
 		return getPersistence().getUserSegments(pk, start, end);
 	}
 
@@ -1112,7 +1072,7 @@ public class TacticUtil {
 	* Returns an ordered range of all the user segments associated with the tactic.
 	*
 	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.model.impl.TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TacticModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
 	* </p>
 	*
 	* @param pk the primary key of the tactic
@@ -1120,12 +1080,10 @@ public class TacticUtil {
 	* @param end the upper bound of the range of tactics (not inclusive)
 	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	* @return the ordered range of user segments associated with the tactic
-	* @throws SystemException if a system exception occurred
 	*/
-	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
+	public static List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long pk, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		OrderByComparator<com.liferay.content.targeting.model.UserSegment> orderByComparator) {
 		return getPersistence()
 				   .getUserSegments(pk, start, end, orderByComparator);
 	}
@@ -1135,10 +1093,8 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic
 	* @return the number of user segments associated with the tactic
-	* @throws SystemException if a system exception occurred
 	*/
-	public static int getUserSegmentsSize(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getUserSegmentsSize(long pk) {
 		return getPersistence().getUserSegmentsSize(pk);
 	}
 
@@ -1148,10 +1104,8 @@ public class TacticUtil {
 	* @param pk the primary key of the tactic
 	* @param userSegmentPK the primary key of the user segment
 	* @return <code>true</code> if the user segment is associated with the tactic; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
-	public static boolean containsUserSegment(long pk, long userSegmentPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean containsUserSegment(long pk, long userSegmentPK) {
 		return getPersistence().containsUserSegment(pk, userSegmentPK);
 	}
 
@@ -1160,10 +1114,8 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic to check for associations with user segments
 	* @return <code>true</code> if the tactic has any user segments associated with it; <code>false</code> otherwise
-	* @throws SystemException if a system exception occurred
 	*/
-	public static boolean containsUserSegments(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static boolean containsUserSegments(long pk) {
 		return getPersistence().containsUserSegments(pk);
 	}
 
@@ -1172,10 +1124,8 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic
 	* @param userSegmentPK the primary key of the user segment
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void addUserSegment(long pk, long userSegmentPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void addUserSegment(long pk, long userSegmentPK) {
 		getPersistence().addUserSegment(pk, userSegmentPK);
 	}
 
@@ -1184,11 +1134,9 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic
 	* @param userSegment the user segment
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addUserSegment(long pk,
-		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.UserSegment userSegment) {
 		getPersistence().addUserSegment(pk, userSegment);
 	}
 
@@ -1197,10 +1145,8 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic
 	* @param userSegmentPKs the primary keys of the user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void addUserSegments(long pk, long[] userSegmentPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void addUserSegments(long pk, long[] userSegmentPKs) {
 		getPersistence().addUserSegments(pk, userSegmentPKs);
 	}
 
@@ -1209,11 +1155,9 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic
 	* @param userSegments the user segments
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void addUserSegments(long pk,
-		java.util.List<com.liferay.content.targeting.model.UserSegment> userSegments)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		List<com.liferay.content.targeting.model.UserSegment> userSegments) {
 		getPersistence().addUserSegments(pk, userSegments);
 	}
 
@@ -1221,10 +1165,8 @@ public class TacticUtil {
 	* Clears all associations between the tactic and its user segments. Also notifies the appropriate model listeners and clears the mapping table finder cache.
 	*
 	* @param pk the primary key of the tactic to clear the associated user segments from
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void clearUserSegments(long pk)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void clearUserSegments(long pk) {
 		getPersistence().clearUserSegments(pk);
 	}
 
@@ -1233,10 +1175,8 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic
 	* @param userSegmentPK the primary key of the user segment
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeUserSegment(long pk, long userSegmentPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeUserSegment(long pk, long userSegmentPK) {
 		getPersistence().removeUserSegment(pk, userSegmentPK);
 	}
 
@@ -1245,11 +1185,9 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic
 	* @param userSegment the user segment
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeUserSegment(long pk,
-		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.UserSegment userSegment) {
 		getPersistence().removeUserSegment(pk, userSegment);
 	}
 
@@ -1258,10 +1196,8 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic
 	* @param userSegmentPKs the primary keys of the user segments
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void removeUserSegments(long pk, long[] userSegmentPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void removeUserSegments(long pk, long[] userSegmentPKs) {
 		getPersistence().removeUserSegments(pk, userSegmentPKs);
 	}
 
@@ -1270,11 +1206,9 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic
 	* @param userSegments the user segments
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void removeUserSegments(long pk,
-		java.util.List<com.liferay.content.targeting.model.UserSegment> userSegments)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		List<com.liferay.content.targeting.model.UserSegment> userSegments) {
 		getPersistence().removeUserSegments(pk, userSegments);
 	}
 
@@ -1283,10 +1217,8 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic
 	* @param userSegmentPKs the primary keys of the user segments to be associated with the tactic
-	* @throws SystemException if a system exception occurred
 	*/
-	public static void setUserSegments(long pk, long[] userSegmentPKs)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void setUserSegments(long pk, long[] userSegmentPKs) {
 		getPersistence().setUserSegments(pk, userSegmentPKs);
 	}
 
@@ -1295,30 +1227,20 @@ public class TacticUtil {
 	*
 	* @param pk the primary key of the tactic
 	* @param userSegments the user segments to be associated with the tactic
-	* @throws SystemException if a system exception occurred
 	*/
 	public static void setUserSegments(long pk,
-		java.util.List<com.liferay.content.targeting.model.UserSegment> userSegments)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		List<com.liferay.content.targeting.model.UserSegment> userSegments) {
 		getPersistence().setUserSegments(pk, userSegments);
 	}
 
+	public static java.util.Set<java.lang.String> getBadColumnNames() {
+		return getPersistence().getBadColumnNames();
+	}
+
 	public static TacticPersistence getPersistence() {
-		if (_persistence == null) {
-			_persistence = (TacticPersistence)PortletBeanLocatorUtil.locate(com.liferay.content.targeting.service.ClpSerializer.getServletContextName(),
-					TacticPersistence.class.getName());
-
-			ReferenceRegistry.registerReference(TacticUtil.class, "_persistence");
-		}
-
-		return _persistence;
+		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	public void setPersistence(TacticPersistence persistence) {
-	}
-
-	private static TacticPersistence _persistence;
+	private static ServiceTracker<TacticPersistence, TacticPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(TacticPersistence.class);
 }

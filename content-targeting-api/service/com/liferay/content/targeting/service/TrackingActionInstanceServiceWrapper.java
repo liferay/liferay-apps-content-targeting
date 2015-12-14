@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.service.ServiceWrapper;
 
 /**
@@ -23,40 +25,13 @@ import com.liferay.portal.service.ServiceWrapper;
  * @see TrackingActionInstanceService
  * @generated
  */
+@ProviderType
 public class TrackingActionInstanceServiceWrapper
 	implements TrackingActionInstanceService,
 		ServiceWrapper<TrackingActionInstanceService> {
 	public TrackingActionInstanceServiceWrapper(
 		TrackingActionInstanceService trackingActionInstanceService) {
 		_trackingActionInstanceService = trackingActionInstanceService;
-	}
-
-	/**
-	* Returns the Spring bean ID for this bean.
-	*
-	* @return the Spring bean ID for this bean
-	*/
-	@Override
-	public java.lang.String getBeanIdentifier() {
-		return _trackingActionInstanceService.getBeanIdentifier();
-	}
-
-	/**
-	* Sets the Spring bean ID for this bean.
-	*
-	* @param beanIdentifier the Spring bean ID for this bean
-	*/
-	@Override
-	public void setBeanIdentifier(java.lang.String beanIdentifier) {
-		_trackingActionInstanceService.setBeanIdentifier(beanIdentifier);
-	}
-
-	@Override
-	public java.lang.Object invokeMethod(java.lang.String name,
-		java.lang.String[] parameterTypes, java.lang.Object[] arguments)
-		throws java.lang.Throwable {
-		return _trackingActionInstanceService.invokeMethod(name,
-			parameterTypes, arguments);
 	}
 
 	@Override
@@ -78,6 +53,7 @@ public class TrackingActionInstanceServiceWrapper
 	/**
 	* @deprecated As of 2.0.0
 	*/
+	@Deprecated
 	@Override
 	public com.liferay.content.targeting.model.TrackingActionInstance addTrackingActionInstance(
 		long userId, java.lang.String trackingActionKey, long campaignId,
@@ -105,6 +81,16 @@ public class TrackingActionInstanceServiceWrapper
 		long campaignId, java.lang.String alias) throws java.lang.Exception {
 		return _trackingActionInstanceService.fetchTrackingActionInstance(campaignId,
 			alias);
+	}
+
+	/**
+	* Returns the OSGi service identifier.
+	*
+	* @return the OSGi service identifier
+	*/
+	@Override
+	public java.lang.String getOSGiServiceIdentifier() {
+		return _trackingActionInstanceService.getOSGiServiceIdentifier();
 	}
 
 	@Override
@@ -139,21 +125,6 @@ public class TrackingActionInstanceServiceWrapper
 		return _trackingActionInstanceService.updateTrackingActionInstance(trackingActionInstanceId,
 			reportInstanceId, alias, referrerClassName, referrerClassPK,
 			elementId, eventType, typeSettings, serviceContext);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	public TrackingActionInstanceService getWrappedTrackingActionInstanceService() {
-		return _trackingActionInstanceService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	public void setWrappedTrackingActionInstanceService(
-		TrackingActionInstanceService trackingActionInstanceService) {
-		_trackingActionInstanceService = trackingActionInstanceService;
 	}
 
 	@Override

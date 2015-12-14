@@ -14,10 +14,10 @@
 
 package com.liferay.content.targeting.anonymous.users.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil;
-
-import com.liferay.portal.kernel.exception.SystemException;
 
 /**
  * The extended model base implementation for the AnonymousUser service. Represents a row in the &quot;CT_AU_AnonymousUser&quot; database table, with each column mapped to a property of this class.
@@ -28,9 +28,10 @@ import com.liferay.portal.kernel.exception.SystemException;
  *
  * @author Brian Wing Shun Chan
  * @see AnonymousUserImpl
- * @see com.liferay.content.targeting.anonymous.users.model.AnonymousUser
+ * @see AnonymousUser
  * @generated
  */
+@ProviderType
 public abstract class AnonymousUserBaseImpl extends AnonymousUserModelImpl
 	implements AnonymousUser {
 	/*
@@ -39,7 +40,7 @@ public abstract class AnonymousUserBaseImpl extends AnonymousUserModelImpl
 	 * Never modify or reference this class directly. All methods that expect a anonymous user model instance should use the {@link AnonymousUser} interface instead.
 	 */
 	@Override
-	public void persist() throws SystemException {
+	public void persist() {
 		if (this.isNew()) {
 			AnonymousUserLocalServiceUtil.addAnonymousUser(this);
 		}

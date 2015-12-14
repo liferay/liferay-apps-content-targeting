@@ -21,7 +21,6 @@ import com.liferay.content.targeting.service.base.AnonymousUserUserSegmentServic
 import com.liferay.content.targeting.service.permission.UserSegmentPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 import org.osgi.service.component.annotations.Reference;
 
@@ -48,7 +47,7 @@ public class AnonymousUserUserSegmentServiceImpl
 	public AnonymousUserUserSegment addAnonymousUserUserSegment(
 			long anonymousUserId, long userSegmentId, boolean manual,
 			boolean active, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_userSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
@@ -60,7 +59,7 @@ public class AnonymousUserUserSegmentServiceImpl
 	@Override
 	public List<AnonymousUser> getAnonymousUsersByUserSegmentId(
 			long userSegmentId, boolean active, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_userSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.VIEW);
@@ -72,7 +71,7 @@ public class AnonymousUserUserSegmentServiceImpl
 	@Override
 	public int getAnonymousUsersByUserSegmentIdCount(
 			long userSegmentId, boolean active, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		_userSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.VIEW);
@@ -85,7 +84,7 @@ public class AnonymousUserUserSegmentServiceImpl
 	public List<AnonymousUser> getAnonymousUsersByUserSegmentIds(
 			long[] userSegmentIds, boolean active,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		for (long userSegmentId : userSegmentIds) {
 			_userSegmentPermission.check(
@@ -100,7 +99,7 @@ public class AnonymousUserUserSegmentServiceImpl
 	public int getAnonymousUsersByUserSegmentIdsCount(
 			long[] userSegmentIds, boolean active,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		for (long userSegmentId : userSegmentIds) {
 			_userSegmentPermission.check(
@@ -114,7 +113,7 @@ public class AnonymousUserUserSegmentServiceImpl
 	@Override
 	public List<UserSegment> getUserSegmentsByAnonymousUserId(
 			long anonymousUserId, boolean active, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return anonymousUserUserSegmentLocalService.
 			getUserSegmentsByAnonymousUserId(anonymousUserId, active);
@@ -123,7 +122,7 @@ public class AnonymousUserUserSegmentServiceImpl
 	@Override
 	public int getUserSegmentsByAnonymousUserIdCount(
 			long anonymousUserId, boolean active, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return anonymousUserUserSegmentLocalService.
 			getUserSegmentsByAnonymousUserIdCount(anonymousUserId, active);
@@ -132,7 +131,7 @@ public class AnonymousUserUserSegmentServiceImpl
 	@Override
 	public List<UserSegment> getUserSegmentsByUserId(
 			long userId, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return anonymousUserUserSegmentLocalService.getUserSegmentsByUserId(
 			userId, active);
@@ -140,7 +139,7 @@ public class AnonymousUserUserSegmentServiceImpl
 
 	@Override
 	public int getUserSegmentsByUserIdCount(long userId, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return anonymousUserUserSegmentLocalService.
 			getUserSegmentsByUserIdCount(userId, active);
@@ -149,7 +148,7 @@ public class AnonymousUserUserSegmentServiceImpl
 	@Override
 	public AnonymousUserUserSegment updateAnonymousUserUserSegment(
 			long anonymousUserUserSegmentId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return anonymousUserUserSegmentLocalService.
 			updateAnonymousUserUserSegment(

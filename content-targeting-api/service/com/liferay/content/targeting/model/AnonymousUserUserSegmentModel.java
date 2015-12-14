@@ -14,9 +14,11 @@
 
 package com.liferay.content.targeting.model;
 
-import com.liferay.portal.kernel.exception.SystemException;
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.portal.model.BaseModel;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.model.ShardedModel;
 import com.liferay.portal.service.ServiceContext;
 
 import com.liferay.portlet.expando.model.ExpandoBridge;
@@ -38,7 +40,9 @@ import java.util.Date;
  * @see com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentModelImpl
  * @generated
  */
-public interface AnonymousUserUserSegmentModel extends BaseModel<AnonymousUserUserSegment> {
+@ProviderType
+public interface AnonymousUserUserSegmentModel extends BaseModel<AnonymousUserUserSegment>,
+	ShardedModel {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -78,6 +82,7 @@ public interface AnonymousUserUserSegmentModel extends BaseModel<AnonymousUserUs
 	 *
 	 * @return the company ID of this anonymous user user segment
 	 */
+	@Override
 	public long getCompanyId();
 
 	/**
@@ -85,6 +90,7 @@ public interface AnonymousUserUserSegmentModel extends BaseModel<AnonymousUserUs
 	 *
 	 * @param companyId the company ID of this anonymous user user segment
 	 */
+	@Override
 	public void setCompanyId(long companyId);
 
 	/**
@@ -119,9 +125,8 @@ public interface AnonymousUserUserSegmentModel extends BaseModel<AnonymousUserUs
 	 * Returns the anonymous user uuid of this anonymous user user segment.
 	 *
 	 * @return the anonymous user uuid of this anonymous user user segment
-	 * @throws SystemException if a system exception occurred
 	 */
-	public String getAnonymousUserUuid() throws SystemException;
+	public String getAnonymousUserUuid();
 
 	/**
 	 * Sets the anonymous user uuid of this anonymous user user segment.
@@ -223,19 +228,20 @@ public interface AnonymousUserUserSegmentModel extends BaseModel<AnonymousUserUs
 	public Object clone();
 
 	@Override
-	public int compareTo(AnonymousUserUserSegment anonymousUserUserSegment);
+	public int compareTo(
+		com.liferay.content.targeting.model.AnonymousUserUserSegment anonymousUserUserSegment);
 
 	@Override
 	public int hashCode();
 
 	@Override
-	public CacheModel<AnonymousUserUserSegment> toCacheModel();
+	public CacheModel<com.liferay.content.targeting.model.AnonymousUserUserSegment> toCacheModel();
 
 	@Override
-	public AnonymousUserUserSegment toEscapedModel();
+	public com.liferay.content.targeting.model.AnonymousUserUserSegment toEscapedModel();
 
 	@Override
-	public AnonymousUserUserSegment toUnescapedModel();
+	public com.liferay.content.targeting.model.AnonymousUserUserSegment toUnescapedModel();
 
 	@Override
 	public String toString();

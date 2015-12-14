@@ -14,6 +14,8 @@
 
 package com.liferay.content.targeting.service.http;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.service.CampaignServiceUtil;
 
 import com.liferay.portal.kernel.log.Log;
@@ -27,7 +29,7 @@ import java.util.Map;
 
 /**
  * Provides the SOAP utility for the
- * {@link com.liferay.content.targeting.service.CampaignServiceUtil} service utility. The
+ * {@link CampaignServiceUtil} service utility. The
  * static methods of this class calls the same methods of the service utility.
  * However, the signatures are different because it is difficult for SOAP to
  * support certain types.
@@ -62,9 +64,10 @@ import java.util.Map;
  * @author Brian Wing Shun Chan
  * @see CampaignServiceHttp
  * @see com.liferay.content.targeting.model.CampaignSoap
- * @see com.liferay.content.targeting.service.CampaignServiceUtil
+ * @see CampaignServiceUtil
  * @generated
  */
+@ProviderType
 public class CampaignServiceSoap {
 	public static com.liferay.content.targeting.model.CampaignSoap addCampaign(
 		long userId, java.lang.String[] nameMapLanguageIds,

@@ -14,8 +14,11 @@
 
 package com.liferay.content.targeting.model.impl;
 
+import aQute.bnd.annotation.ProviderType;
+
 import com.liferay.content.targeting.model.Campaign;
 
+import com.liferay.portal.kernel.util.HashUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.CacheModel;
@@ -34,7 +37,32 @@ import java.util.Date;
  * @see Campaign
  * @generated
  */
+@ProviderType
 public class CampaignCacheModel implements CacheModel<Campaign>, Externalizable {
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+
+		if (!(obj instanceof CampaignCacheModel)) {
+			return false;
+		}
+
+		CampaignCacheModel campaignCacheModel = (CampaignCacheModel)obj;
+
+		if (campaignId == campaignCacheModel.campaignId) {
+			return true;
+		}
+
+		return false;
+	}
+
+	@Override
+	public int hashCode() {
+		return HashUtil.hash(0, campaignId);
+	}
+
 	@Override
 	public String toString() {
 		StringBundler sb = new StringBundler(31);

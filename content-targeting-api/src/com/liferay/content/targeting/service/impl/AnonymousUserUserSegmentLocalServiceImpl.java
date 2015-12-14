@@ -22,7 +22,6 @@ import com.liferay.content.targeting.service.base.AnonymousUserUserSegmentLocalS
 import com.liferay.content.targeting.util.PortletPropsValues;
 import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.CompanyActionableDynamicQuery;
@@ -55,7 +54,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 	public AnonymousUserUserSegment addAnonymousUserUserSegment(
 			long anonymousUserId, long userSegmentId, boolean manual,
 			boolean active, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long anonymousUserUserSegmentId = counterLocalService.increment();
 
@@ -80,15 +79,13 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 	}
 
 	@Override
-	public void checkAnonymousUserUserSegments()
-		throws PortalException, SystemException {
-
+	public void checkAnonymousUserUserSegments() throws PortalException {
 		ActionableDynamicQuery actionableDynamicQuery =
 			new CompanyActionableDynamicQuery() {
 
 				@Override
 				protected void performAction(Object object)
-					throws PortalException, SystemException {
+					throws PortalException {
 
 					Company company = (Company)object;
 
@@ -104,7 +101,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 	@Override
 	public List<AnonymousUser> getAnonymousUsersByUserSegmentId(
 			long userSegmentId, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAnonymousUsersByUserSegmentIds(
 			new long[] { userSegmentId }, active);
@@ -113,18 +110,18 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 	@Override
 	public int getAnonymousUsersByUserSegmentIdCount(
 			long userSegmentId, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return getAnonymousUsersByUserSegmentIdsCount(
-				new long[]{userSegmentId}, active);
+			new long[] {userSegmentId}, active);
 	}
 
 	@Override
 	public List<AnonymousUser> getAnonymousUsersByUserSegmentIds(
 			long[] userSegmentIds, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<AnonymousUser> anonymousUsers = new ArrayList<AnonymousUser>();
+		List<AnonymousUser> anonymousUsers = new ArrayList<>();
 
 		List<AnonymousUserUserSegment> anonymousUserUserSegments =
 			anonymousUserUserSegmentPersistence.findByUserSegmentIds(
@@ -146,7 +143,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 	@Override
 	public int getAnonymousUsersByUserSegmentIdsCount(
 			long[] userSegmentIds, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return anonymousUserUserSegmentPersistence.countByUserSegmentIds(
 			userSegmentIds, active);
@@ -155,14 +152,14 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 	@Override
 	public List<AnonymousUserUserSegment> getAnonymousUserUserSegments(
 			long anonymousUserId, long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return anonymousUserUserSegmentPersistence.findByA_U(
 			anonymousUserId, userSegmentId);
 	}
 
 	@Override
-	public Date getMaxAge() throws PortalException, SystemException {
+	public Date getMaxAge() throws PortalException {
 		Calendar calendar = Calendar.getInstance();
 
 		calendar.setTime(new Date());
@@ -177,9 +174,9 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 	@Override
 	public List<UserSegment> getUserSegmentsByAnonymousUserId(
 			long anonymousUserId, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<UserSegment> userSegments = new ArrayList<UserSegment>();
+		List<UserSegment> userSegments = new ArrayList<>();
 
 		List<AnonymousUserUserSegment> anonymousUserUserSegments =
 			anonymousUserUserSegmentPersistence.findByAnonymousUserId(
@@ -188,9 +185,8 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 		for (AnonymousUserUserSegment anonymousUserUserSegment
 				: anonymousUserUserSegments) {
 
-			UserSegment userSegment =
-				userSegmentLocalService.getUserSegment(
-					anonymousUserUserSegment.getUserSegmentId());
+			UserSegment userSegment = userSegmentLocalService.getUserSegment(
+				anonymousUserUserSegment.getUserSegmentId());
 
 			userSegments.add(userSegment);
 		}
@@ -201,7 +197,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 	@Override
 	public int getUserSegmentsByAnonymousUserIdCount(
 			long anonymousUserId, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return anonymousUserUserSegmentPersistence.countByAnonymousUserId(
 			anonymousUserId, active);
@@ -210,9 +206,9 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 	@Override
 	public List<UserSegment> getUserSegmentsByUserId(
 			long userId, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<UserSegment> userSegments = new ArrayList<UserSegment>();
+		List<UserSegment> userSegments = new ArrayList<>();
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.fetchAnonymousUserByUserId(userId);
@@ -227,7 +223,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 
 	@Override
 	public int getUserSegmentsByUserIdCount(long userId, boolean active)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AnonymousUser anonymousUser =
 			_anonymousUserLocalService.fetchAnonymousUserByUserId(userId);
@@ -243,7 +239,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 	@Override
 	public AnonymousUserUserSegment updateAnonymousUserUserSegment(
 			long anonymousUserUserSegmentId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date now = new Date();
 
@@ -266,7 +262,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 	@Override
 	public void updateAnonymousUserUserSegments(
 			long companyId, Date modifiedDate)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<AnonymousUserUserSegment> anonymousUserUserSegments =
 			anonymousUserUserSegmentPersistence.findByC_LtD_M(

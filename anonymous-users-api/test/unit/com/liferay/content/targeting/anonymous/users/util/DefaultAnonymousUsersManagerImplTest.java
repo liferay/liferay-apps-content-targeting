@@ -75,7 +75,7 @@ public class DefaultAnonymousUsersManagerImplTest extends PowerMockito {
 		requestChain.setAttribute(WebKeys.USER_ID, "1");
 		requestChain.setRemoteAddr("127.0.0.1");
 		requestChain.addHeader(
-				"Forwarded", "for=127.0.0.3, for=proxy1, for=proxy2");
+			"Forwarded", "for=127.0.0.3, for=proxy1, for=proxy2");
 
 		String userChainIp = _anonymousUsersManager.getAddressFromRequest(
 			requestChain);
