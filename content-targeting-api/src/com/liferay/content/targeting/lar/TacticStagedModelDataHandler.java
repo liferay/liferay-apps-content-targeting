@@ -16,21 +16,23 @@ package com.liferay.content.targeting.lar;
 
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
+import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.ChannelInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.MapUtil;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
+import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -42,6 +44,11 @@ public class TacticStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Tactic> {
 
 	public static final String[] CLASS_NAMES = {Tactic.class.getName()};
+
+	@Override
+	public void deleteStagedModel(Tactic stagedTactic) throws PortalException {
+		TacticLocalServiceUtil.deleteTactic(stagedTactic);
+	}
 
 	@Override
 	public void deleteStagedModel(
@@ -67,6 +74,13 @@ public class TacticStagedModelDataHandler
 	}
 
 	@Override
+	public List<Tactic>
+		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	protected void doExportStagedModel(
 			PortletDataContext portletDataContext, Tactic tactic)
 		throws Exception {
@@ -82,9 +96,9 @@ public class TacticStagedModelDataHandler
 	}
 
 	@Override
-	protected void doImportCompanyStagedModel(
+	public void importCompanyStagedModel(
 			PortletDataContext portletDataContext, String uuid, long tacticId)
-		throws Exception {
+		throws PortletDataException {
 
 		Tactic existingTactic =
 			TacticLocalServiceUtil.fetchTacticByUuidAndGroupId(
@@ -241,9 +255,7 @@ public class TacticStagedModelDataHandler
 	}
 
 	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
+	protected boolean validateMissingReference(String uuid, long groupId) {
 
 		Tactic tactic = TacticLocalServiceUtil.fetchTacticByUuidAndGroupId(
 			uuid, groupId);

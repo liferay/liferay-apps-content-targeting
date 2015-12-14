@@ -14,13 +14,12 @@
 
 package com.liferay.content.targeting.api.model;
 
-import com.liferay.content.targeting.InvalidChannelException;
+import com.liferay.content.targeting.exception.InvalidChannelException;
 import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.Constants;
@@ -29,6 +28,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.security.permission.ResourceActionsUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
 import java.util.Locale;
 import java.util.Map;

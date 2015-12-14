@@ -20,25 +20,27 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.lar.BaseStagedModelDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
+import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.portlet.UnavailableException;
 
+import com.liferay.portlet.exportimport.lar.PortletDataException;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -48,22 +50,11 @@ public class RuleInstanceStagedModelDataHandler
 
 	public static final String[] CLASS_NAMES = {RuleInstance.class.getName()};
 
-	public RuleInstanceStagedModelDataHandler() throws UnavailableException {
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
+	@Override
+	public void deleteStagedModel(RuleInstance stagedRuleInstance)
+		throws PortalException {
 
-		if (bundle == null) {
-			throw new UnavailableException(
-				"Can't find a reference to the OSGi bundle") {
-
-				@Override
-				public boolean isPermanent() {
-					return true;
-				}
-			};
-		}
-
-		_rulesRegistry = ServiceTrackerUtil.getService(
-			RulesRegistry.class, bundle.getBundleContext());
+		RuleInstanceLocalServiceUtil.deleteRuleInstance(stagedRuleInstance);
 	}
 
 	@Override
@@ -95,6 +86,13 @@ public class RuleInstanceStagedModelDataHandler
 		}
 
 		return rule.getName(LocaleUtil.getDefault());
+	}
+
+	@Override
+	public List<RuleInstance>
+		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -141,10 +139,10 @@ public class RuleInstanceStagedModelDataHandler
 	}
 
 	@Override
-	protected void doImportCompanyStagedModel(
+	public void importCompanyStagedModel(
 			PortletDataContext portletDataContext, String uuid,
 			long ruleInstanceId)
-		throws Exception {
+		throws PortletDataException {
 
 		RuleInstance existingRuleInstance =
 			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
@@ -221,10 +219,7 @@ public class RuleInstanceStagedModelDataHandler
 	}
 
 	@Override
-	protected boolean validateMissingReference(
-			String uuid, long companyId, long groupId)
-		throws Exception {
-
+	protected boolean validateMissingReference(String uuid, long groupId) {
 		RuleInstance ruleInstance =
 			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
 				uuid, groupId);
@@ -234,6 +229,11 @@ public class RuleInstanceStagedModelDataHandler
 		}
 
 		return true;
+	}
+
+	@Reference(unbind="-")
+	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
+		_rulesRegistry = rulesRegistry;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
