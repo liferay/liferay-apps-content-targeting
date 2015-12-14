@@ -17,8 +17,7 @@ package com.liferay.content.targeting.util;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.TacticPermission;
-import com.liferay.content.targeting.service.persistence.TacticActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -28,20 +27,25 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = Indexer.class)
 public class TacticIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {Tactic.class.getName()};
@@ -51,6 +55,11 @@ public class TacticIndexer extends BaseIndexer {
 	public TacticIndexer() {
 		setFilterSearch(true);
 		setPermissionAware(true);
+	}
+
+	@Override
+	public String getClassName() {
+		return Tactic.class.getName();
 	}
 
 	@Override
@@ -71,7 +80,7 @@ public class TacticIndexer extends BaseIndexer {
 
 		Tactic tactic = TacticLocalServiceUtil.getTactic(entryClassPK);
 
-		return TacticPermission.contains(
+		return _tacticPermission.contains(
 			permissionChecker, tactic, ActionKeys.VIEW);
 	}
 
@@ -125,7 +134,8 @@ public class TacticIndexer extends BaseIndexer {
 	@Override
 	protected Summary doGetSummary(
 		Document document, Locale locale, String snippet,
-		PortletURL portletURL) {
+		PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
 
 		return null;
 	}
@@ -164,8 +174,8 @@ public class TacticIndexer extends BaseIndexer {
 	protected void reindexTactics(final long companyId)
 		throws PortalException, SystemException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			new TacticActionableDynamicQuery() {
+		IndexableActionableDynamicQuery actionableDynamicQuery =
+			new IndexableActionableDynamicQuery() {
 
 			@Override
 			protected void performAction(Object object) {
@@ -175,7 +185,7 @@ public class TacticIndexer extends BaseIndexer {
 					Document document = getDocument(tactic);
 
 					if (document != null) {
-						addDocument(document);
+						addDocuments(document);
 					}
 				}
 				catch (PortalException e) {
@@ -194,6 +204,17 @@ public class TacticIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	@Reference(unbind="unsetTacticPermission")
+	protected void setTacticPermission(TacticPermission tacticPermission) {
+		_tacticPermission = tacticPermission;
+	}
+
+	protected void unsetTacticPermission() {
+		_tacticPermission = null;
+	}
+
+	private TacticPermission _tacticPermission;
 
 	private static Log _log = LogFactoryUtil.getLog(TacticIndexer.class);
 

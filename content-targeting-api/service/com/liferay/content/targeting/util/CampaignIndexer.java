@@ -17,8 +17,7 @@ package com.liferay.content.targeting.util;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.CampaignPermission;
-import com.liferay.content.targeting.service.persistence.CampaignActionableDynamicQuery;
-import com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery;
+import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -28,6 +27,7 @@ import com.liferay.portal.kernel.search.BooleanQuery;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.DocumentImpl;
 import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
@@ -35,13 +35,18 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.security.permission.PermissionChecker;
 
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
 import java.util.Locale;
 
-import javax.portlet.PortletURL;
+import javax.portlet.PortletRequest;
+import javax.portlet.PortletResponse;
 
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = Indexer.class)
 public class CampaignIndexer extends BaseIndexer {
 
 	public static final String[] CLASS_NAMES = {Campaign.class.getName()};
@@ -51,6 +56,11 @@ public class CampaignIndexer extends BaseIndexer {
 	public CampaignIndexer() {
 		setFilterSearch(true);
 		setPermissionAware(true);
+	}
+
+	@Override
+	public String getClassName() {
+		return Campaign.class.getName();
 	}
 
 	@Override
@@ -71,7 +81,7 @@ public class CampaignIndexer extends BaseIndexer {
 
 		Campaign campaign = CampaignLocalServiceUtil.getCampaign(entryClassPK);
 
-		return CampaignPermission.contains(
+		return _campaignPermission.contains(
 			permissionChecker, campaign, ActionKeys.VIEW);
 	}
 
@@ -124,7 +134,8 @@ public class CampaignIndexer extends BaseIndexer {
 	@Override
 	protected Summary doGetSummary(
 		Document document, Locale locale, String snippet,
-		PortletURL portletURL) {
+		PortletRequest portletRequest, PortletResponse portletResponse)
+		throws Exception {
 
 		return null;
 	}
@@ -163,8 +174,8 @@ public class CampaignIndexer extends BaseIndexer {
 	protected void reindexCampaigns(final long companyId)
 		throws PortalException, SystemException {
 
-		ActionableDynamicQuery actionableDynamicQuery =
-			new CampaignActionableDynamicQuery() {
+		IndexableActionableDynamicQuery actionableDynamicQuery =
+			new IndexableActionableDynamicQuery() {
 
 			@Override
 			protected void performAction(Object object) {
@@ -174,7 +185,7 @@ public class CampaignIndexer extends BaseIndexer {
 					Document document = getDocument(campaign);
 
 					if (document != null) {
-						addDocument(document);
+						addDocuments(document);
 					}
 				}
 				catch (PortalException e) {
@@ -194,6 +205,19 @@ public class CampaignIndexer extends BaseIndexer {
 
 		actionableDynamicQuery.performActions();
 	}
+
+	@Reference(unbind="unsetCampaignPermission")
+	protected void setCampaignPermission(
+		CampaignPermission campaignPermission) {
+
+		_campaignPermission = campaignPermission;
+	}
+
+	protected void unsetCampaignPermission() {
+		_campaignPermission = null;
+	}
+
+	private CampaignPermission _campaignPermission;
 
 	private static Log _log = LogFactoryUtil.getLog(CampaignIndexer.class);
 
