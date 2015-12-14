@@ -11,9 +11,9 @@
 	<!-- Destinations -->
 
 	<bean id="destination.anonymous_user_segments" class="com.liferay.portal.kernel.messaging.ParallelDestination">
-		<constructor-arg name="name" value="liferay/anonymous_user_segments" />
-		<constructor-arg name="workersCoreSize" value="25" />
-		<constructor-arg name="workersMaxSize" value="50" />
+		<property name="name" value="liferay/anonymous_user_segments" />
+		<property name="workersCoreSize" value="25" />
+		<property name="workersMaxSize" value="50" />
 	</bean>
 
 	<!-- Configurator -->
