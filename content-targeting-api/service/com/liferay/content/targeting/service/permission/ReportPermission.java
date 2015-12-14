@@ -14,15 +14,26 @@
 
 package com.liferay.content.targeting.service.permission;
 
+import com.liferay.content.targeting.model.Campaign;
+import com.liferay.content.targeting.model.ReportInstance;
+import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
-public class ReportPermission {
+@Component(
+	immediate = true,
+	property = {"model.class.name=om.liferay.content.targeting.model.ReportInstance"},
+	service = BaseModelPermissionChecker.class
+)
+public class ReportPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long userId, long companyId,
@@ -51,4 +62,31 @@ public class ReportPermission {
 			groupId, className, classPK, actionId);
 	}
 
+	public void checkBaseModel(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException {
+
+		ReportInstance reportInstance =
+			_reportInstanceLocalService.fetchReportInstance(primaryKey);
+
+		if (!contains(permissionChecker, reportInstance.getUserId(),
+				reportInstance.getCompanyId(), reportInstance.getGroupId(),
+				reportInstance.getClassName(), reportInstance.getClassPK(),
+				actionId)) {
+
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, ReportInstance.class.getName(),
+				primaryKey, actionId);
+		}
+	}
+
+	@Reference
+	protected void setReportInstanceLocalService(
+		ReportInstanceLocalService reportInstanceLocalService) {
+
+		_reportInstanceLocalService = reportInstanceLocalService;
+	}
+
+	private ReportInstanceLocalService _reportInstanceLocalService;
 }

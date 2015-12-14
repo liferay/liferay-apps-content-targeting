@@ -19,12 +19,19 @@ import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Pavel Savinov
  */
-public class TacticPermission {
+@Component(
+	immediate = true,
+	property = {"model.class.name=om.liferay.content.targeting.model.Tactic"},
+	service = BaseModelPermissionChecker.class
+)
+public class TacticPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long tacticId, String actionId)
@@ -74,6 +81,18 @@ public class TacticPermission {
 		return contains(
 			permissionChecker, tactic.getGroupId(), tactic.getTacticId(),
 			actionId);
+	}
+
+	public void checkBaseModel(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, groupId, primaryKey, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Tactic.class.getName(),
+				primaryKey, actionId);
+		}
 	}
 
 }
