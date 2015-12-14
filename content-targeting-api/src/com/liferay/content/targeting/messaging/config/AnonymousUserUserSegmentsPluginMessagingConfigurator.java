@@ -16,6 +16,7 @@ package com.liferay.content.targeting.messaging.config;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator;
 
@@ -41,7 +42,7 @@ public class AnonymousUserUserSegmentsPluginMessagingConfigurator
 		Map<String, List<MessageListener>> messageListeners) {
 
 		Collection<String> destinationNames =
-			getMessageBus().getDestinationNames();
+			MessageBusUtil.getMessageBus().getDestinationNames();
 
 		if (!destinationNames.contains(
 				_anonymousUserSegmentsMessageDestination)) {
