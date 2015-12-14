@@ -19,12 +19,20 @@ import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
  */
-public class CampaignPermission {
+@Component(
+	immediate = true,
+	property = {"model.class.name=om.liferay.content.targeting.model.Campaign"},
+	service = BaseModelPermissionChecker.class
+)
+public class CampaignPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, Campaign campaign,
@@ -78,6 +86,18 @@ public class CampaignPermission {
 		Campaign campaign = CampaignLocalServiceUtil.getCampaign(campaignId);
 
 		return contains(permissionChecker, campaign, actionId);
+	}
+
+	public void checkBaseModel(
+			PermissionChecker permissionChecker, long groupId, long primaryKey,
+			String actionId)
+		throws PortalException {
+
+		if (!contains(permissionChecker, groupId, primaryKey, actionId)) {
+			throw new PrincipalException.MustHavePermission(
+				permissionChecker, Campaign.class.getName(),
+				primaryKey, actionId);
+		}
 	}
 
 }

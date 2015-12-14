@@ -16,12 +16,20 @@ package com.liferay.content.targeting.service.permission;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.security.auth.PrincipalException;
+import com.liferay.portal.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.security.permission.PermissionChecker;
+import com.liferay.portal.security.permission.ResourcePermissionChecker;
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Julio Camarero
  */
-public class ContentTargetingPermission {
+@Component(
+	immediate = true,
+	property = {"resource.name=com.liferay.content.targeting.model"},
+	service = ResourcePermissionChecker.class
+)
+public class ContentTargetingPermission extends BaseResourcePermissionChecker  {
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.content.targeting.model";
@@ -33,6 +41,20 @@ public class ContentTargetingPermission {
 		if (!contains(permissionChecker, groupId, actionId)) {
 			throw new PrincipalException();
 		}
+	}
+
+	@Override
+	public Boolean checkResource(
+		PermissionChecker permissionChecker, long groupId, String actionId) {
+
+		try {
+			check(permissionChecker, groupId, actionId);
+
+			return true;
+		}
+		catch (PortalException e) {}
+
+		return false;
 	}
 
 	public static boolean contains(
