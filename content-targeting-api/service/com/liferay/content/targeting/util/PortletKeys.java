@@ -19,7 +19,21 @@ package com.liferay.content.targeting.util;
  */
 public class PortletKeys extends com.liferay.portal.util.PortletKeys {
 
-	public static final String CT_ADMIN = "ctadmin_WAR_contenttargetingweb";
+	public static final String CT_ADMIN =
+		"com_liferay_content_targeting_portlet_ContentTargetingPortlet";
+
+	public static final String CT_CAMPAIGN_DISPLAY =
+		"com_liferay_content_targeting_portlet_CampaignContentDisplayPortlet";
+
+	public static final String CT_SIMULATOR =
+		"com_liferay_content_targeting_portlet_SimulatorPortlet";
+
+	public static final String CT_USERSEGMENT_DISPLAY =
+		"com_liferay_content_targeting_portlet_" +
+			"UserSegmentContentDisplayPortlet";
+
+	public static final String CT_USERSEGMENT_LIST =
+		"com_liferay_content_targeting_portlet_UserSegmentContentListPortlet";
 
 	public static final String CT_CORE = "ctcore";
 
