@@ -16,9 +16,11 @@ package com.liferay.content.targeting.messaging.config;
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.messaging.MessageBusUtil;
+import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Collection;
 import java.util.List;
@@ -42,7 +44,7 @@ public class AnonymousUserUserSegmentsPluginMessagingConfigurator
 		Map<String, List<MessageListener>> messageListeners) {
 
 		Collection<String> destinationNames =
-			MessageBusUtil.getMessageBus().getDestinationNames();
+			_messageBus.getDestinationNames();
 
 		if (!destinationNames.contains(
 				_anonymousUserSegmentsMessageDestination)) {
@@ -65,9 +67,22 @@ public class AnonymousUserUserSegmentsPluginMessagingConfigurator
 		}
 	}
 
+	public void setServletContextName(String servletContextName) {
+		PortletClassLoaderUtil.setServletContextName(servletContextName);
+
+		_servletContextName = servletContextName;
+	}
+
+	@Reference(unbind = "-")
+	protected void setMessageBus(MessageBus messageBus) {
+		_messageBus = messageBus;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AnonymousUserUserSegmentsPluginMessagingConfigurator.class);
 
 	private String _anonymousUserSegmentsMessageDestination;
+	private volatile MessageBus _messageBus;
+	private String _servletContextName;
 
 }

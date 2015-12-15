@@ -16,8 +16,6 @@
 		<property name="workersMaxSize" value="50" />
 	</bean>
 
-	<!-- Configurator -->
-
 	<bean id="messagingConfigurator" class="com.liferay.content.targeting.messaging.config.AnonymousUserUserSegmentsPluginMessagingConfigurator">
 		<property name="destinations">
 			<list>
@@ -25,23 +23,8 @@
 			</list>
 		</property>
 		<property name="anonymousUserSegmentsMessageDestination" value="liferay/anonymous_user_segments" />
-		<property name="messageListeners">
-			<map key-type="java.lang.String" value-type="java.util.List">
-				<entry key="liferay/hot_deploy">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.anonymous_user_segments_hot_deploy_listener" />
-					</list>
-				</entry>
-				<entry key="liferay/anonymous_user_segments">
-					<list value-type="com.liferay.portal.kernel.messaging.MessageListener">
-						<ref bean="messageListener.anonymous_user_segments_listener" />
-					</list>
-				</entry>
-			</map>
-		</property>
+		<property name="servletContextName" value="content-targeting-api" />
 	</bean>
-
-	<!-- Listeners -->
 
 	<bean id="messageListener.anonymous_user_segments_listener" class="com.liferay.content.targeting.messaging.AnonymousUserUserSegmentsMessageListener" />
 	<bean id="messageListener.anonymous_user_segments_hot_deploy_listener" class="com.liferay.content.targeting.messaging.AnonymousUseUserSegmentsHotDeployMessageListener">
