@@ -14,16 +14,16 @@
 
 package com.liferay.content.targeting.portlet;
 
-import com.liferay.content.targeting.DuplicateChannelInstanceException;
-import com.liferay.content.targeting.InvalidChannelException;
-import com.liferay.content.targeting.InvalidChannelsException;
-import com.liferay.content.targeting.InvalidDateRangeException;
-import com.liferay.content.targeting.InvalidNameException;
-import com.liferay.content.targeting.InvalidReportException;
-import com.liferay.content.targeting.InvalidRuleException;
-import com.liferay.content.targeting.InvalidRulesException;
-import com.liferay.content.targeting.InvalidTrackingActionsException;
-import com.liferay.content.targeting.UsedUserSegmentException;
+import com.liferay.content.targeting.exception.DuplicateChannelInstanceException;
+import com.liferay.content.targeting.exception.InvalidChannelException;
+import com.liferay.content.targeting.exception.InvalidChannelsException;
+import com.liferay.content.targeting.exception.InvalidDateRangeException;
+import com.liferay.content.targeting.exception.InvalidNameException;
+import com.liferay.content.targeting.exception.InvalidReportException;
+import com.liferay.content.targeting.exception.InvalidRuleException;
+import com.liferay.content.targeting.exception.InvalidRulesException;
+import com.liferay.content.targeting.exception.InvalidTrackingActionsException;
+import com.liferay.content.targeting.exception.UsedUserSegmentException;
 import com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService;
 import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService;
 import com.liferay.content.targeting.api.model.Channel;
@@ -44,7 +44,6 @@ import com.liferay.content.targeting.portlet.util.BreadcrumbUtil;
 import com.liferay.content.targeting.portlet.util.ChannelTemplate;
 import com.liferay.content.targeting.portlet.util.ReportInstanceRowChecker;
 import com.liferay.content.targeting.portlet.util.RuleTemplate;
-import com.liferay.content.targeting.portlet.util.UnavailableServiceException;
 import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.CampaignService;
 import com.liferay.content.targeting.service.ChannelInstanceLocalService;
@@ -68,14 +67,13 @@ import com.liferay.content.targeting.util.CampaignConstants;
 import com.liferay.content.targeting.util.CampaignSearchContainerIterator;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.content.targeting.util.ContentTargetingUtil;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.ReportSearchContainerIterator;
 import com.liferay.content.targeting.util.TacticSearchContainerIterator;
 import com.liferay.content.targeting.util.UserSegmentSearchContainerIterator;
 import com.liferay.content.targeting.util.UserSegmentUtil;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
 import com.liferay.portal.kernel.dao.search.RowChecker;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
@@ -88,6 +86,7 @@ import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.servlet.taglib.aui.ValidatorTag;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.transaction.Propagation;
+import com.liferay.portal.kernel.util.AggregateResourceBundle;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -107,8 +106,8 @@ import com.liferay.portal.security.permission.ResourceActionsUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextFactory;
 import com.liferay.portal.service.permission.UserPermissionUtil;
-import com.liferay.portal.spring.transaction.TransactionAttributeBuilder;
-import com.liferay.portal.spring.transaction.TransactionalCallableUtil;
+import com.liferay.portal.kernel.transaction.TransactionAttribute;
+import com.liferay.portal.kernel.transaction.TransactionInvokerUtil;
 import com.liferay.portal.theme.ThemeDisplay;
 import com.liferay.portal.util.PortalUtil;
 
@@ -129,26 +128,54 @@ import java.util.concurrent.Callable;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletConfig;
-import javax.portlet.PortletException;
 import javax.portlet.PortletMode;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 import javax.portlet.PortletURL;
 import javax.portlet.RenderResponse;
-import javax.portlet.UnavailableException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-
-import org.springframework.transaction.interceptor.TransactionAttribute;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  * @author Carlos Sierra Andrés
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.control-panel-entry-category=site_administration.configuration",
+		"com.liferay.portlet.control-panel-entry-class=com.liferay.content.targeting.portlet.ContentTargetingControlPanelEntry",
+		"com.liferay.portlet.control-panel-entry-weight=10",
+		"com.liferay.portlet.css-class-wrapper=content-targeting-portlet",
+		"com.liferay.portlet.display-category=category.hidden",
+		"com.liferay.portlet.header-portlet-css=/css/content_targeting/main.css",
+		"com.liferay.portlet.header-portlet-css=/css/content_targeting/rules_panel.css",
+		"com.liferay.portlet.header-portlet-css=/css/content_targeting/warning_restart.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/content_targeting/input_slider.js",
+		"com.liferay.portlet.header-portlet-javascript=/js/content_targeting/search.js",
+		"com.liferay.portlet.header-portlet-javascript=/js/content_targeting/ct_form_builder.js",
+		"com.liferay.portlet.icon=/icons/icon.png",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=50",
+		"com.liferay.portlet.scopeable=true",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.name=" + PortletKeys.CT_ADMIN,
+		"javax.portlet.display-name=Audience Targeting",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/html/content_targeting/view.ftl",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = {ContentTargetingPortlet.class, Portlet.class}
+)
 public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 	public void deleteCampaign(ActionRequest request, ActionResponse response)
@@ -302,68 +329,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		}
 	}
 
-	@Override
-	public void init() throws PortletException {
-		super.init();
-
-		Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-		if (bundle == null) {
-			throw new UnavailableException(
-				"Can't find a reference to the OSGi bundle") {
-
-				@Override
-				public boolean isPermanent() {
-					return true;
-				}
-			};
-		}
-
-		_analyticsEventLocalService = ServiceTrackerUtil.getService(
-			AnalyticsEventLocalService.class, bundle.getBundleContext());
-		_anonymousUserLocalService = ServiceTrackerUtil.getService(
-			AnonymousUserLocalService.class, bundle.getBundleContext());
-		_campaignLocalService = ServiceTrackerUtil.getService(
-			CampaignLocalService.class, bundle.getBundleContext());
-		_campaignService = ServiceTrackerUtil.getService(
-			CampaignService.class, bundle.getBundleContext());
-		_channelInstanceService = ServiceTrackerUtil.getService(
-			ChannelInstanceService.class, bundle.getBundleContext());
-		_channelInstanceLocalService = ServiceTrackerUtil.getService(
-			ChannelInstanceLocalService.class, bundle.getBundleContext());
-		_channelsRegistry = ServiceTrackerUtil.getService(
-			ChannelsRegistry.class, bundle.getBundleContext());
-		_reportInstanceLocalService = ServiceTrackerUtil.getService(
-			ReportInstanceLocalService.class, bundle.getBundleContext());
-		_reportInstanceService = ServiceTrackerUtil.getService(
-			ReportInstanceService.class, bundle.getBundleContext());
-		_reportsRegistry = ServiceTrackerUtil.getService(
-			ReportsRegistry.class, bundle.getBundleContext());
-		_ruleCategoriesRegistry = ServiceTrackerUtil.getService(
-			RuleCategoriesRegistry.class, bundle.getBundleContext());
-		_ruleInstanceLocalService = ServiceTrackerUtil.getService(
-			RuleInstanceLocalService.class, bundle.getBundleContext());
-		_ruleInstanceService = ServiceTrackerUtil.getService(
-			RuleInstanceService.class, bundle.getBundleContext());
-		_rulesRegistry = ServiceTrackerUtil.getService(
-			RulesRegistry.class, bundle.getBundleContext());
-		_tacticService = ServiceTrackerUtil.getService(
-			TacticService.class, bundle.getBundleContext());
-		_tacticLocalService = ServiceTrackerUtil.getService(
-			TacticLocalService.class, bundle.getBundleContext());
-		_trackingActionInstanceService = ServiceTrackerUtil.getService(
-			TrackingActionInstanceService.class, bundle.getBundleContext());
-		_trackingActionInstanceLocalService = ServiceTrackerUtil.getService(
-			TrackingActionInstanceLocalService.class,
-			bundle.getBundleContext());
-		_trackingActionsRegistry = ServiceTrackerUtil.getService(
-			TrackingActionsRegistry.class, bundle.getBundleContext());
-		_userSegmentLocalService = ServiceTrackerUtil.getService(
-			UserSegmentLocalService.class, bundle.getBundleContext());
-		_userSegmentService = ServiceTrackerUtil.getService(
-			UserSegmentService.class, bundle.getBundleContext());
-	}
-
 	public void updateCampaign(ActionRequest request, ActionResponse response)
 		throws Exception {
 
@@ -418,7 +383,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					nameMap, descriptionMap, startDate, endDate, timeZoneId,
 					priority, active, userSegmentIds, serviceContext);
 
-			Campaign campaign = TransactionalCallableUtil.call(
+			Campaign campaign = TransactionInvokerUtil.invoke(
 				_transactionAttribute, campaignCallable);
 
 			boolean saveAndContinue = ParamUtil.get(
@@ -545,7 +510,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					reportInstanceId, reportKey, className, classPK, nameMap,
 					descriptionMap, serviceContext);
 
-			ReportInstance reportInstance = TransactionalCallableUtil.call(
+			ReportInstance reportInstance = TransactionInvokerUtil.invoke(
 				_transactionAttribute, reportInstanceCallable);
 
 			boolean saveAndContinue = ParamUtil.get(
@@ -648,7 +613,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					campaignId, nameMap, descriptionMap, userSegmentIds,
 					serviceContext);
 
-			Tactic tactic = TransactionalCallableUtil.call(
+			Tactic tactic = TransactionInvokerUtil.invoke(
 				_transactionAttribute, tacticCallable);
 
 			boolean saveAndContinue = ParamUtil.get(
@@ -726,7 +691,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 					request, response, themeDisplay.getUserId(), userSegmentId,
 					nameMap, descriptionMap, serviceContext);
 
-			UserSegment userSegment = TransactionalCallableUtil.call(
+			UserSegment userSegment = TransactionInvokerUtil.invoke(
 				_transactionAttribute, userSegmentCallable);
 
 			boolean saveAndContinue = ParamUtil.get(
@@ -796,6 +761,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		for (RuleInstance ruleInstance : ruleInstances) {
 			_ruleInstanceService.deleteRuleInstance(
+
 				ruleInstance.getRuleInstanceId());
 		}
 	}
@@ -805,8 +771,6 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			String path, PortletRequest portletRequest,
 			PortletResponse portletResponse, Template template)
 		throws Exception {
-
-		_checkServices();
 
 		BeansWrapper wrapper = BeansWrapper.getDefaultInstance();
 
@@ -1126,8 +1090,9 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 
 		long scopeGroupId = themeDisplay.getScopeGroupId();
 
-		PermissionChecker permissionChecker = (PermissionChecker)template.get(
-			"permissionChecker");
+		PermissionChecker permissionChecker =
+			themeDisplay.getPermissionChecker();
+
 
 		if (Validator.isNull(path) || path.equals(ContentTargetingPath.VIEW) ||
 			path.equals(ContentTargetingPath.VIEW_CAMPAIGNS_RESOURCES) ||
@@ -1177,14 +1142,13 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				 path.equals(ContentTargetingPath.EDIT_TACTIC) ||
 				 path.equals(ContentTargetingPath.VIEW_TACTICS_RESOURCES)) {
 
+			template.put(
+				"campaignTabs",
+				ParamUtil.getString(portletRequest, "campaignTabs", "details"));
+
 			long campaignId = ParamUtil.getLong(portletRequest, "campaignId");
 
 			template.put("campaignId", campaignId);
-			template.put("className", Campaign.class.getName());
-			template.put("classPK", campaignId);
-			template.put(
-				"tabs2",
-				ParamUtil.getString(portletRequest, "tabs2", "details"));
 
 			Calendar endDate = Calendar.getInstance();
 			int priority = 1;
@@ -1509,14 +1473,14 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 			}
 		}
 		else if (path.equals(ContentTargetingPath.EDIT_USER_SEGMENT)) {
+			template.put(
+				"userSegmentTabs",
+				ParamUtil.getString(
+					portletRequest, "userSegmentTabs", "details"));
+
 			long userSegmentId = ParamUtil.getLong(
 				portletRequest, "userSegmentId");
 
-			template.put("className", UserSegment.class.getName());
-			template.put("classPK", userSegmentId);
-			template.put(
-				"tabs2",
-				ParamUtil.getString(portletRequest, "tabs2", "details"));
 			template.put("ruleCategoriesRegistry", _ruleCategoriesRegistry);
 			template.put("rulesRegistry", _rulesRegistry);
 			template.put("userSegmentId", userSegmentId);
@@ -1737,7 +1701,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 							"mvcPath", ContentTargetingPath.EDIT_CAMPAIGN);
 						portletURL.setParameter(
 							"campaignId", String.valueOf(classPK));
-						portletURL.setParameter("tabs2", "reports");
+						portletURL.setParameter("campaignTabs", "reports");
 					}
 					else {
 						portletURL.setParameter(
@@ -1760,7 +1724,7 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 						JavaConstants.JAVAX_PORTLET_CONFIG);
 
 				String title = LanguageUtil.format(
-					portletConfig, themeDisplay.getLocale(),
+					portletConfig.getResourceBundle(themeDisplay.getLocale()),
 					"reports-for-the-x-x",
 					new Object[] {
 						ResourceActionsUtil.getModelResource(
@@ -1808,6 +1772,146 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 				}
 			}
 		}
+	}
+
+	@Reference(unbind = "unsetAnalyticsEventLocalService")
+	protected void setAnalyticsEventLocalService(
+		AnalyticsEventLocalService analyticsEventLocalService) {
+
+		_analyticsEventLocalService = analyticsEventLocalService;
+	}
+
+	@Reference(unbind = "unsetAnonymousUserLocalService")
+	protected void setAnonymousUserLocalService(
+		AnonymousUserLocalService anonymousUserLocalService) {
+
+		_anonymousUserLocalService = anonymousUserLocalService;
+	}
+
+	@Reference(unbind = "unsetCampaignLocalService")
+	protected void setCampaignLocalService(
+		CampaignLocalService campaignLocalService) {
+
+		_campaignLocalService = campaignLocalService;
+	}
+
+	@Reference(unbind = "unsetCampaignService")
+	protected void setCampaignService(
+		CampaignService campaignService) {
+
+		_campaignService = campaignService;
+	}
+
+	@Reference(unbind = "unsetChannelInstanceService")
+	protected void setChannelInstanceService(
+		ChannelInstanceService channelInstanceService) {
+
+		_channelInstanceService = channelInstanceService;
+	}
+
+	@Reference(unbind = "unsetChannelInstanceLocalService")
+	protected void setChannelInstanceLocalService(
+		ChannelInstanceLocalService channelInstanceLocalService) {
+
+		_channelInstanceLocalService = channelInstanceLocalService;
+	}
+
+	@Reference(unbind = "unsetChannelsRegistry")
+	protected void setChannelsRegistry(ChannelsRegistry channelsRegistry) {
+		_channelsRegistry = channelsRegistry;
+	}
+
+	@Reference(unbind = "unsetReportInstanceLocalService")
+	protected void setReportInstanceLocalService(
+		ReportInstanceLocalService reportInstanceLocalService) {
+
+		_reportInstanceLocalService = reportInstanceLocalService;
+	}
+
+	@Reference(unbind = "unsetReportInstanceService")
+	protected void setReportInstanceService(
+		ReportInstanceService reportInstanceService) {
+
+		_reportInstanceService = reportInstanceService;
+	}
+
+	@Reference(unbind = "unsetReportsRegistry")
+	protected void setReportsRegistry(ReportsRegistry reportsRegistry) {
+		_reportsRegistry = reportsRegistry;
+	}
+
+	@Reference(unbind = "unsetRuleCategoriesRegistry")
+	protected void setRuleCategoriesRegistry(
+		RuleCategoriesRegistry ruleCategoriesRegistry) {
+
+		_ruleCategoriesRegistry = ruleCategoriesRegistry;
+	}
+
+	@Reference(unbind = "unsetRuleInstanceLocalService")
+	protected void setRuleInstanceLocalService(
+		RuleInstanceLocalService ruleInstanceLocalService) {
+
+		_ruleInstanceLocalService = ruleInstanceLocalService;
+	}
+
+	@Reference(unbind = "unsetRuleInstanceService")
+	protected void setRuleInstanceService(
+		RuleInstanceService ruleInstanceService) {
+
+		_ruleInstanceService = ruleInstanceService;
+	}
+
+	@Reference(unbind = "unsetRulesRegistry")
+	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
+		_rulesRegistry = rulesRegistry;
+	}
+
+	@Reference(unbind = "unsetTacticService")
+	protected void setTacticService(TacticService tacticService) {
+		_tacticService = tacticService;
+	}
+
+	@Reference(unbind = "unsetTacticLocalService")
+	protected void setTacticLocalService(
+		TacticLocalService tacticLocalService) {
+
+		_tacticLocalService = tacticLocalService;
+	}
+
+	@Reference(unbind = "unsetTrackingActionInstanceService")
+	protected void setTrackingActionInstanceService(
+		TrackingActionInstanceService trackingActionInstanceService) {
+
+		_trackingActionInstanceService = trackingActionInstanceService;
+	}
+
+	@Reference(unbind = "unsetTrackingActionInstanceLocalService")
+	protected void setTrackingActionInstanceLocalService(
+		TrackingActionInstanceLocalService trackingActionInstanceLocalService) {
+
+		_trackingActionInstanceLocalService =
+			trackingActionInstanceLocalService;
+	}
+
+	@Reference(unbind = "unsetTrackingActionsRegistry")
+	protected void setTrackingActionsRegistry(
+		TrackingActionsRegistry trackingActionsRegistry) {
+
+		_trackingActionsRegistry = trackingActionsRegistry;
+	}
+
+	@Reference(unbind = "unsetUserSegmentLocalService")
+	protected void setUserSegmentLocalService(
+		UserSegmentLocalService userSegmentLocalService) {
+
+		_userSegmentLocalService = userSegmentLocalService;
+	}
+
+	@Reference(unbind = "unsetUserSegmentService")
+	protected void setUserSegmentService(
+		UserSegmentService userSegmentService) {
+
+		_userSegmentService = userSegmentService;
 	}
 
 	protected List<InvalidChannelException> updateChannels(
@@ -2002,17 +2106,88 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 		return ruleExceptions;
 	}
 
-	private void _checkServices()
-		throws SystemException, UnavailableServiceException {
+	protected void unsetAnalyticsEventLocalService() {
+		_analyticsEventLocalService = null;
+	}
 
-		try {
-			_analyticsEventLocalService.getAnalyticsEvents(0, 1);
-			_anonymousUserLocalService.getAnonymousUsers(0, 1);
-			_campaignLocalService.getCampaigns(0, 1);
-		}
-		catch (Exception e) {
-			throw new UnavailableServiceException();
-		}
+	protected void unsetAnonymousUserLocalService() {
+		_anonymousUserLocalService = null;
+	}
+
+	protected void unsetCampaignLocalService() {
+		_campaignLocalService = null;
+	}
+
+	protected void unsetCampaignService() {
+		_campaignService = null;
+	}
+
+	protected void unsetChannelInstanceService() {
+		_channelInstanceService = null;
+	}
+
+	protected void unsetChannelInstanceLocalService() {
+		_channelInstanceLocalService = null;
+	}
+
+	protected void unsetChannelsRegistry() {
+		_channelsRegistry = null;
+	}
+
+	protected void unsetReportInstanceLocalService() {
+		_reportInstanceLocalService = null;
+	}
+
+	protected void unsetReportInstanceService() {
+		_reportInstanceService = null;
+	}
+
+	protected void unsetReportsRegistry() {
+		_reportsRegistry = null;
+	}
+
+	protected void unsetRuleCategoriesRegistry() {
+		_ruleCategoriesRegistry = null;
+	}
+
+	protected void unsetRuleInstanceLocalService() {
+		_ruleInstanceLocalService = null;
+	}
+
+	protected void unsetRuleInstanceService() {
+		_ruleInstanceService = null;
+	}
+
+	protected void unsetRulesRegistry() {
+		_rulesRegistry = null;
+	}
+
+	protected void unsetTacticService() {
+		_tacticService = null;
+	}
+
+	protected void unsetTacticLocalService() {
+		_tacticLocalService = null;
+	}
+
+	protected void unsetTrackingActionInstanceService() {
+		_trackingActionInstanceService = null;
+	}
+
+	protected void unsetTrackingActionInstanceLocalService() {
+		_trackingActionInstanceLocalService = null;
+	}
+
+	protected void unsetTrackingActionsRegistry() {
+		_trackingActionsRegistry = null;
+	}
+
+	protected void unsetUserSegmentLocalService() {
+		_userSegmentLocalService = null;
+	}
+
+	protected void unsetUserSegmentService() {
+		_userSegmentService = null;
 	}
 
 	private long _getCampaignClassPK(Campaign campaign, Group scopeGroup)
@@ -2093,31 +2268,33 @@ public class ContentTargetingPortlet extends CTFreeMarkerPortlet {
 	private static Log _log = LogFactoryUtil.getLog(
 		ContentTargetingPortlet.class);
 
-	private AnalyticsEventLocalService _analyticsEventLocalService;
-	private AnonymousUserLocalService _anonymousUserLocalService;
-	private CampaignLocalService _campaignLocalService;
-	private CampaignService _campaignService;
-	private ChannelInstanceLocalService _channelInstanceLocalService;
-	private ChannelInstanceService _channelInstanceService;
-	private ChannelsRegistry _channelsRegistry;
-	private ReportInstanceLocalService _reportInstanceLocalService;
-	private ReportInstanceService _reportInstanceService;
-	private ReportsRegistry _reportsRegistry;
-	private RuleCategoriesRegistry _ruleCategoriesRegistry;
-	private RuleInstanceLocalService _ruleInstanceLocalService;
-	private RuleInstanceService _ruleInstanceService;
-	private RulesRegistry _rulesRegistry;
-	private TacticLocalService _tacticLocalService;
-	private TacticService _tacticService;
-	private TrackingActionInstanceLocalService
+	private volatile AnalyticsEventLocalService _analyticsEventLocalService;
+	private volatile AnonymousUserLocalService _anonymousUserLocalService;
+	private volatile CampaignLocalService _campaignLocalService;
+	private volatile CampaignService _campaignService;
+	private volatile ChannelInstanceLocalService _channelInstanceLocalService;
+	private volatile ChannelInstanceService _channelInstanceService;
+	private volatile ChannelsRegistry _channelsRegistry;
+	private volatile ReportInstanceLocalService _reportInstanceLocalService;
+	private volatile ReportInstanceService _reportInstanceService;
+	private volatile ReportsRegistry _reportsRegistry;
+	private volatile RuleCategoriesRegistry _ruleCategoriesRegistry;
+	private volatile RuleInstanceLocalService _ruleInstanceLocalService;
+	private volatile RuleInstanceService _ruleInstanceService;
+	private volatile RulesRegistry _rulesRegistry;
+	private volatile TacticLocalService _tacticLocalService;
+	private volatile TacticService _tacticService;
+	private volatile TrackingActionInstanceLocalService
 		_trackingActionInstanceLocalService;
-	private TrackingActionInstanceService _trackingActionInstanceService;
-	private TrackingActionsRegistry _trackingActionsRegistry;
+	private volatile TrackingActionInstanceService
+		_trackingActionInstanceService;
+	private volatile TrackingActionsRegistry _trackingActionsRegistry;
 	private TransactionAttribute _transactionAttribute =
-		TransactionAttributeBuilder.build(
-			Propagation.REQUIRED, new Class<?>[]{Exception.class});
-	private UserSegmentLocalService _userSegmentLocalService;
-	private UserSegmentService _userSegmentService;
+		TransactionAttribute.Factory.create(
+			Propagation.REQUIRED, new Class<?>[]{Exception.class},
+			new Class<?>[]{});
+	private volatile UserSegmentLocalService _userSegmentLocalService;
+	private volatile UserSegmentService _userSegmentService;
 
 	private class CampaignCallable implements Callable<Campaign> {
 

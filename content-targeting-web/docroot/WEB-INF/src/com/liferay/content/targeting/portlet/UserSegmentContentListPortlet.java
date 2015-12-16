@@ -15,6 +15,7 @@
 package com.liferay.content.targeting.portlet;
 
 import com.liferay.content.targeting.util.ContentTargetingUtil;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -45,6 +46,7 @@ import com.liferay.portlet.asset.service.persistence.AssetEntryQuery;
 import freemarker.ext.beans.BeansWrapper;
 
 import freemarker.template.TemplateHashModel;
+import org.osgi.service.component.annotations.Component;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -52,6 +54,7 @@ import java.util.List;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
+import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
@@ -59,6 +62,33 @@ import javax.portlet.PortletResponse;
 /**
  * @author Eudaldo Alonso
  */
+@Component(
+	immediate = true,
+	property = {
+		"com.liferay.portlet.css-class-wrapper=user-segment-content-list-portlet",
+		"com.liferay.portlet.display-category=category.ct",
+		"com.liferay.portlet.header-portlet-css=/css/content_targeting/warning_restart.css",
+		"com.liferay.portlet.header-portlet-css=/css/user_segment_content_list/main.css",
+		"com.liferay.portlet.header-portlet-javascript=/js/content_targeting/thumbnails_preview.js",
+		"com.liferay.portlet.icon=/icons/user_segment_content_list.png",
+		"com.liferay.portlet.instanceable=true",
+		"com.liferay.portlet.private-request-attributes=false",
+		"com.liferay.portlet.private-session-attributes=false",
+		"com.liferay.portlet.render-weight=1",
+		"com.liferay.portlet.scopeable=true",
+		"com.liferay.portlet.use-default-template=true",
+		"javax.portlet.name=" + PortletKeys.CT_USERSEGMENT_LIST,
+		"javax.portlet.display-name=User Segment Content List",
+		"javax.portlet.expiration-cache=0",
+		"javax.portlet.init-param.config-template=/html/user_segment_content_list/configuration.ftl",
+		"javax.portlet.init-param.template-path=/",
+		"javax.portlet.init-param.view-template=/html/user_segment_content_list/view.ftl",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=administrator,guest,power-user,user",
+		"javax.portlet.supports.mime-type=text/html"
+	},
+	service = {UserSegmentContentListPortlet.class, Portlet.class}
+)
 public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 
 	public void updatePreferences(
@@ -151,7 +181,9 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 	}
 
 	@Override
-	protected String getPath(PortletRequest portletRequest) {
+	protected String getPath(
+		PortletRequest portletRequest, PortletResponse portletResponse) {
+
 		String strutsPath = ParamUtil.getString(
 			portletRequest, "struts_action");
 
@@ -159,7 +191,7 @@ public class UserSegmentContentListPortlet extends CTFreeMarkerDisplayPortlet {
 			return UserSegmentContentListPath.VIEW_CONTENT;
 		}
 
-		return super.getPath(portletRequest);
+		return super.getPath(portletRequest, portletResponse);
 	}
 
 	protected void populateViewContext(
