@@ -14,6 +14,7 @@
 
 package com.liferay.content.targeting.portlet.util;
 
+import com.liferay.portal.kernel.io.unsync.UnsyncStringWriter;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.template.TemplateConstants;
@@ -21,10 +22,11 @@ import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
 import com.liferay.portal.templateparser.Transformer;
 import com.liferay.portal.theme.ThemeDisplay;
-import com.liferay.portlet.assetpublisher.util.AssetPublisherHelperUtil;
-import com.liferay.portlet.dynamicdatamapping.model.DDMTemplate;
-import com.liferay.portlet.dynamicdatamapping.service.DDMTemplateLocalServiceUtil;
-import com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateConstants;
+import com.liferay.asset.publisher.web.util.AssetPublisherHelper;
+import com.liferay.dynamic.data.lists.web.configuration.DDLWebConfigurationKeys;
+import com.liferay.dynamic.data.mapping.model.DDMTemplate;
+import com.liferay.dynamic.data.mapping.service.DDMTemplateLocalServiceUtil;
+import com.liferay.portlet.display.template.PortletDisplayTemplateConstants;
 
 import java.util.HashMap;
 import java.util.List;
@@ -38,7 +40,7 @@ import javax.portlet.PortletRequest;
  */
 public class PortletDisplayTemplateUtil
 	extends
-	com.liferay.portlet.portletdisplaytemplate.util.PortletDisplayTemplateUtil {
+	com.liferay.portlet.display.template.PortletDisplayTemplateUtil {
 
 	public static String renderDDMTemplate(
 			PortletRequest portletRequest, ThemeDisplay themeDisplay,
@@ -76,15 +78,16 @@ public class PortletDisplayTemplateUtil
 			contextObjects.put("taglibLiferayHash", portletJspTagLibs);
 		}
 
-		contextObjects.put(
-			PortletDisplayTemplateConstants.ASSET_PUBLISHER_HELPER,
-			AssetPublisherHelperUtil.getAssetPublisherHelper());
+		contextObjects.put("assetPublisherHelper", new AssetPublisherHelper());
 
 		Transformer transformer = new Transformer(
-			PropsKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, true);
+			DDLWebConfigurationKeys.DYNAMIC_DATA_LISTS_ERROR_TEMPLATE, true);
+
+		UnsyncStringWriter unsyncStringWriter = new UnsyncStringWriter();
 
 		return transformer.transform(
-			themeDisplay, contextObjects, ddmTemplate.getScript(), language);
+			themeDisplay, contextObjects, ddmTemplate.getScript(), language,
+			unsyncStringWriter);
 	}
 
 	private static Map<String, Object> _getPortletPreferences(
