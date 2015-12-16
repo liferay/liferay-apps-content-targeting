@@ -21,6 +21,7 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.ServiceContext;
+import org.osgi.service.component.annotations.Component;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,10 @@ import java.util.Map;
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	immediate = true,
+	property = {"destination.name=liferay/analytics"},
+	service = MessageListener.class)
 public class AnalyticsMessageListener implements MessageListener {
 
 	@Override
