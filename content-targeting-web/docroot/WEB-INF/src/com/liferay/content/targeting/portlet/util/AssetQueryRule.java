@@ -226,7 +226,8 @@ public abstract class AssetQueryRule implements QueryRule {
 		String cssClass = "query-operator";
 
 		if ((andOperator == null) && !contains) {
-			sb.append(LanguageUtil.get(portletConfig, locale, "not"));
+			sb.append(LanguageUtil.get(
+				portletConfig.getResourceBundle(locale), "not"));
 			sb.append(StringPool.SPACE);
 
 			cssClass += " first";
@@ -236,13 +237,17 @@ public abstract class AssetQueryRule implements QueryRule {
 
 			sb.append(
 				andOperator ?
-					LanguageUtil.get(portletConfig, locale, "and") :
-					LanguageUtil.get(portletConfig, locale, "or"));
+					LanguageUtil.get(
+						portletConfig.getResourceBundle(locale), "and") :
+					LanguageUtil.get(
+						portletConfig.getResourceBundle(locale), "or"));
 
 			sb.append(StringPool.SPACE);
 
 			if (!contains) {
-				sb.append(LanguageUtil.get(portletConfig, locale, "not"));
+				sb.append(
+					LanguageUtil.get(
+						portletConfig.getResourceBundle(locale), "not"));
 				sb.append(StringPool.SPACE);
 			}
 		}

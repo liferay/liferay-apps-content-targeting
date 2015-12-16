@@ -106,7 +106,8 @@ public class UserSegmentQueryRule extends AssetQueryRule implements QueryRule {
 		throws SystemException {
 
 		if (ArrayUtil.isEmpty(_userSegmentAssetCategoryIds)) {
-			return LanguageUtil.get(portletConfig, locale, "default");
+			return LanguageUtil.get(
+				portletConfig.getResourceBundle(locale), "default");
 		}
 
 		String summary = StringPool.BLANK;

@@ -15,8 +15,7 @@
 package com.liferay.content.targeting.portlet.util;
 
 import com.liferay.content.targeting.model.Campaign;
-import com.liferay.content.targeting.service.CampaignLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
@@ -26,9 +25,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import java.util.Locale;
 
 import javax.portlet.PortletConfig;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 /**
  * @author Eudaldo Alonso
@@ -97,7 +93,8 @@ public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 		throws SystemException {
 
 		if (_campaign == null) {
-			return LanguageUtil.get(portletConfig, locale, "default");
+			return LanguageUtil.get(
+				portletConfig.getResourceBundle(locale), "default");
 		}
 
 		return getCampaignName(locale);
@@ -117,13 +114,7 @@ public class CampaignQueryRule extends AssetQueryRule implements QueryRule {
 
 	protected void initCampaign() {
 		try {
-			Bundle bundle = FrameworkUtil.getBundle(getClass());
-
-			CampaignLocalService campaignLocalService =
-				ServiceTrackerUtil.getService(
-					CampaignLocalService.class, bundle.getBundleContext());
-
-			_campaign = campaignLocalService.getCampaign(_campaignId);
+			_campaign = CampaignLocalServiceUtil.getCampaign(_campaignId);
 		}
 		catch (Exception e) {
 		}
