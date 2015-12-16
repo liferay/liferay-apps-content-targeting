@@ -25,6 +25,7 @@ import com.liferay.portal.kernel.portlet.DefaultConfigurationAction;
 import com.liferay.portal.kernel.template.Template;
 import com.liferay.portal.kernel.template.TemplateHandler;
 import com.liferay.portal.kernel.template.TemplateHandlerRegistryUtil;
+import com.liferay.portal.kernel.settings.ParameterMapSettings;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.PropertiesParamUtil;
@@ -163,7 +164,7 @@ public class CTFreeMarkerDisplayPortlet extends CTFreeMarkerPortlet {
 		throws Exception {
 
 		UnicodeProperties properties = PropertiesParamUtil.getProperties(
-			request, DefaultConfigurationAction.PREFERENCES_PREFIX);
+			request, ParameterMapSettings.PREFERENCES_PREFIX);
 
 		for (Map.Entry<String, String> entry : properties.entrySet()) {
 			String name = entry.getKey();
