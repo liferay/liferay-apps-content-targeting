@@ -16,12 +16,6 @@ package com.liferay.content.targeting.portlet.lar;
 
 import com.liferay.content.targeting.lar.AssetEntryReferencedStagedModel;
 import com.liferay.content.targeting.portlet.util.QueryRule;
-import com.liferay.portal.kernel.lar.DataLevel;
-import com.liferay.portal.kernel.lar.DefaultConfigurationPortletDataHandler;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -32,6 +26,12 @@ import com.liferay.portal.model.Portlet;
 import com.liferay.portal.service.PortletLocalServiceUtil;
 import com.liferay.portlet.asset.model.AssetEntry;
 import com.liferay.portlet.asset.service.AssetEntryLocalServiceUtil;
+import com.liferay.portlet.exportimport.lar.DataLevel;
+import com.liferay.portlet.exportimport.lar.DefaultConfigurationPortletDataHandler;
+import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
 import java.util.Enumeration;
 import java.util.List;

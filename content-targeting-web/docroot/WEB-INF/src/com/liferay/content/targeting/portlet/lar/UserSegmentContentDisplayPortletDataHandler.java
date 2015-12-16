@@ -18,12 +18,6 @@ import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.portlet.util.QueryRule;
 import com.liferay.content.targeting.portlet.util.UserSegmentQueryRuleUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.portal.kernel.lar.DataLevel;
-import com.liferay.portal.kernel.lar.ExportImportPathUtil;
-import com.liferay.portal.kernel.lar.PortletDataContext;
-import com.liferay.portal.kernel.lar.PortletDataException;
-import com.liferay.portal.kernel.lar.PortletDataHandlerBoolean;
-import com.liferay.portal.kernel.lar.StagedModelDataHandlerUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -36,6 +30,12 @@ import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.service.AssetCategoryLocalServiceUtil;
+import com.liferay.portlet.exportimport.lar.DataLevel;
+import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
+import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.PortletDataHandlerBoolean;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
 import java.util.List;
 
