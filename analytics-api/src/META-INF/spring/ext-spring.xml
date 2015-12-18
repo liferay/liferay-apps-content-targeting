@@ -37,5 +37,6 @@
 				</entry>
 			</map>
 		</property>
+		<property name="servletContextName" value="analytics-processor" />
 	</bean>
 </beans>

@@ -17,17 +17,25 @@ package com.liferay.content.targeting.anonymous.users.hook.events;
 import com.liferay.content.targeting.anonymous.users.util.AnonymousUsersCookieManager;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.ActionException;
+import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Julio Camarero
  */
+@Component(
+	property = {"key=login.events.post"},
+	service = LifecycleAction.class
+)
 public class AnonymousUsersLoginAction extends Action {
 
 	@Override
@@ -53,7 +61,7 @@ public class AnonymousUsersLoginAction extends Action {
 		}
 	}
 
-	@Reference(unbind ="unsetAnonymousUsersCookieManager")
+	@Reference(unbind="unsetAnonymousUsersCookieManager")
 	protected void setAnonymousUsersCookieManager(
 		AnonymousUsersCookieManager anonymousUsersCookieManager) {
 

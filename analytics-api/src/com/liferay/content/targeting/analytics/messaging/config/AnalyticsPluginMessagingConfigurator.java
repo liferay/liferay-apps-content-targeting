@@ -19,6 +19,9 @@ import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.MessageBusUtil;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator;
+import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
+
+import org.osgi.service.component.annotations.Reference;
 
 import java.util.Collection;
 import java.util.List;
@@ -61,9 +64,16 @@ public class AnalyticsPluginMessagingConfigurator
 		}
 	}
 
+	public void setServletContextName(String servletContextName) {
+		PortletClassLoaderUtil.setServletContextName(servletContextName);
+
+		_servletContextName = servletContextName;
+	}
+
 	private static Log _log = LogFactoryUtil.getLog(
 		AnalyticsPluginMessagingConfigurator.class);
 
 	private String _analyticsMessageDestination;
+	private String _servletContextName;
 
 }
