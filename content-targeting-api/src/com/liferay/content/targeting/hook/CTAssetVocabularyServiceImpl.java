@@ -24,6 +24,7 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.GroupLocalServiceUtil;
+import com.liferay.portal.service.ServiceWrapper;
 import com.liferay.portlet.asset.NoSuchVocabularyException;
 import com.liferay.portlet.asset.model.AssetVocabulary;
 import com.liferay.portlet.asset.model.AssetVocabularyDisplay;
@@ -35,11 +36,18 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eudaldo Alonso
  */
+@Component(immediate = true, service = ServiceWrapper.class)
 public class CTAssetVocabularyServiceImpl
 		extends AssetVocabularyServiceWrapper {
+
+	public CTAssetVocabularyServiceImpl() {
+		super(null);
+	}
 
 	public CTAssetVocabularyServiceImpl(
 		AssetVocabularyService assetVocabularyService) {
