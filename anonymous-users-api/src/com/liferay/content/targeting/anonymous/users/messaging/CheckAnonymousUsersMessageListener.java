@@ -12,13 +12,20 @@
  * details.
  */
 
-package com.liferay.content.targeting.util;
+package com.liferay.content.targeting.anonymous.users.messaging;
+
+import com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalServiceUtil;
+import com.liferay.portal.kernel.messaging.BaseMessageListener;
+import com.liferay.portal.kernel.messaging.Message;
 
 /**
- * @author Eudaldo Alonso
+ * @author Pavel Savinov
  */
-public class UserSegmentConstants {
+public class CheckAnonymousUsersMessageListener extends BaseMessageListener {
 
-	public static final String VOCABULARY_NAME = "user-segment";
+	@Override
+	protected void doReceive(Message message) throws Exception {
+		AnonymousUserLocalServiceUtil.checkAnonymousUsers();
+	}
 
 }

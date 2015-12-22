@@ -21,9 +21,11 @@ String className = (String)request.getAttribute("liferay-ui:asset-categories-sum
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-summary:classPK"));
 PortletURL portletURL = (PortletURL)request.getAttribute("liferay-ui:asset-categories-summary:portletURL");
 
+AssetEntry assetEntry = AssetEntryLocalServiceUtil.fetchEntry(className, classPK);
+
 List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
 
-long[] groupIds = getCurrentAndAncestorSiteGroupIds(scopeGroupId);
+long[] groupIds = _getCurrentAndAncestorSiteGroupIds((assetEntry != null) ? assetEntry.getGroupId() : scopeGroupId);
 
 for (long groupId : groupIds) {
 	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(groupId, false));
@@ -41,14 +43,15 @@ for (AssetVocabulary vocabulary : vocabularies) {
 		<span class="taglib-asset-categories-summary">
 			<%= vocabulary.getTitle(locale) %>
 
-				<c:if test="<%= vocabulary.getGroupId() != themeDisplay.getSiteGroupId() %>">
+			<c:if test="<%= vocabulary.getGroupId() != themeDisplay.getSiteGroupId() %>">
 
-					<%
-					Group vocabularyGroup = GroupLocalServiceUtil.getGroup(vocabulary.getGroupId());
-					%>
+				<%
+				Group vocabularyGroup = GroupLocalServiceUtil.getGroup(vocabulary.getGroupId());
+				%>
 
-					(<%= vocabularyGroup.getDescriptiveName() %>)
-				</c:if>:
+				(<%= vocabularyGroup.getDescriptiveName() %>)
+			</c:if>:
+
 			<c:choose>
 				<c:when test="<%= portletURL != null %>">
 

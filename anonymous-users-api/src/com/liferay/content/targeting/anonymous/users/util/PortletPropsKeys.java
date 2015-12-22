@@ -12,13 +12,14 @@
  * details.
  */
 
-package com.liferay.content.targeting.util;
+package com.liferay.content.targeting.anonymous.users.util;
 
 /**
- * @author Eudaldo Alonso
+ * @author Pavel Savinov
  */
-public class UserSegmentConstants {
+public class PortletPropsKeys {
 
-	public static final String VOCABULARY_NAME = "user-segment";
+	public static final String ANONYMOUS_USERS_MAX_AGE =
+		"anonymous.users.max.age";
 
 }

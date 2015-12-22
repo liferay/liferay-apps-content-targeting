@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.search.IndexerRegistryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
+import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.asset.NoSuchVocabularyException;
@@ -55,23 +56,8 @@ public class UserSegmentUtil {
 		serviceContext.setAddGuestPermissions(true);
 
 		return AssetVocabularyLocalServiceUtil.addVocabulary(
-			userId, null, getAssetVocabularyTitle(),
-			getAssetVocabularyDescription(), null, serviceContext);
-	}
-
-	public static Map<Locale, String> getAssetVocabularyDescription() {
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
-
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
-			descriptionMap.put(
-				locale,
-				LanguageUtil.get(
-					locale, UserSegmentConstants.VOCABULARY_DESCRIPTION));
-		}
-
-		return descriptionMap;
+			userId, StringPool.BLANK, _getAssetVocabularyTitleMap(), null,
+			StringPool.BLANK, serviceContext);
 	}
 
 	public static long getAssetVocabularyId(
@@ -145,20 +131,6 @@ public class UserSegmentUtil {
 			LocaleUtil.getDefault(), UserSegmentConstants.VOCABULARY_NAME);
 	}
 
-	public static Map<Locale, String> getAssetVocabularyTitle() {
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
-
-		Locale[] locales = LanguageUtil.getAvailableLocales();
-
-		for (Locale locale : locales) {
-			titleMap.put(
-				locale,
-				LanguageUtil.get(locale, UserSegmentConstants.VOCABULARY_NAME));
-		}
-
-		return titleMap;
-	}
-
 	public static List<UserSegment> getUserSegments(Hits hits)
 		throws PortalException, SystemException {
 
@@ -191,6 +163,20 @@ public class UserSegmentUtil {
 		}
 
 		return userSegments;
+	}
+
+	private static Map<Locale, String> _getAssetVocabularyTitleMap() {
+		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+
+		Locale[] locales = LanguageUtil.getAvailableLocales();
+
+		for (Locale locale : locales) {
+			titleMap.put(
+				locale,
+				LanguageUtil.get(locale, UserSegmentConstants.VOCABULARY_NAME));
+		}
+
+		return titleMap;
 	}
 
 }

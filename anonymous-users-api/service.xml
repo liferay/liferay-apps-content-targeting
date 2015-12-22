@@ -34,5 +34,10 @@
 		<finder name="UserId" return-type="Collection">
 			<finder-column name="userId" />
 		</finder>
+
+		<finder name="C_LtD" return-type="Collection">
+			<finder-column name="companyId" />
+			<finder-column name="createDate" comparator="&lt;" />
+		</finder>
 	</entity>
 </service-builder>

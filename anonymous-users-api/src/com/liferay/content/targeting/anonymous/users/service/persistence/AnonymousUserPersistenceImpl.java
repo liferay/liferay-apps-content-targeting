@@ -30,6 +30,7 @@ import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.CalendarUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.InstanceFactory;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -50,6 +51,7 @@ import java.io.Serializable;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -1684,6 +1686,556 @@ public class AnonymousUserPersistenceImpl extends BasePersistenceImpl<AnonymousU
 	}
 
 	private static final String _FINDER_COLUMN_USERID_USERID_2 = "anonymousUser.userId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_LTD = new FinderPath(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
+			AnonymousUserModelImpl.FINDER_CACHE_ENABLED,
+			AnonymousUserImpl.class, FINDER_CLASS_NAME_LIST_WITH_PAGINATION,
+			"findByC_LtD",
+			new String[] {
+				Long.class.getName(), Date.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_LTD = new FinderPath(AnonymousUserModelImpl.ENTITY_CACHE_ENABLED,
+			AnonymousUserModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByC_LtD",
+			new String[] { Long.class.getName(), Date.class.getName() });
+
+	/**
+	 * Returns all the anonymous users where companyId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @return the matching anonymous users
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<AnonymousUser> findByC_LtD(long companyId, Date createDate)
+		throws SystemException {
+		return findByC_LtD(companyId, createDate, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the anonymous users where companyId = &#63; and createDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @param start the lower bound of the range of anonymous users
+	 * @param end the upper bound of the range of anonymous users (not inclusive)
+	 * @return the range of matching anonymous users
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<AnonymousUser> findByC_LtD(long companyId, Date createDate,
+		int start, int end) throws SystemException {
+		return findByC_LtD(companyId, createDate, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the anonymous users where companyId = &#63; and createDate &lt; &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @param start the lower bound of the range of anonymous users
+	 * @param end the upper bound of the range of anonymous users (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching anonymous users
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public List<AnonymousUser> findByC_LtD(long companyId, Date createDate,
+		int start, int end, OrderByComparator orderByComparator)
+		throws SystemException {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_C_LTD;
+		finderArgs = new Object[] {
+				companyId, createDate,
+				
+				start, end, orderByComparator
+			};
+
+		List<AnonymousUser> list = (List<AnonymousUser>)FinderCacheUtil.getResult(finderPath,
+				finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (AnonymousUser anonymousUser : list) {
+				if ((companyId != anonymousUser.getCompanyId()) ||
+						(createDate.getTime() <= anonymousUser.getCreateDate()
+																  .getTime())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(4 +
+						(orderByComparator.getOrderByFields().length * 3));
+			}
+			else {
+				query = new StringBundler(4);
+			}
+
+			query.append(_SQL_SELECT_ANONYMOUSUSER_WHERE);
+
+			query.append(_FINDER_COLUMN_C_LTD_COMPANYID_2);
+
+			boolean bindCreateDate = false;
+
+			if (createDate == null) {
+				query.append(_FINDER_COLUMN_C_LTD_CREATEDATE_1);
+			}
+			else {
+				bindCreateDate = true;
+
+				query.append(_FINDER_COLUMN_C_LTD_CREATEDATE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(AnonymousUserModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (bindCreateDate) {
+					qPos.add(CalendarUtil.getTimestamp(createDate));
+				}
+
+				if (!pagination) {
+					list = (List<AnonymousUser>)QueryUtil.list(q, getDialect(),
+							start, end, false);
+
+					Collections.sort(list);
+
+					list = new UnmodifiableList<AnonymousUser>(list);
+				}
+				else {
+					list = (List<AnonymousUser>)QueryUtil.list(q, getDialect(),
+							start, end);
+				}
+
+				cacheResult(list);
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first anonymous user in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching anonymous user
+	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnonymousUser findByC_LtD_First(long companyId, Date createDate,
+		OrderByComparator orderByComparator)
+		throws NoSuchAnonymousUserException, SystemException {
+		AnonymousUser anonymousUser = fetchByC_LtD_First(companyId, createDate,
+				orderByComparator);
+
+		if (anonymousUser != null) {
+			return anonymousUser;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", createDate=");
+		msg.append(createDate);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchAnonymousUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the first anonymous user in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnonymousUser fetchByC_LtD_First(long companyId, Date createDate,
+		OrderByComparator orderByComparator) throws SystemException {
+		List<AnonymousUser> list = findByC_LtD(companyId, createDate, 0, 1,
+				orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last anonymous user in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching anonymous user
+	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnonymousUser findByC_LtD_Last(long companyId, Date createDate,
+		OrderByComparator orderByComparator)
+		throws NoSuchAnonymousUserException, SystemException {
+		AnonymousUser anonymousUser = fetchByC_LtD_Last(companyId, createDate,
+				orderByComparator);
+
+		if (anonymousUser != null) {
+			return anonymousUser;
+		}
+
+		StringBundler msg = new StringBundler(6);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("companyId=");
+		msg.append(companyId);
+
+		msg.append(", createDate=");
+		msg.append(createDate);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchAnonymousUserException(msg.toString());
+	}
+
+	/**
+	 * Returns the last anonymous user in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnonymousUser fetchByC_LtD_Last(long companyId, Date createDate,
+		OrderByComparator orderByComparator) throws SystemException {
+		int count = countByC_LtD(companyId, createDate);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<AnonymousUser> list = findByC_LtD(companyId, createDate,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the anonymous users before and after the current anonymous user in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param anonymousUserId the primary key of the current anonymous user
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next anonymous user
+	 * @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public AnonymousUser[] findByC_LtD_PrevAndNext(long anonymousUserId,
+		long companyId, Date createDate, OrderByComparator orderByComparator)
+		throws NoSuchAnonymousUserException, SystemException {
+		AnonymousUser anonymousUser = findByPrimaryKey(anonymousUserId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			AnonymousUser[] array = new AnonymousUserImpl[3];
+
+			array[0] = getByC_LtD_PrevAndNext(session, anonymousUser,
+					companyId, createDate, orderByComparator, true);
+
+			array[1] = anonymousUser;
+
+			array[2] = getByC_LtD_PrevAndNext(session, anonymousUser,
+					companyId, createDate, orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected AnonymousUser getByC_LtD_PrevAndNext(Session session,
+		AnonymousUser anonymousUser, long companyId, Date createDate,
+		OrderByComparator orderByComparator, boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByFields().length * 6));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_ANONYMOUSUSER_WHERE);
+
+		query.append(_FINDER_COLUMN_C_LTD_COMPANYID_2);
+
+		boolean bindCreateDate = false;
+
+		if (createDate == null) {
+			query.append(_FINDER_COLUMN_C_LTD_CREATEDATE_1);
+		}
+		else {
+			bindCreateDate = true;
+
+			query.append(_FINDER_COLUMN_C_LTD_CREATEDATE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(AnonymousUserModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(companyId);
+
+		if (bindCreateDate) {
+			qPos.add(CalendarUtil.getTimestamp(createDate));
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(anonymousUser);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<AnonymousUser> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the anonymous users where companyId = &#63; and createDate &lt; &#63; from the database.
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public void removeByC_LtD(long companyId, Date createDate)
+		throws SystemException {
+		for (AnonymousUser anonymousUser : findByC_LtD(companyId, createDate,
+				QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(anonymousUser);
+		}
+	}
+
+	/**
+	 * Returns the number of anonymous users where companyId = &#63; and createDate &lt; &#63;.
+	 *
+	 * @param companyId the company ID
+	 * @param createDate the create date
+	 * @return the number of matching anonymous users
+	 * @throws SystemException if a system exception occurred
+	 */
+	@Override
+	public int countByC_LtD(long companyId, Date createDate)
+		throws SystemException {
+		FinderPath finderPath = FINDER_PATH_WITH_PAGINATION_COUNT_BY_C_LTD;
+
+		Object[] finderArgs = new Object[] { companyId, createDate };
+
+		Long count = (Long)FinderCacheUtil.getResult(finderPath, finderArgs,
+				this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_ANONYMOUSUSER_WHERE);
+
+			query.append(_FINDER_COLUMN_C_LTD_COMPANYID_2);
+
+			boolean bindCreateDate = false;
+
+			if (createDate == null) {
+				query.append(_FINDER_COLUMN_C_LTD_CREATEDATE_1);
+			}
+			else {
+				bindCreateDate = true;
+
+				query.append(_FINDER_COLUMN_C_LTD_CREATEDATE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(companyId);
+
+				if (bindCreateDate) {
+					qPos.add(CalendarUtil.getTimestamp(createDate));
+				}
+
+				count = (Long)q.uniqueResult();
+
+				FinderCacheUtil.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				FinderCacheUtil.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_C_LTD_COMPANYID_2 = "anonymousUser.companyId = ? AND ";
+	private static final String _FINDER_COLUMN_C_LTD_CREATEDATE_1 = "anonymousUser.createDate < NULL";
+	private static final String _FINDER_COLUMN_C_LTD_CREATEDATE_2 = "anonymousUser.createDate < ?";
 
 	public AnonymousUserPersistenceImpl() {
 		setModelClass(AnonymousUser.class);

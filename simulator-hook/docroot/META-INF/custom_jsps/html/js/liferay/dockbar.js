@@ -310,7 +310,6 @@ AUI.add(
 					btnNavigation.on(
 						EVENT_CLICK,
 						function(event) {
-							btnNavigation.toggleClass('open');
 							navigation.toggleClass('open');
 						}
 					);
@@ -462,9 +461,9 @@ AUI.add(
 
 		Liferay.Dockbar = Dockbar;
 
-		Liferay.Dockbar.DOCKBAR_PANELS = DOCKBAR_PANELS;
-
 		Liferay.Dockbar.ADD_PANEL = STR_ADD_PANEL;
+
+		Liferay.Dockbar.DOCKBAR_PANELS = DOCKBAR_PANELS;
 
 		Liferay.Dockbar.PREVIEW_PANEL = STR_PREVIEW_PANEL;
 	},

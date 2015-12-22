@@ -129,20 +129,34 @@ public class AnonymousUserLocalServiceClpInvoker {
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName43 = "fetchAnonymousUserByUserId";
+		_methodName43 = "checkAnonymousUsers";
 
-		_methodParameterTypes43 = new String[] { "long" };
+		_methodParameterTypes43 = new String[] {  };
 
-		_methodName44 = "updateAnonymousUser";
+		_methodName44 = "deleteAnonymousUsers";
 
 		_methodParameterTypes44 = new String[] {
+				"long", "java.util.Date", "boolean"
+			};
+
+		_methodName45 = "fetchAnonymousUserByUserId";
+
+		_methodParameterTypes45 = new String[] { "long" };
+
+		_methodName46 = "getMaxAge";
+
+		_methodParameterTypes46 = new String[] {  };
+
+		_methodName47 = "updateAnonymousUser";
+
+		_methodParameterTypes47 = new String[] {
 				"long", "long", "java.lang.String", "java.lang.String",
 				"com.liferay.portal.service.ServiceContext"
 			};
 
-		_methodName45 = "updateLastIp";
+		_methodName48 = "updateLastIp";
 
-		_methodParameterTypes45 = new String[] { "long", "java.lang.String" };
+		_methodParameterTypes48 = new String[] { "long", "java.lang.String" };
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -267,19 +281,40 @@ public class AnonymousUserLocalServiceClpInvoker {
 
 		if (_methodName43.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
-			return AnonymousUserLocalServiceUtil.fetchAnonymousUserByUserId(((Long)arguments[0]).longValue());
+			AnonymousUserLocalServiceUtil.checkAnonymousUsers();
+
+			return null;
 		}
 
 		if (_methodName44.equals(name) &&
 				Arrays.deepEquals(_methodParameterTypes44, parameterTypes)) {
+			AnonymousUserLocalServiceUtil.deleteAnonymousUsers(((Long)arguments[0]).longValue(),
+				(java.util.Date)arguments[1],
+				((Boolean)arguments[2]).booleanValue());
+
+			return null;
+		}
+
+		if (_methodName45.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
+			return AnonymousUserLocalServiceUtil.fetchAnonymousUserByUserId(((Long)arguments[0]).longValue());
+		}
+
+		if (_methodName46.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes46, parameterTypes)) {
+			return AnonymousUserLocalServiceUtil.getMaxAge();
+		}
+
+		if (_methodName47.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes47, parameterTypes)) {
 			return AnonymousUserLocalServiceUtil.updateAnonymousUser(((Long)arguments[0]).longValue(),
 				((Long)arguments[1]).longValue(),
 				(java.lang.String)arguments[2], (java.lang.String)arguments[3],
 				(com.liferay.portal.service.ServiceContext)arguments[4]);
 		}
 
-		if (_methodName45.equals(name) &&
-				Arrays.deepEquals(_methodParameterTypes45, parameterTypes)) {
+		if (_methodName48.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes48, parameterTypes)) {
 			return AnonymousUserLocalServiceUtil.updateLastIp(((Long)arguments[0]).longValue(),
 				(java.lang.String)arguments[1]);
 		}
@@ -335,4 +370,10 @@ public class AnonymousUserLocalServiceClpInvoker {
 	private String[] _methodParameterTypes44;
 	private String _methodName45;
 	private String[] _methodParameterTypes45;
+	private String _methodName46;
+	private String[] _methodParameterTypes46;
+	private String _methodName47;
+	private String[] _methodParameterTypes47;
+	private String _methodName48;
+	private String[] _methodParameterTypes48;
 }

@@ -21,17 +21,25 @@ String randomNamespace = PortalUtil.generateRandomKey(request, "taglib_ui_asset_
 
 String className = (String)request.getAttribute("liferay-ui:asset-categories-selector:className");
 long classPK = GetterUtil.getLong((String)request.getAttribute("liferay-ui:asset-categories-selector:classPK"));
+long[] groupIds = (long[])request.getAttribute("liferay-ui:asset-categories-selector:groupIds");
 String hiddenInput = (String)request.getAttribute("liferay-ui:asset-categories-selector:hiddenInput");
 String curCategoryIds = GetterUtil.getString((String)request.getAttribute("liferay-ui:asset-categories-selector:curCategoryIds"), "");
 String curCategoryNames = StringPool.BLANK;
 int maxEntries = GetterUtil.getInteger(PropsUtil.get(PropsKeys.ASSET_CATEGORIES_SELECTOR_MAX_ENTRIES));
 
+if (ArrayUtil.isEmpty(groupIds)) {
+	groupIds = _getCurrentAndAncestorSiteGroupIds(scopeGroupId);
+}
+else {
+	groupIds = _getCurrentAndAncestorSiteGroupIds(groupIds);
+}
+
+groupIds = ArrayUtil.unique(groupIds);
+
 List<AssetVocabulary> vocabularies = new ArrayList<AssetVocabulary>();
 
-long[] groupIds = getCurrentAndAncestorSiteGroupIds(scopeGroupId);
-
-for (long groupId : groupIds) {
-	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(groupId, false));
+for (int i = 0; i < groupIds.length; i++) {
+	vocabularies.addAll(AssetVocabularyServiceUtil.getGroupVocabularies(groupIds[i], false));
 }
 
 if (Validator.isNotNull(className)) {

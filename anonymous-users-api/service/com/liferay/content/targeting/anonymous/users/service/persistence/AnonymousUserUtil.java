@@ -606,6 +606,182 @@ public class AnonymousUserUtil {
 	}
 
 	/**
+	* Returns all the anonymous users where companyId = &#63; and createDate &lt; &#63;.
+	*
+	* @param companyId the company ID
+	* @param createDate the create date
+	* @return the matching anonymous users
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> findByC_LtD(
+		long companyId, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_LtD(companyId, createDate);
+	}
+
+	/**
+	* Returns a range of all the anonymous users where companyId = &#63; and createDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param createDate the create date
+	* @param start the lower bound of the range of anonymous users
+	* @param end the upper bound of the range of anonymous users (not inclusive)
+	* @return the range of matching anonymous users
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> findByC_LtD(
+		long companyId, java.util.Date createDate, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().findByC_LtD(companyId, createDate, start, end);
+	}
+
+	/**
+	* Returns an ordered range of all the anonymous users where companyId = &#63; and createDate &lt; &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link com.liferay.content.targeting.anonymous.users.model.impl.AnonymousUserModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param companyId the company ID
+	* @param createDate the create date
+	* @param start the lower bound of the range of anonymous users
+	* @param end the upper bound of the range of anonymous users (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching anonymous users
+	* @throws SystemException if a system exception occurred
+	*/
+	public static java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> findByC_LtD(
+		long companyId, java.util.Date createDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_LtD(companyId, createDate, start, end,
+			orderByComparator);
+	}
+
+	/**
+	* Returns the first anonymous user in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	*
+	* @param companyId the company ID
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching anonymous user
+	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser findByC_LtD_First(
+		long companyId, java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_LtD_First(companyId, createDate, orderByComparator);
+	}
+
+	/**
+	* Returns the first anonymous user in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	*
+	* @param companyId the company ID
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchByC_LtD_First(
+		long companyId, java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_LtD_First(companyId, createDate, orderByComparator);
+	}
+
+	/**
+	* Returns the last anonymous user in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	*
+	* @param companyId the company ID
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching anonymous user
+	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser findByC_LtD_Last(
+		long companyId, java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_LtD_Last(companyId, createDate, orderByComparator);
+	}
+
+	/**
+	* Returns the last anonymous user in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	*
+	* @param companyId the company ID
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching anonymous user, or <code>null</code> if a matching anonymous user could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchByC_LtD_Last(
+		long companyId, java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .fetchByC_LtD_Last(companyId, createDate, orderByComparator);
+	}
+
+	/**
+	* Returns the anonymous users before and after the current anonymous user in the ordered set where companyId = &#63; and createDate &lt; &#63;.
+	*
+	* @param anonymousUserId the primary key of the current anonymous user
+	* @param companyId the company ID
+	* @param createDate the create date
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next anonymous user
+	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws SystemException if a system exception occurred
+	*/
+	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser[] findByC_LtD_PrevAndNext(
+		long anonymousUserId, long companyId, java.util.Date createDate,
+		com.liferay.portal.kernel.util.OrderByComparator orderByComparator)
+		throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException,
+			com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence()
+				   .findByC_LtD_PrevAndNext(anonymousUserId, companyId,
+			createDate, orderByComparator);
+	}
+
+	/**
+	* Removes all the anonymous users where companyId = &#63; and createDate &lt; &#63; from the database.
+	*
+	* @param companyId the company ID
+	* @param createDate the create date
+	* @throws SystemException if a system exception occurred
+	*/
+	public static void removeByC_LtD(long companyId, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		getPersistence().removeByC_LtD(companyId, createDate);
+	}
+
+	/**
+	* Returns the number of anonymous users where companyId = &#63; and createDate &lt; &#63;.
+	*
+	* @param companyId the company ID
+	* @param createDate the create date
+	* @return the number of matching anonymous users
+	* @throws SystemException if a system exception occurred
+	*/
+	public static int countByC_LtD(long companyId, java.util.Date createDate)
+		throws com.liferay.portal.kernel.exception.SystemException {
+		return getPersistence().countByC_LtD(companyId, createDate);
+	}
+
+	/**
 	* Caches the anonymous user in the entity cache if it is enabled.
 	*
 	* @param anonymousUser the anonymous user
