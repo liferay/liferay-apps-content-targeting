@@ -19,7 +19,7 @@ Import-Package:\
 	!org.apache.axis.transport.http,\
 	!org.apache.axis.utils.cache,\
 	!org.apache.bsf,\
-	!org.apache.commons.validator,\
+	!org.apache.commons.validator.*,\
 	!org.apache.log,\
 	!org.apache.poi.hssf.usermodel,\
 	!org.apache.poi.ss.usermodel,\
@@ -52,14 +52,18 @@ Import-Package:\
 	*
 Export-Package:\
 	com.liferay.content.targeting.portlet,\
-	com.liferay.content.targeting.portlet.lar
+	com.liferay.content.targeting.portlet.lar,\
+	com.liferay.content.targeting.portlet.util
 Include-Resource:\
 	resource-actions=docroot/WEB-INF/src/META-INF/resource-actions,\
 	META-INF/resources/css=docroot/css,\
 	META-INF/resources/images=docroot/images,\
 	META-INF/resources/js=docroot/js,\
-	META-INF/tld=docroot/WEB-INF/tld,\
-	@${app.server.portal.dir}/WEB-INF/lib/portal-impl.jar!/com/liferay/portal/freemarker/FreeMarkerUtil.class
+	WEB-INF/tld/aui.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-aui.tld,\
+	WEB-INF/tld/liferay-ui.tld=${app.server.portal.dir}/WEB-INF/tld/liferay-ui.tld,\
+	@${app.server.portal.dir}/WEB-INF/lib/portal-impl.jar!/com/liferay/portal/freemarker/FreeMarkerUtil.class,\
+	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/portlet/PortletProps.class,\
+	@${app.server.portal.dir}/WEB-INF/lib/util-java.jar!/com/liferay/util/dao/orm/CustomSQLUtil.class
 Service-Component: com.liferay.content.targeting.portlet.*
 Servlet-Context-Name: content-targeting-web
 JS-Config: /js/config.js
