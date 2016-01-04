@@ -1,0 +1,15 @@
+Bundle-Name: Analytics Web
+Bundle-SymbolicName: com.liferay.content.targeting.analytics.web
+Bundle-Version: 1.0.0
+Export-Package:\
+    com.liferay.content.targeting.web.filter,\
+    com.liferay.content.targeting.web.servlet.taglib
+Import-Package:\
+	*
+Include-Resource:\
+	classes
+Private-Package: com.liferay.content.targeting.analytics.web.*
+Service-Component: com.liferay.content.targeting.analytics.web.*
+JS-Config: /js/analytics/config.js
+Web-ContextPath: /analytics-web
+-baseline: *;version="1.0.0"
