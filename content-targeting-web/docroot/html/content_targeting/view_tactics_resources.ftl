@@ -16,10 +16,10 @@
 
 <#include "../init.ftl" />
 
-<@portlet["renderURL"] varImpl="viewTacticsURL">
+<@portlet["renderURL"] copyCurrentRenderParameters=false varImpl="viewTacticsURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 	<@portlet["param"] name="campaignId" value="${campaignId}" />
-	<@portlet["param"] name="tabs2" value="promotions" />
+	<@portlet["param"] name="campaignTabs" value="promotions" />
 	<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 	<@portlet["param"] name="classPK" value="${campaignId}" />
 </@>
@@ -41,7 +41,7 @@
 	>
 
 		<#if campaignPermission.contains(permissionChecker, campaign, actionKeys.UPDATE)>
-			<@portlet["renderURL"] var="editTacticURL">
+			<@portlet["renderURL"] copyCurrentRenderParameters=false var="editTacticURL">
 				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_TACTIC}" />
 				<@portlet["param"] name="redirect" value="${viewTacticsURL}" />
 				<@portlet["param"] name="tacticId" value="${tactic.getTacticId()?string}" />
@@ -109,10 +109,10 @@
 				if (confirm('<@liferay_ui["message"] key="are-you-sure-you-want-to-delete-this" />')) {
 					document.<@portlet["namespace"] />fmTactics.<@portlet["namespace"] />tacticsIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmTactics, '<@portlet["namespace"] />allRowIds');
 
-					<@portlet["renderURL"] var="redirectURL">
+					<@portlet["renderURL"] copyCurrentRenderParameters=false var="redirectURL">
 						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_CAMPAIGN}" />
 						<@portlet["param"] name="campaignId" value="${campaignId}" />
-						<@portlet["param"] name="tabs2" value="promotions" />
+						<@portlet["param"] name="campaignTabs" value="promotions" />
 						<@portlet["param"] name="className" value="${campaignClass.getName()}" />
 						<@portlet["param"] name="classPK" value="${campaignId}" />
 					</@>

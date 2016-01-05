@@ -38,7 +38,7 @@
 						<#assign selectedValue = true>
 					</#if>
 
-					<@aui["option"] label='${languageUtil.get(portletConfig, locale, "select-more-than-one")}...' selected=selectedValue value=false />
+					<@aui["option"] label='${languageUtil.get(portletConfig.getResourceBundle(locale), "select-more-than-one")}...' selected=selectedValue value=false />
 
 					<optgroup label="<@liferay_ui["message"] key="asset-type" />">
 						<#assign i = 0>
@@ -81,8 +81,8 @@
 
 		<@liferay_ui["section"]>
 			<div class="display-template">
-				<@liferay_ui["ddm-template-selector"]
-					classNameId=portalUtil.getClassNameId(templateHandler.getClassName())
+				<@liferay_ddm["template-selector"]
+					className=templateHandler.getClassName()
 					displayStyle=displayStyle
 					displayStyleGroupId=displayStyleGroupId
 					displayStyles=displayStyles

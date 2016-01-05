@@ -19,7 +19,7 @@
 <#include "../macros_exceptions.ftl" />
 
 <#if validator.isNull(backURL)>
-	<@portlet["renderURL"] var="backURL">
+	<@portlet["renderURL"] copyCurrentRenderParameters=false var="backURL">
 		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
 		<@portlet["param"] name="tabs1" value="user-segments" />
 	</@>
@@ -30,23 +30,27 @@
 	title='${(userSegment.getName(locale))!"new-user-segment"}'
 />
 
+<#assign classPK=userSegmentId>
+<#assign className=userSegmentClass.getName()>
+
 <#if (userSegmentId > 0)>
-	<#assign userSegmentTabs="details,reports">
+	<#assign pills="details,reports">
 <#else>
-	<#assign userSegmentTabs="details">
+	<#assign pills="details">
 </#if>
 
-<@portlet["renderURL"] var="portletURL">
+<@portlet["renderURL"] copyCurrentRenderParameters=false varImpl="switchTabsURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
 	<@portlet["param"] name="userSegmentId" value="${userSegmentId}" />
 </@>
 
 <@liferay_ui["tabs"]
-	names="${userSegmentTabs}"
-	param="tabs2"
+	names="${pills}"
+	param="userSegmentTabs"
+	portletURL=switchTabsURL
+	refresh=true
 	type="pills"
-	url=portletURL
-	value="${tabs2}"
+	value="${userSegmentTabs}"
 >
 	<@liferay_ui["section"]>
 		<#include "user_segment_details.ftl" />

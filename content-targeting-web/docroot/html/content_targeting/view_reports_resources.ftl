@@ -33,7 +33,7 @@
 			modelVar="reportInstance"
 		>
 
-			<@portlet["renderURL"] varImpl="viewReportURL">
+			<@portlet["renderURL"] copyCurrentRenderParameters=false varImpl="viewReportURL">
 				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW_REPORT}" />
 				<@portlet["param"] name="className" value="${className}" />
 				<@portlet["param"] name="classPK" value="${classPK?string}" />
@@ -71,7 +71,7 @@
 			>
 				<@liferay_ui["icon-menu"]>
 					<#if reportInstance.isInstantiable()>
-						<@portlet["renderURL"] var="editReportURL">
+						<@portlet["renderURL"] copyCurrentRenderParameters=false var="editReportURL">
 							<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_REPORT}" />
 							<@portlet["param"] name="className" value="${className}" />
 							<@portlet["param"] name="classPK" value="${classPK?string}" />

@@ -16,7 +16,7 @@
 
 <#include "../init.ftl" />
 
-<@portlet["renderURL"] varImpl="viewUserSegmentsURL">
+<@portlet["renderURL"] copyCurrentRenderParameters=false varImpl="viewUserSegmentsURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
 	<@portlet["param"] name="tabs1" value="user-segments" />
 </@>
@@ -38,7 +38,7 @@
 	>
 
 		<#if userSegmentPermission.contains(permissionChecker, userSegment, actionKeys.UPDATE)>
-			<@portlet["renderURL"] var="editUserSegmentURL">
+			<@portlet["renderURL"] copyCurrentRenderParameters=false var="editUserSegmentURL">
 				<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
 				<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
 				<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
@@ -70,13 +70,13 @@
 					/>
 
 					<#if (reportsCount > 0)>
-						<@portlet["renderURL"] var="viewUserSegmentReportsURL">
+						<@portlet["renderURL"] copyCurrentRenderParameters=false var="viewUserSegmentReportsURL">
 							<@portlet["param"] name="mvcPath" value="${contentTargetingPath.EDIT_USER_SEGMENT}" />
 							<@portlet["param"] name="redirect" value="${viewUserSegmentsURL}" />
 							<@portlet["param"] name="className" value="${userSegmentClass.getName()}" />
 							<@portlet["param"] name="classPK" value="${userSegment.getUserSegmentId()?string}" />
 							<@portlet["param"] name="userSegmentId" value="${userSegment.getUserSegmentId()?string}" />
-							<@portlet["param"] name="tabs2" value="reports" />
+							<@portlet["param"] name="userSegmentTabs" value="reports" />
 						</@>
 
 						<@liferay_ui["icon"]
@@ -143,7 +143,7 @@
 				if (confirm('<@liferay_ui["message"] key="are-you-sure-you-want-to-delete-this" />')) {
 					document.<@portlet["namespace"] />fmUserSegment.<@portlet["namespace"] />userSegmentIds.value = Liferay.Util.listCheckedExcept(document.<@portlet["namespace"] />fmUserSegment, '<@portlet["namespace"] />allRowIds');
 
-					<@portlet["renderURL"] var="redirectURL">
+					<@portlet["renderURL"] copyCurrentRenderParameters=false var="redirectURL">
 						<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
 						<@portlet["param"] name="tabs1" value="user-segments" />
 					</@>

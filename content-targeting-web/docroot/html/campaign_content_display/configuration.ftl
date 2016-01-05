@@ -51,11 +51,11 @@
 				</div>
 			</div>
 		</@>
-
+<
 		<@liferay_ui["section"]>
 			<div class="display-template">
-				<@liferay_ui["ddm-template-selector"]
-					classNameId=portalUtil.getClassNameId(templateHandler.getClassName())
+				<@liferay_ddm["template-selector"]
+					classNameId=templateHandler.getClassName()
 					displayStyle=displayStyle
 					displayStyleGroupId=displayStyleGroupId
 					displayStyles=displayStyles
@@ -71,7 +71,7 @@
 	</@>
 </@>
 
-<@portlet["renderURL"] var="newUserSegmentRuleURL" windowState=windowStateFactory.getWindowState("EXCLUSIVE").toString()>
+<@portlet["renderURL"] copyCurrentRenderParameters=false var="newUserSegmentRuleURL" windowState=windowStateFactory.getWindowState("EXCLUSIVE").toString()>
 	<@portlet["param"] name="mvcPath" value="${campaignContentDisplayPath.EDIT_QUERY_RULE}" />
 </@>
 

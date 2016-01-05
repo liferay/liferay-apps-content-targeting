@@ -21,7 +21,7 @@
 
 <@liferay_ui["header"]
 	backURL="${backURL}"
-	title=report.getName(locale)
+	title=reportInstance.getReportName(locale)
 />
 
 <#if scopeGroup.isStagingGroup()>

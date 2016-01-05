@@ -19,7 +19,7 @@
 
 <@usedUserSegmentException />
 
-<@portlet["renderURL"] var="searchURL">
+<@portlet["renderURL"] copyCurrentRenderParameters=false var="searchURL">
 	<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
 	<@portlet["param"] name="tabs1" value="user-segments" />
 </@>
@@ -33,7 +33,7 @@
 
 		<@aui["nav-bar-search"] cssClass="pull-right">
 			<div class="form-search">
-				<@liferay_ui["input-search"] id="userSegmentKeywords" name="userSegmentKeywords" placeholder='${languageUtil.get(portletConfig, locale, "keywords")}' />
+				<@liferay_ui["input-search"] id="userSegmentKeywords" name="userSegmentKeywords" placeholder='${languageUtil.get(portletConfig.getResourceBundle(locale), "keywords")}' />
 			</div>
 		</@>
 	</@>

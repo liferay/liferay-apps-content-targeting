@@ -16,8 +16,8 @@
 
 <#include "../init.ftl" />
 
-<@liferay_portlet["actionURL"] name="updatePreferences" var="configurationURL">
-	<@portlet["param"] name="redirect" value="${currentURL}" />
+<@liferay_portlet["actionURL"] portletConfiguration=true var="configurationURL">
+	<@portlet["param"] name="cmd" value="update" />
 </@>
 
 <@aui["form"] action="${configurationURL}" method="post" name="fm">
@@ -54,8 +54,8 @@
 
 		<@liferay_ui["section"]>
 			<div class="display-template">
-				<@liferay_ui["ddm-template-selector"]
-					classNameId=portalUtil.getClassNameId(templateHandler.getClassName())
+				<@liferay_ddm["template-selector"]
+					className=templateHandler.getClassName()
 					displayStyle=displayStyle
 					displayStyleGroupId=displayStyleGroupId
 					displayStyles=displayStyles
@@ -69,32 +69,6 @@
 	<@aui["button-row"]>
 		<@aui["button"] type="submit" value="save" />
 	</@>
-</@>
-
-<@portlet["renderURL"] var="newUserSegmentRuleURL" windowState=windowStateFactory.getWindowState("EXCLUSIVE").toString()>
-	<@portlet["param"] name="mvcPath" value="${userSegmentContentDisplayPath.EDIT_QUERY_RULE}" />
-</@>
-
-
-<@aui["script"] use="dd-proxy">
-
-	// This code is only needed to fix a YUI issue. See WCM-42
-	// It should be removed once this plugin is migrated to 7.0
-
-	A.Plugin.DDProxy.prototype.clone = function() {
-	   var host = this.get('host'),
-		   n = host.get('node'),
-		   c = n.cloneNode(true);
-
-	   c.all('input[type="radio"]').removeAttribute('name');
-
-	   delete c._yuid;
-	   c.setAttribute('id', A.guid());
-	   c.setStyle('position', 'absolute');
-	   n.get('parentNode').appendChild(c);
-	   host.set('dragNode', c);
-	   return c;
-	}
 </@>
 
 <@aui["script"] use="aui-base,liferay-auto-fields">

@@ -117,7 +117,7 @@
 	<#assign assetRenderer = assetEntry.getAssetRenderer() />
 
 	<#if assetRenderer.hasEditPermission(permissionChecker)>
-		<@portlet["renderURL"] varImpl="redirectURL" windowState=windowStateFactory.getWindowState("pop_up").toString()>
+		<@portlet["renderURL"] copyCurrentRenderParameters=false varImpl="redirectURL" windowState=windowStateFactory.getWindowState("pop_up").toString()>
 			<@portlet["param"] name="mvcPath" value="html/add_asset_redirect.ftl" />
 			<@portlet["param"] name="redirect" value="${currentURL}" />
 		</@>
@@ -190,20 +190,7 @@
 	</#if>
 
 	<#if displayStyle == "full-content">
-		<#assign path = assetRenderer.render(renderRequest, renderResponse, "full_content") />
-
-		<div class="asset-content">
-			<@liferay_util["include"] page=path>
-				<@liferay_util["param"] name="showEditURL" value=showEditLink?string />
-				<@liferay_util["param"] name="showExtraInfo" value="false" />
-				<@liferay_util["param"] name="showHeader" value="false" />
-			</@>
-		</div>
-	<#else>
-		<@liferay_util["include"] page="/html/portlet/asset_publisher/display/${stringUtil.replace(displayStyle, '-', '_')}.jsp">
-			<@liferay_util["param"] name="showEditURL" value=showEditLink?string />
-			<@liferay_util["param"] name="showExtraInfo" value="false" />
-		</@>
+		<#assign renderResult = assetRenderer.include(request, response, "full_content")>
 	</#if>
 </#macro>
 
@@ -231,7 +218,7 @@
 	<div class="edit-controls lfr-meta-actions">
 		<@aui["input"] name="assetEntryId${index}" type="hidden" value=queryRule.getAssetEntryId() />
 
-		<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" message=languageUtil.get(portletConfig, locale, "select-content") showWhenSingleIcon=true>
+		<@liferay_ui["icon-menu"] cssClass="select-existing-selector" direction="right" icon="${themeDisplay.getPathThemeImages()}/common/add.png" message=languageUtil.get(portletConfig.getResourceBundle(locale), "select-content") showWhenSingleIcon=true>
 			<#list assetRendererFactories as assetRendererFactory>
 				<@liferay_ui["icon"]
 					cssClass="asset-selector"
@@ -347,7 +334,7 @@
 	warningMessage
 	filterIds=""
 >
-	<@portlet["renderURL"] var="viewUserSegments">
+	<@portlet["renderURL"] copyCurrentRenderParameters=false var="viewUserSegments">
 		<@portlet["param"] name="mvcPath" value="${contentTargetingPath.VIEW}" />
 		<@portlet["param"] name="tabs1" value="user-segments" />
 	</@>
