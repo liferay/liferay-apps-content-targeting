@@ -41,6 +41,7 @@ import com.liferay.portlet.asset.model.AssetRendererFactory;
 import freemarker.ext.beans.BeansWrapper;
 
 import freemarker.template.TemplateHashModel;
+import org.osgi.service.component.annotations.Component;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,8 +52,6 @@ import javax.portlet.Portlet;
 import javax.portlet.PortletPreferences;
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-
-import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eudaldo Alonso

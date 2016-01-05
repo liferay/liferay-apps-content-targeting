@@ -21,6 +21,7 @@ import freemarker.template.TemplateModelException;
 
 import javax.servlet.ServletContext;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * @author Pavel Savinov
@@ -64,9 +65,8 @@ public class TaglibFactoryWrapper implements TemplateHashModel {
 
     private ClassLoader _classLoader;
 
-    private final TaglibFactory _taglibFactory;
-
     private final Map<String, TemplateModel> _templateModels =
-        new ConcurrentHashMap<>();
+        new ConcurrentHashMap<String, TemplateModel>();
 
+    private final TaglibFactory _taglibFactory;
 }
