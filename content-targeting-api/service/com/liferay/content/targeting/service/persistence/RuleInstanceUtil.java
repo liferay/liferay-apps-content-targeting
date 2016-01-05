@@ -18,12 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.content.targeting.model.RuleInstance;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1154,21 +1153,6 @@ public class RuleInstanceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(RuleInstancePersistence persistence) {
-	}
-
-	private static ServiceTracker<RuleInstancePersistence, RuleInstancePersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(RuleInstanceUtil.class);
-
-		_serviceTracker = new ServiceTracker<RuleInstancePersistence, RuleInstancePersistence>(bundle.getBundleContext(),
-				RuleInstancePersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<RuleInstancePersistence, RuleInstancePersistence> _serviceTracker =
+		ServiceTrackerFactory.open(RuleInstancePersistence.class);
 }

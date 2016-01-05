@@ -16,8 +16,7 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -370,21 +369,6 @@ public class RuleInstanceLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(RuleInstanceLocalService service) {
-	}
-
-	private static ServiceTracker<RuleInstanceLocalService, RuleInstanceLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(RuleInstanceLocalServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<RuleInstanceLocalService, RuleInstanceLocalService>(bundle.getBundleContext(),
-				RuleInstanceLocalService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<RuleInstanceLocalService, RuleInstanceLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(RuleInstanceLocalService.class);
 }

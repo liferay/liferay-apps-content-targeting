@@ -425,23 +425,6 @@ public class ReportInstanceLocalServiceWrapper
 			typeSettings, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ReportInstanceLocalService getWrappedReportInstanceLocalService() {
-		return _reportInstanceLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedReportInstanceLocalService(
-		ReportInstanceLocalService reportInstanceLocalService) {
-		_reportInstanceLocalService = reportInstanceLocalService;
-	}
-
 	@Override
 	public ReportInstanceLocalService getWrappedService() {
 		return _reportInstanceLocalService;

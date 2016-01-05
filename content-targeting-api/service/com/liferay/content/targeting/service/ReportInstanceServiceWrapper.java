@@ -125,23 +125,6 @@ public class ReportInstanceServiceWrapper implements ReportInstanceService,
 			typeSettings, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ReportInstanceService getWrappedReportInstanceService() {
-		return _reportInstanceService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedReportInstanceService(
-		ReportInstanceService reportInstanceService) {
-		_reportInstanceService = reportInstanceService;
-	}
-
 	@Override
 	public ReportInstanceService getWrappedService() {
 		return _reportInstanceService;

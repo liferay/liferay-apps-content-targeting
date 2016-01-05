@@ -47,6 +47,8 @@ import com.liferay.portal.model.CacheModel;
 import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
+import com.liferay.portal.service.persistence.CompanyProvider;
+import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.service.persistence.impl.TableMapper;
 import com.liferay.portal.service.persistence.impl.TableMapperFactory;
@@ -3205,6 +3207,8 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 
 		userSegment.setUuid(uuid);
 
+		userSegment.setCompanyId(companyProvider.getCompanyId());
+
 		return userSegment;
 	}
 
@@ -3265,11 +3269,9 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	protected UserSegment removeImpl(UserSegment userSegment) {
 		userSegment = toUnwrappedModel(userSegment);
 
-		userSegmentToCampaignTableMapper.deleteLeftPrimaryKeyTableMappings(0,
-			userSegment.getPrimaryKey());
+		userSegmentToCampaignTableMapper.deleteLeftPrimaryKeyTableMappings(userSegment.getPrimaryKey());
 
-		userSegmentToTacticTableMapper.deleteLeftPrimaryKeyTableMappings(0,
-			userSegment.getPrimaryKey());
+		userSegmentToTacticTableMapper.deleteLeftPrimaryKeyTableMappings(userSegment.getPrimaryKey());
 
 		Session session = null;
 
@@ -3841,7 +3843,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public long[] getCampaignPrimaryKeys(long pk) {
-		long[] pks = userSegmentToCampaignTableMapper.getRightPrimaryKeys(0, pk);
+		long[] pks = userSegmentToCampaignTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.clone();
 	}
@@ -3893,8 +3895,8 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	public List<com.liferay.content.targeting.model.Campaign> getCampaigns(
 		long pk, int start, int end,
 		OrderByComparator<com.liferay.content.targeting.model.Campaign> orderByComparator) {
-		return userSegmentToCampaignTableMapper.getRightBaseModels(0, pk,
-			start, end, orderByComparator);
+		return userSegmentToCampaignTableMapper.getRightBaseModels(pk, start,
+			end, orderByComparator);
 	}
 
 	/**
@@ -3905,7 +3907,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public int getCampaignsSize(long pk) {
-		long[] pks = userSegmentToCampaignTableMapper.getRightPrimaryKeys(0, pk);
+		long[] pks = userSegmentToCampaignTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
 	}
@@ -3919,7 +3921,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public boolean containsCampaign(long pk, long campaignPK) {
-		return userSegmentToCampaignTableMapper.containsTableMapping(0, pk,
+		return userSegmentToCampaignTableMapper.containsTableMapping(pk,
 			campaignPK);
 	}
 
@@ -3947,7 +3949,16 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public void addCampaign(long pk, long campaignPK) {
-		userSegmentToCampaignTableMapper.addTableMapping(0, pk, campaignPK);
+		UserSegment userSegment = fetchByPrimaryKey(pk);
+
+		if (userSegment == null) {
+			userSegmentToCampaignTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, campaignPK);
+		}
+		else {
+			userSegmentToCampaignTableMapper.addTableMapping(userSegment.getCompanyId(),
+				pk, campaignPK);
+		}
 	}
 
 	/**
@@ -3959,8 +3970,16 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	@Override
 	public void addCampaign(long pk,
 		com.liferay.content.targeting.model.Campaign campaign) {
-		userSegmentToCampaignTableMapper.addTableMapping(0, pk,
-			campaign.getPrimaryKey());
+		UserSegment userSegment = fetchByPrimaryKey(pk);
+
+		if (userSegment == null) {
+			userSegmentToCampaignTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, campaign.getPrimaryKey());
+		}
+		else {
+			userSegmentToCampaignTableMapper.addTableMapping(userSegment.getCompanyId(),
+				pk, campaign.getPrimaryKey());
+		}
 	}
 
 	/**
@@ -3971,8 +3990,20 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public void addCampaigns(long pk, long[] campaignPKs) {
+		long companyId = 0;
+
+		UserSegment userSegment = fetchByPrimaryKey(pk);
+
+		if (userSegment == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = userSegment.getCompanyId();
+		}
+
 		for (long campaignPK : campaignPKs) {
-			userSegmentToCampaignTableMapper.addTableMapping(0, pk, campaignPK);
+			userSegmentToCampaignTableMapper.addTableMapping(companyId, pk,
+				campaignPK);
 		}
 	}
 
@@ -3985,8 +4016,19 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	@Override
 	public void addCampaigns(long pk,
 		List<com.liferay.content.targeting.model.Campaign> campaigns) {
+		long companyId = 0;
+
+		UserSegment userSegment = fetchByPrimaryKey(pk);
+
+		if (userSegment == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = userSegment.getCompanyId();
+		}
+
 		for (com.liferay.content.targeting.model.Campaign campaign : campaigns) {
-			userSegmentToCampaignTableMapper.addTableMapping(0, pk,
+			userSegmentToCampaignTableMapper.addTableMapping(companyId, pk,
 				campaign.getPrimaryKey());
 		}
 	}
@@ -3998,7 +4040,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public void clearCampaigns(long pk) {
-		userSegmentToCampaignTableMapper.deleteLeftPrimaryKeyTableMappings(0, pk);
+		userSegmentToCampaignTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
 	/**
@@ -4009,7 +4051,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public void removeCampaign(long pk, long campaignPK) {
-		userSegmentToCampaignTableMapper.deleteTableMapping(0, pk, campaignPK);
+		userSegmentToCampaignTableMapper.deleteTableMapping(pk, campaignPK);
 	}
 
 	/**
@@ -4021,7 +4063,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	@Override
 	public void removeCampaign(long pk,
 		com.liferay.content.targeting.model.Campaign campaign) {
-		userSegmentToCampaignTableMapper.deleteTableMapping(0, pk,
+		userSegmentToCampaignTableMapper.deleteTableMapping(pk,
 			campaign.getPrimaryKey());
 	}
 
@@ -4034,8 +4076,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	@Override
 	public void removeCampaigns(long pk, long[] campaignPKs) {
 		for (long campaignPK : campaignPKs) {
-			userSegmentToCampaignTableMapper.deleteTableMapping(0, pk,
-				campaignPK);
+			userSegmentToCampaignTableMapper.deleteTableMapping(pk, campaignPK);
 		}
 	}
 
@@ -4049,7 +4090,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	public void removeCampaigns(long pk,
 		List<com.liferay.content.targeting.model.Campaign> campaigns) {
 		for (com.liferay.content.targeting.model.Campaign campaign : campaigns) {
-			userSegmentToCampaignTableMapper.deleteTableMapping(0, pk,
+			userSegmentToCampaignTableMapper.deleteTableMapping(pk,
 				campaign.getPrimaryKey());
 		}
 	}
@@ -4064,21 +4105,32 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	public void setCampaigns(long pk, long[] campaignPKs) {
 		Set<Long> newCampaignPKsSet = SetUtil.fromArray(campaignPKs);
 		Set<Long> oldCampaignPKsSet = SetUtil.fromArray(userSegmentToCampaignTableMapper.getRightPrimaryKeys(
-					0, pk));
+					pk));
 
 		Set<Long> removeCampaignPKsSet = new HashSet<Long>(oldCampaignPKsSet);
 
 		removeCampaignPKsSet.removeAll(newCampaignPKsSet);
 
 		for (long removeCampaignPK : removeCampaignPKsSet) {
-			userSegmentToCampaignTableMapper.deleteTableMapping(0, pk,
+			userSegmentToCampaignTableMapper.deleteTableMapping(pk,
 				removeCampaignPK);
 		}
 
 		newCampaignPKsSet.removeAll(oldCampaignPKsSet);
 
+		long companyId = 0;
+
+		UserSegment userSegment = fetchByPrimaryKey(pk);
+
+		if (userSegment == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = userSegment.getCompanyId();
+		}
+
 		for (long newCampaignPK : newCampaignPKsSet) {
-			userSegmentToCampaignTableMapper.addTableMapping(0, pk,
+			userSegmentToCampaignTableMapper.addTableMapping(companyId, pk,
 				newCampaignPK);
 		}
 	}
@@ -4116,7 +4168,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public long[] getTacticPrimaryKeys(long pk) {
-		long[] pks = userSegmentToTacticTableMapper.getRightPrimaryKeys(0, pk);
+		long[] pks = userSegmentToTacticTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.clone();
 	}
@@ -4167,7 +4219,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	public List<com.liferay.content.targeting.model.Tactic> getTactics(
 		long pk, int start, int end,
 		OrderByComparator<com.liferay.content.targeting.model.Tactic> orderByComparator) {
-		return userSegmentToTacticTableMapper.getRightBaseModels(0, pk, start,
+		return userSegmentToTacticTableMapper.getRightBaseModels(pk, start,
 			end, orderByComparator);
 	}
 
@@ -4179,7 +4231,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public int getTacticsSize(long pk) {
-		long[] pks = userSegmentToTacticTableMapper.getRightPrimaryKeys(0, pk);
+		long[] pks = userSegmentToTacticTableMapper.getRightPrimaryKeys(pk);
 
 		return pks.length;
 	}
@@ -4193,8 +4245,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public boolean containsTactic(long pk, long tacticPK) {
-		return userSegmentToTacticTableMapper.containsTableMapping(0, pk,
-			tacticPK);
+		return userSegmentToTacticTableMapper.containsTableMapping(pk, tacticPK);
 	}
 
 	/**
@@ -4221,7 +4272,16 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public void addTactic(long pk, long tacticPK) {
-		userSegmentToTacticTableMapper.addTableMapping(0, pk, tacticPK);
+		UserSegment userSegment = fetchByPrimaryKey(pk);
+
+		if (userSegment == null) {
+			userSegmentToTacticTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, tacticPK);
+		}
+		else {
+			userSegmentToTacticTableMapper.addTableMapping(userSegment.getCompanyId(),
+				pk, tacticPK);
+		}
 	}
 
 	/**
@@ -4233,8 +4293,16 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	@Override
 	public void addTactic(long pk,
 		com.liferay.content.targeting.model.Tactic tactic) {
-		userSegmentToTacticTableMapper.addTableMapping(0, pk,
-			tactic.getPrimaryKey());
+		UserSegment userSegment = fetchByPrimaryKey(pk);
+
+		if (userSegment == null) {
+			userSegmentToTacticTableMapper.addTableMapping(companyProvider.getCompanyId(),
+				pk, tactic.getPrimaryKey());
+		}
+		else {
+			userSegmentToTacticTableMapper.addTableMapping(userSegment.getCompanyId(),
+				pk, tactic.getPrimaryKey());
+		}
 	}
 
 	/**
@@ -4245,8 +4313,20 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public void addTactics(long pk, long[] tacticPKs) {
+		long companyId = 0;
+
+		UserSegment userSegment = fetchByPrimaryKey(pk);
+
+		if (userSegment == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = userSegment.getCompanyId();
+		}
+
 		for (long tacticPK : tacticPKs) {
-			userSegmentToTacticTableMapper.addTableMapping(0, pk, tacticPK);
+			userSegmentToTacticTableMapper.addTableMapping(companyId, pk,
+				tacticPK);
 		}
 	}
 
@@ -4259,8 +4339,19 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	@Override
 	public void addTactics(long pk,
 		List<com.liferay.content.targeting.model.Tactic> tactics) {
+		long companyId = 0;
+
+		UserSegment userSegment = fetchByPrimaryKey(pk);
+
+		if (userSegment == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = userSegment.getCompanyId();
+		}
+
 		for (com.liferay.content.targeting.model.Tactic tactic : tactics) {
-			userSegmentToTacticTableMapper.addTableMapping(0, pk,
+			userSegmentToTacticTableMapper.addTableMapping(companyId, pk,
 				tactic.getPrimaryKey());
 		}
 	}
@@ -4272,7 +4363,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public void clearTactics(long pk) {
-		userSegmentToTacticTableMapper.deleteLeftPrimaryKeyTableMappings(0, pk);
+		userSegmentToTacticTableMapper.deleteLeftPrimaryKeyTableMappings(pk);
 	}
 
 	/**
@@ -4283,7 +4374,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 */
 	@Override
 	public void removeTactic(long pk, long tacticPK) {
-		userSegmentToTacticTableMapper.deleteTableMapping(0, pk, tacticPK);
+		userSegmentToTacticTableMapper.deleteTableMapping(pk, tacticPK);
 	}
 
 	/**
@@ -4295,7 +4386,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	@Override
 	public void removeTactic(long pk,
 		com.liferay.content.targeting.model.Tactic tactic) {
-		userSegmentToTacticTableMapper.deleteTableMapping(0, pk,
+		userSegmentToTacticTableMapper.deleteTableMapping(pk,
 			tactic.getPrimaryKey());
 	}
 
@@ -4308,7 +4399,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	@Override
 	public void removeTactics(long pk, long[] tacticPKs) {
 		for (long tacticPK : tacticPKs) {
-			userSegmentToTacticTableMapper.deleteTableMapping(0, pk, tacticPK);
+			userSegmentToTacticTableMapper.deleteTableMapping(pk, tacticPK);
 		}
 	}
 
@@ -4322,7 +4413,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	public void removeTactics(long pk,
 		List<com.liferay.content.targeting.model.Tactic> tactics) {
 		for (com.liferay.content.targeting.model.Tactic tactic : tactics) {
-			userSegmentToTacticTableMapper.deleteTableMapping(0, pk,
+			userSegmentToTacticTableMapper.deleteTableMapping(pk,
 				tactic.getPrimaryKey());
 		}
 	}
@@ -4337,21 +4428,32 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	public void setTactics(long pk, long[] tacticPKs) {
 		Set<Long> newTacticPKsSet = SetUtil.fromArray(tacticPKs);
 		Set<Long> oldTacticPKsSet = SetUtil.fromArray(userSegmentToTacticTableMapper.getRightPrimaryKeys(
-					0, pk));
+					pk));
 
 		Set<Long> removeTacticPKsSet = new HashSet<Long>(oldTacticPKsSet);
 
 		removeTacticPKsSet.removeAll(newTacticPKsSet);
 
 		for (long removeTacticPK : removeTacticPKsSet) {
-			userSegmentToTacticTableMapper.deleteTableMapping(0, pk,
-				removeTacticPK);
+			userSegmentToTacticTableMapper.deleteTableMapping(pk, removeTacticPK);
 		}
 
 		newTacticPKsSet.removeAll(oldTacticPKsSet);
 
+		long companyId = 0;
+
+		UserSegment userSegment = fetchByPrimaryKey(pk);
+
+		if (userSegment == null) {
+			companyId = companyProvider.getCompanyId();
+		}
+		else {
+			companyId = userSegment.getCompanyId();
+		}
+
 		for (long newTacticPK : newTacticPKsSet) {
-			userSegmentToTacticTableMapper.addTableMapping(0, pk, newTacticPK);
+			userSegmentToTacticTableMapper.addTableMapping(companyId, pk,
+				newTacticPK);
 		}
 	}
 
@@ -4413,6 +4515,8 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 		TableMapperFactory.removeTableMapper("CT_Tactics_UserSegments");
 	}
 
+	@ServiceReference(type = CompanyProviderWrapper.class)
+	protected CompanyProvider companyProvider;
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)

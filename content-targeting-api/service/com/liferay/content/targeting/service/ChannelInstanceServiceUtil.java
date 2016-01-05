@@ -16,8 +16,7 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -98,21 +97,6 @@ public class ChannelInstanceServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(ChannelInstanceService service) {
-	}
-
-	private static ServiceTracker<ChannelInstanceService, ChannelInstanceService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(ChannelInstanceServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<ChannelInstanceService, ChannelInstanceService>(bundle.getBundleContext(),
-				ChannelInstanceService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<ChannelInstanceService, ChannelInstanceService> _serviceTracker =
+		ServiceTrackerFactory.open(ChannelInstanceService.class);
 }

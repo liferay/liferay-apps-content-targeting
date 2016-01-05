@@ -397,23 +397,6 @@ public class ChannelInstanceLocalServiceWrapper
 			alias, typeSettings, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ChannelInstanceLocalService getWrappedChannelInstanceLocalService() {
-		return _channelInstanceLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedChannelInstanceLocalService(
-		ChannelInstanceLocalService channelInstanceLocalService) {
-		_channelInstanceLocalService = channelInstanceLocalService;
-	}
-
 	@Override
 	public ChannelInstanceLocalService getWrappedService() {
 		return _channelInstanceLocalService;

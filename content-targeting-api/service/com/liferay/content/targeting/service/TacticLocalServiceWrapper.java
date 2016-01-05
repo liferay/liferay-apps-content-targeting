@@ -500,23 +500,6 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 			descriptionMap, userSegmentsIds, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public TacticLocalService getWrappedTacticLocalService() {
-		return _tacticLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedTacticLocalService(
-		TacticLocalService tacticLocalService) {
-		_tacticLocalService = tacticLocalService;
-	}
-
 	@Override
 	public TacticLocalService getWrappedService() {
 		return _tacticLocalService;

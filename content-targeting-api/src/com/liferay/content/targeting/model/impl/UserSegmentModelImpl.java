@@ -186,7 +186,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 			{ "userSegmentId", Types.BIGINT }
 		};
 	public static final String MAPPING_TABLE_CT_CAMPAIGNS_USERSEGMENTS_SQL_CREATE =
-		"create table CT_Campaigns_UserSegments (companyId LONG not null,campaignId LONG not null,userSegmentId LONG not null,primary key (companyId, campaignId, userSegmentId))";
+		"create table CT_Campaigns_UserSegments (companyId LONG not null,campaignId LONG not null,userSegmentId LONG not null,primary key (campaignId, userSegmentId))";
 	public static final boolean FINDER_CACHE_ENABLED_CT_CAMPAIGNS_USERSEGMENTS = GetterUtil.getBoolean(com.liferay.content.targeting.api.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.CT_Campaigns_UserSegments"),
 			true);
@@ -197,7 +197,7 @@ public class UserSegmentModelImpl extends BaseModelImpl<UserSegment>
 			{ "tacticId", Types.BIGINT },
 			{ "userSegmentId", Types.BIGINT }
 		};
-	public static final String MAPPING_TABLE_CT_TACTICS_USERSEGMENTS_SQL_CREATE = "create table CT_Tactics_UserSegments (companyId LONG not null,tacticId LONG not null,userSegmentId LONG not null,primary key (companyId, tacticId, userSegmentId))";
+	public static final String MAPPING_TABLE_CT_TACTICS_USERSEGMENTS_SQL_CREATE = "create table CT_Tactics_UserSegments (companyId LONG not null,tacticId LONG not null,userSegmentId LONG not null,primary key (tacticId, userSegmentId))";
 	public static final boolean FINDER_CACHE_ENABLED_CT_TACTICS_USERSEGMENTS = GetterUtil.getBoolean(com.liferay.content.targeting.api.util.ServiceProps.get(
 				"value.object.finder.cache.enabled.CT_Tactics_UserSegments"),
 			true);

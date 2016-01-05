@@ -619,23 +619,6 @@ public class CampaignLocalServiceWrapper implements CampaignLocalService,
 			groupPermissions, guestPermissions);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public CampaignLocalService getWrappedCampaignLocalService() {
-		return _campaignLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedCampaignLocalService(
-		CampaignLocalService campaignLocalService) {
-		_campaignLocalService = campaignLocalService;
-	}
-
 	@Override
 	public CampaignLocalService getWrappedService() {
 		return _campaignLocalService;

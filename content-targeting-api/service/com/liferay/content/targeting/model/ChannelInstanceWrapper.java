@@ -602,14 +602,6 @@ public class ChannelInstanceWrapper implements ChannelInstance,
 		return _channelInstance.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ChannelInstance getWrappedChannelInstance() {
-		return _channelInstance;
-	}
-
 	@Override
 	public ChannelInstance getWrappedModel() {
 		return _channelInstance;

@@ -888,14 +888,6 @@ public class ReportInstanceWrapper implements ReportInstance,
 		return _reportInstance.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public ReportInstance getWrappedReportInstance() {
-		return _reportInstance;
-	}
-
 	@Override
 	public ReportInstance getWrappedModel() {
 		return _reportInstance;

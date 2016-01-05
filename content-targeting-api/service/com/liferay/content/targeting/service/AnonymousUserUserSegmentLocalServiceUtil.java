@@ -16,8 +16,7 @@ package com.liferay.content.targeting.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -372,21 +371,6 @@ public class AnonymousUserUserSegmentLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AnonymousUserUserSegmentLocalService service) {
-	}
-
-	private static ServiceTracker<AnonymousUserUserSegmentLocalService, AnonymousUserUserSegmentLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AnonymousUserUserSegmentLocalServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<AnonymousUserUserSegmentLocalService, AnonymousUserUserSegmentLocalService>(bundle.getBundleContext(),
-				AnonymousUserUserSegmentLocalService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<AnonymousUserUserSegmentLocalService, AnonymousUserUserSegmentLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(AnonymousUserUserSegmentLocalService.class);
 }

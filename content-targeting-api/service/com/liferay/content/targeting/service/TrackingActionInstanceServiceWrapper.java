@@ -127,23 +127,6 @@ public class TrackingActionInstanceServiceWrapper
 			elementId, eventType, typeSettings, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public TrackingActionInstanceService getWrappedTrackingActionInstanceService() {
-		return _trackingActionInstanceService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedTrackingActionInstanceService(
-		TrackingActionInstanceService trackingActionInstanceService) {
-		_trackingActionInstanceService = trackingActionInstanceService;
-	}
-
 	@Override
 	public TrackingActionInstanceService getWrappedService() {
 		return _trackingActionInstanceService;

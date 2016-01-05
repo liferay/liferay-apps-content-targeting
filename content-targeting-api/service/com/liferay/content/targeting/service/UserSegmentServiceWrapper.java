@@ -103,23 +103,6 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 			descriptionMap, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public UserSegmentService getWrappedUserSegmentService() {
-		return _userSegmentService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedUserSegmentService(
-		UserSegmentService userSegmentService) {
-		_userSegmentService = userSegmentService;
-	}
-
 	@Override
 	public UserSegmentService getWrappedService() {
 		return _userSegmentService;

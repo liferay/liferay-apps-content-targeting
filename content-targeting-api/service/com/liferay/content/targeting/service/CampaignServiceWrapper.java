@@ -132,22 +132,6 @@ public class CampaignServiceWrapper implements CampaignService,
 			userSegmentIds, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public CampaignService getWrappedCampaignService() {
-		return _campaignService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedCampaignService(CampaignService campaignService) {
-		_campaignService = campaignService;
-	}
-
 	@Override
 	public CampaignService getWrappedService() {
 		return _campaignService;

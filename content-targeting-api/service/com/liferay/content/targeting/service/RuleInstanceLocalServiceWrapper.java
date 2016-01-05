@@ -389,23 +389,6 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 			typeSettings, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public RuleInstanceLocalService getWrappedRuleInstanceLocalService() {
-		return _ruleInstanceLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedRuleInstanceLocalService(
-		RuleInstanceLocalService ruleInstanceLocalService) {
-		_ruleInstanceLocalService = ruleInstanceLocalService;
-	}
-
 	@Override
 	public RuleInstanceLocalService getWrappedService() {
 		return _ruleInstanceLocalService;

@@ -917,14 +917,6 @@ public class CampaignWrapper implements Campaign, ModelWrapper<Campaign> {
 		return _campaign.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public Campaign getWrappedCampaign() {
-		return _campaign;
-	}
-
 	@Override
 	public Campaign getWrappedModel() {
 		return _campaign;

@@ -18,12 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.content.targeting.model.TrackingActionInstance;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -2176,21 +2175,6 @@ public class TrackingActionInstanceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(TrackingActionInstancePersistence persistence) {
-	}
-
-	private static ServiceTracker<TrackingActionInstancePersistence, TrackingActionInstancePersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(TrackingActionInstanceUtil.class);
-
-		_serviceTracker = new ServiceTracker<TrackingActionInstancePersistence, TrackingActionInstancePersistence>(bundle.getBundleContext(),
-				TrackingActionInstancePersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<TrackingActionInstancePersistence, TrackingActionInstancePersistence> _serviceTracker =
+		ServiceTrackerFactory.open(TrackingActionInstancePersistence.class);
 }

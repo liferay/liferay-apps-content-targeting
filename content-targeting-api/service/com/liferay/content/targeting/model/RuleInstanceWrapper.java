@@ -552,14 +552,6 @@ public class RuleInstanceWrapper implements RuleInstance,
 		return _ruleInstance.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public RuleInstance getWrappedRuleInstance() {
-		return _ruleInstance;
-	}
-
 	@Override
 	public RuleInstance getWrappedModel() {
 		return _ruleInstance;

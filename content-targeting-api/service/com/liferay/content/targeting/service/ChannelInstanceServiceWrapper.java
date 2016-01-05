@@ -89,23 +89,6 @@ public class ChannelInstanceServiceWrapper implements ChannelInstanceService,
 			alias, typeSettings, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public ChannelInstanceService getWrappedChannelInstanceService() {
-		return _channelInstanceService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedChannelInstanceService(
-		ChannelInstanceService channelInstanceService) {
-		_channelInstanceService = channelInstanceService;
-	}
-
 	@Override
 	public ChannelInstanceService getWrappedService() {
 		return _channelInstanceService;

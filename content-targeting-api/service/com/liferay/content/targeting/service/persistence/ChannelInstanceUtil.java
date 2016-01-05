@@ -18,12 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.content.targeting.model.ChannelInstance;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1732,21 +1731,6 @@ public class ChannelInstanceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(ChannelInstancePersistence persistence) {
-	}
-
-	private static ServiceTracker<ChannelInstancePersistence, ChannelInstancePersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(ChannelInstanceUtil.class);
-
-		_serviceTracker = new ServiceTracker<ChannelInstancePersistence, ChannelInstancePersistence>(bundle.getBundleContext(),
-				ChannelInstancePersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<ChannelInstancePersistence, ChannelInstancePersistence> _serviceTracker =
+		ServiceTrackerFactory.open(ChannelInstancePersistence.class);
 }

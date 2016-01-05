@@ -390,23 +390,6 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 			modifiedDate);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AnonymousUserUserSegmentLocalService getWrappedAnonymousUserUserSegmentLocalService() {
-		return _anonymousUserUserSegmentLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAnonymousUserUserSegmentLocalService(
-		AnonymousUserUserSegmentLocalService anonymousUserUserSegmentLocalService) {
-		_anonymousUserUserSegmentLocalService = anonymousUserUserSegmentLocalService;
-	}
-
 	@Override
 	public AnonymousUserUserSegmentLocalService getWrappedService() {
 		return _anonymousUserUserSegmentLocalService;

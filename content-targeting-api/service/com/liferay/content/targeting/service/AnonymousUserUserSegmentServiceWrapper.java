@@ -138,23 +138,6 @@ public class AnonymousUserUserSegmentServiceWrapper
 			serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AnonymousUserUserSegmentService getWrappedAnonymousUserUserSegmentService() {
-		return _anonymousUserUserSegmentService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAnonymousUserUserSegmentService(
-		AnonymousUserUserSegmentService anonymousUserUserSegmentService) {
-		_anonymousUserUserSegmentService = anonymousUserUserSegmentService;
-	}
-
 	@Override
 	public AnonymousUserUserSegmentService getWrappedService() {
 		return _anonymousUserUserSegmentService;

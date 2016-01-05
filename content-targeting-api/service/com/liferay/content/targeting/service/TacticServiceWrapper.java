@@ -76,22 +76,6 @@ public class TacticServiceWrapper implements TacticService,
 			descriptionMap, userSegmentsIds, serviceContext);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public TacticService getWrappedTacticService() {
-		return _tacticService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedTacticService(TacticService tacticService) {
-		_tacticService = tacticService;
-	}
-
 	@Override
 	public TacticService getWrappedService() {
 		return _tacticService;

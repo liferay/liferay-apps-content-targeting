@@ -814,14 +814,6 @@ public class UserSegmentWrapper implements UserSegment,
 		return _userSegment.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public UserSegment getWrappedUserSegment() {
-		return _userSegment;
-	}
-
 	@Override
 	public UserSegment getWrappedModel() {
 		return _userSegment;

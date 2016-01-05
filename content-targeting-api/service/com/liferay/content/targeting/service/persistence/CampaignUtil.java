@@ -18,12 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.content.targeting.model.Campaign;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1223,21 +1222,6 @@ public class CampaignUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(CampaignPersistence persistence) {
-	}
-
-	private static ServiceTracker<CampaignPersistence, CampaignPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(CampaignUtil.class);
-
-		_serviceTracker = new ServiceTracker<CampaignPersistence, CampaignPersistence>(bundle.getBundleContext(),
-				CampaignPersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<CampaignPersistence, CampaignPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(CampaignPersistence.class);
 }

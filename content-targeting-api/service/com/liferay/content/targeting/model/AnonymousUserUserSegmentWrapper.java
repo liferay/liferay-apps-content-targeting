@@ -436,14 +436,6 @@ public class AnonymousUserUserSegmentWrapper implements AnonymousUserUserSegment
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public AnonymousUserUserSegment getWrappedAnonymousUserUserSegment() {
-		return _anonymousUserUserSegment;
-	}
-
 	@Override
 	public AnonymousUserUserSegment getWrappedModel() {
 		return _anonymousUserUserSegment;

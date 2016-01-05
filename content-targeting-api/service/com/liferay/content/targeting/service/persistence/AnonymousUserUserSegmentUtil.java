@@ -18,12 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.content.targeting.model.AnonymousUserUserSegment;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -1128,21 +1127,6 @@ public class AnonymousUserUserSegmentUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(AnonymousUserUserSegmentPersistence persistence) {
-	}
-
-	private static ServiceTracker<AnonymousUserUserSegmentPersistence, AnonymousUserUserSegmentPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AnonymousUserUserSegmentUtil.class);
-
-		_serviceTracker = new ServiceTracker<AnonymousUserUserSegmentPersistence, AnonymousUserUserSegmentPersistence>(bundle.getBundleContext(),
-				AnonymousUserUserSegmentPersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<AnonymousUserUserSegmentPersistence, AnonymousUserUserSegmentPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(AnonymousUserUserSegmentPersistence.class);
 }

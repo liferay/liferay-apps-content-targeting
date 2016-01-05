@@ -686,23 +686,6 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 			groupPermissions, guestPermissions);
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public UserSegmentLocalService getWrappedUserSegmentLocalService() {
-		return _userSegmentLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedUserSegmentLocalService(
-		UserSegmentLocalService userSegmentLocalService) {
-		_userSegmentLocalService = userSegmentLocalService;
-	}
-
 	@Override
 	public UserSegmentLocalService getWrappedService() {
 		return _userSegmentLocalService;

@@ -52,6 +52,7 @@ import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.SystemEventPersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
@@ -472,25 +473,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the anonymous user user segment remote service.
-	 *
-	 * @return the anonymous user user segment remote service
-	 */
-	public com.liferay.content.targeting.service.AnonymousUserUserSegmentService getAnonymousUserUserSegmentService() {
-		return anonymousUserUserSegmentService;
-	}
-
-	/**
-	 * Sets the anonymous user user segment remote service.
-	 *
-	 * @param anonymousUserUserSegmentService the anonymous user user segment remote service
-	 */
-	public void setAnonymousUserUserSegmentService(
-		com.liferay.content.targeting.service.AnonymousUserUserSegmentService anonymousUserUserSegmentService) {
-		this.anonymousUserUserSegmentService = anonymousUserUserSegmentService;
-	}
-
-	/**
 	 * Returns the anonymous user user segment persistence.
 	 *
 	 * @return the anonymous user user segment persistence
@@ -526,25 +508,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	public void setCampaignLocalService(
 		com.liferay.content.targeting.service.CampaignLocalService campaignLocalService) {
 		this.campaignLocalService = campaignLocalService;
-	}
-
-	/**
-	 * Returns the campaign remote service.
-	 *
-	 * @return the campaign remote service
-	 */
-	public com.liferay.content.targeting.service.CampaignService getCampaignService() {
-		return campaignService;
-	}
-
-	/**
-	 * Sets the campaign remote service.
-	 *
-	 * @param campaignService the campaign remote service
-	 */
-	public void setCampaignService(
-		com.liferay.content.targeting.service.CampaignService campaignService) {
-		this.campaignService = campaignService;
 	}
 
 	/**
@@ -603,25 +566,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the channel instance remote service.
-	 *
-	 * @return the channel instance remote service
-	 */
-	public com.liferay.content.targeting.service.ChannelInstanceService getChannelInstanceService() {
-		return channelInstanceService;
-	}
-
-	/**
-	 * Sets the channel instance remote service.
-	 *
-	 * @param channelInstanceService the channel instance remote service
-	 */
-	public void setChannelInstanceService(
-		com.liferay.content.targeting.service.ChannelInstanceService channelInstanceService) {
-		this.channelInstanceService = channelInstanceService;
-	}
-
-	/**
 	 * Returns the channel instance persistence.
 	 *
 	 * @return the channel instance persistence
@@ -657,25 +601,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	public void setReportInstanceLocalService(
 		com.liferay.content.targeting.service.ReportInstanceLocalService reportInstanceLocalService) {
 		this.reportInstanceLocalService = reportInstanceLocalService;
-	}
-
-	/**
-	 * Returns the report instance remote service.
-	 *
-	 * @return the report instance remote service
-	 */
-	public com.liferay.content.targeting.service.ReportInstanceService getReportInstanceService() {
-		return reportInstanceService;
-	}
-
-	/**
-	 * Sets the report instance remote service.
-	 *
-	 * @param reportInstanceService the report instance remote service
-	 */
-	public void setReportInstanceService(
-		com.liferay.content.targeting.service.ReportInstanceService reportInstanceService) {
-		this.reportInstanceService = reportInstanceService;
 	}
 
 	/**
@@ -717,25 +642,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the rule instance remote service.
-	 *
-	 * @return the rule instance remote service
-	 */
-	public com.liferay.content.targeting.service.RuleInstanceService getRuleInstanceService() {
-		return ruleInstanceService;
-	}
-
-	/**
-	 * Sets the rule instance remote service.
-	 *
-	 * @param ruleInstanceService the rule instance remote service
-	 */
-	public void setRuleInstanceService(
-		com.liferay.content.targeting.service.RuleInstanceService ruleInstanceService) {
-		this.ruleInstanceService = ruleInstanceService;
-	}
-
-	/**
 	 * Returns the rule instance persistence.
 	 *
 	 * @return the rule instance persistence
@@ -771,25 +677,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	public void setTacticLocalService(
 		com.liferay.content.targeting.service.TacticLocalService tacticLocalService) {
 		this.tacticLocalService = tacticLocalService;
-	}
-
-	/**
-	 * Returns the tactic remote service.
-	 *
-	 * @return the tactic remote service
-	 */
-	public com.liferay.content.targeting.service.TacticService getTacticService() {
-		return tacticService;
-	}
-
-	/**
-	 * Sets the tactic remote service.
-	 *
-	 * @param tacticService the tactic remote service
-	 */
-	public void setTacticService(
-		com.liferay.content.targeting.service.TacticService tacticService) {
-		this.tacticService = tacticService;
 	}
 
 	/**
@@ -830,25 +717,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the tracking action instance remote service.
-	 *
-	 * @return the tracking action instance remote service
-	 */
-	public com.liferay.content.targeting.service.TrackingActionInstanceService getTrackingActionInstanceService() {
-		return trackingActionInstanceService;
-	}
-
-	/**
-	 * Sets the tracking action instance remote service.
-	 *
-	 * @param trackingActionInstanceService the tracking action instance remote service
-	 */
-	public void setTrackingActionInstanceService(
-		com.liferay.content.targeting.service.TrackingActionInstanceService trackingActionInstanceService) {
-		this.trackingActionInstanceService = trackingActionInstanceService;
-	}
-
-	/**
 	 * Returns the tracking action instance persistence.
 	 *
 	 * @return the tracking action instance persistence
@@ -884,25 +752,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	public void setUserSegmentLocalService(
 		com.liferay.content.targeting.service.UserSegmentLocalService userSegmentLocalService) {
 		this.userSegmentLocalService = userSegmentLocalService;
-	}
-
-	/**
-	 * Returns the user segment remote service.
-	 *
-	 * @return the user segment remote service
-	 */
-	public com.liferay.content.targeting.service.UserSegmentService getUserSegmentService() {
-		return userSegmentService;
-	}
-
-	/**
-	 * Sets the user segment remote service.
-	 *
-	 * @param userSegmentService the user segment remote service
-	 */
-	public void setUserSegmentService(
-		com.liferay.content.targeting.service.UserSegmentService userSegmentService) {
-		this.userSegmentService = userSegmentService;
 	}
 
 	/**
@@ -960,25 +809,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	public void setClassNameLocalService(
 		com.liferay.portal.service.ClassNameLocalService classNameLocalService) {
 		this.classNameLocalService = classNameLocalService;
-	}
-
-	/**
-	 * Returns the class name remote service.
-	 *
-	 * @return the class name remote service
-	 */
-	public com.liferay.portal.service.ClassNameService getClassNameService() {
-		return classNameService;
-	}
-
-	/**
-	 * Sets the class name remote service.
-	 *
-	 * @param classNameService the class name remote service
-	 */
-	public void setClassNameService(
-		com.liferay.portal.service.ClassNameService classNameService) {
-		this.classNameService = classNameService;
 	}
 
 	/**
@@ -1077,25 +907,6 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
-	}
-
-	/**
 	 * Returns the user persistence.
 	 *
 	 * @return the user persistence
@@ -1167,73 +978,53 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 
 	@BeanReference(type = com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService.class)
 	protected com.liferay.content.targeting.service.AnonymousUserUserSegmentLocalService anonymousUserUserSegmentLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.AnonymousUserUserSegmentService.class)
-	protected com.liferay.content.targeting.service.AnonymousUserUserSegmentService anonymousUserUserSegmentService;
 	@BeanReference(type = AnonymousUserUserSegmentPersistence.class)
 	protected AnonymousUserUserSegmentPersistence anonymousUserUserSegmentPersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.CampaignLocalService.class)
 	protected com.liferay.content.targeting.service.CampaignLocalService campaignLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.CampaignService.class)
-	protected com.liferay.content.targeting.service.CampaignService campaignService;
 	@BeanReference(type = CampaignPersistence.class)
 	protected CampaignPersistence campaignPersistence;
 	@BeanReference(type = CampaignFinder.class)
 	protected CampaignFinder campaignFinder;
 	@BeanReference(type = com.liferay.content.targeting.service.ChannelInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.ChannelInstanceLocalService channelInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.ChannelInstanceService.class)
-	protected com.liferay.content.targeting.service.ChannelInstanceService channelInstanceService;
 	@BeanReference(type = ChannelInstancePersistence.class)
 	protected ChannelInstancePersistence channelInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.ReportInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.ReportInstanceLocalService reportInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.ReportInstanceService.class)
-	protected com.liferay.content.targeting.service.ReportInstanceService reportInstanceService;
 	@BeanReference(type = ReportInstancePersistence.class)
 	protected ReportInstancePersistence reportInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.RuleInstanceLocalService.class)
 	protected com.liferay.content.targeting.service.RuleInstanceLocalService ruleInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.RuleInstanceService.class)
-	protected com.liferay.content.targeting.service.RuleInstanceService ruleInstanceService;
 	@BeanReference(type = RuleInstancePersistence.class)
 	protected RuleInstancePersistence ruleInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.TacticLocalService.class)
 	protected com.liferay.content.targeting.service.TacticLocalService tacticLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.TacticService.class)
-	protected com.liferay.content.targeting.service.TacticService tacticService;
 	@BeanReference(type = TacticPersistence.class)
 	protected TacticPersistence tacticPersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.TrackingActionInstanceLocalService.class)
 	protected TrackingActionInstanceLocalService trackingActionInstanceLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.TrackingActionInstanceService.class)
-	protected com.liferay.content.targeting.service.TrackingActionInstanceService trackingActionInstanceService;
 	@BeanReference(type = TrackingActionInstancePersistence.class)
 	protected TrackingActionInstancePersistence trackingActionInstancePersistence;
 	@BeanReference(type = com.liferay.content.targeting.service.UserSegmentLocalService.class)
 	protected com.liferay.content.targeting.service.UserSegmentLocalService userSegmentLocalService;
-	@BeanReference(type = com.liferay.content.targeting.service.UserSegmentService.class)
-	protected com.liferay.content.targeting.service.UserSegmentService userSegmentService;
 	@BeanReference(type = UserSegmentPersistence.class)
 	protected UserSegmentPersistence userSegmentPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
-	protected com.liferay.portal.service.ClassNameService classNameService;
-	@BeanReference(type = ClassNamePersistence.class)
+	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.SystemEventLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.SystemEventLocalService.class)
 	protected com.liferay.portal.service.SystemEventLocalService systemEventLocalService;
-	@BeanReference(type = SystemEventPersistence.class)
+	@ServiceReference(type = SystemEventPersistence.class)
 	protected SystemEventPersistence systemEventPersistence;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
 	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;

@@ -712,14 +712,6 @@ public class TrackingActionInstanceWrapper implements TrackingActionInstance,
 		return _trackingActionInstance.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public TrackingActionInstance getWrappedTrackingActionInstance() {
-		return _trackingActionInstance;
-	}
-
 	@Override
 	public TrackingActionInstance getWrappedModel() {
 		return _trackingActionInstance;
