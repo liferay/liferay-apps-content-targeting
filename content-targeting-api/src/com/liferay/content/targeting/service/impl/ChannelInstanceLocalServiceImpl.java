@@ -30,13 +30,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the channel instance local service.
@@ -208,18 +206,10 @@ public class ChannelInstanceLocalServiceImpl
 		}
 	}
 
-	@Reference(unbind = "unsetChannelsRegistry")
-	protected void setChannelsRegistry(ChannelsRegistry channelsRegistry) {
-		_channelsRegistry = channelsRegistry;
-	}
-
-	protected void unsetChannelsRegistry(ChannelsRegistry channelsRegistry) {
-		_channelsRegistry = null;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		ChannelInstanceLocalServiceImpl.class);
 
-	private ChannelsRegistry _channelsRegistry;
+	@ServiceReference(type = ChannelsRegistry.class)
+	protected ChannelsRegistry _channelsRegistry;
 
 }

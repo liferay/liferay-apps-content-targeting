@@ -16,14 +16,12 @@ package com.liferay.content.targeting.service.impl;
 
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.base.UserSegmentServiceBaseImpl;
-import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.content.targeting.service.permission.ContentTargetingPermission;
 import com.liferay.content.targeting.service.permission.UserSegmentPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 import java.util.Locale;
@@ -52,7 +50,7 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		_contentTargetingPermission.check(
+		ContentTargetingPermission.check(
 			getPermissionChecker(), serviceContext.getScopeGroupId(),
 			ActionKeys.ADD_USER_SEGMENT);
 
@@ -64,7 +62,7 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 	public UserSegment deleteUserSegment(long userSegmentId)
 		throws PortalException, SystemException {
 
-		_userSegmentPermission.check(
+		UserSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.DELETE);
 
 		return userSegmentLocalService.deleteUserSegment(userSegmentId);
@@ -104,35 +102,11 @@ public class UserSegmentServiceImpl extends UserSegmentServiceBaseImpl {
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		_userSegmentPermission.check(
+		UserSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
 
 		return userSegmentLocalService.updateUserSegment(
 			userSegmentId, nameMap, descriptionMap, serviceContext);
 	}
-
-	@Reference(unbind = "unsetContentTargetingPermission")
-	protected void setContentTargetingPermission(
-		ContentTargetingPermission contentTargetingPermission) {
-
-		_contentTargetingPermission = contentTargetingPermission;
-	}
-	@Reference(unbind="unsetUserSegmentPermission")
-	protected void setUserSegmentPermission(
-		UserSegmentPermission userSegmentPermission) {
-
-		_userSegmentPermission = userSegmentPermission;
-	}
-
-	protected void unsetContentTargetingPermission() {
-		_contentTargetingPermission = null;
-	}
-
-	protected void unsetUserSegmentPermission() {
-		_userSegmentPermission = null;
-	}
-
-	private ContentTargetingPermission _contentTargetingPermission;
-	private UserSegmentPermission _userSegmentPermission;
 
 }

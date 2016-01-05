@@ -21,7 +21,6 @@ import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 import java.util.Locale;
@@ -50,7 +49,7 @@ public class ReportInstanceServiceImpl extends ReportInstanceServiceBaseImpl {
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		_reportPermission.check(
+		ReportPermission.check(
 			getPermissionChecker(), userId, serviceContext.getCompanyId(),
 			serviceContext.getScopeGroupId(), className, classPK,
 			ActionKeys.UPDATE);
@@ -70,7 +69,7 @@ public class ReportInstanceServiceImpl extends ReportInstanceServiceBaseImpl {
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		_reportPermission.check(
+		ReportPermission.check(
 			getPermissionChecker(), userId, serviceContext.getCompanyId(),
 			serviceContext.getScopeGroupId(), className, classPK,
 			ActionKeys.UPDATE);
@@ -122,7 +121,7 @@ public class ReportInstanceServiceImpl extends ReportInstanceServiceBaseImpl {
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		_reportPermission.check(
+		ReportPermission.check(
 			getPermissionChecker(), userId, serviceContext.getCompanyId(),
 			serviceContext.getScopeGroupId(), className, classPK,
 			ActionKeys.UPDATE);
@@ -138,16 +137,5 @@ public class ReportInstanceServiceImpl extends ReportInstanceServiceBaseImpl {
 
 		return reportInstanceLocalService.updateReportInstance(reportInstance);
 	}
-
-	@Reference(unbind = "unsetReportPermission")
-	protected void setReportPermission(ReportPermission reportPermission) {
-		_reportPermission = reportPermission;
-	}
-
-	protected void unsetReportPermission() {
-		_reportPermission = null;
-	}
-
-	private static ReportPermission _reportPermission;
 
 }

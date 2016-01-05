@@ -30,13 +30,11 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the tracking action instance local service.
@@ -297,22 +295,10 @@ public class TrackingActionInstanceLocalServiceImpl
 		}
 	}
 
-	@Reference(unbind = "unsetTrackingActionsRegistry")
-	protected void setTrackingActionsRegistry(
-		TrackingActionsRegistry trackingActionsRegistry) {
-
-		_trackingActionsRegistry = trackingActionsRegistry;
-	}
-
-	protected void unsetTrackingActionsRegistry(
-		TrackingActionsRegistry trackingActionsRegistry) {
-
-		_trackingActionsRegistry = null;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		TrackingActionInstanceLocalServiceImpl.class);
 
-	private TrackingActionsRegistry _trackingActionsRegistry;
+	@ServiceReference(type = TrackingActionsRegistry.class)
+	protected TrackingActionsRegistry _trackingActionsRegistry;
 
 }

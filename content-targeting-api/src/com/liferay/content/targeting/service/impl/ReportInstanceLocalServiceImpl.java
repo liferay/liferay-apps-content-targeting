@@ -19,7 +19,6 @@ import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.TrackingActionInstance;
-import com.liferay.content.targeting.service.TrackingActionInstanceLocalService;
 import com.liferay.content.targeting.service.base.ReportInstanceLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -47,9 +46,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 /**
  * The implementation of the report instance local service.
@@ -150,13 +147,13 @@ public class ReportInstanceLocalServiceImpl
 			reportInstanceId);
 
 		List<TrackingActionInstance> trackingActionInstances =
-			_trackingActionInstanceLocalService.
+			trackingActionInstanceLocalService.
 				getTrackingActionInstancesByReportInstanceId(reportInstanceId);
 
 		for (TrackingActionInstance trackingActionInstance
 				: trackingActionInstances) {
 
-			_trackingActionInstanceLocalService.deleteTrackingActionInstance(
+			trackingActionInstanceLocalService.deleteTrackingActionInstance(
 				trackingActionInstance.getTrackingActionInstanceId());
 		}
 
@@ -326,17 +323,7 @@ public class ReportInstanceLocalServiceImpl
 			"Unable to fix the search index after 10 attempts");
 	}
 
-	@Reference(unbind = "unsetReportsRegistry")
-	protected void setReportsRegistry(ReportsRegistry reportsRegistry) {
-		_reportsRegistry = reportsRegistry;
-	}
-
-	protected void unsetReportsRegistry(ReportsRegistry reportsRegistry) {
-		_reportsRegistry = null;
-	}
-
-	private ReportsRegistry _reportsRegistry;
-	private TrackingActionInstanceLocalService
-		_trackingActionInstanceLocalService;
+	@ServiceReference(type = ReportsRegistry.class)
+	protected ReportsRegistry _reportsRegistry;
 
 }

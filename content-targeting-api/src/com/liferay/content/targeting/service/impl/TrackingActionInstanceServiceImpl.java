@@ -21,7 +21,6 @@ import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 
@@ -50,7 +49,7 @@ public class TrackingActionInstanceServiceImpl
 			String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		_campaignPermission.check(
+		CampaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
 
 		return trackingActionInstanceLocalService.addTrackingActionInstance(
@@ -71,7 +70,7 @@ public class TrackingActionInstanceServiceImpl
 			ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		_campaignPermission.check(
+		CampaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
 
 		return trackingActionInstanceLocalService.addTrackingActionInstance(
@@ -89,7 +88,7 @@ public class TrackingActionInstanceServiceImpl
 			trackingActionInstanceLocalService.getTrackingActionInstance(
 				trackingActionInstanceId);
 
-		_campaignPermission.check(
+		CampaignPermission.check(
 			getPermissionChecker(), trackingActionInstance.getCampaignId(),
 			ActionKeys.UPDATE);
 
@@ -146,7 +145,7 @@ public class TrackingActionInstanceServiceImpl
 			trackingActionInstanceLocalService.getTrackingActionInstance(
 				trackingActionInstanceId);
 
-		_campaignPermission.check(
+		CampaignPermission.check(
 			getPermissionChecker(), trackingActionInstance.getCampaignId(),
 			ActionKeys.UPDATE);
 
@@ -155,18 +154,5 @@ public class TrackingActionInstanceServiceImpl
 			referrerClassName, referrerClassPK, elementId, eventType,
 			typeSettings, serviceContext);
 	}
-
-	@Reference(unbind="unsetCampaignPermission")
-	protected void setCampaignPermission(
-		CampaignPermission campaignPermission) {
-
-		_campaignPermission = campaignPermission;
-	}
-
-	protected void unsetCampaignPermission() {
-		_campaignPermission = null;
-	}
-
-	private CampaignPermission _campaignPermission;
 
 }

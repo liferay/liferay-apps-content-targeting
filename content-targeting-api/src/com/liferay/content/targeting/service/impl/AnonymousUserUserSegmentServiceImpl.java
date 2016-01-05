@@ -22,7 +22,6 @@ import com.liferay.content.targeting.service.permission.UserSegmentPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.service.ServiceContext;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class AnonymousUserUserSegmentServiceImpl
 			boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
-		_userSegmentPermission.check(
+		UserSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
 
 		return anonymousUserUserSegmentLocalService.addAnonymousUserUserSegment(
@@ -61,7 +60,7 @@ public class AnonymousUserUserSegmentServiceImpl
 			long userSegmentId, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
-		_userSegmentPermission.check(
+		UserSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.VIEW);
 
 		return anonymousUserUserSegmentLocalService.
@@ -73,7 +72,7 @@ public class AnonymousUserUserSegmentServiceImpl
 			long userSegmentId, boolean active, ServiceContext serviceContext)
 		throws PortalException {
 
-		_userSegmentPermission.check(
+		UserSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.VIEW);
 
 		return anonymousUserUserSegmentLocalService.
@@ -87,7 +86,7 @@ public class AnonymousUserUserSegmentServiceImpl
 		throws PortalException {
 
 		for (long userSegmentId : userSegmentIds) {
-			_userSegmentPermission.check(
+			UserSegmentPermission.check(
 				getPermissionChecker(), userSegmentId, ActionKeys.VIEW);
 		}
 
@@ -102,7 +101,7 @@ public class AnonymousUserUserSegmentServiceImpl
 		throws PortalException {
 
 		for (long userSegmentId : userSegmentIds) {
-			_userSegmentPermission.check(
+			UserSegmentPermission.check(
 				getPermissionChecker(), userSegmentId, ActionKeys.VIEW);
 		}
 
@@ -154,18 +153,5 @@ public class AnonymousUserUserSegmentServiceImpl
 			updateAnonymousUserUserSegment(
 				anonymousUserUserSegmentId, serviceContext);
 	}
-
-	@Reference(unbind="unsetUserSegmentPermission")
-	protected void setUserSegmentPermission(
-		UserSegmentPermission userSegmentPermission) {
-
-		_userSegmentPermission = userSegmentPermission;
-	}
-
-	protected void unsetUserSegmentPermission() {
-		_userSegmentPermission = null;
-	}
-
-	private UserSegmentPermission _userSegmentPermission;
 
 }
