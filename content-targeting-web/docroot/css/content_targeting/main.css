@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 
 .content-targeting-portlet {
 	.add-field-bar {
@@ -31,9 +31,9 @@
 
 			.tabbable {
 				float: left;
-				margin-left: 0;
+				margin-left: 10px;
 				position: relative;
-				width: 240px;
+				width: 260px;
 			}
 
 			.tabbable-content {
@@ -55,7 +55,10 @@
 						padding: 0;
 
 						.search-panels-input {
-							@include border-radius(0);
+							@include border-top-radius(5px);
+							@include border-right-radius(5px);
+							@include border-bottom-radius(5px);
+							@include border-left-radius(5px);
 
 							margin-bottom: 0;
 							width: 166px;
@@ -64,7 +67,7 @@
 				}
 			}
 
-			.diagram-builder-fields-container {
+			.property-builder-fields-container {
 				margin: 10px 0;
 				overflow: hidden;
 
@@ -80,7 +83,7 @@
 						color: #FFF;
 						float: left;
 						font-size: 28px;
-						height: 28px;
+						height: 34px;
 						margin-right: 10px;
 						padding: 5px;
 						text-align: center;
@@ -128,7 +131,7 @@
 				.category-content {
 					margin-right: 20px;
 					padding-bottom: 15px;
-					padding-left: 40px;
+					padding-left: 20px;
 					padding-top: 15px;
 
 					&.toggler-content-expanded {
@@ -142,7 +145,7 @@
 					}
 				}
 
-				.diagram-builder-field {
+				.property-builder-field {
 					cursor: move;
 					display: inline-block;
 					float: none;
@@ -165,7 +168,7 @@
 						margin-bottom: 0;
 					}
 
-					.diagram-builder-field-icon {
+					.property-builder-field-icon {
 						float: left;
 						font-size: 20px;
 						height: 20px;
@@ -175,7 +178,7 @@
 						width: 20px;
 					}
 
-					.diagram-builder-field-label {
+					.property-builder-field-label {
 						font-size: 12px;
 						line-height: 18px;
 						margin-top: 3px;
@@ -201,9 +204,9 @@
 				}
 			}
 
-			.diagram-builder-canvas {
+			.property-builder-canvas {
 				background-color: #F6F6F6;
-				border-width: 0;
+				border-width: 1px;
 
 				&.has-items {
 					.alert-no-items {
@@ -214,9 +217,10 @@
 				.alert-no-items {
 					margin-left: 20px;
 					margin-right: 20px;
+					margin-top: 20px;
 				}
 
-				.diagram-builder-drop-container {
+				.property-builder-drop-container {
 					height: auto;
 					min-height: 500px;
 					padding-bottom: 0;
@@ -241,7 +245,7 @@
 							font-size: 16px;
 						}
 
-						.icon-trash:before {
+						.glyphicon-trash:before {
 							content: "\f00d";
 						}
 					}
@@ -253,7 +257,7 @@
 					border-left-width: 2px;
 					border-radius: 0;
 
-					@include box-shadow(inherit);
+					box-shadow: inherit;
 
 					margin: 30px;
 
@@ -272,7 +276,8 @@
 							position: relative;
 
 							.field-icon {
-								font-size: 35px;
+								display: block;
+								font-size: 30px;
 								position: absolute;
 								text-align: center;
 								width: 35px;
@@ -304,7 +309,7 @@
 					border-left-color: #009AE5;
 					border-left-width: 5px;
 
-					@include box-shadow(0 3px 0 #E9E9E9);
+					box-shadow: 0 3px 0 #E9E9E9;
 
 					.form-builder-field-content {
 						border-left-color: rgba(0, 154, 229, 0.5);
@@ -334,7 +339,7 @@
 		}
 
 		.cancel-search {
-			color: #f88;
+			color: #F88;
 			display: none;
 			margin-top: -1em;
 			position: absolute;

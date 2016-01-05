@@ -1,4 +1,4 @@
-@import "compass";
+@import "bourbon";
 
 .user-segment-content-display-portlet {
 	.rules-panel {
@@ -18,6 +18,11 @@
 					margin: 10px 0;
 				}
 			}
+		}
+
+		.toolbar {
+			right: 5px;
+			text-align: right;
 		}
 	}
 
