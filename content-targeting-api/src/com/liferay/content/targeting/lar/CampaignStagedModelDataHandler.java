@@ -22,6 +22,7 @@ import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -32,14 +33,22 @@ import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
 import java.util.List;
 import java.util.Map;
 
+import org.osgi.service.component.annotations.Component;
+
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	immediate = true,
+	service = StagedModelDataHandler.class
+)
 public class CampaignStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Campaign> {
 

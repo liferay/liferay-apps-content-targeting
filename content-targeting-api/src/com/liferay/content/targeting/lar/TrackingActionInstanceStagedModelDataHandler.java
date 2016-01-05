@@ -20,6 +20,7 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
+import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
@@ -30,20 +31,23 @@ import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
+import com.liferay.portlet.exportimport.lar.PortletDataException;
+import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 
 import java.util.List;
 import java.util.Map;
 
-import javax.portlet.UnavailableException;
-
-import com.liferay.portlet.exportimport.lar.PortletDataException;
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
+import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
+@Component(
+	immediate = true,
+	service = StagedModelDataHandler.class
+)
 public class TrackingActionInstanceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<TrackingActionInstance> {
 
