@@ -26,13 +26,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.model.Company;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.persistence.CompanyActionableDynamicQuery;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the anonymous user user segment local service.
@@ -286,19 +285,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 		}
 	}
 
-	@Reference(unbind = "unsetAnonymousUserLocalService")
-	protected void setAnonymousUserLocalService(
-		AnonymousUserLocalService anonymousUserLocalService) {
-
-		_anonymousUserLocalService = anonymousUserLocalService;
-	}
-
-	protected void unsetAnonymousUserLocalService(
-		AnonymousUserLocalService anonymousUserLocalService) {
-
-		_anonymousUserLocalService = null;
-	}
-
-	private AnonymousUserLocalService _anonymousUserLocalService;
+	@ServiceReference(type = AnonymousUserLocalService.class)
+	protected AnonymousUserLocalService _anonymousUserLocalService;
 
 }

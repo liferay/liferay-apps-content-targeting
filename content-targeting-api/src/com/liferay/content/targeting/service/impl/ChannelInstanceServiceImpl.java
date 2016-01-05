@@ -21,7 +21,6 @@ import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 
@@ -47,7 +46,7 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 			String alias, String typeSettings, ServiceContext serviceContext)
 		throws PortalException, SystemException {
 
-		_campaignPermission.check(
+		CampaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
 
 		return channelInstanceLocalService.addChannelInstance(
@@ -62,7 +61,7 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 		ChannelInstance channelInstance =
 			channelInstanceLocalService.getChannelInstance(channelInstanceId);
 
-		_campaignPermission.check(
+		CampaignPermission.check(
 			getPermissionChecker(), channelInstance.getCampaignId(),
 			ActionKeys.UPDATE);
 
@@ -96,25 +95,12 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 		ChannelInstance channelInstance =
 			channelInstanceLocalService.getChannelInstance(channelInstanceId);
 
-		_campaignPermission.check(
+		CampaignPermission.check(
 			getPermissionChecker(), channelInstance.getCampaignId(),
 			ActionKeys.UPDATE);
 
 		return channelInstanceLocalService.updateChannelInstance(
 			channelInstanceId, alias, typeSettings, serviceContext);
 	}
-
-	@Reference(unbind="unsetCampaignPermission")
-	protected void setCampaignPermission(
-		CampaignPermission campaignPermission) {
-
-		_campaignPermission = campaignPermission;
-	}
-
-	protected void unsetCampaignPermission() {
-		_campaignPermission = null;
-	}
-
-	private CampaignPermission _campaignPermission;
 
 }

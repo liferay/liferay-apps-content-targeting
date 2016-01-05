@@ -29,13 +29,10 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Date;
 import java.util.List;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * The implementation of the rule instance local service.
@@ -177,18 +174,10 @@ public class RuleInstanceLocalServiceImpl
 		return ruleInstance;
 	}
 
-	@Reference(unbind = "unsetRulesRegistry")
-	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
-		_rulesRegistry = rulesRegistry;
-	}
-
-	protected void unsetRulesRegistry(RulesRegistry rulesRegistry) {
-		_rulesRegistry = null;
-	}
-
 	private static Log _log = LogFactoryUtil.getLog(
 		RuleInstanceLocalServiceImpl.class);
 
-	private RulesRegistry _rulesRegistry;
+	@ServiceReference(type = RulesRegistry.class)
+	protected RulesRegistry _rulesRegistry;
 
 }

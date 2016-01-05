@@ -18,18 +18,15 @@ import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.CampaignLocalService;
-import com.liferay.content.targeting.service.UserSegmentLocalService;
-import com.liferay.osgi.util.service.ServiceTrackerUtil;
+import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
+import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
 import java.util.Locale;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 /**
  * The extended model implementation for the ReportInstance service. Represents a row in the &quot;CT_ReportInstance&quot; database table, with each column mapped to a property of this class.
@@ -52,7 +49,7 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 		String reportName = report.getName(locale);
 
 		if (Campaign.class.getName().equals(getClassName())) {
-			Campaign campaign = _campaignLocalService.fetchCampaign(
+			Campaign campaign = CampaignLocalServiceUtil.fetchCampaign(
 				getClassPK());
 
 			if (campaign != null) {
@@ -61,8 +58,8 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 			}
 		}
 		else if (UserSegment.class.getName().equals(getClassName())) {
-			UserSegment userSegment = _userSegmentLocalService.fetchUserSegment(
-				getClassPK());
+			UserSegment userSegment =
+				UserSegmentLocalServiceUtil.fetchUserSegment(getClassPK());
 
 			if (userSegment != null) {
 				reportName = String.format(
@@ -98,27 +95,7 @@ public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 		return report.isInstantiable();
 	}
 
-	@Reference(unbind = "-")
-	protected void setCampaignLocalService(
-		CampaignLocalService campaignLocalService) {
-
-		_campaignLocalService = campaignLocalService;
-	}
-
-	@Reference(unbind = "-")
-	protected void setReportsRegistry(ReportsRegistry reportsRegistry) {
-		_reportsRegistry = reportsRegistry;
-	}
-
-	@Reference
-	protected void setUserSegmentLocalService(
-		UserSegmentLocalService userSegmentLocalService) {
-
-		_userSegmentLocalService = userSegmentLocalService;
-	}
-
-	private CampaignLocalService _campaignLocalService;
-	private ReportsRegistry _reportsRegistry;
-	private UserSegmentLocalService _userSegmentLocalService;
+	@ServiceReference(type = ReportsRegistry.class)
+	protected ReportsRegistry _reportsRegistry;
 
 }
