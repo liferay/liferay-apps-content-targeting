@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!DOCTYPE service-builder PUBLIC "-//Liferay//DTD Service Builder 6.2.0//EN" "http://www.liferay.com/dtd/liferay-service-builder_6_2_0.dtd">
+
+<service-builder package-path="com.liferay.content.targeting.rule.engine">
+	<namespace>RuleEngine</namespace>
+	<entity name="RuleEngine" uuid="true" local-service="true" remote-service="true">
+		<column name="dummyId" type="long" primary="true" />
+	</entity>
+</service-builder>
