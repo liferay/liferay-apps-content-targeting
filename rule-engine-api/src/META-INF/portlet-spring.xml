@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-destroy-method="destroy" default-init-method="afterPropertiesSet" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	<bean id="com.liferay.content.targeting.rule.score.points.service.DummyLocalService" class="com.liferay.content.targeting.rule.score.points.service.impl.DummyLocalServiceImpl" />
+	<bean id="com.liferay.content.targeting.rule.score.points.service.DummyService" class="com.liferay.content.targeting.rule.score.points.service.impl.DummyServiceImpl" />
+	<bean id="com.liferay.content.targeting.rule.score.points.service.persistence.DummyPersistence" class="com.liferay.content.targeting.rule.score.points.service.persistence.DummyPersistenceImpl" parent="basePersistence" />
+	<bean id="com.liferay.content.targeting.rule.engine.service.RuleEngineLocalService" class="com.liferay.content.targeting.rule.engine.service.impl.RuleEngineLocalServiceImpl" />
+	<bean id="com.liferay.content.targeting.rule.engine.service.RuleEngineService" class="com.liferay.content.targeting.rule.engine.service.impl.RuleEngineServiceImpl" />
+	<bean id="com.liferay.content.targeting.rule.engine.service.persistence.RuleEnginePersistence" class="com.liferay.content.targeting.rule.engine.service.persistence.RuleEnginePersistenceImpl" parent="basePersistence" />
+</beans>

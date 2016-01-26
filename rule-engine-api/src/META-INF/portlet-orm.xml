@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_1_0.xsd">
+	<persistence-unit-metadata>
+		<xml-mapping-metadata-complete/>
+		<persistence-unit-defaults>
+			<access>PROPERTY</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<mapped-superclass class="com.liferay.content.targeting.rule.score.points.model.impl.DummyModelImpl">
+		<attributes>
+			<id name="dummyId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<mapped-superclass class="com.liferay.content.targeting.rule.engine.model.impl.RuleEngineModelImpl">
+		<attributes>
+			<id name="dummyId" />
+			<basic name="uuid">
+				<column name="UUID_" />
+			</basic>
+			<transient name="modelAttributes" />
+			<transient name="primaryKey" />
+			<transient name="primaryKeyObj" />
+		</attributes>
+	</mapped-superclass>
+	<entity class="com.liferay.content.targeting.rule.score.points.model.impl.DummyImpl" name="Dummy">
+		<table name="Dummy_Dummy" />
+		<attributes />
+	</entity>
+	<entity class="com.liferay.content.targeting.rule.engine.model.impl.RuleEngineImpl" name="RuleEngine">
+		<table name="RuleEngine_RuleEngine" />
+		<attributes />
+	</entity>
+</entity-mappings>
