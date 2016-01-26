@@ -14,7 +14,10 @@
 
 package com.liferay.content.targeting.rule.engine.service.impl;
 
+import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.rule.engine.service.base.RuleEngineServiceBaseImpl;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * The implementation of the rule engine remote service.
@@ -31,9 +34,39 @@ import com.liferay.content.targeting.rule.engine.service.base.RuleEngineServiceB
  * @see com.liferay.content.targeting.rule.engine.service.RuleEngineServiceUtil
  */
 public class RuleEngineServiceImpl extends RuleEngineServiceBaseImpl {
-	/*
-	 * NOTE FOR DEVELOPERS:
-	 *
-	 * Never reference this interface directly. Always use {@link com.liferay.content.targeting.rule.engine.service.RuleEngineServiceUtil} to access the rule engine remote service.
-	 */
+
+	@Override
+	public long[] getMatchesUserSegmentIds(
+			HttpServletRequest request, long groupId, long anonymousUserId)
+		throws Exception {
+
+		// TODO: Permission check
+
+		return ruleEngineLocalService.getMatchesUserSegmentIds(
+			request, groupId, anonymousUserId);
+	}
+
+	@Override
+	public long[] getMatchesUserSegmentIds(
+			HttpServletRequest request, long[] groupIds, long anonymousUserId)
+		throws Exception {
+
+		// TODO: Permission check
+
+		return ruleEngineLocalService.getMatchesUserSegmentIds(
+			request, groupIds, anonymousUserId);
+	}
+
+	@Override
+	public boolean matches(
+			HttpServletRequest request, long anonymousUserId,
+			UserSegment userSegment)
+		throws Exception {
+
+		// TODO: Permission check
+
+		return ruleEngineLocalService.matches(
+			request, anonymousUserId, userSegment);
+	}
+
 }
