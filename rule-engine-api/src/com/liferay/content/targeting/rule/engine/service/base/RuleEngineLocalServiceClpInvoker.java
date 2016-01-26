@@ -113,6 +113,25 @@ public class RuleEngineLocalServiceClpInvoker {
 		_methodName35 = "setBeanIdentifier";
 
 		_methodParameterTypes35 = new String[] { "java.lang.String" };
+
+		_methodName41 = "getMatchesUserSegmentIds";
+
+		_methodParameterTypes41 = new String[] {
+				"javax.servlet.http.HttpServletRequest", "long[][]", "long"
+			};
+
+		_methodName42 = "getMatchesUserSegmentIds";
+
+		_methodParameterTypes42 = new String[] {
+				"javax.servlet.http.HttpServletRequest", "long", "long"
+			};
+
+		_methodName43 = "matches";
+
+		_methodParameterTypes43 = new String[] {
+				"javax.servlet.http.HttpServletRequest", "long",
+				"com.liferay.content.targeting.model.UserSegment"
+			};
 	}
 
 	public Object invokeMethod(String name, String[] parameterTypes,
@@ -216,6 +235,26 @@ public class RuleEngineLocalServiceClpInvoker {
 			return null;
 		}
 
+		if (_methodName41.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes41, parameterTypes)) {
+			return RuleEngineLocalServiceUtil.getMatchesUserSegmentIds((javax.servlet.http.HttpServletRequest)arguments[0],
+				(long[])arguments[1], ((Long)arguments[2]).longValue());
+		}
+
+		if (_methodName42.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes42, parameterTypes)) {
+			return RuleEngineLocalServiceUtil.getMatchesUserSegmentIds((javax.servlet.http.HttpServletRequest)arguments[0],
+				((Long)arguments[1]).longValue(),
+				((Long)arguments[2]).longValue());
+		}
+
+		if (_methodName43.equals(name) &&
+				Arrays.deepEquals(_methodParameterTypes43, parameterTypes)) {
+			return RuleEngineLocalServiceUtil.matches((javax.servlet.http.HttpServletRequest)arguments[0],
+				((Long)arguments[1]).longValue(),
+				(com.liferay.content.targeting.model.UserSegment)arguments[2]);
+		}
+
 		throw new UnsupportedOperationException();
 	}
 
@@ -255,4 +294,10 @@ public class RuleEngineLocalServiceClpInvoker {
 	private String[] _methodParameterTypes34;
 	private String _methodName35;
 	private String[] _methodParameterTypes35;
+	private String _methodName41;
+	private String[] _methodParameterTypes41;
+	private String _methodName42;
+	private String[] _methodParameterTypes42;
+	private String _methodName43;
+	private String[] _methodParameterTypes43;
 }

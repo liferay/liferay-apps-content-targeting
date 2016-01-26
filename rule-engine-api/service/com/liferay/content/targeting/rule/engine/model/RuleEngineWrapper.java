@@ -193,7 +193,8 @@ public class RuleEngineWrapper implements RuleEngine, ModelWrapper<RuleEngine> {
 	}
 
 	@Override
-	public int compareTo(RuleEngine ruleEngine) {
+	public int compareTo(
+		com.liferay.content.targeting.rule.engine.model.RuleEngine ruleEngine) {
 		return _ruleEngine.compareTo(ruleEngine);
 	}
 
@@ -203,17 +204,17 @@ public class RuleEngineWrapper implements RuleEngine, ModelWrapper<RuleEngine> {
 	}
 
 	@Override
-	public com.liferay.portal.model.CacheModel<RuleEngine> toCacheModel() {
+	public com.liferay.portal.model.CacheModel<com.liferay.content.targeting.rule.engine.model.RuleEngine> toCacheModel() {
 		return _ruleEngine.toCacheModel();
 	}
 
 	@Override
-	public RuleEngine toEscapedModel() {
+	public com.liferay.content.targeting.rule.engine.model.RuleEngine toEscapedModel() {
 		return new RuleEngineWrapper(_ruleEngine.toEscapedModel());
 	}
 
 	@Override
-	public RuleEngine toUnescapedModel() {
+	public com.liferay.content.targeting.rule.engine.model.RuleEngine toUnescapedModel() {
 		return new RuleEngineWrapper(_ruleEngine.toUnescapedModel());
 	}
 

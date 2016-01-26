@@ -275,6 +275,27 @@ public class RuleEngineLocalServiceUtil {
 		return getService().invokeMethod(name, parameterTypes, arguments);
 	}
 
+	public static long[] getMatchesUserSegmentIds(
+		javax.servlet.http.HttpServletRequest request, long[] groupIds,
+		long anonymousUserId) throws java.lang.Exception {
+		return getService()
+				   .getMatchesUserSegmentIds(request, groupIds, anonymousUserId);
+	}
+
+	public static long[] getMatchesUserSegmentIds(
+		javax.servlet.http.HttpServletRequest request, long groupId,
+		long anonymousUserId) throws java.lang.Exception {
+		return getService()
+				   .getMatchesUserSegmentIds(request, groupId, anonymousUserId);
+	}
+
+	public static boolean matches(
+		javax.servlet.http.HttpServletRequest request, long anonymousUserId,
+		com.liferay.content.targeting.model.UserSegment userSegment)
+		throws java.lang.Exception {
+		return getService().matches(request, anonymousUserId, userSegment);
+	}
+
 	public static void clearService() {
 		_service = null;
 	}

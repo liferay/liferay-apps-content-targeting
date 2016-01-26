@@ -7,17 +7,6 @@
 			<access>PROPERTY</access>
 		</persistence-unit-defaults>
 	</persistence-unit-metadata>
-	<mapped-superclass class="com.liferay.content.targeting.rule.score.points.model.impl.DummyModelImpl">
-		<attributes>
-			<id name="dummyId" />
-			<basic name="uuid">
-				<column name="UUID_" />
-			</basic>
-			<transient name="modelAttributes" />
-			<transient name="primaryKey" />
-			<transient name="primaryKeyObj" />
-		</attributes>
-	</mapped-superclass>
 	<mapped-superclass class="com.liferay.content.targeting.rule.engine.model.impl.RuleEngineModelImpl">
 		<attributes>
 			<id name="dummyId" />
@@ -29,10 +18,6 @@
 			<transient name="primaryKeyObj" />
 		</attributes>
 	</mapped-superclass>
-	<entity class="com.liferay.content.targeting.rule.score.points.model.impl.DummyImpl" name="Dummy">
-		<table name="Dummy_Dummy" />
-		<attributes />
-	</entity>
 	<entity class="com.liferay.content.targeting.rule.engine.model.impl.RuleEngineImpl" name="RuleEngine">
 		<table name="RuleEngine_RuleEngine" />
 		<attributes />

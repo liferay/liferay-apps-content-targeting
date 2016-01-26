@@ -18,6 +18,7 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.jsonwebservice.JSONWebService;
 import com.liferay.portal.kernel.transaction.Isolation;
+import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.security.ac.AccessControlled;
 import com.liferay.portal.service.BaseService;
@@ -63,4 +64,19 @@ public interface RuleEngineService extends BaseService, InvokableService {
 	java.lang.Object invokeMethod(java.lang.String name,
 								  java.lang.String[] parameterTypes, java.lang.Object[] arguments)
 		throws java.lang.Throwable;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	long[] getMatchesUserSegmentIds(
+			javax.servlet.http.HttpServletRequest request, long[] groupIds,
+			long anonymousUserId) throws java.lang.Exception;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	long[] getMatchesUserSegmentIds(
+			javax.servlet.http.HttpServletRequest request, long groupId,
+			long anonymousUserId) throws java.lang.Exception;
+
+	boolean matches(javax.servlet.http.HttpServletRequest request,
+					long anonymousUserId,
+					com.liferay.content.targeting.model.UserSegment userSegment)
+		throws java.lang.Exception;
 }

@@ -287,6 +287,31 @@ public class RuleEngineLocalServiceWrapper implements RuleEngineLocalService,
 			arguments);
 	}
 
+	@Override
+	public long[] getMatchesUserSegmentIds(
+		javax.servlet.http.HttpServletRequest request, long[] groupIds,
+		long anonymousUserId) throws java.lang.Exception {
+		return _ruleEngineLocalService.getMatchesUserSegmentIds(request,
+			groupIds, anonymousUserId);
+	}
+
+	@Override
+	public long[] getMatchesUserSegmentIds(
+		javax.servlet.http.HttpServletRequest request, long groupId,
+		long anonymousUserId) throws java.lang.Exception {
+		return _ruleEngineLocalService.getMatchesUserSegmentIds(request,
+			groupId, anonymousUserId);
+	}
+
+	@Override
+	public boolean matches(javax.servlet.http.HttpServletRequest request,
+		long anonymousUserId,
+		com.liferay.content.targeting.model.UserSegment userSegment)
+		throws java.lang.Exception {
+		return _ruleEngineLocalService.matches(request, anonymousUserId,
+			userSegment);
+	}
+
 	/**
 	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
 	 */
