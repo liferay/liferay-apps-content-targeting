@@ -1,4 +1,4 @@
-<%
+<%--
 /**
  * Copyright (c) 2000-present Liferay, Inc. All rights reserved.
  *
@@ -12,10 +12,39 @@
  * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
  * details.
  */
-%>
+--%>
 
 <%@ taglib uri="http://java.sun.com/portlet_2_0" prefix="portlet" %>
 
 <portlet:defineObjects />
 
-This is the <b>Rule Engine Consumer</b> portlet.
+<%
+long[] userSegmentIds = (long[])request.getAttribute("userSegmentIds");
+
+if (userSegmentIds.length > 0) {
+%>
+
+	<ul>
+
+	<%
+	for (long userSegmentId : userSegmentIds) {
+	%>
+
+		<li><%= userSegmentId %></li>
+
+	<%
+	}
+	%>
+
+	</ul>
+
+<%
+}
+else {
+%>
+
+<h2>No matching user segments where found</h2>
+
+<%
+}
+%>

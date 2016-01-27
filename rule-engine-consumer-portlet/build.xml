@@ -2,5 +2,7 @@
 <!DOCTYPE project>
 
 <project name="rule-engine-consumer-portlet" basedir="." default="deploy">
+	<property name="import.shared" value="rule-engine-api" />
+
 	<import file="../../../portlets/build-common-portlet.xml" />
 </project>
