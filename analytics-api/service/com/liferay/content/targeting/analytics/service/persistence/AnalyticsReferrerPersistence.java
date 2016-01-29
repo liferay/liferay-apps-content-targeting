@@ -106,7 +106,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	* @param analyticsEventId the analytics event ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public AnalyticsReferrer findByAnalyticsEventId_First(
 		long analyticsEventId,
@@ -130,7 +130,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	* @param analyticsEventId the analytics event ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public AnalyticsReferrer findByAnalyticsEventId_Last(
 		long analyticsEventId,
@@ -155,7 +155,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	* @param analyticsEventId the analytics event ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public AnalyticsReferrer[] findByAnalyticsEventId_PrevAndNext(
 		long analyticsReferrerId, long analyticsEventId,
@@ -251,7 +251,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public AnalyticsReferrer findByR_R_First(
 		java.lang.String referrerClassName, long referrerClassPK,
@@ -277,7 +277,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public AnalyticsReferrer findByR_R_Last(
 		java.lang.String referrerClassName, long referrerClassPK,
@@ -304,7 +304,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public AnalyticsReferrer[] findByR_R_PrevAndNext(long analyticsReferrerId,
 		java.lang.String referrerClassName, long referrerClassPK,
@@ -410,7 +410,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public AnalyticsReferrer findByA_R_R_First(long analyticsEventId,
 		java.lang.String referrerClassName, long referrerClassPK,
@@ -438,7 +438,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public AnalyticsReferrer findByA_R_R_Last(long analyticsEventId,
 		java.lang.String referrerClassName, long referrerClassPK,
@@ -467,7 +467,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public AnalyticsReferrer[] findByA_R_R_PrevAndNext(
 		long analyticsReferrerId, long analyticsEventId,
@@ -611,7 +611,7 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	*
 	* @param analyticsReferrerId the primary key of the analytics referrer
 	* @return the analytics referrer that was removed
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public AnalyticsReferrer remove(long analyticsReferrerId)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;
@@ -619,11 +619,11 @@ public interface AnalyticsReferrerPersistence extends BasePersistence<AnalyticsR
 	public AnalyticsReferrer updateImpl(AnalyticsReferrer analyticsReferrer);
 
 	/**
-	* Returns the analytics referrer with the primary key or throws a {@link com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException} if it could not be found.
+	* Returns the analytics referrer with the primary key or throws a {@link NoSuchAnalyticsReferrerException} if it could not be found.
 	*
 	* @param analyticsReferrerId the primary key of the analytics referrer
 	* @return the analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public AnalyticsReferrer findByPrimaryKey(long analyticsReferrerId)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException;

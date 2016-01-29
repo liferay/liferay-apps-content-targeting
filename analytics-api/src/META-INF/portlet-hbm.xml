@@ -5,7 +5,6 @@
 	<import class="com.liferay.content.targeting.analytics.model.AnalyticsEvent" />
 	<import class="com.liferay.content.targeting.analytics.model.AnalyticsReferrer" />
 	<class name="com.liferay.content.targeting.analytics.model.impl.AnalyticsEventImpl" table="CT_Analytics_AnalyticsEvent">
-		<cache usage="read-write" />
 		<id name="analyticsEventId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -20,11 +19,10 @@
 		<property name="userAgent" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="URL" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="additionalInfo" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="additionalInfo" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 		<property name="createDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerImpl" table="CT_Analytics_AnalyticsReferrer">
-		<cache usage="read-write" />
 		<id name="analyticsReferrerId" type="long">
 			<generator class="assigned" />
 		</id>

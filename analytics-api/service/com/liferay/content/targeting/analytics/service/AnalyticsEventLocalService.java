@@ -65,7 +65,7 @@ public interface AnalyticsEventLocalService extends BaseLocalService,
 		java.lang.String languageId, java.lang.String URL,
 		java.lang.String additionalInfo,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
 		long userId, long anonymousUserId, java.lang.String className,
@@ -75,7 +75,7 @@ public interface AnalyticsEventLocalService extends BaseLocalService,
 		java.lang.String userAgent, java.lang.String languageId,
 		java.lang.String URL, java.lang.String additionalInfo,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public com.liferay.content.targeting.analytics.model.AnalyticsEvent addAnalyticsEvent(
 		long userId, long anonymousUserId, java.lang.String className,
@@ -85,9 +85,9 @@ public interface AnalyticsEventLocalService extends BaseLocalService,
 		java.lang.String languageId, java.lang.String URL,
 		java.lang.String additionalInfo,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public void checkAnalyticsEvents() throws PortalException, SystemException;
+	public void checkAnalyticsEvents() throws PortalException;
 
 	/**
 	* Creates a new analytics event with the primary key. Does not add the analytics event to the database.
@@ -103,12 +103,10 @@ public interface AnalyticsEventLocalService extends BaseLocalService,
 	*
 	* @param analyticsEvent the analytics event
 	* @return the analytics event that was removed
-	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.analytics.model.AnalyticsEvent deleteAnalyticsEvent(
-		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent)
-		throws SystemException;
+		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent);
 
 	/**
 	* Deletes the analytics event with the primary key from the database. Also notifies the appropriate model listeners.
@@ -122,7 +120,7 @@ public interface AnalyticsEventLocalService extends BaseLocalService,
 		long analyticsEventId) throws PortalException;
 
 	public void deleteAnalyticsEvents(long companyId, java.util.Date createDate)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -218,33 +216,32 @@ public interface AnalyticsEventLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		long anonymousUserId, java.lang.String className, long classPK,
-		java.lang.String eventType) throws PortalException, SystemException;
+		java.lang.String eventType) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String className, long classPK, java.lang.String eventType)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate) throws PortalException, SystemException;
+		java.util.Date createDate) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
-		long companyId, java.util.Date createDate)
-		throws PortalException, SystemException;
+		long companyId, java.util.Date createDate) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<java.lang.Object[]> getAnalyticsEvents(
 		long companyId, java.lang.String referrerClassName,
 		long referrerClassPK, java.util.Date createDate)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate) throws PortalException, SystemException;
+		java.util.Date createDate) throws PortalException;
 
 	/**
 	* Returns a range of all the analytics events.
@@ -263,11 +260,11 @@ public interface AnalyticsEventLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEventsContent(
-		java.util.Date createDate) throws PortalException, SystemException;
+		java.util.Date createDate) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getAnalyticsEventsContentIds(java.util.Date createDate)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Returns the number of analytics events.
@@ -280,54 +277,53 @@ public interface AnalyticsEventLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsEventsCount(long anonymousUserId,
 		java.lang.String className, long classPK, java.lang.String eventType)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsEventsCount(java.lang.String className,
-		long classPK, java.lang.String eventType)
-		throws PortalException, SystemException;
+		long classPK, java.lang.String eventType) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsEventsCount(java.lang.String className,
 		long classPK, java.lang.String eventType, java.util.Date createDate)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsEventsCount(java.lang.String className,
 		long classPK, java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType, java.util.Date createDate)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsEventsCount(long companyId, java.util.Date createDate)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsEventsCount(java.lang.String elementId,
 		java.lang.String eventType, java.util.Date createDate)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsEventsCount(java.lang.String referrerClassName,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.util.Date createDate)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getAnalyticsEventsIds(java.lang.String className,
 		long classPK, java.lang.String eventType, java.util.Date createDate)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long[] getAnalyticsEventsIds(java.lang.String elementId,
 		java.lang.String eventType, java.util.Date createDate)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date getMaxAge() throws PortalException, SystemException;
+	public java.util.Date getMaxAge() throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

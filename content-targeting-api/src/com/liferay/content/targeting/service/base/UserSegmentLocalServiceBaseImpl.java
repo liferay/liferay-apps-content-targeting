@@ -1402,6 +1402,6 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	protected com.liferay.portlet.asset.service.AssetVocabularyLocalService assetVocabularyLocalService;
 	@ServiceReference(type = AssetVocabularyPersistence.class)
 	protected AssetVocabularyPersistence assetVocabularyPersistence;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

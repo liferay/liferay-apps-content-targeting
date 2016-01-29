@@ -26,6 +26,5 @@ public interface AnalyticsEventFinder {
 
 	public java.util.List<java.lang.Object[]> findByC_GtC_R_R(long companyId,
 		java.lang.String referrerClassName, long referrerClassPK,
-		java.util.Date date)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		java.util.Date date);
 }

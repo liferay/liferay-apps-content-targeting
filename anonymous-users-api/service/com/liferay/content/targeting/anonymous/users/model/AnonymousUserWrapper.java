@@ -498,14 +498,6 @@ public class AnonymousUserWrapper implements AnonymousUser,
 		return _anonymousUser.getStagedModelType();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public AnonymousUser getWrappedAnonymousUser() {
-		return _anonymousUser;
-	}
-
 	@Override
 	public AnonymousUser getWrappedModel() {
 		return _anonymousUser;

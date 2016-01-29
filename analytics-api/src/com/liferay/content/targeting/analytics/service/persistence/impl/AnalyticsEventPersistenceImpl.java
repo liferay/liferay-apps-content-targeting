@@ -36,6 +36,8 @@ import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.model.CacheModel;
+import com.liferay.portal.service.persistence.CompanyProvider;
+import com.liferay.portal.service.persistence.CompanyProviderWrapper;
 import com.liferay.portal.service.persistence.impl.BasePersistenceImpl;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
@@ -216,7 +218,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -284,7 +286,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByCompanyId_First(long companyId,
@@ -335,7 +337,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByCompanyId_Last(long companyId,
@@ -393,7 +395,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsEvent[] findByCompanyId_PrevAndNext(long analyticsEventId,
@@ -432,8 +434,9 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -719,7 +722,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -803,7 +806,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByC_GtD_First(long companyId, Date createDate,
@@ -859,7 +862,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByC_GtD_Last(long companyId, Date createDate,
@@ -922,7 +925,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsEvent[] findByC_GtD_PrevAndNext(long analyticsEventId,
@@ -962,11 +965,12 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
@@ -1283,7 +1287,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1367,7 +1371,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByC_LtD_First(long companyId, Date createDate,
@@ -1423,7 +1427,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByC_LtD_Last(long companyId, Date createDate,
@@ -1486,7 +1490,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsEvent[] findByC_LtD_PrevAndNext(long analyticsEventId,
@@ -1526,11 +1530,12 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
@@ -1848,7 +1853,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1932,7 +1937,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByNotC_GtD_First(long classPK, Date createDate,
@@ -1988,7 +1993,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByNotC_GtD_Last(long classPK, Date createDate,
@@ -2051,7 +2056,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsEvent[] findByNotC_GtD_PrevAndNext(long analyticsEventId,
@@ -2091,11 +2096,12 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
@@ -2444,7 +2450,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			if (orderByComparator != null) {
 				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(5);
@@ -2550,7 +2556,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByC_C_E_First(String className, long classPK,
@@ -2611,7 +2617,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByC_C_E_Last(String className, long classPK,
@@ -2679,7 +2685,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsEvent[] findByC_C_E_PrevAndNext(long analyticsEventId,
@@ -2721,10 +2727,11 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		if (orderByComparator != null) {
 			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(5);
 		}
 
 		query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
@@ -3102,7 +3109,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			if (orderByComparator != null) {
 				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(5);
@@ -3219,7 +3226,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByE_E_GtD_First(String elementId,
@@ -3282,7 +3289,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByE_E_GtD_Last(String elementId,
@@ -3352,7 +3359,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsEvent[] findByE_E_GtD_PrevAndNext(long analyticsEventId,
@@ -3394,10 +3401,11 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 		if (orderByComparator != null) {
 			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(5);
 		}
 
 		query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
@@ -3830,7 +3838,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			if (orderByComparator != null) {
 				query = new StringBundler(6 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(6);
@@ -3941,7 +3949,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByA_C_C_E_First(long anonymousUserId,
@@ -4009,7 +4017,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByA_C_C_E_Last(long anonymousUserId,
@@ -4085,7 +4093,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsEvent[] findByA_C_C_E_PrevAndNext(long analyticsEventId,
@@ -4128,11 +4136,12 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(6);
 		}
 
 		query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
@@ -4534,7 +4543,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			if (orderByComparator != null) {
 				query = new StringBundler(6 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(6);
@@ -4656,7 +4665,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByC_C_E_GtD_First(String className, long classPK,
@@ -4724,7 +4733,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	 * @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByC_C_E_GtD_Last(String className, long classPK,
@@ -4799,7 +4808,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 * @param createDate the create date
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsEvent[] findByC_C_E_GtD_PrevAndNext(long analyticsEventId,
@@ -4842,11 +4851,12 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(6);
 		}
 
 		query.append(_SQL_SELECT_ANALYTICSEVENT_WHERE);
@@ -5221,6 +5231,8 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		analyticsEvent.setNew(true);
 		analyticsEvent.setPrimaryKey(analyticsEventId);
 
+		analyticsEvent.setCompanyId(companyProvider.getCompanyId());
+
 		return analyticsEvent;
 	}
 
@@ -5229,7 +5241,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 *
 	 * @param analyticsEventId the primary key of the analytics event
 	 * @return the analytics event that was removed
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsEvent remove(long analyticsEventId)
@@ -5242,7 +5254,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	 *
 	 * @param primaryKey the primary key of the analytics event
 	 * @return the analytics event that was removed
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsEvent remove(Serializable primaryKey)
@@ -5449,11 +5461,11 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the analytics event with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the analytics event with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the analytics event
 	 * @return the analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByPrimaryKey(Serializable primaryKey)
@@ -5473,11 +5485,11 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 	}
 
 	/**
-	 * Returns the analytics event with the primary key or throws a {@link com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException} if it could not be found.
+	 * Returns the analytics event with the primary key or throws a {@link NoSuchAnalyticsEventException} if it could not be found.
 	 *
 	 * @param analyticsEventId the primary key of the analytics event
 	 * @return the analytics event
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	 * @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsEvent findByPrimaryKey(long analyticsEventId)
@@ -5724,7 +5736,7 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_ANALYTICSEVENT);
 
@@ -5844,6 +5856,8 @@ public class AnalyticsEventPersistenceImpl extends BasePersistenceImpl<Analytics
 		finderCache.removeCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 	}
 
+	@ServiceReference(type = CompanyProviderWrapper.class)
+	protected CompanyProvider companyProvider;
 	@ServiceReference(type = EntityCache.class)
 	protected EntityCache entityCache;
 	@ServiceReference(type = FinderCache.class)

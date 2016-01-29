@@ -188,7 +188,7 @@ public class TrackingActionInstanceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByUuid_First(
 		java.lang.String uuid,
@@ -216,7 +216,7 @@ public class TrackingActionInstanceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByUuid_Last(
 		java.lang.String uuid,
@@ -245,7 +245,7 @@ public class TrackingActionInstanceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	*/
 	public static TrackingActionInstance[] findByUuid_PrevAndNext(
 		long trackingActionInstanceId, java.lang.String uuid,
@@ -276,12 +276,12 @@ public class TrackingActionInstanceUtil {
 	}
 
 	/**
-	* Returns the tracking action instance where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchTrackingActionInstanceException} if it could not be found.
+	* Returns the tracking action instance where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByUUID_G(java.lang.String uuid,
 		long groupId)
@@ -420,7 +420,7 @@ public class TrackingActionInstanceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByUuid_C_First(
 		java.lang.String uuid, long companyId,
@@ -452,7 +452,7 @@ public class TrackingActionInstanceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByUuid_C_Last(
 		java.lang.String uuid, long companyId,
@@ -485,7 +485,7 @@ public class TrackingActionInstanceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	*/
 	public static TrackingActionInstance[] findByUuid_C_PrevAndNext(
 		long trackingActionInstanceId, java.lang.String uuid, long companyId,
@@ -593,7 +593,7 @@ public class TrackingActionInstanceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByGroupId_First(long groupId,
 		OrderByComparator<TrackingActionInstance> orderByComparator)
@@ -619,7 +619,7 @@ public class TrackingActionInstanceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByGroupId_Last(long groupId,
 		OrderByComparator<TrackingActionInstance> orderByComparator)
@@ -646,7 +646,7 @@ public class TrackingActionInstanceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	*/
 	public static TrackingActionInstance[] findByGroupId_PrevAndNext(
 		long trackingActionInstanceId, long groupId,
@@ -752,7 +752,7 @@ public class TrackingActionInstanceUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByCampaignId_First(
 		long campaignId,
@@ -782,7 +782,7 @@ public class TrackingActionInstanceUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByCampaignId_Last(
 		long campaignId,
@@ -813,7 +813,7 @@ public class TrackingActionInstanceUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	*/
 	public static TrackingActionInstance[] findByCampaignId_PrevAndNext(
 		long trackingActionInstanceId, long campaignId,
@@ -844,12 +844,12 @@ public class TrackingActionInstanceUtil {
 	}
 
 	/**
-	* Returns the tracking action instance where campaignId = &#63; and alias = &#63; or throws a {@link com.liferay.content.targeting.NoSuchTrackingActionInstanceException} if it could not be found.
+	* Returns the tracking action instance where campaignId = &#63; and alias = &#63; or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
 	*
 	* @param campaignId the campaign ID
 	* @param alias the alias
 	* @return the matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByC_A(long campaignId,
 		java.lang.String alias)
@@ -996,7 +996,7 @@ public class TrackingActionInstanceUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByC_E_E_First(long campaignId,
 		java.lang.String elementId, java.lang.String eventType,
@@ -1032,7 +1032,7 @@ public class TrackingActionInstanceUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByC_E_E_Last(long campaignId,
 		java.lang.String elementId, java.lang.String eventType,
@@ -1069,7 +1069,7 @@ public class TrackingActionInstanceUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	*/
 	public static TrackingActionInstance[] findByC_E_E_PrevAndNext(
 		long trackingActionInstanceId, long campaignId,
@@ -1208,7 +1208,7 @@ public class TrackingActionInstanceUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByC_R_R_E_First(long campaignId,
 		java.lang.String referrerClassName, long referrerClassPK,
@@ -1248,7 +1248,7 @@ public class TrackingActionInstanceUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByC_R_R_E_Last(long campaignId,
 		java.lang.String referrerClassName, long referrerClassPK,
@@ -1289,7 +1289,7 @@ public class TrackingActionInstanceUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	*/
 	public static TrackingActionInstance[] findByC_R_R_E_PrevAndNext(
 		long trackingActionInstanceId, long campaignId,
@@ -1415,7 +1415,7 @@ public class TrackingActionInstanceUtil {
 	* @param reportInstanceId the report instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByReportInstanceId_First(
 		long reportInstanceId,
@@ -1447,7 +1447,7 @@ public class TrackingActionInstanceUtil {
 	* @param reportInstanceId the report instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByReportInstanceId_Last(
 		long reportInstanceId,
@@ -1480,7 +1480,7 @@ public class TrackingActionInstanceUtil {
 	* @param reportInstanceId the report instance ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	*/
 	public static TrackingActionInstance[] findByReportInstanceId_PrevAndNext(
 		long trackingActionInstanceId, long reportInstanceId,
@@ -1511,12 +1511,12 @@ public class TrackingActionInstanceUtil {
 	}
 
 	/**
-	* Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or throws a {@link com.liferay.content.targeting.NoSuchTrackingActionInstanceException} if it could not be found.
+	* Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
 	*
 	* @param reportInstanceId the report instance ID
 	* @param alias the alias
 	* @return the matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByR_A(long reportInstanceId,
 		java.lang.String alias)
@@ -1669,7 +1669,7 @@ public class TrackingActionInstanceUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByR_E_E_First(
 		long reportInstanceId, java.lang.String elementId,
@@ -1707,7 +1707,7 @@ public class TrackingActionInstanceUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByR_E_E_Last(
 		long reportInstanceId, java.lang.String elementId,
@@ -1746,7 +1746,7 @@ public class TrackingActionInstanceUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	*/
 	public static TrackingActionInstance[] findByR_E_E_PrevAndNext(
 		long trackingActionInstanceId, long reportInstanceId,
@@ -1886,7 +1886,7 @@ public class TrackingActionInstanceUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByR_R_R_E_First(
 		long reportInstanceId, java.lang.String referrerClassName,
@@ -1926,7 +1926,7 @@ public class TrackingActionInstanceUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	*/
 	public static TrackingActionInstance findByR_R_R_E_Last(
 		long reportInstanceId, java.lang.String referrerClassName,
@@ -1967,7 +1967,7 @@ public class TrackingActionInstanceUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	*/
 	public static TrackingActionInstance[] findByR_R_R_E_PrevAndNext(
 		long trackingActionInstanceId, long reportInstanceId,
@@ -2049,7 +2049,7 @@ public class TrackingActionInstanceUtil {
 	*
 	* @param trackingActionInstanceId the primary key of the tracking action instance
 	* @return the tracking action instance that was removed
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	*/
 	public static TrackingActionInstance remove(long trackingActionInstanceId)
 		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException {
@@ -2062,11 +2062,11 @@ public class TrackingActionInstanceUtil {
 	}
 
 	/**
-	* Returns the tracking action instance with the primary key or throws a {@link com.liferay.content.targeting.NoSuchTrackingActionInstanceException} if it could not be found.
+	* Returns the tracking action instance with the primary key or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
 	*
 	* @param trackingActionInstanceId the primary key of the tracking action instance
 	* @return the tracking action instance
-	* @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	*/
 	public static TrackingActionInstance findByPrimaryKey(
 		long trackingActionInstanceId)

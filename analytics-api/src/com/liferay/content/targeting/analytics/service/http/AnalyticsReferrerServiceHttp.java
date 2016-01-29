@@ -20,9 +20,9 @@ import com.liferay.content.targeting.analytics.service.AnalyticsReferrerServiceU
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
 
 /**
@@ -56,8 +56,7 @@ import com.liferay.portal.service.http.TunnelUtil;
 @ProviderType
 public class AnalyticsReferrerServiceHttp {
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
-		HttpPrincipal httpPrincipal, long analyticsEventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, long analyticsEventId) {
 		try {
 			MethodKey methodKey = new MethodKey(AnalyticsReferrerServiceUtil.class,
 					"getAnalyticsReferrers",
@@ -72,10 +71,6 @@ public class AnalyticsReferrerServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

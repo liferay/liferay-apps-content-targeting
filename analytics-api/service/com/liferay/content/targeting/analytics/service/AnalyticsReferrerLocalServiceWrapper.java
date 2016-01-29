@@ -37,8 +37,7 @@ public class AnalyticsReferrerLocalServiceWrapper
 	@Override
 	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer addAnalyticsReferrer(
 		long analyticsEventId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _analyticsReferrerLocalService.addAnalyticsReferrer(analyticsEventId,
 			className, classPK);
 	}
@@ -216,32 +215,28 @@ public class AnalyticsReferrerLocalServiceWrapper
 
 	@Override
 	public int getAnalyticsReferrerCount(long analyticsEventId,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		return _analyticsReferrerLocalService.getAnalyticsReferrerCount(analyticsEventId,
 			className, classPK);
 	}
 
 	@Override
 	public int getAnalyticsReferrerCount(long[] analyticsEventIds,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		return _analyticsReferrerLocalService.getAnalyticsReferrerCount(analyticsEventIds,
 			className, classPK);
 	}
 
 	@Override
 	public int getAnalyticsReferrerCount(java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK) {
 		return _analyticsReferrerLocalService.getAnalyticsReferrerCount(className,
 			classPK);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
-		long analyticsEventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long analyticsEventId) {
 		return _analyticsReferrerLocalService.getAnalyticsReferrers(analyticsEventId);
 	}
 
@@ -304,23 +299,6 @@ public class AnalyticsReferrerLocalServiceWrapper
 	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer updateAnalyticsReferrer(
 		com.liferay.content.targeting.analytics.model.AnalyticsReferrer analyticsReferrer) {
 		return _analyticsReferrerLocalService.updateAnalyticsReferrer(analyticsReferrer);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AnalyticsReferrerLocalService getWrappedAnalyticsReferrerLocalService() {
-		return _analyticsReferrerLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAnalyticsReferrerLocalService(
-		AnalyticsReferrerLocalService analyticsReferrerLocalService) {
-		_analyticsReferrerLocalService = analyticsReferrerLocalService;
 	}
 
 	@Override

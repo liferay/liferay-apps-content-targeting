@@ -622,14 +622,6 @@ public class AnalyticsEventWrapper implements AnalyticsEvent,
 		return false;
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedModel}
-	 */
-	@Deprecated
-	public AnalyticsEvent getWrappedAnalyticsEvent() {
-		return _analyticsEvent;
-	}
-
 	@Override
 	public AnalyticsEvent getWrappedModel() {
 		return _analyticsEvent;

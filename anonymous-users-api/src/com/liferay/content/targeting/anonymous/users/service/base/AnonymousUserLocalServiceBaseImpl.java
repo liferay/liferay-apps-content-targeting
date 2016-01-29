@@ -43,6 +43,7 @@ import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import com.liferay.portlet.exportimport.lar.ExportImportHelperUtil;
@@ -419,25 +420,6 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the anonymous user remote service.
-	 *
-	 * @return the anonymous user remote service
-	 */
-	public com.liferay.content.targeting.anonymous.users.service.AnonymousUserService getAnonymousUserService() {
-		return anonymousUserService;
-	}
-
-	/**
-	 * Sets the anonymous user remote service.
-	 *
-	 * @param anonymousUserService the anonymous user remote service
-	 */
-	public void setAnonymousUserService(
-		com.liferay.content.targeting.anonymous.users.service.AnonymousUserService anonymousUserService) {
-		this.anonymousUserService = anonymousUserService;
-	}
-
-	/**
 	 * Returns the anonymous user persistence.
 	 *
 	 * @return the anonymous user persistence
@@ -495,25 +477,6 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the class name remote service.
-	 *
-	 * @return the class name remote service
-	 */
-	public com.liferay.portal.service.ClassNameService getClassNameService() {
-		return classNameService;
-	}
-
-	/**
-	 * Sets the class name remote service.
-	 *
-	 * @param classNameService the class name remote service
-	 */
-	public void setClassNameService(
-		com.liferay.portal.service.ClassNameService classNameService) {
-		this.classNameService = classNameService;
-	}
-
-	/**
 	 * Returns the class name persistence.
 	 *
 	 * @return the class name persistence
@@ -568,25 +531,6 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 	public void setUserLocalService(
 		com.liferay.portal.service.UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
 	}
 
 	/**
@@ -661,26 +605,20 @@ public abstract class AnonymousUserLocalServiceBaseImpl
 
 	@BeanReference(type = com.liferay.content.targeting.anonymous.users.service.AnonymousUserLocalService.class)
 	protected AnonymousUserLocalService anonymousUserLocalService;
-	@BeanReference(type = com.liferay.content.targeting.anonymous.users.service.AnonymousUserService.class)
-	protected com.liferay.content.targeting.anonymous.users.service.AnonymousUserService anonymousUserService;
 	@BeanReference(type = AnonymousUserPersistence.class)
 	protected AnonymousUserPersistence anonymousUserPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
-	protected com.liferay.portal.service.ClassNameService classNameService;
-	@BeanReference(type = ClassNamePersistence.class)
+	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

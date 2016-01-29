@@ -105,7 +105,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	* @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	*/
 	public RuleInstance findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
@@ -127,7 +127,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	* @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	*/
 	public RuleInstance findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
@@ -150,7 +150,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	* @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	*/
 	public RuleInstance[] findByUuid_PrevAndNext(long ruleInstanceId,
 		java.lang.String uuid,
@@ -173,12 +173,12 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the rule instance where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchRuleInstanceException} if it could not be found.
+	* Returns the rule instance where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchRuleInstanceException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	* @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	*/
 	public RuleInstance findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
@@ -293,7 +293,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	* @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	*/
 	public RuleInstance findByUuid_C_First(java.lang.String uuid,
 		long companyId,
@@ -319,7 +319,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	* @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	*/
 	public RuleInstance findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
@@ -346,7 +346,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	* @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	*/
 	public RuleInstance[] findByUuid_C_PrevAndNext(long ruleInstanceId,
 		java.lang.String uuid, long companyId,
@@ -435,7 +435,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	* @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	*/
 	public RuleInstance findByGroupId_First(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
@@ -457,7 +457,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	* @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	*/
 	public RuleInstance findByGroupId_Last(long groupId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
@@ -480,7 +480,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	* @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	*/
 	public RuleInstance[] findByGroupId_PrevAndNext(long ruleInstanceId,
 		long groupId,
@@ -567,7 +567,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	* @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	*/
 	public RuleInstance findByUserSegmentId_First(long userSegmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
@@ -589,7 +589,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	* @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	*/
 	public RuleInstance findByUserSegmentId_Last(long userSegmentId,
 		com.liferay.portal.kernel.util.OrderByComparator<RuleInstance> orderByComparator)
@@ -612,7 +612,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	* @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	*/
 	public RuleInstance[] findByUserSegmentId_PrevAndNext(long ruleInstanceId,
 		long userSegmentId,
@@ -705,7 +705,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	* @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	*/
 	public RuleInstance findByR_U_First(java.lang.String ruleKey,
 		long userSegmentId,
@@ -731,7 +731,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	* @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	*/
 	public RuleInstance findByR_U_Last(java.lang.String ruleKey,
 		long userSegmentId,
@@ -758,7 +758,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	* @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	*/
 	public RuleInstance[] findByR_U_PrevAndNext(long ruleInstanceId,
 		java.lang.String ruleKey, long userSegmentId,
@@ -809,7 +809,7 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	*
 	* @param ruleInstanceId the primary key of the rule instance
 	* @return the rule instance that was removed
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	* @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	*/
 	public RuleInstance remove(long ruleInstanceId)
 		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;
@@ -817,11 +817,11 @@ public interface RuleInstancePersistence extends BasePersistence<RuleInstance> {
 	public RuleInstance updateImpl(RuleInstance ruleInstance);
 
 	/**
-	* Returns the rule instance with the primary key or throws a {@link com.liferay.content.targeting.NoSuchRuleInstanceException} if it could not be found.
+	* Returns the rule instance with the primary key or throws a {@link NoSuchRuleInstanceException} if it could not be found.
 	*
 	* @param ruleInstanceId the primary key of the rule instance
 	* @return the rule instance
-	* @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	* @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	*/
 	public RuleInstance findByPrimaryKey(long ruleInstanceId)
 		throws com.liferay.content.targeting.exception.NoSuchRuleInstanceException;

@@ -20,9 +20,9 @@ import com.liferay.content.targeting.analytics.service.AnalyticsEventServiceUtil
 
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.auth.HttpPrincipal;
 import com.liferay.portal.kernel.util.MethodHandler;
 import com.liferay.portal.kernel.util.MethodKey;
-import com.liferay.portal.security.auth.HttpPrincipal;
 import com.liferay.portal.service.http.TunnelUtil;
 
 /**
@@ -57,8 +57,7 @@ import com.liferay.portal.service.http.TunnelUtil;
 public class AnalyticsEventServiceHttp {
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		HttpPrincipal httpPrincipal, long companyId, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnalyticsEventServiceUtil.class,
 					"getAnalyticsEvents", _getAnalyticsEventsParameterTypes0);
@@ -76,10 +75,6 @@ public class AnalyticsEventServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -95,8 +90,7 @@ public class AnalyticsEventServiceHttp {
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		HttpPrincipal httpPrincipal, java.lang.String className, long classPK,
 		java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnalyticsEventServiceUtil.class,
 					"getAnalyticsEvents", _getAnalyticsEventsParameterTypes1);
@@ -114,10 +108,6 @@ public class AnalyticsEventServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -133,8 +123,7 @@ public class AnalyticsEventServiceHttp {
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		HttpPrincipal httpPrincipal, java.lang.String elementId,
 		java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnalyticsEventServiceUtil.class,
 					"getAnalyticsEvents", _getAnalyticsEventsParameterTypes2);
@@ -150,10 +139,6 @@ public class AnalyticsEventServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

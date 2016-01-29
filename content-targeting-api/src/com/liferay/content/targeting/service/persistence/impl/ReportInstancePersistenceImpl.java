@@ -216,7 +216,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -298,7 +298,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
 	public ReportInstance findByUuid_First(String uuid,
@@ -348,7 +348,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
 	public ReportInstance findByUuid_Last(String uuid,
@@ -405,7 +405,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	 * @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	 */
 	@Override
 	public ReportInstance[] findByUuid_PrevAndNext(long reportInstanceId,
@@ -444,8 +444,9 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -651,12 +652,12 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the report instance where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchReportInstanceException} if it could not be found.
+	 * Returns the report instance where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchReportInstanceException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
 	public ReportInstance findByUUID_G(String uuid, long groupId)
@@ -1031,7 +1032,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1118,7 +1119,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
 	public ReportInstance findByUuid_C_First(String uuid, long companyId,
@@ -1174,7 +1175,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
 	public ReportInstance findByUuid_C_Last(String uuid, long companyId,
@@ -1237,7 +1238,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	 * @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	 */
 	@Override
 	public ReportInstance[] findByUuid_C_PrevAndNext(long reportInstanceId,
@@ -1277,11 +1278,12 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_REPORTINSTANCE_WHERE);
@@ -1620,7 +1622,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1707,7 +1709,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
 	public ReportInstance findByC_C_First(String className, long classPK,
@@ -1763,7 +1765,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
 	public ReportInstance findByC_C_Last(String className, long classPK,
@@ -1826,7 +1828,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	 * @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	 */
 	@Override
 	public ReportInstance[] findByC_C_PrevAndNext(long reportInstanceId,
@@ -1866,11 +1868,12 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_REPORTINSTANCE_WHERE);
@@ -2225,7 +2228,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 			if (orderByComparator != null) {
 				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(5);
@@ -2331,7 +2334,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
 	public ReportInstance findByR_C_C_First(String reportKey, String className,
@@ -2393,7 +2396,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	 * @throws NoSuchReportInstanceException if a matching report instance could not be found
 	 */
 	@Override
 	public ReportInstance findByR_C_C_Last(String reportKey, String className,
@@ -2461,7 +2464,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 * @param classPK the class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	 * @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	 */
 	@Override
 	public ReportInstance[] findByR_C_C_PrevAndNext(long reportInstanceId,
@@ -2503,10 +2506,11 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 		if (orderByComparator != null) {
 			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(5);
 		}
 
 		query.append(_SQL_SELECT_REPORTINSTANCE_WHERE);
@@ -2915,7 +2919,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 *
 	 * @param reportInstanceId the primary key of the report instance
 	 * @return the report instance that was removed
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	 * @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	 */
 	@Override
 	public ReportInstance remove(long reportInstanceId)
@@ -2928,7 +2932,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	 *
 	 * @param primaryKey the primary key of the report instance
 	 * @return the report instance that was removed
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	 * @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	 */
 	@Override
 	public ReportInstance remove(Serializable primaryKey)
@@ -3184,11 +3188,11 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Returns the report instance with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the report instance with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the report instance
 	 * @return the report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	 * @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	 */
 	@Override
 	public ReportInstance findByPrimaryKey(Serializable primaryKey)
@@ -3208,11 +3212,11 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 	}
 
 	/**
-	 * Returns the report instance with the primary key or throws a {@link com.liferay.content.targeting.NoSuchReportInstanceException} if it could not be found.
+	 * Returns the report instance with the primary key or throws a {@link NoSuchReportInstanceException} if it could not be found.
 	 *
 	 * @param reportInstanceId the primary key of the report instance
 	 * @return the report instance
-	 * @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	 * @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	 */
 	@Override
 	public ReportInstance findByPrimaryKey(long reportInstanceId)
@@ -3459,7 +3463,7 @@ public class ReportInstancePersistenceImpl extends BasePersistenceImpl<ReportIns
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_REPORTINSTANCE);
 

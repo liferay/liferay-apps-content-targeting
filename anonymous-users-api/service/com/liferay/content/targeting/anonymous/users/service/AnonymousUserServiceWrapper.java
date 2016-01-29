@@ -43,23 +43,6 @@ public class AnonymousUserServiceWrapper implements AnonymousUserService,
 		return _anonymousUserService.getOSGiServiceIdentifier();
 	}
 
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AnonymousUserService getWrappedAnonymousUserService() {
-		return _anonymousUserService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAnonymousUserService(
-		AnonymousUserService anonymousUserService) {
-		_anonymousUserService = anonymousUserService;
-	}
-
 	@Override
 	public AnonymousUserService getWrappedService() {
 		return _anonymousUserService;

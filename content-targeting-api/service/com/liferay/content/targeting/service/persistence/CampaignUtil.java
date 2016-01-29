@@ -183,7 +183,7 @@ public class CampaignUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching campaign
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a matching campaign could not be found
+	* @throws NoSuchCampaignException if a matching campaign could not be found
 	*/
 	public static Campaign findByUuid_First(java.lang.String uuid,
 		OrderByComparator<Campaign> orderByComparator)
@@ -209,7 +209,7 @@ public class CampaignUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching campaign
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a matching campaign could not be found
+	* @throws NoSuchCampaignException if a matching campaign could not be found
 	*/
 	public static Campaign findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<Campaign> orderByComparator)
@@ -236,7 +236,7 @@ public class CampaignUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next campaign
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a campaign with the primary key could not be found
+	* @throws NoSuchCampaignException if a campaign with the primary key could not be found
 	*/
 	public static Campaign[] findByUuid_PrevAndNext(long campaignId,
 		java.lang.String uuid, OrderByComparator<Campaign> orderByComparator)
@@ -265,12 +265,12 @@ public class CampaignUtil {
 	}
 
 	/**
-	* Returns the campaign where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchCampaignException} if it could not be found.
+	* Returns the campaign where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchCampaignException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching campaign
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a matching campaign could not be found
+	* @throws NoSuchCampaignException if a matching campaign could not be found
 	*/
 	public static Campaign findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.content.targeting.exception.NoSuchCampaignException {
@@ -405,7 +405,7 @@ public class CampaignUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching campaign
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a matching campaign could not be found
+	* @throws NoSuchCampaignException if a matching campaign could not be found
 	*/
 	public static Campaign findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<Campaign> orderByComparator)
@@ -435,7 +435,7 @@ public class CampaignUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching campaign
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a matching campaign could not be found
+	* @throws NoSuchCampaignException if a matching campaign could not be found
 	*/
 	public static Campaign findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<Campaign> orderByComparator)
@@ -466,7 +466,7 @@ public class CampaignUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next campaign
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a campaign with the primary key could not be found
+	* @throws NoSuchCampaignException if a campaign with the primary key could not be found
 	*/
 	public static Campaign[] findByUuid_C_PrevAndNext(long campaignId,
 		java.lang.String uuid, long companyId,
@@ -571,7 +571,7 @@ public class CampaignUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching campaign
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a matching campaign could not be found
+	* @throws NoSuchCampaignException if a matching campaign could not be found
 	*/
 	public static Campaign findByGroupId_First(long groupId,
 		OrderByComparator<Campaign> orderByComparator)
@@ -597,7 +597,7 @@ public class CampaignUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching campaign
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a matching campaign could not be found
+	* @throws NoSuchCampaignException if a matching campaign could not be found
 	*/
 	public static Campaign findByGroupId_Last(long groupId,
 		OrderByComparator<Campaign> orderByComparator)
@@ -624,7 +624,7 @@ public class CampaignUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next campaign
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a campaign with the primary key could not be found
+	* @throws NoSuchCampaignException if a campaign with the primary key could not be found
 	*/
 	public static Campaign[] findByGroupId_PrevAndNext(long campaignId,
 		long groupId, OrderByComparator<Campaign> orderByComparator)
@@ -687,7 +687,7 @@ public class CampaignUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next campaign
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a campaign with the primary key could not be found
+	* @throws NoSuchCampaignException if a campaign with the primary key could not be found
 	*/
 	public static Campaign[] filterFindByGroupId_PrevAndNext(long campaignId,
 		long groupId, OrderByComparator<Campaign> orderByComparator)
@@ -897,7 +897,7 @@ public class CampaignUtil {
 	*
 	* @param campaignId the primary key of the campaign
 	* @return the campaign that was removed
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a campaign with the primary key could not be found
+	* @throws NoSuchCampaignException if a campaign with the primary key could not be found
 	*/
 	public static Campaign remove(long campaignId)
 		throws com.liferay.content.targeting.exception.NoSuchCampaignException {
@@ -909,11 +909,11 @@ public class CampaignUtil {
 	}
 
 	/**
-	* Returns the campaign with the primary key or throws a {@link com.liferay.content.targeting.NoSuchCampaignException} if it could not be found.
+	* Returns the campaign with the primary key or throws a {@link NoSuchCampaignException} if it could not be found.
 	*
 	* @param campaignId the primary key of the campaign
 	* @return the campaign
-	* @throws com.liferay.content.targeting.NoSuchCampaignException if a campaign with the primary key could not be found
+	* @throws NoSuchCampaignException if a campaign with the primary key could not be found
 	*/
 	public static Campaign findByPrimaryKey(long campaignId)
 		throws com.liferay.content.targeting.exception.NoSuchCampaignException {

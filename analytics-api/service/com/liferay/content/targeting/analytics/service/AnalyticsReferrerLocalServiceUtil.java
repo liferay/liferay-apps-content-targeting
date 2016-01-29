@@ -16,8 +16,7 @@ package com.liferay.content.targeting.analytics.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -44,8 +43,7 @@ public class AnalyticsReferrerLocalServiceUtil {
 	 */
 	public static com.liferay.content.targeting.analytics.model.AnalyticsReferrer addAnalyticsReferrer(
 		long analyticsEventId, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAnalyticsReferrer(analyticsEventId, className, classPK);
 	}
@@ -206,30 +204,26 @@ public class AnalyticsReferrerLocalServiceUtil {
 	}
 
 	public static int getAnalyticsReferrerCount(long analyticsEventId,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		return getService()
 				   .getAnalyticsReferrerCount(analyticsEventId, className,
 			classPK);
 	}
 
 	public static int getAnalyticsReferrerCount(long[] analyticsEventIds,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		return getService()
 				   .getAnalyticsReferrerCount(analyticsEventIds, className,
 			classPK);
 	}
 
 	public static int getAnalyticsReferrerCount(java.lang.String className,
-		long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long classPK) {
 		return getService().getAnalyticsReferrerCount(className, classPK);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
-		long analyticsEventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long analyticsEventId) {
 		return getService().getAnalyticsReferrers(analyticsEventId);
 	}
 
@@ -292,21 +286,6 @@ public class AnalyticsReferrerLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AnalyticsReferrerLocalService service) {
-	}
-
-	private static ServiceTracker<AnalyticsReferrerLocalService, AnalyticsReferrerLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AnalyticsReferrerLocalServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<AnalyticsReferrerLocalService, AnalyticsReferrerLocalService>(bundle.getBundleContext(),
-				AnalyticsReferrerLocalService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<AnalyticsReferrerLocalService, AnalyticsReferrerLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(AnalyticsReferrerLocalService.class);
 }

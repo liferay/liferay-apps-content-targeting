@@ -11,7 +11,6 @@
 	<import class="com.liferay.content.targeting.model.TrackingActionInstance" />
 	<import class="com.liferay.content.targeting.model.UserSegment" />
 	<class name="com.liferay.content.targeting.model.impl.AnonymousUserUserSegmentImpl" table="CT_AnonymousUserUserSegment">
-		<cache usage="read-write" />
 		<id name="anonymousUserUserSegmentId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -23,7 +22,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.content.targeting.model.impl.CampaignImpl" table="CT_Campaign">
-		<cache usage="read-write" />
 		<id name="campaignId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -43,7 +41,6 @@
 		<property name="active" type="com.liferay.portal.dao.orm.hibernate.BooleanType" column="active_" />
 	</class>
 	<class name="com.liferay.content.targeting.model.impl.ChannelInstanceImpl" table="CT_ChannelInstance">
-		<cache usage="read-write" />
 		<id name="channelInstanceId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -58,10 +55,9 @@
 		<property name="campaignId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="tacticId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="alias" type="com.liferay.portal.dao.orm.hibernate.StringType" column="alias_" />
-		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.content.targeting.model.impl.ReportInstanceImpl" table="CT_ReportInstance">
-		<cache usage="read-write" />
 		<id name="reportInstanceId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -77,10 +73,9 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="className" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="classPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.content.targeting.model.impl.RuleInstanceImpl" table="CT_RuleInstance">
-		<cache usage="read-write" />
 		<id name="ruleInstanceId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -93,10 +88,9 @@
 		<property name="modifiedDate" type="org.hibernate.type.TimestampType" />
 		<property name="ruleKey" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="userSegmentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
-		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.content.targeting.model.impl.TacticImpl" table="CT_Tactic">
-		<cache usage="read-write" />
 		<id name="tacticId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -112,7 +106,6 @@
 		<property name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 	</class>
 	<class name="com.liferay.content.targeting.model.impl.TrackingActionInstanceImpl" table="CT_TrackingActionInstance">
-		<cache usage="read-write" />
 		<id name="trackingActionInstanceId" type="long">
 			<generator class="assigned" />
 		</id>
@@ -131,10 +124,9 @@
 		<property name="referrerClassPK" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property name="elementId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property name="typeSettings" type="com.liferay.portal.dao.orm.hibernate.StringClobType" />
 	</class>
 	<class name="com.liferay.content.targeting.model.impl.UserSegmentImpl" table="CT_UserSegment">
-		<cache usage="read-write" />
 		<id name="userSegmentId" type="long">
 			<generator class="assigned" />
 		</id>

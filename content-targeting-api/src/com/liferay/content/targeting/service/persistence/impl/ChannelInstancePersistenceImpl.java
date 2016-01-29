@@ -216,7 +216,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -298,7 +298,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByUuid_First(String uuid,
@@ -348,7 +348,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByUuid_Last(String uuid,
@@ -406,7 +406,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	 */
 	@Override
 	public ChannelInstance[] findByUuid_PrevAndNext(long channelInstanceId,
@@ -445,8 +445,9 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -652,12 +653,12 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the channel instance where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchChannelInstanceException} if it could not be found.
+	 * Returns the channel instance where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchChannelInstanceException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByUUID_G(String uuid, long groupId)
@@ -1032,7 +1033,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1119,7 +1120,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByUuid_C_First(String uuid, long companyId,
@@ -1175,7 +1176,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByUuid_C_Last(String uuid, long companyId,
@@ -1238,7 +1239,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	 */
 	@Override
 	public ChannelInstance[] findByUuid_C_PrevAndNext(long channelInstanceId,
@@ -1278,11 +1279,12 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_CHANNELINSTANCE_WHERE);
@@ -1611,7 +1613,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1693,7 +1695,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param channelKey the channel key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByChannelKey_First(String channelKey,
@@ -1744,7 +1746,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param channelKey the channel key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByChannelKey_Last(String channelKey,
@@ -1802,7 +1804,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param channelKey the channel key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	 */
 	@Override
 	public ChannelInstance[] findByChannelKey_PrevAndNext(
@@ -1842,8 +1844,9 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -2161,7 +2164,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -2229,7 +2232,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByGroupId_First(long groupId,
@@ -2280,7 +2283,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByGroupId_Last(long groupId,
@@ -2338,7 +2341,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	 */
 	@Override
 	public ChannelInstance[] findByGroupId_PrevAndNext(long channelInstanceId,
@@ -2377,8 +2380,9 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -2669,7 +2673,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -2737,7 +2741,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByCampaignId_First(long campaignId,
@@ -2788,7 +2792,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByCampaignId_Last(long campaignId,
@@ -2846,7 +2850,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	 */
 	@Override
 	public ChannelInstance[] findByCampaignId_PrevAndNext(
@@ -2886,8 +2890,9 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -3177,7 +3182,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -3245,7 +3250,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param tacticId the tactic ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByTacticId_First(long tacticId,
@@ -3296,7 +3301,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param tacticId the tactic ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByTacticId_Last(long tacticId,
@@ -3354,7 +3359,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param tacticId the tactic ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	 */
 	@Override
 	public ChannelInstance[] findByTacticId_PrevAndNext(
@@ -3394,8 +3399,9 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -3696,7 +3702,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -3783,7 +3789,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param channelKey the channel key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByC_K_First(long campaignId, String channelKey,
@@ -3839,7 +3845,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param channelKey the channel key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByC_K_Last(long campaignId, String channelKey,
@@ -3902,7 +3908,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param channelKey the channel key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	 */
 	@Override
 	public ChannelInstance[] findByC_K_PrevAndNext(long channelInstanceId,
@@ -3942,11 +3948,12 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_CHANNELINSTANCE_WHERE);
@@ -4159,12 +4166,12 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the channel instance where tacticId = &#63; and alias = &#63; or throws a {@link com.liferay.content.targeting.NoSuchChannelInstanceException} if it could not be found.
+	 * Returns the channel instance where tacticId = &#63; and alias = &#63; or throws a {@link NoSuchChannelInstanceException} if it could not be found.
 	 *
 	 * @param tacticId the tactic ID
 	 * @param alias the alias
 	 * @return the matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByT_A(long tacticId, String alias)
@@ -4539,7 +4546,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -4626,7 +4633,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param channelKey the channel key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByT_K_First(long tacticId, String channelKey,
@@ -4682,7 +4689,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param channelKey the channel key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	 * @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	 */
 	@Override
 	public ChannelInstance findByT_K_Last(long tacticId, String channelKey,
@@ -4745,7 +4752,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 * @param channelKey the channel key
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	 */
 	@Override
 	public ChannelInstance[] findByT_K_PrevAndNext(long channelInstanceId,
@@ -4785,11 +4792,12 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_CHANNELINSTANCE_WHERE);
@@ -5205,7 +5213,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 *
 	 * @param channelInstanceId the primary key of the channel instance
 	 * @return the channel instance that was removed
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	 */
 	@Override
 	public ChannelInstance remove(long channelInstanceId)
@@ -5218,7 +5226,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	 *
 	 * @param primaryKey the primary key of the channel instance
 	 * @return the channel instance that was removed
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	 */
 	@Override
 	public ChannelInstance remove(Serializable primaryKey)
@@ -5539,11 +5547,11 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	}
 
 	/**
-	 * Returns the channel instance with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the channel instance with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the channel instance
 	 * @return the channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	 */
 	@Override
 	public ChannelInstance findByPrimaryKey(Serializable primaryKey)
@@ -5563,11 +5571,11 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 	}
 
 	/**
-	 * Returns the channel instance with the primary key or throws a {@link com.liferay.content.targeting.NoSuchChannelInstanceException} if it could not be found.
+	 * Returns the channel instance with the primary key or throws a {@link NoSuchChannelInstanceException} if it could not be found.
 	 *
 	 * @param channelInstanceId the primary key of the channel instance
 	 * @return the channel instance
-	 * @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	 * @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	 */
 	@Override
 	public ChannelInstance findByPrimaryKey(long channelInstanceId)
@@ -5814,7 +5822,7 @@ public class ChannelInstancePersistenceImpl extends BasePersistenceImpl<ChannelI
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_CHANNELINSTANCE);
 

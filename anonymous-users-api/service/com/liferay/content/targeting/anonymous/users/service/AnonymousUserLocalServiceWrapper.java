@@ -50,16 +50,14 @@ public class AnonymousUserLocalServiceWrapper
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser addAnonymousUser(
 		long userId, java.lang.String lastIp, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserLocalService.addAnonymousUser(userId, lastIp,
 			typeSettings, serviceContext);
 	}
 
 	@Override
 	public void checkAnonymousUsers()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_anonymousUserLocalService.checkAnonymousUsers();
 	}
 
@@ -104,8 +102,7 @@ public class AnonymousUserLocalServiceWrapper
 	@Override
 	public void deleteAnonymousUsers(long companyId, java.util.Date createDate,
 		boolean includeUsers)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_anonymousUserLocalService.deleteAnonymousUsers(companyId, createDate,
 			includeUsers);
 	}
@@ -213,9 +210,7 @@ public class AnonymousUserLocalServiceWrapper
 
 	@Override
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUserByUserId(
-		long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserLocalService.fetchAnonymousUserByUserId(userId);
 	}
 
@@ -308,8 +303,7 @@ public class AnonymousUserLocalServiceWrapper
 
 	@Override
 	public java.util.Date getMaxAge()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserLocalService.getMaxAge();
 	}
 
@@ -347,8 +341,7 @@ public class AnonymousUserLocalServiceWrapper
 		long anonymousUserId, long userId, java.lang.String lastIp,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserLocalService.updateAnonymousUser(anonymousUserId,
 			userId, lastIp, typeSettings, serviceContext);
 	}
@@ -356,26 +349,8 @@ public class AnonymousUserLocalServiceWrapper
 	@Override
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser updateLastIp(
 		long anonymousUserId, java.lang.String lastIp)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserLocalService.updateLastIp(anonymousUserId, lastIp);
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #getWrappedService}
-	 */
-	@Deprecated
-	public AnonymousUserLocalService getWrappedAnonymousUserLocalService() {
-		return _anonymousUserLocalService;
-	}
-
-	/**
-	 * @deprecated As of 6.1.0, replaced by {@link #setWrappedService}
-	 */
-	@Deprecated
-	public void setWrappedAnonymousUserLocalService(
-		AnonymousUserLocalService anonymousUserLocalService) {
-		_anonymousUserLocalService = anonymousUserLocalService;
 	}
 
 	@Override

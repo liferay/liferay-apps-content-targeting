@@ -16,6 +16,7 @@ package com.liferay.content.targeting.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
@@ -28,6 +29,7 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.model.impl.UserSegmentModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.content.targeting.model.impl.UserSegmentImpl")
 @ProviderType
 public interface UserSegment extends UserSegmentModel, PersistedModel {
 	/*

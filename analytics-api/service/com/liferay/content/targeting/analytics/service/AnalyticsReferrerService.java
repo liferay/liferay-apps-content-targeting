@@ -52,7 +52,7 @@ public interface AnalyticsReferrerService extends BaseService {
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
-		long analyticsEventId) throws SystemException;
+		long analyticsEventId);
 
 	/**
 	* Returns the OSGi service identifier.

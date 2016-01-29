@@ -184,7 +184,7 @@ public class UserSegmentUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	* @throws NoSuchUserSegmentException if a matching user segment could not be found
 	*/
 	public static UserSegment findByUuid_First(java.lang.String uuid,
 		OrderByComparator<UserSegment> orderByComparator)
@@ -210,7 +210,7 @@ public class UserSegmentUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	* @throws NoSuchUserSegmentException if a matching user segment could not be found
 	*/
 	public static UserSegment findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<UserSegment> orderByComparator)
@@ -237,7 +237,7 @@ public class UserSegmentUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	* @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	*/
 	public static UserSegment[] findByUuid_PrevAndNext(long userSegmentId,
 		java.lang.String uuid, OrderByComparator<UserSegment> orderByComparator)
@@ -267,12 +267,12 @@ public class UserSegmentUtil {
 	}
 
 	/**
-	* Returns the user segment where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchUserSegmentException} if it could not be found.
+	* Returns the user segment where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchUserSegmentException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	* @throws NoSuchUserSegmentException if a matching user segment could not be found
 	*/
 	public static UserSegment findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
@@ -408,7 +408,7 @@ public class UserSegmentUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	* @throws NoSuchUserSegmentException if a matching user segment could not be found
 	*/
 	public static UserSegment findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<UserSegment> orderByComparator)
@@ -438,7 +438,7 @@ public class UserSegmentUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	* @throws NoSuchUserSegmentException if a matching user segment could not be found
 	*/
 	public static UserSegment findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<UserSegment> orderByComparator)
@@ -469,7 +469,7 @@ public class UserSegmentUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	* @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	*/
 	public static UserSegment[] findByUuid_C_PrevAndNext(long userSegmentId,
 		java.lang.String uuid, long companyId,
@@ -502,11 +502,11 @@ public class UserSegmentUtil {
 	}
 
 	/**
-	* Returns the user segment where assetCategoryId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchUserSegmentException} if it could not be found.
+	* Returns the user segment where assetCategoryId = &#63; or throws a {@link NoSuchUserSegmentException} if it could not be found.
 	*
 	* @param assetCategoryId the asset category ID
 	* @return the matching user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	* @throws NoSuchUserSegmentException if a matching user segment could not be found
 	*/
 	public static UserSegment findByAssetCategoryId(long assetCategoryId)
 		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
@@ -631,7 +631,7 @@ public class UserSegmentUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	* @throws NoSuchUserSegmentException if a matching user segment could not be found
 	*/
 	public static UserSegment findByGroupId_First(long groupId,
 		OrderByComparator<UserSegment> orderByComparator)
@@ -657,7 +657,7 @@ public class UserSegmentUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	* @throws NoSuchUserSegmentException if a matching user segment could not be found
 	*/
 	public static UserSegment findByGroupId_Last(long groupId,
 		OrderByComparator<UserSegment> orderByComparator)
@@ -684,7 +684,7 @@ public class UserSegmentUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	* @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	*/
 	public static UserSegment[] findByGroupId_PrevAndNext(long userSegmentId,
 		long groupId, OrderByComparator<UserSegment> orderByComparator)
@@ -747,7 +747,7 @@ public class UserSegmentUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	* @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	*/
 	public static UserSegment[] filterFindByGroupId_PrevAndNext(
 		long userSegmentId, long groupId,
@@ -958,7 +958,7 @@ public class UserSegmentUtil {
 	*
 	* @param userSegmentId the primary key of the user segment
 	* @return the user segment that was removed
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	* @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	*/
 	public static UserSegment remove(long userSegmentId)
 		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {
@@ -970,11 +970,11 @@ public class UserSegmentUtil {
 	}
 
 	/**
-	* Returns the user segment with the primary key or throws a {@link com.liferay.content.targeting.NoSuchUserSegmentException} if it could not be found.
+	* Returns the user segment with the primary key or throws a {@link NoSuchUserSegmentException} if it could not be found.
 	*
 	* @param userSegmentId the primary key of the user segment
 	* @return the user segment
-	* @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	* @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	*/
 	public static UserSegment findByPrimaryKey(long userSegmentId)
 		throws com.liferay.content.targeting.exception.NoSuchUserSegmentException {

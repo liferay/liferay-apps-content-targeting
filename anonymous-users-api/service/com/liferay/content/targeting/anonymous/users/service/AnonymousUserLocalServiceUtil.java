@@ -16,8 +16,7 @@ package com.liferay.content.targeting.anonymous.users.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -57,16 +56,14 @@ public class AnonymousUserLocalServiceUtil {
 	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser addAnonymousUser(
 		long userId, java.lang.String lastIp, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAnonymousUser(userId, lastIp, typeSettings,
 			serviceContext);
 	}
 
 	public static void checkAnonymousUsers()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkAnonymousUsers();
 	}
 
@@ -107,8 +104,7 @@ public class AnonymousUserLocalServiceUtil {
 
 	public static void deleteAnonymousUsers(long companyId,
 		java.util.Date createDate, boolean includeUsers)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteAnonymousUsers(companyId, createDate, includeUsers);
 	}
 
@@ -205,9 +201,7 @@ public class AnonymousUserLocalServiceUtil {
 	}
 
 	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUserByUserId(
-		long userId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		long userId) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().fetchAnonymousUserByUserId(userId);
 	}
 
@@ -289,8 +283,7 @@ public class AnonymousUserLocalServiceUtil {
 	}
 
 	public static java.util.Date getMaxAge()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMaxAge();
 	}
 
@@ -324,8 +317,7 @@ public class AnonymousUserLocalServiceUtil {
 		long anonymousUserId, long userId, java.lang.String lastIp,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateAnonymousUser(anonymousUserId, userId, lastIp,
 			typeSettings, serviceContext);
@@ -333,8 +325,7 @@ public class AnonymousUserLocalServiceUtil {
 
 	public static com.liferay.content.targeting.anonymous.users.model.AnonymousUser updateLastIp(
 		long anonymousUserId, java.lang.String lastIp)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().updateLastIp(anonymousUserId, lastIp);
 	}
 
@@ -342,21 +333,6 @@ public class AnonymousUserLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AnonymousUserLocalService service) {
-	}
-
-	private static ServiceTracker<AnonymousUserLocalService, AnonymousUserLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AnonymousUserLocalServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<AnonymousUserLocalService, AnonymousUserLocalService>(bundle.getBundleContext(),
-				AnonymousUserLocalService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<AnonymousUserLocalService, AnonymousUserLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(AnonymousUserLocalService.class);
 }

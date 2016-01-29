@@ -18,12 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.content.targeting.anonymous.users.model.AnonymousUser;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -185,7 +184,7 @@ public class AnonymousUserUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public static AnonymousUser findByUuid_First(java.lang.String uuid,
 		OrderByComparator<AnonymousUser> orderByComparator)
@@ -211,7 +210,7 @@ public class AnonymousUserUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public static AnonymousUser findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<AnonymousUser> orderByComparator)
@@ -238,7 +237,7 @@ public class AnonymousUserUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public static AnonymousUser[] findByUuid_PrevAndNext(long anonymousUserId,
 		java.lang.String uuid,
@@ -350,7 +349,7 @@ public class AnonymousUserUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public static AnonymousUser findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<AnonymousUser> orderByComparator)
@@ -380,7 +379,7 @@ public class AnonymousUserUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public static AnonymousUser findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<AnonymousUser> orderByComparator)
@@ -411,7 +410,7 @@ public class AnonymousUserUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public static AnonymousUser[] findByUuid_C_PrevAndNext(
 		long anonymousUserId, java.lang.String uuid, long companyId,
@@ -517,7 +516,7 @@ public class AnonymousUserUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public static AnonymousUser findByUserId_First(long userId,
 		OrderByComparator<AnonymousUser> orderByComparator)
@@ -543,7 +542,7 @@ public class AnonymousUserUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public static AnonymousUser findByUserId_Last(long userId,
 		OrderByComparator<AnonymousUser> orderByComparator)
@@ -570,7 +569,7 @@ public class AnonymousUserUtil {
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public static AnonymousUser[] findByUserId_PrevAndNext(
 		long anonymousUserId, long userId,
@@ -683,7 +682,7 @@ public class AnonymousUserUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public static AnonymousUser findByC_LtD_First(long companyId,
 		java.util.Date createDate,
@@ -715,7 +714,7 @@ public class AnonymousUserUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public static AnonymousUser findByC_LtD_Last(long companyId,
 		java.util.Date createDate,
@@ -748,7 +747,7 @@ public class AnonymousUserUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public static AnonymousUser[] findByC_LtD_PrevAndNext(
 		long anonymousUserId, long companyId, java.util.Date createDate,
@@ -813,7 +812,7 @@ public class AnonymousUserUtil {
 	*
 	* @param anonymousUserId the primary key of the anonymous user
 	* @return the anonymous user that was removed
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public static AnonymousUser remove(long anonymousUserId)
 		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException {
@@ -825,11 +824,11 @@ public class AnonymousUserUtil {
 	}
 
 	/**
-	* Returns the anonymous user with the primary key or throws a {@link com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException} if it could not be found.
+	* Returns the anonymous user with the primary key or throws a {@link NoSuchAnonymousUserException} if it could not be found.
 	*
 	* @param anonymousUserId the primary key of the anonymous user
 	* @return the anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public static AnonymousUser findByPrimaryKey(long anonymousUserId)
 		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException {
@@ -936,21 +935,6 @@ public class AnonymousUserUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(AnonymousUserPersistence persistence) {
-	}
-
-	private static ServiceTracker<AnonymousUserPersistence, AnonymousUserPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AnonymousUserUtil.class);
-
-		_serviceTracker = new ServiceTracker<AnonymousUserPersistence, AnonymousUserPersistence>(bundle.getBundleContext(),
-				AnonymousUserPersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<AnonymousUserPersistence, AnonymousUserPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(AnonymousUserPersistence.class);
 }

@@ -34,6 +34,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
 import com.liferay.portal.kernel.util.StringBundler;
@@ -41,7 +42,6 @@ import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.CompanyProvider;
@@ -216,7 +216,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -298,7 +298,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	 * @throws NoSuchTacticException if a matching tactic could not be found
 	 */
 	@Override
 	public Tactic findByUuid_First(String uuid,
@@ -347,7 +347,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	 * @throws NoSuchTacticException if a matching tactic could not be found
 	 */
 	@Override
 	public Tactic findByUuid_Last(String uuid,
@@ -403,7 +403,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	 * @throws NoSuchTacticException if a tactic with the primary key could not be found
 	 */
 	@Override
 	public Tactic[] findByUuid_PrevAndNext(long tacticId, String uuid,
@@ -442,8 +442,9 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -648,12 +649,12 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the tactic where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchTacticException} if it could not be found.
+	 * Returns the tactic where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchTacticException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	 * @throws NoSuchTacticException if a matching tactic could not be found
 	 */
 	@Override
 	public Tactic findByUUID_G(String uuid, long groupId)
@@ -1024,7 +1025,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1111,7 +1112,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	 * @throws NoSuchTacticException if a matching tactic could not be found
 	 */
 	@Override
 	public Tactic findByUuid_C_First(String uuid, long companyId,
@@ -1166,7 +1167,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	 * @throws NoSuchTacticException if a matching tactic could not be found
 	 */
 	@Override
 	public Tactic findByUuid_C_Last(String uuid, long companyId,
@@ -1228,7 +1229,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	 * @throws NoSuchTacticException if a tactic with the primary key could not be found
 	 */
 	@Override
 	public Tactic[] findByUuid_C_PrevAndNext(long tacticId, String uuid,
@@ -1267,11 +1268,12 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_TACTIC_WHERE);
@@ -1593,7 +1595,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1661,7 +1663,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	 * @throws NoSuchTacticException if a matching tactic could not be found
 	 */
 	@Override
 	public Tactic findByGroupId_First(long groupId,
@@ -1710,7 +1712,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	 * @throws NoSuchTacticException if a matching tactic could not be found
 	 */
 	@Override
 	public Tactic findByGroupId_Last(long groupId,
@@ -1767,7 +1769,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	 * @throws NoSuchTacticException if a tactic with the primary key could not be found
 	 */
 	@Override
 	public Tactic[] findByGroupId_PrevAndNext(long tacticId, long groupId,
@@ -1806,8 +1808,9 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -1958,10 +1961,10 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 
 		if (orderByComparator != null) {
 			query = new StringBundler(3 +
-					(orderByComparator.getOrderByFields().length * 3));
+					(orderByComparator.getOrderByFields().length * 2));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -2035,7 +2038,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	 * @throws NoSuchTacticException if a tactic with the primary key could not be found
 	 */
 	@Override
 	public Tactic[] filterFindByGroupId_PrevAndNext(long tacticId,
@@ -2079,11 +2082,12 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -2449,7 +2453,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -2517,7 +2521,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	 * @throws NoSuchTacticException if a matching tactic could not be found
 	 */
 	@Override
 	public Tactic findByCampaignId_First(long campaignId,
@@ -2566,7 +2570,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	 * @throws NoSuchTacticException if a matching tactic could not be found
 	 */
 	@Override
 	public Tactic findByCampaignId_Last(long campaignId,
@@ -2623,7 +2627,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	 * @throws NoSuchTacticException if a tactic with the primary key could not be found
 	 */
 	@Override
 	public Tactic[] findByCampaignId_PrevAndNext(long tacticId,
@@ -2662,8 +2666,9 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -2986,7 +2991,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 *
 	 * @param tacticId the primary key of the tactic
 	 * @return the tactic that was removed
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	 * @throws NoSuchTacticException if a tactic with the primary key could not be found
 	 */
 	@Override
 	public Tactic remove(long tacticId) throws NoSuchTacticException {
@@ -2998,7 +3003,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	 *
 	 * @param primaryKey the primary key of the tactic
 	 * @return the tactic that was removed
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	 * @throws NoSuchTacticException if a tactic with the primary key could not be found
 	 */
 	@Override
 	public Tactic remove(Serializable primaryKey) throws NoSuchTacticException {
@@ -3237,11 +3242,11 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	}
 
 	/**
-	 * Returns the tactic with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the tactic with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the tactic
 	 * @return the tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	 * @throws NoSuchTacticException if a tactic with the primary key could not be found
 	 */
 	@Override
 	public Tactic findByPrimaryKey(Serializable primaryKey)
@@ -3261,11 +3266,11 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 	}
 
 	/**
-	 * Returns the tactic with the primary key or throws a {@link com.liferay.content.targeting.NoSuchTacticException} if it could not be found.
+	 * Returns the tactic with the primary key or throws a {@link NoSuchTacticException} if it could not be found.
 	 *
 	 * @param tacticId the primary key of the tactic
 	 * @return the tactic
-	 * @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	 * @throws NoSuchTacticException if a tactic with the primary key could not be found
 	 */
 	@Override
 	public Tactic findByPrimaryKey(long tacticId) throws NoSuchTacticException {
@@ -3508,7 +3513,7 @@ public class TacticPersistenceImpl extends BasePersistenceImpl<Tactic>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_TACTIC);
 

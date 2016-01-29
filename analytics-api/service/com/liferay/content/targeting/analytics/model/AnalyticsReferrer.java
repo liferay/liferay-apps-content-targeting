@@ -16,6 +16,7 @@ package com.liferay.content.targeting.analytics.model;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.portal.kernel.annotation.ImplementationClassName;
 import com.liferay.portal.kernel.util.Accessor;
 import com.liferay.portal.model.PersistedModel;
 
@@ -28,6 +29,7 @@ import com.liferay.portal.model.PersistedModel;
  * @see com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerModelImpl
  * @generated
  */
+@ImplementationClassName("com.liferay.content.targeting.analytics.model.impl.AnalyticsReferrerImpl")
 @ProviderType
 public interface AnalyticsReferrer extends AnalyticsReferrerModel, PersistedModel {
 	/*

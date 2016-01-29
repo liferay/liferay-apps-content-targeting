@@ -16,8 +16,7 @@ package com.liferay.content.targeting.analytics.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -43,8 +42,7 @@ public class AnalyticsReferrerServiceUtil {
 	 * Never modify this class directly. Add custom service methods to {@link com.liferay.content.targeting.analytics.service.impl.AnalyticsReferrerServiceImpl} and rerun ServiceBuilder to regenerate this class.
 	 */
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
-		long analyticsEventId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long analyticsEventId) {
 		return getService().getAnalyticsReferrers(analyticsEventId);
 	}
 
@@ -61,21 +59,6 @@ public class AnalyticsReferrerServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AnalyticsReferrerService service) {
-	}
-
-	private static ServiceTracker<AnalyticsReferrerService, AnalyticsReferrerService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AnalyticsReferrerServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<AnalyticsReferrerService, AnalyticsReferrerService>(bundle.getBundleContext(),
-				AnalyticsReferrerService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<AnalyticsReferrerService, AnalyticsReferrerService> _serviceTracker =
+		ServiceTrackerFactory.open(AnalyticsReferrerService.class);
 }

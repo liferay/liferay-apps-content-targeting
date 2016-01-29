@@ -222,7 +222,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -290,7 +290,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param analyticsEventId the analytics event ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics referrer
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	 */
 	@Override
 	public AnalyticsReferrer findByAnalyticsEventId_First(
@@ -343,7 +343,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param analyticsEventId the analytics event ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics referrer
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	 */
 	@Override
 	public AnalyticsReferrer findByAnalyticsEventId_Last(
@@ -403,7 +403,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param analyticsEventId the analytics event ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics referrer
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsReferrer[] findByAnalyticsEventId_PrevAndNext(
@@ -445,8 +445,9 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -750,7 +751,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -837,7 +838,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics referrer
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	 */
 	@Override
 	public AnalyticsReferrer findByR_R_First(String referrerClassName,
@@ -895,7 +896,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics referrer
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	 */
 	@Override
 	public AnalyticsReferrer findByR_R_Last(String referrerClassName,
@@ -960,7 +961,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics referrer
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsReferrer[] findByR_R_PrevAndNext(long analyticsReferrerId,
@@ -1001,11 +1002,12 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_ANALYTICSREFERRER_WHERE);
@@ -1370,7 +1372,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 			if (orderByComparator != null) {
 				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(5);
@@ -1462,7 +1464,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching analytics referrer
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	 */
 	@Override
 	public AnalyticsReferrer findByA_R_R_First(long analyticsEventId,
@@ -1525,7 +1527,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching analytics referrer
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	 */
 	@Override
 	public AnalyticsReferrer findByA_R_R_Last(long analyticsEventId,
@@ -1597,7 +1599,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 * @param referrerClassPK the referrer class p k
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next analytics referrer
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsReferrer[] findByA_R_R_PrevAndNext(
@@ -1642,10 +1644,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 		if (orderByComparator != null) {
 			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(5);
 		}
 
 		query.append(_SQL_SELECT_ANALYTICSREFERRER_WHERE);
@@ -2303,7 +2306,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 *
 	 * @param analyticsReferrerId the primary key of the analytics referrer
 	 * @return the analytics referrer that was removed
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsReferrer remove(long analyticsReferrerId)
@@ -2316,7 +2319,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	 *
 	 * @param primaryKey the primary key of the analytics referrer
 	 * @return the analytics referrer that was removed
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsReferrer remove(Serializable primaryKey)
@@ -2514,11 +2517,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	}
 
 	/**
-	 * Returns the analytics referrer with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the analytics referrer with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the analytics referrer
 	 * @return the analytics referrer
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsReferrer findByPrimaryKey(Serializable primaryKey)
@@ -2538,11 +2541,11 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 	}
 
 	/**
-	 * Returns the analytics referrer with the primary key or throws a {@link com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException} if it could not be found.
+	 * Returns the analytics referrer with the primary key or throws a {@link NoSuchAnalyticsReferrerException} if it could not be found.
 	 *
 	 * @param analyticsReferrerId the primary key of the analytics referrer
 	 * @return the analytics referrer
-	 * @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	 * @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	 */
 	@Override
 	public AnalyticsReferrer findByPrimaryKey(long analyticsReferrerId)
@@ -2790,7 +2793,7 @@ public class AnalyticsReferrerPersistenceImpl extends BasePersistenceImpl<Analyt
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_ANALYTICSREFERRER);
 

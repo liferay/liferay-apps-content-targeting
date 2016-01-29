@@ -212,7 +212,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -294,7 +294,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	 */
 	@Override
 	public RuleInstance findByUuid_First(String uuid,
@@ -343,7 +343,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	 */
 	@Override
 	public RuleInstance findByUuid_Last(String uuid,
@@ -400,7 +400,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	 * @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	 */
 	@Override
 	public RuleInstance[] findByUuid_PrevAndNext(long ruleInstanceId,
@@ -439,8 +439,9 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -645,12 +646,12 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the rule instance where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchRuleInstanceException} if it could not be found.
+	 * Returns the rule instance where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchRuleInstanceException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	 */
 	@Override
 	public RuleInstance findByUUID_G(String uuid, long groupId)
@@ -1022,7 +1023,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1109,7 +1110,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	 */
 	@Override
 	public RuleInstance findByUuid_C_First(String uuid, long companyId,
@@ -1165,7 +1166,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	 */
 	@Override
 	public RuleInstance findByUuid_C_Last(String uuid, long companyId,
@@ -1228,7 +1229,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	 * @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	 */
 	@Override
 	public RuleInstance[] findByUuid_C_PrevAndNext(long ruleInstanceId,
@@ -1268,11 +1269,12 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_RULEINSTANCE_WHERE);
@@ -1596,7 +1598,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1664,7 +1666,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	 */
 	@Override
 	public RuleInstance findByGroupId_First(long groupId,
@@ -1714,7 +1716,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	 */
 	@Override
 	public RuleInstance findByGroupId_Last(long groupId,
@@ -1772,7 +1774,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	 * @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	 */
 	@Override
 	public RuleInstance[] findByGroupId_PrevAndNext(long ruleInstanceId,
@@ -1811,8 +1813,9 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -2106,7 +2109,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -2174,7 +2177,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	 */
 	@Override
 	public RuleInstance findByUserSegmentId_First(long userSegmentId,
@@ -2225,7 +2228,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	 */
 	@Override
 	public RuleInstance findByUserSegmentId_Last(long userSegmentId,
@@ -2283,7 +2286,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	 * @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	 */
 	@Override
 	public RuleInstance[] findByUserSegmentId_PrevAndNext(long ruleInstanceId,
@@ -2322,8 +2325,9 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -2620,7 +2624,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -2707,7 +2711,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	 */
 	@Override
 	public RuleInstance findByR_U_First(String ruleKey, long userSegmentId,
@@ -2763,7 +2767,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a matching rule instance could not be found
+	 * @throws NoSuchRuleInstanceException if a matching rule instance could not be found
 	 */
 	@Override
 	public RuleInstance findByR_U_Last(String ruleKey, long userSegmentId,
@@ -2826,7 +2830,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	 * @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	 */
 	@Override
 	public RuleInstance[] findByR_U_PrevAndNext(long ruleInstanceId,
@@ -2866,11 +2870,12 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_RULEINSTANCE_WHERE);
@@ -3237,7 +3242,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 *
 	 * @param ruleInstanceId the primary key of the rule instance
 	 * @return the rule instance that was removed
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	 * @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	 */
 	@Override
 	public RuleInstance remove(long ruleInstanceId)
@@ -3250,7 +3255,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	 *
 	 * @param primaryKey the primary key of the rule instance
 	 * @return the rule instance that was removed
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	 * @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	 */
 	@Override
 	public RuleInstance remove(Serializable primaryKey)
@@ -3515,11 +3520,11 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	}
 
 	/**
-	 * Returns the rule instance with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the rule instance with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the rule instance
 	 * @return the rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	 * @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	 */
 	@Override
 	public RuleInstance findByPrimaryKey(Serializable primaryKey)
@@ -3539,11 +3544,11 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 	}
 
 	/**
-	 * Returns the rule instance with the primary key or throws a {@link com.liferay.content.targeting.NoSuchRuleInstanceException} if it could not be found.
+	 * Returns the rule instance with the primary key or throws a {@link NoSuchRuleInstanceException} if it could not be found.
 	 *
 	 * @param ruleInstanceId the primary key of the rule instance
 	 * @return the rule instance
-	 * @throws com.liferay.content.targeting.NoSuchRuleInstanceException if a rule instance with the primary key could not be found
+	 * @throws NoSuchRuleInstanceException if a rule instance with the primary key could not be found
 	 */
 	@Override
 	public RuleInstance findByPrimaryKey(long ruleInstanceId)
@@ -3789,7 +3794,7 @@ public class RuleInstancePersistenceImpl extends BasePersistenceImpl<RuleInstanc
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_RULEINSTANCE);
 

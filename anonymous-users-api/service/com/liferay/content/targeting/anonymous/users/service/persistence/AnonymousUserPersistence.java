@@ -105,7 +105,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public AnonymousUser findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
@@ -127,7 +127,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public AnonymousUser findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
@@ -150,7 +150,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public AnonymousUser[] findByUuid_PrevAndNext(long anonymousUserId,
 		java.lang.String uuid,
@@ -243,7 +243,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public AnonymousUser findByUuid_C_First(java.lang.String uuid,
 		long companyId,
@@ -269,7 +269,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public AnonymousUser findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
@@ -296,7 +296,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public AnonymousUser[] findByUuid_C_PrevAndNext(long anonymousUserId,
 		java.lang.String uuid, long companyId,
@@ -385,7 +385,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public AnonymousUser findByUserId_First(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
@@ -407,7 +407,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public AnonymousUser findByUserId_Last(long userId,
 		com.liferay.portal.kernel.util.OrderByComparator<AnonymousUser> orderByComparator)
@@ -430,7 +430,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param userId the user ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public AnonymousUser[] findByUserId_PrevAndNext(long anonymousUserId,
 		long userId,
@@ -523,7 +523,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public AnonymousUser findByC_LtD_First(long companyId,
 		java.util.Date createDate,
@@ -549,7 +549,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a matching anonymous user could not be found
+	* @throws NoSuchAnonymousUserException if a matching anonymous user could not be found
 	*/
 	public AnonymousUser findByC_LtD_Last(long companyId,
 		java.util.Date createDate,
@@ -576,7 +576,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public AnonymousUser[] findByC_LtD_PrevAndNext(long anonymousUserId,
 		long companyId, java.util.Date createDate,
@@ -627,7 +627,7 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	*
 	* @param anonymousUserId the primary key of the anonymous user
 	* @return the anonymous user that was removed
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public AnonymousUser remove(long anonymousUserId)
 		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;
@@ -635,11 +635,11 @@ public interface AnonymousUserPersistence extends BasePersistence<AnonymousUser>
 	public AnonymousUser updateImpl(AnonymousUser anonymousUser);
 
 	/**
-	* Returns the anonymous user with the primary key or throws a {@link com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException} if it could not be found.
+	* Returns the anonymous user with the primary key or throws a {@link NoSuchAnonymousUserException} if it could not be found.
 	*
 	* @param anonymousUserId the primary key of the anonymous user
 	* @return the anonymous user
-	* @throws com.liferay.content.targeting.anonymous.users.NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
+	* @throws NoSuchAnonymousUserException if a anonymous user with the primary key could not be found
 	*/
 	public AnonymousUser findByPrimaryKey(long anonymousUserId)
 		throws com.liferay.content.targeting.anonymous.users.exception.NoSuchAnonymousUserException;

@@ -16,8 +16,7 @@ package com.liferay.content.targeting.analytics.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -45,24 +44,21 @@ public class AnalyticsEventServiceUtil {
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String className, long classPK, java.lang.String eventType,
 		java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnalyticsEvents(className, classPK, eventType, createDate);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		long companyId, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAnalyticsEvents(companyId, createDate);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String elementId, java.lang.String eventType,
 		java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAnalyticsEvents(elementId, eventType, createDate);
 	}
 
@@ -79,21 +75,6 @@ public class AnalyticsEventServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AnalyticsEventService service) {
-	}
-
-	private static ServiceTracker<AnalyticsEventService, AnalyticsEventService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AnalyticsEventServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<AnalyticsEventService, AnalyticsEventService>(bundle.getBundleContext(),
-				AnalyticsEventService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<AnalyticsEventService, AnalyticsEventService> _serviceTracker =
+		ServiceTrackerFactory.open(AnalyticsEventService.class);
 }

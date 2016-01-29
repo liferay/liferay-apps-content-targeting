@@ -236,7 +236,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -309,7 +309,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment findByAnonymousUserId_First(
@@ -367,7 +367,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment findByAnonymousUserId_Last(
@@ -432,7 +432,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment[] findByAnonymousUserId_PrevAndNext(
@@ -476,11 +476,12 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_ANONYMOUSUSERUSERSEGMENT_WHERE);
@@ -794,7 +795,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -867,7 +868,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment findByA_U_First(long anonymousUserId,
@@ -925,7 +926,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment findByA_U_Last(long anonymousUserId,
@@ -990,7 +991,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 * @param userSegmentId the user segment ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment[] findByA_U_PrevAndNext(
@@ -1033,11 +1034,12 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_ANONYMOUSUSERUSERSEGMENT_WHERE);
@@ -1343,7 +1345,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 
 			if (orderByComparator != null) {
 				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(5);
@@ -1432,7 +1434,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 * @param manual the manual
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment findByC_LtD_M_First(long companyId,
@@ -1495,7 +1497,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 * @param manual the manual
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment findByC_LtD_M_Last(long companyId,
@@ -1565,7 +1567,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 * @param manual the manual
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment[] findByC_LtD_M_PrevAndNext(
@@ -1611,10 +1613,11 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 
 		if (orderByComparator != null) {
 			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(5);
 		}
 
 		query.append(_SQL_SELECT_ANONYMOUSUSERUSERSEGMENT_WHERE);
@@ -1968,7 +1971,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -2041,7 +2044,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment findByUserSegmentIds_First(
@@ -2099,7 +2102,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment findByUserSegmentIds_Last(
@@ -2164,7 +2167,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 * @param active the active
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment[] findByUserSegmentIds_PrevAndNext(
@@ -2208,11 +2211,12 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_ANONYMOUSUSERUSERSEGMENT_WHERE);
@@ -2781,7 +2785,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 *
 	 * @param anonymousUserUserSegmentId the primary key of the anonymous user user segment
 	 * @return the anonymous user user segment that was removed
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment remove(long anonymousUserUserSegmentId)
@@ -2794,7 +2798,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	 *
 	 * @param primaryKey the primary key of the anonymous user user segment
 	 * @return the anonymous user user segment that was removed
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment remove(Serializable primaryKey)
@@ -3000,11 +3004,11 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Returns the anonymous user user segment with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the anonymous user user segment with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the anonymous user user segment
 	 * @return the anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment findByPrimaryKey(Serializable primaryKey)
@@ -3024,11 +3028,11 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 	}
 
 	/**
-	 * Returns the anonymous user user segment with the primary key or throws a {@link com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException} if it could not be found.
+	 * Returns the anonymous user user segment with the primary key or throws a {@link NoSuchAnonymousUserUserSegmentException} if it could not be found.
 	 *
 	 * @param anonymousUserUserSegmentId the primary key of the anonymous user user segment
 	 * @return the anonymous user user segment
-	 * @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	 * @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	 */
 	@Override
 	public AnonymousUserUserSegment findByPrimaryKey(
@@ -3279,7 +3283,7 @@ public class AnonymousUserUserSegmentPersistenceImpl extends BasePersistenceImpl
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_ANONYMOUSUSERUSERSEGMENT);
 

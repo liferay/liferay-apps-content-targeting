@@ -185,7 +185,7 @@ public class ChannelInstanceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByUuid_First(java.lang.String uuid,
 		OrderByComparator<ChannelInstance> orderByComparator)
@@ -211,7 +211,7 @@ public class ChannelInstanceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<ChannelInstance> orderByComparator)
@@ -238,7 +238,7 @@ public class ChannelInstanceUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	*/
 	public static ChannelInstance[] findByUuid_PrevAndNext(
 		long channelInstanceId, java.lang.String uuid,
@@ -269,12 +269,12 @@ public class ChannelInstanceUtil {
 	}
 
 	/**
-	* Returns the channel instance where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchChannelInstanceException} if it could not be found.
+	* Returns the channel instance where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchChannelInstanceException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByUUID_G(java.lang.String uuid,
 		long groupId)
@@ -413,7 +413,7 @@ public class ChannelInstanceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<ChannelInstance> orderByComparator)
@@ -443,7 +443,7 @@ public class ChannelInstanceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<ChannelInstance> orderByComparator)
@@ -474,7 +474,7 @@ public class ChannelInstanceUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	*/
 	public static ChannelInstance[] findByUuid_C_PrevAndNext(
 		long channelInstanceId, java.lang.String uuid, long companyId,
@@ -583,7 +583,7 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByChannelKey_First(
 		java.lang.String channelKey,
@@ -613,7 +613,7 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByChannelKey_Last(
 		java.lang.String channelKey,
@@ -644,7 +644,7 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	*/
 	public static ChannelInstance[] findByChannelKey_PrevAndNext(
 		long channelInstanceId, java.lang.String channelKey,
@@ -748,7 +748,7 @@ public class ChannelInstanceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByGroupId_First(long groupId,
 		OrderByComparator<ChannelInstance> orderByComparator)
@@ -774,7 +774,7 @@ public class ChannelInstanceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByGroupId_Last(long groupId,
 		OrderByComparator<ChannelInstance> orderByComparator)
@@ -801,7 +801,7 @@ public class ChannelInstanceUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	*/
 	public static ChannelInstance[] findByGroupId_PrevAndNext(
 		long channelInstanceId, long groupId,
@@ -906,7 +906,7 @@ public class ChannelInstanceUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByCampaignId_First(long campaignId,
 		OrderByComparator<ChannelInstance> orderByComparator)
@@ -934,7 +934,7 @@ public class ChannelInstanceUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByCampaignId_Last(long campaignId,
 		OrderByComparator<ChannelInstance> orderByComparator)
@@ -963,7 +963,7 @@ public class ChannelInstanceUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	*/
 	public static ChannelInstance[] findByCampaignId_PrevAndNext(
 		long channelInstanceId, long campaignId,
@@ -1068,7 +1068,7 @@ public class ChannelInstanceUtil {
 	* @param tacticId the tactic ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByTacticId_First(long tacticId,
 		OrderByComparator<ChannelInstance> orderByComparator)
@@ -1095,7 +1095,7 @@ public class ChannelInstanceUtil {
 	* @param tacticId the tactic ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByTacticId_Last(long tacticId,
 		OrderByComparator<ChannelInstance> orderByComparator)
@@ -1122,7 +1122,7 @@ public class ChannelInstanceUtil {
 	* @param tacticId the tactic ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	*/
 	public static ChannelInstance[] findByTacticId_PrevAndNext(
 		long channelInstanceId, long tacticId,
@@ -1235,7 +1235,7 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByC_K_First(long campaignId,
 		java.lang.String channelKey,
@@ -1267,7 +1267,7 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByC_K_Last(long campaignId,
 		java.lang.String channelKey,
@@ -1300,7 +1300,7 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	*/
 	public static ChannelInstance[] findByC_K_PrevAndNext(
 		long channelInstanceId, long campaignId, java.lang.String channelKey,
@@ -1333,12 +1333,12 @@ public class ChannelInstanceUtil {
 	}
 
 	/**
-	* Returns the channel instance where tacticId = &#63; and alias = &#63; or throws a {@link com.liferay.content.targeting.NoSuchChannelInstanceException} if it could not be found.
+	* Returns the channel instance where tacticId = &#63; and alias = &#63; or throws a {@link NoSuchChannelInstanceException} if it could not be found.
 	*
 	* @param tacticId the tactic ID
 	* @param alias the alias
 	* @return the matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByT_A(long tacticId,
 		java.lang.String alias)
@@ -1478,7 +1478,7 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByT_K_First(long tacticId,
 		java.lang.String channelKey,
@@ -1510,7 +1510,7 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a matching channel instance could not be found
+	* @throws NoSuchChannelInstanceException if a matching channel instance could not be found
 	*/
 	public static ChannelInstance findByT_K_Last(long tacticId,
 		java.lang.String channelKey,
@@ -1543,7 +1543,7 @@ public class ChannelInstanceUtil {
 	* @param channelKey the channel key
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	*/
 	public static ChannelInstance[] findByT_K_PrevAndNext(
 		long channelInstanceId, long tacticId, java.lang.String channelKey,
@@ -1608,7 +1608,7 @@ public class ChannelInstanceUtil {
 	*
 	* @param channelInstanceId the primary key of the channel instance
 	* @return the channel instance that was removed
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	*/
 	public static ChannelInstance remove(long channelInstanceId)
 		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {
@@ -1620,11 +1620,11 @@ public class ChannelInstanceUtil {
 	}
 
 	/**
-	* Returns the channel instance with the primary key or throws a {@link com.liferay.content.targeting.NoSuchChannelInstanceException} if it could not be found.
+	* Returns the channel instance with the primary key or throws a {@link NoSuchChannelInstanceException} if it could not be found.
 	*
 	* @param channelInstanceId the primary key of the channel instance
 	* @return the channel instance
-	* @throws com.liferay.content.targeting.NoSuchChannelInstanceException if a channel instance with the primary key could not be found
+	* @throws NoSuchChannelInstanceException if a channel instance with the primary key could not be found
 	*/
 	public static ChannelInstance findByPrimaryKey(long channelInstanceId)
 		throws com.liferay.content.targeting.exception.NoSuchChannelInstanceException {

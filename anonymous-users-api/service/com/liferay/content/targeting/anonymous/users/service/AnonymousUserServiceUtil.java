@@ -16,8 +16,7 @@ package com.liferay.content.targeting.anonymous.users.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -56,21 +55,6 @@ public class AnonymousUserServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AnonymousUserService service) {
-	}
-
-	private static ServiceTracker<AnonymousUserService, AnonymousUserService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AnonymousUserServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<AnonymousUserService, AnonymousUserService>(bundle.getBundleContext(),
-				AnonymousUserService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<AnonymousUserService, AnonymousUserService> _serviceTracker =
+		ServiceTrackerFactory.open(AnonymousUserService.class);
 }

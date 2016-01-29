@@ -198,7 +198,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public static AnonymousUserUserSegment findByAnonymousUserId_First(
 		long anonymousUserId, boolean active,
@@ -232,7 +232,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public static AnonymousUserUserSegment findByAnonymousUserId_Last(
 		long anonymousUserId, boolean active,
@@ -267,7 +267,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public static AnonymousUserUserSegment[] findByAnonymousUserId_PrevAndNext(
 		long anonymousUserUserSegmentId, long anonymousUserId, boolean active,
@@ -385,7 +385,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public static AnonymousUserUserSegment findByA_U_First(
 		long anonymousUserId, long userSegmentId,
@@ -419,7 +419,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public static AnonymousUserUserSegment findByA_U_Last(
 		long anonymousUserId, long userSegmentId,
@@ -454,7 +454,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public static AnonymousUserUserSegment[] findByA_U_PrevAndNext(
 		long anonymousUserUserSegmentId, long anonymousUserId,
@@ -576,7 +576,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @param manual the manual
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public static AnonymousUserUserSegment findByC_LtD_M_First(long companyId,
 		java.util.Date modifiedDate, boolean manual,
@@ -612,7 +612,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @param manual the manual
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public static AnonymousUserUserSegment findByC_LtD_M_Last(long companyId,
 		java.util.Date modifiedDate, boolean manual,
@@ -649,7 +649,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @param manual the manual
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public static AnonymousUserUserSegment[] findByC_LtD_M_PrevAndNext(
 		long anonymousUserUserSegmentId, long companyId,
@@ -770,7 +770,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public static AnonymousUserUserSegment findByUserSegmentIds_First(
 		long userSegmentId, boolean active,
@@ -804,7 +804,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public static AnonymousUserUserSegment findByUserSegmentIds_Last(
 		long userSegmentId, boolean active,
@@ -839,7 +839,7 @@ public class AnonymousUserUserSegmentUtil {
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public static AnonymousUserUserSegment[] findByUserSegmentIds_PrevAndNext(
 		long anonymousUserUserSegmentId, long userSegmentId, boolean active,
@@ -1000,7 +1000,7 @@ public class AnonymousUserUserSegmentUtil {
 	*
 	* @param anonymousUserUserSegmentId the primary key of the anonymous user user segment
 	* @return the anonymous user user segment that was removed
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public static AnonymousUserUserSegment remove(
 		long anonymousUserUserSegmentId)
@@ -1014,11 +1014,11 @@ public class AnonymousUserUserSegmentUtil {
 	}
 
 	/**
-	* Returns the anonymous user user segment with the primary key or throws a {@link com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException} if it could not be found.
+	* Returns the anonymous user user segment with the primary key or throws a {@link NoSuchAnonymousUserUserSegmentException} if it could not be found.
 	*
 	* @param anonymousUserUserSegmentId the primary key of the anonymous user user segment
 	* @return the anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public static AnonymousUserUserSegment findByPrimaryKey(
 		long anonymousUserUserSegmentId)

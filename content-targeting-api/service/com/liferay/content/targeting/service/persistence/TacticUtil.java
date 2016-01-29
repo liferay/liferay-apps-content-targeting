@@ -181,7 +181,7 @@ public class TacticUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	* @throws NoSuchTacticException if a matching tactic could not be found
 	*/
 	public static Tactic findByUuid_First(java.lang.String uuid,
 		OrderByComparator<Tactic> orderByComparator)
@@ -207,7 +207,7 @@ public class TacticUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	* @throws NoSuchTacticException if a matching tactic could not be found
 	*/
 	public static Tactic findByUuid_Last(java.lang.String uuid,
 		OrderByComparator<Tactic> orderByComparator)
@@ -234,7 +234,7 @@ public class TacticUtil {
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	* @throws NoSuchTacticException if a tactic with the primary key could not be found
 	*/
 	public static Tactic[] findByUuid_PrevAndNext(long tacticId,
 		java.lang.String uuid, OrderByComparator<Tactic> orderByComparator)
@@ -263,12 +263,12 @@ public class TacticUtil {
 	}
 
 	/**
-	* Returns the tactic where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchTacticException} if it could not be found.
+	* Returns the tactic where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchTacticException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	* @throws NoSuchTacticException if a matching tactic could not be found
 	*/
 	public static Tactic findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.content.targeting.exception.NoSuchTacticException {
@@ -403,7 +403,7 @@ public class TacticUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	* @throws NoSuchTacticException if a matching tactic could not be found
 	*/
 	public static Tactic findByUuid_C_First(java.lang.String uuid,
 		long companyId, OrderByComparator<Tactic> orderByComparator)
@@ -433,7 +433,7 @@ public class TacticUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	* @throws NoSuchTacticException if a matching tactic could not be found
 	*/
 	public static Tactic findByUuid_C_Last(java.lang.String uuid,
 		long companyId, OrderByComparator<Tactic> orderByComparator)
@@ -464,7 +464,7 @@ public class TacticUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	* @throws NoSuchTacticException if a tactic with the primary key could not be found
 	*/
 	public static Tactic[] findByUuid_C_PrevAndNext(long tacticId,
 		java.lang.String uuid, long companyId,
@@ -568,7 +568,7 @@ public class TacticUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	* @throws NoSuchTacticException if a matching tactic could not be found
 	*/
 	public static Tactic findByGroupId_First(long groupId,
 		OrderByComparator<Tactic> orderByComparator)
@@ -594,7 +594,7 @@ public class TacticUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	* @throws NoSuchTacticException if a matching tactic could not be found
 	*/
 	public static Tactic findByGroupId_Last(long groupId,
 		OrderByComparator<Tactic> orderByComparator)
@@ -621,7 +621,7 @@ public class TacticUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	* @throws NoSuchTacticException if a tactic with the primary key could not be found
 	*/
 	public static Tactic[] findByGroupId_PrevAndNext(long tacticId,
 		long groupId, OrderByComparator<Tactic> orderByComparator)
@@ -684,7 +684,7 @@ public class TacticUtil {
 	* @param groupId the group ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	* @throws NoSuchTacticException if a tactic with the primary key could not be found
 	*/
 	public static Tactic[] filterFindByGroupId_PrevAndNext(long tacticId,
 		long groupId, OrderByComparator<Tactic> orderByComparator)
@@ -797,7 +797,7 @@ public class TacticUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	* @throws NoSuchTacticException if a matching tactic could not be found
 	*/
 	public static Tactic findByCampaignId_First(long campaignId,
 		OrderByComparator<Tactic> orderByComparator)
@@ -825,7 +825,7 @@ public class TacticUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a matching tactic could not be found
+	* @throws NoSuchTacticException if a matching tactic could not be found
 	*/
 	public static Tactic findByCampaignId_Last(long campaignId,
 		OrderByComparator<Tactic> orderByComparator)
@@ -854,7 +854,7 @@ public class TacticUtil {
 	* @param campaignId the campaign ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	* @throws NoSuchTacticException if a tactic with the primary key could not be found
 	*/
 	public static Tactic[] findByCampaignId_PrevAndNext(long tacticId,
 		long campaignId, OrderByComparator<Tactic> orderByComparator)
@@ -916,7 +916,7 @@ public class TacticUtil {
 	*
 	* @param tacticId the primary key of the tactic
 	* @return the tactic that was removed
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	* @throws NoSuchTacticException if a tactic with the primary key could not be found
 	*/
 	public static Tactic remove(long tacticId)
 		throws com.liferay.content.targeting.exception.NoSuchTacticException {
@@ -928,11 +928,11 @@ public class TacticUtil {
 	}
 
 	/**
-	* Returns the tactic with the primary key or throws a {@link com.liferay.content.targeting.NoSuchTacticException} if it could not be found.
+	* Returns the tactic with the primary key or throws a {@link NoSuchTacticException} if it could not be found.
 	*
 	* @param tacticId the primary key of the tactic
 	* @return the tactic
-	* @throws com.liferay.content.targeting.NoSuchTacticException if a tactic with the primary key could not be found
+	* @throws NoSuchTacticException if a tactic with the primary key could not be found
 	*/
 	public static Tactic findByPrimaryKey(long tacticId)
 		throws com.liferay.content.targeting.exception.NoSuchTacticException {

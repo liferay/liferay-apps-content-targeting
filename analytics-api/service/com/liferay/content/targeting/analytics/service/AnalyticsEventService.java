@@ -53,17 +53,16 @@ public interface AnalyticsEventService extends BaseService {
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String className, long classPK, java.lang.String eventType,
-		java.util.Date createDate) throws PortalException, SystemException;
+		java.util.Date createDate) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
-		long companyId, java.util.Date createDate)
-		throws PortalException, SystemException;
+		long companyId, java.util.Date createDate) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String elementId, java.lang.String eventType,
-		java.util.Date createDate) throws PortalException, SystemException;
+		java.util.Date createDate) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.

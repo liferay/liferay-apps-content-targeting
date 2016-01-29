@@ -61,9 +61,9 @@ public interface AnonymousUserLocalService extends BaseLocalService,
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser addAnonymousUser(
 		long userId, java.lang.String lastIp, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
-	public void checkAnonymousUsers() throws PortalException, SystemException;
+	public void checkAnonymousUsers() throws PortalException;
 
 	/**
 	* Creates a new anonymous user with the primary key. Does not add the anonymous user to the database.
@@ -96,7 +96,7 @@ public interface AnonymousUserLocalService extends BaseLocalService,
 		long anonymousUserId) throws PortalException;
 
 	public void deleteAnonymousUsers(long companyId, java.util.Date createDate,
-		boolean includeUsers) throws PortalException, SystemException;
+		boolean includeUsers) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -177,7 +177,7 @@ public interface AnonymousUserLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser fetchAnonymousUserByUserId(
-		long userId) throws PortalException, SystemException;
+		long userId) throws PortalException;
 
 	/**
 	* Returns the anonymous user with the matching UUID and company.
@@ -247,7 +247,7 @@ public interface AnonymousUserLocalService extends BaseLocalService,
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public java.util.Date getMaxAge() throws PortalException, SystemException;
+	public java.util.Date getMaxAge() throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -275,9 +275,9 @@ public interface AnonymousUserLocalService extends BaseLocalService,
 		long anonymousUserId, long userId, java.lang.String lastIp,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public com.liferay.content.targeting.anonymous.users.model.AnonymousUser updateLastIp(
 		long anonymousUserId, java.lang.String lastIp)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

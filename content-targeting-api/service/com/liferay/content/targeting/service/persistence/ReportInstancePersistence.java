@@ -105,7 +105,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
 	public ReportInstance findByUuid_First(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator)
@@ -127,7 +127,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
 	public ReportInstance findByUuid_Last(java.lang.String uuid,
 		com.liferay.portal.kernel.util.OrderByComparator<ReportInstance> orderByComparator)
@@ -150,7 +150,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param uuid the uuid
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	* @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	*/
 	public ReportInstance[] findByUuid_PrevAndNext(long reportInstanceId,
 		java.lang.String uuid,
@@ -173,12 +173,12 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	public int countByUuid(java.lang.String uuid);
 
 	/**
-	* Returns the report instance where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchReportInstanceException} if it could not be found.
+	* Returns the report instance where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchReportInstanceException} if it could not be found.
 	*
 	* @param uuid the uuid
 	* @param groupId the group ID
 	* @return the matching report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
 	public ReportInstance findByUUID_G(java.lang.String uuid, long groupId)
 		throws com.liferay.content.targeting.exception.NoSuchReportInstanceException;
@@ -293,7 +293,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
 	public ReportInstance findByUuid_C_First(java.lang.String uuid,
 		long companyId,
@@ -319,7 +319,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
 	public ReportInstance findByUuid_C_Last(java.lang.String uuid,
 		long companyId,
@@ -346,7 +346,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	* @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	*/
 	public ReportInstance[] findByUuid_C_PrevAndNext(long reportInstanceId,
 		java.lang.String uuid, long companyId,
@@ -441,7 +441,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
 	public ReportInstance findByC_C_First(java.lang.String className,
 		long classPK,
@@ -467,7 +467,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
 	public ReportInstance findByC_C_Last(java.lang.String className,
 		long classPK,
@@ -494,7 +494,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	* @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	*/
 	public ReportInstance[] findByC_C_PrevAndNext(long reportInstanceId,
 		java.lang.String className, long classPK,
@@ -597,7 +597,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
 	public ReportInstance findByR_C_C_First(java.lang.String reportKey,
 		java.lang.String className, long classPK,
@@ -625,7 +625,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a matching report instance could not be found
+	* @throws NoSuchReportInstanceException if a matching report instance could not be found
 	*/
 	public ReportInstance findByR_C_C_Last(java.lang.String reportKey,
 		java.lang.String className, long classPK,
@@ -654,7 +654,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	* @param classPK the class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	* @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	*/
 	public ReportInstance[] findByR_C_C_PrevAndNext(long reportInstanceId,
 		java.lang.String reportKey, java.lang.String className, long classPK,
@@ -709,7 +709,7 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	*
 	* @param reportInstanceId the primary key of the report instance
 	* @return the report instance that was removed
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	* @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	*/
 	public ReportInstance remove(long reportInstanceId)
 		throws com.liferay.content.targeting.exception.NoSuchReportInstanceException;
@@ -717,11 +717,11 @@ public interface ReportInstancePersistence extends BasePersistence<ReportInstanc
 	public ReportInstance updateImpl(ReportInstance reportInstance);
 
 	/**
-	* Returns the report instance with the primary key or throws a {@link com.liferay.content.targeting.NoSuchReportInstanceException} if it could not be found.
+	* Returns the report instance with the primary key or throws a {@link NoSuchReportInstanceException} if it could not be found.
 	*
 	* @param reportInstanceId the primary key of the report instance
 	* @return the report instance
-	* @throws com.liferay.content.targeting.NoSuchReportInstanceException if a report instance with the primary key could not be found
+	* @throws NoSuchReportInstanceException if a report instance with the primary key could not be found
 	*/
 	public ReportInstance findByPrimaryKey(long reportInstanceId)
 		throws com.liferay.content.targeting.exception.NoSuchReportInstanceException;

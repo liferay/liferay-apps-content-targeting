@@ -217,7 +217,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -299,7 +299,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByUuid_First(String uuid,
@@ -350,7 +350,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByUuid_Last(String uuid,
@@ -408,7 +408,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance[] findByUuid_PrevAndNext(
@@ -449,8 +449,9 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -656,12 +657,12 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the tracking action instance where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchTrackingActionInstanceException} if it could not be found.
+	 * Returns the tracking action instance where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByUUID_G(String uuid, long groupId)
@@ -1039,7 +1040,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1126,7 +1127,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByUuid_C_First(String uuid,
@@ -1184,7 +1185,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByUuid_C_Last(String uuid,
@@ -1249,7 +1250,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance[] findByUuid_C_PrevAndNext(
@@ -1291,11 +1292,12 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
@@ -1622,7 +1624,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1690,7 +1692,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByGroupId_First(long groupId,
@@ -1741,7 +1743,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByGroupId_Last(long groupId,
@@ -1799,7 +1801,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance[] findByGroupId_PrevAndNext(
@@ -1840,8 +1842,9 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -2134,7 +2137,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -2202,7 +2205,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByCampaignId_First(long campaignId,
@@ -2253,7 +2256,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByCampaignId_Last(long campaignId,
@@ -2311,7 +2314,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param campaignId the campaign ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance[] findByCampaignId_PrevAndNext(
@@ -2353,8 +2356,9 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -2530,12 +2534,12 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the tracking action instance where campaignId = &#63; and alias = &#63; or throws a {@link com.liferay.content.targeting.NoSuchTrackingActionInstanceException} if it could not be found.
+	 * Returns the tracking action instance where campaignId = &#63; and alias = &#63; or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
 	 *
 	 * @param campaignId the campaign ID
 	 * @param alias the alias
 	 * @return the matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByC_A(long campaignId, String alias)
@@ -2929,7 +2933,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			if (orderByComparator != null) {
 				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(5);
@@ -3035,7 +3039,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByC_E_E_First(long campaignId,
@@ -3098,7 +3102,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByC_E_E_Last(long campaignId,
@@ -3168,7 +3172,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance[] findByC_E_E_PrevAndNext(
@@ -3212,10 +3216,11 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 		if (orderByComparator != null) {
 			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(5);
 		}
 
 		query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
@@ -3627,7 +3632,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			if (orderByComparator != null) {
 				query = new StringBundler(6 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(6);
@@ -3738,7 +3743,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByC_R_R_E_First(long campaignId,
@@ -3807,7 +3812,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByC_R_R_E_Last(long campaignId,
@@ -3884,7 +3889,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance[] findByC_R_R_E_PrevAndNext(
@@ -3929,11 +3934,12 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(6);
 		}
 
 		query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
@@ -4327,7 +4333,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -4395,7 +4401,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param reportInstanceId the report instance ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByReportInstanceId_First(
@@ -4448,7 +4454,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param reportInstanceId the report instance ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByReportInstanceId_Last(
@@ -4508,7 +4514,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param reportInstanceId the report instance ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance[] findByReportInstanceId_PrevAndNext(
@@ -4552,8 +4558,9 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -4730,12 +4737,12 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			new String[] { Long.class.getName(), String.class.getName() });
 
 	/**
-	 * Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or throws a {@link com.liferay.content.targeting.NoSuchTrackingActionInstanceException} if it could not be found.
+	 * Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
 	 *
 	 * @param reportInstanceId the report instance ID
 	 * @param alias the alias
 	 * @return the matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByR_A(long reportInstanceId, String alias)
@@ -5130,7 +5137,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			if (orderByComparator != null) {
 				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(5);
@@ -5236,7 +5243,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByR_E_E_First(long reportInstanceId,
@@ -5299,7 +5306,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByR_E_E_Last(long reportInstanceId,
@@ -5369,7 +5376,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance[] findByR_E_E_PrevAndNext(
@@ -5415,10 +5422,11 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 		if (orderByComparator != null) {
 			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(5);
 		}
 
 		query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
@@ -5836,7 +5844,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			if (orderByComparator != null) {
 				query = new StringBundler(6 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(6);
@@ -5947,7 +5955,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByR_R_R_E_First(long reportInstanceId,
@@ -6016,7 +6024,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByR_R_R_E_Last(long reportInstanceId,
@@ -6093,7 +6101,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 * @param eventType the event type
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance[] findByR_R_R_E_PrevAndNext(
@@ -6140,11 +6148,12 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(7 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(6);
 		}
 
 		query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
@@ -6672,7 +6681,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 *
 	 * @param trackingActionInstanceId the primary key of the tracking action instance
 	 * @return the tracking action instance that was removed
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance remove(long trackingActionInstanceId)
@@ -6685,7 +6694,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	 *
 	 * @param primaryKey the primary key of the tracking action instance
 	 * @return the tracking action instance that was removed
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance remove(Serializable primaryKey)
@@ -7058,11 +7067,11 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Returns the tracking action instance with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the tracking action instance with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the tracking action instance
 	 * @return the tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByPrimaryKey(Serializable primaryKey)
@@ -7082,11 +7091,11 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	/**
-	 * Returns the tracking action instance with the primary key or throws a {@link com.liferay.content.targeting.NoSuchTrackingActionInstanceException} if it could not be found.
+	 * Returns the tracking action instance with the primary key or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
 	 *
 	 * @param trackingActionInstanceId the primary key of the tracking action instance
 	 * @return the tracking action instance
-	 * @throws com.liferay.content.targeting.NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
 	 */
 	@Override
 	public TrackingActionInstance findByPrimaryKey(
@@ -7337,7 +7346,7 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE);
 

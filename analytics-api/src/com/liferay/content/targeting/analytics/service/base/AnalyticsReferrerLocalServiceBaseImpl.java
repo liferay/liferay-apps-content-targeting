@@ -44,6 +44,7 @@ import com.liferay.portal.service.BaseLocalServiceImpl;
 import com.liferay.portal.service.PersistedModelLocalServiceRegistry;
 import com.liferay.portal.service.persistence.ClassNamePersistence;
 import com.liferay.portal.service.persistence.UserPersistence;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 import com.liferay.portal.util.PortalUtil;
 
 import java.io.Serializable;
@@ -338,25 +339,6 @@ public abstract class AnalyticsReferrerLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the analytics event remote service.
-	 *
-	 * @return the analytics event remote service
-	 */
-	public com.liferay.content.targeting.analytics.service.AnalyticsEventService getAnalyticsEventService() {
-		return analyticsEventService;
-	}
-
-	/**
-	 * Sets the analytics event remote service.
-	 *
-	 * @param analyticsEventService the analytics event remote service
-	 */
-	public void setAnalyticsEventService(
-		com.liferay.content.targeting.analytics.service.AnalyticsEventService analyticsEventService) {
-		this.analyticsEventService = analyticsEventService;
-	}
-
-	/**
 	 * Returns the analytics event persistence.
 	 *
 	 * @return the analytics event persistence
@@ -411,25 +393,6 @@ public abstract class AnalyticsReferrerLocalServiceBaseImpl
 	public void setAnalyticsReferrerLocalService(
 		AnalyticsReferrerLocalService analyticsReferrerLocalService) {
 		this.analyticsReferrerLocalService = analyticsReferrerLocalService;
-	}
-
-	/**
-	 * Returns the analytics referrer remote service.
-	 *
-	 * @return the analytics referrer remote service
-	 */
-	public com.liferay.content.targeting.analytics.service.AnalyticsReferrerService getAnalyticsReferrerService() {
-		return analyticsReferrerService;
-	}
-
-	/**
-	 * Sets the analytics referrer remote service.
-	 *
-	 * @param analyticsReferrerService the analytics referrer remote service
-	 */
-	public void setAnalyticsReferrerService(
-		com.liferay.content.targeting.analytics.service.AnalyticsReferrerService analyticsReferrerService) {
-		this.analyticsReferrerService = analyticsReferrerService;
 	}
 
 	/**
@@ -490,25 +453,6 @@ public abstract class AnalyticsReferrerLocalServiceBaseImpl
 	}
 
 	/**
-	 * Returns the class name remote service.
-	 *
-	 * @return the class name remote service
-	 */
-	public com.liferay.portal.service.ClassNameService getClassNameService() {
-		return classNameService;
-	}
-
-	/**
-	 * Sets the class name remote service.
-	 *
-	 * @param classNameService the class name remote service
-	 */
-	public void setClassNameService(
-		com.liferay.portal.service.ClassNameService classNameService) {
-		this.classNameService = classNameService;
-	}
-
-	/**
 	 * Returns the class name persistence.
 	 *
 	 * @return the class name persistence
@@ -563,25 +507,6 @@ public abstract class AnalyticsReferrerLocalServiceBaseImpl
 	public void setUserLocalService(
 		com.liferay.portal.service.UserLocalService userLocalService) {
 		this.userLocalService = userLocalService;
-	}
-
-	/**
-	 * Returns the user remote service.
-	 *
-	 * @return the user remote service
-	 */
-	public com.liferay.portal.service.UserService getUserService() {
-		return userService;
-	}
-
-	/**
-	 * Sets the user remote service.
-	 *
-	 * @param userService the user remote service
-	 */
-	public void setUserService(
-		com.liferay.portal.service.UserService userService) {
-		this.userService = userService;
 	}
 
 	/**
@@ -656,34 +581,26 @@ public abstract class AnalyticsReferrerLocalServiceBaseImpl
 
 	@BeanReference(type = com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService.class)
 	protected com.liferay.content.targeting.analytics.service.AnalyticsEventLocalService analyticsEventLocalService;
-	@BeanReference(type = com.liferay.content.targeting.analytics.service.AnalyticsEventService.class)
-	protected com.liferay.content.targeting.analytics.service.AnalyticsEventService analyticsEventService;
 	@BeanReference(type = AnalyticsEventPersistence.class)
 	protected AnalyticsEventPersistence analyticsEventPersistence;
 	@BeanReference(type = AnalyticsEventFinder.class)
 	protected AnalyticsEventFinder analyticsEventFinder;
 	@BeanReference(type = com.liferay.content.targeting.analytics.service.AnalyticsReferrerLocalService.class)
 	protected AnalyticsReferrerLocalService analyticsReferrerLocalService;
-	@BeanReference(type = com.liferay.content.targeting.analytics.service.AnalyticsReferrerService.class)
-	protected com.liferay.content.targeting.analytics.service.AnalyticsReferrerService analyticsReferrerService;
 	@BeanReference(type = AnalyticsReferrerPersistence.class)
 	protected AnalyticsReferrerPersistence analyticsReferrerPersistence;
-	@BeanReference(type = com.liferay.counter.service.CounterLocalService.class)
+	@ServiceReference(type = com.liferay.counter.service.CounterLocalService.class)
 	protected com.liferay.counter.service.CounterLocalService counterLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ClassNameLocalService.class)
 	protected com.liferay.portal.service.ClassNameLocalService classNameLocalService;
-	@BeanReference(type = com.liferay.portal.service.ClassNameService.class)
-	protected com.liferay.portal.service.ClassNameService classNameService;
-	@BeanReference(type = ClassNamePersistence.class)
+	@ServiceReference(type = ClassNamePersistence.class)
 	protected ClassNamePersistence classNamePersistence;
-	@BeanReference(type = com.liferay.portal.service.ResourceLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.ResourceLocalService.class)
 	protected com.liferay.portal.service.ResourceLocalService resourceLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserLocalService.class)
+	@ServiceReference(type = com.liferay.portal.service.UserLocalService.class)
 	protected com.liferay.portal.service.UserLocalService userLocalService;
-	@BeanReference(type = com.liferay.portal.service.UserService.class)
-	protected com.liferay.portal.service.UserService userService;
-	@BeanReference(type = UserPersistence.class)
+	@ServiceReference(type = UserPersistence.class)
 	protected UserPersistence userPersistence;
-	@BeanReference(type = PersistedModelLocalServiceRegistry.class)
+	@ServiceReference(type = PersistedModelLocalServiceRegistry.class)
 	protected PersistedModelLocalServiceRegistry persistedModelLocalServiceRegistry;
 }

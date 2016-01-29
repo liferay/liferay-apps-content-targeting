@@ -35,6 +35,7 @@ import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.SetUtil;
@@ -44,7 +45,6 @@ import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Validator;
 import com.liferay.portal.kernel.uuid.PortalUUIDUtil;
 import com.liferay.portal.model.CacheModel;
-import com.liferay.portal.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portal.service.ServiceContextThreadLocal;
 import com.liferay.portal.service.persistence.CompanyProvider;
@@ -222,7 +222,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -304,7 +304,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	 * @throws NoSuchUserSegmentException if a matching user segment could not be found
 	 */
 	@Override
 	public UserSegment findByUuid_First(String uuid,
@@ -353,7 +353,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	 * @throws NoSuchUserSegmentException if a matching user segment could not be found
 	 */
 	@Override
 	public UserSegment findByUuid_Last(String uuid,
@@ -410,7 +410,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @param uuid the uuid
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	 * @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	 */
 	@Override
 	public UserSegment[] findByUuid_PrevAndNext(long userSegmentId,
@@ -449,8 +449,9 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -655,12 +656,12 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 			new String[] { String.class.getName(), Long.class.getName() });
 
 	/**
-	 * Returns the user segment where uuid = &#63; and groupId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchUserSegmentException} if it could not be found.
+	 * Returns the user segment where uuid = &#63; and groupId = &#63; or throws a {@link NoSuchUserSegmentException} if it could not be found.
 	 *
 	 * @param uuid the uuid
 	 * @param groupId the group ID
 	 * @return the matching user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	 * @throws NoSuchUserSegmentException if a matching user segment could not be found
 	 */
 	@Override
 	public UserSegment findByUUID_G(String uuid, long groupId)
@@ -1032,7 +1033,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(4 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(4);
@@ -1119,7 +1120,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	 * @throws NoSuchUserSegmentException if a matching user segment could not be found
 	 */
 	@Override
 	public UserSegment findByUuid_C_First(String uuid, long companyId,
@@ -1175,7 +1176,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	 * @throws NoSuchUserSegmentException if a matching user segment could not be found
 	 */
 	@Override
 	public UserSegment findByUuid_C_Last(String uuid, long companyId,
@@ -1238,7 +1239,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @param companyId the company ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	 * @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	 */
 	@Override
 	public UserSegment[] findByUuid_C_PrevAndNext(long userSegmentId,
@@ -1278,11 +1279,12 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		query.append(_SQL_SELECT_USERSEGMENT_WHERE);
@@ -1494,11 +1496,11 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 			"countByAssetCategoryId", new String[] { Long.class.getName() });
 
 	/**
-	 * Returns the user segment where assetCategoryId = &#63; or throws a {@link com.liferay.content.targeting.NoSuchUserSegmentException} if it could not be found.
+	 * Returns the user segment where assetCategoryId = &#63; or throws a {@link NoSuchUserSegmentException} if it could not be found.
 	 *
 	 * @param assetCategoryId the asset category ID
 	 * @return the matching user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	 * @throws NoSuchUserSegmentException if a matching user segment could not be found
 	 */
 	@Override
 	public UserSegment findByAssetCategoryId(long assetCategoryId)
@@ -1822,7 +1824,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
 				query = new StringBundler(3);
@@ -1890,7 +1892,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the first matching user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	 * @throws NoSuchUserSegmentException if a matching user segment could not be found
 	 */
 	@Override
 	public UserSegment findByGroupId_First(long groupId,
@@ -1940,7 +1942,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the last matching user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a matching user segment could not be found
+	 * @throws NoSuchUserSegmentException if a matching user segment could not be found
 	 */
 	@Override
 	public UserSegment findByGroupId_Last(long groupId,
@@ -1997,7 +1999,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	 * @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	 */
 	@Override
 	public UserSegment[] findByGroupId_PrevAndNext(long userSegmentId,
@@ -2036,8 +2038,9 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
 			query = new StringBundler(3);
@@ -2189,10 +2192,10 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 
 		if (orderByComparator != null) {
 			query = new StringBundler(3 +
-					(orderByComparator.getOrderByFields().length * 3));
+					(orderByComparator.getOrderByFields().length * 2));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -2266,7 +2269,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 * @param groupId the group ID
 	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	 * @return the previous, current, and next user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	 * @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	 */
 	@Override
 	public UserSegment[] filterFindByGroupId_PrevAndNext(long userSegmentId,
@@ -2310,11 +2313,12 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 		StringBundler query = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByFields().length * 6));
+			query = new StringBundler(5 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			query = new StringBundler(4);
 		}
 
 		if (getDB().isSupportsInlineDistinct()) {
@@ -3217,7 +3221,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 *
 	 * @param userSegmentId the primary key of the user segment
 	 * @return the user segment that was removed
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	 * @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	 */
 	@Override
 	public UserSegment remove(long userSegmentId)
@@ -3230,7 +3234,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	 *
 	 * @param primaryKey the primary key of the user segment
 	 * @return the user segment that was removed
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	 * @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	 */
 	@Override
 	public UserSegment remove(Serializable primaryKey)
@@ -3459,11 +3463,11 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	}
 
 	/**
-	 * Returns the user segment with the primary key or throws a {@link com.liferay.portal.NoSuchModelException} if it could not be found.
+	 * Returns the user segment with the primary key or throws a {@link com.liferay.portal.exception.NoSuchModelException} if it could not be found.
 	 *
 	 * @param primaryKey the primary key of the user segment
 	 * @return the user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	 * @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	 */
 	@Override
 	public UserSegment findByPrimaryKey(Serializable primaryKey)
@@ -3483,11 +3487,11 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 	}
 
 	/**
-	 * Returns the user segment with the primary key or throws a {@link com.liferay.content.targeting.NoSuchUserSegmentException} if it could not be found.
+	 * Returns the user segment with the primary key or throws a {@link NoSuchUserSegmentException} if it could not be found.
 	 *
 	 * @param userSegmentId the primary key of the user segment
 	 * @return the user segment
-	 * @throws com.liferay.content.targeting.NoSuchUserSegmentException if a user segment with the primary key could not be found
+	 * @throws NoSuchUserSegmentException if a user segment with the primary key could not be found
 	 */
 	@Override
 	public UserSegment findByPrimaryKey(long userSegmentId)
@@ -3733,7 +3737,7 @@ public class UserSegmentPersistenceImpl extends BasePersistenceImpl<UserSegment>
 
 			if (orderByComparator != null) {
 				query = new StringBundler(2 +
-						(orderByComparator.getOrderByFields().length * 3));
+						(orderByComparator.getOrderByFields().length * 2));
 
 				query.append(_SQL_SELECT_USERSEGMENT);
 

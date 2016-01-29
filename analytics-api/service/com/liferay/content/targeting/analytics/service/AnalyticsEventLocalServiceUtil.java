@@ -16,8 +16,7 @@ package com.liferay.content.targeting.analytics.service;
 
 import aQute.bnd.annotation.ProviderType;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
+import com.liferay.osgi.util.ServiceTrackerFactory;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -61,8 +60,7 @@ public class AnalyticsEventLocalServiceUtil {
 		java.lang.String languageId, java.lang.String URL,
 		java.lang.String additionalInfo,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAnalyticsEvent(userId, anonymousUserId, className,
 			classPK, elementId, eventType, clientIP, userAgent, languageId,
@@ -77,8 +75,7 @@ public class AnalyticsEventLocalServiceUtil {
 		java.lang.String userAgent, java.lang.String languageId,
 		java.lang.String URL, java.lang.String additionalInfo,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAnalyticsEvent(userId, anonymousUserId, className,
 			classPK, referrerClassName, referrerClassPKs, elementId, eventType,
@@ -93,8 +90,7 @@ public class AnalyticsEventLocalServiceUtil {
 		java.lang.String languageId, java.lang.String URL,
 		java.lang.String additionalInfo,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addAnalyticsEvent(userId, anonymousUserId, className,
 			classPK, referrers, elementId, eventType, clientIP, userAgent,
@@ -102,8 +98,7 @@ public class AnalyticsEventLocalServiceUtil {
 	}
 
 	public static void checkAnalyticsEvents()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().checkAnalyticsEvents();
 	}
 
@@ -123,11 +118,9 @@ public class AnalyticsEventLocalServiceUtil {
 	*
 	* @param analyticsEvent the analytics event
 	* @return the analytics event that was removed
-	* @throws SystemException
 	*/
 	public static com.liferay.content.targeting.analytics.model.AnalyticsEvent deleteAnalyticsEvent(
-		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.analytics.model.AnalyticsEvent analyticsEvent) {
 		return getService().deleteAnalyticsEvent(analyticsEvent);
 	}
 
@@ -146,8 +139,7 @@ public class AnalyticsEventLocalServiceUtil {
 
 	public static void deleteAnalyticsEvents(long companyId,
 		java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		getService().deleteAnalyticsEvents(companyId, createDate);
 	}
 
@@ -263,8 +255,7 @@ public class AnalyticsEventLocalServiceUtil {
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		long anonymousUserId, java.lang.String className, long classPK,
 		java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnalyticsEvents(anonymousUserId, className, classPK,
 			eventType);
@@ -272,32 +263,28 @@ public class AnalyticsEventLocalServiceUtil {
 
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String className, long classPK, java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAnalyticsEvents(className, classPK, eventType);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String className, long classPK, java.lang.String eventType,
 		java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnalyticsEvents(className, classPK, eventType, createDate);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		long companyId, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAnalyticsEvents(companyId, createDate);
 	}
 
 	public static java.util.List<java.lang.Object[]> getAnalyticsEvents(
 		long companyId, java.lang.String referrerClassName,
 		long referrerClassPK, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnalyticsEvents(companyId, referrerClassName,
 			referrerClassPK, createDate);
@@ -306,8 +293,7 @@ public class AnalyticsEventLocalServiceUtil {
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEvents(
 		java.lang.String elementId, java.lang.String eventType,
 		java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAnalyticsEvents(elementId, eventType, createDate);
 	}
 
@@ -329,14 +315,12 @@ public class AnalyticsEventLocalServiceUtil {
 
 	public static java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsEvent> getAnalyticsEventsContent(
 		java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAnalyticsEventsContent(createDate);
 	}
 
 	public static long[] getAnalyticsEventsContentIds(java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAnalyticsEventsContentIds(createDate);
 	}
 
@@ -351,8 +335,7 @@ public class AnalyticsEventLocalServiceUtil {
 
 	public static int getAnalyticsEventsCount(long anonymousUserId,
 		java.lang.String className, long classPK, java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnalyticsEventsCount(anonymousUserId, className,
 			classPK, eventType);
@@ -360,16 +343,14 @@ public class AnalyticsEventLocalServiceUtil {
 
 	public static int getAnalyticsEventsCount(java.lang.String className,
 		long classPK, java.lang.String eventType)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnalyticsEventsCount(className, classPK, eventType);
 	}
 
 	public static int getAnalyticsEventsCount(java.lang.String className,
 		long classPK, java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnalyticsEventsCount(className, classPK, eventType,
 			createDate);
@@ -378,8 +359,7 @@ public class AnalyticsEventLocalServiceUtil {
 	public static int getAnalyticsEventsCount(java.lang.String className,
 		long classPK, java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnalyticsEventsCount(className, classPK,
 			referrerClassName, referrerClassPK, eventType, createDate);
@@ -387,15 +367,13 @@ public class AnalyticsEventLocalServiceUtil {
 
 	public static int getAnalyticsEventsCount(long companyId,
 		java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getAnalyticsEventsCount(companyId, createDate);
 	}
 
 	public static int getAnalyticsEventsCount(java.lang.String elementId,
 		java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnalyticsEventsCount(elementId, eventType, createDate);
 	}
@@ -404,8 +382,7 @@ public class AnalyticsEventLocalServiceUtil {
 		java.lang.String referrerClassName, long referrerClassPK,
 		java.lang.String elementId, java.lang.String eventType,
 		java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnalyticsEventsCount(referrerClassName, referrerClassPK,
 			elementId, eventType, createDate);
@@ -413,8 +390,7 @@ public class AnalyticsEventLocalServiceUtil {
 
 	public static long[] getAnalyticsEventsIds(java.lang.String className,
 		long classPK, java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnalyticsEventsIds(className, classPK, eventType,
 			createDate);
@@ -422,8 +398,7 @@ public class AnalyticsEventLocalServiceUtil {
 
 	public static long[] getAnalyticsEventsIds(java.lang.String elementId,
 		java.lang.String eventType, java.util.Date createDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .getAnalyticsEventsIds(elementId, eventType, createDate);
 	}
@@ -433,8 +408,7 @@ public class AnalyticsEventLocalServiceUtil {
 	}
 
 	public static java.util.Date getMaxAge()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getMaxAge();
 	}
 
@@ -468,21 +442,6 @@ public class AnalyticsEventLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setService(AnalyticsEventLocalService service) {
-	}
-
-	private static ServiceTracker<AnalyticsEventLocalService, AnalyticsEventLocalService> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AnalyticsEventLocalServiceUtil.class);
-
-		_serviceTracker = new ServiceTracker<AnalyticsEventLocalService, AnalyticsEventLocalService>(bundle.getBundleContext(),
-				AnalyticsEventLocalService.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<AnalyticsEventLocalService, AnalyticsEventLocalService> _serviceTracker =
+		ServiceTrackerFactory.open(AnalyticsEventLocalService.class);
 }

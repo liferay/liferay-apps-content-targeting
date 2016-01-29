@@ -18,12 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -191,7 +190,7 @@ public class AnalyticsReferrerUtil {
 	* @param analyticsEventId the analytics event ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public static AnalyticsReferrer findByAnalyticsEventId_First(
 		long analyticsEventId,
@@ -223,7 +222,7 @@ public class AnalyticsReferrerUtil {
 	* @param analyticsEventId the analytics event ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public static AnalyticsReferrer findByAnalyticsEventId_Last(
 		long analyticsEventId,
@@ -256,7 +255,7 @@ public class AnalyticsReferrerUtil {
 	* @param analyticsEventId the analytics event ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public static AnalyticsReferrer[] findByAnalyticsEventId_PrevAndNext(
 		long analyticsReferrerId, long analyticsEventId,
@@ -371,7 +370,7 @@ public class AnalyticsReferrerUtil {
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public static AnalyticsReferrer findByR_R_First(
 		java.lang.String referrerClassName, long referrerClassPK,
@@ -405,7 +404,7 @@ public class AnalyticsReferrerUtil {
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public static AnalyticsReferrer findByR_R_Last(
 		java.lang.String referrerClassName, long referrerClassPK,
@@ -440,7 +439,7 @@ public class AnalyticsReferrerUtil {
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public static AnalyticsReferrer[] findByR_R_PrevAndNext(
 		long analyticsReferrerId, java.lang.String referrerClassName,
@@ -568,7 +567,7 @@ public class AnalyticsReferrerUtil {
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public static AnalyticsReferrer findByA_R_R_First(long analyticsEventId,
 		java.lang.String referrerClassName, long referrerClassPK,
@@ -604,7 +603,7 @@ public class AnalyticsReferrerUtil {
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
+	* @throws NoSuchAnalyticsReferrerException if a matching analytics referrer could not be found
 	*/
 	public static AnalyticsReferrer findByA_R_R_Last(long analyticsEventId,
 		java.lang.String referrerClassName, long referrerClassPK,
@@ -641,7 +640,7 @@ public class AnalyticsReferrerUtil {
 	* @param referrerClassPK the referrer class p k
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public static AnalyticsReferrer[] findByA_R_R_PrevAndNext(
 		long analyticsReferrerId, long analyticsEventId,
@@ -822,7 +821,7 @@ public class AnalyticsReferrerUtil {
 	*
 	* @param analyticsReferrerId the primary key of the analytics referrer
 	* @return the analytics referrer that was removed
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public static AnalyticsReferrer remove(long analyticsReferrerId)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException {
@@ -835,11 +834,11 @@ public class AnalyticsReferrerUtil {
 	}
 
 	/**
-	* Returns the analytics referrer with the primary key or throws a {@link com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException} if it could not be found.
+	* Returns the analytics referrer with the primary key or throws a {@link NoSuchAnalyticsReferrerException} if it could not be found.
 	*
 	* @param analyticsReferrerId the primary key of the analytics referrer
 	* @return the analytics referrer
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
+	* @throws NoSuchAnalyticsReferrerException if a analytics referrer with the primary key could not be found
 	*/
 	public static AnalyticsReferrer findByPrimaryKey(long analyticsReferrerId)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsReferrerException {
@@ -942,21 +941,6 @@ public class AnalyticsReferrerUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(AnalyticsReferrerPersistence persistence) {
-	}
-
-	private static ServiceTracker<AnalyticsReferrerPersistence, AnalyticsReferrerPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AnalyticsReferrerUtil.class);
-
-		_serviceTracker = new ServiceTracker<AnalyticsReferrerPersistence, AnalyticsReferrerPersistence>(bundle.getBundleContext(),
-				AnalyticsReferrerPersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<AnalyticsReferrerPersistence, AnalyticsReferrerPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(AnalyticsReferrerPersistence.class);
 }

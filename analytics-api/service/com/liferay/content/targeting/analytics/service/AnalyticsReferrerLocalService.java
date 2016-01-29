@@ -49,7 +49,7 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 	 */
 	public com.liferay.content.targeting.analytics.model.AnalyticsReferrer addAnalyticsReferrer(
 		long analyticsEventId, java.lang.String className, long classPK)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Adds the analytics referrer to the database. Also notifies the appropriate model listeners.
@@ -184,19 +184,19 @@ public interface AnalyticsReferrerLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsReferrerCount(long analyticsEventId,
-		java.lang.String className, long classPK) throws SystemException;
+		java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsReferrerCount(long[] analyticsEventIds,
-		java.lang.String className, long classPK) throws SystemException;
+		java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getAnalyticsReferrerCount(java.lang.String className,
-		long classPK) throws SystemException;
+		long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.analytics.model.AnalyticsReferrer> getAnalyticsReferrers(
-		long analyticsEventId) throws SystemException;
+		long analyticsEventId);
 
 	/**
 	* Returns a range of all the analytics referrers.

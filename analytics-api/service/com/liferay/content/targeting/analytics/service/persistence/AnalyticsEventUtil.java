@@ -18,12 +18,11 @@ import aQute.bnd.annotation.ProviderType;
 
 import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 
+import com.liferay.osgi.util.ServiceTrackerFactory;
+
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.service.ServiceContext;
-
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 
 import org.osgi.util.tracker.ServiceTracker;
 
@@ -187,7 +186,7 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByCompanyId_First(long companyId,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
@@ -215,7 +214,7 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByCompanyId_Last(long companyId,
 		OrderByComparator<AnalyticsEvent> orderByComparator)
@@ -244,7 +243,7 @@ public class AnalyticsEventUtil {
 	* @param companyId the company ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByCompanyId_PrevAndNext(
 		long analyticsEventId, long companyId,
@@ -357,7 +356,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByC_GtD_First(long companyId,
 		java.util.Date createDate,
@@ -389,7 +388,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByC_GtD_Last(long companyId,
 		java.util.Date createDate,
@@ -422,7 +421,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByC_GtD_PrevAndNext(
 		long analyticsEventId, long companyId, java.util.Date createDate,
@@ -537,7 +536,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByC_LtD_First(long companyId,
 		java.util.Date createDate,
@@ -569,7 +568,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByC_LtD_Last(long companyId,
 		java.util.Date createDate,
@@ -602,7 +601,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByC_LtD_PrevAndNext(
 		long analyticsEventId, long companyId, java.util.Date createDate,
@@ -717,7 +716,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByNotC_GtD_First(long classPK,
 		java.util.Date createDate,
@@ -749,7 +748,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByNotC_GtD_Last(long classPK,
 		java.util.Date createDate,
@@ -782,7 +781,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByNotC_GtD_PrevAndNext(
 		long analyticsEventId, long classPK, java.util.Date createDate,
@@ -903,7 +902,7 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByC_C_E_First(java.lang.String className,
 		long classPK, java.lang.String eventType,
@@ -939,7 +938,7 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByC_C_E_Last(java.lang.String className,
 		long classPK, java.lang.String eventType,
@@ -976,7 +975,7 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByC_C_E_PrevAndNext(
 		long analyticsEventId, java.lang.String className, long classPK,
@@ -1106,7 +1105,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByE_E_GtD_First(
 		java.lang.String elementId, java.lang.String eventType,
@@ -1144,7 +1143,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByE_E_GtD_Last(
 		java.lang.String elementId, java.lang.String eventType,
@@ -1183,7 +1182,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByE_E_GtD_PrevAndNext(
 		long analyticsEventId, java.lang.String elementId,
@@ -1318,7 +1317,7 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByA_C_C_E_First(long anonymousUserId,
 		java.lang.String className, long classPK, java.lang.String eventType,
@@ -1356,7 +1355,7 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByA_C_C_E_Last(long anonymousUserId,
 		java.lang.String className, long classPK, java.lang.String eventType,
@@ -1395,7 +1394,7 @@ public class AnalyticsEventUtil {
 	* @param eventType the event type
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByA_C_C_E_PrevAndNext(
 		long analyticsEventId, long anonymousUserId,
@@ -1537,7 +1536,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByC_C_E_GtD_First(
 		java.lang.String className, long classPK, java.lang.String eventType,
@@ -1577,7 +1576,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a matching analytics event could not be found
+	* @throws NoSuchAnalyticsEventException if a matching analytics event could not be found
 	*/
 	public static AnalyticsEvent findByC_C_E_GtD_Last(
 		java.lang.String className, long classPK, java.lang.String eventType,
@@ -1618,7 +1617,7 @@ public class AnalyticsEventUtil {
 	* @param createDate the create date
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent[] findByC_C_E_GtD_PrevAndNext(
 		long analyticsEventId, java.lang.String className, long classPK,
@@ -1692,7 +1691,7 @@ public class AnalyticsEventUtil {
 	*
 	* @param analyticsEventId the primary key of the analytics event
 	* @return the analytics event that was removed
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent remove(long analyticsEventId)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
@@ -1704,11 +1703,11 @@ public class AnalyticsEventUtil {
 	}
 
 	/**
-	* Returns the analytics event with the primary key or throws a {@link com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException} if it could not be found.
+	* Returns the analytics event with the primary key or throws a {@link NoSuchAnalyticsEventException} if it could not be found.
 	*
 	* @param analyticsEventId the primary key of the analytics event
 	* @return the analytics event
-	* @throws com.liferay.content.targeting.analytics.NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
+	* @throws NoSuchAnalyticsEventException if a analytics event with the primary key could not be found
 	*/
 	public static AnalyticsEvent findByPrimaryKey(long analyticsEventId)
 		throws com.liferay.content.targeting.analytics.exception.NoSuchAnalyticsEventException {
@@ -1811,21 +1810,6 @@ public class AnalyticsEventUtil {
 		return _serviceTracker.getService();
 	}
 
-	/**
-	 * @deprecated As of 6.2.0
-	 */
-	@Deprecated
-	public void setPersistence(AnalyticsEventPersistence persistence) {
-	}
-
-	private static ServiceTracker<AnalyticsEventPersistence, AnalyticsEventPersistence> _serviceTracker;
-
-	static {
-		Bundle bundle = FrameworkUtil.getBundle(AnalyticsEventUtil.class);
-
-		_serviceTracker = new ServiceTracker<AnalyticsEventPersistence, AnalyticsEventPersistence>(bundle.getBundleContext(),
-				AnalyticsEventPersistence.class, null);
-
-		_serviceTracker.open();
-	}
+	private static ServiceTracker<AnalyticsEventPersistence, AnalyticsEventPersistence> _serviceTracker =
+		ServiceTrackerFactory.open(AnalyticsEventPersistence.class);
 }

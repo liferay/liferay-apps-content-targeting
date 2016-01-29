@@ -111,7 +111,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public AnonymousUserUserSegment findByAnonymousUserId_First(
 		long anonymousUserId, boolean active,
@@ -137,7 +137,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public AnonymousUserUserSegment findByAnonymousUserId_Last(
 		long anonymousUserId, boolean active,
@@ -164,7 +164,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public AnonymousUserUserSegment[] findByAnonymousUserId_PrevAndNext(
 		long anonymousUserUserSegmentId, long anonymousUserId, boolean active,
@@ -259,7 +259,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public AnonymousUserUserSegment findByA_U_First(long anonymousUserId,
 		long userSegmentId,
@@ -285,7 +285,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public AnonymousUserUserSegment findByA_U_Last(long anonymousUserId,
 		long userSegmentId,
@@ -312,7 +312,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param userSegmentId the user segment ID
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public AnonymousUserUserSegment[] findByA_U_PrevAndNext(
 		long anonymousUserUserSegmentId, long anonymousUserId,
@@ -416,7 +416,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param manual the manual
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public AnonymousUserUserSegment findByC_LtD_M_First(long companyId,
 		java.util.Date modifiedDate, boolean manual,
@@ -444,7 +444,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param manual the manual
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public AnonymousUserUserSegment findByC_LtD_M_Last(long companyId,
 		java.util.Date modifiedDate, boolean manual,
@@ -473,7 +473,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param manual the manual
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public AnonymousUserUserSegment[] findByC_LtD_M_PrevAndNext(
 		long anonymousUserUserSegmentId, long companyId,
@@ -573,7 +573,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the first matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public AnonymousUserUserSegment findByUserSegmentIds_First(
 		long userSegmentId, boolean active,
@@ -599,7 +599,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the last matching anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a matching anonymous user user segment could not be found
 	*/
 	public AnonymousUserUserSegment findByUserSegmentIds_Last(
 		long userSegmentId, boolean active,
@@ -626,7 +626,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	* @param active the active
 	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
 	* @return the previous, current, and next anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public AnonymousUserUserSegment[] findByUserSegmentIds_PrevAndNext(
 		long anonymousUserUserSegmentId, long userSegmentId, boolean active,
@@ -755,7 +755,7 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 	*
 	* @param anonymousUserUserSegmentId the primary key of the anonymous user user segment
 	* @return the anonymous user user segment that was removed
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public AnonymousUserUserSegment remove(long anonymousUserUserSegmentId)
 		throws com.liferay.content.targeting.exception.NoSuchAnonymousUserUserSegmentException;
@@ -764,11 +764,11 @@ public interface AnonymousUserUserSegmentPersistence extends BasePersistence<Ano
 		AnonymousUserUserSegment anonymousUserUserSegment);
 
 	/**
-	* Returns the anonymous user user segment with the primary key or throws a {@link com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException} if it could not be found.
+	* Returns the anonymous user user segment with the primary key or throws a {@link NoSuchAnonymousUserUserSegmentException} if it could not be found.
 	*
 	* @param anonymousUserUserSegmentId the primary key of the anonymous user user segment
 	* @return the anonymous user user segment
-	* @throws com.liferay.content.targeting.NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
+	* @throws NoSuchAnonymousUserUserSegmentException if a anonymous user user segment with the primary key could not be found
 	*/
 	public AnonymousUserUserSegment findByPrimaryKey(
 		long anonymousUserUserSegmentId)
