@@ -16,7 +16,10 @@ package com.liferay.content.targeting.exception;
 
 import aQute.bnd.annotation.ProviderType;
 
+import com.liferay.content.targeting.model.Campaign;
 import com.liferay.portal.kernel.exception.PortalException;
+
+import java.util.List;
 
 /**
  * @author Brian Wing Shun Chan
@@ -27,6 +30,10 @@ public class UsedUserSegmentException extends PortalException {
 	public UsedUserSegmentException() {
 	}
 
+	public UsedUserSegmentException(List<Campaign> campaigns) {
+		_campaigns = campaigns;
+	}
+
 	public UsedUserSegmentException(String msg) {
 		super(msg);
 	}
@@ -35,8 +42,14 @@ public class UsedUserSegmentException extends PortalException {
 		super(msg, cause);
 	}
 
-	public UsedUserSegmentException(Throwable cause) {
-		super(cause);
+	public List<Campaign> getCampaigns() {
+		return _campaigns;
 	}
+
+	public void setCampaigns(List<Campaign> campaigns) {
+		_campaigns = campaigns;
+	}
+
+	private List<Campaign> _campaigns;
 
 }
