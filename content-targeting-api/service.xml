@@ -433,7 +433,9 @@
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
 	</entity>
 	<exceptions>
-		<exception>UsedUserSegment</exception>
+		<exception>DuplicateChannelInstance</exception>
+		<exception>DuplicateReportInstance</exception>
+		<exception>DuplicateTrackingActionInstance</exception>
 		<exception>InvalidChannel</exception>
 		<exception>InvalidChannels</exception>
 		<exception>InvalidDateRange</exception>
@@ -443,5 +445,6 @@
 		<exception>InvalidRules</exception>
 		<exception>InvalidTrackingAction</exception>
 		<exception>InvalidTrackingActions</exception>
+		<exception>UsedUserSegment</exception>
 	</exceptions>
 </service-builder>
