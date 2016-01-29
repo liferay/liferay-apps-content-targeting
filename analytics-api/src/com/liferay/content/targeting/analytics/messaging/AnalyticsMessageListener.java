@@ -21,18 +21,19 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.model.Layout;
 import com.liferay.portal.service.ServiceContext;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Eduardo Garcia
  */
 @Component(
-	immediate = true,
-	property = {"destination.name=liferay/analytics"},
-	service = MessageListener.class)
+	immediate = true, property = {"destination.name=liferay/analytics"},
+	service = MessageListener.class
+)
 public class AnalyticsMessageListener implements MessageListener {
 
 	@Override
@@ -60,7 +61,7 @@ public class AnalyticsMessageListener implements MessageListener {
 			"referrers");
 
 		if ((referrers == null) || referrers.isEmpty()) {
-			referrers = new HashMap<String, long[]>();
+			referrers = new HashMap<>();
 
 			referrers.put(
 				Layout.class.getName(), new long[] {message.getLong("plid")});

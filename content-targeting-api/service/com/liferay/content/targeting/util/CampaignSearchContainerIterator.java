@@ -15,11 +15,9 @@
 package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.Campaign;
-import com.liferay.content.targeting.service.CampaignLocalService;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
@@ -27,7 +25,6 @@ import java.util.List;
 import javax.portlet.PortletException;
 
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -36,7 +33,8 @@ import org.osgi.service.component.annotations.Reference;
 public class CampaignSearchContainerIterator
 	extends SearchContainerIterator<Campaign> {
 
-	public CampaignSearchContainerIterator() {}
+	public CampaignSearchContainerIterator() {
+	}
 
 	public CampaignSearchContainerIterator(long groupId, String keywords)
 		throws PortletException {
@@ -46,7 +44,7 @@ public class CampaignSearchContainerIterator
 
 	@Override
 	public List<Campaign> getResults(int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(keywords)) {
 			return CampaignLocalServiceUtil.getCampaigns(
@@ -61,7 +59,7 @@ public class CampaignSearchContainerIterator
 	}
 
 	@Override
-	public int getTotal() throws PortalException, SystemException {
+	public int getTotal() throws PortalException {
 		if (Validator.isNull(keywords)) {
 			return CampaignLocalServiceUtil.getCampaignsCount(groupId);
 		}

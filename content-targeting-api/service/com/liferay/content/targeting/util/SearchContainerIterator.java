@@ -15,7 +15,6 @@
 package com.liferay.content.targeting.util;
 
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.Collections;
 import java.util.List;
@@ -33,13 +32,11 @@ public class SearchContainerIterator<R> {
 		this.keywords = keywords;
 	}
 
-	public List<R> getResults(int start, int end)
-		throws PortalException, SystemException {
-
+	public List<R> getResults(int start, int end) throws PortalException {
 		return Collections.emptyList();
 	}
 
-	public int getTotal() throws PortalException, SystemException {
+	public int getTotal() throws PortalException {
 		return 0;
 	}
 

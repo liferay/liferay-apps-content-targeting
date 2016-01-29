@@ -17,7 +17,6 @@ package com.liferay.content.targeting.analytics.service.impl;
 import com.liferay.content.targeting.analytics.model.AnalyticsReferrer;
 import com.liferay.content.targeting.analytics.service.base.AnalyticsReferrerLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class AnalyticsReferrerLocalServiceImpl
 	@Override
 	public AnalyticsReferrer addAnalyticsReferrer(
 			long analyticsEventId, String className, long classPK)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long analyticsReferrerId = counterLocalService.increment();
 
@@ -59,32 +58,28 @@ public class AnalyticsReferrerLocalServiceImpl
 
 	@Override
 	public int getAnalyticsReferrerCount(
-			long analyticsEventId, String className, long classPK)
-		throws SystemException {
+		long analyticsEventId, String className, long classPK) {
 
 		return getAnalyticsReferrerCount(
-			new long[]{analyticsEventId}, className, classPK);
+			new long[] {analyticsEventId}, className, classPK);
 	}
 
 	@Override
 	public int getAnalyticsReferrerCount(
-			long[] analyticsEventIds, String className, long classPK)
-		throws SystemException {
+		long[] analyticsEventIds, String className, long classPK) {
 
 		return analyticsReferrerPersistence.countByA_R_R(
 			analyticsEventIds, className, classPK);
 	}
 
 	@Override
-	public int getAnalyticsReferrerCount(String className, long classPK)
-		throws SystemException {
-
+	public int getAnalyticsReferrerCount(String className, long classPK) {
 		return analyticsReferrerPersistence.countByR_R(className, classPK);
 	}
 
 	@Override
-	public List<AnalyticsReferrer> getAnalyticsReferrers(long analyticsEventId)
-		throws SystemException {
+	public List<AnalyticsReferrer> getAnalyticsReferrers(
+		long analyticsEventId) {
 
 		return analyticsReferrerPersistence.findByAnalyticsEventId(
 			analyticsEventId);

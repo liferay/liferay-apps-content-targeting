@@ -15,14 +15,10 @@
 package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.Tactic;
-import com.liferay.content.targeting.service.TacticLocalService;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 
@@ -34,7 +30,8 @@ import javax.portlet.PortletException;
 public class TacticSearchContainerIterator
 	extends SearchContainerIterator<Tactic> {
 
-	public TacticSearchContainerIterator() {}
+	public TacticSearchContainerIterator() {
+	}
 
 	public TacticSearchContainerIterator(
 			long campaignId, long groupId, String keywords)
@@ -46,9 +43,7 @@ public class TacticSearchContainerIterator
 	}
 
 	@Override
-	public List<Tactic> getResults(int start, int end)
-		throws PortalException, SystemException {
-
+	public List<Tactic> getResults(int start, int end) throws PortalException {
 		if (Validator.isNull(keywords)) {
 			return TacticLocalServiceUtil.getTactics(start, end);
 		}
@@ -61,10 +56,11 @@ public class TacticSearchContainerIterator
 	}
 
 	public List<Tactic> getResults(long campaignId, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(keywords)) {
-			return TacticLocalServiceUtil.getTactics(campaignId, start, end, null);
+			return TacticLocalServiceUtil.getTactics(
+				campaignId, start, end, null);
 		}
 
 		BaseModelSearchResult<Tactic> searchResults =
@@ -75,7 +71,7 @@ public class TacticSearchContainerIterator
 	}
 
 	@Override
-	public int getTotal() throws PortalException, SystemException {
+	public int getTotal() throws PortalException {
 		if (Validator.isNull(keywords)) {
 			return TacticLocalServiceUtil.getTacticsCount();
 		}
@@ -88,9 +84,7 @@ public class TacticSearchContainerIterator
 		return searchResults.getLength();
 	}
 
-	public int getTotal(long campaignId)
-		throws PortalException, SystemException {
-
+	public int getTotal(long campaignId) throws PortalException {
 		if (Validator.isNull(keywords)) {
 			return TacticLocalServiceUtil.getTacticsCount(campaignId);
 		}

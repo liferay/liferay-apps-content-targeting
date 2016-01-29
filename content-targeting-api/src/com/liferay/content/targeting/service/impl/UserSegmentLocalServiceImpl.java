@@ -26,7 +26,6 @@ import com.liferay.content.targeting.util.ContentTargetingUtil;
 import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Hits;
@@ -72,14 +71,14 @@ import java.util.Map;
  * @see com.liferay.content.targeting.service.UserSegmentLocalServiceUtil
  */
 public class UserSegmentLocalServiceImpl
-		extends UserSegmentLocalServiceBaseImpl {
+	extends UserSegmentLocalServiceBaseImpl {
 
 	@Indexable(type = IndexableType.REINDEX)
 	@Override
 	public UserSegment addUserSegment(
 			long userId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
 
@@ -163,7 +162,7 @@ public class UserSegmentLocalServiceImpl
 	public void addUserSegmentResources(
 			UserSegment userSegment, boolean addGroupPermissions,
 			boolean addGuestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		resourceLocalService.addResources(
 			userSegment.getCompanyId(), userSegment.getGroupId(),
@@ -176,7 +175,7 @@ public class UserSegmentLocalServiceImpl
 	public void addUserSegmentResources(
 			UserSegment userSegment, String[] groupPermissions,
 			String[] guestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		resourceLocalService.addModelResources(
 			userSegment.getCompanyId(), userSegment.getGroupId(),
@@ -187,7 +186,7 @@ public class UserSegmentLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public UserSegment deleteUserSegment(long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<Campaign> campaigns = userSegmentPersistence.getCampaigns(
 			userSegmentId);
@@ -205,7 +204,7 @@ public class UserSegmentLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public UserSegment deleteUserSegment(UserSegment userSegment)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		userSegmentPersistence.remove(userSegment);
 
@@ -260,9 +259,7 @@ public class UserSegmentLocalServiceImpl
 	}
 
 	@Override
-	public void deleteUserSegments(long groupId)
-		throws PortalException, SystemException {
-
+	public void deleteUserSegments(long groupId) throws PortalException {
 		for (UserSegment userSegment :
 				userSegmentPersistence.findByGroupId(groupId)) {
 
@@ -273,29 +270,29 @@ public class UserSegmentLocalServiceImpl
 
 	@Override
 	public UserSegment fetchUserSegmentByAssetCategoryId(long assetCategoryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userSegmentPersistence.fetchByAssetCategoryId(assetCategoryId);
 	}
 
 	@Override
 	public List<UserSegment> getUserSegments(long groupId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		return getUserSegments(new long[]{groupId});
+		return getUserSegments(new long[] {groupId});
 	}
 
 	@Override
 	public List<UserSegment> getUserSegments(
 			long groupId, int start, int end, OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		return getUserSegments(new long[]{groupId}, start, end, obc);
+		return getUserSegments(new long[] {groupId}, start, end, obc);
 	}
 
 	@Override
 	public List<UserSegment> getUserSegments(long[] groupIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userSegmentPersistence.findByGroupId(groupIds);
 	}
@@ -303,28 +300,24 @@ public class UserSegmentLocalServiceImpl
 	@Override
 	public List<UserSegment> getUserSegments(
 			long[] groupIds, int start, int end, OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return userSegmentPersistence.findByGroupId(groupIds, start, end, obc);
 	}
 
 	@Override
-	public int getUserSegmentsCount(long groupId)
-		throws PortalException, SystemException {
-
+	public int getUserSegmentsCount(long groupId) throws PortalException {
 		return userSegmentPersistence.countByGroupId(groupId);
 	}
 
 	@Override
-	public int getUserSegmentsCount(long[] groupIds)
-		throws PortalException, SystemException {
-
+	public int getUserSegmentsCount(long[] groupIds) throws PortalException {
 		return userSegmentPersistence.countByGroupId(groupIds);
 	}
 
 	@Override
 	public Hits search(long groupId, String keywords, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Indexer indexer = IndexerRegistryUtil.getIndexer(
 			UserSegment.class.getName());
@@ -338,7 +331,7 @@ public class UserSegmentLocalServiceImpl
 	@Override
 	public BaseModelSearchResult<UserSegment> searchUserSegments(
 			long groupId, String keywords, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
 			groupId, keywords, start, end);
@@ -351,7 +344,7 @@ public class UserSegmentLocalServiceImpl
 	public UserSegment updateUserSegment(
 			long userSegmentId, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date now = new Date();
 
@@ -404,7 +397,7 @@ public class UserSegmentLocalServiceImpl
 	public void updateUserSegmentResources(
 			UserSegment userSegment, String[] groupPermissions,
 			String[] guestPermissions)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		resourceLocalService.updateResources(
 			userSegment.getCompanyId(), userSegment.getGroupId(),
@@ -415,7 +408,7 @@ public class UserSegmentLocalServiceImpl
 	protected AssetCategory addUserSegmentCategory(
 			long userId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long vocabularyId = UserSegmentUtil.getAssetVocabularyId(
 			userId, serviceContext);
@@ -428,8 +421,8 @@ public class UserSegmentLocalServiceImpl
 		try {
 			assetCategory = assetCategoryLocalService.addCategory(
 				userId, serviceContext.getScopeGroupId(),
-				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID,
-				titleMap, descriptionMap, vocabularyId, null, serviceContext);
+				AssetCategoryConstants.DEFAULT_PARENT_CATEGORY_ID, titleMap,
+				descriptionMap, vocabularyId, null, serviceContext);
 		}
 		catch (DuplicateCategoryException dce) {
 			throw new InvalidNameException();
@@ -440,7 +433,7 @@ public class UserSegmentLocalServiceImpl
 
 	protected SearchContext buildSearchContext(
 			long groupId, String keywords, int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -449,7 +442,7 @@ public class UserSegmentLocalServiceImpl
 		searchContext.setCompanyId(group.getCompanyId());
 
 		searchContext.setEnd(end);
-		searchContext.setGroupIds(new long[]{groupId});
+		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setKeywords(keywords);
 		searchContext.setStart(start);
 
@@ -457,8 +450,7 @@ public class UserSegmentLocalServiceImpl
 	}
 
 	protected AssetCategory getStagingAssetCategory(
-			Group scopeGroup, long assetCategoryId)
-		throws SystemException {
+		Group scopeGroup, long assetCategoryId) {
 
 		if (!scopeGroup.hasStagingGroup()) {
 			return null;
@@ -474,7 +466,7 @@ public class UserSegmentLocalServiceImpl
 	}
 
 	protected void removeUserSegmentCategory(long assetCategoryId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetCategory assetCategory =
 			assetCategoryLocalService.fetchAssetCategory(assetCategoryId);
@@ -503,7 +495,7 @@ public class UserSegmentLocalServiceImpl
 
 	protected BaseModelSearchResult<UserSegment> searchUserSegments(
 			SearchContext searchContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			UserSegment.class);
@@ -515,7 +507,7 @@ public class UserSegmentLocalServiceImpl
 				hits);
 
 			if (userSegments != null) {
-				return new BaseModelSearchResult<UserSegment>(
+				return new BaseModelSearchResult<>(
 					userSegments, hits.getLength());
 			}
 		}
@@ -527,7 +519,7 @@ public class UserSegmentLocalServiceImpl
 	protected AssetCategory updateUserSegmentCategory(
 			long userId, long assetCategoryId, Map<Locale, String> titleMap,
 			Map<Locale, String> descriptionMap, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		long vocabularyId = UserSegmentUtil.getAssetVocabularyId(
 			userId, serviceContext);

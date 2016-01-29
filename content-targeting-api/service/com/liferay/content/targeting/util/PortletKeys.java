@@ -25,6 +25,8 @@ public class PortletKeys extends com.liferay.portal.util.PortletKeys {
 	public static final String CT_CAMPAIGN_DISPLAY =
 		"com_liferay_content_targeting_portlet_CampaignContentDisplayPortlet";
 
+	public static final String CT_CORE = "ctcore";
+
 	public static final String CT_SIMULATOR =
 		"com_liferay_content_targeting_portlet_SimulatorPortlet";
 
@@ -34,7 +36,5 @@ public class PortletKeys extends com.liferay.portal.util.PortletKeys {
 
 	public static final String CT_USERSEGMENT_LIST =
 		"com_liferay_content_targeting_portlet_UserSegmentContentListPortlet";
-
-	public static final String CT_CORE = "ctcore";
 
 }

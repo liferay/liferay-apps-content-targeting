@@ -19,6 +19,7 @@ import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseResourcePermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
 import com.liferay.portal.kernel.security.permission.ResourcePermissionChecker;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -29,7 +30,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {"resource.name=com.liferay.content.targeting.model"},
 	service = ResourcePermissionChecker.class
 )
-public class ContentTargetingPermission extends BaseResourcePermissionChecker  {
+public class ContentTargetingPermission extends BaseResourcePermissionChecker {
 
 	public static final String RESOURCE_NAME =
 		"com.liferay.content.targeting.model";
@@ -43,6 +44,13 @@ public class ContentTargetingPermission extends BaseResourcePermissionChecker  {
 		}
 	}
 
+	public static boolean contains(
+		PermissionChecker permissionChecker, long groupId, String actionId) {
+
+		return permissionChecker.hasPermission(
+			groupId, RESOURCE_NAME, groupId, actionId);
+	}
+
 	@Override
 	public Boolean checkResource(
 		PermissionChecker permissionChecker, long groupId, String actionId) {
@@ -52,16 +60,10 @@ public class ContentTargetingPermission extends BaseResourcePermissionChecker  {
 
 			return true;
 		}
-		catch (PortalException e) {}
+		catch (PortalException e) {
+		}
 
 		return false;
-	}
-
-	public static boolean contains(
-		PermissionChecker permissionChecker, long groupId, String actionId) {
-
-		return permissionChecker.hasPermission(
-			groupId, RESOURCE_NAME, groupId, actionId);
 	}
 
 }

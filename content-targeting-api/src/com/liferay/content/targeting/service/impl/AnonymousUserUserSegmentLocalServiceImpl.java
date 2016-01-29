@@ -103,7 +103,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 		throws PortalException {
 
 		return getAnonymousUsersByUserSegmentIds(
-			new long[] { userSegmentId }, active);
+			new long[] {userSegmentId}, active);
 	}
 
 	@Override
@@ -268,7 +268,7 @@ public class AnonymousUserUserSegmentLocalServiceImpl
 				companyId, modifiedDate, false);
 
 		for (AnonymousUserUserSegment anonymousUserUserSegment
-			: anonymousUserUserSegments) {
+				: anonymousUserUserSegments) {
 
 			if (anonymousUserUserSegment.isManual()) {
 				continue;

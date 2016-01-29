@@ -14,15 +14,14 @@
 
 package com.liferay.content.targeting.service.impl;
 
-import com.liferay.content.targeting.exception.DuplicateReportInstanceException;
 import com.liferay.content.targeting.api.model.Report;
 import com.liferay.content.targeting.api.model.ReportsRegistry;
+import com.liferay.content.targeting.exception.DuplicateReportInstanceException;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.base.ReportInstanceLocalServiceBaseImpl;
 import com.liferay.content.targeting.util.BaseModelSearchResult;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Hits;
@@ -37,6 +36,7 @@ import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.model.Group;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,8 +45,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
-
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 /**
  * The implementation of the report instance local service.
@@ -71,7 +69,7 @@ public class ReportInstanceLocalServiceImpl
 			long userId, String reportKey, String className, long classPK,
 			Map<Locale, String> nameMap, Map<Locale, String> descriptionMap,
 			String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Report report = _reportsRegistry.getReport(reportKey);
 
@@ -119,10 +117,10 @@ public class ReportInstanceLocalServiceImpl
 	public ReportInstance addReportInstance(
 			long userId, String reportKey, String className, long classPK,
 			String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		Map<Locale, String> descriptionMap = new HashMap<Locale, String>();
-		Map<Locale, String> nameMap = new HashMap<Locale, String>();
+		Map<Locale, String> descriptionMap = new HashMap<>();
+		Map<Locale, String> nameMap = new HashMap<>();
 
 		Set<Locale> availableLocales = LanguageUtil.getAvailableLocales();
 
@@ -141,7 +139,7 @@ public class ReportInstanceLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ReportInstance deleteReportInstance(long reportInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ReportInstance reportInstance = reportInstancePersistence.remove(
 			reportInstanceId);
@@ -162,8 +160,7 @@ public class ReportInstanceLocalServiceImpl
 
 	@Override
 	public ReportInstance fetchReportInstance(
-			String reportKey, String className, long classPK)
-		throws SystemException {
+		String reportKey, String className, long classPK) {
 
 		List<ReportInstance> reportInstances =
 			reportInstancePersistence.findByR_C_C(
@@ -178,8 +175,7 @@ public class ReportInstanceLocalServiceImpl
 
 	@Override
 	public List<ReportInstance> findReportInstances(
-			String reportKey, String className, long classPK)
-		throws SystemException {
+		String reportKey, String className, long classPK) {
 
 		return reportInstancePersistence.findByR_C_C(
 			reportKey, className, classPK);
@@ -187,8 +183,7 @@ public class ReportInstanceLocalServiceImpl
 
 	@Override
 	public int getReportInstanceCount(
-			String reportKey, String className, long classPK)
-		throws SystemException {
+		String reportKey, String className, long classPK) {
 
 		return reportInstancePersistence.countByR_C_C(
 			reportKey, className, classPK);
@@ -196,16 +191,14 @@ public class ReportInstanceLocalServiceImpl
 
 	@Override
 	public List<ReportInstance> getReportInstances(
-			String className, long classPK)
-		throws SystemException {
+		String className, long classPK) {
 
 		return reportInstancePersistence.findByC_C(className, classPK);
 	}
 
 	@Override
 	public List<ReportInstance> getReportInstances(
-			String className, long classPK, int start, int end)
-		throws SystemException {
+		String className, long classPK, int start, int end) {
 
 		return reportInstancePersistence.findByC_C(
 			className, classPK, start, end);
@@ -215,7 +208,7 @@ public class ReportInstanceLocalServiceImpl
 	public List<ReportInstance> searchReportInstances(
 			long groupId, String className, long classPK, String keywords,
 			int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SearchContext searchContext = buildSearchContext(
 			groupId, className, classPK, keywords, start, end);
@@ -230,7 +223,7 @@ public class ReportInstanceLocalServiceImpl
 			String className, long classPK, Map<Locale, String> nameMap,
 			Map<Locale, String> descriptionMap, String typeSettings,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ReportInstance reportInstance = getReportInstance(reportInstanceId);
 
@@ -250,7 +243,7 @@ public class ReportInstanceLocalServiceImpl
 	protected SearchContext buildSearchContext(
 			long groupId, String className, long classPK, String keywords,
 			int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		SearchContext searchContext = new SearchContext();
 
@@ -271,7 +264,7 @@ public class ReportInstanceLocalServiceImpl
 		searchContext.addFacet(classNameFacet);
 		searchContext.addFacet(classPKFacet);
 		searchContext.setCompanyId(group.getCompanyId());
-		searchContext.setGroupIds(new long[]{groupId});
+		searchContext.setGroupIds(new long[] {groupId});
 		searchContext.setEnd(end);
 		searchContext.setKeywords(keywords == null ? "" : keywords);
 		searchContext.setStart(start);
@@ -281,7 +274,7 @@ public class ReportInstanceLocalServiceImpl
 
 	protected BaseModelSearchResult<ReportInstance> searchReportInstances(
 			SearchContext searchContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Indexer indexer = IndexerRegistryUtil.nullSafeGetIndexer(
 			ReportInstance.class);
@@ -294,8 +287,7 @@ public class ReportInstanceLocalServiceImpl
 			if (hits != null) {
 				List<Document> documents = hits.toList();
 
-				reportInstances = new ArrayList<ReportInstance>(
-					documents.size());
+				reportInstances = new ArrayList<>(documents.size());
 
 				for (Document document : documents) {
 					long reportInstanceId = GetterUtil.getLong(
@@ -310,11 +302,11 @@ public class ReportInstanceLocalServiceImpl
 				}
 			}
 			else {
-				reportInstances = new ArrayList<ReportInstance>(0);
+				reportInstances = new ArrayList<>(0);
 			}
 
 			if ((hits != null) && (reportInstances != null)) {
-				return new BaseModelSearchResult<ReportInstance>(
+				return new BaseModelSearchResult<>(
 					reportInstances, hits.getLength());
 			}
 		}

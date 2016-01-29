@@ -58,9 +58,9 @@ public class DefaultReportsRegistryImpl implements ReportsRegistry {
 	}
 
 	@Reference(
-		unbind = "unregisterReport",
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC)
+		policy = ReferencePolicy.DYNAMIC, unbind = "unregisterReport"
+	)
 	public void registerReport(Report report) {
 		_reports.put(report.getReportKey(), report);
 	}
@@ -86,7 +86,6 @@ public class DefaultReportsRegistryImpl implements ReportsRegistry {
 		return outputMap;
 	}
 
-	private Map<String, Report> _reports =
-		new ConcurrentHashMap<String, Report>();
+	private Map<String, Report> _reports = new ConcurrentHashMap<>();
 
 }

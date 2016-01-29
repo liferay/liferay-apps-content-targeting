@@ -25,8 +25,7 @@ import java.util.Map;
  *
  * @author Brian Wing Shun Chan
  */
-public class ChannelInstanceImpl
-		extends ChannelInstanceBaseImpl {
+public class ChannelInstanceImpl extends ChannelInstanceBaseImpl {
 
 	public ChannelInstanceImpl() {
 	}

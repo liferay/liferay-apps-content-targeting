@@ -18,21 +18,26 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.impl.CampaignImpl;
 import com.liferay.content.targeting.model.impl.CampaignModelImpl;
 import com.liferay.content.targeting.service.persistence.CampaignFinder;
+import com.liferay.content.targeting.service.persistence.CampaignUtil;
 import com.liferay.portal.kernel.dao.orm.FinderCacheUtil;
 import com.liferay.portal.kernel.dao.orm.FinderPath;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
 import com.liferay.portal.kernel.dao.orm.Session;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
-import com.liferay.portal.kernel.security.permission.InlineSQLHelperUtil;
 import com.liferay.util.dao.orm.CustomSQLUtil;
+
+import java.io.Serializable;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eduardo Garcia
@@ -43,48 +48,49 @@ public class CampaignFinderImpl
 	public static final String FIND_BY_G_D_A_U =
 		CampaignFinder.class.getName() + ".findByG_D_A_U";
 
-	public static final FinderPath FINDER_PATH_FIND_BY_G_D_A_U =
-		new FinderPath(
-			CampaignModelImpl.ENTITY_CACHE_ENABLED,
-			CampaignModelImpl.FINDER_CACHE_ENABLED, CampaignImpl.class,
-			CampaignPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByG_D_A_U",
-			new String[] {
-				Long.class.getName(), Date.class.getName(),
-				Boolean.class.getName(), Long.class.getName(),
-				Boolean.class.getName()
-			}
-		);
+	public static final FinderPath FINDER_PATH_FIND_BY_G_D_A_U = new FinderPath(
+		CampaignModelImpl.ENTITY_CACHE_ENABLED,
+		CampaignModelImpl.FINDER_CACHE_ENABLED, CampaignImpl.class,
+		CampaignPersistenceImpl.FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+		"findByG_D_A_U",
+		new String[] {
+			Long.class.getName(), Date.class.getName(), Boolean.class.getName(),
+			Long.class.getName(), Boolean.class.getName()
+		}
+	);
 
 	@Override
 	public List<Campaign> filterFindByG_D_A_U(
-			long[] groupIds, Date date, boolean active, long[] userSegmentIds)
-		throws SystemException {
+		long[] groupIds, Date date, boolean active, long[] userSegmentIds) {
 
 		return doFetchByG_D_A_U(groupIds, date, active, userSegmentIds, true);
 	}
 
 	@Override
 	public List<Campaign> findByG_D_A_U(
-			long[] groupIds, Date date, boolean active, long[] userSegmentIds)
-		throws SystemException {
+		long[] groupIds, Date date, boolean active, long[] userSegmentIds) {
 
 		return doFetchByG_D_A_U(groupIds, date, active, userSegmentIds, false);
 	}
 
 	@Override
 	public Campaign fetchByG_D_A_U_First(
-			long[] groupIds, Date date, boolean active, long[] userSegmentIds)
-		throws SystemException {
+		long[] groupIds, Date date, boolean active, long[] userSegmentIds) {
 
 		return doFetchByG_D_A_U_First(
 			groupIds, date, active, userSegmentIds, false);
 	}
 
+	@Override
+	public Map<Serializable, Campaign> fetchByPrimaryKeys(
+		Set<Serializable> primaryKeys) {
+
+		return CampaignUtil.fetchByPrimaryKeys(primaryKeys);
+	}
+
 	protected List<Campaign> doFetchByG_D_A_U(
-			long[] groupIds, Date date, boolean active, long[] userSegmentIds,
-			boolean inlineSQLHelper)
-		throws SystemException {
+		long[] groupIds, Date date, boolean active, long[] userSegmentIds,
+		boolean inlineSQLHelper) {
 
 		if ((userSegmentIds == null) || (userSegmentIds.length == 0)) {
 			userSegmentIds = new long[] {-1};
@@ -130,7 +136,7 @@ public class CampaignFinderImpl
 					groupIds);
 			}
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addEntity("Campaign", CampaignImpl.class);
 
@@ -163,9 +169,8 @@ public class CampaignFinderImpl
 	}
 
 	protected Campaign doFetchByG_D_A_U_First(
-			long[] groupIds, Date date, boolean active, long[] userSegmentIds,
-			boolean inlineSQLHelper)
-		throws SystemException {
+		long[] groupIds, Date date, boolean active, long[] userSegmentIds,
+		boolean inlineSQLHelper) {
 
 		List<Campaign> campaigns = doFetchByG_D_A_U(
 			groupIds, date, active, userSegmentIds, inlineSQLHelper);
@@ -201,8 +206,7 @@ public class CampaignFinderImpl
 
 	@Override
 	public Campaign filterFetchByG_D_A_U_First(
-			long[] groupIds, Date date, boolean active, long[] userSegmentIds)
-		throws SystemException {
+		long[] groupIds, Date date, boolean active, long[] userSegmentIds) {
 
 		return doFetchByG_D_A_U_First(
 			groupIds, date, active, userSegmentIds, true);

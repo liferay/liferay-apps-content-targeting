@@ -15,19 +15,14 @@
 package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.ReportInstance;
-import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.content.targeting.service.ReportInstanceLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
 
 import java.util.List;
 
 import javax.portlet.PortletException;
-
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -35,7 +30,9 @@ import org.osgi.service.component.annotations.Reference;
 public class ReportSearchContainerIterator
 	extends SearchContainerIterator<ReportInstance> {
 
-	public ReportSearchContainerIterator() {}
+	public ReportSearchContainerIterator() {
+	}
+
 	/**
 	 * @deprecated As of Audience Targeting 2.0, replaced by {@link
 	 *             #ReportSearchContainerIterator(long, String, String, long)}
@@ -59,7 +56,7 @@ public class ReportSearchContainerIterator
 
 	@Override
 	public List<ReportInstance> getResults(int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isBlank(keywords)) {
 			return ReportInstanceLocalServiceUtil.getReportInstances(
@@ -71,13 +68,11 @@ public class ReportSearchContainerIterator
 	}
 
 	@Override
-	public int getTotal() throws PortalException, SystemException {
+	public int getTotal() throws PortalException {
 		return getResults().size();
 	}
 
-	protected List<ReportInstance> getResults()
-		throws PortalException, SystemException {
-
+	protected List<ReportInstance> getResults() throws PortalException {
 		return getResults(QueryUtil.ALL_POS, QueryUtil.ALL_POS);
 	}
 

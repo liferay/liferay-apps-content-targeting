@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  * @author Julio Camarero
  */
 public interface UserSegmentSimulator {
+
 	public void addUserSegmentId(
 		long userSegmentId, HttpServletRequest request,
 		HttpServletResponse response);

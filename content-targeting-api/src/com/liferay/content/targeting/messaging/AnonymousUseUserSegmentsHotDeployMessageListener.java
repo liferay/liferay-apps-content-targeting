@@ -59,12 +59,13 @@ public class AnonymousUseUserSegmentsHotDeployMessageListener
 		catch (Exception e) {
 			_log.error(
 				"Cannot register message listener for" +
-					_anonymousUserSegmentsMessageDestination, e);
+					_anonymousUserSegmentsMessageDestination,
+				e);
 		}
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(
-AnonymousUseUserSegmentsHotDeployMessageListener.class);
+		AnonymousUseUserSegmentsHotDeployMessageListener.class);
 
 	private String _anonymousUserSegmentsMessageDestination;
 	private MessageListener _anonymousUserSegmentsMessageListener;

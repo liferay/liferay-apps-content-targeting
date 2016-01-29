@@ -22,7 +22,8 @@ import com.liferay.portal.exception.NoSuchModelException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class NoSuchTrackingActionInstanceException extends NoSuchModelException {
+public class NoSuchTrackingActionInstanceException
+	extends NoSuchModelException {
 
 	public NoSuchTrackingActionInstanceException() {
 	}

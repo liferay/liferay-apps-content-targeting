@@ -20,7 +20,6 @@ import com.liferay.content.targeting.api.model.RulesEngine;
 import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.messaging.Message;
@@ -43,11 +42,10 @@ import org.osgi.service.component.annotations.Reference;
 public class DefaultRulesEngineImpl implements RulesEngine {
 
 	public long[] getMatchingUserSegmentIds(
-			HttpServletRequest request, AnonymousUser anonymousUser,
-			List<UserSegment> userSegments)
-		throws SystemException {
+		HttpServletRequest request, AnonymousUser anonymousUser,
+		List<UserSegment> userSegments) {
 
-		List<Long> userSegmentIds = new ArrayList<Long>();
+		List<Long> userSegmentIds = new ArrayList<>();
 
 		for (UserSegment userSegment : userSegments) {
 			if (matches(
@@ -97,9 +95,12 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 		_rulesRegistry = rulesRegistry;
 	}
 
+	protected void unsetRulesRegistry() {
+		_rulesRegistry = null;
+	}
+
 	protected void updateAnonymousUserUserSegment(
-			AnonymousUser anonymousUser, UserSegment userSegment)
-		throws SystemException {
+		AnonymousUser anonymousUser, UserSegment userSegment) {
 
 		Date now = new Date();
 
@@ -112,10 +113,6 @@ public class DefaultRulesEngineImpl implements RulesEngine {
 		message.put("userSegmentId", userSegment.getUserSegmentId());
 
 		MessageBusUtil.sendMessage("liferay/anonymous_user_segments", message);
-	}
-
-	protected void unsetRulesRegistry() {
-		_rulesRegistry = null;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

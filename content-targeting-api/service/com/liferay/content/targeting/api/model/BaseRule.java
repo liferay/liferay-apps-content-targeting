@@ -18,15 +18,14 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
 import java.util.Locale;
@@ -52,8 +51,7 @@ public abstract class BaseRule implements Rule {
 	}
 
 	@Override
-	public void deleteData(RuleInstance ruleInstance)
-		throws PortalException, SystemException {
+	public void deleteData(RuleInstance ruleInstance) throws PortalException {
 	}
 
 	@Override
@@ -92,9 +90,9 @@ public abstract class BaseRule implements Rule {
 		}
 		catch (Exception e) {
 			_log.error(
-			"Error while processing rule form template " +
-				_FORM_TEMPLATE_PATH,
-			e);
+				"Error while processing rule form template " +
+					_FORM_TEMPLATE_PATH,
+				e);
 		}
 
 		return content;

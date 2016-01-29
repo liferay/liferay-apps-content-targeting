@@ -14,14 +14,13 @@
 
 package com.liferay.content.targeting.service.permission;
 
-import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.ReportInstance;
 import com.liferay.content.targeting.service.ReportInstanceLocalService;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -38,7 +37,7 @@ public class ReportPermission implements BaseModelPermissionChecker {
 	public static void check(
 			PermissionChecker permissionChecker, long userId, long companyId,
 			long groupId, String className, long classPK, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(
 				permissionChecker, userId, companyId, groupId, className,
@@ -70,14 +69,15 @@ public class ReportPermission implements BaseModelPermissionChecker {
 		ReportInstance reportInstance =
 			_reportInstanceLocalService.fetchReportInstance(primaryKey);
 
-		if (!contains(permissionChecker, reportInstance.getUserId(),
+		if (!contains(
+				permissionChecker, reportInstance.getUserId(),
 				reportInstance.getCompanyId(), reportInstance.getGroupId(),
 				reportInstance.getClassName(), reportInstance.getClassPK(),
 				actionId)) {
 
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, ReportInstance.class.getName(),
-				primaryKey, actionId);
+				permissionChecker, ReportInstance.class.getName(), primaryKey,
+				actionId);
 		}
 	}
 
@@ -89,4 +89,5 @@ public class ReportPermission implements BaseModelPermissionChecker {
 	}
 
 	private ReportInstanceLocalService _reportInstanceLocalService;
+
 }

@@ -20,11 +20,12 @@ import com.liferay.portal.kernel.messaging.MessageBus;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
@@ -43,8 +44,7 @@ public class AnonymousUserUserSegmentsPluginMessagingConfigurator
 	public void setMessageListeners(
 		Map<String, List<MessageListener>> messageListeners) {
 
-		Collection<String> destinationNames =
-			_messageBus.getDestinationNames();
+		Collection<String> destinationNames = _messageBus.getDestinationNames();
 
 		if (!destinationNames.contains(
 				_anonymousUserSegmentsMessageDestination)) {

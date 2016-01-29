@@ -19,7 +19,6 @@ import com.liferay.content.targeting.service.base.RuleInstanceServiceBaseImpl;
 import com.liferay.content.targeting.service.permission.UserSegmentPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
@@ -44,18 +43,18 @@ public class RuleInstanceServiceImpl extends RuleInstanceServiceBaseImpl {
 	public RuleInstance addRuleInstance(
 			long userId, String ruleKey, long userSegmentId,
 			String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserSegmentPermission.check(
 			getPermissionChecker(), userSegmentId, ActionKeys.UPDATE);
 
 		return ruleInstanceLocalService.addRuleInstance(
-				userId, ruleKey, userSegmentId, typeSettings, serviceContext);
+			userId, ruleKey, userSegmentId, typeSettings, serviceContext);
 	}
 
 	@Override
 	public RuleInstance deleteRuleInstance(long ruleInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		RuleInstance ruleInstance = ruleInstanceLocalService.getRuleInstance(
 			ruleInstanceId);
@@ -68,15 +67,13 @@ public class RuleInstanceServiceImpl extends RuleInstanceServiceBaseImpl {
 	}
 
 	@Override
-	public List<RuleInstance> getRuleInstances(long userSegmentId)
-		throws SystemException {
-
+	public List<RuleInstance> getRuleInstances(long userSegmentId) {
 		return ruleInstanceLocalService.getRuleInstances(userSegmentId);
 	}
 
 	@Override
 	public long getRuleInstancesCount(long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ruleInstanceLocalService.getRuleInstancesCount(userSegmentId);
 	}
@@ -85,7 +82,7 @@ public class RuleInstanceServiceImpl extends RuleInstanceServiceBaseImpl {
 	public RuleInstance updateRuleInstance(
 			long ruleInstanceId, String typeSettings,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		RuleInstance ruleInstance = ruleInstanceLocalService.getRuleInstance(
 			ruleInstanceId);

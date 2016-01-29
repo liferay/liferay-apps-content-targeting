@@ -17,10 +17,10 @@ package com.liferay.content.targeting.service.permission;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -36,7 +36,7 @@ public class UserSegmentPermission implements BaseModelPermissionChecker {
 	public static void check(
 			PermissionChecker permissionChecker, long userSegmentId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, userSegmentId, actionId)) {
 			throw new PrincipalException();
@@ -64,10 +64,10 @@ public class UserSegmentPermission implements BaseModelPermissionChecker {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long userSegmentId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
-				userSegmentId);
+			userSegmentId);
 
 		return contains(permissionChecker, userSegment, actionId);
 	}
@@ -96,8 +96,8 @@ public class UserSegmentPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, groupId, primaryKey, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, UserSegment.class.getName(),
-				primaryKey, actionId);
+				permissionChecker, UserSegment.class.getName(), primaryKey,
+				actionId);
 		}
 	}
 

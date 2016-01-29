@@ -31,7 +31,9 @@ public class DuplicateTrackingActionInstanceException extends PortalException {
 		super(msg);
 	}
 
-	public DuplicateTrackingActionInstanceException(String msg, Throwable cause) {
+	public DuplicateTrackingActionInstanceException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

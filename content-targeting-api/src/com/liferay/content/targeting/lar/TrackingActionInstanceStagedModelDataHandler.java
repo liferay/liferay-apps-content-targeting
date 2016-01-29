@@ -20,9 +20,7 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
-import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -32,27 +30,37 @@ import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 
 import java.util.List;
 import java.util.Map;
 
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
-@Component(
-	immediate = true,
-	service = StagedModelDataHandler.class
-)
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class TrackingActionInstanceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<TrackingActionInstance> {
 
 	public static final String[] CLASS_NAMES = {
-		TrackingActionInstance.class.getName()};
+		TrackingActionInstance.class.getName()
+	};
+
+	@Override
+	public void deleteStagedModel(
+			String uuid, long groupId, String className, String extraData)
+		throws PortalException {
+
+		TrackingActionInstance trackingActionInstance =
+			TrackingActionInstanceLocalServiceUtil.
+				fetchTrackingActionInstanceByUuidAndGroupId(uuid, groupId);
+
+		TrackingActionInstanceLocalServiceUtil.deleteTrackingActionInstance(
+			trackingActionInstance);
+	}
 
 	@Override
 	public void deleteStagedModel(TrackingActionInstance trackingActionInstance)
@@ -63,16 +71,10 @@ public class TrackingActionInstanceStagedModelDataHandler
 	}
 
 	@Override
-	public void deleteStagedModel(
-			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+	public List<TrackingActionInstance>
+		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
 
-		TrackingActionInstance trackingActionInstance =
-			TrackingActionInstanceLocalServiceUtil.
-				fetchTrackingActionInstanceByUuidAndGroupId(uuid, groupId);
-
-		TrackingActionInstanceLocalServiceUtil.deleteTrackingActionInstance(
-			trackingActionInstance);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -88,10 +90,23 @@ public class TrackingActionInstanceStagedModelDataHandler
 	}
 
 	@Override
-	public List<TrackingActionInstance>
-		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid,
+			long trackingActionInstanceId)
+		throws PortletDataException {
 
-		throw new UnsupportedOperationException();
+		TrackingActionInstance existingTrackingActionInstance =
+			TrackingActionInstanceLocalServiceUtil.
+				fetchTrackingActionInstanceByUuidAndGroupId(
+					uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> trackingActionInstanceIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				TrackingActionInstance.class);
+
+		trackingActionInstanceIds.put(
+			trackingActionInstanceId,
+			existingTrackingActionInstance.getTrackingActionInstanceId());
 	}
 
 	@Override
@@ -139,26 +154,6 @@ public class TrackingActionInstanceStagedModelDataHandler
 			trackingActionInstanceElement,
 			ExportImportPathUtil.getModelPath(trackingActionInstance),
 			trackingActionInstance);
-	}
-
-	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
-			long trackingActionInstanceId)
-		throws PortletDataException {
-
-		TrackingActionInstance existingTrackingActionInstance =
-			TrackingActionInstanceLocalServiceUtil.
-				fetchTrackingActionInstanceByUuidAndGroupId(
-					uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> trackingActionInstanceIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				TrackingActionInstance.class);
-
-		trackingActionInstanceIds.put(
-			trackingActionInstanceId,
-			existingTrackingActionInstance.getTrackingActionInstanceId());
 	}
 
 	@Override
@@ -248,6 +243,13 @@ public class TrackingActionInstanceStagedModelDataHandler
 			trackingActionInstance, importedTrackingActionInstance);
 	}
 
+	@Reference(unbind ="-")
+	protected void setTrackingActionsRegistry(
+		TrackingActionsRegistry trackingActionsRegistry) {
+
+		_trackingActionsRegistry = trackingActionsRegistry;
+	}
+
 	@Override
 	protected boolean validateMissingReference(String uuid, long groupId) {
 		TrackingActionInstance trackingActionInstance =
@@ -259,13 +261,6 @@ public class TrackingActionInstanceStagedModelDataHandler
 		}
 
 		return true;
-	}
-
-	@Reference(unbind="-")
-	protected void setTrackingActionsRegistry(
-		TrackingActionsRegistry trackingActionsRegistry) {
-
-		_trackingActionsRegistry = trackingActionsRegistry;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -19,7 +19,6 @@ import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.TacticPermission;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -31,16 +30,17 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -133,8 +133,8 @@ public class TacticIndexer extends BaseIndexer {
 
 	@Override
 	protected Summary doGetSummary(
-		Document document, Locale locale, String snippet,
-		PortletRequest portletRequest, PortletResponse portletResponse)
+			Document document, Locale locale, String snippet,
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
 		return null;
@@ -171,33 +171,32 @@ public class TacticIndexer extends BaseIndexer {
 		return PORTLET_ID;
 	}
 
-	protected void reindexTactics(final long companyId)
-		throws PortalException, SystemException {
-
+	protected void reindexTactics(final long companyId) throws PortalException {
 		IndexableActionableDynamicQuery actionableDynamicQuery =
 			new IndexableActionableDynamicQuery() {
 
-			@Override
-			protected void performAction(Object object) {
-				Tactic tactic = (Tactic)object;
+				@Override
+				protected void performAction(Object object) {
+					Tactic tactic = (Tactic)object;
 
-				try {
-					Document document = getDocument(tactic);
+					try {
+						Document document = getDocument(tactic);
 
-					if (document != null) {
-						addDocuments(document);
+						if (document != null) {
+							addDocuments(document);
+						}
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index tactic: " +
+									tactic.getTacticId(),
+								e);
+						}
 					}
 				}
-				catch (PortalException e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index tactic: " + tactic.getTacticId(),
-							e);
-					}
-				}
-			}
 
-		};
+			};
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
@@ -205,7 +204,7 @@ public class TacticIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind="unsetTacticPermission")
+	@Reference(unbind ="unsetTacticPermission")
 	protected void setTacticPermission(TacticPermission tacticPermission) {
 		_tacticPermission = tacticPermission;
 	}
@@ -214,8 +213,8 @@ public class TacticIndexer extends BaseIndexer {
 		_tacticPermission = null;
 	}
 
-	private TacticPermission _tacticPermission;
-
 	private static Log _log = LogFactoryUtil.getLog(TacticIndexer.class);
+
+	private TacticPermission _tacticPermission;
 
 }

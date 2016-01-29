@@ -17,10 +17,10 @@ package com.liferay.content.targeting.service.permission;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
+
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -35,7 +35,7 @@ public class TacticPermission implements BaseModelPermissionChecker {
 
 	public static void check(
 			PermissionChecker permissionChecker, long tacticId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, tacticId, actionId)) {
 			throw new PrincipalException();
@@ -61,7 +61,7 @@ public class TacticPermission implements BaseModelPermissionChecker {
 
 	public static boolean contains(
 			PermissionChecker permissionChecker, long tacticId, String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Tactic tactic = TacticLocalServiceUtil.getTactic(tacticId);
 
@@ -73,7 +73,7 @@ public class TacticPermission implements BaseModelPermissionChecker {
 
 		if (permissionChecker.hasOwnerPermission(
 				tactic.getCompanyId(), Tactic.class.getName(),
-			tactic.getTacticId(), tactic.getUserId(), actionId)) {
+				tactic.getTacticId(), tactic.getUserId(), actionId)) {
 
 			return true;
 		}
@@ -90,8 +90,8 @@ public class TacticPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, groupId, primaryKey, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, Tactic.class.getName(),
-				primaryKey, actionId);
+				permissionChecker, Tactic.class.getName(), primaryKey,
+				actionId);
 		}
 	}
 

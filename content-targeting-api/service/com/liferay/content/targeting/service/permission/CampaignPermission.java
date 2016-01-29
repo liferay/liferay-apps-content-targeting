@@ -17,7 +17,6 @@ package com.liferay.content.targeting.service.permission;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.security.auth.PrincipalException;
 import com.liferay.portal.kernel.security.permission.BaseModelPermissionChecker;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
@@ -47,7 +46,7 @@ public class CampaignPermission implements BaseModelPermissionChecker {
 	public static void check(
 			PermissionChecker permissionChecker, long campaignId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (!contains(permissionChecker, campaignId, actionId)) {
 			throw new PrincipalException();
@@ -81,7 +80,7 @@ public class CampaignPermission implements BaseModelPermissionChecker {
 	public static boolean contains(
 			PermissionChecker permissionChecker, long campaignId,
 			String actionId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Campaign campaign = CampaignLocalServiceUtil.getCampaign(campaignId);
 
@@ -95,8 +94,8 @@ public class CampaignPermission implements BaseModelPermissionChecker {
 
 		if (!contains(permissionChecker, groupId, primaryKey, actionId)) {
 			throw new PrincipalException.MustHavePermission(
-				permissionChecker, Campaign.class.getName(),
-				primaryKey, actionId);
+				permissionChecker, Campaign.class.getName(), primaryKey,
+				actionId);
 		}
 	}
 

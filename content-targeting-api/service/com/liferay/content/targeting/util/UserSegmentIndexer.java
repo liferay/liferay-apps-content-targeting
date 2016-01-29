@@ -19,7 +19,6 @@ import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.content.targeting.service.permission.UserSegmentPermission;
 import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.BaseIndexer;
@@ -31,16 +30,17 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.SearchContext;
 import com.liferay.portal.kernel.search.SearchEngineUtil;
 import com.liferay.portal.kernel.search.Summary;
-import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.security.permission.PermissionChecker;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+import com.liferay.portal.kernel.util.GetterUtil;
 
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eudaldo Alonso
@@ -133,8 +133,8 @@ public class UserSegmentIndexer extends BaseIndexer {
 
 	@Override
 	protected Summary doGetSummary(
-		Document document, Locale locale, String snippet,
-		PortletRequest portletRequest, PortletResponse portletResponse)
+			Document document, Locale locale, String snippet,
+			PortletRequest portletRequest, PortletResponse portletResponse)
 		throws Exception {
 
 		return null;
@@ -173,33 +173,33 @@ public class UserSegmentIndexer extends BaseIndexer {
 	}
 
 	protected void reindexUserSegments(final long companyId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		IndexableActionableDynamicQuery actionableDynamicQuery =
 			new IndexableActionableDynamicQuery() {
 
-			@Override
-			protected void performAction(Object object) {
-				UserSegment userSegment = (UserSegment)object;
+				@Override
+				protected void performAction(Object object) {
+					UserSegment userSegment = (UserSegment)object;
 
-				try {
-					Document document = getDocument(userSegment);
+					try {
+						Document document = getDocument(userSegment);
 
-					if (document != null) {
-						addDocuments(document);
+						if (document != null) {
+							addDocuments(document);
+						}
+					}
+					catch (PortalException e) {
+						if (_log.isWarnEnabled()) {
+							_log.warn(
+								"Unable to index user segment: " +
+									userSegment.getUserSegmentId(),
+								e);
+						}
 					}
 				}
-				catch (PortalException e) {
-					if (_log.isWarnEnabled()) {
-						_log.warn(
-							"Unable to index user segment: " +
-								userSegment.getUserSegmentId(),
-							e);
-					}
-				}
-			}
 
-		};
+			};
 
 		actionableDynamicQuery.setCompanyId(companyId);
 		actionableDynamicQuery.setSearchEngineId(getSearchEngineId());
@@ -207,7 +207,7 @@ public class UserSegmentIndexer extends BaseIndexer {
 		actionableDynamicQuery.performActions();
 	}
 
-	@Reference(unbind="unsetUserSegmentPermission")
+	@Reference(unbind ="unsetUserSegmentPermission")
 	protected void setUserSegmentPermission(
 		UserSegmentPermission userSegmentPermission) {
 
@@ -218,8 +218,8 @@ public class UserSegmentIndexer extends BaseIndexer {
 		_userSegmentPermission = null;
 	}
 
-	private UserSegmentPermission _userSegmentPermission;
-
 	private static Log _log = LogFactoryUtil.getLog(UserSegmentIndexer.class);
+
+	private UserSegmentPermission _userSegmentPermission;
 
 }

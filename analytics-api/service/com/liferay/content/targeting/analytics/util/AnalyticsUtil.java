@@ -24,7 +24,6 @@ import com.liferay.portal.service.GroupLocalServiceUtil;
 /**
  * @author Eduardo Garcia
  */
-
 public class AnalyticsUtil {
 
 	public static String getAnalyticsFormExcludedIdsRegex(long groupId) {

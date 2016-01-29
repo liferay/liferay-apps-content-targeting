@@ -21,8 +21,6 @@ import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.messaging.config.PluginMessagingConfigurator;
 import com.liferay.portal.kernel.portlet.PortletClassLoaderUtil;
 
-import org.osgi.service.component.annotations.Reference;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -53,7 +51,7 @@ public class AnalyticsPluginMessagingConfigurator
 				_log.warn(
 					"Cannot register analytics API message listener because " +
 						"destination " + _analyticsMessageDestination +
-						" does not exist yet");
+							" does not exist yet");
 			}
 		}
 

@@ -21,10 +21,11 @@ import com.liferay.portal.kernel.messaging.Message;
 import com.liferay.portal.kernel.messaging.MessageListener;
 import com.liferay.portal.kernel.util.CalendarFactoryUtil;
 import com.liferay.portal.service.ServiceContext;
-import org.osgi.service.component.annotations.Component;
 
 import java.util.Calendar;
 import java.util.List;
+
+import org.osgi.service.component.annotations.Component;
 
 /**
  * @author Pavel Savinov
@@ -32,7 +33,8 @@ import java.util.List;
 @Component(
 	immediate = true,
 	property = {"destination.name=liferay/anonymous_user_segments"},
-	service = MessageListener.class)
+	service = MessageListener.class
+)
 public class AnonymousUserUserSegmentsMessageListener
 	extends BaseMessageListener {
 

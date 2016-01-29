@@ -43,9 +43,9 @@ public class DefaultRuleCategoriesRegistryImpl
 	}
 
 	@Reference(
-		unbind = "unregisterRuleCategory",
 		cardinality = ReferenceCardinality.MULTIPLE,
-		policy = ReferencePolicy.DYNAMIC)
+		policy = ReferencePolicy.DYNAMIC, unbind = "unregisterRuleCategory"
+	)
 	public void registerRuleCategory(RuleCategory ruleCategory) {
 		_ruleCategories.put(ruleCategory.getCategoryKey(), ruleCategory);
 	}
@@ -55,6 +55,6 @@ public class DefaultRuleCategoriesRegistryImpl
 	}
 
 	private Map<String, RuleCategory> _ruleCategories =
-		new ConcurrentHashMap<String, RuleCategory>();
+		new ConcurrentHashMap<>();
 
 }

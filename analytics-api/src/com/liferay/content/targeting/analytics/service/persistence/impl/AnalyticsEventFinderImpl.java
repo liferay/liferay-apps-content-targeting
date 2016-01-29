@@ -14,7 +14,6 @@
 
 package com.liferay.content.targeting.analytics.service.persistence.impl;
 
-import com.liferay.content.targeting.analytics.model.AnalyticsEvent;
 import com.liferay.content.targeting.analytics.service.persistence.AnalyticsEventFinder;
 import com.liferay.portal.kernel.dao.orm.QueryPos;
 import com.liferay.portal.kernel.dao.orm.SQLQuery;
@@ -30,8 +29,7 @@ import java.util.List;
  * @author Eudaldo Alonso
  */
 public class AnalyticsEventFinderImpl
-	extends AnalyticsEventFinderBaseImpl
-	implements AnalyticsEventFinder {
+	extends AnalyticsEventFinderBaseImpl implements AnalyticsEventFinder {
 
 	public static final String FIND_BY_C_GtC_R_R =
 		AnalyticsEventFinder.class.getName() + ".findByC_GtC_R_R";
@@ -43,18 +41,16 @@ public class AnalyticsEventFinderImpl
 
 	@Override
 	public List<Object[]> findByC_GtC_R_R(
-			long companyId, String referrerClassName, long referrerClassPK,
-			Date date)
-		throws SystemException {
+		long companyId, String referrerClassName, long referrerClassPK,
+		Date date) {
 
 		return doFindByC_GTC_R_R(
 			companyId, referrerClassName, referrerClassPK, date);
 	}
 
 	protected List<Object[]> doFindByC_GTC_R_R(
-			long companyId, String referrerClassName, long referrerClassPK,
-			Date date)
-		throws SystemException {
+		long companyId, String referrerClassName, long referrerClassPK,
+		Date date) {
 
 		Session session = null;
 
@@ -65,7 +61,7 @@ public class AnalyticsEventFinderImpl
 
 			String sql = CustomSQLUtil.get(FIND_BY_C_GtC_R_R);
 
-			SQLQuery q = session.createSQLQuery(sql);
+			SQLQuery q = session.createSynchronizedSQLQuery(sql);
 
 			q.addScalar("className", Type.STRING);
 			q.addScalar("classPK", Type.LONG);

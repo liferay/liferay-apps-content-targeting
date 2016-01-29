@@ -38,8 +38,7 @@ public class UserModelListener extends BaseModelListener<User> {
 					user.getUserId());
 
 			if (anonymousUser != null) {
-				_anonymousUserLocalService.deleteAnonymousUser(
-					anonymousUser);
+				_anonymousUserLocalService.deleteAnonymousUser(anonymousUser);
 			}
 		}
 		catch (Exception e) {

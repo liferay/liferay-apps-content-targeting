@@ -19,7 +19,6 @@ import com.liferay.content.targeting.service.base.TrackingActionInstanceServiceB
 import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
@@ -47,7 +46,7 @@ public class TrackingActionInstanceServiceImpl
 			long campaignId, String alias, String referrerClassName,
 			long referrerClassPK, String elementId, String eventType,
 			String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CampaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
@@ -59,8 +58,8 @@ public class TrackingActionInstanceServiceImpl
 	}
 
 	/**
-	* @deprecated As of 2.0.0
-	*/
+	 * @deprecated As of 2.0.0
+	 */
 	@Deprecated
 	@Override
 	public TrackingActionInstance addTrackingActionInstance(
@@ -68,7 +67,7 @@ public class TrackingActionInstanceServiceImpl
 			String alias, String referrerClassName, long referrerClassPK,
 			String elementId, String eventType, String typeSettings,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CampaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
@@ -82,7 +81,7 @@ public class TrackingActionInstanceServiceImpl
 	@Override
 	public TrackingActionInstance deleteTrackingActionInstance(
 			long trackingActionInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		TrackingActionInstance trackingActionInstance =
 			trackingActionInstanceLocalService.getTrackingActionInstance(
@@ -107,8 +106,7 @@ public class TrackingActionInstanceServiceImpl
 
 	@Override
 	public List<TrackingActionInstance> getTrackingActionInstances(
-			long campaignId)
-		throws SystemException {
+		long campaignId) {
 
 		return trackingActionInstanceLocalService.getTrackingActionInstances(
 			campaignId);
@@ -117,17 +115,14 @@ public class TrackingActionInstanceServiceImpl
 	@Override
 	public List<TrackingActionInstance>
 		getTrackingActionInstancesByReportInstanceId(
-			long reportInstanceId)
-		throws SystemException {
+			long reportInstanceId) {
 
 		return trackingActionInstanceLocalService.
 			getTrackingActionInstancesByReportInstanceId(reportInstanceId);
 	}
 
 	@Override
-	public int getTrackingActionInstancesCount(long campaignId)
-		throws SystemException {
-
+	public int getTrackingActionInstancesCount(long campaignId) {
 		return
 			trackingActionInstanceLocalService.getTrackingActionInstancesCount(
 				campaignId);
@@ -139,7 +134,7 @@ public class TrackingActionInstanceServiceImpl
 			String referrerClassName, long referrerClassPK, String elementId,
 			String eventType, String typeSettings,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		TrackingActionInstance trackingActionInstance =
 			trackingActionInstanceLocalService.getTrackingActionInstance(

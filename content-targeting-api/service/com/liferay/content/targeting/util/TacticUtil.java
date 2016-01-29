@@ -17,7 +17,6 @@ package com.liferay.content.targeting.util;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
 import com.liferay.portal.kernel.search.Hits;
@@ -36,15 +35,13 @@ public class TacticUtil {
 	public static final String[] SELECTED_FIELD_NAMES =
 		{Field.COMPANY_ID, Field.GROUP_ID, Field.UID, "tacticId"};
 
-	public static List<Tactic> getTactics(Hits hits)
-		throws PortalException, SystemException {
-
+	public static List<Tactic> getTactics(Hits hits) throws PortalException {
 		List<Tactic> tactics = null;
 
 		if (hits != null) {
 			List<Document> documents = hits.toList();
 
-			tactics = new ArrayList<Tactic>(documents.size());
+			tactics = new ArrayList<>(documents.size());
 
 			for (Document document : documents) {
 				long tacticId = GetterUtil.getLong(document.get("tacticId"));
@@ -68,7 +65,7 @@ public class TacticUtil {
 			}
 		}
 		else {
-			tactics = new ArrayList<Tactic>(0);
+			tactics = new ArrayList<>(0);
 		}
 
 		return tactics;

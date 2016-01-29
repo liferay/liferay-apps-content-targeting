@@ -20,13 +20,11 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.util.StringPool;
+import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import java.util.Locale;
-
-import com.liferay.portal.spring.extender.service.ServiceReference;
 
 /**
  * The extended model implementation for the ReportInstance service. Represents a row in the &quot;CT_ReportInstance&quot; database table, with each column mapped to a property of this class.
@@ -39,7 +37,7 @@ import com.liferay.portal.spring.extender.service.ServiceReference;
  */
 public class ReportInstanceImpl extends ReportInstanceBaseImpl {
 
-	public String getReportName(Locale locale) throws SystemException {
+	public String getReportName(Locale locale) {
 		Report report = _reportsRegistry.getReport(getReportKey());
 
 		if (report == null) {

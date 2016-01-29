@@ -14,7 +14,6 @@
 
 package com.liferay.content.targeting.lar;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.model.ResourcedModel;
 import com.liferay.portal.model.StagedGroupedModel;
@@ -70,6 +69,11 @@ public class AssetEntryReferencedStagedModel
 	}
 
 	@Override
+	public Date getLastPublishDate() {
+		throw new UnsupportedOperationException();
+	}
+
+	@Override
 	public Class<?> getModelClass() {
 		return AssetEntryReferencedStagedModel.class;
 	}
@@ -77,11 +81,6 @@ public class AssetEntryReferencedStagedModel
 	@Override
 	public String getModelClassName() {
 		return AssetEntryReferencedStagedModel.class.getName();
-	}
-
-	@Override
-	public Date getLastPublishDate() {
-		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -119,7 +118,7 @@ public class AssetEntryReferencedStagedModel
 	}
 
 	@Override
-	public String getUserUuid() throws SystemException {
+	public String getUserUuid() {
 		return _assetEntry.getUserUuid();
 	}
 

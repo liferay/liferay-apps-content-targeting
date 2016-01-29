@@ -7,11 +7,10 @@ Export-Package:\
 	com.liferay.content.targeting.anonymous.users.service,\
 	com.liferay.content.targeting.anonymous.users.service.messaging,\
 	com.liferay.content.targeting.anonymous.users.util
-Import-Package:\
-	*;resolution:="optional"
+Import-Package: *;resolution:="optional"
 Include-Resource:\
- 	classes,\
- 	META-INF/sql=sql,\
+	classes,\
+	META-INF/sql=sql,\
 	WEB-INF/classes/META-INF=classes/META-INF/,\
 	WEB-INF/classes/META-INF/spring=classes/META-INF/spring,\
 	WEB-INF/sql=sql,\
@@ -22,8 +21,8 @@ Liferay-Service: true
 Require-Capability:\
 	liferay.extender;\
 	filter:="(&(liferay.extender=spring.extender)(version>=1.0)(!(version>=2.0)))"
-Spring-Context: META-INF/spring
--spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference
 Service-Component: com.liferay.content.targeting.anonymous.users.*
+Spring-Context: META-INF/spring
 Web-ContextPath: /anonymous-users-api
 -baseline: *;version="2.0.0"
+-spring-dependency: com.liferay.portal.spring.extender.service.ServiceReference

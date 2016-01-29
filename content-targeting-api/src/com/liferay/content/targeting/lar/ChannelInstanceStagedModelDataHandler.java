@@ -20,7 +20,6 @@ import com.liferay.content.targeting.model.ChannelInstance;
 import com.liferay.content.targeting.model.Tactic;
 import com.liferay.content.targeting.service.ChannelInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
-import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
@@ -31,27 +30,31 @@ import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 
 import java.util.List;
 import java.util.Map;
 
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Pavel Savinov
  */
-@Component(
-	immediate = true,
-	service = StagedModelDataHandler.class
-)
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class ChannelInstanceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<ChannelInstance> {
 
 	public static final String[] CLASS_NAMES = {
-		ChannelInstance.class.getName()};
+		ChannelInstance.class.getName()
+	};
+
+	@Override
+	public void deleteStagedModel(ChannelInstance channelInstance)
+		throws PortalException {
+
+		ChannelInstanceLocalServiceUtil.deleteChannelInstance(channelInstance);
+	}
 
 	@Override
 	public void deleteStagedModel(
@@ -66,10 +69,10 @@ public class ChannelInstanceStagedModelDataHandler
 	}
 
 	@Override
-	public void deleteStagedModel(ChannelInstance channelInstance)
-		throws PortalException {
+	public List<ChannelInstance> fetchStagedModelsByUuidAndCompanyId(
+		String uuid, long companyId) {
 
-		ChannelInstanceLocalServiceUtil.deleteChannelInstance(channelInstance);
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -83,10 +86,22 @@ public class ChannelInstanceStagedModelDataHandler
 	}
 
 	@Override
-	public List<ChannelInstance>
-	fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid,
+			long channelInstanceId)
+		throws PortletDataException {
 
-		throw new UnsupportedOperationException();
+		ChannelInstance existingChannelInstance =
+			ChannelInstanceLocalServiceUtil.
+				fetchChannelInstanceByUuidAndGroupId(
+					uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> channelInstanceIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				ChannelInstance.class);
+
+		channelInstanceIds.put(
+			channelInstanceId, existingChannelInstance.getChannelInstanceId());
 	}
 
 	@Override
@@ -99,7 +114,7 @@ public class ChannelInstanceStagedModelDataHandler
 			portletDataContext.getExportDataElement(channelInstance);
 
 		Channel channel = _channelsRegistry.getChannel(
-				channelInstance.getChannelKey());
+			channelInstance.getChannelKey());
 
 		if (channel == null) {
 			_log.error(
@@ -133,25 +148,6 @@ public class ChannelInstanceStagedModelDataHandler
 			channelInstanceElement,
 			ExportImportPathUtil.getModelPath(channelInstance),
 			channelInstance);
-	}
-
-	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
-			long channelInstanceId)
-		throws PortletDataException {
-
-		ChannelInstance existingChannelInstance =
-			ChannelInstanceLocalServiceUtil.
-				fetchChannelInstanceByUuidAndGroupId(
-					uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> channelInstanceIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				ChannelInstance.class);
-
-		channelInstanceIds.put(
-			channelInstanceId, existingChannelInstance.getChannelInstanceId());
 	}
 
 	@Override
@@ -224,9 +220,13 @@ public class ChannelInstanceStagedModelDataHandler
 		}
 	}
 
+	@Reference(unbind = "-")
+	protected void setChannelsRegistry(ChannelsRegistry channelsRegistry) {
+		_channelsRegistry = channelsRegistry;
+	}
+
 	@Override
 	protected boolean validateMissingReference(String uuid, long groupId) {
-
 		ChannelInstance channelInstance =
 			ChannelInstanceLocalServiceUtil.
 				fetchChannelInstanceByUuidAndGroupId(uuid, groupId);
@@ -236,11 +236,6 @@ public class ChannelInstanceStagedModelDataHandler
 		}
 
 		return true;
-	}
-
-	@Reference(unbind = "-")
-	protected void setChannelsRegistry(ChannelsRegistry channelsRegistry) {
-		_channelsRegistry = channelsRegistry;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

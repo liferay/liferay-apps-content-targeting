@@ -34,7 +34,6 @@ import com.liferay.portlet.exportimport.lar.PortletDataHandlerControl;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 import com.liferay.portlet.exportimport.lar.StagedModelType;
 
-
 import java.util.List;
 
 import javax.portlet.PortletPreferences;
@@ -190,10 +189,6 @@ public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 		userSegmentActionableDynamicQuery.performCount();
 	}
 
-	protected static final String RESOURCE_NAME =
-		"com.liferay.content.targeting";
-
-
 	@Reference(unbind = "-")
 	protected void setCampaignLocalService(
 		CampaignLocalService campaignLocalService) {
@@ -207,6 +202,9 @@ public class ContentTargetingPortletDataHandler extends BasePortletDataHandler {
 
 		_userSegmentLocalService = userSegmentLocalService;
 	}
+
+	protected static final String RESOURCE_NAME =
+		"com.liferay.content.targeting";
 
 	private CampaignLocalService _campaignLocalService;
 	private UserSegmentLocalService _userSegmentLocalService;

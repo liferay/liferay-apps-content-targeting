@@ -139,7 +139,7 @@ public class PortalPreferencesUserSegmentSimulator
 			return null;
 		}
 
-		List<Long> values = new ArrayList<Long>();
+		List<Long> values = new ArrayList<>();
 
 		for (String string : array) {
 			long value = GetterUtil.getLong(string);

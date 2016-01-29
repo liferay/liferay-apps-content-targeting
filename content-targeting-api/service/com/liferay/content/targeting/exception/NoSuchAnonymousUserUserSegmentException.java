@@ -22,7 +22,8 @@ import com.liferay.portal.exception.NoSuchModelException;
  * @author Brian Wing Shun Chan
  */
 @ProviderType
-public class NoSuchAnonymousUserUserSegmentException extends NoSuchModelException {
+public class NoSuchAnonymousUserUserSegmentException
+	extends NoSuchModelException {
 
 	public NoSuchAnonymousUserUserSegmentException() {
 	}
@@ -31,7 +32,9 @@ public class NoSuchAnonymousUserUserSegmentException extends NoSuchModelExceptio
 		super(msg);
 	}
 
-	public NoSuchAnonymousUserUserSegmentException(String msg, Throwable cause) {
+	public NoSuchAnonymousUserUserSegmentException(
+		String msg, Throwable cause) {
+
 		super(msg, cause);
 	}
 

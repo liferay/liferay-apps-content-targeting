@@ -18,10 +18,8 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.xml.Element;
@@ -36,7 +34,6 @@ import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
@@ -48,26 +45,16 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eduardo Garcia
  */
-@Component(
-	immediate = true,
-	service = StagedModelDataHandler.class
-)
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class UserSegmentStagedModelDataHandler
 	extends BaseStagedModelDataHandler<UserSegment> {
 
 	public static final String[] CLASS_NAMES = {UserSegment.class.getName()};
 
 	@Override
-	public void deleteStagedModel(UserSegment stagedUserSegment)
-		throws PortalException {
-
-		UserSegmentLocalServiceUtil.deleteUserSegment(stagedUserSegment);
-	}
-
-	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		UserSegment userSegment =
 			UserSegmentLocalServiceUtil.fetchUserSegmentByUuidAndGroupId(
@@ -79,13 +66,10 @@ public class UserSegmentStagedModelDataHandler
 	}
 
 	@Override
-	public String[] getClassNames() {
-		return CLASS_NAMES;
-	}
+	public void deleteStagedModel(UserSegment stagedUserSegment)
+		throws PortalException {
 
-	@Override
-	public String getDisplayName(UserSegment userSegment) {
-		return userSegment.getName(LocaleUtil.getDefault());
+		UserSegmentLocalServiceUtil.deleteUserSegment(stagedUserSegment);
 	}
 
 	@Override
@@ -96,29 +80,13 @@ public class UserSegmentStagedModelDataHandler
 	}
 
 	@Override
-	protected void doImportStagedModel(
-			PortletDataContext portletDataContext, UserSegment userSegment)
-		throws Exception {
-
-		importStagedModel(portletDataContext,userSegment);
+	public String[] getClassNames() {
+		return CLASS_NAMES;
 	}
 
 	@Override
-	protected void doExportStagedModel(
-			PortletDataContext portletDataContext, UserSegment userSegment)
-		throws Exception {
-
-		Element userSegmentElement = portletDataContext.getExportDataElement(
-			userSegment);
-
-		exportAssetCategory(
-			portletDataContext, userSegmentElement, userSegment);
-
-		exportRuleInstances(portletDataContext, userSegment);
-
-		portletDataContext.addClassedModel(
-			userSegmentElement, ExportImportPathUtil.getModelPath(userSegment),
-			userSegment);
+	public String getDisplayName(UserSegment userSegment) {
+		return userSegment.getName(LocaleUtil.getDefault());
 	}
 
 	@Override
@@ -187,14 +155,16 @@ public class UserSegmentStagedModelDataHandler
 						UserSegmentLocalServiceUtil.addUserSegment(
 							userId, userSegment.getNameMap(),
 							userSegment.getDescriptionMap(), serviceContext);
-				} else {
+				}
+				else {
 					importedUserSegment =
 						UserSegmentLocalServiceUtil.updateUserSegment(
 							existingUserSegment.getUserSegmentId(),
 							userSegment.getNameMap(),
 							userSegment.getDescriptionMap(), serviceContext);
 				}
-			} else {
+			}
+			else {
 				importedUserSegment =
 					UserSegmentLocalServiceUtil.addUserSegment(
 						userId, userSegment.getNameMap(),
@@ -210,6 +180,32 @@ public class UserSegmentStagedModelDataHandler
 		catch (Exception e) {
 			throw new PortletDataException(e);
 		}
+	}
+
+	@Override
+	protected void doExportStagedModel(
+			PortletDataContext portletDataContext, UserSegment userSegment)
+		throws Exception {
+
+		Element userSegmentElement = portletDataContext.getExportDataElement(
+			userSegment);
+
+		exportAssetCategory(
+			portletDataContext, userSegmentElement, userSegment);
+
+		exportRuleInstances(portletDataContext, userSegment);
+
+		portletDataContext.addClassedModel(
+			userSegmentElement, ExportImportPathUtil.getModelPath(userSegment),
+			userSegment);
+	}
+
+	@Override
+	protected void doImportStagedModel(
+			PortletDataContext portletDataContext, UserSegment userSegment)
+		throws Exception {
+
+		importStagedModel(portletDataContext, userSegment);
 	}
 
 	protected void exportAssetCategory(
@@ -350,8 +346,7 @@ public class UserSegmentStagedModelDataHandler
 			else {
 				importedAssetCategory =
 					AssetCategoryLocalServiceUtil.updateCategory(
-						userId,
-						existingAssetCategory.getCategoryId(),
+						userId, existingAssetCategory.getCategoryId(),
 						existingAssetCategory.getParentCategoryId(),
 						assetCategory.getTitleMap(),
 						assetCategory.getDescriptionMap(),

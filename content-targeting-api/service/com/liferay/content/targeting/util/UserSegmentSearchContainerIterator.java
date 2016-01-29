@@ -15,14 +15,10 @@
 package com.liferay.content.targeting.util;
 
 import com.liferay.content.targeting.model.UserSegment;
-import com.liferay.content.targeting.service.UserSegmentLocalService;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.Validator;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
 
 import java.util.List;
 
@@ -34,7 +30,8 @@ import javax.portlet.PortletException;
 public class UserSegmentSearchContainerIterator
 	extends SearchContainerIterator<UserSegment> {
 
-	public UserSegmentSearchContainerIterator() {}
+	public UserSegmentSearchContainerIterator() {
+	}
 
 	public UserSegmentSearchContainerIterator(long groupId, String keywords)
 		throws PortletException {
@@ -44,7 +41,7 @@ public class UserSegmentSearchContainerIterator
 
 	@Override
 	public List<UserSegment> getResults(int start, int end)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		if (Validator.isNull(keywords)) {
 			return UserSegmentLocalServiceUtil.getUserSegments(
@@ -59,7 +56,7 @@ public class UserSegmentSearchContainerIterator
 	}
 
 	@Override
-	public int getTotal() throws PortalException, SystemException {
+	public int getTotal() throws PortalException {
 		if (Validator.isNull(keywords)) {
 			return UserSegmentLocalServiceUtil.getUserSegmentsCount(groupId);
 		}

@@ -22,7 +22,6 @@ import com.liferay.content.targeting.service.CampaignLocalServiceUtil;
 import com.liferay.content.targeting.service.TacticLocalServiceUtil;
 import com.liferay.content.targeting.service.TrackingActionInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -33,7 +32,6 @@ import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.StagedModelDataHandlerUtil;
 
@@ -45,14 +43,16 @@ import org.osgi.service.component.annotations.Component;
 /**
  * @author Eduardo Garcia
  */
-@Component(
-	immediate = true,
-	service = StagedModelDataHandler.class
-)
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class CampaignStagedModelDataHandler
 	extends BaseStagedModelDataHandler<Campaign> {
 
 	public static final String[] CLASS_NAMES = {Campaign.class.getName()};
+
+	@Override
+	public void deleteStagedModel(Campaign campaign) throws PortalException {
+		CampaignLocalServiceUtil.deleteCampaign(campaign);
+	}
 
 	@Override
 	public void deleteStagedModel(
@@ -69,8 +69,10 @@ public class CampaignStagedModelDataHandler
 	}
 
 	@Override
-	public void deleteStagedModel(Campaign campaign) throws PortalException {
-		CampaignLocalServiceUtil.deleteCampaign(campaign);
+	public List<Campaign>
+		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -84,12 +86,20 @@ public class CampaignStagedModelDataHandler
 	}
 
 	@Override
-	public List<Campaign>
-		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid, long campaignId)
+		throws PortletDataException {
 
-		throw new UnsupportedOperationException();
+		Campaign existingCampaign =
+			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> campaignIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				Campaign.class);
+
+		campaignIds.put(campaignId, existingCampaign.getCampaignId());
 	}
-
 
 	@Override
 	protected void doExportStagedModel(
@@ -108,22 +118,6 @@ public class CampaignStagedModelDataHandler
 		exportTrackingActionInstances(portletDataContext, campaign);
 
 		exportTactics(portletDataContext, campaignElement, campaign);
-	}
-
-	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid, long campaignId)
-		throws PortletDataException {
-
-		Campaign existingCampaign =
-			CampaignLocalServiceUtil.fetchCampaignByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> campaignIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				Campaign.class);
-
-		campaignIds.put(campaignId, existingCampaign.getCampaignId());
 	}
 
 	@Override
@@ -158,13 +152,12 @@ public class CampaignStagedModelDataHandler
 					campaign.getActive(), userSegmentIds, serviceContext);
 			}
 			else {
-				importedCampaign =
-					CampaignLocalServiceUtil.updateCampaign(
-						existingCampaign.getCampaignId(), campaign.getNameMap(),
-						campaign.getDescriptionMap(), campaign.getStartDate(),
-						campaign.getEndDate(), campaign.getTimeZoneId(),
-						campaign.getPriority(), campaign.getActive(),
-						userSegmentIds, serviceContext);
+				importedCampaign = CampaignLocalServiceUtil.updateCampaign(
+					existingCampaign.getCampaignId(), campaign.getNameMap(),
+					campaign.getDescriptionMap(), campaign.getStartDate(),
+					campaign.getEndDate(), campaign.getTimeZoneId(),
+					campaign.getPriority(), campaign.getActive(),
+					userSegmentIds, serviceContext);
 			}
 		}
 		else {

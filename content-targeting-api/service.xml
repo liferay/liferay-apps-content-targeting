@@ -33,6 +33,11 @@
 			<finder-column name="active" />
 		</finder>
 
+		<finder name="UserSegmentIds" return-type="Collection">
+			<finder-column name="userSegmentId" arrayable-operator="OR" />
+			<finder-column name="active" />
+		</finder>
+
 		<finder name="A_U" return-type="Collection">
 			<finder-column name="anonymousUserId" />
 			<finder-column name="userSegmentId" />
@@ -42,11 +47,6 @@
 			<finder-column name="companyId" />
 			<finder-column name="modifiedDate" comparator="&lt;" />
 			<finder-column name="manual" />
-		</finder>
-
-		<finder name="UserSegmentIds" return-type="Collection">
-			<finder-column name="userSegmentId" arrayable-operator="OR" />
-			<finder-column name="active" />
 		</finder>
 
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
@@ -343,8 +343,15 @@
 		<finder name="CampaignId" return-type="Collection">
 			<finder-column name="campaignId" />
 		</finder>
+		<finder name="ReportInstanceId" return-type="Collection">
+			<finder-column name="reportInstanceId" />
+		</finder>
 		<finder name="C_A" return-type="TrackingAction" unique="true">
 			<finder-column name="campaignId" />
+			<finder-column name="alias" />
+		</finder>
+		<finder name="R_A" return-type="TrackingAction" unique="true">
+			<finder-column name="reportInstanceId" />
 			<finder-column name="alias" />
 		</finder>
 		<finder name="C_E_E" return-type="Collection">
@@ -352,22 +359,15 @@
 			<finder-column name="elementId" />
 			<finder-column name="eventType" />
 		</finder>
+		<finder name="R_E_E" return-type="Collection">
+			<finder-column name="reportInstanceId" />
+			<finder-column name="elementId" />
+			<finder-column name="eventType" />
+		</finder>
 		<finder name="C_R_R_E" return-type="Collection">
 			<finder-column name="campaignId" />
 			<finder-column name="referrerClassName" />
 			<finder-column name="referrerClassPK" />
-			<finder-column name="eventType" />
-		</finder>
-		<finder name="ReportInstanceId" return-type="Collection">
-			<finder-column name="reportInstanceId" />
-		</finder>
-		<finder name="R_A" return-type="TrackingAction" unique="true">
-			<finder-column name="reportInstanceId" />
-			<finder-column name="alias" />
-		</finder>
-		<finder name="R_E_E" return-type="Collection">
-			<finder-column name="reportInstanceId" />
-			<finder-column name="elementId" />
 			<finder-column name="eventType" />
 		</finder>
 		<finder name="R_R_R_E" return-type="Collection">
@@ -427,10 +427,10 @@
 
 		<!-- References -->
 
-		<reference package-path="com.liferay.portlet.asset" entity="AssetCategory" />
-		<reference package-path="com.liferay.portlet.asset" entity="AssetVocabulary" />
 		<reference package-path="com.liferay.portal" entity="Group" />
 		<reference package-path="com.liferay.portal" entity="SystemEvent" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetCategory" />
+		<reference package-path="com.liferay.portlet.asset" entity="AssetVocabulary" />
 	</entity>
 	<exceptions>
 		<exception>DuplicateChannelInstance</exception>

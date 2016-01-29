@@ -20,9 +20,7 @@ import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.RuleInstanceLocalServiceUtil;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
-import com.liferay.content.targeting.util.PortletKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.LocaleUtil;
@@ -33,22 +31,18 @@ import com.liferay.portlet.exportimport.lar.BaseStagedModelDataHandler;
 import com.liferay.portlet.exportimport.lar.ExportImportPathUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 import com.liferay.portlet.exportimport.lar.PortletDataException;
-import com.liferay.portlet.exportimport.lar.PortletDataHandler;
+import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 
 import java.util.List;
 import java.util.Map;
 
-import com.liferay.portlet.exportimport.lar.StagedModelDataHandler;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 /**
  * @author Eduardo Garcia
  */
-@Component(
-	immediate = true,
-	service = StagedModelDataHandler.class
-)
+@Component(immediate = true, service = StagedModelDataHandler.class)
 public class RuleInstanceStagedModelDataHandler
 	extends BaseStagedModelDataHandler<RuleInstance> {
 
@@ -64,13 +58,20 @@ public class RuleInstanceStagedModelDataHandler
 	@Override
 	public void deleteStagedModel(
 			String uuid, long groupId, String className, String extraData)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		RuleInstance ruleInstance =
 			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
 				uuid, groupId);
 
 		RuleInstanceLocalServiceUtil.deleteRuleInstance(ruleInstance);
+	}
+
+	@Override
+	public List<RuleInstance>
+		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
@@ -93,10 +94,21 @@ public class RuleInstanceStagedModelDataHandler
 	}
 
 	@Override
-	public List<RuleInstance>
-		fetchStagedModelsByUuidAndCompanyId(String uuid, long companyId) {
+	public void importCompanyStagedModel(
+			PortletDataContext portletDataContext, String uuid,
+			long ruleInstanceId)
+		throws PortletDataException {
 
-		throw new UnsupportedOperationException();
+		RuleInstance existingRuleInstance =
+			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
+				uuid, portletDataContext.getCompanyGroupId());
+
+		Map<Long, Long> ruleInstanceIds =
+			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
+				RuleInstance.class);
+
+		ruleInstanceIds.put(
+			ruleInstanceId, existingRuleInstance.getRuleInstanceId());
 	}
 
 	@Override
@@ -116,9 +128,8 @@ public class RuleInstanceStagedModelDataHandler
 			return;
 		}
 
-		UserSegment userSegment =
-			UserSegmentLocalServiceUtil.getUserSegment(
-				ruleInstance.getUserSegmentId());
+		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
+			ruleInstance.getUserSegmentId());
 
 		Element userSegmentElement = portletDataContext.getExportDataElement(
 			userSegment);
@@ -143,24 +154,6 @@ public class RuleInstanceStagedModelDataHandler
 	}
 
 	@Override
-	public void importCompanyStagedModel(
-			PortletDataContext portletDataContext, String uuid,
-			long ruleInstanceId)
-		throws PortletDataException {
-
-		RuleInstance existingRuleInstance =
-			RuleInstanceLocalServiceUtil.fetchRuleInstanceByUuidAndGroupId(
-				uuid, portletDataContext.getCompanyGroupId());
-
-		Map<Long, Long> ruleInstanceIds =
-			(Map<Long, Long>)portletDataContext.getNewPrimaryKeysMap(
-				RuleInstance.class);
-
-		ruleInstanceIds.put(
-			ruleInstanceId, existingRuleInstance.getRuleInstanceId());
-	}
-
-	@Override
 	protected void doImportStagedModel(
 			PortletDataContext portletDataContext, RuleInstance ruleInstance)
 		throws Exception {
@@ -174,9 +167,8 @@ public class RuleInstanceStagedModelDataHandler
 			return;
 		}
 
-		UserSegment userSegment =
-			UserSegmentLocalServiceUtil.getUserSegment(
-				ruleInstance.getUserSegmentId());
+		UserSegment userSegment = UserSegmentLocalServiceUtil.getUserSegment(
+			ruleInstance.getUserSegmentId());
 
 		try {
 			rule.importData(portletDataContext, userSegment, ruleInstance);
@@ -222,6 +214,11 @@ public class RuleInstanceStagedModelDataHandler
 			ruleInstance, importedRuleInstance);
 	}
 
+	@Reference(unbind ="-")
+	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
+		_rulesRegistry = rulesRegistry;
+	}
+
 	@Override
 	protected boolean validateMissingReference(String uuid, long groupId) {
 		RuleInstance ruleInstance =
@@ -233,11 +230,6 @@ public class RuleInstanceStagedModelDataHandler
 		}
 
 		return true;
-	}
-
-	@Reference(unbind="-")
-	protected void setRulesRegistry(RulesRegistry rulesRegistry) {
-		_rulesRegistry = rulesRegistry;
 	}
 
 	private static Log _log = LogFactoryUtil.getLog(

@@ -17,7 +17,6 @@ package com.liferay.content.targeting.util;
 import com.liferay.content.targeting.model.UserSegment;
 import com.liferay.content.targeting.service.UserSegmentLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.search.Document;
 import com.liferay.portal.kernel.search.Field;
@@ -51,7 +50,7 @@ public class UserSegmentUtil {
 
 	public static AssetVocabulary addAssetVocabulary(
 			long userId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		serviceContext.setAddGroupPermissions(true);
 		serviceContext.setAddGuestPermissions(true);
@@ -64,7 +63,7 @@ public class UserSegmentUtil {
 
 	public static long getAssetVocabularyId(
 			long userId, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetVocabulary vocabulary = null;
 
@@ -109,9 +108,9 @@ public class UserSegmentUtil {
 	}
 
 	public static long[] getAssetVocabularyIds(long[] groupIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
-		List<Long> vocabularyIds = new ArrayList<Long>();
+		List<Long> vocabularyIds = new ArrayList<>();
 
 		for (long groupId : groupIds) {
 			try {
@@ -134,12 +133,11 @@ public class UserSegmentUtil {
 	}
 
 	public static List<UserSegment> getUserSegments(Hits hits)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<Document> documents = hits.toList();
 
-		List<UserSegment> userSegments = new ArrayList<UserSegment>(
-			documents.size());
+		List<UserSegment> userSegments = new ArrayList<>(documents.size());
 
 		for (com.liferay.portal.kernel.search.Document document : documents) {
 			long userSegmentId = GetterUtil.getLong(
@@ -168,7 +166,7 @@ public class UserSegmentUtil {
 	}
 
 	private static Map<Locale, String> _getAssetVocabularyTitleMap() {
-		Map<Locale, String> titleMap = new HashMap<Locale, String>();
+		Map<Locale, String> titleMap = new HashMap<>();
 
 		Set<Locale> locales = LanguageUtil.getAvailableLocales();
 

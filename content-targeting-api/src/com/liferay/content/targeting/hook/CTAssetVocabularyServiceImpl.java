@@ -16,7 +16,6 @@ package com.liferay.content.targeting.hook;
 
 import com.liferay.content.targeting.util.UserSegmentUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.ListUtil;
 import com.liferay.portal.kernel.util.LocaleThreadLocal;
 import com.liferay.portal.kernel.util.OrderByComparator;
@@ -43,7 +42,7 @@ import org.osgi.service.component.annotations.Component;
  */
 @Component(immediate = true, service = ServiceWrapper.class)
 public class CTAssetVocabularyServiceImpl
-		extends AssetVocabularyServiceWrapper {
+	extends AssetVocabularyServiceWrapper {
 
 	public CTAssetVocabularyServiceImpl() {
 		super(null);
@@ -59,7 +58,7 @@ public class CTAssetVocabularyServiceImpl
 	public AssetVocabularyDisplay getGroupVocabulariesDisplay(
 			long groupId, String name, int start, int end,
 			boolean addDefaultVocabulary, OrderByComparator obc)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		AssetVocabularyDisplay vocabularyDisplay =
 			super.getGroupVocabulariesDisplay(
@@ -72,13 +71,13 @@ public class CTAssetVocabularyServiceImpl
 
 		try {
 			vocabulary = AssetVocabularyLocalServiceUtil.getGroupVocabulary(
-					groupId, UserSegmentUtil.getAssetVocabularyName());
+				groupId, UserSegmentUtil.getAssetVocabularyName());
 		}
 		catch (NoSuchVocabularyException nsve) {
 			return vocabularyDisplay;
 		}
 
-		List<AssetVocabulary> removes = new ArrayList<AssetVocabulary>();
+		List<AssetVocabulary> removes = new ArrayList<>();
 
 		removes.add(vocabulary);
 
@@ -90,7 +89,7 @@ public class CTAssetVocabularyServiceImpl
 
 	@Override
 	public List<AssetVocabulary> getVocabularies(long[] vocabularyIds)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		List<AssetVocabulary> vocabularies = super.getVocabularies(
 			vocabularyIds);
@@ -99,8 +98,7 @@ public class CTAssetVocabularyServiceImpl
 			return vocabularies;
 		}
 
-		List<AssetVocabulary> unambiguousVocabularies =
-			new ArrayList<AssetVocabulary>();
+		List<AssetVocabulary> unambiguousVocabularies = new ArrayList<>();
 
 		Locale locale = LocaleThreadLocal.getThemeDisplayLocale();
 

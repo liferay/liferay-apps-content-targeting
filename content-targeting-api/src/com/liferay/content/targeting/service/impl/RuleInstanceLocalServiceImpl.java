@@ -19,7 +19,6 @@ import com.liferay.content.targeting.api.model.RulesRegistry;
 import com.liferay.content.targeting.model.RuleInstance;
 import com.liferay.content.targeting.service.base.RuleInstanceLocalServiceBaseImpl;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.Indexable;
@@ -55,7 +54,7 @@ public class RuleInstanceLocalServiceImpl
 	public RuleInstance addRuleInstance(
 			long userId, String ruleKey, long userSegmentId,
 			String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		User user = userLocalService.getUser(userId);
 
@@ -85,10 +84,10 @@ public class RuleInstanceLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public RuleInstance deleteRuleInstance(long ruleInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		RuleInstance ruleInstance = ruleInstancePersistence.findByPrimaryKey(
-				ruleInstanceId);
+			ruleInstanceId);
 
 		return deleteRuleInstance(ruleInstance);
 	}
@@ -96,7 +95,7 @@ public class RuleInstanceLocalServiceImpl
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public RuleInstance deleteRuleInstance(RuleInstance ruleInstance)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ruleInstancePersistence.remove(ruleInstance);
 
@@ -127,30 +126,27 @@ public class RuleInstanceLocalServiceImpl
 	}
 
 	@Override
-	public List<RuleInstance> getRuleInstances(long userSegmentId)
-		throws SystemException {
-
+	public List<RuleInstance> getRuleInstances(long userSegmentId) {
 		return ruleInstancePersistence.findByUserSegmentId(userSegmentId);
 	}
 
 	@Override
 	public List<RuleInstance> getRuleInstances(
-			String ruleKey, long userSegmentId)
-		throws SystemException {
+		String ruleKey, long userSegmentId) {
 
 		return ruleInstancePersistence.findByR_U(ruleKey, userSegmentId);
 	}
 
 	@Override
 	public long getRuleInstancesCount(long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ruleInstancePersistence.countByUserSegmentId(userSegmentId);
 	}
 
 	@Override
 	public long getRuleInstancesCount(String ruleKey, long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return ruleInstancePersistence.countByR_U(ruleKey, userSegmentId);
 	}
@@ -159,7 +155,7 @@ public class RuleInstanceLocalServiceImpl
 	public RuleInstance updateRuleInstance(
 			long ruleInstanceId, String typeSettings,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		Date now = new Date();
 
@@ -174,10 +170,10 @@ public class RuleInstanceLocalServiceImpl
 		return ruleInstance;
 	}
 
-	private static Log _log = LogFactoryUtil.getLog(
-		RuleInstanceLocalServiceImpl.class);
-
 	@ServiceReference(type = RulesRegistry.class)
 	protected RulesRegistry _rulesRegistry;
+
+	private static Log _log = LogFactoryUtil.getLog(
+		RuleInstanceLocalServiceImpl.class);
 
 }

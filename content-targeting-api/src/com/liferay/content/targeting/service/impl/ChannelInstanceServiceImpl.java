@@ -19,7 +19,6 @@ import com.liferay.content.targeting.service.base.ChannelInstanceServiceBaseImpl
 import com.liferay.content.targeting.service.permission.CampaignPermission;
 import com.liferay.content.targeting.util.ActionKeys;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.service.ServiceContext;
 
 import java.util.List;
@@ -44,7 +43,7 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 	public ChannelInstance addChannelInstance(
 			long userId, long tacticId, String channelKey, long campaignId,
 			String alias, String typeSettings, ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		CampaignPermission.check(
 			getPermissionChecker(), campaignId, ActionKeys.UPDATE);
@@ -56,7 +55,7 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 
 	@Override
 	public ChannelInstance deleteChannelInstance(long channelInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ChannelInstance channelInstance =
 			channelInstanceLocalService.getChannelInstance(channelInstanceId);
@@ -72,7 +71,7 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 	@Override
 	public List<ChannelInstance> getChannelInstances(
 			long campaignId, long tacticId)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return channelInstanceLocalService.getChannelInstances(tacticId);
 	}
@@ -80,7 +79,7 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 	@Override
 	public List<ChannelInstance> getChannelInstances(
 			long tacticId, String channelKey)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		return channelInstanceLocalService.getChannelInstances(
 			tacticId, channelKey);
@@ -90,7 +89,7 @@ public class ChannelInstanceServiceImpl extends ChannelInstanceServiceBaseImpl {
 	public ChannelInstance updateChannelInstance(
 			long channelInstanceId, String alias, String typeSettings,
 			ServiceContext serviceContext)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ChannelInstance channelInstance =
 			channelInstanceLocalService.getChannelInstance(channelInstanceId);

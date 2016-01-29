@@ -25,7 +25,6 @@ import com.liferay.content.targeting.util.WebKeys;
 import com.liferay.portal.kernel.events.Action;
 import com.liferay.portal.kernel.events.LifecycleAction;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.ArrayUtil;
@@ -36,8 +35,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.osgi.framework.Bundle;
-import org.osgi.framework.FrameworkUtil;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -76,7 +73,7 @@ public class UserSegmentPreAction extends Action {
 	}
 
 	protected long[] getGroupIds(HttpServletRequest request)
-		throws PortalException, SystemException {
+		throws PortalException {
 
 		ThemeDisplay themeDisplay = (ThemeDisplay)request.getAttribute(
 			WebKeys.THEME_DISPLAY);
@@ -124,6 +121,10 @@ public class UserSegmentPreAction extends Action {
 		return userSegmentsIds;
 	}
 
+	protected void setAnonymousUsersManager() {
+		_anonymousUsersManager = null;
+	}
+
 	@Reference(unbind = "unsetAnonymousUsersManager")
 	protected void setAnonymousUsersManager(
 		AnonymousUsersManager anonymousUsersManager) {
@@ -131,17 +132,9 @@ public class UserSegmentPreAction extends Action {
 		_anonymousUsersManager = anonymousUsersManager;
 	}
 
-	protected void setAnonymousUsersManager() {
-		_anonymousUsersManager = null;
-	}
-
 	@Reference(unbind = "unsetRulesEngine")
 	protected void setRulesEngine(RulesEngine rulesEngine) {
 		_rulesEngine = rulesEngine;
-	}
-
-	protected void unsetRulesEngine() {
-		_rulesEngine = null;
 	}
 
 	@Reference(unbind = "unsetUserSegmentSimulator")
@@ -151,10 +144,13 @@ public class UserSegmentPreAction extends Action {
 		_userSegmentSimulator = userSegmentSimulator;
 	}
 
+	protected void unsetRulesEngine() {
+		_rulesEngine = null;
+	}
+
 	protected void unsetUserSegmentSimulator() {
 		_userSegmentSimulator = null;
 	}
-
 
 	private static Log _log = LogFactoryUtil.getLog(UserSegmentPreAction.class);
 

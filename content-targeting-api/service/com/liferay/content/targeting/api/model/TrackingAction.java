@@ -18,7 +18,6 @@ import com.liferay.content.targeting.exception.InvalidTrackingActionException;
 import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.xml.Element;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
@@ -55,7 +54,7 @@ public interface TrackingAction {
 	 *        stored configuration
 	 */
 	public void deleteData(TrackingActionInstance trackingActionInstance)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	 * Exports any additional data added by this tracking action when the

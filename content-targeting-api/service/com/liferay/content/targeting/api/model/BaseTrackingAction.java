@@ -19,15 +19,14 @@ import com.liferay.content.targeting.model.Campaign;
 import com.liferay.content.targeting.model.TrackingActionInstance;
 import com.liferay.content.targeting.util.ContentTargetingContextUtil;
 import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portal.kernel.util.Constants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.StringBundler;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.xml.Element;
-import com.liferay.portal.kernel.security.permission.ResourceActionsUtil;
 import com.liferay.portlet.exportimport.lar.PortletDataContext;
 
 import java.util.Locale;
@@ -59,7 +58,7 @@ public abstract class BaseTrackingAction implements TrackingAction {
 
 	@Override
 	public void deleteData(TrackingActionInstance trackingActionInstance)
-		throws PortalException, SystemException {
+		throws PortalException {
 	}
 
 	@Override
