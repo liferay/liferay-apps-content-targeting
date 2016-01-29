@@ -18,7 +18,7 @@ package com.liferay.content.targeting.util;
  * @author Julio Camarero
  */
 public class ActionKeys
-	extends com.liferay.portal.security.permission.ActionKeys {
+	extends com.liferay.portal.kernel.security.permission.ActionKeys {
 
 	public static final String ADD_CAMPAIGN = "ADD_CAMPAIGN";
 

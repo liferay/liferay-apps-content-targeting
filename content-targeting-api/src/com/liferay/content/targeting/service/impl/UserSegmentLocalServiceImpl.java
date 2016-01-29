@@ -46,8 +46,8 @@ import com.liferay.portal.model.ResourceConstants;
 import com.liferay.portal.model.SystemEventConstants;
 import com.liferay.portal.model.User;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.asset.DuplicateCategoryException;
-import com.liferay.portlet.asset.NoSuchCategoryException;
+import com.liferay.portlet.asset.exception.DuplicateCategoryException;
+import com.liferay.portlet.asset.exception.NoSuchCategoryException;
 import com.liferay.portlet.asset.model.AssetCategory;
 import com.liferay.portlet.asset.model.AssetCategoryConstants;
 
