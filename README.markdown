@@ -43,7 +43,7 @@ running these commands inside the directory apps/content-targeting:
 
 3. Set these properties in the `build.<username>.properties` of your Liferay SDK:
 
-		plugins.includes=*-api,*-hook,*-service,*-web,report-*,rule-*,runtime-dependencies,tracking-action-*
+		plugins.includes=*-api,*-hook,*-service,*-web,report-*,rule-*,tracking-action-*
 		plugin.excludes=*-test
 
 4. Go to apps/content-targeting and run `ant build-app`
