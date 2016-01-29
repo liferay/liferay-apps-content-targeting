@@ -397,8 +397,7 @@ public class UserSegmentWrapper implements UserSegment,
 	}
 
 	@Override
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances() {
 		return _userSegment.getRuleInstances();
 	}
 

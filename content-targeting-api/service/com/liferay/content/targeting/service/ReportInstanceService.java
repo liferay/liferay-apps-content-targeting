@@ -57,7 +57,7 @@ public interface ReportInstanceService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 2.0.0
@@ -67,20 +67,18 @@ public interface ReportInstanceService extends BaseService {
 		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		long reportInstanceId) throws SystemException;
+		long reportInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws SystemException;
+		java.lang.String reportKey, java.lang.String className, long classPK);
 
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
-		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws SystemException;
+		java.lang.String reportKey, java.lang.String className, long classPK);
 
 	/**
 	* Returns the OSGi service identifier.
@@ -91,11 +89,10 @@ public interface ReportInstanceService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
-		java.lang.String className, long classPK) throws SystemException;
+		java.lang.String className, long classPK);
 
 	public com.liferay.content.targeting.model.ReportInstance updateReportInstance(
-		com.liferay.content.targeting.model.ReportInstance reportInstance)
-		throws SystemException;
+		com.liferay.content.targeting.model.ReportInstance reportInstance);
 
 	public com.liferay.content.targeting.model.ReportInstance updateReportInstance(
 		long reportInstanceId, long userId, java.lang.String reportKey,
@@ -104,5 +101,5 @@ public interface ReportInstanceService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

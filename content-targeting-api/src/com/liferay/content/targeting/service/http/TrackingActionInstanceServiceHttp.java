@@ -62,8 +62,7 @@ public class TrackingActionInstanceServiceHttp {
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrackingActionInstanceServiceUtil.class,
 					"addTrackingActionInstance",
@@ -82,10 +81,6 @@ public class TrackingActionInstanceServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
@@ -107,8 +102,7 @@ public class TrackingActionInstanceServiceHttp {
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrackingActionInstanceServiceUtil.class,
 					"addTrackingActionInstance",
@@ -129,10 +123,6 @@ public class TrackingActionInstanceServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -147,8 +137,7 @@ public class TrackingActionInstanceServiceHttp {
 
 	public static com.liferay.content.targeting.model.TrackingActionInstance deleteTrackingActionInstance(
 		HttpPrincipal httpPrincipal, long trackingActionInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrackingActionInstanceServiceUtil.class,
 					"deleteTrackingActionInstance",
@@ -165,10 +154,6 @@ public class TrackingActionInstanceServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
@@ -217,8 +202,7 @@ public class TrackingActionInstanceServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
-		HttpPrincipal httpPrincipal, long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, long campaignId) {
 		try {
 			MethodKey methodKey = new MethodKey(TrackingActionInstanceServiceUtil.class,
 					"getTrackingActionInstances",
@@ -233,10 +217,6 @@ public class TrackingActionInstanceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -250,8 +230,7 @@ public class TrackingActionInstanceServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
-		HttpPrincipal httpPrincipal, long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, long reportInstanceId) {
 		try {
 			MethodKey methodKey = new MethodKey(TrackingActionInstanceServiceUtil.class,
 					"getTrackingActionInstancesByReportInstanceId",
@@ -266,10 +245,6 @@ public class TrackingActionInstanceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -283,8 +258,7 @@ public class TrackingActionInstanceServiceHttp {
 	}
 
 	public static int getTrackingActionInstancesCount(
-		HttpPrincipal httpPrincipal, long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, long campaignId) {
 		try {
 			MethodKey methodKey = new MethodKey(TrackingActionInstanceServiceUtil.class,
 					"getTrackingActionInstancesCount",
@@ -299,10 +273,6 @@ public class TrackingActionInstanceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -322,8 +292,7 @@ public class TrackingActionInstanceServiceHttp {
 		java.lang.String elementId, java.lang.String eventType,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(TrackingActionInstanceServiceUtil.class,
 					"updateTrackingActionInstance",
@@ -342,10 +311,6 @@ public class TrackingActionInstanceServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

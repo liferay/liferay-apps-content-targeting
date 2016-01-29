@@ -37,8 +37,7 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.addUserSegment(userId, nameMap,
 			descriptionMap, serviceContext);
 	}
@@ -46,8 +45,7 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 	@Override
 	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
 		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.deleteUserSegment(userSegmentId);
 	}
 
@@ -64,30 +62,26 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.getUserSegments(groupId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long[] groupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.getUserSegments(groupIds);
 	}
 
 	@Override
 	public int getUserSegmentsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.getUserSegmentsCount(groupId);
 	}
 
 	@Override
 	public int getUserSegmentsCount(long[] groupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.getUserSegmentsCount(groupIds);
 	}
 
@@ -97,8 +91,7 @@ public class UserSegmentServiceWrapper implements UserSegmentService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentService.updateUserSegment(userSegmentId, nameMap,
 			descriptionMap, serviceContext);
 	}

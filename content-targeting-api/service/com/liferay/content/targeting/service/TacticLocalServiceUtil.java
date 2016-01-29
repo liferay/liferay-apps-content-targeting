@@ -59,8 +59,7 @@ public class TacticLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addTactic(userId, campaignId, nameMap, descriptionMap,
 			userSegmentsIds, serviceContext);
@@ -115,12 +114,10 @@ public class TacticLocalServiceUtil {
 	* @param tactic the tactic
 	* @return the tactic that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public static com.liferay.content.targeting.model.Tactic deleteTactic(
 		com.liferay.content.targeting.model.Tactic tactic)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteTactic(tactic);
 	}
 
@@ -130,12 +127,10 @@ public class TacticLocalServiceUtil {
 	* @param tacticId the primary key of the tactic
 	* @return the tactic that was removed
 	* @throws PortalException if a tactic with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.content.targeting.model.Tactic deleteTactic(
 		long tacticId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteTactic(tacticId);
 	}
 
@@ -310,16 +305,14 @@ public class TacticLocalServiceUtil {
 
 	public static java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
 		long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTactics(campaignId);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
 		long campaignId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTactics(campaignId, start, end, obc);
 	}
 
@@ -379,8 +372,7 @@ public class TacticLocalServiceUtil {
 	}
 
 	public static int getTacticsCount(long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getTacticsCount(campaignId);
 	}
 
@@ -426,17 +418,14 @@ public class TacticLocalServiceUtil {
 
 	public static com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
 		long campaignId, long groupId, java.lang.String keywords, int start,
-		int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchTactics(campaignId, groupId, keywords, start, end);
 	}
 
 	public static com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
 		long groupId, java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().searchTactics(groupId, keywords, start, end);
 	}
 
@@ -462,8 +451,7 @@ public class TacticLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateTactic(tacticId, campaignId, nameMap, descriptionMap,
 			userSegmentsIds, serviceContext);

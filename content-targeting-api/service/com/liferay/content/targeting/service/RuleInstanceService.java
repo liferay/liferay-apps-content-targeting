@@ -54,10 +54,10 @@ public interface RuleInstanceService extends BaseService {
 		long userId, java.lang.String ruleKey, long userSegmentId,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
-		long ruleInstanceId) throws PortalException, SystemException;
+		long ruleInstanceId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -68,14 +68,14 @@ public interface RuleInstanceService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		long userSegmentId) throws SystemException;
+		long userSegmentId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getRuleInstancesCount(long userSegmentId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

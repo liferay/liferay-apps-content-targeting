@@ -54,19 +54,18 @@ public interface ChannelInstanceService extends BaseService {
 		long userId, long tacticId, java.lang.String channelKey,
 		long campaignId, java.lang.String alias, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
-		long channelInstanceId) throws PortalException, SystemException;
+		long channelInstanceId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
-		long campaignId, long tacticId) throws PortalException, SystemException;
+		long campaignId, long tacticId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
-		long tacticId, java.lang.String channelKey)
-		throws PortalException, SystemException;
+		long tacticId, java.lang.String channelKey) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -79,5 +78,5 @@ public interface ChannelInstanceService extends BaseService {
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

@@ -59,8 +59,7 @@ public class RuleInstanceServiceHttp {
 		HttpPrincipal httpPrincipal, long userId, java.lang.String ruleKey,
 		long userSegmentId, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RuleInstanceServiceUtil.class,
 					"addRuleInstance", _addRuleInstanceParameterTypes0);
@@ -78,10 +77,6 @@ public class RuleInstanceServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -96,8 +91,7 @@ public class RuleInstanceServiceHttp {
 
 	public static com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
 		HttpPrincipal httpPrincipal, long ruleInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RuleInstanceServiceUtil.class,
 					"deleteRuleInstance", _deleteRuleInstanceParameterTypes1);
@@ -115,10 +109,6 @@ public class RuleInstanceServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -132,8 +122,7 @@ public class RuleInstanceServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		HttpPrincipal httpPrincipal, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, long userSegmentId) {
 		try {
 			MethodKey methodKey = new MethodKey(RuleInstanceServiceUtil.class,
 					"getRuleInstances", _getRuleInstancesParameterTypes2);
@@ -147,10 +136,6 @@ public class RuleInstanceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -165,8 +150,7 @@ public class RuleInstanceServiceHttp {
 
 	public static long getRuleInstancesCount(HttpPrincipal httpPrincipal,
 		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RuleInstanceServiceUtil.class,
 					"getRuleInstancesCount",
@@ -185,10 +169,6 @@ public class RuleInstanceServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -205,8 +185,7 @@ public class RuleInstanceServiceHttp {
 		HttpPrincipal httpPrincipal, long ruleInstanceId,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(RuleInstanceServiceUtil.class,
 					"updateRuleInstance", _updateRuleInstanceParameterTypes4);
@@ -222,10 +201,6 @@ public class RuleInstanceServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

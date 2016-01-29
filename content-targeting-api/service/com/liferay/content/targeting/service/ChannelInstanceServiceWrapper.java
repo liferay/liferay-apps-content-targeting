@@ -38,8 +38,7 @@ public class ChannelInstanceServiceWrapper implements ChannelInstanceService,
 		long userId, long tacticId, java.lang.String channelKey,
 		long campaignId, java.lang.String alias, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _channelInstanceService.addChannelInstance(userId, tacticId,
 			channelKey, campaignId, alias, typeSettings, serviceContext);
 	}
@@ -47,24 +46,21 @@ public class ChannelInstanceServiceWrapper implements ChannelInstanceService,
 	@Override
 	public com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
 		long channelInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _channelInstanceService.deleteChannelInstance(channelInstanceId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
 		long campaignId, long tacticId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _channelInstanceService.getChannelInstances(campaignId, tacticId);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
 		long tacticId, java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _channelInstanceService.getChannelInstances(tacticId, channelKey);
 	}
 
@@ -83,8 +79,7 @@ public class ChannelInstanceServiceWrapper implements ChannelInstanceService,
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _channelInstanceService.updateChannelInstance(channelInstanceId,
 			alias, typeSettings, serviceContext);
 	}

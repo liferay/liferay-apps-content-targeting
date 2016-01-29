@@ -48,8 +48,7 @@ public class TrackingActionInstanceServiceUtil {
 		java.lang.String elementId, java.lang.String eventType,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addTrackingActionInstance(userId, reportInstanceId,
 			trackingActionKey, campaignId, alias, referrerClassName,
@@ -66,8 +65,7 @@ public class TrackingActionInstanceServiceUtil {
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addTrackingActionInstance(userId, trackingActionKey,
 			campaignId, alias, referrerClassName, referrerClassPK, elementId,
@@ -76,8 +74,7 @@ public class TrackingActionInstanceServiceUtil {
 
 	public static com.liferay.content.targeting.model.TrackingActionInstance deleteTrackingActionInstance(
 		long trackingActionInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .deleteTrackingActionInstance(trackingActionInstanceId);
 	}
@@ -97,20 +94,17 @@ public class TrackingActionInstanceServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
-		long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long campaignId) {
 		return getService().getTrackingActionInstances(campaignId);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
-		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long reportInstanceId) {
 		return getService()
 				   .getTrackingActionInstancesByReportInstanceId(reportInstanceId);
 	}
 
-	public static int getTrackingActionInstancesCount(long campaignId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int getTrackingActionInstancesCount(long campaignId) {
 		return getService().getTrackingActionInstancesCount(campaignId);
 	}
 
@@ -120,8 +114,7 @@ public class TrackingActionInstanceServiceUtil {
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateTrackingActionInstance(trackingActionInstanceId,
 			reportInstanceId, alias, referrerClassName, referrerClassPK,

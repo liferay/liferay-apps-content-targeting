@@ -59,8 +59,7 @@ public interface UserSegment extends UserSegmentModel, PersistedModel {
 	public java.lang.String getNameWithGroupName(java.util.Locale locale,
 		long groupId);
 
-	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances()
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances();
 
 	public boolean isRuleEnabled(
 		com.liferay.content.targeting.api.model.Rule rule)

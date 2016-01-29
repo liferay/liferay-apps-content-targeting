@@ -120,12 +120,11 @@ public abstract class ReportInstanceLocalServiceBaseImpl
 	 * @param reportInstanceId the primary key of the report instance
 	 * @return the report instance that was removed
 	 * @throws PortalException if a report instance with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ReportInstance deleteReportInstance(long reportInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return reportInstancePersistence.remove(reportInstanceId);
 	}
 

@@ -57,8 +57,7 @@ public class RuleInstanceLocalServiceUtil {
 		long userId, java.lang.String ruleKey, long userSegmentId,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRuleInstance(userId, ruleKey, userSegmentId,
 			typeSettings, serviceContext);
@@ -90,12 +89,10 @@ public class RuleInstanceLocalServiceUtil {
 	* @param ruleInstance the rule instance
 	* @return the rule instance that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public static com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
 		com.liferay.content.targeting.model.RuleInstance ruleInstance)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRuleInstance(ruleInstance);
 	}
 
@@ -105,12 +102,10 @@ public class RuleInstanceLocalServiceUtil {
 	* @param ruleInstanceId the primary key of the rule instance
 	* @return the rule instance that was removed
 	* @throws PortalException if a rule instance with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
 		long ruleInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRuleInstance(ruleInstanceId);
 	}
 
@@ -265,8 +260,7 @@ public class RuleInstanceLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		java.lang.String ruleKey, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String ruleKey, long userSegmentId) {
 		return getService().getRuleInstances(ruleKey, userSegmentId);
 	}
 
@@ -287,8 +281,7 @@ public class RuleInstanceLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userSegmentId) {
 		return getService().getRuleInstances(userSegmentId);
 	}
 
@@ -333,14 +326,12 @@ public class RuleInstanceLocalServiceUtil {
 
 	public static long getRuleInstancesCount(java.lang.String ruleKey,
 		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRuleInstancesCount(ruleKey, userSegmentId);
 	}
 
 	public static long getRuleInstancesCount(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRuleInstancesCount(userSegmentId);
 	}
 
@@ -358,8 +349,7 @@ public class RuleInstanceLocalServiceUtil {
 	public static com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRuleInstance(ruleInstanceId, typeSettings,
 			serviceContext);

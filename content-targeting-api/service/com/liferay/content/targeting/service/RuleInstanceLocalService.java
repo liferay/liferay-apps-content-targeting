@@ -62,7 +62,7 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 		long userId, java.lang.String ruleKey, long userSegmentId,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Creates a new rule instance with the primary key. Does not add the rule instance to the database.
@@ -87,12 +87,11 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @param ruleInstance the rule instance
 	* @return the rule instance that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
 		com.liferay.content.targeting.model.RuleInstance ruleInstance)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Deletes the rule instance with the primary key from the database. Also notifies the appropriate model listeners.
@@ -100,11 +99,10 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	* @param ruleInstanceId the primary key of the rule instance
 	* @return the rule instance that was removed
 	* @throws PortalException if a rule instance with the primary key could not be found
-	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
-		long ruleInstanceId) throws PortalException, SystemException;
+		long ruleInstanceId) throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -233,7 +231,7 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		java.lang.String ruleKey, long userSegmentId) throws SystemException;
+		java.lang.String ruleKey, long userSegmentId);
 
 	/**
 	* Returns a range of all the rule instances.
@@ -252,7 +250,7 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		long userSegmentId) throws SystemException;
+		long userSegmentId);
 
 	/**
 	* Returns all the rule instances matching the UUID and company.
@@ -290,11 +288,11 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getRuleInstancesCount(java.lang.String ruleKey,
-		long userSegmentId) throws PortalException, SystemException;
+		long userSegmentId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public long getRuleInstancesCount(long userSegmentId)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Updates the rule instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -309,5 +307,5 @@ public interface RuleInstanceLocalService extends BaseLocalService,
 	public com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

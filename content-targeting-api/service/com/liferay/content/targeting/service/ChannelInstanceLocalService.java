@@ -62,7 +62,7 @@ public interface ChannelInstanceLocalService extends BaseLocalService,
 		long userId, long tacticId, java.lang.String channelKey,
 		long campaignId, java.lang.String alias, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Creates a new channel instance with the primary key. Does not add the channel instance to the database.
@@ -79,12 +79,11 @@ public interface ChannelInstanceLocalService extends BaseLocalService,
 	* @param channelInstance the channel instance
 	* @return the channel instance that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
 		com.liferay.content.targeting.model.ChannelInstance channelInstance)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Deletes the channel instance with the primary key from the database. Also notifies the appropriate model listeners.
@@ -92,11 +91,10 @@ public interface ChannelInstanceLocalService extends BaseLocalService,
 	* @param channelInstanceId the primary key of the channel instance
 	* @return the channel instance that was removed
 	* @throws PortalException if a channel instance with the primary key could not be found
-	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
-		long channelInstanceId) throws PortalException, SystemException;
+		long channelInstanceId) throws PortalException;
 
 	/**
 	* @throws PortalException
@@ -191,12 +189,11 @@ public interface ChannelInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getCampaignChannelInstances(
-		long campaignId) throws PortalException, SystemException;
+		long campaignId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getCampaignChannelInstances(
-		long campaignId, java.lang.String channelKey)
-		throws PortalException, SystemException;
+		long campaignId, java.lang.String channelKey) throws PortalException;
 
 	/**
 	* Returns the channel instance with the primary key.
@@ -238,12 +235,11 @@ public interface ChannelInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
-		long tacticId) throws PortalException, SystemException;
+		long tacticId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
-		long tacticId, java.lang.String channelKey)
-		throws PortalException, SystemException;
+		long tacticId, java.lang.String channelKey) throws PortalException;
 
 	/**
 	* Returns all the channel instances matching the UUID and company.
@@ -312,5 +308,5 @@ public interface ChannelInstanceLocalService extends BaseLocalService,
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

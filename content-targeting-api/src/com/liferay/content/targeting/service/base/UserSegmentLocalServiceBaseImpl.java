@@ -123,12 +123,11 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param userSegmentId the primary key of the user segment
 	 * @return the user segment that was removed
 	 * @throws PortalException if a user segment with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public UserSegment deleteUserSegment(long userSegmentId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return userSegmentPersistence.remove(userSegmentId);
 	}
 
@@ -138,12 +137,11 @@ public abstract class UserSegmentLocalServiceBaseImpl
 	 * @param userSegment the user segment
 	 * @return the user segment that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public UserSegment deleteUserSegment(UserSegment userSegment)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return userSegmentPersistence.remove(userSegment);
 	}
 

@@ -60,8 +60,7 @@ public class ReportInstanceLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addReportInstance(userId, reportKey, className, classPK,
 			nameMap, descriptionMap, typeSettings, serviceContext);
@@ -71,8 +70,7 @@ public class ReportInstanceLocalServiceUtil {
 		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addReportInstance(userId, reportKey, className, classPK,
 			typeSettings, serviceContext);
@@ -115,12 +113,10 @@ public class ReportInstanceLocalServiceUtil {
 	* @param reportInstanceId the primary key of the report instance
 	* @return the report instance that was removed
 	* @throws PortalException if a report instance with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.content.targeting.model.ReportInstance deleteReportInstance(
 		long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteReportInstance(reportInstanceId);
 	}
 
@@ -208,8 +204,7 @@ public class ReportInstanceLocalServiceUtil {
 	}
 
 	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String reportKey, java.lang.String className, long classPK) {
 		return getService().fetchReportInstance(reportKey, className, classPK);
 	}
 
@@ -226,8 +221,7 @@ public class ReportInstanceLocalServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
-		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String reportKey, java.lang.String className, long classPK) {
 		return getService().findReportInstances(reportKey, className, classPK);
 	}
 
@@ -287,20 +281,17 @@ public class ReportInstanceLocalServiceUtil {
 	}
 
 	public static int getReportInstanceCount(java.lang.String reportKey,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		return getService().getReportInstanceCount(reportKey, className, classPK);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		return getService().getReportInstances(className, classPK);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
-		java.lang.String className, long classPK, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK, int start, int end) {
 		return getService().getReportInstances(className, classPK, start, end);
 	}
 
@@ -362,8 +353,7 @@ public class ReportInstanceLocalServiceUtil {
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> searchReportInstances(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .searchReportInstances(groupId, className, classPK,
 			keywords, start, end);
@@ -387,8 +377,7 @@ public class ReportInstanceLocalServiceUtil {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateReportInstance(reportInstanceId, userId, reportKey,
 			className, classPK, nameMap, descriptionMap, typeSettings,

@@ -120,12 +120,10 @@ public abstract class CampaignLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param campaignId the primary key of the campaign
 	 * @return the campaign that was removed
 	 * @throws PortalException if a campaign with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Campaign deleteCampaign(long campaignId)
-		throws PortalException, SystemException {
+	public Campaign deleteCampaign(long campaignId) throws PortalException {
 		return campaignPersistence.remove(campaignId);
 	}
 
@@ -135,12 +133,10 @@ public abstract class CampaignLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param campaign the campaign
 	 * @return the campaign that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Campaign deleteCampaign(Campaign campaign)
-		throws PortalException, SystemException {
+	public Campaign deleteCampaign(Campaign campaign) throws PortalException {
 		return campaignPersistence.remove(campaign);
 	}
 

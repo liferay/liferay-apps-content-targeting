@@ -2521,6 +2521,533 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	}
 
 	private static final String _FINDER_COLUMN_CAMPAIGNID_CAMPAIGNID_2 = "trackingActionInstance.campaignId = ?";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_REPORTINSTANCEID =
+		new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
+			TrackingActionInstanceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByReportInstanceId",
+			new String[] {
+				Long.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID =
+		new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
+			TrackingActionInstanceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"findByReportInstanceId", new String[] { Long.class.getName() },
+			TrackingActionInstanceModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
+			TrackingActionInstanceModelImpl.TRACKINGACTIONKEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_REPORTINSTANCEID = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
+			"countByReportInstanceId", new String[] { Long.class.getName() });
+
+	/**
+	 * Returns all the tracking action instances where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @return the matching tracking action instances
+	 */
+	@Override
+	public List<TrackingActionInstance> findByReportInstanceId(
+		long reportInstanceId) {
+		return findByReportInstanceId(reportInstanceId, QueryUtil.ALL_POS,
+			QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the tracking action instances where reportInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param start the lower bound of the range of tracking action instances
+	 * @param end the upper bound of the range of tracking action instances (not inclusive)
+	 * @return the range of matching tracking action instances
+	 */
+	@Override
+	public List<TrackingActionInstance> findByReportInstanceId(
+		long reportInstanceId, int start, int end) {
+		return findByReportInstanceId(reportInstanceId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the tracking action instances where reportInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param start the lower bound of the range of tracking action instances
+	 * @param end the upper bound of the range of tracking action instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching tracking action instances
+	 */
+	@Override
+	public List<TrackingActionInstance> findByReportInstanceId(
+		long reportInstanceId, int start, int end,
+		OrderByComparator<TrackingActionInstance> orderByComparator) {
+		return findByReportInstanceId(reportInstanceId, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the tracking action instances where reportInstanceId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param start the lower bound of the range of tracking action instances
+	 * @param end the upper bound of the range of tracking action instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching tracking action instances
+	 */
+	@Override
+	public List<TrackingActionInstance> findByReportInstanceId(
+		long reportInstanceId, int start, int end,
+		OrderByComparator<TrackingActionInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID;
+			finderArgs = new Object[] { reportInstanceId };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_REPORTINSTANCEID;
+			finderArgs = new Object[] {
+					reportInstanceId,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<TrackingActionInstance> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<TrackingActionInstance>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (TrackingActionInstance trackingActionInstance : list) {
+					if ((reportInstanceId != trackingActionInstance.getReportInstanceId())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(3 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(TrackingActionInstanceModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(reportInstanceId);
+
+				if (!pagination) {
+					list = (List<TrackingActionInstance>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<TrackingActionInstance>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first tracking action instance in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching tracking action instance
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 */
+	@Override
+	public TrackingActionInstance findByReportInstanceId_First(
+		long reportInstanceId,
+		OrderByComparator<TrackingActionInstance> orderByComparator)
+		throws NoSuchTrackingActionInstanceException {
+		TrackingActionInstance trackingActionInstance = fetchByReportInstanceId_First(reportInstanceId,
+				orderByComparator);
+
+		if (trackingActionInstance != null) {
+			return trackingActionInstance;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTrackingActionInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the first tracking action instance in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	 */
+	@Override
+	public TrackingActionInstance fetchByReportInstanceId_First(
+		long reportInstanceId,
+		OrderByComparator<TrackingActionInstance> orderByComparator) {
+		List<TrackingActionInstance> list = findByReportInstanceId(reportInstanceId,
+				0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last tracking action instance in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching tracking action instance
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 */
+	@Override
+	public TrackingActionInstance findByReportInstanceId_Last(
+		long reportInstanceId,
+		OrderByComparator<TrackingActionInstance> orderByComparator)
+		throws NoSuchTrackingActionInstanceException {
+		TrackingActionInstance trackingActionInstance = fetchByReportInstanceId_Last(reportInstanceId,
+				orderByComparator);
+
+		if (trackingActionInstance != null) {
+			return trackingActionInstance;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTrackingActionInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the last tracking action instance in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	 */
+	@Override
+	public TrackingActionInstance fetchByReportInstanceId_Last(
+		long reportInstanceId,
+		OrderByComparator<TrackingActionInstance> orderByComparator) {
+		int count = countByReportInstanceId(reportInstanceId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<TrackingActionInstance> list = findByReportInstanceId(reportInstanceId,
+				count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the tracking action instances before and after the current tracking action instance in the ordered set where reportInstanceId = &#63;.
+	 *
+	 * @param trackingActionInstanceId the primary key of the current tracking action instance
+	 * @param reportInstanceId the report instance ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next tracking action instance
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 */
+	@Override
+	public TrackingActionInstance[] findByReportInstanceId_PrevAndNext(
+		long trackingActionInstanceId, long reportInstanceId,
+		OrderByComparator<TrackingActionInstance> orderByComparator)
+		throws NoSuchTrackingActionInstanceException {
+		TrackingActionInstance trackingActionInstance = findByPrimaryKey(trackingActionInstanceId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			TrackingActionInstance[] array = new TrackingActionInstanceImpl[3];
+
+			array[0] = getByReportInstanceId_PrevAndNext(session,
+					trackingActionInstance, reportInstanceId,
+					orderByComparator, true);
+
+			array[1] = trackingActionInstance;
+
+			array[2] = getByReportInstanceId_PrevAndNext(session,
+					trackingActionInstance, reportInstanceId,
+					orderByComparator, false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected TrackingActionInstance getByReportInstanceId_PrevAndNext(
+		Session session, TrackingActionInstance trackingActionInstance,
+		long reportInstanceId,
+		OrderByComparator<TrackingActionInstance> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(4 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(3);
+		}
+
+		query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
+
+		query.append(_FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2);
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(TrackingActionInstanceModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(reportInstanceId);
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(trackingActionInstance);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<TrackingActionInstance> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the tracking action instances where reportInstanceId = &#63; from the database.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 */
+	@Override
+	public void removeByReportInstanceId(long reportInstanceId) {
+		for (TrackingActionInstance trackingActionInstance : findByReportInstanceId(
+				reportInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+			remove(trackingActionInstance);
+		}
+	}
+
+	/**
+	 * Returns the number of tracking action instances where reportInstanceId = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @return the number of matching tracking action instances
+	 */
+	@Override
+	public int countByReportInstanceId(long reportInstanceId) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_REPORTINSTANCEID;
+
+		Object[] finderArgs = new Object[] { reportInstanceId };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_TRACKINGACTIONINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(reportInstanceId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2 =
+		"trackingActionInstance.reportInstanceId = ?";
 	public static final FinderPath FINDER_PATH_FETCH_BY_C_A = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
 			TrackingActionInstanceImpl.class, FINDER_CLASS_NAME_ENTITY,
@@ -2778,6 +3305,263 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	private static final String _FINDER_COLUMN_C_A_ALIAS_1 = "trackingActionInstance.alias IS NULL";
 	private static final String _FINDER_COLUMN_C_A_ALIAS_2 = "trackingActionInstance.alias = ?";
 	private static final String _FINDER_COLUMN_C_A_ALIAS_3 = "(trackingActionInstance.alias IS NULL OR trackingActionInstance.alias = '')";
+	public static final FinderPath FINDER_PATH_FETCH_BY_R_A = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
+			TrackingActionInstanceImpl.class, FINDER_CLASS_NAME_ENTITY,
+			"fetchByR_A",
+			new String[] { Long.class.getName(), String.class.getName() },
+			TrackingActionInstanceModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
+			TrackingActionInstanceModelImpl.ALIAS_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_R_A = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_A",
+			new String[] { Long.class.getName(), String.class.getName() });
+
+	/**
+	 * Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param alias the alias
+	 * @return the matching tracking action instance
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 */
+	@Override
+	public TrackingActionInstance findByR_A(long reportInstanceId, String alias)
+		throws NoSuchTrackingActionInstanceException {
+		TrackingActionInstance trackingActionInstance = fetchByR_A(reportInstanceId,
+				alias);
+
+		if (trackingActionInstance == null) {
+			StringBundler msg = new StringBundler(6);
+
+			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+			msg.append("reportInstanceId=");
+			msg.append(reportInstanceId);
+
+			msg.append(", alias=");
+			msg.append(alias);
+
+			msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+			if (_log.isWarnEnabled()) {
+				_log.warn(msg.toString());
+			}
+
+			throw new NoSuchTrackingActionInstanceException(msg.toString());
+		}
+
+		return trackingActionInstance;
+	}
+
+	/**
+	 * Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param alias the alias
+	 * @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	 */
+	@Override
+	public TrackingActionInstance fetchByR_A(long reportInstanceId, String alias) {
+		return fetchByR_A(reportInstanceId, alias, true);
+	}
+
+	/**
+	 * Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param alias the alias
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	 */
+	@Override
+	public TrackingActionInstance fetchByR_A(long reportInstanceId,
+		String alias, boolean retrieveFromCache) {
+		Object[] finderArgs = new Object[] { reportInstanceId, alias };
+
+		Object result = null;
+
+		if (retrieveFromCache) {
+			result = finderCache.getResult(FINDER_PATH_FETCH_BY_R_A,
+					finderArgs, this);
+		}
+
+		if (result instanceof TrackingActionInstance) {
+			TrackingActionInstance trackingActionInstance = (TrackingActionInstance)result;
+
+			if ((reportInstanceId != trackingActionInstance.getReportInstanceId()) ||
+					!Validator.equals(alias, trackingActionInstance.getAlias())) {
+				result = null;
+			}
+		}
+
+		if (result == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_R_A_REPORTINSTANCEID_2);
+
+			boolean bindAlias = false;
+
+			if (alias == null) {
+				query.append(_FINDER_COLUMN_R_A_ALIAS_1);
+			}
+			else if (alias.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_A_ALIAS_3);
+			}
+			else {
+				bindAlias = true;
+
+				query.append(_FINDER_COLUMN_R_A_ALIAS_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(reportInstanceId);
+
+				if (bindAlias) {
+					qPos.add(alias);
+				}
+
+				List<TrackingActionInstance> list = q.list();
+
+				if (list.isEmpty()) {
+					finderCache.putResult(FINDER_PATH_FETCH_BY_R_A, finderArgs,
+						list);
+				}
+				else {
+					TrackingActionInstance trackingActionInstance = list.get(0);
+
+					result = trackingActionInstance;
+
+					cacheResult(trackingActionInstance);
+
+					if ((trackingActionInstance.getReportInstanceId() != reportInstanceId) ||
+							(trackingActionInstance.getAlias() == null) ||
+							!trackingActionInstance.getAlias().equals(alias)) {
+						finderCache.putResult(FINDER_PATH_FETCH_BY_R_A,
+							finderArgs, trackingActionInstance);
+					}
+				}
+			}
+			catch (Exception e) {
+				finderCache.removeResult(FINDER_PATH_FETCH_BY_R_A, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		if (result instanceof List<?>) {
+			return null;
+		}
+		else {
+			return (TrackingActionInstance)result;
+		}
+	}
+
+	/**
+	 * Removes the tracking action instance where reportInstanceId = &#63; and alias = &#63; from the database.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param alias the alias
+	 * @return the tracking action instance that was removed
+	 */
+	@Override
+	public TrackingActionInstance removeByR_A(long reportInstanceId,
+		String alias) throws NoSuchTrackingActionInstanceException {
+		TrackingActionInstance trackingActionInstance = findByR_A(reportInstanceId,
+				alias);
+
+		return remove(trackingActionInstance);
+	}
+
+	/**
+	 * Returns the number of tracking action instances where reportInstanceId = &#63; and alias = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param alias the alias
+	 * @return the number of matching tracking action instances
+	 */
+	@Override
+	public int countByR_A(long reportInstanceId, String alias) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_A;
+
+		Object[] finderArgs = new Object[] { reportInstanceId, alias };
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(3);
+
+			query.append(_SQL_COUNT_TRACKINGACTIONINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_R_A_REPORTINSTANCEID_2);
+
+			boolean bindAlias = false;
+
+			if (alias == null) {
+				query.append(_FINDER_COLUMN_R_A_ALIAS_1);
+			}
+			else if (alias.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_A_ALIAS_3);
+			}
+			else {
+				bindAlias = true;
+
+				query.append(_FINDER_COLUMN_R_A_ALIAS_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(reportInstanceId);
+
+				if (bindAlias) {
+					qPos.add(alias);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_R_A_REPORTINSTANCEID_2 = "trackingActionInstance.reportInstanceId = ? AND ";
+	private static final String _FINDER_COLUMN_R_A_ALIAS_1 = "trackingActionInstance.alias IS NULL";
+	private static final String _FINDER_COLUMN_R_A_ALIAS_2 = "trackingActionInstance.alias = ?";
+	private static final String _FINDER_COLUMN_R_A_ALIAS_3 = "(trackingActionInstance.alias IS NULL OR trackingActionInstance.alias = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_E_E = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
 			TrackingActionInstanceImpl.class,
@@ -3464,6 +4248,698 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	private static final String _FINDER_COLUMN_C_E_E_EVENTTYPE_1 = "trackingActionInstance.eventType IS NULL";
 	private static final String _FINDER_COLUMN_C_E_E_EVENTTYPE_2 = "trackingActionInstance.eventType = ?";
 	private static final String _FINDER_COLUMN_C_E_E_EVENTTYPE_3 = "(trackingActionInstance.eventType IS NULL OR trackingActionInstance.eventType = '')";
+	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_E_E = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
+			TrackingActionInstanceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_E_E",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				String.class.getName(),
+				
+			Integer.class.getName(), Integer.class.getName(),
+				OrderByComparator.class.getName()
+			});
+	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E_E = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
+			TrackingActionInstanceImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_E_E",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
+			},
+			TrackingActionInstanceModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
+			TrackingActionInstanceModelImpl.ELEMENTID_COLUMN_BITMASK |
+			TrackingActionInstanceModelImpl.EVENTTYPE_COLUMN_BITMASK |
+			TrackingActionInstanceModelImpl.TRACKINGACTIONKEY_COLUMN_BITMASK);
+	public static final FinderPath FINDER_PATH_COUNT_BY_R_E_E = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
+			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_E_E",
+			new String[] {
+				Long.class.getName(), String.class.getName(),
+				String.class.getName()
+			});
+
+	/**
+	 * Returns all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param elementId the element ID
+	 * @param eventType the event type
+	 * @return the matching tracking action instances
+	 */
+	@Override
+	public List<TrackingActionInstance> findByR_E_E(long reportInstanceId,
+		String elementId, String eventType) {
+		return findByR_E_E(reportInstanceId, elementId, eventType,
+			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param elementId the element ID
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of tracking action instances
+	 * @param end the upper bound of the range of tracking action instances (not inclusive)
+	 * @return the range of matching tracking action instances
+	 */
+	@Override
+	public List<TrackingActionInstance> findByR_E_E(long reportInstanceId,
+		String elementId, String eventType, int start, int end) {
+		return findByR_E_E(reportInstanceId, elementId, eventType, start, end,
+			null);
+	}
+
+	/**
+	 * Returns an ordered range of all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param elementId the element ID
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of tracking action instances
+	 * @param end the upper bound of the range of tracking action instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching tracking action instances
+	 */
+	@Override
+	public List<TrackingActionInstance> findByR_E_E(long reportInstanceId,
+		String elementId, String eventType, int start, int end,
+		OrderByComparator<TrackingActionInstance> orderByComparator) {
+		return findByR_E_E(reportInstanceId, elementId, eventType, start, end,
+			orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param elementId the element ID
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of tracking action instances
+	 * @param end the upper bound of the range of tracking action instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param retrieveFromCache whether to retrieve from the finder cache
+	 * @return the ordered range of matching tracking action instances
+	 */
+	@Override
+	public List<TrackingActionInstance> findByR_E_E(long reportInstanceId,
+		String elementId, String eventType, int start, int end,
+		OrderByComparator<TrackingActionInstance> orderByComparator,
+		boolean retrieveFromCache) {
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+				(orderByComparator == null)) {
+			pagination = false;
+			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E_E;
+			finderArgs = new Object[] { reportInstanceId, elementId, eventType };
+		}
+		else {
+			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_R_E_E;
+			finderArgs = new Object[] {
+					reportInstanceId, elementId, eventType,
+					
+					start, end, orderByComparator
+				};
+		}
+
+		List<TrackingActionInstance> list = null;
+
+		if (retrieveFromCache) {
+			list = (List<TrackingActionInstance>)finderCache.getResult(finderPath,
+					finderArgs, this);
+
+			if ((list != null) && !list.isEmpty()) {
+				for (TrackingActionInstance trackingActionInstance : list) {
+					if ((reportInstanceId != trackingActionInstance.getReportInstanceId()) ||
+							!Validator.equals(elementId,
+								trackingActionInstance.getElementId()) ||
+							!Validator.equals(eventType,
+								trackingActionInstance.getEventType())) {
+						list = null;
+
+						break;
+					}
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(5 +
+						(orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(5);
+			}
+
+			query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_R_E_E_REPORTINSTANCEID_2);
+
+			boolean bindElementId = false;
+
+			if (elementId == null) {
+				query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_1);
+			}
+			else if (elementId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_3);
+			}
+			else {
+				bindElementId = true;
+
+				query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_2);
+			}
+
+			boolean bindEventType = false;
+
+			if (eventType == null) {
+				query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_1);
+			}
+			else if (eventType.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_3);
+			}
+			else {
+				bindEventType = true;
+
+				query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_2);
+			}
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
+					orderByComparator);
+			}
+			else
+			 if (pagination) {
+				query.append(TrackingActionInstanceModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(reportInstanceId);
+
+				if (bindElementId) {
+					qPos.add(elementId);
+				}
+
+				if (bindEventType) {
+					qPos.add(eventType);
+				}
+
+				if (!pagination) {
+					list = (List<TrackingActionInstance>)QueryUtil.list(q,
+							getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<TrackingActionInstance>)QueryUtil.list(q,
+							getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param elementId the element ID
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching tracking action instance
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 */
+	@Override
+	public TrackingActionInstance findByR_E_E_First(long reportInstanceId,
+		String elementId, String eventType,
+		OrderByComparator<TrackingActionInstance> orderByComparator)
+		throws NoSuchTrackingActionInstanceException {
+		TrackingActionInstance trackingActionInstance = fetchByR_E_E_First(reportInstanceId,
+				elementId, eventType, orderByComparator);
+
+		if (trackingActionInstance != null) {
+			return trackingActionInstance;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
+
+		msg.append(", elementId=");
+		msg.append(elementId);
+
+		msg.append(", eventType=");
+		msg.append(eventType);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTrackingActionInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param elementId the element ID
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	 */
+	@Override
+	public TrackingActionInstance fetchByR_E_E_First(long reportInstanceId,
+		String elementId, String eventType,
+		OrderByComparator<TrackingActionInstance> orderByComparator) {
+		List<TrackingActionInstance> list = findByR_E_E(reportInstanceId,
+				elementId, eventType, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param elementId the element ID
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching tracking action instance
+	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	 */
+	@Override
+	public TrackingActionInstance findByR_E_E_Last(long reportInstanceId,
+		String elementId, String eventType,
+		OrderByComparator<TrackingActionInstance> orderByComparator)
+		throws NoSuchTrackingActionInstanceException {
+		TrackingActionInstance trackingActionInstance = fetchByR_E_E_Last(reportInstanceId,
+				elementId, eventType, orderByComparator);
+
+		if (trackingActionInstance != null) {
+			return trackingActionInstance;
+		}
+
+		StringBundler msg = new StringBundler(8);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("reportInstanceId=");
+		msg.append(reportInstanceId);
+
+		msg.append(", elementId=");
+		msg.append(elementId);
+
+		msg.append(", eventType=");
+		msg.append(eventType);
+
+		msg.append(StringPool.CLOSE_CURLY_BRACE);
+
+		throw new NoSuchTrackingActionInstanceException(msg.toString());
+	}
+
+	/**
+	 * Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param elementId the element ID
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	 */
+	@Override
+	public TrackingActionInstance fetchByR_E_E_Last(long reportInstanceId,
+		String elementId, String eventType,
+		OrderByComparator<TrackingActionInstance> orderByComparator) {
+		int count = countByR_E_E(reportInstanceId, elementId, eventType);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<TrackingActionInstance> list = findByR_E_E(reportInstanceId,
+				elementId, eventType, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the tracking action instances before and after the current tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	 *
+	 * @param trackingActionInstanceId the primary key of the current tracking action instance
+	 * @param reportInstanceId the report instance ID
+	 * @param elementId the element ID
+	 * @param eventType the event type
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the previous, current, and next tracking action instance
+	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	 */
+	@Override
+	public TrackingActionInstance[] findByR_E_E_PrevAndNext(
+		long trackingActionInstanceId, long reportInstanceId, String elementId,
+		String eventType,
+		OrderByComparator<TrackingActionInstance> orderByComparator)
+		throws NoSuchTrackingActionInstanceException {
+		TrackingActionInstance trackingActionInstance = findByPrimaryKey(trackingActionInstanceId);
+
+		Session session = null;
+
+		try {
+			session = openSession();
+
+			TrackingActionInstance[] array = new TrackingActionInstanceImpl[3];
+
+			array[0] = getByR_E_E_PrevAndNext(session, trackingActionInstance,
+					reportInstanceId, elementId, eventType, orderByComparator,
+					true);
+
+			array[1] = trackingActionInstance;
+
+			array[2] = getByR_E_E_PrevAndNext(session, trackingActionInstance,
+					reportInstanceId, elementId, eventType, orderByComparator,
+					false);
+
+			return array;
+		}
+		catch (Exception e) {
+			throw processException(e);
+		}
+		finally {
+			closeSession(session);
+		}
+	}
+
+	protected TrackingActionInstance getByR_E_E_PrevAndNext(Session session,
+		TrackingActionInstance trackingActionInstance, long reportInstanceId,
+		String elementId, String eventType,
+		OrderByComparator<TrackingActionInstance> orderByComparator,
+		boolean previous) {
+		StringBundler query = null;
+
+		if (orderByComparator != null) {
+			query = new StringBundler(6 +
+					(orderByComparator.getOrderByConditionFields().length * 3) +
+					(orderByComparator.getOrderByFields().length * 3));
+		}
+		else {
+			query = new StringBundler(5);
+		}
+
+		query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
+
+		query.append(_FINDER_COLUMN_R_E_E_REPORTINSTANCEID_2);
+
+		boolean bindElementId = false;
+
+		if (elementId == null) {
+			query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_1);
+		}
+		else if (elementId.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_3);
+		}
+		else {
+			bindElementId = true;
+
+			query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_2);
+		}
+
+		boolean bindEventType = false;
+
+		if (eventType == null) {
+			query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_1);
+		}
+		else if (eventType.equals(StringPool.BLANK)) {
+			query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_3);
+		}
+		else {
+			bindEventType = true;
+
+			query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_2);
+		}
+
+		if (orderByComparator != null) {
+			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
+
+			if (orderByConditionFields.length > 0) {
+				query.append(WHERE_AND);
+			}
+
+			for (int i = 0; i < orderByConditionFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByConditionFields[i]);
+
+				if ((i + 1) < orderByConditionFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(WHERE_GREATER_THAN);
+					}
+					else {
+						query.append(WHERE_LESSER_THAN);
+					}
+				}
+			}
+
+			query.append(ORDER_BY_CLAUSE);
+
+			String[] orderByFields = orderByComparator.getOrderByFields();
+
+			for (int i = 0; i < orderByFields.length; i++) {
+				query.append(_ORDER_BY_ENTITY_ALIAS);
+				query.append(orderByFields[i]);
+
+				if ((i + 1) < orderByFields.length) {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC_HAS_NEXT);
+					}
+					else {
+						query.append(ORDER_BY_DESC_HAS_NEXT);
+					}
+				}
+				else {
+					if (orderByComparator.isAscending() ^ previous) {
+						query.append(ORDER_BY_ASC);
+					}
+					else {
+						query.append(ORDER_BY_DESC);
+					}
+				}
+			}
+		}
+		else {
+			query.append(TrackingActionInstanceModelImpl.ORDER_BY_JPQL);
+		}
+
+		String sql = query.toString();
+
+		Query q = session.createQuery(sql);
+
+		q.setFirstResult(0);
+		q.setMaxResults(2);
+
+		QueryPos qPos = QueryPos.getInstance(q);
+
+		qPos.add(reportInstanceId);
+
+		if (bindElementId) {
+			qPos.add(elementId);
+		}
+
+		if (bindEventType) {
+			qPos.add(eventType);
+		}
+
+		if (orderByComparator != null) {
+			Object[] values = orderByComparator.getOrderByConditionValues(trackingActionInstance);
+
+			for (Object value : values) {
+				qPos.add(value);
+			}
+		}
+
+		List<TrackingActionInstance> list = q.list();
+
+		if (list.size() == 2) {
+			return list.get(1);
+		}
+		else {
+			return null;
+		}
+	}
+
+	/**
+	 * Removes all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63; from the database.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param elementId the element ID
+	 * @param eventType the event type
+	 */
+	@Override
+	public void removeByR_E_E(long reportInstanceId, String elementId,
+		String eventType) {
+		for (TrackingActionInstance trackingActionInstance : findByR_E_E(
+				reportInstanceId, elementId, eventType, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS, null)) {
+			remove(trackingActionInstance);
+		}
+	}
+
+	/**
+	 * Returns the number of tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	 *
+	 * @param reportInstanceId the report instance ID
+	 * @param elementId the element ID
+	 * @param eventType the event type
+	 * @return the number of matching tracking action instances
+	 */
+	@Override
+	public int countByR_E_E(long reportInstanceId, String elementId,
+		String eventType) {
+		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_E_E;
+
+		Object[] finderArgs = new Object[] {
+				reportInstanceId, elementId, eventType
+			};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(4);
+
+			query.append(_SQL_COUNT_TRACKINGACTIONINSTANCE_WHERE);
+
+			query.append(_FINDER_COLUMN_R_E_E_REPORTINSTANCEID_2);
+
+			boolean bindElementId = false;
+
+			if (elementId == null) {
+				query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_1);
+			}
+			else if (elementId.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_3);
+			}
+			else {
+				bindElementId = true;
+
+				query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_2);
+			}
+
+			boolean bindEventType = false;
+
+			if (eventType == null) {
+				query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_1);
+			}
+			else if (eventType.equals(StringPool.BLANK)) {
+				query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_3);
+			}
+			else {
+				bindEventType = true;
+
+				query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_2);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(reportInstanceId);
+
+				if (bindElementId) {
+					qPos.add(elementId);
+				}
+
+				if (bindEventType) {
+					qPos.add(eventType);
+				}
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_R_E_E_REPORTINSTANCEID_2 = "trackingActionInstance.reportInstanceId = ? AND ";
+	private static final String _FINDER_COLUMN_R_E_E_ELEMENTID_1 = "trackingActionInstance.elementId IS NULL AND ";
+	private static final String _FINDER_COLUMN_R_E_E_ELEMENTID_2 = "trackingActionInstance.elementId = ? AND ";
+	private static final String _FINDER_COLUMN_R_E_E_ELEMENTID_3 = "(trackingActionInstance.elementId IS NULL OR trackingActionInstance.elementId = '') AND ";
+	private static final String _FINDER_COLUMN_R_E_E_EVENTTYPE_1 = "trackingActionInstance.eventType IS NULL";
+	private static final String _FINDER_COLUMN_R_E_E_EVENTTYPE_2 = "trackingActionInstance.eventType = ?";
+	private static final String _FINDER_COLUMN_R_E_E_EVENTTYPE_3 = "(trackingActionInstance.eventType IS NULL OR trackingActionInstance.eventType = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_C_R_R_E = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
 			TrackingActionInstanceImpl.class,
@@ -4197,1482 +5673,6 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 	private static final String _FINDER_COLUMN_C_R_R_E_EVENTTYPE_1 = "trackingActionInstance.eventType IS NULL";
 	private static final String _FINDER_COLUMN_C_R_R_E_EVENTTYPE_2 = "trackingActionInstance.eventType = ?";
 	private static final String _FINDER_COLUMN_C_R_R_E_EVENTTYPE_3 = "(trackingActionInstance.eventType IS NULL OR trackingActionInstance.eventType = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_REPORTINSTANCEID =
-		new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
-			TrackingActionInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByReportInstanceId",
-			new String[] {
-				Long.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID =
-		new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
-			TrackingActionInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"findByReportInstanceId", new String[] { Long.class.getName() },
-			TrackingActionInstanceModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
-			TrackingActionInstanceModelImpl.TRACKINGACTIONKEY_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_REPORTINSTANCEID = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION,
-			"countByReportInstanceId", new String[] { Long.class.getName() });
-
-	/**
-	 * Returns all the tracking action instances where reportInstanceId = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @return the matching tracking action instances
-	 */
-	@Override
-	public List<TrackingActionInstance> findByReportInstanceId(
-		long reportInstanceId) {
-		return findByReportInstanceId(reportInstanceId, QueryUtil.ALL_POS,
-			QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the tracking action instances where reportInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param start the lower bound of the range of tracking action instances
-	 * @param end the upper bound of the range of tracking action instances (not inclusive)
-	 * @return the range of matching tracking action instances
-	 */
-	@Override
-	public List<TrackingActionInstance> findByReportInstanceId(
-		long reportInstanceId, int start, int end) {
-		return findByReportInstanceId(reportInstanceId, start, end, null);
-	}
-
-	/**
-	 * Returns an ordered range of all the tracking action instances where reportInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param start the lower bound of the range of tracking action instances
-	 * @param end the upper bound of the range of tracking action instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching tracking action instances
-	 */
-	@Override
-	public List<TrackingActionInstance> findByReportInstanceId(
-		long reportInstanceId, int start, int end,
-		OrderByComparator<TrackingActionInstance> orderByComparator) {
-		return findByReportInstanceId(reportInstanceId, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the tracking action instances where reportInstanceId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param start the lower bound of the range of tracking action instances
-	 * @param end the upper bound of the range of tracking action instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching tracking action instances
-	 */
-	@Override
-	public List<TrackingActionInstance> findByReportInstanceId(
-		long reportInstanceId, int start, int end,
-		OrderByComparator<TrackingActionInstance> orderByComparator,
-		boolean retrieveFromCache) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID;
-			finderArgs = new Object[] { reportInstanceId };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_REPORTINSTANCEID;
-			finderArgs = new Object[] {
-					reportInstanceId,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<TrackingActionInstance> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<TrackingActionInstance>)finderCache.getResult(finderPath,
-					finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (TrackingActionInstance trackingActionInstance : list) {
-					if ((reportInstanceId != trackingActionInstance.getReportInstanceId())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(3 +
-						(orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(3);
-			}
-
-			query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
-
-			query.append(_FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2);
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(TrackingActionInstanceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(reportInstanceId);
-
-				if (!pagination) {
-					list = (List<TrackingActionInstance>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<TrackingActionInstance>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first tracking action instance in the ordered set where reportInstanceId = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching tracking action instance
-	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
-	 */
-	@Override
-	public TrackingActionInstance findByReportInstanceId_First(
-		long reportInstanceId,
-		OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws NoSuchTrackingActionInstanceException {
-		TrackingActionInstance trackingActionInstance = fetchByReportInstanceId_First(reportInstanceId,
-				orderByComparator);
-
-		if (trackingActionInstance != null) {
-			return trackingActionInstance;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("reportInstanceId=");
-		msg.append(reportInstanceId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTrackingActionInstanceException(msg.toString());
-	}
-
-	/**
-	 * Returns the first tracking action instance in the ordered set where reportInstanceId = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	 */
-	@Override
-	public TrackingActionInstance fetchByReportInstanceId_First(
-		long reportInstanceId,
-		OrderByComparator<TrackingActionInstance> orderByComparator) {
-		List<TrackingActionInstance> list = findByReportInstanceId(reportInstanceId,
-				0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last tracking action instance in the ordered set where reportInstanceId = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching tracking action instance
-	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
-	 */
-	@Override
-	public TrackingActionInstance findByReportInstanceId_Last(
-		long reportInstanceId,
-		OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws NoSuchTrackingActionInstanceException {
-		TrackingActionInstance trackingActionInstance = fetchByReportInstanceId_Last(reportInstanceId,
-				orderByComparator);
-
-		if (trackingActionInstance != null) {
-			return trackingActionInstance;
-		}
-
-		StringBundler msg = new StringBundler(4);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("reportInstanceId=");
-		msg.append(reportInstanceId);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTrackingActionInstanceException(msg.toString());
-	}
-
-	/**
-	 * Returns the last tracking action instance in the ordered set where reportInstanceId = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	 */
-	@Override
-	public TrackingActionInstance fetchByReportInstanceId_Last(
-		long reportInstanceId,
-		OrderByComparator<TrackingActionInstance> orderByComparator) {
-		int count = countByReportInstanceId(reportInstanceId);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TrackingActionInstance> list = findByReportInstanceId(reportInstanceId,
-				count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the tracking action instances before and after the current tracking action instance in the ordered set where reportInstanceId = &#63;.
-	 *
-	 * @param trackingActionInstanceId the primary key of the current tracking action instance
-	 * @param reportInstanceId the report instance ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next tracking action instance
-	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
-	 */
-	@Override
-	public TrackingActionInstance[] findByReportInstanceId_PrevAndNext(
-		long trackingActionInstanceId, long reportInstanceId,
-		OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws NoSuchTrackingActionInstanceException {
-		TrackingActionInstance trackingActionInstance = findByPrimaryKey(trackingActionInstanceId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			TrackingActionInstance[] array = new TrackingActionInstanceImpl[3];
-
-			array[0] = getByReportInstanceId_PrevAndNext(session,
-					trackingActionInstance, reportInstanceId,
-					orderByComparator, true);
-
-			array[1] = trackingActionInstance;
-
-			array[2] = getByReportInstanceId_PrevAndNext(session,
-					trackingActionInstance, reportInstanceId,
-					orderByComparator, false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected TrackingActionInstance getByReportInstanceId_PrevAndNext(
-		Session session, TrackingActionInstance trackingActionInstance,
-		long reportInstanceId,
-		OrderByComparator<TrackingActionInstance> orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(4 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(3);
-		}
-
-		query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
-
-		query.append(_FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2);
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(TrackingActionInstanceModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(reportInstanceId);
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(trackingActionInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<TrackingActionInstance> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the tracking action instances where reportInstanceId = &#63; from the database.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 */
-	@Override
-	public void removeByReportInstanceId(long reportInstanceId) {
-		for (TrackingActionInstance trackingActionInstance : findByReportInstanceId(
-				reportInstanceId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
-			remove(trackingActionInstance);
-		}
-	}
-
-	/**
-	 * Returns the number of tracking action instances where reportInstanceId = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @return the number of matching tracking action instances
-	 */
-	@Override
-	public int countByReportInstanceId(long reportInstanceId) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_REPORTINSTANCEID;
-
-		Object[] finderArgs = new Object[] { reportInstanceId };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(2);
-
-			query.append(_SQL_COUNT_TRACKINGACTIONINSTANCE_WHERE);
-
-			query.append(_FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2);
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(reportInstanceId);
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_REPORTINSTANCEID_REPORTINSTANCEID_2 =
-		"trackingActionInstance.reportInstanceId = ?";
-	public static final FinderPath FINDER_PATH_FETCH_BY_R_A = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
-			TrackingActionInstanceImpl.class, FINDER_CLASS_NAME_ENTITY,
-			"fetchByR_A",
-			new String[] { Long.class.getName(), String.class.getName() },
-			TrackingActionInstanceModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
-			TrackingActionInstanceModelImpl.ALIAS_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_R_A = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_A",
-			new String[] { Long.class.getName(), String.class.getName() });
-
-	/**
-	 * Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param alias the alias
-	 * @return the matching tracking action instance
-	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
-	 */
-	@Override
-	public TrackingActionInstance findByR_A(long reportInstanceId, String alias)
-		throws NoSuchTrackingActionInstanceException {
-		TrackingActionInstance trackingActionInstance = fetchByR_A(reportInstanceId,
-				alias);
-
-		if (trackingActionInstance == null) {
-			StringBundler msg = new StringBundler(6);
-
-			msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-			msg.append("reportInstanceId=");
-			msg.append(reportInstanceId);
-
-			msg.append(", alias=");
-			msg.append(alias);
-
-			msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-			if (_log.isWarnEnabled()) {
-				_log.warn(msg.toString());
-			}
-
-			throw new NoSuchTrackingActionInstanceException(msg.toString());
-		}
-
-		return trackingActionInstance;
-	}
-
-	/**
-	 * Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param alias the alias
-	 * @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	 */
-	@Override
-	public TrackingActionInstance fetchByR_A(long reportInstanceId, String alias) {
-		return fetchByR_A(reportInstanceId, alias, true);
-	}
-
-	/**
-	 * Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param alias the alias
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	 */
-	@Override
-	public TrackingActionInstance fetchByR_A(long reportInstanceId,
-		String alias, boolean retrieveFromCache) {
-		Object[] finderArgs = new Object[] { reportInstanceId, alias };
-
-		Object result = null;
-
-		if (retrieveFromCache) {
-			result = finderCache.getResult(FINDER_PATH_FETCH_BY_R_A,
-					finderArgs, this);
-		}
-
-		if (result instanceof TrackingActionInstance) {
-			TrackingActionInstance trackingActionInstance = (TrackingActionInstance)result;
-
-			if ((reportInstanceId != trackingActionInstance.getReportInstanceId()) ||
-					!Validator.equals(alias, trackingActionInstance.getAlias())) {
-				result = null;
-			}
-		}
-
-		if (result == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
-
-			query.append(_FINDER_COLUMN_R_A_REPORTINSTANCEID_2);
-
-			boolean bindAlias = false;
-
-			if (alias == null) {
-				query.append(_FINDER_COLUMN_R_A_ALIAS_1);
-			}
-			else if (alias.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_A_ALIAS_3);
-			}
-			else {
-				bindAlias = true;
-
-				query.append(_FINDER_COLUMN_R_A_ALIAS_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(reportInstanceId);
-
-				if (bindAlias) {
-					qPos.add(alias);
-				}
-
-				List<TrackingActionInstance> list = q.list();
-
-				if (list.isEmpty()) {
-					finderCache.putResult(FINDER_PATH_FETCH_BY_R_A, finderArgs,
-						list);
-				}
-				else {
-					TrackingActionInstance trackingActionInstance = list.get(0);
-
-					result = trackingActionInstance;
-
-					cacheResult(trackingActionInstance);
-
-					if ((trackingActionInstance.getReportInstanceId() != reportInstanceId) ||
-							(trackingActionInstance.getAlias() == null) ||
-							!trackingActionInstance.getAlias().equals(alias)) {
-						finderCache.putResult(FINDER_PATH_FETCH_BY_R_A,
-							finderArgs, trackingActionInstance);
-					}
-				}
-			}
-			catch (Exception e) {
-				finderCache.removeResult(FINDER_PATH_FETCH_BY_R_A, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		if (result instanceof List<?>) {
-			return null;
-		}
-		else {
-			return (TrackingActionInstance)result;
-		}
-	}
-
-	/**
-	 * Removes the tracking action instance where reportInstanceId = &#63; and alias = &#63; from the database.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param alias the alias
-	 * @return the tracking action instance that was removed
-	 */
-	@Override
-	public TrackingActionInstance removeByR_A(long reportInstanceId,
-		String alias) throws NoSuchTrackingActionInstanceException {
-		TrackingActionInstance trackingActionInstance = findByR_A(reportInstanceId,
-				alias);
-
-		return remove(trackingActionInstance);
-	}
-
-	/**
-	 * Returns the number of tracking action instances where reportInstanceId = &#63; and alias = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param alias the alias
-	 * @return the number of matching tracking action instances
-	 */
-	@Override
-	public int countByR_A(long reportInstanceId, String alias) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_A;
-
-		Object[] finderArgs = new Object[] { reportInstanceId, alias };
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(3);
-
-			query.append(_SQL_COUNT_TRACKINGACTIONINSTANCE_WHERE);
-
-			query.append(_FINDER_COLUMN_R_A_REPORTINSTANCEID_2);
-
-			boolean bindAlias = false;
-
-			if (alias == null) {
-				query.append(_FINDER_COLUMN_R_A_ALIAS_1);
-			}
-			else if (alias.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_A_ALIAS_3);
-			}
-			else {
-				bindAlias = true;
-
-				query.append(_FINDER_COLUMN_R_A_ALIAS_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(reportInstanceId);
-
-				if (bindAlias) {
-					qPos.add(alias);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_R_A_REPORTINSTANCEID_2 = "trackingActionInstance.reportInstanceId = ? AND ";
-	private static final String _FINDER_COLUMN_R_A_ALIAS_1 = "trackingActionInstance.alias IS NULL";
-	private static final String _FINDER_COLUMN_R_A_ALIAS_2 = "trackingActionInstance.alias = ?";
-	private static final String _FINDER_COLUMN_R_A_ALIAS_3 = "(trackingActionInstance.alias IS NULL OR trackingActionInstance.alias = '')";
-	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_E_E = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
-			TrackingActionInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByR_E_E",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName(),
-				
-			Integer.class.getName(), Integer.class.getName(),
-				OrderByComparator.class.getName()
-			});
-	public static final FinderPath FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E_E = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
-			TrackingActionInstanceImpl.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByR_E_E",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			},
-			TrackingActionInstanceModelImpl.REPORTINSTANCEID_COLUMN_BITMASK |
-			TrackingActionInstanceModelImpl.ELEMENTID_COLUMN_BITMASK |
-			TrackingActionInstanceModelImpl.EVENTTYPE_COLUMN_BITMASK |
-			TrackingActionInstanceModelImpl.TRACKINGACTIONKEY_COLUMN_BITMASK);
-	public static final FinderPath FINDER_PATH_COUNT_BY_R_E_E = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
-			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED, Long.class,
-			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByR_E_E",
-			new String[] {
-				Long.class.getName(), String.class.getName(),
-				String.class.getName()
-			});
-
-	/**
-	 * Returns all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param elementId the element ID
-	 * @param eventType the event type
-	 * @return the matching tracking action instances
-	 */
-	@Override
-	public List<TrackingActionInstance> findByR_E_E(long reportInstanceId,
-		String elementId, String eventType) {
-		return findByR_E_E(reportInstanceId, elementId, eventType,
-			QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
-	}
-
-	/**
-	 * Returns a range of all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param elementId the element ID
-	 * @param eventType the event type
-	 * @param start the lower bound of the range of tracking action instances
-	 * @param end the upper bound of the range of tracking action instances (not inclusive)
-	 * @return the range of matching tracking action instances
-	 */
-	@Override
-	public List<TrackingActionInstance> findByR_E_E(long reportInstanceId,
-		String elementId, String eventType, int start, int end) {
-		return findByR_E_E(reportInstanceId, elementId, eventType, start, end,
-			null);
-	}
-
-	/**
-	 * Returns an ordered range of all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param elementId the element ID
-	 * @param eventType the event type
-	 * @param start the lower bound of the range of tracking action instances
-	 * @param end the upper bound of the range of tracking action instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching tracking action instances
-	 */
-	@Override
-	public List<TrackingActionInstance> findByR_E_E(long reportInstanceId,
-		String elementId, String eventType, int start, int end,
-		OrderByComparator<TrackingActionInstance> orderByComparator) {
-		return findByR_E_E(reportInstanceId, elementId, eventType, start, end,
-			orderByComparator, true);
-	}
-
-	/**
-	 * Returns an ordered range of all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param elementId the element ID
-	 * @param eventType the event type
-	 * @param start the lower bound of the range of tracking action instances
-	 * @param end the upper bound of the range of tracking action instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param retrieveFromCache whether to retrieve from the finder cache
-	 * @return the ordered range of matching tracking action instances
-	 */
-	@Override
-	public List<TrackingActionInstance> findByR_E_E(long reportInstanceId,
-		String elementId, String eventType, int start, int end,
-		OrderByComparator<TrackingActionInstance> orderByComparator,
-		boolean retrieveFromCache) {
-		boolean pagination = true;
-		FinderPath finderPath = null;
-		Object[] finderArgs = null;
-
-		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
-				(orderByComparator == null)) {
-			pagination = false;
-			finderPath = FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E_E;
-			finderArgs = new Object[] { reportInstanceId, elementId, eventType };
-		}
-		else {
-			finderPath = FINDER_PATH_WITH_PAGINATION_FIND_BY_R_E_E;
-			finderArgs = new Object[] {
-					reportInstanceId, elementId, eventType,
-					
-					start, end, orderByComparator
-				};
-		}
-
-		List<TrackingActionInstance> list = null;
-
-		if (retrieveFromCache) {
-			list = (List<TrackingActionInstance>)finderCache.getResult(finderPath,
-					finderArgs, this);
-
-			if ((list != null) && !list.isEmpty()) {
-				for (TrackingActionInstance trackingActionInstance : list) {
-					if ((reportInstanceId != trackingActionInstance.getReportInstanceId()) ||
-							!Validator.equals(elementId,
-								trackingActionInstance.getElementId()) ||
-							!Validator.equals(eventType,
-								trackingActionInstance.getEventType())) {
-						list = null;
-
-						break;
-					}
-				}
-			}
-		}
-
-		if (list == null) {
-			StringBundler query = null;
-
-			if (orderByComparator != null) {
-				query = new StringBundler(5 +
-						(orderByComparator.getOrderByFields().length * 2));
-			}
-			else {
-				query = new StringBundler(5);
-			}
-
-			query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
-
-			query.append(_FINDER_COLUMN_R_E_E_REPORTINSTANCEID_2);
-
-			boolean bindElementId = false;
-
-			if (elementId == null) {
-				query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_1);
-			}
-			else if (elementId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_3);
-			}
-			else {
-				bindElementId = true;
-
-				query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_2);
-			}
-
-			boolean bindEventType = false;
-
-			if (eventType == null) {
-				query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_1);
-			}
-			else if (eventType.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_3);
-			}
-			else {
-				bindEventType = true;
-
-				query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_2);
-			}
-
-			if (orderByComparator != null) {
-				appendOrderByComparator(query, _ORDER_BY_ENTITY_ALIAS,
-					orderByComparator);
-			}
-			else
-			 if (pagination) {
-				query.append(TrackingActionInstanceModelImpl.ORDER_BY_JPQL);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(reportInstanceId);
-
-				if (bindElementId) {
-					qPos.add(elementId);
-				}
-
-				if (bindEventType) {
-					qPos.add(eventType);
-				}
-
-				if (!pagination) {
-					list = (List<TrackingActionInstance>)QueryUtil.list(q,
-							getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<TrackingActionInstance>)QueryUtil.list(q,
-							getDialect(), start, end);
-				}
-
-				cacheResult(list);
-
-				finderCache.putResult(finderPath, finderArgs, list);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return list;
-	}
-
-	/**
-	 * Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param elementId the element ID
-	 * @param eventType the event type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching tracking action instance
-	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
-	 */
-	@Override
-	public TrackingActionInstance findByR_E_E_First(long reportInstanceId,
-		String elementId, String eventType,
-		OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws NoSuchTrackingActionInstanceException {
-		TrackingActionInstance trackingActionInstance = fetchByR_E_E_First(reportInstanceId,
-				elementId, eventType, orderByComparator);
-
-		if (trackingActionInstance != null) {
-			return trackingActionInstance;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("reportInstanceId=");
-		msg.append(reportInstanceId);
-
-		msg.append(", elementId=");
-		msg.append(elementId);
-
-		msg.append(", eventType=");
-		msg.append(eventType);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTrackingActionInstanceException(msg.toString());
-	}
-
-	/**
-	 * Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param elementId the element ID
-	 * @param eventType the event type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	 */
-	@Override
-	public TrackingActionInstance fetchByR_E_E_First(long reportInstanceId,
-		String elementId, String eventType,
-		OrderByComparator<TrackingActionInstance> orderByComparator) {
-		List<TrackingActionInstance> list = findByR_E_E(reportInstanceId,
-				elementId, eventType, 0, 1, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param elementId the element ID
-	 * @param eventType the event type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching tracking action instance
-	 * @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
-	 */
-	@Override
-	public TrackingActionInstance findByR_E_E_Last(long reportInstanceId,
-		String elementId, String eventType,
-		OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws NoSuchTrackingActionInstanceException {
-		TrackingActionInstance trackingActionInstance = fetchByR_E_E_Last(reportInstanceId,
-				elementId, eventType, orderByComparator);
-
-		if (trackingActionInstance != null) {
-			return trackingActionInstance;
-		}
-
-		StringBundler msg = new StringBundler(8);
-
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
-
-		msg.append("reportInstanceId=");
-		msg.append(reportInstanceId);
-
-		msg.append(", elementId=");
-		msg.append(elementId);
-
-		msg.append(", eventType=");
-		msg.append(eventType);
-
-		msg.append(StringPool.CLOSE_CURLY_BRACE);
-
-		throw new NoSuchTrackingActionInstanceException(msg.toString());
-	}
-
-	/**
-	 * Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param elementId the element ID
-	 * @param eventType the event type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	 */
-	@Override
-	public TrackingActionInstance fetchByR_E_E_Last(long reportInstanceId,
-		String elementId, String eventType,
-		OrderByComparator<TrackingActionInstance> orderByComparator) {
-		int count = countByR_E_E(reportInstanceId, elementId, eventType);
-
-		if (count == 0) {
-			return null;
-		}
-
-		List<TrackingActionInstance> list = findByR_E_E(reportInstanceId,
-				elementId, eventType, count - 1, count, orderByComparator);
-
-		if (!list.isEmpty()) {
-			return list.get(0);
-		}
-
-		return null;
-	}
-
-	/**
-	 * Returns the tracking action instances before and after the current tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	 *
-	 * @param trackingActionInstanceId the primary key of the current tracking action instance
-	 * @param reportInstanceId the report instance ID
-	 * @param elementId the element ID
-	 * @param eventType the event type
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next tracking action instance
-	 * @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
-	 */
-	@Override
-	public TrackingActionInstance[] findByR_E_E_PrevAndNext(
-		long trackingActionInstanceId, long reportInstanceId, String elementId,
-		String eventType,
-		OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws NoSuchTrackingActionInstanceException {
-		TrackingActionInstance trackingActionInstance = findByPrimaryKey(trackingActionInstanceId);
-
-		Session session = null;
-
-		try {
-			session = openSession();
-
-			TrackingActionInstance[] array = new TrackingActionInstanceImpl[3];
-
-			array[0] = getByR_E_E_PrevAndNext(session, trackingActionInstance,
-					reportInstanceId, elementId, eventType, orderByComparator,
-					true);
-
-			array[1] = trackingActionInstance;
-
-			array[2] = getByR_E_E_PrevAndNext(session, trackingActionInstance,
-					reportInstanceId, elementId, eventType, orderByComparator,
-					false);
-
-			return array;
-		}
-		catch (Exception e) {
-			throw processException(e);
-		}
-		finally {
-			closeSession(session);
-		}
-	}
-
-	protected TrackingActionInstance getByR_E_E_PrevAndNext(Session session,
-		TrackingActionInstance trackingActionInstance, long reportInstanceId,
-		String elementId, String eventType,
-		OrderByComparator<TrackingActionInstance> orderByComparator,
-		boolean previous) {
-		StringBundler query = null;
-
-		if (orderByComparator != null) {
-			query = new StringBundler(6 +
-					(orderByComparator.getOrderByConditionFields().length * 3) +
-					(orderByComparator.getOrderByFields().length * 3));
-		}
-		else {
-			query = new StringBundler(5);
-		}
-
-		query.append(_SQL_SELECT_TRACKINGACTIONINSTANCE_WHERE);
-
-		query.append(_FINDER_COLUMN_R_E_E_REPORTINSTANCEID_2);
-
-		boolean bindElementId = false;
-
-		if (elementId == null) {
-			query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_1);
-		}
-		else if (elementId.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_3);
-		}
-		else {
-			bindElementId = true;
-
-			query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_2);
-		}
-
-		boolean bindEventType = false;
-
-		if (eventType == null) {
-			query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_1);
-		}
-		else if (eventType.equals(StringPool.BLANK)) {
-			query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_3);
-		}
-		else {
-			bindEventType = true;
-
-			query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_2);
-		}
-
-		if (orderByComparator != null) {
-			String[] orderByConditionFields = orderByComparator.getOrderByConditionFields();
-
-			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
-			}
-
-			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
-
-				if ((i + 1) < orderByConditionFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
-					}
-					else {
-						query.append(WHERE_LESSER_THAN);
-					}
-				}
-			}
-
-			query.append(ORDER_BY_CLAUSE);
-
-			String[] orderByFields = orderByComparator.getOrderByFields();
-
-			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
-
-				if ((i + 1) < orderByFields.length) {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
-					}
-					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
-					}
-				}
-				else {
-					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
-					}
-					else {
-						query.append(ORDER_BY_DESC);
-					}
-				}
-			}
-		}
-		else {
-			query.append(TrackingActionInstanceModelImpl.ORDER_BY_JPQL);
-		}
-
-		String sql = query.toString();
-
-		Query q = session.createQuery(sql);
-
-		q.setFirstResult(0);
-		q.setMaxResults(2);
-
-		QueryPos qPos = QueryPos.getInstance(q);
-
-		qPos.add(reportInstanceId);
-
-		if (bindElementId) {
-			qPos.add(elementId);
-		}
-
-		if (bindEventType) {
-			qPos.add(eventType);
-		}
-
-		if (orderByComparator != null) {
-			Object[] values = orderByComparator.getOrderByConditionValues(trackingActionInstance);
-
-			for (Object value : values) {
-				qPos.add(value);
-			}
-		}
-
-		List<TrackingActionInstance> list = q.list();
-
-		if (list.size() == 2) {
-			return list.get(1);
-		}
-		else {
-			return null;
-		}
-	}
-
-	/**
-	 * Removes all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63; from the database.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param elementId the element ID
-	 * @param eventType the event type
-	 */
-	@Override
-	public void removeByR_E_E(long reportInstanceId, String elementId,
-		String eventType) {
-		for (TrackingActionInstance trackingActionInstance : findByR_E_E(
-				reportInstanceId, elementId, eventType, QueryUtil.ALL_POS,
-				QueryUtil.ALL_POS, null)) {
-			remove(trackingActionInstance);
-		}
-	}
-
-	/**
-	 * Returns the number of tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	 *
-	 * @param reportInstanceId the report instance ID
-	 * @param elementId the element ID
-	 * @param eventType the event type
-	 * @return the number of matching tracking action instances
-	 */
-	@Override
-	public int countByR_E_E(long reportInstanceId, String elementId,
-		String eventType) {
-		FinderPath finderPath = FINDER_PATH_COUNT_BY_R_E_E;
-
-		Object[] finderArgs = new Object[] {
-				reportInstanceId, elementId, eventType
-			};
-
-		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
-
-		if (count == null) {
-			StringBundler query = new StringBundler(4);
-
-			query.append(_SQL_COUNT_TRACKINGACTIONINSTANCE_WHERE);
-
-			query.append(_FINDER_COLUMN_R_E_E_REPORTINSTANCEID_2);
-
-			boolean bindElementId = false;
-
-			if (elementId == null) {
-				query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_1);
-			}
-			else if (elementId.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_3);
-			}
-			else {
-				bindElementId = true;
-
-				query.append(_FINDER_COLUMN_R_E_E_ELEMENTID_2);
-			}
-
-			boolean bindEventType = false;
-
-			if (eventType == null) {
-				query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_1);
-			}
-			else if (eventType.equals(StringPool.BLANK)) {
-				query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_3);
-			}
-			else {
-				bindEventType = true;
-
-				query.append(_FINDER_COLUMN_R_E_E_EVENTTYPE_2);
-			}
-
-			String sql = query.toString();
-
-			Session session = null;
-
-			try {
-				session = openSession();
-
-				Query q = session.createQuery(sql);
-
-				QueryPos qPos = QueryPos.getInstance(q);
-
-				qPos.add(reportInstanceId);
-
-				if (bindElementId) {
-					qPos.add(elementId);
-				}
-
-				if (bindEventType) {
-					qPos.add(eventType);
-				}
-
-				count = (Long)q.uniqueResult();
-
-				finderCache.putResult(finderPath, finderArgs, count);
-			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
-
-				throw processException(e);
-			}
-			finally {
-				closeSession(session);
-			}
-		}
-
-		return count.intValue();
-	}
-
-	private static final String _FINDER_COLUMN_R_E_E_REPORTINSTANCEID_2 = "trackingActionInstance.reportInstanceId = ? AND ";
-	private static final String _FINDER_COLUMN_R_E_E_ELEMENTID_1 = "trackingActionInstance.elementId IS NULL AND ";
-	private static final String _FINDER_COLUMN_R_E_E_ELEMENTID_2 = "trackingActionInstance.elementId = ? AND ";
-	private static final String _FINDER_COLUMN_R_E_E_ELEMENTID_3 = "(trackingActionInstance.elementId IS NULL OR trackingActionInstance.elementId = '') AND ";
-	private static final String _FINDER_COLUMN_R_E_E_EVENTTYPE_1 = "trackingActionInstance.eventType IS NULL";
-	private static final String _FINDER_COLUMN_R_E_E_EVENTTYPE_2 = "trackingActionInstance.eventType = ?";
-	private static final String _FINDER_COLUMN_R_E_E_EVENTTYPE_3 = "(trackingActionInstance.eventType IS NULL OR trackingActionInstance.eventType = '')";
 	public static final FinderPath FINDER_PATH_WITH_PAGINATION_FIND_BY_R_R_R_E = new FinderPath(TrackingActionInstanceModelImpl.ENTITY_CACHE_ENABLED,
 			TrackingActionInstanceModelImpl.FINDER_CACHE_ENABLED,
 			TrackingActionInstanceImpl.class,
@@ -6904,6 +6904,27 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 			}
 
 			if ((trackingActionInstanceModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						trackingActionInstanceModelImpl.getOriginalReportInstanceId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_REPORTINSTANCEID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID,
+					args);
+
+				args = new Object[] {
+						trackingActionInstanceModelImpl.getReportInstanceId()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_REPORTINSTANCEID,
+					args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID,
+					args);
+			}
+
+			if ((trackingActionInstanceModelImpl.getColumnBitmask() &
 					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_E_E.getColumnBitmask()) != 0) {
 				Object[] args = new Object[] {
 						trackingActionInstanceModelImpl.getOriginalCampaignId(),
@@ -6923,6 +6944,29 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_E_E, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_E_E,
+					args);
+			}
+
+			if ((trackingActionInstanceModelImpl.getColumnBitmask() &
+					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E_E.getColumnBitmask()) != 0) {
+				Object[] args = new Object[] {
+						trackingActionInstanceModelImpl.getOriginalReportInstanceId(),
+						trackingActionInstanceModelImpl.getOriginalElementId(),
+						trackingActionInstanceModelImpl.getOriginalEventType()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_E_E, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E_E,
+					args);
+
+				args = new Object[] {
+						trackingActionInstanceModelImpl.getReportInstanceId(),
+						trackingActionInstanceModelImpl.getElementId(),
+						trackingActionInstanceModelImpl.getEventType()
+					};
+
+				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_E_E, args);
+				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E_E,
 					args);
 			}
 
@@ -6948,50 +6992,6 @@ public class TrackingActionInstancePersistenceImpl extends BasePersistenceImpl<T
 
 				finderCache.removeResult(FINDER_PATH_COUNT_BY_C_R_R_E, args);
 				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_C_R_R_E,
-					args);
-			}
-
-			if ((trackingActionInstanceModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						trackingActionInstanceModelImpl.getOriginalReportInstanceId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_REPORTINSTANCEID,
-					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID,
-					args);
-
-				args = new Object[] {
-						trackingActionInstanceModelImpl.getReportInstanceId()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_REPORTINSTANCEID,
-					args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_REPORTINSTANCEID,
-					args);
-			}
-
-			if ((trackingActionInstanceModelImpl.getColumnBitmask() &
-					FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E_E.getColumnBitmask()) != 0) {
-				Object[] args = new Object[] {
-						trackingActionInstanceModelImpl.getOriginalReportInstanceId(),
-						trackingActionInstanceModelImpl.getOriginalElementId(),
-						trackingActionInstanceModelImpl.getOriginalEventType()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_E_E, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E_E,
-					args);
-
-				args = new Object[] {
-						trackingActionInstanceModelImpl.getReportInstanceId(),
-						trackingActionInstanceModelImpl.getElementId(),
-						trackingActionInstanceModelImpl.getEventType()
-					};
-
-				finderCache.removeResult(FINDER_PATH_COUNT_BY_R_E_E, args);
-				finderCache.removeResult(FINDER_PATH_WITHOUT_PAGINATION_FIND_BY_R_E_E,
 					args);
 			}
 

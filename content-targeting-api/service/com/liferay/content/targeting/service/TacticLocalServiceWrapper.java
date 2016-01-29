@@ -51,8 +51,7 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tacticLocalService.addTactic(userId, campaignId, nameMap,
 			descriptionMap, userSegmentsIds, serviceContext);
 	}
@@ -112,13 +111,11 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 	* @param tactic the tactic
 	* @return the tactic that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.content.targeting.model.Tactic deleteTactic(
 		com.liferay.content.targeting.model.Tactic tactic)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tacticLocalService.deleteTactic(tactic);
 	}
 
@@ -128,13 +125,11 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 	* @param tacticId the primary key of the tactic
 	* @return the tactic that was removed
 	* @throws PortalException if a tactic with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.content.targeting.model.Tactic deleteTactic(
 		long tacticId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tacticLocalService.deleteTactic(tacticId);
 	}
 
@@ -326,8 +321,7 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
 		long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tacticLocalService.getTactics(campaignId);
 	}
 
@@ -335,8 +329,7 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
 		long campaignId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tacticLocalService.getTactics(campaignId, start, end, obc);
 	}
 
@@ -400,8 +393,7 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 
 	@Override
 	public int getTacticsCount(long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tacticLocalService.getTacticsCount(campaignId);
 	}
 
@@ -455,9 +447,7 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 	@Override
 	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
 		long campaignId, long groupId, java.lang.String keywords, int start,
-		int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		int end) throws com.liferay.portal.kernel.exception.PortalException {
 		return _tacticLocalService.searchTactics(campaignId, groupId, keywords,
 			start, end);
 	}
@@ -465,8 +455,7 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 	@Override
 	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
 		long groupId, java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tacticLocalService.searchTactics(groupId, keywords, start, end);
 	}
 
@@ -494,8 +483,7 @@ public class TacticLocalServiceWrapper implements TacticLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tacticLocalService.updateTactic(tacticId, campaignId, nameMap,
 			descriptionMap, userSegmentsIds, serviceContext);
 	}

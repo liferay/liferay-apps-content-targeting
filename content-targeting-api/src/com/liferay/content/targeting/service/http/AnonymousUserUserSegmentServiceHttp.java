@@ -59,8 +59,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 		HttpPrincipal httpPrincipal, long anonymousUserId, long userSegmentId,
 		boolean manual, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
 					"addAnonymousUserUserSegment",
@@ -80,10 +79,6 @@ public class AnonymousUserUserSegmentServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -99,8 +94,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 	public static java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentId(
 		HttpPrincipal httpPrincipal, long userSegmentId, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
 					"getAnonymousUsersByUserSegmentId",
@@ -119,10 +113,6 @@ public class AnonymousUserUserSegmentServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -138,8 +128,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 	public static int getAnonymousUsersByUserSegmentIdCount(
 		HttpPrincipal httpPrincipal, long userSegmentId, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
 					"getAnonymousUsersByUserSegmentIdCount",
@@ -158,10 +147,6 @@ public class AnonymousUserUserSegmentServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -177,8 +162,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 	public static java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentIds(
 		HttpPrincipal httpPrincipal, long[] userSegmentIds, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
 					"getAnonymousUsersByUserSegmentIds",
@@ -197,10 +181,6 @@ public class AnonymousUserUserSegmentServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -216,8 +196,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 	public static int getAnonymousUsersByUserSegmentIdsCount(
 		HttpPrincipal httpPrincipal, long[] userSegmentIds, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
 					"getAnonymousUsersByUserSegmentIdsCount",
@@ -236,10 +215,6 @@ public class AnonymousUserUserSegmentServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -255,8 +230,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByAnonymousUserId(
 		HttpPrincipal httpPrincipal, long anonymousUserId, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
 					"getUserSegmentsByAnonymousUserId",
@@ -275,10 +249,6 @@ public class AnonymousUserUserSegmentServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -294,8 +264,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 	public static int getUserSegmentsByAnonymousUserIdCount(
 		HttpPrincipal httpPrincipal, long anonymousUserId, boolean active,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
 					"getUserSegmentsByAnonymousUserIdCount",
@@ -314,10 +283,6 @@ public class AnonymousUserUserSegmentServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -332,8 +297,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 
 	public static java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUserId(
 		HttpPrincipal httpPrincipal, long userId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
 					"getUserSegmentsByUserId",
@@ -352,10 +316,6 @@ public class AnonymousUserUserSegmentServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -370,8 +330,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 
 	public static int getUserSegmentsByUserIdCount(
 		HttpPrincipal httpPrincipal, long userId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
 					"getUserSegmentsByUserIdCount",
@@ -390,10 +349,6 @@ public class AnonymousUserUserSegmentServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -409,8 +364,7 @@ public class AnonymousUserUserSegmentServiceHttp {
 	public static com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
 		HttpPrincipal httpPrincipal, long anonymousUserUserSegmentId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(AnonymousUserUserSegmentServiceUtil.class,
 					"updateAnonymousUserUserSegment",
@@ -427,10 +381,6 @@ public class AnonymousUserUserSegmentServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

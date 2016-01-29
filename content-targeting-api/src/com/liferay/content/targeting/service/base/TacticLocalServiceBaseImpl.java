@@ -120,12 +120,10 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param tacticId the primary key of the tactic
 	 * @return the tactic that was removed
 	 * @throws PortalException if a tactic with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Tactic deleteTactic(long tacticId)
-		throws PortalException, SystemException {
+	public Tactic deleteTactic(long tacticId) throws PortalException {
 		return tacticPersistence.remove(tacticId);
 	}
 
@@ -135,12 +133,10 @@ public abstract class TacticLocalServiceBaseImpl extends BaseLocalServiceImpl
 	 * @param tactic the tactic
 	 * @return the tactic that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Tactic deleteTactic(Tactic tactic)
-		throws PortalException, SystemException {
+	public Tactic deleteTactic(Tactic tactic) throws PortalException {
 		return tacticPersistence.remove(tactic);
 	}
 

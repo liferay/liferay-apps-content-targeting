@@ -39,8 +39,7 @@ public class TacticServiceWrapper implements TacticService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tacticService.addTactic(userId, campaignId, nameMap,
 			descriptionMap, userSegmentsIds, serviceContext);
 	}
@@ -58,8 +57,7 @@ public class TacticServiceWrapper implements TacticService,
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
 		long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tacticService.getTactics(campaignId);
 	}
 
@@ -70,8 +68,7 @@ public class TacticServiceWrapper implements TacticService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _tacticService.updateTactic(tacticId, campaignId, nameMap,
 			descriptionMap, userSegmentsIds, serviceContext);
 	}

@@ -55,8 +55,7 @@ public interface ReportInstance extends ReportInstanceModel, PersistedModel {
 			}
 		};
 
-	public java.lang.String getReportName(java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.SystemException;
+	public java.lang.String getReportName(java.util.Locale locale);
 
 	public java.lang.String getTypeName(java.util.Locale locale);
 

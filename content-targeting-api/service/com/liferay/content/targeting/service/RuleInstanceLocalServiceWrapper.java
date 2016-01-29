@@ -50,8 +50,7 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 		long userId, java.lang.String ruleKey, long userSegmentId,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceLocalService.addRuleInstance(userId, ruleKey,
 			userSegmentId, typeSettings, serviceContext);
 	}
@@ -84,13 +83,11 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 	* @param ruleInstance the rule instance
 	* @return the rule instance that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
 		com.liferay.content.targeting.model.RuleInstance ruleInstance)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceLocalService.deleteRuleInstance(ruleInstance);
 	}
 
@@ -100,13 +97,11 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 	* @param ruleInstanceId the primary key of the rule instance
 	* @return the rule instance that was removed
 	* @throws PortalException if a rule instance with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
 		long ruleInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceLocalService.deleteRuleInstance(ruleInstanceId);
 	}
 
@@ -280,8 +275,7 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		java.lang.String ruleKey, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String ruleKey, long userSegmentId) {
 		return _ruleInstanceLocalService.getRuleInstances(ruleKey, userSegmentId);
 	}
 
@@ -304,8 +298,7 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userSegmentId) {
 		return _ruleInstanceLocalService.getRuleInstances(userSegmentId);
 	}
 
@@ -354,16 +347,14 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 	@Override
 	public long getRuleInstancesCount(java.lang.String ruleKey,
 		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceLocalService.getRuleInstancesCount(ruleKey,
 			userSegmentId);
 	}
 
 	@Override
 	public long getRuleInstancesCount(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceLocalService.getRuleInstancesCount(userSegmentId);
 	}
 
@@ -383,8 +374,7 @@ public class RuleInstanceLocalServiceWrapper implements RuleInstanceLocalService
 	public com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceLocalService.updateRuleInstance(ruleInstanceId,
 			typeSettings, serviceContext);
 	}

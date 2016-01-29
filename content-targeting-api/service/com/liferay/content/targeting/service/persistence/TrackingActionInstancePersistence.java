@@ -640,6 +640,143 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	public int countByCampaignId(long campaignId);
 
 	/**
+	* Returns all the tracking action instances where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @return the matching tracking action instances
+	*/
+	public java.util.List<TrackingActionInstance> findByReportInstanceId(
+		long reportInstanceId);
+
+	/**
+	* Returns a range of all the tracking action instances where reportInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param start the lower bound of the range of tracking action instances
+	* @param end the upper bound of the range of tracking action instances (not inclusive)
+	* @return the range of matching tracking action instances
+	*/
+	public java.util.List<TrackingActionInstance> findByReportInstanceId(
+		long reportInstanceId, int start, int end);
+
+	/**
+	* Returns an ordered range of all the tracking action instances where reportInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param start the lower bound of the range of tracking action instances
+	* @param end the upper bound of the range of tracking action instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching tracking action instances
+	*/
+	public java.util.List<TrackingActionInstance> findByReportInstanceId(
+		long reportInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the tracking action instances where reportInstanceId = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param start the lower bound of the range of tracking action instances
+	* @param end the upper bound of the range of tracking action instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching tracking action instances
+	*/
+	public java.util.List<TrackingActionInstance> findByReportInstanceId(
+		long reportInstanceId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first tracking action instance in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching tracking action instance
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	*/
+	public TrackingActionInstance findByReportInstanceId_First(
+		long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+
+	/**
+	* Returns the first tracking action instance in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	*/
+	public TrackingActionInstance fetchByReportInstanceId_First(
+		long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator);
+
+	/**
+	* Returns the last tracking action instance in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching tracking action instance
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	*/
+	public TrackingActionInstance findByReportInstanceId_Last(
+		long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+
+	/**
+	* Returns the last tracking action instance in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	*/
+	public TrackingActionInstance fetchByReportInstanceId_Last(
+		long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator);
+
+	/**
+	* Returns the tracking action instances before and after the current tracking action instance in the ordered set where reportInstanceId = &#63;.
+	*
+	* @param trackingActionInstanceId the primary key of the current tracking action instance
+	* @param reportInstanceId the report instance ID
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next tracking action instance
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	*/
+	public TrackingActionInstance[] findByReportInstanceId_PrevAndNext(
+		long trackingActionInstanceId, long reportInstanceId,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+
+	/**
+	* Removes all the tracking action instances where reportInstanceId = &#63; from the database.
+	*
+	* @param reportInstanceId the report instance ID
+	*/
+	public void removeByReportInstanceId(long reportInstanceId);
+
+	/**
+	* Returns the number of tracking action instances where reportInstanceId = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @return the number of matching tracking action instances
+	*/
+	public int countByReportInstanceId(long reportInstanceId);
+
+	/**
 	* Returns the tracking action instance where campaignId = &#63; and alias = &#63; or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
 	*
 	* @param campaignId the campaign ID
@@ -691,6 +828,59 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	* @return the number of matching tracking action instances
 	*/
 	public int countByC_A(long campaignId, java.lang.String alias);
+
+	/**
+	* Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param alias the alias
+	* @return the matching tracking action instance
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	*/
+	public TrackingActionInstance findByR_A(long reportInstanceId,
+		java.lang.String alias)
+		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+
+	/**
+	* Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param alias the alias
+	* @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	*/
+	public TrackingActionInstance fetchByR_A(long reportInstanceId,
+		java.lang.String alias);
+
+	/**
+	* Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param alias the alias
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	*/
+	public TrackingActionInstance fetchByR_A(long reportInstanceId,
+		java.lang.String alias, boolean retrieveFromCache);
+
+	/**
+	* Removes the tracking action instance where reportInstanceId = &#63; and alias = &#63; from the database.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param alias the alias
+	* @return the tracking action instance that was removed
+	*/
+	public TrackingActionInstance removeByR_A(long reportInstanceId,
+		java.lang.String alias)
+		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+
+	/**
+	* Returns the number of tracking action instances where reportInstanceId = &#63; and alias = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param alias the alias
+	* @return the number of matching tracking action instances
+	*/
+	public int countByR_A(long reportInstanceId, java.lang.String alias);
 
 	/**
 	* Returns all the tracking action instances where campaignId = &#63; and elementId = &#63; and eventType = &#63;.
@@ -855,6 +1045,172 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	* @return the number of matching tracking action instances
 	*/
 	public int countByC_E_E(long campaignId, java.lang.String elementId,
+		java.lang.String eventType);
+
+	/**
+	* Returns all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @return the matching tracking action instances
+	*/
+	public java.util.List<TrackingActionInstance> findByR_E_E(
+		long reportInstanceId, java.lang.String elementId,
+		java.lang.String eventType);
+
+	/**
+	* Returns a range of all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param start the lower bound of the range of tracking action instances
+	* @param end the upper bound of the range of tracking action instances (not inclusive)
+	* @return the range of matching tracking action instances
+	*/
+	public java.util.List<TrackingActionInstance> findByR_E_E(
+		long reportInstanceId, java.lang.String elementId,
+		java.lang.String eventType, int start, int end);
+
+	/**
+	* Returns an ordered range of all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param start the lower bound of the range of tracking action instances
+	* @param end the upper bound of the range of tracking action instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @return the ordered range of matching tracking action instances
+	*/
+	public java.util.List<TrackingActionInstance> findByR_E_E(
+		long reportInstanceId, java.lang.String elementId,
+		java.lang.String eventType, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator);
+
+	/**
+	* Returns an ordered range of all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	*
+	* <p>
+	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	* </p>
+	*
+	* @param reportInstanceId the report instance ID
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param start the lower bound of the range of tracking action instances
+	* @param end the upper bound of the range of tracking action instances (not inclusive)
+	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	* @param retrieveFromCache whether to retrieve from the finder cache
+	* @return the ordered range of matching tracking action instances
+	*/
+	public java.util.List<TrackingActionInstance> findByR_E_E(
+		long reportInstanceId, java.lang.String elementId,
+		java.lang.String eventType, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator,
+		boolean retrieveFromCache);
+
+	/**
+	* Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching tracking action instance
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	*/
+	public TrackingActionInstance findByR_E_E_First(long reportInstanceId,
+		java.lang.String elementId, java.lang.String eventType,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+
+	/**
+	* Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the first matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	*/
+	public TrackingActionInstance fetchByR_E_E_First(long reportInstanceId,
+		java.lang.String elementId, java.lang.String eventType,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator);
+
+	/**
+	* Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching tracking action instance
+	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
+	*/
+	public TrackingActionInstance findByR_E_E_Last(long reportInstanceId,
+		java.lang.String elementId, java.lang.String eventType,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+
+	/**
+	* Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the last matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
+	*/
+	public TrackingActionInstance fetchByR_E_E_Last(long reportInstanceId,
+		java.lang.String elementId, java.lang.String eventType,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator);
+
+	/**
+	* Returns the tracking action instances before and after the current tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	*
+	* @param trackingActionInstanceId the primary key of the current tracking action instance
+	* @param reportInstanceId the report instance ID
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	* @return the previous, current, and next tracking action instance
+	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
+	*/
+	public TrackingActionInstance[] findByR_E_E_PrevAndNext(
+		long trackingActionInstanceId, long reportInstanceId,
+		java.lang.String elementId, java.lang.String eventType,
+		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
+		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
+
+	/**
+	* Removes all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63; from the database.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param elementId the element ID
+	* @param eventType the event type
+	*/
+	public void removeByR_E_E(long reportInstanceId,
+		java.lang.String elementId, java.lang.String eventType);
+
+	/**
+	* Returns the number of tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
+	*
+	* @param reportInstanceId the report instance ID
+	* @param elementId the element ID
+	* @param eventType the event type
+	* @return the number of matching tracking action instances
+	*/
+	public int countByR_E_E(long reportInstanceId, java.lang.String elementId,
 		java.lang.String eventType);
 
 	/**
@@ -1039,362 +1395,6 @@ public interface TrackingActionInstancePersistence extends BasePersistence<Track
 	*/
 	public int countByC_R_R_E(long campaignId,
 		java.lang.String referrerClassName, long referrerClassPK,
-		java.lang.String eventType);
-
-	/**
-	* Returns all the tracking action instances where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @return the matching tracking action instances
-	*/
-	public java.util.List<TrackingActionInstance> findByReportInstanceId(
-		long reportInstanceId);
-
-	/**
-	* Returns a range of all the tracking action instances where reportInstanceId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param start the lower bound of the range of tracking action instances
-	* @param end the upper bound of the range of tracking action instances (not inclusive)
-	* @return the range of matching tracking action instances
-	*/
-	public java.util.List<TrackingActionInstance> findByReportInstanceId(
-		long reportInstanceId, int start, int end);
-
-	/**
-	* Returns an ordered range of all the tracking action instances where reportInstanceId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param start the lower bound of the range of tracking action instances
-	* @param end the upper bound of the range of tracking action instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching tracking action instances
-	*/
-	public java.util.List<TrackingActionInstance> findByReportInstanceId(
-		long reportInstanceId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator);
-
-	/**
-	* Returns an ordered range of all the tracking action instances where reportInstanceId = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param start the lower bound of the range of tracking action instances
-	* @param end the upper bound of the range of tracking action instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching tracking action instances
-	*/
-	public java.util.List<TrackingActionInstance> findByReportInstanceId(
-		long reportInstanceId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	* Returns the first tracking action instance in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching tracking action instance
-	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
-	*/
-	public TrackingActionInstance findByReportInstanceId_First(
-		long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
-
-	/**
-	* Returns the first tracking action instance in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	*/
-	public TrackingActionInstance fetchByReportInstanceId_First(
-		long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator);
-
-	/**
-	* Returns the last tracking action instance in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching tracking action instance
-	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
-	*/
-	public TrackingActionInstance findByReportInstanceId_Last(
-		long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
-
-	/**
-	* Returns the last tracking action instance in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	*/
-	public TrackingActionInstance fetchByReportInstanceId_Last(
-		long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator);
-
-	/**
-	* Returns the tracking action instances before and after the current tracking action instance in the ordered set where reportInstanceId = &#63;.
-	*
-	* @param trackingActionInstanceId the primary key of the current tracking action instance
-	* @param reportInstanceId the report instance ID
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next tracking action instance
-	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
-	*/
-	public TrackingActionInstance[] findByReportInstanceId_PrevAndNext(
-		long trackingActionInstanceId, long reportInstanceId,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
-
-	/**
-	* Removes all the tracking action instances where reportInstanceId = &#63; from the database.
-	*
-	* @param reportInstanceId the report instance ID
-	*/
-	public void removeByReportInstanceId(long reportInstanceId);
-
-	/**
-	* Returns the number of tracking action instances where reportInstanceId = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @return the number of matching tracking action instances
-	*/
-	public int countByReportInstanceId(long reportInstanceId);
-
-	/**
-	* Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or throws a {@link NoSuchTrackingActionInstanceException} if it could not be found.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param alias the alias
-	* @return the matching tracking action instance
-	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
-	*/
-	public TrackingActionInstance findByR_A(long reportInstanceId,
-		java.lang.String alias)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
-
-	/**
-	* Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param alias the alias
-	* @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	*/
-	public TrackingActionInstance fetchByR_A(long reportInstanceId,
-		java.lang.String alias);
-
-	/**
-	* Returns the tracking action instance where reportInstanceId = &#63; and alias = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param alias the alias
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	*/
-	public TrackingActionInstance fetchByR_A(long reportInstanceId,
-		java.lang.String alias, boolean retrieveFromCache);
-
-	/**
-	* Removes the tracking action instance where reportInstanceId = &#63; and alias = &#63; from the database.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param alias the alias
-	* @return the tracking action instance that was removed
-	*/
-	public TrackingActionInstance removeByR_A(long reportInstanceId,
-		java.lang.String alias)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
-
-	/**
-	* Returns the number of tracking action instances where reportInstanceId = &#63; and alias = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param alias the alias
-	* @return the number of matching tracking action instances
-	*/
-	public int countByR_A(long reportInstanceId, java.lang.String alias);
-
-	/**
-	* Returns all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param elementId the element ID
-	* @param eventType the event type
-	* @return the matching tracking action instances
-	*/
-	public java.util.List<TrackingActionInstance> findByR_E_E(
-		long reportInstanceId, java.lang.String elementId,
-		java.lang.String eventType);
-
-	/**
-	* Returns a range of all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param elementId the element ID
-	* @param eventType the event type
-	* @param start the lower bound of the range of tracking action instances
-	* @param end the upper bound of the range of tracking action instances (not inclusive)
-	* @return the range of matching tracking action instances
-	*/
-	public java.util.List<TrackingActionInstance> findByR_E_E(
-		long reportInstanceId, java.lang.String elementId,
-		java.lang.String eventType, int start, int end);
-
-	/**
-	* Returns an ordered range of all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param elementId the element ID
-	* @param eventType the event type
-	* @param start the lower bound of the range of tracking action instances
-	* @param end the upper bound of the range of tracking action instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @return the ordered range of matching tracking action instances
-	*/
-	public java.util.List<TrackingActionInstance> findByR_E_E(
-		long reportInstanceId, java.lang.String elementId,
-		java.lang.String eventType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator);
-
-	/**
-	* Returns an ordered range of all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	*
-	* <p>
-	* Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to {@link QueryUtil#ALL_POS} will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not {@link QueryUtil#ALL_POS}), then the query will include the default ORDER BY logic from {@link TrackingActionInstanceModelImpl}. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	* </p>
-	*
-	* @param reportInstanceId the report instance ID
-	* @param elementId the element ID
-	* @param eventType the event type
-	* @param start the lower bound of the range of tracking action instances
-	* @param end the upper bound of the range of tracking action instances (not inclusive)
-	* @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	* @param retrieveFromCache whether to retrieve from the finder cache
-	* @return the ordered range of matching tracking action instances
-	*/
-	public java.util.List<TrackingActionInstance> findByR_E_E(
-		long reportInstanceId, java.lang.String elementId,
-		java.lang.String eventType, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator,
-		boolean retrieveFromCache);
-
-	/**
-	* Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param elementId the element ID
-	* @param eventType the event type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching tracking action instance
-	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
-	*/
-	public TrackingActionInstance findByR_E_E_First(long reportInstanceId,
-		java.lang.String elementId, java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
-
-	/**
-	* Returns the first tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param elementId the element ID
-	* @param eventType the event type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the first matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	*/
-	public TrackingActionInstance fetchByR_E_E_First(long reportInstanceId,
-		java.lang.String elementId, java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator);
-
-	/**
-	* Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param elementId the element ID
-	* @param eventType the event type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching tracking action instance
-	* @throws NoSuchTrackingActionInstanceException if a matching tracking action instance could not be found
-	*/
-	public TrackingActionInstance findByR_E_E_Last(long reportInstanceId,
-		java.lang.String elementId, java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
-
-	/**
-	* Returns the last tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param elementId the element ID
-	* @param eventType the event type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the last matching tracking action instance, or <code>null</code> if a matching tracking action instance could not be found
-	*/
-	public TrackingActionInstance fetchByR_E_E_Last(long reportInstanceId,
-		java.lang.String elementId, java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator);
-
-	/**
-	* Returns the tracking action instances before and after the current tracking action instance in the ordered set where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	*
-	* @param trackingActionInstanceId the primary key of the current tracking action instance
-	* @param reportInstanceId the report instance ID
-	* @param elementId the element ID
-	* @param eventType the event type
-	* @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	* @return the previous, current, and next tracking action instance
-	* @throws NoSuchTrackingActionInstanceException if a tracking action instance with the primary key could not be found
-	*/
-	public TrackingActionInstance[] findByR_E_E_PrevAndNext(
-		long trackingActionInstanceId, long reportInstanceId,
-		java.lang.String elementId, java.lang.String eventType,
-		com.liferay.portal.kernel.util.OrderByComparator<TrackingActionInstance> orderByComparator)
-		throws com.liferay.content.targeting.exception.NoSuchTrackingActionInstanceException;
-
-	/**
-	* Removes all the tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63; from the database.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param elementId the element ID
-	* @param eventType the event type
-	*/
-	public void removeByR_E_E(long reportInstanceId,
-		java.lang.String elementId, java.lang.String eventType);
-
-	/**
-	* Returns the number of tracking action instances where reportInstanceId = &#63; and elementId = &#63; and eventType = &#63;.
-	*
-	* @param reportInstanceId the report instance ID
-	* @param elementId the element ID
-	* @param eventType the event type
-	* @return the number of matching tracking action instances
-	*/
-	public int countByR_E_E(long reportInstanceId, java.lang.String elementId,
 		java.lang.String eventType);
 
 	/**

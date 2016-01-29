@@ -66,14 +66,14 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.REINDEX)
 	public com.liferay.content.targeting.model.ReportInstance addReportInstance(
 		long userId, java.lang.String reportKey, java.lang.String className,
 		long classPK, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Creates a new report instance with the primary key. Does not add the report instance to the database.
@@ -108,11 +108,10 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	* @param reportInstanceId the primary key of the report instance
 	* @return the report instance that was removed
 	* @throws PortalException if a report instance with the primary key could not be found
-	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.ReportInstance deleteReportInstance(
-		long reportInstanceId) throws PortalException, SystemException;
+		long reportInstanceId) throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -185,8 +184,7 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws SystemException;
+		java.lang.String reportKey, java.lang.String className, long classPK);
 
 	/**
 	* Returns the report instance matching the UUID and group.
@@ -200,8 +198,7 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 		java.lang.String uuid, long groupId);
 
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
-		java.lang.String reportKey, java.lang.String className, long classPK)
-		throws SystemException;
+		java.lang.String reportKey, java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery();
@@ -250,16 +247,15 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getReportInstanceCount(java.lang.String reportKey,
-		java.lang.String className, long classPK) throws SystemException;
+		java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
-		java.lang.String className, long classPK) throws SystemException;
+		java.lang.String className, long classPK);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
-		java.lang.String className, long classPK, int start, int end)
-		throws SystemException;
+		java.lang.String className, long classPK, int start, int end);
 
 	/**
 	* Returns a range of all the report instances.
@@ -314,7 +310,7 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 	public java.util.List<com.liferay.content.targeting.model.ReportInstance> searchReportInstances(
 		long groupId, java.lang.String className, long classPK,
 		java.lang.String keywords, int start, int end)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Updates the report instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -334,5 +330,5 @@ public interface ReportInstanceLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

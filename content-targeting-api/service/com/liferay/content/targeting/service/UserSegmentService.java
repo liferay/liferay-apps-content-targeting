@@ -54,10 +54,10 @@ public interface UserSegmentService extends BaseService {
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
-		long userSegmentId) throws PortalException, SystemException;
+		long userSegmentId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -68,24 +68,22 @@ public interface UserSegmentService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long groupId) throws PortalException, SystemException;
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long[] groupIds) throws PortalException, SystemException;
+		long[] groupIds) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserSegmentsCount(long groupId)
-		throws PortalException, SystemException;
+	public int getUserSegmentsCount(long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserSegmentsCount(long[] groupIds)
-		throws PortalException, SystemException;
+	public int getUserSegmentsCount(long[] groupIds) throws PortalException;
 
 	public com.liferay.content.targeting.model.UserSegment updateUserSegment(
 		long userSegmentId,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

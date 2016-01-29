@@ -57,7 +57,7 @@ public interface TrackingActionInstanceService extends BaseService {
 		java.lang.String elementId, java.lang.String eventType,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 2.0.0
@@ -69,10 +69,10 @@ public interface TrackingActionInstanceService extends BaseService {
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public com.liferay.content.targeting.model.TrackingActionInstance deleteTrackingActionInstance(
-		long trackingActionInstanceId) throws PortalException, SystemException;
+		long trackingActionInstanceId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstance(
@@ -87,15 +87,14 @@ public interface TrackingActionInstanceService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
-		long campaignId) throws SystemException;
+		long campaignId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
-		long reportInstanceId) throws SystemException;
+		long reportInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTrackingActionInstancesCount(long campaignId)
-		throws SystemException;
+	public int getTrackingActionInstancesCount(long campaignId);
 
 	public com.liferay.content.targeting.model.TrackingActionInstance updateTrackingActionInstance(
 		long trackingActionInstanceId, long reportInstanceId,
@@ -103,5 +102,5 @@ public interface TrackingActionInstanceService extends BaseService {
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

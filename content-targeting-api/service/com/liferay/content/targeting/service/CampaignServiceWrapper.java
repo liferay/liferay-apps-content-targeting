@@ -39,8 +39,7 @@ public class CampaignServiceWrapper implements CampaignService,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignService.addCampaign(userId, nameMap, descriptionMap,
 			startDate, endDate, priority, active, userSegmentIds, serviceContext);
 	}
@@ -53,8 +52,7 @@ public class CampaignServiceWrapper implements CampaignService,
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignService.addCampaign(userId, nameMap, descriptionMap,
 			startDate, endDate, timeZoneId, priority, active, userSegmentIds,
 			serviceContext);
@@ -63,15 +61,13 @@ public class CampaignServiceWrapper implements CampaignService,
 	@Override
 	public com.liferay.content.targeting.model.Campaign deleteCampaign(
 		long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignService.deleteCampaign(campaignId);
 	}
 
 	@Override
 	public com.liferay.content.targeting.model.Campaign fetchCurrentMaxPriorityCampaign(
-		long[] groupIds, long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long[] groupIds, long[] userSegmentIds) {
 		return _campaignService.fetchCurrentMaxPriorityCampaign(groupIds,
 			userSegmentIds);
 	}
@@ -79,15 +75,13 @@ public class CampaignServiceWrapper implements CampaignService,
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignService.getCampaigns(groupId);
 	}
 
 	@Override
 	public int getCampaignsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignService.getCampaignsCount(groupId);
 	}
 
@@ -109,8 +103,7 @@ public class CampaignServiceWrapper implements CampaignService,
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignService.updateCampaign(campaignId, nameMap,
 			descriptionMap, startDate, endDate, priority, active,
 			userSegmentIds, serviceContext);
@@ -125,8 +118,7 @@ public class CampaignServiceWrapper implements CampaignService,
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _campaignService.updateCampaign(campaignId, nameMap,
 			descriptionMap, startDate, endDate, timeZoneId, priority, active,
 			userSegmentIds, serviceContext);

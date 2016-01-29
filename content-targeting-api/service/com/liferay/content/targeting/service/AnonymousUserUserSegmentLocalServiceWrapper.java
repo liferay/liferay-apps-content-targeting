@@ -38,8 +38,7 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 	public com.liferay.content.targeting.model.AnonymousUserUserSegment addAnonymousUserUserSegment(
 		long anonymousUserId, long userSegmentId, boolean manual,
 		boolean active, com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserUserSegmentLocalService.addAnonymousUserUserSegment(anonymousUserId,
 			userSegmentId, manual, active, serviceContext);
 	}
@@ -58,8 +57,7 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 
 	@Override
 	public void checkAnonymousUserUserSegments()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_anonymousUserUserSegmentLocalService.checkAnonymousUserUserSegments();
 	}
 
@@ -225,8 +223,7 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.AnonymousUserUserSegment> getAnonymousUserUserSegments(
 		long anonymousUserId, long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserUserSegmentLocalService.getAnonymousUserUserSegments(anonymousUserId,
 			userSegmentId);
 	}
@@ -262,8 +259,7 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentId(
 		long userSegmentId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserUserSegmentLocalService.getAnonymousUsersByUserSegmentId(userSegmentId,
 			active);
 	}
@@ -271,8 +267,7 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 	@Override
 	public int getAnonymousUsersByUserSegmentIdCount(long userSegmentId,
 		boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserUserSegmentLocalService.getAnonymousUsersByUserSegmentIdCount(userSegmentId,
 			active);
 	}
@@ -280,8 +275,7 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.content.targeting.anonymous.users.model.AnonymousUser> getAnonymousUsersByUserSegmentIds(
 		long[] userSegmentIds, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserUserSegmentLocalService.getAnonymousUsersByUserSegmentIds(userSegmentIds,
 			active);
 	}
@@ -289,8 +283,7 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 	@Override
 	public int getAnonymousUsersByUserSegmentIdsCount(long[] userSegmentIds,
 		boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserUserSegmentLocalService.getAnonymousUsersByUserSegmentIdsCount(userSegmentIds,
 			active);
 	}
@@ -302,8 +295,7 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 
 	@Override
 	public java.util.Date getMaxAge()
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserUserSegmentLocalService.getMaxAge();
 	}
 
@@ -327,8 +319,7 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByAnonymousUserId(
 		long anonymousUserId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserUserSegmentLocalService.getUserSegmentsByAnonymousUserId(anonymousUserId,
 			active);
 	}
@@ -336,8 +327,7 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 	@Override
 	public int getUserSegmentsByAnonymousUserIdCount(long anonymousUserId,
 		boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserUserSegmentLocalService.getUserSegmentsByAnonymousUserIdCount(anonymousUserId,
 			active);
 	}
@@ -345,16 +335,14 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegmentsByUserId(
 		long userId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserUserSegmentLocalService.getUserSegmentsByUserId(userId,
 			active);
 	}
 
 	@Override
 	public int getUserSegmentsByUserIdCount(long userId, boolean active)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserUserSegmentLocalService.getUserSegmentsByUserIdCount(userId,
 			active);
 	}
@@ -375,8 +363,7 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 	public com.liferay.content.targeting.model.AnonymousUserUserSegment updateAnonymousUserUserSegment(
 		long anonymousUserUserSegmentId,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _anonymousUserUserSegmentLocalService.updateAnonymousUserUserSegment(anonymousUserUserSegmentId,
 			serviceContext);
 	}
@@ -384,8 +371,7 @@ public class AnonymousUserUserSegmentLocalServiceWrapper
 	@Override
 	public void updateAnonymousUserUserSegments(long companyId,
 		java.util.Date modifiedDate)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_anonymousUserUserSegmentLocalService.updateAnonymousUserUserSegments(companyId,
 			modifiedDate);
 	}

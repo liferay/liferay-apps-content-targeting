@@ -62,8 +62,7 @@ public class ReportInstanceServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ReportInstanceServiceUtil.class,
 					"addReportInstance", _addReportInstanceParameterTypes0);
@@ -80,10 +79,6 @@ public class ReportInstanceServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
@@ -103,8 +98,7 @@ public class ReportInstanceServiceHttp {
 		java.lang.String className, long classPK,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ReportInstanceServiceUtil.class,
 					"addReportInstance", _addReportInstanceParameterTypes1);
@@ -122,10 +116,6 @@ public class ReportInstanceServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -139,8 +129,7 @@ public class ReportInstanceServiceHttp {
 	}
 
 	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
-		HttpPrincipal httpPrincipal, long reportInstanceId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, long reportInstanceId) {
 		try {
 			MethodKey methodKey = new MethodKey(ReportInstanceServiceUtil.class,
 					"fetchReportInstance", _fetchReportInstanceParameterTypes2);
@@ -154,10 +143,6 @@ public class ReportInstanceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -172,8 +157,7 @@ public class ReportInstanceServiceHttp {
 
 	public static com.liferay.content.targeting.model.ReportInstance fetchReportInstance(
 		HttpPrincipal httpPrincipal, java.lang.String reportKey,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		try {
 			MethodKey methodKey = new MethodKey(ReportInstanceServiceUtil.class,
 					"fetchReportInstance", _fetchReportInstanceParameterTypes3);
@@ -187,10 +171,6 @@ public class ReportInstanceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -205,8 +185,7 @@ public class ReportInstanceServiceHttp {
 
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> findReportInstances(
 		HttpPrincipal httpPrincipal, java.lang.String reportKey,
-		java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		java.lang.String className, long classPK) {
 		try {
 			MethodKey methodKey = new MethodKey(ReportInstanceServiceUtil.class,
 					"findReportInstances", _findReportInstancesParameterTypes4);
@@ -220,10 +199,6 @@ public class ReportInstanceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -237,8 +212,7 @@ public class ReportInstanceServiceHttp {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.ReportInstance> getReportInstances(
-		HttpPrincipal httpPrincipal, java.lang.String className, long classPK)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		HttpPrincipal httpPrincipal, java.lang.String className, long classPK) {
 		try {
 			MethodKey methodKey = new MethodKey(ReportInstanceServiceUtil.class,
 					"getReportInstances", _getReportInstancesParameterTypes5);
@@ -252,10 +226,6 @@ public class ReportInstanceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -275,8 +245,7 @@ public class ReportInstanceServiceHttp {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ReportInstanceServiceUtil.class,
 					"updateReportInstance", _updateReportInstanceParameterTypes6);
@@ -295,10 +264,6 @@ public class ReportInstanceServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -313,8 +278,7 @@ public class ReportInstanceServiceHttp {
 
 	public static com.liferay.content.targeting.model.ReportInstance updateReportInstance(
 		HttpPrincipal httpPrincipal,
-		com.liferay.content.targeting.model.ReportInstance reportInstance)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		com.liferay.content.targeting.model.ReportInstance reportInstance) {
 		try {
 			MethodKey methodKey = new MethodKey(ReportInstanceServiceUtil.class,
 					"updateReportInstance", _updateReportInstanceParameterTypes7);
@@ -328,10 +292,6 @@ public class ReportInstanceServiceHttp {
 				returnObj = TunnelUtil.invoke(httpPrincipal, methodHandler);
 			}
 			catch (Exception e) {
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 

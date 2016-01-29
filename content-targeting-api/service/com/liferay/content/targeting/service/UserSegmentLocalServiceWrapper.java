@@ -85,8 +85,7 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.addUserSegment(userId, nameMap,
 			descriptionMap, serviceContext);
 	}
@@ -107,8 +106,7 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	public void addUserSegmentResources(
 		com.liferay.content.targeting.model.UserSegment userSegment,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_userSegmentLocalService.addUserSegmentResources(userSegment,
 			addGroupPermissions, addGuestPermissions);
 	}
@@ -117,8 +115,7 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	public void addUserSegmentResources(
 		com.liferay.content.targeting.model.UserSegment userSegment,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_userSegmentLocalService.addUserSegmentResources(userSegment,
 			groupPermissions, guestPermissions);
 	}
@@ -211,13 +208,11 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	* @param userSegment the user segment
 	* @return the user segment that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
 		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.deleteUserSegment(userSegment);
 	}
 
@@ -227,20 +222,17 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	* @param userSegmentId the primary key of the user segment
 	* @return the user segment that was removed
 	* @throws PortalException if a user segment with the primary key could not be found
-	* @throws SystemException
 	*/
 	@Override
 	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
 		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.deleteUserSegment(userSegmentId);
 	}
 
 	@Override
 	public void deleteUserSegments(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_userSegmentLocalService.deleteUserSegments(groupId);
 	}
 
@@ -338,8 +330,7 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	@Override
 	public com.liferay.content.targeting.model.UserSegment fetchUserSegmentByAssetCategoryId(
 		long assetCategoryId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.fetchUserSegmentByAssetCategoryId(assetCategoryId);
 	}
 
@@ -497,8 +488,7 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.getUserSegments(groupId);
 	}
 
@@ -506,16 +496,14 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.getUserSegments(groupId, start, end, obc);
 	}
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long[] groupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.getUserSegments(groupIds);
 	}
 
@@ -523,8 +511,7 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long[] groupIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.getUserSegments(groupIds, start, end,
 			obc);
 	}
@@ -590,15 +577,13 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 
 	@Override
 	public int getUserSegmentsCount(long groupId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.getUserSegmentsCount(groupId);
 	}
 
 	@Override
 	public int getUserSegmentsCount(long[] groupIds)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.getUserSegmentsCount(groupIds);
 	}
 
@@ -627,16 +612,14 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	@Override
 	public com.liferay.portal.kernel.search.Hits search(long groupId,
 		java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.search(groupId, keywords, start, end);
 	}
 
 	@Override
 	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.UserSegment> searchUserSegments(
 		long groupId, java.lang.String keywords, int start, int end)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.searchUserSegments(groupId, keywords,
 			start, end);
 	}
@@ -670,8 +653,7 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _userSegmentLocalService.updateUserSegment(userSegmentId,
 			nameMap, descriptionMap, serviceContext);
 	}
@@ -680,8 +662,7 @@ public class UserSegmentLocalServiceWrapper implements UserSegmentLocalService,
 	public void updateUserSegmentResources(
 		com.liferay.content.targeting.model.UserSegment userSegment,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		_userSegmentLocalService.updateUserSegmentResources(userSegment,
 			groupPermissions, guestPermissions);
 	}

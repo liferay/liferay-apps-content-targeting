@@ -120,12 +120,11 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 * @param ruleInstanceId the primary key of the rule instance
 	 * @return the rule instance that was removed
 	 * @throws PortalException if a rule instance with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public RuleInstance deleteRuleInstance(long ruleInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return ruleInstancePersistence.remove(ruleInstanceId);
 	}
 
@@ -135,12 +134,11 @@ public abstract class RuleInstanceLocalServiceBaseImpl
 	 * @param ruleInstance the rule instance
 	 * @return the rule instance that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public RuleInstance deleteRuleInstance(RuleInstance ruleInstance)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return ruleInstancePersistence.remove(ruleInstance);
 	}
 

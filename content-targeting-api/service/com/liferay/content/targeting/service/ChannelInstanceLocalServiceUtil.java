@@ -57,8 +57,7 @@ public class ChannelInstanceLocalServiceUtil {
 		long userId, long tacticId, java.lang.String channelKey,
 		long campaignId, java.lang.String alias, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addChannelInstance(userId, tacticId, channelKey,
 			campaignId, alias, typeSettings, serviceContext);
@@ -81,12 +80,10 @@ public class ChannelInstanceLocalServiceUtil {
 	* @param channelInstance the channel instance
 	* @return the channel instance that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	public static com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
 		com.liferay.content.targeting.model.ChannelInstance channelInstance)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteChannelInstance(channelInstance);
 	}
 
@@ -96,12 +93,10 @@ public class ChannelInstanceLocalServiceUtil {
 	* @param channelInstanceId the primary key of the channel instance
 	* @return the channel instance that was removed
 	* @throws PortalException if a channel instance with the primary key could not be found
-	* @throws SystemException
 	*/
 	public static com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
 		long channelInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteChannelInstance(channelInstanceId);
 	}
 
@@ -215,15 +210,13 @@ public class ChannelInstanceLocalServiceUtil {
 
 	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getCampaignChannelInstances(
 		long campaignId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCampaignChannelInstances(campaignId);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getCampaignChannelInstances(
 		long campaignId, java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getCampaignChannelInstances(campaignId, channelKey);
 	}
 
@@ -272,15 +265,13 @@ public class ChannelInstanceLocalServiceUtil {
 
 	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
 		long tacticId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getChannelInstances(tacticId);
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
 		long tacticId, java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getChannelInstances(tacticId, channelKey);
 	}
 
@@ -363,8 +354,7 @@ public class ChannelInstanceLocalServiceUtil {
 		long channelInstanceId, java.lang.String alias,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateChannelInstance(channelInstanceId, alias,
 			typeSettings, serviceContext);

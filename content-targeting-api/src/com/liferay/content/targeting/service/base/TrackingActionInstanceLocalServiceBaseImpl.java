@@ -122,12 +122,11 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 * @param trackingActionInstanceId the primary key of the tracking action instance
 	 * @return the tracking action instance that was removed
 	 * @throws PortalException if a tracking action instance with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public TrackingActionInstance deleteTrackingActionInstance(
-		long trackingActionInstanceId) throws PortalException, SystemException {
+		long trackingActionInstanceId) throws PortalException {
 		return trackingActionInstancePersistence.remove(trackingActionInstanceId);
 	}
 
@@ -137,13 +136,12 @@ public abstract class TrackingActionInstanceLocalServiceBaseImpl
 	 * @param trackingActionInstance the tracking action instance
 	 * @return the tracking action instance that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public TrackingActionInstance deleteTrackingActionInstance(
 		TrackingActionInstance trackingActionInstance)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return trackingActionInstancePersistence.remove(trackingActionInstance);
 	}
 

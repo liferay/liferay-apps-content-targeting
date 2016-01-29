@@ -437,8 +437,7 @@ public class ReportInstanceWrapper implements ReportInstance,
 	}
 
 	@Override
-	public java.lang.String getReportName(java.util.Locale locale)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public java.lang.String getReportName(java.util.Locale locale) {
 		return _reportInstance.getReportName(locale);
 	}
 

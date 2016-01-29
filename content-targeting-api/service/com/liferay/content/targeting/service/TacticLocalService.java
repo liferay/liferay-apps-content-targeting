@@ -65,7 +65,7 @@ public interface TacticLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void addUserSegmentTactic(long userSegmentId,
 		com.liferay.content.targeting.model.Tactic tactic);
@@ -102,12 +102,11 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param tactic the tactic
 	* @return the tactic that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.Tactic deleteTactic(
 		com.liferay.content.targeting.model.Tactic tactic)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Deletes the tactic with the primary key from the database. Also notifies the appropriate model listeners.
@@ -115,11 +114,10 @@ public interface TacticLocalService extends BaseLocalService,
 	* @param tacticId the primary key of the tactic
 	* @return the tactic that was removed
 	* @throws PortalException if a tactic with the primary key could not be found
-	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.Tactic deleteTactic(
-		long tacticId) throws PortalException, SystemException;
+		long tacticId) throws PortalException;
 
 	public void deleteUserSegmentTactic(long userSegmentId,
 		com.liferay.content.targeting.model.Tactic tactic);
@@ -257,13 +255,13 @@ public interface TacticLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
-		long campaignId) throws PortalException, SystemException;
+		long campaignId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
 		long campaignId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Returns a range of all the tactics.
@@ -315,8 +313,7 @@ public interface TacticLocalService extends BaseLocalService,
 	public int getTacticsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTacticsCount(long campaignId)
-		throws PortalException, SystemException;
+	public int getTacticsCount(long campaignId) throws PortalException;
 
 	/**
 	* Returns the userSegmentIds of the user segments associated with the tactic.
@@ -352,12 +349,12 @@ public interface TacticLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
 		long campaignId, long groupId, java.lang.String keywords, int start,
-		int end) throws PortalException, SystemException;
+		int end) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.Tactic> searchTactics(
 		long groupId, java.lang.String keywords, int start, int end)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void setUserSegmentTactics(long userSegmentId, long[] tacticIds);
 
@@ -378,5 +375,5 @@ public interface TacticLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

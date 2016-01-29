@@ -37,8 +37,7 @@ public class RuleInstanceServiceWrapper implements RuleInstanceService,
 		long userId, java.lang.String ruleKey, long userSegmentId,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceService.addRuleInstance(userId, ruleKey,
 			userSegmentId, typeSettings, serviceContext);
 	}
@@ -46,8 +45,7 @@ public class RuleInstanceServiceWrapper implements RuleInstanceService,
 	@Override
 	public com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
 		long ruleInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceService.deleteRuleInstance(ruleInstanceId);
 	}
 
@@ -63,15 +61,13 @@ public class RuleInstanceServiceWrapper implements RuleInstanceService,
 
 	@Override
 	public java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userSegmentId) {
 		return _ruleInstanceService.getRuleInstances(userSegmentId);
 	}
 
 	@Override
 	public long getRuleInstancesCount(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceService.getRuleInstancesCount(userSegmentId);
 	}
 
@@ -79,8 +75,7 @@ public class RuleInstanceServiceWrapper implements RuleInstanceService,
 	public com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return _ruleInstanceService.updateRuleInstance(ruleInstanceId,
 			typeSettings, serviceContext);
 	}

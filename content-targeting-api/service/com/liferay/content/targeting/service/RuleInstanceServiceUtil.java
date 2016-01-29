@@ -45,8 +45,7 @@ public class RuleInstanceServiceUtil {
 		long userId, java.lang.String ruleKey, long userSegmentId,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .addRuleInstance(userId, ruleKey, userSegmentId,
 			typeSettings, serviceContext);
@@ -54,8 +53,7 @@ public class RuleInstanceServiceUtil {
 
 	public static com.liferay.content.targeting.model.RuleInstance deleteRuleInstance(
 		long ruleInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().deleteRuleInstance(ruleInstanceId);
 	}
 
@@ -69,22 +67,19 @@ public class RuleInstanceServiceUtil {
 	}
 
 	public static java.util.List<com.liferay.content.targeting.model.RuleInstance> getRuleInstances(
-		long userSegmentId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+		long userSegmentId) {
 		return getService().getRuleInstances(userSegmentId);
 	}
 
 	public static long getRuleInstancesCount(long userSegmentId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService().getRuleInstancesCount(userSegmentId);
 	}
 
 	public static com.liferay.content.targeting.model.RuleInstance updateRuleInstance(
 		long ruleInstanceId, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		return getService()
 				   .updateRuleInstance(ruleInstanceId, typeSettings,
 			serviceContext);

@@ -72,7 +72,7 @@ public interface UserSegmentLocalService extends BaseLocalService,
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Adds the user segment to the database. Also notifies the appropriate model listeners.
@@ -87,12 +87,12 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	public void addUserSegmentResources(
 		com.liferay.content.targeting.model.UserSegment userSegment,
 		boolean addGroupPermissions, boolean addGuestPermissions)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void addUserSegmentResources(
 		com.liferay.content.targeting.model.UserSegment userSegment,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void clearCampaignUserSegments(long campaignId);
 
@@ -142,12 +142,11 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @param userSegment the user segment
 	* @return the user segment that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
 		com.liferay.content.targeting.model.UserSegment userSegment)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Deletes the user segment with the primary key from the database. Also notifies the appropriate model listeners.
@@ -155,14 +154,12 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	* @param userSegmentId the primary key of the user segment
 	* @return the user segment that was removed
 	* @throws PortalException if a user segment with the primary key could not be found
-	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.UserSegment deleteUserSegment(
-		long userSegmentId) throws PortalException, SystemException;
+		long userSegmentId) throws PortalException;
 
-	public void deleteUserSegments(long groupId)
-		throws PortalException, SystemException;
+	public void deleteUserSegments(long groupId) throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -235,7 +232,7 @@ public interface UserSegmentLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.UserSegment fetchUserSegmentByAssetCategoryId(
-		long assetCategoryId) throws PortalException, SystemException;
+		long assetCategoryId) throws PortalException;
 
 	/**
 	* Returns the user segment matching the UUID and group.
@@ -345,23 +342,23 @@ public interface UserSegmentLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long groupId) throws PortalException, SystemException;
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long groupId, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
-		long[] groupIds) throws PortalException, SystemException;
+		long[] groupIds) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.UserSegment> getUserSegments(
 		long[] groupIds, int start, int end,
 		com.liferay.portal.kernel.util.OrderByComparator obc)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Returns a range of all the user segments.
@@ -413,12 +410,10 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	public int getUserSegmentsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserSegmentsCount(long groupId)
-		throws PortalException, SystemException;
+	public int getUserSegmentsCount(long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getUserSegmentsCount(long[] groupIds)
-		throws PortalException, SystemException;
+	public int getUserSegmentsCount(long[] groupIds) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean hasCampaignUserSegment(long campaignId, long userSegmentId);
@@ -435,12 +430,12 @@ public interface UserSegmentLocalService extends BaseLocalService,
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.portal.kernel.search.Hits search(long groupId,
 		java.lang.String keywords, int start, int end)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.util.BaseModelSearchResult<com.liferay.content.targeting.model.UserSegment> searchUserSegments(
 		long groupId, java.lang.String keywords, int start, int end)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void setCampaignUserSegments(long campaignId, long[] userSegmentIds);
 
@@ -462,10 +457,10 @@ public interface UserSegmentLocalService extends BaseLocalService,
 		java.util.Map<java.util.Locale, java.lang.String> nameMap,
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public void updateUserSegmentResources(
 		com.liferay.content.targeting.model.UserSegment userSegment,
 		java.lang.String[] groupPermissions, java.lang.String[] guestPermissions)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

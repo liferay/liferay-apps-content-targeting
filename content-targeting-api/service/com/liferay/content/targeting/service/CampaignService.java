@@ -56,7 +56,7 @@ public interface CampaignService extends BaseService {
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public com.liferay.content.targeting.model.Campaign addCampaign(
 		long userId, java.util.Map<java.util.Locale, java.lang.String> nameMap,
@@ -65,22 +65,21 @@ public interface CampaignService extends BaseService {
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public com.liferay.content.targeting.model.Campaign deleteCampaign(
-		long campaignId) throws PortalException, SystemException;
+		long campaignId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.Campaign fetchCurrentMaxPriorityCampaign(
-		long[] groupIds, long[] userSegmentIds) throws SystemException;
+		long[] groupIds, long[] userSegmentIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.Campaign> getCampaigns(
-		long groupId) throws PortalException, SystemException;
+		long groupId) throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getCampaignsCount(long groupId)
-		throws PortalException, SystemException;
+	public int getCampaignsCount(long groupId) throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -96,7 +95,7 @@ public interface CampaignService extends BaseService {
 		java.util.Date startDate, java.util.Date endDate, int priority,
 		boolean active, long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	public com.liferay.content.targeting.model.Campaign updateCampaign(
 		long campaignId,
@@ -106,5 +105,5 @@ public interface CampaignService extends BaseService {
 		java.lang.String timeZoneId, int priority, boolean active,
 		long[] userSegmentIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

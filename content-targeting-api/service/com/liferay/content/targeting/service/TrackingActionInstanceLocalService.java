@@ -65,7 +65,7 @@ public interface TrackingActionInstanceLocalService extends BaseLocalService,
 		java.lang.String elementId, java.lang.String eventType,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* @deprecated As of 2.0.0
@@ -77,7 +77,7 @@ public interface TrackingActionInstanceLocalService extends BaseLocalService,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Creates a new tracking action instance with the primary key. Does not add the tracking action instance to the database.
@@ -102,12 +102,11 @@ public interface TrackingActionInstanceLocalService extends BaseLocalService,
 	* @param trackingActionInstance the tracking action instance
 	* @return the tracking action instance that was removed
 	* @throws PortalException
-	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.TrackingActionInstance deleteTrackingActionInstance(
 		com.liferay.content.targeting.model.TrackingActionInstance trackingActionInstance)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Deletes the tracking action instance with the primary key from the database. Also notifies the appropriate model listeners.
@@ -115,11 +114,10 @@ public interface TrackingActionInstanceLocalService extends BaseLocalService,
 	* @param trackingActionInstanceId the primary key of the tracking action instance
 	* @return the tracking action instance that was removed
 	* @throws PortalException if a tracking action instance with the primary key could not be found
-	* @throws SystemException
 	*/
 	@com.liferay.portal.kernel.search.Indexable(type = IndexableType.DELETE)
 	public com.liferay.content.targeting.model.TrackingActionInstance deleteTrackingActionInstance(
-		long trackingActionInstanceId) throws PortalException, SystemException;
+		long trackingActionInstanceId) throws PortalException;
 
 	public com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery();
 
@@ -188,7 +186,7 @@ public interface TrackingActionInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstance(
-		long campaignId, java.lang.String alias) throws SystemException;
+		long campaignId, java.lang.String alias);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstance(
@@ -196,8 +194,7 @@ public interface TrackingActionInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public com.liferay.content.targeting.model.TrackingActionInstance fetchTrackingActionInstanceByReportInstanceId(
-		long reportInstanceId, java.lang.String alias)
-		throws SystemException;
+		long reportInstanceId, java.lang.String alias);
 
 	/**
 	* Returns the tracking action instance matching the UUID and group.
@@ -257,17 +254,16 @@ public interface TrackingActionInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
-		long campaignId) throws SystemException;
+		long campaignId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
 		long campaignId, java.lang.String className, long classPK,
-		java.lang.String eventType) throws SystemException;
+		java.lang.String eventType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstances(
-		long campaignId, java.lang.String elementId, java.lang.String eventType)
-		throws SystemException;
+		long campaignId, java.lang.String elementId, java.lang.String eventType);
 
 	/**
 	* Returns a range of all the tracking action instances.
@@ -286,17 +282,17 @@ public interface TrackingActionInstanceLocalService extends BaseLocalService,
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
-		long reportInstanceId) throws SystemException;
+		long reportInstanceId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
 		long reportInstanceId, java.lang.String className, long classPK,
-		java.lang.String eventType) throws SystemException;
+		java.lang.String eventType);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.TrackingActionInstance> getTrackingActionInstancesByReportInstanceId(
 		long reportInstanceId, java.lang.String elementId,
-		java.lang.String eventType) throws SystemException;
+		java.lang.String eventType);
 
 	/**
 	* Returns all the tracking action instances matching the UUID and company.
@@ -333,8 +329,7 @@ public interface TrackingActionInstanceLocalService extends BaseLocalService,
 	public int getTrackingActionInstancesCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getTrackingActionInstancesCount(long campaignId)
-		throws SystemException;
+	public int getTrackingActionInstancesCount(long campaignId);
 
 	/**
 	* Updates the tracking action instance in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -352,5 +347,5 @@ public interface TrackingActionInstanceLocalService extends BaseLocalService,
 		long referrerClassPK, java.lang.String elementId,
 		java.lang.String eventType, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

@@ -56,7 +56,7 @@ public interface TacticService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 
 	/**
 	* Returns the OSGi service identifier.
@@ -67,7 +67,7 @@ public interface TacticService extends BaseService {
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public java.util.List<com.liferay.content.targeting.model.Tactic> getTactics(
-		long campaignId) throws PortalException, SystemException;
+		long campaignId) throws PortalException;
 
 	public com.liferay.content.targeting.model.Tactic updateTactic(
 		long tacticId, long campaignId,
@@ -75,5 +75,5 @@ public interface TacticService extends BaseService {
 		java.util.Map<java.util.Locale, java.lang.String> descriptionMap,
 		long[] userSegmentsIds,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws PortalException, SystemException;
+		throws PortalException;
 }

@@ -120,12 +120,11 @@ public abstract class ChannelInstanceLocalServiceBaseImpl
 	 * @param channelInstanceId the primary key of the channel instance
 	 * @return the channel instance that was removed
 	 * @throws PortalException if a channel instance with the primary key could not be found
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ChannelInstance deleteChannelInstance(long channelInstanceId)
-		throws PortalException, SystemException {
+		throws PortalException {
 		return channelInstancePersistence.remove(channelInstanceId);
 	}
 
@@ -135,13 +134,11 @@ public abstract class ChannelInstanceLocalServiceBaseImpl
 	 * @param channelInstance the channel instance
 	 * @return the channel instance that was removed
 	 * @throws PortalException
-	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
 	public ChannelInstance deleteChannelInstance(
-		ChannelInstance channelInstance)
-		throws PortalException, SystemException {
+		ChannelInstance channelInstance) throws PortalException {
 		return channelInstancePersistence.remove(channelInstance);
 	}
 

@@ -60,8 +60,7 @@ public class ChannelInstanceServiceHttp {
 		java.lang.String channelKey, long campaignId, java.lang.String alias,
 		java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ChannelInstanceServiceUtil.class,
 					"addChannelInstance", _addChannelInstanceParameterTypes0);
@@ -80,10 +79,6 @@ public class ChannelInstanceServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -98,8 +93,7 @@ public class ChannelInstanceServiceHttp {
 
 	public static com.liferay.content.targeting.model.ChannelInstance deleteChannelInstance(
 		HttpPrincipal httpPrincipal, long channelInstanceId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ChannelInstanceServiceUtil.class,
 					"deleteChannelInstance",
@@ -118,10 +112,6 @@ public class ChannelInstanceServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -136,8 +126,7 @@ public class ChannelInstanceServiceHttp {
 
 	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
 		HttpPrincipal httpPrincipal, long campaignId, long tacticId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ChannelInstanceServiceUtil.class,
 					"getChannelInstances", _getChannelInstancesParameterTypes2);
@@ -155,10 +144,6 @@ public class ChannelInstanceServiceHttp {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
 				}
 
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
-				}
-
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
 			}
 
@@ -173,8 +158,7 @@ public class ChannelInstanceServiceHttp {
 
 	public static java.util.List<com.liferay.content.targeting.model.ChannelInstance> getChannelInstances(
 		HttpPrincipal httpPrincipal, long tacticId, java.lang.String channelKey)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ChannelInstanceServiceUtil.class,
 					"getChannelInstances", _getChannelInstancesParameterTypes3);
@@ -190,10 +174,6 @@ public class ChannelInstanceServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);
@@ -212,8 +192,7 @@ public class ChannelInstanceServiceHttp {
 		HttpPrincipal httpPrincipal, long channelInstanceId,
 		java.lang.String alias, java.lang.String typeSettings,
 		com.liferay.portal.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			com.liferay.portal.kernel.exception.SystemException {
+		throws com.liferay.portal.kernel.exception.PortalException {
 		try {
 			MethodKey methodKey = new MethodKey(ChannelInstanceServiceUtil.class,
 					"updateChannelInstance",
@@ -230,10 +209,6 @@ public class ChannelInstanceServiceHttp {
 			catch (Exception e) {
 				if (e instanceof com.liferay.portal.kernel.exception.PortalException) {
 					throw (com.liferay.portal.kernel.exception.PortalException)e;
-				}
-
-				if (e instanceof com.liferay.portal.kernel.exception.SystemException) {
-					throw (com.liferay.portal.kernel.exception.SystemException)e;
 				}
 
 				throw new com.liferay.portal.kernel.exception.SystemException(e);

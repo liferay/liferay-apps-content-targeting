@@ -24,21 +24,20 @@ import aQute.bnd.annotation.ProviderType;
 public interface CampaignFinder {
 	public java.util.List<com.liferay.content.targeting.model.Campaign> filterFindByG_D_A_U(
 		long[] groupIds, java.util.Date date, boolean active,
-		long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] userSegmentIds);
 
 	public java.util.List<com.liferay.content.targeting.model.Campaign> findByG_D_A_U(
 		long[] groupIds, java.util.Date date, boolean active,
-		long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] userSegmentIds);
 
 	public com.liferay.content.targeting.model.Campaign fetchByG_D_A_U_First(
 		long[] groupIds, java.util.Date date, boolean active,
-		long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] userSegmentIds);
+
+	public java.util.Map<java.io.Serializable, com.liferay.content.targeting.model.Campaign> fetchByPrimaryKeys(
+		java.util.Set<java.io.Serializable> primaryKeys);
 
 	public com.liferay.content.targeting.model.Campaign filterFetchByG_D_A_U_First(
 		long[] groupIds, java.util.Date date, boolean active,
-		long[] userSegmentIds)
-		throws com.liferay.portal.kernel.exception.SystemException;
+		long[] userSegmentIds);
 }
